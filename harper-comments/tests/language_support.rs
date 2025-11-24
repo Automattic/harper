@@ -1,6 +1,7 @@
 use std::path::Path;
 
 use harper_comments::CommentParser;
+use harper_core::languages::Language;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::MarkdownOptions;
 use harper_core::spell::FstDictionary;
@@ -26,7 +27,7 @@ macro_rules! create_test {
                  let dict = FstDictionary::curated();
                  let document = Document::new(&source, &parser, &dict);
 
-                 let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
+                 let mut linter = LintGroup::new_curated(dict, Language::English(EnglishDialect::American));
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);

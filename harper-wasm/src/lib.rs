@@ -5,6 +5,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
+use harper_core::languages::Language as HarperLanguage;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
@@ -103,7 +104,10 @@ impl Linter {
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
         let dictionary = Self::construct_merged_dict(MutableDictionary::default());
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
+        let lint_group = LintGroup::new_curated_empty_config(
+            dictionary.clone(),
+            HarperLanguage::English(dialect.into()),
+        );
 
         Self {
             lint_group,
@@ -120,8 +124,10 @@ impl Linter {
     fn synchronize_lint_dict(&mut self) {
         let mut lint_config = self.lint_group.config.clone();
         self.dictionary = Self::construct_merged_dict(self.user_dictionary.clone());
-        self.lint_group =
-            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+        self.lint_group = LintGroup::new_curated_empty_config(
+            self.dictionary.clone(),
+            HarperLanguage::English(self.dialect.into()),
+        );
         self.lint_group.config.merge_from(&mut lint_config);
     }
 
@@ -551,16 +557,22 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let config = LintGroup::new_curated(
+        MutableDictionary::new().into(),
+        HarperLanguage::English(Dialect::American.into()),
+    )
+    .config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let config = LintGroup::new_curated(
+        MutableDictionary::new().into(),
+        HarperLanguage::English(Dialect::American.into()),
+    )
+    .config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

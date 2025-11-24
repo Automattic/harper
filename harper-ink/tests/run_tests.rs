@@ -1,3 +1,4 @@
+use harper_core::languages::Language;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
 use harper_core::{Document, EnglishDialect};
@@ -22,7 +23,7 @@ macro_rules! create_test {
                       &FstDictionary::curated()
                       );
 
-                 let mut linter = LintGroup::new_curated(dict, EnglishDialect::American);
+                 let mut linter = LintGroup::new_curated(dict, Language::English(EnglishDialect::American));
                  let lints = linter.lint(&document);
 
                  dbg!(&lints);

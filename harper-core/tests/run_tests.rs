@@ -1,3 +1,4 @@
+use harper_core::languages::Language;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
@@ -20,7 +21,7 @@ macro_rules! create_test {
                 let dict = FstDictionary::curated();
                 let document = Document::new_markdown_default(&source, &dict);
 
-                let mut linter = LintGroup::new_curated(dict, $dialect);
+                let mut linter = LintGroup::new_curated(dict, Language::English($dialect));
                 let lints = linter.lint(&document);
 
                 dbg!(&lints);
@@ -52,7 +53,7 @@ macro_rules! create_org_test {
                 let dict = FstDictionary::curated();
                 let document = Document::new(&source, &OrgMode, &dict);
 
-                let mut linter = LintGroup::new_curated(dict, $dialect);
+                let mut linter = LintGroup::new_curated(dict, Language::English($dialect));
                 let lints = linter.lint(&document);
 
                 dbg!(&lints);
@@ -72,9 +73,9 @@ create_test!(preexisting.md, 0, EnglishDialect::American);
 create_test!(issue_109.md, 0, EnglishDialect::American);
 create_test!(issue_109_ext.md, 0, EnglishDialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, EnglishDialect::American);
-create_test!(obsidian_links.md, 3, EnglishDialect::American);
+create_test!(obsidian_links.md, 2, EnglishDialect::American);
 create_test!(issue_267.md, 0, EnglishDialect::American);
-create_test!(proper_noun_capitalization.md, 3, EnglishDialect::American);
+create_test!(proper_noun_capitalization.md, 2, EnglishDialect::American);
 create_test!(amazon_hostname.md, 0, EnglishDialect::American);
 create_test!(issue_159.md, 1, EnglishDialect::American);
 create_test!(issue_358.md, 0, EnglishDialect::American);

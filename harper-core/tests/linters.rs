@@ -9,6 +9,7 @@
 //! Note: This test will fail if the snapshot files are not up to date. This
 //! ensures that CI will fail if linters change their behavior.
 
+use harper_core::languages::Language;
 use harper_core::spell::FstDictionary;
 use harper_core::{
     Dialect, Document, EnglishDialect,
@@ -196,10 +197,10 @@ fn test_most_lints() {
 
         let mut linter = LintGroup::new_curated(
             dict,
-            dialect_override.unwrap_or_else(|| {
+            Language::English(dialect_override.unwrap_or_else(|| {
                 EnglishDialect::try_guess_from_document(&document)
                     .unwrap_or(EnglishDialect::American)
-            }),
+            })),
         );
 
         let mut lints = linter.lint(&document);
