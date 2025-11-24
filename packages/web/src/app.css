@@ -102,7 +102,7 @@ h4 {
 }
 
 p {
-	@apply leading-7 [&:not(:first-child)]:mt-6;
+	@apply leading-[130%] [&:not(:first-child)]:mt-6;
 }
 
 a {

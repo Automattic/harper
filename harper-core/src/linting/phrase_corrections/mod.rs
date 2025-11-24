@@ -92,13 +92,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
         ),
-        "AndTheLike" => (
-            ["an the like"],
-            ["and the like"],
-            "Did you mean `and the like`?",
-            "Fixes the typo in `and the like`.",
-            LintKind::Typo
-        ),
         "AnotherAn" => (
             ["another an"],
             ["another"],

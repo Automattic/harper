@@ -2658,7 +2658,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2673,6 +2673,7 @@ dependencies = [
  "ariadne",
  "clap",
  "dirs 6.0.0",
+ "either",
  "harper-comments",
  "harper-core",
  "harper-ink",
@@ -2681,15 +2682,16 @@ dependencies = [
  "harper-python",
  "harper-stats",
  "harper-typst",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "serde",
  "serde_json",
  "strum",
+ "strum_macros",
 ]
 
 [[package]]
 name = "harper-comments"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2723,7 +2725,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "ammonia",
  "bitflags 2.10.0",
@@ -2733,7 +2735,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",
@@ -2761,7 +2763,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2772,7 +2774,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2783,7 +2785,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2794,7 +2796,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2805,7 +2807,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2836,11 +2838,11 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "burn",
  "burn-ndarray",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "is-macro",
  "lru",
  "rand 0.9.2",
@@ -2854,7 +2856,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2865,7 +2867,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2876,7 +2878,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2895,7 +2897,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "0.72.0"
+version = "0.73.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2950,14 +2952,15 @@ dependencies = [
 
 [[package]]
 name = "hashbrown"
-version = "0.16.0"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5419bdc4f6a9207fbeba6d11b604d481addf78ecd10c11ad51e76c2f6482748d"
+checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
 dependencies = [
  "allocator-api2",
  "equivalent",
  "foldhash 0.2.0",
  "serde",
+ "serde_core",
 ]
 
 [[package]]
@@ -3236,7 +3239,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6717a8d2a5a929a1a2eb43a12812498ed141a0bcfb7e8f7844fbdbe4303bba9f"
 dependencies = [
  "equivalent",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "serde",
  "serde_core",
 ]
@@ -3488,7 +3491,7 @@ version = "0.16.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96051b46fc183dc9cd4a223960ef37b9af631b55191852a8274bfef064cda20f"
 dependencies = [
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
 ]
 
 [[package]]
@@ -3931,9 +3934,9 @@ checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
 
 [[package]]
 name = "open"
-version = "5.3.2"
+version = "5.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2483562e62ea94312f3576a7aca397306df7990b8d89033e18766744377ef95"
+checksum = "43bb73a7fa3799b198970490a51174027ba0d4ec504b03cd08caf513d40024bc"
 dependencies = [
  "is-wsl",
  "libc",

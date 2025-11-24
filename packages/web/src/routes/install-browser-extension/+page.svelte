@@ -8,7 +8,7 @@ let demoText =
 <div class="fixed left-0 top-0 w-screen h-screen bg-white dark:bg-black z-1000">
   <div class="max-w-6xl mx-auto shadow-md border-gray-300 dark:border-x h-full overflow-y-auto">
     <section class="px-6 sm:px-10 py-16 sm:py-24">
-      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl leading-tight mb-6">
+      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl mb-6">
         Thanks for Installing Harper!
       </h1>
 
