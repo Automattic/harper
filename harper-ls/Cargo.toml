@@ -27,7 +27,7 @@ itertools = "0.14.0"
 tracing = { version = "0.1.41", default-features = false, features = ["std"] }
 tracing-subscriber = { version = "0.3.20", default-features = false, features = ["fmt", "std"] }
 resolve-path = "0.1.0"
-open = "5.3.0"
+open = "5.3.3"
 futures = "0.3.31"
 serde = { version = "1.0.228", features = ["derive"] }
 indexmap = { version = "2.12.0", features = ["serde"] }
