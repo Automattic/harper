@@ -1,7 +1,7 @@
 use crate::{
     Token,
     char_string::CharStringExt,
-    expr::{All, Expr, SequenceExpr},
+    expr::{All, Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
@@ -93,19 +93,34 @@ impl Default for SimplePastToPastParticiple {
                             Box::new(WordSet::new(&["have", "had", "has", "having"])),
                             // for passive voice
                             Box::new(InflectionOfBe::default()),
+                            // pronoun + have contractions
+                            Box::new(WordSet::new(&[
+                                "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
+                                "she's", "she'd", "it's", "it'd", "they've", "they'd",
+                            ])),
+                            // pronoun + have contractions missing apostrophes
+                            Box::new(WordSet::new(&[
+                                "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
+                                "shed", "its", "itd", "theyve", "theyd",
+                            ])),
                         ])
                         .t_ws()
                         .then_verb_simple_past_form(),
                 ),
-                // negative: one known exception
-                Box::new(
-                    SequenceExpr::default().then_unless(
-                        SequenceExpr::default()
-                            .then(InflectionOfBe::default())
-                            .t_any()
-                            .t_aco("woke"),
-                    ),
-                ),
+                // negative: exceptions
+                Box::new(SequenceExpr::default().then_unless(FirstMatchOf::new(vec![
+                        Box::new(
+                            SequenceExpr::default()
+                                .then(InflectionOfBe::default())
+                                .t_any()
+                                .t_aco("woke"),
+                        ),
+                        Box::new(
+                            SequenceExpr::aco("id")
+                                .t_any()
+                                .then_word_set(&["came", "did", "went"]),
+                        ),
+                    ]))),
             ])),
         }
     }
@@ -117,11 +132,7 @@ impl ExprLinter for SimplePastToPastParticiple {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 3
-            || !toks[0].kind.is_verb()
-            || !toks[1].kind.is_whitespace()
-            || !toks[2].kind.is_verb()
-        {
+        if toks.len() != 3 || !toks[1].kind.is_whitespace() || !toks[2].kind.is_verb() {
             return None;
         }
 
@@ -175,6 +186,8 @@ mod tests {
     use crate::linting::tests::{
         assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
+
+    // "Be" and "have"
 
     #[test]
     fn correct_have_went() {
@@ -340,14 +353,6 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_being_woke() {
-        assert_no_lints(
-            "Being woke to gender discrimination is difficult",
-            SimplePastToPastParticiple::default(),
-        );
-    }
-
-    #[test]
     fn correct_has_flew() {
         assert_suggestion_result(
             "Well time has flew and I was quite busy but I remember this conversation so I am sharing this with you.",
@@ -371,14 +376,6 @@ mod tests {
             "They all worked wonderfully under 3.4.2 and all are broke under 3.5.1.",
             SimplePastToPastParticiple::default(),
             "They all worked wonderfully under 3.4.2 and all are broken under 3.5.1.",
-        );
-    }
-
-    #[test]
-    fn dont_flag_be_woke() {
-        assert_no_lints(
-            "So You Want To Be Woke. The path to becoming woke is hard",
-            SimplePastToPastParticiple::default(),
         );
     }
 
@@ -442,6 +439,158 @@ mod tests {
             "In the example provided, TP53 and LMNB1 genes are took as seeds.",
             SimplePastToPastParticiple::default(),
             "In the example provided, TP53 and LMNB1 genes are taken as seeds.",
+        );
+    }
+
+    // Contractions
+
+    #[test]
+    fn correct_ive_went() {
+        assert_suggestion_result(
+            "I've went through some tutorials and went back and forth with AI translating programs from one language to the other.",
+            SimplePastToPastParticiple::default(),
+            "I've gone through some tutorials and went back and forth with AI translating programs from one language to the other.",
+        );
+    }
+
+    #[test]
+    fn correct_ive_went_no_apostrophe() {
+        assert_suggestion_result(
+            "I've went thru all the steps to help fix this Virus issue and im locked up.",
+            SimplePastToPastParticiple::default(),
+            "I've gone thru all the steps to help fix this Virus issue and im locked up.",
+        );
+    }
+
+    #[test]
+    fn correct_id_did() {
+        assert_suggestion_result(
+            "I'd did a calibration after the FW update now.",
+            SimplePastToPastParticiple::default(),
+            "I'd done a calibration after the FW update now.",
+        );
+    }
+
+    #[test]
+    fn correct_weve_went() {
+        assert_suggestion_result(
+            "Thanks for the feedback, but the issue is no longer relevant since we've went with different approach.",
+            SimplePastToPastParticiple::default(),
+            "Thanks for the feedback, but the issue is no longer relevant since we've gone with different approach.",
+        );
+    }
+
+    #[test]
+    fn correct_wed_chose() {
+        assert_suggestion_result(
+            "whatever number we'd chose, only one tab will be allowed to run",
+            SimplePastToPastParticiple::default(),
+            "whatever number we'd chosen, only one tab will be allowed to run",
+        );
+    }
+
+    #[test]
+    fn correct_youve_wrote() {
+        assert_suggestion_result(
+            "I love this project, it's impressing how many refactoring you've wrote in a limited amount of time.",
+            SimplePastToPastParticiple::default(),
+            "I love this project, it's impressing how many refactoring you've written in a limited amount of time.",
+        );
+    }
+
+    #[test]
+    fn correct_youve_ran_no_apostrophe() {
+        assert_suggestion_result(
+            "after youve ran it, execute the file_mover.ps1 using powershell",
+            SimplePastToPastParticiple::default(),
+            "after youve run it, execute the file_mover.ps1 using powershell",
+        );
+    }
+
+    #[test]
+    fn correct_youd_wrote() {
+        assert_suggestion_result(
+            "When I saw you'd wrote a terminal emulator I had to try it and so far it's amazing.",
+            SimplePastToPastParticiple::default(),
+            "When I saw you'd written a terminal emulator I had to try it and so far it's amazing.",
+        );
+    }
+
+    #[test]
+    fn correct_its_broke() {
+        assert_suggestion_result(
+            "Not sure why it's broke for me but not for you.",
+            SimplePastToPastParticiple::default(),
+            "Not sure why it's broken for me but not for you.",
+        );
+    }
+
+    #[test]
+    fn correct_its_broke_no_apostrophe() {
+        assert_suggestion_result(
+            "Now its broke and won't do batch images (decoding error).",
+            SimplePastToPastParticiple::default(),
+            "Now its broken and won't do batch images (decoding error).",
+        );
+    }
+
+    #[test]
+    fn correct_theyve_broke() {
+        assert_suggestion_result(
+            "They've broke something again :D.",
+            SimplePastToPastParticiple::default(),
+            "They've broken something again :D.",
+        );
+    }
+
+    #[test]
+    fn correct_theyd_forgot() {
+        assert_suggestion_result(
+            "they found the process they'd forgot they were running",
+            SimplePastToPastParticiple::default(),
+            "they found the process they'd forgotten they were running",
+        );
+    }
+
+    // Known exceptions
+
+    #[test]
+    fn dont_flag_being_woke() {
+        assert_no_lints(
+            "Being woke to gender discrimination is difficult",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_be_woke() {
+        assert_no_lints(
+            "So You Want To Be Woke. The path to becoming woke is hard",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_id_did() {
+        assert_no_lints(
+            "Prop id did not match.",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_id_came() {
+        assert_no_lints(
+            "I'm a longtime user of UniFi and site ID came around after my account was established.",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_id_went() {
+        assert_no_lints(
+            "Could not determine debug ID went away after cleaning the dist/ before the build, so that's unrelated.",
+            SimplePastToPastParticiple::default(),
         );
     }
 }

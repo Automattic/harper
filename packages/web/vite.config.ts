@@ -43,10 +43,6 @@ export default defineConfig(async () => {
 					},
 					navbar: [
 						{ title: 'Documentation', to: '/docs/about' },
-						{
-							title: 'Visual Studio Code',
-							to: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
-						},
 						{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
 						{
 							title: 'Chrome Extension',

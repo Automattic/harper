@@ -934,6 +934,27 @@ fn got_ride_of() {
     );
 }
 
+// HolyWar
+
+#[test]
+#[ignore = "Known failure due to replace_with_match_case working by character index"]
+fn correct_holy_war() {
+    assert_suggestion_result(
+        "I know it is Holly War about idempotent in HTTP and DELETE",
+        lint_group(),
+        "I know it is Holy War about idempotent in HTTP and DELETE",
+    );
+}
+
+#[test]
+fn correct_holly_wars() {
+    assert_suggestion_result(
+        "Anyway I'm not starting some holly wars about this point.",
+        lint_group(),
+        "Anyway I'm not starting some holy wars about this point.",
+    );
+}
+
 // HowItLooksLike
 
 #[test]

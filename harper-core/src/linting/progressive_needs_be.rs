@@ -1,6 +1,5 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::{Token, TokenKind};
+use crate::Token;
+use crate::expr::{Expr, SequenceExpr};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -12,15 +11,17 @@ impl Default for ProgressiveNeedsBe {
     fn default() -> Self {
         // Support both contracted (I've/We've/You've/They've) and non-contracted
         // (I have/We have/You have/They have) forms before a progressive verb.
-        let contracted = SequenceExpr::word_set(&["I've", "We've", "You've", "They've"])
-            .t_ws()
-            .then_kind_both(TokenKind::is_verb, TokenKind::is_verb_progressive_form);
+        let contracted = SequenceExpr::word_set(&[
+            "I've", "We've", "You've", "They've", "Ive", "Weve", "Youve", "Theyve",
+        ])
+        .t_ws()
+        .then_verb_progressive_form();
 
         let non_contracted = SequenceExpr::word_set(&["I", "We", "You", "They"])
             .t_ws()
             .then_any_capitalization_of("have")
             .t_ws()
-            .then_kind_both(TokenKind::is_verb, TokenKind::is_verb_progressive_form);
+            .then_verb_progressive_form();
 
         let expr = SequenceExpr::any_of(vec![Box::new(contracted), Box::new(non_contracted)]);
 
@@ -55,15 +56,14 @@ impl ExprLinter for ProgressiveNeedsBe {
         };
 
         // Choose the correct "be" contraction based on the pronoun
-        let pronoun_str: String = first_word.span.get_content(src).iter().copied().collect();
-        let lower = pronoun_str.to_lowercase();
-        let progressive_replacement = if lower.starts_with("i") {
+        let pronoun = first_word.span.get_content(src);
+        let progressive_replacement = if pronoun.starts_with_ignore_ascii_case_str("i") {
             "I'm"
-        } else if lower.starts_with("we") {
+        } else if pronoun.starts_with_ignore_ascii_case_str("we") {
             "We're"
-        } else if lower.starts_with("you") {
+        } else if pronoun.starts_with_ignore_ascii_case_str("you") {
             "You're"
-        } else if lower.starts_with("they") {
+        } else if pronoun.starts_with_ignore_ascii_case_str("they") {
             "They're"
         } else {
             "I'm"
@@ -852,6 +852,59 @@ mod tests {
             "We have\nworking on it today.",
             ProgressiveNeedsBe::default(),
             "We're\nworking on it today.",
+        );
+    }
+
+    //////////
+
+    #[test]
+    #[ignore = "Handling the progressive `being` will need a special case"]
+    fn test_ive_being() {
+        assert_good_and_bad_suggestions(
+            "I've being playing with languages.toml",
+            ProgressiveNeedsBe::default(),
+            &[
+                "I've been playing with languages.toml",
+                "I'm playing with languages.toml",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn test_ive_doing_no_apostrophe() {
+        assert_suggestion_result(
+            "Ive always seen the variables and debug into it, and thats what ive doing.",
+            ProgressiveNeedsBe::default(),
+            "Ive always seen the variables and debug into it, and thats what i'm doing.",
+        );
+    }
+
+    #[test]
+    fn test_ive_looking_no_apostrophe() {
+        assert_suggestion_result(
+            "Ive looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.",
+            ProgressiveNeedsBe::default(),
+            "I'm looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Handling the progressive `being` will need a special case"]
+    fn test_youve_being() {
+        assert_suggestion_result(
+            "Thanks for all the work you've being doing for this project btw!",
+            ProgressiveNeedsBe::default(),
+            "Thanks for all the work you're doing for this project btw!",
+        );
+    }
+
+    #[test]
+    fn test_theyve_doing() {
+        assert_suggestion_result(
+            "it’s also kind of implied users read the documentation or generally have a sense of what they’ve doing and what could go wrong",
+            ProgressiveNeedsBe::default(),
+            "it’s also kind of implied users read the documentation or generally have a sense of what they're doing and what could go wrong",
         );
     }
 }
