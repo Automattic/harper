@@ -6,8 +6,11 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
+use crate::languages::Language;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, DialectFlags, EnglishDialect, TokenStringExt};
+use crate::{
+    CharString, CharStringExt, DialectFlags, DialectsEnum, EnglishDialect, TokenStringExt,
+};
 
 pub struct SpellCheck<T>
 where
@@ -15,7 +18,9 @@ where
 {
     dictionary: T,
     suggestion_cache: LruCache<CharString, Vec<CharString>>,
-    dialect: EnglishDialect,
+    // The language parameter might be useless because of the dictionary
+    // language: Language,
+    dialect: DialectsEnum,
 }
 
 impl<T: Dictionary> SpellCheck<T> {
@@ -23,6 +28,17 @@ impl<T: Dictionary> SpellCheck<T> {
         Self {
             dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            // language: Language::English(dialect),
+            dialect: DialectsEnum::English(dialect),
+        }
+    }
+
+    pub fn new_with_language(dictionary: T, language: Language) -> Self {
+        let dialect: DialectsEnum = language.into();
+        Self {
+            dictionary,
+            suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            // language,
             dialect,
         }
     }
@@ -50,7 +66,7 @@ impl<T: Dictionary> SpellCheck<T> {
                             .get_word_metadata(v)
                             .unwrap()
                             .dialects
-                            .is_dialect_enabled(self.dialect.into())
+                            .is_dialect_enabled(self.dialect)
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -74,7 +90,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             let word_chars = document.get_span_content(&word.span);
 
             if let Some(metadata) = word.kind.as_word().unwrap()
-                && metadata.dialects.is_dialect_enabled(self.dialect.into())
+                && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
                     || self.dictionary.contains_exact_word(&word_chars.to_lower()))
             {
@@ -478,6 +494,30 @@ mod tests {
             "'fll' is supposed to be 'fill'",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "'fill' is supposed to be 'fill'",
+        );
+    }
+}
+
+#[cfg(test)]
+mod tests_portuguese {
+    use super::SpellCheck;
+    use crate::PortugueseDialect;
+    use crate::languages::{Language, LanguageFamily};
+    use crate::linting::tests::assert_suggestion_result;
+    use crate::spell::FstDictionary;
+
+    // Capitalization tests
+
+    #[test]
+    fn brazil_capitalized() {
+        let language = Language::Portuguese(PortugueseDialect::default());
+        assert_suggestion_result(
+            "The word brazil should be capitalized.",
+            SpellCheck::new_with_language(
+                FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+                language,
+            ),
+            "The word Brazil should be capitalized.",
         );
     }
 }

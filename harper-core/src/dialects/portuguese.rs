@@ -31,8 +31,8 @@ use crate::{Document, TokenKind, TokenStringExt};
     VariantArray,
 )]
 pub enum PortugueseDialect {
-    #[default]
     European = 1 << 0,
+    #[default]
     Brazilian = 1 << 1,
     African = 1 << 2,
 }

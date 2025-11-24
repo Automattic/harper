@@ -389,7 +389,7 @@ where
 
 #[cfg(test)]
 pub mod tests {
-    use crate::{Document, Span, Token, parsers::PlainEnglish};
+    use crate::{Document, Span, Token, languages::Language, parsers::PlainEnglish};
     use hashbrown::HashSet;
 
     /// Extension trait for converting spans of tokens back to their original text
@@ -446,7 +446,12 @@ pub mod tests {
     /// Runs a provided linter on text, applies the first suggestion from each lint
     /// and asserts whether the result is equal to a given value.
     #[track_caller]
-    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
+    pub fn assert_suggestion_result(
+        text: &str,
+        linter: impl Linter,
+        expected_result: &str,
+        language: Language,
+    ) {
         assert_nth_suggestion_result(text, linter, expected_result, 0);
     }
 

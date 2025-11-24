@@ -6,7 +6,7 @@ use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, 
 use crate::{
     Dialect, DialectFlags, EnglishDialect, EnglishDialectFlags,
     dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags},
-    languages::LanguageFamily,
+    languages::{Language, LanguageFamily},
 };
 
 #[derive(
@@ -70,6 +70,7 @@ pub enum DialectFlagsEnum {
 }
 impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
     fn is_dialect_enabled(&self, dialect: DialectsEnum) -> bool {
+        println!("Comparing the dialects {} and ", dialect);
         match (self, dialect) {
             (
                 DialectFlagsEnum::English(english_dialect_flags),
@@ -79,7 +80,11 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
             ) => portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect),
-            _ => panic!("Trying to get dialect from wrong dialect flags"),
+
+            (a, b) => panic!(
+                "Trying to get dialect from wrong dialect flags. Comparing dialects {:#?} and {}",
+                a, b
+            ),
         }
     }
 
@@ -130,6 +135,17 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
 impl Default for DialectFlagsEnum {
     fn default() -> Self {
         Self::English(EnglishDialectFlags::default())
+    }
+}
+
+impl From<Language> for DialectsEnum {
+    fn from(language: Language) -> Self {
+        match language {
+            Language::English(english_dialect) => DialectsEnum::English(english_dialect),
+            Language::Portuguese(portuguese_dialect) => {
+                DialectsEnum::Portuguese(portuguese_dialect)
+            }
+        }
     }
 }
 
