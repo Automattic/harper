@@ -2682,7 +2682,7 @@ dependencies = [
  "harper-python",
  "harper-stats",
  "harper-typst",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "serde",
  "serde_json",
  "strum",
@@ -2735,7 +2735,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",
@@ -2842,7 +2842,7 @@ version = "0.73.0"
 dependencies = [
  "burn",
  "burn-ndarray",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "is-macro",
  "lru",
  "rand 0.9.2",
@@ -2952,14 +2952,15 @@ dependencies = [
 
 [[package]]
 name = "hashbrown"
-version = "0.16.0"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5419bdc4f6a9207fbeba6d11b604d481addf78ecd10c11ad51e76c2f6482748d"
+checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
 dependencies = [
  "allocator-api2",
  "equivalent",
  "foldhash 0.2.0",
  "serde",
+ "serde_core",
 ]
 
 [[package]]
@@ -3238,7 +3239,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6717a8d2a5a929a1a2eb43a12812498ed141a0bcfb7e8f7844fbdbe4303bba9f"
 dependencies = [
  "equivalent",
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
  "serde",
  "serde_core",
 ]
@@ -3490,7 +3491,7 @@ version = "0.16.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96051b46fc183dc9cd4a223960ef37b9af631b55191852a8274bfef064cda20f"
 dependencies = [
- "hashbrown 0.16.0",
+ "hashbrown 0.16.1",
 ]
 
 [[package]]
