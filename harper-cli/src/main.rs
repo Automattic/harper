@@ -1,24 +1,24 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordId};
+use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
-use std::path::{Component, Path, PathBuf};
-use std::sync::Arc;
-use std::{fs, process};
+use std::path::{Path, PathBuf};
+// use std::sync::Arc;
+use std::fs;
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
-use harper_core::linting::{LintGroup, Linter};
+use harper_core::linting::LintGroup;
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
-    dict_word_metadata_orthography::OrthFlags, remove_overlaps,
+    dict_word_metadata_orthography::OrthFlags,
 };
 use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
@@ -36,15 +36,19 @@ use input::Input;
 mod annotate_tokens;
 use annotate_tokens::{Annotation, AnnotationType};
 
+mod lint;
+use crate::lint::lint;
+use lint::LintOptions;
+
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
 #[command(version, about)]
 enum Args {
-    /// Lint a provided document.
+    /// Lint provided documents.
     Lint {
         /// The text or file you wish to grammar check. If not provided, it will be read from
         /// standard input.
-        input: Option<Input>,
+        inputs: Vec<Input>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
@@ -188,103 +192,41 @@ enum Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     let markdown_options = MarkdownOptions::default();
-    let dictionary = FstDictionary::curated();
+    let curated_dictionary = FstDictionary::curated();
 
     match args {
         Args::Lint {
-            input,
+            inputs,
             count,
             ignore,
             only,
             dialect,
             user_dict_path,
+            // TODO workspace_dict_path?
             file_dict_path,
         } => {
-            // Try to read from standard input if `input` was not provided.
-            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
-
-            let mut merged_dict = MergedDictionary::new();
-            merged_dict.add_dictionary(dictionary);
-
-            // Attempt to load user dictionary.
-            match load_dict(&user_dict_path) {
-                Ok(user_dict) => merged_dict.add_dictionary(Arc::new(user_dict)),
-                Err(err) => println!("{}: {}", user_dict_path.display(), err),
-            }
-
-            if let Input::File(ref file) = input {
-                // Only attempt to load file dictionary if input is a file.
-                let file_dict_path = file_dict_path.join(file_dict_name(file));
-                match load_dict(&file_dict_path) {
-                    Ok(file_dict) => merged_dict.add_dictionary(Arc::new(file_dict)),
-                    Err(err) => println!("{}: {}", file_dict_path.display(), err),
-                }
-            }
-
-            // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &merged_dict)?;
-
-            let mut linter = LintGroup::new_curated(Arc::new(merged_dict), dialect);
-
-            if let Some(rules) = only {
-                linter.set_all_rules_to(Some(false));
-
-                for rule in rules {
-                    if !linter.contains_key(&rule) {
-                        eprintln!("Warning: Cannot enable unknown rule '{}'.", &rule);
-                    }
-                    linter.config.set_rule_enabled(rule, true);
-                }
-            }
-
-            if let Some(rules) = ignore {
-                for rule in rules {
-                    if !linter.contains_key(&rule) {
-                        eprintln!("Warning: Cannot disable unknown rule '{}'.", &rule);
-                    }
-                    linter.config.set_rule_enabled(rule, false);
-                }
-            }
-
-            let mut lints = linter.lint(&doc);
-
-            if count {
-                println!("{}", lints.len());
-                return Ok(());
-            }
-
-            if lints.is_empty() {
-                println!("No lints found");
-                return Ok(());
-            }
-
-            remove_overlaps(&mut lints);
-
-            let primary_color = Color::Magenta;
-
-            let input_identifier = input.get_identifier();
-
-            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
-
-            for lint in lints {
-                report_builder = report_builder.with_label(
-                    Label::new((&input_identifier, lint.span.into()))
-                        .with_message(lint.message)
-                        .with_color(primary_color),
-                );
-            }
-
-            let report = report_builder.finish();
-            report.print((&input_identifier, Source::from(source)))?;
-
-            process::exit(1)
+            lint(
+                markdown_options,
+                curated_dictionary,
+                inputs,
+                LintOptions {
+                    count,
+                    ignore: &ignore,
+                    only: &only,
+                    dialect,
+                },
+                user_dict_path,
+                // TODO workspace_dict_path?
+                file_dict_path,
+            )
         }
         Args::Parse { input } => {
             // Try to read from standard input if `input` was not provided.
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, _) = input.load(markdown_options, &dictionary)?;
+            let (doc, _) = input.load(false, markdown_options, &curated_dictionary)?;
+            let doc = doc.expect("Failed to load document");
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -301,7 +243,8 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary)?;
+            let (doc, source) = input.load(false, markdown_options, &curated_dictionary)?;
+            let doc = doc.expect("Failed to load document");
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -350,7 +293,8 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &dictionary)?;
+            let (doc, source) = input.load(false, markdown_options, &curated_dictionary)?;
+            let doc = doc.expect("Failed to load document");
 
             let input_identifier = input.get_identifier();
 
@@ -374,7 +318,7 @@ fn main() -> anyhow::Result<()> {
         Args::Words => {
             let mut word_str = String::new();
 
-            for word in dictionary.words_iter() {
+            for word in curated_dictionary.words_iter() {
                 word_str.clear();
                 word_str.extend(word);
 
@@ -399,7 +343,7 @@ fn main() -> anyhow::Result<()> {
             ];
 
             for word in words {
-                let meta = dictionary.get_word_metadata_str(&word);
+                let meta = curated_dictionary.get_word_metadata_str(&word);
                 let (flags, emojis) = meta.as_ref().map_or_else(
                     || (String::new(), String::new()),
                     |md| {
@@ -500,7 +444,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -522,7 +466,14 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::MineWords { file } => {
-            let (doc, _source) = load_file(&file, MarkdownOptions::default(), &dictionary)?;
+            let (doc, _source) = load_file(
+                &file,
+                None,
+                false,
+                MarkdownOptions::default(),
+                &curated_dictionary,
+            )?;
+            let doc = doc.expect("Failed to load document");
 
             let mut words = HashMap::new();
 
@@ -837,7 +788,7 @@ fn main() -> anyhow::Result<()> {
             let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
             // First pass: process open and hyphenated compounds
-            for word in dictionary.words_iter() {
+            for word in curated_dictionary.words_iter() {
                 if !word.contains(&' ') && !word.contains(&'-') {
                     continue;
                 }
@@ -856,7 +807,7 @@ fn main() -> anyhow::Result<()> {
             }
 
             // Second pass: process closed compounds
-            for word in dictionary.words_iter() {
+            for word in curated_dictionary.words_iter() {
                 if word.contains(&' ') || word.contains(&'-') {
                     continue;
                 }
@@ -893,8 +844,8 @@ fn main() -> anyhow::Result<()> {
                 | OrthFlags::UPPER_CAMEL;
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
-            for word in dictionary.words_iter() {
-                if let Some(metadata) = dictionary.get_word_metadata(word) {
+            for word in curated_dictionary.words_iter() {
+                if let Some(metadata) = curated_dictionary.get_word_metadata(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -920,7 +871,8 @@ fn main() -> anyhow::Result<()> {
             // Get input from either file or direct text
             let input = match input {
                 Some(Input::File(path)) => std::fs::read_to_string(path)?,
-                Some(Input::Text(text)) => text,
+                Some(Input::Dir(_)) => anyhow::bail!("Directory input is not supported"),
+                Some(Input::Text(text)) | Some(Input::Stdin(text)) => text,
                 None => std::io::read_to_string(std::io::stdin())?,
             };
 
@@ -975,9 +927,11 @@ fn main() -> anyhow::Result<()> {
 
 fn load_file(
     file: &Path,
+    input_identifier: Option<&str>,
+    batch_mode: bool,
     markdown_options: MarkdownOptions,
     dictionary: &impl Dictionary,
-) -> anyhow::Result<(Document, String)> {
+) -> anyhow::Result<(Option<Document>, String)> {
     let source = std::fs::read_to_string(file)?;
 
     let parser: Box<dyn harper_core::parsers::Parser> = match file
@@ -993,19 +947,32 @@ fn load_file(
         Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
         Some("py") | Some("pyi") => Box::new(PythonParser::default()),
+        Some("txt") => Box::new(PlainEnglish),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
                 Box::new(comment_parser)
             } else {
-                println!(
-                    "Warning: Could not detect language ID; falling back to PlainEnglish parser."
+                eprintln!(
+                    "{}Warning: Could not detect language ID; {}",
+                    input_identifier
+                        .map(|id| format!("{}: ", id))
+                        .unwrap_or_default(),
+                    if batch_mode {
+                        "skipping file."
+                    } else {
+                        "falling back to PlainEnglish parser."
+                    }
                 );
-                Box::new(PlainEnglish)
+                if batch_mode {
+                    return Ok((None, source));
+                } else {
+                    Box::new(PlainEnglish)
+                }
             }
         }
     };
 
-    Ok((Document::new(&source, &parser, dictionary), source))
+    Ok((Some(Document::new(&source, &parser, dictionary)), source))
 }
 
 /// Split a dictionary line into its word and annotation segments
@@ -1032,31 +999,4 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         let child_str: String = child.iter().collect();
         println!(" - {child_str}");
     }
-}
-
-/// Sync version of harper-ls/src/dictionary_io@load_dict
-fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
-    let str = fs::read_to_string(path)?;
-
-    let mut dict = MutableDictionary::new();
-    dict.extend_words(
-        str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
-    );
-
-    Ok(dict)
-}
-
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
-fn file_dict_name(path: &Path) -> PathBuf {
-    let mut rewritten = String::new();
-
-    for seg in path.components() {
-        if !matches!(seg, Component::RootDir) {
-            rewritten.push_str(&seg.as_os_str().to_string_lossy());
-            rewritten.push('%');
-        }
-    }
-
-    rewritten.into()
 }

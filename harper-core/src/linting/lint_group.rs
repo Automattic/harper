@@ -22,6 +22,7 @@ use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::and_in::AndIn;
+use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::ask_no_preposition::AskNoPreposition;
@@ -99,6 +100,7 @@ use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
+use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_match_for::NoMatchFor;
 use super::nobody::Nobody;
@@ -125,6 +127,7 @@ use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
+use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -138,6 +141,7 @@ use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
+use super::single_be::SingleBe;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -219,6 +223,11 @@ fn curated_config() -> LintGroupConfig {
 }
 
 impl LintGroupConfig {
+    /// Check if a rule exists in the configuration.
+    pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
+        self.inner.contains_key(key.as_ref())
+    }
+
     pub fn set_rule_enabled(&mut self, key: impl ToString, val: bool) {
         self.inner.insert(key.to_string(), Some(val));
     }
@@ -315,7 +324,7 @@ impl LintGroup {
             config: LintGroupConfig::default(),
             linters: BTreeMap::new(),
             expr_linters: BTreeMap::new(),
-            chunk_expr_cache: LruCache::new(NonZero::new(10000).unwrap()),
+            chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
         }
     }
@@ -466,6 +475,7 @@ impl LintGroup {
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_expr_rule!(AndIn, true);
+        insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(AskNoPreposition, true);
@@ -480,7 +490,6 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(VerbToAdjective, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -542,6 +551,7 @@ impl LintGroup {
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_struct_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
@@ -570,6 +580,7 @@ impl LintGroup {
         insert_expr_rule!(PronounInflectionBe, true);
         insert_struct_rule!(PronounKnew, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuantifierNumeralConflict, true);
         insert_expr_rule!(QuiteQuiet, true);
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
@@ -581,6 +592,7 @@ impl LintGroup {
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
+        insert_expr_rule!(SingleBe, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -605,6 +617,7 @@ impl LintGroup {
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(UseGenitive, false);
+        insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
         insert_expr_rule!(WasAloud, true);

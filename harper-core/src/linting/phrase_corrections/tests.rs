@@ -250,9 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndTheLike
-// -none-
-
 // AnotherAn
 #[test]
 fn correct_another_an() {
@@ -914,6 +911,17 @@ fn corrects_i_does() {
         "I does enjoy writing Rust.",
         lint_group(),
         "I do enjoy writing Rust.",
+    );
+}
+
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
     );
 }
 

@@ -17,7 +17,7 @@ import {
 	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
-import lintKindColor, { type LintKind } from './lintKindColor';
+import { type LintKind, lintKindColor } from './lintKindColor';
 import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';

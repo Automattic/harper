@@ -18,3 +18,4 @@ onlyBuiltDependencies:
   - keytar
   - msw
   - svelte-preprocess
+  - '@tailwindcss/oxide'

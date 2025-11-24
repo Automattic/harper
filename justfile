@@ -3,6 +3,15 @@ format:
   cargo fmt  
   pnpm format
 
+# Build the shared component library
+build-components:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/packages/components"
+  pnpm install --engine-strict=false
+  pnpm build
+
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
@@ -80,7 +89,7 @@ build-wp: build-harperjs
   pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
-dev-web: build-harperjs build-lint-framework
+dev-web: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -89,7 +98,7 @@ dev-web: build-harperjs build-lint-framework
   pnpm dev
 
 # Build the Harper website.
-build-web: build-harperjs build-lint-framework
+build-web: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -110,7 +119,7 @@ build-obsidian: build-harperjs
   zip harper-obsidian-plugin.zip manifest.json main.js
 
 # Build the Chrome extension.
-build-chrome-plugin: build-harperjs build-lint-framework
+build-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -120,7 +129,7 @@ build-chrome-plugin: build-harperjs build-lint-framework
   pnpm zip-for-chrome
 
 # Start a development server for the Chrome extension.
-dev-chrome-plugin: build-harperjs build-lint-framework
+dev-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -130,7 +139,7 @@ dev-chrome-plugin: build-harperjs build-lint-framework
   pnpm dev
 
 # Build the Firefox extension.
-build-firefox-plugin: build-harperjs build-lint-framework
+build-firefox-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -272,7 +281,7 @@ check-rust: auditdictionary
 # Perform format and type checking.
 check: check-rust check-js build-web
 
-check-js: build-harperjs build-lint-framework
+check-js: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -320,9 +329,11 @@ test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-
 parse file:
   cargo run --bin harper-cli -- parse {{file}}
 
-# Lint a provided file using Harper and print the results.
-lint file:
-  cargo run --bin harper-cli -- lint {{file}}
+# Lint provided inputs using Harper and print the results.
+# The inputs can be files, directories, or a string on the command line.
+# If no inputs are provided, lint stdin.
+lint *inputs:
+  cargo run --bin harper-cli -- lint {{inputs}}
 
 # Show the spans of the parsed tokens overlapped in the provided file.
 spans file:
@@ -667,3 +678,10 @@ alias auditdict := auditdictionary
 
 auditdictionary DIR="harper-core":
   cargo run --bin harper-cli -- audit-dictionary {{DIR}}
+
+runsnapshots:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd harper-core
+  cargo test -- test_pos_tagger test_most_lints

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Badge, Button } from 'flowbite-svelte';
+import { Badge, Button } from 'components';
 
 let { onConfirm }: { onConfirm: () => void } = $props();
 
@@ -26,7 +26,7 @@ const steps = [
     {/each}
   </ul>
 
-  <Button color="primary" outline class="w-full h-10" on:click={onConfirm}>
+  <Button color="primary"  class="w-full h-10" on:click={onConfirm}>
     Let's start writing
   </Button>
 </main>

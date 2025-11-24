@@ -92,13 +92,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
         ),
-        "AndTheLike" => (
-            ["an the like"],
-            ["and the like"],
-            "Did you mean `and the like`?",
-            "Fixes the typo in `and the like`.",
-            LintKind::Typo
-        ),
         "AnotherAn" => (
             ["another an"],
             ["another"],
@@ -599,6 +592,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
         ),
+        "InLieuOf" => (
+            ["in lue of"],
+            ["in lieu of"],
+            "Did you mean `in lieu of`?",
+            "Corrects the misspelling `in lue of` to `in lieu of`.",
+            LintKind::Spelling
+        ),
         "InOfItself" => (
             ["in of itself"],
             ["in itself", "in and of itself"],
@@ -928,7 +928,7 @@ pub fn lint_group() -> LintGroup {
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'.",
             LintKind::Redundancy
         ),
         "RifeWith" => (

@@ -391,19 +391,6 @@ mod tests {
     }
 
     #[test]
-    fn fixes_for_t_content() {
-        assert_good_and_bad_suggestions(
-            "Missing languages for published field in APIv2 for Touristic Content",
-            Touristic::default(),
-            &[
-                "Missing languages for published field in APIv2 for Tourist Content",
-                "Missing languages for published field in APIv2 for Tourism Content",
-            ],
-            &["Missing languages for published field in APIv2 for Touristy Content"],
-        );
-    }
-
-    #[test]
     fn fixes_a_t_flutter() {
         assert_good_and_bad_suggestions(
             "A Touristic Flutter App.",

@@ -13,6 +13,7 @@ mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
 mod and_in;
+mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
 mod ask_no_preposition;
@@ -108,6 +109,7 @@ mod most_number;
 mod most_of_the_times;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
+mod need_to_noun;
 mod no_french_spaces;
 mod no_match_for;
 mod no_oxford_comma;
@@ -140,6 +142,7 @@ mod pronoun_inflection_be;
 mod pronoun_knew;
 mod proper_noun_capitalization_linters;
 mod quantifier_needs_of;
+mod quantifier_numeral_conflict;
 mod quite_quiet;
 mod quote_spacing;
 mod redundant_additive_adverbs;
@@ -153,6 +156,7 @@ mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
 mod since_duration;
+mod single_be;
 mod some_without_article;
 mod something_is;
 mod somewhat_something;
@@ -203,6 +207,7 @@ pub use am_in_the_morning::AmInTheMorning;
 pub use amounts_for::AmountsFor;
 pub use an_a::AnA;
 pub use and_in::AndIn;
+pub use and_the_like::AndTheLike;
 pub use another_thing_coming::AnotherThingComing;
 pub use another_think_coming::AnotherThinkComing;
 pub use ask_no_preposition::AskNoPreposition;
@@ -287,6 +292,7 @@ pub use most_number::MostNumber;
 pub use most_of_the_times::MostOfTheTimes;
 pub use multiple_sequential_pronouns::MultipleSequentialPronouns;
 pub use nail_on_the_head::NailOnTheHead;
+pub use need_to_noun::NeedToNoun;
 pub use no_french_spaces::NoFrenchSpaces;
 pub use no_match_for::NoMatchFor;
 pub use no_oxford_comma::NoOxfordComma;
@@ -313,6 +319,7 @@ pub use pronoun_are::PronounAre;
 pub use pronoun_contraction::PronounContraction;
 pub use pronoun_inflection_be::PronounInflectionBe;
 pub use quantifier_needs_of::QuantifierNeedsOf;
+pub use quantifier_numeral_conflict::QuantifierNumeralConflict;
 pub use quite_quiet::QuiteQuiet;
 pub use quote_spacing::QuoteSpacing;
 pub use redundant_additive_adverbs::RedundantAdditiveAdverbs;
@@ -326,6 +333,7 @@ pub use sentence_capitalization::SentenceCapitalization;
 pub use shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 pub use simple_past_to_past_participle::SimplePastToPastParticiple;
 pub use since_duration::SinceDuration;
+pub use single_be::SingleBe;
 pub use some_without_article::SomeWithoutArticle;
 pub use something_is::SomethingIs;
 pub use somewhat_something::SomewhatSomething;
@@ -473,9 +481,7 @@ pub mod tests {
         let transformed_str = transform_nth_str(text, &mut linter, n);
 
         if transformed_str.as_str() != expected_result {
-            panic!(
-                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
-            );
+            panic!("Expected \"{expected_result}\"\n But got  \"{transformed_str}\"");
         }
 
         // Applying the suggestions should fix all the lints.
