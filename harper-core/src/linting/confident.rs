@@ -56,11 +56,7 @@ mod tests {
 
     #[test]
     fn describing_person_incorrect() {
-        assert_suggestion_result(
-            "She felt confidant about her presentation.",
-            Confident::default(),
-            "She felt confident about her presentation.",
-        );
+        assert_suggestion_result("She felt confidant about her presentation.", Confident::default(), "She felt confident about her presentation.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -74,11 +70,7 @@ mod tests {
 
     #[test]
     fn certainty_incorrect() {
-        assert_suggestion_result(
-            "I am confidant the test results are accurate.",
-            Confident::default(),
-            "I am confident the test results are accurate.",
-        );
+        assert_suggestion_result("I am confidant the test results are accurate.", Confident::default(), "I am confident the test results are accurate.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -92,11 +84,7 @@ mod tests {
 
     #[test]
     fn demeanor_incorrect() {
-        assert_suggestion_result(
-            "He walked to the stage with a confidant stride.",
-            Confident::default(),
-            "He walked to the stage with a confident stride.",
-        );
+        assert_suggestion_result("He walked to the stage with a confidant stride.", Confident::default(), "He walked to the stage with a confident stride.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -110,11 +98,7 @@ mod tests {
 
     #[test]
     fn professional_incorrect() {
-        assert_suggestion_result(
-            "You should sound confidant during job interviews.",
-            Confident::default(),
-            "You should sound confident during job interviews.",
-        );
+        assert_suggestion_result("You should sound confidant during job interviews.", Confident::default(), "You should sound confident during job interviews.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -128,11 +112,7 @@ mod tests {
 
     #[test]
     fn assured_tone_incorrect() {
-        assert_suggestion_result(
-            "Present your argument in a confidant, persuasive manner.",
-            Confident::default(),
-            "Present your argument in a confident, persuasive manner.",
-        );
+        assert_suggestion_result("Present your argument in a confidant, persuasive manner.", Confident::default(), "Present your argument in a confident, persuasive manner.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -146,19 +126,11 @@ mod tests {
 
     #[test]
     fn extra_text_between() {
-        assert_suggestion_result(
-            "She felt very confidant about her presentation.",
-            Confident::default(),
-            "She felt very confident about her presentation.",
-        );
+        assert_suggestion_result("She felt very confidant about her presentation.", Confident::default(), "She felt very confident about her presentation.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn linking_verb_was_confidant() {
-        assert_suggestion_result(
-            "She was confidant about her presentation.",
-            Confident::default(),
-            "She was confident about her presentation.",
-        );
+        assert_suggestion_result("She was confidant about her presentation.", Confident::default(), "She was confident about her presentation.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

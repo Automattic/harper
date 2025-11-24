@@ -83,11 +83,7 @@ mod tests {
 
     #[test]
     fn corrects_most_number() {
-        assert_suggestion_result(
-            "Find artists that have been on Spotify the most number of times.",
-            MostNumber::default(),
-            "Find artists that have been on Spotify the highest number of times.",
-        );
+        assert_suggestion_result("Find artists that have been on Spotify the most number of times.", MostNumber::default(), "Find artists that have been on Spotify the highest number of times.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

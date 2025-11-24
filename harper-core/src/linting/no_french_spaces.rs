@@ -48,6 +48,7 @@ mod tests {
             "This is a short sentence.  This is another short sentence.",
             NoFrenchSpaces,
             "This is a short sentence. This is another short sentence.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 }

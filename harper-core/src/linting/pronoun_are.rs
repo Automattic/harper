@@ -96,11 +96,7 @@ mod tests {
 
     #[test]
     fn fixes_you_r() {
-        assert_suggestion_result(
-            "You r absolutely right.",
-            PronounAre::default(),
-            "You are absolutely right.",
-        );
+        assert_suggestion_result("You r absolutely right.", PronounAre::default(), "You are absolutely right.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -115,56 +111,32 @@ mod tests {
 
     #[test]
     fn keeps_uppercase_pronoun() {
-        assert_suggestion_result(
-            "YOU r welcome here.",
-            PronounAre::default(),
-            "YOU ARE welcome here.",
-        );
+        assert_suggestion_result("YOU r welcome here.", PronounAre::default(), "YOU ARE welcome here.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_they_r_with_comma() {
-        assert_suggestion_result(
-            "They r, of course, arriving tomorrow.",
-            PronounAre::default(),
-            "They are, of course, arriving tomorrow.",
-        );
+        assert_suggestion_result("They r, of course, arriving tomorrow.", PronounAre::default(), "They are, of course, arriving tomorrow.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_we_r_lowercase() {
-        assert_suggestion_result(
-            "we r ready now.",
-            PronounAre::default(),
-            "we are ready now.",
-        );
+        assert_suggestion_result("we r ready now.", PronounAre::default(), "we are ready now.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_they_r_sentence_start() {
-        assert_suggestion_result(
-            "They r planning ahead.",
-            PronounAre::default(),
-            "They are planning ahead.",
-        );
+        assert_suggestion_result("They r planning ahead.", PronounAre::default(), "They are planning ahead.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_lowercase_sentence() {
-        assert_suggestion_result(
-            "they r late again.",
-            PronounAre::default(),
-            "they are late again.",
-        );
+        assert_suggestion_result("they r late again.", PronounAre::default(), "they are late again.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn handles_line_break() {
-        assert_suggestion_result(
-            "We r\nready to go.",
-            PronounAre::default(),
-            "We are\nready to go.",
-        );
+        assert_suggestion_result("We r\nready to go.", PronounAre::default(), "We are\nready to go.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

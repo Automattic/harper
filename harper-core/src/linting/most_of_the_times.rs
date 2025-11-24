@@ -54,37 +54,21 @@ mod tests {
 
     #[test]
     fn hangs_forever() {
-        assert_suggestion_result(
-            "restic backup hangs forever most of the times · Issue #2834",
-            MostOfTheTimes::default(),
-            "restic backup hangs forever most of the time · Issue #2834",
-        );
+        assert_suggestion_result("restic backup hangs forever most of the times · Issue #2834", MostOfTheTimes::default(), "restic backup hangs forever most of the time · Issue #2834", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn options_are_ignored() {
-        assert_suggestion_result(
-            "but other options like device and options are ignored most of the times",
-            MostOfTheTimes::default(),
-            "but other options like device and options are ignored most of the time",
-        );
+        assert_suggestion_result("but other options like device and options are ignored most of the times", MostOfTheTimes::default(), "but other options like device and options are ignored most of the time", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn parenthesized() {
-        assert_suggestion_result(
-            "prompted html code gets (most of the times) read by copilot but is not displayed.",
-            MostOfTheTimes::default(),
-            "prompted html code gets (most of the time) read by copilot but is not displayed.",
-        );
+        assert_suggestion_result("prompted html code gets (most of the times) read by copilot but is not displayed.", MostOfTheTimes::default(), "prompted html code gets (most of the time) read by copilot but is not displayed.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_cant_play() {
-        assert_suggestion_result(
-            "I cannot get the version 1.0 without c so I cant play a lot of the times with other people",
-            MostOfTheTimes::default(),
-            "I cannot get the version 1.0 without c so I cant play a lot of the time with other people",
-        );
+        assert_suggestion_result("I cannot get the version 1.0 without c so I cant play a lot of the times with other people", MostOfTheTimes::default(), "I cannot get the version 1.0 without c so I cant play a lot of the time with other people", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

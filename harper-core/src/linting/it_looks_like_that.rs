@@ -138,20 +138,12 @@ mod tests {
         #[test]
         fn fix_that_the() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result(
-                "it looks like that the original products should have NULL in the value column",
-                ItLooksLikeThat::default(),
-                "it looks like the original products should have NULL in the value column",
-            );
+            assert_suggestion_result("it looks like that the original products should have NULL in the value column", ItLooksLikeThat::default(), "it looks like the original products should have NULL in the value column", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]
         fn fix_that_some() {
-            assert_suggestion_result(
-                "From first expresion it looks like that some tokkens or what was cached",
-                ItLooksLikeThat::default(),
-                "From first expresion it looks like some tokkens or what was cached",
-            );
+            assert_suggestion_result("From first expresion it looks like that some tokkens or what was cached", ItLooksLikeThat::default(), "From first expresion it looks like some tokkens or what was cached", crate::languages::Language::English(crate::EnglishDialect::American));
         }
     }
 
@@ -181,11 +173,7 @@ mod tests {
         fn fix_that_it_verb_lemma() {
             // "that" is being wrongly used as a relative pronoun
             // But it's hard to check becuase 'renovate' is a verb but is being used as a noun
-            assert_suggestion_result(
-                "It looks like that Renovate decides to not reuse the branch when there are no changes in it",
-                ItLooksLikeThat::default(),
-                "It looks like Renovate decides to not reuse the branch when there are no changes in it",
-            );
+            assert_suggestion_result("It looks like that Renovate decides to not reuse the branch when there are no changes in it", ItLooksLikeThat::default(), "It looks like Renovate decides to not reuse the branch when there are no changes in it", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]
@@ -208,20 +196,12 @@ mod tests {
         fn fix_that_verb_ing_have() {
             // Verbs in -ing are also gerunds, which are nouns.
             // But at least in this case, "having", it doesn't work after "that".
-            assert_suggestion_result(
-                "It looks like that having <br> tags inside them breaks the rendering",
-                ItLooksLikeThat::default(),
-                "It looks like having <br> tags inside them breaks the rendering",
-            );
+            assert_suggestion_result("It looks like that having <br> tags inside them breaks the rendering", ItLooksLikeThat::default(), "It looks like having <br> tags inside them breaks the rendering", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]
         fn fix_that_verb_ing_using() {
-            assert_suggestion_result(
-                "it looks like that using TensorFlow in conjunction with packages that use pybind11_abseil will fail",
-                ItLooksLikeThat::default(),
-                "it looks like using TensorFlow in conjunction with packages that use pybind11_abseil will fail",
-            );
+            assert_suggestion_result("it looks like that using TensorFlow in conjunction with packages that use pybind11_abseil will fail", ItLooksLikeThat::default(), "it looks like using TensorFlow in conjunction with packages that use pybind11_abseil will fail", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]
@@ -240,29 +220,17 @@ mod tests {
         #[test]
         fn fix_that_subj_obj_pronoun_it_was() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result(
-                "It looks like that it was not improved a lot.",
-                ItLooksLikeThat::default(),
-                "It looks like it was not improved a lot.",
-            );
+            assert_suggestion_result("It looks like that it was not improved a lot.", ItLooksLikeThat::default(), "It looks like it was not improved a lot.", crate::languages::Language::English(crate::EnglishDialect::American));
         }
         #[test]
         fn fix_that_subj_obj_pronoun_it_works() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result(
-                "Thx, it looks like that it works for Inpainting itself",
-                ItLooksLikeThat::default(),
-                "Thx, it looks like it works for Inpainting itself",
-            );
+            assert_suggestion_result("Thx, it looks like that it works for Inpainting itself", ItLooksLikeThat::default(), "Thx, it looks like it works for Inpainting itself", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]
         fn fix_that_subj_obj_pronoun_you() {
-            assert_suggestion_result(
-                "It looks like that you can't use the files in combination.",
-                ItLooksLikeThat::default(),
-                "It looks like you can't use the files in combination.",
-            );
+            assert_suggestion_result("It looks like that you can't use the files in combination.", ItLooksLikeThat::default(), "It looks like you can't use the files in combination.", crate::languages::Language::English(crate::EnglishDialect::American));
         }
 
         #[test]

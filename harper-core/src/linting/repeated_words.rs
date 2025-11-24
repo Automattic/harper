@@ -119,47 +119,27 @@ mod tests {
 
     #[test]
     fn issue_333() {
-        assert_suggestion_result(
-            "This is is a test",
-            RepeatedWords::default(),
-            "This is a test",
-        );
+        assert_suggestion_result("This is is a test", RepeatedWords::default(), "This is a test", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn double_a() {
-        assert_suggestion_result(
-            "This is a a test",
-            RepeatedWords::default(),
-            "This is a test",
-        );
+        assert_suggestion_result("This is a a test", RepeatedWords::default(), "This is a test", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn double_and() {
-        assert_suggestion_result(
-            "And and this is also a test",
-            RepeatedWords::default(),
-            "And this is also a test",
-        );
+        assert_suggestion_result("And and this is also a test", RepeatedWords::default(), "And this is also a test", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn on_on_github() {
-        assert_suggestion_result(
-            "Take a look at the project on on GitHub.",
-            RepeatedWords::default(),
-            "Take a look at the project on GitHub.",
-        );
+        assert_suggestion_result("Take a look at the project on on GitHub.", RepeatedWords::default(), "Take a look at the project on GitHub.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn as_as() {
-        assert_suggestion_result(
-            "he is as as hard as nails",
-            RepeatedWords::default(),
-            "he is as hard as nails",
-        );
+        assert_suggestion_result("he is as as hard as nails", RepeatedWords::default(), "he is as hard as nails", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

@@ -202,10 +202,6 @@ mod tests {
 
     #[test]
     fn fix_wear_and_tears() {
-        assert_suggestion_result(
-            "Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce",
-            MassPlurals::new(FstDictionary::curated()),
-            "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce",
-        );
+        assert_suggestion_result("Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce", MassPlurals::new(FstDictionary::curated()), "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

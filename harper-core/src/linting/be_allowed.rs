@@ -86,83 +86,47 @@ mod tests {
 
     #[test]
     fn corrects_basic_sentence() {
-        assert_suggestion_result(
-            "You will not allowed to enter the lab.",
-            BeAllowed::default(),
-            "You will not be allowed to enter the lab.",
-        );
+        assert_suggestion_result("You will not allowed to enter the lab.", BeAllowed::default(), "You will not be allowed to enter the lab.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_first_person_subject() {
-        assert_suggestion_result(
-            "I will not allowed to go tonight.",
-            BeAllowed::default(),
-            "I will not be allowed to go tonight.",
-        );
+        assert_suggestion_result("I will not allowed to go tonight.", BeAllowed::default(), "I will not be allowed to go tonight.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_plural_subject() {
-        assert_suggestion_result(
-            "Students will not allowed to submit late work.",
-            BeAllowed::default(),
-            "Students will not be allowed to submit late work.",
-        );
+        assert_suggestion_result("Students will not allowed to submit late work.", BeAllowed::default(), "Students will not be allowed to submit late work.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_intro_clause() {
-        assert_suggestion_result(
-            "Because of policy, workers will not allowed to take photos.",
-            BeAllowed::default(),
-            "Because of policy, workers will not be allowed to take photos.",
-        );
+        assert_suggestion_result("Because of policy, workers will not allowed to take photos.", BeAllowed::default(), "Because of policy, workers will not be allowed to take photos.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_contracted_form() {
-        assert_suggestion_result(
-            "They won't allowed to park here during events.",
-            BeAllowed::default(),
-            "They won't be allowed to park here during events.",
-        );
+        assert_suggestion_result("They won't allowed to park here during events.", BeAllowed::default(), "They won't be allowed to park here during events.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_all_caps() {
-        assert_suggestion_result(
-            "THEY WILL NOT ALLOWED TO ENTER.",
-            BeAllowed::default(),
-            "THEY WILL NOT BE ALLOWED TO ENTER.",
-        );
+        assert_suggestion_result("THEY WILL NOT ALLOWED TO ENTER.", BeAllowed::default(), "THEY WILL NOT BE ALLOWED TO ENTER.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_trailing_clause() {
-        assert_suggestion_result(
-            "Without a permit, guests will not allowed to stay overnight at the cabin.",
-            BeAllowed::default(),
-            "Without a permit, guests will not be allowed to stay overnight at the cabin.",
-        );
+        assert_suggestion_result("Without a permit, guests will not allowed to stay overnight at the cabin.", BeAllowed::default(), "Without a permit, guests will not be allowed to stay overnight at the cabin.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_modal_context() {
-        assert_suggestion_result(
-            "Even with approval, contractors will not allowed to access production.",
-            BeAllowed::default(),
-            "Even with approval, contractors will not be allowed to access production.",
-        );
+        assert_suggestion_result("Even with approval, contractors will not allowed to access production.", BeAllowed::default(), "Even with approval, contractors will not be allowed to access production.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn leaves_correct_phrase_untouched() {
-        assert_suggestion_result(
-            "They will not be allowed to park here during events.",
-            BeAllowed::default(),
-            "They will not be allowed to park here during events.",
-        );
+        assert_suggestion_result("They will not be allowed to park here during events.", BeAllowed::default(), "They will not be allowed to park here during events.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

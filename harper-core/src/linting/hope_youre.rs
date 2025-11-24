@@ -67,74 +67,42 @@ mod tests {
 
     #[test]
     fn corrects_excited_here() {
-        assert_suggestion_result(
-            "I hope your excited here.",
-            HopeYoure::default(),
-            "I hope you're excited here.",
-        );
+        assert_suggestion_result("I hope your excited here.", HopeYoure::default(), "I hope you're excited here.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_safe_there() {
-        assert_suggestion_result(
-            "I hope your safe there.",
-            HopeYoure::default(),
-            "I hope you're safe there.",
-        );
+        assert_suggestion_result("I hope your safe there.", HopeYoure::default(), "I hope you're safe there.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_safe_over_there() {
-        assert_suggestion_result(
-            "I hope your safe over there.",
-            HopeYoure::default(),
-            "I hope you're safe over there.",
-        );
+        assert_suggestion_result("I hope your safe over there.", HopeYoure::default(), "I hope you're safe over there.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_fine_here() {
-        assert_suggestion_result(
-            "I hope your fine here.",
-            HopeYoure::default(),
-            "I hope you're fine here.",
-        );
+        assert_suggestion_result("I hope your fine here.", HopeYoure::default(), "I hope you're fine here.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_happy_there() {
-        assert_suggestion_result(
-            "I hope your happy there.",
-            HopeYoure::default(),
-            "I hope you're happy there.",
-        );
+        assert_suggestion_result("I hope your happy there.", HopeYoure::default(), "I hope you're happy there.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_healthy_out_here() {
-        assert_suggestion_result(
-            "I hope your healthy out here.",
-            HopeYoure::default(),
-            "I hope you're healthy out here.",
-        );
+        assert_suggestion_result("I hope your healthy out here.", HopeYoure::default(), "I hope you're healthy out here.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_strong_there() {
-        assert_suggestion_result(
-            "We hope your strong there.",
-            HopeYoure::default(),
-            "We hope you're strong there.",
-        );
+        assert_suggestion_result("We hope your strong there.", HopeYoure::default(), "We hope you're strong there.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_sorry_here() {
-        assert_suggestion_result(
-            "Hope your sorry here.",
-            HopeYoure::default(),
-            "Hope you're sorry here.",
-        );
+        assert_suggestion_result("Hope your sorry here.", HopeYoure::default(), "Hope you're sorry here.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

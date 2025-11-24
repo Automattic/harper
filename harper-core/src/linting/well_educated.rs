@@ -63,65 +63,37 @@ mod tests {
 
     #[test]
     fn corrects_simple_sentence() {
-        assert_suggestion_result(
-            "She is good-educated.",
-            WellEducated::default(),
-            "She is well-educated.",
-        );
+        assert_suggestion_result("She is good-educated.", WellEducated::default(), "She is well-educated.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_in_clause() {
-        assert_suggestion_result(
-            "The panel found him good-educated and articulate.",
-            WellEducated::default(),
-            "The panel found him well-educated and articulate.",
-        );
+        assert_suggestion_result("The panel found him good-educated and articulate.", WellEducated::default(), "The panel found him well-educated and articulate.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_modifier() {
-        assert_suggestion_result(
-            "They considered her very good-educated for her age.",
-            WellEducated::default(),
-            "They considered her very well-educated for her age.",
-        );
+        assert_suggestion_result("They considered her very good-educated for her age.", WellEducated::default(), "They considered her very well-educated for her age.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_all_caps() {
-        assert_suggestion_result(
-            "Their mentors are GOOD-EDUCATED leaders.",
-            WellEducated::default(),
-            "Their mentors are WELL-EDUCATED leaders.",
-        );
+        assert_suggestion_result("Their mentors are GOOD-EDUCATED leaders.", WellEducated::default(), "Their mentors are WELL-EDUCATED leaders.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_title_case() {
-        assert_suggestion_result(
-            "The report lauded Good-Educated Candidates.",
-            WellEducated::default(),
-            "The report lauded Well-Educated Candidates.",
-        );
+        assert_suggestion_result("The report lauded Good-Educated Candidates.", WellEducated::default(), "The report lauded Well-Educated Candidates.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_quotes() {
-        assert_suggestion_result(
-            "He called them \"good-educated\" professionals.",
-            WellEducated::default(),
-            "He called them \"well-educated\" professionals.",
-        );
+        assert_suggestion_result("He called them \"good-educated\" professionals.", WellEducated::default(), "He called them \"well-educated\" professionals.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_split_tokens() {
-        assert_suggestion_result(
-            "Their children are good - educated despite the odds.",
-            WellEducated::default(),
-            "Their children are well-educated despite the odds.",
-        );
+        assert_suggestion_result("Their children are good - educated despite the odds.", WellEducated::default(), "Their children are well-educated despite the odds.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

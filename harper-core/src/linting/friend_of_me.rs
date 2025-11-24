@@ -67,64 +67,36 @@ mod tests {
 
     #[test]
     fn corrects_friend_of_me() {
-        assert_suggestion_result(
-            "Last year a friend of me died unexpectedly (not a close friend).",
-            FriendOfMe::default(),
-            "Last year a friend of mine died unexpectedly (not a close friend).",
-        );
+        assert_suggestion_result("Last year a friend of me died unexpectedly (not a close friend).", FriendOfMe::default(), "Last year a friend of mine died unexpectedly (not a close friend).", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friend_of_you() {
-        assert_suggestion_result(
-            "imagine a friend of you wants to disturb your call, and send you a session-terminate with a wrong SID",
-            FriendOfMe::default(),
-            "imagine a friend of yours wants to disturb your call, and send you a session-terminate with a wrong SID",
-        );
+        assert_suggestion_result("imagine a friend of you wants to disturb your call, and send you a session-terminate with a wrong SID", FriendOfMe::default(), "imagine a friend of yours wants to disturb your call, and send you a session-terminate with a wrong SID", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friend_of_us() {
-        assert_suggestion_result(
-            "You have denounced a friend of us! You have denounced an enemy of us.",
-            FriendOfMe::default(),
-            "You have denounced a friend of ours! You have denounced an enemy of ours.",
-        );
+        assert_suggestion_result("You have denounced a friend of us! You have denounced an enemy of us.", FriendOfMe::default(), "You have denounced a friend of ours! You have denounced an enemy of ours.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friends_of_them() {
-        assert_suggestion_result(
-            "guest has friend and they see which friends of them are comming",
-            FriendOfMe::default(),
-            "guest has friend and they see which friends of theirs are comming",
-        );
+        assert_suggestion_result("guest has friend and they see which friends of them are comming", FriendOfMe::default(), "guest has friend and they see which friends of theirs are comming", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friend_of_him() {
-        assert_suggestion_result(
-            "Ah, got it, i thought you may was a friend of him",
-            FriendOfMe::default(),
-            "Ah, got it, i thought you may was a friend of his",
-        );
+        assert_suggestion_result("Ah, got it, i thought you may was a friend of him", FriendOfMe::default(), "Ah, got it, i thought you may was a friend of his", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friends_of_me() {
-        assert_suggestion_result(
-            "guest has friend and they see which friends of me are comming",
-            FriendOfMe::default(),
-            "guest has friend and they see which friends of mine are comming",
-        );
+        assert_suggestion_result("guest has friend and they see which friends of me are comming", FriendOfMe::default(), "guest has friend and they see which friends of mine are comming", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_friends_of_us() {
-        assert_suggestion_result(
-            "This project was created for friends of us.",
-            FriendOfMe::default(),
-            "This project was created for friends of ours.",
-        );
+        assert_suggestion_result("This project was created for friends of us.", FriendOfMe::default(), "This project was created for friends of ours.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

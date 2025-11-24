@@ -98,20 +98,12 @@ mod tests {
 
     #[test]
     fn suggests_im_looking() {
-        assert_suggestion_result(
-            "I've looking into it.",
-            ProgressiveNeedsBe::default(),
-            "I'm looking into it.",
-        );
+        assert_suggestion_result("I've looking into it.", ProgressiveNeedsBe::default(), "I'm looking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_basic_im() {
-        assert_suggestion_result(
-            "I've looking into it.",
-            ProgressiveNeedsBe::default(),
-            "I'm looking into it.",
-        );
+        assert_suggestion_result("I've looking into it.", ProgressiveNeedsBe::default(), "I'm looking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -159,38 +151,22 @@ mod tests {
 
     #[test]
     fn handles_newline_whitespace() {
-        assert_suggestion_result(
-            "I've\nlooking into it.",
-            ProgressiveNeedsBe::default(),
-            "I'm\nlooking into it.",
-        );
+        assert_suggestion_result("I've\nlooking into it.", ProgressiveNeedsBe::default(), "I'm\nlooking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn capitalization_all_caps_base() {
-        assert_suggestion_result(
-            "I'VE looking into it.",
-            ProgressiveNeedsBe::default(),
-            "I'M looking into it.",
-        );
+        assert_suggestion_result("I'VE looking into it.", ProgressiveNeedsBe::default(), "I'M looking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn works_for_weve() {
-        assert_suggestion_result(
-            "We've looking into it.",
-            ProgressiveNeedsBe::default(),
-            "We're looking into it.",
-        );
+        assert_suggestion_result("We've looking into it.", ProgressiveNeedsBe::default(), "We're looking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn suggests_im_looking_non_contracted() {
-        assert_suggestion_result(
-            "I have looking into it.",
-            ProgressiveNeedsBe::default(),
-            "I'm looking into it.",
-        );
+        assert_suggestion_result("I have looking into it.", ProgressiveNeedsBe::default(), "I'm looking into it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -224,531 +200,275 @@ mod tests {
     // Contracted: I've/We've/You've/They've + gerund
     #[test]
     fn ive_working() {
-        assert_suggestion_result(
-            "I've working on it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm working on it today.",
-        );
+        assert_suggestion_result("I've working on it today.", ProgressiveNeedsBe::default(), "I'm working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_working() {
-        assert_suggestion_result(
-            "We've working on it today.",
-            ProgressiveNeedsBe::default(),
-            "We're working on it today.",
-        );
+        assert_suggestion_result("We've working on it today.", ProgressiveNeedsBe::default(), "We're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_working() {
-        assert_suggestion_result(
-            "You've working on it today.",
-            ProgressiveNeedsBe::default(),
-            "You're working on it today.",
-        );
+        assert_suggestion_result("You've working on it today.", ProgressiveNeedsBe::default(), "You're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_working() {
-        assert_suggestion_result(
-            "They've working on it today.",
-            ProgressiveNeedsBe::default(),
-            "They're working on it today.",
-        );
+        assert_suggestion_result("They've working on it today.", ProgressiveNeedsBe::default(), "They're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_eating() {
-        assert_suggestion_result(
-            "I've eating it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm eating it today.",
-        );
+        assert_suggestion_result("I've eating it today.", ProgressiveNeedsBe::default(), "I'm eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_eating() {
-        assert_suggestion_result(
-            "We've eating it today.",
-            ProgressiveNeedsBe::default(),
-            "We're eating it today.",
-        );
+        assert_suggestion_result("We've eating it today.", ProgressiveNeedsBe::default(), "We're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_eating() {
-        assert_suggestion_result(
-            "You've eating it today.",
-            ProgressiveNeedsBe::default(),
-            "You're eating it today.",
-        );
+        assert_suggestion_result("You've eating it today.", ProgressiveNeedsBe::default(), "You're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_eating() {
-        assert_suggestion_result(
-            "They've eating it today.",
-            ProgressiveNeedsBe::default(),
-            "They're eating it today.",
-        );
+        assert_suggestion_result("They've eating it today.", ProgressiveNeedsBe::default(), "They're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_reading() {
-        assert_suggestion_result(
-            "I've reading it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm reading it today.",
-        );
+        assert_suggestion_result("I've reading it today.", ProgressiveNeedsBe::default(), "I'm reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_reading() {
-        assert_suggestion_result(
-            "We've reading it today.",
-            ProgressiveNeedsBe::default(),
-            "We're reading it today.",
-        );
+        assert_suggestion_result("We've reading it today.", ProgressiveNeedsBe::default(), "We're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_reading() {
-        assert_suggestion_result(
-            "You've reading it today.",
-            ProgressiveNeedsBe::default(),
-            "You're reading it today.",
-        );
+        assert_suggestion_result("You've reading it today.", ProgressiveNeedsBe::default(), "You're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_reading() {
-        assert_suggestion_result(
-            "They've reading it today.",
-            ProgressiveNeedsBe::default(),
-            "They're reading it today.",
-        );
+        assert_suggestion_result("They've reading it today.", ProgressiveNeedsBe::default(), "They're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_writing() {
-        assert_suggestion_result(
-            "I've writing it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm writing it today.",
-        );
+        assert_suggestion_result("I've writing it today.", ProgressiveNeedsBe::default(), "I'm writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_writing() {
-        assert_suggestion_result(
-            "We've writing it today.",
-            ProgressiveNeedsBe::default(),
-            "We're writing it today.",
-        );
+        assert_suggestion_result("We've writing it today.", ProgressiveNeedsBe::default(), "We're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_writing() {
-        assert_suggestion_result(
-            "You've writing it today.",
-            ProgressiveNeedsBe::default(),
-            "You're writing it today.",
-        );
+        assert_suggestion_result("You've writing it today.", ProgressiveNeedsBe::default(), "You're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_writing() {
-        assert_suggestion_result(
-            "They've writing it today.",
-            ProgressiveNeedsBe::default(),
-            "They're writing it today.",
-        );
+        assert_suggestion_result("They've writing it today.", ProgressiveNeedsBe::default(), "They're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_speaking() {
-        assert_suggestion_result(
-            "I've speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm speaking about it today.",
-        );
+        assert_suggestion_result("I've speaking about it today.", ProgressiveNeedsBe::default(), "I'm speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_speaking() {
-        assert_suggestion_result(
-            "We've speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "We're speaking about it today.",
-        );
+        assert_suggestion_result("We've speaking about it today.", ProgressiveNeedsBe::default(), "We're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_speaking() {
-        assert_suggestion_result(
-            "You've speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "You're speaking about it today.",
-        );
+        assert_suggestion_result("You've speaking about it today.", ProgressiveNeedsBe::default(), "You're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_speaking() {
-        assert_suggestion_result(
-            "They've speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "They're speaking about it today.",
-        );
+        assert_suggestion_result("They've speaking about it today.", ProgressiveNeedsBe::default(), "They're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_studying() {
-        assert_suggestion_result(
-            "I've studying it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm studying it today.",
-        );
+        assert_suggestion_result("I've studying it today.", ProgressiveNeedsBe::default(), "I'm studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_studying() {
-        assert_suggestion_result(
-            "We've studying it today.",
-            ProgressiveNeedsBe::default(),
-            "We're studying it today.",
-        );
+        assert_suggestion_result("We've studying it today.", ProgressiveNeedsBe::default(), "We're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_studying() {
-        assert_suggestion_result(
-            "You've studying it today.",
-            ProgressiveNeedsBe::default(),
-            "You're studying it today.",
-        );
+        assert_suggestion_result("You've studying it today.", ProgressiveNeedsBe::default(), "You're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_studying() {
-        assert_suggestion_result(
-            "They've studying it today.",
-            ProgressiveNeedsBe::default(),
-            "They're studying it today.",
-        );
+        assert_suggestion_result("They've studying it today.", ProgressiveNeedsBe::default(), "They're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_testing() {
-        assert_suggestion_result(
-            "I've testing it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm testing it today.",
-        );
+        assert_suggestion_result("I've testing it today.", ProgressiveNeedsBe::default(), "I'm testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_testing() {
-        assert_suggestion_result(
-            "We've testing it today.",
-            ProgressiveNeedsBe::default(),
-            "We're testing it today.",
-        );
+        assert_suggestion_result("We've testing it today.", ProgressiveNeedsBe::default(), "We're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_testing() {
-        assert_suggestion_result(
-            "You've testing it today.",
-            ProgressiveNeedsBe::default(),
-            "You're testing it today.",
-        );
+        assert_suggestion_result("You've testing it today.", ProgressiveNeedsBe::default(), "You're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_testing() {
-        assert_suggestion_result(
-            "They've testing it today.",
-            ProgressiveNeedsBe::default(),
-            "They're testing it today.",
-        );
+        assert_suggestion_result("They've testing it today.", ProgressiveNeedsBe::default(), "They're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn ive_using() {
-        assert_suggestion_result(
-            "I've using it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm using it today.",
-        );
+        assert_suggestion_result("I've using it today.", ProgressiveNeedsBe::default(), "I'm using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn weve_using() {
-        assert_suggestion_result(
-            "We've using it today.",
-            ProgressiveNeedsBe::default(),
-            "We're using it today.",
-        );
+        assert_suggestion_result("We've using it today.", ProgressiveNeedsBe::default(), "We're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn youve_using() {
-        assert_suggestion_result(
-            "You've using it today.",
-            ProgressiveNeedsBe::default(),
-            "You're using it today.",
-        );
+        assert_suggestion_result("You've using it today.", ProgressiveNeedsBe::default(), "You're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn theyve_using() {
-        assert_suggestion_result(
-            "They've using it today.",
-            ProgressiveNeedsBe::default(),
-            "They're using it today.",
-        );
+        assert_suggestion_result("They've using it today.", ProgressiveNeedsBe::default(), "They're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // Non-contracted: I/We/You/They have + gerund
     #[test]
     fn i_have_working() {
-        assert_suggestion_result(
-            "I have working on it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm working on it today.",
-        );
+        assert_suggestion_result("I have working on it today.", ProgressiveNeedsBe::default(), "I'm working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_working() {
-        assert_suggestion_result(
-            "We have working on it today.",
-            ProgressiveNeedsBe::default(),
-            "We're working on it today.",
-        );
+        assert_suggestion_result("We have working on it today.", ProgressiveNeedsBe::default(), "We're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_working() {
-        assert_suggestion_result(
-            "You have working on it today.",
-            ProgressiveNeedsBe::default(),
-            "You're working on it today.",
-        );
+        assert_suggestion_result("You have working on it today.", ProgressiveNeedsBe::default(), "You're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_working() {
-        assert_suggestion_result(
-            "They have working on it today.",
-            ProgressiveNeedsBe::default(),
-            "They're working on it today.",
-        );
+        assert_suggestion_result("They have working on it today.", ProgressiveNeedsBe::default(), "They're working on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_eating() {
-        assert_suggestion_result(
-            "I have eating it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm eating it today.",
-        );
+        assert_suggestion_result("I have eating it today.", ProgressiveNeedsBe::default(), "I'm eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_eating() {
-        assert_suggestion_result(
-            "We have eating it today.",
-            ProgressiveNeedsBe::default(),
-            "We're eating it today.",
-        );
+        assert_suggestion_result("We have eating it today.", ProgressiveNeedsBe::default(), "We're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_eating() {
-        assert_suggestion_result(
-            "You have eating it today.",
-            ProgressiveNeedsBe::default(),
-            "You're eating it today.",
-        );
+        assert_suggestion_result("You have eating it today.", ProgressiveNeedsBe::default(), "You're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_eating() {
-        assert_suggestion_result(
-            "They have eating it today.",
-            ProgressiveNeedsBe::default(),
-            "They're eating it today.",
-        );
+        assert_suggestion_result("They have eating it today.", ProgressiveNeedsBe::default(), "They're eating it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_reading() {
-        assert_suggestion_result(
-            "I have reading it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm reading it today.",
-        );
+        assert_suggestion_result("I have reading it today.", ProgressiveNeedsBe::default(), "I'm reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_reading() {
-        assert_suggestion_result(
-            "We have reading it today.",
-            ProgressiveNeedsBe::default(),
-            "We're reading it today.",
-        );
+        assert_suggestion_result("We have reading it today.", ProgressiveNeedsBe::default(), "We're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_reading() {
-        assert_suggestion_result(
-            "You have reading it today.",
-            ProgressiveNeedsBe::default(),
-            "You're reading it today.",
-        );
+        assert_suggestion_result("You have reading it today.", ProgressiveNeedsBe::default(), "You're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_reading() {
-        assert_suggestion_result(
-            "They have reading it today.",
-            ProgressiveNeedsBe::default(),
-            "They're reading it today.",
-        );
+        assert_suggestion_result("They have reading it today.", ProgressiveNeedsBe::default(), "They're reading it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_writing() {
-        assert_suggestion_result(
-            "I have writing it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm writing it today.",
-        );
+        assert_suggestion_result("I have writing it today.", ProgressiveNeedsBe::default(), "I'm writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_writing() {
-        assert_suggestion_result(
-            "We have writing it today.",
-            ProgressiveNeedsBe::default(),
-            "We're writing it today.",
-        );
+        assert_suggestion_result("We have writing it today.", ProgressiveNeedsBe::default(), "We're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_writing() {
-        assert_suggestion_result(
-            "You have writing it today.",
-            ProgressiveNeedsBe::default(),
-            "You're writing it today.",
-        );
+        assert_suggestion_result("You have writing it today.", ProgressiveNeedsBe::default(), "You're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_writing() {
-        assert_suggestion_result(
-            "They have writing it today.",
-            ProgressiveNeedsBe::default(),
-            "They're writing it today.",
-        );
+        assert_suggestion_result("They have writing it today.", ProgressiveNeedsBe::default(), "They're writing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_speaking() {
-        assert_suggestion_result(
-            "I have speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm speaking about it today.",
-        );
+        assert_suggestion_result("I have speaking about it today.", ProgressiveNeedsBe::default(), "I'm speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_speaking() {
-        assert_suggestion_result(
-            "We have speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "We're speaking about it today.",
-        );
+        assert_suggestion_result("We have speaking about it today.", ProgressiveNeedsBe::default(), "We're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_speaking() {
-        assert_suggestion_result(
-            "You have speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "You're speaking about it today.",
-        );
+        assert_suggestion_result("You have speaking about it today.", ProgressiveNeedsBe::default(), "You're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_speaking() {
-        assert_suggestion_result(
-            "They have speaking about it today.",
-            ProgressiveNeedsBe::default(),
-            "They're speaking about it today.",
-        );
+        assert_suggestion_result("They have speaking about it today.", ProgressiveNeedsBe::default(), "They're speaking about it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_studying() {
-        assert_suggestion_result(
-            "I have studying it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm studying it today.",
-        );
+        assert_suggestion_result("I have studying it today.", ProgressiveNeedsBe::default(), "I'm studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_studying() {
-        assert_suggestion_result(
-            "We have studying it today.",
-            ProgressiveNeedsBe::default(),
-            "We're studying it today.",
-        );
+        assert_suggestion_result("We have studying it today.", ProgressiveNeedsBe::default(), "We're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_studying() {
-        assert_suggestion_result(
-            "You have studying it today.",
-            ProgressiveNeedsBe::default(),
-            "You're studying it today.",
-        );
+        assert_suggestion_result("You have studying it today.", ProgressiveNeedsBe::default(), "You're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_studying() {
-        assert_suggestion_result(
-            "They have studying it today.",
-            ProgressiveNeedsBe::default(),
-            "They're studying it today.",
-        );
+        assert_suggestion_result("They have studying it today.", ProgressiveNeedsBe::default(), "They're studying it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_testing() {
-        assert_suggestion_result(
-            "I have testing it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm testing it today.",
-        );
+        assert_suggestion_result("I have testing it today.", ProgressiveNeedsBe::default(), "I'm testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_testing() {
-        assert_suggestion_result(
-            "We have testing it today.",
-            ProgressiveNeedsBe::default(),
-            "We're testing it today.",
-        );
+        assert_suggestion_result("We have testing it today.", ProgressiveNeedsBe::default(), "We're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_testing() {
-        assert_suggestion_result(
-            "You have testing it today.",
-            ProgressiveNeedsBe::default(),
-            "You're testing it today.",
-        );
+        assert_suggestion_result("You have testing it today.", ProgressiveNeedsBe::default(), "You're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_testing() {
-        assert_suggestion_result(
-            "They have testing it today.",
-            ProgressiveNeedsBe::default(),
-            "They're testing it today.",
-        );
+        assert_suggestion_result("They have testing it today.", ProgressiveNeedsBe::default(), "They're testing it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn i_have_using() {
-        assert_suggestion_result(
-            "I have using it today.",
-            ProgressiveNeedsBe::default(),
-            "I'm using it today.",
-        );
+        assert_suggestion_result("I have using it today.", ProgressiveNeedsBe::default(), "I'm using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn we_have_using() {
-        assert_suggestion_result(
-            "We have using it today.",
-            ProgressiveNeedsBe::default(),
-            "We're using it today.",
-        );
+        assert_suggestion_result("We have using it today.", ProgressiveNeedsBe::default(), "We're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn you_have_using() {
-        assert_suggestion_result(
-            "You have using it today.",
-            ProgressiveNeedsBe::default(),
-            "You're using it today.",
-        );
+        assert_suggestion_result("You have using it today.", ProgressiveNeedsBe::default(), "You're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn they_have_using() {
-        assert_suggestion_result(
-            "They have using it today.",
-            ProgressiveNeedsBe::default(),
-            "They're using it today.",
-        );
+        assert_suggestion_result("They have using it today.", ProgressiveNeedsBe::default(), "They're using it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // Both-suggestion checks
@@ -840,18 +560,10 @@ mod tests {
 
     #[test]
     fn capitalization_variants_non_contracted() {
-        assert_suggestion_result(
-            "WE HAVE working today.",
-            ProgressiveNeedsBe::default(),
-            "WE'RE working today.",
-        );
+        assert_suggestion_result("WE HAVE working today.", ProgressiveNeedsBe::default(), "WE'RE working today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
     #[test]
     fn newline_variants_non_contracted() {
-        assert_suggestion_result(
-            "We have\nworking on it today.",
-            ProgressiveNeedsBe::default(),
-            "We're\nworking on it today.",
-        );
+        assert_suggestion_result("We have\nworking on it today.", ProgressiveNeedsBe::default(), "We're\nworking on it today.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

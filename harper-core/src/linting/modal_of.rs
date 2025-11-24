@@ -129,17 +129,17 @@ mod tests {
 
     #[test]
     fn test_lowercase() {
-        assert_suggestion_result("could of", ModalOf::default(), "could have");
+        assert_suggestion_result("could of", ModalOf::default(), "could have", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn test_negative() {
-        assert_suggestion_result("mightn't of", ModalOf::default(), "mightn't have");
+        assert_suggestion_result("mightn't of", ModalOf::default(), "mightn't have", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn test_uppercase_negative() {
-        assert_suggestion_result("Mustn't of", ModalOf::default(), "Mustn't have");
+        assert_suggestion_result("Mustn't of", ModalOf::default(), "Mustn't have", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -193,11 +193,7 @@ mod tests {
 
     #[test]
     fn catches_must_of() {
-        assert_suggestion_result(
-            "Ah I must of missed that part.",
-            ModalOf::default(),
-            "Ah I must have missed that part.",
-        );
+        assert_suggestion_result("Ah I must of missed that part.", ModalOf::default(), "Ah I must have missed that part.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -211,11 +207,7 @@ mod tests {
 
     #[test]
     fn catches_would_of() {
-        assert_suggestion_result(
-            "now this issue would of caused hundreds of thousands of extra lines",
-            ModalOf::default(),
-            "now this issue would have caused hundreds of thousands of extra lines",
-        );
+        assert_suggestion_result("now this issue would of caused hundreds of thousands of extra lines", ModalOf::default(), "now this issue would have caused hundreds of thousands of extra lines", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

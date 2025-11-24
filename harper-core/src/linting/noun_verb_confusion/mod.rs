@@ -34,16 +34,12 @@ mod tests {
 
     #[test]
     fn corrects_good_advise() {
-        assert_suggestion_result("Good advise", NounVerbConfusion::default(), "Good advice");
+        assert_suggestion_result("Good advise", NounVerbConfusion::default(), "Good advice", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_bad_advise() {
-        assert_suggestion_result(
-            "I just wanted to bring attention to this because it stood out to me as potentially bad advise.",
-            NounVerbConfusion::default(),
-            "I just wanted to bring attention to this because it stood out to me as potentially bad advice.",
-        );
+        assert_suggestion_result("I just wanted to bring attention to this because it stood out to me as potentially bad advise.", NounVerbConfusion::default(), "I just wanted to bring attention to this because it stood out to me as potentially bad advice.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -58,11 +54,7 @@ mod tests {
     #[test]
     #[ignore = "'better advise' can be correct as above, or a mistake like here"]
     fn correct_better_advise() {
-        assert_suggestion_result(
-            "Maybe this will be a decent idea, .or anybody has better advise :)",
-            NounVerbConfusion::default(),
-            "Maybe this will be a decent idea, .or anybody has better advice :)",
-        );
+        assert_suggestion_result("Maybe this will be a decent idea, .or anybody has better advise :)", NounVerbConfusion::default(), "Maybe this will be a decent idea, .or anybody has better advice :)", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -76,48 +68,28 @@ mod tests {
 
     #[test]
     fn correct_strong_believe() {
-        assert_suggestion_result(
-            "cause my strong believe is that we must give any user to describe whether a post is meant factual",
-            NounVerbConfusion::default(),
-            "cause my strong belief is that we must give any user to describe whether a post is meant factual",
-        );
+        assert_suggestion_result("cause my strong believe is that we must give any user to describe whether a post is meant factual", NounVerbConfusion::default(), "cause my strong belief is that we must give any user to describe whether a post is meant factual", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_deep_breathe() {
-        assert_suggestion_result(
-            "Take deep breathe and Do it again!",
-            NounVerbConfusion::default(),
-            "Take deep breath and Do it again!",
-        );
+        assert_suggestion_result("Take deep breathe and Do it again!", NounVerbConfusion::default(), "Take deep breath and Do it again!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_bad_intend() {
-        assert_suggestion_result(
-            "What do you do if you only see slightly longer posts that may still be acceptable (and not bad intend from the poster)",
-            NounVerbConfusion::default(),
-            "What do you do if you only see slightly longer posts that may still be acceptable (and not bad intent from the poster)",
-        );
+        assert_suggestion_result("What do you do if you only see slightly longer posts that may still be acceptable (and not bad intend from the poster)", NounVerbConfusion::default(), "What do you do if you only see slightly longer posts that may still be acceptable (and not bad intent from the poster)", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_belief_instead_of_verb() {
-        assert_suggestion_result(
-            "I belief in you.",
-            NounVerbConfusion::default(),
-            "I believe in you.",
-        );
+        assert_suggestion_result("I belief in you.", NounVerbConfusion::default(), "I believe in you.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "`to` can't disambiguate since it's valid between verbs and nouns"]
     fn corrects_breath_instead_of_verb() {
-        assert_suggestion_result(
-            "Remember to breath deeply.",
-            NounVerbConfusion::default(),
-            "Remember to breathe deeply.",
-        );
+        assert_suggestion_result("Remember to breath deeply.", NounVerbConfusion::default(), "Remember to breathe deeply.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -134,138 +106,78 @@ mod tests {
 
     #[test]
     fn fix_when_i_breath_you_breath() {
-        assert_suggestion_result(
-            "When I breath, you breath!",
-            NounVerbConfusion::default(),
-            "When I breathe, you breathe!",
-        );
+        assert_suggestion_result("When I breath, you breath!", NounVerbConfusion::default(), "When I breathe, you breathe!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_weather_climate_and_the_air_we_breath() {
-        assert_suggestion_result(
-            "Weather Climate and the Air We Breath",
-            NounVerbConfusion::default(),
-            "Weather Climate and the Air We Breathe",
-        );
+        assert_suggestion_result("Weather Climate and the Air We Breath", NounVerbConfusion::default(), "Weather Climate and the Air We Breathe", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_always_breath() {
-        assert_suggestion_result(
-            "breathing. remember to always breath.",
-            NounVerbConfusion::default(),
-            "breathing. remember to always breathe.",
-        );
+        assert_suggestion_result("breathing. remember to always breath.", NounVerbConfusion::default(), "breathing. remember to always breathe.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_never_breath_a_word() {
-        assert_suggestion_result(
-            "And never breath a word about your loss; If you can force your heart and nerve and sinew.",
-            NounVerbConfusion::default(),
-            "And never breathe a word about your loss; If you can force your heart and nerve and sinew.",
-        );
+        assert_suggestion_result("And never breath a word about your loss; If you can force your heart and nerve and sinew.", NounVerbConfusion::default(), "And never breathe a word about your loss; If you can force your heart and nerve and sinew.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_breath_for_seconds() {
-        assert_suggestion_result(
-            "Once turned on, the LED on the TX unit would breath for a few seconds, then go completely dead and not responding to objects in front of the sensors.",
-            NounVerbConfusion::default(),
-            "Once turned on, the LED on the TX unit would breathe for a few seconds, then go completely dead and not responding to objects in front of the sensors.",
-        );
+        assert_suggestion_result("Once turned on, the LED on the TX unit would breath for a few seconds, then go completely dead and not responding to objects in front of the sensors.", NounVerbConfusion::default(), "Once turned on, the LED on the TX unit would breathe for a few seconds, then go completely dead and not responding to objects in front of the sensors.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_breath_a_little_more_life() {
-        assert_suggestion_result(
-            "... up to 12% more performance, could breath a little more life into systems as old as Sandy Bridge.",
-            NounVerbConfusion::default(),
-            "... up to 12% more performance, could breathe a little more life into systems as old as Sandy Bridge.",
-        );
+        assert_suggestion_result("... up to 12% more performance, could breath a little more life into systems as old as Sandy Bridge.", NounVerbConfusion::default(), "... up to 12% more performance, could breathe a little more life into systems as old as Sandy Bridge.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_the_diversity_we_breath() {
-        assert_suggestion_result(
-            "The Diversity We Breath: Community Diversity",
-            NounVerbConfusion::default(),
-            "The Diversity We Breathe: Community Diversity",
-        );
+        assert_suggestion_result("The Diversity We Breath: Community Diversity", NounVerbConfusion::default(), "The Diversity We Breathe: Community Diversity", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_belief() {
-        assert_suggestion_result(
-            "While I have no plans to return to aerospace I belief it gives me a unique perspective to many challenges.",
-            NounVerbConfusion::default(),
-            "While I have no plans to return to aerospace I believe it gives me a unique perspective to many challenges.",
-        );
+        assert_suggestion_result("While I have no plans to return to aerospace I belief it gives me a unique perspective to many challenges.", NounVerbConfusion::default(), "While I have no plans to return to aerospace I believe it gives me a unique perspective to many challenges.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_we_belief() {
-        assert_suggestion_result(
-            "In contrast to other vendors in e-mobility, we belief that true transparency is only trustworthy if the entire process ...",
-            NounVerbConfusion::default(),
-            "In contrast to other vendors in e-mobility, we believe that true transparency is only trustworthy if the entire process ...",
-        );
+        assert_suggestion_result("In contrast to other vendors in e-mobility, we belief that true transparency is only trustworthy if the entire process ...", NounVerbConfusion::default(), "In contrast to other vendors in e-mobility, we believe that true transparency is only trustworthy if the entire process ...", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "`underwater` is a marginal noun so `breath underwater` matches the compound noun test."]
     fn fix_i_can_breath() {
-        assert_suggestion_result(
-            "Steps to reproduce Expected behaviour I can breath underwater.",
-            NounVerbConfusion::default(),
-            "Steps to reproduce Expected behaviour I can breathe underwater.",
-        );
+        assert_suggestion_result("Steps to reproduce Expected behaviour I can breath underwater.", NounVerbConfusion::default(), "Steps to reproduce Expected behaviour I can breathe underwater.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_caps_should_breath() {
-        assert_suggestion_result(
-            "CAPS 1 2 3 4 5 A B C D SHOULD BREATH A BIT MORE ?",
-            NounVerbConfusion::default(),
-            "CAPS 1 2 3 4 5 A B C D SHOULD BREATHE A BIT MORE ?",
-        );
+        assert_suggestion_result("CAPS 1 2 3 4 5 A B C D SHOULD BREATH A BIT MORE ?", NounVerbConfusion::default(), "CAPS 1 2 3 4 5 A B C D SHOULD BREATHE A BIT MORE ?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_can_you_advice_me() {
-        assert_suggestion_result(
-            "Can you advice me how to train?",
-            NounVerbConfusion::default(),
-            "Can you advise me how to train?",
-        );
+        assert_suggestion_result("Can you advice me how to train?", NounVerbConfusion::default(), "Can you advise me how to train?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_we_can_advice_you() {
-        assert_suggestion_result(
-            "Feel free to share more details about your use case, so we can advice you specifically based on your case.",
-            NounVerbConfusion::default(),
-            "Feel free to share more details about your use case, so we can advise you specifically based on your case.",
-        );
+        assert_suggestion_result("Feel free to share more details about your use case, so we can advice you specifically based on your case.", NounVerbConfusion::default(), "Feel free to share more details about your use case, so we can advise you specifically based on your case.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_would_advice_against() {
-        assert_suggestion_result(
-            "So that I would advice against using a spindle in laser mode.",
-            NounVerbConfusion::default(),
-            "So that I would advise against using a spindle in laser mode.",
-        );
+        assert_suggestion_result("So that I would advice against using a spindle in laser mode.", NounVerbConfusion::default(), "So that I would advise against using a spindle in laser mode.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_advice_to_listen() {
-        assert_suggestion_result(
-            "The idea of this applicaton was inspired by Ray Dalio, who always advice to listen to people who know more than us by experience.",
-            NounVerbConfusion::default(),
-            "The idea of this applicaton was inspired by Ray Dalio, who always advise to listen to people who know more than us by experience.",
-        );
+        assert_suggestion_result("The idea of this applicaton was inspired by Ray Dalio, who always advice to listen to people who know more than us by experience.", NounVerbConfusion::default(), "The idea of this applicaton was inspired by Ray Dalio, who always advise to listen to people who know more than us by experience.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -280,56 +192,32 @@ mod tests {
 
     #[test]
     fn fix_advice_to_stick_with_openvscode() {
-        assert_suggestion_result(
-            "But unless you really need it, I would advice to stick with openvscode as there are nearly the same.",
-            NounVerbConfusion::default(),
-            "But unless you really need it, I would advise to stick with openvscode as there are nearly the same.",
-        );
+        assert_suggestion_result("But unless you really need it, I would advice to stick with openvscode as there are nearly the same.", NounVerbConfusion::default(), "But unless you really need it, I would advise to stick with openvscode as there are nearly the same.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_advice_to_back_up_os_image() {
-        assert_suggestion_result(
-            "I would advice to back up all OS image before any update, because you could lose something what was working previously.",
-            NounVerbConfusion::default(),
-            "I would advise to back up all OS image before any update, because you could lose something what was working previously.",
-        );
+        assert_suggestion_result("I would advice to back up all OS image before any update, because you could lose something what was working previously.", NounVerbConfusion::default(), "I would advise to back up all OS image before any update, because you could lose something what was working previously.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_advice_to_use_ms_store() {
-        assert_suggestion_result(
-            "I know we can always advice to use the MS store to download JASP instead",
-            NounVerbConfusion::default(),
-            "I know we can always advise to use the MS store to download JASP instead",
-        );
+        assert_suggestion_result("I know we can always advice to use the MS store to download JASP instead", NounVerbConfusion::default(), "I know we can always advise to use the MS store to download JASP instead", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_should_intent_be() {
-        assert_suggestion_result(
-            "Should intent be on the blocklist?",
-            NounVerbConfusion::default(),
-            "Should intent be on the blocklist?",
-        );
+        assert_suggestion_result("Should intent be on the blocklist?", NounVerbConfusion::default(), "Should intent be on the blocklist?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_if_you_intent() {
-        assert_suggestion_result(
-            "If you intent to use a 64 bits machine, change line 74",
-            NounVerbConfusion::default(),
-            "If you intend to use a 64 bits machine, change line 74",
-        );
+        assert_suggestion_result("If you intent to use a 64 bits machine, change line 74", NounVerbConfusion::default(), "If you intend to use a 64 bits machine, change line 74", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_what_you_would_intent_to_do() {
-        assert_suggestion_result(
-            "May I ask what you would intent to do with such a feature?",
-            NounVerbConfusion::default(),
-            "May I ask what you would intend to do with such a feature?",
-        );
+        assert_suggestion_result("May I ask what you would intent to do with such a feature?", NounVerbConfusion::default(), "May I ask what you would intend to do with such a feature?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -343,40 +231,24 @@ mod tests {
 
     #[test]
     fn fix_did_you_always_intent_to() {
-        assert_suggestion_result(
-            "Did you always intent to fight malware? No.",
-            NounVerbConfusion::default(),
-            "Did you always intend to fight malware? No.",
-        );
+        assert_suggestion_result("Did you always intent to fight malware? No.", NounVerbConfusion::default(), "Did you always intend to fight malware? No.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_we_recommend_you_create_a_new_issue_on_github_explaining_what_you_intent_to_do() {
-        assert_suggestion_result(
-            "... we recommend you create a new issue on github explaining what you intent to do.",
-            NounVerbConfusion::default(),
-            "... we recommend you create a new issue on github explaining what you intend to do.",
-        );
+        assert_suggestion_result("... we recommend you create a new issue on github explaining what you intent to do.", NounVerbConfusion::default(), "... we recommend you create a new issue on github explaining what you intend to do.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_intent_to_use_non_imported_symbol() {
-        assert_suggestion_result(
-            "There's a warning reported for this code, saying that it may intent to use non-imported symbol",
-            NounVerbConfusion::default(),
-            "There's a warning reported for this code, saying that it may intend to use non-imported symbol",
-        );
+        assert_suggestion_result("There's a warning reported for this code, saying that it may intent to use non-imported symbol", NounVerbConfusion::default(), "There's a warning reported for this code, saying that it may intend to use non-imported symbol", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // tests for preceding "to"
 
     #[test]
     fn fix_to_emphasis_the() {
-        assert_suggestion_result(
-            "This one could be used in a dialog to emphasis the surprise.",
-            NounVerbConfusion::default(),
-            "This one could be used in a dialog to emphasize the surprise.",
-        );
+        assert_suggestion_result("This one could be used in a dialog to emphasis the surprise.", NounVerbConfusion::default(), "This one could be used in a dialog to emphasize the surprise.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -399,276 +271,156 @@ mod tests {
 
     #[test]
     fn fix_to_advice_a_class() {
-        assert_suggestion_result(
-            "How to advice a class that have been intercepted by another javaagent",
-            NounVerbConfusion::default(),
-            "How to advise a class that have been intercepted by another javaagent",
-        );
+        assert_suggestion_result("How to advice a class that have been intercepted by another javaagent", NounVerbConfusion::default(), "How to advise a class that have been intercepted by another javaagent", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_to_breath_some() {
-        assert_suggestion_result(
-            "You go to the balcony to breath some fresh air and look down at the things outside.",
-            NounVerbConfusion::default(),
-            "You go to the balcony to breathe some fresh air and look down at the things outside.",
-        );
+        assert_suggestion_result("You go to the balcony to breath some fresh air and look down at the things outside.", NounVerbConfusion::default(), "You go to the balcony to breathe some fresh air and look down at the things outside.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_to_emphasis_a() {
-        assert_suggestion_result(
-            "we'd like to emphasis a few points below",
-            NounVerbConfusion::default(),
-            "we'd like to emphasize a few points below",
-        );
+        assert_suggestion_result("we'd like to emphasis a few points below", NounVerbConfusion::default(), "we'd like to emphasize a few points below", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_to_advice_their() {
-        assert_suggestion_result(
-            "People who are managing this situation tend to advice their users to lock+unlock their screen",
-            NounVerbConfusion::default(),
-            "People who are managing this situation tend to advise their users to lock+unlock their screen",
-        );
+        assert_suggestion_result("People who are managing this situation tend to advice their users to lock+unlock their screen", NounVerbConfusion::default(), "People who are managing this situation tend to advise their users to lock+unlock their screen", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // affect vs. effect sentences gathered from user reports
 
     #[test]
     fn fix_positive_affect_on_small_businesses() {
-        assert_suggestion_result(
-            "The new law had a positive affect on small businesses.",
-            NounVerbConfusion::default(),
-            "The new law had a positive effect on small businesses.",
-        );
+        assert_suggestion_result("The new law had a positive affect on small businesses.", NounVerbConfusion::default(), "The new law had a positive effect on small businesses.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_measured_the_affect_of_caffeine() {
-        assert_suggestion_result(
-            "We measured the affect of caffeine on reaction time.",
-            NounVerbConfusion::default(),
-            "We measured the effect of caffeine on reaction time.",
-        );
+        assert_suggestion_result("We measured the affect of caffeine on reaction time.", NounVerbConfusion::default(), "We measured the effect of caffeine on reaction time.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_side_affects_included_nausea() {
-        assert_suggestion_result(
-            "The side affects included nausea and fatigue.",
-            NounVerbConfusion::default(),
-            "The side effects included nausea and fatigue.",
-        );
+        assert_suggestion_result("The side affects included nausea and fatigue.", NounVerbConfusion::default(), "The side effects included nausea and fatigue.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_cause_and_affect_not_same() {
-        assert_suggestion_result(
-            "Cause and affect are not the same thing.",
-            NounVerbConfusion::default(),
-            "Cause and effect are not the same thing.",
-        );
+        assert_suggestion_result("Cause and affect are not the same thing.", NounVerbConfusion::default(), "Cause and effect are not the same thing.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_change_will_have_an_affect_on_revenue() {
-        assert_suggestion_result(
-            "The change will have an affect on our revenue.",
-            NounVerbConfusion::default(),
-            "The change will have an effect on our revenue.",
-        );
+        assert_suggestion_result("The change will have an affect on our revenue.", NounVerbConfusion::default(), "The change will have an effect on our revenue.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_medicine_took_affect_within_minutes() {
-        assert_suggestion_result(
-            "The medicine took affect within minutes.",
-            NounVerbConfusion::default(),
-            "The medicine took effect within minutes.",
-        );
+        assert_suggestion_result("The medicine took affect within minutes.", NounVerbConfusion::default(), "The medicine took effect within minutes.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_policy_will_come_into_affect() {
-        assert_suggestion_result(
-            "The policy will come into affect on October 1.",
-            NounVerbConfusion::default(),
-            "The policy will come into effect on October 1.",
-        );
+        assert_suggestion_result("The policy will come into affect on October 1.", NounVerbConfusion::default(), "The policy will come into effect on October 1.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_rules_are_now_in_affect() {
-        assert_suggestion_result(
-            "The rules are now in affect.",
-            NounVerbConfusion::default(),
-            "The rules are now in effect.",
-        );
+        assert_suggestion_result("The rules are now in affect.", NounVerbConfusion::default(), "The rules are now in effect.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_with_immediate_affect_office_closed() {
-        assert_suggestion_result(
-            "With immediate affect, the office is closed.",
-            NounVerbConfusion::default(),
-            "With immediate effect, the office is closed.",
-        );
+        assert_suggestion_result("With immediate affect, the office is closed.", NounVerbConfusion::default(), "With immediate effect, the office is closed.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_stunning_special_affects() {
-        assert_suggestion_result(
-            "The director used stunning special affects.",
-            NounVerbConfusion::default(),
-            "The director used stunning special effects.",
-        );
+        assert_suggestion_result("The director used stunning special affects.", NounVerbConfusion::default(), "The director used stunning special effects.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_placebo_affect_can_be_powerful() {
-        assert_suggestion_result(
-            "The placebo affect can be powerful.",
-            NounVerbConfusion::default(),
-            "The placebo effect can be powerful.",
-        );
+        assert_suggestion_result("The placebo affect can be powerful.", NounVerbConfusion::default(), "The placebo effect can be powerful.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_ripple_affect_across_market() {
-        assert_suggestion_result(
-            "We felt the ripple affect across the entire market.",
-            NounVerbConfusion::default(),
-            "We felt the ripple effect across the entire market.",
-        );
+        assert_suggestion_result("We felt the ripple affect across the entire market.", NounVerbConfusion::default(), "We felt the ripple effect across the entire market.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_snowball_affect_amplified_problem() {
-        assert_suggestion_result(
-            "The snowball affect amplified the problem.",
-            NounVerbConfusion::default(),
-            "The snowball effect amplified the problem.",
-        );
+        assert_suggestion_result("The snowball affect amplified the problem.", NounVerbConfusion::default(), "The snowball effect amplified the problem.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_knock_on_affect_throughout_team() {
-        assert_suggestion_result(
-            "That decision had a knock-on affect throughout the team.",
-            NounVerbConfusion::default(),
-            "That decision had a knock-on effect throughout the team.",
-        );
+        assert_suggestion_result("That decision had a knock-on affect throughout the team.", NounVerbConfusion::default(), "That decision had a knock-on effect throughout the team.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_greenhouse_affect_warms_planet() {
-        assert_suggestion_result(
-            "The greenhouse affect warms the planet.",
-            NounVerbConfusion::default(),
-            "The greenhouse effect warms the planet.",
-        );
+        assert_suggestion_result("The greenhouse affect warms the planet.", NounVerbConfusion::default(), "The greenhouse effect warms the planet.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_apology_had_little_affect() {
-        assert_suggestion_result(
-            "Her apology had little affect.",
-            NounVerbConfusion::default(),
-            "Her apology had little effect.",
-        );
+        assert_suggestion_result("Her apology had little affect.", NounVerbConfusion::default(), "Her apology had little effect.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_settings_go_into_affect() {
-        assert_suggestion_result(
-            "The new settings go into affect after a restart.",
-            NounVerbConfusion::default(),
-            "The new settings go into effect after a restart.",
-        );
+        assert_suggestion_result("The new settings go into affect after a restart.", NounVerbConfusion::default(), "The new settings go into effect after a restart.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_put_plan_into_affect() {
-        assert_suggestion_result(
-            "They put the new plan into affect last week.",
-            NounVerbConfusion::default(),
-            "They put the new plan into effect last week.",
-        );
+        assert_suggestion_result("They put the new plan into affect last week.", NounVerbConfusion::default(), "They put the new plan into effect last week.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_contract_comes_into_affect() {
-        assert_suggestion_result(
-            "The contract comes into affect at midnight.",
-            NounVerbConfusion::default(),
-            "The contract comes into effect at midnight.",
-        );
+        assert_suggestion_result("The contract comes into affect at midnight.", NounVerbConfusion::default(), "The contract comes into effect at midnight.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_warning_had_no_affect_on_behavior() {
-        assert_suggestion_result(
-            "The warning had no affect on his behavior.",
-            NounVerbConfusion::default(),
-            "The warning had no effect on his behavior.",
-        );
+        assert_suggestion_result("The warning had no affect on his behavior.", NounVerbConfusion::default(), "The warning had no effect on his behavior.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_inflation_had_opposite_affect() {
-        assert_suggestion_result(
-            "Inflation had the opposite affect than expected.",
-            NounVerbConfusion::default(),
-            "Inflation had the opposite effect than expected.",
-        );
+        assert_suggestion_result("Inflation had the opposite affect than expected.", NounVerbConfusion::default(), "Inflation had the opposite effect than expected.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_regulation_remains_in_affect() {
-        assert_suggestion_result(
-            "The regulation remains in affect until further notice.",
-            NounVerbConfusion::default(),
-            "The regulation remains in effect until further notice.",
-        );
+        assert_suggestion_result("The regulation remains in affect until further notice.", NounVerbConfusion::default(), "The regulation remains in effect until further notice.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_app_changes_take_affect() {
-        assert_suggestion_result(
-            "The app changes take affect next week.",
-            NounVerbConfusion::default(),
-            "The app changes take effect next week.",
-        );
+        assert_suggestion_result("The app changes take affect next week.", NounVerbConfusion::default(), "The app changes take effect next week.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_sound_affects_were_added() {
-        assert_suggestion_result(
-            "Sound affects were added in post.",
-            NounVerbConfusion::default(),
-            "Sound effects were added in post.",
-        );
+        assert_suggestion_result("Sound affects were added in post.", NounVerbConfusion::default(), "Sound effects were added in post.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // Effect/affect-specific checks
     // `effect` mistakenly used as the verb `affect`.
     #[test]
     fn corrects_noun_subject_effects_object() {
-        assert_suggestion_result(
-            "System outages effect our customers.",
-            NounVerbConfusion::default(),
-            "System outages affect our customers.",
-        );
+        assert_suggestion_result("System outages effect our customers.", NounVerbConfusion::default(), "System outages affect our customers.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_effects_variant() {
-        assert_suggestion_result(
-            "This policy effects employee morale.",
-            NounVerbConfusion::default(),
-            "This policy affects employee morale.",
-        );
+        assert_suggestion_result("This policy effects employee morale.", NounVerbConfusion::default(), "This policy affects employee morale.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -754,291 +506,163 @@ mod tests {
 
     #[test]
     fn corrects_tariff_effect_import_prices() {
-        assert_suggestion_result(
-            "The new tariff will effect import prices next quarter.",
-            NounVerbConfusion::default(),
-            "The new tariff will affect import prices next quarter.",
-        );
+        assert_suggestion_result("The new tariff will effect import prices next quarter.", NounVerbConfusion::default(), "The new tariff will affect import prices next quarter.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_droughts_effect_crop_yields() {
-        assert_suggestion_result(
-            "Prolonged droughts severely effect crop yields across the valley.",
-            NounVerbConfusion::default(),
-            "Prolonged droughts severely affect crop yields across the valley.",
-        );
+        assert_suggestion_result("Prolonged droughts severely effect crop yields across the valley.", NounVerbConfusion::default(), "Prolonged droughts severely affect crop yields across the valley.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_caffeine_effect_sleep() {
-        assert_suggestion_result(
-            "Caffeine can effect your sleep architecture.",
-            NounVerbConfusion::default(),
-            "Caffeine can affect your sleep architecture.",
-        );
+        assert_suggestion_result("Caffeine can effect your sleep architecture.", NounVerbConfusion::default(), "Caffeine can affect your sleep architecture.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_bug_effect_devices() {
-        assert_suggestion_result(
-            "The firmware bug doesn't effect older devices.",
-            NounVerbConfusion::default(),
-            "The firmware bug doesn't affect older devices.",
-        );
+        assert_suggestion_result("The firmware bug doesn't effect older devices.", NounVerbConfusion::default(), "The firmware bug doesn't affect older devices.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_sarcasm_effect_morale() {
-        assert_suggestion_result(
-            "Her sarcasm seemed to effect the team's morale.",
-            NounVerbConfusion::default(),
-            "Her sarcasm seemed to affect the team's morale.",
-        );
+        assert_suggestion_result("Her sarcasm seemed to effect the team's morale.", NounVerbConfusion::default(), "Her sarcasm seemed to affect the team's morale.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_outage_effect_timeline() {
-        assert_suggestion_result(
-            "How will this outage effect our deployment timeline?",
-            NounVerbConfusion::default(),
-            "How will this outage affect our deployment timeline?",
-        );
+        assert_suggestion_result("How will this outage effect our deployment timeline?", NounVerbConfusion::default(), "How will this outage affect our deployment timeline?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_temperatures_effect_battery() {
-        assert_suggestion_result(
-            "Cold temperatures drastically effect lithium-ion battery performance.",
-            NounVerbConfusion::default(),
-            "Cold temperatures drastically affect lithium-ion battery performance.",
-        );
+        assert_suggestion_result("Cold temperatures drastically effect lithium-ion battery performance.", NounVerbConfusion::default(), "Cold temperatures drastically affect lithium-ion battery performance.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_policy_effect_eligibility() {
-        assert_suggestion_result(
-            "The policy change could effect your eligibility for benefits.",
-            NounVerbConfusion::default(),
-            "The policy change could affect your eligibility for benefits.",
-        );
+        assert_suggestion_result("The policy change could effect your eligibility for benefits.", NounVerbConfusion::default(), "The policy change could affect your eligibility for benefits.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_variables_effect_results() {
-        assert_suggestion_result(
-            "These confounding variables may effect the study's results.",
-            NounVerbConfusion::default(),
-            "These confounding variables may affect the study's results.",
-        );
+        assert_suggestion_result("These confounding variables may effect the study's results.", NounVerbConfusion::default(), "These confounding variables may affect the study's results.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_fans_effect_concentration() {
-        assert_suggestion_result(
-            "The noisy HVAC fans constantly effect concentration in the lab.",
-            NounVerbConfusion::default(),
-            "The noisy HVAC fans constantly affect concentration in the lab.",
-        );
+        assert_suggestion_result("The noisy HVAC fans constantly effect concentration in the lab.", NounVerbConfusion::default(), "The noisy HVAC fans constantly affect concentration in the lab.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_hormones_effect_immunity() {
-        assert_suggestion_result(
-            "Stress hormones can effect immune response during recovery.",
-            NounVerbConfusion::default(),
-            "Stress hormones can affect immune response during recovery.",
-        );
+        assert_suggestion_result("Stress hormones can effect immune response during recovery.", NounVerbConfusion::default(), "Stress hormones can affect immune response during recovery.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_pacing_effect_engagement() {
-        assert_suggestion_result(
-            "The instructor's pacing tended to effect student engagement.",
-            NounVerbConfusion::default(),
-            "The instructor's pacing tended to affect student engagement.",
-        );
+        assert_suggestion_result("The instructor's pacing tended to effect student engagement.", NounVerbConfusion::default(), "The instructor's pacing tended to affect student engagement.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_humidity_effect_paint() {
-        assert_suggestion_result(
-            "Humidity levels directly effect paint curing time.",
-            NounVerbConfusion::default(),
-            "Humidity levels directly affect paint curing time.",
-        );
+        assert_suggestion_result("Humidity levels directly effect paint curing time.", NounVerbConfusion::default(), "Humidity levels directly affect paint curing time.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_exchange_effect_invoice() {
-        assert_suggestion_result(
-            "The exchange rate will surely effect the final invoice.",
-            NounVerbConfusion::default(),
-            "The exchange rate will surely affect the final invoice.",
-        );
+        assert_suggestion_result("The exchange rate will surely effect the final invoice.", NounVerbConfusion::default(), "The exchange rate will surely affect the final invoice.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_brightness_effect_contrast() {
-        assert_suggestion_result(
-            "Screen brightness settings can effect perceived contrast.",
-            NounVerbConfusion::default(),
-            "Screen brightness settings can affect perceived contrast.",
-        );
+        assert_suggestion_result("Screen brightness settings can effect perceived contrast.", NounVerbConfusion::default(), "Screen brightness settings can affect perceived contrast.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_medication_effect_him() {
-        assert_suggestion_result(
-            "The medication didn't effect him the way the doctor expected.",
-            NounVerbConfusion::default(),
-            "The medication didn't affect him the way the doctor expected.",
-        );
+        assert_suggestion_result("The medication didn't effect him the way the doctor expected.", NounVerbConfusion::default(), "The medication didn't affect him the way the doctor expected.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_payments_effect_credit() {
-        assert_suggestion_result(
-            "Late payments will negatively effect your credit score.",
-            NounVerbConfusion::default(),
-            "Late payments will negatively affect your credit score.",
-        );
+        assert_suggestion_result("Late payments will negatively effect your credit score.", NounVerbConfusion::default(), "Late payments will negatively affect your credit score.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_wording_effect_interpretation() {
-        assert_suggestion_result(
-            "Minor wording tweaks shouldn't effect the legal interpretation.",
-            NounVerbConfusion::default(),
-            "Minor wording tweaks shouldn't affect the legal interpretation.",
-        );
+        assert_suggestion_result("Minor wording tweaks shouldn't effect the legal interpretation.", NounVerbConfusion::default(), "Minor wording tweaks shouldn't affect the legal interpretation.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_traffic_effect_delivery() {
-        assert_suggestion_result(
-            "Traffic patterns often effect delivery windows downtown.",
-            NounVerbConfusion::default(),
-            "Traffic patterns often affect delivery windows downtown.",
-        );
+        assert_suggestion_result("Traffic patterns often effect delivery windows downtown.", NounVerbConfusion::default(), "Traffic patterns often affect delivery windows downtown.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_rumor_effect_confidence() {
-        assert_suggestion_result(
-            "The rumor started to effect investor confidence by noon.",
-            NounVerbConfusion::default(),
-            "The rumor started to affect investor confidence by noon.",
-        );
+        assert_suggestion_result("The rumor started to effect investor confidence by noon.", NounVerbConfusion::default(), "The rumor started to affect investor confidence by noon.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_allergies_effect_productivity() {
-        assert_suggestion_result(
-            "Seasonal allergies badly effect her productivity each April.",
-            NounVerbConfusion::default(),
-            "Seasonal allergies badly affect her productivity each April.",
-        );
+        assert_suggestion_result("Seasonal allergies badly effect her productivity each April.", NounVerbConfusion::default(), "Seasonal allergies badly affect her productivity each April.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_feedback_effect_roadmap() {
-        assert_suggestion_result(
-            "Your feedback won't immediately effect the roadmap.",
-            NounVerbConfusion::default(),
-            "Your feedback won't immediately affect the roadmap.",
-        );
+        assert_suggestion_result("Your feedback won't immediately effect the roadmap.", NounVerbConfusion::default(), "Your feedback won't immediately affect the roadmap.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_rules_effect_honeypot() {
-        assert_suggestion_result(
-            "I cant seem to get my additional rules to effect the honeypot",
-            NounVerbConfusion::default(),
-            "I cant seem to get my additional rules to affect the honeypot",
-        );
+        assert_suggestion_result("I cant seem to get my additional rules to effect the honeypot", NounVerbConfusion::default(), "I cant seem to get my additional rules to affect the honeypot", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_bandwidth_effect_video() {
-        assert_suggestion_result(
-            "Fluctuating bandwidth can effect video call quality.",
-            NounVerbConfusion::default(),
-            "Fluctuating bandwidth can affect video call quality.",
-        );
+        assert_suggestion_result("Fluctuating bandwidth can effect video call quality.", NounVerbConfusion::default(), "Fluctuating bandwidth can affect video call quality.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_gradient_effect_sensor() {
-        assert_suggestion_result(
-            "The temperature gradient might effect the sensor's calibration.",
-            NounVerbConfusion::default(),
-            "The temperature gradient might affect the sensor's calibration.",
-        );
+        assert_suggestion_result("The temperature gradient might effect the sensor's calibration.", NounVerbConfusion::default(), "The temperature gradient might affect the sensor's calibration.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_delays_effect_satisfaction() {
-        assert_suggestion_result(
-            "Even tiny delays can effect user satisfaction metrics.",
-            NounVerbConfusion::default(),
-            "Even tiny delays can affect user satisfaction metrics.",
-        );
+        assert_suggestion_result("Even tiny delays can effect user satisfaction metrics.", NounVerbConfusion::default(), "Even tiny delays can affect user satisfaction metrics.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_architecture_effect_gps() {
-        assert_suggestion_result(
-            "The surrounding architecture can effect GPS accuracy.",
-            NounVerbConfusion::default(),
-            "The surrounding architecture can affect GPS accuracy.",
-        );
+        assert_suggestion_result("The surrounding architecture can effect GPS accuracy.", NounVerbConfusion::default(), "The surrounding architecture can affect GPS accuracy.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_lighting_effect_color() {
-        assert_suggestion_result(
-            "Lighting conditions strongly effect color perception.",
-            NounVerbConfusion::default(),
-            "Lighting conditions strongly affect color perception.",
-        );
+        assert_suggestion_result("Lighting conditions strongly effect color perception.", NounVerbConfusion::default(), "Lighting conditions strongly affect color perception.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_coach_effect_roles() {
-        assert_suggestion_result(
-            "The new coach's strategy will effect players' roles.",
-            NounVerbConfusion::default(),
-            "The new coach's strategy will affect players' roles.",
-        );
+        assert_suggestion_result("The new coach's strategy will effect players' roles.", NounVerbConfusion::default(), "The new coach's strategy will affect players' roles.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_overtraining_effect_reaction() {
-        assert_suggestion_result(
-            "Overtraining can effect reaction time and coordination.",
-            NounVerbConfusion::default(),
-            "Overtraining can affect reaction time and coordination.",
-        );
+        assert_suggestion_result("Overtraining can effect reaction time and coordination.", NounVerbConfusion::default(), "Overtraining can affect reaction time and coordination.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_label_effect_behavior() {
-        assert_suggestion_result(
-            "The warning label may effect how consumers use the product.",
-            NounVerbConfusion::default(),
-            "The warning label may affect how consumers use the product.",
-        );
+        assert_suggestion_result("The warning label may effect how consumers use the product.", NounVerbConfusion::default(), "The warning label may affect how consumers use the product.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // `affect` mistakenly used as the noun `effect`.
     #[test]
     fn corrects_because_affect_is() {
-        assert_suggestion_result(
-            "I worry because affect is hidden.",
-            NounVerbConfusion::default(),
-            "I worry because effect is hidden.",
-        );
+        assert_suggestion_result("I worry because affect is hidden.", NounVerbConfusion::default(), "I worry because effect is hidden.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -1052,227 +676,127 @@ mod tests {
 
     #[test]
     fn corrects_positive_affect_on() {
-        assert_suggestion_result(
-            "The new law had a positive affect on small businesses.",
-            NounVerbConfusion::default(),
-            "The new law had a positive effect on small businesses.",
-        );
+        assert_suggestion_result("The new law had a positive affect on small businesses.", NounVerbConfusion::default(), "The new law had a positive effect on small businesses.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_great_affect() {
-        assert_suggestion_result(
-            "badges that they provide to users to allow them to promote their projects to great affect",
-            NounVerbConfusion::default(),
-            "badges that they provide to users to allow them to promote their projects to great effect",
-        );
+        assert_suggestion_result("badges that they provide to users to allow them to promote their projects to great affect", NounVerbConfusion::default(), "badges that they provide to users to allow them to promote their projects to great effect", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_affect_of() {
-        assert_suggestion_result(
-            "We measured the affect of caffeine on reaction time.",
-            NounVerbConfusion::default(),
-            "We measured the effect of caffeine on reaction time.",
-        );
+        assert_suggestion_result("We measured the affect of caffeine on reaction time.", NounVerbConfusion::default(), "We measured the effect of caffeine on reaction time.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_side_affects() {
-        assert_suggestion_result(
-            "The side affects included nausea and fatigue.",
-            NounVerbConfusion::default(),
-            "The side effects included nausea and fatigue.",
-        );
+        assert_suggestion_result("The side affects included nausea and fatigue.", NounVerbConfusion::default(), "The side effects included nausea and fatigue.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_cause_and_affect() {
-        assert_suggestion_result(
-            "Cause and affect are not the same thing.",
-            NounVerbConfusion::default(),
-            "Cause and effect are not the same thing.",
-        );
+        assert_suggestion_result("Cause and affect are not the same thing.", NounVerbConfusion::default(), "Cause and effect are not the same thing.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_have_an_affect_on() {
-        assert_suggestion_result(
-            "The change will have an affect on our revenue.",
-            NounVerbConfusion::default(),
-            "The change will have an effect on our revenue.",
-        );
+        assert_suggestion_result("The change will have an affect on our revenue.", NounVerbConfusion::default(), "The change will have an effect on our revenue.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_took_affect() {
-        assert_suggestion_result(
-            "The medicine took affect within minutes.",
-            NounVerbConfusion::default(),
-            "The medicine took effect within minutes.",
-        );
+        assert_suggestion_result("The medicine took affect within minutes.", NounVerbConfusion::default(), "The medicine took effect within minutes.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_come_into_affect() {
-        assert_suggestion_result(
-            "The policy will come into affect on October 1.",
-            NounVerbConfusion::default(),
-            "The policy will come into effect on October 1.",
-        );
+        assert_suggestion_result("The policy will come into affect on October 1.", NounVerbConfusion::default(), "The policy will come into effect on October 1.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_in_affect_sentence() {
-        assert_suggestion_result(
-            "The rules are now in affect.",
-            NounVerbConfusion::default(),
-            "The rules are now in effect.",
-        );
+        assert_suggestion_result("The rules are now in affect.", NounVerbConfusion::default(), "The rules are now in effect.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_immediate_affect() {
-        assert_suggestion_result(
-            "With immediate affect, the office is closed.",
-            NounVerbConfusion::default(),
-            "With immediate effect, the office is closed.",
-        );
+        assert_suggestion_result("With immediate affect, the office is closed.", NounVerbConfusion::default(), "With immediate effect, the office is closed.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_special_affects() {
-        assert_suggestion_result(
-            "The director used stunning special affects.",
-            NounVerbConfusion::default(),
-            "The director used stunning special effects.",
-        );
+        assert_suggestion_result("The director used stunning special affects.", NounVerbConfusion::default(), "The director used stunning special effects.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_placebo_affect() {
-        assert_suggestion_result(
-            "The placebo affect can be powerful.",
-            NounVerbConfusion::default(),
-            "The placebo effect can be powerful.",
-        );
+        assert_suggestion_result("The placebo affect can be powerful.", NounVerbConfusion::default(), "The placebo effect can be powerful.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_ripple_affect() {
-        assert_suggestion_result(
-            "We felt the ripple affect across the entire market.",
-            NounVerbConfusion::default(),
-            "We felt the ripple effect across the entire market.",
-        );
+        assert_suggestion_result("We felt the ripple affect across the entire market.", NounVerbConfusion::default(), "We felt the ripple effect across the entire market.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_snowball_affect() {
-        assert_suggestion_result(
-            "The snowball affect amplified the problem.",
-            NounVerbConfusion::default(),
-            "The snowball effect amplified the problem.",
-        );
+        assert_suggestion_result("The snowball affect amplified the problem.", NounVerbConfusion::default(), "The snowball effect amplified the problem.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_knock_on_affect() {
-        assert_suggestion_result(
-            "That decision had a knock-on affect throughout the team.",
-            NounVerbConfusion::default(),
-            "That decision had a knock-on effect throughout the team.",
-        );
+        assert_suggestion_result("That decision had a knock-on affect throughout the team.", NounVerbConfusion::default(), "That decision had a knock-on effect throughout the team.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_greenhouse_affect() {
-        assert_suggestion_result(
-            "The greenhouse affect warms the planet.",
-            NounVerbConfusion::default(),
-            "The greenhouse effect warms the planet.",
-        );
+        assert_suggestion_result("The greenhouse affect warms the planet.", NounVerbConfusion::default(), "The greenhouse effect warms the planet.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_little_affect() {
-        assert_suggestion_result(
-            "Her apology had little affect.",
-            NounVerbConfusion::default(),
-            "Her apology had little effect.",
-        );
+        assert_suggestion_result("Her apology had little affect.", NounVerbConfusion::default(), "Her apology had little effect.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_go_into_affect() {
-        assert_suggestion_result(
-            "The new settings go into affect after a restart.",
-            NounVerbConfusion::default(),
-            "The new settings go into effect after a restart.",
-        );
+        assert_suggestion_result("The new settings go into affect after a restart.", NounVerbConfusion::default(), "The new settings go into effect after a restart.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_put_plan_into_affect() {
-        assert_suggestion_result(
-            "They put the new plan into affect last week.",
-            NounVerbConfusion::default(),
-            "They put the new plan into effect last week.",
-        );
+        assert_suggestion_result("They put the new plan into affect last week.", NounVerbConfusion::default(), "They put the new plan into effect last week.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_contract_into_affect() {
-        assert_suggestion_result(
-            "The contract comes into affect at midnight.",
-            NounVerbConfusion::default(),
-            "The contract comes into effect at midnight.",
-        );
+        assert_suggestion_result("The contract comes into affect at midnight.", NounVerbConfusion::default(), "The contract comes into effect at midnight.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_no_affect_on_behavior() {
-        assert_suggestion_result(
-            "The warning had no affect on his behavior.",
-            NounVerbConfusion::default(),
-            "The warning had no effect on his behavior.",
-        );
+        assert_suggestion_result("The warning had no affect on his behavior.", NounVerbConfusion::default(), "The warning had no effect on his behavior.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_opposite_affect() {
-        assert_suggestion_result(
-            "Inflation had the opposite affect than expected.",
-            NounVerbConfusion::default(),
-            "Inflation had the opposite effect than expected.",
-        );
+        assert_suggestion_result("Inflation had the opposite affect than expected.", NounVerbConfusion::default(), "Inflation had the opposite effect than expected.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_remains_in_affect() {
-        assert_suggestion_result(
-            "The regulation remains in affect until further notice.",
-            NounVerbConfusion::default(),
-            "The regulation remains in effect until further notice.",
-        );
+        assert_suggestion_result("The regulation remains in affect until further notice.", NounVerbConfusion::default(), "The regulation remains in effect until further notice.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_take_affect_next_week() {
-        assert_suggestion_result(
-            "The app changes take affect next week.",
-            NounVerbConfusion::default(),
-            "The app changes take effect next week.",
-        );
+        assert_suggestion_result("The app changes take affect next week.", NounVerbConfusion::default(), "The app changes take effect next week.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_sound_affects() {
-        assert_suggestion_result(
-            "Sound affects were added in post.",
-            NounVerbConfusion::default(),
-            "Sound effects were added in post.",
-        );
+        assert_suggestion_result("Sound affects were added in post.", NounVerbConfusion::default(), "Sound effects were added in post.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -1295,11 +819,7 @@ mod tests {
 
     #[test]
     fn corrects_sound_affect() {
-        assert_suggestion_result(
-            "Diesel Generator's animation returns to 'idle' state, but it's sound affect remains in the 'work' state.",
-            NounVerbConfusion::default(),
-            "Diesel Generator's animation returns to 'idle' state, but it's sound effect remains in the 'work' state.",
-        );
+        assert_suggestion_result("Diesel Generator's animation returns to 'idle' state, but it's sound affect remains in the 'work' state.", NounVerbConfusion::default(), "Diesel Generator's animation returns to 'idle' state, but it's sound effect remains in the 'work' state.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

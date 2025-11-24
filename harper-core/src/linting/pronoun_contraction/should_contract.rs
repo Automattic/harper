@@ -108,29 +108,17 @@ mod tests {
 
     #[test]
     fn contracts_your_correctly() {
-        assert_suggestion_result(
-            "your the best",
-            ShouldContract::default(),
-            "you're the best",
-        );
+        assert_suggestion_result("your the best", ShouldContract::default(), "you're the best", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn contracts_were_complex_correctly() {
-        assert_suggestion_result(
-            "were a good team",
-            ShouldContract::default(),
-            "we're a good team",
-        );
+        assert_suggestion_result("were a good team", ShouldContract::default(), "we're a good team", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn case_insensitive_handling() {
-        assert_suggestion_result(
-            "Your the best",
-            ShouldContract::default(),
-            "You're the best",
-        );
+        assert_suggestion_result("Your the best", ShouldContract::default(), "You're the best", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

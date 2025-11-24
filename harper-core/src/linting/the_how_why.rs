@@ -94,20 +94,12 @@ mod tests {
 
     #[test]
     fn basic_the_how() {
-        assert_suggestion_result(
-            "This is the how it all started.",
-            TheHowWhy::default(),
-            "This is how it all started.",
-        );
+        assert_suggestion_result("This is the how it all started.", TheHowWhy::default(), "This is how it all started.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn the_why() {
-        assert_suggestion_result(
-            "The important part is the why it matters.",
-            TheHowWhy::default(),
-            "The important part is why it matters.",
-        );
+        assert_suggestion_result("The important part is the why it matters.", TheHowWhy::default(), "The important part is why it matters.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -130,29 +122,17 @@ mod tests {
 
     #[test]
     fn the_who() {
-        assert_suggestion_result(
-            "We must identify the who is responsible.",
-            TheHowWhy::default(),
-            "We must identify who is responsible.",
-        );
+        assert_suggestion_result("We must identify the who is responsible.", TheHowWhy::default(), "We must identify who is responsible.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn the_when() {
-        assert_suggestion_result(
-            "He outlined the when the new phase will start.",
-            TheHowWhy::default(),
-            "He outlined when the new phase will start.",
-        );
+        assert_suggestion_result("He outlined the when the new phase will start.", TheHowWhy::default(), "He outlined when the new phase will start.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn the_what() {
-        assert_suggestion_result(
-            "The presentation clarifies the what we intend to build.",
-            TheHowWhy::default(),
-            "The presentation clarifies what we intend to build.",
-        );
+        assert_suggestion_result("The presentation clarifies the what we intend to build.", TheHowWhy::default(), "The presentation clarifies what we intend to build.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

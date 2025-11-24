@@ -69,20 +69,12 @@ mod tests {
 
     #[test]
     fn far_be_it_for_me_capitalized() {
-        assert_suggestion_result(
-            "Far be it for me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.",
-            FarBeIt::default(),
-            "Far be it from me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.",
-        );
+        assert_suggestion_result("Far be it for me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.", FarBeIt::default(), "Far be it from me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn far_be_it_for_me_lowercase() {
-        assert_suggestion_result(
-            "Far be it for me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.",
-            FarBeIt::default(),
-            "Far be it from me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.",
-        );
+        assert_suggestion_result("Far be it for me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.", FarBeIt::default(), "Far be it from me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -96,11 +88,7 @@ mod tests {
 
     #[test]
     fn far_be_it_for_the_software() {
-        assert_suggestion_result(
-            "Far be it for the software to give any indication of that fact.",
-            FarBeIt::default(),
-            "Far be it from the software to give any indication of that fact.",
-        );
+        assert_suggestion_result("Far be it for the software to give any indication of that fact.", FarBeIt::default(), "Far be it from the software to give any indication of that fact.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

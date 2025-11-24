@@ -66,39 +66,23 @@ mod tests {
 
     #[test]
     fn corrects_pronoun_cant() {
-        assert_suggestion_result(
-            "I cant go to the store.",
-            Cant::default(),
-            "I can't go to the store.",
-        );
+        assert_suggestion_result("I cant go to the store.", Cant::default(), "I can't go to the store.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_proper_noun_cant() {
-        assert_suggestion_result(
-            "Bob cant go to the store.",
-            Cant::default(),
-            "Bob can't go to the store.",
-        );
+        assert_suggestion_result("Bob cant go to the store.", Cant::default(), "Bob can't go to the store.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_common_noun_cant() {
         // "dog" and "cat" are
-        assert_suggestion_result(
-            "A horse cant drink bottled water.",
-            Cant::default(),
-            "A horse can't drink bottled water.",
-        );
+        assert_suggestion_result("A horse cant drink bottled water.", Cant::default(), "A horse can't drink bottled water.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_cant_pronoun() {
-        assert_suggestion_result(
-            "Cant you go to the store?",
-            Cant::default(),
-            "Can't you go to the store?",
-        );
+        assert_suggestion_result("Cant you go to the store?", Cant::default(), "Can't you go to the store?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -118,11 +102,7 @@ mod tests {
     #[test]
     #[ignore = "'Convert' is also a noun, so a 'cant convert' could be a person who switched to speaking jargon"]
     fn corrects_cant_verb() {
-        assert_suggestion_result(
-            "Cant convert widget to input",
-            Cant::default(),
-            "Can't convert widget to input",
-        );
+        assert_suggestion_result("Cant convert widget to input", Cant::default(), "Can't convert widget to input", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

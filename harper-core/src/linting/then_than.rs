@@ -122,65 +122,37 @@ mod tests {
 
     #[test]
     fn catches_shorter_then() {
-        assert_suggestion_result(
-            "One was shorter then the other.",
-            ThenThan::default(),
-            "One was shorter than the other.",
-        );
+        assert_suggestion_result("One was shorter then the other.", ThenThan::default(), "One was shorter than the other.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_better_then() {
-        assert_suggestion_result(
-            "One was better then the other.",
-            ThenThan::default(),
-            "One was better than the other.",
-        );
+        assert_suggestion_result("One was better then the other.", ThenThan::default(), "One was better than the other.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_longer_then() {
-        assert_suggestion_result(
-            "One was longer then the other.",
-            ThenThan::default(),
-            "One was longer than the other.",
-        );
+        assert_suggestion_result("One was longer then the other.", ThenThan::default(), "One was longer than the other.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_less_then() {
-        assert_suggestion_result(
-            "I eat less then you.",
-            ThenThan::default(),
-            "I eat less than you.",
-        );
+        assert_suggestion_result("I eat less then you.", ThenThan::default(), "I eat less than you.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_more_then() {
-        assert_suggestion_result(
-            "I eat more then you.",
-            ThenThan::default(),
-            "I eat more than you.",
-        );
+        assert_suggestion_result("I eat more then you.", ThenThan::default(), "I eat more than you.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn stronger_should_change() {
-        assert_suggestion_result(
-            "a chain is no stronger then its weakest link",
-            ThenThan::default(),
-            "a chain is no stronger than its weakest link",
-        );
+        assert_suggestion_result("a chain is no stronger then its weakest link", ThenThan::default(), "a chain is no stronger than its weakest link", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn half_a_loaf_should_change() {
-        assert_suggestion_result(
-            "half a loaf is better then no bread",
-            ThenThan::default(),
-            "half a loaf is better than no bread",
-        );
+        assert_suggestion_result("half a loaf is better then no bread", ThenThan::default(), "half a loaf is better than no bread", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -190,29 +162,17 @@ mod tests {
 
     #[test]
     fn crazier_than_rat_should_change() {
-        assert_suggestion_result(
-            "crazier then a shithouse rat",
-            ThenThan::default(),
-            "crazier than a shithouse rat",
-        );
+        assert_suggestion_result("crazier then a shithouse rat", ThenThan::default(), "crazier than a shithouse rat", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn poke_in_eye_should_change() {
-        assert_suggestion_result(
-            "better then a poke in the eye with a sharp stick",
-            ThenThan::default(),
-            "better than a poke in the eye with a sharp stick",
-        );
+        assert_suggestion_result("better then a poke in the eye with a sharp stick", ThenThan::default(), "better than a poke in the eye with a sharp stick", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn other_then_should_change() {
-        assert_suggestion_result(
-            "There was no one other then us at the campsite.",
-            ThenThan::default(),
-            "There was no one other than us at the campsite.",
-        );
+        assert_suggestion_result("There was no one other then us at the campsite.", ThenThan::default(), "There was no one other than us at the campsite.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -339,47 +299,27 @@ mod tests {
 
     #[test]
     fn more_talented_then_her_issue_720() {
-        assert_suggestion_result(
-            "He was more talented then her at writing code.",
-            ThenThan::default(),
-            "He was more talented than her at writing code.",
-        );
+        assert_suggestion_result("He was more talented then her at writing code.", ThenThan::default(), "He was more talented than her at writing code.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn simpler_then_hers_issue_720() {
-        assert_suggestion_result(
-            "The design was simpler then hers in layout and color scheme.",
-            ThenThan::default(),
-            "The design was simpler than hers in layout and color scheme.",
-        );
+        assert_suggestion_result("The design was simpler then hers in layout and color scheme.", ThenThan::default(), "The design was simpler than hers in layout and color scheme.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn earlier_then_him_issue_720() {
-        assert_suggestion_result(
-            "We arrived earlier then him at the event.",
-            ThenThan::default(),
-            "We arrived earlier than him at the event.",
-        );
+        assert_suggestion_result("We arrived earlier then him at the event.", ThenThan::default(), "We arrived earlier than him at the event.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn more_robust_then_his_issue_720() {
-        assert_suggestion_result(
-            "This approach is more robust then his for handling edge cases.",
-            ThenThan::default(),
-            "This approach is more robust than his for handling edge cases.",
-        );
+        assert_suggestion_result("This approach is more robust then his for handling edge cases.", ThenThan::default(), "This approach is more robust than his for handling edge cases.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_more_recently_then_last_week_issue_720() {
-        assert_suggestion_result(
-            "We submitted the patch more recently then last week, so they should have it already.",
-            ThenThan::default(),
-            "We submitted the patch more recently than last week, so they should have it already.",
-        );
+        assert_suggestion_result("We submitted the patch more recently then last week, so they should have it already.", ThenThan::default(), "We submitted the patch more recently than last week, so they should have it already.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -411,55 +351,31 @@ mod tests {
 
     #[test]
     fn patch_worse_then() {
-        assert_suggestion_result(
-            "He was worse then her at writing code.",
-            ThenThan::default(),
-            "He was worse than her at writing code.",
-        );
+        assert_suggestion_result("He was worse then her at writing code.", ThenThan::default(), "He was worse than her at writing code.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_rather_then() {
-        assert_suggestion_result(
-            "If copy-paste has to be prevented, I'd prefer it if paste rather then copy would be disabled",
-            ThenThan::default(),
-            "If copy-paste has to be prevented, I'd prefer it if paste rather than copy would be disabled",
-        );
+        assert_suggestion_result("If copy-paste has to be prevented, I'd prefer it if paste rather then copy would be disabled", ThenThan::default(), "If copy-paste has to be prevented, I'd prefer it if paste rather than copy would be disabled", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_easier_said_then_done() {
-        assert_suggestion_result(
-            "This is currently easier said then done because you cannot press Ctrl+A in the debug console",
-            ThenThan::default(),
-            "This is currently easier said than done because you cannot press Ctrl+A in the debug console",
-        );
+        assert_suggestion_result("This is currently easier said then done because you cannot press Ctrl+A in the debug console", ThenThan::default(), "This is currently easier said than done because you cannot press Ctrl+A in the debug console", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_every_now_and_than() {
-        assert_suggestion_result(
-            "I was testing every now and than after an upgrade on the home assistant plugin.",
-            ThenThan::default(),
-            "I was testing every now and then after an upgrade on the home assistant plugin.",
-        );
+        assert_suggestion_result("I was testing every now and than after an upgrade on the home assistant plugin.", ThenThan::default(), "I was testing every now and then after an upgrade on the home assistant plugin.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_until_than() {
-        assert_suggestion_result(
-            "For the case anyone else ever hits this and the problem is not solved until than, this is a working workaround for the problem",
-            ThenThan::default(),
-            "For the case anyone else ever hits this and the problem is not solved until then, this is a working workaround for the problem",
-        );
+        assert_suggestion_result("For the case anyone else ever hits this and the problem is not solved until than, this is a working workaround for the problem", ThenThan::default(), "For the case anyone else ever hits this and the problem is not solved until then, this is a working workaround for the problem", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn patch_now_and_than() {
-        assert_suggestion_result(
-            "sounds good if golang-set becomes an issue between now and than…just let me know!",
-            ThenThan::default(),
-            "sounds good if golang-set becomes an issue between now and then…just let me know!",
-        );
+        assert_suggestion_result("sounds good if golang-set becomes an issue between now and than…just let me know!", ThenThan::default(), "sounds good if golang-set becomes an issue between now and then…just let me know!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

@@ -70,6 +70,7 @@ mod tests {
             "It is addicting like heroin.",
             Addicting::default(),
             "It is addictive like heroin.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -89,6 +90,7 @@ mod tests {
             "The objective of the game is simple yet highly addicting, you start out with the four basic elements.",
             Addicting::default(),
             "The objective of the game is simple yet highly addictive, you start out with the four basic elements.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -107,6 +109,7 @@ mod tests {
             "Yeah, I find taking the functional approach for these kinds of problems rather addicting myself :)",
             Addicting::default(),
             "Yeah, I find taking the functional approach for these kinds of problems rather addictive myself :)",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 

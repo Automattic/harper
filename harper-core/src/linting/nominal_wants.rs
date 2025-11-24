@@ -116,39 +116,23 @@ mod tests {
 
     #[test]
     fn fixes_he_wonts() {
-        assert_suggestion_result(
-            "He wonts to join us.",
-            NominalWants::default(),
-            "He wants to join us.",
-        );
+        assert_suggestion_result("He wonts to join us.", NominalWants::default(), "He wants to join us.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "This is not a grammar error if the previous word is `help`, `let`, or `make`."]
     fn fixes_it_wont() {
-        assert_suggestion_result(
-            "It wont to move forward.",
-            NominalWants::default(),
-            "It wants to move forward.",
-        );
+        assert_suggestion_result("It wont to move forward.", NominalWants::default(), "It wants to move forward.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_she_wont() {
-        assert_suggestion_result(
-            "She wont to leave early.",
-            NominalWants::default(),
-            "She wants to leave early.",
-        );
+        assert_suggestion_result("She wont to leave early.", NominalWants::default(), "She wants to leave early.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_i_wont() {
-        assert_suggestion_result(
-            "I wonts to leave early.",
-            NominalWants::default(),
-            "I want to leave early.",
-        );
+        assert_suggestion_result("I wonts to leave early.", NominalWants::default(), "I want to leave early.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -158,11 +142,7 @@ mod tests {
 
     #[test]
     fn fixes_you_wants() {
-        assert_suggestion_result(
-            "What do you wants?",
-            NominalWants::default(),
-            "What do you want?",
-        );
+        assert_suggestion_result("What do you wants?", NominalWants::default(), "What do you want?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

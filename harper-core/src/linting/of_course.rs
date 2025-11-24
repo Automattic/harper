@@ -86,16 +86,12 @@ mod tests {
 
     #[test]
     fn flags_of_curse() {
-        assert_suggestion_result("Yes, of curse!", OfCourse::default(), "Yes, of course!");
+        assert_suggestion_result("Yes, of curse!", OfCourse::default(), "Yes, of course!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_of_corse() {
-        assert_suggestion_result(
-            "Well, of corse we can.",
-            OfCourse::default(),
-            "Well, of course we can.",
-        );
+        assert_suggestion_result("Well, of corse we can.", OfCourse::default(), "Well, of course we can.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

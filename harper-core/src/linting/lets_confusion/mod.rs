@@ -20,52 +20,44 @@ mod tests {
 
     #[test]
     fn walking() {
-        assert_suggestion_result(
-            "The crutch let's him walk.",
-            LetsConfusion::default(),
-            "The crutch lets him walk.",
-        );
+        assert_suggestion_result("The crutch let's him walk.", LetsConfusion::default(), "The crutch lets him walk.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn issue_426_us() {
-        assert_suggestion_result("let's us do", LetsConfusion::default(), "lets us do");
+        assert_suggestion_result("let's us do", LetsConfusion::default(), "lets us do", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn issue_426_me() {
-        assert_suggestion_result("let's me do", LetsConfusion::default(), "lets me do");
+        assert_suggestion_result("let's me do", LetsConfusion::default(), "lets me do", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn from_harper_docs() {
-        assert_suggestion_result(
-            "Often the longest and the shortest words are the most helpful, so lets push them first.",
-            LetsConfusion::default(),
-            "Often the longest and the shortest words are the most helpful, so let's push them first.",
-        );
+        assert_suggestion_result("Often the longest and the shortest words are the most helpful, so lets push them first.", LetsConfusion::default(), "Often the longest and the shortest words are the most helpful, so let's push them first.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "\"play\" is also a noun so in a context like \"Sometimes the umpire lets play continue\""]
     fn issue_470_missing_apostrophe_play() {
-        assert_suggestion_result("lets play", LetsConfusion::default(), "let's play");
+        assert_suggestion_result("lets play", LetsConfusion::default(), "let's play", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore]
     fn issue_470_missing_subject_play() {
-        assert_suggestion_result("let play", LetsConfusion::default(), "let's play");
+        assert_suggestion_result("let play", LetsConfusion::default(), "let's play", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn issue_470_missing_apostrophe_proceed() {
-        assert_suggestion_result("lets proceed", LetsConfusion::default(), "let's proceed");
+        assert_suggestion_result("lets proceed", LetsConfusion::default(), "let's proceed", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn issue_470_missing_subject_proceed() {
-        assert_suggestion_result("let proceed", LetsConfusion::default(), "let's proceed");
+        assert_suggestion_result("let proceed", LetsConfusion::default(), "let's proceed", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

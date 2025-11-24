@@ -67,29 +67,17 @@ mod tests {
 
     #[test]
     fn flags_ask() {
-        assert_suggestion_result(
-            "Nora asked to us about the concert lineup.",
-            AskNoPreposition::default(),
-            "Nora asked us about the concert lineup.",
-        );
+        assert_suggestion_result("Nora asked to us about the concert lineup.", AskNoPreposition::default(), "Nora asked us about the concert lineup.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_ask_all_caps() {
-        assert_suggestion_result(
-            "NORA ASKED TO US ABOUT THE CONCERT LINEUP.",
-            AskNoPreposition::default(),
-            "NORA ASKED US ABOUT THE CONCERT LINEUP.",
-        );
+        assert_suggestion_result("NORA ASKED TO US ABOUT THE CONCERT LINEUP.", AskNoPreposition::default(), "NORA ASKED US ABOUT THE CONCERT LINEUP.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_tell() {
-        assert_suggestion_result(
-            "Please tell to him the results promptly.",
-            AskNoPreposition::default(),
-            "Please tell him the results promptly.",
-        );
+        assert_suggestion_result("Please tell to him the results promptly.", AskNoPreposition::default(), "Please tell him the results promptly.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -103,74 +91,42 @@ mod tests {
 
     #[test]
     fn flags_ask_us() {
-        assert_suggestion_result(
-            "Can you ask to us for directions?",
-            AskNoPreposition::default(),
-            "Can you ask us for directions?",
-        );
+        assert_suggestion_result("Can you ask to us for directions?", AskNoPreposition::default(), "Can you ask us for directions?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_asks_him() {
-        assert_suggestion_result(
-            "Julia asks to him every morning about the report.",
-            AskNoPreposition::default(),
-            "Julia asks him every morning about the report.",
-        );
+        assert_suggestion_result("Julia asks to him every morning about the report.", AskNoPreposition::default(), "Julia asks him every morning about the report.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_asked_me() {
-        assert_suggestion_result(
-            "They asked to me why I left early.",
-            AskNoPreposition::default(),
-            "They asked me why I left early.",
-        );
+        assert_suggestion_result("They asked to me why I left early.", AskNoPreposition::default(), "They asked me why I left early.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_told_one() {
-        assert_suggestion_result(
-            "The guide told to one the secret path.",
-            AskNoPreposition::default(),
-            "The guide told one the secret path.",
-        );
+        assert_suggestion_result("The guide told to one the secret path.", AskNoPreposition::default(), "The guide told one the secret path.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_telling_it() {
-        assert_suggestion_result(
-            "She is telling to it with gentle words.",
-            AskNoPreposition::default(),
-            "She is telling it with gentle words.",
-        );
+        assert_suggestion_result("She is telling to it with gentle words.", AskNoPreposition::default(), "She is telling it with gentle words.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_tells_them() {
-        assert_suggestion_result(
-            "He tells to them stories at night.",
-            AskNoPreposition::default(),
-            "He tells them stories at night.",
-        );
+        assert_suggestion_result("He tells to them stories at night.", AskNoPreposition::default(), "He tells them stories at night.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_telling_him() {
-        assert_suggestion_result(
-            "I was telling to him the latest news.",
-            AskNoPreposition::default(),
-            "I was telling him the latest news.",
-        );
+        assert_suggestion_result("I was telling to him the latest news.", AskNoPreposition::default(), "I was telling him the latest news.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_asking_you() {
-        assert_suggestion_result(
-            "Someone is asking to you for help.",
-            AskNoPreposition::default(),
-            "Someone is asking you for help.",
-        );
+        assert_suggestion_result("Someone is asking to you for help.", AskNoPreposition::default(), "Someone is asking you for help.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

@@ -96,25 +96,17 @@ mod tests {
     // Flagged examples
     #[test]
     fn flags_you_out_to_be_able_to_see() {
-        assert_suggestion_result(
-            "you out to be able to see",
-            OughtToBe::default(),
-            "you ought to be able to see",
-        );
+        assert_suggestion_result("you out to be able to see", OughtToBe::default(), "you ought to be able to see", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_as_it_out_to_be() {
-        assert_suggestion_result("as it out to be", OughtToBe::default(), "as it ought to be");
+        assert_suggestion_result("as it out to be", OughtToBe::default(), "as it ought to be", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flags_then_it_out_to_be() {
-        assert_suggestion_result(
-            "then it out to be",
-            OughtToBe::default(),
-            "then it ought to be",
-        );
+        assert_suggestion_result("then it out to be", OughtToBe::default(), "then it ought to be", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // Legit phrasal-verb cases that should be ignored

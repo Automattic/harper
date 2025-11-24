@@ -83,7 +83,7 @@ mod tests {
 
     #[test]
     fn fix_at_4am_in_the_morning() {
-        assert_suggestion_result("At 4am in the morning", AmInTheMorning::default(), "At 4am");
+        assert_suggestion_result("At 4am in the morning", AmInTheMorning::default(), "At 4am", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -93,11 +93,7 @@ mod tests {
 
     #[test]
     fn fix_at_4_am_in_the_morning() {
-        assert_suggestion_result(
-            "At 4 am in the morning",
-            AmInTheMorning::default(),
-            "At 4 am",
-        );
+        assert_suggestion_result("At 4 am in the morning", AmInTheMorning::default(), "At 4 am", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -107,7 +103,7 @@ mod tests {
 
     #[test]
     fn fix_at_4am_in_the_morning_caps() {
-        assert_suggestion_result("At 4AM in the morning", AmInTheMorning::default(), "At 4AM");
+        assert_suggestion_result("At 4AM in the morning", AmInTheMorning::default(), "At 4AM", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -117,11 +113,7 @@ mod tests {
 
     #[test]
     fn fix_at_4_am_in_the_morning_caps() {
-        assert_suggestion_result(
-            "At 4 AM in the morning",
-            AmInTheMorning::default(),
-            "At 4 AM",
-        );
+        assert_suggestion_result("At 4 AM in the morning", AmInTheMorning::default(), "At 4 AM", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -131,22 +123,14 @@ mod tests {
 
     #[test]
     fn fix_at_4_a_dot_m_dot_in_the_morning() {
-        assert_suggestion_result(
-            "At 4 a.m. in the morning",
-            AmInTheMorning::default(),
-            "At 4 a.m.",
-        );
+        assert_suggestion_result("At 4 a.m. in the morning", AmInTheMorning::default(), "At 4 a.m.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // real-world examples
 
     #[test]
     fn fix_real_world_1_am_in_the_morning() {
-        assert_suggestion_result(
-            "I wrote this whole program as a joke, at 1 AM in the morning. Nothing else to say.",
-            AmInTheMorning::default(),
-            "I wrote this whole program as a joke, at 1 AM. Nothing else to say.",
-        );
+        assert_suggestion_result("I wrote this whole program as a joke, at 1 AM in the morning. Nothing else to say.", AmInTheMorning::default(), "I wrote this whole program as a joke, at 1 AM. Nothing else to say.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "I wrote this whole program as a joke, at 1 AM in the morning. Nothing else to say.",
             AmInTheMorning::default(),
@@ -157,11 +141,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_3am_in_the_morning() {
-        assert_suggestion_result(
-            "Luckily I was at home, but it was not fun at 3am in the morning.",
-            AmInTheMorning::default(),
-            "Luckily I was at home, but it was not fun at 3am.",
-        );
+        assert_suggestion_result("Luckily I was at home, but it was not fun at 3am in the morning.", AmInTheMorning::default(), "Luckily I was at home, but it was not fun at 3am.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "Luckily I was at home, but it was not fun at 3am in the morning.",
             AmInTheMorning::default(),
@@ -172,11 +152,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_3am_at_night() {
-        assert_suggestion_result(
-            "If I want to run my script or some cron job at 3am at night, it seems to be not possible after macOS is in sleep mode.",
-            AmInTheMorning::default(),
-            "If I want to run my script or some cron job at 3am, it seems to be not possible after macOS is in sleep mode.",
-        );
+        assert_suggestion_result("If I want to run my script or some cron job at 3am at night, it seems to be not possible after macOS is in sleep mode.", AmInTheMorning::default(), "If I want to run my script or some cron job at 3am, it seems to be not possible after macOS is in sleep mode.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "If I want to run my script or some cron job at 3am at night, it seems to be not possible after macOS is in sleep mode.",
             AmInTheMorning::default(),
@@ -187,11 +163,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_9pm_at_night() {
-        assert_suggestion_result(
-            "The servers stop at 9PM at night and starts again at 9AM.",
-            AmInTheMorning::default(),
-            "The servers stop at 9PM and starts again at 9AM.",
-        );
+        assert_suggestion_result("The servers stop at 9PM at night and starts again at 9AM.", AmInTheMorning::default(), "The servers stop at 9PM and starts again at 9AM.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "The servers stop at 9PM at night and starts again at 9AM.",
             AmInTheMorning::default(),
@@ -202,11 +174,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_3_30_am_in_the_morning() {
-        assert_suggestion_result(
-            "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM in the morning.",
-            AmInTheMorning::default(),
-            "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM.",
-        );
+        assert_suggestion_result("Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM in the morning.", AmInTheMorning::default(), "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM in the morning.",
             AmInTheMorning::default(),
@@ -217,11 +185,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_5_pm_in_the_afternoon_caps_dots() {
-        assert_suggestion_result(
-            "Style issues get a blue marker: It's 5 P.M. in the afternoon.",
-            AmInTheMorning::default(),
-            "Style issues get a blue marker: It's 5 P.M..",
-        );
+        assert_suggestion_result("Style issues get a blue marker: It's 5 P.M. in the afternoon.", AmInTheMorning::default(), "Style issues get a blue marker: It's 5 P.M..", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "Style issues get a blue marker: It's 5 P.M. in the afternoon.",
             AmInTheMorning::default(),
@@ -232,11 +196,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_5_pm_in_the_afternoon_caps() {
-        assert_suggestion_result(
-            "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.",
-            AmInTheMorning::default(),
-            "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM on Monday, 27 May 2007.",
-        );
+        assert_suggestion_result("Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.", AmInTheMorning::default(), "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM on Monday, 27 May 2007.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.",
             AmInTheMorning::default(),
@@ -247,11 +207,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_6_pm_in_the_evening() {
-        assert_suggestion_result(
-            "I am in China and it is six pm in the evening.",
-            AmInTheMorning::default(),
-            "I am in China and it is six pm.",
-        );
+        assert_suggestion_result("I am in China and it is six pm in the evening.", AmInTheMorning::default(), "I am in China and it is six pm.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "I am in China and it is six pm in the evening.",
             AmInTheMorning::default(),
@@ -262,11 +218,7 @@ mod tests {
 
     #[test]
     fn fix_real_world_4_am_in_the_morning() {
-        assert_suggestion_result(
-            "On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.",
-            AmInTheMorning::default(),
-            "On the second application, we normally have the 503 between 1am and 4 am, almost every day.",
-        );
+        assert_suggestion_result("On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.", AmInTheMorning::default(), "On the second application, we normally have the 503 between 1am and 4 am, almost every day.", crate::languages::Language::English(crate::EnglishDialect::American));
         assert_nth_suggestion_result(
             "On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.",
             AmInTheMorning::default(),

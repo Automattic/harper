@@ -168,6 +168,7 @@ mod tests {
             "The word america should be capitalized.",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "The word America should be capitalized.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -323,6 +324,7 @@ mod tests {
             "abanonedware",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::Australian),
             "abandonware",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -416,6 +418,7 @@ mod tests {
             "hes",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "he's",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -425,6 +428,7 @@ mod tests {
             "shes",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "she's",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -518,6 +522,7 @@ mod tests_portuguese {
                 language,
             ),
             "The word Brazil should be capitalized.",
+            Language::English(crate::EnglishDialect::American),
         );
     }
 }

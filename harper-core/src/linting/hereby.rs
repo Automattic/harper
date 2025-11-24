@@ -55,10 +55,6 @@ mod tests {
 
     #[test]
     fn declare() {
-        assert_suggestion_result(
-            "I here by declare this state to be free.",
-            Hereby::default(),
-            "I hereby declare this state to be free.",
-        );
+        assert_suggestion_result("I here by declare this state to be free.", Hereby::default(), "I hereby declare this state to be free.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

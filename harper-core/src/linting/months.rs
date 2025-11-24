@@ -129,82 +129,46 @@ mod tests {
 
     #[test]
     fn fix_in_august() {
-        assert_suggestion_result(
-            "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in august.",
-            Months::default(),
-            "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in August.",
-        );
+        assert_suggestion_result("I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in august.", Months::default(), "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in August.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_in_march() {
-        assert_suggestion_result(
-            "This game was originally written by me in march 2000.",
-            Months::default(),
-            "This game was originally written by me in March 2000.",
-        );
+        assert_suggestion_result("This game was originally written by me in march 2000.", Months::default(), "This game was originally written by me in March 2000.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_in_may() {
-        assert_suggestion_result(
-            "typo in may 2024 updates",
-            Months::default(),
-            "typo in May 2024 updates",
-        );
+        assert_suggestion_result("typo in may 2024 updates", Months::default(), "typo in May 2024 updates", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_last_august() {
-        assert_suggestion_result(
-            "since last august smart has been leading talks to open up japan",
-            Months::default(),
-            "since last August smart has been leading talks to open up japan",
-        );
+        assert_suggestion_result("since last august smart has been leading talks to open up japan", Months::default(), "since last August smart has been leading talks to open up japan", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_last_may() {
-        assert_suggestion_result(
-            "I have a 2019 mini countryman that i purchased last may.",
-            Months::default(),
-            "I have a 2019 mini countryman that i purchased last May.",
-        );
+        assert_suggestion_result("I have a 2019 mini countryman that i purchased last may.", Months::default(), "I have a 2019 mini countryman that i purchased last May.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_of_august() {
-        assert_suggestion_result(
-            "change abbreviation of august for Indonesian locale",
-            Months::default(),
-            "change abbreviation of August for Indonesian locale",
-        )
+        assert_suggestion_result("change abbreviation of august for Indonesian locale", Months::default(), "change abbreviation of August for Indonesian locale", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn fix_march_2019() {
-        assert_suggestion_result(
-            "How to disable drop cap today (late march 2019)",
-            Months::default(),
-            "How to disable drop cap today (late March 2019)",
-        );
+        assert_suggestion_result("How to disable drop cap today (late march 2019)", Months::default(), "How to disable drop cap today (late March 2019)", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_may_2022() {
-        assert_suggestion_result(
-            "That will be ende from 30 may 2022.",
-            Months::default(),
-            "That will be ende from 30 May 2022.",
-        );
+        assert_suggestion_result("That will be ende from 30 may 2022.", Months::default(), "That will be ende from 30 May 2022.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_days() {
-        assert_suggestion_result(
-            "Between march 15 and august 27.",
-            Months::default(),
-            "Between March 15 and August 27.",
-        );
+        assert_suggestion_result("Between march 15 and august 27.", Months::default(), "Between March 15 and August 27.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

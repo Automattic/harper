@@ -75,15 +75,11 @@ mod tests {
 
     #[test]
     fn flag_most_biggest() {
-        assert_suggestion_result("Most biggest", MoreBetter::default(), "Biggest");
+        assert_suggestion_result("Most biggest", MoreBetter::default(), "Biggest", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flag_more_better_and_more_better() {
-        assert_suggestion_result(
-            "More bigger is more better",
-            MoreBetter::default(),
-            "Bigger is better",
-        );
+        assert_suggestion_result("More bigger is more better", MoreBetter::default(), "Bigger is better", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

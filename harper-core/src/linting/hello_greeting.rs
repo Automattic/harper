@@ -61,41 +61,37 @@ mod tests {
 
     #[test]
     fn corrects_basic_greeting() {
-        assert_suggestion_result("Halo John!", HelloGreeting::default(), "Hello John!");
+        assert_suggestion_result("Halo John!", HelloGreeting::default(), "Hello John!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_comma() {
-        assert_suggestion_result("Halo, Jane.", HelloGreeting::default(), "Hello, Jane.");
+        assert_suggestion_result("Halo, Jane.", HelloGreeting::default(), "Hello, Jane.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_world() {
-        assert_suggestion_result("Halo world!", HelloGreeting::default(), "Hello world!");
+        assert_suggestion_result("Halo world!", HelloGreeting::default(), "Hello world!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_without_punctuation() {
-        assert_suggestion_result(
-            "Halo there friend.",
-            HelloGreeting::default(),
-            "Hello there friend.",
-        );
+        assert_suggestion_result("Halo there friend.", HelloGreeting::default(), "Hello there friend.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_single_word_sentence() {
-        assert_suggestion_result("Halo!", HelloGreeting::default(), "Hello!");
+        assert_suggestion_result("Halo!", HelloGreeting::default(), "Hello!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_question() {
-        assert_suggestion_result("Halo?", HelloGreeting::default(), "Hello?");
+        assert_suggestion_result("Halo?", HelloGreeting::default(), "Hello?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_uppercase() {
-        assert_suggestion_result("HALO!", HelloGreeting::default(), "HELLO!");
+        assert_suggestion_result("HALO!", HelloGreeting::default(), "HELLO!", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -118,10 +114,6 @@ mod tests {
 
     #[test]
     fn corrects_in_quotes() {
-        assert_suggestion_result(
-            "\"Halo John!\"",
-            HelloGreeting::default(),
-            "\"Hello John!\"",
-        );
+        assert_suggestion_result("\"Halo John!\"", HelloGreeting::default(), "\"Hello John!\"", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

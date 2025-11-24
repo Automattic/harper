@@ -43,15 +43,11 @@ mod tests {
 
     #[test]
     fn simple() {
-        assert_suggestion_result("wordpress.com", WordPressDotcom, "WordPress.com");
+        assert_suggestion_result("wordpress.com", WordPressDotcom, "WordPress.com", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn sentence() {
-        assert_suggestion_result(
-            "wordpress.com is a great hosting provider",
-            WordPressDotcom,
-            "WordPress.com is a great hosting provider",
-        );
+        assert_suggestion_result("wordpress.com is a great hosting provider", WordPressDotcom, "WordPress.com is a great hosting provider", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

@@ -106,20 +106,12 @@ mod tests {
 
     #[test]
     fn corrects_its_various() {
-        assert_suggestion_result(
-            "I like it's various colors.",
-            ItsPossessive::default(),
-            "I like its various colors.",
-        );
+        assert_suggestion_result("I like it's various colors.", ItsPossessive::default(), "I like its various colors.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_inspiration() {
-        assert_suggestion_result(
-            "I would just put `Orthography` and it's various function implementations in their own `orthography.rs` file.",
-            ItsPossessive::default(),
-            "I would just put `Orthography` and its various function implementations in their own `orthography.rs` file.",
-        );
+        assert_suggestion_result("I would just put `Orthography` and it's various function implementations in their own `orthography.rs` file.", ItsPossessive::default(), "I would just put `Orthography` and its various function implementations in their own `orthography.rs` file.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -133,11 +125,7 @@ mod tests {
 
     #[test]
     fn admired_sculpture_for_its_intricacy() {
-        assert_suggestion_result(
-            "I admired the sculpture for it's intricacy.",
-            ItsPossessive::default(),
-            "I admired the sculpture for its intricacy.",
-        );
+        assert_suggestion_result("I admired the sculpture for it's intricacy.", ItsPossessive::default(), "I admired the sculpture for its intricacy.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -151,11 +139,7 @@ mod tests {
 
     #[test]
     fn plain_sentence_with_apostrophe_s() {
-        assert_suggestion_result(
-            "It's benefits are numerous.",
-            ItsPossessive::default(),
-            "Its benefits are numerous.",
-        );
+        assert_suggestion_result("It's benefits are numerous.", ItsPossessive::default(), "Its benefits are numerous.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

@@ -63,38 +63,22 @@ mod tests {
 
     #[test]
     fn fixes_no_one_elses() {
-        assert_suggestion_result(
-            "It's no one elses problem.",
-            ElsePossessive::default(),
-            "It's no one else's problem.",
-        );
+        assert_suggestion_result("It's no one elses problem.", ElsePossessive::default(), "It's no one else's problem.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_someone_elses() {
-        assert_suggestion_result(
-            "It's someone elses problem.",
-            ElsePossessive::default(),
-            "It's someone else's problem.",
-        );
+        assert_suggestion_result("It's someone elses problem.", ElsePossessive::default(), "It's someone else's problem.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_anybody_elses() {
-        assert_suggestion_result(
-            "Was that anybody elses idea?",
-            ElsePossessive::default(),
-            "Was that anybody else's idea?",
-        );
+        assert_suggestion_result("Was that anybody elses idea?", ElsePossessive::default(), "Was that anybody else's idea?", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fixes_everyone_elses() {
-        assert_suggestion_result(
-            "He echoed everyone elses concerns.",
-            ElsePossessive::default(),
-            "He echoed everyone else's concerns.",
-        );
+        assert_suggestion_result("He echoed everyone elses concerns.", ElsePossessive::default(), "He echoed everyone else's concerns.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

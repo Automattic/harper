@@ -99,57 +99,33 @@ mod tests {
 
     #[test]
     fn issue_1905() {
-        assert_suggestion_result(
-            "I want to try this insteadof that.",
-            SplitWords::default(),
-            "I want to try this instead of that.",
-        );
+        assert_suggestion_result("I want to try this insteadof that.", SplitWords::default(), "I want to try this instead of that.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     /// Same as above, but with the longer component word at the end.
     #[test]
     fn issue_1905_rev() {
-        assert_suggestion_result(
-            "I want to try thisinstead of that.",
-            SplitWords::default(),
-            "I want to try this instead of that.",
-        );
+        assert_suggestion_result("I want to try thisinstead of that.", SplitWords::default(), "I want to try this instead of that.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn split_common() {
-        assert_suggestion_result(
-            "This is notnot a problem.",
-            SplitWords::default(),
-            "This is not not a problem.",
-        );
+        assert_suggestion_result("This is notnot a problem.", SplitWords::default(), "This is not not a problem.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn splits_multiple_compound_words() {
-        assert_suggestion_result(
-            "We stared intothe darkness and kindof panicked about sortof everything.",
-            SplitWords::default(),
-            "We stared into the darkness and kind of panicked about sort of everything.",
-        );
+        assert_suggestion_result("We stared intothe darkness and kindof panicked about sortof everything.", SplitWords::default(), "We stared into the darkness and kind of panicked about sort of everything.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn splits_word_with_longer_prefix() {
-        assert_suggestion_result(
-            "The astronauts waited on the landingpad for hours.",
-            SplitWords::default(),
-            "The astronauts waited on the landing pad for hours.",
-        );
+        assert_suggestion_result("The astronauts waited on the landingpad for hours.", SplitWords::default(), "The astronauts waited on the landing pad for hours.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn splits_before_punctuation() {
-        assert_suggestion_result(
-            "This was kindof, actually, hilarious.",
-            SplitWords::default(),
-            "This was kind of, actually, hilarious.",
-        );
+        assert_suggestion_result("This was kindof, actually, hilarious.", SplitWords::default(), "This was kind of, actually, hilarious.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

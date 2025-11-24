@@ -56,28 +56,16 @@ mod tests {
 
     #[test]
     fn corrects_out_of_date() {
-        assert_suggestion_result(
-            "The software is out of date.",
-            OutOfDate::default(),
-            "The software is out-of-date.",
-        );
+        assert_suggestion_result("The software is out of date.", OutOfDate::default(), "The software is out-of-date.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_out_of_date_with_variation() {
-        assert_suggestion_result(
-            "This information is out of-date.",
-            OutOfDate::default(),
-            "This information is out-of-date.",
-        );
+        assert_suggestion_result("This information is out of-date.", OutOfDate::default(), "This information is out-of-date.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn allows_correct_usage() {
-        assert_suggestion_result(
-            "The guidelines are out-of-date.",
-            OutOfDate::default(),
-            "The guidelines are out-of-date.",
-        );
+        assert_suggestion_result("The guidelines are out-of-date.", OutOfDate::default(), "The guidelines are out-of-date.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

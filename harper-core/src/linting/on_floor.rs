@@ -106,38 +106,22 @@ mod tests {
 
     #[test]
     fn lint_with_in() {
-        assert_suggestion_result(
-            "I'm living in the 3rd floor of a building.",
-            OnFloor::default(),
-            "I'm living on the 3rd floor of a building.",
-        );
+        assert_suggestion_result("I'm living in the 3rd floor of a building.", OnFloor::default(), "I'm living on the 3rd floor of a building.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn lint_with_at() {
-        assert_suggestion_result(
-            "I'm living at the second floor of a building.",
-            OnFloor::default(),
-            "I'm living on the second floor of a building.",
-        );
+        assert_suggestion_result("I'm living at the second floor of a building.", OnFloor::default(), "I'm living on the second floor of a building.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn in_the_start_of_sentence() {
-        assert_suggestion_result(
-            "In the 3rd floor of a building.",
-            OnFloor::default(),
-            "On the 3rd floor of a building.",
-        );
+        assert_suggestion_result("In the 3rd floor of a building.", OnFloor::default(), "On the 3rd floor of a building.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn at_the_start_of_sentence() {
-        assert_suggestion_result(
-            "At the second floor of a building.",
-            OnFloor::default(),
-            "On the second floor of a building.",
-        );
+        assert_suggestion_result("At the second floor of a building.", OnFloor::default(), "On the second floor of a building.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

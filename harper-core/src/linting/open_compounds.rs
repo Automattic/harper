@@ -160,20 +160,12 @@ mod tests {
 
     #[test]
     fn corrects_lone_infront() {
-        assert_suggestion_result(
-            "Button always overlaps (infront) of other views.",
-            OpenCompounds::default(),
-            "Button always overlaps (in front) of other views.",
-        );
+        assert_suggestion_result("Button always overlaps (infront) of other views.", OpenCompounds::default(), "Button always overlaps (in front) of other views.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_infront() {
-        assert_suggestion_result(
-            "So if i have no variable or a running process id/name which indicates that liveley is infront/fullscreen i can't do anything further via batch and must wait ...",
-            OpenCompounds::default(),
-            "So if i have no variable or a running process id/name which indicates that liveley is in front/fullscreen i can't do anything further via batch and must wait ...",
-        );
+        assert_suggestion_result("So if i have no variable or a running process id/name which indicates that liveley is infront/fullscreen i can't do anything further via batch and must wait ...", OpenCompounds::default(), "So if i have no variable or a running process id/name which indicates that liveley is in front/fullscreen i can't do anything further via batch and must wait ...", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -196,11 +188,7 @@ mod tests {
 
     #[test]
     fn correct_with_period_after() {
-        assert_suggestion_result(
-            "Car with a reversed ramp infront.",
-            OpenCompounds::default(),
-            "Car with a reversed ramp in front.",
-        );
+        assert_suggestion_result("Car with a reversed ramp infront.", OpenCompounds::default(), "Car with a reversed ramp in front.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -233,122 +221,82 @@ mod tests {
 
     #[test]
     fn even_repeated_infront_works() {
-        assert_suggestion_result(
-            "infront infront",
-            OpenCompounds::default(),
-            "in front in front",
-        );
+        assert_suggestion_result("infront infront", OpenCompounds::default(), "in front in front", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // A few
 
     #[test]
     fn correct_afew_atomic() {
-        assert_suggestion_result(
-            "ITK code to generate anisotropic metrics, mostly Riemannian metrics and afew particular cases of Finslerian metrics.",
-            OpenCompounds::default(),
-            "ITK code to generate anisotropic metrics, mostly Riemannian metrics and a few particular cases of Finslerian metrics.",
-        );
+        assert_suggestion_result("ITK code to generate anisotropic metrics, mostly Riemannian metrics and afew particular cases of Finslerian metrics.", OpenCompounds::default(), "ITK code to generate anisotropic metrics, mostly Riemannian metrics and a few particular cases of Finslerian metrics.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // A lot
 
     #[test]
     fn correct_alot_atomic() {
-        assert_suggestion_result("Alot", OpenCompounds::default(), "A lot");
+        assert_suggestion_result("Alot", OpenCompounds::default(), "A lot", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // A while
 
     #[test]
     fn correct_awhile_atomic() {
-        assert_suggestion_result("Awhile", OpenCompounds::default(), "A while");
+        assert_suggestion_result("Awhile", OpenCompounds::default(), "A while", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn test_in_quite_a_while() {
-        assert_suggestion_result(
-            "I haven’t seen him in quite awhile.",
-            OpenCompounds::default(),
-            "I haven’t seen him in quite a while.",
-        );
+        assert_suggestion_result("I haven’t seen him in quite awhile.", OpenCompounds::default(), "I haven’t seen him in quite a while.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn test_in_a_while() {
-        assert_suggestion_result(
-            "I haven't checked in awhile.",
-            OpenCompounds::default(),
-            "I haven't checked in a while.",
-        );
+        assert_suggestion_result("I haven't checked in awhile.", OpenCompounds::default(), "I haven't checked in a while.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_for_awhile() {
-        assert_suggestion_result(
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
-            OpenCompounds::default(),
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
-        );
+        assert_suggestion_result("Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile", OpenCompounds::default(), "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_after_awhile() {
-        assert_suggestion_result(
-            "Links on portal stop working after awhile, requiring page refresh.",
-            OpenCompounds::default(),
-            "Links on portal stop working after a while, requiring page refresh.",
-        );
+        assert_suggestion_result("Links on portal stop working after awhile, requiring page refresh.", OpenCompounds::default(), "Links on portal stop working after a while, requiring page refresh.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // As well
 
     #[test]
     fn correct_aswell_atomic() {
-        assert_suggestion_result("Aswell", OpenCompounds::default(), "As well");
+        assert_suggestion_result("Aswell", OpenCompounds::default(), "As well", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_as_keyboards_aswell() {
-        assert_suggestion_result(
-            "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
-            "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
-        );
+        assert_suggestion_result("Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.", OpenCompounds::default(), "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_aswell_as() {
-        assert_suggestion_result(
-            "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-            OpenCompounds::default(),
-            "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-        );
+        assert_suggestion_result("When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work", OpenCompounds::default(), "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_toml_aswell() {
-        assert_suggestion_result(
-            "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
-            OpenCompounds::default(),
-            "format Cargo.toml as well #5893 - rust-lang/rustfmt",
-        );
+        assert_suggestion_result("format Cargo.toml aswell #5893 - rust-lang/rustfmt", OpenCompounds::default(), "format Cargo.toml as well #5893 - rust-lang/rustfmt", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_aswell() {
-        assert_suggestion_result(
-            "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
-            "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-        );
+        assert_suggestion_result("'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.", OpenCompounds::default(), "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // At least
 
     #[test]
     fn correct_atleast_atomic() {
-        assert_suggestion_result("Atleast", OpenCompounds::default(), "At least");
+        assert_suggestion_result("Atleast", OpenCompounds::default(), "At least", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -371,43 +319,31 @@ mod tests {
 
     #[test]
     fn correct_atleast() {
-        assert_suggestion_result(
-            "Mar 22, 2562 BE — constructor - expected atleast one input #250.",
-            OpenCompounds::default(),
-            "Mar 22, 2562 BE — constructor - expected at least one input #250.",
-        );
+        assert_suggestion_result("Mar 22, 2562 BE — constructor - expected atleast one input #250.", OpenCompounds::default(), "Mar 22, 2562 BE — constructor - expected at least one input #250.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // Each other
 
     #[test]
     fn correct_eachother_atomic() {
-        assert_suggestion_result("Eachother", OpenCompounds::default(), "Each other");
+        assert_suggestion_result("Eachother", OpenCompounds::default(), "Each other", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_eachother() {
-        assert_suggestion_result(
-            "Script parsing fails when two scenes reference eachother",
-            OpenCompounds::default(),
-            "Script parsing fails when two scenes reference each other",
-        );
+        assert_suggestion_result("Script parsing fails when two scenes reference eachother", OpenCompounds::default(), "Script parsing fails when two scenes reference each other", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // In case
 
     #[test]
     fn correct_incase_atomic() {
-        assert_suggestion_result("Incase", OpenCompounds::default(), "In case");
+        assert_suggestion_result("Incase", OpenCompounds::default(), "In case", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_in_case() {
-        assert_suggestion_result(
-            "Support for enum variable incase of reusable enum class",
-            OpenCompounds::default(),
-            "Support for enum variable in case of reusable enum class",
-        );
+        assert_suggestion_result("Support for enum variable incase of reusable enum class", OpenCompounds::default(), "Support for enum variable in case of reusable enum class", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -423,21 +359,13 @@ mod tests {
 
     #[test]
     fn correct_infact_atomic() {
-        assert_suggestion_result(
-            "Yes I do infact exist :O",
-            OpenCompounds::default(),
-            "Yes I do in fact exist :O",
-        );
+        assert_suggestion_result("Yes I do infact exist :O", OpenCompounds::default(), "Yes I do in fact exist :O", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     // up to
 
     #[test]
     fn correct_upto() {
-        assert_suggestion_result(
-            "Free for upto 10k subscribers, unlimited push notifications, in-browser messaging",
-            OpenCompounds::default(),
-            "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging",
-        );
+        assert_suggestion_result("Free for upto 10k subscribers, unlimited push notifications, in-browser messaging", OpenCompounds::default(), "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

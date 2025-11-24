@@ -69,11 +69,7 @@ mod tests {
 
     #[test]
     fn fix_dont_with_semicolon_to_apostrophe() {
-        assert_suggestion_result(
-            "It's better if you don;t type like this.",
-            SemicolonApostrophe::default(),
-            "It's better if you don't type like this.",
-        );
+        assert_suggestion_result("It's better if you don;t type like this.", SemicolonApostrophe::default(), "It's better if you don't type like this.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -83,43 +79,27 @@ mod tests {
 
     #[test]
     fn fix_title_case() {
-        assert_suggestion_result(
-            "Don;t type like this.",
-            SemicolonApostrophe::default(),
-            "Don't type like this.",
-        );
+        assert_suggestion_result("Don;t type like this.", SemicolonApostrophe::default(), "Don't type like this.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_all_caps() {
-        assert_suggestion_result(
-            "DON;T TRY THIS AT HOME.",
-            SemicolonApostrophe::default(),
-            "DON'T TRY THIS AT HOME.",
-        );
+        assert_suggestion_result("DON;T TRY THIS AT HOME.", SemicolonApostrophe::default(), "DON'T TRY THIS AT HOME.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "replace_with_match_case has a bug turning `I'll` into `I'LL`"]
     fn fix_ill_and_monkeys() {
-        assert_suggestion_result(
-            "Well I;ll be a monkey;s uncle!",
-            SemicolonApostrophe::default(),
-            "Well I'll be a monkey's uncle!",
-        )
+        assert_suggestion_result("Well I;ll be a monkey;s uncle!", SemicolonApostrophe::default(), "Well I'll be a monkey's uncle!", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn fix_other_contractions_and_possessives() {
-        assert_suggestion_result(
-            "Let;s see if we;ve fixed patrakov;s bug. Fun wasn;t it?",
-            SemicolonApostrophe::default(),
-            "Let's see if we've fixed patrakov's bug. Fun wasn't it?",
-        )
+        assert_suggestion_result("Let;s see if we;ve fixed patrakov;s bug. Fun wasn;t it?", SemicolonApostrophe::default(), "Let's see if we've fixed patrakov's bug. Fun wasn't it?", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn corrects_ive_with_correct_capitalization() {
-        assert_suggestion_result("I;ve", SemicolonApostrophe::default(), "I've");
+        assert_suggestion_result("I;ve", SemicolonApostrophe::default(), "I've", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

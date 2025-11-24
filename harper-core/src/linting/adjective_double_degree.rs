@@ -115,6 +115,7 @@ mod tests {
             "The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
             AdjectiveDoubleDegree::default(),
             "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -124,6 +125,7 @@ mod tests {
             "how can make docx gennerate more faster?",
             AdjectiveDoubleDegree::default(),
             "how can make docx gennerate faster?",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -133,6 +135,7 @@ mod tests {
             "Find alternative product name more better than age .",
             AdjectiveDoubleDegree::default(),
             "Find alternative product name better than age .",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -142,6 +145,7 @@ mod tests {
             "how can i get a most best quality file",
             AdjectiveDoubleDegree::default(),
             "how can i get a best quality file",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 

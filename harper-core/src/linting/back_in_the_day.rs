@@ -72,38 +72,22 @@ mod tests {
 
     #[test]
     fn detects_gem_update_case() {
-        assert_suggestion_result(
-            "... has been resolved through a gem update back in the days",
-            BackInTheDay::default(),
-            "... has been resolved through a gem update back in the day",
-        );
+        assert_suggestion_result("... has been resolved through a gem update back in the days", BackInTheDay::default(), "... has been resolved through a gem update back in the day", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn detects_install_case() {
-        assert_suggestion_result(
-            "Back in the days we're used to install it directly from ...",
-            BackInTheDay::default(),
-            "Back in the day we're used to install it directly from ...",
-        );
+        assert_suggestion_result("Back in the days we're used to install it directly from ...", BackInTheDay::default(), "Back in the day we're used to install it directly from ...", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn detects_composer_json_case() {
-        assert_suggestion_result(
-            "Back in the days there was only composer.json and ...",
-            BackInTheDay::default(),
-            "Back in the day there was only composer.json and ...",
-        );
+        assert_suggestion_result("Back in the days there was only composer.json and ...", BackInTheDay::default(), "Back in the day there was only composer.json and ...", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn detects_version_release_case() {
-        assert_suggestion_result(
-            "... should have been released back in the days in a version 11",
-            BackInTheDay::default(),
-            "... should have been released back in the day in a version 11",
-        );
+        assert_suggestion_result("... should have been released back in the days in a version 11", BackInTheDay::default(), "... should have been released back in the day in a version 11", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

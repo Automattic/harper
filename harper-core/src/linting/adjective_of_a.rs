@@ -170,6 +170,7 @@ mod tests {
             "Yeah I'm using as large of a batch size as I can on this machine",
             AdjectiveOfA,
             "Yeah I'm using as large a batch size as I can on this machine",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -179,6 +180,7 @@ mod tests {
             "- If forking is really that bad of an option, let's first decide where to put this.",
             AdjectiveOfA,
             "- If forking is really that bad an option, let's first decide where to put this.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         );
     }
 
@@ -570,6 +572,7 @@ mod tests {
             "Warn users if setting too large of a session object",
             AdjectiveOfA,
             "Warn users if setting too large a session object",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -579,6 +582,7 @@ mod tests {
             "An Org Role with Too Long of a Name Hides Delete Option",
             AdjectiveOfA,
             "An Org Role with Too Long a Name Hides Delete Option",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -588,6 +592,7 @@ mod tests {
             "StepButton has too big of a space to click",
             AdjectiveOfA,
             "StepButton has too big a space to click",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -597,6 +602,7 @@ mod tests {
             "\"No Speech provider is registered.\" is too vague of an error",
             AdjectiveOfA,
             "\"No Speech provider is registered.\" is too vague an error",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -606,6 +612,7 @@ mod tests {
             "Hopefully this isn't too dumb of a question.",
             AdjectiveOfA,
             "Hopefully this isn't too dumb a question.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -615,6 +622,7 @@ mod tests {
             "This should tell us how important of a use case that is and how often writing a type literal in a case is deliberate.",
             AdjectiveOfA,
             "This should tell us how important a use case that is and how often writing a type literal in a case is deliberate.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -624,6 +632,7 @@ mod tests {
             "so making changes isn't that rare of an occurrence for me.",
             AdjectiveOfA,
             "so making changes isn't that rare an occurrence for me.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -633,6 +642,7 @@ mod tests {
             "Might be nice to have it draggable from other places as well, but not as important of a bug anymore.",
             AdjectiveOfA,
             "Might be nice to have it draggable from other places as well, but not as important a bug anymore.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -642,6 +652,7 @@ mod tests {
             "I login infrequently as well and 6 months is too short of a time.",
             AdjectiveOfA,
             "I login infrequently as well and 6 months is too short a time.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -651,6 +662,7 @@ mod tests {
             "that common of a name for a cluster role its hard to rule out",
             AdjectiveOfA,
             "that common a name for a cluster role its hard to rule out",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -660,6 +672,7 @@ mod tests {
             "the w factor into the u factor to as great of an extent as possible.",
             AdjectiveOfA,
             "the w factor into the u factor to as great an extent as possible.",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 
@@ -669,6 +682,7 @@ mod tests {
             "but this is probably too uncommon of a practice to be the default",
             AdjectiveOfA,
             "but this is probably too uncommon a practice to be the default",
+            crate::languages::Language::English(crate::EnglishDialect::American),
         )
     }
 }

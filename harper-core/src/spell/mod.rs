@@ -566,6 +566,7 @@ mod tests {
             "colour",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "color",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -575,6 +576,7 @@ mod tests {
             "color",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "colour",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -585,6 +587,7 @@ mod tests {
             "Colour",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Color",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -595,6 +598,7 @@ mod tests {
             "Color",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Colour",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -606,6 +610,7 @@ mod tests {
             "COLOUR",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "COLOR",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -616,6 +621,7 @@ mod tests {
             "COLOR",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "COLOUR",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -628,6 +634,7 @@ mod tests {
             "realize",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "realise",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -637,6 +644,7 @@ mod tests {
             "realise",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "realize",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -646,6 +654,7 @@ mod tests {
             "Realize",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Realise",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -656,6 +665,7 @@ mod tests {
             "Realise",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Realize",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -666,6 +676,7 @@ mod tests {
             "REALIZE",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "REALISE",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -676,6 +687,7 @@ mod tests {
             "REALISE",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "REALIZE",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -686,6 +698,7 @@ mod tests {
             "defense",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "defence",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -695,6 +708,7 @@ mod tests {
             "defence",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "defense",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -704,6 +718,7 @@ mod tests {
             "Defense",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Defence",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -713,6 +728,7 @@ mod tests {
             "Defence",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Defense",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -723,6 +739,7 @@ mod tests {
             "DEFENSE",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "DEFENCE",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -733,6 +750,7 @@ mod tests {
             "DEFENCE",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "DEFENSE",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -743,6 +761,7 @@ mod tests {
             "skeptic",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "sceptic",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -752,6 +771,7 @@ mod tests {
             "sceptic",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "skeptic",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -761,6 +781,7 @@ mod tests {
             "Skeptic",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Sceptic",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -771,6 +792,7 @@ mod tests {
             "Sceptic",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Skeptic",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -781,6 +803,7 @@ mod tests {
             "SKEPTIC",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "SCEPTIC",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -791,6 +814,7 @@ mod tests {
             "SCEPTIC",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "SKEPTIC",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -802,6 +826,7 @@ mod tests {
             "centimetre",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "centimeter",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -811,6 +836,7 @@ mod tests {
             "centimeter",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "centimetre",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -820,6 +846,7 @@ mod tests {
             "Centimetre",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Centimeter",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -830,6 +857,7 @@ mod tests {
             "Centimeter",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Centimetre",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -840,6 +868,7 @@ mod tests {
             "CENTIMETRE",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "CENTIMETER",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -850,6 +879,7 @@ mod tests {
             "CENTIMETER",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "CENTIMETRE",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -861,6 +891,7 @@ mod tests {
             "traveller",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "traveler",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -870,6 +901,7 @@ mod tests {
             "traveler",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "traveller",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -879,6 +911,7 @@ mod tests {
             "Traveller",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "Traveler",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -889,6 +922,7 @@ mod tests {
             "Traveler",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "Traveller",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -899,6 +933,7 @@ mod tests {
             "TRAVELLER",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "TRAVELER",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -909,6 +944,7 @@ mod tests {
             "TRAVELER",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "TRAVELLER",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -921,6 +957,7 @@ mod tests {
             "I've got a gray cat.",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "I've got a grey cat.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -930,6 +967,7 @@ mod tests {
             "It's a greyscale photo.",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "It's a grayscale photo.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -940,6 +978,7 @@ mod tests {
             "I've Got a Gray Cat.",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "I've Got a Grey Cat.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -949,6 +988,7 @@ mod tests {
             "It's a Greyscale Photo.",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "It's a Grayscale Photo.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -959,6 +999,7 @@ mod tests {
             "GRAY",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::British),
             "GREY",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -969,6 +1010,7 @@ mod tests {
             "GREY",
             SpellCheck::new(FstDictionary::curated(), EnglishDialect::American),
             "GRAY",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 

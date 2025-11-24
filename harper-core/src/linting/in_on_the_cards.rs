@@ -101,6 +101,7 @@ mod tests {
             "Both these features are on the cards, but for now we want to let users know if they have requested an invalid example.",
             InOnTheCards::new(EnglishDialect::American),
             "Both these features are in the cards, but for now we want to let users know if they have requested an invalid example.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -119,6 +120,7 @@ mod tests {
             "If a permanent unique identifier is not on the cards any time soon for WebHID, we should consider a WebUSB alternative.",
             InOnTheCards::new(EnglishDialect::American),
             "If a permanent unique identifier is not in the cards any time soon for WebHID, we should consider a WebUSB alternative.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -128,6 +130,7 @@ mod tests {
             "a full breach of genomics (patient?) data can be on the cards since S3 AWS bucket credentials can be slurped from the process's memory",
             InOnTheCards::new(EnglishDialect::American),
             "a full breach of genomics (patient?) data can be in the cards since S3 AWS bucket credentials can be slurped from the process's memory",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -137,6 +140,7 @@ mod tests {
             "Virtualising the message summaries ObservableCollection was on the cards so I also take note of your last point.",
             InOnTheCards::new(EnglishDialect::American),
             "Virtualising the message summaries ObservableCollection was in the cards so I also take note of your last point.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -146,6 +150,7 @@ mod tests {
             "parallelising that part isnt on the cards since there would be no noticeable ...",
             InOnTheCards::new(EnglishDialect::American),
             "parallelising that part isnt in the cards since there would be no noticeable ...",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -155,6 +160,7 @@ mod tests {
             "Regarding extensive documentation, as mentioned, its on the cards, project being sponsored by the aforementioned organisations.",
             InOnTheCards::new(EnglishDialect::American),
             "Regarding extensive documentation, as mentioned, its in the cards, project being sponsored by the aforementioned organisations.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -164,6 +170,7 @@ mod tests {
             "lots of high altitudes were on the cards again",
             InOnTheCards::new(EnglishDialect::American),
             "lots of high altitudes were in the cards again",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -173,6 +180,7 @@ mod tests {
             "downgrading to an end-of-life operating system isn't on the cards",
             InOnTheCards::new(EnglishDialect::American),
             "downgrading to an end-of-life operating system isn't in the cards",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -182,6 +190,7 @@ mod tests {
             "it's only a middleground for an org because passwordless wasn't on the cards previously",
             InOnTheCards::new(EnglishDialect::American),
             "it's only a middleground for an org because passwordless wasn't in the cards previously",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -193,6 +202,7 @@ mod tests {
             "Just wondering if it was in the cards or not for something like the Quest3 to get support in the future.",
             InOnTheCards::new(EnglishDialect::British),
             "Just wondering if it was on the cards or not for something like the Quest3 to get support in the future.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -211,6 +221,7 @@ mod tests {
             "Is that just not in the cards for WASM at this time?",
             InOnTheCards::new(EnglishDialect::British),
             "Is that just not on the cards for WASM at this time?",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -220,6 +231,7 @@ mod tests {
             "Would this be in the cards?",
             InOnTheCards::new(EnglishDialect::British),
             "Would this be on the cards?",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -229,6 +241,7 @@ mod tests {
             "Manifest files are in the cards but haven't been implemented yet.",
             InOnTheCards::new(EnglishDialect::British),
             "Manifest files are on the cards but haven't been implemented yet.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -238,6 +251,7 @@ mod tests {
             "As far as an error, that probably would be helpful but doesn't sound like its in the cards.",
             InOnTheCards::new(EnglishDialect::British),
             "As far as an error, that probably would be helpful but doesn't sound like its on the cards.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -247,6 +261,7 @@ mod tests {
             "a year or two given the major overhauls that were in the cards at the time",
             InOnTheCards::new(EnglishDialect::British),
             "a year or two given the major overhauls that were on the cards at the time",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -256,6 +271,7 @@ mod tests {
             "I'm going to close this as opting out of the installation framework that Electron gives us isn't in the cards for the project at this time.",
             InOnTheCards::new(EnglishDialect::British),
             "I'm going to close this as opting out of the installation framework that Electron gives us isn't on the cards for the project at this time.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -265,6 +281,7 @@ mod tests {
             "doing something better than just swapping our internal log package for glog wasn’t in the cards back then",
             InOnTheCards::new(EnglishDialect::British),
             "doing something better than just swapping our internal log package for glog wasn’t on the cards back then",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 
@@ -274,6 +291,7 @@ mod tests {
             "I had thought stacked borrows was mostly in a final tweaking phase and major changes weren't in the cards.",
             InOnTheCards::new(EnglishDialect::British),
             "I had thought stacked borrows was mostly in a final tweaking phase and major changes weren't on the cards.",
+            crate::languages::Language::English(EnglishDialect::American),
         );
     }
 }

@@ -55,10 +55,6 @@ mod tests {
 
     #[test]
     fn where_as() {
-        assert_suggestion_result(
-            "Dogs love playing fetch, where as cats are more independent creatures.",
-            Whereas::default(),
-            "Dogs love playing fetch, whereas cats are more independent creatures.",
-        );
+        assert_suggestion_result("Dogs love playing fetch, where as cats are more independent creatures.", Whereas::default(), "Dogs love playing fetch, whereas cats are more independent creatures.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

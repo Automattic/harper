@@ -93,7 +93,7 @@ mod tests {
 
     #[test]
     fn correct_the_my_atomic_lowercase() {
-        assert_suggestion_result("the my", TheMy::default(), "my");
+        assert_suggestion_result("the my", TheMy::default(), "my", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -103,12 +103,12 @@ mod tests {
 
     #[test]
     fn correct_the_my_atomic_uppercase() {
-        assert_suggestion_result("The my", TheMy::default(), "My");
+        assert_suggestion_result("The my", TheMy::default(), "My", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_my_the_atomic_lowercase() {
-        assert_suggestion_result("my the", TheMy::default(), "my");
+        assert_suggestion_result("my the", TheMy::default(), "my", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn correct_my_the_atomic_uppercase() {
-        assert_suggestion_result("My the", TheMy::default(), "My");
+        assert_suggestion_result("My the", TheMy::default(), "My", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -129,47 +129,27 @@ mod tests {
 
     #[test]
     fn correct_the_my_github() {
-        assert_suggestion_result(
-            "When I try to configure the my react-native app to support koltin file, this library gives these errors",
-            TheMy::default(),
-            "When I try to configure my react-native app to support koltin file, this library gives these errors",
-        );
+        assert_suggestion_result("When I try to configure the my react-native app to support koltin file, this library gives these errors", TheMy::default(), "When I try to configure my react-native app to support koltin file, this library gives these errors", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_the_our_github() {
-        assert_suggestion_result(
-            "Source codes of the our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"",
-            TheMy::default(),
-            "Source codes of our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"",
-        );
+        assert_suggestion_result("Source codes of the our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"", TheMy::default(), "Source codes of our paper titled \"Multi-level Textual-Visual Alignment and Fusion Network for Multimodal Aspect-based Sentiment Analysis\"", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_the_their_github() {
-        assert_suggestion_result(
-            "the slider cannot render when i use again the their component on NextJS app",
-            TheMy::default(),
-            "the slider cannot render when i use again their component on NextJS app",
-        );
+        assert_suggestion_result("the slider cannot render when i use again the their component on NextJS app", TheMy::default(), "the slider cannot render when i use again their component on NextJS app", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_your_the_github() {
-        assert_suggestion_result(
-            "This plugin allows you to view your the information about order and customer from your spree store on zendesk",
-            TheMy::default(),
-            "This plugin allows you to view your information about order and customer from your spree store on zendesk",
-        );
+        assert_suggestion_result("This plugin allows you to view your the information about order and customer from your spree store on zendesk", TheMy::default(), "This plugin allows you to view your information about order and customer from your spree store on zendesk", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_my_the_github() {
-        assert_suggestion_result(
-            "Scripts used my the project to collect, process and store social media data from a number of sources",
-            TheMy::default(),
-            "Scripts used my project to collect, process and store social media data from a number of sources",
-        );
+        assert_suggestion_result("Scripts used my the project to collect, process and store social media data from a number of sources", TheMy::default(), "Scripts used my project to collect, process and store social media data from a number of sources", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -192,20 +172,12 @@ mod tests {
 
     #[test]
     fn correct_our_the_github() {
-        assert_suggestion_result(
-            "Companion Repository to our the whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"",
-            TheMy::default(),
-            "Companion Repository to our whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"",
-        )
+        assert_suggestion_result("Companion Repository to our the whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"", TheMy::default(), "Companion Repository to our whitepaper \"Towards Reliable and Scalable Linux Kernel CVE Attribution in Automated Static Firmware Analyses\"", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn correct_their_the_github() {
-        assert_suggestion_result(
-            "Types exported by @_exported remember only their the original module",
-            TheMy::default(),
-            "Types exported by @_exported remember only their original module",
-        )
+        assert_suggestion_result("Types exported by @_exported remember only their the original module", TheMy::default(), "Types exported by @_exported remember only their original module", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
@@ -219,28 +191,16 @@ mod tests {
 
     #[test]
     fn correct_the_his_github() {
-        assert_suggestion_result(
-            "Allows the user to specify the his last name.",
-            TheMy::default(),
-            "Allows the user to specify his last name.",
-        )
+        assert_suggestion_result("Allows the user to specify the his last name.", TheMy::default(), "Allows the user to specify his last name.", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn correct_his_the_github() {
-        assert_suggestion_result(
-            "One interesting creation was his the Schelling segregation model",
-            TheMy::default(),
-            "One interesting creation was his Schelling segregation model",
-        )
+        assert_suggestion_result("One interesting creation was his the Schelling segregation model", TheMy::default(), "One interesting creation was his Schelling segregation model", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 
     #[test]
     fn correct_the_her_github() {
-        assert_suggestion_result(
-            "In memory of the occasion when our Queen Victoria graciously came to see our Island, and the her Royal Consort Albert landed at Ramsey",
-            TheMy::default(),
-            "In memory of the occasion when our Queen Victoria graciously came to see our Island, and her Royal Consort Albert landed at Ramsey",
-        )
+        assert_suggestion_result("In memory of the occasion when our Queen Victoria graciously came to see our Island, and the her Royal Consort Albert landed at Ramsey", TheMy::default(), "In memory of the occasion when our Queen Victoria graciously came to see our Island, and her Royal Consort Albert landed at Ramsey", crate::languages::Language::English(crate::EnglishDialect::American))
     }
 }

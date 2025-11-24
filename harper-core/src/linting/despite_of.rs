@@ -53,11 +53,7 @@ mod tests {
 
     #[test]
     fn catches_lowercase() {
-        assert_suggestion_result(
-            "The team performed well, despite of the difficulties they faced.",
-            DespiteOf::default(),
-            "The team performed well, despite the difficulties they faced.",
-        );
+        assert_suggestion_result("The team performed well, despite of the difficulties they faced.", DespiteOf::default(), "The team performed well, despite the difficulties they faced.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

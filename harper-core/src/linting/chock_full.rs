@@ -70,73 +70,41 @@ mod tests {
 
     #[test]
     fn lower_space_chalk() {
-        assert_suggestion_result(
-            "The codebase is chalk full of errors that we need to address.",
-            ChockFull::default(),
-            "The codebase is chock-full of errors that we need to address.",
-        );
+        assert_suggestion_result("The codebase is chalk full of errors that we need to address.", ChockFull::default(), "The codebase is chock-full of errors that we need to address.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn lower_space_choke() {
-        assert_suggestion_result(
-            "The project is choke full of questionable decisions that we need to revisit.",
-            ChockFull::default(),
-            "The project is chock-full of questionable decisions that we need to revisit.",
-        );
+        assert_suggestion_result("The project is choke full of questionable decisions that we need to revisit.", ChockFull::default(), "The project is chock-full of questionable decisions that we need to revisit.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn upper_space_chalk() {
-        assert_suggestion_result(
-            "Chalk full of deprecated methods; we should refactor.",
-            ChockFull::default(),
-            "Chock-full of deprecated methods; we should refactor.",
-        );
+        assert_suggestion_result("Chalk full of deprecated methods; we should refactor.", ChockFull::default(), "Chock-full of deprecated methods; we should refactor.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn upper_space_choke() {
-        assert_suggestion_result(
-            "Choke full of unnecessary complexity; simplify it.",
-            ChockFull::default(),
-            "Chock-full of unnecessary complexity; simplify it.",
-        );
+        assert_suggestion_result("Choke full of unnecessary complexity; simplify it.", ChockFull::default(), "Chock-full of unnecessary complexity; simplify it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn lower_hyphen_chalk() {
-        assert_suggestion_result(
-            "The code is chalk-full of bugs; we need to debug before release.",
-            ChockFull::default(),
-            "The code is chock-full of bugs; we need to debug before release.",
-        );
+        assert_suggestion_result("The code is chalk-full of bugs; we need to debug before release.", ChockFull::default(), "The code is chock-full of bugs; we need to debug before release.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn lower_hyphen_choke() {
-        assert_suggestion_result(
-            "The project is choke-full of warnings; we should address them.",
-            ChockFull::default(),
-            "The project is chock-full of warnings; we should address them.",
-        );
+        assert_suggestion_result("The project is choke-full of warnings; we should address them.", ChockFull::default(), "The project is chock-full of warnings; we should address them.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn upper_hyphen_chalk() {
-        assert_suggestion_result(
-            "Chalk-full of features, but we only need a few.",
-            ChockFull::default(),
-            "Chock-full of features, but we only need a few.",
-        );
+        assert_suggestion_result("Chalk-full of features, but we only need a few.", ChockFull::default(), "Chock-full of features, but we only need a few.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn upper_hyphen_choke() {
-        assert_suggestion_result(
-            "Choke-full of pitfalls; let's consider alternatives.",
-            ChockFull::default(),
-            "Chock-full of pitfalls; let's consider alternatives.",
-        );
+        assert_suggestion_result("Choke-full of pitfalls; let's consider alternatives.", ChockFull::default(), "Chock-full of pitfalls; let's consider alternatives.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

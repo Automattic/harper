@@ -96,11 +96,7 @@ mod tests {
 
     #[test]
     fn not_lint_with_correct_verb() {
-        assert_suggestion_result(
-            "She was looking forward to see the grandchildren again.",
-            LookingForwardTo::default(),
-            "She was looking forward to seeing the grandchildren again.",
-        );
+        assert_suggestion_result("She was looking forward to see the grandchildren again.", LookingForwardTo::default(), "She was looking forward to seeing the grandchildren again.", crate::languages::Language::English(crate::EnglishDialect::American));
         // assert_lint_count(
         //     "She was looking forward to seeing the grandchildren again.",
         //     LookingForwardTo::default(),
@@ -110,20 +106,12 @@ mod tests {
 
     #[test]
     fn lint_with_incorrect_verb() {
-        assert_suggestion_result(
-            "She was looking forward to see the grandchildren again.",
-            LookingForwardTo::default(),
-            "She was looking forward to seeing the grandchildren again.",
-        );
+        assert_suggestion_result("She was looking forward to see the grandchildren again.", LookingForwardTo::default(), "She was looking forward to seeing the grandchildren again.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn lint_with_incorrect_verb_ending_in_e() {
-        assert_suggestion_result(
-            "She was looking forward to make the grandchildren happy.",
-            LookingForwardTo::default(),
-            "She was looking forward to making the grandchildren happy.",
-        );
+        assert_suggestion_result("She was looking forward to make the grandchildren happy.", LookingForwardTo::default(), "She was looking forward to making the grandchildren happy.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

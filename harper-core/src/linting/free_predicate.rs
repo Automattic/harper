@@ -114,56 +114,32 @@ mod tests {
 
     #[test]
     fn corrects_is_fee_for() {
-        assert_suggestion_result(
-            "The trial is fee for new members.",
-            FreePredicate::default(),
-            "The trial is free for new members.",
-        );
+        assert_suggestion_result("The trial is fee for new members.", FreePredicate::default(), "The trial is free for new members.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_totally_fee() {
-        assert_suggestion_result(
-            "Customer support is totally fee.",
-            FreePredicate::default(),
-            "Customer support is totally free.",
-        );
+        assert_suggestion_result("Customer support is totally fee.", FreePredicate::default(), "Customer support is totally free.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_really_fee_to() {
-        assert_suggestion_result(
-            "The workshop is really fee to attend.",
-            FreePredicate::default(),
-            "The workshop is really free to attend.",
-        );
+        assert_suggestion_result("The workshop is really fee to attend.", FreePredicate::default(), "The workshop is really free to attend.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_fee_with_comma() {
-        assert_suggestion_result(
-            "Our platform is fee, and always available.",
-            FreePredicate::default(),
-            "Our platform is free, and always available.",
-        );
+        assert_suggestion_result("Our platform is fee, and always available.", FreePredicate::default(), "Our platform is free, and always available.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_fee_period() {
-        assert_suggestion_result(
-            "Access is fee.",
-            FreePredicate::default(),
-            "Access is free.",
-        );
+        assert_suggestion_result("Access is fee.", FreePredicate::default(), "Access is free.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_fee_past_tense() {
-        assert_suggestion_result(
-            "The program was fee for nonprofits.",
-            FreePredicate::default(),
-            "The program was free for nonprofits.",
-        );
+        assert_suggestion_result("The program was fee for nonprofits.", FreePredicate::default(), "The program was free for nonprofits.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

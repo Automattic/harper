@@ -61,47 +61,27 @@ mod tests {
 
     #[test]
     fn catches_cautionary_tail() {
-        assert_suggestion_result(
-            "It serves as a cautionary tail.",
-            CautionaryTale::default(),
-            "It serves as a cautionary tale.",
-        );
+        assert_suggestion_result("It serves as a cautionary tail.", CautionaryTale::default(), "It serves as a cautionary tale.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_inspirational_tail() {
-        assert_suggestion_result(
-            "Her journey is an inspirational tail of perseverance.",
-            CautionaryTale::default(),
-            "Her journey is an inspirational tale of perseverance.",
-        );
+        assert_suggestion_result("Her journey is an inspirational tail of perseverance.", CautionaryTale::default(), "Her journey is an inspirational tale of perseverance.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_capitalized_cautionary_tail() {
-        assert_suggestion_result(
-            "The article discusses a Cautionary Tail about privacy.",
-            CautionaryTale::default(),
-            "The article discusses a Cautionary Tale about privacy.",
-        );
+        assert_suggestion_result("The article discusses a Cautionary Tail about privacy.", CautionaryTale::default(), "The article discusses a Cautionary Tale about privacy.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_uppercase_cautionary_tail() {
-        assert_suggestion_result(
-            "THE STORY IS A CAUTIONARY TAIL.",
-            CautionaryTale::default(),
-            "THE STORY IS A CAUTIONARY TALE.",
-        );
+        assert_suggestion_result("THE STORY IS A CAUTIONARY TAIL.", CautionaryTale::default(), "THE STORY IS A CAUTIONARY TALE.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn catches_mixed_case() {
-        assert_suggestion_result(
-            "This serves as an inspirational Tail for all.",
-            CautionaryTale::default(),
-            "This serves as an inspirational Tale for all.",
-        );
+        assert_suggestion_result("This serves as an inspirational Tail for all.", CautionaryTale::default(), "This serves as an inspirational Tale for all.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -138,11 +118,7 @@ mod tests {
 
     #[test]
     fn catches_in_longer_text() {
-        assert_suggestion_result(
-            "The movie presents a cautionary tail about the dangers of AI. It's really scary.",
-            CautionaryTale::default(),
-            "The movie presents a cautionary tale about the dangers of AI. It's really scary.",
-        );
+        assert_suggestion_result("The movie presents a cautionary tail about the dangers of AI. It's really scary.", CautionaryTale::default(), "The movie presents a cautionary tale about the dangers of AI. It's really scary.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -165,10 +141,6 @@ mod tests {
 
     #[test]
     fn catches_at_start_of_sentence() {
-        assert_suggestion_result(
-            "Cautionary tail: don't trust strangers.",
-            CautionaryTale::default(),
-            "Cautionary tale: don't trust strangers.",
-        );
+        assert_suggestion_result("Cautionary tail: don't trust strangers.", CautionaryTale::default(), "Cautionary tale: don't trust strangers.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

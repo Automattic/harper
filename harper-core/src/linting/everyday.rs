@@ -230,30 +230,18 @@ mod tests {
 
     #[test]
     fn correct_adjective_at_end_of_chunk() {
-        assert_suggestion_result(
-            "This is something I do everyday.",
-            Everyday::default(),
-            "This is something I do every day.",
-        );
+        assert_suggestion_result("This is something I do everyday.", Everyday::default(), "This is something I do every day.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn correct_adverb_after_article_before_noun() {
-        assert_suggestion_result(
-            "It's nothing special, just an every day thing.",
-            Everyday::default(),
-            "It's nothing special, just an everyday thing.",
-        );
+        assert_suggestion_result("It's nothing special, just an every day thing.", Everyday::default(), "It's nothing special, just an everyday thing.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "Can't yet match end-of-chunk after it. Adjective before is legit for both adjective and adverb."]
     fn correct_adjective_without_following_noun() {
-        assert_suggestion_result(
-            "Some git commands used everyday",
-            Everyday::default(),
-            "Some git commands used every day",
-        );
+        assert_suggestion_result("Some git commands used everyday", Everyday::default(), "Some git commands used every day", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -281,11 +269,7 @@ mod tests {
 
     #[test]
     fn correct_everyday_at_end_of_sentence_after_past_verb() {
-        assert_suggestion_result(
-            "Trying to write about what I learned everyday.",
-            Everyday::default(),
-            "Trying to write about what I learned every day.",
-        );
+        assert_suggestion_result("Trying to write about what I learned everyday.", Everyday::default(), "Trying to write about what I learned every day.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -319,11 +303,7 @@ mod tests {
     #[test]
     #[ignore = "replace_with_match_case_str converts to EveryDay instead of Everyday"]
     fn correct_every_day_after_article() {
-        assert_suggestion_result(
-            "The Every Day Calendar with Dark Mode",
-            Everyday::default(),
-            "The Everyday Calendar with Dark Mode",
-        );
+        assert_suggestion_result("The Every Day Calendar with Dark Mode", Everyday::default(), "The Everyday Calendar with Dark Mode", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

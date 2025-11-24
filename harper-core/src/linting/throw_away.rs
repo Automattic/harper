@@ -57,11 +57,7 @@ mod tests {
 
     #[test]
     fn corrects_simple_case() {
-        assert_suggestion_result(
-            "We through away the old code.",
-            ThrowAway::default(),
-            "We throw away the old code.",
-        );
+        assert_suggestion_result("We through away the old code.", ThrowAway::default(), "We throw away the old code.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -76,29 +72,17 @@ mod tests {
 
     #[test]
     fn corrects_sentence_start_capital() {
-        assert_suggestion_result(
-            "Through away this document when you're done.",
-            ThrowAway::default(),
-            "Throw away this document when you're done.",
-        );
+        assert_suggestion_result("Through away this document when you're done.", ThrowAway::default(), "Throw away this document when you're done.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_all_caps_instance() {
-        assert_suggestion_result(
-            "Please THROUGH AWAY THE TRASH.",
-            ThrowAway::default(),
-            "Please THROW AWAY THE TRASH.",
-        );
+        assert_suggestion_result("Please THROUGH AWAY THE TRASH.", ThrowAway::default(), "Please THROW AWAY THE TRASH.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_with_extra_whitespace() {
-        assert_suggestion_result(
-            "We through  away the leftovers.",
-            ThrowAway::default(),
-            "We throw  away the leftovers.",
-        );
+        assert_suggestion_result("We through  away the leftovers.", ThrowAway::default(), "We throw  away the leftovers.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -136,11 +120,7 @@ mod tests {
 
     #[test]
     fn corrects_with_contraction() {
-        assert_suggestion_result(
-            "Don't through away your shot.",
-            ThrowAway::default(),
-            "Don't throw away your shot.",
-        );
+        assert_suggestion_result("Don't through away your shot.", ThrowAway::default(), "Don't throw away your shot.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

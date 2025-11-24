@@ -201,11 +201,7 @@ mod tests {
     #[test]
     #[ignore = "can't check yet. 'capture' is noun as well as verb. \"to nouns\" is good English. we can't disambiguate verbs from nouns."]
     fn check_993_suggestions() {
-        assert_suggestion_result(
-            "A location-agnostic structure that attempts to captures the context and content that a Lint occurred.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.",
-        );
+        assert_suggestion_result("A location-agnostic structure that attempts to captures the context and content that a Lint occurred.", InflectedVerbAfterTo::new(FstDictionary::curated()), "A location-agnostic structure that attempts to capture the context and content that a Lint occurred.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -219,30 +215,18 @@ mod tests {
 
     #[test]
     fn corrects_exist_s() {
-        assert_suggestion_result(
-            "A valid solution is expected to exists.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "A valid solution is expected to exist.",
-        );
+        assert_suggestion_result("A valid solution is expected to exists.", InflectedVerbAfterTo::new(FstDictionary::curated()), "A valid solution is expected to exist.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "can't check yet. 'catch' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
     fn corrects_es_ending() {
-        assert_suggestion_result(
-            "I need it to catches every exception.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "I need it to catch every exception.",
-        );
+        assert_suggestion_result("I need it to catches every exception.", InflectedVerbAfterTo::new(FstDictionary::curated()), "I need it to catch every exception.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_ed_ending() {
-        assert_suggestion_result(
-            "I had to expanded my horizon.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "I had to expand my horizon.",
-        );
+        assert_suggestion_result("I had to expanded my horizon.", InflectedVerbAfterTo::new(FstDictionary::curated()), "I had to expand my horizon.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -256,21 +240,13 @@ mod tests {
 
     #[test]
     fn corrects_explain_ed() {
-        assert_suggestion_result(
-            "To explained the rules to the team.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "To explain the rules to the team.",
-        );
+        assert_suggestion_result("To explained the rules to the team.", InflectedVerbAfterTo::new(FstDictionary::curated()), "To explain the rules to the team.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     #[ignore = "can't check yet. surprisingly, 'explore' is noun as well as verb. 'to nouns' is good English. we can't disambiguate verbs from nouns."]
     fn corrects_explor_ed() {
-        assert_suggestion_result(
-            "I went to explored distant galaxies.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "I went to explore distant galaxies.",
-        );
+        assert_suggestion_result("I went to explored distant galaxies.", InflectedVerbAfterTo::new(FstDictionary::curated()), "I went to explore distant galaxies.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -285,11 +261,7 @@ mod tests {
     #[test]
     fn correct_feign_ed() {
         // adj "able" before "to" works with "to", making "to" part of an infinitive verb
-        assert_suggestion_result(
-            "I was able to feigned ignorance.",
-            InflectedVerbAfterTo::new(FstDictionary::curated()),
-            "I was able to feign ignorance.",
-        );
+        assert_suggestion_result("I was able to feigned ignorance.", InflectedVerbAfterTo::new(FstDictionary::curated()), "I was able to feign ignorance.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

@@ -64,16 +64,12 @@ mod tests {
 
     #[test]
     fn corrects_i_are_simple() {
-        assert_suggestion_result("I are", IAmAgreement::default(), "I am");
+        assert_suggestion_result("I are", IAmAgreement::default(), "I am", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_i_are() {
-        assert_suggestion_result(
-            "I are really happy about this release.",
-            IAmAgreement::default(),
-            "I am really happy about this release.",
-        );
+        assert_suggestion_result("I are really happy about this release.", IAmAgreement::default(), "I am really happy about this release.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -114,37 +110,21 @@ mod tests {
 
     #[test]
     fn fix_so_i_are() {
-        assert_suggestion_result(
-            "I have not yet been able to reproduce this issue in my environment, so I are still trying to figure it out",
-            IAmAgreement::default(),
-            "I have not yet been able to reproduce this issue in my environment, so I am still trying to figure it out",
-        );
+        assert_suggestion_result("I have not yet been able to reproduce this issue in my environment, so I are still trying to figure it out", IAmAgreement::default(), "I have not yet been able to reproduce this issue in my environment, so I am still trying to figure it out", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_if_i_are() {
-        assert_suggestion_result(
-            "If i are on creative inventory, and try to clean my inventory holding shift is disconnected too.",
-            IAmAgreement::default(),
-            "If i am on creative inventory, and try to clean my inventory holding shift is disconnected too.",
-        );
+        assert_suggestion_result("If i are on creative inventory, and try to clean my inventory holding shift is disconnected too.", IAmAgreement::default(), "If i am on creative inventory, and try to clean my inventory holding shift is disconnected too.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_what_i_are() {
-        assert_suggestion_result(
-            "in this situation I can't see what I are typing",
-            IAmAgreement::default(),
-            "in this situation I can't see what I am typing",
-        );
+        assert_suggestion_result("in this situation I can't see what I are typing", IAmAgreement::default(), "in this situation I can't see what I am typing", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn fix_where_i_are() {
-        assert_suggestion_result(
-            "I have a logging application where I are append to a topic",
-            IAmAgreement::default(),
-            "I have a logging application where I am append to a topic",
-        );
+        assert_suggestion_result("I have a logging application where I are append to a topic", IAmAgreement::default(), "I have a logging application where I am append to a topic", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

@@ -122,7 +122,7 @@ mod tests {
 
     #[test]
     fn that_is_contraction() {
-        assert_suggestion_result("That s", MergeWords::default(), "That's");
+        assert_suggestion_result("That s", MergeWords::default(), "That's", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]

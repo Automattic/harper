@@ -78,11 +78,7 @@ mod tests {
 
     #[test]
     fn corrects_to_never_to() {
-        assert_suggestion_result(
-            "Tom has decided to never to do that again.",
-            ToAdverb::default(),
-            "Tom has decided to never do that again.",
-        );
+        assert_suggestion_result("Tom has decided to never to do that again.", ToAdverb::default(), "Tom has decided to never do that again.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -97,38 +93,22 @@ mod tests {
 
     #[test]
     fn corrects_to_maybe_to() {
-        assert_suggestion_result(
-            "The next step is to maybe to take a language class.",
-            ToAdverb::default(),
-            "The next step is to maybe take a language class.",
-        );
+        assert_suggestion_result("The next step is to maybe to take a language class.", ToAdverb::default(), "The next step is to maybe take a language class.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_to_not_to() {
-        assert_suggestion_result(
-            "He tells the monitor to not to collect anything.",
-            ToAdverb::default(),
-            "He tells the monitor to not collect anything.",
-        );
+        assert_suggestion_result("He tells the monitor to not to collect anything.", ToAdverb::default(), "He tells the monitor to not collect anything.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_to_just_to() {
-        assert_suggestion_result(
-            "She told me to just to keep the peace.",
-            ToAdverb::default(),
-            "She told me to just keep the peace.",
-        );
+        assert_suggestion_result("She told me to just to keep the peace.", ToAdverb::default(), "She told me to just keep the peace.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn corrects_to_really_to() {
-        assert_suggestion_result(
-            "They plan to really to push the release.",
-            ToAdverb::default(),
-            "They plan to really push the release.",
-        );
+        assert_suggestion_result("They plan to really to push the release.", ToAdverb::default(), "They plan to really push the release.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -147,11 +127,7 @@ mod tests {
 
     #[test]
     fn corrects_to_quickly_to() {
-        assert_suggestion_result(
-            "They hoped to quickly to solve it.",
-            ToAdverb::default(),
-            "They hoped to quickly solve it.",
-        );
+        assert_suggestion_result("They hoped to quickly to solve it.", ToAdverb::default(), "They hoped to quickly solve it.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
@@ -161,10 +137,6 @@ mod tests {
 
     #[test]
     fn handles_capitalized_to() {
-        assert_suggestion_result(
-            "To Always to succeed is the goal.",
-            ToAdverb::default(),
-            "To Always succeed is the goal.",
-        );
+        assert_suggestion_result("To Always to succeed is the goal.", ToAdverb::default(), "To Always succeed is the goal.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }

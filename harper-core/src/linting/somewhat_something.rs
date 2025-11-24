@@ -52,19 +52,11 @@ mod tests {
 
     #[test]
     fn issue_414() {
-        assert_suggestion_result(
-            "This may be somewhat of a surprise.",
-            SomewhatSomething::default(),
-            "This may be something of a surprise.",
-        );
+        assert_suggestion_result("This may be somewhat of a surprise.", SomewhatSomething::default(), "This may be something of a surprise.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 
     #[test]
     fn flag_these() {
-        assert_suggestion_result(
-            "These are somewhat of a cult data structure.",
-            SomewhatSomething::default(),
-            "These are something of a cult data structure.",
-        );
+        assert_suggestion_result("These are somewhat of a cult data structure.", SomewhatSomething::default(), "These are something of a cult data structure.", crate::languages::Language::English(crate::EnglishDialect::American));
     }
 }
