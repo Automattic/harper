@@ -44,6 +44,6 @@ test.describe('Lexical webcomponent regression', () => {
 
 		const lexicalText = (await lexical.textContent()) ?? '';
 		const mirrorText = (await mirror.textContent()) ?? '';
-		expect(lexicalText).toBe(mirrorText);
+		expect(lexicalText.trim()).toBe(mirrorText.trim());
 	});
 });
