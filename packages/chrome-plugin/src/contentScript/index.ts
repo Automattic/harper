@@ -1,5 +1,11 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes, getClosestBlockAncestor, type UnpackedLint } from 'lint-framework';
+import {
+	getClosestBlockAncestor,
+	isVisible,
+	LintFramework,
+	leafNodes,
+	type UnpackedLint,
+} from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
