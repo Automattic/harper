@@ -60,22 +60,22 @@ mod tests {
 
     #[test]
     fn corrects_has_we() {
-        assert_suggestion_result("Has we finished the report?", HavePronoun::default(), "Have we finished the report?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Has we finished the report?", HavePronoun::default(), "Have we finished the report?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_has_you() {
-        assert_suggestion_result("Has you misunderstood?", HavePronoun::default(), "Have you misunderstood?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Has you misunderstood?", HavePronoun::default(), "Have you misunderstood?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_has_i() {
-        assert_suggestion_result("Has I misunderstood?", HavePronoun::default(), "Have I misunderstood?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Has I misunderstood?", HavePronoun::default(), "Have I misunderstood?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_has_they() {
-        assert_suggestion_result("Has they arrived yet?", HavePronoun::default(), "Have they arrived yet?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Has they arrived yet?", HavePronoun::default(), "Have they arrived yet?", crate::languages::LanguageFamily::English);
     }
 
     #[test]

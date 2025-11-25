@@ -44,51 +44,51 @@ mod tests {
 
     #[test]
     fn corrects_btw() {
-        assert_suggestion_result("Btw, are you ready to go shopping soon?", lint_group(), "By the way, are you ready to go shopping soon?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Btw, are you ready to go shopping soon?", lint_group(), "By the way, are you ready to go shopping soon?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_style() {
-        assert_suggestion_result("I love the fit, btw.", lint_group(), "I love the fit, by the way.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I love the fit, btw.", lint_group(), "I love the fit, by the way.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_fyi() {
-        assert_suggestion_result("Fyi, the meeting is at 3.", lint_group(), "For your information, the meeting is at 3.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Fyi, the meeting is at 3.", lint_group(), "For your information, the meeting is at 3.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_asap() {
-        assert_suggestion_result("Please respond asap.", lint_group(), "Please respond as soon as possible.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Please respond asap.", lint_group(), "Please respond as soon as possible.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_imo() {
-        assert_suggestion_result("Imo, that is the best option.", lint_group(), "In my opinion, that is the best option.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Imo, that is the best option.", lint_group(), "In my opinion, that is the best option.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_omg() {
-        assert_suggestion_result("Omg! That's incredible!", lint_group(), "Oh my god! That's incredible!", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Omg! That's incredible!", lint_group(), "Oh my god! That's incredible!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_brb() {
-        assert_suggestion_result("Hold on, brb.", lint_group(), "Hold on, be right back.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Hold on, brb.", lint_group(), "Hold on, be right back.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_tbh() {
-        assert_suggestion_result("Tbh, I'm not impressed.", lint_group(), "To be honest, I'm not impressed.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Tbh, I'm not impressed.", lint_group(), "To be honest, I'm not impressed.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_rly() {
-        assert_suggestion_result("Rly excited for this.", lint_group(), "Really excited for this.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Rly excited for this.", lint_group(), "Really excited for this.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_2181() {
-        assert_suggestion_result("AFAIK, we don't currently have an issue for it.", lint_group(), "As far as i know, we don't currently have an issue for it.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("AFAIK, we don't currently have an issue for it.", lint_group(), "As far as i know, we don't currently have an issue for it.", crate::languages::LanguageFamily::English);
     }
 }

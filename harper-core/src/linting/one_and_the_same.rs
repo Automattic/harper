@@ -73,12 +73,12 @@ mod tests {
 
     #[test]
     fn corrects_after_are_atomic() {
-        assert_suggestion_result("... are one in the same ...", OneAndTheSame::default(), "... are one and the same ...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("... are one in the same ...", OneAndTheSame::default(), "... are one and the same ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_after_were_atomic() {
-        assert_suggestion_result("... were one in the same ...", OneAndTheSame::default(), "... were one and the same ...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("... were one in the same ...", OneAndTheSame::default(), "... were one and the same ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -92,33 +92,33 @@ mod tests {
 
     #[test]
     fn corrects_github_are() {
-        assert_suggestion_result("Yes, I believe they are one in the same.", OneAndTheSame::default(), "Yes, I believe they are one and the same.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Yes, I believe they are one in the same.", OneAndTheSame::default(), "Yes, I believe they are one and the same.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_github_were() {
-        assert_suggestion_result("As prior to OpenShift 4.0, OAuth and Kubernetes REST API were one in the same, option (2) above should still work there.", OneAndTheSame::default(), "As prior to OpenShift 4.0, OAuth and Kubernetes REST API were one and the same, option (2) above should still work there.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("As prior to OpenShift 4.0, OAuth and Kubernetes REST API were one in the same, option (2) above should still work there.", OneAndTheSame::default(), "As prior to OpenShift 4.0, OAuth and Kubernetes REST API were one and the same, option (2) above should still work there.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_as_atomic() {
-        assert_suggestion_result("... one in the same as ...", OneAndTheSame::default(), "... one and the same as ...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("... one in the same as ...", OneAndTheSame::default(), "... one and the same as ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_as_github() {
-        assert_suggestion_result("In our case the slicedState is one in the same as the featureState", OneAndTheSame::default(), "In our case the slicedState is one and the same as the featureState", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("In our case the slicedState is one in the same as the featureState", OneAndTheSame::default(), "In our case the slicedState is one and the same as the featureState", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "needs zero-width end-of-chunk pattern akin to regex `$`"]
     fn corrects_at_end() {
-        assert_suggestion_result("I think this is one in the same.", OneAndTheSame::default(), "I think this is one and the same.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I think this is one in the same.", OneAndTheSame::default(), "I think this is one and the same.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_is_as() {
-        assert_suggestion_result("I believe this and this issue is one in the same as Next.js uses cloudflare workers for it's edge infra.", OneAndTheSame::default(), "I believe this and this issue is one and the same as Next.js uses cloudflare workers for it's edge infra.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I believe this and this issue is one in the same as Next.js uses cloudflare workers for it's edge infra.", OneAndTheSame::default(), "I believe this and this issue is one and the same as Next.js uses cloudflare workers for it's edge infra.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -133,7 +133,7 @@ mod tests {
     #[test]
     #[ignore = "Cannot detect unexpected ungrammatical `same of`"]
     fn corrects_is_of() {
-        assert_suggestion_result("R3 that Stephan Buhre noted is one-in-the-same of what I posted.", OneAndTheSame::default(), "R3 that Stephan Buhre noted is one and the same of what I posted.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("R3 that Stephan Buhre noted is one-in-the-same of what I posted.", OneAndTheSame::default(), "R3 that Stephan Buhre noted is one and the same of what I posted.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

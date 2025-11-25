@@ -111,42 +111,22 @@ mod tests {
 
     #[test]
     fn fix_double_regular_superlative() {
-        assert_suggestion_result(
-            "The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
-            AdjectiveDoubleDegree::default(),
-            "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.", AdjectiveDoubleDegree::default(), "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_double_regular_comparative() {
-        assert_suggestion_result(
-            "how can make docx gennerate more faster?",
-            AdjectiveDoubleDegree::default(),
-            "how can make docx gennerate faster?",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("how can make docx gennerate more faster?", AdjectiveDoubleDegree::default(), "how can make docx gennerate faster?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_double_irregular_comparative() {
-        assert_suggestion_result(
-            "Find alternative product name more better than age .",
-            AdjectiveDoubleDegree::default(),
-            "Find alternative product name better than age .",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("Find alternative product name more better than age .", AdjectiveDoubleDegree::default(), "Find alternative product name better than age .", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_double_irregular_superlative() {
-        assert_suggestion_result(
-            "how can i get a most best quality file",
-            AdjectiveDoubleDegree::default(),
-            "how can i get a best quality file",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("how can i get a most best quality file", AdjectiveDoubleDegree::default(), "how can i get a best quality file", crate::languages::LanguageFamily::English);
     }
 
     #[test]

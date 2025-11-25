@@ -57,11 +57,11 @@ mod tests {
 
     #[test]
     fn remove_uh() {
-        assert_suggestion_result("Let's remove all the uh filler words.", FillerWords::default(), "Let's remove all the filler words.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Let's remove all the uh filler words.", FillerWords::default(), "Let's remove all the filler words.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn remove_um_st_start() {
-        assert_suggestion_result("Um but I'll just add some context for this.", FillerWords::default(), "but I'll just add some context for this.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Um but I'll just add some context for this.", FillerWords::default(), "but I'll just add some context for this.", crate::languages::LanguageFamily::English);
     }
 }

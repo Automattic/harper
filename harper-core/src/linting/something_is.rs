@@ -69,42 +69,37 @@ mod tests {
 
     #[test]
     fn fixes_somethings_going() {
-        assert_suggestion_result("Somethings going well today.", SomethingIs::default(), "Something's going well today.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Somethings going well today.", SomethingIs::default(), "Something's going well today.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_anythings_happening() {
-        assert_suggestion_result("Anythings happening tonight?", SomethingIs::default(), "Anything's happening tonight?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Anythings happening tonight?", SomethingIs::default(), "Anything's happening tonight?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_everythings_working() {
-        assert_suggestion_result("Everythings working smoothly.", SomethingIs::default(), "Everything's working smoothly.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Everythings working smoothly.", SomethingIs::default(), "Everything's working smoothly.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_nothings_changing() {
-        assert_suggestion_result("Nothings changing around here.", SomethingIs::default(), "Nothing's changing around here.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Nothings changing around here.", SomethingIs::default(), "Nothing's changing around here.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_with_adverb() {
-        assert_suggestion_result("Somethings really happening now.", SomethingIs::default(), "Something's really happening now.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Somethings really happening now.", SomethingIs::default(), "Something's really happening now.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_uppercase() {
-        assert_suggestion_result("SOMETHINGS HAPPENING NOW!", SomethingIs::default(), "SOMETHING'S HAPPENING NOW!", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("SOMETHINGS HAPPENING NOW!", SomethingIs::default(), "SOMETHING'S HAPPENING NOW!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn offers_is_expansion() {
-        assert_nth_suggestion_result(
-            "Somethings going wrong.",
-            SomethingIs::default(),
-            "Something is going wrong.",
-            1,
-        );
+        assert_nth_suggestion_result("Somethings going wrong.", SomethingIs::default(), "Something is going wrong.", crate::languages::LanguageFamily::English, 1);
     }
 
     #[test]

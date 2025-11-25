@@ -98,47 +98,47 @@ mod tests {
 
     #[test]
     fn corrects_basic_command() {
-        assert_suggestion_result("Double click the icon.", DoubleClick::default(), "Double-click the icon.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Double click the icon.", DoubleClick::default(), "Double-click the icon.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_preposition() {
-        assert_suggestion_result("Please double click on the link.", DoubleClick::default(), "Please double-click on the link.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Please double click on the link.", DoubleClick::default(), "Please double-click on the link.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_pronoun() {
-        assert_suggestion_result("You should double click it to open.", DoubleClick::default(), "You should double-click it to open.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You should double click it to open.", DoubleClick::default(), "You should double-click it to open.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_plural_form() {
-        assert_suggestion_result("Double clicks are recorded in the log.", DoubleClick::default(), "Double-clicks are recorded in the log.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Double clicks are recorded in the log.", DoubleClick::default(), "Double-clicks are recorded in the log.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_past_tense() {
-        assert_suggestion_result("They double clicked the submit button.", DoubleClick::default(), "They double-clicked the submit button.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They double clicked the submit button.", DoubleClick::default(), "They double-clicked the submit button.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_gerund() {
-        assert_suggestion_result("Double clicking the item highlights it.", DoubleClick::default(), "Double-clicking the item highlights it.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Double clicking the item highlights it.", DoubleClick::default(), "Double-clicking the item highlights it.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_caps() {
-        assert_suggestion_result("He DOUBLE CLICKED the file.", DoubleClick::default(), "He DOUBLE-CLICKED the file.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He DOUBLE CLICKED the file.", DoubleClick::default(), "He DOUBLE-CLICKED the file.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_multiline() {
-        assert_suggestion_result("Double\nclick the checkbox.", DoubleClick::default(), "Double-click the checkbox.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Double\nclick the checkbox.", DoubleClick::default(), "Double-click the checkbox.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_at_sentence_end() {
-        assert_suggestion_result("Just double click.", DoubleClick::default(), "Just double-click.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Just double click.", DoubleClick::default(), "Just double-click.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

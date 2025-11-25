@@ -56,22 +56,22 @@ mod tests {
 
     #[test]
     fn corrects_first_aid_kid() {
-        assert_suggestion_result("A first aid kid is a collection of medical supplies.", FirstAidKit::default(), "A first aid kit is a collection of medical supplies.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A first aid kid is a collection of medical supplies.", FirstAidKit::default(), "A first aid kit is a collection of medical supplies.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_starter_kid() {
-        assert_suggestion_result("Check the starter kid before proceeding.", FirstAidKit::default(), "Check the starter kit before proceeding.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Check the starter kid before proceeding.", FirstAidKit::default(), "Check the starter kit before proceeding.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_travel_kid() {
-        assert_suggestion_result("Pack your travel kid for the trip.", FirstAidKit::default(), "Pack your travel kit for the trip.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Pack your travel kid for the trip.", FirstAidKit::default(), "Pack your travel kit for the trip.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_tool_kid() {
-        assert_suggestion_result("Don't forget the tool kid for assembly.", FirstAidKit::default(), "Don't forget the tool kit for assembly.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Don't forget the tool kid for assembly.", FirstAidKit::default(), "Don't forget the tool kit for assembly.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

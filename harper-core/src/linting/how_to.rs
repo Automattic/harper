@@ -78,7 +78,7 @@ mod tests {
 
     #[test]
     fn flags_missing_to() {
-        assert_suggestion_result("Here's how clone the repository.", HowTo::default(), "Here's how to clone the repository.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Here's how clone the repository.", HowTo::default(), "Here's how to clone the repository.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -88,62 +88,62 @@ mod tests {
 
     #[test]
     fn flags_other_verbs() {
-        assert_suggestion_result("Learn how install Rust.", HowTo::default(), "Learn how to install Rust.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Learn how install Rust.", HowTo::default(), "Learn how to install Rust.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ros_package_install() {
-        assert_suggestion_result("Can someone explain how install this ROS package on Humble?", HowTo::default(), "Can someone explain how to install this ROS package on Humble?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Can someone explain how install this ROS package on Humble?", HowTo::default(), "Can someone explain how to install this ROS package on Humble?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn extract_and_install_app() {
-        assert_suggestion_result("Here’s a quick guide on how install an app you’ve extracted from a tarball.", HowTo::default(), "Here’s a quick guide on how to install an app you’ve extracted from a tarball.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Here’s a quick guide on how install an app you’ve extracted from a tarball.", HowTo::default(), "Here’s a quick guide on how to install an app you’ve extracted from a tarball.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dll_files() {
-        assert_suggestion_result("This video shows how fix missing DLL files on Windows.", HowTo::default(), "This video shows how to fix missing DLL files on Windows.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("This video shows how fix missing DLL files on Windows.", HowTo::default(), "This video shows how to fix missing DLL files on Windows.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dofus_on_ubuntu() {
-        assert_suggestion_result("Full tutorial on how install Dofus under Ubuntu.", HowTo::default(), "Full tutorial on how to install Dofus under Ubuntu.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Full tutorial on how install Dofus under Ubuntu.", HowTo::default(), "Full tutorial on how to install Dofus under Ubuntu.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn tar_gz_install() {
-        assert_suggestion_result("Find out how install software shipped as a .tar.gz archive.", HowTo::default(), "Find out how to install software shipped as a .tar.gz archive.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Find out how install software shipped as a .tar.gz archive.", HowTo::default(), "Find out how to install software shipped as a .tar.gz archive.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn thrift_libraries() {
-        assert_suggestion_result("Anyone know how install the Thrift libraries from source?", HowTo::default(), "Anyone know how to install the Thrift libraries from source?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Anyone know how install the Thrift libraries from source?", HowTo::default(), "Anyone know how to install the Thrift libraries from source?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn windows_adk() {
-        assert_suggestion_result("Lost the Windows ADK again—remind me how install it?", HowTo::default(), "Lost the Windows ADK again—remind me how to install it?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Lost the Windows ADK again—remind me how install it?", HowTo::default(), "Lost the Windows ADK again—remind me how to install it?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn accounting_errors() {
-        assert_suggestion_result("Eight common accounting errors and how fix them.", HowTo::default(), "Eight common accounting errors and how to fix them.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Eight common accounting errors and how fix them.", HowTo::default(), "Eight common accounting errors and how to fix them.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn sentence_fragments() {
-        assert_suggestion_result("Here’s what sentence fragments are and how fix them.", HowTo::default(), "Here’s what sentence fragments are and how to fix them.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Here’s what sentence fragments are and how fix them.", HowTo::default(), "Here’s what sentence fragments are and how to fix them.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn zipper_slider() {
-        assert_suggestion_result("Quick demo on how fix a broken zipper slider.", HowTo::default(), "Quick demo on how to fix a broken zipper slider.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Quick demo on how fix a broken zipper slider.", HowTo::default(), "Quick demo on how to fix a broken zipper slider.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn door_lock() {
-        assert_suggestion_result("Tips on how fix a door that won’t lock.", HowTo::default(), "Tips on how to fix a door that won’t lock.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Tips on how fix a door that won’t lock.", HowTo::default(), "Tips on how to fix a door that won’t lock.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

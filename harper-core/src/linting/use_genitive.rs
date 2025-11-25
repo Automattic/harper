@@ -89,12 +89,12 @@ mod tests {
 
     #[test]
     fn catches_adjective_noun() {
-        assert_suggestion_result("What are there big problems?", UseGenitive::default(), "What are their big problems?", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("What are there big problems?", UseGenitive::default(), "What are their big problems?", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn catches_just_noun() {
-        assert_suggestion_result("What are there problems?", UseGenitive::default(), "What are their problems?", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("What are there problems?", UseGenitive::default(), "What are their problems?", crate::languages::LanguageFamily::English)
     }
 
     #[test]
@@ -123,7 +123,7 @@ mod tests {
     #[test]
     #[should_panic] // currently fails, because "received" is ambiguous between verb and adjective
     fn catches_they_are() {
-        assert_suggestion_result("The students received they're test results today.", UseGenitive::default(), "The students received their test results today.", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("The students received they're test results today.", UseGenitive::default(), "The students received their test results today.", crate::languages::LanguageFamily::English)
     }
 
     #[test]

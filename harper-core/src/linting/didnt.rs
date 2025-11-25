@@ -51,37 +51,37 @@ mod tests {
 
     #[test]
     fn corrects_i_dint() {
-        assert_suggestion_result("I dint lock the gate.", Didnt::default(), "I didn't lock the gate.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I dint lock the gate.", Didnt::default(), "I didn't lock the gate.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_you_dint() {
-        assert_suggestion_result("You dint look this way.", Didnt::default(), "You didn't look this way.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You dint look this way.", Didnt::default(), "You didn't look this way.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_he_dint() {
-        assert_suggestion_result("He dint see the sign.", Didnt::default(), "He didn't see the sign.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He dint see the sign.", Didnt::default(), "He didn't see the sign.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_she_dint() {
-        assert_suggestion_result("She dint call me back.", Didnt::default(), "She didn't call me back.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She dint call me back.", Didnt::default(), "She didn't call me back.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_we_dint() {
-        assert_suggestion_result("We dint sleep much.", Didnt::default(), "We didn't sleep much.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We dint sleep much.", Didnt::default(), "We didn't sleep much.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_dint() {
-        assert_suggestion_result("They dint enjoy the show.", Didnt::default(), "They didn't enjoy the show.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They dint enjoy the show.", Didnt::default(), "They didn't enjoy the show.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_it_dint() {
-        assert_suggestion_result("It dint rain today.", Didnt::default(), "It didn't rain today.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It dint rain today.", Didnt::default(), "It didn't rain today.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

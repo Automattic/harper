@@ -57,12 +57,12 @@ mod tests {
 
     #[test]
     fn fix_ignore() {
-        assert_suggestion_result("It is save to ignore trivial code.", SaveToSafe::default(), "It is safe to ignore trivial code.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It is save to ignore trivial code.", SaveToSafe::default(), "It is safe to ignore trivial code.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_travel() {
-        assert_suggestion_result("Is it save to travel abroad now?", SaveToSafe::default(), "Is it safe to travel abroad now?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Is it save to travel abroad now?", SaveToSafe::default(), "Is it safe to travel abroad now?", crate::languages::LanguageFamily::English);
     }
 
     #[test]

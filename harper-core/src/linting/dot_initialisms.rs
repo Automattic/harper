@@ -66,6 +66,6 @@ mod tests {
 
     #[test]
     fn matches_eg() {
-        assert_suggestion_result("Some text here (eg. more text).", DotInitialisms::default(), "Some text here (e.g. more text).", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("Some text here (eg. more text).", DotInitialisms::default(), "Some text here (e.g. more text).", crate::languages::LanguageFamily::English)
     }
 }

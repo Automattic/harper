@@ -562,67 +562,37 @@ mod tests {
     // is_ou_misspelling
     #[test]
     fn suggest_color_for_colour_lowercase() {
-        assert_suggestion_result(
-            "colour",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "color",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("colour", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "color", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_colour_for_color_lowercase() {
-        assert_suggestion_result(
-            "color",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "colour",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("color", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "colour", crate::languages::LanguageFamily::English);
     }
 
     // titlecase
     #[test]
     fn suggest_color_for_colour_titlecase() {
-        assert_suggestion_result(
-            "Colour",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Color",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Colour", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Color", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_colour_for_color_titlecase() {
-        assert_suggestion_result(
-            "Color",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Colour",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Color", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Colour", crate::languages::LanguageFamily::English);
     }
 
     // all-caps
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_color_for_colour_all_caps() {
-        assert_suggestion_result(
-            "COLOUR",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "COLOR",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("COLOUR", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "COLOR", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_colour_for_color_all_caps() {
-        assert_suggestion_result(
-            "COLOR",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "COLOUR",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("COLOR", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "COLOUR", crate::languages::LanguageFamily::English);
     }
 
     // is_cksz_misspelling
@@ -630,322 +600,172 @@ mod tests {
     // s/z as in realise/realize
     #[test]
     fn suggest_realise_for_realize() {
-        assert_suggestion_result(
-            "realize",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "realise",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("realize", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "realise", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_realize_for_realise() {
-        assert_suggestion_result(
-            "realise",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "realize",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("realise", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "realize", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_realise_for_realize_titlecase() {
-        assert_suggestion_result(
-            "Realize",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Realise",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Realize", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Realise", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_titlecase() {
-        assert_suggestion_result(
-            "Realise",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Realize",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Realise", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Realize", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realise_for_realize_all_caps() {
-        assert_suggestion_result(
-            "REALIZE",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "REALISE",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("REALIZE", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "REALISE", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_all_caps() {
-        assert_suggestion_result(
-            "REALISE",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "REALIZE",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("REALISE", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "REALIZE", crate::languages::LanguageFamily::English);
     }
 
     // s/c as in defense/defence
     #[test]
     fn suggest_defence_for_defense() {
-        assert_suggestion_result(
-            "defense",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "defence",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("defense", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "defence", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_defense_for_defence() {
-        assert_suggestion_result(
-            "defence",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "defense",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("defence", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "defense", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_defense_for_defence_titlecase() {
-        assert_suggestion_result(
-            "Defense",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Defence",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Defense", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Defence", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_defence_for_defense_titlecase() {
-        assert_suggestion_result(
-            "Defence",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Defense",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Defence", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Defense", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_defense_for_defence_all_caps() {
-        assert_suggestion_result(
-            "DEFENSE",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "DEFENCE",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("DEFENSE", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "DEFENCE", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_defence_for_defense_all_caps() {
-        assert_suggestion_result(
-            "DEFENCE",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "DEFENSE",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("DEFENCE", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "DEFENSE", crate::languages::LanguageFamily::English);
     }
 
     // k/c as in skeptic/sceptic
     #[test]
     fn suggest_sceptic_for_skeptic() {
-        assert_suggestion_result(
-            "skeptic",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "sceptic",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("skeptic", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "sceptic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_skeptic_for_sceptic() {
-        assert_suggestion_result(
-            "sceptic",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "skeptic",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("sceptic", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "skeptic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_sceptic_for_skeptic_titlecase() {
-        assert_suggestion_result(
-            "Skeptic",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Sceptic",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Skeptic", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Sceptic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_skeptic_for_sceptic_titlecase() {
-        assert_suggestion_result(
-            "Sceptic",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Skeptic",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Sceptic", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Skeptic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_skeptic_for_sceptic_all_caps() {
-        assert_suggestion_result(
-            "SKEPTIC",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "SCEPTIC",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("SKEPTIC", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "SCEPTIC", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_sceptic_for_skeptic_all_caps() {
-        assert_suggestion_result(
-            "SCEPTIC",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "SKEPTIC",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("SCEPTIC", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "SKEPTIC", crate::languages::LanguageFamily::English);
     }
 
     // is_er_misspelling
     // as in meter/metre
     #[test]
     fn suggest_centimeter_for_centimetre() {
-        assert_suggestion_result(
-            "centimetre",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "centimeter",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("centimetre", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "centimeter", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_centimetre_for_centimeter() {
-        assert_suggestion_result(
-            "centimeter",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "centimetre",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("centimeter", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "centimetre", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_centimeter_for_centimetre_titlecase() {
-        assert_suggestion_result(
-            "Centimetre",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Centimeter",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Centimetre", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Centimeter", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_centimetre_for_centimeter_titlecase() {
-        assert_suggestion_result(
-            "Centimeter",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Centimetre",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Centimeter", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Centimetre", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_centimeter_for_centimetre_all_caps() {
-        assert_suggestion_result(
-            "CENTIMETRE",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "CENTIMETER",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("CENTIMETRE", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "CENTIMETER", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_centimetre_for_centimeter_all_caps() {
-        assert_suggestion_result(
-            "CENTIMETER",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "CENTIMETRE",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("CENTIMETER", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "CENTIMETRE", crate::languages::LanguageFamily::English);
     }
 
     // is_ll_misspelling
     // as in traveller/traveler
     #[test]
     fn suggest_traveler_for_traveller() {
-        assert_suggestion_result(
-            "traveller",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "traveler",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("traveller", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "traveler", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_traveller_for_traveler() {
-        assert_suggestion_result(
-            "traveler",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "traveller",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("traveler", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "traveller", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_traveler_for_traveller_titlecase() {
-        assert_suggestion_result(
-            "Traveller",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "Traveler",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Traveller", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "Traveler", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_traveller_for_traveler_titlecase() {
-        assert_suggestion_result(
-            "Traveler",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "Traveller",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("Traveler", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "Traveller", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_traveler_for_traveller_all_caps() {
-        assert_suggestion_result(
-            "TRAVELLER",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "TRAVELER",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("TRAVELLER", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "TRAVELER", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_traveller_for_traveler_all_caps() {
-        assert_suggestion_result(
-            "TRAVELER",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "TRAVELLER",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("TRAVELER", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "TRAVELLER", crate::languages::LanguageFamily::English);
     }
 
     // is_ay_ey_misspelling
@@ -953,65 +773,35 @@ mod tests {
 
     #[test]
     fn suggest_grey_for_gray_in_non_american() {
-        assert_suggestion_result(
-            "I've got a gray cat.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "I've got a grey cat.",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("I've got a gray cat.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "I've got a grey cat.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_gray_for_grey_in_american() {
-        assert_suggestion_result(
-            "It's a greyscale photo.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "It's a grayscale photo.",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("It's a greyscale photo.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "It's a grayscale photo.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_grey_for_gray_in_non_american_titlecase() {
-        assert_suggestion_result(
-            "I've Got a Gray Cat.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "I've Got a Grey Cat.",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("I've Got a Gray Cat.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "I've Got a Grey Cat.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggest_gray_for_grey_in_american_titlecase() {
-        assert_suggestion_result(
-            "It's a Greyscale Photo.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "It's a Grayscale Photo.",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("It's a Greyscale Photo.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "It's a Grayscale Photo.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_grey_for_gray_in_non_american_all_caps() {
-        assert_suggestion_result(
-            "GRAY",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "GREY",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("GRAY", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "GREY", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_gray_for_grey_in_american_all_caps() {
-        assert_suggestion_result(
-            "GREY",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American),
-            "GRAY",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+        assert_suggestion_result("GREY", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::American), "GRAY", crate::languages::LanguageFamily::English);
     }
 
     // Tests for non-dialectal misspelling patterns

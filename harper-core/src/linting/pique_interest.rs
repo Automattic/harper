@@ -79,36 +79,36 @@ mod tests {
 
     #[test]
     fn corrects_peak_interest() {
-        assert_suggestion_result("The story managed to peak his interest.", PiqueInterest::default(), "The story managed to pique his interest.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The story managed to peak his interest.", PiqueInterest::default(), "The story managed to pique his interest.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_peeked_interest_at_start() {
-        assert_suggestion_result("Peeked his interest, did she?", PiqueInterest::default(), "Piqued his interest, did she?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Peeked his interest, did she?", PiqueInterest::default(), "Piqued his interest, did she?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_peak_interest_in_middle() {
-        assert_suggestion_result("She tried to peak his interest during the lecture.", PiqueInterest::default(), "She tried to pique his interest during the lecture.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She tried to peak his interest during the lecture.", PiqueInterest::default(), "She tried to pique his interest during the lecture.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_peaked_interest_at_end() {
-        assert_suggestion_result("All along, she hoped she peaked his interest.", PiqueInterest::default(), "All along, she hoped she piqued his interest.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("All along, she hoped she peaked his interest.", PiqueInterest::default(), "All along, she hoped she piqued his interest.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_correct_unrelated_peak() {
-        assert_suggestion_result("He reached the peak of the mountain.", PiqueInterest::default(), "He reached the peak of the mountain.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He reached the peak of the mountain.", PiqueInterest::default(), "He reached the peak of the mountain.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_peaking_interest() {
-        assert_suggestion_result("She was peaking his interest with her stories.", PiqueInterest::default(), "She was piquing his interest with her stories.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She was peaking his interest with her stories.", PiqueInterest::default(), "She was piquing his interest with her stories.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_peaked_my_interest() {
-        assert_suggestion_result("you've peaked my interest.", PiqueInterest::default(), "you've piqued my interest.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("you've peaked my interest.", PiqueInterest::default(), "you've piqued my interest.", crate::languages::LanguageFamily::English);
     }
 }

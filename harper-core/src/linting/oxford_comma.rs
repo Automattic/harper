@@ -111,17 +111,17 @@ mod tests {
 
     #[test]
     fn people() {
-        assert_suggestion_result("Nancy, Steve and Carl are going to the coffee shop.", OxfordComma::default(), "Nancy, Steve, and Carl are going to the coffee shop.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Nancy, Steve and Carl are going to the coffee shop.", OxfordComma::default(), "Nancy, Steve, and Carl are going to the coffee shop.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn places() {
-        assert_suggestion_result("I've always wanted to visit Paris, Tokyo and Rome.", OxfordComma::default(), "I've always wanted to visit Paris, Tokyo, and Rome.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I've always wanted to visit Paris, Tokyo and Rome.", OxfordComma::default(), "I've always wanted to visit Paris, Tokyo, and Rome.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn foods() {
-        assert_suggestion_result("My favorite foods are pizza, sushi, tacos and burgers.", OxfordComma::default(), "My favorite foods are pizza, sushi, tacos, and burgers.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("My favorite foods are pizza, sushi, tacos and burgers.", OxfordComma::default(), "My favorite foods are pizza, sushi, tacos, and burgers.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -144,17 +144,17 @@ mod tests {
 
     #[test]
     fn or_writing() {
-        assert_suggestion_result("Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.", OxfordComma::default(), "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.", OxfordComma::default(), "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn sports() {
-        assert_suggestion_result("They enjoy playing soccer, basketball or tennis.", OxfordComma::default(), "They enjoy playing soccer, basketball, or tennis.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They enjoy playing soccer, basketball or tennis.", OxfordComma::default(), "They enjoy playing soccer, basketball, or tennis.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn nor_vegetables() {
-        assert_suggestion_result("I like carrots, kale nor broccoli.", OxfordComma::default(), "I like carrots, kale, nor broccoli.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I like carrots, kale nor broccoli.", OxfordComma::default(), "I like carrots, kale, nor broccoli.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

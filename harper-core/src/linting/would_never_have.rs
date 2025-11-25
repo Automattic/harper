@@ -89,52 +89,52 @@ mod tests {
 
     #[test]
     fn fix_could_have_never_been() {
-        assert_suggestion_result("Having a conversation would have never been easier with Ramen!", WouldNeverHave::default(), "Having a conversation never would have been easier with Ramen!", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Having a conversation would have never been easier with Ramen!", WouldNeverHave::default(), "Having a conversation never would have been easier with Ramen!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_would_have_never_come() {
-        assert_suggestion_result("This would have never come about without the help and encouragement of many people, too numerous to mention here.", WouldNeverHave::default(), "This never would have come about without the help and encouragement of many people, too numerous to mention here.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("This would have never come about without the help and encouragement of many people, too numerous to mention here.", WouldNeverHave::default(), "This never would have come about without the help and encouragement of many people, too numerous to mention here.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_would_have_never_find() {
-        assert_suggestion_result("Thanks for the help, think I would have never find it out alone.", WouldNeverHave::default(), "Thanks for the help, think I never would have find it out alone.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Thanks for the help, think I would have never find it out alone.", WouldNeverHave::default(), "Thanks for the help, think I never would have find it out alone.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_all_caps() {
-        assert_suggestion_result("I WOULD'VE NEVER THOUGHT TO TEST ALL CAPS.", WouldNeverHave::default(), "I NEVER WOULD'VE THOUGHT TO TEST ALL CAPS.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I WOULD'VE NEVER THOUGHT TO TEST ALL CAPS.", WouldNeverHave::default(), "I NEVER WOULD'VE THOUGHT TO TEST ALL CAPS.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Fails due to the strange way replace_with_match_case works"]
     fn fix_title_case() {
-        assert_suggestion_result("I Would Never Have Thought To Test Title Case English.", WouldNeverHave::default(), "I Never Would Have Thought To Test Title Case English.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I Would Never Have Thought To Test Title Case English.", WouldNeverHave::default(), "I Never Would Have Thought To Test Title Case English.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_could_never_have_worked() {
-        assert_suggestion_result("ft_quantile_discretizer could never have worked", WouldNeverHave::default(), "ft_quantile_discretizer never could have worked", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("ft_quantile_discretizer could never have worked", WouldNeverHave::default(), "ft_quantile_discretizer never could have worked", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_would_never_have_thought_of() {
-        assert_suggestion_result("We discover security flaws that your team would never have thought of.", WouldNeverHave::default(), "We discover security flaws that your team never would have thought of.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We discover security flaws that your team would never have thought of.", WouldNeverHave::default(), "We discover security flaws that your team never would have thought of.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_wouldve_never_known_missing_apostrophe() {
-        assert_suggestion_result("We wouldve never known from the current api docs", WouldNeverHave::default(), "We never would've known from the current api docs", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We wouldve never known from the current api docs", WouldNeverHave::default(), "We never would've known from the current api docs", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_wouldve_never_grokked() {
-        assert_suggestion_result("I would've never grokked that it's an issue in rollup.", WouldNeverHave::default(), "I never would've grokked that it's an issue in rollup.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I would've never grokked that it's an issue in rollup.", WouldNeverHave::default(), "I never would've grokked that it's an issue in rollup.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_couldve_never_designed() {
-        assert_suggestion_result("Without my subscription I could've never designed this in such little time without it.", WouldNeverHave::default(), "Without my subscription I never could've designed this in such little time without it.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Without my subscription I could've never designed this in such little time without it.", WouldNeverHave::default(), "Without my subscription I never could've designed this in such little time without it.", crate::languages::LanguageFamily::English);
     }
 }

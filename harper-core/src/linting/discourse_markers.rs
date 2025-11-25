@@ -97,42 +97,42 @@ mod tests {
 
     #[test]
     fn corrects_frankly() {
-        assert_suggestion_result("Frankly I think he is wrong.", DiscourseMarkers::default(), "Frankly, I think he is wrong.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Frankly I think he is wrong.", DiscourseMarkers::default(), "Frankly, I think he is wrong.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_however() {
-        assert_suggestion_result("However I disagree with your conclusion.", DiscourseMarkers::default(), "However, I disagree with your conclusion.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("However I disagree with your conclusion.", DiscourseMarkers::default(), "However, I disagree with your conclusion.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_therefore() {
-        assert_suggestion_result("Therefore we must act now.", DiscourseMarkers::default(), "Therefore, we must act now.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Therefore we must act now.", DiscourseMarkers::default(), "Therefore, we must act now.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_meanwhile() {
-        assert_suggestion_result("Meanwhile preparations continued in the background.", DiscourseMarkers::default(), "Meanwhile, preparations continued in the background.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Meanwhile preparations continued in the background.", DiscourseMarkers::default(), "Meanwhile, preparations continued in the background.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_furthermore() {
-        assert_suggestion_result("Furthermore this approach reduces complexity.", DiscourseMarkers::default(), "Furthermore, this approach reduces complexity.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Furthermore this approach reduces complexity.", DiscourseMarkers::default(), "Furthermore, this approach reduces complexity.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_nevertheless() {
-        assert_suggestion_result("Nevertheless we persevered despite the odds.", DiscourseMarkers::default(), "Nevertheless, we persevered despite the odds.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Nevertheless we persevered despite the odds.", DiscourseMarkers::default(), "Nevertheless, we persevered despite the odds.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_consequently() {
-        assert_suggestion_result("Consequently the system halted unexpectedly.", DiscourseMarkers::default(), "Consequently, the system halted unexpectedly.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Consequently the system halted unexpectedly.", DiscourseMarkers::default(), "Consequently, the system halted unexpectedly.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_thus() {
-        assert_suggestion_result("Thus we arrive at the final verdict.", DiscourseMarkers::default(), "Thus, we arrive at the final verdict.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Thus we arrive at the final verdict.", DiscourseMarkers::default(), "Thus, we arrive at the final verdict.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -145,17 +145,17 @@ mod tests {
 
     #[test]
     fn corrects_instead() {
-        assert_suggestion_result("Instead he chose a different path.", DiscourseMarkers::default(), "Instead, he chose a different path.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Instead he chose a different path.", DiscourseMarkers::default(), "Instead, he chose a different path.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_moreover() {
-        assert_suggestion_result("Moreover this solution is more efficient.", DiscourseMarkers::default(), "Moreover, this solution is more efficient.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Moreover this solution is more efficient.", DiscourseMarkers::default(), "Moreover, this solution is more efficient.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_alternatively() {
-        assert_suggestion_result("Alternatively we could defer the decision.", DiscourseMarkers::default(), "Alternatively, we could defer the decision.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Alternatively we could defer the decision.", DiscourseMarkers::default(), "Alternatively, we could defer the decision.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -176,17 +176,17 @@ mod tests {
 
     #[test]
     fn preserves_whitespace() {
-        assert_suggestion_result("However   I disagree.", DiscourseMarkers::default(), "However,   I disagree.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("However   I disagree.", DiscourseMarkers::default(), "However,   I disagree.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_semicolon_case() {
-        assert_suggestion_result("However I disagree.", DiscourseMarkers::default(), "However, I disagree.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("However I disagree.", DiscourseMarkers::default(), "However, I disagree.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_multiple_sentences() {
-        assert_suggestion_result("However I disagree. Therefore I propose an alternative.", DiscourseMarkers::default(), "However, I disagree. Therefore, I propose an alternative.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("However I disagree. Therefore I propose an alternative.", DiscourseMarkers::default(), "However, I disagree. Therefore, I propose an alternative.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -196,7 +196,7 @@ mod tests {
 
     #[test]
     fn corrects_for_example() {
-        assert_suggestion_result("For example I recommend updating the configuration.", DiscourseMarkers::default(), "For example, I recommend updating the configuration.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("For example I recommend updating the configuration.", DiscourseMarkers::default(), "For example, I recommend updating the configuration.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -209,12 +209,12 @@ mod tests {
 
     #[test]
     fn preserves_whitespace_for_example() {
-        assert_suggestion_result("For example   the outcome was unexpected.", DiscourseMarkers::default(), "For example,   the outcome was unexpected.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("For example   the outcome was unexpected.", DiscourseMarkers::default(), "For example,   the outcome was unexpected.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_on_the_other_hand() {
-        assert_suggestion_result("On the other hand we could delay the deployment.", DiscourseMarkers::default(), "On the other hand, we could delay the deployment.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("On the other hand we could delay the deployment.", DiscourseMarkers::default(), "On the other hand, we could delay the deployment.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

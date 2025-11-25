@@ -52,41 +52,41 @@ mod tests {
 
     #[test]
     fn fixes_a_couple_months() {
-        assert_suggestion_result("A couple months ago...", QuantifierNeedsOf::default(), "A couple of months ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple months ago...", QuantifierNeedsOf::default(), "A couple of months ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_weeks() {
-        assert_suggestion_result("A couple weeks ago...", QuantifierNeedsOf::default(), "A couple of weeks ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple weeks ago...", QuantifierNeedsOf::default(), "A couple of weeks ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_days() {
-        assert_suggestion_result("A couple days ago...", QuantifierNeedsOf::default(), "A couple of days ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple days ago...", QuantifierNeedsOf::default(), "A couple of days ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_seconds() {
-        assert_suggestion_result("A couple seconds ago...", QuantifierNeedsOf::default(), "A couple of seconds ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple seconds ago...", QuantifierNeedsOf::default(), "A couple of seconds ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_minutes() {
-        assert_suggestion_result("A couple minutes ago...", QuantifierNeedsOf::default(), "A couple of minutes ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple minutes ago...", QuantifierNeedsOf::default(), "A couple of minutes ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_houses() {
-        assert_suggestion_result("A couple houses ago...", QuantifierNeedsOf::default(), "A couple of houses ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple houses ago...", QuantifierNeedsOf::default(), "A couple of houses ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_centuries() {
-        assert_suggestion_result("A couple centuries ago...", QuantifierNeedsOf::default(), "A couple of centuries ago...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("A couple centuries ago...", QuantifierNeedsOf::default(), "A couple of centuries ago...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_a_couple_people() {
-        assert_suggestion_result("I saw a couple people walk by a few minutes ago.", QuantifierNeedsOf::default(), "I saw a couple of people walk by a few minutes ago.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I saw a couple people walk by a few minutes ago.", QuantifierNeedsOf::default(), "I saw a couple of people walk by a few minutes ago.", crate::languages::LanguageFamily::English);
     }
 }

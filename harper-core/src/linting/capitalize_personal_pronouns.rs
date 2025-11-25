@@ -52,17 +52,17 @@ mod tests {
 
     #[test]
     fn start() {
-        assert_suggestion_result("i am hungry", CapitalizePersonalPronouns, "I am hungry", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i am hungry", CapitalizePersonalPronouns, "I am hungry", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn end() {
-        assert_suggestion_result("There is no one stronger than i", CapitalizePersonalPronouns, "There is no one stronger than I", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("There is no one stronger than i", CapitalizePersonalPronouns, "There is no one stronger than I", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn middle() {
-        assert_suggestion_result("First of all, i am not happy with this.", CapitalizePersonalPronouns, "First of all, I am not happy with this.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("First of all, i am not happy with this.", CapitalizePersonalPronouns, "First of all, I am not happy with this.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -76,51 +76,51 @@ mod tests {
 
     #[test]
     fn corrects_id() {
-        assert_suggestion_result("i'd", CapitalizePersonalPronouns, "I'd", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i'd", CapitalizePersonalPronouns, "I'd", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_real_world_id() {
-        assert_suggestion_result("Personal Homebrew tap with tools i'd like to use", CapitalizePersonalPronouns, "Personal Homebrew tap with tools I'd like to use", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("Personal Homebrew tap with tools i'd like to use", CapitalizePersonalPronouns, "Personal Homebrew tap with tools I'd like to use", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_idve() {
-        assert_suggestion_result("i'd've", CapitalizePersonalPronouns, "I'd've", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i'd've", CapitalizePersonalPronouns, "I'd've", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_real_world_idve() {
-        assert_suggestion_result("... i'd've loved this even more twice length , but let not get greedy", CapitalizePersonalPronouns, "... I'd've loved this even more twice length , but let not get greedy", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("... i'd've loved this even more twice length , but let not get greedy", CapitalizePersonalPronouns, "... I'd've loved this even more twice length , but let not get greedy", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_ill() {
-        assert_suggestion_result("i'll", CapitalizePersonalPronouns, "I'll", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i'll", CapitalizePersonalPronouns, "I'll", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_real_world_ill() {
-        assert_suggestion_result("Hey i deploy my contract it give me error and i'll match with the script file both are same if someone have idea how i slove this please ...", CapitalizePersonalPronouns, "Hey I deploy my contract it give me error and I'll match with the script file both are same if someone have idea how I slove this please ...", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("Hey i deploy my contract it give me error and i'll match with the script file both are same if someone have idea how i slove this please ...", CapitalizePersonalPronouns, "Hey I deploy my contract it give me error and I'll match with the script file both are same if someone have idea how I slove this please ...", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_im() {
-        assert_suggestion_result("i'm", CapitalizePersonalPronouns, "I'm", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i'm", CapitalizePersonalPronouns, "I'm", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_real_world_im() {
-        assert_suggestion_result("Grid view not working, i'm not using any template", CapitalizePersonalPronouns, "Grid view not working, I'm not using any template", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("Grid view not working, i'm not using any template", CapitalizePersonalPronouns, "Grid view not working, I'm not using any template", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_ive() {
-        assert_suggestion_result("i've", CapitalizePersonalPronouns, "I've", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i've", CapitalizePersonalPronouns, "I've", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_real_world_ive() {
-        assert_suggestion_result("Can't use Github Pro although i've verified for student pack", CapitalizePersonalPronouns, "Can't use Github Pro although I've verified for student pack", crate::languages::Language::English(crate::EnglishDialect::American))
+        assert_suggestion_result("Can't use Github Pro although i've verified for student pack", CapitalizePersonalPronouns, "Can't use Github Pro although I've verified for student pack", crate::languages::LanguageFamily::English)
     }
 }

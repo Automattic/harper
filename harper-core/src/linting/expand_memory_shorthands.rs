@@ -122,117 +122,117 @@ mod tests {
 
     #[test]
     fn detects_bytes() {
-        assert_suggestion_result("5 B", ExpandMemoryShorthands::new(), "5 bytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("5 B", ExpandMemoryShorthands::new(), "5 bytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_kilobytes() {
-        assert_suggestion_result("10 kB", ExpandMemoryShorthands::new(), "10 kilobytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("10 kB", ExpandMemoryShorthands::new(), "10 kilobytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_megabytes() {
-        assert_suggestion_result("30 MB", ExpandMemoryShorthands::new(), "30 megabytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("30 MB", ExpandMemoryShorthands::new(), "30 megabytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_gigabytes() {
-        assert_suggestion_result("16 GB", ExpandMemoryShorthands::new(), "16 gigabytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("16 GB", ExpandMemoryShorthands::new(), "16 gigabytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_terabytes() {
-        assert_suggestion_result("2 TB", ExpandMemoryShorthands::new(), "2 terabytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("2 TB", ExpandMemoryShorthands::new(), "2 terabytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_kibibytes() {
-        assert_suggestion_result("1024 KiB", ExpandMemoryShorthands::new(), "1024 kibibytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1024 KiB", ExpandMemoryShorthands::new(), "1024 kibibytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_mebibytes() {
-        assert_suggestion_result("2048 MiB", ExpandMemoryShorthands::new(), "2048 mebibytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("2048 MiB", ExpandMemoryShorthands::new(), "2048 mebibytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_gibibytes() {
-        assert_suggestion_result("4 GiB", ExpandMemoryShorthands::new(), "4 gibibytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("4 GiB", ExpandMemoryShorthands::new(), "4 gibibytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_tebibytes() {
-        assert_suggestion_result("8 TiB", ExpandMemoryShorthands::new(), "8 tebibytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("8 TiB", ExpandMemoryShorthands::new(), "8 tebibytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_petabytes() {
-        assert_suggestion_result("1 PB", ExpandMemoryShorthands::new(), "1 petabyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 PB", ExpandMemoryShorthands::new(), "1 petabyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_exabytes() {
-        assert_suggestion_result("1 EB", ExpandMemoryShorthands::new(), "1 exabyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 EB", ExpandMemoryShorthands::new(), "1 exabyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_zettabytes() {
-        assert_suggestion_result("1 ZB", ExpandMemoryShorthands::new(), "1 zettabyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 ZB", ExpandMemoryShorthands::new(), "1 zettabyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_yottabytes() {
-        assert_suggestion_result("1 YB", ExpandMemoryShorthands::new(), "1 yottabyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 YB", ExpandMemoryShorthands::new(), "1 yottabyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_quettabytes() {
-        assert_suggestion_result("1 QB", ExpandMemoryShorthands::new(), "1 quettabyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 QB", ExpandMemoryShorthands::new(), "1 quettabyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_pebibytes() {
-        assert_suggestion_result("1 PiB", ExpandMemoryShorthands::new(), "1 pebibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 PiB", ExpandMemoryShorthands::new(), "1 pebibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_exbibytes() {
-        assert_suggestion_result("1 EiB", ExpandMemoryShorthands::new(), "1 exbibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 EiB", ExpandMemoryShorthands::new(), "1 exbibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_zebibytes() {
-        assert_suggestion_result("1 ZiB", ExpandMemoryShorthands::new(), "1 zebibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 ZiB", ExpandMemoryShorthands::new(), "1 zebibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_yobibytes() {
-        assert_suggestion_result("1 YiB", ExpandMemoryShorthands::new(), "1 yobibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 YiB", ExpandMemoryShorthands::new(), "1 yobibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_robibytes() {
-        assert_suggestion_result("1 RiB", ExpandMemoryShorthands::new(), "1 robibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 RiB", ExpandMemoryShorthands::new(), "1 robibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn detects_quebibytes() {
-        assert_suggestion_result("1 QiB", ExpandMemoryShorthands::new(), "1 quebibyte", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("1 QiB", ExpandMemoryShorthands::new(), "1 quebibyte", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_punctuation() {
-        assert_suggestion_result("8 GB.", ExpandMemoryShorthands::new(), "8 gigabytes.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("8 GB.", ExpandMemoryShorthands::new(), "8 gigabytes.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_adjacent_number() {
-        assert_suggestion_result("16GB", ExpandMemoryShorthands::new(), "16 gigabytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("16GB", ExpandMemoryShorthands::new(), "16 gigabytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_hyphen_separated() {
-        assert_suggestion_result("32-GB", ExpandMemoryShorthands::new(), "32-gigabytes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("32-GB", ExpandMemoryShorthands::new(), "32-gigabytes", crate::languages::LanguageFamily::English);
     }
 
     #[test]

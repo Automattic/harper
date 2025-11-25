@@ -84,17 +84,17 @@ mod tests {
 
     #[test]
     fn suggests_removing_second_modal_keeps_first() {
-        assert_suggestion_result("They might could finish the project by Friday.", DoubleModal::default(), "They might finish the project by Friday.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They might could finish the project by Friday.", DoubleModal::default(), "They might finish the project by Friday.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_removing_second_modal_keeps_first_variant_order() {
-        assert_suggestion_result("You could might want to double-check that.", DoubleModal::default(), "You could want to double-check that.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You could might want to double-check that.", DoubleModal::default(), "You could want to double-check that.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_removing_second_modal_keeps_first_capitalised() {
-        assert_suggestion_result("We Must Should be consistent.", DoubleModal::default(), "We Must be consistent.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We Must Should be consistent.", DoubleModal::default(), "We Must be consistent.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

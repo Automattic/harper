@@ -93,12 +93,12 @@ mod tests {
 
     #[test]
     fn simple_pronoun_new() {
-        assert_suggestion_result("I new you would say that.", PronounKnew::default(), "I knew you would say that.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I new you would say that.", PronounKnew::default(), "I knew you would say that.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn with_adverb() {
-        assert_suggestion_result("She often new the answer.", PronounKnew::default(), "She often knew the answer.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She often new the answer.", PronounKnew::default(), "She often knew the answer.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -160,12 +160,12 @@ mod tests {
 
     #[test]
     fn fixes_i_knew_what() {
-        assert_suggestion_result("I new what to do.", PronounKnew::default(), "I knew what to do.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I new what to do.", PronounKnew::default(), "I knew what to do.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_she_knew_what() {
-        assert_suggestion_result("She new what to do.", PronounKnew::default(), "She knew what to do.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She new what to do.", PronounKnew::default(), "She knew what to do.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

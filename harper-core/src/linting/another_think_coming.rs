@@ -52,21 +52,21 @@ pub mod tests {
 
     #[test]
     fn fix_got_another_thing_coming() {
-        assert_suggestion_result("If Microsoft thinks my Team and I are going to REINSTALL Windows fresh on over 1500 PC's they've got another thing coming!!", AnotherThinkComing::default(), "If Microsoft thinks my Team and I are going to REINSTALL Windows fresh on over 1500 PC's they've got another think coming!!", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If Microsoft thinks my Team and I are going to REINSTALL Windows fresh on over 1500 PC's they've got another thing coming!!", AnotherThinkComing::default(), "If Microsoft thinks my Team and I are going to REINSTALL Windows fresh on over 1500 PC's they've got another think coming!!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_has_another_thing_coming() {
-        assert_suggestion_result("Anyone who thinks it's easy to raise a child has another thing coming.", AnotherThinkComing::default(), "Anyone who thinks it's easy to raise a child has another think coming.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Anyone who thinks it's easy to raise a child has another thing coming.", AnotherThinkComing::default(), "Anyone who thinks it's easy to raise a child has another think coming.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_have_another_thing_coming() {
-        assert_suggestion_result("And if you think they're predictable, you have another thing coming still.", AnotherThinkComing::default(), "And if you think they're predictable, you have another think coming still.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("And if you think they're predictable, you have another thing coming still.", AnotherThinkComing::default(), "And if you think they're predictable, you have another think coming still.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_had_another_thing_coming() {
-        assert_suggestion_result("And wouldn't you know it I had another thing coming.", AnotherThinkComing::default(), "And wouldn't you know it I had another think coming.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("And wouldn't you know it I had another thing coming.", AnotherThinkComing::default(), "And wouldn't you know it I had another think coming.", crate::languages::LanguageFamily::English);
     }
 }

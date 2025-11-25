@@ -65,43 +65,43 @@ mod tests {
 
     #[test]
     fn corrects_three_day_training() {
-        assert_suggestion_result("The company offers a 3 day training program.", HyphenateNumberDay::default(), "The company offers a 3-day training program.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The company offers a 3 day training program.", HyphenateNumberDay::default(), "The company offers a 3-day training program.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_five_day_challenge() {
-        assert_suggestion_result("Join the 5 day challenge to improve your skills.", HyphenateNumberDay::default(), "Join the 5-day challenge to improve your skills.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Join the 5 day challenge to improve your skills.", HyphenateNumberDay::default(), "Join the 5-day challenge to improve your skills.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_seven_day_plan() {
-        assert_suggestion_result("She followed a strict 7 day meal plan.", HyphenateNumberDay::default(), "She followed a strict 7-day meal plan.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She followed a strict 7 day meal plan.", HyphenateNumberDay::default(), "She followed a strict 7-day meal plan.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_correct_when_not_adjective() {
-        assert_suggestion_result("The seminar lasts for 2 days.", HyphenateNumberDay::default(), "The seminar lasts for 2 days.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The seminar lasts for 2 days.", HyphenateNumberDay::default(), "The seminar lasts for 2 days.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_varied_phrases() {
-        assert_suggestion_result("They implemented a new 6 day work schedule.", HyphenateNumberDay::default(), "They implemented a new 6-day work schedule.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They implemented a new 6 day work schedule.", HyphenateNumberDay::default(), "They implemented a new 6-day work schedule.", crate::languages::LanguageFamily::English);
 
-        assert_suggestion_result("Enroll in our 10 day fitness bootcamp!", HyphenateNumberDay::default(), "Enroll in our 10-day fitness bootcamp!", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Enroll in our 10 day fitness bootcamp!", HyphenateNumberDay::default(), "Enroll in our 10-day fitness bootcamp!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn edge_case_day_long() {
-        assert_suggestion_result("The 4 day-long seminar was insightful.", HyphenateNumberDay::default(), "The 4-day-long seminar was insightful.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The 4 day-long seminar was insightful.", HyphenateNumberDay::default(), "The 4-day-long seminar was insightful.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn edge_case_plural_days() {
-        assert_suggestion_result("The trip was a fun 5 day experience.", HyphenateNumberDay::default(), "The trip was a fun 5-day experience.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The trip was a fun 5 day experience.", HyphenateNumberDay::default(), "The trip was a fun 5-day experience.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_spelled_out_numbers() {
-        assert_suggestion_result("We had a three day holiday.", HyphenateNumberDay::default(), "We had a three day holiday.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We had a three day holiday.", HyphenateNumberDay::default(), "We had a three day holiday.", crate::languages::LanguageFamily::English);
     }
 }

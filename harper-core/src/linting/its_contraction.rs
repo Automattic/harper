@@ -105,22 +105,22 @@ mod tests {
 
     #[test]
     fn fix_had() {
-        assert_suggestion_result("Its had an enormous effect.", ItsContraction::default(), "It's had an enormous effect.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its had an enormous effect.", ItsContraction::default(), "It's had an enormous effect.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_been() {
-        assert_suggestion_result("Its been months since we spoke.", ItsContraction::default(), "It's been months since we spoke.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its been months since we spoke.", ItsContraction::default(), "It's been months since we spoke.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_got() {
-        assert_suggestion_result("I think its got nothing to do with us.", ItsContraction::default(), "I think it's got nothing to do with us.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I think its got nothing to do with us.", ItsContraction::default(), "I think it's got nothing to do with us.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_its_common() {
-        assert_suggestion_result("Its common for users to get frustrated.", ItsContraction::default(), "It's common for users to get frustrated.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its common for users to get frustrated.", ItsContraction::default(), "It's common for users to get frustrated.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -152,7 +152,7 @@ mod tests {
 
     #[test]
     fn issue_381() {
-        assert_suggestion_result("Its a nice day.", ItsContraction::default(), "It's a nice day.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its a nice day.", ItsContraction::default(), "It's a nice day.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -185,27 +185,27 @@ mod tests {
 
     #[test]
     fn corrects_because() {
-        assert_suggestion_result("Its because they don't want to.", ItsContraction::default(), "It's because they don't want to.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its because they don't want to.", ItsContraction::default(), "It's because they don't want to.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_its_hard() {
-        assert_suggestion_result("Its hard to believe that.", ItsContraction::default(), "It's hard to believe that.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its hard to believe that.", ItsContraction::default(), "It's hard to believe that.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_its_easy() {
-        assert_suggestion_result("Its easy if you try.", ItsContraction::default(), "It's easy if you try.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its easy if you try.", ItsContraction::default(), "It's easy if you try.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_its_a_picnic() {
-        assert_suggestion_result("Its a beautiful day for a picnic", ItsContraction::default(), "It's a beautiful day for a picnic", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its a beautiful day for a picnic", ItsContraction::default(), "It's a beautiful day for a picnic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_its_my() {
-        assert_suggestion_result("Its my favorite song.", ItsContraction::default(), "It's my favorite song.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Its my favorite song.", ItsContraction::default(), "It's my favorite song.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

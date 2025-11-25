@@ -54,6 +54,6 @@ mod tests {
 
     #[test]
     fn both_valid_and_invalid() {
-        assert_suggestion_result("No body told me. I have a head but no body.", Nobody::default(), "Nobody told me. I have a head but no body.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("No body told me. I have a head but no body.", Nobody::default(), "Nobody told me. I have a head but no body.", crate::languages::LanguageFamily::English);
     }
 }

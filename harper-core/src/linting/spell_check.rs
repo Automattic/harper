@@ -164,15 +164,10 @@ mod tests {
 
     #[test]
     fn america_capitalized() {
-        assert_suggestion_result(
-            "The word america should be capitalized.",
-            SpellCheck::new(
+        assert_suggestion_result("The word america should be capitalized.", SpellCheck::new(
                 FstDictionary::curated(crate::languages::LanguageFamily::English),
                 EnglishDialect::American,
-            ),
-            "The word America should be capitalized.",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+            ), "The word America should be capitalized.", crate::languages::LanguageFamily::English);
     }
 
     // Dialect tests
@@ -371,15 +366,10 @@ mod tests {
 
     #[test]
     fn abandonware_correction() {
-        assert_suggestion_result(
-            "abanonedware",
-            SpellCheck::new(
+        assert_suggestion_result("abanonedware", SpellCheck::new(
                 FstDictionary::curated(crate::languages::LanguageFamily::English),
                 EnglishDialect::Australian,
-            ),
-            "abandonware",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+            ), "abandonware", crate::languages::LanguageFamily::English);
     }
 
     // Unit tests for specific spellcheck corrections
@@ -495,28 +485,18 @@ mod tests {
 
     #[test]
     fn corrects_hes() {
-        assert_suggestion_result(
-            "hes",
-            SpellCheck::new(
+        assert_suggestion_result("hes", SpellCheck::new(
                 FstDictionary::curated(crate::languages::LanguageFamily::English),
                 EnglishDialect::British,
-            ),
-            "he's",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+            ), "he's", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_shes() {
-        assert_suggestion_result(
-            "shes",
-            SpellCheck::new(
+        assert_suggestion_result("shes", SpellCheck::new(
                 FstDictionary::curated(crate::languages::LanguageFamily::English),
                 EnglishDialect::British,
-            ),
-            "she's",
-            crate::languages::Language::English(EnglishDialect::American),
-        );
+            ), "she's", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -613,14 +593,9 @@ mod tests_portuguese {
     #[test]
     fn brazil_capitalized() {
         let language = Language::Portuguese(PortugueseDialect::default());
-        assert_suggestion_result(
-            "The word brazil should be capitalized.",
-            SpellCheck::new_with_language(
+        assert_suggestion_result("The word brazil should be capitalized.", SpellCheck::new_with_language(
                 FstDictionary::curated(LanguageFamily::Portuguese),
                 language,
-            ),
-            "The word Brazil should be capitalized.",
-            Language::English(crate::EnglishDialect::American),
-        );
+            ), "The word Brazil should be capitalized.", LanguageFamily::English);
     }
 }

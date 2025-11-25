@@ -64,7 +64,7 @@ mod tests {
     #[test]
     #[should_panic] // currently fails because comments is a homographs (verb or noun)
     fn your_comments() {
-        assert_suggestion_result("You comments may end up in the documentation.", PossessiveYour::default(), "Your comments may end up in the documentation.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You comments may end up in the documentation.", PossessiveYour::default(), "Your comments may end up in the documentation.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

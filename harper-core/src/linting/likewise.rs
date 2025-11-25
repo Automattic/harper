@@ -60,11 +60,11 @@ mod tests {
 
     #[test]
     fn wise_men() {
-        assert_suggestion_result("Like wise men, we waited.", Likewise::default(), "Like wise men, we waited.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Like wise men, we waited.", Likewise::default(), "Like wise men, we waited.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn like_wise() {
-        assert_suggestion_result("He acted, like wise, without hesitation.", Likewise::default(), "He acted, likewise, without hesitation.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He acted, like wise, without hesitation.", Likewise::default(), "He acted, likewise, without hesitation.", crate::languages::LanguageFamily::English);
     }
 }

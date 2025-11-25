@@ -389,7 +389,11 @@ where
 
 #[cfg(test)]
 pub mod tests {
-    use crate::{Document, Span, Token, languages::Language, parsers::PlainEnglish};
+    use crate::{
+        Document, Span, Token,
+        languages::LanguageFamily,
+        parsers::{Parser, PlainEnglish, PlainPortuguese},
+    };
     use hashbrown::HashSet;
 
     /// Extension trait for converting spans of tokens back to their original text
@@ -450,9 +454,9 @@ pub mod tests {
         text: &str,
         linter: impl Linter,
         expected_result: &str,
-        language: Language,
+        language: LanguageFamily,
     ) {
-        assert_nth_suggestion_result(text, linter, expected_result, 0);
+        assert_nth_suggestion_result(text, linter, expected_result, language, 0);
     }
 
     /// Runs a provided linter on text, applies the nth suggestion from each lint
@@ -464,9 +468,10 @@ pub mod tests {
         text: &str,
         mut linter: impl Linter,
         expected_result: &str,
+        language: LanguageFamily,
         n: usize,
     ) {
-        let transformed_str = transform_nth_str(text, &mut linter, n);
+        let transformed_str = transform_nth_str(text, &mut linter, language, n);
 
         if transformed_str.as_str() != expected_result {
             panic!(
@@ -483,10 +488,11 @@ pub mod tests {
         text: &str,
         mut linter: impl Linter,
         expected_result: &str,
+        language: LanguageFamily,
     ) {
-        let zeroth = transform_nth_str(text, &mut linter, 0);
-        let first = transform_nth_str(text, &mut linter, 1);
-        let second = transform_nth_str(text, &mut linter, 2);
+        let zeroth = transform_nth_str(text, &mut linter, language, 0);
+        let first = transform_nth_str(text, &mut linter, language, 1);
+        let second = transform_nth_str(text, &mut linter, language, 2);
 
         match (
             zeroth.as_str() == expected_result,
@@ -613,16 +619,26 @@ pub mod tests {
         }
     }
 
-    fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
+    fn transform_nth_str(
+        text: &str,
+        linter: &mut impl Linter,
+        language: LanguageFamily,
+        n: usize,
+    ) -> String {
         let mut text_chars: Vec<char> = text.chars().collect();
 
         let mut iter_count = 0;
 
+        let parser: Box<dyn Parser> = match language {
+            LanguageFamily::English => Box::new(PlainEnglish),
+            LanguageFamily::Portuguese => Box::new(PlainPortuguese),
+        };
+
         loop {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
-                &PlainEnglish,
-                &FstDictionary::curated(crate::languages::LanguageFamily::English),
+                &parser,
+                &FstDictionary::curated(language),
             );
             let lints = linter.lint(&test);
 

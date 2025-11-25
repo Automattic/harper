@@ -52,22 +52,22 @@ pub mod tests {
 
     #[test]
     fn fix_have_another_think_coming() {
-        assert_suggestion_result("If you think that, you have another think coming, English.", AnotherThingComing::default(), "If you think that, you have another thing coming, English.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If you think that, you have another think coming, English.", AnotherThingComing::default(), "If you think that, you have another thing coming, English.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_has_another_think_coming() {
-        assert_suggestion_result("If the wage earner thinks that he will obtain anything from either of the old parties he has another think coming.", AnotherThingComing::default(), "If the wage earner thinks that he will obtain anything from either of the old parties he has another thing coming.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If the wage earner thinks that he will obtain anything from either of the old parties he has another think coming.", AnotherThingComing::default(), "If the wage earner thinks that he will obtain anything from either of the old parties he has another thing coming.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "A lettercase bug results in 'another thiNG COMing.'"]
     fn fix_got_another_think_coming() {
-        assert_suggestion_result("The correct phrase is, “You've got another THINK coming.”", AnotherThingComing::default(), "The correct phrase is, “You've got another THING coming.”", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The correct phrase is, “You've got another THINK coming.”", AnotherThingComing::default(), "The correct phrase is, “You've got another THING coming.”", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_had_another_think_coming() {
-        assert_suggestion_result("Guess I had another think coming.", AnotherThingComing::default(), "Guess I had another thing coming.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Guess I had another think coming.", AnotherThingComing::default(), "Guess I had another thing coming.", crate::languages::LanguageFamily::English);
     }
 }

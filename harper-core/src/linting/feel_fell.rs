@@ -78,43 +78,43 @@ mod tests {
 
     #[test]
     fn fix_i_fell_like() {
-        assert_suggestion_result("But I fell like i am having a knot in my brain ...", FeelFell::default(), "But I feel like i am having a knot in my brain ...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("But I fell like i am having a knot in my brain ...", FeelFell::default(), "But I feel like i am having a knot in my brain ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_if_you_fell_like_it() {
-        assert_suggestion_result("If you fell like it create w2ui-postgres for server side implementation", FeelFell::default(), "If you feel like it create w2ui-postgres for server side implementation", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If you fell like it create w2ui-postgres for server side implementation", FeelFell::default(), "If you feel like it create w2ui-postgres for server side implementation", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_dont_fell_like() {
-        assert_suggestion_result("But with this bug in place, I don't fell like asking the student to work with this tool", FeelFell::default(), "But with this bug in place, I don't feel like asking the student to work with this tool", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("But with this bug in place, I don't fell like asking the student to work with this tool", FeelFell::default(), "But with this bug in place, I don't feel like asking the student to work with this tool", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_comfortable() {
-        assert_suggestion_result("Technology that I fell comfortable to wok Php,Laravel, Javascript,Vue, Jquery, MySqli, sqLite.", FeelFell::default(), "Technology that I feel comfortable to wok Php,Laravel, Javascript,Vue, Jquery, MySqli, sqLite.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Technology that I fell comfortable to wok Php,Laravel, Javascript,Vue, Jquery, MySqli, sqLite.", FeelFell::default(), "Technology that I feel comfortable to wok Php,Laravel, Javascript,Vue, Jquery, MySqli, sqLite.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_good() {
-        assert_suggestion_result("I've ha a touch of the flu and didn't fell good enough to mess with the computer.", FeelFell::default(), "I've ha a touch of the flu and didn't feel good enough to mess with the computer.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I've ha a touch of the flu and didn't fell good enough to mess with the computer.", FeelFell::default(), "I've ha a touch of the flu and didn't feel good enough to mess with the computer.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_didnt_fell() {
-        assert_suggestion_result("They have served me well, and I didn't fell that it's a gamble.", FeelFell::default(), "They have served me well, and I didn't feel that it's a gamble.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They have served me well, and I didn't fell that it's a gamble.", FeelFell::default(), "They have served me well, and I didn't feel that it's a gamble.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_free() {
-        assert_suggestion_result("Please fell free to add more songs.", FeelFell::default(), "Please feel free to add more songs.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Please fell free to add more songs.", FeelFell::default(), "Please feel free to add more songs.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Needs more context or better heuristics"]
     fn fix_fell_right() {
-        assert_suggestion_result("It may fell right first but only causes confusion in long run.", FeelFell::default(), "It may feel right first but only causes confusion in long run.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It may fell right first but only causes confusion in long run.", FeelFell::default(), "It may feel right first but only causes confusion in long run.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -135,7 +135,7 @@ mod tests {
 
     #[test]
     fn fix_does_not_fell_comfortable() {
-        assert_suggestion_result("she does not fell comfortable with the \" iso \"-format", FeelFell::default(), "she does not feel comfortable with the \" iso \"-format", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("she does not fell comfortable with the \" iso \"-format", FeelFell::default(), "she does not feel comfortable with the \" iso \"-format", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -149,36 +149,36 @@ mod tests {
 
     #[test]
     fn fix_fell_that() {
-        assert_suggestion_result("I fell that a libSQL adapter would be a reasonable addition to the core offering.", FeelFell::default(), "I feel that a libSQL adapter would be a reasonable addition to the core offering.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I fell that a libSQL adapter would be a reasonable addition to the core offering.", FeelFell::default(), "I feel that a libSQL adapter would be a reasonable addition to the core offering.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_it() {
-        assert_suggestion_result("I personally fell it makes the screens difficult to use", FeelFell::default(), "I personally feel it makes the screens difficult to use", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I personally fell it makes the screens difficult to use", FeelFell::default(), "I personally feel it makes the screens difficult to use", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_its() {
-        assert_suggestion_result("but I fell it's too late to update that specific part of the API", FeelFell::default(), "but I feel it's too late to update that specific part of the API", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("but I fell it's too late to update that specific part of the API", FeelFell::default(), "but I feel it's too late to update that specific part of the API", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_im() {
-        assert_suggestion_result("I fell I'm missing sth and I need help.", FeelFell::default(), "I feel I'm missing sth and I need help.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I fell I'm missing sth and I need help.", FeelFell::default(), "I feel I'm missing sth and I need help.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_we() {
-        assert_suggestion_result("i fell we will have to directly use BigDecimal here for Json encoding", FeelFell::default(), "i feel we will have to directly use BigDecimal here for Json encoding", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("i fell we will have to directly use BigDecimal here for Json encoding", FeelFell::default(), "i feel we will have to directly use BigDecimal here for Json encoding", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_i() {
-        assert_suggestion_result("feel free to reopen if you fell I have missed something", FeelFell::default(), "feel free to reopen if you feel I have missed something", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("feel free to reopen if you fell I have missed something", FeelFell::default(), "feel free to reopen if you feel I have missed something", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_fell_you() {
-        assert_suggestion_result("But, I maybe fell you are stepping away from what a Markdown link actually is", FeelFell::default(), "But, I maybe feel you are stepping away from what a Markdown link actually is", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("But, I maybe fell you are stepping away from what a Markdown link actually is", FeelFell::default(), "But, I maybe feel you are stepping away from what a Markdown link actually is", crate::languages::LanguageFamily::English);
     }
 }

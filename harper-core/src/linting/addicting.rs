@@ -66,12 +66,7 @@ mod tests {
 
     #[test]
     fn fix_addicting() {
-        assert_suggestion_result(
-            "It is addicting like heroin.",
-            Addicting::default(),
-            "It is addictive like heroin.",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("It is addicting like heroin.", Addicting::default(), "It is addictive like heroin.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -86,12 +81,7 @@ mod tests {
 
     #[test]
     fn fix_yet_highly_addicting() {
-        assert_suggestion_result(
-            "The objective of the game is simple yet highly addicting, you start out with the four basic elements.",
-            Addicting::default(),
-            "The objective of the game is simple yet highly addictive, you start out with the four basic elements.",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("The objective of the game is simple yet highly addicting, you start out with the four basic elements.", Addicting::default(), "The objective of the game is simple yet highly addictive, you start out with the four basic elements.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -105,12 +95,7 @@ mod tests {
     #[test]
     #[ignore = "False positive since `myself` is not an object pronoun in this construction"]
     fn fix_find_things_addicting_myself() {
-        assert_suggestion_result(
-            "Yeah, I find taking the functional approach for these kinds of problems rather addicting myself :)",
-            Addicting::default(),
-            "Yeah, I find taking the functional approach for these kinds of problems rather addictive myself :)",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("Yeah, I find taking the functional approach for these kinds of problems rather addicting myself :)", Addicting::default(), "Yeah, I find taking the functional approach for these kinds of problems rather addictive myself :)", crate::languages::LanguageFamily::English);
     }
 
     #[test]

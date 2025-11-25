@@ -96,17 +96,17 @@ mod tests {
 
     #[test]
     fn flags_simple_shame() {
-        assert_suggestion_result("I think I would be a shame if this happened.", ItWouldBe::default(), "I think it would be a shame if this happened.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I think I would be a shame if this happened.", ItWouldBe::default(), "I think it would be a shame if this happened.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flags_believe_bummer() {
-        assert_suggestion_result("We believe I might not be a bummer after all.", ItWouldBe::default(), "We believe it might not be a bummer after all.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We believe I might not be a bummer after all.", ItWouldBe::default(), "We believe it might not be a bummer after all.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flags_doubt_good_idea() {
-        assert_suggestion_result("They doubt I will be a good idea for the team.", ItWouldBe::default(), "They doubt it will be a good idea for the team.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They doubt I will be a good idea for the team.", ItWouldBe::default(), "They doubt it will be a good idea for the team.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

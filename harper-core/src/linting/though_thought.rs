@@ -66,32 +66,32 @@ mod tests {
 
     #[test]
     fn fix_i_though_i() {
-        assert_suggestion_result("Looking at those I though I had to draw imgui into separate renderpass", ThoughThought::default(), "Looking at those I thought I had to draw imgui into separate renderpass", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Looking at those I though I had to draw imgui into separate renderpass", ThoughThought::default(), "Looking at those I thought I had to draw imgui into separate renderpass", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_though_it() {
-        assert_suggestion_result("and I though it was a shame because the data it provides can be ...", ThoughThought::default(), "and I thought it was a shame because the data it provides can be ...", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("and I though it was a shame because the data it provides can be ...", ThoughThought::default(), "and I thought it was a shame because the data it provides can be ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_though_that() {
-        assert_suggestion_result("I though that there may be other solutions as in other here", ThoughThought::default(), "I thought that there may be other solutions as in other here", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I though that there may be other solutions as in other here", ThoughThought::default(), "I thought that there may be other solutions as in other here", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_though_they() {
-        assert_suggestion_result("path parsin error ( i though they were extincted )", ThoughThought::default(), "path parsin error ( i thought they were extincted )", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("path parsin error ( i though they were extincted )", ThoughThought::default(), "path parsin error ( i thought they were extincted )", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_though_we() {
-        assert_suggestion_result("and that way I though we need something universial", ThoughThought::default(), "and that way I thought we need something universial", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("and that way I though we need something universial", ThoughThought::default(), "and that way I thought we need something universial", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_i_though_you() {
-        assert_suggestion_result("I though you resolved the issue, so I updated my version", ThoughThought::default(), "I thought you resolved the issue, so I updated my version", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I though you resolved the issue, so I updated my version", ThoughThought::default(), "I thought you resolved the issue, so I updated my version", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -113,7 +113,7 @@ mod tests {
     #[test]
     #[ignore = "TODO: Can't check because `it` is both subject and object"]
     fn fix_you_though_it() {
-        assert_suggestion_result("it may reveal that the bug is not where you though it was", ThoughThought::default(), "it may reveal that the bug is not where you thought it was", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("it may reveal that the bug is not where you though it was", ThoughThought::default(), "it may reveal that the bug is not where you thought it was", crate::languages::LanguageFamily::English);
     }
 
     #[test]

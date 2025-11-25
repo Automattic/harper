@@ -137,22 +137,22 @@ mod tests {
 
     #[test]
     fn fix_open_the_tv() {
-        assert_suggestion_result("open the TV", OpenTheLight::default(), "turn on the TV", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("open the TV", OpenTheLight::default(), "turn on the TV", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_he_opens_the_tv() {
-        assert_suggestion_result("he opens the TV", OpenTheLight::default(), "he turns on the TV", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("he opens the TV", OpenTheLight::default(), "he turns on the TV", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_she_opened_the_tv() {
-        assert_suggestion_result("she opened the TV", OpenTheLight::default(), "she turned on the TV", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("she opened the TV", OpenTheLight::default(), "she turned on the TV", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn opening_the_tv() {
-        assert_suggestion_result("opening the TV", OpenTheLight::default(), "turning on the TV", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("opening the TV", OpenTheLight::default(), "turning on the TV", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -162,27 +162,27 @@ mod tests {
 
     #[test]
     fn fix_open_the_tv_to_watch_the_news() {
-        assert_suggestion_result("open the TV to watch the news", OpenTheLight::default(), "turn on the TV to watch the news", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("open the TV to watch the news", OpenTheLight::default(), "turn on the TV to watch the news", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_dont_forget_to_open_the_lights() {
-        assert_suggestion_result("Don't forget to open the lights when you enter the room.", OpenTheLight::default(), "Don't forget to turn on the lights when you enter the room.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Don't forget to open the lights when you enter the room.", OpenTheLight::default(), "Don't forget to turn on the lights when you enter the room.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_can_you_open_the_fan() {
-        assert_suggestion_result("Can you open the fan? It's quite stuffy.", OpenTheLight::default(), "Can you turn on the fan? It's quite stuffy.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Can you open the fan? It's quite stuffy.", OpenTheLight::default(), "Can you turn on the fan? It's quite stuffy.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_opened_the_radio() {
-        assert_suggestion_result("I opened the radio to listen to the morning show.", OpenTheLight::default(), "I turned on the radio to listen to the morning show.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I opened the radio to listen to the morning show.", OpenTheLight::default(), "I turned on the radio to listen to the morning show.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_open_the_aircon() {
-        assert_suggestion_result("Can you open the aircon? It's hot.", OpenTheLight::default(), "Can you turn on the aircon? It's hot.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Can you open the aircon? It's hot.", OpenTheLight::default(), "Can you turn on the aircon? It's hot.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -309,12 +309,12 @@ mod tests {
 
     #[test]
     fn fix_opening_fan() {
-        assert_suggestion_result("If the CO2 passed a set point, it would open the fan, and close it once CO2 dropped enough.", OpenTheLight::default(), "If the CO2 passed a set point, it would turn on the fan, and close it once CO2 dropped enough.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If the CO2 passed a set point, it would open the fan, and close it once CO2 dropped enough.", OpenTheLight::default(), "If the CO2 passed a set point, it would turn on the fan, and close it once CO2 dropped enough.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_opening_tv() {
-        assert_suggestion_result("This was to prevent me from falling back into the temptation of opening the TV and breaking up the rule I wanted to implement.", OpenTheLight::default(), "This was to prevent me from falling back into the temptation of turning on the TV and breaking up the rule I wanted to implement.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("This was to prevent me from falling back into the temptation of opening the TV and breaking up the rule I wanted to implement.", OpenTheLight::default(), "This was to prevent me from falling back into the temptation of turning on the TV and breaking up the rule I wanted to implement.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -329,6 +329,6 @@ mod tests {
 
     #[test]
     fn fix_opening_lights() {
-        assert_suggestion_result("Steering wheel remains blocked until I open my lights.", OpenTheLight::default(), "Steering wheel remains blocked until I turn on my lights.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Steering wheel remains blocked until I open my lights.", OpenTheLight::default(), "Steering wheel remains blocked until I turn on my lights.", crate::languages::LanguageFamily::English);
     }
 }

@@ -44,11 +44,6 @@ mod tests {
 
     #[test]
     fn fixes_basic() {
-        assert_suggestion_result(
-            "This is a short sentence.  This is another short sentence.",
-            NoFrenchSpaces,
-            "This is a short sentence. This is another short sentence.",
-            crate::languages::Language::English(crate::EnglishDialect::American),
-        );
+        assert_suggestion_result("This is a short sentence.  This is another short sentence.", NoFrenchSpaces, "This is a short sentence. This is another short sentence.", crate::languages::LanguageFamily::English);
     }
 }

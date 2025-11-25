@@ -71,12 +71,12 @@ mod tests {
 
     #[test]
     fn catches_en_dash() {
-        assert_suggestion_result("pre--Industrial Revolution", Dashes::default(), &format!("pre{EN_DASH}Industrial Revolution"), crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("pre--Industrial Revolution", Dashes::default(), &format!("pre{EN_DASH}Industrial Revolution"), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn catches_em_dash() {
-        assert_suggestion_result("'There is no box' --- Scott", Dashes::default(), &format!("'There is no box' {EM_DASH} Scott"), crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("'There is no box' --- Scott", Dashes::default(), &format!("'There is no box' {EM_DASH} Scott"), crate::languages::LanguageFamily::English);
     }
 
     #[test]

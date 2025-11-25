@@ -56,37 +56,37 @@ mod tests {
 
     #[test]
     fn corrects_lowercase_before_the() {
-        assert_suggestion_result("We realized their's the clue we missed.", Theres::default(), "We realized there's the clue we missed.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We realized their's the clue we missed.", Theres::default(), "We realized there's the clue we missed.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_sentence_start() {
-        assert_suggestion_result("Their's the solution on the table.", Theres::default(), "There's the solution on the table.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Their's the solution on the table.", Theres::default(), "There's the solution on the table.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_no() {
-        assert_suggestion_result("I promise their's no extra charge.", Theres::default(), "I promise there's no extra charge.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I promise their's no extra charge.", Theres::default(), "I promise there's no extra charge.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_an() {
-        assert_suggestion_result("I suspect their's an error in the log.", Theres::default(), "I suspect there's an error in the log.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I suspect their's an error in the log.", Theres::default(), "I suspect there's an error in the log.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_a() {
-        assert_suggestion_result("Maybe their's a better route available.", Theres::default(), "Maybe there's a better route available.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Maybe their's a better route available.", Theres::default(), "Maybe there's a better route available.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_another() {
-        assert_suggestion_result("Their's another round after this.", Theres::default(), "There's another round after this.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Their's another round after this.", Theres::default(), "There's another round after this.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_enough() {
-        assert_suggestion_result("Their's enough context in the report.", Theres::default(), "There's enough context in the report.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Their's enough context in the report.", Theres::default(), "There's enough context in the report.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

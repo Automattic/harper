@@ -180,17 +180,17 @@ mod tests {
 
     #[test]
     fn corrects_he_are() {
-        assert_suggestion_result("He are my best friend.", PronounInflectionBe::default(), "He is my best friend.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He are my best friend.", PronounInflectionBe::default(), "He is my best friend.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_she_are() {
-        assert_suggestion_result("She are my best friend.", PronounInflectionBe::default(), "She is my best friend.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She are my best friend.", PronounInflectionBe::default(), "She is my best friend.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_is() {
-        assert_suggestion_result("They is my best friend.", PronounInflectionBe::default(), "They are my best friend.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They is my best friend.", PronounInflectionBe::default(), "They are my best friend.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -204,27 +204,27 @@ mod tests {
 
     #[test]
     fn corrects_it_are() {
-        assert_suggestion_result("It are on the table.", PronounInflectionBe::default(), "It is on the table.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It are on the table.", PronounInflectionBe::default(), "It is on the table.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_he_are_negation() {
-        assert_suggestion_result("He are not amused.", PronounInflectionBe::default(), "He is not amused.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He are not amused.", PronounInflectionBe::default(), "He is not amused.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_she_are_progressive() {
-        assert_suggestion_result("She are going to win.", PronounInflectionBe::default(), "She is going to win.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She are going to win.", PronounInflectionBe::default(), "She is going to win.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_is_negation() {
-        assert_suggestion_result("They is not ready.", PronounInflectionBe::default(), "They are not ready.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They is not ready.", PronounInflectionBe::default(), "They are not ready.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_is_progressive() {
-        assert_suggestion_result("They is planning a trip.", PronounInflectionBe::default(), "They are planning a trip.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They is planning a trip.", PronounInflectionBe::default(), "They are planning a trip.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -268,17 +268,17 @@ mod tests {
 
     #[test]
     fn corrects_i_were() {
-        assert_suggestion_result("I were the best player on the field.", PronounInflectionBe::default(), "I was the best player on the field.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I were the best player on the field.", PronounInflectionBe::default(), "I was the best player on the field.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_we_was() {
-        assert_suggestion_result("We was the best players on the field.", PronounInflectionBe::default(), "We were the best players on the field.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We was the best players on the field.", PronounInflectionBe::default(), "We were the best players on the field.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_you_was() {
-        assert_suggestion_result("You was my best friend.", PronounInflectionBe::default(), "You were my best friend.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You was my best friend.", PronounInflectionBe::default(), "You were my best friend.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -292,12 +292,12 @@ mod tests {
 
     #[test]
     fn corrects_he_were() {
-        assert_suggestion_result("He were late.", PronounInflectionBe::default(), "He was late.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He were late.", PronounInflectionBe::default(), "He was late.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_was() {
-        assert_suggestion_result("They was on time.", PronounInflectionBe::default(), "They were on time.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They was on time.", PronounInflectionBe::default(), "They were on time.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -312,12 +312,12 @@ mod tests {
 
     #[test]
     fn corrects_he_arent() {
-        assert_suggestion_result("He aren't ready.", PronounInflectionBe::default(), "He isn't ready.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He aren't ready.", PronounInflectionBe::default(), "He isn't ready.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_isnt() {
-        assert_suggestion_result("They isn't coming.", PronounInflectionBe::default(), "They aren't coming.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They isn't coming.", PronounInflectionBe::default(), "They aren't coming.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -332,17 +332,17 @@ mod tests {
 
     #[test]
     fn corrects_she_really_are() {
-        assert_suggestion_result("She really are talented.", PronounInflectionBe::default(), "She really is talented.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She really are talented.", PronounInflectionBe::default(), "She really is talented.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_often_is() {
-        assert_suggestion_result("They often is late.", PronounInflectionBe::default(), "They often are late.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They often is late.", PronounInflectionBe::default(), "They often are late.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_because_he_are() {
-        assert_suggestion_result("because he are tired.", PronounInflectionBe::default(), "because he is tired.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("because he are tired.", PronounInflectionBe::default(), "because he is tired.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

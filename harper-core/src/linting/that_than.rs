@@ -67,7 +67,7 @@ mod tests {
 
     #[test]
     fn fix_slower_that() {
-        assert_suggestion_result("Local installed PHAR 5x times slower that the same PHAR installed globally", ThatThan::default(), "Local installed PHAR 5x times slower than the same PHAR installed globally", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Local installed PHAR 5x times slower that the same PHAR installed globally", ThatThan::default(), "Local installed PHAR 5x times slower than the same PHAR installed globally", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -100,39 +100,39 @@ mod tests {
     #[test]
     #[ignore = "not handled because 'better' results in false positives"]
     fn fix_better_that() {
-        assert_suggestion_result("Examples of how different cards perform far better that others.", ThatThan::default(), "Examples of how different cards perform far better than others.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Examples of how different cards perform far better that others.", ThatThan::default(), "Examples of how different cards perform far better than others.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_smaller_that() {
-        assert_suggestion_result("When the resulting part is smaller that the build plate, it gets re-arranged.", ThatThan::default(), "When the resulting part is smaller than the build plate, it gets re-arranged.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("When the resulting part is smaller that the build plate, it gets re-arranged.", ThatThan::default(), "When the resulting part is smaller than the build plate, it gets re-arranged.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "not handled because 'bigger' results in false positives"]
     fn cant_flag_bigger_that() {
-        assert_suggestion_result("Enable bigger that 1024*768 window for world builder.", ThatThan::default(), "Enable bigger than 1024*768 window for world builder.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Enable bigger that 1024*768 window for world builder.", ThatThan::default(), "Enable bigger than 1024*768 window for world builder.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_longer_that() {
-        assert_suggestion_result("Window list in CodeBrowser can be longer that screen height.", ThatThan::default(), "Window list in CodeBrowser can be longer than screen height.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Window list in CodeBrowser can be longer that screen height.", ThatThan::default(), "Window list in CodeBrowser can be longer than screen height.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "'less that' also occurs in false positives"]
     fn fix_less_that() {
-        assert_suggestion_result("Collector Not collecting metrics if the collection interval is less that the metric generation interval.", ThatThan::default(), "Collector Not collecting metrics if the collection interval is less than the metric generation interval.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Collector Not collecting metrics if the collection interval is less that the metric generation interval.", ThatThan::default(), "Collector Not collecting metrics if the collection interval is less than the metric generation interval.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_faster_that() {
-        assert_suggestion_result("with the general case performing approximately 4x faster that a Vec based implementation", ThatThan::default(), "with the general case performing approximately 4x faster than a Vec based implementation", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("with the general case performing approximately 4x faster that a Vec based implementation", ThatThan::default(), "with the general case performing approximately 4x faster than a Vec based implementation", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_taller_that() {
-        assert_suggestion_result("Notice that people we've already placed are not taller that the current person.", ThatThan::default(), "Notice that people we've already placed are not taller than the current person.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Notice that people we've already placed are not taller that the current person.", ThatThan::default(), "Notice that people we've already placed are not taller than the current person.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -79,37 +79,37 @@ mod tests {
 
     #[test]
     fn corrects_he_bough() {
-        assert_suggestion_result("He bough a laptop yesterday.", Bought::default(), "He bought a laptop yesterday.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He bough a laptop yesterday.", Bought::default(), "He bought a laptop yesterday.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_she_never_bough() {
-        assert_suggestion_result("She never bough fresh herbs there.", Bought::default(), "She never bought fresh herbs there.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She never bough fresh herbs there.", Bought::default(), "She never bought fresh herbs there.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_already_bough() {
-        assert_suggestion_result("They already bough the train tickets.", Bought::default(), "They already bought the train tickets.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They already bough the train tickets.", Bought::default(), "They already bought the train tickets.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_we_have_bough() {
-        assert_suggestion_result("We have bough extra paint.", Bought::default(), "We have bought extra paint.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We have bough extra paint.", Bought::default(), "We have bought extra paint.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_they_have_never_bough() {
-        assert_suggestion_result("They have never bough theatre seats online.", Bought::default(), "They have never bought theatre seats online.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They have never bough theatre seats online.", Bought::default(), "They have never bought theatre seats online.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_ive_bough() {
-        assert_suggestion_result("I've bough the ingredients already.", Bought::default(), "I've bought the ingredients already.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I've bough the ingredients already.", Bought::default(), "I've bought the ingredients already.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_wed_bough() {
-        assert_suggestion_result("We'd bough snacks before the film.", Bought::default(), "We'd bought snacks before the film.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We'd bough snacks before the film.", Bought::default(), "We'd bought snacks before the film.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

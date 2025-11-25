@@ -62,27 +62,22 @@ mod tests {
 
     #[test]
     fn fixes_simple_lowercase() {
-        assert_suggestion_result("We interviewed the some candidates today.", SomeWithoutArticle::default(), "We interviewed some candidates today.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We interviewed the some candidates today.", SomeWithoutArticle::default(), "We interviewed some candidates today.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_sentence_case() {
-        assert_suggestion_result("The Some volunteers arrived early.", SomeWithoutArticle::default(), "Some volunteers arrived early.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The Some volunteers arrived early.", SomeWithoutArticle::default(), "Some volunteers arrived early.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn preserves_uppercase_block() {
-        assert_suggestion_result("THE SOME OPTIONS WERE LISTED.", SomeWithoutArticle::default(), "SOME OPTIONS WERE LISTED.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("THE SOME OPTIONS WERE LISTED.", SomeWithoutArticle::default(), "SOME OPTIONS WERE LISTED.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn second_suggestion_produces_the_same() {
-        assert_nth_suggestion_result(
-            "We kept the some approach from last year.",
-            SomeWithoutArticle::default(),
-            "We kept the same approach from last year.",
-            1,
-        );
+        assert_nth_suggestion_result("We kept the some approach from last year.", SomeWithoutArticle::default(), "We kept the same approach from last year.", crate::languages::LanguageFamily::English, 1);
     }
 
     #[test]
@@ -114,16 +109,16 @@ mod tests {
 
     #[test]
     fn works_before_comma() {
-        assert_suggestion_result("They reviewed the some, then finalized the list.", SomeWithoutArticle::default(), "They reviewed some, then finalized the list.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They reviewed the some, then finalized the list.", SomeWithoutArticle::default(), "They reviewed some, then finalized the list.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn works_before_possessive_noun() {
-        assert_suggestion_result("The report praised the some team's effort.", SomeWithoutArticle::default(), "The report praised some team's effort.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The report praised the some team's effort.", SomeWithoutArticle::default(), "The report praised some team's effort.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_line_break_spacing() {
-        assert_suggestion_result("We invited the some\nartists to perform.", SomeWithoutArticle::default(), "We invited some\nartists to perform.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We invited the some\nartists to perform.", SomeWithoutArticle::default(), "We invited some\nartists to perform.", crate::languages::LanguageFamily::English);
     }
 }

@@ -114,37 +114,32 @@ mod tests {
 
     #[test]
     fn corrects_basic_case() {
-        assert_suggestion_result("It may seen impossible to finish.", ModalSeem::default(), "It may seem impossible to finish.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It may seen impossible to finish.", ModalSeem::default(), "It may seem impossible to finish.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_adverb() {
-        assert_suggestion_result("That might seen utterly ridiculous.", ModalSeem::default(), "That might seem utterly ridiculous.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("That might seen utterly ridiculous.", ModalSeem::default(), "That might seem utterly ridiculous.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn offers_be_option() {
-        assert_nth_suggestion_result(
-            "It may seen impossible to finish.",
-            ModalSeem::default(),
-            "It may be impossible to finish.",
-            1,
-        );
+        assert_nth_suggestion_result("It may seen impossible to finish.", ModalSeem::default(), "It may be impossible to finish.", crate::languages::LanguageFamily::English, 1);
     }
 
     #[test]
     fn respects_uppercase() {
-        assert_suggestion_result("THIS COULD SEEN TERRIBLE.", ModalSeem::default(), "THIS COULD SEEM TERRIBLE.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("THIS COULD SEEN TERRIBLE.", ModalSeem::default(), "THIS COULD SEEM TERRIBLE.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_punctuation() {
-        assert_suggestion_result("Still, it may seen absurd, but we will continue.", ModalSeem::default(), "Still, it may seem absurd, but we will continue.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Still, it may seen absurd, but we will continue.", ModalSeem::default(), "Still, it may seem absurd, but we will continue.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_across_newline() {
-        assert_suggestion_result("It may seen\n impossible to pull off.", ModalSeem::default(), "It may seem\n impossible to pull off.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It may seen\n impossible to pull off.", ModalSeem::default(), "It may seem\n impossible to pull off.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

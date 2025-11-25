@@ -119,17 +119,17 @@ mod tests {
 
     #[test]
     fn fix_shoot_leg() {
-        assert_suggestion_result("I managed to shoot myself in the leg when using CF Workers deployment", ShootOneselfInTheFoot::default(), "I managed to shoot myself in the foot when using CF Workers deployment", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I managed to shoot myself in the leg when using CF Workers deployment", ShootOneselfInTheFoot::default(), "I managed to shoot myself in the foot when using CF Workers deployment", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_shoot_into_foot() {
-        assert_suggestion_result("Or should we keep them to prevent users from shooting themselves into the foot?", ShootOneselfInTheFoot::default(), "Or should we keep them to prevent users from shooting themselves in the foot?", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Or should we keep them to prevent users from shooting themselves into the foot?", ShootOneselfInTheFoot::default(), "Or should we keep them to prevent users from shooting themselves in the foot?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_shoot_into_feet() {
-        assert_suggestion_result("(to prevent you from shooting yourself into the feet)", ShootOneselfInTheFoot::default(), "(to prevent you from shooting yourself in the foot)", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("(to prevent you from shooting yourself into the feet)", ShootOneselfInTheFoot::default(), "(to prevent you from shooting yourself in the foot)", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -152,12 +152,12 @@ mod tests {
 
     #[test]
     fn fix_a_foot() {
-        assert_suggestion_result("Shot ourselves in a foot, \"Wrong X-Request-Key\" error #589.", ShootOneselfInTheFoot::default(), "Shot ourselves in the foot, \"Wrong X-Request-Key\" error #589.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Shot ourselves in a foot, \"Wrong X-Request-Key\" error #589.", ShootOneselfInTheFoot::default(), "Shot ourselves in the foot, \"Wrong X-Request-Key\" error #589.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_shoots_himself() {
-        assert_suggestion_result("the administrator shoots himself in the foot and then hops around", ShootOneselfInTheFoot::default(), "the administrator shoots himself in the foot and then hops around", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("the administrator shoots himself in the foot and then hops around", ShootOneselfInTheFoot::default(), "the administrator shoots himself in the foot and then hops around", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -171,17 +171,17 @@ mod tests {
 
     #[test]
     fn fix_oneself_in_a_foot() {
-        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in a foot", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in a foot", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_oneself_in_the_feet() {
-        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the feet", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the feet", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_oneself_into_the_leg() {
-        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself into the foot", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself into the foot", ShootOneselfInTheFoot::default(), "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the foot", crate::languages::LanguageFamily::English);
     }
 
     #[test]

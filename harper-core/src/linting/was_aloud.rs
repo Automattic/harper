@@ -55,31 +55,31 @@ mod tests {
 
     #[test]
     fn corrects_was_aloud() {
-        assert_suggestion_result("He was aloud to enter the room.", WasAloud::default(), "He was allowed to enter the room.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He was aloud to enter the room.", WasAloud::default(), "He was allowed to enter the room.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_were_aloud() {
-        assert_suggestion_result("They were aloud to participate.", WasAloud::default(), "They were allowed to participate.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They were aloud to participate.", WasAloud::default(), "They were allowed to participate.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_correct_proper_use_of_aloud() {
-        assert_suggestion_result("She read the passage aloud to the class.", WasAloud::default(), "She read the passage aloud to the class.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She read the passage aloud to the class.", WasAloud::default(), "She read the passage aloud to the class.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_unrelated_text() {
-        assert_suggestion_result("The concert was loud and exciting.", WasAloud::default(), "The concert was loud and exciting.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The concert was loud and exciting.", WasAloud::default(), "The concert was loud and exciting.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn be_aloud() {
-        assert_suggestion_result("You may be aloud to enter the room.", WasAloud::default(), "You may be allowed to enter the room.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You may be aloud to enter the room.", WasAloud::default(), "You may be allowed to enter the room.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn been_aloud() {
-        assert_suggestion_result("If I had been aloud to enter I would've jumped at the chance.", WasAloud::default(), "If I had been allowed to enter I would've jumped at the chance.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("If I had been aloud to enter I would've jumped at the chance.", WasAloud::default(), "If I had been allowed to enter I would've jumped at the chance.", crate::languages::LanguageFamily::English);
     }
 }

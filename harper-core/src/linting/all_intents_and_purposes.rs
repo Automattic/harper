@@ -101,49 +101,49 @@ mod tests {
 
     #[test]
     fn fix_for_intended() {
-        assert_suggestion_result("The details tag should be treated like a div for all intended purposes, but unsure where in the selection logic", AllIntentsAndPurposes::default(), "The details tag should be treated like a div for all intents and purposes, but unsure where in the selection logic", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The details tag should be treated like a div for all intended purposes, but unsure where in the selection logic", AllIntentsAndPurposes::default(), "The details tag should be treated like a div for all intents and purposes, but unsure where in the selection logic", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_for_intense() {
-        assert_suggestion_result("For all intense purposes, I thought your code was really well written", AllIntentsAndPurposes::default(), "For all intents and purposes, I thought your code was really well written", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("For all intense purposes, I thought your code was really well written", AllIntentsAndPurposes::default(), "For all intents and purposes, I thought your code was really well written", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_for_intensive() {
-        assert_suggestion_result("MultiNode could be for all intensive purposes, the same as Node sans the way it creates the command line arguments for the process.", AllIntentsAndPurposes::default(), "MultiNode could be for all intents and purposes, the same as Node sans the way it creates the command line arguments for the process.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("MultiNode could be for all intensive purposes, the same as Node sans the way it creates the command line arguments for the process.", AllIntentsAndPurposes::default(), "MultiNode could be for all intents and purposes, the same as Node sans the way it creates the command line arguments for the process.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_for_intrinsic_purposes() {
-        assert_suggestion_result("For all intrinsic purposes I think you are wrong.", AllIntentsAndPurposes::default(), "For all intents and purposes I think you are wrong.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("For all intrinsic purposes I think you are wrong.", AllIntentsAndPurposes::default(), "For all intents and purposes I think you are wrong.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_in_intense_purposes() {
-        assert_suggestion_result("the solution has some rules than in all intense purposes is not necessarily database driven", AllIntentsAndPurposes::default(), "the solution has some rules than for all intents and purposes is not necessarily database driven", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("the solution has some rules than in all intense purposes is not necessarily database driven", AllIntentsAndPurposes::default(), "the solution has some rules than for all intents and purposes is not necessarily database driven", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_to_intensive_purposes() {
-        assert_suggestion_result("To all intensive purposes, for the consumer, a view is a table", AllIntentsAndPurposes::default(), "To all intents and purposes, for the consumer, a view is a table", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("To all intensive purposes, for the consumer, a view is a table", AllIntentsAndPurposes::default(), "To all intents and purposes, for the consumer, a view is a table", crate::languages::LanguageFamily::English);
     }
 
     // Nouns with "and"
 
     #[test]
     fn fix_at_intents_and() {
-        assert_suggestion_result("can be thought of, at all intents and purposes, as a controlled cache", AllIntentsAndPurposes::default(), "can be thought of, for all intents and purposes, as a controlled cache", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("can be thought of, at all intents and purposes, as a controlled cache", AllIntentsAndPurposes::default(), "can be thought of, for all intents and purposes, as a controlled cache", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_by_intents_and() {
-        assert_suggestion_result("so by all intents and purposes one is not nested into another", AllIntentsAndPurposes::default(), "so for all intents and purposes one is not nested into another", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("so by all intents and purposes one is not nested into another", AllIntentsAndPurposes::default(), "so for all intents and purposes one is not nested into another", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_for_extents_and() {
-        assert_suggestion_result("#include, for all extents and purposes (if you take the preprocessor out) just copies the file", AllIntentsAndPurposes::default(), "#include, for all intents and purposes (if you take the preprocessor out) just copies the file", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("#include, for all extents and purposes (if you take the preprocessor out) just copies the file", AllIntentsAndPurposes::default(), "#include, for all intents and purposes (if you take the preprocessor out) just copies the file", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -156,27 +156,27 @@ mod tests {
 
     #[test]
     fn fix_from_intents_and() {
-        assert_suggestion_result("act as a full archive node from all intents and purposes", AllIntentsAndPurposes::default(), "act as a full archive node for all intents and purposes", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("act as a full archive node from all intents and purposes", AllIntentsAndPurposes::default(), "act as a full archive node for all intents and purposes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_in_intents_and() {
-        assert_suggestion_result("I posted #20493 asking about, in all intents and purposes, deno info", AllIntentsAndPurposes::default(), "I posted #20493 asking about, for all intents and purposes, deno info", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I posted #20493 asking about, in all intents and purposes, deno info", AllIntentsAndPurposes::default(), "I posted #20493 asking about, for all intents and purposes, deno info", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_intents_and() {
-        assert_suggestion_result("It depends on all intents and purposes what you want to do.", AllIntentsAndPurposes::default(), "It depends for all intents and purposes what you want to do.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("It depends on all intents and purposes what you want to do.", AllIntentsAndPurposes::default(), "It depends for all intents and purposes what you want to do.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_through_intents_and() {
-        assert_suggestion_result("While, I know through all intents and purposes it is an ugly url to look at", AllIntentsAndPurposes::default(), "While, I know for all intents and purposes it is an ugly url to look at", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("While, I know through all intents and purposes it is an ugly url to look at", AllIntentsAndPurposes::default(), "While, I know for all intents and purposes it is an ugly url to look at", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_to_extents_and() {
-        assert_suggestion_result("and they were trying to find out how that would also affect the the personnel to all extents and purposes.", AllIntentsAndPurposes::default(), "and they were trying to find out how that would also affect the the personnel to all intents and purposes.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("and they were trying to find out how that would also affect the the personnel to all extents and purposes.", AllIntentsAndPurposes::default(), "and they were trying to find out how that would also affect the the personnel to all intents and purposes.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -189,29 +189,29 @@ mod tests {
 
     #[test]
     fn fix_with_intents_and() {
-        assert_suggestion_result("With all intents and purposes the array should be As String since all values I'll be dealing with will be strings.", AllIntentsAndPurposes::default(), "For all intents and purposes the array should be As String since all values I'll be dealing with will be strings.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("With all intents and purposes the array should be As String since all values I'll be dealing with will be strings.", AllIntentsAndPurposes::default(), "For all intents and purposes the array should be As String since all values I'll be dealing with will be strings.", crate::languages::LanguageFamily::English);
     }
 
     // Adjectives with "and"!
 
     #[test]
     fn fix_by_intensive_purposes() {
-        assert_suggestion_result("By all intensive purposes this should be working", AllIntentsAndPurposes::default(), "For all intents and purposes this should be working", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("By all intensive purposes this should be working", AllIntentsAndPurposes::default(), "For all intents and purposes this should be working", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_for_intense_and() {
-        assert_suggestion_result("to test my site, which for all intense and purposes works", AllIntentsAndPurposes::default(), "to test my site, which for all intents and purposes works", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("to test my site, which for all intense and purposes works", AllIntentsAndPurposes::default(), "to test my site, which for all intents and purposes works", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_in_intensive_purposes() {
-        assert_suggestion_result("it should in all intensive purposes keep running", AllIntentsAndPurposes::default(), "it should for all intents and purposes keep running", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("it should in all intensive purposes keep running", AllIntentsAndPurposes::default(), "it should for all intents and purposes keep running", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_to_intense_and() {
-        assert_suggestion_result("The other type, is to all intense and purposes a submit button to the browser", AllIntentsAndPurposes::default(), "The other type, is to all intents and purposes a submit button to the browser", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The other type, is to all intense and purposes a submit button to the browser", AllIntentsAndPurposes::default(), "The other type, is to all intents and purposes a submit button to the browser", crate::languages::LanguageFamily::English);
     }
 
     // Doesn't try to deal with qualified "all"

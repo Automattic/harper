@@ -103,47 +103,47 @@ mod tests {
 
     #[test]
     fn corrects_basic_sentence() {
-        assert_suggestion_result("He roller skated down the hill.", RollerSkated::default(), "He roller-skated down the hill.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He roller skated down the hill.", RollerSkated::default(), "He roller-skated down the hill.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_adverb() {
-        assert_suggestion_result("They roller skated quickly around the rink.", RollerSkated::default(), "They roller-skated quickly around the rink.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They roller skated quickly around the rink.", RollerSkated::default(), "They roller-skated quickly around the rink.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_auxiliary() {
-        assert_suggestion_result("She had roller skated there before.", RollerSkated::default(), "She had roller-skated there before.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She had roller skated there before.", RollerSkated::default(), "She had roller-skated there before.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_contraction() {
-        assert_suggestion_result("They'd roller skated all night.", RollerSkated::default(), "They'd roller-skated all night.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They'd roller skated all night.", RollerSkated::default(), "They'd roller-skated all night.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_caps() {
-        assert_suggestion_result("They ROLLER SKATED yesterday.", RollerSkated::default(), "They ROLLER-SKATED yesterday.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They ROLLER SKATED yesterday.", RollerSkated::default(), "They ROLLER-SKATED yesterday.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_in_quotes() {
-        assert_suggestion_result("\"We roller skated together,\" she said.", RollerSkated::default(), "\"We roller-skated together,\" she said.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("\"We roller skated together,\" she said.", RollerSkated::default(), "\"We roller-skated together,\" she said.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_across_line_break() {
-        assert_suggestion_result("We\nroller skated whenever we could.", RollerSkated::default(), "We\nroller-skated whenever we could.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("We\nroller skated whenever we could.", RollerSkated::default(), "We\nroller-skated whenever we could.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_trailing_punctuation() {
-        assert_suggestion_result("He roller skated, laughed, and waved.", RollerSkated::default(), "He roller-skated, laughed, and waved.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He roller skated, laughed, and waved.", RollerSkated::default(), "He roller-skated, laughed, and waved.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_without_space_after_punctuation() {
-        assert_suggestion_result("He roller skated,laughed, and waved.", RollerSkated::default(), "He roller-skated,laughed, and waved.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("He roller skated,laughed, and waved.", RollerSkated::default(), "He roller-skated,laughed, and waved.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

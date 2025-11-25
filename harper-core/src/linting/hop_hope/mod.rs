@@ -14,41 +14,41 @@ mod tests {
 
     #[test]
     fn corrects_hop_to_hope() {
-        assert_suggestion_result("I hop we can clarify this soon.", HopHope::default(), "I hope we can clarify this soon.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I hop we can clarify this soon.", HopHope::default(), "I hope we can clarify this soon.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_correct_unrelated_use() {
-        assert_suggestion_result("I hop on one foot for fun.", HopHope::default(), "I hop on one foot for fun.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I hop on one foot for fun.", HopHope::default(), "I hop on one foot for fun.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_mixed_case_hop() {
-        assert_suggestion_result("I HoP we can find a solution.", HopHope::default(), "I HoPE we can find a solution.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I HoP we can find a solution.", HopHope::default(), "I HoPE we can find a solution.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_hoping_on_call() {
-        assert_suggestion_result("I was hoping on a call to discuss this.", HopHope::default(), "I was hopping on a call to discuss this.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I was hoping on a call to discuss this.", HopHope::default(), "I was hopping on a call to discuss this.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_hoped_on_plane() {
-        assert_suggestion_result("She hoped on an airplane to visit family.", HopHope::default(), "She hopped on an airplane to visit family.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She hoped on an airplane to visit family.", HopHope::default(), "She hopped on an airplane to visit family.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_hope_on_bus() {
-        assert_suggestion_result("They hope on a bus every morning.", HopHope::default(), "They hop on a bus every morning.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They hope on a bus every morning.", HopHope::default(), "They hop on a bus every morning.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_correct_unrelated_context() {
-        assert_suggestion_result("I hope everything goes well with your project.", HopHope::default(), "I hope everything goes well with your project.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I hope everything goes well with your project.", HopHope::default(), "I hope everything goes well with your project.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_mixed_case() {
-        assert_suggestion_result("She HoPeD on a train to get home.", HopHope::default(), "She HoPpED on a train to get home.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She HoPeD on a train to get home.", HopHope::default(), "She HoPpED on a train to get home.", crate::languages::LanguageFamily::English);
     }
 }

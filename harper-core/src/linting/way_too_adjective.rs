@@ -72,17 +72,17 @@ mod tests {
 
     #[test]
     fn corrects_way_to_fast() {
-        assert_suggestion_result("You drive way to fast.", WayTooAdjective::default(), "You drive way too fast.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You drive way to fast.", WayTooAdjective::default(), "You drive way too fast.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_way_to_complicated() {
-        assert_suggestion_result("I think this would be way to complicated to implement.", WayTooAdjective::default(), "I think this would be way too complicated to implement.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("I think this would be way to complicated to implement.", WayTooAdjective::default(), "I think this would be way too complicated to implement.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_way_to_much() {
-        assert_suggestion_result("…and ate way to much.", WayTooAdjective::default(), "…and ate way too much.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("…and ate way to much.", WayTooAdjective::default(), "…and ate way too much.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

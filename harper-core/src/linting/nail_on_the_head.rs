@@ -55,22 +55,22 @@ mod tests {
 
     #[test]
     fn fix_hat() {
-        assert_suggestion_result("She hit the nail on the hat.", NailOnTheHead::default(), "She hit the nail on the head.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("She hit the nail on the hat.", NailOnTheHead::default(), "She hit the nail on the head.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_had() {
-        assert_suggestion_result("You really put the nail on the had with that comment.", NailOnTheHead::default(), "You really put the nail on the head with that comment.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("You really put the nail on the had with that comment.", NailOnTheHead::default(), "You really put the nail on the head with that comment.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_hit() {
-        assert_suggestion_result("They hit the nail on the hit regarding our problem.", NailOnTheHead::default(), "They hit the nail on the head regarding our problem.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("They hit the nail on the hit regarding our problem.", NailOnTheHead::default(), "They hit the nail on the head regarding our problem.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_hid() {
-        assert_suggestion_result("The article nails the nail on the hid this time.", NailOnTheHead::default(), "The article nails the nail on the head this time.", crate::languages::Language::English(crate::EnglishDialect::American));
+        assert_suggestion_result("The article nails the nail on the hid this time.", NailOnTheHead::default(), "The article nails the nail on the head this time.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
