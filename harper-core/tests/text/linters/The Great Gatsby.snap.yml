@@ -5013,7 +5013,7 @@ Suggest:
 
 
 
-Lint:    WordChoice (54 priority)
+Lint:    Punctuation (54 priority)
 Message: |
     3495 | It was when curiosity about Gatsby was at its highest that the lights in his
          |                                           ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
