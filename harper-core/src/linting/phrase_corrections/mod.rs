@@ -739,6 +739,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects wrong variations of the idiomatic adjective `last-ditch`.",
             LintKind::Usage
         ),
+        "LastNight" => (
+            ["yesterday night"],
+            ["last night"],
+            "The idiomatic phrase is `last night`.",
+            "Flags `yesterday night` and suggests the standard phrasing `last night`.",
+            LintKind::WordChoice
+        ),
         "LetAlone" => (
             ["let along"],
             ["let alone"],
