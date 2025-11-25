@@ -75,7 +75,6 @@ use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
-use super::its_proper_noun::ItsProperNoun;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -512,7 +511,6 @@ impl LintGroup {
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
-        insert_expr_rule!(ItsProperNoun, true);
         insert_struct_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);

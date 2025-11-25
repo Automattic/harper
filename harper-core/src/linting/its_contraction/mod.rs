@@ -1,102 +1,15 @@
-use harper_brill::UPOS;
+use super::merge_linters::merge_linters;
 
-use crate::Document;
-use crate::TokenStringExt;
-use crate::expr::All;
-use crate::expr::Expr;
-use crate::expr::ExprExt;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::patterns::NominalPhrase;
-use crate::patterns::Pattern;
-use crate::patterns::UPOSSet;
-use crate::patterns::WordSet;
-use crate::{
-    Token,
-    linting::{Lint, LintKind, Suggestion},
-};
+mod general;
+mod proper_noun;
 
-use super::Linter;
+use general::General;
+use proper_noun::ProperNoun;
 
-pub struct ItsContraction {
-    expr: Box<dyn Expr>,
-}
-
-impl Default for ItsContraction {
-    fn default() -> Self {
-        let positive = SequenceExpr::default().t_aco("its").then_whitespace().then(
-            UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET, UPOS::PRON])
-                .or(WordSet::new(&["because"])),
-        );
-
-        let exceptions = SequenceExpr::default()
-            .then_anything()
-            .then_anything()
-            .then(WordSet::new(&["own", "intended"]));
-
-        let inverted = SequenceExpr::default().then_unless(exceptions);
-
-        let expr = All::new(vec![Box::new(positive), Box::new(inverted)]).or_longest(
-            SequenceExpr::aco("its")
-                .t_ws()
-                .then(UPOSSet::new(&[UPOS::ADJ]))
-                .t_ws()
-                .then(UPOSSet::new(&[UPOS::SCONJ, UPOS::PART])),
-        );
-
-        Self {
-            expr: Box::new(expr),
-        }
-    }
-}
-
-impl Linter for ItsContraction {
-    fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut lints = Vec::new();
-        let source = document.get_source();
-
-        for chunk in document.iter_chunks() {
-            lints.extend(
-                self.expr
-                    .iter_matches(chunk, source)
-                    .filter_map(|match_span| {
-                        self.match_to_lint(&chunk[match_span.start..], source)
-                    }),
-            );
-        }
-
-        lints
-    }
-
-    fn description(&self) -> &str {
-        "Detects the possessive `its` before `had`, `been`, or `got` and offers `it's` or `it has`."
-    }
-}
-
-impl ItsContraction {
-    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
-        let offender = toks.first()?;
-        let offender_chars = offender.span.get_content(source);
-
-        if toks.get(2)?.kind.is_upos(UPOS::VERB)
-            && NominalPhrase.matches(&toks[2..], source).is_some()
-        {
-            return None;
-        }
-
-        Some(Lint {
-            span: offender.span,
-            lint_kind: LintKind::WordChoice,
-            suggestions: vec![
-                Suggestion::replace_with_match_case_str("it's", offender_chars),
-                Suggestion::replace_with_match_case_str("it has", offender_chars),
-            ],
-            message: "Use `it's` (short for `it has` or `it is`) here, not the possessive `its`."
-                .to_owned(),
-            priority: 54,
-        })
-    }
-}
+merge_linters!(
+    ItsContraction => General, ProperNoun =>
+    "Detects places where the possessive `its` should be the contraction `it's`, including before verbs/clauses and before proper nouns after opinion verbs."
+);
 
 #[cfg(test)]
 mod tests {
@@ -282,6 +195,92 @@ mod tests {
         assert_no_lints(
             "The book contains its own secrets. ",
             ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_think_google() {
+        assert_suggestion_result(
+            "I think its Google, not Microsoft.",
+            ItsContraction::default(),
+            "I think it's Google, not Microsoft.",
+        );
+    }
+
+    #[test]
+    fn corrects_hope_katie() {
+        assert_suggestion_result(
+            "I hope its Katie.",
+            ItsContraction::default(),
+            "I hope it's Katie.",
+        );
+    }
+
+    #[test]
+    fn corrects_guess_date() {
+        assert_suggestion_result(
+            "I guess its March 6.",
+            ItsContraction::default(),
+            "I guess it's March 6.",
+        );
+    }
+
+    #[test]
+    fn corrects_assume_john() {
+        assert_suggestion_result(
+            "We assume its John.",
+            ItsContraction::default(),
+            "We assume it's John.",
+        );
+    }
+
+    #[test]
+    fn corrects_doubt_tesla() {
+        assert_suggestion_result(
+            "They doubt its Tesla this year.",
+            ItsContraction::default(),
+            "They doubt it's Tesla this year.",
+        );
+    }
+
+    #[test]
+    fn handles_two_word_name() {
+        assert_suggestion_result(
+            "She thinks its New York.",
+            ItsContraction::default(),
+            "She thinks it's New York.",
+        );
+    }
+
+    #[test]
+    fn ignores_existing_contraction() {
+        assert_lint_count("I think it's Google.", ItsContraction::default(), 0);
+    }
+
+    #[test]
+    fn ignores_possessive_noun_after_name() {
+        assert_lint_count(
+            "I think its Google product launch.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_without_opinion_verb() {
+        assert_lint_count(
+            "Its Google Pixel lineup is impressive.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignores_common_noun_target() {
+        assert_lint_count(
+            "We hope its accuracy improves.",
+            ItsContraction::default(),
+            0,
         );
     }
 }
