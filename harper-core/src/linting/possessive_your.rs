@@ -87,30 +87,18 @@ mod tests {
 
     #[test]
     fn test_top3_suggestion_your() {
-        assert_top3_suggestion_result(
-            "You combination of artist and teacher.",
-            PossessiveYour::default(),
-            "Your combination of artist and teacher.",
-        );
+        assert_top3_suggestion_result("You combination of artist and teacher.", PossessiveYour::default(), "Your combination of artist and teacher.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_top3_suggestion_youre_a() {
-        assert_top3_suggestion_result(
-            "You combination of artist and teacher.",
-            PossessiveYour::default(),
-            "You're a combination of artist and teacher.",
-        );
+        assert_top3_suggestion_result("You combination of artist and teacher.", PossessiveYour::default(), "You're a combination of artist and teacher.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore]
     fn test_top3_suggestion_multiple() {
-        assert_top3_suggestion_result(
-            "You knowledge. You imagination. You icosahedron",
-            PossessiveYour::default(),
-            "Your knowledge. Your imagination. You're an icosahedron",
-        );
+        assert_top3_suggestion_result("You knowledge. You imagination. You icosahedron", PossessiveYour::default(), "Your knowledge. Your imagination. You're an icosahedron", crate::languages::LanguageFamily::English);
     }
 
     #[test]

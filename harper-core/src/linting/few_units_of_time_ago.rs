@@ -88,11 +88,7 @@ mod tests {
 
     #[test]
     fn fix_done_few_minutes_ago() {
-        assert_top3_suggestion_result(
-            "Done few minutes ago",
-            FewUnitsOfTimeAgo::default(),
-            "Done a few minutes ago",
-        );
+        assert_top3_suggestion_result("Done few minutes ago", FewUnitsOfTimeAgo::default(), "Done a few minutes ago", crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -76,11 +76,7 @@ mod tests {
 
     #[test]
     fn fix_price_plural() {
-        assert_top3_suggestion_result(
-            "Our team won the prices announced yesterday.",
-            WinPrize::default(),
-            "Our team won the prizes announced yesterday.",
-        );
+        assert_top3_suggestion_result("Our team won the prices announced yesterday.", WinPrize::default(), "Our team won the prizes announced yesterday.", crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -567,6 +567,7 @@ mod tests {
             "I can't eat aubergine or coriander, so I'll just have a bag of crisps.",
             Regionalisms::new(EnglishDialect::American),
             "I can't eat eggplant or cilantro, so I'll just have a bag of chips.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -575,9 +576,9 @@ mod tests {
         assert_top3_suggestion_result(
             "I dropped my mobile phone in the esky and now it's covered in tomato sauce.",
             Regionalisms::new(EnglishDialect::American),
-            // Tomato sauce is valid in American English, it just means pasta sauce rather than ketchup.
             "I dropped my cellphone in the cooler and now it's covered in tomato sauce.",
-        )
+            crate::languages::LanguageFamily::English,
+        ) // Tomato sauce is valid in American English, it just means pasta sauce rather than ketchup.
     }
 
     #[test]
@@ -586,6 +587,7 @@ mod tests {
             "Drive the station wagon onto the footpath and hand me that spanner.",
             Regionalisms::new(EnglishDialect::British),
             "Drive the estate onto the pavement and hand me that spanner.",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -595,6 +597,7 @@ mod tests {
             "Drive the station wagon onto the footpath and hand me that spanner.",
             Regionalisms::new(EnglishDialect::American),
             "Drive the station wagon onto the sidewalk and hand me that wrench.",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -604,6 +607,7 @@ mod tests {
             "Wash the pacifier under the faucet.",
             Regionalisms::new(EnglishDialect::Australian),
             "Wash the dummy under the tap.",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -613,6 +617,7 @@ mod tests {
             "I needed more gasoline to drive the truck to the soccer match.",
             Regionalisms::new(EnglishDialect::British),
             "I needed more petrol to drive the truck to the football match.",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -622,6 +627,7 @@ mod tests {
             "Can you sell me a light globe for this torch?",
             Regionalisms::new(EnglishDialect::British),
             "Can you sell me a light bulb for this torch?",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -631,6 +637,7 @@ mod tests {
             "I spilled ketchup on my clean sweater.",
             Regionalisms::new(EnglishDialect::Australian),
             "I spilled tomato sauce on my clean jumper.",
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -649,6 +656,7 @@ mod tests {
             "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
             Regionalisms::new(EnglishDialect::American),
             "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
+            crate::languages::LanguageFamily::English,
         )
     }
 }

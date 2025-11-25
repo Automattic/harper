@@ -261,35 +261,31 @@ mod tests {
 
     #[test]
     fn fix_shit() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "crap")
+        assert_top3_suggestion_result("shit", AvoidCurses::default(), "crap", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_shit_titlecase() {
-        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Crap")
+        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Crap", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_shit_allcaps() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "CRAP")
+        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "CRAP", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_f_word_to_all_asterisks() {
-        assert_top3_suggestion_result(
-            "fuck those fucking fuckers",
-            AvoidCurses::default(),
-            "**** those ****ing ****ers",
-        )
+        assert_top3_suggestion_result("fuck those fucking fuckers", AvoidCurses::default(), "**** those ****ing ****ers", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_shit_with_single_asterisk() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "sh*t")
+        assert_top3_suggestion_result("shit", AvoidCurses::default(), "sh*t", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_shite_all_caps_with_single_asterisk() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "SH*T")
+        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "SH*T", crate::languages::LanguageFamily::English)
     }
 }

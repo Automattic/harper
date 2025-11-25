@@ -200,20 +200,12 @@ fn detect_as_early_back_as_real_world() {
 // AsIfThough
 #[test]
 fn correct_as_if_though_usagi_1() {
-    assert_top3_suggestion_result(
-        "It's coming back to you. and looking as if though it's very bright red.",
-        lint_group(),
-        "It's coming back to you. and looking as if it's very bright red.",
-    );
+    assert_top3_suggestion_result("It's coming back to you. and looking as if though it's very bright red.", lint_group(), "It's coming back to you. and looking as if it's very bright red.", crate::languages::LanguageFamily::English);
 }
 
 #[test]
 fn correct_as_if_though_usagi_2() {
-    assert_top3_suggestion_result(
-        "it passes right on by it as if though nothing happened.",
-        lint_group(),
-        "it passes right on by it as though nothing happened.",
-    );
+    assert_top3_suggestion_result("it passes right on by it as if though nothing happened.", lint_group(), "it passes right on by it as though nothing happened.", crate::languages::LanguageFamily::English);
 }
 
 // AsItHappens
@@ -476,11 +468,7 @@ fn on_route_real_world() {
 
 #[test]
 fn on_hyphen_route_real_world() {
-    assert_top3_suggestion_result(
-        "I ultimately just want a slight preference for matches that are on-route to correct cases like the above.",
-        lint_group(),
-        "I ultimately just want a slight preference for matches that are en-route to correct cases like the above.",
-    );
+    assert_top3_suggestion_result("I ultimately just want a slight preference for matches that are on-route to correct cases like the above.", lint_group(), "I ultimately just want a slight preference for matches that are en-route to correct cases like the above.", crate::languages::LanguageFamily::English);
 }
 
 #[test]
@@ -657,16 +645,12 @@ fn corrects_i_does() {
 // InAndOfItself
 #[test]
 fn detect_atomic_in_of_itself() {
-    assert_top3_suggestion_result("in of itself", lint_group(), "in and of itself");
+    assert_top3_suggestion_result("in of itself", lint_group(), "in and of itself", crate::languages::LanguageFamily::English);
 }
 
 #[test]
 fn correct_real_world_in_of_itself() {
-    assert_top3_suggestion_result(
-        "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
-        lint_group(),
-        "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...",
-    )
+    assert_top3_suggestion_result("This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...", lint_group(), "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently...", crate::languages::LanguageFamily::English)
 }
 
 // InAnyWay
@@ -791,11 +775,7 @@ fn let_along() {
 // LikeAsIf
 #[test]
 fn correct_like_as_if() {
-    assert_top3_suggestion_result(
-        "And looks like as if linux-personality hasn't got any changes for 8 years.",
-        lint_group(),
-        "And looks as if linux-personality hasn't got any changes for 8 years.",
-    );
+    assert_top3_suggestion_result("And looks like as if linux-personality hasn't got any changes for 8 years.", lint_group(), "And looks as if linux-personality hasn't got any changes for 8 years.", crate::languages::LanguageFamily::English);
 }
 
 // LikeThePlague
@@ -1349,16 +1329,8 @@ fn thanks_a_lot_clean() {
 
 #[test]
 fn fixes_to_worry_about() {
-    assert_top3_suggestion_result(
-        "I don't want you to worried about it.",
-        lint_group(),
-        "I don't want you to worry about it.",
-    );
-    assert_top3_suggestion_result(
-        "I don't want you to worried about it.",
-        lint_group(),
-        "I don't want you too worried about it.",
-    );
+    assert_top3_suggestion_result("I don't want you to worried about it.", lint_group(), "I don't want you to worry about it.", crate::languages::LanguageFamily::English);
+    assert_top3_suggestion_result("I don't want you to worried about it.", lint_group(), "I don't want you too worried about it.", crate::languages::LanguageFamily::English);
 }
 
 // WroughtIron

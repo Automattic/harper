@@ -809,30 +809,18 @@ mod tests {
     // is_ei_ie_misspelling
     #[test]
     fn fix_cheif_and_recieved() {
-        assert_top3_suggestion_result(
-            "The cheif recieved a letter.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "The chief received a letter.",
-        );
+        assert_top3_suggestion_result("The cheif recieved a letter.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "The chief received a letter.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_titlecase() {
-        assert_top3_suggestion_result(
-            "The Cheif Recieved a Letter.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "The Chief Received a Letter.",
-        );
+        assert_top3_suggestion_result("The Cheif Recieved a Letter.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "The Chief Received a Letter.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_all_caps() {
-        assert_top3_suggestion_result(
-            "THE CHEIF RECIEVED A LETTER.",
-            SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British),
-            "THE CHEIF RECEIVED A LETTER.",
-        );
+        assert_top3_suggestion_result("THE CHEIF RECIEVED A LETTER.", SpellCheck::new(FstDictionary::curated(crate::languages::LanguageFamily::English), EnglishDialect::British), "THE CHEIF RECEIVED A LETTER.", crate::languages::LanguageFamily::English);
     }
 }
