@@ -7,8 +7,8 @@ pub struct ModalVerb {
 impl Default for ModalVerb {
     fn default() -> Self {
         let modals = [
-            "can", "could", "may", "might", "must", "shall", "should", "will", "would", "ought",
-            "dare",
+            "can", "can't", "could", "may", "might", "must", "shall", "should", "will", "would",
+            "ought", "dare",
         ];
         let mut words = WordSet::new(&modals);
         modals.iter().for_each(|word| {
