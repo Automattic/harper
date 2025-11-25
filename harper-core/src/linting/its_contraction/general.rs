@@ -75,7 +75,7 @@ impl General {
 
         Some(Lint {
             span: offender.span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::Punctuation,
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("it's", offender_chars),
                 Suggestion::replace_with_match_case_str("it has", offender_chars),
