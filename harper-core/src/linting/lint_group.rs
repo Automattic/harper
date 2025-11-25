@@ -59,6 +59,7 @@ use super::far_be_it::FarBeIt;
 use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
+use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
@@ -490,6 +491,7 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
+        insert_struct_rule!(FindFine, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
