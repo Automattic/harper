@@ -1,5 +1,5 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
+import { isVisible, LintFramework, leafNodes, getClosestBlockAncestor, type UnpackedLint } from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
@@ -40,26 +40,6 @@ const keepAliveCallback = () => {
 };
 
 keepAliveCallback();
-
-function getClosestBlockAncestor(leaf: Node, root: Element): Element | null {
-	let current: Node | null = leaf;
-
-	while (current) {
-		if (current instanceof Element) {
-			if (getComputedStyle(current).display === 'block') {
-				return current;
-			}
-
-			if (current === root) {
-				break;
-			}
-		}
-
-		current = current.parentNode;
-	}
-
-	return null;
-}
 
 function scan() {
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
