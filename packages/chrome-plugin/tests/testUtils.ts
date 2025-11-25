@@ -143,7 +143,7 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 
 		await page.getByTitle('Disable the AnA rule').click();
 
-		await page.waitForTimeout(500);
+		await page.waitForTimeout(1000);
 
 		await assertHarperHighlightBoxes(page, []);
 	});
