@@ -991,7 +991,7 @@ pub mod tests {
 
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> DictWordMetadata {
-        FstDictionary::curated()
+        FstDictionary::curated(crate::languages::LanguageFamily::English)
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .into_owned()

@@ -24,7 +24,11 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            "",
+            &PlainEnglish,
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+        )
     }
 }
 
@@ -64,7 +68,11 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Vec<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_vec(
+            Lrc::new(source),
+            parser,
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+        )
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -85,7 +93,11 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            text,
+            &PlainEnglish,
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+        )
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -100,7 +112,7 @@ impl Document {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
     }
 

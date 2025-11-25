@@ -82,6 +82,7 @@ use std::borrow::Cow;
 
 use harper_core::dict_word_metadata::VerbFormFlags;
 use harper_core::dict_word_metadata_orthography::OrthFlags;
+use harper_core::languages::LanguageFamily;
 use harper_core::spell::FstDictionary;
 use harper_core::{Degree, DialectFlags, DictWordMetadata, Document, EnglishDialect, TokenKind};
 
@@ -370,7 +371,7 @@ impl Formatter {
 #[test]
 fn test_pos_tagger() {
     snapshot::snapshot_all_text_files("tagged", ".md", |source, _| {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(LanguageFamily::English);
         let document = Document::new_markdown_default(source, &dict);
 
         let mut formatter = Formatter::new();

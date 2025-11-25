@@ -214,7 +214,7 @@ fn main() -> anyhow::Result<()> {
     };
     let markdown_options = MarkdownOptions::default();
 
-    let dictionary = FstDictionary::curated_select_language(global_options.language);
+    let dictionary = FstDictionary::curated(global_options.language);
 
     match command {
         Command::Lint {
@@ -478,7 +478,11 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                print_word_derivations(
+                    dict_word,
+                    dict_annot,
+                    &FstDictionary::curated(LanguageFamily::English),
+                );
             };
 
             if !annot.is_empty() {

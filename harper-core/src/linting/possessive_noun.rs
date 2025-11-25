@@ -103,7 +103,7 @@ mod tests {
     use crate::spell::FstDictionary;
 
     fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
-        PossessiveNoun::new(FstDictionary::curated())
+        PossessiveNoun::new(FstDictionary::curated(crate::languages::LanguageFamily::English))
     }
 
     /// Sourced from a Hacker News comment

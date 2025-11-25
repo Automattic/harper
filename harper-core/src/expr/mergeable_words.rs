@@ -29,7 +29,7 @@ impl MergeableWords {
                 .then_any_word()
                 .then(SpaceOrHyphen)
                 .then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(crate::languages::LanguageFamily::English),
             predicate: Box::new(predicate),
         }
     }

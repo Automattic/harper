@@ -37,12 +37,13 @@ impl<D: Dictionary> Parser for IsolateEnglish<D> {
 #[cfg(test)]
 mod tests {
     use super::IsolateEnglish;
+    use crate::languages::LanguageFamily;
     use crate::spell::FstDictionary;
     use crate::{Document, TokenStringExt, parsers::PlainEnglish};
 
     /// Assert that the provided text contains _no_ chunks of valid English
     fn assert_no_english(text: &str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(LanguageFamily::English);
 
         let document = Document::new(
             text,
@@ -57,7 +58,7 @@ mod tests {
     /// Assert that, once stripped of non-English chunks, the resulting document looks like another
     /// piece of text.
     fn assert_stripped_english(source: &str, target: &str) {
-        let dict = FstDictionary::curated();
+        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
 
         let document = Document::new(
             source,

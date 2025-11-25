@@ -1,5 +1,5 @@
 use criterion::{Criterion, criterion_group, criterion_main};
-use harper_core::languages::Language;
+use harper_core::languages::{Language, LanguageFamily};
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
 use harper_core::{Document, EnglishDialect};
@@ -14,7 +14,7 @@ fn parse_essay(c: &mut Criterion) {
 }
 
 fn lint_essay(c: &mut Criterion) {
-    let dictionary = FstDictionary::curated();
+    let dictionary = FstDictionary::curated(LanguageFamily::English);
     let mut lint_set =
         LintGroup::new_curated(dictionary, Language::English(EnglishDialect::American));
     let document = Document::new_markdown_default_curated(black_box(ESSAY));
@@ -27,7 +27,7 @@ fn lint_essay(c: &mut Criterion) {
 fn lint_essay_uncached(c: &mut Criterion) {
     c.bench_function("lint_essay_uncached", |b| {
         b.iter(|| {
-            let dictionary = FstDictionary::curated();
+            let dictionary = FstDictionary::curated(LanguageFamily::English);
             let mut lint_set = LintGroup::new_curated(
                 dictionary.clone(),
                 Language::English(EnglishDialect::American),

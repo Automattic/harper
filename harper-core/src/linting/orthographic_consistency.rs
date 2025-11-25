@@ -14,7 +14,7 @@ pub struct OrthographicConsistency {
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(crate::languages::LanguageFamily::English),
             expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
         }
     }

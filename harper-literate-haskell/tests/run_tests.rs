@@ -1,4 +1,4 @@
-use harper_core::languages::Language;
+use harper_core::languages::{Language, LanguageFamily};
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::MarkdownOptions;
 use harper_core::spell::FstDictionary;
@@ -19,7 +19,7 @@ macro_rules! create_test {
                     )
                  );
 
-                 let dict = FstDictionary::curated();
+                 let dict = FstDictionary::curated(LanguageFamily::English);
                  let document = Document::new_curated(&source, &LiterateHaskellParser::new_markdown(MarkdownOptions::default()));
 
                  let mut linter = LintGroup::new_curated(dict, Language::English(EnglishDialect::American));

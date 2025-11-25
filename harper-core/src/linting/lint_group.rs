@@ -847,7 +847,7 @@ mod tests {
     #[test]
     fn lint_descriptions_are_clean() {
         let mut group = LintGroup::new_curated(
-            FstDictionary::curated(),
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
             Language::English(EnglishDialect::American),
         );
         let pairs: Vec<_> = group

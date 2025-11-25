@@ -1,7 +1,8 @@
-use harper_core::languages::Language;
+use harper_core::languages::{Language, LanguageFamily};
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
+
 use harper_core::{Document, EnglishDialect};
 
 /// Creates a unit test checking that the linting of a Markdown document (in
@@ -18,7 +19,7 @@ macro_rules! create_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = FstDictionary::curated(LanguageFamily::English);
                 let document = Document::new_markdown_default(&source, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, Language::English($dialect));
@@ -50,7 +51,7 @@ macro_rules! create_org_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = FstDictionary::curated(LanguageFamily::English);
                 let document = Document::new(&source, &OrgMode, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, Language::English($dialect));

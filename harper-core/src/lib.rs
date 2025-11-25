@@ -164,7 +164,7 @@ mod tests {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
         let mut linter = LintGroup::new_curated(
-            FstDictionary::curated(),
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
             Language::English(EnglishDialect::American),
         );
 

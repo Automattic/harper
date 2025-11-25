@@ -73,7 +73,7 @@ mod tests {
         let document = Document::new_markdown_default_curated(&text);
 
         let mut lints = LintGroup::new_curated(
-            FstDictionary::curated(),
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
             Language::English(EnglishDialect::American),
         )
         .lint(&document);
@@ -93,7 +93,7 @@ mod tests {
         let document = Document::new_markdown_default_curated(&text);
 
         let mut lints = LintGroup::new_curated(
-            FstDictionary::curated(),
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
             Language::English(EnglishDialect::American),
         )
         .lint(&document);
@@ -115,7 +115,7 @@ mod tests {
         let document = Document::new_markdown_default_curated(source);
 
         let mut lints = LintGroup::new_curated(
-            FstDictionary::curated(),
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
             Language::English(EnglishDialect::American),
         )
         .lint(&document);
