@@ -163,6 +163,26 @@ export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Prom
 	}
 }
 
+/** Create a test to assert that a page has a certain number highlights.
+  * Wraps `assertPageHasNHighlights` */
+export async function testPageHasNHighlights(testPageUrl: TestPageUrlProvider, n: number){
+  test(`Page has ${n} highlights`, async ({page}) => {
+    const url = await resolveTestPage(testPageUrl, page);
+    await page.goto(url);
+
+    await page.waitForTimeout(6000);
+
+    assertPageHasNHighlights(page, n)
+  })
+}
+
+/** Assert that the page has a specific number of highlights.
+  * Useful for making sure certain patterns are ignored. */
+export async function assertPageHasNHighlights(page: Page, n: number){
+  const highlights = getHarperHighlights(page);
+  expect(await highlights.count()).toBe(n);
+}
+
 /** An assertion that checks to ensure that two boxes are _approximately_ equal.
  * Leaves wiggle room for floating point error. */
 export function assertBoxesClose(a: Box, b: Box) {
