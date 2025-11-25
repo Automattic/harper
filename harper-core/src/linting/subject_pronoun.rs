@@ -45,7 +45,7 @@ impl ExprLinter for SubjectPronoun {
     }
 
     fn description(&self) -> &'static str {
-        "Fixes sentences that start with “me and X” by putting the proper noun first and using `I`."
+        "Fixes sentences that start with `me and X` by putting the proper noun first and using `I`."
     }
 }
 
