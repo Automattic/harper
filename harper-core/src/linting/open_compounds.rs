@@ -14,7 +14,6 @@ impl Default for OpenCompounds {
         let phrases = [
             "a few",
             "a lot",
-            "a while",
             "as well",
             "at least",
             "each other",
