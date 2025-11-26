@@ -20903,7 +20903,7 @@ derision/Nwg
 derisive/JYNp
 derisiveness/Nmg
 derisory/J
-derivation/~NgS
+derivation/~NgSQ
 derivative/~JNgS
 derive/~VB
 dermal/~JN
@@ -26497,7 +26497,7 @@ gite/NS
 give/~VG>SNZz
 giveaway/NgSJ
 giveback/NgS
-given/~VTSPNgJ
+given/~VTPNSgJp # "Givenness" is a technical word in the branch of philosophy called Phenomenology, so I'm adding it here
 giver/~Ng
 gizmo/NSg
 gizzard/NgS
@@ -33045,7 +33045,7 @@ marital/~JY
 maritime/~J
 marjoram/Ng
 mark/~NgSVdGr
-marked/~JVtTU
+marked/~JVtTUp # "Markedness" is a technical term in linguistics, so adding it here
 markedly/~Ry
 marker/~NgSV
 market/~NgSVd>GZB
@@ -38340,7 +38340,7 @@ perturbed/~VJU
 pertussis/Ng
 peruke/NgS
 perusal/NgS
-peruse/VGdSN
+peruse/VGdNS>
 perv/~NSV
 pervade/VdSG
 pervasive/~JYp
@@ -54082,3 +54082,58 @@ work out/V
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
 # Word added using the `just addnoun` command will be added here
+
+adposition/NSg
+affixation/Nmg
+affordance/NSg
+affricate/NSg
+agglutinative/J
+antepenultimate/J
+approximant/NSg
+allative/NSg
+allophone/NSg
+benefactive/NSgJ
+calque/NSg
+clitic/NSg
+Compline/NO # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
+conlang/NSGg>Vd # conlang (n/v) < "constructed language", plu. 'conlangs', regular verb; also "conlanging" for the activity
+denotation/NSgQ
+derivation/NSgQ
+endonym/NSg
+epenthesis/Nm # TODO: not count noun
+epenthetic/JQ
+evidential/NSg # used in linguistics as a count noun; e.g. "a system of evidentials"
+exocentric/JQ
+golem/NSg
+iconicity/Nmg
+imperfective/NSgJ
+intentionality/N # From Phenomenology
+intervocalic/JQ
+lenition/N # non-count
+lexicalize/Vd # lexicalized is an adjective
+LFG/NOg # Lexical Functional Grammar
+licensor/NSg
+locative/NSgJ
+neurodivergent/J
+nonpast/N
+omnipredicativity/N0
+optative/NSgJ
+paucal/NJ
+perfective/NSgJ
+phenomenological/JQ
+phonotactic/JQ
+phonotactics/N
+postposition/NSg
+poststructuralist/NSgJ
+prefixation/N
+retroflex/J
+romanization/NSg
+sandhi/Nmg
+singulative/NSgJ
+supervenience/Nmg # From emergentist ontology
+tonogenesis/Nmg
+topicalize/Vd>SGZ
+topicalization/Nmg
+typological/JQ
+volitive/NSgJ
+worldbuild/Vd>G

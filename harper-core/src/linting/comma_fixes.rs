@@ -118,7 +118,7 @@ impl Linter for CommaFixes {
 #[cfg(test)]
 mod tests {
     use super::CommaFixes;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn allows_english_comma_atomic() {
@@ -202,5 +202,13 @@ mod tests {
     #[test]
     fn doesnt_correct_comma_between_non_english_tokens() {
         assert_lint_count("严禁采摘花、 果、叶，挖掘树根、草药!", CommaFixes, 0);
+    }
+
+    #[test]
+    fn issue_2233() {
+        assert_no_lints(
+            "In foobar, apple is a fruit, and \"beer\" is not a fruit.",
+            CommaFixes,
+        );
     }
 }
