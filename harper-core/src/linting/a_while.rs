@@ -11,7 +11,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AWhile {
     expr: Box<dyn Expr>,
-    map: Arc<ExprMap<CharString>>,
+    map: Arc<ExprMap<(CharString, &'static str)>>,
 }
 
 impl Default for AWhile {
@@ -25,14 +25,26 @@ impl Default for AWhile {
             .t_ws()
             .t_aco("while");
 
-        map.insert(a, char_string!("awhile"));
+        map.insert(
+            a,
+            (
+                char_string!("awhile"),
+                "Use the single word `awhile` when it follows a verb.",
+            ),
+        );
 
         let b = SequenceExpr::default()
             .then_unless(UPOSSet::new(&[UPOS::VERB]))
             .t_ws()
             .t_aco("awhile");
 
-        map.insert(b, char_string!("a while"));
+        map.insert(
+            b,
+            (
+                char_string!("a while"),
+                "When not used after a verb, spell this duration as `a while`.",
+            ),
+        );
 
         let map = Arc::new(map);
 
@@ -49,19 +61,19 @@ impl ExprLinter for AWhile {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let sug = self.map.lookup(0, matched_tokens, source)?;
+        let &(ref suggestion, message) = self.map.lookup(0, matched_tokens, source)?;
 
         Some(Lint {
             span: matched_tokens[2..].span()?,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::ReplaceWith(sug.to_vec())],
-            message: "".to_owned(),
+            suggestions: vec![Suggestion::ReplaceWith(suggestion.to_vec())],
+            message: message.to_owned(),
             ..Default::default()
         })
     }
 
     fn description(&self) -> &'static str {
-        unimplemented!()
+        "Enforces `awhile` after verbs and `a while` everywhere else."
     }
 }
 
