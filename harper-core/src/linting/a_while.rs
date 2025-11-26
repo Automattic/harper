@@ -63,10 +63,8 @@ impl ExprLinter for AWhile {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let &(ref suggestion, message) = self.map.lookup(0, matched_tokens, source)?;
         let span = matched_tokens[2..].span()?;
-        let suggestion = Suggestion::replace_with_match_case(
-            suggestion.to_vec(),
-            span.get_content(source),
-        );
+        let suggestion =
+            Suggestion::replace_with_match_case(suggestion.to_vec(), span.get_content(source));
 
         Some(Lint {
             span,
