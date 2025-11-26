@@ -127,7 +127,7 @@
 > By      ' maybe   ' she  means  ' no       ' .
 # NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/Dq/P . .
 > The electricity was cut       off        , so          we   had to read    by      candlelight .
-# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VB  P  NSg/VBP NSg/J/P Nᴹ          .
+# D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VP  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in        me       , I       now       pronounce you    man      and  wife      .
 # NSg/J/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/R/P NPr/ISg+ . ISg/#r+ NSg/J/R/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
 > By      Jove ! I       think  she's got it       !
@@ -211,7 +211,7 @@
 >
 #
 > I       had to stay     with my  wicked stepmother , for   I       had nowhere else    to go       .
-# ISg/#r+ VB  P  NSg/VB/J P    D$+ VP/J   NSg        . R/C/P ISg/#r+ VB  NSg/J   NSg/J/C P  NSg/VB/J .
+# ISg/#r+ VP  P  NSg/VB/J P    D$+ VP/J   NSg        . R/C/P ISg/#r+ VP  NSg/J   NSg/J/C P  NSg/VB/J .
 >
 #
 > Preposition
@@ -331,7 +331,7 @@
 > You    can't get    all          your news   from the Internet .
 # ISgPl+ VXB   NSg/VB NSg/I/J/C/Dq D$+  Nᴹ/VB+ P    D   NPrᴹ/VB+ .
 > He       had books   piled from floor   to ceiling .
-# NPr/ISg+ VB  NPl/V3+ VP/J  P    NSg/VB+ P  NSg/VB  .
+# NPr/ISg+ VP  NPl/V3+ VP/J  P    NSg/VB+ P  NSg/VB  .
 > He       departed yesterday from Chicago .
 # NPr/ISg+ NSg/VP/J NSg       P    NPr+    .
 > This    figure  has been    changed from a    one      to a   seven .
@@ -593,7 +593,7 @@
 > All           the lights  are on  , so          they must   be      home      .
 # NSg/I/J/C/Dq+ D+  NPl/V3+ VB  J/P . NSg/I/J/R/C IPl+ NSg/VB NSg/VXB NSg/VB/J+ .
 > We   had to ration our food because there was a    war      on  .
-# IPl+ VB  P  NSg/VB D$+ NSg+ C/P     R+    VPt D/P+ N🅪Sg/VB+ J/P .
+# IPl+ VP  P  NSg/VB D$+ NSg+ C/P     R+    VPt D/P+ N🅪Sg/VB+ J/P .
 > Some     of the cast     went    down        with flu  , but     the show's still    on  .
 # I/J/R/Dq P  D   NSg/VB/J NSg/VPt N🅪Sg/VB/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/VB/J J/P .
 > That          TV   programme     that          you    wanted to watch  is  on  now       .
@@ -645,7 +645,7 @@
 > He       rambled on  and  on  .
 # NPr/ISg+ VP/J    J/P VB/C J/P .
 > Ten  years on  , nothing  had changed in        the village .
-# NSg+ NPl+  J/P . NSg/I/J+ VB  VP/J    NPr/J/R/P D+  NSg+    .
+# NSg+ NPl+  J/P . NSg/I/J+ VP  VP/J    NPr/J/R/P D+  NSg+    .
 >
 #
 > Preposition
@@ -659,7 +659,7 @@
 > The parrot  was sitting  on  Jim's shoulder .
 # D+  NSg/VB+ VPt NSg/Vg/J J/P NSg$  NSg/VB+  .
 > He       had a   scar    on  the side     of his     face    .
-# NPr/ISg+ VB  D/P NSg/VB+ J/P D   NSg/VB/J P  ISg/D$+ NSg/VB+ .
+# NPr/ISg+ VP  D/P NSg/VB+ J/P D   NSg/VB/J P  ISg/D$+ NSg/VB+ .
 > There is  a   dirty smudge on  this    window  .
 # R+    VL3 D/P VB/J  NSg/VB J/P I/Ddem+ NSg/VB+ .
 > The painting   hangs  on  the wall    .
@@ -749,7 +749,7 @@
 > The meal    is  on  the house   .
 # D+  NSg/VB+ VL3 J/P D+  NPr/VB+ .
 > I       had a    terrible thirst on  me       .
-# ISg/#r+ VB  D/P+ J+       Nᴹ/VB+ J/P NPr/ISg+ .
+# ISg/#r+ VP  D/P+ J+       Nᴹ/VB+ J/P NPr/ISg+ .
 > Have    pity    or    compassion on  him  .
 # NSg/VXB N🅪Sg/VB NPr/C Nᴹ/VB+     J/P ISg+ .
 > He's on  his     lunch    break   .

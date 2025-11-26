@@ -120,6 +120,11 @@ impl SequenceExpr {
         Self::default().then_any_of(exprs)
     }
 
+    /// Match the longest of multiple expressions.
+    pub fn longest_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_longest_of(exprs)
+    }
+
     /// Will be accepted unless the condition matches.
     pub fn unless(condition: impl Expr + 'static) -> Self {
         Self::default().then_unless(condition)
