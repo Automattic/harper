@@ -64,6 +64,7 @@ impl Language {
     }
 }
 
+/// Specifies an English Dialect, often used for linting.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {

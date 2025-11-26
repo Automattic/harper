@@ -6,7 +6,8 @@ import type Linter from './Linter';
 import type { LinterInit } from './Linter';
 import type { LintConfig, LintOptions } from './main';
 
-/** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).  */
+/** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
+ * See the interface definition for more details. */
 export default class LocalLinter implements Linter {
 	binary: SuperBinaryModule;
 	private inner: Promise<WasmLinter>;
@@ -73,12 +74,10 @@ export default class LocalLinter implements Linter {
 		return inner.get_lint_config_as_object();
 	}
 
-	/** Wraps the function on the BinaryModule by the same name. */
 	async getDefaultLintConfigAsJSON(): Promise<string> {
 		return await this.binary.getDefaultLintConfigAsJSON();
 	}
 
-	/** Wraps the function on the BinaryModule by the same name. */
 	async getDefaultLintConfig(): Promise<LintConfig> {
 		return await this.binary.getDefaultLintConfig();
 	}
@@ -98,7 +97,6 @@ export default class LocalLinter implements Linter {
 		inner.set_lint_config_from_json(config);
 	}
 
-	/** Wraps the function on the BinaryModule by the same name. */
 	async toTitleCase(text: string): Promise<string> {
 		return await this.binary.toTitleCase(text);
 	}

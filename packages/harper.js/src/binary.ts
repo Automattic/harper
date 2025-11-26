@@ -25,6 +25,7 @@ const loadBinary = pMemoize(async (binary: string) => {
 	return exports;
 });
 
+/** A wrapper around the underlying WebAssembly module that contains Harper's core code. Used to construct a `Linter`, as well as access some miscellaneous other functions. */
 export class BinaryModule {
 	public url: string | URL = '';
 	private inner: Promise<typeof import('harper-wasm')> | null = null;
