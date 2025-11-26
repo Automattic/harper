@@ -257,49 +257,6 @@ mod tests {
         assert_suggestion_result("Alot", OpenCompounds::default(), "A lot");
     }
 
-    // A while
-
-    #[test]
-    fn correct_awhile_atomic() {
-        assert_suggestion_result("Awhile", OpenCompounds::default(), "A while");
-    }
-
-    #[test]
-    fn test_in_quite_a_while() {
-        assert_suggestion_result(
-            "I haven’t seen him in quite awhile.",
-            OpenCompounds::default(),
-            "I haven’t seen him in quite a while.",
-        );
-    }
-
-    #[test]
-    fn test_in_a_while() {
-        assert_suggestion_result(
-            "I haven't checked in awhile.",
-            OpenCompounds::default(),
-            "I haven't checked in a while.",
-        );
-    }
-
-    #[test]
-    fn correct_for_awhile() {
-        assert_suggestion_result(
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
-            OpenCompounds::default(),
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
-        );
-    }
-
-    #[test]
-    fn correct_after_awhile() {
-        assert_suggestion_result(
-            "Links on portal stop working after awhile, requiring page refresh.",
-            OpenCompounds::default(),
-            "Links on portal stop working after a while, requiring page refresh.",
-        );
-    }
-
     // As well
 
     #[test]

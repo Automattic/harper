@@ -62,11 +62,16 @@ impl ExprLinter for AWhile {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let &(ref suggestion, message) = self.map.lookup(0, matched_tokens, source)?;
+        let span = matched_tokens[2..].span()?;
+        let suggestion = Suggestion::replace_with_match_case(
+            suggestion.to_vec(),
+            span.get_content(source),
+        );
 
         Some(Lint {
-            span: matched_tokens[2..].span()?,
+            span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::ReplaceWith(suggestion.to_vec())],
+            suggestions: vec![suggestion],
             message: message.to_owned(),
             ..Default::default()
         })
@@ -101,6 +106,42 @@ mod tests {
             "After thinking a while, I decided to foo a bar.",
             AWhile::default(),
             "After thinking awhile, I decided to foo a bar.",
+        );
+    }
+
+    #[test]
+    fn correct_in_quite_a_while() {
+        assert_suggestion_result(
+            "I haven't seen him in quite awhile.",
+            AWhile::default(),
+            "I haven't seen him in quite a while.",
+        );
+    }
+
+    #[test]
+    fn correct_in_a_while() {
+        assert_suggestion_result(
+            "I haven't checked in awhile.",
+            AWhile::default(),
+            "I haven't checked in a while.",
+        );
+    }
+
+    #[test]
+    fn correct_for_awhile() {
+        assert_suggestion_result(
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
+            AWhile::default(),
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
+        );
+    }
+
+    #[test]
+    fn correct_after_awhile() {
+        assert_suggestion_result(
+            "Links on portal stop working after awhile, requiring page refresh.",
+            AWhile::default(),
+            "Links on portal stop working after a while, requiring page refresh.",
         );
     }
 }
