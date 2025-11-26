@@ -12,7 +12,7 @@ self.onmessage = (e) => {
 	if (typeof binaryUrl !== 'string') {
 		throw new TypeError(`Expected binary to be a string of url but got ${typeof binaryUrl}.`);
 	}
-	const binary = new SuperBinaryModule(binaryUrl);
+	const binary = SuperBinaryModule.create(binaryUrl);
 	const serializer = new Serializer(binary);
 	const linter = new LocalLinter({ binary, dialect });
 

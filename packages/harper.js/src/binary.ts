@@ -26,33 +26,38 @@ const loadBinary = pMemoize(async (binary: string) => {
 });
 
 export class BinaryModule {
-	public url: string | URL;
-	private inner: Promise<typeof import('harper-wasm')>;
+	public url: string | URL = '';
+	private inner: Promise<typeof import('harper-wasm')> | null = null;
 
-	constructor(url: string | URL) {
-		this.url = url;
-		this.inner = LazyPromise.from(() =>
-			loadBinary(typeof this.url === 'string' ? this.url : this.url.href),
+	/** Load a binary from a specified URL. This is the only recommended way to construct this type. */
+	public static create(url: string | URL): BinaryModule {
+		const module = new SuperBinaryModule();
+
+		module.url = url;
+		module.inner = LazyPromise.from(() =>
+			loadBinary(typeof module.url === 'string' ? module.url : module.url.href),
 		);
+
+		return module;
 	}
 
 	public async getDefaultLintConfigAsJSON(): Promise<string> {
-		const exported = await this.inner;
+		const exported = await this.inner!;
 		return exported.get_default_lint_config_as_json();
 	}
 
 	public async getDefaultLintConfig(): Promise<LintConfig> {
-		const exported = await this.inner;
+		const exported = await this.inner!;
 		return exported.get_default_lint_config();
 	}
 
 	public async toTitleCase(text: string): Promise<string> {
-		const exported = await this.inner;
+		const exported = await this.inner!;
 		return exported.to_title_case(text);
 	}
 
 	public async setup(): Promise<void> {
-		const exported = await this.inner;
+		const exported = await this.inner!;
 		exported.setup();
 	}
 }
@@ -72,8 +77,8 @@ export class SuperBinaryModule extends BinaryModule {
 
 /** A version of the Harper WebAssembly binary stored inline as a data URL.
  * Can be tree-shaken if unused. */
-export const binary = /*@__PURE__*/ new SuperBinaryModule(binaryUrl) as BinaryModule;
+export const binary = /*@__PURE__*/ BinaryModule.create(binaryUrl);
 
 /** A version of the Harper WebAssembly binary stored inline as a data URL.
  * Can be tree-shaken if unused. */
-export const binaryInlined = /*@__PURE__*/ new SuperBinaryModule(binaryInlinedUrl) as BinaryModule;
+export const binaryInlined = /*@__PURE__*/ BinaryModule.create(binaryInlinedUrl);
