@@ -1,5 +1,11 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
+import {
+	getClosestBlockAncestor,
+	isVisible,
+	LintFramework,
+	leafNodes,
+	type UnpackedLint,
+} from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
@@ -68,12 +74,22 @@ function scan() {
 	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 
@@ -88,16 +104,26 @@ function scan() {
 
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
 				continue;
 			}
 
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 }

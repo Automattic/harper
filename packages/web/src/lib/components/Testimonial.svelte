@@ -8,7 +8,7 @@ export let testimonial: string;
 
 <Card class="flex h-full flex-col justify-between gap-6">
 	<p class="text-base text-neutral-700 dark:text-neutral-200">
-		{testimonial}
+		&ldquo;{testimonial}&rdquo;
 	</p>
 	<footer class="flex flex-col gap-1">
 		<span class="font-semibold text-neutral-900 dark:text-neutral-50">{authorName}</span>
