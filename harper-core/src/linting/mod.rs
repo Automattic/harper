@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod a_while;
 mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
@@ -197,6 +198,7 @@ mod wordpress_dotcom;
 mod would_never_have;
 
 pub use a_part::APart;
+pub use a_while::AWhile;
 pub use addicting::Addicting;
 pub use adjective_double_degree::AdjectiveDoubleDegree;
 pub use adjective_of_a::AdjectiveOfA;
