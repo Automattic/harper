@@ -616,6 +616,3956 @@
 			"target": [],
 			"base_metadata": {},
 			"rename_ok": true
+		},
+		"а": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "не",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"н": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ня",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"і": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "па",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"с": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "за",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ы": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ў",
+					"add": "у",
+					"condition": "."
+				},
+				{
+					"remove": "Ў",
+					"add": "У",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"р": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "і",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"л": {
+			"#": "-",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "най",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"е": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "да",
+					"add": "дзе",
+					"condition": "да"
+				},
+				{
+					"remove": "ка",
+					"add": "цэ",
+					"condition": "ка"
+				},
+				{
+					"remove": "зда",
+					"add": "зьдзе",
+					"condition": "зда"
+				},
+				{
+					"remove": "зна",
+					"add": "зьне",
+					"condition": "зна"
+				},
+				{
+					"remove": "сла",
+					"add": "сьле",
+					"condition": "сла"
+				},
+				{
+					"remove": "сна",
+					"add": "сьне",
+					"condition": "сна"
+				},
+				{
+					"remove": "ха",
+					"add": "се",
+					"condition": "ха"
+				},
+				{
+					"remove": "а",
+					"add": "у",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ой",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ою",
+					"condition": "а"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ю",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ёй",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ёю",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"о": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "сма",
+					"add": "сьме",
+					"condition": "сма"
+				},
+				{
+					"remove": "спа",
+					"add": "сьпе",
+					"condition": "спа"
+				},
+				{
+					"remove": "зба",
+					"add": "зьбе",
+					"condition": "зба"
+				},
+				{
+					"remove": "зва",
+					"add": "зьве",
+					"condition": "зва"
+				},
+				{
+					"remove": "зда",
+					"add": "зьдзе",
+					"condition": "зда"
+				},
+				{
+					"remove": "зма",
+					"add": "зьме",
+					"condition": "зма"
+				},
+				{
+					"remove": "зна",
+					"add": "зьне",
+					"condition": "зна"
+				},
+				{
+					"remove": "да",
+					"add": "дзе",
+					"condition": "да"
+				},
+				{
+					"remove": "ка",
+					"add": "цы",
+					"condition": "ка"
+				},
+				{
+					"remove": "а",
+					"add": "у",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ай",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "аю",
+					"condition": "а"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ю",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "яй",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "яю",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"к": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ва",
+					"add": "ў",
+					"condition": "ва"
+				},
+				{
+					"remove": "",
+					"add": "ў",
+					"condition": "а"
+				},
+				{
+					"remove": "йка",
+					"add": "ек",
+					"condition": "йка"
+				},
+				{
+					"remove": "ўка",
+					"add": "вак",
+					"condition": "ўка"
+				},
+				{
+					"remove": "ька",
+					"add": "ек",
+					"condition": "ька"
+				},
+				{
+					"remove": "а",
+					"add": "ам",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "амі",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ах",
+					"condition": "а"
+				},
+				{
+					"remove": "йня",
+					"add": "ень",
+					"condition": "йня"
+				},
+				{
+					"remove": "ьня",
+					"add": "ень",
+					"condition": "сьня"
+				},
+				{
+					"remove": "ўня",
+					"add": "вень",
+					"condition": "ўня"
+				},
+				{
+					"remove": "",
+					"add": "м",
+					"condition": "я"
+				},
+				{
+					"remove": "",
+					"add": "мі",
+					"condition": "я"
+				},
+				{
+					"remove": "",
+					"add": "х",
+					"condition": "я"
+				},
+				{
+					"remove": "і",
+					"add": "й",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ям",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ямі",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ях",
+					"condition": "і"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"я": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "йкі",
+					"add": "ек",
+					"condition": "йкі"
+				},
+				{
+					"remove": "ўкі",
+					"add": "вак",
+					"condition": "ўкі"
+				},
+				{
+					"remove": "ькі",
+					"add": "ек",
+					"condition": "ькі"
+				},
+				{
+					"remove": "вы",
+					"add": "ў",
+					"condition": "вы"
+				},
+				{
+					"remove": "ы",
+					"add": "аў",
+					"condition": "вы"
+				},
+				{
+					"remove": "е",
+					"add": "",
+					"condition": "е"
+				},
+				{
+					"remove": "е",
+					"add": "аў",
+					"condition": "е"
+				},
+				{
+					"remove": "е",
+					"add": "ам",
+					"condition": "е"
+				},
+				{
+					"remove": "е",
+					"add": "амі",
+					"condition": "е"
+				},
+				{
+					"remove": "е",
+					"add": "ах",
+					"condition": "е"
+				},
+				{
+					"remove": "ы",
+					"add": "ам",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "амі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ах",
+					"condition": "ы"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"т": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "я",
+					"condition": "і"
+				},
+				{
+					"remove": "",
+					"add": "я",
+					"condition": "ы"
+				},
+				{
+					"remove": "е",
+					"add": "я",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "я",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "я",
+					"condition": "й"
+				},
+				{
+					"remove": "ёк",
+					"add": "ька",
+					"condition": "ёк"
+				},
+				{
+					"remove": "о",
+					"add": "а",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "ва",
+					"condition": "ў"
+				},
+				{
+					"remove": "вец",
+					"add": "ўца",
+					"condition": "вец"
+				},
+				{
+					"remove": "лец",
+					"add": "льца",
+					"condition": "лец"
+				},
+				{
+					"remove": "ь",
+					"add": "я",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"д": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "а",
+					"add": "у",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ю",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ю",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ю",
+					"condition": "й"
+				},
+				{
+					"remove": "вак",
+					"add": "ўку",
+					"condition": "вак"
+				},
+				{
+					"remove": "ў",
+					"add": "ву",
+					"condition": "ў"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцу",
+					"condition": "вец"
+				},
+				{
+					"remove": "лец",
+					"add": "льцу",
+					"condition": "лец"
+				},
+				{
+					"remove": "ь",
+					"add": "ю",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ю",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ам",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ем",
+					"condition": "е"
+				},
+				{
+					"remove": "я",
+					"add": "ем",
+					"condition": "я"
+				},
+				{
+					"remove": "й",
+					"add": "ем",
+					"condition": "й"
+				},
+				{
+					"remove": "ь",
+					"add": "ем",
+					"condition": "ь"
+				},
+				{
+					"remove": "у",
+					"add": "ам",
+					"condition": "у"
+				},
+				{
+					"remove": "ў",
+					"add": "вам",
+					"condition": "ў"
+				},
+				{
+					"remove": "вак",
+					"add": "ўкам",
+					"condition": "вак"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцам",
+					"condition": "вец"
+				},
+				{
+					"remove": "лец",
+					"add": "льцам",
+					"condition": "лец"
+				},
+				{
+					"remove": "да",
+					"add": "дзе",
+					"condition": "да"
+				},
+				{
+					"remove": "е",
+					"add": "і",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "і",
+					"condition": "ё"
+				},
+				{
+					"remove": "зм",
+					"add": "зьме",
+					"condition": "зм"
+				},
+				{
+					"remove": "й",
+					"add": "і",
+					"condition": "й"
+				},
+				{
+					"remove": "м",
+					"add": "ьме",
+					"condition": "см"
+				},
+				{
+					"remove": "ў",
+					"add": "ве",
+					"condition": "ў"
+				},
+				{
+					"remove": "х",
+					"add": "ху",
+					"condition": "х"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцы",
+					"condition": "вец"
+				},
+				{
+					"remove": "лец",
+					"add": "льцы",
+					"condition": "лец"
+				},
+				{
+					"remove": "ь",
+					"add": "і",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"у": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "а",
+					"add": "у",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ю",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ю",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ю",
+					"condition": "й"
+				},
+				{
+					"remove": "ёк",
+					"add": "ьку",
+					"condition": "ёк"
+				},
+				{
+					"remove": "о",
+					"add": "у",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "ву",
+					"condition": "ў"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцу",
+					"condition": "вец"
+				},
+				{
+					"remove": "ь",
+					"add": "ю",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ю",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ом",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ём",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ём",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ём",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ом",
+					"condition": "о"
+				},
+				{
+					"remove": "ёк",
+					"add": "ьком",
+					"condition": "ёк"
+				},
+				{
+					"remove": "у",
+					"add": "ом",
+					"condition": "у"
+				},
+				{
+					"remove": "ў",
+					"add": "вом",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "ём",
+					"condition": "ь"
+				},
+				{
+					"remove": "ю",
+					"add": "ём",
+					"condition": "ю"
+				},
+				{
+					"remove": "я",
+					"add": "ём",
+					"condition": "я"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцом",
+					"condition": "вец"
+				},
+				{
+					"remove": "до",
+					"add": "ьдзе",
+					"condition": "здо"
+				},
+				{
+					"remove": "ро",
+					"add": "ры",
+					"condition": "ро"
+				},
+				{
+					"remove": "ў",
+					"add": "ве",
+					"condition": "ў"
+				},
+				{
+					"remove": "д",
+					"add": "дзе",
+					"condition": "д"
+				},
+				{
+					"remove": "вец",
+					"add": "ўцы",
+					"condition": "вец"
+				},
+				{
+					"remove": "е",
+					"add": "і",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "і",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "і",
+					"condition": "й"
+				},
+				{
+					"remove": "ь",
+					"add": "і",
+					"condition": "ь"
+				},
+				{
+					"remove": "ю",
+					"add": "і",
+					"condition": "ю"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"в": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "е",
+					"add": "і",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "і",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "і",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ы",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "вы",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "і",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "і",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "аў",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "яў",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "яў",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "яў",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "аў",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "ваў",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "яў",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "яў",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ам",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ям",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ям",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ям",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ам",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "вам",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "ям",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ям",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "амі",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ямі",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ямі",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ямі",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "амі",
+					"condition": "о"
+				},
+				{
+					"remove": "ў",
+					"add": "вамі",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "ямі",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ямі",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ах",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ях",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ях",
+					"condition": "ё"
+				},
+				{
+					"remove": "о",
+					"add": "ах",
+					"condition": "о"
+				},
+				{
+					"remove": "й",
+					"add": "ях",
+					"condition": "й"
+				},
+				{
+					"remove": "ў",
+					"add": "вах",
+					"condition": "ў"
+				},
+				{
+					"remove": "ь",
+					"add": "ях",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ях",
+					"condition": "я"
+				},
+				{
+					"remove": "ы",
+					"add": "аў",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ам",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "амі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ах",
+					"condition": "ы"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"з": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "о",
+					"add": "ы",
+					"condition": "о"
+				},
+				{
+					"remove": "ь",
+					"add": "і",
+					"condition": "ь"
+				},
+				{
+					"remove": "а",
+					"add": "оў",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ёў",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ёў",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ёў",
+					"condition": "й"
+				},
+				{
+					"remove": "ь",
+					"add": "ёў",
+					"condition": "ь"
+				},
+				{
+					"remove": "о",
+					"add": "оў",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "оў",
+					"condition": "ы"
+				},
+				{
+					"remove": "я",
+					"add": "ёў",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ам",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ям",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ям",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ям",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ам",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "ам",
+					"condition": "ы"
+				},
+				{
+					"remove": "ь",
+					"add": "ям",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ям",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ом",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ём",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ём",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ём",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ом",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "ом",
+					"condition": "ы"
+				},
+				{
+					"remove": "ь",
+					"add": "ём",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ём",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "амі",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ямі",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ямі",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ямі",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "амі",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "амі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ь",
+					"add": "ямі",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ямі",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ах",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ях",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ях",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ях",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ах",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "ах",
+					"condition": "ы"
+				},
+				{
+					"remove": "ь",
+					"add": "ях",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ях",
+					"condition": "я"
+				},
+				{
+					"remove": "а",
+					"add": "ох",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "ёх",
+					"condition": "е"
+				},
+				{
+					"remove": "ё",
+					"add": "ёх",
+					"condition": "ё"
+				},
+				{
+					"remove": "й",
+					"add": "ёх",
+					"condition": "й"
+				},
+				{
+					"remove": "о",
+					"add": "ох",
+					"condition": "о"
+				},
+				{
+					"remove": "ы",
+					"add": "ох",
+					"condition": "ы"
+				},
+				{
+					"remove": "ь",
+					"add": "ёх",
+					"condition": "ь"
+				},
+				{
+					"remove": "я",
+					"add": "ёх",
+					"condition": "я"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"м": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "дзю",
+					"condition": "дзь"
+				},
+				{
+					"remove": "",
+					"add": "лю",
+					"condition": "ль"
+				},
+				{
+					"remove": "",
+					"add": "ню",
+					"condition": "нь"
+				},
+				{
+					"remove": "",
+					"add": "сю",
+					"condition": "сь"
+				},
+				{
+					"remove": "ь",
+					"add": "ю",
+					"condition": "сьць"
+				},
+				{
+					"remove": "ж",
+					"add": "жжу",
+					"condition": "ж"
+				},
+				{
+					"remove": "ш",
+					"add": "шшу",
+					"condition": "ш"
+				},
+				{
+					"remove": "ч",
+					"add": "ччу",
+					"condition": "ч"
+				},
+				{
+					"remove": "",
+					"add": "ю",
+					"condition": "ў"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"п": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "а",
+					"add": "эй",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ам",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "амі",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "ах",
+					"condition": "а"
+				},
+				{
+					"remove": "і",
+					"add": "ей",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ям",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ямі",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ях",
+					"condition": "і"
+				},
+				{
+					"remove": "ы",
+					"add": "эй",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ам",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "амі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ах",
+					"condition": "ы"
+				},
+				{
+					"remove": "я",
+					"add": "ей",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ям",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ямі",
+					"condition": "я"
+				},
+				{
+					"remove": "я",
+					"add": "ях",
+					"condition": "я"
+				},
+				{
+					"remove": "ей",
+					"add": "ям",
+					"condition": "ей"
+				},
+				{
+					"remove": "ей",
+					"add": "ямі",
+					"condition": "ей"
+				},
+				{
+					"remove": "ей",
+					"add": "ях",
+					"condition": "ей"
+				},
+				{
+					"remove": "эй",
+					"add": "ам",
+					"condition": "эй"
+				},
+				{
+					"remove": "эй",
+					"add": "амі",
+					"condition": "эй"
+				},
+				{
+					"remove": "эй",
+					"add": "ах",
+					"condition": "эй"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ц": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ы",
+					"add": "ага",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "аму",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ая",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ай",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ую",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "аю",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ае",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ыя",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ымі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "я",
+					"add": "й",
+					"condition": "ая"
+				},
+				{
+					"remove": "ая",
+					"add": "ую",
+					"condition": "ая"
+				},
+				{
+					"remove": "я",
+					"add": "ю",
+					"condition": "ая"
+				},
+				{
+					"remove": "ая",
+					"add": "ых",
+					"condition": "ая"
+				},
+				{
+					"remove": "ая",
+					"add": "ым",
+					"condition": "ая"
+				},
+				{
+					"remove": "ая",
+					"add": "ымі",
+					"condition": "ая"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ў": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ы",
+					"add": "а",
+					"condition": "ы"
+				},
+				{
+					"remove": "і",
+					"add": "а",
+					"condition": "ні"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"б": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ы",
+					"add": "ога",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ому",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ое",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ая",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ой",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ую",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ою",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ыя",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ымі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "і",
+					"add": "ога",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ому",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ім",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ое",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ая",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ой",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ую",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ою",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ія",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "іх",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ім",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "імі",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "іх",
+					"condition": "і"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"г": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ы",
+					"add": "ага",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "аму",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ая",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ай",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ую",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "аю",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ыя",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ым",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ымі",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "ых",
+					"condition": "ы"
+				},
+				{
+					"remove": "і",
+					"add": "ія",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "іх",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "ім",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "імі",
+					"condition": "і"
+				},
+				{
+					"remove": "і",
+					"add": "іх",
+					"condition": "і"
+				},
+				{
+					"remove": "н",
+					"add": "най",
+					"condition": "ін"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ґ": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ы",
+					"add": "ага",
+					"condition": "ы"
+				},
+				{
+					"remove": "ы",
+					"add": "аму",
+					"condition": "ы"
+				},
+				{
+					"remove": "",
+					"add": "м",
+					"condition": "ы"
+				},
+				{
+					"remove": "",
+					"add": "я",
+					"condition": "ы"
+				},
+				{
+					"remove": "",
+					"add": "х",
+					"condition": "ы"
+				},
+				{
+					"remove": "",
+					"add": "мі",
+					"condition": "ы"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ч": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "жаш",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зеш",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чаш",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жа",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зе",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "ча",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жам",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зем",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чам",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жаце",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зеце",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чаце",
+					"condition": "ку"
+				},
+				{
+					"remove": "у",
+					"add": "уць",
+					"condition": "у"
+				},
+				{
+					"remove": "ю",
+					"add": "еш",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "е",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ем",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "еце",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "юць",
+					"condition": "ю"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ь": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "уць",
+					"add": "ем",
+					"condition": "уць"
+				},
+				{
+					"remove": "уць",
+					"add": "еце",
+					"condition": "уць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ш": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ю",
+					"add": "юцца",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "авацца",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "аваліся",
+					"condition": "ую"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"х": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "у",
+					"add": "зецца",
+					"condition": "ду"
+				},
+				{
+					"remove": "ну",
+					"add": "ьнецца",
+					"condition": "сну"
+				},
+				{
+					"remove": "ту",
+					"add": "цецца",
+					"condition": "ту"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "у"
+				},
+				{
+					"remove": "ю",
+					"add": "ецца",
+					"condition": "ю"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "ю"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "а"
+				},
+				{
+					"remove": "а",
+					"add": "уцца",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "юцца",
+					"condition": "уе"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "дзе"
+				},
+				{
+					"remove": "зе",
+					"add": "уцца",
+					"condition": "дзе"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"й": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "жэш",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зеш",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чэш",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жэ",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зе",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чэ",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жом",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зём",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чом",
+					"condition": "ку"
+				},
+				{
+					"remove": "у",
+					"add": "уць",
+					"condition": "у"
+				},
+				{
+					"remove": "ю",
+					"add": "еш",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "е",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ём",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "юць",
+					"condition": "ю"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"э": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "у",
+					"add": "зяце",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зяцё",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "аце",
+					"condition": "жру"
+				},
+				{
+					"remove": "у",
+					"add": "ацё",
+					"condition": "жру"
+				},
+				{
+					"remove": "су",
+					"add": "ьсяце",
+					"condition": "ссу"
+				},
+				{
+					"remove": "су",
+					"add": "ьсяцё",
+					"condition": "ссу"
+				},
+				{
+					"remove": "ту",
+					"add": "ьцяце",
+					"condition": "сту"
+				},
+				{
+					"remove": "ту",
+					"add": "ьцяцё",
+					"condition": "сту"
+				},
+				{
+					"remove": "яту",
+					"add": "ецяце",
+					"condition": "яту"
+				},
+				{
+					"remove": "яту",
+					"add": "ецяцё",
+					"condition": "яту"
+				},
+				{
+					"remove": "ьці",
+					"add": "яце",
+					"condition": "ьці"
+				},
+				{
+					"remove": "ьці",
+					"add": "яцё",
+					"condition": "ьці"
+				},
+				{
+					"remove": "ць",
+					"add": "яце",
+					"condition": "ець"
+				},
+				{
+					"remove": "ць",
+					"add": "яцё",
+					"condition": "ець"
+				},
+				{
+					"remove": "ю",
+					"add": "яце",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "яцё",
+					"condition": "ю"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ж": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ць",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "ў",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "ла",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "лі",
+					"condition": "у"
+				},
+				{
+					"remove": "ую",
+					"add": "аваць",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "аваў",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "авала",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "авалі",
+					"condition": "ую"
+				},
+				{
+					"remove": "юю",
+					"add": "яваць",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "яваў",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "явала",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "явалі",
+					"condition": "юю"
+				},
+				{
+					"remove": "ць",
+					"add": "ў",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "ла",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "лі",
+					"condition": "ць"
+				},
+				{
+					"remove": "зьці",
+					"add": "з",
+					"condition": "зьці"
+				},
+				{
+					"remove": "зьці",
+					"add": "зла",
+					"condition": "зьці"
+				},
+				{
+					"remove": "зьці",
+					"add": "зьлі",
+					"condition": "зьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "ў",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "ла",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "лі",
+					"condition": "сьці"
+				},
+				{
+					"remove": "чы",
+					"add": "",
+					"condition": "чы"
+				},
+				{
+					"remove": "чы",
+					"add": "ла",
+					"condition": "чы"
+				},
+				{
+					"remove": "чы",
+					"add": "лі",
+					"condition": "чы"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ю": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "жы",
+					"condition": "гу"
+				},
+				{
+					"remove": "гу",
+					"add": "жыце",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зі",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зіце",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чы",
+					"condition": "ку"
+				},
+				{
+					"remove": "ку",
+					"add": "чыце",
+					"condition": "ку"
+				},
+				{
+					"remove": "ю",
+					"add": "і",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "іце",
+					"condition": "ю"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ё": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "ж",
+					"condition": "гу"
+				},
+				{
+					"remove": "гу",
+					"add": "жце",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зь",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зьце",
+					"condition": "ду"
+				},
+				{
+					"remove": "ю",
+					"add": "й",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "йце",
+					"condition": "ю"
+				},
+				{
+					"remove": "ць",
+					"add": "й",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "йце",
+					"condition": "ць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"А": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ся",
+					"condition": "ую"
+				},
+				{
+					"remove": "гу",
+					"add": "жасься",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зесься",
+					"condition": "ду"
+				},
+				{
+					"remove": "гу",
+					"add": "жацца",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зецца",
+					"condition": "ду"
+				},
+				{
+					"remove": "гу",
+					"add": "жамся",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "земся",
+					"condition": "ду"
+				},
+				{
+					"remove": "гу",
+					"add": "жацеся",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зецеся",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "уцца",
+					"condition": "у"
+				},
+				{
+					"remove": "ю",
+					"add": "есься",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ецца",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "емся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ецеся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "юцца",
+					"condition": "ю"
+				},
+				{
+					"remove": "цца",
+					"add": "юся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "есься",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "емся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "ецеся",
+					"condition": "цца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Н": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "е",
+					"add": "юцца",
+					"condition": "ле"
+				},
+				{
+					"remove": "е",
+					"add": "уцца",
+					"condition": "не"
+				},
+				{
+					"remove": "а",
+					"add": "уцца",
+					"condition": "а"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"П": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ся",
+					"condition": "ую"
+				},
+				{
+					"remove": "гу",
+					"add": "жэсься",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зесься",
+					"condition": "ду"
+				},
+				{
+					"remove": "ту",
+					"add": "цесься",
+					"condition": "ту"
+				},
+				{
+					"remove": "ку",
+					"add": "чэсься",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жэцца",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зецца",
+					"condition": "ду"
+				},
+				{
+					"remove": "ту",
+					"add": "цецца",
+					"condition": "ту"
+				},
+				{
+					"remove": "ку",
+					"add": "чэцца",
+					"condition": "ку"
+				},
+				{
+					"remove": "гу",
+					"add": "жомся",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зёмся",
+					"condition": "ду"
+				},
+				{
+					"remove": "ку",
+					"add": "чомся",
+					"condition": "ку"
+				},
+				{
+					"remove": "ту",
+					"add": "цёмся",
+					"condition": "ту"
+				},
+				{
+					"remove": "у",
+					"add": "уцца",
+					"condition": "у"
+				},
+				{
+					"remove": "ю",
+					"add": "есься",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ецца",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "ёмся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "юцца",
+					"condition": "ю"
+				},
+				{
+					"remove": "ць",
+					"add": "ецца",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "юцца",
+					"condition": "ць"
+				},
+				{
+					"remove": "ь",
+					"add": "ца",
+					"condition": "ць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Я": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "жацеся",
+					"condition": "гу"
+				},
+				{
+					"remove": "гу",
+					"add": "жацёся",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зяцеся",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зяцёся",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "ацеся",
+					"condition": "ру"
+				},
+				{
+					"remove": "у",
+					"add": "ацёся",
+					"condition": "ру"
+				},
+				{
+					"remove": "су",
+					"add": "ьсяцеся",
+					"condition": "ссу"
+				},
+				{
+					"remove": "су",
+					"add": "ьсяцёся",
+					"condition": "ссу"
+				},
+				{
+					"remove": "ць",
+					"add": "яцеся",
+					"condition": "ець"
+				},
+				{
+					"remove": "ць",
+					"add": "яцёся",
+					"condition": "ець"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"І": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "ўся",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "лася",
+					"condition": "у"
+				},
+				{
+					"remove": "",
+					"add": "ліся",
+					"condition": "у"
+				},
+				{
+					"remove": "ць",
+					"add": "цца",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "ўся",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "лася",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "ліся",
+					"condition": "ць"
+				},
+				{
+					"remove": "сьці",
+					"add": "ўся",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "лася",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "ліся",
+					"condition": "сьці"
+				},
+				{
+					"remove": "чы",
+					"add": "ся",
+					"condition": "чы"
+				},
+				{
+					"remove": "чы",
+					"add": "лася",
+					"condition": "чы"
+				},
+				{
+					"remove": "чы",
+					"add": "ліся",
+					"condition": "чы"
+				},
+				{
+					"remove": "цца",
+					"add": "ўся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "лася",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "ліся",
+					"condition": "цца"
+				},
+				{
+					"remove": "",
+					"add": "ся",
+					"condition": "зьці"
+				},
+				{
+					"remove": "ці",
+					"add": "ся",
+					"condition": "зьці"
+				},
+				{
+					"remove": "ьці",
+					"add": "лася",
+					"condition": "зьці"
+				},
+				{
+					"remove": "ці",
+					"add": "ліся",
+					"condition": "зьці"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"С": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "у",
+					"add": "зься",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зьцеся",
+					"condition": "ду"
+				},
+				{
+					"remove": "ю",
+					"add": "йся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "йцеся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ць",
+					"add": "йся",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "йцеся",
+					"condition": "ць"
+				},
+				{
+					"remove": "юся",
+					"add": "йся",
+					"condition": "юся"
+				},
+				{
+					"remove": "юся",
+					"add": "йцеся",
+					"condition": "юся"
+				},
+				{
+					"remove": "цца",
+					"add": "йся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "йцеся",
+					"condition": "цца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"К": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "гу",
+					"add": "жыся",
+					"condition": "гу"
+				},
+				{
+					"remove": "гу",
+					"add": "жыцеся",
+					"condition": "гу"
+				},
+				{
+					"remove": "у",
+					"add": "зіся",
+					"condition": "ду"
+				},
+				{
+					"remove": "у",
+					"add": "зіцеся",
+					"condition": "ду"
+				},
+				{
+					"remove": "ту",
+					"add": "ціся",
+					"condition": "ту"
+				},
+				{
+					"remove": "ту",
+					"add": "ціцеся",
+					"condition": "ту"
+				},
+				{
+					"remove": "ку",
+					"add": "чыся",
+					"condition": "ку"
+				},
+				{
+					"remove": "ку",
+					"add": "чыцеся",
+					"condition": "ку"
+				},
+				{
+					"remove": "ю",
+					"add": "іся",
+					"condition": "ю"
+				},
+				{
+					"remove": "ю",
+					"add": "іцеся",
+					"condition": "ю"
+				},
+				{
+					"remove": "аць",
+					"add": "іся",
+					"condition": "аць"
+				},
+				{
+					"remove": "аць",
+					"add": "іцеся",
+					"condition": "аць"
+				},
+				{
+					"remove": "юся",
+					"add": "іся",
+					"condition": "юся"
+				},
+				{
+					"remove": "юся",
+					"add": "іцеся",
+					"condition": "юся"
+				},
+				{
+					"remove": "уцца",
+					"add": "іся",
+					"condition": "нуцца"
+				},
+				{
+					"remove": "уцца",
+					"add": "іцеся",
+					"condition": "нуцца"
+				},
+				{
+					"remove": "уся",
+					"add": "іся",
+					"condition": "нуся"
+				},
+				{
+					"remove": "уся",
+					"add": "іцеся",
+					"condition": "нуся"
+				},
+				{
+					"remove": "гуся",
+					"add": "жыся",
+					"condition": "гуся"
+				},
+				{
+					"remove": "гуся",
+					"add": "жыцеся",
+					"condition": "гуся"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Т": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "сьці",
+					"add": "е",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьці",
+					"add": "юць",
+					"condition": "сьці"
+				},
+				{
+					"remove": "цца",
+					"add": "ецца",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "юцца",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "ўся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "лася",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "ліся",
+					"condition": "цца"
+				},
+				{
+					"remove": "ую",
+					"add": "авацца",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "аваўся",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "авалася",
+					"condition": "ую"
+				},
+				{
+					"remove": "ую",
+					"add": "аваліся",
+					"condition": "ую"
+				},
+				{
+					"remove": "юю",
+					"add": "явацца",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "яваўся",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "явалася",
+					"condition": "юю"
+				},
+				{
+					"remove": "юю",
+					"add": "яваліся",
+					"condition": "юю"
+				},
+				{
+					"remove": "у",
+					"add": "ецца",
+					"condition": "бу"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "бу"
+				},
+				{
+					"remove": "ю",
+					"add": "ецца",
+					"condition": "лю"
+				},
+				{
+					"remove": "",
+					"add": "цца",
+					"condition": "лю"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"В": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ў",
+					"add": "ла",
+					"condition": "оў"
+				},
+				{
+					"remove": "ў",
+					"add": "лі",
+					"condition": "оў"
+				},
+				{
+					"remove": "ўся",
+					"add": "лася",
+					"condition": "ўся"
+				},
+				{
+					"remove": "ўся",
+					"add": "ліся",
+					"condition": "ўся"
+				},
+				{
+					"remove": "е",
+					"add": "ё",
+					"condition": "е"
+				},
+				{
+					"remove": "еся",
+					"add": "ёся",
+					"condition": "еся"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"М": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ш",
+					"condition": "ае"
+				},
+				{
+					"remove": "",
+					"add": "м",
+					"condition": "ае"
+				},
+				{
+					"remove": "",
+					"add": "це",
+					"condition": "ае"
+				},
+				{
+					"remove": "а",
+					"add": "уць",
+					"condition": "а"
+				},
+				{
+					"remove": "е",
+					"add": "уць",
+					"condition": "мне"
+				},
+				{
+					"remove": "е",
+					"add": "юць",
+					"condition": "ле"
+				},
+				{
+					"remove": "зе",
+					"add": "уць",
+					"condition": "дзе"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Д": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ш",
+					"condition": "а"
+				},
+				{
+					"remove": "",
+					"add": "м",
+					"condition": "а"
+				},
+				{
+					"remove": "",
+					"add": "це",
+					"condition": "а"
+				},
+				{
+					"remove": "жа",
+					"add": "гуць",
+					"condition": "жа"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"З": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "віць",
+					"add": "ў",
+					"condition": "віць"
+				},
+				{
+					"remove": "віць",
+					"add": "ўце",
+					"condition": "віць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Г": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "іць",
+					"add": "і",
+					"condition": "іць"
+				},
+				{
+					"remove": "іць",
+					"add": "іце",
+					"condition": "іць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ы",
+					"condition": "ыць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ыце",
+					"condition": "ыць"
+				},
+				{
+					"remove": "ець",
+					"add": "і",
+					"condition": "ець"
+				},
+				{
+					"remove": "ець",
+					"add": "іце",
+					"condition": "ець"
+				},
+				{
+					"remove": "паць",
+					"add": "ьпі",
+					"condition": "спаць"
+				},
+				{
+					"remove": "паць",
+					"add": "ьпіце",
+					"condition": "спаць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ґ": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "віць",
+					"add": "ўлю",
+					"condition": "віць"
+				},
+				{
+					"remove": "зіць",
+					"add": "жу",
+					"condition": "дзіць"
+				},
+				{
+					"remove": "сіць",
+					"add": "шу",
+					"condition": "сіць"
+				},
+				{
+					"remove": "ціць",
+					"add": "чу",
+					"condition": "ьціць"
+				},
+				{
+					"remove": "сьціць",
+					"add": "шчу",
+					"condition": "сьціць"
+				},
+				{
+					"remove": "зець",
+					"add": "жу",
+					"condition": "зець"
+				},
+				{
+					"remove": "сець",
+					"add": "шу",
+					"condition": "сець"
+				},
+				{
+					"remove": "цець",
+					"add": "чу",
+					"condition": "цець"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"У": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "віць",
+					"add": "ўся",
+					"condition": "віць"
+				},
+				{
+					"remove": "віць",
+					"add": "ўцеся",
+					"condition": "віць"
+				},
+				{
+					"remove": "іцца",
+					"add": "ься",
+					"condition": "іцца"
+				},
+				{
+					"remove": "іцца",
+					"add": "ьцеся",
+					"condition": "іцца"
+				},
+				{
+					"remove": "ыцца",
+					"add": "ся",
+					"condition": "ыцца"
+				},
+				{
+					"remove": "ыцца",
+					"add": "цеся",
+					"condition": "ыцца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Л": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ець",
+					"add": "іся",
+					"condition": "ець"
+				},
+				{
+					"remove": "ець",
+					"add": "іцеся",
+					"condition": "ець"
+				},
+				{
+					"remove": "ецца",
+					"add": "іся",
+					"condition": "ецца"
+				},
+				{
+					"remove": "ецца",
+					"add": "іцеся",
+					"condition": "ецца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Б": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "віць",
+					"add": "ўлюся",
+					"condition": "віць"
+				},
+				{
+					"remove": "зіць",
+					"add": "жуся",
+					"condition": "дзіць"
+				},
+				{
+					"remove": "сіць",
+					"add": "шуся",
+					"condition": "сіць"
+				},
+				{
+					"remove": "ыць",
+					"add": "уся",
+					"condition": "ыць"
+				},
+				{
+					"remove": "зець",
+					"add": "жуся",
+					"condition": "зець"
+				},
+				{
+					"remove": "цець",
+					"add": "чуся",
+					"condition": "цець"
+				},
+				{
+					"remove": "зіцца",
+					"add": "жуся",
+					"condition": "зіцца"
+				},
+				{
+					"remove": "сіцца",
+					"add": "шуся",
+					"condition": "сіцца"
+				},
+				{
+					"remove": "віцца",
+					"add": "ўлюся",
+					"condition": "віцца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"ф": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "іць",
+					"add": "яцца",
+					"condition": "іць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ацца",
+					"condition": "ыць"
+				},
+				{
+					"remove": "цца",
+					"add": "сься",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "мся",
+					"condition": "цца"
+				},
+				{
+					"remove": "цца",
+					"add": "цеся",
+					"condition": "цца"
+				},
+				{
+					"remove": "іцца",
+					"add": "яцца",
+					"condition": "іцца"
+				},
+				{
+					"remove": "ыцца",
+					"add": "ацца",
+					"condition": "ыцца"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ш": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "іць",
+					"add": "яць",
+					"condition": "іць"
+				},
+				{
+					"remove": "ыць",
+					"add": "аць",
+					"condition": "ыць"
+				},
+				{
+					"remove": "іцца",
+					"add": "яцца",
+					"condition": "іцца"
+				},
+				{
+					"remove": "ыцца",
+					"add": "ацца",
+					"condition": "ыцца"
+				},
+				{
+					"remove": "эць",
+					"add": "ыць",
+					"condition": "эць"
+				},
+				{
+					"remove": "эць",
+					"add": "аць",
+					"condition": "эць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ё": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ць",
+					"add": "цца",
+					"condition": "ць"
+				},
+				{
+					"remove": "іць",
+					"add": "яцца",
+					"condition": "іць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ацца",
+					"condition": "ыць"
+				},
+				{
+					"remove": "ць",
+					"add": "ўся",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "лася",
+					"condition": "ць"
+				},
+				{
+					"remove": "ць",
+					"add": "ліся",
+					"condition": "ць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Х": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ш",
+					"add": "сься",
+					"condition": "ш"
+				},
+				{
+					"remove": "ь",
+					"add": "ца",
+					"condition": "ць"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Р": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "чы",
+					"condition": "ую"
+				},
+				{
+					"remove": "ць",
+					"add": "чы",
+					"condition": "уць"
+				},
+				{
+					"remove": "ць",
+					"add": "чы",
+					"condition": "юць"
+				},
+				{
+					"remove": "іць",
+					"add": "ячы",
+					"condition": "іць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ачы",
+					"condition": "ыць"
+				},
+				{
+					"remove": "а",
+					"add": "учы",
+					"condition": "ча"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ч": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "чыся",
+					"condition": "ую"
+				},
+				{
+					"remove": "іць",
+					"add": "ячыся",
+					"condition": "іць"
+				},
+				{
+					"remove": "іцца",
+					"add": "ячыся",
+					"condition": "іцца"
+				},
+				{
+					"remove": "ыцца",
+					"add": "ачыся",
+					"condition": "ыцца"
+				},
+				{
+					"remove": "ць",
+					"add": "чыся",
+					"condition": "уць"
+				},
+				{
+					"remove": "ыць",
+					"add": "ачыся",
+					"condition": "ыць"
+				},
+				{
+					"remove": "ся",
+					"add": "чыся",
+					"condition": "юся"
+				},
+				{
+					"remove": "ся",
+					"add": "чыся",
+					"condition": "уся"
+				},
+				{
+					"remove": "а",
+					"add": "учыся",
+					"condition": "ча"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ц": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ўшы",
+					"condition": "мну"
+				},
+				{
+					"remove": "ую",
+					"add": "аваўшы",
+					"condition": "ую"
+				},
+				{
+					"remove": "юю",
+					"add": "яваўшы",
+					"condition": "юю"
+				},
+				{
+					"remove": "ць",
+					"add": "ўшы",
+					"condition": "ць"
+				},
+				{
+					"remove": "сьці",
+					"add": "ўшы",
+					"condition": "сьці"
+				},
+				{
+					"remove": "ьці",
+					"add": "шы",
+					"condition": "зьці"
+				},
+				{
+					"remove": "чы",
+					"add": "шы",
+					"condition": "чы"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"Ю": {
+			"#": "-",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "ць",
+					"add": "ўшыся",
+					"condition": "ць"
+				},
+				{
+					"remove": "цца",
+					"add": "ўшыся",
+					"condition": "цца"
+				},
+				{
+					"remove": "ую",
+					"add": "аваўшыся",
+					"condition": "ую"
+				},
+				{
+					"remove": "юю",
+					"add": "яваўшыся",
+					"condition": "юю"
+				},
+				{
+					"remove": "сьці",
+					"add": "ўшыся",
+					"condition": "сьці"
+				},
+				{
+					"remove": "сьціся",
+					"add": "ўшыся",
+					"condition": "сьціся"
+				},
+				{
+					"remove": "ьці",
+					"add": "шыся",
+					"condition": "зьці"
+				},
+				{
+					"remove": "чы",
+					"add": "шыся",
+					"condition": "чы"
+				},
+				{
+					"remove": "уюся",
+					"add": "аваўшыся",
+					"condition": "уюся"
+				},
+				{
+					"remove": "ююся",
+					"add": "яваўшыся",
+					"condition": "ююся"
+				},
+				{
+					"remove": "ся",
+					"add": "ўшыся",
+					"condition": "нуся"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
 		}
 	},
 	"properties": {
