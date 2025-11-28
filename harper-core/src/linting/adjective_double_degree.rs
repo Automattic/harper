@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -21,6 +22,8 @@ impl Default for AdjectiveDoubleDegree {
 }
 
 impl ExprLinter for AdjectiveDoubleDegree {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

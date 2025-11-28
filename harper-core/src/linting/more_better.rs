@@ -1,4 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
@@ -29,6 +30,8 @@ impl Default for MoreBetter {
 }
 
 impl ExprLinter for MoreBetter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

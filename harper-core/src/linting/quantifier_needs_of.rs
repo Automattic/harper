@@ -3,6 +3,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 /// Flags phrases like `a couple months` → should be `a couple **of** months`.
 pub struct QuantifierNeedsOf {
@@ -25,6 +26,8 @@ impl Default for QuantifierNeedsOf {
 }
 
 impl ExprLinter for QuantifierNeedsOf {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -3,6 +3,7 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{Lrc, Punctuation, Token, TokenKind, TokenStringExt, patterns::Word};
 
 pub struct Everyday {
@@ -12,7 +13,7 @@ pub struct Everyday {
 impl Default for Everyday {
     fn default() -> Self {
         let everyday = Word::new("everyday");
-        let every_day = Lrc::new(SequenceExpr::default().t_aco("every").t_ws().t_aco("day"));
+        let every_day = Lrc::new(SequenceExpr::aco("every").t_ws().t_aco("day"));
 
         let everyday_bad_after =
             All::new(vec![
@@ -91,7 +92,7 @@ impl Default for Everyday {
                 SequenceExpr::default()
                     .then(every_day.clone())
                     .t_ws()
-                    .then_noun()
+                    .then_plural_noun()
                     .then_punctuation(),
             ),
             Box::new(
@@ -147,6 +148,8 @@ impl Default for Everyday {
 }
 
 impl ExprLinter for Everyday {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -215,7 +218,7 @@ impl ExprLinter for Everyday {
 mod tests {
     use super::Everyday;
     use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+        assert_lint_count, assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
     #[test]
@@ -505,5 +508,10 @@ mod tests {
             Everyday::default(),
             "MEET SOMEONE NEW EVERY DAY.",
         );
+    }
+
+    #[test]
+    fn dont_flag_every_day_singular_noun_2020() {
+        assert_no_lints("50 requests per day, every day free.", Everyday::default());
     }
 }

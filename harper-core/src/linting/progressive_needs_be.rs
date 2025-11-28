@@ -2,6 +2,7 @@ use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ProgressiveNeedsBe {
     expr: Box<dyn Expr>,
@@ -32,6 +33,8 @@ impl Default for ProgressiveNeedsBe {
 }
 
 impl ExprLinter for ProgressiveNeedsBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

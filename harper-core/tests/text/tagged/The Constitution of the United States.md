@@ -10,8 +10,8 @@
 # VB        NPr🅪Sg+ . VB     NSg/J    NSg         . VB      R/C/P D   NSg/VB/J N🅪Sg/Comm+ .
 > promote the general  Welfare , and  secure the Blessings of Liberty to ourselves
 # NSg/VB  D   NSg/VB/J Nᴹ/VB+  . VB/C VB/J   D   NPl/V3    P  NSg+    P  IPl+
-> and  our Posterity , do      ordain and  establish this   Constitution for   the United
-# VB/C D$+ Nᴹ+       . NSg/VXB VB     VB/C VB        I/Ddem NPr+         R/C/P D   VP/J
+> and  our Posterity , do  ordain and  establish this   Constitution for   the United
+# VB/C D$+ Nᴹ+       . VXB VB     VB/C VB        I/Ddem NPr+         R/C/P D   VP/J
 > States   of America .
 # NPrPl/V3 P  NPr+    .
 >
@@ -256,8 +256,8 @@
 # Dq+  NPr/VB+ VXB   NSg/VXB D   NSg/VB P  D+  NPl+      . NPl/V3  VB/C
 > Qualifications of its     own       Members , and  a   Majority of each shall constitute a
 # NPl            P  ISg/D$+ NSg/VB/J+ NPl/V3+ . VB/C D/P NSg      P  Dq+  VXB   NSg/VB     D/P
-> Quorum to do      Business ; but     a   smaller Number      may     adjourn from day     to day    , and
-# NSg    P  NSg/VXB N🅪Sg/J+  . NSg/C/P D/P NSg/JC  N🅪Sg/VB/JC+ NPr/VXB VB      P    NPr🅪Sg+ P  NPr🅪Sg . VB/C
+> Quorum to do  Business ; but     a   smaller Number      may     adjourn from day     to day    , and
+# NSg    P  VXB N🅪Sg/J+  . NSg/C/P D/P NSg/JC  N🅪Sg/VB/JC+ NPr/VXB VB      P    NPr🅪Sg+ P  NPr🅪Sg . VB/C
 > may     be      authorized to compel the Attendance of absent     Members , in        such  Manner ,
 # NPr/VXB NSg/VXB VP/J       P  VB     D   NSg        P  NSg/VB/J/P NPl/V3+ . NPr/J/R/P NSg/I NSg+   .
 > and  under   such  Penalties as    each House   may     provide .
@@ -960,8 +960,8 @@
 #
 > Before he       enter  on  the Execution of his     Office  , he       shall take   the following
 # C/P    NPr/ISg+ NSg/VB J/P D   N🅪Sg      P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   Nᴹ/Vg/J/P
-> Oath    or    Affirmation : - - " I       do      solemnly swear    ( or    affirm ) that         I       will    faithfully
-# NSg/VB+ NPr/C NSg         . . . . ISg/#r+ NSg/VXB R        NSg/VB/J . NPr/C VB     . NSg/I/C/Ddem ISg/#r+ NPr/VXB R
+> Oath    or    Affirmation : - - " I       do  solemnly swear    ( or    affirm ) that         I       will    faithfully
+# NSg/VB+ NPr/C NSg         . . . . ISg/#r+ VXB R        NSg/VB/J . NPr/C VB     . NSg/I/C/Ddem ISg/#r+ NPr/VXB R
 > execute the Office of President of the United States    , and  will    to the best       of
 # VB      D   NSg/VB P  NSg/VB    P  D   VP/J   NPrPl/V3+ . VB/C NPr/VXB P  D   NPr/VXB/JS P
 > my  Ability , preserve , protect and  defend the Constitution of the United

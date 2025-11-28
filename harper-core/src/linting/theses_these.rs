@@ -1,6 +1,7 @@
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::UPOSSet;
 use harper_brill::UPOS;
 
@@ -22,6 +23,8 @@ impl Default for ThesesThese {
 }
 
 impl ExprLinter for ThesesThese {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

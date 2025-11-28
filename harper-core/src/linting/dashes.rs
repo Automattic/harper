@@ -4,6 +4,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 const EN_DASH: char = '–';
 const EM_DASH: char = '—';
@@ -29,6 +30,8 @@ impl Default for Dashes {
 }
 
 impl ExprLinter for Dashes {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -1,5 +1,6 @@
 use hashbrown::HashSet;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
@@ -56,6 +57,8 @@ impl<D> ExprLinter for MassPlurals<D>
 where
     D: Dictionary,
 {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

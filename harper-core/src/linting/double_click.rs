@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -57,6 +58,8 @@ impl Default for DoubleClick {
 }
 
 impl ExprLinter for DoubleClick {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

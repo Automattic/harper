@@ -6,6 +6,7 @@ use crate::{Lrc, Token, TokenKind};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PronounInflectionBe {
     expr: Box<dyn Expr>,
@@ -143,6 +144,8 @@ impl Default for PronounInflectionBe {
 }
 
 impl ExprLinter for PronounInflectionBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
