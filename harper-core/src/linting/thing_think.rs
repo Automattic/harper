@@ -106,7 +106,8 @@ impl ExprLinter for ThingThink {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{ThingThink, tests::assert_suggestion_result};
+    use super::ThingThink;
+    use crate::linting::tests::assert_suggestion_result;
 
     // Pronouns
 

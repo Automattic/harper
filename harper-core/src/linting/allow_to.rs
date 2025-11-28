@@ -56,10 +56,8 @@ impl ExprLinter for AllowTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        AllowTo,
-        tests::{assert_lint_count, assert_no_lints},
-    };
+    use super::AllowTo;
+    use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
     #[test]
     fn flag_allow_to() {

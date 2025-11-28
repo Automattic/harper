@@ -62,10 +62,8 @@ impl ExprLinter for ThoughThought {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        ThoughThought,
-        tests::{assert_no_lints, assert_suggestion_result},
-    };
+    use super::ThoughThought;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fix_i_though_i() {

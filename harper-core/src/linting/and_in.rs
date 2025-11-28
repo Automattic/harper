@@ -46,10 +46,8 @@ impl ExprLinter for AndIn {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        AndIn,
-        tests::{assert_no_lints, assert_suggestion_result},
-    };
+    use super::AndIn;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn dont_flag_an_in_house() {
