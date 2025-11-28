@@ -71,7 +71,8 @@ impl ExprLinter for MoreBetter {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{MoreBetter, tests::assert_suggestion_result};
+    use super::MoreBetter;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn flag_most_biggest() {

@@ -62,10 +62,8 @@ impl ExprLinter for SemicolonApostrophe {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        SemicolonApostrophe,
-        tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use super::SemicolonApostrophe;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_dont_with_semicolon_to_apostrophe() {

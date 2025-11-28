@@ -74,10 +74,8 @@ impl ExprLinter for GoSoFarAsTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        GoSoFarAsTo,
-        tests::{assert_no_lints, assert_suggestion_result},
-    };
+    use super::GoSoFarAsTo;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn go_so_far_to() {

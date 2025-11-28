@@ -85,12 +85,10 @@ impl ExprLinter for InOnTheCards {
 
 #[cfg(test)]
 mod tests {
+    use super::InOnTheCards;
     use crate::{
         Dialect,
-        linting::{
-            InOnTheCards,
-            tests::{assert_lint_count, assert_suggestion_result},
-        },
+        linting::tests::{assert_lint_count, assert_suggestion_result},
     };
 
     // On the cards

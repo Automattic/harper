@@ -62,9 +62,9 @@ impl ExprLinter for FarBeIt {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        FarBeIt,
-        tests::{assert_no_lints, assert_suggestion_count, assert_suggestion_result},
+    use super::FarBeIt;
+    use crate::linting::tests::{
+        assert_no_lints, assert_suggestion_count, assert_suggestion_result,
     };
 
     #[test]

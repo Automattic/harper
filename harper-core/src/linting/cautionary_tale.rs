@@ -54,10 +54,8 @@ impl ExprLinter for CautionaryTale {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        CautionaryTale,
-        tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use super::CautionaryTale;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn catches_cautionary_tail() {
