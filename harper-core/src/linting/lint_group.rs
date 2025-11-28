@@ -188,12 +188,7 @@ use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{
-    closed_compounds,
-    initialisms,
-    phrase_corrections,
-    phrase_set_corrections,
-};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
