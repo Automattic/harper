@@ -2,6 +2,7 @@ use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::{Lrc, Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 use hashbrown::HashMap;
 
 pub struct OpenCompounds {
@@ -65,6 +66,8 @@ impl Default for OpenCompounds {
 }
 
 impl ExprLinter for OpenCompounds {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

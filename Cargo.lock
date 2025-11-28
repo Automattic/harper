@@ -2683,6 +2683,7 @@ dependencies = [
  "harper-stats",
  "harper-typst",
  "hashbrown 0.16.1",
+ "rayon",
  "serde",
  "serde_json",
  "strum",

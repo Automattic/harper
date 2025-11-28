@@ -366,8 +366,8 @@
 # NSg/VB+  N🅪Sg/VB+ VL3 D/P NSg/J     NSg/VB     . IPl+ VXB   NSg/VXB VP/J   NPr/ISg+ D/P+
 > experimental science  , but     like         astronomy , economics , and  geology , some     of its
 # NSg/J+       N🅪Sg/VB+ . NSg/C/P NSg/VB/J/C/P Nᴹ+       . Nᴹ+       . VB/C NSg     . I/J/R/Dq P  ISg/D$+
-> unique forms  of observation and  experience do      not     fit       a   narrow   stereotype of
-# NSg/J  NPl/V3 P  N🅪Sg        VB/C N🅪Sg/VB+   NSg/VXB NSg/R/C NSg/VBP/J D/P NSg/VB/J NSg/VB     P
+> unique forms  of observation and  experience do  not     fit       a   narrow   stereotype of
+# NSg/J  NPl/V3 P  N🅪Sg        VB/C N🅪Sg/VB+   VXB NSg/R/C NSg/VBP/J D/P NSg/VB/J NSg/VB     P
 > the experimental method  . Nonetheless , they are experiments . Each new    machine
 # D   NSg/J        NSg/VB+ . R           . IPl+ VB  NPl/V3+     . Dq+  NSg/J+ NSg/VB+
 > that          is  built    is  an   experiment . Actually constructing the machine poses   a
@@ -900,8 +900,8 @@
 #
 > Alan Turing's insight : there are only  five actions that         a   computer has to
 # NPr+ NSg$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
-> perform in        order    to do      " anything  " .
-# VB      NPr/J/R/P N🅪Sg/VB+ P  NSg/VXB . NSg/I/VB+ . .
+> perform in        order    to do  " anything  " .
+# VB      NPr/J/R/P N🅪Sg/VB+ P  VXB . NSg/I/VB+ . .
 >
 #
 > Every algorithm can     be      expressed in        a   language for   a   computer consisting of
@@ -942,8 +942,8 @@
 # ?       ?    VB/C NSg      ?          N🅪Sg+   . R+    VB  J/R/C NSg   NPl  P
 > combining these  actions ( into more         complex  ones ) that          are needed in        order    for
 # Nᴹ/Vg/J   I/Ddem NPl/V3+ . P    NPr/I/J/R/Dq NSg/VB/J NPl+ . NSg/I/C/Ddem+ VB  VP/J   NPr/J/R/P N🅪Sg/VB+ R/C/P
-> a   computer to do      " anything  " .
-# D/P NSg/VB+  P  NSg/VXB . NSg/I/VB+ . .
+> a   computer to do  " anything  " .
+# D/P NSg/VB+  P  VXB . NSg/I/VB+ . .
 >
 #
 > Only  three rules   are needed to combine any    set       of basic  instructions into more
@@ -956,16 +956,16 @@
 #
 >
 #
-> sequence : first    do      this    , then    do      that          ;
-# NSg/VB+  . NSg/VB/J NSg/VXB I/Ddem+ . NSg/J/C NSg/VXB NSg/I/C/Ddem+ .
+> sequence : first    do  this    , then    do  that          ;
+# NSg/VB+  . NSg/VB/J VXB I/Ddem+ . NSg/J/C VXB NSg/I/C/Ddem+ .
 >
 #
-> selection : IF    such  - and  - such  is  the case      , THEN    do      this    , ELSE    do      that          ;
-# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/J/C NSg/VXB I/Ddem+ . NSg/J/C NSg/VXB NSg/I/C/Ddem+ .
+> selection : IF    such  - and  - such  is  the case      , THEN    do  this    , ELSE    do  that          ;
+# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/J/C VXB I/Ddem+ . NSg/J/C VXB NSg/I/C/Ddem+ .
 >
 #
-> repetition : WHILE      such  - and  - such  is  the case      , DO      this    . The three rules  of
-# N🅪Sg/VB+   . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/VXB I/Ddem+ . D   NSg   NPl/V3 P
+> repetition : WHILE      such  - and  - such  is  the case      , DO  this    . The three rules  of
+# N🅪Sg/VB+   . NSg/VB/C/P NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . VXB I/Ddem+ . D   NSg   NPl/V3 P
 > Boehm's and  Jacopini's insight can     be      further simplified with the use      of
 # ?       VB/C ?          N🅪Sg+   NPr/VXB NSg/VXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
 > goto ( which means  it       is  more         elementary than structured programming ) .

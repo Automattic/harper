@@ -1,5 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AndIn {
@@ -15,6 +16,8 @@ impl Default for AndIn {
 }
 
 impl ExprLinter for AndIn {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &*self.expr
     }

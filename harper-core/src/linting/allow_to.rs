@@ -1,4 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
@@ -24,6 +25,8 @@ impl Default for AllowTo {
 }
 
 impl ExprLinter for AllowTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.exp.as_ref()
     }

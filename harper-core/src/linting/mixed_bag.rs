@@ -1,4 +1,5 @@
 use crate::CharStringExt;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::{
@@ -29,6 +30,8 @@ impl Default for MixedBag {
 }
 
 impl ExprLinter for MixedBag {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

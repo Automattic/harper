@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -68,6 +69,8 @@ impl Default for ModalSeem {
 }
 
 impl ExprLinter for ModalSeem {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

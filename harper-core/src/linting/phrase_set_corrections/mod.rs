@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::one_to_one(
@@ -36,7 +36,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::many_to_many(
@@ -341,6 +341,17 @@ pub fn lint_group() -> LintGroup {
     });
 
     add_many_to_many_mappings!(group, {
+        "AwaitFor" => (
+            &[
+                (&["await for"], &["await", "wait for"]),
+                (&["awaited for"], &["awaited", "waited for"]),
+                (&["awaiting for"], &["awaiting", "waiting for"]),
+                (&["awaits for"], &["awaits", "waits for"])
+            ],
+            "`Await` and `for` are redundant when used together - use one or the other",
+            "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
+            LintKind::Redundancy
+        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),

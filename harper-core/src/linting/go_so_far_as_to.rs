@@ -2,6 +2,7 @@ use crate::Token;
 use crate::TokenStringExt;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind};
 
 pub struct GoSoFarAsTo {
@@ -22,6 +23,8 @@ impl Default for GoSoFarAsTo {
 }
 
 impl ExprLinter for GoSoFarAsTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.exp.as_ref()
     }

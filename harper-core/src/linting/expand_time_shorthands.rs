@@ -6,6 +6,7 @@ use std::sync::Arc;
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandTimeShorthands {
@@ -57,6 +58,8 @@ impl Default for ExpandTimeShorthands {
 }
 
 impl ExprLinter for ExpandTimeShorthands {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

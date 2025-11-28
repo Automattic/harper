@@ -1,5 +1,6 @@
 use crate::linting::tests::{
-    assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+    assert_nth_suggestion_result, assert_suggestion_result,
 };
 
 use super::lint_group;
@@ -832,6 +833,60 @@ fn correct_passer_bys_hyphen() {
 // -none-
 
 // Many to many tests
+
+// AwaitFor
+
+#[test]
+fn correct_awaits_for() {
+    assert_good_and_bad_suggestions(
+        "Headless mode awaits for requested user feedback without showing any text for what that feedback should be",
+        lint_group(),
+        &[
+            "Headless mode awaits requested user feedback without showing any text for what that feedback should be",
+            "Headless mode waits for requested user feedback without showing any text for what that feedback should be",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_awaiting_for() {
+    assert_good_and_bad_suggestions(
+        "gpg import fails awaiting for prompt answer",
+        lint_group(),
+        &[
+            "gpg import fails waiting for prompt answer",
+            "gpg import fails awaiting prompt answer",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_await_for() {
+    assert_good_and_bad_suggestions(
+        "I still await for a college course on \"Followership 101\"",
+        lint_group(),
+        &[
+            "I still wait for a college course on \"Followership 101\"",
+            "I still await a college course on \"Followership 101\"",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_awaited_for() {
+    assert_good_and_bad_suggestions(
+        "I have long awaited for the rise of the Dagoat agenda, and it is glorious.",
+        lint_group(),
+        &[
+            "I have long awaited the rise of the Dagoat agenda, and it is glorious.",
+            "I have long waited for the rise of the Dagoat agenda, and it is glorious.",
+        ],
+        &[],
+    );
+}
 
 // GetRidOf
 
