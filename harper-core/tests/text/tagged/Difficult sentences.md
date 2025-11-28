@@ -226,8 +226,8 @@
 # NPr/ISg+ VPt VP/J   R/C/P D+  NSg/VB+ NSg/I/C NPr/ISg+ VP/J       .
 > I       have    something for   you    .
 # ISg/#r+ NSg/VXB NSg/I/J+  R/C/P ISgPl+ .
-> Everything I       do      , I       do      for   you    .
-# NSg/I/VB+  ISg/#r+ NSg/VXB . ISg/#r+ NSg/VXB R/C/P ISgPl+ .
+> Everything I       do  , I       do  for   you    .
+# NSg/I/VB+  ISg/#r+ VXB . ISg/#r+ VXB R/C/P ISgPl+ .
 > We're having  a   birthday party    for   Janet .
 # K     Nᴹ/Vg/J D/P NSg/VB+  NSg/VB/J R/C/P NPr+  .
 > The mayor gave a   speech  for   the charity gala   .
@@ -286,8 +286,8 @@
 # ISg/#r+ NPr/VB/J Nᴹ/Vg/J R/C/P NSg+       NSg/J/P D   NSg/VB P  N🅪Sg/J+  NSg+     .
 > He's going   for   his     doctorate .
 # NSg$ Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB+   .
-> Do      you    want   to go       for   coffee     ?
-# NSg/VXB ISgPl+ NSg/VB P  NSg/VB/J R/C/P N🅪Sg/VB/J+ .
+> Do  you    want   to go       for   coffee     ?
+# VXB ISgPl+ NSg/VB P  NSg/VB/J R/C/P N🅪Sg/VB/J+ .
 > I'm saving      up         for   a   car  .
 # K   N🅪Sg/Vg/J/P NSg/VB/J/P R/C/P D/P NSg+ .
 > Don't wait   for   an  answer  .
@@ -786,8 +786,8 @@
 #
 > I       want   to leave  .
 # ISg/#r+ NSg/VB P  NSg/VB .
-> He       asked me       what   to do      .
-# NPr/ISg+ VP/J  NPr/ISg+ NSg/I+ P  NSg/VXB .
+> He       asked me       what   to do  .
+# NPr/ISg+ VP/J  NPr/ISg+ NSg/I+ P  VXB .
 > I       have    places  to go       and  people  to see    .
 # ISg/#r+ NSg/VXB NPl/V3+ P  NSg/VB/J VB/C NPl/VB+ P  NSg/VB .
 > To err is  human    .
@@ -934,5 +934,5 @@
 # NSg/VB+
 >
 #
-> Do      you    want   to come       with ?
-# NSg/VXB ISgPl+ NSg/VB P  NSg/VBPp/P P    .
+> Do  you    want   to come       with ?
+# VXB ISgPl+ NSg/VB P  NSg/VBPp/P P    .
