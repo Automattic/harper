@@ -4,8 +4,8 @@
 mod char_ext;
 mod char_string;
 mod currency;
-pub mod dict_word_metadata;
-pub mod dict_word_metadata_orthography;
+mod dict_word_metadata;
+mod dict_word_metadata_orthography;
 mod document;
 mod edit_distance;
 pub mod expr;
@@ -35,8 +35,8 @@ use std::collections::{BTreeMap, VecDeque};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DictWordMetadata, NounData,
-    PronounData, VerbData, VerbForm,
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
+    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -54,7 +54,7 @@ pub use token_kind::TokenKind;
 pub use token_string_ext::TokenStringExt;
 pub use vec_ext::VecExt;
 
-/// Return harper-core version
+/// Return `harper-core` version
 pub fn core_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
