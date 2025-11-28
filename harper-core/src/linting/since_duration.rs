@@ -93,7 +93,7 @@ impl ExprLinter for SinceDuration {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::SinceDuration;
+    use super::SinceDuration;
     use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
