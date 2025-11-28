@@ -1,6 +1,7 @@
 use crate::expr::{AnchorStart, Expr, SequenceExpr};
 use crate::{Token, TokenStringExt};
 
+use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct SubjectPronoun {
@@ -24,6 +25,8 @@ impl Default for SubjectPronoun {
 }
 
 impl ExprLinter for SubjectPronoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
