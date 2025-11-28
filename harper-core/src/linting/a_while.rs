@@ -7,6 +7,7 @@ use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::UPOSSet;
 use crate::{CharString, Token, TokenStringExt};
 
+use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AWhile {
@@ -56,6 +57,8 @@ impl Default for AWhile {
 }
 
 impl ExprLinter for AWhile {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
