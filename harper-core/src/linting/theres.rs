@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
     expr::SequenceExpr,
@@ -26,6 +27,8 @@ impl Default for Theres {
 }
 
 impl ExprLinter for Theres {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn crate::expr::Expr {
         self.expr.as_ref()
     }

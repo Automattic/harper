@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Dialect, Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -31,6 +32,8 @@ impl HaveTakeALook {
 }
 
 impl ExprLinter for HaveTakeALook {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

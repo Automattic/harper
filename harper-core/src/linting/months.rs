@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenKind,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -87,6 +88,8 @@ impl Default for Months {
 }
 
 impl ExprLinter for Months {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

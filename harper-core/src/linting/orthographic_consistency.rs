@@ -6,6 +6,8 @@ use crate::spell::{Dictionary, FstDictionary};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
+
 pub struct OrthographicConsistency {
     dict: Arc<FstDictionary>,
     expr: Box<dyn Expr>,
@@ -27,6 +29,8 @@ impl Default for OrthographicConsistency {
 }
 
 impl ExprLinter for OrthographicConsistency {
+    type Unit = Chunk;
+
     fn description(&self) -> &str {
         "Ensures word casing matches the dictionary's canonical orthography."
     }

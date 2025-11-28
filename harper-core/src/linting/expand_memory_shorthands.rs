@@ -4,6 +4,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandMemoryShorthands {
@@ -74,6 +75,8 @@ impl Default for ExpandMemoryShorthands {
 }
 
 impl ExprLinter for ExpandMemoryShorthands {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

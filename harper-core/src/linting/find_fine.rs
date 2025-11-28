@@ -3,6 +3,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::patterns::InflectionOfBe;
 
+use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct FindFine {
@@ -23,6 +24,8 @@ impl Default for FindFine {
 }
 
 impl ExprLinter for FindFine {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -51,6 +52,8 @@ impl Default for BeAllowed {
 }
 
 impl ExprLinter for BeAllowed {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

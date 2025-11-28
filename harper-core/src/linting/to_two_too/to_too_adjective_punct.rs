@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdjectivePunct {
     expr: Box<dyn Expr>,
@@ -36,6 +37,8 @@ impl Default for ToTooAdjectivePunct {
 }
 
 impl ExprLinter for ToTooAdjectivePunct {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
