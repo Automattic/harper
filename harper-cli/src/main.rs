@@ -17,8 +17,7 @@ use harper_comments::CommentParser;
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, Document, Span, TokenKind, TokenStringExt,
-    dict_word_metadata_orthography::OrthFlags,
+    CharStringExt, Dialect, DictWordMetadata, Document, OrthFlags, Span, TokenKind, TokenStringExt,
 };
 use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;

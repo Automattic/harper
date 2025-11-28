@@ -143,7 +143,7 @@
 > cross       - language differences . The tag     sets   for   heavily inflected languages such  as
 # NPr/VB/J/P+ . N🅪Sg/VB+ NPl/VB+     . D+  NSg/VB+ NPl/V3 R/C/P R       VP/J      NPl/V3+   NSg/I NSg/R
 > Greek    and  Latin can     be      very large ; tagging words   in        agglutinative languages such
-# NPr/VB/J VB/C NPr/J NPr/VXB NSg/VXB J/R  NSg/J . NSg/Vg  NPl/V3+ NPr/J/R/P ?             NPl/V3+   NSg/I
+# NPr/VB/J VB/C NPr/J NPr/VXB NSg/VXB J/R  NSg/J . NSg/Vg  NPl/V3+ NPr/J/R/P J             NPl/V3+   NSg/I
 > as    Inuit languages may     be      virtually impossible . At    the other    extreme , Petrov et
 # NSg/R NPr/J NPl/V3+   NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
 > al. have    proposed a   " universal " tag     set       , with 12 categories ( for   example , no

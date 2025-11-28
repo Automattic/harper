@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
@@ -77,6 +78,8 @@ impl Default for ThingThink {
 }
 
 impl ExprLinter for ThingThink {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -103,7 +106,8 @@ impl ExprLinter for ThingThink {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{ThingThink, tests::assert_suggestion_result};
+    use super::ThingThink;
+    use crate::linting::tests::assert_suggestion_result;
 
     // Pronouns
 

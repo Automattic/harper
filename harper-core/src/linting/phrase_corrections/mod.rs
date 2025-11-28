@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input:expr, $corrections:expr, $hint:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseLinter::new_fixed_phrases(
@@ -865,6 +865,13 @@ pub fn lint_group() -> LintGroup {
             "The phrase is `peace of mind`, meaning `calm`. A `piece` is a `part` of something.",
             "Corrects `piece of mind` to `peace of mind`.",
             LintKind::Eggcorn
+        ),
+        "PerSe" => (
+            ["per say", "per-se", "per-say"],
+            ["per se"],
+            "The correct spelling is `per se` (with no hyphen)",
+            "Corrects common misspellings of `per se`.",
+            LintKind::Spelling
         ),
         "PointsOfView" => (
             ["point of views"],

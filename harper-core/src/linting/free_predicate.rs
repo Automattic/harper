@@ -7,6 +7,7 @@ use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::WhitespacePattern;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct FreePredicate {
     expr: Box<dyn Expr>,
@@ -47,6 +48,8 @@ impl Default for FreePredicate {
 }
 
 impl ExprLinter for FreePredicate {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

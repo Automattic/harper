@@ -12,6 +12,7 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
+use super::a_while::AWhile;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
@@ -43,6 +44,7 @@ use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
+use super::currency_placement::CurrencyPlacement;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
@@ -59,6 +61,7 @@ use super::far_be_it::FarBeIt;
 use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
+use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
@@ -87,6 +90,7 @@ use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
+use super::mass_plurals::MassPlurals;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
@@ -103,9 +107,11 @@ use super::nail_on_the_head::NailOnTheHead;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_match_for::NoMatchFor;
+use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::noun_countability::NounCountability;
+use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
 use super::on_floor::OnFloor;
@@ -115,6 +121,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
@@ -150,6 +157,7 @@ use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
+use super::subject_pronoun::SubjectPronoun;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
@@ -178,14 +186,12 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
-use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
+use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{
-    MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
-    phrase_set_corrections,
-};
+use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -307,7 +313,7 @@ pub struct LintGroup {
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
-    expr_linters: BTreeMap<String, Box<dyn ExprLinter>>,
+    chunk_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only re-run the expr linters
     /// when a chunk changes.
@@ -323,7 +329,7 @@ impl LintGroup {
         Self {
             config: LintGroupConfig::default(),
             linters: BTreeMap::new(),
-            expr_linters: BTreeMap::new(),
+            chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
         }
@@ -331,7 +337,8 @@ impl LintGroup {
 
     /// Check if the group already contains a linter with a given name.
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
-        self.linters.contains_key(name.as_ref()) || self.expr_linters.contains_key(name.as_ref())
+        self.linters.contains_key(name.as_ref())
+            || self.chunk_expr_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
@@ -346,21 +353,22 @@ impl LintGroup {
         }
     }
 
-    /// Add a [`ExprLinter`] to the group, returning whether the operation was successful.
+    /// Add a chunk-based [`ExprLinter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     ///
     /// This function is not significantly different from [`Self::add`], but allows us to take
-    /// advantage of some properties of [`ExprLinter`]s for cache optimization.
-    pub fn add_expr_linter(
+    /// advantage of some properties of chunk-based [`ExprLinter`]s for cache optimization.
+    pub fn add_chunk_expr_linter(
         &mut self,
         name: impl AsRef<str>,
-        linter: impl ExprLinter + 'static,
+        // linter: impl ExprLinter + 'static,
+        linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+            self.chunk_expr_linters
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
             true
         }
     }
@@ -373,14 +381,14 @@ impl LintGroup {
         let other_linters = std::mem::take(&mut other.linters);
         self.linters.extend(other_linters);
 
-        let other_expr_linters = std::mem::take(&mut other.expr_linters);
-        self.expr_linters.extend(other_expr_linters);
+        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
+        self.chunk_expr_linters.extend(other_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
         self.linters
             .keys()
-            .chain(self.expr_linters.keys())
+            .chain(self.chunk_expr_linters.keys())
             .map(|v| v.as_str())
     }
 
@@ -403,7 +411,7 @@ impl LintGroup {
             .iter()
             .map(|(key, value)| (key.as_str(), value.description()))
             .chain(
-                self.expr_linters
+                self.chunk_expr_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
             )
@@ -416,7 +424,7 @@ impl LintGroup {
             .iter()
             .map(|(key, value)| (key.as_str(), value.description_html()))
             .chain(
-                self.expr_linters
+                self.chunk_expr_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), value.description_html())),
             )
@@ -441,12 +449,12 @@ impl LintGroup {
             };
         }
 
-        /// Add an `ExprLinter` to the group, setting it to be enabled by default.
+        /// Add a chunk-based `ExprLinter` to the group, setting it to be enabled by default.
         /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_expr_linter(stringify!($rule), $rule::default());
+                out.add_chunk_expr_linter(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -471,7 +479,7 @@ impl LintGroup {
         insert_expr_rule!(AfterLater, true);
         insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_expr_rule!(AllowTo, true);
-        insert_struct_rule!(AmInTheMorning, true);
+        insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule!(AnA, true);
         insert_expr_rule!(AndIn, true);
@@ -490,6 +498,9 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(AWhile, true);
+        insert_struct_rule!(SubjectPronoun, true);
+        insert_struct_rule!(FindFine, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -505,16 +516,16 @@ impl LintGroup {
         insert_expr_rule!(DoubleClick, true);
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
-        insert_struct_rule!(ElsePossessive, true);
-        insert_struct_rule!(Everyday, true);
+        insert_expr_rule!(ElsePossessive, true);
+        insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
-        insert_struct_rule!(FirstAidKit, true);
-        insert_struct_rule!(ForNoun, true);
+        insert_expr_rule!(FirstAidKit, true);
+        insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
         insert_expr_rule!(GoSoFarAsTo, true);
@@ -523,14 +534,14 @@ impl LintGroup {
         insert_expr_rule!(HelloGreeting, true);
         insert_expr_rule!(Hereby, true);
         insert_struct_rule!(HopHope, true);
-        insert_struct_rule!(HowTo, true);
+        insert_expr_rule!(HowTo, true);
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
-        insert_struct_rule!(ItsPossessive, true);
+        insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -550,24 +561,24 @@ impl LintGroup {
         insert_expr_rule!(MostNumber, true);
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
-        insert_struct_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NailOnTheHead, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
-        insert_struct_rule!(NominalWants, true);
+        insert_expr_rule!(NominalWants, true);
         insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
-        insert_struct_rule!(OfCourse, true);
+        insert_expr_rule!(OfCourse, true);
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OnceOrTwice, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
-        insert_struct_rule!(OrthographicConsistency, true);
-        insert_struct_rule!(OughtToBe, true);
+        insert_expr_rule!(OrthographicConsistency, true);
+        insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
@@ -578,7 +589,7 @@ impl LintGroup {
         insert_expr_rule!(PronounAre, true);
         insert_struct_rule!(PronounContraction, true);
         insert_expr_rule!(PronounInflectionBe, true);
-        insert_struct_rule!(PronounKnew, true);
+        insert_expr_rule!(PronounKnew, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(QuantifierNumeralConflict, true);
         insert_expr_rule!(QuiteQuiet, true);
@@ -587,7 +598,7 @@ impl LintGroup {
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
-        insert_struct_rule!(SaveToSafe, true);
+        insert_expr_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
@@ -603,7 +614,7 @@ impl LintGroup {
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
-        insert_struct_rule!(TheMy, true);
+        insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(Theres, true);
         insert_expr_rule!(ThesesThese, true);
@@ -697,7 +708,7 @@ impl LintGroup {
             } else {
                 let mut pattern_lints = BTreeMap::new();
 
-                for (key, linter) in &mut self.expr_linters {
+                for (key, linter) in &mut self.chunk_expr_linters {
                     if self.config.is_rule_enabled(key) {
                         let lints =
                             run_on_chunk(linter, chunk, document.get_source()).map(|mut l| {

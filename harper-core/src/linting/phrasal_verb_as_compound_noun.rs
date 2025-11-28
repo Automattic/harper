@@ -749,4 +749,12 @@ mod tests {
             PhrasalVerbAsCompoundNoun::default(),
         );
     }
+
+    #[test]
+    fn issue_1772() {
+        assert_no_lints(
+            "By default, only one tile size is instantiated for each data type, math instruction, and layout.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
 }

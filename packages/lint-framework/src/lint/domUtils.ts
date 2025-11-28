@@ -33,6 +33,27 @@ export function getNodesFromQuerySelector(element: Element, query: string) {
 	return extractFromNodeList(element.querySelectorAll(query));
 }
 
+/** Get a node's closest ancestor that has `display: block`. */
+export function getClosestBlockAncestor(leaf: Node, root: Element): Element | null {
+	let current: Node | null = leaf;
+
+	while (current) {
+		if (current instanceof Element) {
+			if (getComputedStyle(current).display === 'block') {
+				return current;
+			}
+
+			if (current === root) {
+				break;
+			}
+		}
+
+		current = current.parentNode;
+	}
+
+	return null;
+}
+
 /**
  * Flatten a provided node, and its children into a single array.
  * @param node

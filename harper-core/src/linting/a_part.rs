@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -26,6 +27,8 @@ impl Default for APart {
 }
 
 impl ExprLinter for APart {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

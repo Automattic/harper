@@ -4,8 +4,8 @@ use std::sync::Arc;
 use std::{fs, process};
 
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
-use either::Either;
 use hashbrown::HashMap;
+use rayon::prelude::*;
 
 use harper_core::{
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
@@ -56,6 +56,12 @@ enum ReportStyle {
 
 struct InputInfo<'a> {
     parent_input_id: &'a str,
+    input: Input,
+}
+
+struct InputJob {
+    batch_mode: bool,
+    parent_input_id: String,
     input: Input,
 }
 
@@ -151,25 +157,11 @@ pub fn lint(
         false => ReportStyle::FullAriadneLintReport,
     };
 
+    let mut input_jobs = Vec::new();
     for user_input in all_user_inputs {
         let (batch_mode, maybe_dir) = match &user_input {
             Input::Dir(dir) => (true, std::fs::read_dir(dir).ok()),
             _ => (false, None),
-        };
-
-        // All the files within this input if it's a Dir, or just this input otherwise.
-        let inputs = if let Some(dir) = maybe_dir {
-            let mut entries: Vec<_> = dir
-                .filter_map(Result::ok)
-                .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
-                .collect();
-
-            // Sort entries by file name
-            entries.sort_by_key(|entry| entry.file_name());
-
-            Either::Left(entries.into_iter().map(|entry| Input::File(entry.path())))
-        } else {
-            Either::Right(std::iter::once(user_input.clone()))
         };
 
         let parent_input_id = if batch_mode {
@@ -178,8 +170,40 @@ pub fn lint(
             String::new()
         };
 
-        for current_input in inputs {
-            let lint_results = lint_one_input(
+        if let Some(dir) = maybe_dir {
+            let mut entries: Vec<_> = dir
+                .filter_map(Result::ok)
+                .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
+                .collect();
+
+            entries.sort_by_key(|entry| entry.file_name());
+
+            for entry in entries {
+                input_jobs.push(InputJob {
+                    batch_mode,
+                    parent_input_id: parent_input_id.clone(),
+                    input: Input::File(entry.path()),
+                });
+            }
+        } else {
+            input_jobs.push(InputJob {
+                batch_mode,
+                parent_input_id,
+                input: user_input.clone(),
+            });
+        }
+    }
+
+    let per_input_results = {
+        let run_job = |job: InputJob| {
+            let InputJob {
+                batch_mode,
+                parent_input_id,
+                input,
+            } = job;
+            let parent_id_ref = parent_input_id.as_str();
+
+            lint_one_input(
                 // Common properties of harper-cli
                 markdown_options,
                 &curated_plus_user_dict,
@@ -196,24 +220,32 @@ pub fn lint(
                 batch_mode,
                 // The current input to be linted
                 InputInfo {
-                    parent_input_id: &parent_input_id,
-                    input: current_input,
+                    parent_input_id: parent_id_ref,
+                    input,
                 },
-            );
+            )
+        };
 
-            // Update the global stats
-            for (kind, count) in lint_results.0 {
-                *all_lint_kinds.entry(kind).or_insert(0) += count;
-            }
-            for (rule, count) in lint_results.1 {
-                *all_rules.entry(rule).or_insert(0) += count;
-            }
-            for ((kind, rule), count) in lint_results.2 {
-                *all_lint_kind_rule_pairs.entry((kind, rule)).or_insert(0) += count;
-            }
-            for (word, count) in lint_results.3 {
-                *all_spellos.entry(word).or_insert(0) += count;
-            }
+        if input_jobs.len() > 1 {
+            input_jobs.into_par_iter().map(run_job).collect::<Vec<_>>()
+        } else {
+            input_jobs.into_iter().map(run_job).collect::<Vec<_>>()
+        }
+    };
+
+    for lint_results in per_input_results {
+        // Update the global stats
+        for (kind, count) in lint_results.0 {
+            *all_lint_kinds.entry(kind).or_insert(0) += count;
+        }
+        for (rule, count) in lint_results.1 {
+            *all_rules.entry(rule).or_insert(0) += count;
+        }
+        for ((kind, rule), count) in lint_results.2 {
+            *all_lint_kind_rule_pairs.entry((kind, rule)).or_insert(0) += count;
+        }
+        for (word, count) in lint_results.3 {
+            *all_spellos.entry(word).or_insert(0) += count;
         }
     }
 

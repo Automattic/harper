@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "0.73.0",
+	"version": "1.0.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -178,6 +178,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Finds and corrects common mistakes between 'a part' and 'apart'"
+				},
+				"harper.linters.AWhile": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Enforces `awhile` after verbs and `a while` everywhere else."
 				},
 				"harper.linters.Addicting": {
 					"scope": "resource",
@@ -430,6 +436,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags offensive language and offers various ways to censor or replace with euphemisms."
+				},
+				"harper.linters.AwaitFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests using either `await` or `wait for` but not both, as they express the same meaning."
 				},
 				"harper.linters.AzureNames": {
 					"scope": "resource",
@@ -1054,6 +1066,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Removes filler words."
+				},
+				"harper.linters.FindFine": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes the common typo where writers write `find` when they mean `fine`."
 				},
 				"harper.linters.FirstAidKit": {
 					"scope": "resource",
@@ -2111,6 +2129,12 @@
 					"default": true,
 					"description": "Corrects `piece of mind` to `peace of mind`."
 				},
+				"harper.linters.PerSe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects common misspellings of `per se`."
+				},
 				"harper.linters.PhrasalVerbAsCompoundNoun": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2530,6 +2554,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `statue of limitations` to `statute of limitations`."
+				},
+				"harper.linters.SubjectPronoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Fixes sentences that start with `me and X` by putting the proper noun first and using `I`."
 				},
 				"harper.linters.SufficeItToSay": {
 					"scope": "resource",

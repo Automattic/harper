@@ -1,4 +1,5 @@
 use crate::expr::{Expr, FirstMatchOf, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind, TokenStringExt};
 
@@ -52,6 +53,8 @@ impl Default for QuiteQuiet {
 }
 
 impl ExprLinter for QuiteQuiet {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

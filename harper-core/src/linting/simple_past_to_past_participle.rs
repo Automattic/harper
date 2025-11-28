@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     char_string::CharStringExt,
@@ -127,6 +128,8 @@ impl Default for SimplePastToPastParticiple {
 }
 
 impl ExprLinter for SimplePastToPastParticiple {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

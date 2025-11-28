@@ -4,7 +4,7 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-use harper_core::dict_word_metadata::DialectFlags;
+use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
@@ -64,6 +64,7 @@ impl Language {
     }
 }
 
+/// Specifies an English Dialect, often used for linting.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {

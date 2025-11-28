@@ -1,5 +1,6 @@
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 
@@ -25,6 +26,8 @@ impl Default for FarBeIt {
 }
 
 impl ExprLinter for FarBeIt {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -62,9 +65,9 @@ impl ExprLinter for FarBeIt {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        FarBeIt,
-        tests::{assert_no_lints, assert_suggestion_count, assert_suggestion_result},
+    use super::FarBeIt;
+    use crate::linting::tests::{
+        assert_no_lints, assert_suggestion_count, assert_suggestion_result,
     };
 
     #[test]
