@@ -1444,6 +1444,34 @@ fn corrects_piece_of_mind() {
     )
 }
 
+// PerSe
+#[test]
+fn corrects_per_se_hyphenated() {
+    assert_suggestion_result(
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
+        lint_group(),
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
+    )
+}
+
+#[test]
+fn corrects_per_say() {
+    assert_suggestion_result(
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
+        lint_group(),
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
+        lint_group(),
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
+    );
+}
+
 // PointsOfView
 #[test]
 fn corrects_points_of_view() {
