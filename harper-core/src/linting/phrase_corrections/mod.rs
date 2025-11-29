@@ -426,13 +426,6 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `w/o` to the full word `without` for clarity.",
             LintKind::Style
         ),
-        "Expatriate" => (
-            ["ex-patriot"],
-            ["expatriate"],
-            "Use the correct term for someone living abroad.",
-            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
-            LintKind::Eggcorn
-        ),
         "FaceFirst" => (
             ["face first into"],
             ["face-first into"],

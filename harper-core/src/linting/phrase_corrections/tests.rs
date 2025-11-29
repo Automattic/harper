@@ -770,9 +770,6 @@ fn expand_cuz() {
 // ExpandWithout
 // -none-
 
-// Expatriate
-// -none-
-
 // FaceFirst
 // -none-
 
