@@ -14155,7 +14155,7 @@ batter/~VGd>SNwgzZ
 batterer/Ng
 battery/~NSg
 batting/~NgV6
-battle/~NSgVd>GJLZ
+battle/~NSgVdGJLZ
 battleaxe/NgS
 battledore/NSg
 battledress/N
@@ -14163,7 +14163,7 @@ battlefield/~NgS
 battlefront/NgS
 battleground/~NgS
 battlement/NSg
-battler/Ng
+battler/NgS
 battleship/~NSg
 batty/J>^N
 bauble/NSg
@@ -14971,7 +14971,8 @@ blitz/~NgSVGd
 blitzkrieg/NgS
 blivet/NS
 blizzard/~NSgV
-bloat/VGd>SNJZ
+bloat/VGdSNJZ
+bloater/NgS
 bloatware/Nmg
 blob/~NSgV
 blobbed/VtT
@@ -16080,7 +16081,7 @@ buzzkill/NSg
 buzzword/NSg
 bx/~N
 bxs/N
-by/~PJNg
+by/~PNg             # removed adjective sense
 bye/~NSgJP
 bygone/JNSg
 bylaw/NSg
@@ -27120,11 +27121,11 @@ grouch/NgSVGd
 grouchily/Ry
 grouchiness/Nmg
 grouchy/J>^p
-ground/~NwgSVGd>JZz
+ground/~NwgSVGdJZz
 groundbreaking/~JNgS
 groundcloth/N0
 groundcloths/N9
-grounder/Ng
+grounder/NgS
 groundhog/NgS
 grounding/~NwgSV6
 groundless/JY
@@ -31988,7 +31989,7 @@ lii
 likability/Nmg
 likable/JpE
 likableness/Nmg
-like/~VGdSNgJ^CPE
+like/~VGdSNgJCPE
 likeability/Ng!@_
 likeable/Jp!@_
 likeableness/Ng!@_
@@ -34252,7 +34253,7 @@ modality/~NwSg
 modded/VtT
 modding/V6Nm
 mode/~NgS
-model/~NSgJ>VGdZz
+model/~NSgJVGdZz
 modeler/NgS
 modeling/~VNg
 modelled/JVr!@_
@@ -48640,7 +48641,7 @@ timberland/NSg
 timberline/~NgS
 timbre/~NSg
 timbrel/NSgV
-time/~NwgSVGd>YZz
+time/~NwgSVGdYZz
 timekeeper/NgS
 timekeeping/NgV
 timeless/~JYNp
@@ -48650,7 +48651,7 @@ timeliness/NmgU
 timely/~J>^Up
 timeout/NSg
 timepiece/NgS
-timer/~Ng
+timer/~NgS
 timescale/~NS
 timeserver/NSg
 timeserving/NgJ
