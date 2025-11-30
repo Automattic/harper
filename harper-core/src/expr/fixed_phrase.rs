@@ -42,9 +42,8 @@ impl FixedPhrase {
                     phrase = phrase.then_whitespace();
                 }
                 TokenKind::Punctuation(p) => {
-                    phrase = phrase.then(move |t: &Token, _source: &[char]| {
-                        t.kind.as_punctuation().cloned() == Some(p)
-                    })
+                    phrase = phrase
+                        .then_kind_where(move |kind| kind.as_punctuation().cloned() == Some(p));
                 }
                 TokenKind::ParagraphBreak => {
                     phrase = phrase.then_whitespace();

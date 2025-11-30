@@ -259,7 +259,7 @@ impl SequenceExpr {
 
     /// Matches any token whose `Kind` exactly matches.
     pub fn then_kind(self, kind: TokenKind) -> Self {
-        self.then(move |tok: &Token, _source: &[char]| tok.kind == kind)
+        self.then_kind_where(move |k| kind == *k)
     }
 
     /// Matches a token where the provided closure returns true for the token's kind.
@@ -296,7 +296,7 @@ impl SequenceExpr {
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| pred_is_1(&tok.kind) && pred_is_2(&tok.kind))
+        self.then_kind_where(move |k| pred_is_1(k) && pred_is_2(k))
     }
 
     /// Match a token where either of the two token kind predicates returns true.
@@ -306,7 +306,7 @@ impl SequenceExpr {
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| pred_is_1(&tok.kind) || pred_is_2(&tok.kind))
+        self.then_kind_where(move |k| pred_is_1(k) || pred_is_2(k))
     }
 
     /// Match a token where neither of the two token kind predicates returns true.
@@ -316,9 +316,7 @@ impl SequenceExpr {
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| {
-            !pred_isnt_1(&tok.kind) && !pred_isnt_2(&tok.kind)
-        })
+        self.then_kind_where(move |k| !pred_isnt_1(k) && !pred_isnt_2(k))
     }
 
     /// Match a token where the first token kind predicate returns true and the second returns false.
@@ -328,7 +326,7 @@ impl SequenceExpr {
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| pred_is(&tok.kind) && !pred_not(&tok.kind))
+        self.then_kind_where(move |k| pred_is(k) && !pred_not(k))
     }
 
     /// Match a token where the first token kind predicate returns true and all of the second return false.
@@ -342,9 +340,7 @@ impl SequenceExpr {
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
         F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| {
-            pred_is(&tok.kind) && !preds_isnt.iter().any(|pred| pred(&tok.kind))
-        })
+        self.then_kind_where(move |k| pred_is(k) && !preds_isnt.iter().any(|pred| pred(k)))
     }
 
     /// Match a token where the first token kind predicate returns true and the second returns false,
@@ -377,7 +373,7 @@ impl SequenceExpr {
     where
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| preds_is.iter().any(|pred| pred(&tok.kind)))
+        self.then_kind_where(move |k| preds_is.iter().any(|pred| pred(k)))
     }
 
     /// Match a token where none of the token kind predicates returns true.
@@ -386,9 +382,7 @@ impl SequenceExpr {
     where
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
-        self.then(move |tok: &Token, _source: &[char]| {
-            preds_isnt.iter().all(|pred| !pred(&tok.kind))
-        })
+        self.then_kind_where(move |k| preds_isnt.iter().all(|pred| !pred(k)))
     }
 
     /// Match a token where any of the token kind predicates returns true,
