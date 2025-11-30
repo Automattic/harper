@@ -49,10 +49,7 @@ impl FixedPhrase {
                 TokenKind::ParagraphBreak => {
                     phrase = phrase.then_whitespace();
                 }
-                TokenKind::Number(n) => {
-                    phrase = phrase
-                        .then(move |tok: &Token, _source: &[char]| tok.kind == TokenKind::Number(n))
-                }
+                TokenKind::Number(_) => phrase = phrase.then_kind_where(|kind| kind.is_number()),
                 _ => panic!("Fell out of expected document formats."),
             }
         }

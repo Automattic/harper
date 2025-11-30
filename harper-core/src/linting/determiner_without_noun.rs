@@ -12,7 +12,7 @@ pub struct DeterminerWithoutNoun {
 impl Default for DeterminerWithoutNoun {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_determiner())
+            .then_kind_where(|kind| kind.is_determiner())
             .t_ws()
             .then_conjunction();
 

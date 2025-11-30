@@ -29,15 +29,15 @@ impl ModalSeem {
     fn adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 
     fn adverb_then_adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adverb())
+            .then_kind_where(|kind| kind.is_adverb())
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 }
 

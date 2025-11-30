@@ -27,9 +27,9 @@ impl Default for QuiteQuiet {
                 if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
                     return false;
                 }
-                let chars = tok.span.get_content(src);
-                chars.ends_with_ignore_ascii_case_chars(&['n', '\'', 't'])
-                    || chars.ends_with_ignore_ascii_case_chars(&['n', '’', 't'])
+                tok.span
+                    .get_content(src)
+                    .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
             })
             .t_ws()
             .t_aco("quiet");

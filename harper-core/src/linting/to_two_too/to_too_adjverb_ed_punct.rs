@@ -23,10 +23,7 @@ impl Default for ToTooAdjVerbEdPunct {
                     && tok
                         .span
                         .get_content(src)
-                        .iter()
-                        .collect::<String>()
-                        .to_lowercase()
-                        .ends_with("ed")
+                        .ends_with_ignore_ascii_case_chars(&['e', 'd'])
             })
             .then_sentence_terminator();
 

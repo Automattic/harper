@@ -57,7 +57,7 @@ impl Default for AffectToEffect {
             .then(|tok: &Token, source: &[char]| matches_preceding_context(tok, source))
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
-            .then(|tok: &Token, _source: &[char]| matches!(tok.kind, TokenKind::Punctuation(_)));
+            .then_kind_where(|kind| kind.is_punctuation());
 
         map.insert(punctuation_follow, 2);
 

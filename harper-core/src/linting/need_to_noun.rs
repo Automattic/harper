@@ -30,12 +30,12 @@ impl Default for NeedToNoun {
             .then_word_set(&["be"]);
 
         let a = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_nominal())
+            .then_kind_where(|kind| kind.is_nominal())
             .t_ws()
             .then_unless(postfix_exceptions);
 
-        let b = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_nominal() && !tok.kind.is_verb());
+        let b =
+            SequenceExpr::default().then_kind_where(|kind| kind.is_nominal() && !kind.is_verb());
 
         let expr = SequenceExpr::default()
             .then(DerivedFrom::new_from_str("need"))

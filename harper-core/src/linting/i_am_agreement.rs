@@ -18,9 +18,7 @@ impl Default for IAmAgreement {
             .then(i_are.clone());
 
         let non_and_word_before_i_are = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                !tok.kind.is_word() || tok.span.get_content_string(src).to_lowercase() != "and"
-            })
+            .then_word_except(&["and"])
             .t_ws()
             .then(i_are);
 

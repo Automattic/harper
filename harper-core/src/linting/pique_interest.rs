@@ -1,3 +1,4 @@
+use crate::TokenKind;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{CharString, CharStringExt, Token, char_string::char_string, patterns::WordSet};
@@ -16,9 +17,10 @@ impl Default for PiqueInterest {
                 "peak", "peaked", "peek", "peeked", "peeking", "peaking",
             ]))
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_non_plural_nominal() || tok.kind.is_possessive_determiner()
-            })
+            .then_kind_either(
+                TokenKind::is_non_plural_nominal,
+                TokenKind::is_possessive_determiner,
+            )
             .then_whitespace()
             .t_aco("interest");
 
