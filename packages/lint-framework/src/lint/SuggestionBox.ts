@@ -16,6 +16,8 @@ function iconSvg(definition: IconDefinition): string {
 const settingsIconSvg = iconSvg(faGear);
 const disableIconSvg = iconSvg(faBan);
 
+let previouslyActiveElement: null | HTMLElement = null;
+
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
 	if ((node as any).__harperAutofocused) {
@@ -23,6 +25,10 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	}
 
 	requestAnimationFrame(() => {
+		if (document.activeElement?.tagName.toLowerCase() != 'harper-render-box') {
+			previouslyActiveElement = document.activeElement as HTMLElement;
+		}
+
 		node.focus();
 		Object.defineProperty(node, '__harperAutofocused', {
 			value: true,
@@ -453,19 +459,24 @@ export default function SuggestionBox(
 		transformOrigin: `${bottom ? 'bottom' : 'top'} left`,
 	};
 
+	const refocusClose = () => {
+		previouslyActiveElement?.focus();
+		close();
+	};
+
 	return h(
 		'div',
 		{
 			className: 'harper-container fade-in',
 			style: positionStyle,
-			'harper-close-on-escape': new CloseOnEscapeHook(close),
+			'harper-close-on-escape': new CloseOnEscapeHook(refocusClose),
 		},
 		[
 			styleTag(box.lint.lint_kind),
 			header(
 				box.lint.lint_kind_pretty,
 				lintKindColor(box.lint.lint_kind),
-				close,
+				refocusClose,
 				actions.openOptions,
 				box.rule,
 				actions.setRuleEnabled,
@@ -474,7 +485,7 @@ export default function SuggestionBox(
 			footer(
 				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
 					box.applySuggestion(v);
-					close();
+					refocusClose();
 				}),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
