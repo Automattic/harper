@@ -888,6 +888,53 @@ fn correct_awaited_for() {
     );
 }
 
+// Copyright
+
+#[test]
+fn copywritten() {
+    assert_suggestion_result(
+        "Including digital copies of copywritten artwork with the project isn't advised.",
+        lint_group(),
+        "Including digital copies of copyrighted artwork with the project isn't advised."
+    );
+}
+
+#[test]
+fn copywrites() {
+    assert_suggestion_result(
+        "Code is 99% copy/pasted from OpenSSH with an attempt to retain all copywrites",
+        lint_group(),
+        "Code is 99% copy/pasted from OpenSSH with an attempt to retain all copyrights",
+    );
+}
+
+#[test]
+fn copywrited() {
+    assert_suggestion_result(
+        "Proprietary copywrited code",
+        lint_group(),
+        "Proprietary copyrighted code",
+    );
+}
+
+#[test]
+fn copywrited_all_caps() {
+    assert_suggestion_result(
+        "URLS MAY CONTAIN COPYWRITED MATERIAL",
+        lint_group(),
+        "URLS MAY CONTAIN COPYRIGHTED MATERIAL",
+    );
+}
+
+#[test]
+fn copywrote() {
+    assert_suggestion_result(
+        "How do you find out if someone copywrote a movie",
+        lint_group(),
+        "How do you find out if someone copyrighted a movie",
+    );
+}
+
 // GetRidOf
 
 #[test]

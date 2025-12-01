@@ -352,6 +352,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "Copyright" => (
+            &[
+                (&["copywrite"], &["copyright"]),
+                (&["copywrites"], &["copyrights"]),
+                (&["copywriting"], &["copyrighting"]),
+                (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
+            ],
+            "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
+            "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
+            LintKind::WordChoice
+        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),

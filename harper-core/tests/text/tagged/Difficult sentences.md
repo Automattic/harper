@@ -603,7 +603,7 @@
 > Are we   still    on  for   tonight ?
 # VB  IPl+ NSg/VB/J J/P R/C/P NSg+    .
 > Mike    just threw coffee     onto Paul's lap       . It's on  now       .
-# NPr/VB+ J    VB    N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
+# NPr/VB+ J    VPt   N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
 > England need     a   hundred runs   , with twenty - five overs remaining . Game      on  !
 # NPr+    N🅪Sg/VXB D/P NSg     NPl/V3 . P    NSg    . NSg  NPl   Nᴹ/Vg/J   . NSg/VB/J+ J/P .
 > Your feet will    soon warm     up         once  your socks   are on  .
