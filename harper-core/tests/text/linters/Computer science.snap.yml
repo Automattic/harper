@@ -493,17 +493,6 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     137 | "In the U.S., however, informatics is linked with applied computing, or
-         |         ^~~~ Did you mean to spell `U.S.` this way?
-Suggest:
-  - Replace with: “P.S.”
-  - Replace with: “UBS”
-  - Replace with: “USA”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
          |               ^~~~~~ Did you mean to spell `Edsger` this way?
