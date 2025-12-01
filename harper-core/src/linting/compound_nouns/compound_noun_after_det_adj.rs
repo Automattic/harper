@@ -1,7 +1,9 @@
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::patterns::InflectionOfBe;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
@@ -31,7 +33,7 @@ impl Default for CompoundNounAfterDetAdj {
             .t_ws()
             .then(is_content_word)
             .t_ws()
-            .then(is_content_word);
+            .then(is_content_word.and_not(InflectionOfBe::default()));
 
         let split_expr = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
             predicate(meta_closed, meta_open)

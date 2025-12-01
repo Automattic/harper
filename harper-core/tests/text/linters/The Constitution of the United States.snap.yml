@@ -225,16 +225,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-      89 | third Class at the Expiration of the sixth Year, so that one third may be
-         |                                                                    ^~~~~~ Did you mean the closed compound noun “maybe”?
-      90 | chosen every second Year; and when vacancies happen in the representation of
-Suggest:
-  - Replace with: “maybe”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       96 | No Person shall be a Senator who shall not have attained to the Age of thirty
