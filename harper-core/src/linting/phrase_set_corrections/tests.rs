@@ -895,7 +895,7 @@ fn copywritten() {
     assert_suggestion_result(
         "Including digital copies of copywritten artwork with the project isn't advised.",
         lint_group(),
-        "Including digital copies of copyrighted artwork with the project isn't advised."
+        "Including digital copies of copyrighted artwork with the project isn't advised.",
     );
 }
 
