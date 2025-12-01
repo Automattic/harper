@@ -7820,6 +7820,7 @@ PRC/ONg             # mainland China
 PRO/N
 PS/ONgJ             # postscript; multiple meanings as implied by the attributes?
 P.S.                # postscript
+U.S./Og             # United States
 PST/ONg
 PSU/Sg              # power supply unit
 PT/NOJ
@@ -54136,3 +54137,4 @@ topicalization/Nmg
 typological/JQ
 volitive/NSgJ
 worldbuild/Vd>G
+WordCamp/gO
