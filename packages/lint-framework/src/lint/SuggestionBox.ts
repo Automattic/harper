@@ -459,6 +459,8 @@ export default function SuggestionBox(
 		transformOrigin: `${bottom ? 'bottom' : 'top'} left`,
 	};
 
+	const ignoreLintCallback = box.ignoreLint;
+
 	const refocusClose = () => {
 		previouslyActiveElement?.focus();
 		close();
@@ -491,7 +493,9 @@ export default function SuggestionBox(
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
 						: undefined,
-					box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
+					ignoreLintCallback
+						? ignoreLint(() => ignoreLintCallback().then(refocusClose))
+						: undefined,
 				],
 			),
 			hintDrawer(hint),
