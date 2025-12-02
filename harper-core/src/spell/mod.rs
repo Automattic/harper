@@ -342,7 +342,7 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 6;
     }
 
-    if sug.edit_distance == 2 {
+    if sug.edit_distance <= 2 {
         if is_ei_ie_misspelling(misspelled_word, sug.word) {
             score -= 11;
         }
@@ -359,6 +359,9 @@ fn order_suggestions<'b>(
     misspelled_word: &[char],
     mut matches: Vec<FuzzyMatchResult<'b>>,
 ) -> Vec<&'b [char]> {
+    // Ignore exact matches; callers generally only want alternatives.
+    matches.retain(|v| v.edit_distance > 0);
+
     matches.sort_by_cached_key(|v| score_suggestion(misspelled_word, v));
 
     matches.into_iter().map(|v| v.word).collect()

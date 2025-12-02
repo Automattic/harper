@@ -480,4 +480,13 @@ mod tests {
             "'fill' is supposed to be 'fill'",
         );
     }
+    #[test]
+    fn issue_2261() {
+        assert_top3_suggestion_result(
+            "Generaly",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "Generally",
+        );
+    }
+
 }
