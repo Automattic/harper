@@ -106,6 +106,7 @@ mod mixed_bag;
 mod modal_of;
 mod modal_seem;
 mod months;
+mod more_adjective;
 mod more_better;
 mod most_number;
 mod most_of_the_times;

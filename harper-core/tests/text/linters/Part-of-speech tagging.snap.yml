@@ -56,6 +56,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+      32 | Correct grammatical tagging will reflect that "dogs" is here used as a verb, not
+      33 | as the more common plural noun. Grammatical context is one way to determine
+         |        ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “commoner”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       33 | as the more common plural noun. Grammatical context is one way to determine
@@ -207,6 +217,17 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+      77 | subtypes of nouns, verbs, punctuation, and so on). Whether a very small set of
+      78 | very broad tags or a much larger set of more precise ones is preferable, depends
+         |                                         ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+      79 | on the purpose at hand. Automatic tagging is easier on smaller tag-sets.
+Suggest:
+  - Replace with: “preciser”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       86 | The first major corpus of English for computer analysis was the Brown Corpus
@@ -297,6 +318,16 @@ Suggest:
 
 
 
+Lint:    WordChoice (127 priority)
+Message: |
+     125 | program can decide that "can" in "the can" is far more likely to be a noun than
+         |                                                   ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+     126 | a verb or a modal. The same method can, of course, be used to benefit from
+Suggest:
+  - Replace with: “likelier”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
@@ -331,6 +362,16 @@ Suggest:
   - Replace with: “Carina”
   - Replace with: “Carnap”
   - Replace with: “Chadian”
+
+
+
+Lint:    WordChoice (127 priority)
+Message: |
+     142 | parsing (1997) that merely assigning the most common tag to each known word and
+         |                                          ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+     143 | the tag "proper noun" to all unknowns will approach 90% accuracy because many
+Suggest:
+  - Replace with: “commonest”
 
 
 
