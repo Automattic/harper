@@ -172,6 +172,8 @@ impl Dictionary for FstDictionary {
             });
         }
 
+        // Ignore exact matches
+        merged.retain(|v| v.edit_distance > 0);
         merged.sort_unstable_by(|a, b| {
             a.edit_distance
                 .cmp(&b.edit_distance)

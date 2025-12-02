@@ -359,9 +359,6 @@ fn order_suggestions<'b>(
     misspelled_word: &[char],
     mut matches: Vec<FuzzyMatchResult<'b>>,
 ) -> Vec<&'b [char]> {
-    // Ignore exact matches; callers generally only want alternatives.
-    matches.retain(|v| v.edit_distance > 0);
-
     matches.sort_by_cached_key(|v| score_suggestion(misspelled_word, v));
 
     matches.into_iter().map(|v| v.word).collect()
