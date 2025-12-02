@@ -181,7 +181,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
       57 | reference to the rather hard-boiled painting that hangs in father’s office. I
-         |                                                            ^~~~~~~~ The canonical dictionary spelling is `father's`.
+         |                                                            ^~~~~~~~ The canonical dictionary spelling is title case: `father's`.
 Suggest:
   - Replace with: “father's”
 
@@ -281,16 +281,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-      98 | of very solemn and obvious editorials for the Yale News—and now I was going to
-         |                                                    ^~~~ The canonical dictionary spelling is `news`.
-      99 | bring back all such things into my life and become again that most limited of
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      106 | natural curiosities, two unusual formations of land. Twenty miles from the city
@@ -326,28 +316,6 @@ Suggest:
   - Replace with: “Hotel”
   - Replace with: “Hate”
   - Replace with: “Hazel”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     119 | thousand a season. The one on my right was a colossal affair by any standard—it
-     120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
-         |                                       ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     119 | thousand a season. The one on my right was a colossal affair by any standard—it
-     120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
-         |                                       ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -566,7 +534,7 @@ Lint:    Capitalization (127 priority)
 Message: |
      402 | “I’ll tell you a family secret,” she whispered enthusiastically. “It’s about the
      403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         | ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         | ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -575,7 +543,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
      403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         |                                              ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                                              ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -966,28 +934,6 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                                  ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                                  ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      730 | beauty, but there was an immediately perceptible vitality about her as if the
@@ -997,15 +943,6 @@ Suggest:
   - Replace with: “smoldering”
   - Replace with: “shouldering”
   - Replace with: “soldering”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-     747 | “I’ll meet you by the news-stand on the lower level.”
-         |                       ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
 
 
 
@@ -1024,7 +961,7 @@ Lint:    Capitalization (127 priority)
 Message: |
      764 | “Wilson? He thinks she goes to see her sister in New York. He’s so dumb he
      765 | doesn’t know he’s alive.”
-         |              ^~~~ The canonical dictionary spelling is `he's`.
+         |              ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -1042,16 +979,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-     772 | her rather wide hips as Tom helped her to the platform in New York. At the
-     773 | news-stand she bought a copy of Town Tattle and a moving-picture magazine, and
-         | ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
@@ -1059,7 +986,7 @@ Message: |
 Suggest:
   - Replace with: “Do”
   - Replace with: “DA”
-  - Replace with: “DE”
+  - Replace with: “Di”
 
 
 
@@ -1241,7 +1168,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
      964 | “Well, they say he’s a nephew or a cousin of Kaiser Wilhelm’s. That’s where all
-         |                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                 ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -1286,7 +1213,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     1039 | kept saying to me: ‘Lucille, that man’s ’way below you!’ But if I hadn’t met
-         |                                   ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                   ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -1470,7 +1397,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     1174 | juice of two hundred oranges in half an hour if a little button was pressed two
     1175 | hundred times by a butler’s thumb.
-         |                    ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                    ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -1591,16 +1518,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    1210 | rhythm obligingly for her, and there is a burst of chatter as the erroneous news
-         |                                                                             ^~~~ The canonical dictionary spelling is `news`.
-    1211 | goes around that she is Gilda Gray’s understudy from the Follies. The party has
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
@@ -1611,16 +1528,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1226 | his “little party” that night. He had seen me several times, and had intended to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
-         |                                                          ^~~~~~~ The canonical dictionary spelling is `robin's`.
-    1224 | crossed my lawn early that Saturday morning with a surprisingly formal note from
-Suggest:
-  - Replace with: “robin's”
 
 
 
@@ -1982,7 +1889,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     1569 | “She had a fight with a man who says he’s her husband,” explained a girl at my
-         |                                      ^~~~ The canonical dictionary spelling is `he's`.
+         |                                      ^~~~ The canonical dictionary spelling is title case: `he's`.
     1570 | elbow.
 Suggest:
   - Replace with: “he's”
@@ -2229,7 +2136,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     1797 | passed so close to some workmen that our fender flicked a button on one man’s
-         |                                                                         ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                                                         ^~~~~ The canonical dictionary spelling is title case: `man's`.
     1798 | coat.
 Suggest:
   - Replace with: “man's”
@@ -2718,28 +2625,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
-         |                                         ^~ This word's canonical spelling is all-caps.
-    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
-         |                                         ^~ Did you mean to spell `De` this way?
-    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
-Suggest:
-  - Replace with: “Db”
-  - Replace with: “Dc”
-  - Replace with: “Dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
@@ -3136,28 +3021,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
-    1982 | de Boulogne.
-         | ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
-    1982 | de Boulogne.
-         | ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
@@ -3274,7 +3137,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2056 | “All right, old sport,” called Gatsby. We slowed down. Taking a white card from
     2057 | his wallet, he waved it before the man’s eyes.
-         |                                    ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                    ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -3316,7 +3179,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2078 | driven by a white chauffeur, in which sat three modish negroes, two bucks and a
-         |                                                        ^~~~~~~ The canonical dictionary spelling is `Negroes`.
+         |                                                        ^~~~~~~ The canonical dictionary spelling is title case: `Negroes`.
     2079 | girl. I laughed aloud as the yolks of their eyeballs rolled toward us in haughty
 Suggest:
   - Replace with: “Negroes”
@@ -3377,7 +3240,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
-         |                                        ^~~ The canonical dictionary spelling is `Sid`.
+         |                                        ^~~ The canonical dictionary spelling is title case: `Sid`.
 Suggest:
   - Replace with: “Sid”
 
@@ -3618,7 +3481,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2215 | about women. He would never so much as look at a friend’s wife.”
-         |                                                  ^~~~~~~~ The canonical dictionary spelling is `friend's`.
+         |                                                  ^~~~~~~~ The canonical dictionary spelling is title case: `friend's`.
 Suggest:
   - Replace with: “friend's”
 
@@ -3667,7 +3530,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2243 | “Meyer Wolfshiem? No, he’s a gambler.” Gatsby hesitated, then added coolly:
-         |                       ^~~~ The canonical dictionary spelling is `he's`.
+         |                       ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3904,7 +3767,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
     2396 | an hour and were driving in a victoria through Central Park. The sun had gone
-         |                               ^~~~~~~~ The canonical dictionary spelling is `Victoria`.
+         |                               ^~~~~~~~ The canonical dictionary spelling is title case: `Victoria`.
 Suggest:
   - Replace with: “Victoria”
 
@@ -3936,7 +3799,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
-         |               ^~~~ The canonical dictionary spelling is `he's`.
+         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3946,7 +3809,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
     2426 | he’s regular tough underneath it all.”
-         | ^~~~ The canonical dictionary spelling is `he's`.
+         | ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3970,7 +3833,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     2448 | whole idea. He doesn’t know very much about Tom, though he says he’s read a
-         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
     2449 | Chicago paper for years just on the chance of catching a glimpse of Daisy’s
 Suggest:
   - Replace with: “he's”
@@ -4224,15 +4087,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2776 | ecstatic patron of recurrent light, and repeated the news to Daisy. “What do you
-         |                                                      ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
@@ -4420,7 +4274,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                                                                         ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
     2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
 Suggest:
   - Replace with: “he's”
@@ -4516,16 +4370,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    3019 | become authorities upon his past, had increased all summer until he fell just
-    3020 | short of being news. Contemporary legends such as the “underground pipe-line to
-         |                ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to
@@ -4617,28 +4461,6 @@ Message: |
          |                ^~~~~~~~~~~~~~~ Did you mean the closed compound noun “newspaperwoman”?
 Suggest:
   - Replace with: “newspaperwoman”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
-         |                                               ^~ This word's canonical spelling is all-caps.
-    3075 | sent him to sea in a yacht, were common property of the turgid journalism
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
-         |                                               ^~ Did you mean to spell `de` this way?
-    3075 | sent him to sea in a yacht, were common property of the turgid journalism
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
 
 
 
@@ -4836,7 +4658,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3213 | “My God, I believe the man’s coming,” said Tom. “Doesn’t he know she doesn’t
-         |                        ^~~~~ The canonical dictionary spelling is `man's`.
+         |                        ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -4991,7 +4813,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3396 | hadn’t been invited. They simply force their way in and he’s too polite to
-         |                                                         ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
     3397 | object.”
 Suggest:
   - Replace with: “he's”
@@ -5070,7 +4892,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     3488 | somewhere a long time ago. For a moment a phrase tried to take shape in my mouth
     3489 | and my lips parted like a dumb man’s, as though there was more struggling upon
-         |                                ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -5276,7 +5098,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
-         |      ^~~~ The canonical dictionary spelling is `he's`.
+         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -5348,28 +5170,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-    3647 | up now, and say—How-de-do.”
-         |                     ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-    3647 | up now, and say—How-de-do.”
-         |                     ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3672 | “Come, Pammy.”
@@ -5396,7 +5196,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3686 | “I read somewhere that the sun’s getting hotter every year,” said Tom genially.
-         |                            ^~~~~ The canonical dictionary spelling is `sun's`.
+         |                            ^~~~~ The canonical dictionary spelling is title case: `sun's`.
 Suggest:
   - Replace with: “sun's”
 
@@ -5413,7 +5213,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
     3688 | minute—it’s just the opposite—the sun’s getting colder every year.
-         |                                   ^~~~~ The canonical dictionary spelling is `sun's`.
+         |                                   ^~~~~ The canonical dictionary spelling is title case: `sun's`.
 Suggest:
   - Replace with: “sun's”
 
@@ -5462,7 +5262,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |                                              ^~~~~~ The canonical dictionary spelling is `king's`.
+         |                                              ^~~~~~ The canonical dictionary spelling is title case: `king's`.
 Suggest:
   - Replace with: “king's”
 
@@ -5512,7 +5312,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3864 | “Nevertheless he’s an Oxford man.”
-         |               ^~~~ The canonical dictionary spelling is `he's`.
+         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -6053,15 +5853,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4373 | “No . . . I just remembered that to-day’s my birthday.”
-         |                                     ^~~~~ The canonical dictionary spelling is `day's`.
-Suggest:
-  - Replace with: “day's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
@@ -6265,24 +6056,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |         ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |            ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
@@ -6291,24 +6064,6 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                       ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                          ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
 
 
 
@@ -6323,24 +6078,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                  ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                     ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
@@ -6349,24 +6086,6 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                                ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                                   ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
 
 
 
@@ -6398,15 +6117,6 @@ Suggest:
   - Replace with: “of”
   - Replace with: “oh”
   - Replace with: “oi”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
-         |                                      ^ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “O”
 
 
 
@@ -6454,7 +6164,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |              ^~~ The canonical dictionary spelling is `Ina`.
+         |              ^~~ The canonical dictionary spelling is title case: `Ina`.
 Suggest:
   - Replace with: “Ina”
 
@@ -6718,7 +6428,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     4622 | house. I sat down for a few minutes with my head in my hands, until I heard the
     4623 | phone taken up inside and the butler’s voice calling a taxi. Then I walked
-         |                               ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                               ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -7389,16 +7099,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    5251 | Gatsby’s side, and alone. From the moment I telephoned news of the catastrophe
-         |                                                        ^~~~ The canonical dictionary spelling is `news`.
-    5252 | to West Egg village, every surmise about him, and every practical question, was
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     5253 | referred to me. At first I was surprised and confused; then, as he lay in his
@@ -7522,7 +7222,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5330 | thought this would be Daisy at last. But the connection came through as a man’s
-         |                                                                           ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                                                           ^~~~~ The canonical dictionary spelling is title case: `man's`.
     5331 | voice, very thin and far away.
 Suggest:
   - Replace with: “man's”
@@ -7805,7 +7505,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5487 | “But I know he’s there.”
-         |             ^~~~ The canonical dictionary spelling is `he's`.
+         |             ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -7814,7 +7514,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                ^~~~ The canonical dictionary spelling is title case: `he's`.
     5494 | Chicago.”
 Suggest:
   - Replace with: “he's”
@@ -7824,7 +7524,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
     5494 | Chicago.”
 Suggest:
   - Replace with: “he's”
@@ -7863,7 +7563,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
     5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
-         |                                ^~~ The canonical dictionary spelling is `Sid`.
+         |                                ^~~ The canonical dictionary spelling is title case: `Sid`.
 Suggest:
   - Replace with: “Sid”
 
@@ -7909,7 +7609,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
-         |      ^~~~ The canonical dictionary spelling is `he's`.
+         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -7940,7 +7640,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
-         |                                                                    ^~~~~ The canonical dictionary spelling is `son's`.
+         |                                                                    ^~~~~ The canonical dictionary spelling is title case: `son's`.
     5561 | possessions was continually increasing and now he had something to show me.
 Suggest:
   - Replace with: “son's”
@@ -8005,7 +7705,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5612 | something. Do you notice what he’s got about improving his mind? He was always
-         |                               ^~~~ The canonical dictionary spelling is `he's`.
+         |                               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 

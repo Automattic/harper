@@ -75,15 +75,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-     166 | You can't get all your news from the Internet.
-         |                        ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      180 | I’ve been doing this from pickney.

@@ -42,28 +42,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-      49 | including the fact that he documented the binary number system. In 1820, Thomas
-      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         | ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      49 | including the fact that he documented the binary number system. In 1820, Thomas
-      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         | ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       49 | including the fact that he documented the binary number system. In 1820, Thomas
@@ -1046,28 +1024,6 @@ Suggest:
   - Replace with: “Guttered”
   - Replace with: “Lotteries”
   - Replace with: “Notified”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
-         |                                                                  ^~ This word's canonical spelling is all-caps.
-     445 |   > "high-voltage/low-voltage", etc.).
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
-         |                                                                  ^~ Did you mean to spell `de` this way?
-     445 |   > "high-voltage/low-voltage", etc.).
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
 
 
 

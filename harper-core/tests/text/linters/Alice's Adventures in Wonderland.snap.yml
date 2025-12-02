@@ -1505,7 +1505,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
-         |           ^~~~~~ The canonical dictionary spelling is `head's`.
+         |           ^~~~~~ The canonical dictionary spelling is title case: `head's`.
 Suggest:
   - Replace with: “head's”
 
@@ -1670,7 +1670,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
-         |                                                                  ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                  ^~~~ The canonical dictionary spelling is title case: `he's`.
     1128 | idiotic!” And she opened the door and went in.
 Suggest:
   - Replace with: “he's”
@@ -2919,7 +2919,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
     2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-         |                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
