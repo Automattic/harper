@@ -136,9 +136,7 @@ impl ExprLinter for OrthographicConsistency {
 
 #[cfg(test)]
 mod tests {
-    use crate::CharStringExt;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
-    use crate::spell::{Dictionary, MutableDictionary};
 
     use super::OrthographicConsistency;
 
