@@ -170,11 +170,6 @@ impl SequenceExpr {
         self.then(WordSet::new(words))
     }
 
-    /// Matches any token whose `Kind` exactly matches.
-    pub fn then_strict(self, kind: TokenKind) -> Self {
-        self.then(move |tok: &Token, _source: &[char]| tok.kind == kind)
-    }
-
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
@@ -229,7 +224,7 @@ impl SequenceExpr {
 
     /// Matches any word.
     pub fn then_any_word(self) -> Self {
-        self.then(|tok: &Token, _source: &[char]| tok.kind.is_word())
+        self.then_kind_where(|kind| kind.is_word())
     }
 
     /// Match examples of `word` that have any capitalization.
@@ -265,6 +260,23 @@ impl SequenceExpr {
     // Token kind/predicate matching methods
 
     // One kind
+
+    /// Matches any token whose `Kind` exactly matches.
+    pub fn then_kind(self, kind: TokenKind) -> Self {
+        self.then(move |tok: &Token, _source: &[char]| tok.kind == kind)
+    }
+
+    /// Matches a token where the provided closure returns true for the token's kind.
+    pub fn then_kind_where<F>(mut self, predicate: F) -> Self
+    where
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.exprs
+            .push(Box::new(move |tok: &Token, _source: &[char]| {
+                predicate(&tok.kind)
+            }));
+        self
+    }
 
     /// Match a token of a given kind which is not in the list of words.
     pub fn then_kind_except<F>(self, pred_is: F, ex: &'static [&'static str]) -> Self

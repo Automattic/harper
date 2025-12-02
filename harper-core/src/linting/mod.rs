@@ -195,6 +195,7 @@ mod way_too_adjective;
 mod well_educated;
 mod whereas;
 mod widely_accepted;
+mod will_non_lemma;
 mod win_prize;
 mod wordpress_dotcom;
 mod would_never_have;
@@ -426,7 +427,6 @@ pub mod tests {
         if !found_bad.is_empty() || !unseen_good.is_empty() {
             eprintln!("\n=== Test Summary ===");
 
-            // In the summary section, change these loops:
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
@@ -434,7 +434,6 @@ pub mod tests {
                 }
             }
 
-            // And for the good suggestions:
             if !unseen_good.is_empty() {
                 eprintln!(
                     "\n❌ Missing {} expected good suggestions:",

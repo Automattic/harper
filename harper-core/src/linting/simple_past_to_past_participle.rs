@@ -41,7 +41,9 @@ const IRREGULAR_VERBS: &[(&str, &str)] = &[
     ("led", "led"),
     ("mistook", "mistaken"),
     ("output", "output"),
+    ("overthrew", "overthrown"),
     ("overtook", "overtaken"),
+    ("overwrote", "overwritten"),
     ("paid", "paid"),
     ("partook", "partaken"),
     // proved, proved/proven
@@ -49,6 +51,7 @@ const IRREGULAR_VERBS: &[(&str, &str)] = &[
     ("ran", "run"),
     ("rang", "rung"),
     ("read", "read"),
+    ("redid", "redone"),
     ("reset", "reset"),
     ("rode", "ridden"),
     ("rose", "risen"),
@@ -66,9 +69,11 @@ const IRREGULAR_VERBS: &[(&str, &str)] = &[
     ("stood", "stood"),
     ("swam", "swum"),
     ("swore", "sworn"),
+    ("taught", "taught"),
     ("thought", "thought"),
     ("trod", "trodden"),
     ("took", "taken"),
+    ("undid", "undone"),
     // was, been
     // were, been
     ("went", "gone"),

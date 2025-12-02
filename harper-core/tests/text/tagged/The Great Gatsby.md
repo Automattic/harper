@@ -146,8 +146,8 @@
 # NSg      NSg/P NSg    D/P NSg/J+ . NSg/C/P NSg/P D   NSg/VB/J NSg/VB/J+ D   NSg/VB/J+ VP/J    ISg+ P
 > Washington , and  I       went    out          to the country alone . I       had a    dog       — at    least    I       had him
 # NPr+       . VB/C ISg/#r+ NSg/VPt NSg/VB/J/R/P P  D   NSg/J+  J     . ISg/#r+ VB  D/P+ NSg/VB/J+ . NSg/P NSg/J/Dq ISg/#r+ VB  ISg+
-> for   a    few       days until he       ran     away — and  an  old   Dodge    and  a    Finnish woman   , who    made
-# R/C/P D/P+ NSg/I/Dq+ NPl+ C/P   NPr/ISg+ NSg/VPt VB/J . VB/C D/P NSg/J NPr/VB/J VB/C D/P+ NSg/J+  NSg/VB+ . NPr/I+ VB
+> for   a    few       days until he       ran away — and  an  old   Dodge    and  a    Finnish woman   , who    made
+# R/C/P D/P+ NSg/I/Dq+ NPl+ C/P   NPr/ISg+ VPt VB/J . VB/C D/P NSg/J NPr/VB/J VB/C D/P+ NSg/J+  NSg/VB+ . NPr/I+ VB
 > my  bed        and  cooked breakfast and  muttered Finnish wisdom to herself over    the
 # D$+ NSg/VBP/J+ VB/C VP/J   N🅪Sg/VB+  VB/C VP/J     NSg/J+  Nᴹ+    P  ISg+    NSg/J/P D+
 > electric stove   .
@@ -304,8 +304,8 @@
 # NSg+ NSg/J+ NPl/V3+ I+   ISg/#r+ R        VPt  NSg/P NSg/I/J/C/Dq . D$+   NPr/VB+ VPt NSg/VB/J NPr/I/J/R/Dq VB/J
 > than I       expected , a   cheerful red    - and  - white       Georgian Colonial mansion , overlooking
 # C/P  ISg/#r+ NSg/VP/J . D/P J        N🅪Sg/J . VB/C . NPr🅪Sg/VB/J NSg/J    NSg/J+   NSg+    . Nᴹ/Vg/J
-> the bay       . The lawn    started at    the beach   and  ran     toward the front     door    for   a
-# D   NSg/VB/J+ . D+  NSg/VB+ VP/J    NSg/P D+  NPr/VB+ VB/C NSg/VPt J/P    D+  NSg/VB/J+ NSg/VB+ R/C/P D/P
+> the bay       . The lawn    started at    the beach   and  ran toward the front     door    for   a
+# D   NSg/VB/J+ . D+  NSg/VB+ VP/J    NSg/P D+  NPr/VB+ VB/C VPt J/P    D+  NSg/VB/J+ NSg/VB+ R/C/P D/P
 > quarter  of a    mile , jumping over    sun     - dials  and  brick      walks  and  burning
 # NSg/VB/J P  D/P+ NSg+ . Nᴹ/Vg/J NSg/J/P NPr/VB+ . NPl/V3 VB/C N🅪Sg/VB/J+ NPl/V3 VB/C Nᴹ/Vg/J
 > gardens — finally when    it       reached the house   drifting up         the side      in        bright   vines
@@ -1256,8 +1256,8 @@
 # R       NPr/ISg+ VPt NSg/J NPr🅪Sg/VB J/P NSg+      NPl/V3+ VB/C NPr/J/R/P NSg/VB/J+ P  NSg/J   NPl/V3  .
 > where   new   red    gaspumps sat      out          in        pools  of light      , and  when    I       reached my  estate
 # NSg/R/C NSg/J N🅪Sg/J ?        NSg/VP/J NSg/VB/J/R/P NPr/J/R/P NPl/V3 P  N🅪Sg/VB/J+ . VB/C NSg/I/C ISg/#r+ VP/J    D$+ NSg/VB/J+
-> at    West      Egg      I       ran     the car  under   its     shed    and  sat      for   a   while       on  an  abandoned
-# NSg/P NPr/VB/J+ N🅪Sg/VB+ ISg/#r+ NSg/VPt D   NSg+ NSg/J/P ISg/D$+ NSg/VP+ VB/C NSg/VP/J R/C/P D/P NSg/VB/C/P+ J/P D/P VP/J
+> at    West      Egg      I       ran the car  under   its     shed    and  sat      for   a   while       on  an  abandoned
+# NSg/P NPr/VB/J+ N🅪Sg/VB+ ISg/#r+ VPt D   NSg+ NSg/J/P ISg/D$+ NSg/VP+ VB/C NSg/VP/J R/C/P D/P NSg/VB/C/P+ J/P D/P VP/J
 > grass      roller in        the yard    . The wind     had blown off        , leaving a   loud  , bright   night    ,
 # NPr🅪Sg/VB+ NSg/VB NPr/J/R/P D   NSg/VB+ . D+  N🅪Sg/VB+ VB  VPp/J NSg/VB/J/P . Nᴹ/Vg/J D/P NSg/J . NPr/VB/J N🅪Sg/VB+ .
 > with wings   beating in        the trees   and  a   persistent organ  sound      as    the full     bellows
@@ -3718,8 +3718,8 @@
 # NSg/VB/J  NPr+    NPrPl  P  NPr+    . VB/C D   ?          VB/C D   NPr    ?      .
 > Snell was there three days before he       went    to the penitentiary , so          drunk     out          on
 # NPr   VPt R+    NSg   NPl+ C/P    NPr/ISg+ NSg/VPt P  D   NSg/J+       . NSg/I/J/R/C NSg/VPp/J NSg/VB/J/R/P J/P
-> the gravel   drive   that         Mrs  . Ulysses Swett’s automobile ran     over    his     right    hand    .
-# D   Nᴹ/VB/J+ N🅪Sg/VB NSg/I/C/Ddem NPl+ . NPr+    ?       NSg/VB/J   NSg/VPt NSg/J/P ISg/D$+ NPr/VB/J NSg/VB+ .
+> the gravel   drive   that         Mrs  . Ulysses Swett’s automobile ran over    his     right    hand    .
+# D   Nᴹ/VB/J+ N🅪Sg/VB NSg/I/C/Ddem NPl+ . NPr+    ?       NSg/VB/J   VPt NSg/J/P ISg/D$+ NPr/VB/J NSg/VB+ .
 > The Dancies came      , too , and  S. B. Whitebait , who    was well       over    sixty , and  Maurice
 # D   ?       NSg/VPt/P . R   . VB/C ?  ?  NSg/VB    . NPr/I+ VPt NSg/VB/J/R NSg/J/P NSg   . VB/C NPr
 > A. Flink , and  the Hammerheads , and  Beluga the tobacco importer , and  Beluga’s
@@ -4008,8 +4008,8 @@
 # . NSg$   D   NSg/I/J P    NPr+       . .
 >
 #
-> To my  astonishment , the thing had an   authentic look    . “ Orderi di      Danilo , ” ran     the
-# P  D$+ Nᴹ+          . D+  NSg+  VB  D/P+ J+        NSg/VB+ . . ?      NPr/#r+ ?      . . NSg/VPt D
+> To my  astonishment , the thing had an   authentic look    . “ Orderi di      Danilo , ” ran the
+# P  D$+ Nᴹ+          . D+  NSg+  VB  D/P+ J+        NSg/VB+ . . ?      NPr/#r+ ?      . . VPt D
 > circular legend   , “ Montenegro , Nicolas Rex . ”
 # NSg/VB/J N🅪Sg/VB+ . . NPr+       . NPrPl   NPr . .
 >
@@ -4742,8 +4742,8 @@
 # Nᴹ/Vg/J NSg/P ISg+ P    J+           N🅪Sg/VB/J+ . NPr/ISg+ VPt Nᴹ/Vg/J/P P  NSg/VB NSg/IPl+
 > together — it       made you    laugh  in        a   hushed , fascinated way    . That          was in        August    . A
 # J        . NPr/ISg+ VB   ISgPl+ NSg/VB NPr/J/R/P D/P VP/J   . VP/J       NSg/J+ . NSg/I/C/Ddem+ VPt NPr/J/R/P NPr/VB/J+ . D/P+
-> week   after I       left     Santa Barbara Tom     ran     into a    wagon   on  the Ventura road    one
-# NSg/J+ P     ISg/#r+ NPr/VB/J NPr+  NPr+    NPr/VB+ NSg/VPt P    D/P+ NSg/VB+ J/P D   ?       N🅪Sg/J+ NSg/I/J
+> week   after I       left     Santa Barbara Tom     ran into a    wagon   on  the Ventura road    one
+# NSg/J+ P     ISg/#r+ NPr/VB/J NPr+  NPr+    NPr/VB+ VPt P    D/P+ NSg/VB+ J/P D   ?       N🅪Sg/J+ NSg/I/J
 > night    , and  ripped a   front     wheel   off        his     car  . The girl    who    was with him  got into
 # N🅪Sg/VB+ . VB/C VP/J   D/P NSg/VB/J+ NSg/VB+ NSg/VB/J/P ISg/D$+ NSg+ . D+  NSg/VB+ NPr/I+ VPt P    ISg+ VP  P
 > the papers  , too , because her     arm       was broken — she  was one     of the chambermaids in
@@ -5472,8 +5472,8 @@
 #
 > I       walked out          the back      way    — just as    Gatsby had when    he       had made his     nervous
 # ISg/#r+ VP/J   NSg/VB/J/R/P D+  NSg/VB/J+ NSg/J+ . J    NSg/R NPr    VB  NSg/I/C NPr/ISg+ VB  VB   ISg/D$+ J
-> circuit of the house   half         an  hour before — and  ran     for   a   huge black     knotted tree    ,
-# NSg/VB  P  D   NPr/VB+ N🅪Sg/VB/J/P+ D/P NSg+ C/P    . VB/C NSg/VPt R/C/P D/P J    N🅪Sg/VB/J VP/J    NSg/VB+ .
+> circuit of the house   half         an  hour before — and  ran for   a   huge black     knotted tree    ,
+# NSg/VB  P  D   NPr/VB+ N🅪Sg/VB/J/P+ D/P NSg+ C/P    . VB/C VPt R/C/P D/P J    N🅪Sg/VB/J VP/J    NSg/VB+ .
 > whose massed leaves  made a   fabric   against the rain     . Once  more         it       was pouring ,
 # I+    VP/J   NPl/V3+ VB   D/P N🅪Sg/VB+ C/P     D   N🅪Sg/VB+ . NSg/C NPr/I/J/R/Dq NPr/ISg+ VPt Nᴹ/Vg/J .
 > and  my  irregular lawn    , well       - shaved by      Gatsby’s gardener , abounded in        small    muddy
@@ -8778,8 +8778,8 @@
 # NSg/I/J/R/C IPl+ NSg/VPt J/P J/P    NPr🅪Sg+ NSg/J/P D+  Nᴹ/Vg/J+ Nᴹ/VB/J+ .
 >
 #
-> The young    Greek    , Michaelis , who    ran     the coffee     joint    beside the ashheaps was the
-# D   NPr/VB/J NPr/VB/J . ?         . NPr/I+ NSg/VPt D+  N🅪Sg/VB/J+ NSg/VB/J P      D   ?        VPt D
+> The young    Greek    , Michaelis , who    ran the coffee     joint    beside the ashheaps was the
+# D   NPr/VB/J NPr/VB/J . ?         . NPr/I+ VPt D+  N🅪Sg/VB/J+ NSg/VB/J P      D   ?        VPt D
 > principal witness at    the inquest . He       had slept through the heat   until after
 # NSg/J     NSg/VB  NSg/P D   NSg/VB  . NPr/ISg+ VB  VP    NSg/J/P D+  Nᴹ/VB+ C/P   P
 > five , when    he       strolled over    to the garage  , and  found  George Wilson sick     in        his
@@ -9002,8 +9002,8 @@
 # . R         VP/J   . . VP/J     NPr/VB+ . Nᴹ/Vg/J .
 >
 #
-> “ She  ran     out          ina road    . Son     - of - a   - bitch  didn’t even     stopus car  . ”
-# . ISg+ NSg/VPt NSg/VB/J/R/P NPr N🅪Sg/J+ . NPr/VB+ . P  . D/P . NSg/VB VB     NSg/VB/J ?      NSg+ . .
+> “ She  ran out          ina road    . Son     - of - a   - bitch  didn’t even     stopus car  . ”
+# . ISg+ VPt NSg/VB/J/R/P NPr N🅪Sg/J+ . NPr/VB+ . P  . D/P . NSg/VB VB     NSg/VB/J ?      NSg+ . .
 >
 #
 > “ There was two  cars , ” said Michaelis , “ one     comin ’ , one     goin ’ , see    ? ”
@@ -9016,8 +9016,8 @@
 #
 > “ One     goin ’ each way    . Well       , she  ” — his     hand    rose      toward the blankets but     stopped
 # . NSg/I/J ?    . Dq   NSg/J+ . NSg/VB/J/R . ISg+ . . ISg/D$+ NSg/VB+ NPr/VPt/J J/P    D+  NPl/V3+  NSg/C/P VB/J
-> half         way    and  fell      to his     side      — “ she  ran     out          there an  ’ the one      comin ’ from N’York
-# N🅪Sg/VB/J/P+ NSg/J+ VB/C NSg/VPt/J P  ISg/D$+ NSg/VB/J+ . . ISg+ NSg/VPt NSg/VB/J/R/P R+    D/P . D+  NSg/I/J+ ?     . P    ?
+> half         way    and  fell      to his     side      — “ she  ran out          there an  ’ the one      comin ’ from N’York
+# N🅪Sg/VB/J/P+ NSg/J+ VB/C NSg/VPt/J P  ISg/D$+ NSg/VB/J+ . . ISg+ VPt NSg/VB/J/R/P R+    D/P . D+  NSg/I/J+ ?     . P    ?
 > knock  right    into her     , goin ’ thirty or    forty miles  an  hour . ”
 # NSg/VB NPr/VB/J P    ISg/D$+ . ?    . NSg    NPr/C NSg/J NPrPl+ D/P NSg+ . .
 >
@@ -9238,8 +9238,8 @@
 # K   NSg/VXB VP/J   NSg/C K   NSg/VB/J NPr/J/R/P . K   VB  NSg/I  P  NSg/I/J/C/Dq P  NSg/IPl+ R/C/P NSg/I/J NPr🅪Sg+ . VB/C
 > suddenly that          included Jordan too . She  must   have    seen    something of this    in        my
 # R        NSg/I/C/Ddem+ VP/J     NPr+   R   . ISg+ NSg/VB NSg/VXB NSg/VPp NSg/I/J+  P  I/Ddem+ NPr/J/R/P D$+
-> expression , for   she  turned abruptly away and  ran     up         the porch steps   into the
-# N🅪Sg+      . R/C/P ISg+ VP/J   R        VB/J VB/C NSg/VPt NSg/VB/J/P D+  NSg+  NPl/V3+ P    D+
+> expression , for   she  turned abruptly away and  ran up         the porch steps   into the
+# N🅪Sg+      . R/C/P ISg+ VP/J   R        VB/J VB/C VPt NSg/VB/J/P D+  NSg+  NPl/V3+ P    D+
 > house   . I       sat      down        for   a   few       minutes with my  head      in        my  hands   , until I       heard the
 # NPr/VB+ . ISg/#r+ NSg/VP/J N🅪Sg/VB/J/P R/C/P D/P NSg/I/Dq+ NPl/V3+ P    D$+ NPr/VB/J+ NPr/J/R/P D$+ NPl/V3+ . C/P   ISg/#r+ VP/J  D+
 > phone   taken up         inside  and  the butler’s voice   calling a   taxi    . Then    I       walked
@@ -10248,8 +10248,8 @@
 # . ISg/#r+ NSg/VB . . NPr/ISg+ VP/J R          . . K   NSg/I/J P  I/Ddem Nᴹ/Vg/J  NPl+   VB/C ISg/#r+ VB
 > think  any    harm     to nobody , but     when    I       get    to know   a   thing I       know   it       . It       was the
 # NSg/VB I/R/Dq N🅪Sg/VB+ P  NSg/I+ . NSg/C/P NSg/I/C ISg/#r+ NSg/VB P  NSg/VB D/P NSg+  ISg/#r+ NSg/VB NPr/ISg+ . NPr/ISg+ VPt D
-> man      in        that          car  . She  ran     out          to speak  to him  and  he       wouldn’t stop   . ”
-# NPr/VB/J NPr/J/R/P NSg/I/C/Ddem+ NSg+ . ISg+ NSg/VPt NSg/VB/J/R/P P  NSg/VB P  ISg+ VB/C NPr/ISg+ VXB      NSg/VB . .
+> man      in        that          car  . She  ran out          to speak  to him  and  he       wouldn’t stop   . ”
+# NPr/VB/J NPr/J/R/P NSg/I/C/Ddem+ NSg+ . ISg+ VPt NSg/VB/J/R/P P  NSg/VB P  ISg+ VB/C NPr/ISg+ VXB      NSg/VB . .
 >
 #
 > Michaelis had seen    this   too , but     it       hadn’t occurred to him  that         there was any
@@ -11532,8 +11532,8 @@
 # NPr/VB+ . . NPr/ISg+ NSg/VPt/J NSg/VB/J/P R         . . NSg/I+ NSg/C ISg/#r+ VPt NPr/VB ISg+ . NSg/I/C/Ddem NSg/VB VB  NPr/ISg+
 > coming  to him  . He       threw dust   into your eyes    just like         he       did in        Daisy’s , but     he
 # Nᴹ/Vg/J P  ISg+ . NPr/ISg+ VB    Nᴹ/VB+ P    D$+  NPl/V3+ J    NSg/VB/J/C/P NPr/ISg+ VPt NPr/J/R/P NSg$    . NSg/C/P NPr/ISg+
-> was a   tough    one      . He       ran     over    Myrtle like         you’d run      over    a   dog       and  never even
-# VPt D/P NSg/VB/J NSg/I/J+ . NPr/ISg+ NSg/VPt NSg/J/P NPr    NSg/VB/J/C/P K     NSg/VBPp NSg/J/P D/P NSg/VB/J+ VB/C R     NSg/VB/J
+> was a   tough    one      . He       ran over    Myrtle like         you’d run      over    a   dog       and  never even
+# VPt D/P NSg/VB/J NSg/I/J+ . NPr/ISg+ VPt NSg/J/P NPr    NSg/VB/J/C/P K     NSg/VBPp NSg/J/P D/P NSg/VB/J+ VB/C R     NSg/VB/J
 > stopped his     car  . ”
 # VB/J    ISg/D$+ NSg+ . .
 >
