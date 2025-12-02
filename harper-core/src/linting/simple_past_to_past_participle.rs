@@ -1,81 +1,10 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
-    char_string::CharStringExt,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, IrregularVerbs, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
-
-/// Maps common irregular verbs between their simple past and past participle forms.
-const IRREGULAR_VERBS: &[(&str, &str)] = &[
-    ("arose", "arisen"),
-    ("ate", "eaten"),
-    ("awoke", "awoken"),
-    ("bade", "bidden"),
-    ("became", "become"),
-    ("began", "begun"),
-    ("bit", "bitten"),
-    ("blew", "blown"),
-    ("bought", "bought"),
-    ("brang", "brung"),
-    ("broke", "broken"),
-    ("brought", "brought"),
-    ("came", "come"),
-    ("chose", "chosen"),
-    ("did", "done"),
-    ("drank", "drunk"),
-    ("drove", "driven"),
-    ("fell", "fallen"),
-    ("felt", "felt"),
-    ("flew", "flown"),
-    ("forgot", "forgotten"),
-    ("forwent", "forgone"),
-    ("gave", "given"),
-    ("grew", "grown"),
-    ("had", "had"),
-    ("heard", "heard"),
-    ("hit", "hit"),
-    ("input", "input"),
-    ("knew", "known"),
-    ("led", "led"),
-    ("mistook", "mistaken"),
-    ("output", "output"),
-    ("overtook", "overtaken"),
-    ("paid", "paid"),
-    ("partook", "partaken"),
-    // proved, proved/proven
-    ("put", "put"),
-    ("ran", "run"),
-    ("rang", "rung"),
-    ("read", "read"),
-    ("reset", "reset"),
-    ("rode", "ridden"),
-    ("rose", "risen"),
-    ("sang", "sung"),
-    ("sank", "sunken"),
-    ("saw", "seen"),
-    ("set", "set"),
-    ("sewed", "sewn"),
-    ("slew", "slain"),
-    ("slid", "slid"),
-    ("spoke", "spoken"),
-    ("sprang", "sprung"),
-    ("stank", "stunk"),
-    ("stole", "stolen"),
-    ("stood", "stood"),
-    ("swam", "swum"),
-    ("swore", "sworn"),
-    ("thought", "thought"),
-    ("trod", "trodden"),
-    ("took", "taken"),
-    // was, been
-    // were, been
-    ("went", "gone"),
-    ("woke", "woken"),
-    ("wove", "woven"),
-    ("wrote", "written"),
-];
 
 /// Corrects simple past tense verbs to past participle after auxiliary verbs like "have" or "be".
 pub struct SimplePastToPastParticiple {
@@ -141,41 +70,32 @@ impl ExprLinter for SimplePastToPastParticiple {
 
         let verb_tok = &toks[2];
 
-        let verb_ch = verb_tok.span.get_content(src);
-        if !IRREGULAR_VERBS
-            .iter()
-            .any(|(t, p)| verb_ch.eq_ignore_ascii_case_str(t) && p != t)
+        let simple_past = verb_tok.span.get_content_string(src);
+
+        if let Some(past_participle) = IrregularVerbs::get()
+            .get_past_participle_for_preterite(&simple_past)
+            .filter(|pp| pp != &simple_past)
         {
-            return None;
-        }
+            let suggestions = vec![Suggestion::replace_with_match_case(
+                past_participle.chars().collect(),
+                verb_tok.span.get_content(src),
+            )];
 
-        let (simple_past, past_participle) = IRREGULAR_VERBS
-            .iter()
-            .find(|(simple_past, _)| {
-                verb_tok
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_str(simple_past)
+            let message = format!(
+                "Use the past participle `{}` instead of `{}` when using compound tenses or passive voice.",
+                past_participle, simple_past
+            );
+
+            Some(Lint {
+                span: verb_tok.span,
+                lint_kind: LintKind::Grammar,
+                suggestions,
+                message,
+                ..Default::default()
             })
-            .unwrap();
-
-        let suggestions = vec![Suggestion::replace_with_match_case(
-            past_participle.chars().collect(),
-            verb_tok.span.get_content(src),
-        )];
-
-        let message = format!(
-            "Use the past participle `{}` instead of `{}` when using compound tenses or passive voice.",
-            past_participle, simple_past
-        );
-
-        Some(Lint {
-            span: verb_tok.span,
-            lint_kind: LintKind::Grammar,
-            suggestions,
-            message,
-            ..Default::default()
-        })
+        } else {
+            None
+        }
     }
 
     fn description(&self) -> &str {

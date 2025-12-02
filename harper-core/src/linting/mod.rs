@@ -202,6 +202,7 @@ mod would_never_have;
 
 pub use expr_linter::ExprLinter;
 pub use initialism_linter::InitialismLinter;
+pub use irregular_verbs::IrregularVerbs;
 pub use lint::Lint;
 pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
