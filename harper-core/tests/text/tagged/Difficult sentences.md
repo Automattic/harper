@@ -919,7 +919,7 @@
 > The sailors were    infected with malaria .
 # D+  NPl+    NSg/VPt NSg/VP/J P    Nᴹ+     .
 > overcome with happiness
-# NSg/VB   P    Nᴹ+
+# VB       P    Nᴹ+
 > green       with envy    ; flushed with success
 # NPr🅪Sg/VB/J P    NSg/VB+ . VP/J    P    N🅪Sg+
 > She  was with Acme for   twenty years before retiring last     fall     .

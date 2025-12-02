@@ -18,8 +18,13 @@ pub struct NeedToNoun {
 impl Default for NeedToNoun {
     fn default() -> Self {
         let postfix_exceptions = LongestMatchOf::new(vec![
-            Box::new(|tok: &Token, _: &[char]| tok.kind.is_adverb() || tok.kind.is_determiner()),
-            Box::new(WordSet::new(&["about"])),
+            Box::new(|tok: &Token, _: &[char]| {
+                tok.kind.is_adverb()
+                    || tok.kind.is_determiner()
+                    || tok.kind.is_unlintable()
+                    || tok.kind.is_pronoun()
+            }),
+            Box::new(WordSet::new(&["about", "it"])),
         ]);
 
         let exceptions = SequenceExpr::default()
@@ -420,5 +425,29 @@ mod tests {
     #[test]
     fn allows_issue_2252() {
         assert_no_lints("Things I need to do today:", NeedToNoun::default());
+    }
+
+    #[test]
+    fn allows_install() {
+        assert_no_lints(
+            "You need to install it separately, as it's a standalone application.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_lay() {
+        assert_no_lints(
+            "Okay, this is a long one, but I feel like I need to lay everything out.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_overcome() {
+        assert_no_lints(
+            "We believe every family deserves the opportunity to flourish, and we are committed to providing the resources they need to overcome adversity.",
+            NeedToNoun::default(),
+        );
     }
 }

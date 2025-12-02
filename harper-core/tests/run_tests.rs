@@ -94,6 +94,7 @@ create_test!(issue_2054_clean.md, 0, Dialect::British);
 create_test!(issue_1873.md, 0, Dialect::British);
 create_test!(issue_2246.md, 0, Dialect::American);
 create_test!(issue_2233.md, 0, Dialect::American);
+create_test!(issue_2240.md, 0, Dialect::American);
 // It just matters that it is > 1
 create_test!(issue_2151.md, 4, Dialect::British);
 

@@ -5543,7 +5543,7 @@
 > work    very diligently to write  out          a   history of the accident , all          except the
 # N🅪Sg/VB J/R  R          P  NSg/VB NSg/VB/J/R/P D/P N🅪Sg    P  D   NSg/J+   . NSg/I/J/C/Dq VB/C/P D
 > Lizard , who    seemed too much         overcome to do  anything  but     sit    with its     mouth   open     ,
-# NSg    . NPr/I+ VP/J   R   NSg/I/J/R/Dq NSg/VB   P  VXB NSg/I/VB+ NSg/C/P NSg/VB P    ISg/D$+ NSg/VB+ NSg/VB/J .
+# NSg    . NPr/I+ VP/J   R   NSg/I/J/R/Dq VB       P  VXB NSg/I/VB+ NSg/C/P NSg/VB P    ISg/D$+ NSg/VB+ NSg/VB/J .
 > gazing  up         into the roof   of the court      .
 # Nᴹ/Vg/J NSg/VB/J/P P    D   NSg/VB P  D   N🅪Sg/VB/J+ .
 >
