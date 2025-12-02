@@ -7820,6 +7820,7 @@ PRC/ONg             # mainland China
 PRO/N
 PS/ONgJ             # postscript; multiple meanings as implied by the attributes?
 P.S.                # postscript
+U.S./Og             # United States
 PST/ONg
 PSU/Sg              # power supply unit
 PT/NOJ
@@ -53305,14 +53306,12 @@ WSL/Og              # windows subsystem for linux
 Waymo/Og
 WeChat/Og
 WebAssembly/g       # see WASM
-Webpack/Og
 WebDAV/Og
 WebGL/Og
 WebGPU/Sg
 WebKit/Og
 WebRTC/Og
 WebSocket/Sg
-Webpack/Og
 WhatsApp/NOgVG      # messaging app
 Wikilink/NSg        # !! please check and comment !! elsewhere we have wikilink
 Wikimedia/Og        # foundation that runs Wikipedia etc.
@@ -53456,6 +53455,7 @@ uptime/NwgS
 vid/NgS             # video
 waitlist/NgS
 watchOS/Og
+webpack/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
 XeTeX/Og            # TeX typesetting engine
@@ -54138,3 +54138,4 @@ typological/JQ
 volitive/NSgJ
 worldbuild/Vd>G
 chroot/gNS
+WordCamp/gO

@@ -269,7 +269,7 @@
 > adopted in        the UK   ( as    in        the School  of Informatics , University of Edinburgh ) .
 # VP/J    NPr/J/R/P D+  NPr+ . NSg/R NPr/J/R/P D   N🅪Sg/VB P  Nᴹ          . NSg        P  NPr+      . .
 > " In        the U.S. , however , informatics is  linked with applied computing , or
-# . NPr/J/R/P D+  ?    . C       . Nᴹ          VL3 VP/J   P    VP/J    Nᴹ/Vg/J+  . NPr/C
+# . NPr/J/R/P D+  NPr+ . C       . Nᴹ          VL3 VP/J   P    VP/J    Nᴹ/Vg/J+  . NPr/C
 > computing in        the context of another domain . "
 # Nᴹ/Vg/J+  NPr/J/R/P D   N🅪Sg/VB P  I/D     NSg+   . .
 >
