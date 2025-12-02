@@ -856,7 +856,7 @@ BRICS/Og
 BS/ONgV
 BSA/NO
 BSD/ONSg
-BTU/N               # same as Btu?
+BTU/N
 BTW/
 BYOB/
 Ba/ONg
@@ -1548,7 +1548,6 @@ Bryce/Og
 Brynner/g
 Bryon/Og
 Brzezinski/Og
-Btu/g               # same as BTU?
 Buber/g
 Buchanan/Og
 Bucharest/Og
@@ -4803,7 +4802,6 @@ IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adject
 IUD/N
 IV/JNSg
 IVF/N
-Ia/O
 Iaccoca/g
 Iago/Og
 Ian/Og
@@ -7321,8 +7319,6 @@ Nb/g                # niobium
 Nd/g                # neodymium
 Ndjamena/g
 Ne/g                # neon
-NeWS
-NeWSes
 Neal/Og
 Neanderthal/JNSg
 Neapolitan/JNOg
@@ -7352,7 +7348,6 @@ Nelsen/Og
 Nelson/Og
 Nembutal/g
 Nemesis/Og
-Neo/Og
 Neogene/JOg
 Neolithic/ONJ
 Nepal/Og
@@ -8746,7 +8741,6 @@ Rollerblade/g
 Rollins/Og
 Rolodex/NgV
 Rolvaag/g
-Rom/ONJ
 Roman/JNOSg
 Romanesque/JSg
 Romania/Og
@@ -10471,7 +10465,6 @@ VRAM/Ng             # video memory
 VT/ONJV             # US state (Vermont)
 VTOL/N              # vertical takeoff and landing
 VW/OgS              # car brand; cf. Volkswagen
-Va/Og
 Vacaville/Og
 Vader/g
 Vaduz/Og
@@ -53555,6 +53548,7 @@ data point/NgS
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NwgS
+de
 de facto/JNg
 de jure/RJ
 de minimis/J
