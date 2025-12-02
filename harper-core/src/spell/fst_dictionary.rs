@@ -1,5 +1,6 @@
 use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
+use hashbrown::HashMap;
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
@@ -154,7 +155,7 @@ impl Dictionary for FstDictionary {
         // The uppercase and lowercase searches can return different result counts, so
         // we can't simply zip the vectors without losing matches.
         let mut merged = Vec::with_capacity(upper_dists.len().max(lower_dists.len()));
-        let mut best_distances = std::collections::HashMap::<u64, u8>::new();
+        let mut best_distances = HashMap::<u64, u8>::new();
 
         for (idx, dist) in upper_dists.into_iter().chain(lower_dists.into_iter()) {
             best_distances
