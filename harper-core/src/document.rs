@@ -948,6 +948,10 @@ impl TokenStringExt for Document {
         self.tokens.iter_paragraphs()
     }
 
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
+        self.tokens.iter_headings()
+    }
+
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
         self.tokens.iter_sentences()
     }

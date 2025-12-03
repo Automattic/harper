@@ -107,6 +107,12 @@ pub trait TokenStringExt: private::Sealed {
     /// paragraphs in a document.
     fn iter_paragraphs(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
 
+    /// Get an iterator over token slices that represent headings.
+    ///
+    /// A heading begins with a [`TokenKind::HeadingStart`] token and ends with
+    /// the next [`TokenKind::ParagraphBreak`].
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
@@ -232,6 +238,17 @@ impl TokenStringExt for [Token] {
         first_pg.into_iter().chain(rest).chain(last_pg)
     }
 
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
+        self.iter_heading_start_indices().filter_map(|start| {
+            let end = self[start..]
+                .iter()
+                .position(|t| t.kind.is_paragraph_break())
+                .unwrap_or(self[start..].len() - 1);
+
+            Some(&self[start..=start + end])
+        })
+    }
+
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
         let first_sentence = self
             .iter_sentence_terminator_indices()
@@ -282,5 +299,75 @@ impl TokenStringExt for [Token] {
         }
 
         SentIter { rem: self }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::ptr;
+
+    use super::*;
+    use crate::{
+        Span, Token, TokenKind,
+        parsers::{Markdown, StrParser},
+    };
+
+    #[test]
+    fn iter_headings_returns_heading_slices() {
+        let source = "# Heading 1\n\nParagraph text\n\n## Heading 2\n\nMore text";
+        let tokens = Markdown::default().parse_str(source);
+
+        let headings: Vec<&[Token]> = tokens.iter_headings().collect();
+        assert_eq!(headings.len(), 2);
+
+        assert!(headings.iter().all(|heading| {
+            heading
+                .first()
+                .is_some_and(|token| token.kind.is_heading_start())
+        }));
+        assert!(headings.iter().all(|heading| {
+            heading
+                .last()
+                .is_some_and(|token| token.kind.is_paragraph_break())
+        }));
+
+        let expected_ranges: Vec<(usize, usize)> = tokens
+            .iter()
+            .enumerate()
+            .filter(|(_, tok)| tok.kind.is_heading_start())
+            .filter_map(|(start, _)| {
+                tokens[start..]
+                    .iter()
+                    .position(|t| t.kind.is_paragraph_break())
+                    .map(|offset| (start, start + offset))
+            })
+            .collect();
+
+        let actual_ranges: Vec<(usize, usize)> = headings
+            .iter()
+            .map(|heading| {
+                let start_idx = tokens
+                    .iter()
+                    .position(|token| ptr::eq(token, heading.first().unwrap()))
+                    .unwrap();
+                let end_idx = tokens
+                    .iter()
+                    .position(|token| ptr::eq(token, heading.last().unwrap()))
+                    .unwrap();
+                (start_idx, end_idx)
+            })
+            .collect();
+
+        assert_eq!(actual_ranges, expected_ranges);
+    }
+
+    #[test]
+    fn iter_headings_requires_paragraph_break() {
+        let tokens = vec![
+            Token::new(Span::new(0, 0), TokenKind::HeadingStart),
+            Token::new(Span::new(0, 1), TokenKind::blank_word()),
+        ];
+
+        assert_eq!(tokens.iter_headings().count(), 0);
     }
 }

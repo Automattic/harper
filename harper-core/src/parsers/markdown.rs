@@ -592,6 +592,7 @@ Paragraph.
         let tokens = parser.parse_str("# This is a simple heading");
 
         assert_eq!(tokens.iter_heading_starts().count(), 1);
+        assert_eq!(tokens.iter_headings().count(), 1);
     }
 
     #[test]
@@ -605,5 +606,6 @@ Paragraph.
         );
 
         assert_eq!(tokens.iter_heading_starts().count(), 2);
+        assert_eq!(tokens.iter_headings().count(), 2);
     }
 }
