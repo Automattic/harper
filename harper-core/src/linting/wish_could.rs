@@ -2,7 +2,6 @@ use super::{Lint, LintKind, Suggestion};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{ExprLinter, expr_linter::Chunk};
-use crate::patterns::WordSet;
 
 pub struct WishCould {
     expr: Box<dyn Expr>,
@@ -13,7 +12,7 @@ impl Default for WishCould {
         Self {
             expr: Box::new(
                 SequenceExpr::word_set(&["wish", "wished", "wishes", "wishing"])
-                .t_ws()
+                    .t_ws()
                     .then_any_of(vec![
                         Box::new(SequenceExpr::default().then_subject_pronoun()),
                         Box::new(SequenceExpr::word_set(&[
@@ -34,10 +33,10 @@ impl Default for WishCould {
                             "these",
                             "this",
                             "those",
-                        ]))
+                        ])),
                     ])
-                .t_ws()
-                .t_aco("can"),
+                    .t_ws()
+                    .t_aco("can"),
             ),
         }
     }
@@ -150,7 +149,11 @@ mod tests {
 
     #[test]
     fn wish_it_can() {
-        assert_suggestion_result("Wish it can be supported.", WishCould::default(), "Wish it could be supported.")
+        assert_suggestion_result(
+            "Wish it can be supported.",
+            WishCould::default(),
+            "Wish it could be supported.",
+        )
     }
 
     #[test]
