@@ -90,7 +90,7 @@ use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::looking_forward_to::LookingForwardTo;
-use super::mass_plurals::MassPlurals;
+use super::mass_nouns::MassNouns;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
@@ -110,7 +110,6 @@ use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
-use super::noun_countability::NounCountability;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
@@ -467,7 +466,6 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
-        // out.merge_from(&mut update_place_names::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -568,7 +566,6 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
-        insert_expr_rule!(NounCountability, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_expr_rule!(OfCourse, true);
@@ -667,8 +664,8 @@ impl LintGroup {
         out.add("HaveTakeALook", HaveTakeALook::new(dialect));
         out.config.set_rule_enabled("HaveTakeALook", true);
 
-        out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
-        out.config.set_rule_enabled("MassPlurals", true);
+        out.add("MassNouns", MassNouns::new(dictionary.clone()));
+        out.config.set_rule_enabled("MassNouns", true);
 
         out
     }
