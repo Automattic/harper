@@ -13,7 +13,7 @@ renderer.link = ({ href, title, text }) => {
 		href = `${href.slice(0, href.length - 3)}.html`;
 	}
 	const titleAttr = title ? ` title="${title}"` : '';
-	return `<a href="${href}" ${titleAttr}>${text}</a>`;
+	return `<a href="${href}" ${titleAttr}>${text.replaceAll('\\_', '_')}</a>`;
 };
 
 const markdown = fs.readFileSync(input, 'utf8');
@@ -30,7 +30,7 @@ const html = `<!doctype html>
   href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
 >
 </head>
-<body>
+<body class="container">
 ${body}
 </body>
 </html>

@@ -2,6 +2,7 @@ use harper_brill::UPOS;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::{All, Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{UPOSSet, WordSet};
 use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
@@ -53,6 +54,8 @@ impl<D> ExprLinter for PossessiveNoun<D>
 where
     D: Dictionary,
 {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

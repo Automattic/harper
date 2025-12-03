@@ -109,6 +109,10 @@ fn starts_with_vowel(word: &[char]) -> bool {
     let word = to_lower_word(word);
     let word = word.as_ref();
 
+    if matches!(word, ['e', 'u', 'l', 'e', ..]) {
+        return true;
+    }
+
     if matches!(
         word,
         [] | ['u', 'k', ..]
@@ -222,6 +226,12 @@ mod tests {
     #[test]
     fn detects_llm_hyphen_as_vowel() {
         assert_lint_count("Here is a LLM-based system.", AnA, 1);
+    }
+
+    #[test]
+    fn detects_euler_as_vowel() {
+        assert_lint_count("This is an Euler brick.", AnA, 0);
+        assert_lint_count("The graph has an Eulerian tour.", AnA, 0);
     }
 
     #[test]

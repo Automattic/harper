@@ -4,6 +4,7 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
+use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
@@ -63,6 +64,7 @@ impl Language {
     }
 }
 
+/// Specifies an English Dialect, often used for linting.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {
@@ -131,7 +133,7 @@ impl Linter {
         let mut lint_dict = MergedDictionary::new();
 
         lint_dict.add_dictionary(FstDictionary::curated());
-        lint_dict.add_dictionary(Arc::new(user_dictionary.clone()));
+        lint_dict.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(lint_dict)
     }
@@ -350,7 +352,10 @@ impl Linter {
             .extend_words(additional_words.iter().map(|word| {
                 (
                     word.chars().collect::<CharString>(),
-                    DictWordMetadata::default(),
+                    DictWordMetadata {
+                        dialects: DialectFlags::from_dialect(self.dialect.into()),
+                        ..Default::default()
+                    },
                 )
             }));
 
@@ -620,4 +625,23 @@ pub struct OrganizedGroup {
     pub group: String,
     #[wasm_bindgen(getter_with_clone)]
     pub lints: Vec<Lint>,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// If a word from another dialect is added to the user dictionary, it should be considered
+    /// part of the user's dialect as well.
+    #[test]
+    fn issue_2216() {
+        let text = "Aeon".to_owned();
+        let mut linter = Linter::new(Dialect::American);
+
+        linter.import_words(vec![text.clone()]);
+        dbg!(linter.dictionary.get_word_metadata_str(&text));
+
+        let lints = linter.lint(text, Language::Plain);
+        assert!(lints.is_empty());
+    }
 }

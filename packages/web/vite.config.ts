@@ -34,8 +34,8 @@ export default defineConfig(async () => {
 					github: 'https://github.com/automattic/harper',
 					discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 					themeColor: {
-						primary: '#818eae',
-						dark: '#355280',
+						primary: '#f1920e',
+						dark: '#301d03',
 						gradient: {
 							start: '#355280',
 							end: '#818eae',
@@ -43,10 +43,6 @@ export default defineConfig(async () => {
 					},
 					navbar: [
 						{ title: 'Documentation', to: '/docs/about' },
-						{
-							title: 'Visual Studio Code',
-							to: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
-						},
 						{ title: 'Obsidian', to: '/docs/integrations/obsidian' },
 						{
 							title: 'Chrome Extension',

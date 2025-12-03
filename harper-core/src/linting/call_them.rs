@@ -5,6 +5,7 @@ use crate::patterns::{DerivedFrom, WordSet};
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct CallThem {
     expr: Box<dyn Expr>,
@@ -53,6 +54,8 @@ impl Default for CallThem {
 }
 
 impl ExprLinter for CallThem {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

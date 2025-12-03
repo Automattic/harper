@@ -1,5 +1,6 @@
 use hashbrown::HashSet;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
@@ -18,9 +19,10 @@ where
 {
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
-        let looks_plural = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
-            let lchars = tok.span.get_content(_src).to_lower();
-            lchars.last().is_some_and(|c| *c == 's')
+        let looks_plural = SequenceExpr::default().then(|tok: &Token, src: &[char]| {
+            tok.span
+                .get_content(src)
+                .ends_with_ignore_ascii_case_chars(&['s'])
         });
         let oov_looks_plural = All::new(vec![Box::new(oov), Box::new(looks_plural)]);
 
@@ -56,6 +58,8 @@ impl<D> ExprLinter for MassPlurals<D>
 where
     D: Dictionary,
 {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

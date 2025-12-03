@@ -243,4 +243,28 @@ mod tests {
             "United States"
         )
     }
+
+    #[test]
+    fn keeps_decimal() {
+        assert_eq!(
+            make_title_case_str(
+                "harper turns 1.0 today",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Harper Turns 1.0 Today"
+        )
+    }
+
+    #[test]
+    fn fixes_odd_capitalized_proper_nouns() {
+        assert_eq!(
+            make_title_case_str(
+                "i spoke at wordcamp u.s. in 2025",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "I Spoke at WordCamp U.S. in 2025",
+        );
+    }
 }

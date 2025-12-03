@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use harper_brill::UPOS;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -56,7 +57,7 @@ impl Default for AffectToEffect {
             .then(|tok: &Token, source: &[char]| matches_preceding_context(tok, source))
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_affect_word(tok, source))
-            .then(|tok: &Token, _source: &[char]| matches!(tok.kind, TokenKind::Punctuation(_)));
+            .then_kind_where(|kind| kind.is_punctuation());
 
         map.insert(punctuation_follow, 2);
 
@@ -77,6 +78,8 @@ impl Default for AffectToEffect {
 }
 
 impl ExprLinter for AffectToEffect {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -216,7 +219,7 @@ fn behaves_like_verb(token: &Token, source: &[char], prev: &[char]) -> bool {
 }
 
 fn is_preceding_context(token: &Token) -> bool {
-    if token.kind.is_adverb() {
+    if token.kind.is_upos(UPOS::ADV) {
         return false;
     }
 

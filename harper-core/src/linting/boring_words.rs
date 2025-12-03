@@ -2,6 +2,7 @@ use crate::expr::{Expr, WordExprGroup};
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct BoringWords {
     expr: Box<dyn Expr>,
@@ -24,6 +25,8 @@ impl Default for BoringWords {
 }
 
 impl ExprLinter for BoringWords {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -70,7 +70,6 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
@@ -368,7 +367,7 @@ async function setActivationKey(key: ActivationKey) {
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({
-		binary: new BinaryModule(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 

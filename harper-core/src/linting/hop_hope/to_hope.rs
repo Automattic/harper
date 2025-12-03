@@ -2,6 +2,7 @@ use super::super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::WordSet;
 use crate::{Token, char_string::char_string};
 
@@ -25,6 +26,8 @@ impl Default for ToHope {
 }
 
 impl ExprLinter for ToHope {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

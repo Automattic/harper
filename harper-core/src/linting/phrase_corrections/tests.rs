@@ -250,12 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndIn
-// -none-
-
-// AndTheLike
-// -none-
-
 // AnotherAn
 #[test]
 fn correct_another_an() {
@@ -776,9 +770,6 @@ fn expand_cuz() {
 // ExpandWithout
 // -none-
 
-// Expatriate
-// -none-
-
 // FaceFirst
 // -none-
 
@@ -917,6 +908,17 @@ fn corrects_i_does() {
         "I does enjoy writing Rust.",
         lint_group(),
         "I do enjoy writing Rust.",
+    );
+}
+
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
     );
 }
 
@@ -1483,63 +1485,30 @@ fn corrects_piece_of_mind() {
 
 // PerSe
 #[test]
-fn corrects_per_say_basic() {
+fn corrects_per_se_hyphenated() {
     assert_suggestion_result(
-        "I'm not a fan per say.",
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
         lint_group(),
-        "I'm not a fan per se.",
-    );
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
+    )
 }
 
 #[test]
-fn corrects_per_say_sentence_start() {
+fn corrects_per_say() {
     assert_suggestion_result(
-        "Per say, the policy is clear.",
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
         lint_group(),
-        "Per se, the policy is clear.",
-    );
-}
-
-#[test]
-fn corrects_per_say_all_caps() {
-    assert_suggestion_result(
-        "This wasn't PER SAY terrible.",
-        lint_group(),
-        "This wasn't PER SE terrible.",
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
     );
 }
 
 #[test]
 fn corrects_per_say_hyphenated() {
     assert_suggestion_result(
-        "Their claim was per-say wrong.",
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
         lint_group(),
-        "Their claim was per se wrong.",
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
     );
-}
-
-#[test]
-fn corrects_multiple_per_say_occurrences() {
-    assert_suggestion_result(
-        "per say once and per say twice",
-        lint_group(),
-        "per se once and per se twice",
-    );
-}
-
-#[test]
-fn allows_per_se() {
-    assert_lint_count("It isn't per se wrong.", lint_group(), 0);
-}
-
-#[test]
-fn ignores_per_comma_say() {
-    assert_lint_count("Charge per, say, shipment.", lint_group(), 0);
-}
-
-#[test]
-fn ignores_single_word_persay() {
-    assert_lint_count("That isn't persay accurate.", lint_group(), 0);
 }
 
 // PointsOfView
@@ -2053,5 +2022,14 @@ fn fixes_teh() {
         "I adore teh light of the moon.",
         lint_group(),
         "I adore the light of the moon.",
+    );
+}
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
     );
 }

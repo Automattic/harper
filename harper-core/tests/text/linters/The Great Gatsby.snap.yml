@@ -3,9 +3,9 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Ft”
-  - Replace with: “F”
   - Replace with: “Fa”
+  - Replace with: “Fe”
+  - Replace with: “F”
 
 
 
@@ -14,16 +14,18 @@ Message: |
        3 | BY F. SCOTT FITZGERALD
          |       ^~~~~ Did you mean to spell `SCOTT` this way?
 Suggest:
+  - Replace with: “Scout”
   - Replace with: “Scott”
-  - Replace with: “Scot”
-  - Replace with: “Scots”
+  - Replace with: “Scoot”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
        3 | BY F. SCOTT FITZGERALD
-         |             ^~~~~~~~~~ Did you mean to spell `FITZGERALD` this way?
+         |             ^~~~~~~~~~ Did you mean `Fitzgerald`?
+Suggest:
+  - Replace with: “Fitzgerald”
 
 
 
@@ -156,9 +158,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
       50 | three generations. The Carraways are something of a clan, and we have a
-         |                        ^~~~~~~~~ Did you mean `Caraways`?
+         |                        ^~~~~~~~~ Did you mean to spell `Carraways` this way?
 Suggest:
   - Replace with: “Caraways”
+  - Replace with: “Caraway's”
+  - Replace with: “Castaways”
 
 
 
@@ -169,15 +173,15 @@ Message: |
       52 | founder of my line was my grandfather’s brother, who came here in fifty-one,
 Suggest:
   - Replace with: “Buckley's”
-  - Replace with: “Buckley”
-  - Replace with: “Nucleic”
+  - Replace with: “Bleach”
+  - Replace with: “Buckle”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
       57 | reference to the rather hard-boiled painting that hangs in father’s office. I
-         |                                                            ^~~~~~~~ The canonical dictionary spelling is `father's`.
+         |                                                            ^~~~~~~~ The canonical dictionary spelling is title case: `father's`.
 Suggest:
   - Replace with: “father's”
 
@@ -190,8 +194,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
-  - Replace with: “central”
   - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -258,11 +262,9 @@ Lint:    Spelling (63 priority)
 Message: |
       95 | like new money from the mint, promising to unfold the shining secrets that only
       96 | Midas and Morgan and Mæcenas knew. And I had the high intention of reading many
-         |                      ^~~~~~~ Did you mean to spell `Mæcenas` this way?
+         |                      ^~~~~~~ Did you mean `Mycenae`?
 Suggest:
   - Replace with: “Mycenae”
-  - Replace with: “Macon's”
-  - Replace with: “Mycenae's”
 
 
 
@@ -276,16 +278,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      100 | all specialists, the “well-rounded man.” This isn’t just an epigram—life is much
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-      98 | of very solemn and obvious editorials for the Yale News—and now I was going to
-         |                                                    ^~~~ The canonical dictionary spelling is `news`.
-      99 | bring back all such things into my life and become again that most limited of
-Suggest:
-  - Replace with: “news”
 
 
 
@@ -322,30 +314,8 @@ Message: |
          |                                 ^~~~~ Did you mean to spell `Hôtel` this way?
 Suggest:
   - Replace with: “Hotel”
-  - Replace with: “Havel”
-  - Replace with: “Hegel”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     119 | thousand a season. The one on my right was a colossal affair by any standard—it
-     120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
-         |                                       ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     119 | thousand a season. The one on my right was a colossal affair by any standard—it
-     120 | was a factual imitation of some Hôtel de Ville in Normandy, with a tower on one
-         |                                       ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
+  - Replace with: “Hate”
+  - Replace with: “Hazel”
 
 
 
@@ -357,7 +327,7 @@ Message: |
 Suggest:
   - Replace with: “Vile”
   - Replace with: “Villa”
-  - Replace with: “Lille”
+  - Replace with: “Villi”
 
 
 
@@ -475,9 +445,9 @@ Message: |
      189 | “It belonged to Demaine, the oil man.” He turned me around again, politely and
          |                 ^~~~~~~ Did you mean to spell `Demaine` this way?
 Suggest:
-  - Replace with: “Deanne”
-  - Replace with: “Deming”
-  - Replace with: “Dewayne”
+  - Replace with: “Decline”
+  - Replace with: “Define”
+  - Replace with: “Demand”
 
 
 
@@ -564,7 +534,7 @@ Lint:    Capitalization (127 priority)
 Message: |
      402 | “I’ll tell you a family secret,” she whispered enthusiastically. “It’s about the
      403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         | ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         | ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -573,7 +543,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
      403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         |                                              ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                                              ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -693,7 +663,6 @@ Message: |
 Suggest:
   - Replace with: “Westminster”
   - Replace with: “Winchester”
-  - Replace with: “Winchesters”
 
 
 
@@ -703,7 +672,8 @@ Message: |
          |                          ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -818,8 +788,8 @@ Message: |
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “To”
 
 
 
@@ -828,9 +798,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -840,8 +810,8 @@ Message: |
          |                                                            ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
+  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
-  - Replace with: “Iceberg”
 
 
 
@@ -852,8 +822,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “To”
 
 
 
@@ -862,9 +832,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -874,8 +844,8 @@ Message: |
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
+  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
-  - Replace with: “Iceberg”
 
 
 
@@ -909,7 +879,7 @@ Message: |
 Suggest:
   - Replace with: “Excalibur's”
   - Replace with: “Vicksburg's”
-  - Replace with: “Iceberg's”
+  - Replace with: “Heckler's”
 
 
 
@@ -928,9 +898,9 @@ Message: |
      699 | garage—Repairs. George B. Wilson. Cars bought and sold.—and I followed Tom
          |                        ^~ Did you mean to spell `B.` this way?
 Suggest:
-  - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
+  - Replace with: “Bu”
 
 
 
@@ -964,28 +934,6 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                                  ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     728 | stout, but she carried her flesh sensuously as some women can. Her face, above a
-     729 | spotted dress of dark blue crêpe-de-chine, contained no facet or gleam of
-         |                                  ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      730 | beauty, but there was an immediately perceptible vitality about her as if the
@@ -998,23 +946,14 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-     747 | “I’ll meet you by the news-stand on the lower level.”
-         |                       ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      756 | “Terrible place, isn’t it,” said Tom, exchanging a frown with Doctor Eckleburg.
          |                                                                      ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
+  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
-  - Replace with: “Iceberg”
 
 
 
@@ -1022,7 +961,7 @@ Lint:    Capitalization (127 priority)
 Message: |
      764 | “Wilson? He thinks she goes to see her sister in New York. He’s so dumb he
      765 | doesn’t know he’s alive.”
-         |              ^~~~ The canonical dictionary spelling is `he's`.
+         |              ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -1034,19 +973,9 @@ Message: |
      769 | to the sensibilities of those East Eggers who might be on the train.
          |                                    ^~~~~~ Did you mean to spell `Eggers` this way?
 Suggest:
-  - Replace with: “Eggo's”
-  - Replace with: “Engels”
   - Replace with: “Edgers”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-     772 | her rather wide hips as Tom helped her to the platform in New York. At the
-     773 | news-stand she bought a copy of Town Tattle and a moving-picture magazine, and
-         | ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
+  - Replace with: “Eggo's”
+  - Replace with: “Edge's”
 
 
 
@@ -1055,9 +984,9 @@ Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
          |                                                                       ^~ Did you mean to spell `D.` this way?
 Suggest:
-  - Replace with: “Dc”
+  - Replace with: “Do”
   - Replace with: “DA”
-  - Replace with: “DE”
+  - Replace with: “Di”
 
 
 
@@ -1171,9 +1100,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      905 | “Mrs. Eberhardt. She goes around looking at people’s feet in their own homes.”
-         |       ^~~~~~~~~ Did you mean `Bernhardt`?
+         |       ^~~~~~~~~ Did you mean to spell `Eberhardt` this way?
 Suggest:
-  - Replace with: “Bernhardt”
+  - Replace with: “Earhart”
+  - Replace with: “Earnhardt”
+  - Replace with: “Erhard”
 
 
 
@@ -1213,10 +1144,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      950 | “Two studies. One of them I call ‘Montauk Point—The Gulls,’ and the other I call
-         |                                   ^~~~~~~ Did you mean `Montague`?
+         |                                   ^~~~~~~ Did you mean to spell `Montauk` this way?
      951 | ‘Montauk Point—The Sea.’”
 Suggest:
+  - Replace with: “Montage”
   - Replace with: “Montague”
+  - Replace with: “Montana”
 
 
 
@@ -1224,16 +1157,18 @@ Lint:    Spelling (63 priority)
 Message: |
      950 | “Two studies. One of them I call ‘Montauk Point—The Gulls,’ and the other I call
      951 | ‘Montauk Point—The Sea.’”
-         |  ^~~~~~~ Did you mean `Montague`?
+         |  ^~~~~~~ Did you mean to spell `Montauk` this way?
 Suggest:
+  - Replace with: “Montage”
   - Replace with: “Montague”
+  - Replace with: “Montana”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
      964 | “Well, they say he’s a nephew or a cousin of Kaiser Wilhelm’s. That’s where all
-         |                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                 ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -1245,9 +1180,9 @@ Message: |
      990 | B. Wilson at the Gasoline Pump,’ or something like that.”
          | ^~ Did you mean to spell `B.` this way?
 Suggest:
-  - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
+  - Replace with: “Bu”
 
 
 
@@ -1270,15 +1205,15 @@ Message: |
          |        ^~~~ Did you mean to spell `kyke` this way?
 Suggest:
   - Replace with: “kike”
-  - Replace with: “tyke”
   - Replace with: “dyke”
+  - Replace with: “tyke”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     1039 | kept saying to me: ‘Lucille, that man’s ’way below you!’ But if I hadn’t met
-         |                                   ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                   ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -1342,9 +1277,9 @@ Message: |
     1122 | Daisy! Dai———”
          |        ^~~ Did you mean to spell `Dai` this way?
 Suggest:
-  - Replace with: “Day”
   - Replace with: “Dab”
   - Replace with: “Dad”
+  - Replace with: “Dag”
 
 
 
@@ -1462,7 +1397,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     1174 | juice of two hundred oranges in half an hour if a little button was pressed two
     1175 | hundred times by a butler’s thumb.
-         |                    ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                    ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -1525,8 +1460,8 @@ Message: |
          | ^~~~~~~ Did you mean to spell `Castile` this way?
 Suggest:
   - Replace with: “Castle”
-  - Replace with: “Cassie”
-  - Replace with: “Castillo”
+  - Replace with: “Captive”
+  - Replace with: “Caste”
 
 
 
@@ -1578,18 +1513,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
-  - Replace with: “central”
   - Replace with: “censure”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    1210 | rhythm obligingly for her, and there is a burst of chatter as the erroneous news
-         |                                                                             ^~~~ The canonical dictionary spelling is `news`.
-    1211 | goes around that she is Gilda Gray’s understudy from the Follies. The party has
-Suggest:
-  - Replace with: “news”
+  - Replace with: “cent”
 
 
 
@@ -1603,16 +1528,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1226 | his “little party” that night. He had seen me several times, and had intended to
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1223 | I had been actually invited. A chauffeur in a uniform of robin’s-egg blue
-         |                                                          ^~~~~~~ The canonical dictionary spelling is `robin's`.
-    1224 | crossed my lawn early that Saturday morning with a surprisingly formal note from
-Suggest:
-  - Replace with: “robin's”
 
 
 
@@ -1669,9 +1584,9 @@ Message: |
          |                                                   ^~~~~~~~~~ Did you mean to spell `Croirier’s` this way?
     1288 | gown in it.”
 Suggest:
-  - Replace with: “Currier's”
   - Replace with: “Courier's”
   - Replace with: “Crosier's”
+  - Replace with: “Croupier's”
 
 
 
@@ -1734,6 +1649,7 @@ Message: |
     1374 | Volume One of the “Stoddard Lectures.”
          |                    ^~~~~~~~ Did you mean to spell `Stoddard` this way?
 Suggest:
+  - Replace with: “Standard”
   - Replace with: “Stoppard”
   - Replace with: “Goddard”
 
@@ -1779,7 +1695,7 @@ Message: |
 Suggest:
   - Replace with: “Bela's”
   - Replace with: “Belau's”
-  - Replace with: “Basho”
+  - Replace with: “Balance”
 
 
 
@@ -1789,8 +1705,8 @@ Message: |
          |                                                                 ^~~~~ Did you mean to spell `Claud` this way?
 Suggest:
   - Replace with: “Clad”
+  - Replace with: “Cloud”
   - Replace with: “Claude”
-  - Replace with: “Claus”
 
 
 
@@ -1973,7 +1889,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     1569 | “She had a fight with a man who says he’s her husband,” explained a girl at my
-         |                                      ^~~~ The canonical dictionary spelling is `he's`.
+         |                                      ^~~~ The canonical dictionary spelling is title case: `he's`.
     1570 | elbow.
 Suggest:
   - Replace with: “he's”
@@ -2018,9 +1934,9 @@ Message: |
     1615 | Sigourney Howard. . . . My aunt. . . .” She was hurrying off as she talked—her
          | ^~~~~~~~~ Did you mean to spell `Sigourney` this way?
 Suggest:
+  - Replace with: “Sojourned”
+  - Replace with: “Sojourner”
   - Replace with: “Gurney”
-  - Replace with: “Journey”
-  - Replace with: “Tourney”
 
 
 
@@ -2075,9 +1991,9 @@ Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |  ^~~~~ Did you mean to spell `Wha’s` this way?
 Suggest:
-  - Replace with: “W12's”
-  - Replace with: “WAL's”
-  - Replace with: “WIP's”
+  - Replace with: “Wham's”
+  - Replace with: “What's”
+  - Replace with: “Who's”
 
 
 
@@ -2086,9 +2002,9 @@ Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
          |                                                 ^~~~ Did you mean to spell `outa` this way?
 Suggest:
-  - Replace with: “outta”
   - Replace with: “out”
-  - Replace with: “outs”
+  - Replace with: “outta”
+  - Replace with: “oath”
 
 
 
@@ -2113,10 +2029,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1710 | “Wonder’ff tell me where there’s a gas’line station?”
-         |  ^~~~~~~~~ Did you mean to spell `Wonder’ff` this way?
+         |  ^~~~~~~~~ Did you mean `Wonder's`?
 Suggest:
   - Replace with: “Wonder's”
-  - Replace with: “Wonderbra”
 
 
 
@@ -2221,7 +2136,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     1797 | passed so close to some workmen that our fender flicked a button on one man’s
-         |                                                                         ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                                                         ^~~~~ The canonical dictionary spelling is title case: `man's`.
     1798 | coat.
 Suggest:
   - Replace with: “man's”
@@ -2255,7 +2170,7 @@ Message: |
 Suggest:
   - Replace with: “Van”
   - Replace with: “Vol”
-  - Replace with: “Yon”
+  - Replace with: “Vow”
 
 
 
@@ -2267,7 +2182,7 @@ Message: |
 Suggest:
   - Replace with: “Becker's”
   - Replace with: “Backers”
-  - Replace with: “Bickers”
+  - Replace with: “Beakers”
 
 
 
@@ -2289,7 +2204,7 @@ Message: |
 Suggest:
   - Replace with: “Voltaire's”
   - Replace with: “Voltaire”
-  - Replace with: “Solitaires”
+  - Replace with: “Voltages”
 
 
 
@@ -2297,8 +2212,9 @@ Lint:    Spelling (63 priority)
 Message: |
     1850 | summer up in Maine. And the Hornbeams and the Willie Voltaires, and a whole clan
     1851 | named Blackbuck, who always gathered in a corner and flipped up their noses like
-         |       ^~~~~~~~~ Did you mean `Blackburn`?
+         |       ^~~~~~~~~ Did you mean to spell `Blackbuck` this way?
 Suggest:
+  - Replace with: “Blackjack”
   - Replace with: “Blackburn”
 
 
@@ -2310,8 +2226,8 @@ Message: |
     1853 | Auerbach and Mr. Chrystie’s wife), and Edgar Beaver, whose hair, they say,
 Suggest:
   - Replace with: “Irma's”
+  - Replace with: “Ism's”
   - Replace with: “Dismays”
-  - Replace with: “Islams”
 
 
 
@@ -2333,17 +2249,20 @@ Message: |
     1853 | Auerbach and Mr. Chrystie’s wife), and Edgar Beaver, whose hair, they say,
          | ^~~~~~~~ Did you mean to spell `Auerbach` this way?
 Suggest:
-  - Replace with: “Outreach”
-  - Replace with: “Bernbach”
+  - Replace with: “Approach”
+  - Replace with: “Acerbate”
+  - Replace with: “Acerbic”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1853 | Auerbach and Mr. Chrystie’s wife), and Edgar Beaver, whose hair, they say,
-         |                  ^~~~~~~~~~ Did you mean `Christi's`?
+         |                  ^~~~~~~~~~ Did you mean to spell `Chrystie’s` this way?
 Suggest:
+  - Replace with: “Christie's”
   - Replace with: “Christi's”
+  - Replace with: “Christine's”
 
 
 
@@ -2352,9 +2271,9 @@ Message: |
     1857 | knickerbockers, and had a fight with a bum named Etty in the garden. From
          |                                                  ^~~~ Did you mean to spell `Etty` this way?
 Suggest:
+  - Replace with: “Ethyl”
   - Replace with: “Etta”
-  - Replace with: “Betty”
-  - Replace with: “Getty”
+  - Replace with: “Jetty”
 
 
 
@@ -2365,8 +2284,8 @@ Message: |
          |                                    ^~~~~~~~ Did you mean to spell `Cheadles` this way?
 Suggest:
   - Replace with: “Charles”
+  - Replace with: “Cradles”
   - Replace with: “Headless”
-  - Replace with: “Beadles”
 
 
 
@@ -2375,9 +2294,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                     ^~ Did you mean to spell `O.` this way?
 Suggest:
-  - Replace with: “Os”
-  - Replace with: “O”
-  - Replace with: “OD”
+  - Replace with: “Of”
+  - Replace with: “Oh”
+  - Replace with: “Oi”
 
 
 
@@ -2386,9 +2305,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                        ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Rd”
-  - Replace with: “R”
-  - Replace with: “RC”
+  - Replace with: “RI”
+  - Replace with: “Ra”
+  - Replace with: “Ru”
 
 
 
@@ -2397,9 +2316,9 @@ Message: |
     1858 | farther out on the Island came the Cheadles and the O. R. P. Schraeders, and the
          |                                                           ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
-  - Replace with: “Pd”
+  - Replace with: “Pa”
+  - Replace with: “Pi”
+  - Replace with: “PE”
 
 
 
@@ -2411,17 +2330,15 @@ Message: |
 Suggest:
   - Replace with: “Schroeder's”
   - Replace with: “Schroeder”
-  - Replace with: “Threaders”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1859 | Stonewall Jackson Abrams of Georgia, and the Fishguards and the Ripley Snells.
-         |                                              ^~~~~~~~~~ Did you mean to spell `Fishguards` this way?
+         |                                              ^~~~~~~~~~ Did you mean `Fireguards`?
 Suggest:
   - Replace with: “Fireguards”
-  - Replace with: “Wireguards”
 
 
 
@@ -2431,8 +2348,8 @@ Message: |
          |                                                                        ^~~~~~ Did you mean to spell `Snells` this way?
 Suggest:
   - Replace with: “Snell's”
-  - Replace with: “Snell”
-  - Replace with: “Knells”
+  - Replace with: “Sells”
+  - Replace with: “Shells”
 
 
 
@@ -2441,8 +2358,8 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
-  - Replace with: “Scott's”
-  - Replace with: “Sept's”
+  - Replace with: “Sweat's”
+  - Replace with: “Sweet's”
   - Replace with: “Seth's”
 
 
@@ -2452,9 +2369,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |     ^~~~~~~ Did you mean to spell `Dancies` this way?
 Suggest:
+  - Replace with: “Dances”
+  - Replace with: “Dandies”
   - Replace with: “Dannie's”
-  - Replace with: “Fancies”
-  - Replace with: “Danes”
 
 
 
@@ -2463,9 +2380,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                            ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Se”
 
 
 
@@ -2474,9 +2391,9 @@ Message: |
     1862 | The Dancies came, too, and S. B. Whitebait, who was well over sixty, and Maurice
          |                               ^~ Did you mean to spell `B.` this way?
 Suggest:
-  - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
+  - Replace with: “Bu”
 
 
 
@@ -2486,7 +2403,7 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          | ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
+  - Replace with: “A”
   - Replace with: “Ab”
   - Replace with: “Ac”
 
@@ -2497,9 +2414,9 @@ Message: |
     1863 | A. Flink, and the Hammerheads, and Beluga the tobacco importer, and Beluga’s
          |    ^~~~~ Did you mean to spell `Flink` this way?
 Suggest:
-  - Replace with: “Flunk”
-  - Replace with: “Blink”
-  - Replace with: “Link”
+  - Replace with: “Fink”
+  - Replace with: “Flank”
+  - Replace with: “Flick”
 
 
 
@@ -2522,6 +2439,7 @@ Message: |
          |                                      ^~~~~~~~~ Did you mean to spell `Mulreadys` this way?
     1867 | Schoen and Gulick the State senator and Newton Orchid, who controlled Films Par
 Suggest:
+  - Replace with: “Misreads”
   - Replace with: “Already”
   - Replace with: “Unready”
 
@@ -2533,9 +2451,9 @@ Message: |
     1867 | Schoen and Gulick the State senator and Newton Orchid, who controlled Films Par
          | ^~~~~~ Did you mean to spell `Schoen` this way?
 Suggest:
-  - Replace with: “Chosen”
-  - Replace with: “Echoes”
-  - Replace with: “Echoed”
+  - Replace with: “School”
+  - Replace with: “Scion”
+  - Replace with: “Scone”
 
 
 
@@ -2545,9 +2463,9 @@ Message: |
     1867 | Schoen and Gulick the State senator and Newton Orchid, who controlled Films Par
          |            ^~~~~~ Did you mean to spell `Gulick` this way?
 Suggest:
+  - Replace with: “Gulch”
   - Replace with: “Click”
   - Replace with: “Flick”
-  - Replace with: “Lick”
 
 
 
@@ -2566,19 +2484,20 @@ Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
          |                                                  ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Se”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1868 | Excellence, and Eckhaust and Clyde Cohen and Don S. Schwartze (the son) and
-         |                                                     ^~~~~~~~~ Did you mean `Schwartz`?
+         |                                                     ^~~~~~~~~ Did you mean to spell `Schwartze` this way?
     1869 | Arthur McCarty, all connected with the movies in one way or another. And the
 Suggest:
   - Replace with: “Schwartz”
+  - Replace with: “Schwartz's”
 
 
 
@@ -2586,9 +2505,11 @@ Lint:    Spelling (63 priority)
 Message: |
     1869 | Arthur McCarty, all connected with the movies in one way or another. And the
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
-         | ^~~~~~~ Did you mean `Cali's`?
+         | ^~~~~~~ Did you mean to spell `Catlips` this way?
 Suggest:
   - Replace with: “Cali's”
+  - Replace with: “Catnip's”
+  - Replace with: “Caliph”
 
 
 
@@ -2599,8 +2520,8 @@ Message: |
          |                 ^~~~~~~~ Did you mean to spell `Bembergs` this way?
 Suggest:
   - Replace with: “Berber's”
+  - Replace with: “Bomber's”
   - Replace with: “Berbers”
-  - Replace with: “Ember's”
 
 
 
@@ -2610,33 +2531,29 @@ Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
-  - Replace with: “Gt”
   - Replace with: “Go”
-  - Replace with: “Gr”
+  - Replace with: “GI”
+  - Replace with: “GU”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
-         |                                      ^~~~~~~ Did you mean to spell `Muldoon` this way?
+         |                                      ^~~~~~~ Did you mean `Mullion`?
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
 Suggest:
   - Replace with: “Mullion”
-  - Replace with: “Mauldin”
-  - Replace with: “Mellon”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1870 | Catlips and the Bembergs and G. Earl Muldoon, brother to that Muldoon who
-         |                                                               ^~~~~~~ Did you mean to spell `Muldoon` this way?
+         |                                                               ^~~~~~~ Did you mean `Mullion`?
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
 Suggest:
   - Replace with: “Mullion”
-  - Replace with: “Mauldin”
-  - Replace with: “Mellon”
 
 
 
@@ -2656,7 +2573,7 @@ Message: |
 Suggest:
   - Replace with: “Dab”
   - Replace with: “Dad”
-  - Replace with: “Dam”
+  - Replace with: “Dag”
 
 
 
@@ -2676,8 +2593,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1871 | afterward strangled his wife. Da Fontano the promoter came there, and Ed Legros
-         |                                  ^~~~~~~ Did you mean `Montana`?
+         |                                  ^~~~~~~ Did you mean to spell `Fontano` this way?
 Suggest:
+  - Replace with: “Fondant”
+  - Replace with: “Fontanel”
   - Replace with: “Montana”
 
 
@@ -2689,8 +2608,8 @@ Message: |
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
 Suggest:
   - Replace with: “Lear's”
-  - Replace with: “Negros”
-  - Replace with: “Lagos”
+  - Replace with: “Leger's”
+  - Replace with: “Leer's”
 
 
 
@@ -2700,31 +2619,9 @@ Message: |
     1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
          |           ^~ Did you mean to spell `B.` this way?
 Suggest:
-  - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
-         |                                         ^~ This word's canonical spelling is all-caps.
-    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1872 | and James B. (“Rot-Gut”) Ferret and the De Jongs and Ernest Lilly—they came to
-         |                                         ^~ Did you mean to spell `De` this way?
-    1873 | gamble, and when Ferret wandered into the garden it meant he was cleaned out and
-Suggest:
-  - Replace with: “Db”
-  - Replace with: “Dc”
-  - Replace with: “Def”
+  - Replace with: “Bi”
+  - Replace with: “Bu”
 
 
 
@@ -2743,7 +2640,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1876 | A man named Klipspringer was there so often and so long that he became known as
-         |             ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |             ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -2753,9 +2652,9 @@ Message: |
     1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
          |     ^~~~~ Did you mean to spell `Waize` this way?
 Suggest:
+  - Replace with: “Waive”
   - Replace with: “Waite”
   - Replace with: “Maize”
-  - Replace with: “Waive”
 
 
 
@@ -2763,11 +2662,9 @@ Lint:    Spelling (63 priority)
 Message: |
     1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were
     1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
-         |                      ^~~~~~~~~ Did you mean to spell `O’Donavan` this way?
+         |                      ^~~~~~~~~ Did you mean `Donovan`?
 Suggest:
-  - Replace with: “O'Donnell”
   - Replace with: “Donovan”
-  - Replace with: “Okinawan”
 
 
 
@@ -2801,9 +2698,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     1879 | Bull. Also from New York were the Chromes and the Backhyssons and the Dennickers
-         |                                                   ^~~~~~~~~~~ Did you mean `Jacksons`?
+         |                                                   ^~~~~~~~~~~ Did you mean to spell `Backhyssons` this way?
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
 Suggest:
+  - Replace with: “Backhoes”
+  - Replace with: “Backstops”
   - Replace with: “Jacksons”
 
 
@@ -2814,9 +2713,9 @@ Message: |
          |                                                                       ^~~~~~~~~~ Did you mean to spell `Dennickers` this way?
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
 Suggest:
-  - Replace with: “Knickers”
-  - Replace with: “Nickers”
-  - Replace with: “Picnickers”
+  - Replace with: “Deicers”
+  - Replace with: “Deniers”
+  - Replace with: “Dickers”
 
 
 
@@ -2824,11 +2723,9 @@ Lint:    Spelling (63 priority)
 Message: |
     1879 | Bull. Also from New York were the Chromes and the Backhyssons and the Dennickers
     1880 | and Russel Betty and the Corrigans and the Kellehers and the Dewars and the
-         |                          ^~~~~~~~~ Did you mean to spell `Corrigans` this way?
+         |                          ^~~~~~~~~ Did you mean `Cardigans`?
 Suggest:
   - Replace with: “Cardigans”
-  - Replace with: “Corina's”
-  - Replace with: “Corrine's”
 
 
 
@@ -2851,8 +2748,8 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
 Suggest:
   - Replace with: “Dewar's”
-  - Replace with: “Dewar”
-  - Replace with: “Dena's”
+  - Replace with: “Dears”
+  - Replace with: “Debars”
 
 
 
@@ -2863,8 +2760,8 @@ Message: |
          | ^~~~~~~ Did you mean to spell `Scullys` this way?
 Suggest:
   - Replace with: “Scull's”
-  - Replace with: “Sculley's”
   - Replace with: “Sculls”
+  - Replace with: “Sculley's”
 
 
 
@@ -2874,9 +2771,9 @@ Message: |
     1881 | Scullys and S. W. Belcher and the Smirkes and the young Quinns, divorced now,
          |             ^~ Did you mean to spell `S.` this way?
 Suggest:
-  - Replace with: “Sf”
-  - Replace with: “Sh”
   - Replace with: “So”
+  - Replace with: “SA”
+  - Replace with: “Se”
 
 
 
@@ -2887,7 +2784,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -2897,8 +2794,8 @@ Message: |
          |                   ^~~~~~~ Did you mean to spell `Belcher` this way?
 Suggest:
   - Replace with: “Beecher”
-  - Replace with: “Becker”
-  - Replace with: “Blucher”
+  - Replace with: “Belched”
+  - Replace with: “Belches”
 
 
 
@@ -2921,8 +2818,8 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
 Suggest:
   - Replace with: “Quinn's”
-  - Replace with: “Quinn”
-  - Replace with: “Qin's”
+  - Replace with: “Quines”
+  - Replace with: “Quins”
 
 
 
@@ -2932,18 +2829,18 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
-  - Replace with: “L”
-  - Replace with: “Lb”
-  - Replace with: “Lo”
+  - Replace with: “Le”
+  - Replace with: “Li”
+  - Replace with: “Lu”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     1885 | Benny McClenahan arrived always with four girls. They were never quite the same
-         |       ^~~~~~~~~~ Did you mean `McClain`?
+         |       ^~~~~~~~~~ Did you mean `McClellan`?
 Suggest:
-  - Replace with: “McClain”
+  - Replace with: “McClellan”
 
 
 
@@ -2977,10 +2874,12 @@ Lint:    Spelling (63 priority)
 Message: |
     1887 | inevitably seemed they had been there before. I have forgotten their
     1888 | names—Jaqueline, I think, or else Consuela, or Gloria or Judy or June, and their
-         |                                   ^~~~~~~~ Did you mean `Consuelo`?
+         |                                   ^~~~~~~~ Did you mean to spell `Consuela` this way?
     1889 | last names were either the melodious names of flowers and months or the sterner
 Suggest:
   - Replace with: “Consuelo”
+  - Replace with: “Consul”
+  - Replace with: “Consular”
 
 
 
@@ -2992,6 +2891,7 @@ Message: |
 Suggest:
   - Replace with: “Faustian”
   - Replace with: “Faustino”
+  - Replace with: “Fasting”
 
 
 
@@ -3008,9 +2908,9 @@ Message: |
          |                                          ^~~~ Did you mean to spell `Haag` this way?
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
-  - Replace with: “Hag”
+  - Replace with: “Hang”
   - Replace with: “Haas”
-  - Replace with: “Ha's”
+  - Replace with: “Hag”
 
 
 
@@ -3032,8 +2932,9 @@ Message: |
          |                                                                 ^~~~~~ Did you mean to spell `Ardita` this way?
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
 Suggest:
+  - Replace with: “Aria”
+  - Replace with: “Audit”
   - Replace with: “Akita”
-  - Replace with: “Anita”
 
 
 
@@ -3043,9 +2944,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          | ^~~~ Did you mean to spell `Fitz` this way?
 Suggest:
+  - Replace with: “Fits”
   - Replace with: “Fit”
   - Replace with: “Fritz”
-  - Replace with: “Ditz”
 
 
 
@@ -3054,9 +2955,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                     ^~ Did you mean to spell `P.` this way?
 Suggest:
-  - Replace with: “Pt”
-  - Replace with: “P”
-  - Replace with: “Pd”
+  - Replace with: “Pa”
+  - Replace with: “Pi”
+  - Replace with: “PE”
 
 
 
@@ -3065,9 +2966,9 @@ Message: |
     1896 | Fitz-Peters and Mr. P. Jewett, once head of the American Legion, and Miss
          |                        ^~~~~~ Did you mean to spell `Jewett` this way?
 Suggest:
+  - Replace with: “Jewel”
   - Replace with: “Jewell”
   - Replace with: “Jewess”
-  - Replace with: “Dewitt”
 
 
 
@@ -3114,40 +3015,19 @@ Message: |
          |                                                                             ^~~~ Did you mean to spell `Bois` this way?
     1982 | de Boulogne.
 Suggest:
-  - Replace with: “Bogs”
+  - Replace with: “Boss”
   - Replace with: “Boris”
   - Replace with: “Bios”
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
-    1982 | de Boulogne.
-         | ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
     1982 | de Boulogne.
-         | ^~ Did you mean to spell `de` this way?
+         |    ^~~~~~~~ Did you mean to spell `Boulogne` this way?
 Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    1981 | “character” leaking sawdust at every pore as he pursued a tiger through the Bois
-    1982 | de Boulogne.
-         |    ^~~~~~~~ Did you mean `Cologne`?
-Suggest:
+  - Replace with: “Bologna”
   - Replace with: “Cologne”
 
 
@@ -3169,8 +3049,8 @@ Message: |
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
   - Replace with: “Order”
-  - Replace with: “Oder”
   - Replace with: “Orders”
+  - Replace with: “Ordeal”
 
 
 
@@ -3202,9 +3082,9 @@ Message: |
          |                                                                 ^~~~~~ Did you mean to spell `Danilo` this way?
     2007 | circular legend, “Montenegro, Nicolas Rex.”
 Suggest:
+  - Replace with: “Daily”
+  - Replace with: “Danish”
   - Replace with: “Danial”
-  - Replace with: “Daniel”
-  - Replace with: “Daniels”
 
 
 
@@ -3214,8 +3094,8 @@ Message: |
          |                                  ^~~~~~ Did you mean to spell `Valour` this way?
 Suggest:
   - Replace with: “Valor”
-  - Replace with: “Valium”
-  - Replace with: “Valois”
+  - Replace with: “Velour”
+  - Replace with: “Value”
 
 
 
@@ -3257,7 +3137,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2056 | “All right, old sport,” called Gatsby. We slowed down. Taking a white card from
     2057 | his wallet, he waved it before the man’s eyes.
-         |                                    ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                    ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -3299,7 +3179,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2078 | driven by a white chauffeur, in which sat three modish negroes, two bucks and a
-         |                                                        ^~~~~~~ The canonical dictionary spelling is `Negroes`.
+         |                                                        ^~~~~~~ The canonical dictionary spelling is title case: `Negroes`.
     2079 | girl. I laughed aloud as the yolks of their eyeballs rolled toward us in haughty
 Suggest:
   - Replace with: “Negroes”
@@ -3324,7 +3204,8 @@ Message: |
          |      ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -3350,14 +3231,16 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
-         |                        ^~~~~~~~~ Did you mean to spell `Katspaugh` this way?
+         |                        ^~~~~~~~~ Did you mean `Kasparov`?
+Suggest:
+  - Replace with: “Kasparov”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
-         |                                        ^~~ The canonical dictionary spelling is `Sid`.
+         |                                        ^~~ The canonical dictionary spelling is title case: `Sid`.
 Suggest:
   - Replace with: “Sid”
 
@@ -3377,8 +3260,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2105 | “I handed the money to Katspaugh and I sid: ‘All right, Katspaugh, don’t pay him
-         |                                                         ^~~~~~~~~ Did you mean to spell `Katspaugh` this way?
+         |                                                         ^~~~~~~~~ Did you mean `Kasparov`?
     2106 | a penny till he shuts his mouth.’ He shut it then and there.”
+Suggest:
+  - Replace with: “Kasparov”
 
 
 
@@ -3443,8 +3328,8 @@ Message: |
     2124 | “The old Metropole.”
          |          ^~~~~~~~~ Did you mean to spell `Metropole` this way?
 Suggest:
-  - Replace with: “Metronome”
   - Replace with: “Metropolis”
+  - Replace with: “Metronome”
 
 
 
@@ -3453,8 +3338,8 @@ Message: |
     2126 | “The old Metropole,” brooded Mr. Wolfshiem gloomily. “Filled with faces dead and
          |          ^~~~~~~~~ Did you mean to spell `Metropole` this way?
 Suggest:
-  - Replace with: “Metronome”
   - Replace with: “Metropolis”
+  - Replace with: “Metronome”
 
 
 
@@ -3543,8 +3428,8 @@ Message: |
     2163 | atmosphere of the old Metropole, began to eat with ferocious delicacy. His eyes,
          |                       ^~~~~~~~~ Did you mean to spell `Metropole` this way?
 Suggest:
-  - Replace with: “Metronome”
   - Replace with: “Metropolis”
+  - Replace with: “Metronome”
 
 
 
@@ -3569,40 +3454,34 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2188 | “He’s an Oggsford man.”
-         |          ^~~~~~~~ Did you mean to spell `Oggsford` this way?
+         |          ^~~~~~~~ Did you mean `Oxford`?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Osborn”
-  - Replace with: “Osgood”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
-         |             ^~~~~~~~ Did you mean to spell `Oggsford` this way?
+         |             ^~~~~~~~ Did you mean `Oxford`?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Osborn”
-  - Replace with: “Osgood”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
-         |                                                   ^~~~~~~~ Did you mean to spell `Oggsford` this way?
+         |                                                   ^~~~~~~~ Did you mean `Oxford`?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Osborn”
-  - Replace with: “Osgood”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     2215 | about women. He would never so much as look at a friend’s wife.”
-         |                                                  ^~~~~~~~ The canonical dictionary spelling is `friend's`.
+         |                                                  ^~~~~~~~ The canonical dictionary spelling is title case: `friend's`.
 Suggest:
   - Replace with: “friend's”
 
@@ -3651,7 +3530,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2243 | “Meyer Wolfshiem? No, he’s a gambler.” Gatsby hesitated, then added coolly:
-         |                       ^~~~ The canonical dictionary spelling is `he's`.
+         |                       ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3683,7 +3562,16 @@ Message: |
          |  ^~~~~~ Did you mean to spell `How’ve` this way?
 Suggest:
   - Replace with: “How're”
-  - Replace with: “Howe”
+  - Replace with: “Hove”
+  - Replace with: “How'd”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2286 | (said Jordan Baker that afternoon, sitting up very straight on a straight chair
+         |                                                                ^~~~~~~~~~~~~~~~ Did you intend to use an adjective here?
+    2287 | in the tea-garden at the Plaza Hotel)
 
 
 
@@ -3764,8 +3652,9 @@ Message: |
          |                                              ^~~~~~~~ Did you mean to spell `Muhlbach` this way?
     2334 | the wedding he gave her a string of pearls valued at three hundred and fifty
 Suggest:
+  - Replace with: “Mulch”
+  - Replace with: “Mullah”
   - Replace with: “Fullback”
-  - Replace with: “Pullback”
 
 
 
@@ -3777,15 +3666,18 @@ Message: |
 Suggest:
   - Replace with: “Sauternes”
   - Replace with: “Sterne”
+  - Replace with: “Sauteing”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2342 | “’Gratulate me,” she muttered. “Never had a drink before, but oh how I do enjoy
-         |   ^~~~~~~~~ Did you mean `Granulate`?
+         |   ^~~~~~~~~ Did you mean to spell `Gratulate` this way?
 Suggest:
   - Replace with: “Granulate”
+  - Replace with: “Graduate”
+  - Replace with: “Granulated”
 
 
 
@@ -3795,8 +3687,8 @@ Message: |
          |        ^~~~~~ Did you mean to spell `deares` this way?
 Suggest:
   - Replace with: “dear's”
-  - Replace with: “deaves”
   - Replace with: “dares”
+  - Replace with: “dearest”
 
 
 
@@ -3856,20 +3748,18 @@ Message: |
     2374 | night, and ripped a front wheel off his car. The girl who was with him got into
 Suggest:
   - Replace with: “Venture”
-  - Replace with: “Century”
-  - Replace with: “Denture”
+  - Replace with: “Ventral”
+  - Replace with: “Ventured”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2379 | saw them one spring in Cannes, and later in Deauville, and then they came back
-         |                                             ^~~~~~~~~ Did you mean to spell `Deauville` this way?
+         |                                             ^~~~~~~~~ Did you mean `Danville`?
     2380 | to Chicago to settle down. Daisy was popular in Chicago, as you know. They moved
 Suggest:
   - Replace with: “Danville”
-  - Replace with: “Melville”
-  - Replace with: “Neville”
 
 
 
@@ -3877,7 +3767,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
     2396 | an hour and were driving in a victoria through Central Park. The sun had gone
-         |                               ^~~~~~~~ The canonical dictionary spelling is `Victoria`.
+         |                               ^~~~~~~~ The canonical dictionary spelling is title case: `Victoria`.
 Suggest:
   - Replace with: “Victoria”
 
@@ -3901,15 +3791,15 @@ Message: |
          |            ^~~~~ Did you mean to spell `Sheik` this way?
 Suggest:
   - Replace with: “Sheikh”
-  - Replace with: “Sabik”
-  - Replace with: “Seiko”
+  - Replace with: “Seek”
+  - Replace with: “Shack”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
-         |               ^~~~ The canonical dictionary spelling is `he's`.
+         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3919,7 +3809,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
     2426 | he’s regular tough underneath it all.”
-         | ^~~~ The canonical dictionary spelling is `he's`.
+         | ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -3943,7 +3833,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     2448 | whole idea. He doesn’t know very much about Tom, though he says he’s read a
-         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
     2449 | Chicago paper for years just on the chance of catching a glimpse of Daisy’s
 Suggest:
   - Replace with: “he's”
@@ -3994,9 +3884,20 @@ Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
+  - Replace with: “Cone”
+  - Replace with: “Convey”
   - Replace with: “Conley”
-  - Replace with: “Corey”
-  - Replace with: “Coley”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2526 | “There’s another little thing,” he said uncertainly, and hesitated.
+         |                                         ^~~~~~~~~~~ Did you mean to spell `uncertainly` this way?
+Suggest:
+  - Replace with: “uncertainty”
+  - Replace with: “uncertain”
+  - Replace with: “certainly”
 
 
 
@@ -4032,9 +3933,9 @@ Message: |
     2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
          | ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
+  - Replace with: “Cone”
+  - Replace with: “Convey”
   - Replace with: “Conley”
-  - Replace with: “Corey”
-  - Replace with: “Coley”
 
 
 
@@ -4077,7 +3978,7 @@ Message: |
 Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
-  - Replace with: “blurred”
+  - Replace with: “beard”
 
 
 
@@ -4094,8 +3995,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2638 | “That’s the secret of Castle Rackrent. Tell your chauffeur to go far away and
-         |                              ^~~~~~~~ Did you mean `Backrest`?
+         |                              ^~~~~~~~ Did you mean to spell `Rackrent` this way?
 Suggest:
+  - Replace with: “Racket”
   - Replace with: “Backrest”
 
 
@@ -4105,9 +4007,9 @@ Message: |
     2641 | “Come back in an hour, Ferdie.” Then in a grave murmur: “His name is Ferdie.”
          |                        ^~~~~~ Did you mean to spell `Ferdie` this way?
 Suggest:
+  - Replace with: “Faerie”
+  - Replace with: “Fertile”
   - Replace with: “Fermi”
-  - Replace with: “Ferris”
-  - Replace with: “Freddie”
 
 
 
@@ -4116,9 +4018,9 @@ Message: |
     2641 | “Come back in an hour, Ferdie.” Then in a grave murmur: “His name is Ferdie.”
          |                                                                      ^~~~~~ Did you mean to spell `Ferdie` this way?
 Suggest:
+  - Replace with: “Faerie”
+  - Replace with: “Fertile”
   - Replace with: “Fermi”
-  - Replace with: “Ferris”
-  - Replace with: “Freddie”
 
 
 
@@ -4185,15 +4087,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2776 | ecstatic patron of recurrent light, and repeated the news to Daisy. “What do you
-         |                                                      ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
@@ -4217,8 +4110,8 @@ Message: |
          |                    ^~~~~~~ Did you mean to spell `postern` this way?
 Suggest:
   - Replace with: “poster”
-  - Replace with: “posters”
   - Replace with: “pastern”
+  - Replace with: “posters”
 
 
 
@@ -4269,7 +4162,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
-         |                                                ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |                                                ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -4379,7 +4274,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                                                                         ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
     2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
 Suggest:
   - Replace with: “he's”
@@ -4389,14 +4284,18 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
-         |                                                  ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |                                                  ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2949 | “I was asleep,” cried Mr. Klipspringer, in a spasm of embarrassment. “That is,
-         |                           ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |                           ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -4412,7 +4311,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2952 | “Klipspringer plays the piano,” said Gatsby, cutting him off. “Don’t you, Ewing,
-         |  ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |  ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -4421,8 +4322,8 @@ Message: |
     2955 | “I don’t play well. I don’t—I hardly play at all. I’m all out of prac———”
          |                                                                  ^~~~ Did you mean to spell `prac` this way?
 Suggest:
-  - Replace with: “pray”
   - Replace with: “prat”
+  - Replace with: “pray”
   - Replace with: “pram”
 
 
@@ -4430,7 +4331,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2965 | When Klipspringer had played “The Love Nest” he turned around on the bench and
-         |      ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |      ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -4461,19 +4364,9 @@ Message: |
     2969 | prac—”
          | ^~~~ Did you mean to spell `prac` this way?
 Suggest:
-  - Replace with: “pray”
   - Replace with: “prat”
+  - Replace with: “pray”
   - Replace with: “pram”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    3019 | become authorities upon his past, had increased all summer until he fell just
-    3020 | short of being news. Contemporary legends such as the “underground pipe-line to
-         |                ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
 
 
 
@@ -4496,9 +4389,9 @@ Message: |
     3024 | a source of satisfaction to James Gatz of North Dakota, isn’t easy to say.
          |                                   ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -4507,9 +4400,9 @@ Message: |
     3026 | James Gatz—that was really, or at least legally, his name. He had changed it at
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -4531,19 +4424,21 @@ Message: |
     3029 | on Lake Superior. It was James Gatz who had been loafing along the beach that
          |                                ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     3031 | Jay Gatsby who borrowed a rowboat, pulled out to the Tuolomee, and informed Cody
-         |                                                      ^~~~~~~~ Did you mean `Toulouse`?
+         |                                                      ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
     3032 | that a wind might catch him and break him up in half an hour.
 Suggest:
   - Replace with: “Toulouse”
+  - Replace with: “Twosome”
+  - Replace with: “Twosomes”
 
 
 
@@ -4569,37 +4464,15 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
-         |                                               ^~ This word's canonical spelling is all-caps.
-    3075 | sent him to sea in a yacht, were common property of the turgid journalism
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
-         |                                               ^~ Did you mean to spell `de` this way?
-    3075 | sent him to sea in a yacht, were common property of the turgid journalism
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3074 | Ella Kaye, the newspaper woman, played Madame de Maintenon to his weakness and
          |                                                  ^~~~~~~~~ Did you mean to spell `Maintenon` this way?
     3075 | sent him to sea in a yacht, were common property of the turgid journalism
 Suggest:
+  - Replace with: “Maintain”
+  - Replace with: “Maintenance”
   - Replace with: “Maintop”
-  - Replace with: “Maine's”
-  - Replace with: “Mainer's”
 
 
 
@@ -4609,9 +4482,9 @@ Message: |
     3077 | when he turned up as James Gatz’s destiny in Little Girl Bay.
          |                            ^~~~~~ Did you mean to spell `Gatz’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gaea's”
-  - Replace with: “Gael's”
+  - Replace with: “Gate's”
+  - Replace with: “Garth's”
+  - Replace with: “Goth's”
 
 
 
@@ -4620,19 +4493,21 @@ Message: |
     3079 | To young Gatz, resting on his oars and looking up at the railed deck, that yacht
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     3085 | and a yachting cap. And when the Tuolomee left for the West Indies and the
-         |                                  ^~~~~~~~ Did you mean `Toulouse`?
+         |                                  ^~~~~~~~ Did you mean to spell `Tuolomee` this way?
     3086 | Barbary Coast Gatsby left too.
 Suggest:
   - Replace with: “Toulouse”
+  - Replace with: “Twosome”
+  - Replace with: “Twosomes”
 
 
 
@@ -4668,6 +4543,17 @@ Message: |
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
   - Replace with: “jail or”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    3093 | It might have lasted indefinitely except for the fact that Ella Kaye came on
+         |                      ^~~~~~~~~~~~ Did you mean to spell `indefinitely` this way?
+Suggest:
+  - Replace with: “indefinite”
+  - Replace with: “infinitely”
+  - Replace with: “definitely”
 
 
 
@@ -4716,6 +4602,17 @@ Message: |
 
 
 
+Lint:    Repetition (31 priority)
+Message: |
+    3135 | uneasy anyhow until he had given them something, realizing in a vague way that
+         |                                                                           ^~~~~
+    3136 | that was all they came for. Mr. Sloane wanted nothing. A lemonade? No, thanks. A
+         | ~~~~ Consider whether the second `that` adds meaning in this context.
+Suggest:
+  - Replace with: “that”
+
+
+
 Lint:    Repetition (127 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
@@ -4761,7 +4658,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3213 | “My God, I believe the man’s coming,” said Tom. “Doesn’t he know she doesn’t
-         |                        ^~~~~ The canonical dictionary spelling is `man's`.
+         |                        ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -4834,9 +4731,9 @@ Message: |
     3316 | “Wha’?”
          |  ^~~ Did you mean to spell `Wha` this way?
 Suggest:
-  - Replace with: “What”
   - Replace with: “Wham”
-  - Replace with: “Aha”
+  - Replace with: “What”
+  - Replace with: “Who”
 
 
 
@@ -4916,7 +4813,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3396 | hadn’t been invited. They simply force their way in and he’s too polite to
-         |                                                         ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
     3397 | object.”
 Suggest:
   - Replace with: “he's”
@@ -4995,7 +4892,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     3488 | somewhere a long time ago. For a moment a phrase tried to take shape in my mouth
     3489 | and my lips parted like a dumb man’s, as though there was more struggling upon
-         |                                ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                ^~~~~ The canonical dictionary spelling is title case: `man's`.
 Suggest:
   - Replace with: “man's”
 
@@ -5046,7 +4943,8 @@ Message: |
     3508 | over.”
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -5056,7 +4954,8 @@ Message: |
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -5066,7 +4965,8 @@ Message: |
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -5171,8 +5071,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “central”
   - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -5198,7 +5098,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
-         |      ^~~~ The canonical dictionary spelling is `he's`.
+         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -5231,9 +5131,9 @@ Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |  ^~~~ Did you mean to spell `Bles` this way?
 Suggest:
+  - Replace with: “Bless”
   - Replace with: “Bales”
   - Replace with: “Bees”
-  - Replace with: “BC's”
 
 
 
@@ -5270,36 +5170,14 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-    3647 | up now, and say—How-de-do.”
-         |                     ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-    3647 | up now, and say—How-de-do.”
-         |                     ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “db”
-  - Replace with: “dc”
-  - Replace with: “dd”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3672 | “Come, Pammy.”
          |        ^~~~~ Did you mean to spell `Pammy` this way?
 Suggest:
-  - Replace with: “Mammy”
-  - Replace with: “Sammy”
-  - Replace with: “Tammy”
+  - Replace with: “Palmy”
+  - Replace with: “Pommy”
+  - Replace with: “Pam's”
 
 
 
@@ -5318,7 +5196,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3686 | “I read somewhere that the sun’s getting hotter every year,” said Tom genially.
-         |                            ^~~~~ The canonical dictionary spelling is `sun's`.
+         |                            ^~~~~ The canonical dictionary spelling is title case: `sun's`.
 Suggest:
   - Replace with: “sun's”
 
@@ -5335,7 +5213,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
     3688 | minute—it’s just the opposite—the sun’s getting colder every year.
-         |                                   ^~~~~ The canonical dictionary spelling is `sun's`.
+         |                                   ^~~~~ The canonical dictionary spelling is title case: `sun's`.
 Suggest:
   - Replace with: “sun's”
 
@@ -5384,7 +5262,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |                                              ^~~~~~ The canonical dictionary spelling is `king's`.
+         |                                              ^~~~~~ The canonical dictionary spelling is title case: `king's`.
 Suggest:
   - Replace with: “king's”
 
@@ -5434,7 +5312,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     3864 | “Nevertheless he’s an Oxford man.”
-         |               ^~~~ The canonical dictionary spelling is `he's`.
+         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -5446,8 +5324,8 @@ Message: |
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “To”
 
 
 
@@ -5456,9 +5334,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -5470,7 +5348,7 @@ Message: |
 Suggest:
   - Replace with: “Excalibur's”
   - Replace with: “Vicksburg's”
-  - Replace with: “Iceberg's”
+  - Replace with: “Heckler's”
 
 
 
@@ -5515,8 +5393,8 @@ Message: |
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “To”
 
 
 
@@ -5525,9 +5403,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -5538,8 +5416,8 @@ Message: |
     3949 | vigil, but I perceived, after a moment, that other eyes were regarding us with
 Suggest:
   - Replace with: “Excalibur”
+  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
-  - Replace with: “Iceberg”
 
 
 
@@ -5645,9 +5523,9 @@ Message: |
     4016 | “Well, we’d better telephone for an axe———”
          |                                     ^~~ Did you mean to spell `axe` this way?
 Suggest:
-  - Replace with: “aye”
   - Replace with: “ace”
   - Replace with: “age”
+  - Replace with: “ale”
 
 
 
@@ -5719,9 +5597,9 @@ Message: |
     4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
-  - Replace with: “l”
-  - Replace with: “lb”
-  - Replace with: “lg”
+  - Replace with: “la”
+  - Replace with: “lo”
+  - Replace with: “elf”
 
 
 
@@ -5769,9 +5647,9 @@ Message: |
          |                                                                  ^~~ Did you mean to spell `Asa` this way?
     4084 | brought him around at the last minute and asked if we had room for him.”
 Suggest:
+  - Replace with: “Aha”
+  - Replace with: “Aka”
   - Replace with: “As”
-  - Replace with: “Asap”
-  - Replace with: “Ada”
 
 
 
@@ -5876,7 +5754,7 @@ Message: |
 Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
-  - Replace with: “Capillary”
+  - Replace with: “Kaolin”
 
 
 
@@ -5975,15 +5853,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4373 | “No . . . I just remembered that to-day’s my birthday.”
-         |                                     ^~~~~ The canonical dictionary spelling is `day's`.
-Suggest:
-  - Replace with: “day's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4377 | It was seven o’clock when we got into the coupé with him and started for Long
@@ -5999,9 +5868,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
-         |                  ^~~~~~~~~ Did you mean `Michael`?
+         |                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6020,28 +5891,34 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4394 | office—really sick, pale as his own pale hair and shaking all over. Michaelis
-         |                                                                     ^~~~~~~~~ Did you mean `Michael`?
+         |                                                                     ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
     4395 | advised him to go to bed, but Wilson refused, saying that he’d miss a lot of
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     4402 | Michaelis was astonished; they had been neighbors for four years, and Wilson had
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     4409 | So naturally Michaelis tried to find out what had happened, but Wilson wouldn’t
-         |              ^~~~~~~~~ Did you mean `Michael`?
+         |              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6049,9 +5926,11 @@ Lint:    Spelling (63 priority)
 Message: |
     4412 | latter was getting uneasy, some workmen came past the door bound for his
     4413 | restaurant, and Michaelis took the opportunity to get away, intending to come
-         |                 ^~~~~~~~~ Did you mean `Michael`?
+         |                 ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6099,9 +5978,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6121,9 +6002,9 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     4442 | “Wreck!” said Tom. “That’s good. Wilson’ll have a little business at last.”
-         |                                  ^~~~~~~~~ Did you mean `Wilson`?
+         |                                  ^~~~~~~~~ Did you mean `Wilson's`?
 Suggest:
-  - Replace with: “Wilson”
+  - Replace with: “Wilson's”
 
 
 
@@ -6175,24 +6056,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |         ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |            ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
@@ -6201,24 +6064,6 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                       ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                          ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
 
 
 
@@ -6233,24 +6078,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                  ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                     ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
@@ -6259,24 +6086,6 @@ Suggest:
   - Replace with: “odd”
   - Replace with: “ode”
   - Replace with: “of”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                                ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “GA”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4479 | “Oh, my Ga-od! Oh, my Ga-od! Oh, Ga-od! Oh, my Ga-od!”
-         |                                                   ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “OD”
 
 
 
@@ -6308,15 +6117,6 @@ Suggest:
   - Replace with: “of”
   - Replace with: “oh”
   - Replace with: “oi”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
-         |                                      ^ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “O”
 
 
 
@@ -6354,16 +6154,17 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4499 | “Auto hit her. Ins’antly killed.”
-         |                ^~~~~~~~~ Did you mean `Instantly`?
+         |                ^~~~~~~~~ Did you mean to spell `Ins’antly` this way?
 Suggest:
   - Replace with: “Instantly”
+  - Replace with: “Insanely”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |              ^~~ The canonical dictionary spelling is `Ina`.
+         |              ^~~ The canonical dictionary spelling is title case: `Ina`.
 Suggest:
   - Replace with: “Ina”
 
@@ -6374,9 +6175,9 @@ Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
          |              ^~~ Did you mean to spell `ina` this way?
 Suggest:
-  - Replace with: “int”
   - Replace with: “in”
   - Replace with: “inc”
+  - Replace with: “ind”
 
 
 
@@ -6386,8 +6187,8 @@ Message: |
          |                                                   ^~~~~~ Did you mean to spell `stopus` this way?
 Suggest:
   - Replace with: “stop's”
-  - Replace with: “stoups”
   - Replace with: “stops”
+  - Replace with: “stoups”
 
 
 
@@ -6403,9 +6204,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4505 | “There was two cars,” said Michaelis, “one comin’, one goin’, see?”
-         |                            ^~~~~~~~~ Did you mean `Michael`?
+         |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6512,12 +6315,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
-         |                                                                          ^~~~~~ Did you mean to spell `N’York` this way?
+         |                                                                          ^~~~~~ Did you mean `York`?
     4511 | knock right into her, goin’ thirty or forty miles an hour.”
 Suggest:
   - Replace with: “York”
-  - Replace with: “Nanook”
-  - Replace with: “Newark”
 
 
 
@@ -6627,7 +6428,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     4622 | house. I sat down for a few minutes with my head in my hands, until I heard the
     4623 | phone taken up inside and the butler’s voice calling a taxi. Then I walked
-         |                               ^~~~~~~~ The canonical dictionary spelling is `butler's`.
+         |                               ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
 Suggest:
   - Replace with: “butler's”
 
@@ -6748,9 +6549,9 @@ Message: |
          |                                                ^~~~~ Did you mean to spell `Beale` this way?
     4851 | hundred pairs of golden and silver slippers shuffled the shining dust. At the
 Suggest:
+  - Replace with: “Bale”
+  - Replace with: “Beagle”
   - Replace with: “Belle”
-  - Replace with: “Berle”
-  - Replace with: “Beadle”
 
 
 
@@ -6783,9 +6584,9 @@ Message: |
          |                                                  ^~~~~~~~~ Did you mean to spell `Leaves’ll` this way?
     4922 | soon, and then there’s always trouble with the pipes.”
 Suggest:
-  - Replace with: “Leakey's”
   - Replace with: “Leave's”
   - Replace with: “Leaven's”
+  - Replace with: “Leaver's”
 
 
 
@@ -6801,12 +6602,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4980 | “I’ve left Daisy’s house,” she said. “I’m at Hempstead, and I’m going down to
-         |                                              ^~~~~~~~~ Did you mean to spell `Hempstead` this way?
+         |                                              ^~~~~~~~~ Did you mean `Homestead`?
     4981 | Southampton this afternoon.”
 Suggest:
   - Replace with: “Homestead”
-  - Replace with: “Bedstead”
-  - Replace with: “Demisted”
 
 
 
@@ -6868,9 +6667,11 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5034 | and closed the door. Michaelis and several other men were with him; first, four
-         |                      ^~~~~~~~~ Did you mean `Michael`?
+         |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6887,10 +6688,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5035 | or five men, later two or three men. Still later Michaelis had to ask the last
-         |                                                  ^~~~~~~~~ Did you mean `Michael`?
+         |                                                  ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
     5036 | stranger to wait there fifteen minutes longer, while he went back to his own
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6910,9 +6713,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     5047 | again in his groaning voice. Michaelis made a clumsy attempt to distract him.
-         |                              ^~~~~~~~~ Did you mean `Michael`?
+         |                              ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6920,9 +6725,11 @@ Lint:    Spelling (63 priority)
 Message: |
     5057 | The hard brown beetles kept thudding against the dull light, and whenever
     5058 | Michaelis heard a car go tearing along the road outside it sounded to him like
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -6973,18 +6780,22 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5087 | Michaelis opened the drawer nearest his hand. There was nothing in it but a
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5102 | Michaelis didn’t see anything odd in that, and he gave Wilson a dozen reasons
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7004,27 +6815,31 @@ Message: |
     5122 | ghost of a superior “Hm!”
          |                      ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
   - Replace with: “Ha”
   - Replace with: “Ham”
+  - Replace with: “He”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5128 | Michaelis had seen this too, but it hadn’t occurred to him that there was any
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5136 | He began to rock again, and Michaelis stood twisting the leash in his hand.
-         |                             ^~~~~~~~~ Did you mean `Michael`?
+         |                             ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7058,9 +6873,11 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
-         |                      ^~~~~~~~~ Did you mean `Michael`?
+         |                      ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7071,8 +6888,8 @@ Message: |
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
   - Replace with: “Ta”
-  - Replace with: “Tb”
-  - Replace with: “Tn”
+  - Replace with: “Ti”
+  - Replace with: “To”
 
 
 
@@ -7081,9 +6898,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -7093,17 +6910,19 @@ Message: |
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
+  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
-  - Replace with: “Iceberg”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5161 | “That’s an advertisement,” Michaelis assured him. Something made him turn away
-         |                            ^~~~~~~~~ Did you mean `Michael`?
+         |                            ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7120,18 +6939,22 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5165 | By six o’clock Michaelis was worn out, and grateful for the sound of a car
-         |                ^~~~~~~~~ Did you mean `Michael`?
+         |                ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5168 | man ate together. Wilson was quieter now, and Michaelis went home to sleep; when
-         |                                               ^~~~~~~~~ Did you mean `Michael`?
+         |                                               ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7163,9 +6986,11 @@ Lint:    Spelling (63 priority)
 Message: |
     5177 | hours he disappeared from view. The police, on the strength of what he said to
     5178 | Michaelis, that he “had a way of finding out,” supposed that he spent that time
-         | ^~~~~~~~~ Did you mean `Michael`?
+         | ^~~~~~~~~ Did you mean to spell `Michaelis` this way?
 Suggest:
-  - Replace with: “Michael”
+  - Replace with: “Michael's”
+  - Replace with: “Michaela's”
+  - Replace with: “Micheal's”
 
 
 
@@ -7274,16 +7099,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    5251 | Gatsby’s side, and alone. From the moment I telephoned news of the catastrophe
-         |                                                        ^~~~ The canonical dictionary spelling is `news`.
-    5252 | to West Egg village, every surmise about him, and every practical question, was
-Suggest:
-  - Replace with: “news”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     5253 | referred to me. At first I was surprised and confused; then, as he lay in his
@@ -7367,7 +7182,8 @@ Message: |
          |          ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -7399,14 +7215,14 @@ Message: |
 Suggest:
   - Replace with: “eta”
   - Replace with: “etc.”
-  - Replace with: “etch”
+  - Replace with: “ethic”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     5330 | thought this would be Daisy at last. But the connection came through as a man’s
-         |                                                                           ^~~~~ The canonical dictionary spelling is `man's`.
+         |                                                                           ^~~~~ The canonical dictionary spelling is title case: `man's`.
     5331 | voice, very thin and far away.
 Suggest:
   - Replace with: “man's”
@@ -7418,9 +7234,9 @@ Message: |
     5333 | “This is Slagle speaking . . .”
          |          ^~~~~~ Did you mean to spell `Slagle` this way?
 Suggest:
-  - Replace with: “Beagle”
-  - Replace with: “Eagle”
-  - Replace with: “Plague”
+  - Replace with: “Sable”
+  - Replace with: “Sage”
+  - Replace with: “Sale”
 
 
 
@@ -7438,9 +7254,9 @@ Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
          |        ^~~~~~~ Did you mean to spell `Parke’s` this way?
 Suggest:
-  - Replace with: “Parks's”
   - Replace with: “Parker's”
-  - Replace with: “Paige's”
+  - Replace with: “Parks's”
+  - Replace with: “Park's”
 
 
 
@@ -7478,9 +7294,9 @@ Message: |
     5352 | I think it was on the third day that a telegram signed Henry C. Gatz arrived
          |                                                              ^~ Did you mean to spell `C.` this way?
 Suggest:
-  - Replace with: “Cw”
-  - Replace with: “Cc”
-  - Replace with: “Ch”
+  - Replace with: “Co”
+  - Replace with: “Cu”
+  - Replace with: “CI”
 
 
 
@@ -7490,9 +7306,9 @@ Message: |
          |                                                                 ^~~~ Did you mean to spell `Gatz` this way?
     5353 | from a town in Minnesota. It said only that the sender was leaving immediately
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -7512,7 +7328,8 @@ Message: |
          |  ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -7521,9 +7338,9 @@ Message: |
     5385 | After a little while Mr. Gatz opened the door and came out, his mouth ajar, his
          |                          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -7556,9 +7373,9 @@ Message: |
     5396 | “Gatz is my name.”
          |  ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -7567,9 +7384,9 @@ Message: |
     5398 | “—Mr. Gatz. I thought you might want to take the body West.”
          |       ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -7585,9 +7402,9 @@ Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
-  - Replace with: “Jg”
+  - Replace with: “Jo”
   - Replace with: “J”
-  - Replace with: “JD”
+  - Replace with: “Jg”
 
 
 
@@ -7597,14 +7414,17 @@ Message: |
          |              ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     5425 | “Oh!” He sounded relieved. “This is Klipspringer.”
-         |                                     ^~~~~~~~~~~~ Did you mean to spell `Klipspringer` this way?
+         |                                     ^~~~~~~~~~~~ Did you mean `Kissinger`?
+Suggest:
+  - Replace with: “Kissinger”
 
 
 
@@ -7613,9 +7433,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                              ^~ Did you mean to spell `B.` this way?
 Suggest:
-  - Replace with: “Bu”
   - Replace with: “Be”
-  - Replace with: “Bf”
+  - Replace with: “Bi”
+  - Replace with: “Bu”
 
 
 
@@ -7624,9 +7444,9 @@ Message: |
     5455 | and I’m sort of helpless without them. My address is care of B. F.———”
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
-  - Replace with: “Ft”
-  - Replace with: “F”
   - Replace with: “Fa”
+  - Replace with: “Fe”
+  - Replace with: “F”
 
 
 
@@ -7666,7 +7486,8 @@ Message: |
          |                      ^~~~~~~~ Did you mean to spell `Carraway` this way?
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -7684,7 +7505,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5487 | “But I know he’s there.”
-         |             ^~~~ The canonical dictionary spelling is `he's`.
+         |             ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -7693,7 +7514,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                ^~~~ The canonical dictionary spelling is title case: `he's`.
     5494 | Chicago.”
 Suggest:
   - Replace with: “he's”
@@ -7703,7 +7524,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
     5494 | Chicago.”
 Suggest:
   - Replace with: “he's”
@@ -7720,9 +7541,10 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
     5500 | She vanished. In a moment Meyer Wolfsheim stood solemnly in the doorway, holding
-         |                                 ^~~~~~~~~ Did you mean `Florsheim`?
+         |                                 ^~~~~~~~~ Did you mean to spell `Wolfsheim` this way?
     5501 | out both hands. He drew me into his office, remarking in a reverent voice that
 Suggest:
+  - Replace with: “Waldheim”
   - Replace with: “Florsheim”
 
 
@@ -7730,12 +7552,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5507 | First time I saw him was when he come into Winebrenner’s poolroom at Forty-third
-         |                                            ^~~~~~~~~~~~~ Did you mean to spell `Winebrenner’s` this way?
+         |                                            ^~~~~~~~~~~~~ Did you mean `Windbreaker's`?
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
 Suggest:
   - Replace with: “Windbreaker's”
-  - Replace with: “Icebreaker's”
-  - Replace with: “Tiebreaker's”
 
 
 
@@ -7743,7 +7563,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
     5509 | on have some lunch with me,’ I sid. He ate more than four dollars’ worth of food
-         |                                ^~~ The canonical dictionary spelling is `Sid`.
+         |                                ^~~ The canonical dictionary spelling is title case: `Sid`.
 Suggest:
   - Replace with: “Sid”
 
@@ -7765,11 +7585,9 @@ Lint:    Spelling (63 priority)
 Message: |
     5519 | was a fine-appearing, gentlemanly young man, and when he told me he was an
     5520 | Oggsford I knew I could use him good. I got him to join up in the American
-         | ^~~~~~~~ Did you mean to spell `Oggsford` this way?
+         | ^~~~~~~~ Did you mean `Oxford`?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Osborn”
-  - Replace with: “Osgood”
 
 
 
@@ -7791,7 +7609,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
-         |      ^~~~ The canonical dictionary spelling is `he's`.
+         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -7813,16 +7631,16 @@ Message: |
          |                                                                   ^~~~ Did you mean to spell `Gatz` this way?
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
 Lint:    Capitalization (127 priority)
 Message: |
     5560 | up and down excitedly in the hall. His pride in his son and in his son’s
-         |                                                                    ^~~~~ The canonical dictionary spelling is `son's`.
+         |                                                                    ^~~~~ The canonical dictionary spelling is title case: `son's`.
     5561 | possessions was continually increasing and now he had something to show me.
 Suggest:
   - Replace with: “son's”
@@ -7854,9 +7672,9 @@ Message: |
     5582 | pocket a ragged old copy of a book called “Hopalong Cassidy.”
          |                                            ^~~~~~~~ Did you mean to spell `Hopalong` this way?
 Suggest:
-  - Replace with: “Along”
-  - Replace with: “Oblong”
-  - Replace with: “Coaling”
+  - Replace with: “Hopping”
+  - Replace with: “Haling”
+  - Replace with: “Haloing”
 
 
 
@@ -7866,9 +7684,9 @@ Message: |
     5602 | > No wasting time at Shafters or [a name, indecipherable] No more smokeing or
          |                      ^~~~~~~~ Did you mean to spell `Shafters` this way?
 Suggest:
-  - Replace with: “Shaffer's”
   - Replace with: “Shatters”
   - Replace with: “Shifters”
+  - Replace with: “Shaffer's”
 
 
 
@@ -7887,7 +7705,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
     5612 | something. Do you notice what he’s got about improving his mind? He was always
-         |                               ^~~~ The canonical dictionary spelling is `he's`.
+         |                               ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 
@@ -7928,9 +7746,9 @@ Message: |
     5629 | then Mr. Gatz and the minister and I in the limousine, and a little later four
          |          ^~~~ Did you mean to spell `Gatz` this way?
 Suggest:
-  - Replace with: “Ga's”
   - Replace with: “Gate”
-  - Replace with: “GHz”
+  - Replace with: “Garth”
+  - Replace with: “Goth”
 
 
 
@@ -8048,6 +7866,7 @@ Message: |
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
          |              ^~~~~~~ Did you mean to spell `Ordways` this way?
 Suggest:
+  - Replace with: “Ordeals”
   - Replace with: “Endways”
   - Replace with: “Midways”
 
@@ -8067,8 +7886,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5666 | going to the Ordways’? the Herseys’? the Schultzes’?” and the long green tickets
-         |                                          ^~~~~~~~~ Did you mean `Schultz`?
+         |                                          ^~~~~~~~~ Did you mean to spell `Schultzes` this way?
 Suggest:
+  - Replace with: “Schultz's”
+  - Replace with: “Schulz's”
   - Replace with: “Schultz”
 
 
@@ -8116,7 +7937,8 @@ Message: |
     5683 | city where dwellings are still called through decades by a family’s name. I see
 Suggest:
   - Replace with: “Caraway”
-  - Replace with: “Faraway”
+  - Replace with: “Caraways”
+  - Replace with: “Castaway”
 
 
 
@@ -8182,9 +8004,9 @@ Message: |
     5692 | figures in my more fantastic dreams. I see it as a night scene by El Greco: a
          |                                                                      ^~~~~ Did you mean to spell `Greco` this way?
 Suggest:
-  - Replace with: “Geo”
-  - Replace with: “Greece”
-  - Replace with: “Greek”
+  - Replace with: “Gecko”
+  - Replace with: “Grace”
+  - Replace with: “Great”
 
 
 

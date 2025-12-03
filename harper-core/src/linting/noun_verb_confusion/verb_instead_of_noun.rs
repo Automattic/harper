@@ -1,8 +1,9 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    patterns::{UPOSSet, WordSet},
 };
 use harper_brill::UPOS;
 
@@ -23,7 +24,7 @@ impl Default for VerbInsteadOfNoun {
         Self {
             expr: Box::new(
                 SequenceExpr::default()
-                    .then_adjective()
+                    .then(UPOSSet::new(&[UPOS::ADJ]))
                     .then_whitespace()
                     .then(verbs.clone()),
             ),
@@ -32,6 +33,8 @@ impl Default for VerbInsteadOfNoun {
 }
 
 impl ExprLinter for VerbInsteadOfNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -58,7 +61,7 @@ impl ExprLinter for VerbInsteadOfNoun {
             return None;
         }
 
-        // "Sound" is both adjectve and noun. We want to flag the common "sound advise"
+        // "Sound" is both adjective and noun. We want to flag the common "sound advise"
         // But not "sound affect", which is just as correct as "sound effect".
         if adj_text == "sound" && verb_text == "affect" {
             return None;

@@ -3,6 +3,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct DespiteOf {
     expr: Box<dyn Expr>,
@@ -21,6 +22,8 @@ impl Default for DespiteOf {
 }
 
 impl ExprLinter for DespiteOf {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

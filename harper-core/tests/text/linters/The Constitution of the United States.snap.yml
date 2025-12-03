@@ -41,9 +41,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “In”
-  - Replace with: “IC”
-  - Replace with: “IE”
+  - Replace with: “I”
+  - Replace with: “Id”
+  - Replace with: “If”
 
 
 
@@ -225,16 +225,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-      89 | third Class at the Expiration of the sixth Year, so that one third may be
-         |                                                                    ^~~~~~ Did you mean the closed compound noun “maybe”?
-      90 | chosen every second Year; and when vacancies happen in the representation of
-Suggest:
-  - Replace with: “maybe”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       96 | No Person shall be a Senator who shall not have attained to the Age of thirty
@@ -361,8 +351,8 @@ Message: |
      125 | Regulations, except as to the Places of chusing Senators.
          |                                         ^~~~~~~ Did you mean to spell `chusing` this way?
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
+  - Replace with: “chasing”
   - Replace with: “casing”
 
 
@@ -396,9 +386,10 @@ Lint:    Spelling (63 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
      140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
-         |            ^~~~~~~~~ Did you mean `Behavior`?
+         |            ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -593,8 +584,8 @@ Message: |
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
-  - Replace with: “Terence”
-  - Replace with: “Geofence”
+  - Replace with: “Decency”
+  - Replace with: “Deface”
 
 
 
@@ -622,8 +613,9 @@ Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
          |                         ^~~~~~~~ Did you mean to spell `Piracies` this way?
 Suggest:
-  - Replace with: “Curacies”
-  - Replace with: “Miracles”
+  - Replace with: “Piracy's”
+  - Replace with: “Papacies”
+  - Replace with: “Pirates”
 
 
 
@@ -634,7 +626,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offender”
 
 
 
@@ -736,7 +729,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -802,7 +795,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “facts”
+  - Replace with: “faith”
 
 
 
@@ -836,10 +829,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul
-         |                                                                       ^~~~~~~~ Did you mean `Control`?
+         |                                                                       ^~~~~~~~ Did you mean to spell `Controul` this way?
      316 | of the Congress.
 Suggest:
   - Replace with: “Control”
+  - Replace with: “Contour”
+  - Replace with: “Contrail”
 
 
 
@@ -960,7 +955,14 @@ Message: |
      367 | and such person shall act accordingly until a President or Vice President shall
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      368 | have qualified.The Congress may by law provide for the case of the death of any
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ~~~~~~~~~~~~~~~ This sentence is 101 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      369 | of the persons from whom the House of Representatives may choose a President
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      370 | whenever the right of choice shall have devolved upon them, and for the case of
@@ -968,7 +970,7 @@ Message: |
      371 | the death of any of the persons from whom the Senate may choose a Vice
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      372 | President whenever the right of choice shall have devolved upon them.]The
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 167 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
 
 
 
@@ -997,8 +999,8 @@ Message: |
          |                                        ^~~~~~~ Did you mean to spell `chusing` this way?
      384 | which they shall give their Votes; which Day shall be the same throughout the
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
+  - Replace with: “chasing”
   - Replace with: “casing”
 
 
@@ -1353,7 +1355,8 @@ Message: |
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offender”
 
 
 
@@ -1416,10 +1419,11 @@ Lint:    Spelling (63 priority)
 Message: |
      525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
      526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
-         |                                      ^~~~~~~~~ Did you mean `Behavior`?
+         |                                      ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
      527 | receive for their Services, a Compensation, which shall not be diminished
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -1618,8 +1622,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1630,8 +1634,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1642,8 +1646,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1727,9 +1731,9 @@ Message: |
      663 | ## Article. V.
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
-  - Replace with: “Vs.”
-  - Replace with: “Vb”
   - Replace with: “Vi”
+  - Replace with: “VA”
+  - Replace with: “Vb”
 
 
 
@@ -1822,6 +1826,7 @@ Message: |
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
+  - Replace with: “Erasures”
   - Replace with: “Azure”
 
 

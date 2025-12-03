@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input:expr, $corrections:expr, $hint:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseLinter::new_fixed_phrases(
@@ -91,20 +91,6 @@ pub fn lint_group() -> LintGroup {
             "Use `another` on its own.",
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
-        ),
-        "AndIn" => (
-            ["an in"],
-            ["and in"],
-            "Did you mean `and in`?",
-            "Fixes the incorrect phrase `an in` to `and in` for proper conjunction usage.",
-            LintKind::Typo
-        ),
-        "AndTheLike" => (
-            ["an the like"],
-            ["and the like"],
-            "Did you mean `and the like`?",
-            "Fixes the typo in `and the like`.",
-            LintKind::Typo
         ),
         "AnotherAn" => (
             ["another an"],
@@ -440,13 +426,6 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `w/o` to the full word `without` for clarity.",
             LintKind::Style
         ),
-        "Expatriate" => (
-            ["ex-patriot"],
-            ["expatriate"],
-            "Use the correct term for someone living abroad.",
-            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
-            LintKind::Eggcorn
-        ),
         "FaceFirst" => (
             ["face first into"],
             ["face-first into"],
@@ -605,6 +584,13 @@ pub fn lint_group() -> LintGroup {
             "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects.",
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
+        ),
+        "InLieuOf" => (
+            ["in lue of"],
+            ["in lieu of"],
+            "Did you mean `in lieu of`?",
+            "Corrects the misspelling `in lue of` to `in lieu of`.",
+            LintKind::Spelling
         ),
         "InOfItself" => (
             ["in of itself"],
@@ -881,11 +867,11 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         ),
         "PerSe" => (
-            ["per say", "per-say"],
+            ["per say", "per-se", "per-say"],
             ["per se"],
-            "The Latin phrase is spelled `per se`.",
-            "Flags misspellings of the Latin phrase `per se`.",
-            LintKind::Eggcorn
+            "The correct spelling is `per se` (with no hyphen)",
+            "Corrects common misspellings of `per se`.",
+            LintKind::Spelling
         ),
         "PointsOfView" => (
             ["point of views"],
@@ -949,7 +935,7 @@ pub fn lint_group() -> LintGroup {
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'.",
             LintKind::Redundancy
         ),
         "RifeWith" => (
@@ -1231,11 +1217,18 @@ pub fn lint_group() -> LintGroup {
             "Fixes incorrect use of `to worried about`."
         ),
         "The" => (
-            ["teh"],
+            ["teh", "te"],
             ["the"],
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
+        ),
+        "RedundantThat" => (
+            ["that that"],
+            ["that"],
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 

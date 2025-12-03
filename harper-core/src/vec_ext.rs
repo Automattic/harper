@@ -1,5 +1,6 @@
 use std::collections::VecDeque;
 
+/// Extensions on top of [`Vec`] that make certain common operations easier.
 pub trait VecExt {
     /// Removes a list of indices from a Vector.
     /// Assumes that the provided indices are already in sorted order.

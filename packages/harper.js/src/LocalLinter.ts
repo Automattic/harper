@@ -1,18 +1,20 @@
 import type { Dialect, Lint, Suggestion, Linter as WasmLinter } from 'harper-wasm';
 import { Language } from 'harper-wasm';
 import LazyPromise from 'p-lazy';
-import type { BinaryModule } from './binary';
+import type { SuperBinaryModule } from './binary';
 import type Linter from './Linter';
 import type { LinterInit } from './Linter';
 import type { LintConfig, LintOptions } from './main';
 
-/** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).  */
+/** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
+ * See the interface definition for more details. */
 export default class LocalLinter implements Linter {
-	binary: BinaryModule;
+	binary: SuperBinaryModule;
 	private inner: Promise<WasmLinter>;
 
 	constructor(init: LinterInit) {
-		this.binary = init.binary;
+		this.binary = init.binary as SuperBinaryModule;
+		this.binary.setup();
 		this.inner = this.createInner(init.dialect);
 	}
 
@@ -73,11 +75,11 @@ export default class LocalLinter implements Linter {
 	}
 
 	async getDefaultLintConfigAsJSON(): Promise<string> {
-		return this.binary.getDefaultLintConfigAsJSON();
+		return await this.binary.getDefaultLintConfigAsJSON();
 	}
 
 	async getDefaultLintConfig(): Promise<LintConfig> {
-		return this.binary.getDefaultLintConfig();
+		return await this.binary.getDefaultLintConfig();
 	}
 
 	async setLintConfig(config: LintConfig): Promise<void> {
@@ -96,7 +98,7 @@ export default class LocalLinter implements Linter {
 	}
 
 	async toTitleCase(text: string): Promise<string> {
-		return this.binary.toTitleCase(text);
+		return await this.binary.toTitleCase(text);
 	}
 
 	async getLintDescriptions(): Promise<Record<string, string>> {

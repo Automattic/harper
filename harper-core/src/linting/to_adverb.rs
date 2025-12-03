@@ -5,6 +5,7 @@ use crate::patterns::{UPOSSet, WordSet};
 use crate::{Span, Token};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 const AMBIGUOUS_ADVERBS: &[&str] = &["just", "not"];
 
@@ -30,6 +31,8 @@ impl Default for ToAdverb {
 }
 
 impl ExprLinter for ToAdverb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
