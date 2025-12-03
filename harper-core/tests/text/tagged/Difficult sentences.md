@@ -603,7 +603,7 @@
 > Are we   still    on  for   tonight ?
 # VB  IPl+ NSg/VB/J J/P R/C/P NSg+    .
 > Mike    just threw coffee     onto Paul's lap       . It's on  now       .
-# NPr/VB+ J    VB    N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
+# NPr/VB+ J    VPt   N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
 > England need     a   hundred runs   , with twenty - five overs remaining . Game      on  !
 # NPr+    N🅪Sg/VXB D/P NSg     NPl/V3 . P    NSg    . NSg  NPl   Nᴹ/Vg/J   . NSg/VB/J+ J/P .
 > Your feet will    soon warm     up         once  your socks   are on  .
@@ -919,7 +919,7 @@
 > The sailors were    infected with malaria .
 # D+  NPl+    NSg/VPt NSg/VP/J P    Nᴹ+     .
 > overcome with happiness
-# NSg/VB   P    Nᴹ+
+# VB       P    Nᴹ+
 > green       with envy    ; flushed with success
 # NPr🅪Sg/VB/J P    NSg/VB+ . VP/J    P    N🅪Sg+
 > She  was with Acme for   twenty years before retiring last     fall     .

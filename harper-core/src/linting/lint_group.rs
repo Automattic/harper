@@ -184,6 +184,7 @@ use super::well_educated::WellEducated;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
+use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
 use super::{ExprLinter, Lint};
@@ -473,6 +474,7 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(AWhile, true);
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
@@ -498,9 +500,6 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(AWhile, true);
-        insert_struct_rule!(SubjectPronoun, true);
-        insert_struct_rule!(FindFine, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -524,6 +523,7 @@ impl LintGroup {
         insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
+        insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
@@ -611,6 +611,7 @@ impl LintGroup {
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(SplitWords, true);
+        insert_struct_rule!(SubjectPronoun, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
@@ -637,6 +638,7 @@ impl LintGroup {
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
+        insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
 

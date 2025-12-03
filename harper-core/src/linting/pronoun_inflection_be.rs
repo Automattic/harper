@@ -52,9 +52,8 @@ impl PronounInflectionBe {
         map.insert(arent, "isn't");
 
         let is = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind
-                    .as_word()
+            .then_kind_where(|kind| {
+                kind.as_word()
                     .as_ref()
                     .and_then(|m| m.as_ref().and_then(|m| m.np_member))
                     .unwrap_or_default()

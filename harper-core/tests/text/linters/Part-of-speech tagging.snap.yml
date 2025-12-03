@@ -27,9 +27,9 @@ Message: |
          |                                                               ^~~ Did you mean to spell `PoS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
-  - Replace with: “PBS”
-  - Replace with: “PMS”
-  - Replace with: “POS”
+  - Replace with: “Pod”
+  - Replace with: “Poi”
+  - Replace with: “Pol”
 
 
 
@@ -52,7 +52,7 @@ Message: |
 Suggest:
   - Replace with: “Brillo's”
   - Replace with: “Bill's”
-  - Replace with: “Trill's”
+  - Replace with: “Drill's”
 
 
 
@@ -76,9 +76,9 @@ Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
-  - Replace with: “Nun”
+  - Replace with: “No”
   - Replace with: “Non”
-  - Replace with: “Na”
+  - Replace with: “Nu”
 
 
 
@@ -89,8 +89,8 @@ Message: |
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
   - Replace with: “NES”
-  - Replace with: “Ens”
-  - Replace with: “INS”
+  - Replace with: “Nos”
+  - Replace with: “Nuns”
 
 
 
@@ -102,7 +102,7 @@ Message: |
 Suggest:
   - Replace with: “Nap”
   - Replace with: “Nip”
-  - Replace with: “Nu”
+  - Replace with: “No”
 
 
 
@@ -112,9 +112,9 @@ Message: |
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
          | ^~~~~ Did you mean to spell `Koine` this way?
 Suggest:
-  - Replace with: “Kine”
   - Replace with: “Kline”
-  - Replace with: “Kane”
+  - Replace with: “Kine”
+  - Replace with: “Kin”
 
 
 
@@ -125,8 +125,8 @@ Message: |
          |              ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -157,9 +157,8 @@ Message: |
          |                                                        ^~~~~~ Did you mean to spell `Ncmsan` this way?
       60 | Type = common, Gender = masculine, Number = singular, Case = accusative, Animate
 Suggest:
-  - Replace with: “Nissan”
   - Replace with: “Nisan”
-  - Replace with: “Nampa”
+  - Replace with: “Nissan”
 
 
 
@@ -169,9 +168,9 @@ Message: |
       64 | Penn tag set, developed in the Penn Treebank project. It is largely similar to
          |                                     ^~~~~~~~ Did you mean to spell `Treebank` this way?
 Suggest:
-  - Replace with: “Freeman”
-  - Replace with: “Reembark”
-  - Replace with: “Debank”
+  - Replace with: “Tie back”
+  - Replace with: “Tieback”
+  - Replace with: “Traceback”
 
 
 
@@ -191,8 +190,8 @@ Message: |
       76 | al. have proposed a "universal" tag set, with 12 categories (for example, no
 Suggest:
   - Replace with: “Petrol”
-  - Replace with: “Pedro”
-  - Replace with: “Peron”
+  - Replace with: “Patrol”
+  - Replace with: “Patron”
 
 
 
@@ -258,6 +257,10 @@ Lint:    Spelling (63 priority)
 Message: |
      105 | later part-of-speech tagging systems, such as CLAWS and VOLSUNGA. However, by
          |                                                         ^~~~~~~~ Did you mean to spell `VOLSUNGA` this way?
+Suggest:
+  - Replace with: “Volcanic”
+  - Replace with: “Volcano”
+  - Replace with: “Voltage”
 
 
 
@@ -280,9 +283,9 @@ Message: |
          |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -291,9 +294,9 @@ Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -302,9 +305,9 @@ Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -328,9 +331,9 @@ Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
          |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
-  - Replace with: “Carina”
-  - Replace with: “Carnap”
-  - Replace with: “Chadian”
+  - Replace with: “Cardiac”
+  - Replace with: “Carnal”
+  - Replace with: “Carnival”
 
 
 
@@ -362,9 +365,9 @@ Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -374,8 +377,8 @@ Message: |
          |                 ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -397,8 +400,8 @@ Message: |
          |                             ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -408,8 +411,8 @@ Message: |
          |         ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -434,7 +437,7 @@ Message: |
 Suggest:
   - Replace with: “Defoe's”
   - Replace with: “Denise's”
-  - Replace with: “Repose's”
+  - Replace with: “Demise's”
 
 
 
@@ -458,7 +461,7 @@ Message: |
 Suggest:
   - Replace with: “Defoe's”
   - Replace with: “Denise's”
-  - Replace with: “Repose's”
+  - Replace with: “Demise's”
 
 
 
@@ -484,8 +487,8 @@ Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -496,8 +499,8 @@ Message: |
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
-  - Replace with: “Belch”
-  - Replace with: “Walsh”
+  - Replace with: “Wench”
+  - Replace with: “Watch”
 
 
 
@@ -507,8 +510,8 @@ Message: |
          |                                                 ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -518,8 +521,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
+  - Replace with: “Sum”
   - Replace with: “SCM”
-  - Replace with: “SVG”
 
 
 
@@ -529,9 +532,9 @@ Message: |
          |                                                                 ^~~~~~~~ Did you mean to spell `Treebank` this way?
      214 | so the results are directly comparable. However, many significant taggers are
 Suggest:
-  - Replace with: “Freeman”
-  - Replace with: “Reembark”
-  - Replace with: “Debank”
+  - Replace with: “Tie back”
+  - Replace with: “Tieback”
+  - Replace with: “Traceback”
 
 
 

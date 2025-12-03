@@ -856,7 +856,7 @@ BRICS/Og
 BS/ONgV
 BSA/NO
 BSD/ONSg
-BTU/N               # same as Btu?
+BTU/N
 BTW/
 BYOB/
 Ba/ONg
@@ -1548,7 +1548,6 @@ Bryce/Og
 Brynner/g
 Bryon/Og
 Brzezinski/Og
-Btu/g               # same as BTU?
 Buber/g
 Buchanan/Og
 Bucharest/Og
@@ -4803,7 +4802,6 @@ IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adject
 IUD/N
 IV/JNSg
 IVF/N
-Ia/O
 Iaccoca/g
 Iago/Og
 Ian/Og
@@ -7321,8 +7319,6 @@ Nb/g                # niobium
 Nd/g                # neodymium
 Ndjamena/g
 Ne/g                # neon
-NeWS
-NeWSes
 Neal/Og
 Neanderthal/JNSg
 Neapolitan/JNOg
@@ -7352,7 +7348,6 @@ Nelsen/Og
 Nelson/Og
 Nembutal/g
 Nemesis/Og
-Neo/Og
 Neogene/JOg
 Neolithic/ONJ
 Nepal/Og
@@ -7820,6 +7815,7 @@ PRC/ONg             # mainland China
 PRO/N
 PS/ONgJ             # postscript; multiple meanings as implied by the attributes?
 P.S.                # postscript
+U.S./Og             # United States
 PST/ONg
 PSU/Sg              # power supply unit
 PT/NOJ
@@ -8745,7 +8741,6 @@ Rollerblade/g
 Rollins/Og
 Rolodex/NgV
 Rolvaag/g
-Rom/ONJ
 Roman/JNOSg
 Romanesque/JSg
 Romania/Og
@@ -10470,7 +10465,6 @@ VRAM/Ng             # video memory
 VT/ONJV             # US state (Vermont)
 VTOL/N              # vertical takeoff and landing
 VW/OgS              # car brand; cf. Volkswagen
-Va/Og
 Vacaville/Og
 Vader/g
 Vaduz/Og
@@ -16085,7 +16079,7 @@ bye/~NSgJP
 bygone/JNSg
 bylaw/NSg
 byline/NSgV
-bypass/~NgSVGd
+bypass/~NgSVGdB
 bypath/Ng
 bypaths/N
 byplay/Ng
@@ -19183,8 +19177,10 @@ copycatting/V6
 copyist/NgS
 copyleft/NV
 copyright/~NSgVGd
-copywrite/VSdG
+copywrite/VSG
 copywriter/NgS
+copywritten/VT
+copywrote/Vt
 coquetry/NSg
 coquette/NSgVdGJ
 coquettish/JY
@@ -36990,7 +36986,7 @@ overcharge/VdGSNg
 overclock/VGdSN
 overcloud/VSGd
 overcoat/NgSV
-overcome/~VGSN
+overcome/~VGS
 overcompensate/VdSGn
 overcompensation/Nmg
 overconfidence/Nmg
@@ -48486,7 +48482,7 @@ threnody/NSg
 thresh/Vd>SGgZ
 thresher/Ng
 threshold/~NSgG
-threw/~V
+threw/~Vt
 thrice/~
 thrift/~NSgV
 thriftily/Ry
@@ -48524,7 +48520,7 @@ throw/~V>GSNgZ
 throwaway/JNSg
 throwback/NSg
 thrower/~Ng
-thrown/~VJ
+thrown/~VTJ
 thru/~P
 thrum/NSgVJ
 thrummed/VtTJ
@@ -53305,14 +53301,12 @@ WSL/Og              # windows subsystem for linux
 Waymo/Og
 WeChat/Og
 WebAssembly/g       # see WASM
-Webpack/Og
 WebDAV/Og
 WebGL/Og
 WebGPU/Sg
 WebKit/Og
 WebRTC/Og
 WebSocket/Sg
-Webpack/Og
 WhatsApp/NOgVG      # messaging app
 Wikilink/NSg        # !! please check and comment !! elsewhere we have wikilink
 Wikimedia/Og        # foundation that runs Wikipedia etc.
@@ -53456,6 +53450,7 @@ uptime/NwgS
 vid/NgS             # video
 waitlist/NgS
 watchOS/Og
+webpack/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
 XeTeX/Og            # TeX typesetting engine
@@ -53553,6 +53548,7 @@ data point/NgS
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NwgS
+de
 de facto/JNg
 de jure/RJ
 de minimis/J
@@ -54137,3 +54133,5 @@ topicalization/Nmg
 typological/JQ
 volitive/NSgJ
 worldbuild/Vd>G
+chroot/gNS
+WordCamp/gO

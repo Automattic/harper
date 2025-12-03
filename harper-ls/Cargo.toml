@@ -1,6 +1,6 @@
 [package]
 name = "harper-ls"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -24,13 +24,13 @@ dirs = "6.0.0"
 anyhow = "1.0.100"
 serde_json = "1.0.145"
 itertools = "0.14.0"
-tracing = { version = "0.1.41", default-features = false, features = ["std"] }
-tracing-subscriber = { version = "0.3.20", default-features = false, features = ["fmt", "std"] }
+tracing = { version = "0.1.43", default-features = false, features = ["std"] }
+tracing-subscriber = { version = "0.3.22", default-features = false, features = ["fmt", "std"] }
 resolve-path = "0.1.0"
 open = "5.3.3"
 futures = "0.3.31"
 serde = { version = "1.0.228", features = ["derive"] }
-indexmap = { version = "2.12.0", features = ["serde"] }
+indexmap = { version = "2.12.1", features = ["serde"] }
 globset = "0.4.18"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
 

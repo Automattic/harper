@@ -15,22 +15,22 @@ impl Default for Everyday {
         let everyday = Word::new("everyday");
         let every_day = Lrc::new(SequenceExpr::aco("every").t_ws().t_aco("day"));
 
-        let everyday_bad_after =
-            All::new(vec![
-                Box::new(
-                    SequenceExpr::default()
-                        .then(everyday.clone())
-                        .t_ws()
-                        .then_any_word(),
-                ),
-                Box::new(SequenceExpr::default().t_any().t_any().then(
-                    |tok: &Token, _src: &[char]| {
-                        !tok.kind.is_noun()
-                            && !tok.kind.is_oov()
-                            && !tok.kind.is_verb_progressive_form()
-                    },
-                )),
-            ]);
+        let everyday_bad_after = All::new(vec![
+            Box::new(
+                SequenceExpr::default()
+                    .then(everyday.clone())
+                    .t_ws()
+                    .then_any_word(),
+            ),
+            Box::new(
+                SequenceExpr::default()
+                    .t_any()
+                    .t_any()
+                    .then_kind_where(|kind| {
+                        !kind.is_noun() && !kind.is_oov() && !kind.is_verb_progressive_form()
+                    }),
+            ),
+        ]);
 
         let bad_before_every_day = All::new(vec![
             Box::new(
@@ -72,18 +72,14 @@ impl Default for Everyday {
                     .then(everyday.clone())
                     .then_punctuation(),
             ),
-            Box::new(
-                SequenceExpr::default()
-                    .t_any()
-                    .then(|tok: &Token, _src: &[char]| {
-                        matches!(
-                            tok.kind,
-                            TokenKind::Punctuation(
-                                Punctuation::Question | Punctuation::Comma | Punctuation::Period
-                            )
-                        )
-                    }),
-            ),
+            Box::new(SequenceExpr::default().t_any().then_kind_where(|kind| {
+                matches!(
+                    kind,
+                    TokenKind::Punctuation(
+                        Punctuation::Question | Punctuation::Comma | Punctuation::Period
+                    )
+                )
+            })),
         ]);
 
         // (However, the message goes far beyond) every day things.
@@ -102,9 +98,9 @@ impl Default for Everyday {
                     .t_any()
                     .t_any()
                     .t_any()
-                    .then(|tok: &Token, _src: &[char]| {
+                    .then_kind_where(|kind| {
                         matches!(
-                            tok.kind,
+                            kind,
                             TokenKind::Punctuation(
                                 Punctuation::Question | Punctuation::Comma | Punctuation::Period
                             )

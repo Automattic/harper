@@ -203,7 +203,7 @@ impl Default for MissingTo {
         let pattern = SequenceExpr::default()
             .then(Self::controller_words())
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_verb_lemma());
+            .then_kind_where(|kind| kind.is_verb_lemma());
 
         map.insert(pattern, 0);
 

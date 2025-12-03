@@ -1,6 +1,7 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
+	assertLocatorIsFocused,
 	clickHarperHighlight,
 	getTextarea,
 	replaceEditorContent,
@@ -73,4 +74,6 @@ test('Can dismiss with escape key', async ({ page }) => {
 	await page.keyboard.press('Escape');
 
 	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+
+	await assertLocatorIsFocused(page, editor);
 });
