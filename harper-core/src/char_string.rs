@@ -46,6 +46,10 @@ pub trait CharStringExt {
     /// The suffix is assumed to be lowercase.
     fn ends_with_ignore_ascii_case_str(&self, suffix: &str) -> bool;
 
+    /// Case-insensitive check if the string ends with any of the given ASCII suffixes.
+    /// The suffixes are assumed to be lowercase.
+    fn ends_with_any_ignore_ascii_case_chars(&self, suffixes: &[&[char]]) -> bool;
+
     /// Check if the string contains any vowels
     fn contains_vowel(&self) -> bool;
 }
@@ -146,6 +150,12 @@ impl CharStringExt for [char] {
             .rev()
             .zip(suffix.iter())
             .all(|(a, b)| a.to_ascii_lowercase() == *b)
+    }
+
+    fn ends_with_any_ignore_ascii_case_chars(&self, suffixes: &[&[char]]) -> bool {
+        suffixes
+            .iter()
+            .any(|suffix| self.ends_with_ignore_ascii_case_chars(suffix))
     }
 
     fn contains_vowel(&self) -> bool {

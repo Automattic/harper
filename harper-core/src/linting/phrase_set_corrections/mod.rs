@@ -352,6 +352,37 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "Copyright" => (
+            &[
+                (&["copywrite"], &["copyright"]),
+                (&["copywrites"], &["copyrights"]),
+                (&["copywriting"], &["copyrighting"]),
+                (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
+            ],
+            "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
+            "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
+            LintKind::WordChoice
+        ),
+        "Expat" => (
+            &[
+                (&["ex-pat", "ex pat"], &["expat"]),
+                (&["ex-pats", "ex pats"], &["expats"]),
+                (&["ex-pat's", "ex pat's"], &["expat's"]),
+            ],
+            "The correct spelling is `expat` with no hyphen or space.",
+            "Corrects the mistake of writing `expat` as two words.",
+            LintKind::Spelling
+        ),
+        "Expatriate" => (
+            &[
+                (&["ex-patriot", "expatriot", "ex patriot"], &["expatriate"]),
+                (&["ex-patriots", "expatriots", "ex patriots"], &["expatriates"]),
+                (&["ex-patriot's", "expatriot's", "ex patriot's"], &["expatriate's"]),
+            ],
+            "Use the correct term for someone living abroad.",
+            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
+            LintKind::Eggcorn
+        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),

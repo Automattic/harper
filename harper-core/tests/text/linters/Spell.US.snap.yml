@@ -5,6 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Afterward”
   - Replace with: “Afterwords”
+  - Replace with: “Afterword's”
 
 
 
@@ -14,8 +15,8 @@ Message: |
          |   ^~~~~~ Did you mean to spell `Centre` this way?
 Suggest:
   - Replace with: “Center”
-  - Replace with: “Entire”
-  - Replace with: “Entry”
+  - Replace with: “Censure”
+  - Replace with: “Cent”
 
 
 
@@ -25,8 +26,8 @@ Message: |
          |   ^~~~~~~~ Did you mean to spell `Labelled` this way?
 Suggest:
   - Replace with: “Labeled”
-  - Replace with: “Belled”
-  - Replace with: “Rebelled”
+  - Replace with: “Labeler”
+  - Replace with: “Labelless”
 
 
 
@@ -36,7 +37,8 @@ Message: |
          |   ^~~~~~~ Did you mean to spell `Flavour` this way?
 Suggest:
   - Replace with: “Flavor”
-  - Replace with: “Cavour”
+  - Replace with: “Favor”
+  - Replace with: “Flour”
 
 
 
@@ -46,8 +48,8 @@ Message: |
          |   ^~~~~~~~ Did you mean to spell `Favoured` this way?
 Suggest:
   - Replace with: “Favored”
-  - Replace with: “Devoured”
-  - Replace with: “Savored”
+  - Replace with: “Flavored”
+  - Replace with: “Floured”
 
 
 
@@ -57,8 +59,8 @@ Message: |
          |   ^~~~~~ Did you mean to spell `Honour` this way?
 Suggest:
   - Replace with: “Honor”
-  - Replace with: “Concur”
-  - Replace with: “Contour”
+  - Replace with: “Hour”
+  - Replace with: “Honer”
 
 
 
@@ -67,18 +69,19 @@ Message: |
       15 | - Grey.
          |   ^~~~ Did you mean to spell `Grey` this way?
 Suggest:
+  - Replace with: “Gray”
+  - Replace with: “Grew”
   - Replace with: “Gorey”
-  - Replace with: “Greg”
-  - Replace with: “Trey”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
       16 | - Quarrelled.
-         |   ^~~~~~~~~~ Did you mean `Quarreled`?
+         |   ^~~~~~~~~~ Did you mean to spell `Quarrelled` this way?
 Suggest:
   - Replace with: “Quarreled”
+  - Replace with: “Quarreler”
 
 
 
@@ -94,18 +97,21 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       18 | - Recognised.
-         |   ^~~~~~~~~~ Did you mean `Recognized`?
+         |   ^~~~~~~~~~ Did you mean to spell `Recognised` this way?
 Suggest:
   - Replace with: “Recognized”
+  - Replace with: “Recognize”
+  - Replace with: “Recognizer”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
       19 | - Neighbour.
-         |   ^~~~~~~~~ Did you mean `Neighbor`?
+         |   ^~~~~~~~~ Did you mean to spell `Neighbour` this way?
 Suggest:
   - Replace with: “Neighbor”
+  - Replace with: “Neighbors”
 
 
 
@@ -135,17 +141,19 @@ Message: |
          |   ^~~~~~~ Did you mean to spell `Theatre` this way?
 Suggest:
   - Replace with: “Theater”
-  - Replace with: “Sheathe”
-  - Replace with: “Heater”
+  - Replace with: “There”
+  - Replace with: “They're”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
       23 | - Analyse.
-         |   ^~~~~~~ Did you mean `Analyze`?
+         |   ^~~~~~~ Did you mean to spell `Analyse` this way?
 Suggest:
   - Replace with: “Analyze”
+  - Replace with: “Analyst”
+  - Replace with: “Analysis”
 
 
 

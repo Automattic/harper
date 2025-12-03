@@ -2429,7 +2429,7 @@
 > the baby      at    her     as    she  spoke   . “ I       must   go       and  get    ready    to play    croquet with the
 # D   NSg/VB/J+ NSg/P ISg/D$+ NSg/R ISg+ NSg/VPt . . ISg/#r+ NSg/VB NSg/VB/J VB/C NSg/VB NSg/VB/J P  N🅪Sg/VB NSg/VB  P    D+
 > Queen     , ” and  she  hurried out          of the room       . The cook   threw a   frying  - pan      after her
-# NPr/VB/J+ . . VB/C ISg+ VP/J    NSg/VB/J/R/P P  D   N🅪Sg/VB/J+ . D   NPr/VB VB    D/P Nᴹ/Vg/J . NPr/VB/J P     ISg/D$+
+# NPr/VB/J+ . . VB/C ISg+ VP/J    NSg/VB/J/R/P P  D   N🅪Sg/VB/J+ . D   NPr/VB VPt   D/P Nᴹ/Vg/J . NPr/VB/J P     ISg/D$+
 > as    she  went    out          , but     it       just missed her     .
 # NSg/R ISg+ NSg/VPt NSg/VB/J/R/P . NSg/C/P NPr/ISg+ J    VP/J   ISg/D$+ .
 >
@@ -3409,7 +3409,7 @@
 > the garden    , called out          “ The Queen     ! The Queen     ! ” and  the three gardeners instantly
 # D   NSg/VB/J+ . VP/J   NSg/VB/J/R/P . D   NPr/VB/J+ . D+  NPr/VB/J+ . . VB/C D+  NSg+  NPl+      R
 > threw themselves flat     upon their faces   . There was a   sound     of many        footsteps , and
-# VB    IPl+       NSg/VB/J P    D$+   NPl/V3+ . R+    VPt D/P N🅪Sg/VB/J P  NSg/I/J/Dq+ NPl+      . VB/C
+# VPt   IPl+       NSg/VB/J P    D$+   NPl/V3+ . R+    VPt D/P N🅪Sg/VB/J P  NSg/I/J/Dq+ NPl+      . VB/C
 > Alice looked round      , eager    to see    the Queen     .
 # NPr+  VP/J   NSg/VB/J/P . NSg/VB/J P  NSg/VB D+  NPr/VB/J+ .
 >
@@ -4693,7 +4693,7 @@
 > “ The reason   is  , ” said the Gryphon , “ that         they would go       with the lobsters to the
 # . D+  N🅪Sg/VB+ VL3 . . VP/J D   ?       . . NSg/I/C/Ddem IPl+ VXB   NSg/VB/J P    D   NPl/V3   P  D
 > dance    . So          they got thrown out          to sea . So          they had to fall    a    long      way    . So          they
-# N🅪Sg/VB+ . NSg/I/J/R/C IPl+ VP  VB/J   NSg/VB/J/R/P P  NSg . NSg/I/J/R/C IPl+ VB  P  N🅪Sg/VB D/P+ NPr/VB/J+ NSg/J+ . NSg/I/J/R/C IPl+
+# N🅪Sg/VB+ . NSg/I/J/R/C IPl+ VP  VPp/J  NSg/VB/J/R/P P  NSg . NSg/I/J/R/C IPl+ VB  P  N🅪Sg/VB D/P+ NPr/VB/J+ NSg/J+ . NSg/I/J/R/C IPl+
 > got their tails   fast       in        their mouths  . So          they couldn’t get    them     out          again .
 # VP  D$+   NPl/V3+ NSg/VB/J/R NPr/J/R/P D$+   NPl/V3+ . NSg/I/J/R/C IPl+ VB       NSg/VB NSg/IPl+ NSg/VB/J/R/P P     .
 > That’s all          . ”
