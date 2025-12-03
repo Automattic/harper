@@ -13,12 +13,18 @@ pub struct TakeMedicine {
 impl Default for TakeMedicine {
     fn default() -> Self {
         let eat_verb = DerivedFrom::new_from_str("eat")
+            .or(DerivedFrom::new_from_str("eats"))
             .or(DerivedFrom::new_from_str("ate"))
+            .or(DerivedFrom::new_from_str("eating"))
             .or(DerivedFrom::new_from_str("eaten"));
 
         let medication = DerivedFrom::new_from_str("antibiotic")
             .or(DerivedFrom::new_from_str("medicine"))
-            .or(DerivedFrom::new_from_str("medication"));
+            .or(DerivedFrom::new_from_str("medication"))
+            .or(DerivedFrom::new_from_str("pill"))
+            .or(DerivedFrom::new_from_str("tablet"))
+            .or(DerivedFrom::new_from_str("aspirin"))
+            .or(DerivedFrom::new_from_str("paracetamol"));
 
         let modifiers = SequenceExpr::default()
             .then_any_of(vec![
@@ -158,6 +164,24 @@ mod tests {
             "He has eaten medication already.",
             TakeMedicine::default(),
             "He has taken medication already.",
+        );
+    }
+
+    #[test]
+    fn swaps_eat_pills() {
+        assert_suggestion_result(
+            "He ate the pills without water.",
+            TakeMedicine::default(),
+            "He took the pills without water.",
+        );
+    }
+
+    #[test]
+    fn swaps_eating_paracetamol() {
+        assert_suggestion_result(
+            "She is eating paracetamol for her headache.",
+            TakeMedicine::default(),
+            "She is taking paracetamol for her headache.",
         );
     }
 
