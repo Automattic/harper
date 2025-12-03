@@ -85,20 +85,20 @@ impl Linter for ProperNoun {
 
 impl ProperNoun {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        if matched_tokens.len() >= 7 {
-            if let Some(next_word) = matched_tokens.get(6) {
-                let is_lowercase = next_word
-                    .span
-                    .get_content(source)
-                    .first()
-                    .map(|c| c.is_lowercase())
-                    .unwrap_or(false);
+        if matched_tokens.len() >= 7
+            && let Some(next_word) = matched_tokens.get(6)
+        {
+            let is_lowercase = next_word
+                .span
+                .get_content(source)
+                .first()
+                .map(|c| c.is_lowercase())
+                .unwrap_or(false);
 
-                if is_lowercase
-                    && (next_word.kind.is_upos(UPOS::NOUN) || next_word.kind.is_upos(UPOS::ADJ))
-                {
-                    return None;
-                }
+            if is_lowercase
+                && (next_word.kind.is_upos(UPOS::NOUN) || next_word.kind.is_upos(UPOS::ADJ))
+            {
+                return None;
             }
         }
 

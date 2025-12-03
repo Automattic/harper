@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Token,
+    Token,
     expr::{Expr, SequenceExpr},
     linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -12,9 +12,9 @@ pub struct JealousOf {
 impl Default for JealousOf {
     fn default() -> Self {
         let valid_object = |tok: &Token, _source: &[char]| {
-            (tok.kind.is_nominal() || tok.kind.is_oov())
+            (tok.kind.is_nominal() || !tok.kind.is_verb())
+                && (tok.kind.is_oov() || tok.kind.is_nominal())
                 && !tok.kind.is_preposition()
-                && !(tok.kind.is_verb() && !tok.kind.is_nominal())
         };
 
         let pattern = SequenceExpr::default()
@@ -39,11 +39,7 @@ impl ExprLinter for JealousOf {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let from_token = tokens.iter().find(|tok| {
-            tok.span
-                .get_content(source)
-                .eq_ignore_ascii_case_str("from")
-        })?;
+        let from_token = &tokens[2];
 
         Some(Lint {
             span: from_token.span,
