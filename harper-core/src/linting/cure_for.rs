@@ -1,6 +1,7 @@
 use crate::{
     Span, Token,
     expr::{Expr, SequenceExpr},
+    linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{DerivedFrom, Word},
 };
@@ -23,6 +24,8 @@ impl Default for CureFor {
 }
 
 impl ExprLinter for CureFor {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

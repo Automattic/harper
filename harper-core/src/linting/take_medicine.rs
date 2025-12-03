@@ -1,6 +1,7 @@
 use crate::{
     Token,
     expr::{Expr, OwnedExprExt, SequenceExpr},
+    linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::DerivedFrom,
 };
@@ -70,6 +71,8 @@ fn replacement_for(
 }
 
 impl ExprLinter for TakeMedicine {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

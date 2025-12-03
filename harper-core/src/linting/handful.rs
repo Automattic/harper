@@ -1,4 +1,5 @@
 use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
+use crate::linting::expr_linter::Chunk;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -23,6 +24,8 @@ impl Default for Handful {
 }
 
 impl ExprLinter for Handful {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

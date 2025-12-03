@@ -1,5 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -20,6 +21,8 @@ impl Default for ApartFrom {
 }
 
 impl ExprLinter for ApartFrom {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

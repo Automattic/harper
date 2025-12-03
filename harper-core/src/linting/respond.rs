@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use crate::Token;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::patterns::Word;
 
@@ -62,6 +63,8 @@ impl Default for Respond {
 }
 
 impl ExprLinter for Respond {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

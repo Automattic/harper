@@ -3,6 +3,7 @@ use std::sync::Arc;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, ExprMap, SequenceExpr},
+    linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::DerivedFrom,
 };
@@ -34,6 +35,8 @@ impl Default for RightClick {
 }
 
 impl ExprLinter for RightClick {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -45,6 +45,7 @@ use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
+use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;

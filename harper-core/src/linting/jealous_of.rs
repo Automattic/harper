@@ -1,6 +1,7 @@
 use crate::{
     CharStringExt, Token,
     expr::{Expr, SequenceExpr},
+    linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
@@ -31,6 +32,8 @@ impl Default for JealousOf {
 }
 
 impl ExprLinter for JealousOf {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

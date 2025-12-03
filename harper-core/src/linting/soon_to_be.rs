@@ -3,6 +3,7 @@ use std::{ops::Range, sync::Arc};
 use crate::{
     Token, TokenKind, TokenStringExt,
     expr::{Expr, ExprMap, SequenceExpr},
+    linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::NominalPhrase,
 };
@@ -84,6 +85,8 @@ impl Default for SoonToBe {
 }
 
 impl ExprLinter for SoonToBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
