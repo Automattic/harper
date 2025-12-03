@@ -88,6 +88,7 @@ pub trait TokenStringExt: private::Sealed {
     create_decl_for!(verb);
     create_decl_for!(word);
     create_decl_for!(word_like);
+    create_decl_for!(heading_start);
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
@@ -139,6 +140,7 @@ impl TokenStringExt for [Token] {
     create_fns_for!(verb);
     create_fns_for!(word_like);
     create_fns_for!(word);
+    create_fns_for!(heading_start);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())

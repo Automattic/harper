@@ -918,6 +918,7 @@ impl TokenStringExt for Document {
     create_fns_on_doc!(verb);
     create_fns_on_doc!(word);
     create_fns_on_doc!(word_like);
+    create_fns_on_doc!(heading_start);
 
     fn first_sentence_word(&self) -> Option<&Token> {
         self.tokens.first_sentence_word()
