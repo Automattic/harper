@@ -50,7 +50,7 @@ impl IrregularNouns {
         Ok(Self { nouns })
     }
 
-    pub fn get() -> Arc<Self> {
+    pub fn curated() -> Arc<Self> {
         (*NOUNS).clone()
     }
 
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn can_find_irregular_plural_for_singular_lowercase() {
         assert_eq!(
-            IrregularNouns::get().get_plural_for_singular("man"),
+            IrregularNouns::curated().get_plural_for_singular("man"),
             Some("men")
         );
     }
@@ -90,7 +90,7 @@ mod tests {
     #[test]
     fn can_find_irregular_plural_for_singular_uppercase() {
         assert_eq!(
-            IrregularNouns::get().get_plural_for_singular("WOMAN"),
+            IrregularNouns::curated().get_plural_for_singular("WOMAN"),
             Some("women")
         );
     }
@@ -98,18 +98,24 @@ mod tests {
     #[test]
     fn can_find_singular_for_irregular_plural() {
         assert_eq!(
-            IrregularNouns::get().get_singular_for_plural("children"),
+            IrregularNouns::curated().get_singular_for_plural("children"),
             Some("child")
         );
     }
 
     #[test]
     fn cant_find_regular_plural() {
-        assert_eq!(IrregularNouns::get().get_plural_for_singular("car"), None);
+        assert_eq!(
+            IrregularNouns::curated().get_plural_for_singular("car"),
+            None
+        );
     }
 
     #[test]
     fn cant_find_non_noun() {
-        assert_eq!(IrregularNouns::get().get_plural_for_singular("the"), None);
+        assert_eq!(
+            IrregularNouns::curated().get_plural_for_singular("the"),
+            None
+        );
     }
 }

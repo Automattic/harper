@@ -73,7 +73,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 
         let simple_past = verb_tok.span.get_content_string(src);
 
-        if let Some(past_participle) = IrregularVerbs::get()
+        if let Some(past_participle) = IrregularVerbs::curated()
             .get_past_participle_for_preterite(&simple_past)
             .filter(|pp| pp != &simple_past)
         {

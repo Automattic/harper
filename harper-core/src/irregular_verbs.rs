@@ -56,7 +56,7 @@ impl IrregularVerbs {
         Ok(Self { verbs })
     }
 
-    pub fn get() -> Arc<Self> {
+    pub fn curated() -> Arc<Self> {
         (*VERBS).clone()
     }
 
@@ -81,7 +81,7 @@ mod tests {
     #[test]
     fn can_find_irregular_past_participle_for_preterite_lowercase() {
         assert_eq!(
-            IrregularVerbs::get().get_past_participle_for_preterite("arose"),
+            IrregularVerbs::curated().get_past_participle_for_preterite("arose"),
             Some("arisen")
         );
     }
@@ -89,7 +89,7 @@ mod tests {
     #[test]
     fn can_find_irregular_past_participle_for_preterite_uppercase() {
         assert_eq!(
-            IrregularVerbs::get().get_past_participle_for_preterite("WENT"),
+            IrregularVerbs::curated().get_past_participle_for_preterite("WENT"),
             Some("gone")
         );
     }
@@ -97,7 +97,7 @@ mod tests {
     #[test]
     fn can_find_irregular_past_participle_same_as_past_tense() {
         assert_eq!(
-            IrregularVerbs::get().get_past_participle_for_preterite("taught"),
+            IrregularVerbs::curated().get_past_participle_for_preterite("taught"),
             Some("taught")
         );
     }
@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn cant_find_regular_past_participle() {
         assert_eq!(
-            IrregularVerbs::get().get_past_participle_for_preterite("walked"),
+            IrregularVerbs::curated().get_past_participle_for_preterite("walked"),
             None
         );
     }
@@ -113,7 +113,7 @@ mod tests {
     #[test]
     fn cant_find_non_verb() {
         assert_eq!(
-            IrregularVerbs::get().get_past_participle_for_preterite("the"),
+            IrregularVerbs::curated().get_past_participle_for_preterite("the"),
             None
         );
     }
