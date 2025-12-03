@@ -23,6 +23,7 @@ use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
+use super::apart_from::ApartFrom;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -76,6 +77,7 @@ use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
+use super::johns_hopkins::JohnsHopkins;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -128,6 +130,7 @@ use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
+use super::right_click::RightClick;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
@@ -454,6 +457,7 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
@@ -513,6 +517,7 @@ impl LintGroup {
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(JealousOf, true);
+        insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_struct_rule!(ItsPossessive, true);
@@ -569,6 +574,7 @@ impl LintGroup {
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
+        insert_expr_rule!(RightClick, true);
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_struct_rule!(SaveToSafe, true);

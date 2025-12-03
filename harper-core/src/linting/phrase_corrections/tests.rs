@@ -1481,6 +1481,67 @@ fn corrects_piece_of_mind() {
     )
 }
 
+// PerSe
+#[test]
+fn corrects_per_say_basic() {
+    assert_suggestion_result(
+        "I'm not a fan per say.",
+        lint_group(),
+        "I'm not a fan per se.",
+    );
+}
+
+#[test]
+fn corrects_per_say_sentence_start() {
+    assert_suggestion_result(
+        "Per say, the policy is clear.",
+        lint_group(),
+        "Per se, the policy is clear.",
+    );
+}
+
+#[test]
+fn corrects_per_say_all_caps() {
+    assert_suggestion_result(
+        "This wasn't PER SAY terrible.",
+        lint_group(),
+        "This wasn't PER SE terrible.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Their claim was per-say wrong.",
+        lint_group(),
+        "Their claim was per se wrong.",
+    );
+}
+
+#[test]
+fn corrects_multiple_per_say_occurrences() {
+    assert_suggestion_result(
+        "per say once and per say twice",
+        lint_group(),
+        "per se once and per se twice",
+    );
+}
+
+#[test]
+fn allows_per_se() {
+    assert_lint_count("It isn't per se wrong.", lint_group(), 0);
+}
+
+#[test]
+fn ignores_per_comma_say() {
+    assert_lint_count("Charge per, say, shipment.", lint_group(), 0);
+}
+
+#[test]
+fn ignores_single_word_persay() {
+    assert_lint_count("That isn't persay accurate.", lint_group(), 0);
+}
+
 // PointsOfView
 #[test]
 fn corrects_points_of_view() {

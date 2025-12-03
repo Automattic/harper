@@ -880,6 +880,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `piece of mind` to `peace of mind`.",
             LintKind::Eggcorn
         ),
+        "PerSe" => (
+            ["per say", "per-say"],
+            ["per se"],
+            "The Latin phrase is spelled `per se`.",
+            "Flags misspellings of the Latin phrase `per se`.",
+            LintKind::Eggcorn
+        ),
         "PointsOfView" => (
             ["point of views"],
             ["points of view"],

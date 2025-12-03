@@ -27,9 +27,7 @@ impl Default for TakeMedicine {
             ])
             .t_ws();
 
-        let adjectives = SequenceExpr::default()
-            .then_one_or_more_adjectives()
-            .t_ws();
+        let adjectives = SequenceExpr::default().then_one_or_more_adjectives().t_ws();
 
         let pattern = SequenceExpr::default()
             .then(eat_verb)
@@ -65,7 +63,10 @@ fn replacement_for(
         base
     };
 
-    Suggestion::replace_with_match_case(replacement.chars().collect(), verb.span.get_content(source))
+    Suggestion::replace_with_match_case(
+        replacement.chars().collect(),
+        verb.span.get_content(source),
+    )
 }
 
 impl ExprLinter for TakeMedicine {
@@ -108,7 +109,9 @@ impl ExprLinter for TakeMedicine {
 #[cfg(test)]
 mod tests {
     use super::TakeMedicine;
-    use crate::linting::tests::{assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    };
 
     #[test]
     fn swaps_ate_antibiotics() {
