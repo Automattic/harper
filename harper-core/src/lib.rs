@@ -11,6 +11,8 @@ mod edit_distance;
 pub mod expr;
 mod fat_token;
 mod ignored_lints;
+pub mod irregular_nouns;
+pub mod irregular_verbs;
 pub mod language_detection;
 mod lexing;
 pub mod linting;

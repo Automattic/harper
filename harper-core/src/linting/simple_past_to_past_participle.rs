@@ -2,7 +2,8 @@ use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{All, Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, IrregularVerbs, Lint, LintKind, Suggestion},
+    irregular_verbs::IrregularVerbs,
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
 
