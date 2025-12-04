@@ -367,7 +367,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new LocalLinter({ binary });
 		const lints = await linter.organizedLints(text, { forceAllHeadings: true });
 
-		const titleCaseLints = lints['UseTitleCase'];
+		const titleCaseLints = lints.UseTitleCase;
 		expect(titleCaseLints).not.toBeUndefined();
 		expect(titleCaseLints.length).toBe(1);
 
