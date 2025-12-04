@@ -48,17 +48,45 @@ impl Parser for Latex {
         harper_tokens_initial.push(Token::new(Span::new(0, 0), TokenKind::Unlintable));
 
         let mut consecutive_hyphens = 0;
+        let mut consecutive_spaces = 0;
 
         let mut harper_tokens: Vec<Token> = vec![];
-        for token in harper_tokens_initial {
-            if matches!(&token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
+        for mut token in harper_tokens_initial {
+            if matches!(token.kind, TokenKind::Newline(1)) {
+                token.kind = TokenKind::Space(1);
+            }
+
+            if matches!(token.kind, TokenKind::Space(_)) {
+                token.kind = TokenKind::Space(1);
+
+                consecutive_spaces += 1;
+            } else if consecutive_spaces > 1 {
+                let mut spaces = vec![];
+                for _ in 0..consecutive_spaces {
+                    spaces.push(harper_tokens.pop().unwrap());
+                }
+                let mut total_span = spaces.first().expect("at least two").span;
+                for h in &spaces[1..] {
+                    total_span.expand_to_include(h.span.end);
+                }
+
+                harper_tokens.push(Token {
+                    span: total_span,
+                    kind: TokenKind::Space(1),
+                });
+
+                consecutive_spaces = 0;
+            } else {
+                consecutive_spaces = 0;
+            }
+
+            if matches!(token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
                 consecutive_hyphens += 1;
             } else if consecutive_hyphens == 2 || consecutive_hyphens == 3 {
                 let mut hyphens = vec![];
                 for _ in 0..consecutive_hyphens {
                     hyphens.push(harper_tokens.pop().unwrap());
                 }
-
                 let mut total_span = hyphens.first().expect("at least two").span;
                 for h in &hyphens[1..] {
                     total_span.expand_to_include(h.span.end);
@@ -73,6 +101,8 @@ impl Parser for Latex {
                     }),
                 });
 
+                consecutive_hyphens = 0;
+            } else {
                 consecutive_hyphens = 0;
             }
 
@@ -135,6 +165,20 @@ mod tests {
         dbg!(&tokens);
 
         assert_eq!(tokens.len(), 3);
+        assert!(matches!(tokens[1].kind, TokenKind::Space(1)));
+    }
+
+    #[test]
+    fn newline_then_indent() {
+        let source = r#"some
+        stuff"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert_eq!(tokens.len(), 3);
+        assert!(matches!(tokens[1].kind, TokenKind::Space(1)));
     }
 
     #[test]
@@ -157,6 +201,18 @@ mod tests {
         dbg!(&tokens);
 
         assert_eq!(tokens.len(), 1);
+    }
+
+    #[test]
+    #[ignore]
+    fn double_quotes() {
+        let source = r#"``stuff''"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert_eq!(tokens.len(), 3);
     }
 
     #[test]
