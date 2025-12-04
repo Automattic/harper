@@ -51,7 +51,7 @@ pub fn try_make_title_case(
             .is_some_and(|o: &Vec<char>| o[idx] != new_char)
             || relevant_text[idx] != new_char
         {
-            if let None = output {
+            if output.is_none() {
                 output = Some(relevant_text.to_vec())
             }
 
@@ -72,15 +72,14 @@ pub fn try_make_title_case(
 
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
-                for i in 0..correct_caps.len() {
-                    set_output_char(word.span.start - start_index + i, correct_caps[i]);
+                for (i, c) in correct_caps.iter().enumerate() {
+                    set_output_char(word.span.start - start_index + i, *c);
                 }
             }
         };
 
-        let should_capitalize = should_capitalize_token(word, source, dict)
-            || index == 0
-            || word_likes.peek().is_none();
+        let should_capitalize =
+            should_capitalize_token(word, source) || index == 0 || word_likes.peek().is_none();
 
         if should_capitalize {
             set_output_char(
@@ -114,7 +113,7 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
 
 /// Determines whether a token should be capitalized.
 /// Is not responsible for capitalization requirements that are dependent on token position.
-fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary) -> bool {
+fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
     match &tok.kind {
         TokenKind::Word(Some(metadata)) => {
             // Only specific conjunctions are not capitalized.

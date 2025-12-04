@@ -239,13 +239,13 @@ impl TokenStringExt for [Token] {
     }
 
     fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
-        self.iter_heading_start_indices().filter_map(|start| {
+        self.iter_heading_start_indices().map(|start| {
             let end = self[start..]
                 .iter()
                 .position(|t| t.kind.is_paragraph_break())
                 .unwrap_or(self[start..].len() - 1);
 
-            Some(&self[start..=start + end])
+            &self[start..=start + end]
         })
     }
 
