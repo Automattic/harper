@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “F”
+  - Replace with: “Ff”
 
 
 
@@ -5603,15 +5603,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
-         |                                   ^~ `lf` should probably be written as `l f`.
-Suggest:
-  - Replace with: “l f”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4075 | “Remember Biloxi,” Jordan warned her. ‘‘Where’d you know him, Tom?”
@@ -7446,7 +7437,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “F”
+  - Replace with: “Ff”
 
 
 

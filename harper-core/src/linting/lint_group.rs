@@ -100,6 +100,7 @@ use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
 use super::misspell::Misspell;
 use super::mixed_bag::MixedBag;
+use super::modal_be_adjective::ModalBeAdjective;
 use super::modal_of::ModalOf;
 use super::modal_seem::ModalSeem;
 use super::months::Months;
@@ -482,7 +483,6 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
-        insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(AWhile, true);
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
@@ -497,6 +497,7 @@ impl LintGroup {
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
+        insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
@@ -549,11 +550,11 @@ impl LintGroup {
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
         insert_expr_rule!(InterestedIn, true);
-        insert_expr_rule!(JealousOf, true);
-        insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_expr_rule!(ItsPossessive, true);
+        insert_expr_rule!(JealousOf, true);
+        insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -566,6 +567,7 @@ impl LintGroup {
         insert_expr_rule!(MissingTo, true);
         insert_expr_rule!(Misspell, true);
         insert_expr_rule!(MixedBag, true);
+        insert_expr_rule!(ModalBeAdjective, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(ModalSeem, true);
         insert_expr_rule!(Months, true);
@@ -617,17 +619,17 @@ impl LintGroup {
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
-        insert_expr_rule!(SoonToBe, true);
         insert_expr_rule!(SingleBe, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
+        insert_expr_rule!(SoonToBe, true);
         insert_expr_rule!(SoughtAfter, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(SplitWords, true);
-        insert_expr_rule!(TakeMedicine, true);
         insert_struct_rule!(SubjectPronoun, true);
+        insert_expr_rule!(TakeMedicine, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);

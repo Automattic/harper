@@ -108,6 +108,7 @@ mod missing_space;
 mod missing_to;
 mod misspell;
 mod mixed_bag;
+mod modal_be_adjective;
 mod modal_of;
 mod modal_seem;
 mod months;

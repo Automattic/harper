@@ -41,7 +41,7 @@
 >
 #
 > Part      - of - speech   tagging is  harder than just having  a   list   of words   and  their
-# NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VL3 JC     C/P  J    Nᴹ/Vg/J D/P NSg/VB P  NPl/V3+ VB/C D$+
+# NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VL3 JC     C/P  J/R  Nᴹ/Vg/J D/P NSg/VB P  NPl/V3+ VB/C D$+
 > parts  of speech   , because some     words   can     represent more         than one     part     of speech
 # NPl/V3 P  N🅪Sg/VB+ . C/P     I/J/R/Dq NPl/V3+ NPr/VXB VB        NPr/I/J/R/Dq C/P  NSg/I/J NSg/VB/J P  N🅪Sg/VB+
 > at    different times   , and  because some     parts  of speech   are complex  . This    is  not
@@ -51,7 +51,7 @@
 > percentage of word    - forms   are ambiguous . For   example , even     " dogs    " , which is
 # N🅪Sg       P  NSg/VB+ . NPl/V3+ VB  J         . R/C/P NSg/VB+ . NSg/VB/J . NPl/V3+ . . I/C+  VL3
 > usually thought of as    just a    plural noun    , can     also be      a    verb    :
-# R       N🅪Sg/VP P  NSg/R J    D/P+ NSg/J+ NSg/VB+ . NPr/VXB R/C  NSg/VXB D/P+ NSg/VB+ .
+# R       N🅪Sg/VP P  NSg/R J/R  D/P+ NSg/J+ NSg/VB+ . NPr/VXB R/C  NSg/VXB D/P+ NSg/VB+ .
 >
 #
 > The sailor dogs    the hatch   .
@@ -186,8 +186,8 @@
 # NSg/I/J/Dq+ NPl+  . D/P+ NSg/VB/J+ N🅪Sg+         VPt NSg/VPp/J P    D/P+ NPr/VB+ NSg/J/P NPr    VB/C NPr   .
 > which consisted of a   huge handmade list   of what   categories could   co        - occur at
 # I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I/VB+ . VB    NSg/P
-> all          . For   example , article then    noun    can     occur , but     article then    verb    ( arguably )
-# NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/C NSg/VB+ . R        .
+> all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
+# NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
 > cannot . The program got about 70 % correct  . Its     results were    repeatedly reviewed
 # NSg/VB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
 > and  corrected by      hand    , and  later users sent   in        errata so          that          by      the late  70 s
@@ -255,7 +255,7 @@
 > More         advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs
 # NPr/I/J/R/Dq VP/J     . . NSg/JC . N🅪Sg/VB . . ?    NSg/VB D   NPl+          NSg/R/C J/R/C P  NPl/V3+
 > but     triples or    even     larger sequences . So          , for   example , if    you've just seen    a
-# NSg/C/P NPl/V3  NPr/C NSg/VB/J JC     NPl/V3+   . NSg/I/J/R/C . R/C/P NSg/VB+ . NSg/C K      J    NSg/VPp D/P
+# NSg/C/P NPl/V3  NPr/C NSg/VB/J JC     NPl/V3+   . NSg/I/J/R/C . R/C/P NSg/VB+ . NSg/C K      J/R  NSg/VPp D/P
 > noun    followed by      a   verb    , the next    item    may     be      very likely a   preposition ,
 # NSg/VB+ VP/J     NSg/J/P D/P NSg/VB+ . D   NSg/J/P NSg/VB+ NPr/VXB NSg/VXB J/R  NSg/J  D/P NSg/VB      .
 > article , or    noun    , but     much         less       likely another verb    .
@@ -268,8 +268,8 @@
 # C       . NPr/ISg+ VL3 NSg/VB/J P  VB        Dq+   N🅪Sg+       VB/C P  NSg/VB D/P NSg/J
 > probability to each one      , by      multiplying together the probabilities of each
 # NSg+        P  Dq   NSg/I/J+ . NSg/J/P Nᴹ/Vg/J     J        D   NPl           P  Dq
-> choice  in        turn   . The combination with the highest probability is  then    chosen   . The
-# N🅪Sg/J+ NPr/J/R/P NSg/VB . D   N🅪Sg        P    D+  JS+     NSg+        VL3 NSg/J/C Nᴹ/VPp/J . D+
+> choice  in        turn   . The combination with the highest probability is  then      chosen   . The
+# N🅪Sg/J+ NPr/J/R/P NSg/VB . D   N🅪Sg        P    D+  JS+     NSg+        VL3 NSg/J/R/C Nᴹ/VPp/J . D+
 > European group   developed CLAWS   , a   tagging program that          did exactly this   and
 # NSg/J+   NSg/VB+ VP/J      NPl/V3+ . D/P NSg/Vg  NPr/VB+ NSg/I/C/Ddem+ VPt R       I/Ddem VB/C
 > achieved accuracy in        the 93 – 95 % range    .
@@ -404,8 +404,8 @@
 # NSg/VB/J+ NPl     NPr/VXB I/C/Dq NSg/VXB VP/J        Nᴹ/Vg/J D   ?       NSg       . D+
 > rule    - based Brill tagger is  unusual in        that         it       learns a   set       of rule    patterns , and
 # NSg/VB+ . VP/J  NSg/J NSg    VL3 NSg/J   NPr/J/R/P NSg/I/C/Ddem NPr/ISg+ NPl/V3 D/P NPr/VBP/J P  NSg/VB+ NPl/V3+  . VB/C
-> then    applies those  patterns rather     than optimizing a   statistical quantity .
-# NSg/J/C V3      I/Ddem NPl/V3+  NPr/VB/J/R C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
+> then      applies those  patterns rather     than optimizing a   statistical quantity .
+# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/VB/J/R C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
 >
 #
 > Many        machine learning methods have    also been    applied to the problem of POS

@@ -329,20 +329,6 @@ impl SequenceExpr {
         self.then_kind_where(move |k| pred_is(k) && !pred_not(k))
     }
 
-    /// Match a token where the first token kind predicate returns true and all of the second return false.
-    /// For instance, a word that can be a verb but not a noun or an adjective.
-    pub fn then_kind_is_but_isnt_any_of<F1, F2>(
-        self,
-        pred_is: F1,
-        preds_isnt: &'static [F2],
-    ) -> Self
-    where
-        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
-        self.then_kind_where(move |k| pred_is(k) && !preds_isnt.iter().any(|pred| pred(k)))
-    }
-
     /// Match a token where the first token kind predicate returns true and the second returns false,
     /// and the token is not in the list of exceptions.
     pub fn then_kind_is_but_is_not_except<F1, F2>(
@@ -358,6 +344,42 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !pred_not(&tok.kind)
+                && !ex
+                    .iter()
+                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+        })
+    }
+
+    /// Match a token where the first token kind predicate returns true and all of the second return false.
+    /// For instance, a word that can be a verb but not a noun or an adjective.
+    pub fn then_kind_is_but_isnt_any_of<F1, F2>(
+        self,
+        pred_is: F1,
+        preds_isnt: &'static [F2],
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then_kind_where(move |k| pred_is(k) && !preds_isnt.iter().any(|pred| pred(k)))
+    }
+
+    /// Match a token where the first token kind predicate returns true and all of the second return false,
+    /// and the token is not in the list of exceptions.
+    /// For instance, an adjective that isn't also a verb or adverb or the word "likely".
+    pub fn then_kind_is_but_isnt_any_of_except<F1, F2>(
+        self,
+        pred_is: F1,
+        preds_isnt: &'static [F2],
+        ex: &'static [&'static str],
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, src: &[char]| {
+            pred_is(&tok.kind)
+                && !preds_isnt.iter().any(|pred| pred(&tok.kind))
                 && !ex
                     .iter()
                     .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
