@@ -27,15 +27,41 @@ pub fn make_title_case_chars(
     make_title_case(document.get_tokens(), source.as_slice(), dict)
 }
 
-pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) -> Vec<char> {
+pub fn try_make_title_case(
+    toks: &[Token],
+    source: &[char],
+    dict: &impl Dictionary,
+) -> Option<Vec<char>> {
     if toks.is_empty() {
-        return Vec::new();
+        return None;
     }
 
     let start_index = toks.first().unwrap().span.start;
+    let relevant_text = toks.span().unwrap().get_content(source);
 
     let mut word_likes = toks.iter_word_likes().enumerate().peekable();
-    let mut output = toks.span().unwrap().get_content(source).to_vec();
+
+    let mut output = None;
+
+    // Checks if the output if the provided char is different from the source. If so, it will
+    // set the output. The goal here is to avoid allocating if no edits must be made.
+    let mut set_output_char = |idx: usize, new_char: char| {
+        if output
+            .as_ref()
+            .is_some_and(|o: &Vec<char>| o[idx] != new_char)
+            || relevant_text[idx] != new_char
+        {
+            if let None = output {
+                output = Some(relevant_text.to_vec())
+            }
+
+            let Some(mutable) = &mut output else {
+                panic!("We just set output to `Some`. This should be impossible.");
+            };
+
+            mutable[idx] = new_char;
+        }
+    };
 
     while let Some((index, word)) = word_likes.next() {
         if let Some(Some(metadata)) = word.kind.as_word()
@@ -46,10 +72,9 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
 
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
-                output[word.span.start - start_index..word.span.end - start_index]
-                    .iter_mut()
-                    .enumerate()
-                    .for_each(|(idx, c)| *c = correct_caps[idx]);
+                for i in 0..correct_caps.len() {
+                    set_output_char(word.span.start - start_index + i, correct_caps[i]);
+                }
             }
         };
 
@@ -57,18 +82,32 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
             || index == 0
             || word_likes.peek().is_none();
 
+        dbg!(should_capitalize);
+
         if should_capitalize {
-            output[word.span.start - start_index] =
-                output[word.span.start - start_index].to_ascii_uppercase();
+            set_output_char(
+                word.span.start - start_index,
+                relevant_text[word.span.start - start_index].to_ascii_uppercase(),
+            );
         } else {
             // The whole word should be lowercase.
             for i in word.span {
-                output[i - start_index] = output[i - start_index].to_ascii_lowercase();
+                set_output_char(
+                    i - start_index,
+                    relevant_text[i - start_index].to_ascii_lowercase(),
+                );
             }
         }
     }
 
+    dbg!(&output);
+
     output
+}
+
+pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) -> Vec<char> {
+    try_make_title_case(toks, source, dict)
+        .unwrap_or_else(|| toks.span().unwrap_or_default().get_content(source).to_vec())
 }
 
 /// Determines whether a token should be capitalized.
