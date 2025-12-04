@@ -4,7 +4,7 @@ use parser::{SyntaxConfig, parse_latex};
 use syntax::latex::{SyntaxKind, SyntaxNode};
 
 use harper_core::{
-    Token,
+    Punctuation, Span, Token, TokenKind,
     parsers::{Parser, PlainEnglish, StrParser},
 };
 
@@ -20,7 +20,7 @@ impl Parser for Latex {
         let latex_document = parse_latex(source_str.as_str(), &SyntaxConfig::default());
         let latex_ast = SyntaxNode::new_root(latex_document);
 
-        let harper_tokens: Vec<_> = latex_ast
+        let mut harper_tokens_initial = latex_ast
             .descendants()
             .filter_map(|node| match node.kind() {
                 SyntaxKind::TEXT => {
@@ -42,9 +42,46 @@ impl Parser for Latex {
                 _ => None,
             })
             .flatten()
-            .collect();
+            .collect_vec();
 
-        // dbg!(&harper_tokens);
+        // dummy token to allow counting consecutive hyphens at the right edge
+        harper_tokens_initial.push(Token::new(Span::new(0, 0), TokenKind::Unlintable));
+
+        let mut consecutive_hyphens = 0;
+
+        let mut harper_tokens: Vec<Token> = vec![];
+        for token in harper_tokens_initial {
+            if matches!(&token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
+                consecutive_hyphens += 1;
+            } else if consecutive_hyphens == 2 || consecutive_hyphens == 3 {
+                let mut hyphens = vec![];
+                for _ in 0..consecutive_hyphens {
+                    hyphens.push(harper_tokens.pop().unwrap());
+                }
+
+                let mut total_span = hyphens.first().expect("at least two").span;
+                for h in &hyphens[1..] {
+                    total_span.expand_to_include(h.span.end);
+                }
+
+                harper_tokens.push(Token {
+                    span: total_span,
+                    kind: TokenKind::Punctuation(match consecutive_hyphens {
+                        2 => Punctuation::EnDash,
+                        3 => Punctuation::EmDash,
+                        _ => unreachable!("already narrowed"),
+                    }),
+                });
+
+                consecutive_hyphens = 0;
+            }
+
+            harper_tokens.push(token);
+        }
+
+        harper_tokens
+            .pop()
+            .expect("it will have at least the dummy token");
 
         harper_tokens
     }
@@ -87,6 +124,39 @@ mod tests {
                 \end{document}
             "#,
         );
+    }
+
+    #[test]
+    fn consecutive_spaces() {
+        let source = r#"a      b"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert_eq!(tokens.len(), 3);
+    }
+
+    #[test]
+    fn en_dash() {
+        let source = r#"6--7"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert_eq!(tokens.len(), 3);
+    }
+
+    #[test]
+    fn em_dash() {
+        let source = r#"---"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert_eq!(tokens.len(), 1);
     }
 
     #[test]
