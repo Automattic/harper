@@ -1,4 +1,4 @@
-# Here, We Try to Test our Title-Casing Feature
+# Here, We Try to Test Our Title-Casing Feature
 
 It should only pay attention to headings.
 

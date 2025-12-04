@@ -129,10 +129,10 @@ fn should_capitalize_token(tok: &Token, source: &[char], dict: &impl Dictionary)
             let chars = tok.span.get_content(source);
             let chars_lower = chars.to_lower();
 
-            let mut metadata = Cow::Borrowed(metadata);
+            let metadata = Cow::Borrowed(metadata);
 
-            if let Some(metadata_lower) = dict.get_word_metadata(&chars_lower) {
-                metadata = Cow::Owned(metadata.clone().or(&metadata_lower));
+            if metadata.np_member.unwrap_or_default() {
+                return true;
             }
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
@@ -306,6 +306,18 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "I Spoke at WordCamp U.S. in 2025",
+        );
+    }
+
+    #[test]
+    fn fixes_your_correctly_in_np() {
+        assert_eq!(
+            make_title_case_str(
+                "it is not your friend",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "It Is Not Your Friend",
         );
     }
 }

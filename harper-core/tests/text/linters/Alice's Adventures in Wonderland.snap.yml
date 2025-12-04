@@ -2834,15 +2834,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2244 | ## CHAPTER X: The Lobster Quadrille
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER X: the Lobster Quadrille”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2248 | voice. “Same as if he had a bone in his throat,” said the Gryphon: and it set to
