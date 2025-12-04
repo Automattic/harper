@@ -253,11 +253,20 @@ impl Linter {
         ctx.default_hash()
     }
 
-    pub fn organized_lints(&mut self, text: String, language: Language) -> Vec<OrganizedGroup> {
+    pub fn organized_lints(
+        &mut self,
+        text: String,
+        language: Language,
+        all_headings: bool,
+    ) -> Vec<OrganizedGroup> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
-        let parser = language.create_parser();
+        let mut parser = language.create_parser();
+
+        if all_headings {
+            parser = Box::new(OopsAllHeadings::new(parser));
+        }
 
         let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
 

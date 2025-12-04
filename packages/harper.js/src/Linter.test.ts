@@ -360,6 +360,21 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lint.lint_kind()).toBe('Capitalization');
 		expect(lint.get_problem_text()).toBe(text);
 	});
+
+	test(`${linterName} lints headings when forced to mark them as such with organized mode`, async () => {
+		const text = 'This sentences should be forced to title case.';
+
+		const linter = new LocalLinter({ binary });
+		const lints = await linter.organizedLints(text, { forceAllHeadings: true });
+
+		const titleCaseLints = lints['UseTitleCase'];
+		expect(titleCaseLints).not.toBeUndefined();
+		expect(titleCaseLints.length).toBe(1);
+
+		const lint = titleCaseLints[0];
+		expect(lint.lint_kind()).toBe('Capitalization');
+		expect(lint.get_problem_text()).toBe(text);
+	});
 }
 
 test('Linters have the same config format', async () => {
