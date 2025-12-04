@@ -1,13 +1,13 @@
-> The Great Gatsby
-# D   NSg/J NPr
+>              The Great Gatsby
+# HeadingStart D   NSg/J NPr
 >
 #
 > BY      F. SCOTT FITZGERALD
 # NSg/J/P ?  NPr+  NPr
 >
 #
-> CHAPTER I
-# NSg/VB+ ISg/#r+
+>              CHAPTER I
+# HeadingStart NSg/VB+ ISg/#r+
 >
 #
 > In        my  younger and  more         vulnerable years my  father  gave me       some      advice that          I’ve
@@ -1296,8 +1296,8 @@
 # NPr/J/R/P D   VB/J    Nᴹ+      .
 >
 #
-> CHAPTER II
-# NSg/VB+ #r
+>              CHAPTER II
+# HeadingStart NSg/VB+ #r
 >
 #
 > About half         way   between West      Egg     and  New    York the motor     road    hastily joins  the
@@ -2310,8 +2310,8 @@
 # R       NSg/VB+ .
 >
 #
-> CHAPTER III
-# NSg/VB+ #r
+>              CHAPTER III
+# HeadingStart NSg/VB+ #r
 >
 #
 > There was music      from my  neighbor’s house   through the summer     nights  . In        his     blue
@@ -3656,8 +3656,8 @@
 # NSg/I/VB+ . ISg/#r+ NPr/VB/J NSg/I/J P  D+  NSg/I/Dq+ VB/JS+ NPl/VB+ NSg/I/C/Ddem+ ISg/#r+ NSg/VXB J    VPp/J .
 >
 #
-> CHAPTER IV
-# NSg/VB+ NSg/J/#r+
+>              CHAPTER IV
+# HeadingStart NSg/VB+ NSg/J/#r+
 >
 #
 > On  Sunday  morning    while      church     bells  rang in        the villages alongshore , the world
@@ -4944,8 +4944,8 @@
 # NSg/VB+ .
 >
 #
-> CHAPTER V
-# NSg/VB+ NSg/P/#r+
+>              CHAPTER V
+# HeadingStart NSg/VB+ NSg/P/#r+
 >
 #
 > When    I       came      home      to West      Egg      that          night    I       was afraid for   a    moment that          my  house
@@ -6002,8 +6002,8 @@
 # NSg/VB/J+ NPl/V3+ P    D+  N🅪Sg/VB+ . Nᴹ/Vg/J NSg/IPl+ R+    J        .
 >
 #
-> CHAPTER VI
-# NSg/VB+ NPr/#r
+>              CHAPTER VI
+# HeadingStart NSg/VB+ NPr/#r
 >
 #
 > About this    time       an  ambitious young    reporter from New    York arrived one     morning    at
@@ -6982,8 +6982,8 @@
 # VP/J       VPt ?              NSg/J   .
 >
 #
-> CHAPTER VII
-# NSg/VB+ NSg/#r
+>              CHAPTER VII
+# HeadingStart NSg/VB+ NSg/#r
 >
 #
 > It       was when    curiosity about Gatsby was at    its     highest that         the lights  in        his
@@ -9466,8 +9466,8 @@
 # VB/J VB/C NPr/VB/J ISg+ Nᴹ/Vg/J  R     NPr/J/R/P D+  N🅪Sg/VB+  . Nᴹ/Vg/J  NSg/J/P NSg/I/J+ .
 >
 #
-> CHAPTER VIII
-# NSg/VB+ #r
+>              CHAPTER VIII
+# HeadingStart NSg/VB+ #r
 >
 #
 > I       couldn’t sleep    all          night    ; a   fog      - horn    was groaning incessantly on  the Sound      ,
@@ -10448,8 +10448,8 @@
 # NSg$     NSg/VB+ D/P NPr/I/J/Dq NSg/J+ NSg/VB/J/P NPr/J/R/P D   NPr🅪Sg/VB+ . VB/C D   NPr/VB+   VPt NSg/VB/J .
 >
 #
-> CHAPTER IX
-# NSg/VB+ #r
+>              CHAPTER IX
+# HeadingStart NSg/VB+ #r
 >
 #
 > After two  years I       remember the rest   of that          day     , and  that         night   and  the next

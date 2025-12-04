@@ -1,5 +1,5 @@
-> Alice’s Adventures in        Wonderland
-# NSg$    NPl/V3     NPr/J/R/P NSg+
+>              Alice’s Adventures in        Wonderland
+# HeadingStart NSg$    NPl/V3     NPr/J/R/P NSg+
 >
 #
 > by      Lewis Carroll
@@ -10,8 +10,8 @@
 # D   NSg+       NSg     NSg+    #
 >
 #
-> CHAPTER I       : Down        the Rabbit  - Hole
-# NSg/VB+ ISg/#r+ . N🅪Sg/VB/J/P D   NSg/VB+ . NSg/VB+
+>              CHAPTER I       : Down        the Rabbit  - Hole
+# HeadingStart NSg/VB+ ISg/#r+ . N🅪Sg/VB/J/P D   NSg/VB+ . NSg/VB+
 >
 #
 > Alice was beginning to get    very tired of sitting  by      her     sister  on  the bank    , and
@@ -370,8 +370,8 @@
 # NSg/I/J/R/C ISg+ NPr/VBP/J P  N🅪Sg/VB . VB/C J/R  J/R  VP/J     NSg/VB/J/P D+  N🅪Sg/VB+ .
 >
 #
-> CHAPTER II : The Pool   of Tears
-# NSg/VB+ #r . D   NSg/VB P  NPl/V3+
+>              CHAPTER II : The Pool   of Tears
+# HeadingStart NSg/VB+ #r . D   NSg/VB P  NPl/V3+
 >
 #
 > “ Curiouser and  curiouser ! ” cried Alice ( she  was so          much         surprised , that         for   the
@@ -728,8 +728,8 @@
 # NSg/VB/J+ VPt  P  D+  NSg/VB+ .
 >
 #
-> CHAPTER III : A   Caucus  - Race    and  a    Long      Tale
-# NSg/VB+ #r  . D/P NSg/VB+ . N🅪Sg/VB VB/C D/P+ NPr/VB/J+ NSg/VB+
+>              CHAPTER III : A   Caucus  - Race    and  a   Long     Tale
+# HeadingStart NSg/VB+ #r  . D/P NSg/VB+ . N🅪Sg/VB VB/C D/P NPr/VB/J NSg/VB+
 >
 #
 > They were    indeed a   queer    - looking party     that          assembled on  the bank   — the birds  with
@@ -1114,8 +1114,8 @@
 # NSg/VB+ . VB/C VPt Nᴹ/Vg/J NSg/VB/J P  NSg/VB ISg/D$+ NSg/VB+ .
 >
 #
-> CHAPTER IV        : The Rabbit  Sends  in        a    Little      Bill
-# NSg/VB+ NSg/J/#r+ . D+  NSg/VB+ NPl/V3 NPr/J/R/P D/P+ NPr/I/J/Dq+ NPr/VB+
+>              CHAPTER IV        : The Rabbit  Sends  in        a   Little     Bill
+# HeadingStart NSg/VB+ NSg/J/#r+ . D   NSg/VB+ NPl/V3 NPr/J/R/P D/P NPr/I/J/Dq NPr/VB+
 >
 #
 > It       was the White       Rabbit , trotting slowly back     again , and  looking anxiously about
@@ -1590,8 +1590,8 @@
 # D   JS       NSg/VB P  ISg/D$+ NPr/C P  NSg/I/VB+ NSg/J/C .
 >
 #
-> CHAPTER V        : Advice from a   Caterpillar
-# NSg/VB+ NSg/P/#r . Nᴹ+    P    D/P NSg/VB
+>              CHAPTER V        : Advice from a   Caterpillar
+# HeadingStart NSg/VB+ NSg/P/#r . Nᴹ+    P    D/P NSg/VB
 >
 #
 > The Caterpillar and  Alice looked at    each other    for   some     time       in        silence : at    last
@@ -2116,8 +2116,8 @@
 # VB  VP      ISg+    N🅪Sg/VB/J/P P  NSg  NPl/V3+ NSg/VB/J/R .
 >
 #
-> CHAPTER VI     : Pig    and  Pepper
-# NSg/VB+ NPr/#r . NSg/VB VB/C N🅪Sg/VB+
+>              CHAPTER VI     : Pig    and  Pepper
+# HeadingStart NSg/VB+ NPr/#r . NSg/VB VB/C N🅪Sg/VB+
 >
 #
 > For   a    minute    or    two she  stood looking at    the house   , and  wondering what   to do
@@ -2706,8 +2706,8 @@
 # P     NSg/I/J/C/Dq . ISg/#r+ R      NSg/VB K   VPp/J/P P  NSg/VB D   NSg/VB R       . .
 >
 #
-> CHAPTER VII    : A   Mad      Tea      - Party
-# NSg/VB+ NSg/#r . D/P NSg/VB/J N🅪Sg/VB+ . NSg/VB/J+
+>              CHAPTER VII    : A   Mad      Tea      - Party
+# HeadingStart NSg/VB+ NSg/#r . D/P NSg/VB/J N🅪Sg/VB+ . NSg/VB/J+
 >
 #
 > There was a    table   set       out          under   a   tree    in        front    of the house   , and  the March   Hare
@@ -3334,8 +3334,8 @@
 # NPr/VB/J NSg/VB+ . NPl/V3+ VB/C D   NSg/VB/J NPl/V3    .
 >
 #
-> CHAPTER VIII : The Queen’s Croquet - Ground
-# NSg/VB+ #r   . D   NSg$    NSg/VB  . N🅪Sg/VB/J+
+>              CHAPTER VIII : The Queen’s Croquet - Ground
+# HeadingStart NSg/VB+ #r   . D   NSg$    NSg/VB  . N🅪Sg/VB/J+
 >
 #
 > A   large rose       - tree   stood near       the entrance of the garden    : the roses   growing on  it
@@ -3896,8 +3896,8 @@
 # NSg/VPt NSg/VB/J P  D   NSg/VB/J+ .
 >
 #
-> CHAPTER IX : The Mock     Turtle’s Story
-# NSg/VB+ #r . D   NSg/VB/J NSg$     NSg/VB+
+>              CHAPTER IX : The Mock     Turtle’s Story
+# HeadingStart NSg/VB+ #r . D   NSg/VB/J NSg$     NSg/VB+
 >
 #
 > “ You    can’t think  how   glad     I       am       to see    you    again , you    dear     old   thing ! ” said the
@@ -4486,8 +4486,8 @@
 # . NPr/VB ISg/D$+ NSg/I/J+  J/P   D   NPl/V3+ NSg/J/R/C . .
 >
 #
-> CHAPTER X         : The Lobster   Quadrille
-# NSg/VB+ NPr/J/#r+ . D+  NSg/VB/J+ NSg/VB/J
+>              CHAPTER X         : The Lobster   Quadrille
+# HeadingStart NSg/VB+ NPr/J/#r+ . D+  NSg/VB/J+ NSg/VB/J
 >
 #
 > The Mock      Turtle  sighed deeply , and  drew    the back     of one     flapper across his     eyes    .
@@ -5008,8 +5008,8 @@
 # . ?   . Nᴹ  P  D   NPr/I+ . NPr/I+ . N🅪Sg/Vg/J+ . NSg/J     . NSg/J     N🅪Sg/VB+ . .
 >
 #
-> CHAPTER XI     : Who    Stole   the Tarts  ?
-# NSg/VB+ NSg/#r . NPr/I+ NSg/VPt D   NPl/V3 .
+>              CHAPTER XI     : Who    Stole   the Tarts  ?
+# HeadingStart NSg/VB+ NSg/#r . NPr/I+ NSg/VPt D   NPl/V3 .
 >
 #
 > The King     and  Queen    of Hearts  were    seated on  their throne when    they arrived , with
@@ -5488,8 +5488,8 @@
 # NSg/P D   NSg/VB/J P  ISg/D$+ NSg/VB/J NPr/I/J/Dq+ NSg/VB+ . D+  NSg/VB+ . NPr+  . .
 >
 #
-> CHAPTER XII : Alice’s Evidence
-# NSg/VB+ #r  . NSg$    Nᴹ/VB+
+>              CHAPTER XII : Alice’s Evidence
+# HeadingStart NSg/VB+ #r  . NSg$    Nᴹ/VB+
 >
 #
 > “ Here    ! ” cried Alice , quite forgetting in        the flurry of the moment how   large she

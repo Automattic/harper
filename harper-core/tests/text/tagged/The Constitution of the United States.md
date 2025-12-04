@@ -1,7 +1,7 @@
 > <!-- source: https://github.com/JesseKPhillips/USA-Constitution/blob/4cfdd130709fa7e8db998383b6917ba33b402ec6/Constitution.md -->
 # Unlintable
->            The Constitution Of The United States    Of America
-# Unlintable D   NPr+         P  D   VP/J   NPrPl/V3+ P  NPr+
+>                         The Constitution Of The United States   Of America
+# Unlintable HeadingStart D   NPr+         P  D   VP/J   NPrPl/V3 P  NPr+
 >
 #
 > We   the People of the United States    , in        Order    to form    a   more         perfect   Union     ,
@@ -16,12 +16,12 @@
 # NPrPl/V3 P  NPr+    .
 >
 #
-> Article . I.
-# NSg/VB+ . ?
+>              Article . I.
+# HeadingStart NSg/VB+ . ?
 >
 #
-> Section . 1 .
-# NSg/VB+ . # .
+>              Section . 1 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > All           legislative Powers    herein granted shall be      vested in        a
@@ -66,8 +66,8 @@
 # NPl+       VXB   NSg/J/C NSg/VB .
 >
 #
-> Section . 2 .
-# NSg/VB+ . # .
+>              Section . 2 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The House  of Representatives shall be      composed of Members
@@ -144,8 +144,8 @@
 # VXB   NSg/VXB D   NSg/VB/J N🅪Sg/VB/J+ P  N🅪Sg        .
 >
 #
-> Section . 3 .
-# NSg/VB+ . # .
+>              Section . 3 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The Senate of the United States    shall be      composed of two
@@ -226,8 +226,8 @@
 # N🅪Sg/VB .
 >
 #
-> Section . 4 .
-# NSg/VB+ . # .
+>              Section . 4 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The Times   , Places  and  Manner of holding Elections for   Senators
@@ -248,8 +248,8 @@
 # NSg/J     NPr🅪Sg+ .
 >
 #
-> Section . 5 .
-# NSg/VB+ . # .
+>              Section . 5 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > Each House   shall be      the Judge  of the Elections , Returns and
@@ -288,8 +288,8 @@
 # NPr/J/R/P I/C+  D   NSg NPl/V3+ VXB   NSg/VXB NSg/Vg/J .
 >
 #
-> Section . 6 .
-# NSg/VB+ . # .
+>              Section . 6 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The Senators and  Representatives shall receive a   Compensation
@@ -326,8 +326,8 @@
 # NSg/VXB VP/J       .
 >
 #
-> Section . 7 .
-# NSg/VB+ . # .
+>              Section . 7 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > All          Bills   for   raising Revenue shall originate in        the House  of
@@ -384,8 +384,8 @@
 # P  D   NPl/V3 VB/C NPl+        VP/J       NPr/J/R/P D   NPr🅪Sg/VB P  D/P NPr/VB+ .
 >
 #
-> Section . 8 .
-# NSg/VB+ . # .
+>              Section . 8 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The Congress shall have    Power      To lay      and  collect  Taxes   , Duties ,
@@ -582,8 +582,8 @@
 #
 >
 #
-> Section . 9 .
-# NSg/VB+ . # .
+>              Section . 9 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The Migration or    Importation of such  Persons as    any    of the
@@ -662,8 +662,8 @@
 # N🅪Sg/VB NPr/C NSg/VB/J N🅪Sg/VB+ .
 >
 #
-> Section . 10 .
-# NSg/VB+ . #  .
+>              Section . 10 .
+# HeadingStart NSg/VB+ . #  .
 >
 #
 > No        State    shall enter  into any    Treaty  , Alliance , or
@@ -702,12 +702,12 @@
 # VP/J    . NPr/C NPr/J/R/P NSg/I J        N🅪Sg/VB/JC+ NSg/R NPr/VXB NSg/R/C VB    P  NSg/VB/J+ .
 >
 #
-> Article . II .
-# NSg/VB+ . #r .
+>              Article . II .
+# HeadingStart NSg/VB+ . #r .
 >
 #
-> Section . 1 .
-# NSg/VB+ . # .
+>              Section . 1 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The executive Power      shall be      vested in        a   President of the
@@ -732,8 +732,8 @@
 # NPrPl/V3+ . VXB   NSg/VXB VP/J      D/P NSg     .
 >
 #
-> SubSection . 1 .
-# NSg/VB+    . # .
+>              SubSection . 1 .
+# HeadingStart NSg/VB+    . # .
 >
 #
 > The Electors shall meet     in        their respective states    , and  vote
@@ -828,8 +828,8 @@
 # VP/J   NPrPl/V3+ .
 >
 #
-> SubSection . 2
-# NSg/VB+    . #
+>              SubSection . 2
+# HeadingStart NSg/VB+    . #
 >
 #
 > No       Person  except a    natural born      Citizen , or    a   Citizen of the
@@ -864,8 +864,8 @@
 # Nᴹ/Vg/J NSg/R NSg/VB+   VB/P   D   NSg/VB/J  P  NSg/I+ NSg/VB/J+ .
 >
 #
-> SubSection 3 .
-# NSg/VB+    # .
+>              SubSection 3 .
+# HeadingStart NSg/VB+    # .
 >
 #
 > In        case      of the removal of the President from office  or    of his
@@ -942,8 +942,8 @@
 # VB/C NPl    P  ISg/D$+ NSg/VB+ .
 >
 #
-> SubSection 4 .
-# NSg/VB+    # .
+>              SubSection 4 .
+# HeadingStart NSg/VB+    # .
 >
 #
 > The President shall , at    stated Times   , receive for   his
@@ -970,8 +970,8 @@
 # NPrPl/V3+ . .
 >
 #
-> SubSection 5 .
-# NSg/VB+    # .
+>              SubSection 5 .
+# HeadingStart NSg/VB+    # .
 >
 #
 > The District  constituting the seat   of Government of the
@@ -998,8 +998,8 @@
 # NPr+         .
 >
 #
-> Section . 2 .
-# NSg/VB+ . # .
+>              Section . 2 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The President shall be      Commander in        Chief    of the Army and  Navy
@@ -1054,8 +1054,8 @@
 # N🅪Sg/VB+ .
 >
 #
-> Section . 3 .
-# NSg/VB+ . # .
+>              Section . 3 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > He       shall from time       to time      give   to the Congress Information of
@@ -1076,8 +1076,8 @@
 # N🅪Sg/VB    NSg/I/J/C/Dq D   NPl/V3   P  D   VP/J   NPrPl/V3+ .
 >
 #
-> Section . 4 .
-# NSg/VB+ . # .
+>              Section . 4 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The President , Vice        President and  all          civil Officers of the
@@ -1088,12 +1088,12 @@
 # P  . NSg     . Nᴹ      . NPr/C NSg/VB/J NSg/VB/J/R NPl/V3+ VB/C NPl          .
 >
 #
-> Article . III .
-# NSg/VB+ . #r  .
+>              Article . III .
+# HeadingStart NSg/VB+ . #r  .
 >
 #
-> Section . 1 .
-# NSg/VB+ . # .
+>              Section . 1 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The judicial Power     of the United States    , shall be      vested in
@@ -1110,8 +1110,8 @@
 # VB/P   D$+   NSg         NPr/J/R/P NSg/VB+ .
 >
 #
-> Section . 2 .
-# NSg/VB+ . # .
+>              Section . 2 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The judicial Power      shall extend to all           Cases   , in        Law     and
@@ -1154,8 +1154,8 @@
 # N🅪Sg/VB NPr/C NPl/V3+ NSg/R D   NPr/VB+  NPr/VXB NSg/J/P N🅪Sg/VB+ NSg/VXB VP/J     .
 >
 #
-> Section . 3 .
-# NSg/VB+ . # .
+>              Section . 3 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > Treason against the United States    , shall consist only  in
@@ -1176,8 +1176,8 @@
 # VB/P   D   N🅪Sg/VB P  D   NSg/VB+ VP/J      .
 >
 #
-> Section . 4 .
-# NSg/VB+ . # .
+>              Section . 4 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The right    of the people  to be      secure in        their persons , houses  ,
@@ -1242,12 +1242,12 @@
 # VB/C NSg/J   NPl+        VP/J      .
 >
 #
-> Article . IV        .
-# NSg/VB+ . NSg/J/#r+ .
+>              Article . IV        .
+# HeadingStart NSg/VB+ . NSg/J/#r+ .
 >
 #
-> Section . 1 .
-# NSg/VB+ . # .
+>              Section . 1 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > Full     Faith and  Credit  shall be      given       in        each State    to the
@@ -1260,8 +1260,8 @@
 # VB/C NPl+        VXB   NSg/VXB VP/J   . VB/C D+  NSg/VB+ R       .
 >
 #
-> Section . 2 .
-# NSg/VB+ . # .
+>              Section . 2 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > All           persons born     or    naturalized in        the United States    , and
@@ -1314,8 +1314,8 @@
 # NSg/VB  NPr/C NPr🅪Sg/VB/Comm+ NPr/VXB NSg/VXB NSg/J .
 >
 #
-> Section . 3 .
-# NSg/VB+ . # .
+>              Section . 3 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > New    States    may     be      admitted by      the Congress into this    Union     ; but
@@ -1340,8 +1340,8 @@
 # I/R/Dq NPl/V3 P  D   VP/J   NPrPl/V3+ . NPr/C P  I/R/Dq NSg/J      N🅪Sg/VB+ .
 >
 #
-> Section . 4 .
-# NSg/VB+ . # .
+>              Section . 4 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The United States    shall guarantee to every State    in        this    Union
@@ -1354,8 +1354,8 @@
 # NSg+        NSg/VB NSg/VXB VP/J     . C/P     NSg/J    Nᴹ/VB+   .
 >
 #
-> Section . 5 .
-# NSg/VB+ . # .
+>              Section . 5 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The validity of the public  debt of the United States    ,
@@ -1374,8 +1374,8 @@
 # NSg/I NPl+  . NPl         VB/C NPl/V3+ VXB   NSg/VXB VB   NSg/J   VB/C NSg/VB/J+ .
 >
 #
-> Article . V.
-# NSg/VB+ . ?
+>              Article . V.
+# HeadingStart NSg/VB+ . ?
 >
 #
 > The Congress , whenever two thirds of both   Houses  shall deem   it       necessary , shall
@@ -1402,8 +1402,8 @@
 # C/P     ISg/D$+ N🅪Sg/VB . VXB   NSg/VXB VP/J     P  ISg/D$+ NSg/VB/J NSg+     NPr/J/R/P D   NPr+   .
 >
 #
-> Article . VI     .
-# NSg/VB+ . NPr/#r .
+>              Article . VI     .
+# HeadingStart NSg/VB+ . NPr/#r .
 >
 #
 > All           Debts contracted and  Engagements entered into , before the Adoption of this
@@ -1446,8 +1446,8 @@
 # NPr/VB/J P  D   NPl/VB+ P  NSg/VB VB/C NSg/VB/J+ NPl/V3+ . VXB   NSg/R/C NSg/VXB VP/J      .
 >
 #
-> Section . 1 .
-# NSg/VB+ . # .
+>              Section . 1 .
+# HeadingStart NSg/VB+ . # .
 >
 #
 > The enumeration in        the Constitution , of certain rights  , shall
@@ -1464,8 +1464,8 @@
 # D   NPl/VB+ .
 >
 #
-> Article . VII    .
-# NSg/VB+ . NSg/#r .
+>              Article . VII    .
+# HeadingStart NSg/VB+ . NSg/#r .
 >
 #
 > The Ratification of the Conventions of nine States    , shall be      sufficient for   the
@@ -1498,12 +1498,12 @@
 # NSg/J   NPr/J/R/P NSg/VB  C       IPl+ NSg/VXB R        VP/J       D$+ NPl/V3+ .
 >
 #
-> Article . VIII .
-# NSg/VB+ . #r   .
+>              Article . VIII .
+# HeadingStart NSg/VB+ . #r   .
 >
 #
-> Section 1 .
-# NSg/VB+ # .
+>              Section 1 .
+# HeadingStart NSg/VB+ # .
 >
 #
 > The transportation or    importation into any    State    , Territory , or

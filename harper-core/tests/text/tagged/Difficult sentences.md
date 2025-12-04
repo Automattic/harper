@@ -1,5 +1,5 @@
-> Difficult sentences
-# VB/J+     NPl/V3+
+>              Difficult sentences
+# HeadingStart VB/J+     NPl/V3+
 >
 #
 > A   collection of difficult sentences to test   Harper's ability to correctly tag     unusual / uncommon but     correct  sentences .
@@ -14,8 +14,8 @@
 # NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VB  VPp/J P    Url                         NSg/VB+ . NSg/VB/#r+ NSg/J/P . NPr/VB/J+ #   .
 >
 #
-> A
-# D/P
+>              A
+# HeadingStart D/P
 >
 #
 > With one      attack    , he       was torn a   pieces .
@@ -24,12 +24,12 @@
 # ISg/#r+ NSg/VB D$+ NPl+  R     D/P+ NPr🅪Sg+ .
 >
 #
-> At
-# NSg/P
+>              At
+# HeadingStart NSg/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > Caesar was at    Rome ; a   climate  treaty  was signed at    Kyoto in        1997 .
@@ -68,28 +68,28 @@
 # ISg+ VL3 NSg/P NPl   VB/C NPl    P    ISg+ .
 >
 #
-> Noun
-# NSg/VB+
+>              Noun
+# HeadingStart NSg/VB+
 >
 #
 > The at    sign    .
 # D   NSg/P NSg/VB+ .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > ( In        online chats   : ) Don't @ me       ! Don't at    me       !
 # . NPr/J/R/P VB/J+  NPl/V3+ . . VB    . NPr/ISg+ . VB    NSg/P NPr/ISg+ .
 >
 #
-> By
-# NSg/J/P
+>              By
+# HeadingStart NSg/J/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > The mailbox is  by      the bus     stop   .
@@ -176,8 +176,8 @@
 # NSg/J/P ?      . +    NSg/J     . . P    . P     .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > I       watched the parade  as    it       passed by      .
@@ -192,8 +192,8 @@
 # D+  NPl+  VB/J  NSg/I/J/R/Dq N🅪Sg/VB/J+ P     NSg/VB+ Nᴹ/Vg/J NPl/V3+ NSg/J/P R/C/P N🅪Sg/VB VB/C N🅪Sg/VB+ .
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > a   by      path    ; a   by      room       ( Out          of the way    , off        to one      side      . )
@@ -202,20 +202,20 @@
 # NSg/J/P NSg/VB . D/P NSg/J/P NSg/VB . NSg/J+     . NSg/J      . .
 >
 #
-> For
-# R/C/P
+>              For
+# HeadingStart R/C/P
 >
 #
-> Conjunction
-# NSg/VB+
+>              Conjunction
+# HeadingStart NSg/VB+
 >
 #
 > I       had to stay     with my  wicked stepmother , for   I       had nowhere else    to go       .
 # ISg/#r+ VB  P  NSg/VB/J P    D$+ VP/J   NSg        . R/C/P ISg/#r+ VB  NSg/J   NSg/J/C P  NSg/VB/J .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > The astronauts headed for   the moon    .
@@ -320,8 +320,8 @@
 # P  NSg/VB  R/C/P NSg$+ NSg+        .
 >
 #
-> From
-# P
+>              From
+# HeadingStart P
 >
 #
 > Paul is  from New    Zealand .
@@ -364,12 +364,12 @@
 # NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
 >
 #
-> In
-# NPr/J/R/P
+>              In
+# HeadingStart NPr/J/R/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > Who    lives in        a   pineapple under   the sea  ?
@@ -450,16 +450,16 @@
 # NSg/J+   NPl/V3+ VXB    NSg/VXB NSg/J  NPr/J/R/P N🅪Sg/I/VB+ . NSg/C/P NSg/R/C VP/J    .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > He       that          ears    my  land       spares my  team    and  gives  me       leave  to in        the crop    .
 # NPr/ISg+ NSg/I/C/Ddem+ NPl/V3+ D$+ NPr🅪Sg/VB+ NPl/V3 D$+ NSg/VB+ VB/C NPl/V3 NPr/ISg+ NSg/VB P  NPr/J/R/P D   NSg/VB+ .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Suddenly a    strange   man       walked in        .
@@ -478,16 +478,16 @@
 # D   NSg/VB NSg/VB/J VB     VBPp   Vg/J        #  NPl/V3+ NPr/J/R/P .
 >
 #
-> Noun
-# NSg/VB+
+>              Noun
+# HeadingStart NSg/VB+
 >
 #
 > His     parents got him  an  in        with the company  .
 # ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg/VB+ .
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > Is  Mr   . Smith   in        ?
@@ -522,8 +522,8 @@
 # ISg/#r+ VPt #   NPl     NPr/J/R/P NSg/I/C D+  N🅪Sg/VB/J+ VP/J    .
 >
 #
-> Unit
-# NSg+
+>              Unit
+# HeadingStart NSg+
 >
 #
 > The glass      is  8 inches  .
@@ -532,8 +532,8 @@
 # D+  NPr🅪Sg/VB+ VL3 # NPr/J/R/P .
 >
 #
-> Of
-# P
+>              Of
+# HeadingStart P
 >
 #
 > Take   the chicken    out          of the freezer .
@@ -582,12 +582,12 @@
 # P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
 >
 #
-> On
-# J/P
+>              On
+# HeadingStart J/P
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > All           the lights  are on  , so          they must   be      home      .
@@ -624,8 +624,8 @@
 # NPr/ISg+ R      V3  P  NSg/VXB J/P . +    NSg/I/J/R/C Nᴹ/Vg/J    .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > turn   the television on
@@ -648,8 +648,8 @@
 # NSg+ NPl+  J/P . NSg/I/J+ VB  VP/J    NPr/J/R/P D+  NSg+    .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > A   vase   of flowers   stood on  the table   .
@@ -768,20 +768,20 @@
 # VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/R/P N🅪Sg/VB+ .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > Can     you    on  the light      ? ( switch    on  )
 # NPr/VXB ISgPl+ J/P D+  N🅪Sg/VB/J+ . . NSg/VB/J+ J/P .
 >
 #
-> To
-# P
+>              To
+# HeadingStart P
 >
 #
-> Particle
-# NSg+
+>              Particle
+# HeadingStart NSg+
 >
 #
 > I       want   to leave  .
@@ -804,8 +804,8 @@
 # ISg/#r+ NSg/VPt P  D+  NPl/V3+ P  NSg/VB I/J/R/Dq+ N🅪Sg/VB+ .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > She  looked to the heavens .
@@ -852,20 +852,20 @@
 # NSg$   D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Please push   the door    to . ( close    )
 # VB     NSg/VB D+  NSg/VB+ P  . . NSg/VB/J .
 >
 #
-> With
-# P
+>              With
+# HeadingStart P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > He       picked a   fight  with the class      bully     .
@@ -930,8 +930,8 @@
 # NSg/I/C/Ddem+ VPt D/P NPr/VB P  VB      . VB  ISgPl+ NSg/VB/J P    NPr/ISg+ .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Do  you    want   to come       with ?
