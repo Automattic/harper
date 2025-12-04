@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       7 | ## CHAPTER I: Down the Rabbit-Hole
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER I: down the Rabbit-Hole”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        9 | Alice was beginning to get very tired of sitting by her sister on the bank, and
@@ -426,6 +435,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     187 | ## CHAPTER II: The Pool of Tears
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER II: the Pool of Tears”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      189 | “Curiouser and curiouser!” cried Alice (she was so much surprised, that for the
@@ -765,6 +783,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     366 | ## CHAPTER III: A Caucus-Race and a Long Tale
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER III: a Caucus-Race and a Long Tale”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      368 | They were indeed a queer-looking party that assembled on the bank—the birds with
@@ -982,6 +1009,15 @@ Suggest:
   - Replace with: “Lord”
   - Replace with: “Lore”
   - Replace with: “Lorry”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER IV: the Rabbit Sends in a little Bill”
 
 
 
@@ -1417,6 +1453,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     796 | ## CHAPTER V: Advice from a Caterpillar
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER v: Advice from a Caterpillar”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
@@ -1636,6 +1681,15 @@ Message: |
          |        ^~~~~~~~~ `righthand` should probably be written as `right hand`.
 Suggest:
   - Replace with: “right hand”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1059 | ## CHAPTER VI: Pig and Pepper
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi: Pig and Pepper”
 
 
 
@@ -1867,6 +1921,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1354 | ## CHAPTER VII: A Mad Tea-Party
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER VII: a Mad Tea-Party”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1356 | There was a table set out under a tree in front of the house, and the March Hare
@@ -2045,6 +2108,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1666 | bright flower-beds and the cool fountains.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 53 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1668 | ## CHAPTER VIII: The Queen’s Croquet-Ground
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER VIII: the Queen’s Croquet-Ground”
 
 
 
@@ -2329,6 +2401,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1947 | went back to the game.
          | ~~~~~~~~~~~~~~~~~~~~~~ This sentence is 51 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1949 | ## CHAPTER IX: The Mock Turtle’s Story
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER IX: the Mock Turtle’s Story”
 
 
 
@@ -2750,6 +2831,15 @@ Message: |
          |                                    ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2244 | ## CHAPTER X: The Lobster Quadrille
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER X: the Lobster Quadrille”
 
 
 

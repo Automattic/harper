@@ -82,8 +82,6 @@ pub fn try_make_title_case(
             || index == 0
             || word_likes.peek().is_none();
 
-        dbg!(should_capitalize);
-
         if should_capitalize {
             set_output_char(
                 word.span.start - start_index,
@@ -100,7 +98,11 @@ pub fn try_make_title_case(
         }
     }
 
-    dbg!(&output);
+    if let Some(output) = &output
+        && output.as_slice() == relevant_text
+    {
+        return None;
+    }
 
     output
 }

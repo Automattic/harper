@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       6 | # Computer science
+         | ^~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Computer Science”
+
+
+
 Lint:    Style (31 priority)
 Message: |
       27 | problem-solving, decision-making, environmental adaptation, planning and
@@ -194,6 +203,15 @@ Message: |
          | ~~~~~~~~~~ Ensure proper capitalization of major universities in the United States.
 Suggest:
   - Replace with: “Columbia University”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     102 | ## Etymology and scope
+         | ^~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Etymology and Scope”
 
 
 
@@ -584,6 +602,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     178 | ### Epistemology of computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Epistemology of Computer Science”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      181 | computer science is a discipline of science, mathematics, or engineering. Allen
@@ -669,6 +696,15 @@ Suggest:
   - Replace with: “Hare”
   - Replace with: “Hoard”
   - Replace with: “Hoary”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     211 | ### Paradigms of computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Paradigms of Computer Science”
 
 
 
@@ -814,6 +850,24 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     243 | ### Theoretical computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Theoretical Computer Science”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     250 | #### Theory of computation
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Theory of Computation”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      252 | According to Peter Denning, the fundamental question underlying computer science
@@ -842,6 +896,33 @@ Message: |
          |                    ^~~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Problem”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     265 | #### Information and coding theory
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Information and Coding Theory”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     277 | #### Data structures and algorithms
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Data Structures and Algorithms”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     282 | #### Programming language theory and formal methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Programming Language Theory and Formal Methods”
 
 
 
@@ -881,6 +962,33 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     308 | ### Applied computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Applied Computer Science”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     310 | #### Computer graphics and visualization
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Graphics and Visualization”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     318 | #### Image and sound processing
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Image and Sound Processing”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      320 | Information can take the form of images, sound, video or other multimedia. Bits
@@ -910,12 +1018,30 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     330 | #### Computational science, finance and engineering
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computational Science, Finance and Engineering”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      330 | #### Computational science, finance and engineering
          |                             ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     344 | #### Human–computer interaction
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Human–Computer Interaction”
 
 
 
@@ -942,12 +1068,48 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     352 | #### Software engineering
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Software Engineering”
+
+
+
 Lint:    Punctuation (31 priority)
 Message: |
      360 | maintenance. For example software testing, systems engineering, technical debt
          |              ^~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     363 | #### Artificial intelligence
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Artificial Intelligence”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     383 | ### Computer systems
+         | ^~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Computer Systems”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     385 | #### Computer architecture and microarchitecture
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Architecture and Microarchitecture”
 
 
 
@@ -973,6 +1135,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     397 | #### Concurrent, parallel and distributed computing
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Concurrent, Parallel and Distributed Computing”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      401 | mathematical models have been developed for general concurrent computation
@@ -985,6 +1156,24 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     408 | #### Computer networks
+         | ^~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Networks”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     413 | #### Computer security and cryptography
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Security and Cryptography”
+
+
+
 Lint:    WordChoice (127 priority)
 Message: |
      421 | Modern cryptography is the scientific study of problems relating to distributed
@@ -992,6 +1181,15 @@ Message: |
      422 | computations that can be attacked. Technologies studied in modern cryptography
 Suggest:
   - Replace with: “to distribute”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     427 | #### Databases and data mining
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Databases and Data Mining”
 
 
 
@@ -1126,6 +1324,15 @@ Message: |
          |     ^~~~ `goto` should probably be written as `go to`.
 Suggest:
   - Replace with: “go to”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     471 | ## Programming paradigms
+         | ^~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Programming Paradigms”
 
 
 

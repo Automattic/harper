@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       3 | # The Constitution Of The United States Of America
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# The Constitution of the United States of America”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        5 | **We the People** of the United States, in Order to form a more perfect Union,
@@ -1773,6 +1782,15 @@ Message: |
 Suggest:
   - Replace with: “to all Intents and Purposes”
   - Replace with: “for alL intents anD purposes”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     677 | ## Article. VI.
+         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Article. Vi.”
 
 
 

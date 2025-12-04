@@ -187,6 +187,7 @@ mod touristic;
 mod unclosed_quotes;
 mod update_place_names;
 mod use_genitive;
+mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
 mod vice_versa;
@@ -243,6 +244,7 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use crate::parsers::Markdown;
     use crate::{Document, Span, Token, parsers::PlainEnglish};
     use hashbrown::HashSet;
 
@@ -468,7 +470,7 @@ pub mod tests {
         loop {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
-                &PlainEnglish,
+                &Markdown::default(),
                 &FstDictionary::curated(),
             );
             let lints = linter.lint(&test);

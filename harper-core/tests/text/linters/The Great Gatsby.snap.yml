@@ -4370,6 +4370,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    3003 | ## CHAPTER VI
+         | ^~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     3020 | short of being news. Contemporary legends such as the “underground pipe-line to

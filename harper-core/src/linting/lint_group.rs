@@ -175,6 +175,7 @@ use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
+use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
@@ -671,6 +672,9 @@ impl LintGroup {
 
         out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
         out.config.set_rule_enabled("MassPlurals", true);
+
+        out.add("UseTitleCase", UseTitleCase::new(dictionary.clone()));
+        out.config.set_rule_enabled("UseTitleCase", true);
 
         out
     }
