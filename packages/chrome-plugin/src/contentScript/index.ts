@@ -43,7 +43,7 @@ function padWithContext(source: string, start: number, end: number, contextLengt
 }
 
 const keepAliveCallback = () => {
-	ProtocolClient.lint('', 'example.com');
+	ProtocolClient.lint('', 'example.com', {});
 
 	setTimeout(keepAliveCallback, 400);
 };

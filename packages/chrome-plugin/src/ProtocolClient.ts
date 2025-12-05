@@ -9,14 +9,14 @@ export default class ProtocolClient {
 		ttl: 5_000,
 	});
 
-	private static cacheKey(text: string, domain: string, options: LintOptions): string {
-		return `${domain}:${text}:${options.forceAllHeadings}:${options.language}`;
+	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
+		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
 	}
 
 	public static async lint(
 		text: string,
 		domain: string,
-		options: LintOptions,
+		options?: LintOptions,
 	): Promise<UnpackedLintGroups> {
 		const key = this.cacheKey(text, domain, options);
 		let p = this.lintCache.get(key);

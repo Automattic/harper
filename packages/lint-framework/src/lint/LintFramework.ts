@@ -132,7 +132,6 @@ export default class LintFramework {
 				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
 					forceAllHeadings: isHeading(target),
 				});
-				console.log(isHeading(target), target);
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
