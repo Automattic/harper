@@ -40,10 +40,10 @@ pub fn try_make_title_case(
     let start_index = toks.first().unwrap().span.start;
     let relevant_text = toks.span().unwrap().get_content(source);
 
-    let mut word_likes = toks.iter_word_likes().enumerate().peekable();
+    let mut word_likes = toks.iter_word_like_indices().enumerate().peekable();
 
     let mut output = None;
-    let mut previous_word_end = start_index;
+    let mut previous_word_index = 0;
 
     // Checks if the output if the provided char is different from the source. If so, it will
     // set the output. The goal here is to avoid allocating if no edits must be made.
@@ -65,7 +65,9 @@ pub fn try_make_title_case(
         }
     };
 
-    while let Some((index, word)) = word_likes.next() {
+    while let Some((index, word_idx)) = word_likes.next() {
+        let word = &toks[word_idx];
+
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
@@ -81,9 +83,8 @@ pub fn try_make_title_case(
         };
 
         // Capitalize the first word following a colon to match Chicago style.
-        let is_after_colon = toks
+        let is_after_colon = toks[previous_word_index..word_idx]
             .iter()
-            .filter(|tok| tok.span.start >= previous_word_end && tok.span.end <= word.span.start)
             .any(|tok| matches!(tok.kind, TokenKind::Punctuation(Punctuation::Colon)));
 
         let should_capitalize = is_after_colon
@@ -106,7 +107,7 @@ pub fn try_make_title_case(
             }
         }
 
-        previous_word_end = word.span.end;
+        previous_word_index = word_idx
     }
 
     if let Some(output) = &output
