@@ -131,77 +131,88 @@ export default class State {
 				const text = view.state.doc.sliceString(-1);
 				const chars = Array.from(text);
 
-				const lints = await this.harper.lint(text);
+				const lints = await this.harper.organizedLints(text);
 
-				return lints.map((lint) => {
-					const span = lint.span();
+				return Object.entries(lints).flatMap(([linterName, lints]) =>
+					lints.map((lint) => {
+						const span = lint.span();
 
-					const actions = lint.suggestions().map((sug) => {
-						return {
-							name:
-								sug.kind() == SuggestionKind.Replace
-									? sug.get_replacement_text()
-									: suggestionToLabel(sug),
-							title: suggestionToLabel(sug),
-							apply: (view) => {
-								if (sug.kind() === SuggestionKind.Remove) {
-									view.dispatch({
-										changes: {
-											from: span.start,
-											to: span.end,
-											insert: '',
-										},
-									});
-								} else if (sug.kind() === SuggestionKind.Replace) {
-									view.dispatch({
-										changes: {
-											from: span.start,
-											to: span.end,
-											insert: sug.get_replacement_text(),
-										},
-									});
-								} else if (sug.kind() === SuggestionKind.InsertAfter) {
-									view.dispatch({
-										changes: {
-											from: span.end,
-											to: span.end,
-											insert: sug.get_replacement_text(),
-										},
-									});
-								}
-							},
-						};
-					});
-
-					if (lint.lint_kind() === 'Spelling') {
-						const word = lint.get_problem_text();
-
-						actions.push({
-							name: '📖',
-							title: `Add “${word}” to your dictionary`,
-							apply: (_view) => {
-								this.harper.importWords([word]);
-								this.reinitialize();
-							},
+						const actions = lint.suggestions().map((sug) => {
+							return {
+								name:
+									sug.kind() == SuggestionKind.Replace
+										? sug.get_replacement_text()
+										: suggestionToLabel(sug),
+								title: suggestionToLabel(sug),
+								apply: (view) => {
+									if (sug.kind() === SuggestionKind.Remove) {
+										view.dispatch({
+											changes: {
+												from: span.start,
+												to: span.end,
+												insert: '',
+											},
+										});
+									} else if (sug.kind() === SuggestionKind.Replace) {
+										view.dispatch({
+											changes: {
+												from: span.start,
+												to: span.end,
+												insert: sug.get_replacement_text(),
+											},
+										});
+									} else if (sug.kind() === SuggestionKind.InsertAfter) {
+										view.dispatch({
+											changes: {
+												from: span.end,
+												to: span.end,
+												insert: sug.get_replacement_text(),
+											},
+										});
+									}
+								},
+							};
 						});
-					}
 
-					return {
-						from: span.start,
-						to: span.end,
-						severity: 'error',
-						title: lint.lint_kind_pretty(),
-						renderMessage: (_view) => {
-							const node = document.createElement('template');
-							node.innerHTML = lint.message_html();
-							return node.content;
-						},
-						ignore: async () => {
-							await this.ignoreLints(text, [lint]);
-						},
-						actions,
-					};
-				});
+						if (lint.lint_kind() === 'Spelling') {
+							const word = lint.get_problem_text();
+
+							actions.push({
+								name: '📖',
+								title: `Add “${word}” to your dictionary`,
+								apply: (_view) => {
+									this.harper.importWords([word]);
+									this.reinitialize();
+								},
+							});
+						}
+
+						return {
+							from: span.start,
+							to: span.end,
+							source: linterName,
+							severity: 'error',
+							title: lint.lint_kind_pretty(),
+							renderMessage: (_view) => {
+								const node = document.createElement('template');
+								node.innerHTML = lint.message_html();
+								return node.content;
+							},
+							ignore: async () => {
+								await this.ignoreLints(text, [lint]);
+							},
+							disable: async () => {
+								const lintConfig = await this.harper.getLintConfig();
+								lintConfig[linterName] = false;
+								await this.harper.setLintConfig(lintConfig);
+
+								await this.reinitialize();
+							},
+
+							actions,
+						};
+					}),
+				);
 			},
 			{
 				delay: this.delay,
