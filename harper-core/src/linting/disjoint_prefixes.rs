@@ -114,10 +114,10 @@ where
         // Check if either joined or hyphenated form is in the dictionary
         let joined_valid = joined
             .as_ref()
-            .map_or(false, |j| self.dict.contains_word_str(j));
+            .is_some_and(|j| self.dict.contains_word_str(j));
         let hyphenated_valid = hyphenated
             .as_ref()
-            .map_or(false, |h| self.dict.contains_word_str(h));
+            .is_some_and(|h| self.dict.contains_word_str(h));
 
         if !joined_valid && !hyphenated_valid {
             return None;
