@@ -80,6 +80,13 @@ impl Expr for SequenceExpr {
 impl SequenceExpr {
     // Constructor methods
 
+    // Single token methods
+
+    /// Construct a new sequence with an [`AnyPattern`] at the beginning of the operation list.
+    pub fn anything() -> Self {
+        Self::default().then_anything()
+    }
+
     // Single word token methods
 
     /// Construct a new sequence with a [`Word`] at the beginning of the operation list.
@@ -166,9 +173,19 @@ impl SequenceExpr {
         self.then(WordSet::new(words))
     }
 
+    /// Shorthand for [`Self::then_word_set`].
+    pub fn t_set(self, words: &'static [&'static str]) -> Self {
+        self.then_word_set(words)
+    }
+
     /// Match against one or more whitespace tokens.
     pub fn then_whitespace(self) -> Self {
         self.then(WhitespacePattern)
+    }
+
+    /// Shorthand for [`Self::then_whitespace`].
+    pub fn t_ws(self) -> Self {
+        self.then_whitespace()
     }
 
     /// Match against one or more whitespace tokens.
@@ -179,11 +196,6 @@ impl SequenceExpr {
     /// Shorthand for [`Self::then_whitespace_or_hyphen`].
     pub fn t_ws_h(self) -> Self {
         self.then_whitespace_or_hyphen()
-    }
-
-    /// Shorthand for [`Self::then_whitespace`].
-    pub fn t_ws(self) -> Self {
-        self.then_whitespace()
     }
 
     pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {

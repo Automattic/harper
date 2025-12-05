@@ -71,6 +71,15 @@ Message: |
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+      43 | However, there are clearly many more categories and sub-categories. For nouns,
+         |                                                     ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “subcategories”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
@@ -371,6 +380,16 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+     154 | algorithms one of the most widely used being the bi-directional inference
+         |                                                  ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     155 | algorithm.
+Suggest:
+  - Replace with: “bidirectional”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      159 | In 1987, Steven DeRose and Kenneth W. Church independently developed dynamic
@@ -477,6 +496,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      179 | separate other pieces as well. Markov Models became the standard method for the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     184 | The methods already discussed involve working from a pre-existing corpus to
+         |                                                      ^~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     185 | learn tag probabilities. It is, however, also possible to bootstrap using
+Suggest:
+  - Replace with: “preexisting”
 
 
 

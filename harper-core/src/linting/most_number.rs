@@ -23,8 +23,7 @@ impl Default for MostNumber {
                 ),
                 // Context pattern
                 Box::new(
-                    SequenceExpr::default()
-                        .then_anything()
+                    SequenceExpr::anything()
                         .then_anything()
                         .then_anything()
                         .then_anything()

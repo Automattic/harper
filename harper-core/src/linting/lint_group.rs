@@ -50,6 +50,7 @@ use super::currency_placement::CurrencyPlacement;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
+use super::disjoint_prefixes::DisjointPrefixes;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
@@ -690,6 +691,12 @@ impl LintGroup {
         out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
         out.config.set_rule_enabled("MassPlurals", true);
 
+        out.add_chunk_expr_linter(
+            "DisjointPrefixes",
+            DisjointPrefixes::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("DisjointPrefixes", true);
+
         out
     }
 
@@ -830,7 +837,7 @@ mod tests {
     #[test]
     fn dont_flag_low_hanging_fruit_desc() {
         assert_no_lints(
-            "Corrects non-standard variants of low-hanging fruit.",
+            "Corrects nonstandard variants of low-hanging fruit.",
             test_group(),
         );
     }
