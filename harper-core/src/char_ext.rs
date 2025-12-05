@@ -31,7 +31,7 @@ impl CharExt for char {
             && !self.is_punctuation()
             && self.is_alphabetic()
             && !self.is_cjk()
-            && self.script() == Script::Latin
+            && (self.script() == Script::Latin || self.script() == Script::Cyrillic)
     }
 
     fn normalized(self) -> Self {
