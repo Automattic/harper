@@ -245,7 +245,7 @@ where
 #[cfg(test)]
 pub mod tests {
     use crate::parsers::Markdown;
-    use crate::{Document, Span, Token, parsers::PlainEnglish};
+    use crate::{Document, Span, Token};
     use hashbrown::HashSet;
 
     /// Extension trait for converting spans of tokens back to their original text

@@ -42,6 +42,7 @@ pub fn try_make_title_case(
     let mut word_likes = toks.iter_word_likes().enumerate().peekable();
 
     let mut output = None;
+    let mut previous_word_end = start_index;
 
     // Checks if the output if the provided char is different from the source. If so, it will
     // set the output. The goal here is to avoid allocating if no edits must be made.
@@ -78,8 +79,16 @@ pub fn try_make_title_case(
             }
         };
 
-        let should_capitalize =
-            should_capitalize_token(word, source) || index == 0 || word_likes.peek().is_none();
+        let text_between_previous_and_current =
+            &relevant_text[(previous_word_end - start_index)..(word.span.start - start_index)];
+
+        // Capitalize the first word following a colon to match Chicago style.
+        let is_after_colon = text_between_previous_and_current.iter().any(|c| *c == ':');
+
+        let should_capitalize = is_after_colon
+            || should_capitalize_token(word, source)
+            || index == 0
+            || word_likes.peek().is_none();
 
         if should_capitalize {
             set_output_char(
@@ -95,6 +104,8 @@ pub fn try_make_title_case(
                 );
             }
         }
+
+        previous_word_end = word.span.end;
     }
 
     if let Some(output) = &output
@@ -119,10 +130,14 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
             // Only specific conjunctions are not capitalized.
             lazy_static! {
                 static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
-                    ["and", "but", "for", "or", "nor"]
+                    ["and", "but", "for", "or", "nor", "as"]
                         .iter()
                         .map(|v| v.chars().collect())
                         .collect();
+                static ref SPECIAL_ARTICLES: HashSet<Vec<char>> = ["a", "an", "the"]
+                    .iter()
+                    .map(|v| v.chars().collect())
+                    .collect();
             }
 
             let chars = tok.span.get_content(source);
@@ -130,15 +145,38 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
 
             let metadata = Cow::Borrowed(metadata);
 
-            if metadata.np_member.unwrap_or_default() {
+            let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
+
+            if chars_lower.as_ref() == ['a', 'l', 'l'] {
                 return true;
             }
 
-            let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
-
             !is_short_preposition
-                && !metadata.is_determiner()
+                && !metadata.is_non_possessive_determiner()
                 && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
+                && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
+        }
+        TokenKind::Word(None) => {
+            lazy_static! {
+                static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
+                    ["and", "but", "for", "or", "nor", "as"]
+                        .iter()
+                        .map(|v| v.chars().collect())
+                        .collect();
+                static ref SPECIAL_ARTICLES: HashSet<Vec<char>> = ["a", "an", "the"]
+                    .iter()
+                    .map(|v| v.chars().collect())
+                    .collect();
+            }
+
+            let chars_lower = tok.span.get_content(source).to_lower();
+
+            if chars_lower.as_ref() == ['a', 'l', 'l'] {
+                return true;
+            }
+
+            !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
+                && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
         }
         _ => true,
     }
@@ -309,7 +347,7 @@ mod tests {
     }
 
     #[test]
-    fn fixes_your_correctly_in_np() {
+    fn fixes_your_correctly() {
         assert_eq!(
             make_title_case_str(
                 "it is not your friend",
@@ -317,6 +355,174 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "It Is Not Your Friend",
+        );
+    }
+
+    #[test]
+    fn handles_old_man_and_the_sea() {
+        assert_eq!(
+            make_title_case_str(
+                "the old man and the sea",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "The Old Man and the Sea",
+        );
+    }
+
+    #[test]
+    fn handles_great_story_with_subtitle() {
+        assert_eq!(
+            make_title_case_str(
+                "the great story: a tale of two cities",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "The Great Story: A Tale of Two Cities",
+        );
+    }
+
+    #[test]
+    fn handles_lantern_and_moths() {
+        assert_eq!(
+            make_title_case_str(
+                "lantern flickered; moths began their worship",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Lantern Flickered; Moths Began Their Worship",
+        );
+    }
+
+    #[test]
+    fn handles_static_with_ghosts() {
+        assert_eq!(
+            make_title_case_str(
+                "static filled the room with ghosts",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Static Filled the Room with Ghosts",
+        );
+    }
+
+    #[test]
+    fn handles_glass_trembled_before_thunder() {
+        assert_eq!(
+            make_title_case_str(
+                "glass trembled before thunder arrived.",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Glass Trembled Before Thunder Arrived.",
+        );
+    }
+
+    #[test]
+    fn handles_hepatitis_b_shots() {
+        assert_eq!(
+            make_title_case_str(
+                "an end to hepatitis b shots for all newborns",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "An End to Hepatitis B Shots for All Newborns",
+        );
+    }
+
+    #[test]
+    fn handles_trump_approval_rating() {
+        assert_eq!(
+            make_title_case_str(
+                "trump's approval rating dips as views of his handling of the economy sour",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Trump's Approval Rating Dips as Views of His Handling of the Economy Sour",
+        );
+    }
+
+    #[test]
+    fn handles_last_door() {
+        assert_eq!(
+            make_title_case_str("the last door", &PlainEnglish, &FstDictionary::curated()),
+            "The Last Door",
+        );
+    }
+
+    #[test]
+    fn handles_midnight_river() {
+        assert_eq!(
+            make_title_case_str("midnight river", &PlainEnglish, &FstDictionary::curated()),
+            "Midnight River",
+        );
+    }
+
+    #[test]
+    fn handles_a_quiet_room() {
+        assert_eq!(
+            make_title_case_str("a quiet room", &PlainEnglish, &FstDictionary::curated()),
+            "A Quiet Room",
+        );
+    }
+
+    #[test]
+    fn handles_broken_map() {
+        assert_eq!(
+            make_title_case_str("broken map", &PlainEnglish, &FstDictionary::curated()),
+            "Broken Map",
+        );
+    }
+
+    #[test]
+    fn handles_fire_in_autumn() {
+        assert_eq!(
+            make_title_case_str("fire in autumn", &PlainEnglish, &FstDictionary::curated()),
+            "Fire in Autumn",
+        );
+    }
+
+    #[test]
+    fn handles_hidden_path() {
+        assert_eq!(
+            make_title_case_str("the hidden path", &PlainEnglish, &FstDictionary::curated()),
+            "The Hidden Path",
+        );
+    }
+
+    #[test]
+    fn handles_under_blue_skies() {
+        assert_eq!(
+            make_title_case_str("under blue skies", &PlainEnglish, &FstDictionary::curated()),
+            "Under Blue Skies",
+        );
+    }
+
+    #[test]
+    fn handles_lost_and_found() {
+        assert_eq!(
+            make_title_case_str("lost and found", &PlainEnglish, &FstDictionary::curated()),
+            "Lost and Found",
+        );
+    }
+
+    #[test]
+    fn handles_silent_watcher() {
+        assert_eq!(
+            make_title_case_str(
+                "the silent watcher",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "The Silent Watcher",
+        );
+    }
+
+    #[test]
+    fn handles_winter_road() {
+        assert_eq!(
+            make_title_case_str("winter road", &PlainEnglish, &FstDictionary::curated()),
+            "Winter Road",
         );
     }
 }
