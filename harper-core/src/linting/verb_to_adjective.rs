@@ -29,8 +29,7 @@ impl Default for VerbToAdjective {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
 
-        let exceptions = SequenceExpr::default()
-            .t_any()
+        let exceptions = SequenceExpr::anything()
             .t_any()
             .then_unless(WordSet::new(&["very"]));
 

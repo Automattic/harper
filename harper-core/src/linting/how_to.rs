@@ -16,8 +16,7 @@ impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequenceExpr::default()
-            .then_anything()
+        let pos_pattern = SequenceExpr::anything()
             .then_anything()
             .t_aco("how")
             .then_whitespace()

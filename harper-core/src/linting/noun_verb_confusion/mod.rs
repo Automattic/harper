@@ -1361,4 +1361,13 @@ mod tests {
             NounVerbConfusion::default(),
         );
     }
+
+    #[test]
+    fn issue_2041() {
+        assert_suggestion_result(
+            "Let me give you a piece of advise.",
+            NounVerbConfusion::default(),
+            "Let me give you a piece of advice.",
+        );
+    }
 }

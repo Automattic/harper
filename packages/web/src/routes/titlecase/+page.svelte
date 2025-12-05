@@ -1,21 +1,24 @@
-<script>
+<script lang="ts">
 import { Link, Textarea } from 'components';
-import { binary, WorkerLinter } from 'harper.js';
+import type { WorkerLinter } from 'harper.js';
 import { onMount } from 'svelte';
 import Typed from 'typed.js';
 
-let textareaRef;
-let linter = new WorkerLinter({ binary });
-
-let text = $state('');
-
-$effect(() => {
-	linter.toTitleCase(text).then((t) => {
-		text = t;
-	});
-});
+let linter: WorkerLinter | null = null;
+let text = '';
+let titlecaseRun = 0;
 
 onMount(() => {
+	(async () => {
+		if (typeof Worker !== 'undefined') {
+			const { WorkerLinter, binary } = await import('harper.js');
+			const newLinter = new WorkerLinter({ binary });
+
+			newLinter.setup();
+			linter = newLinter;
+		}
+	})();
+
 	const typed = new Typed('#titleCaseInputField', {
 		strings: [
 			'Click Here to Write an Article Title',
@@ -33,6 +36,18 @@ onMount(() => {
 
 	return () => typed.destroy();
 });
+
+$: if (linter) {
+	const requestId = ++titlecaseRun;
+	const currentText = text;
+
+	linter.toTitleCase(currentText).then((converted) => {
+		if (requestId !== titlecaseRun) return;
+		if (converted !== currentText) {
+			text = converted;
+		}
+	});
+}
 </script>
 
 <h1>Title Case Converter</h1>
@@ -56,7 +71,7 @@ onMount(() => {
 				<Textarea
 					bind:value={text}
 					rows="1"
-					class="heading-textarea font-serif text-2xl md:text-3xl font-bold border-none focus:ring-2 focus:ring-blue-200 bg-transparent p-0 resize-none overflow-hidden"
+					class="heading-textarea w-full font-serif text-2xl md:text-3xl font-bold border-none focus:ring-2 focus:ring-blue-200 bg-transparent p-0 resize-none overflow-hidden"
 					id="titleCaseInputField"
 				/>
 				<div class="text-sm mb-3">By John Doe, Staff Writer</div>
