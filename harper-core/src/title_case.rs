@@ -6,6 +6,7 @@ use crate::TokenKind;
 use hashbrown::HashSet;
 use lazy_static::lazy_static;
 
+use crate::Punctuation;
 use crate::spell::Dictionary;
 use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
@@ -79,11 +80,11 @@ pub fn try_make_title_case(
             }
         };
 
-        let text_between_previous_and_current =
-            &relevant_text[(previous_word_end - start_index)..(word.span.start - start_index)];
-
         // Capitalize the first word following a colon to match Chicago style.
-        let is_after_colon = text_between_previous_and_current.iter().any(|c| *c == ':');
+        let is_after_colon = toks
+            .iter()
+            .filter(|tok| tok.span.start >= previous_word_end && tok.span.end <= word.span.start)
+            .any(|tok| matches!(tok.kind, TokenKind::Punctuation(Punctuation::Colon)));
 
         let should_capitalize = is_after_colon
             || should_capitalize_token(word, source)
