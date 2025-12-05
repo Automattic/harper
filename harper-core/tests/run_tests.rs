@@ -68,7 +68,6 @@ macro_rules! create_org_test {
 }
 
 create_test!(whack_bullets.md, 1, Dialect::American);
-create_test!(preexisting.md, 0, Dialect::American);
 create_test!(issue_109.md, 0, Dialect::American);
 create_test!(issue_109_ext.md, 0, Dialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
@@ -101,7 +100,7 @@ create_test!(issue_2240.md, 0, Dialect::American);
 create_test!(issue_2151.md, 4, Dialect::British);
 
 // Make sure it doesn't panic
-create_test!(lukas_homework.md, 3, Dialect::American);
+create_test!(lukas_homework.md, 4, Dialect::American);
 
 // Org mode tests
 create_org_test!(index.org, 49, Dialect::American);

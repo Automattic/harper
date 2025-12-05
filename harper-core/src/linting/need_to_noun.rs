@@ -27,8 +27,7 @@ impl Default for NeedToNoun {
             Box::new(WordSet::new(&["about", "it"])),
         ]);
 
-        let exceptions = SequenceExpr::default()
-            .t_any()
+        let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()

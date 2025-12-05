@@ -96,6 +96,7 @@ async function enableDefaultDomains() {
 		'news.ycombinator.com',
 		'classroom.google.com',
 		'quilljs.com',
+		'www.wattpad.com',
 	];
 
 	for (const item of defaultEnabledDomains) {

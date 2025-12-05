@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “F”
+  - Replace with: “Ff”
 
 
 
@@ -374,6 +374,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      138 | everything afterward savors of anti-climax. His family were enormously
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     137 | one of those men who reach such an acute limited excellence at twenty-one that
+     138 | everything afterward savors of anti-climax. His family were enormously
+         |                                ^~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “anticlimax”
 
 
 
@@ -979,6 +989,15 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+     775 | Up-stairs, in the solemn echoing drive she let four taxicabs drive away before
+         | ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “Upstairs”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      784 | We backed up to a gray old man who bore an absurd resemblance to John D.
@@ -1450,6 +1469,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1192 | Castile. The bar is in full swing, and floating rounds of cocktails permeate the
          | ~~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+    1188 | piccolos, and low and high drums. The last swimmers have come in from the beach
+    1189 | now and are dressing up-stairs; the cars from New York are parked five deep in
+         |                      ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
 
 
 
@@ -2059,6 +2088,17 @@ Message: |
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    1745 | I took dinner usually at the Yale Club—for some reason it was the gloomiest
+    1746 | event of my day—and then I went up-stairs to the library and studied investments
+         |                                 ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+    1747 | and securities for a conscientious hour. There were generally a few rioters
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1759 | darkness. At the enchanted metropolitan twilight I felt a haunting loneliness
@@ -2117,6 +2157,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1780 | at Daisy’s. At her first big golf tournament there was a row that nearly reached
          | ~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+    1781 | the newspapers—a suggestion that she had moved her ball from a bad lie in the
+    1782 | semi-final round. The thing approached the proportions of a scandal—then died
+         | ^~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “semifinal”
 
 
 
@@ -4087,6 +4137,15 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    2789 | Daisy went up-stairs to wash her face—too late I thought with humiliation of my
+         |            ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     2806 | was in he answered: ‘‘That’s my affair,” before he realized that it wasn’t an
@@ -4146,6 +4205,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2843 | doing liver exercises on the floor. It was Mr. Klipspringer, the ‘‘boarder.” I
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+    2840 | We went up-stairs, through period bedrooms swathed in rose and lavender silk and
+         |         ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
 
 
 
@@ -4919,7 +4987,7 @@ Suggest:
 
 
 
-Lint:    WordChoice (54 priority)
+Lint:    Punctuation (54 priority)
 Message: |
     3495 | It was when curiosity about Gatsby was at its highest that the lights in his
          |                                           ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
@@ -5268,6 +5336,15 @@ Message: |
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    3765 | They went up-stairs to get ready while we three men stood there shuffling the
+         |           ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Capitalization (127 priority)
 Message: |
     3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
@@ -5609,15 +5686,6 @@ Suggest:
   - Replace with: “la”
   - Replace with: “lo”
   - Replace with: “elf”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
-         |                                   ^~ `lf` should probably be written as `l f`.
-Suggest:
-  - Replace with: “l f”
 
 
 
@@ -6501,6 +6569,16 @@ Message: |
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    4780 | her as his tent out at camp was to him. There was a ripe mystery about it, a
+    4781 | hint of bedrooms up-stairs more beautiful and cool than other bedrooms, of gay
+         |                  ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     4797 | pretenses. I don’t mean that he had traded on his phantom millions, but he had
@@ -7154,6 +7232,16 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    5299 | Some one started to ask me questions, but I broke away and going up-stairs
+         |                                                                  ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+    5300 | looked hastily through the unlocked parts of his desk—he’d never told me
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5304 | Next morning I sent the butler to New York with a letter to Wolfshiem, which
@@ -7377,6 +7465,15 @@ Message: |
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+    5390 | began to be mixed with an awed pride. I helped him to a bedroom up-stairs; while
+         |                                                                 ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5396 | “Gatz is my name.”
@@ -7455,7 +7552,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “F”
+  - Replace with: “Ff”
 
 
 
@@ -8098,6 +8195,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5746 | adapting itself to his restless eyes. Just as I slowed up to avoid overtaking
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+    5764 | ready to leave, and when I sent down word that we weren’t in he tried to force
+    5765 | his way up-stairs. He was crazy enough to kill me if I hadn’t told him who owned
+         |         ^~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “upstairs”
 
 
 

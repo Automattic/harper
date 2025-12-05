@@ -84,7 +84,7 @@ impl ExprLinter for ShootOneselfInTheFoot {
     }
 
     fn description(&self) -> &str {
-        "Corrects non-standard variants of 'shoot oneself in the foot'."
+        "Corrects nonstandard variants of 'shoot oneself in the foot'."
     }
 }
 

@@ -119,7 +119,7 @@
 > algorithm to compute the Bernoulli numbers   , which is  considered to be      the first
 # NSg       P  NSg/VB  D   NPr+      NPrPl/V3+ . I/C+  VL3 VP/J       P  NSg/VXB D   NSg/VB/J
 > published algorithm ever specifically tailored for   implementation on  a   computer .
-# VP/J      NSg       J    R            VP/J     R/C/P N🅪Sg+          J/P D/P NSg/VB+  .
+# VP/J      NSg       J/R  R            VP/J     R/C/P N🅪Sg+          J/P D/P NSg/VB+  .
 > Around 1885 , Herman Hollerith invented the tabulator , which used punched cards
 # J/P    #    . NPr+   NPr       VP/J     D   NSg       . I/C+  VP/J VP/J    NPl/V3+
 > to process statistical information ; eventually his     company  became part     of IBM  .
@@ -165,7 +165,7 @@
 > to refer  to the machines rather     than their human    predecessors . As    it       became
 # P  NSg/VB P  D   NPl/V3+  NPr/VB/J/R C/P  D$+   NSg/VB/J NPl+         . NSg/R NPr/ISg+ VPt
 > clear    that         computers could   be      used for   more         than just mathematical calculations ,
-# NSg/VB/J NSg/I/C/Ddem NPl/V3+   NSg/VXB NSg/VXB VP/J R/C/P NPr/I/J/R/Dq C/P  J    J+           +            .
+# NSg/VB/J NSg/I/C/Ddem NPl/V3+   NSg/VXB NSg/VXB VP/J R/C/P NPr/I/J/R/Dq C/P  J/R  J+           +            .
 > the field  of computer science  broadened to study  computation in        general  . In
 # D   NSg/VB P  NSg/VB+  N🅪Sg/VB+ VP/J      P  NSg/VB NSg         NPr/J/R/P NSg/VB/J . NPr/J/R/P
 > 1945 , IBM  founded the Watson Scientific Computing Laboratory at    Columbia
@@ -711,7 +711,7 @@
 > application of engineering practices to software . Software engineering deals
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does   not     just deal     with the
-# P    D   Nᴹ/Vg/J    VB/C Nᴹ/Vg/J   P  Nᴹ+      . NPr/ISg+ NPl/V3 NSg/R/C J    NSg/VB/J P    D+
+# P    D   Nᴹ/Vg/J    VB/C Nᴹ/Vg/J   P  Nᴹ+      . NPr/ISg+ NPl/V3 NSg/R/C J/R  NSg/VB/J P    D+
 > creation or    manufacture of new    software , but     its     internal arrangement and
 # NSg+     NPr/C NSg/VB      P  NSg/J+ Nᴹ+      . NSg/C/P ISg/D$+ J        NSg         VB/C
 > maintenance . For   example software testing  , systems engineering , technical debt
@@ -956,12 +956,12 @@
 #
 >
 #
-> sequence : first    do  this    , then    do  that          ;
-# NSg/VB+  . NSg/VB/J VXB I/Ddem+ . NSg/J/C VXB NSg/I/C/Ddem+ .
+> sequence : first    do  this    , then      do  that          ;
+# NSg/VB+  . NSg/VB/J VXB I/Ddem+ . NSg/J/R/C VXB NSg/I/C/Ddem+ .
 >
 #
-> selection : IF    such  - and  - such  is  the case      , THEN    do  this    , ELSE    do  that          ;
-# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/J/C VXB I/Ddem+ . NSg/J/C VXB NSg/I/C/Ddem+ .
+> selection : IF    such  - and  - such  is  the case      , THEN      do  this    , ELSE    do  that          ;
+# N🅪Sg+     . NSg/C NSg/I . VB/C . NSg/I VL3 D   NPr🅪Sg/VB . NSg/J/R/C VXB I/Ddem+ . NSg/J/C VXB NSg/I/C/Ddem+ .
 >
 #
 > repetition : WHILE      such  - and  - such  is  the case      , DO  this    . The three rules  of

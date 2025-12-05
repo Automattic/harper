@@ -89,6 +89,15 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+      43 | However, there are clearly many more categories and sub-categories. For nouns,
+         |                                                     ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “subcategories”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
@@ -398,6 +407,16 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+     154 | algorithms one of the most widely used being the bi-directional inference
+         |                                                  ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     155 | algorithm.
+Suggest:
+  - Replace with: “bidirectional”
+
+
+
 Lint:    Capitalization (127 priority)
 Message: |
      157 | ### Dynamic programming methods
@@ -522,6 +541,16 @@ Message: |
          | ^~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
 Suggest:
   - Replace with: “#### Unsupervised Taggers”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     184 | The methods already discussed involve working from a pre-existing corpus to
+         |                                                      ^~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     185 | learn tag probabilities. It is, however, also possible to bootstrap using
+Suggest:
+  - Replace with: “preexisting”
 
 
 

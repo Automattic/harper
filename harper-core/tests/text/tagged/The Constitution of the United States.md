@@ -62,8 +62,8 @@
 # D   NPl/V3 P  NPl      VB/C NPl+            VXB   NSg/VB NSg/P NSg/VB+ J/P D   # NPr/J/#r+ NPr🅪Sg P
 > January , of the years in        which such   terms   end     ; and  the terms  of their
 # NPr+    . P  D+  NPl+  NPr/J/R/P I/C+  NSg/I+ NPl/V3+ NSg/VB+ . VB/C D   NPl/V3 P  D$+
-> successors shall then    begin  .
-# NPl+       VXB   NSg/J/C NSg/VB .
+> successors shall then      begin  .
+# NPl+       VXB   NSg/J/R/C NSg/VB .
 >
 #
 >              Section . 2 .
@@ -756,12 +756,12 @@
 # NSg/VB    P  D   NPr+   . . D   NSg/VB    P  D   NPr+   VXB   . NPr/J/R/P D   N🅪Sg/VB  P
 > the Senate and  House  of Representatives , open     all          the certificates and  the
 # D   NPr+   VB/C NPr/VB P  NPl+            . NSg/VB/J NSg/I/J/C/Dq D   NPl/V3+      VB/C D
-> votes   shall then    be      counted ; — The person  having  the greatest Number     of votes   for
-# NPl/V3+ VXB   NSg/J/C NSg/VXB VP/J    . . D   NSg/VB+ Nᴹ/Vg/J D   JS       N🅪Sg/VB/JC P  NPl/V3+ R/C/P
+> votes   shall then      be      counted ; — The person  having  the greatest Number     of votes   for
+# NPl/V3+ VXB   NSg/J/R/C NSg/VXB VP/J    . . D   NSg/VB+ Nᴹ/Vg/J D   JS       N🅪Sg/VB/JC P  NPl/V3+ R/C/P
 > President , shall be      the President , if    such  number      be      a   majority of the whole
 # NSg/VB+   . VXB   NSg/VXB D   NSg/VB+   . NSg/C NSg/I N🅪Sg/VB/JC+ NSg/VXB D/P NSg      P  D   NSg/J
-> number      of Electors appointed ; and  if    no       person  have    such  majority , then    from
-# N🅪Sg/VB/JC+ P  NPl      VP/J      . VB/C NSg/C NPr/Dq/P NSg/VB+ NSg/VXB NSg/I NSg+     . NSg/J/C P
+> number      of Electors appointed ; and  if    no       person  have    such  majority , then      from
+# N🅪Sg/VB/JC+ P  NPl      VP/J      . VB/C NSg/C NPr/Dq/P NSg/VB+ NSg/VXB NSg/I NSg+     . NSg/J/R/C P
 > the persons having  the highest numbers   not     exceeding three on  the list   of those
 # D   NPl/V3+ Nᴹ/Vg/J D   JS      NPrPl/V3+ NSg/R/C Nᴹ/Vg/J   NSg   J/P D   NSg/VB P  I/Ddem
 > voted for   as    President , the House  of Representatives shall choose   immediately ,
@@ -780,14 +780,14 @@
 # NSg/VB/J VXB   NSg/VXB VP/J . D   NSg/VB/J/P+ NSg/VB+   NSg/VB/J VXB   VBPp   NSg/VB+   . NSg/C D/P+
 > President shall not     have    been    chosen   before the time       fixed for   the beginning of
 # NSg/VB+   VXB   NSg/R/C NSg/VXB NSg/VPp Nᴹ/VPp/J C/P    D+  N🅪Sg/VB/J+ VP/J  R/C/P D   NSg/Vg/J  P
-> his     term      , or    if    the President elect    shall have    failed to qualify , then    the Vice
-# ISg/D$+ NSg/VB/J+ . NPr/C NSg/C D+  NSg/VB+   NSg/VB/J VXB   NSg/VXB VP/J   P  NSg/VB  . NSg/J/C D   NSg/VB/J/P+
+> his     term      , or    if    the President elect    shall have    failed to qualify , then      the Vice
+# ISg/D$+ NSg/VB/J+ . NPr/C NSg/C D+  NSg/VB+   NSg/VB/J VXB   NSg/VXB VP/J   P  NSg/VB  . NSg/J/R/C D   NSg/VB/J/P+
 > President elect    shall act     as    President until a   President shall have    qualified ;
 # NSg/VB+   NSg/VB/J VXB   NPr/VB+ NSg/R NSg/VB+   C/P   D/P NSg/VB+   VXB   NSg/VXB VP/J      .
 > and  the Congress may     by      law      provide for   the case       wherein neither a   President
 # VB/C D   NPr/VB+  NPr/VXB NSg/J/P N🅪Sg/VB+ VB      R/C/P D   NPr🅪Sg/VB+ C       I/C     D/P NSg/VB+
 > elect    nor   a   Vice        President elect    shall have    qualified , declaring who    shall then
-# NSg/VB/J NSg/C D/P NSg/VB/J/P+ NSg/VB+   NSg/VB/J VXB   NSg/VXB VP/J      . Nᴹ/Vg/J   NPr/I+ VXB   NSg/J/C
+# NSg/VB/J NSg/C D/P NSg/VB/J/P+ NSg/VB+   NSg/VB/J VXB   NSg/VXB VP/J      . Nᴹ/Vg/J   NPr/I+ VXB   NSg/J/R/C
 > act     as    President , or    the manner in        which one     who    is  to act    shall be      selected ,
 # NPr/VB+ NSg/R NSg/VB+   . NPr/C D   NSg+   NPr/J/R/P I/C+  NSg/I/J NPr/I+ VL3 P  NPr/VB VXB   NSg/VXB VP/J     .
 > and  such  person  shall act     accordingly until a   President or    Vice        President shall
@@ -806,8 +806,8 @@
 # NSg/VB+ Nᴹ/Vg/J D   JS       N🅪Sg/VB/JC P  NPl/V3+ NSg/R NSg/VB/J/P+ . NSg/VB+   . VXB   NSg/VXB D
 > Vice        - President , if    such   number      be      a   majority of the whole number     of Electors
 # NSg/VB/J/P+ . NSg/VB+   . NSg/C NSg/I+ N🅪Sg/VB/JC+ NSg/VXB D/P NSg      P  D   NSg/J N🅪Sg/VB/JC P  NPl
-> appointed , and  if    no       person  have    a   majority , then    from the two highest numbers
-# VP/J      . VB/C NSg/C NPr/Dq/P NSg/VB+ NSg/VXB D/P NSg+     . NSg/J/C P    D   NSg JS      NPrPl/V3+
+> appointed , and  if    no       person  have    a   majority , then      from the two highest numbers
+# VP/J      . VB/C NSg/C NPr/Dq/P NSg/VB+ NSg/VXB D/P NSg+     . NSg/J/R/C P    D   NSg JS      NPrPl/V3+
 > on  the list    , the Senate shall choose   the Vice        - President ; a   quorum for   the
 # J/P D   NSg/VB+ . D   NPr+   VXB   NSg/VB/C D   NSg/VB/J/P+ . NSg/VB+   . D/P NSg    R/C/P D
 > purpose  shall consist of two - thirds of the whole number     of Senators , and  a
@@ -937,7 +937,7 @@
 > powers   and  duties of his     office  , the Vice        President shall continue to discharge
 # NPrPl/V3 VB/C NPl    P  ISg/D$+ NSg/VB+ . D+  NSg/VB/J/P+ NSg/VB+   VXB   NSg/VB   P  N🅪Sg/VB
 > the same as    Acting  President ; otherwise , the President shall resume the powers
-# D   I/J  NSg/R Nᴹ/Vg/J NSg/VB+   . J         . D+  NSg/VB+   VXB   NSg/VB D   NPrPl/V3
+# D   I/J  NSg/R Nᴹ/Vg/J NSg/VB+   . J/R       . D+  NSg/VB+   VXB   NSg/VB D   NPrPl/V3
 > and  duties of his     office  .
 # VB/C NPl    P  ISg/D$+ NSg/VB+ .
 >
@@ -1029,7 +1029,7 @@
 > and  all          other    Officers of the United States    , whose Appointments are not     herein
 # VB/C NSg/I/J/C/Dq NSg/VB/J NPl/V3   P  D   VP/J   NPrPl/V3+ . I+    NPl+         VB  NSg/R/C R
 > otherwise provided for   , and  which shall be      established by      Law      : but     the Congress
-# J         VP/J/C   R/C/P . VB/C I/C+  VXB   NSg/VXB VP/J        NSg/J/P N🅪Sg/VB+ . NSg/C/P D   NPr/VB+
+# J/R       VP/J/C   R/C/P . VB/C I/C+  VXB   NSg/VXB VP/J        NSg/J/P N🅪Sg/VB+ . NSg/C/P D   NPr/VB+
 > may     by      Law      vest   the Appointment of such  inferior Officers , as    they think
 # NPr/VXB NSg/J/P N🅪Sg/VB+ NSg/VB D   NSg         P  NSg/I NSg/J    NPl/V3+  . NSg/R IPl+ NSg/VB
 > proper , in        the President alone , in        the Courts of Law      , or    in        the Heads  of
@@ -1193,7 +1193,7 @@
 >
 #
 > No        person  shall be      held to answer for   a    capital , or    otherwise infamous crime    ,
-# NPr/Dq/P+ NSg/VB+ VXB   NSg/VXB VB   P  NSg/VB R/C/P D/P+ N🅪Sg/J+ . NPr/C J         VB/J+    N🅪Sg/VB+ .
+# NPr/Dq/P+ NSg/VB+ VXB   NSg/VXB VB   P  NSg/VB R/C/P D/P+ N🅪Sg/J+ . NPr/C J/R       VB/J+    N🅪Sg/VB+ .
 > unless on  a   presentment or    indictment of a   grand jury      , except in        cases   arising
 # C      J/P D/P NSg         NPr/C NSg        P  D/P NSg/J NSg/VB/J+ . VB/C/P NPr/J/R/P NPl/V3+ Nᴹ/Vg/J
 > in        the land      or    naval forces  , or    in        the militia , when    in        actual service in        time
@@ -1207,7 +1207,7 @@
 > liberty , or    property , without due   process of law      ; nor   shall private  property be
 # NSg+    . NPr/C NSg/VB+  . C/P     NSg/J NSg/VB  P  N🅪Sg/VB+ . NSg/C VXB   NSg/VB/J NSg/VB+  NSg/VXB
 > taken for   public  use      , without just compensation .
-# VPp/J R/C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     J    N🅪Sg+        .
+# VPp/J R/C/P Nᴹ/VB/J N🅪Sg/VB+ . C/P     J/R  N🅪Sg+        .
 >
 #
 > In        all          criminal prosecutions , the accused shall enjoy the right    to a   speedy and
@@ -1231,7 +1231,7 @@
 > dollars , the right    of trial     by      jury      shall be      preserved , and  no        fact tried by      a
 # NPl+    . D   NPr/VB/J P  NSg/VB/J+ NSg/J/P NSg/VB/J+ VXB   NSg/VXB VP/J      . VB/C NPr/Dq/P+ NSg+ VP/J  NSg/J/P D/P+
 > jury      , shall be      otherwise reexamined in        any    court     of the United States    , than
-# NSg/VB/J+ . VXB   NSg/VXB J         VP/J       NPr/J/R/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
+# NSg/VB/J+ . VXB   NSg/VXB J/R       VP/J       NPr/J/R/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
 > according to the rules  of the common   law      .
 # Nᴹ/Vg/J   P  D   NPl/V3 P  D   NSg/VB/J N🅪Sg/VB+ .
 >
@@ -1433,7 +1433,7 @@
 > the United States    and  of the several States    , shall be      bound    by      Oath    or
 # D   VP/J   NPrPl/V3+ VB/C P  D   J/Dq    NPrPl/V3+ . VXB   NSg/VXB NSg/VP/J NSg/J/P NSg/VB+ NPr/C
 > Affirmation , to support this   Constitution ; but     no       religious Test    shall ever be
-# NSg         . P  N🅪Sg/VB I/Ddem NPr+         . NSg/C/P NPr/Dq/P NSg/J     NSg/VB+ VXB   J    NSg/VXB
+# NSg         . P  N🅪Sg/VB I/Ddem NPr+         . NSg/C/P NPr/Dq/P NSg/J     NSg/VB+ VXB   J/R  NSg/VXB
 > required as    a   Qualification to any    Office  or    public  Trust     under   the United
 # VP/J     NSg/R D/P N🅪Sg+         P  I/R/Dq NSg/VB+ NPr/C Nᴹ/VB/J N🅪Sg/VB/J NSg/J/P D   VP/J
 > States    .

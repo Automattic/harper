@@ -22,14 +22,9 @@ impl Default for Everyday {
                     .t_ws()
                     .then_any_word(),
             ),
-            Box::new(
-                SequenceExpr::default()
-                    .t_any()
-                    .t_any()
-                    .then_kind_where(|kind| {
-                        !kind.is_noun() && !kind.is_oov() && !kind.is_verb_progressive_form()
-                    }),
-            ),
+            Box::new(SequenceExpr::anything().t_any().then_kind_where(|kind| {
+                !kind.is_noun() && !kind.is_oov() && !kind.is_verb_progressive_form()
+            })),
         ]);
 
         let bad_before_every_day = All::new(vec![
@@ -56,8 +51,7 @@ impl Default for Everyday {
                     .then_any_word(),
             ),
             Box::new(
-                SequenceExpr::default()
-                    .t_any()
+                SequenceExpr::anything()
                     .t_any()
                     .then_kind_both(TokenKind::is_noun, TokenKind::is_verb)
                     .t_any()
@@ -72,7 +66,7 @@ impl Default for Everyday {
                     .then(everyday.clone())
                     .then_punctuation(),
             ),
-            Box::new(SequenceExpr::default().t_any().then_kind_where(|kind| {
+            Box::new(SequenceExpr::anything().then_kind_where(|kind| {
                 matches!(
                     kind,
                     TokenKind::Punctuation(
@@ -92,8 +86,7 @@ impl Default for Everyday {
                     .then_punctuation(),
             ),
             Box::new(
-                SequenceExpr::default()
-                    .t_any()
+                SequenceExpr::anything()
                     .t_any()
                     .t_any()
                     .t_any()

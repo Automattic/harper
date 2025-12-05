@@ -321,6 +321,16 @@ Suggest:
 
 
 
+Lint:    Spelling (127 priority)
+Message: |
+     122 | science; this is now used for a multi-disciplinary field of data analysis,
+         |                                 ^~~~~~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     123 | including statistics and databases.
+Suggest:
+  - Replace with: “multidisciplinary”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      126 | field of computing were suggested (albeit facetiously) in the Communications of
@@ -1222,6 +1232,16 @@ Suggest:
   - Replace with: “Guttered”
   - Replace with: “Lotteries”
   - Replace with: “Notified”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
+         |                                                                  ^~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     445 |   > "high-voltage/low-voltage", etc.).
+Suggest:
+  - Replace with: “demagnetized”
 
 
 
