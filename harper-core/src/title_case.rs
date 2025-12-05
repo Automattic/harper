@@ -156,28 +156,6 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
                 && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
                 && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
         }
-        TokenKind::Word(None) => {
-            lazy_static! {
-                static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
-                    ["and", "but", "for", "or", "nor", "as"]
-                        .iter()
-                        .map(|v| v.chars().collect())
-                        .collect();
-                static ref SPECIAL_ARTICLES: HashSet<Vec<char>> = ["a", "an", "the"]
-                    .iter()
-                    .map(|v| v.chars().collect())
-                    .collect();
-            }
-
-            let chars_lower = tok.span.get_content(source).to_lower();
-
-            if chars_lower.as_ref() == ['a', 'l', 'l'] {
-                return true;
-            }
-
-            !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
-                && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
-        }
         _ => true,
     }
 }
