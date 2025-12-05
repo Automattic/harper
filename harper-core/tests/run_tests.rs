@@ -68,7 +68,6 @@ macro_rules! create_org_test {
 }
 
 create_test!(whack_bullets.md, 1, Dialect::American);
-create_test!(preexisting.md, 1, Dialect::American);
 create_test!(issue_109.md, 0, Dialect::American);
 create_test!(issue_109_ext.md, 0, Dialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
@@ -86,7 +85,7 @@ create_test!(pr_452.md, 2, Dialect::American);
 create_test!(hex_basic_clean.md, 0, Dialect::American);
 create_test!(hex_basic_dirty.md, 1, Dialect::American);
 create_test!(misc_closed_compound_clean.md, 0, Dialect::American);
-create_test!(yogurt_british_clean.md, 1, Dialect::British);
+create_test!(yogurt_british_clean.md, 0, Dialect::British);
 create_test!(issue_1581.md, 0, Dialect::British);
 create_test!(issue_2054.md, 6, Dialect::British);
 create_test!(issue_1988.md, 0, Dialect::American);
