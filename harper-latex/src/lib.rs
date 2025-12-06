@@ -80,6 +80,13 @@ impl Parser for Latex {
                 consecutive_spaces = 0;
             }
 
+            if matches!(token.kind, TokenKind::Punctuation(_))
+                && token.span.get_content_string(source) == "~"
+            {
+                // non-breaking space
+                token.kind = TokenKind::Space(1);
+            }
+
             if matches!(token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
                 consecutive_hyphens += 1;
             } else if consecutive_hyphens == 2 || consecutive_hyphens == 3 {
@@ -240,7 +247,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn non_breaking_space() {
         let source = r#"This~that"#;
 
