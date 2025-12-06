@@ -35,5 +35,4 @@ macro_rules! create_test {
     };
 }
 
-create_test!(simple_document.tex, 1);
-// create_test!(simple_document.tex, 0);
+create_test!(simple_document.tex, 0);
