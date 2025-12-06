@@ -945,6 +945,7 @@ fn load_file(
         )),
         Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
+        Some("tex") => Box::new(harper_latex::Latex),
         Some("py") | Some("pyi") => Box::new(PythonParser::default()),
         Some("txt") => Box::new(PlainEnglish),
         _ => {
