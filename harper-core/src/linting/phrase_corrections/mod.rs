@@ -249,7 +249,7 @@ pub fn lint_group() -> LintGroup {
             ["in built", "in-built", "built in"],
             ["built-in"],
             "Prefer the hyphenated compound `built-in`.",
-            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
+            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
         ),
         "ByAccident" => (
             ["on accident"],
@@ -725,6 +725,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects wrong variations of the idiomatic adjective `last-ditch`.",
             LintKind::Usage
         ),
+        "LastNight" => (
+            ["yesterday night"],
+            ["last night"],
+            "The idiomatic phrase is `last night`.",
+            "Flags `yesterday night` and suggests the standard phrasing `last night`.",
+            LintKind::WordChoice
+        ),
         "LetAlone" => (
             ["let along"],
             ["let alone"],
@@ -749,7 +756,7 @@ pub fn lint_group() -> LintGroup {
             ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
             ["low-hanging fruit"],
             "The standard form is `low-hanging fruit` with a hyphen and singular form.",
-            "Corrects non-standard variants of `low-hanging fruit`.",
+            "Corrects nonstandard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
         "ManagerialReins" => (
@@ -908,7 +915,7 @@ pub fn lint_group() -> LintGroup {
             ["quite many"],
             ["quite a few"],
             "Use `quite a few` instead of `quite many`.",
-            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered nonstandard usage.",
             LintKind::Nonstandard
         ),
         "RapidFire" => (

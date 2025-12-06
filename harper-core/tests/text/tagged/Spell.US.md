@@ -1,5 +1,5 @@
-> Spell
-# NSg/VB
+>              Spell
+# HeadingStart NSg/VB
 >
 #
 > This    document contains a   list   of words   spelled correctly in        some     dialects of English      , but     not     American English      . This    is  designed to test   the spelling suggestions we   give   for   such   mistakes .
@@ -10,8 +10,8 @@
 # P  VB      I/Ddem+ . D   NSg      P  I/Ddem NSg/VB+ V3       Unlintable . I/C+  NPr/VXB NPr/VB D   NSg/VB+  NSg       P  N🅪Sg/VB D   NPr/J    NSg+    . NPr/VB/J/R C/P  Nᴹ/Vg/J P  N🅪Sg/VB D/P R             VP/J     NSg+    .
 >
 #
-> Words
-# NPl/V3+
+>              Words
+# HeadingStart NPl/V3+
 >
 #
 >

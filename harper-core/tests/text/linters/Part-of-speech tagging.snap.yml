@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       6 | # Part-of-speech tagging
+         | ^~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Part-of-Speech Tagging”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
@@ -68,6 +77,24 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       37 | watertight door) securely").
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+      39 | ### Tag sets
+         | ^~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Tag Sets”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+      43 | However, there are clearly many more categories and sub-categories. For nouns,
+         |                                                     ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “subcategories”
 
 
 
@@ -277,6 +304,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     117 | ### Use of hidden Markov models
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Use of Hidden Markov Models”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      119 | In the mid-1980s, researchers in Europe began to use hidden Markov models (HMMs)
@@ -368,6 +404,25 @@ Suggest:
   - Replace with: “Hams”
   - Replace with: “Hems”
   - Replace with: “Hums”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     154 | algorithms one of the most widely used being the bi-directional inference
+         |                                                  ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     155 | algorithm.
+Suggest:
+  - Replace with: “bidirectional”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     157 | ### Dynamic programming methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Dynamic Programming Methods”
 
 
 
@@ -477,6 +532,34 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      179 | separate other pieces as well. Markov Models became the standard method for the
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 45 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     182 | #### Unsupervised taggers
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Unsupervised Taggers”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     184 | The methods already discussed involve working from a pre-existing corpus to
+         |                                                      ^~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     185 | learn tag probabilities. It is, however, also possible to bootstrap using
+Suggest:
+  - Replace with: “preexisting”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     198 | #### Other taggers and methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Other Taggers and Methods”
 
 
 

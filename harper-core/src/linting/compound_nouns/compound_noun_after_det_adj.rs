@@ -41,12 +41,7 @@ impl Default for CompoundNounAfterDetAdj {
 
         let mut expr = All::default();
         expr.add(context_expr);
-        expr.add(
-            SequenceExpr::default()
-                .t_any()
-                .t_any()
-                .then(split_expr.clone()),
-        );
+        expr.add(SequenceExpr::anything().t_any().then(split_expr.clone()));
 
         Self {
             expr: Box::new(expr),

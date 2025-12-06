@@ -856,7 +856,7 @@ BRICS/Og
 BS/ONgV
 BSA/NO
 BSD/ONSg
-BTU/N               # same as Btu?
+BTU/N
 BTW/
 BYOB/
 Ba/ONg
@@ -1548,7 +1548,6 @@ Bryce/Og
 Brynner/g
 Bryon/Og
 Brzezinski/Og
-Btu/g               # same as BTU?
 Buber/g
 Buchanan/Og
 Bucharest/Og
@@ -4803,7 +4802,6 @@ IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adject
 IUD/N
 IV/JNSg
 IVF/N
-Ia/O
 Iaccoca/g
 Iago/Og
 Ian/Og
@@ -7321,8 +7319,6 @@ Nb/g                # niobium
 Nd/g                # neodymium
 Ndjamena/g
 Ne/g                # neon
-NeWS
-NeWSes
 Neal/Og
 Neanderthal/JNSg
 Neapolitan/JNOg
@@ -7352,7 +7348,6 @@ Nelsen/Og
 Nelson/Og
 Nembutal/g
 Nemesis/Og
-Neo/Og
 Neogene/JOg
 Neolithic/ONJ
 Nepal/Og
@@ -8746,7 +8741,6 @@ Rollerblade/g
 Rollins/Og
 Rolodex/NgV
 Rolvaag/g
-Rom/ONJ
 Roman/JNOSg
 Romanesque/JSg
 Romania/Og
@@ -10471,7 +10465,6 @@ VRAM/Ng             # video memory
 VT/ONJV             # US state (Vermont)
 VTOL/N              # vertical takeoff and landing
 VW/OgS              # car brand; cf. Volkswagen
-Va/Og
 Vacaville/Og
 Vader/g
 Vaduz/Og
@@ -13328,7 +13321,7 @@ async/J             # abbreviation of "asynchronous"
 asynchronicity/Nmg
 asynchronous/~JY
 asynchrony/Nmg
-at/~PN              # removed `4` an `8` obscure verb and obsolete dialectal pronoun
+at/~PN              # removed `V` and `I` obscure verb and obsolete dialectal pronoun
 atavism/Nmg
 atavist/NSg
 atavistic/J
@@ -16373,6 +16366,8 @@ canoeist/NSg
 canola/Ng
 canon/~NgSJ
 canonical/~JYN
+canonicalise/VGdS!_
+canonicalize/VGdS
 canonisation/NgS!_
 canonise/VdSG!_
 canonization/~NSg
@@ -20609,6 +20604,7 @@ defensible/Ji
 defensibly/Ryi
 defensive/~JYNgp
 defensiveness/Nmg
+defer/VS
 deference/~Nmg
 deferential/JY
 deferral/NgS
@@ -21024,7 +21020,7 @@ detailer/NgS
 detain/VGdSL
 detainee/~NgS
 detainment/Nmg
-detect/~VSdGJvB
+detect/~VSdGvB
 detectable/~JU
 detected/~JVU
 detection/~NwgS
@@ -23652,7 +23648,7 @@ eventide/Ng
 eventual/~JY
 eventuality/NSg
 eventuate/VGdS
-ever/~J
+ever/~RJ
 everglade/NSg
 evergreen/~JNSgV
 everlasting/~JYNgS
@@ -24112,7 +24108,7 @@ eyetooth/N0g
 eyewash/NgV
 eyewear/Nmg
 eyewitness/~NgSV
-f/~N^>eirv
+#f/~N^>eirv          # N:noun ^:fest >:fer e:def i:inf r:ref v:five
 fMRI/N
 fa/~NgP
 fab/~JNgSV
@@ -30946,7 +30942,7 @@ juryman/N0g
 jurymen/N9
 jurywoman/N0g
 jurywomen/N9
-just/~JY^>p         # removed `1` noun. archaic and interferes with linter heuristics
+just/~JY^>pR        # removed `1` noun. archaic and interferes with linter heuristics
 justice/~NwgSi
 justifiable/~JU
 justifiably/RyU
@@ -35443,7 +35439,7 @@ niacin/Nmg
 nib/NSgV
 nibble/VGd>SNgZ
 nibbler/Ng
-nice/~JY^>NVp
+nice/~JY^>Np
 niceness/Nmg
 nicety/NSg
 niche/~NSgVdJ
@@ -36767,7 +36763,7 @@ ostracism/Ng
 ostracize/VGdS
 ostrich/~NgS
 other/~JNgSVp
-otherwise/~J
+otherwise/~RJ
 otherworldly/J
 otiose/J
 otter/~NgS
@@ -36993,7 +36989,7 @@ overcharge/VdGSNg
 overclock/VGdSN
 overcloud/VSGd
 overcoat/NgSV
-overcome/~VGSN
+overcome/~VGS
 overcompensate/VdSGn
 overcompensation/Nmg
 overconfidence/Nmg
@@ -48311,7 +48307,7 @@ thematic/~JNQ
 thematically/Ry
 theme/~NSgVdG
 themselves/~Ia3F:   # I~pronoun a~personal 3~person :~plural F~reflexive
-then/~JNgC
+then/~RJNgC
 thence/~
 thenceforth/
 thenceforward/
@@ -53058,7 +53054,7 @@ KiCad/Og            # software
 Kia/ONSg            # automobile brand
 Kubernetes/OgS
 LADAR
-LDAP/Og             # Lightweight Directory Access Protocol 
+LDAP/Og             # Lightweight Directory Access Protocol
 LEGO/NSg            # official trademark form of Lego
 LIBOR/N             # London Interbank Offered Rate
 LIDAR/N             # FIXME! elsewhere we have LiDAR
@@ -53555,6 +53551,7 @@ data point/NgS
 day-to-day/JR
 de-extinct/VGd
 de-extinction/NwgS
+de
 de facto/JNg
 de jure/RJ
 de minimis/J
@@ -53952,6 +53949,7 @@ U-turn/NgSVdG
 uh-huh
 uh-oh
 un-American/J
+up front/JR
 use case/NgS
 user-friendly/J
 UTF-16/Ng

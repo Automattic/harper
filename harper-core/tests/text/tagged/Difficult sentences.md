@@ -1,5 +1,5 @@
-> Difficult sentences
-# VB/J+     NPl/V3+
+>              Difficult sentences
+# HeadingStart VB/J+     NPl/V3+
 >
 #
 > A   collection of difficult sentences to test   Harper's ability to correctly tag     unusual / uncommon but     correct  sentences .
@@ -14,8 +14,8 @@
 # NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VB  VPp/J P    Url                         NSg/VB+ . NSg/VB/#r+ NSg/J/P . NPr/VB/J+ #   .
 >
 #
-> A
-# D/P
+>              A
+# HeadingStart D/P
 >
 #
 > With one      attack    , he       was torn a   pieces .
@@ -24,12 +24,12 @@
 # ISg/#r+ NSg/VB D$+ NPl+  R     D/P+ NPr🅪Sg+ .
 >
 #
-> At
-# NSg/P
+>              At
+# HeadingStart NSg/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > Caesar was at    Rome ; a   climate  treaty  was signed at    Kyoto in        1997 .
@@ -68,28 +68,28 @@
 # ISg+ VL3 NSg/P NPl   VB/C NPl    P    ISg+ .
 >
 #
-> Noun
-# NSg/VB+
+>              Noun
+# HeadingStart NSg/VB+
 >
 #
 > The at    sign    .
 # D   NSg/P NSg/VB+ .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > ( In        online chats   : ) Don't @ me       ! Don't at    me       !
 # . NPr/J/R/P VB/J+  NPl/V3+ . . VB    . NPr/ISg+ . VB    NSg/P NPr/ISg+ .
 >
 #
-> By
-# NSg/J/P
+>              By
+# HeadingStart NSg/J/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > The mailbox is  by      the bus     stop   .
@@ -176,8 +176,8 @@
 # NSg/J/P ?      . +    NSg/J     . . P    . P     .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > I       watched the parade  as    it       passed by      .
@@ -192,8 +192,8 @@
 # D+  NPl+  VB/J  NSg/I/J/R/Dq N🅪Sg/VB/J+ P     NSg/VB+ Nᴹ/Vg/J NPl/V3+ NSg/J/P R/C/P N🅪Sg/VB VB/C N🅪Sg/VB+ .
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > a   by      path    ; a   by      room       ( Out          of the way    , off        to one      side      . )
@@ -202,20 +202,20 @@
 # NSg/J/P NSg/VB . D/P NSg/J/P NSg/VB . NSg/J+     . NSg/J      . .
 >
 #
-> For
-# R/C/P
+>              For
+# HeadingStart R/C/P
 >
 #
-> Conjunction
-# NSg/VB+
+>              Conjunction
+# HeadingStart NSg/VB+
 >
 #
 > I       had to stay     with my  wicked stepmother , for   I       had nowhere else    to go       .
 # ISg/#r+ VB  P  NSg/VB/J P    D$+ VP/J   NSg        . R/C/P ISg/#r+ VB  NSg/J   NSg/J/C P  NSg/VB/J .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > The astronauts headed for   the moon    .
@@ -232,8 +232,8 @@
 # K     Nᴹ/Vg/J D/P NSg/VB+  NSg/VB/J R/C/P NPr+  .
 > The mayor gave a   speech  for   the charity gala   .
 # D+  NSg+  VPt  D/P N🅪Sg/VB R/C/P D+  NPr+    NSg/J+ .
-> If    having  to bag    the groceries correctly is  more         than you    can     handle , then    this   isn't  the job     for   you    .
-# NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/C I/Ddem NSg/VB D   NPr/VB+ R/C/P ISgPl+ .
+> If    having  to bag    the groceries correctly is  more         than you    can     handle , then      this   isn't  the job     for   you    .
+# NSg/C Nᴹ/Vg/J P  NSg/VB D+  NPl/V3+   R         VL3 NPr/I/J/R/Dq C/P  ISgPl+ NPr/VXB NSg/VB . NSg/J/R/C I/Ddem NSg/VB D   NPr/VB+ R/C/P ISgPl+ .
 > This    is  a   new   bell   for   my  bicycle .
 # I/Ddem+ VL3 D/P NSg/J NPr/VB R/C/P D$+ NSg/VB+ .
 > The cake     is  for   Tom    and  Helen's anniversary .
@@ -241,7 +241,7 @@
 > This    medicine is  for   your cough   .
 # I/Ddem+ N🅪Sg/VB+ VL3 R/C/P D$+  NSg/VB+ .
 > He       wouldn't apologize ; and  just for   that          , she  refused to help   him  .
-# NPr/ISg+ VXB      VB        . VB/C J    R/C/P NSg/I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
+# NPr/ISg+ VXB      VB        . VB/C J/R  R/C/P NSg/I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
 > He       looks  better     for   having  lost weight   . ( UK   usage )
 # NPr/ISg+ NPl/V3 NSg/VXB/JC R/C/P Nᴹ/Vg/J VP/J N🅪Sg/VB+ . . NPr+ N🅪Sg+ .
 > She  was the worse     for   drink   .
@@ -281,7 +281,7 @@
 > It       is  unreasonable for   our boss      to withhold our wages   .
 # NPr/ISg+ VL3 J            R/C/P D$+ NSg/VB/J+ P  NSg/VB   D$+ NPl/V3+ .
 > I       don't think  it's a   good     idea for   you    and  me       to meet     ever again .
-# ISg/#r+ VB    NSg/VB +    D/P NPr/VB/J NSg+ R/C/P ISgPl+ VB/C NPr/ISg+ P  NSg/VB/J J    P     .
+# ISg/#r+ VB    NSg/VB +    D/P NPr/VB/J NSg+ R/C/P ISgPl+ VB/C NPr/ISg+ P  NSg/VB/J J/R  P     .
 > I       am       aiming  for   completion by      the end    of business Thursday .
 # ISg/#r+ NPr/VB/J Nᴹ/Vg/J R/C/P NSg+       NSg/J/P D   NSg/VB P  N🅪Sg/J+  NSg+     .
 > He's going   for   his     doctorate .
@@ -320,8 +320,8 @@
 # P  NSg/VB  R/C/P NSg$+ NSg+        .
 >
 #
-> From
-# P
+>              From
+# HeadingStart P
 >
 #
 > Paul is  from New    Zealand .
@@ -353,9 +353,9 @@
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
 > The bomb      went     off        just 100 yards   from where   they were    standing .
-# D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J    #   NPl/V3+ P    NSg/R/C IPl+ NSg/VPt Nᴹ/Vg/J  .
+# D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ NSg/VPt Nᴹ/Vg/J  .
 > From the top      of the lighthouse you    can     just see    the mainland .
-# P    D   NSg/VB/J P  D+  NSg+       ISgPl+ NPr/VXB J    NSg/VB D+  NSg+     .
+# P    D   NSg/VB/J P  D+  NSg+       ISgPl+ NPr/VXB J/R  NSg/VB D+  NSg+     .
 > I’ve been    doing   this    from pickney .
 # K    NSg/VPp Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
@@ -364,12 +364,12 @@
 # NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
 >
 #
-> In
-# NPr/J/R/P
+>              In
+# HeadingStart NPr/J/R/P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > Who    lives in        a   pineapple under   the sea  ?
@@ -450,16 +450,16 @@
 # NSg/J+   NPl/V3+ VXB    NSg/VXB NSg/J  NPr/J/R/P N🅪Sg/I/VB+ . NSg/C/P NSg/R/C VP/J    .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > He       that          ears    my  land       spares my  team    and  gives  me       leave  to in        the crop    .
 # NPr/ISg+ NSg/I/C/Ddem+ NPl/V3+ D$+ NPr🅪Sg/VB+ NPl/V3 D$+ NSg/VB+ VB/C NPl/V3 NPr/ISg+ NSg/VB P  NPr/J/R/P D   NSg/VB+ .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Suddenly a    strange   man       walked in        .
@@ -470,24 +470,24 @@
 # NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/VB   NSg/VB+ VB/C VP/J  NPr/J/R/P .
 > They flew      in        from London last      night    .
 # IPl+ NSg/VPt/J NPr/J/R/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
-> For   six  hours the tide    flows  in        , then    for   another six  hours it       flows  out          .
-# R/C/P NSg+ NPl+  D+  NSg/VB+ NPl/V3 NPr/J/R/P . NSg/J/C R/C/P I/D+    NSg+ NPl+  NPr/ISg+ NPl/V3 NSg/VB/J/R/P .
+> For   six  hours the tide    flows  in        , then      for   another six  hours it       flows  out          .
+# R/C/P NSg+ NPl+  D+  NSg/VB+ NPl/V3 NPr/J/R/P . NSg/J/R/C R/C/P I/D+    NSg+ NPl+  NPr/ISg+ NPl/V3 NSg/VB/J/R/P .
 > Bring the water    to the boil    and  drop   the vegetables in        .
 # VB    D+  N🅪Sg/VB+ P  D+  NSg/VB+ VB/C NSg/VB D+  NPl+       NPr/J/R/P .
 > The show   still    didn't become interesting 20 minutes in        .
 # D   NSg/VB NSg/VB/J VB     VBPp   Vg/J        #  NPl/V3+ NPr/J/R/P .
 >
 #
-> Noun
-# NSg/VB+
+>              Noun
+# HeadingStart NSg/VB+
 >
 #
 > His     parents got him  an  in        with the company  .
 # ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg/VB+ .
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > Is  Mr   . Smith   in        ?
@@ -496,8 +496,8 @@
 # NPr/I/J/Dq NSg/J/P NPr/I/J/Dq ISg/#r+ VP/J   D+  NPr/VB+ P    D+  NSg/VB+ . C/P   R       NSg/I/J/C/Dq P  NPr/ISg+ VPt NPr/J/R/P .
 > The bullet  is  about five centimetres in        .
 # D+  NSg/VB+ VL3 J/P   NSg  NPl/Comm    NPr/J/R/P .
-> If    the tennis  ball    bounces on  the line    then    it's in        .
-# NSg/C D+  NSg/VB+ NPr/VB+ NPl/V3  J/P D+  NSg/VB+ NSg/J/C +    NPr/J/R/P .
+> If    the tennis  ball    bounces on  the line    then      it's in        .
+# NSg/C D+  NSg/VB+ NPr/VB+ NPl/V3  J/P D+  NSg/VB+ NSg/J/R/C +    NPr/J/R/P .
 > I've discovered why    the TV   wasn't working – the plug    wasn't in        !
 # K    VP/J       NSg/VB D   NSg+ VB     Nᴹ/Vg/J . D   NSg/VB+ VB     NPr/J/R/P .
 > The replies to the questionnaires are now       all          in        .
@@ -513,7 +513,7 @@
 > He       is  very in        with the Joneses .
 # NPr/ISg+ VL3 J/R  NPr/J/R/P P    D   NPl/V3  .
 > I       need     to keep   in        with the neighbours   in        case       I       ever need     a    favour        from them     .
-# ISg/#r+ N🅪Sg/VXB P  NSg/VB NPr/J/R/P P    D   NPl/V3/Comm+ NPr/J/R/P NPr🅪Sg/VB+ ISg/#r+ J    N🅪Sg/VXB D/P+ N🅪Sg/VB/Comm+ P    NSg/IPl+ .
+# ISg/#r+ N🅪Sg/VXB P  NSg/VB NPr/J/R/P P    D   NPl/V3/Comm+ NPr/J/R/P NPr🅪Sg/VB+ ISg/#r+ J/R  N🅪Sg/VXB D/P+ N🅪Sg/VB/Comm+ P    NSg/IPl+ .
 > I       think  that          bird      fancies you    . You're in        there , mate   !
 # ISg/#r+ NSg/VB NSg/I/C/Ddem+ NPr/VB/J+ NPl/V3  ISgPl+ . +      NPr/J/R/P R     . NSg/VB .
 > I'm three drinks  in        right    now       .
@@ -522,8 +522,8 @@
 # ISg/#r+ VPt #   NPl     NPr/J/R/P NSg/I/C D+  N🅪Sg/VB/J+ VP/J    .
 >
 #
-> Unit
-# NSg+
+>              Unit
+# HeadingStart NSg+
 >
 #
 > The glass      is  8 inches  .
@@ -532,8 +532,8 @@
 # D+  NPr🅪Sg/VB+ VL3 # NPr/J/R/P .
 >
 #
-> Of
-# P
+>              Of
+# HeadingStart P
 >
 #
 > Take   the chicken    out          of the freezer .
@@ -582,12 +582,12 @@
 # P     D/P NSg/VB/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
 >
 #
-> On
-# J/P
+>              On
+# HeadingStart J/P
 >
 #
-> Adjective
-# NSg/VB/J+
+>              Adjective
+# HeadingStart NSg/VB/J+
 >
 #
 > All           the lights  are on  , so          they must   be      home      .
@@ -603,7 +603,7 @@
 > Are we   still    on  for   tonight ?
 # VB  IPl+ NSg/VB/J J/P R/C/P NSg+    .
 > Mike    just threw coffee     onto Paul's lap       . It's on  now       .
-# NPr/VB+ J    VPt   N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
+# NPr/VB+ J/R  VPt   N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
 > England need     a   hundred runs   , with twenty - five overs remaining . Game      on  !
 # NPr+    N🅪Sg/VXB D/P NSg     NPl/V3 . P    NSg    . NSg  NPl   Nᴹ/Vg/J   . NSg/VB/J+ J/P .
 > Your feet will    soon warm     up         once  your socks   are on  .
@@ -624,8 +624,8 @@
 # NPr/ISg+ R      V3  P  NSg/VXB J/P . +    NSg/I/J/R/C Nᴹ/Vg/J    .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > turn   the television on
@@ -648,8 +648,8 @@
 # NSg+ NPl+  J/P . NSg/I/J+ VB  VP/J    NPr/J/R/P D+  NSg+    .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > A   vase   of flowers   stood on  the table   .
@@ -698,8 +698,8 @@
 # P  N🅪Sg/VB J/P D/P NSg/VB NPr/C NSg/VB/J+ .
 > A    table   can't stand  on  two legs    .
 # D/P+ NSg/VB+ VXB   NSg/VB J/P NSg NPl/V3+ .
-> After resting  on  his     elbows  , he       stood on  his     toes    , then    walked on  his     heels   .
-# P     Nᴹ/Vg/J+ J/P ISg/D$+ NPl/V3+ . NPr/ISg+ VB    J/P ISg/D$+ NPl/V3+ . NSg/J/C VP/J   J/P ISg/D$+ NPl/V3+ .
+> After resting  on  his     elbows  , he       stood on  his     toes    , then      walked on  his     heels   .
+# P     Nᴹ/Vg/J+ J/P ISg/D$+ NPl/V3+ . NPr/ISg+ VB    J/P ISg/D$+ NPl/V3+ . NSg/J/R/C VP/J   J/P ISg/D$+ NPl/V3+ .
 > The Tories are on  twenty - five percent in        this   constituency .
 # D   NPl    VB  J/P NSg    . NSg  NSg     NPr/J/R/P I/Ddem NSg+         .
 > The blue       team    are on  six points and  the red     team    on  five .
@@ -768,20 +768,20 @@
 # VB     VB    NPr/VB J/P ISg/D$+ VB/C NSg/VB ISg/D$+ NPr/J/R/P N🅪Sg/VB+ .
 >
 #
-> Verb
-# NSg/VB+
+>              Verb
+# HeadingStart NSg/VB+
 >
 #
 > Can     you    on  the light      ? ( switch    on  )
 # NPr/VXB ISgPl+ J/P D+  N🅪Sg/VB/J+ . . NSg/VB/J+ J/P .
 >
 #
-> To
-# P
+>              To
+# HeadingStart P
 >
 #
-> Particle
-# NSg+
+>              Particle
+# HeadingStart NSg+
 >
 #
 > I       want   to leave  .
@@ -804,8 +804,8 @@
 # ISg/#r+ NSg/VPt P  D+  NPl/V3+ P  NSg/VB I/J/R/Dq+ N🅪Sg/VB+ .
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > She  looked to the heavens .
@@ -836,8 +836,8 @@
 # I/Ddem+ NSg/VB+ VL3 J        P  D/P NSg/VB/J .
 > There's a   lot    of sense    to what   he       says   .
 # K       D/P NPr/VB P  N🅪Sg/VB+ P  NSg/I+ NPr/ISg+ NPl/V3 .
-> The name    has a    nice      ring    to it       .
-# D+  NSg/VB+ V3  D/P+ NPr/VB/J+ NSg/VB+ P  NPr/ISg+ .
+> The name    has a    nice   ring    to it       .
+# D+  NSg/VB+ V3  D/P+ NPr/J+ NSg/VB+ P  NPr/ISg+ .
 > There are 100 pence to the pound   .
 # R+    VB  #   NPl   P  D+  NPr/VB+ .
 > It       takes  2 to 4 weeks  to process typical applications .
@@ -852,20 +852,20 @@
 # NSg$   D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Please push   the door    to . ( close    )
 # VB     NSg/VB D+  NSg/VB+ P  . . NSg/VB/J .
 >
 #
-> With
-# P
+>              With
+# HeadingStart P
 >
 #
-> Preposition
-# NSg/VB
+>              Preposition
+# HeadingStart NSg/VB
 >
 #
 > He       picked a   fight  with the class      bully     .
@@ -919,7 +919,7 @@
 > The sailors were    infected with malaria .
 # D+  NPl+    NSg/VPt NSg/VP/J P    Nᴹ+     .
 > overcome with happiness
-# NSg/VB   P    Nᴹ+
+# VB       P    Nᴹ+
 > green       with envy    ; flushed with success
 # NPr🅪Sg/VB/J P    NSg/VB+ . VP/J    P    N🅪Sg+
 > She  was with Acme for   twenty years before retiring last     fall     .
@@ -930,8 +930,8 @@
 # NSg/I/C/Ddem+ VPt D/P NPr/VB P  VB      . VB  ISgPl+ NSg/VB/J P    NPr/ISg+ .
 >
 #
-> Adverb
-# NSg/VB+
+>              Adverb
+# HeadingStart NSg/VB+
 >
 #
 > Do  you    want   to come       with ?

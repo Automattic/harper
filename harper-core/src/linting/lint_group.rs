@@ -26,6 +26,7 @@ use super::and_in::AndIn;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
+use super::apart_from::ApartFrom;
 use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -44,10 +45,12 @@ use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
+use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
+use super::disjoint_prefixes::DisjointPrefixes;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
@@ -83,6 +86,8 @@ use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
+use super::jealous_of::JealousOf;
+use super::johns_hopkins::JohnsHopkins;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -96,6 +101,7 @@ use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
 use super::misspell::Misspell;
 use super::mixed_bag::MixedBag;
+use super::modal_be_adjective::ModalBeAdjective;
 use super::modal_of::ModalOf;
 use super::modal_seem::ModalSeem;
 use super::months::Months;
@@ -139,6 +145,8 @@ use super::quote_spacing::QuoteSpacing;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
+use super::respond::Respond;
+use super::right_click::RightClick;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
@@ -151,12 +159,14 @@ use super::single_be::SingleBe;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
+use super::soon_to_be::SoonToBe;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
+use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
@@ -174,6 +184,7 @@ use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
+use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
@@ -183,6 +194,7 @@ use super::well_educated::WellEducated;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
+use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
 use super::{ExprLinter, Lint};
@@ -471,6 +483,7 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule!(AWhile, true);
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
@@ -484,6 +497,7 @@ impl LintGroup {
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
+        insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
@@ -496,15 +510,13 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
-        insert_expr_rule!(AWhile, true);
-        insert_struct_rule!(SubjectPronoun, true);
-        insert_struct_rule!(FindFine, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_expr_rule!(CriteriaPhenomena, true);
+        insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
@@ -522,6 +534,7 @@ impl LintGroup {
         insert_expr_rule!(FeelFell, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
+        insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
@@ -540,6 +553,8 @@ impl LintGroup {
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
         insert_expr_rule!(ItsPossessive, true);
+        insert_expr_rule!(JealousOf, true);
+        insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -552,6 +567,7 @@ impl LintGroup {
         insert_expr_rule!(MissingTo, true);
         insert_expr_rule!(Misspell, true);
         insert_expr_rule!(MixedBag, true);
+        insert_expr_rule!(ModalBeAdjective, true);
         insert_expr_rule!(ModalOf, true);
         insert_expr_rule!(ModalSeem, true);
         insert_expr_rule!(Months, true);
@@ -593,6 +609,8 @@ impl LintGroup {
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
+        insert_expr_rule!(Respond, true);
+        insert_expr_rule!(RightClick, true);
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
@@ -604,10 +622,13 @@ impl LintGroup {
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
+        insert_expr_rule!(SoonToBe, true);
         insert_expr_rule!(SoughtAfter, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(SplitWords, true);
+        insert_struct_rule!(SubjectPronoun, true);
+        insert_expr_rule!(TakeMedicine, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
@@ -634,6 +655,7 @@ impl LintGroup {
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
+        insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
 
@@ -666,6 +688,15 @@ impl LintGroup {
 
         out.add("MassNouns", MassNouns::new(dictionary.clone()));
         out.config.set_rule_enabled("MassNouns", true);
+
+        out.add("UseTitleCase", UseTitleCase::new(dictionary.clone()));
+        out.config.set_rule_enabled("UseTitleCase", true);
+
+        out.add_chunk_expr_linter(
+            "DisjointPrefixes",
+            DisjointPrefixes::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("DisjointPrefixes", true);
 
         out
     }
@@ -807,7 +838,7 @@ mod tests {
     #[test]
     fn dont_flag_low_hanging_fruit_desc() {
         assert_no_lints(
-            "Corrects non-standard variants of low-hanging fruit.",
+            "Corrects nonstandard variants of low-hanging fruit.",
             test_group(),
         );
     }
