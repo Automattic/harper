@@ -4,54 +4,47 @@ mod noun_countability;
 use mass_plurals::MassPlurals;
 use noun_countability::NounCountability;
 
-pub use merge_rule_hidden::MassNouns;
+use crate::{
+    Document,
+    linting::{Lint, Linter},
+    remove_overlaps,
+    spell::Dictionary,
+};
 
-mod merge_rule_hidden {
-    use crate::{
-        Document,
-        linting::{Lint, Linter},
-        remove_overlaps,
-        spell::Dictionary,
-    };
+pub struct MassNouns<D> {
+    mass_plurals: MassPlurals<D>,
+    noun_countability: NounCountability,
+}
 
-    use super::MassPlurals;
-    use super::NounCountability;
-
-    pub struct MassNouns<D> {
-        mass_plurals: MassPlurals<D>,
-        noun_countability: NounCountability,
-    }
-
-    impl<D> MassNouns<D>
-    where
-        D: Dictionary + Clone,
-    {
-        pub fn new(dict: D) -> Self {
-            Self {
-                mass_plurals: MassPlurals::new(dict.clone()),
-                noun_countability: NounCountability::default(),
-            }
+impl<D> MassNouns<D>
+where
+    D: Dictionary + Clone,
+{
+    pub fn new(dict: D) -> Self {
+        Self {
+            mass_plurals: MassPlurals::new(dict.clone()),
+            noun_countability: NounCountability::default(),
         }
     }
+}
 
-    impl<D> Linter for MassNouns<D>
-    where
-        D: Dictionary,
-    {
-        fn lint(&mut self, document: &Document) -> Vec<Lint> {
-            let mut lints = Vec::new();
+impl<D> Linter for MassNouns<D>
+where
+    D: Dictionary,
+{
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let mut lints = Vec::new();
 
-            lints.extend(self.mass_plurals.lint(document));
-            lints.extend(self.noun_countability.lint(document));
+        lints.extend(self.mass_plurals.lint(document));
+        lints.extend(self.noun_countability.lint(document));
 
-            remove_overlaps(&mut lints);
+        remove_overlaps(&mut lints);
 
-            lints
-        }
+        lints
+    }
 
-        fn description(&self) -> &'static str {
-            "Detects mass nouns used as countable nouns."
-        }
+    fn description(&self) -> &'static str {
+        "Detects mass nouns used as countable nouns."
     }
 }
 
