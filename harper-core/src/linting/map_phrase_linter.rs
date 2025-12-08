@@ -4,6 +4,7 @@ use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
 use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -105,6 +106,8 @@ impl MapPhraseLinter {
 }
 
 impl ExprLinter for MapPhraseLinter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

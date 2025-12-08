@@ -1,6 +1,7 @@
 import h from 'virtual-dom/h';
 import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
 import { getCaretPosition } from './editorUtils';
+import type { UnpackedLint } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -39,14 +40,16 @@ export default class PopupHandler {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: () => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	};
 
 	constructor(actions: {
 		getActivationKey?: () => Promise<ActivationKey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: () => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];

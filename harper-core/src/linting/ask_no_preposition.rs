@@ -1,5 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Span, Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -32,6 +33,8 @@ impl Default for AskNoPreposition {
 }
 
 impl ExprLinter for AskNoPreposition {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

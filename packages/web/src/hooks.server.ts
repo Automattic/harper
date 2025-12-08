@@ -1,5 +1,5 @@
-import { db } from '$lib/db';
 import { migrate } from 'drizzle-orm/mysql2/migrator';
+import { db } from '$lib/db';
 
 // Migrate exactly once at startup
 try {

@@ -1,4 +1,5 @@
 use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::patterns::Word;
 use crate::{CharStringExt, Lrc, Token, patterns::WordSet};
@@ -85,6 +86,8 @@ impl Default for GeneralNounInsteadOfVerb {
 }
 
 impl ExprLinter for GeneralNounInsteadOfVerb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -5,7 +5,6 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
-	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -44,7 +43,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
 
 	return true;
@@ -71,7 +70,6 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
@@ -96,6 +94,9 @@ async function enableDefaultDomains() {
 		'www.facebook.com',
 		'www.upwork.com',
 		'news.ycombinator.com',
+		'classroom.google.com',
+		'quilljs.com',
+		'www.wattpad.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -161,7 +162,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 		return { kind: 'lints', lints: {} };
 	}
 
-	const grouped = await linter.organizedLints(req.text);
+	const grouped = await linter.organizedLints(req.text, req.options);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -172,7 +173,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	return { kind: 'lints', lints: unpackedBySource };
 }
 
-async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse> {
+async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
 	return { kind: 'getConfig', config: await getLintConfig() };
 }
 
@@ -188,7 +189,7 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 	return createUnitResponse();
 }
 
-async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectResponse> {
+async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
@@ -228,7 +229,7 @@ async function handleGetDomainStatus(
 }
 
 async function handleSetDomainStatus(req: SetDomainStatusRequest): Promise<UnitResponse> {
-	await setDomainEnable(req.domain, req.enabled);
+	await setDomainEnable(req.domain, req.enabled, req.overrideValue);
 
 	return createUnitResponse();
 }
@@ -240,7 +241,7 @@ async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<Uni
 }
 
 async function handleGetLintDescriptions(
-	req: GetLintDescriptionsRequest,
+	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
@@ -367,7 +368,7 @@ async function setActivationKey(key: ActivationKey) {
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({
-		binary: new BinaryModule(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 
@@ -388,16 +389,27 @@ function formatDomainKey(domain: string): string {
 }
 
 /** Check if Harper has been enabled for a given domain. */
-async function enabledForDomain(domain: string): Promise<boolean> {
+async function enabledForDomain(domain: string): Promise<boolean | null> {
 	const req = await chrome.storage.local.get({
 		[formatDomainKey(domain)]: await enabledByDefault(),
 	});
 	return req[formatDomainKey(domain)];
 }
 
-/** Set whether Harper is enabled for a given domain. */
-async function setDomainEnable(domain: string, status: boolean) {
-	await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+/** Set whether Harper is enabled for a given domain.
+ *
+ * @param overrideValue dictates whether this should override a previous setting.
+ * */
+async function setDomainEnable(domain: string, status: boolean, overrideValue = true) {
+	let shouldSet = !(await isDomainSet(domain));
+
+	if (overrideValue) {
+		shouldSet = true;
+	}
+
+	if (shouldSet) {
+		await chrome.storage.local.set({ [formatDomainKey(domain)]: status });
+	}
 }
 
 /** Set whether Harper is enabled by default. */

@@ -69,10 +69,13 @@ impl<B: Backend> NpModel<B> {
         }
 
         let x = self.linear_out.forward(x);
-        x.squeeze::<2>(2)
+        x.squeeze_dim::<2>(2)
     }
 }
 
+/// A [`Chunker`] that uses a BiLSTM and the Burn machine learning framework.
+///
+/// Additional details in this [talk](https://elijahpotter.dev/articles/i-spoke-at-wordcamp-u.s.-in-2025)
 pub struct BurnChunker<B: Backend> {
     vocab: HashMap<String, usize>,
     model: NpModel<B>,

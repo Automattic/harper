@@ -3,7 +3,13 @@ use unicode_width::UnicodeWidthChar;
 
 use crate::Punctuation;
 
-pub trait CharExt {
+mod private {
+    pub trait Sealed {}
+
+    impl Sealed for char {}
+}
+
+pub trait CharExt: private::Sealed {
     fn is_cjk(&self) -> bool;
     /// Whether a character can be a component of an English word.
     fn is_english_lingual(&self) -> bool;
@@ -13,6 +19,7 @@ pub trait CharExt {
     ///
     /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
     fn is_vowel(&self) -> bool;
+    fn normalized(self) -> Self;
 }
 
 impl CharExt for char {
@@ -25,6 +32,13 @@ impl CharExt for char {
             && self.is_alphabetic()
             && !self.is_cjk()
             && self.script() == Script::Latin
+    }
+
+    fn normalized(self) -> Self {
+        match self {
+            '’' | '‘' | 'ʼ' | '＇' => '\'',
+            _ => self,
+        }
     }
 
     fn is_emoji(&self) -> bool {

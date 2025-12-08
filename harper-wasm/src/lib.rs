@@ -4,9 +4,10 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
+use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
-use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
+use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
@@ -63,6 +64,7 @@ impl Language {
     }
 }
 
+/// Specifies an English Dialect, often used for linting.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {
@@ -131,7 +133,7 @@ impl Linter {
         let mut lint_dict = MergedDictionary::new();
 
         lint_dict.add_dictionary(FstDictionary::curated());
-        lint_dict.add_dictionary(Arc::new(user_dictionary.clone()));
+        lint_dict.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(lint_dict)
     }
@@ -251,11 +253,20 @@ impl Linter {
         ctx.default_hash()
     }
 
-    pub fn organized_lints(&mut self, text: String, language: Language) -> Vec<OrganizedGroup> {
+    pub fn organized_lints(
+        &mut self,
+        text: String,
+        language: Language,
+        all_headings: bool,
+    ) -> Vec<OrganizedGroup> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
-        let parser = language.create_parser();
+        let mut parser = language.create_parser();
+
+        if all_headings {
+            parser = Box::new(OopsAllHeadings::new(parser));
+        }
 
         let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
 
@@ -280,7 +291,9 @@ impl Linter {
                     .into_iter()
                     .map(|l| {
                         let problem_text = l.span.get_content_string(&source);
-                        Lint::new(l, problem_text, language)
+                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+
+                        Lint::new(l, span, problem_text, language)
                     })
                     .collect(),
             })
@@ -288,11 +301,15 @@ impl Linter {
     }
 
     /// Perform the configured linting on the provided text.
-    pub fn lint(&mut self, text: String, language: Language) -> Vec<Lint> {
+    pub fn lint(&mut self, text: String, language: Language, all_headings: bool) -> Vec<Lint> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
-        let parser = language.create_parser();
+        let mut parser = language.create_parser();
+
+        if all_headings {
+            parser = Box::new(OopsAllHeadings::new(parser));
+        }
 
         let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
 
@@ -310,7 +327,8 @@ impl Linter {
             .into_iter()
             .map(|l| {
                 let problem_text = l.span.get_content_string(&source);
-                Lint::new(l, problem_text, language)
+                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                Lint::new(l, span, problem_text, language)
             })
             .collect()
     }
@@ -347,7 +365,10 @@ impl Linter {
             .extend_words(additional_words.iter().map(|word| {
                 (
                     word.chars().collect::<CharString>(),
-                    DictWordMetadata::default(),
+                    DictWordMetadata {
+                        dialects: DialectFlags::from_dialect(self.dialect.into()),
+                        ..Default::default()
+                    },
                 )
             }));
 
@@ -471,6 +492,8 @@ impl Suggestion {
 #[wasm_bindgen]
 pub struct Lint {
     inner: harper_core::linting::Lint,
+    /// Indexed in a proverbial JS string
+    span: Span,
     /// The problematic text that produced this lint.
     problem_text: String,
     language: Language,
@@ -480,11 +503,13 @@ pub struct Lint {
 impl Lint {
     pub(crate) fn new(
         inner: harper_core::linting::Lint,
+        span: Span,
         problem_text: String,
         language: Language,
     ) -> Self {
         Self {
             inner,
+            span,
             problem_text,
             language,
         }
@@ -521,7 +546,7 @@ impl Lint {
 
     /// Get the location of the problematic text.
     pub fn span(&self) -> Span {
-        self.inner.span.into()
+        self.span
     }
 
     /// Get a description of the error.
@@ -533,6 +558,13 @@ impl Lint {
     pub fn message_html(&self) -> String {
         self.inner.message_html()
     }
+}
+
+/// Convert Harper's character index into a UTF-16 code unit index understood by JS.
+fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
+    char_str.iter().take(char_idx).fold(0usize, |acc, ch| {
+        acc + if (*ch as u32) <= 0xFFFF { 1 } else { 2 }
+    })
 }
 
 #[wasm_bindgen]
@@ -577,6 +609,15 @@ impl Span {
     }
 }
 
+impl Span {
+    pub fn to_js_indices(&self, source: &[char]) -> Self {
+        Self::new(
+            char_idx_to_js_str_idx(self.start, source),
+            char_idx_to_js_str_idx(self.end, source),
+        )
+    }
+}
+
 impl From<Span> for harper_core::Span<char> {
     fn from(value: Span) -> Self {
         harper_core::Span::new(value.start, value.end)
@@ -597,4 +638,23 @@ pub struct OrganizedGroup {
     pub group: String,
     #[wasm_bindgen(getter_with_clone)]
     pub lints: Vec<Lint>,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// If a word from another dialect is added to the user dictionary, it should be considered
+    /// part of the user's dialect as well.
+    #[test]
+    fn issue_2216() {
+        let text = "Aeon".to_owned();
+        let mut linter = Linter::new(Dialect::American);
+
+        linter.import_words(vec![text.clone()]);
+        dbg!(linter.dictionary.get_word_metadata_str(&text));
+
+        let lints = linter.lint(text, Language::Plain, false);
+        assert!(lints.is_empty());
+    }
 }

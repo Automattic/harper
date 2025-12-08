@@ -30,7 +30,7 @@ merge_linters! {
 #[cfg(test)]
 mod tests {
     use super::NounVerbConfusion;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_good_advise() {
@@ -1335,6 +1335,39 @@ mod tests {
             "Sound effects were added in post.",
             NounVerbConfusion::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn issue_1997() {
+        assert_no_lints(
+            "It depends on which sources it affects, what parameters it uses, etc.",
+            NounVerbConfusion::default(),
+        );
+    }
+
+    #[test]
+    fn issue_1996() {
+        assert_no_lints(
+            "Avoid effects outside of functions.",
+            NounVerbConfusion::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2008() {
+        assert_no_lints(
+            "Changes that only affect static types, without breaking runtime behavior.",
+            NounVerbConfusion::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2041() {
+        assert_suggestion_result(
+            "Let me give you a piece of advise.",
+            NounVerbConfusion::default(),
+            "Let me give you a piece of advice.",
         );
     }
 }

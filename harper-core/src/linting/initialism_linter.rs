@@ -4,6 +4,7 @@ use itertools::Itertools;
 use crate::{Token, patterns::Word};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 /// A struct that can be composed to expand initialisms, respecting the capitalization of each
 /// item.
@@ -29,6 +30,8 @@ impl InitialismLinter {
 }
 
 impl ExprLinter for InitialismLinter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -37,20 +40,14 @@ impl ExprLinter for InitialismLinter {
         let tok = matched_tokens.first()?;
         let source = tok.span.get_content(source);
 
-        let caps = source
-            .iter()
-            .map(char::is_ascii_uppercase)
-            .chain([false].into_iter().cycle());
-
         let mut expansion_lower = self.expansion_lower.to_owned();
+        let first_letter = &mut expansion_lower[0][0];
 
-        for (word, cap) in expansion_lower.iter_mut().zip(caps) {
-            word[0] = if cap {
-                word[0].to_ascii_uppercase()
-            } else {
-                word[0].to_ascii_lowercase()
-            }
-        }
+        *first_letter = if source[0].is_ascii_uppercase() {
+            first_letter.to_ascii_uppercase()
+        } else {
+            first_letter.to_ascii_lowercase()
+        };
 
         let phrase = Itertools::intersperse_with(expansion_lower.into_iter(), || vec![' '])
             .reduce(|mut left, mut right| {

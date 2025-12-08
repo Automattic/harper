@@ -5,6 +5,7 @@ use crate::patterns::ModalVerb;
 use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ModalOf {
     expr: Box<dyn Expr>,
@@ -20,6 +21,17 @@ impl Default for ModalOf {
         let modal_of = Lrc::new(
             SequenceExpr::default()
                 .then(ModalVerb::default())
+                .then_whitespace()
+                .t_aco("of"),
+        );
+
+        // "will of" is a false positive if "will" is a noun
+        // "The will of the many"
+        let noun_will_of_naive = Lrc::new(
+            SequenceExpr::default()
+                .then_word_set(&["the", "a"])
+                .then_whitespace()
+                .t_aco("will")
                 .then_whitespace()
                 .t_aco("of"),
         );
@@ -52,6 +64,7 @@ impl Default for ModalOf {
                 Box::new(anyword_might_of_course),
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
+                Box::new(noun_will_of_naive),
                 Box::new(modal_of),
             ])),
         }
@@ -59,6 +72,8 @@ impl Default for ModalOf {
 }
 
 impl ExprLinter for ModalOf {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -298,5 +313,20 @@ mod tests {
     #[test]
     fn catches_mixed_case_could_of_put() {
         assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
+    }
+
+    #[test]
+    fn doesnt_catch_noun_will_of() {
+        assert_lint_count("the will of the many", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_noun_will_of_edgecase() {
+        assert_lint_count("he sent us a will of his", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn catch_modal_will_of() {
+        assert_lint_count("that will of an impact", ModalOf::default(), 1);
     }
 }

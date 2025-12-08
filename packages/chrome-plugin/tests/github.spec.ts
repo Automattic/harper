@@ -1,11 +1,10 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
-	clickHarperHighlight,
-	getHarperHighlights,
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,
+	testCanBlockRuleTextareaSuggestion,
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
@@ -13,6 +12,7 @@ const TEST_PAGE_URL = 'http://localhost:8081/github_textarea.html';
 
 testBasicSuggestionTextarea(TEST_PAGE_URL);
 testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
+testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
 
 test('Wraps correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);

@@ -1,5 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
@@ -14,23 +15,23 @@ impl Default for ItLooksLikeThat {
                 SequenceExpr::default()
                     .then_fixed_phrase("it looks like that")
                     .then_whitespace()
-                    .then(|tok: &Token, _: &[char]| {
+                    .then_kind_where(|kind| {
                         // Heuristics on the word after "that" which show "that" was used
                         // as a relative pronoun, which is a mistake
-                        let is_subj = tok.kind.is_subject_pronoun();
-                        let is_ing = tok.kind.is_verb_progressive_form();
+                        let is_subj = kind.is_subject_pronoun();
+                        let is_ing = kind.is_verb_progressive_form();
                         let is_definitely_rel_pron = is_subj || is_ing;
 
                         // Heuristics on the word after "that" which show "that"
                         // could possibly be a legitimate demonstrative pronoun or determiner
                         // as a demonstrative pronoun or a determiner
                         // which would not be a mistake.
-                        let is_v3psgpres = tok.kind.is_verb_third_person_singular_present_form();
+                        let is_v3psgpres = kind.is_verb_third_person_singular_present_form();
                         // NOTE: we don't have .is_modal_verb() but maybe we need it now!
-                        let is_vmodal_or_aux = tok.kind.is_auxiliary_verb();
-                        let is_vpret = tok.kind.is_verb_simple_past_form();
-                        let is_noun = tok.kind.is_noun();
-                        let is_oov = tok.kind.is_oov();
+                        let is_vmodal_or_aux = kind.is_auxiliary_verb();
+                        let is_vpret = kind.is_verb_simple_past_form();
+                        let is_noun = kind.is_noun();
+                        let is_oov = kind.is_oov();
 
                         let maybe_demonstrative_or_determiner =
                             is_v3psgpres || is_vmodal_or_aux || is_vpret || is_noun || is_oov;
@@ -43,6 +44,8 @@ impl Default for ItLooksLikeThat {
 }
 
 impl ExprLinter for ItLooksLikeThat {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

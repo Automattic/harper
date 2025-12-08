@@ -4,8 +4,6 @@ on:
   push:
     branches: ["master"]
     tags: ["v*"]
-  pull_request:
-    branches: ["master"]
   merge_group:
 
 jobs:
@@ -18,6 +16,9 @@ jobs:
           - os: windows-latest
             rust_target: x86_64-pc-windows-msvc
             code_target: win32-x64
+          - os: windows-latest
+            rust_target: aarch64-pc-windows-msvc
+            code_target: win32-arm64
           - os: macOS-latest
             rust_target: x86_64-apple-darwin
             code_target: darwin-x64
@@ -30,6 +31,15 @@ jobs:
           - os: ubuntu-latest
             rust_target: aarch64-unknown-linux-gnu
             code_target: linux-arm64
+          - os: ubuntu-latest
+            rust_target: armv7-unknown-linux-gnueabihf
+            code_target: linux-armhf
+          - os: ubuntu-latest
+            rust_target: x86_64-unknown-linux-musl
+            code_target: alpine-x64
+          - os: ubuntu-latest
+            rust_target: aarch64-unknown-linux-musl
+            code_target: alpine-arm64
     runs-on: ${{ matrix.platform.os }}
     steps:
       - uses: actions/checkout@v4

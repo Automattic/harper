@@ -41,9 +41,9 @@ macro_rules! create_test {
     };
 }
 
-create_test!(multiline_comments.cpp, 3);
-create_test!(multiline_comments.ts, 3);
-create_test!(multiline_comments.sol, 3);
+create_test!(multiline_comments.cpp, 4);
+create_test!(multiline_comments.ts, 4);
+create_test!(multiline_comments.sol, 4);
 create_test!(clean.lua, 0);
 create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);
@@ -61,6 +61,7 @@ create_test!(ignore_shebang_3.sh, 0);
 create_test!(ignore_shebang_4.sh, 1);
 create_test!(common.mill, 1);
 create_test!(basic_kotlin.kt, 0);
+create_test!(issue_1097.lua, 0);
 create_test!(basic.clj, 12);
 
 // Checks that some comments are masked out

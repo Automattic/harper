@@ -11,6 +11,7 @@ pub use freq_dict::FreqDict;
 pub use freq_dict_builder::FreqDictBuilder;
 
 /// An implementer of this trait is capable of assigned Part-of-Speech tags to a provided sentence.
+/// This is widely useful for various applications. [See here.](https://en.wikipedia.org/wiki/Part-of-speech_tagging)
 pub trait Tagger {
     fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>>;
 }

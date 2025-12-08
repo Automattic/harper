@@ -1,8 +1,10 @@
+use crate::TokenKind;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{CharString, CharStringExt, Token, char_string::char_string, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PiqueInterest {
     expr: Box<dyn Expr>,
@@ -15,9 +17,10 @@ impl Default for PiqueInterest {
                 "peak", "peaked", "peek", "peeked", "peeking", "peaking",
             ]))
             .then_whitespace()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind.is_non_plural_nominal() || tok.kind.is_possessive_determiner()
-            })
+            .then_kind_either(
+                TokenKind::is_non_plural_nominal,
+                TokenKind::is_possessive_determiner,
+            )
             .then_whitespace()
             .t_aco("interest");
 
@@ -42,6 +45,8 @@ impl PiqueInterest {
 }
 
 impl ExprLinter for PiqueInterest {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

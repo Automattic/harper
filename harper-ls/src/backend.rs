@@ -26,7 +26,7 @@ use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_typst::Typst;
-use serde_json::Value;
+use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
 use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
@@ -359,7 +359,15 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "literate haskell" | "lhaskell" => {
+            "git-commit" | "gitcommit" | "octo" => {
+                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
+            }
+            "html" => Some(Box::new(HtmlParser::default())),
+            "ink" => Some(Box::new(InkParser::default())),
+            "jj-commit" | "jjdescription" => {
+                Some(Box::new(JJDescriptionParser::new(markdown_options)))
+            }
+            "lhaskell" | "literate haskell" => {
                 let parser = LiterateHaskellParser::new_markdown(markdown_options);
 
                 if let Some(new_dict) =
@@ -381,17 +389,12 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
-            "ink" => Some(Box::new(InkParser::default())),
+            "mail" => Some(Box::new(PlainEnglish)),
             "markdown" => Some(Box::new(Markdown::new(markdown_options))),
-            "git-commit" | "gitcommit" => {
-                Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
-            }
-            "jjdescription" => Some(Box::new(JJDescriptionParser::new(markdown_options))),
-            "html" => Some(Box::new(HtmlParser::default())),
-            "mail" | "plaintext" | "text" => Some(Box::new(PlainEnglish)),
-            "typst" => Some(Box::new(Typst)),
             "org" => Some(Box::new(OrgMode)),
+            "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
+            "typst" => Some(Box::new(Typst)),
             _ => None,
         };
 
@@ -480,7 +483,7 @@ impl Backend {
                 section: None,
             }])
             .await
-            .unwrap();
+            .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
         if let Some(first) = new_config.pop() {
             self.update_config_from_obj(first).await;
