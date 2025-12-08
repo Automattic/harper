@@ -56,6 +56,7 @@ use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
+use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
@@ -529,6 +530,7 @@ impl LintGroup {
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_expr_rule!(ElsePossessive, true);
+        insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
