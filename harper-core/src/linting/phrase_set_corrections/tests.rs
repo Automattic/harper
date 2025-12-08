@@ -462,8 +462,70 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandArgument
+
+#[test]
+fn corrects_arg() {
+    assert_suggestion_result(
+        "but I cannot figure out how to flag an arg as required",
+        lint_group(),
+        "but I cannot figure out how to flag an argument as required",
+    );
+}
+
+#[test]
+fn corrects_args() {
+    assert_suggestion_result(
+        "but every test I've done shows args as being about 65% faster",
+        lint_group(),
+        "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandDecl
+
+#[test]
+fn corrects_decl() {
+    assert_suggestion_result(
+        "Yeah, I agree a forward decl would be preferable in this case.",
+        lint_group(),
+        "Yeah, I agree a forward declaration would be preferable in this case.",
+    );
+}
+
+#[test]
+fn corrects_decls() {
+    assert_suggestion_result(
+        "Accessing type decls from pointer types",
+        lint_group(),
+        "Accessing type declarations from pointer types",
+    );
+}
+
 // ExpandDependency
 // -none-
+
+// ExpandParam
+
+#[test]
+fn corrects_param() {
+    assert_suggestion_result(
+        "If I use the following to set an endDate param with a default value",
+        lint_group(),
+        "If I use the following to set an endDate parameter with a default value",
+    );
+}
+
+#[test]
+fn corrects_params() {
+    assert_suggestion_result(
+        "the params are not loaded in the R environment when using the terminal",
+        lint_group(),
+        "the parameters are not loaded in the R environment when using the terminal.",
+    );
+}
+
+// ExpandSpecification
 
 // ExpandStandardInput
 // -none-

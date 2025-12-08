@@ -761,6 +761,16 @@ fn expand_cuz() {
     );
 }
 
+// ExpandForward
+#[test]
+fn expand_fwd() {
+    assert_suggestion_result(
+        "Now I look fwd to the interior, the color, etc.",
+        lint_group(),
+        "Now I look forward to the interior, the color, etc.",
+    );
+}
+
 // ExpandMinimum
 // -none
 
