@@ -6,8 +6,8 @@
 # Unlintable Unlintable
 >            -->
 # Unlintable Unlintable
->            Part      - of - speech   tagging
-# Unlintable NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg
+>                         Part      - of - speech   tagging
+# Unlintable HeadingStart NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg
 >
 #
 > In        corpus linguistics , part      - of - speech   tagging ( POS  tagging or    PoS  tagging or
@@ -36,8 +36,8 @@
 # NSg/VB/J VB/C NSg/I/J/R/Dq R      VP/J NPr🅪Sg/VB/J+ NSg+ . NPl     . NPl/V3  NSg/VB+ . VP/J  NPl+       .
 >
 #
-> Principle
-# N🅪Sg/VB+
+>              Principle
+# HeadingStart N🅪Sg/VB+
 >
 #
 > Part      - of - speech   tagging is  harder than just having  a   list   of words   and  their
@@ -72,8 +72,8 @@
 # J          NSg/VB+ . R        . . .
 >
 #
-> Tag     sets
-# NSg/VB+ NPl/V3
+>              Tag     sets
+# HeadingStart NSg/VB+ NPl/V3
 >
 #
 > Schools commonly teach  that         there are 9 parts  of speech  in        English     : noun    , verb    ,
@@ -156,12 +156,12 @@
 # J/P D   N🅪Sg/VB+ NSg/P NSg/VB+ . NSg/J     NSg/Vg  VL3 NSg/JC J/P NSg/JC  NSg/VB+ . NPl/V3 .
 >
 #
-> History
-# N🅪Sg+
+>              History
+# HeadingStart N🅪Sg+
 >
 #
-> The Brown        Corpus
-# D+  NPr🅪Sg/VB/J+ NSg+
+>              The Brown       Corpus
+# HeadingStart D+  NPr🅪Sg/VB/J NSg+
 >
 #
 > Research on  part      - of - speech   tagging has been    closely tied to corpus linguistics .
@@ -228,8 +228,8 @@
 # NPl+          NSg/VB NSg/VXB VP/J       R/C/P Dq+  NSg/VB+ .
 >
 #
-> Use     of hidden Markov models
-# N🅪Sg/VB P  VB/J   NPr    NPl/V3+
+>              Use     of hidden Markov models
+# HeadingStart N🅪Sg/VB P  VB/J   NPr    NPl/V3+
 >
 #
 > In        the mid      - 1980s , researchers in        Europe began to use     hidden Markov models  ( HMMs )
@@ -308,8 +308,8 @@
 # NSg       .
 >
 #
-> Dynamic programming methods
-# NSg/J+  Nᴹ/Vg/J+    NPl/V3+
+>              Dynamic programming methods
+# HeadingStart NSg/J+  Nᴹ/Vg/J+    NPl/V3+
 >
 #
 > In        1987 , Steven DeRose and  Kenneth W. Church     independently developed dynamic
@@ -358,8 +358,8 @@
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg+       .
 >
 #
-> Unsupervised taggers
-# VB/J         NPl
+>              Unsupervised taggers
+# HeadingStart VB/J         NPl
 >
 #
 > The methods already discussed involve working from a    pre       - existing corpus to
@@ -390,8 +390,8 @@
 # J      NPl/V3+    .
 >
 #
-> Other    taggers and  methods
-# NSg/VB/J NPl     VB/C NPl/V3+
+>              Other    taggers and  methods
+# HeadingStart NSg/VB/J NPl     VB/C NPl/V3+
 >
 #
 > Some     current major    algorithms for   part      - of - speech   tagging include the Viterbi

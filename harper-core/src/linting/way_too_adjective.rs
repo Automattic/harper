@@ -20,8 +20,7 @@ impl Default for WayTooAdjective {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ]).or(WordSet::new(&["much"])));
 
-        let exceptions = SequenceExpr::default()
-            .t_any()
+        let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()

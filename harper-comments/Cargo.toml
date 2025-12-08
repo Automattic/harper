@@ -13,7 +13,7 @@ harper-html = { path = "../harper-html", version = "1.0.0" }
 harper-tree-sitter = { path = "../harper-tree-sitter", version = "1.0.0" }
 itertools = "0.14.0"
 tree-sitter = "0.25.10"
-tree-sitter-bash = "0.25.0"
+tree-sitter-bash = "0.25.1"
 tree-sitter-c = "0.24.1"
 tree-sitter-cmake = "0.7.1"
 tree-sitter-cpp = "0.23.4"

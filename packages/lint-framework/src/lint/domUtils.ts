@@ -112,6 +112,17 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 
 const sharedRange: Range | null = typeof document !== 'undefined' ? document.createRange() : null;
 
+/** Check if a node represents a heading (native heading tags or role="heading"). */
+export function isHeading(node: Node): boolean {
+	if (!(node instanceof Element)) return false;
+
+	const tag = node.tagName.toLowerCase();
+	if (/^h[1-6]$/.test(tag)) return true;
+
+	const role = node.getAttribute('role');
+	return role?.toLowerCase() === 'heading';
+}
+
 /** Check if an element is visible to the user.
  *
  * It is coarse and meant for performance improvements, not precision.*/

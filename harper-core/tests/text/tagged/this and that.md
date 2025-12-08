@@ -10,8 +10,8 @@
 # . I/Ddem . NPr/J/R/P NSg/J     NPl/V3   P    D/P NPr/VB P  NSg/VB+ NPl/V3+ .
 >
 #
-> Examples
-# NPl/V3+
+>              Examples
+# HeadingStart NPl/V3+
 >
 #
 > This   triangle is  nice  .

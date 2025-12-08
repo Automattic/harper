@@ -26,7 +26,7 @@ use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_typst::Typst;
-use serde_json::Value;
+use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
 use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
@@ -483,7 +483,7 @@ impl Backend {
                 section: None,
             }])
             .await
-            .unwrap();
+            .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
         if let Some(first) = new_config.pop() {
             self.update_config_from_obj(first).await;

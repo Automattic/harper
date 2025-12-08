@@ -40,16 +40,13 @@ impl Default for OpenCompounds {
         }
         let compound = Lrc::new(SequenceExpr::default().then(compound_wordset));
 
-        let with_prev = SequenceExpr::default()
-            .then_anything()
-            .then(compound.clone());
+        let with_prev = SequenceExpr::anything().then(compound.clone());
 
         let with_next = SequenceExpr::default()
             .then(compound.clone())
             .then_anything();
 
-        let with_prev_and_next = SequenceExpr::default()
-            .then_anything()
+        let with_prev_and_next = SequenceExpr::anything()
             .then(compound.clone())
             .then_anything();
 

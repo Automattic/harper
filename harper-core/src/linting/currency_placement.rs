@@ -110,7 +110,7 @@ mod tests {
     #[test]
     fn multiple_dollar() {
         assert_suggestion_result(
-            "They were either 25$ 24$ or 23$.",
+            "They were either 25\\$ 24\\$ or 23\\$.",
             CurrencyPlacement::default(),
             "They were either $25 $24 or $23.",
         );

@@ -18,8 +18,7 @@ impl Default for General {
                 .or(WordSet::new(&["because"])),
         );
 
-        let exceptions = SequenceExpr::default()
-            .then_anything()
+        let exceptions = SequenceExpr::anything()
             .then_anything()
             .then(WordSet::new(&["own", "intended"]));
 

@@ -302,6 +302,7 @@ fn format_tag(kind: &TokenKind) -> Cow<'static, str> {
         TokenKind::Unlintable => Cow::Borrowed("Unlintable"),
         TokenKind::Regexish => Cow::Borrowed("Regexish"),
         TokenKind::ParagraphBreak => Cow::Borrowed("ParagraphBreak"),
+        TokenKind::HeadingStart => Cow::Borrowed("HeadingStart"),
     }
 }
 

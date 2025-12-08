@@ -985,6 +985,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
@@ -1417,6 +1426,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     796 | ## CHAPTER V: Advice from a Caterpillar
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER v: Advice from a Caterpillar”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
@@ -1636,6 +1654,15 @@ Message: |
          |        ^~~~~~~~~ `righthand` should probably be written as `right hand`.
 Suggest:
   - Replace with: “right hand”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1059 | ## CHAPTER VI: Pig and Pepper
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi: Pig and Pepper”
 
 
 
