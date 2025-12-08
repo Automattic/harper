@@ -191,6 +191,15 @@ mod tests {
     }
 
     #[test]
+    fn fix_should_you_every() {
+        assert_suggestion_result(
+            "but you will always have a place in his home should you every truly desire it",
+            EverEvery::default(),
+            "but you will always have a place in his home should you ever truly desire it",
+        )
+    }
+
+    #[test]
     fn fix_would_i_every() {
         assert_suggestion_result(
             "Why would I every do that?",
