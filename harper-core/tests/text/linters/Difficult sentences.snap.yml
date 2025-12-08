@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       1 | # Difficult sentences
+         | ^~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Difficult Sentences”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
       20 | at the bottom of the page; sitting at the table; at church; at sea
@@ -72,15 +81,6 @@ Message: |
          | ^~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “To”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-     166 | You can't get all your news from the Internet.
-         |                        ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
 
 
 

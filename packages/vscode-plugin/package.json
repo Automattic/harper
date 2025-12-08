@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -689,6 +689,12 @@
 					"default": true,
 					"description": "Corrects `conform` typos to `confirm`."
 				},
+				"harper.linters.Copyright": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works."
+				},
 				"harper.linters.CorrectNumberSuffix": {
 					"scope": "resource",
 					"type": "boolean",
@@ -982,6 +988,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands the abbreviation `w/o` to the full word `without` for clarity."
+				},
+				"harper.linters.Expat": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the mistake of writing `expat` as two words."
 				},
 				"harper.linters.Expatriate": {
 					"scope": "resource",
@@ -2956,6 +2968,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Catches the mix-up between `price`/`prise` and `prize` after the verb `win`."
+				},
+				"harper.linters.WishCould": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for `can` being used after `wish` when it should be `could`."
 				},
 				"harper.linters.WordPressDotcom": {
 					"scope": "resource",

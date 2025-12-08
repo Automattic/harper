@@ -1,6 +1,7 @@
+import type { LintOptions } from 'harper.js';
 import type { IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
-import { isVisible } from './domUtils';
+import { isHeading, isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
@@ -27,7 +28,11 @@ export default class LintFramework {
 	private updateEventCallback: () => void;
 
 	/** Function used to fetch lints for a given text/domain. */
-	private lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>;
+	private lintProvider: (
+		text: string,
+		domain: string,
+		options?: LintOptions,
+	) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
@@ -39,7 +44,11 @@ export default class LintFramework {
 	};
 
 	constructor(
-		lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>,
+		lintProvider: (
+			text: string,
+			domain: string,
+			options?: LintOptions,
+		) => Promise<UnpackedLintGroups>,
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
@@ -120,7 +129,9 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lintsBySource = await this.lintProvider(text, window.location.hostname);
+				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
+					forceAllHeadings: isHeading(target),
+				});
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);

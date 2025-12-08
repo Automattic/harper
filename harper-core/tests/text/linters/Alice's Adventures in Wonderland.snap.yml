@@ -985,6 +985,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
@@ -1417,6 +1426,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     796 | ## CHAPTER V: Advice from a Caterpillar
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER v: Advice from a Caterpillar”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
@@ -1505,7 +1523,7 @@ Suggest:
 Lint:    Capitalization (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
-         |           ^~~~~~ The canonical dictionary spelling is `head's`.
+         |           ^~~~~~ The canonical dictionary spelling is title case: `head's`.
 Suggest:
   - Replace with: “head's”
 
@@ -1639,6 +1657,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1059 | ## CHAPTER VI: Pig and Pepper
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi: Pig and Pepper”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1061 | For a minute or two she stood looking at the house, and wondering what to do
@@ -1670,7 +1697,7 @@ Message: |
 Lint:    Capitalization (127 priority)
 Message: |
     1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
-         |                                                                  ^~~~ The canonical dictionary spelling is `he's`.
+         |                                                                  ^~~~ The canonical dictionary spelling is title case: `he's`.
     1128 | idiotic!” And she opened the door and went in.
 Suggest:
   - Replace with: “he's”
@@ -2919,7 +2946,7 @@ Lint:    Capitalization (127 priority)
 Message: |
     2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
     2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-         |                                 ^~~~ The canonical dictionary spelling is `he's`.
+         |                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
 Suggest:
   - Replace with: “he's”
 

@@ -204,7 +204,16 @@ impl Parser for Markdown {
                     });
                     stack.push(pulldown_cmark::Tag::List(v));
                 }
-                pulldown_cmark::Event::Start(tag) => stack.push(tag),
+                pulldown_cmark::Event::Start(tag) => {
+                    if matches!(tag, pulldown_cmark::Tag::Heading { .. }) {
+                        tokens.push(Token {
+                            span: Span::new_with_len(span_start, 0),
+                            kind: TokenKind::HeadingStart,
+                        });
+                    }
+
+                    stack.push(tag)
+                }
                 pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Paragraph)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Item)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Heading(_))
@@ -574,5 +583,29 @@ Paragraph.
         let opts = MarkdownOptions::default();
         let parser = Markdown::new(opts);
         let _res = parser.parse_str("//{@j");
+    }
+
+    #[test]
+    fn simple_headings_are_marked() {
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let tokens = parser.parse_str("# This is a simple heading");
+
+        assert_eq!(tokens.iter_heading_starts().count(), 1);
+        assert_eq!(tokens.iter_headings().count(), 1);
+    }
+
+    #[test]
+    fn multiple_headings_are_marked() {
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let tokens = parser.parse_str(
+            r#"# This is a simple heading
+
+## This is a second simple heading"#,
+        );
+
+        assert_eq!(tokens.iter_heading_starts().count(), 2);
+        assert_eq!(tokens.iter_headings().count(), 2);
     }
 }
