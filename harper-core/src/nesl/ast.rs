@@ -19,7 +19,7 @@ impl AstNode {
     pub fn to_expr(&self) -> Box<dyn Expr> {
         match self {
             AstNode::Whitespace => Box::new(WhitespacePattern),
-            AstNode::Word(word) => Box::new(Word::from_chars(&word)),
+            AstNode::Word(word) => Box::new(Word::from_chars(word)),
             AstNode::Not(ast_node) => Box::new(UnlessStep::new(
                 ast_node.to_expr(),
                 |_tok: &Token, _: &[char]| true,

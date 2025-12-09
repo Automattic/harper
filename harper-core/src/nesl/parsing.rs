@@ -47,7 +47,7 @@ fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstNode>, Error> {
 
     let mut cursor = 0;
     while let Some(remainder) = tokens.get(cursor..)
-        && remainder.len() > 0
+        && !remainder.is_empty()
     {
         let res = parse_node(remainder, source)?;
         seq.push(res.node);
@@ -115,8 +115,6 @@ fn parse_node(tokens: &[Token], source: &[char]) -> Result<FoundNode, Error> {
                 cursor += new_child.next_idx;
 
                 if cursor != close_idx && !tokens[cursor].kind.is_comma() {
-                    dbg!(&tokens[cursor].kind);
-                    dbg!(&tokens[cursor].span.get_content_string(source));
                     return Err(Error::ExpectedComma);
                 }
 
@@ -130,10 +128,7 @@ fn parse_node(tokens: &[Token], source: &[char]) -> Result<FoundNode, Error> {
             Ok(FoundNode::new(AstNode::Arr(children), close_idx + 1))
         }
         TokenKind::Punctuation(p) => Ok(FoundNode::new(AstNode::Punctuation(p), 1)),
-        _ => {
-            dbg!(&tok.kind);
-            Err(Error::UnsupportedToken)
-        }
+        _ => Err(Error::UnsupportedToken),
     }
 }
 
@@ -148,9 +143,7 @@ fn locate_matching_brace(
     let mut cursor = 1;
 
     loop {
-        let Some(cur) = tokens.get(cursor) else {
-            return None;
-        };
+        let cur = tokens.get(cursor)?;
 
         if is_open(&cur.kind) {
             visited_opens += 1;

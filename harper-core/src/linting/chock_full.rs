@@ -1,8 +1,6 @@
 use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::expr::SpaceOrHyphen;
 use crate::nesl::nesl_to_expr;
-use crate::{Token, TokenStringExt, patterns::WordSet};
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
