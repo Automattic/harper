@@ -1,5 +1,5 @@
 use crate::expr::Expr;
-use crate::nesl::nesl_to_expr;
+use crate::nesl::nesl_expr_to_expr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -12,7 +12,7 @@ pub struct ChockFull {
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            expr: nesl_to_expr("[chalk, choke][ , -]full").unwrap(),
+            expr: nesl_expr_to_expr("[chalk, choke][ , -]full").unwrap(),
         }
     }
 }

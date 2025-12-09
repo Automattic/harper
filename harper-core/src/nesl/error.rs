@@ -10,4 +10,6 @@ pub enum Error {
     UnmatchedBrace,
     #[error("Expected a comma here.")]
     ExpectedComma,
+    #[error("Expected a valid keyword.")]
+    UnexpectedKeyword,
 }
