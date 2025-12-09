@@ -1,5 +1,3 @@
-use blanket::blanket;
-
 use crate::{LSend, Token, patterns::Pattern};
 
 /// An atomic step within a larger expression.

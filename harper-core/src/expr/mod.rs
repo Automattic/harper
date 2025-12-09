@@ -22,7 +22,6 @@ mod first_match_of;
 mod fixed_phrase;
 mod longest_match_of;
 mod mergeable_words;
-mod nesl;
 mod optional;
 mod reflexive_pronoun;
 mod repeating;

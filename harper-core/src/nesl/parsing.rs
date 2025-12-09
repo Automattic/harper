@@ -1,4 +1,4 @@
-use ast::{Ast, AstNode};
+use ast::AstNode;
 use error::Error;
 
 use crate::lexing::{FoundToken, lex_nesl_token};
@@ -28,7 +28,7 @@ fn lex(source: &[char]) -> Vec<Token> {
     }
 }
 
-fn parse_str(nesl: &str) -> Result<Ast, Error> {
+pub fn parse_str(nesl: &str) -> Result<AstNode, Error> {
     let chars: CharString = nesl.chars().collect();
     let tokens = lex(&chars);
 
@@ -41,7 +41,7 @@ fn parse_str(nesl: &str) -> Result<Ast, Error> {
         AstNode::Seq(seq)
     };
 
-    Ok(Ast { root })
+    Ok(root)
 }
 
 fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstNode>, Error> {
@@ -175,13 +175,13 @@ mod tests {
 
     #[test]
     fn parses_whitespace() {
-        assert_eq!(parse_str(" ").unwrap().root, AstNode::Whitespace)
+        assert_eq!(parse_str(" ").unwrap(), AstNode::Whitespace)
     }
 
     #[test]
     fn parses_word() {
         assert_eq!(
-            parse_str("word").unwrap().root,
+            parse_str("word").unwrap(),
             AstNode::Word(char_string!("word"))
         )
     }
@@ -189,7 +189,7 @@ mod tests {
     #[test]
     fn parses_word_space() {
         assert_eq!(
-            parse_str("word ").unwrap().root,
+            parse_str("word ").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("word")),
                 AstNode::Whitespace
@@ -200,7 +200,7 @@ mod tests {
     #[test]
     fn parses_word_space_word() {
         assert_eq!(
-            parse_str("word word").unwrap().root,
+            parse_str("word word").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("word")),
                 AstNode::Whitespace,
@@ -212,7 +212,7 @@ mod tests {
     #[test]
     fn parses_simple_seq() {
         assert_eq!(
-            parse_str("a (b c) d").unwrap().root,
+            parse_str("a (b c) d").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -230,7 +230,7 @@ mod tests {
     #[test]
     fn parses_nested_seqs() {
         assert_eq!(
-            parse_str("a (b (c)) d").unwrap().root,
+            parse_str("a (b (c)) d").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -248,7 +248,7 @@ mod tests {
     #[test]
     fn parses_paired_seqs() {
         assert_eq!(
-            parse_str("a (b) (c) d").unwrap().root,
+            parse_str("a (b) (c) d").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -264,7 +264,7 @@ mod tests {
     #[test]
     fn parses_not() {
         assert_eq!(
-            parse_str("a !b c").unwrap().root,
+            parse_str("a !b c").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -278,7 +278,7 @@ mod tests {
     #[test]
     fn parses_not_seq() {
         assert_eq!(
-            parse_str("a !(b c) d").unwrap().root,
+            parse_str("a !(b c) d").unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -295,13 +295,13 @@ mod tests {
 
     #[test]
     fn parses_empty_array() {
-        assert_eq!(parse_str("[]").unwrap().root, AstNode::Arr(vec![]))
+        assert_eq!(parse_str("[]").unwrap(), AstNode::Arr(vec![]))
     }
 
     #[test]
     fn parses_single_element_array() {
         assert_eq!(
-            parse_str("[a]").unwrap().root,
+            parse_str("[a]").unwrap(),
             AstNode::Arr(vec![AstNode::Word(char_string!("a"))])
         )
     }
@@ -309,7 +309,7 @@ mod tests {
     #[test]
     fn parses_double_element_array() {
         assert_eq!(
-            parse_str("[a, b]").unwrap().root,
+            parse_str("[a, b]").unwrap(),
             AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b"))
@@ -320,7 +320,7 @@ mod tests {
     #[test]
     fn parses_triple_element_array() {
         assert_eq!(
-            parse_str("[a, b, c]").unwrap().root,
+            parse_str("[a, b, c]").unwrap(),
             AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b")),
@@ -332,7 +332,7 @@ mod tests {
     #[test]
     fn parses_not_triple_element_array() {
         assert_eq!(
-            parse_str("![a, b, c]").unwrap().root,
+            parse_str("![a, b, c]").unwrap(),
             AstNode::Not(Box::new(AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b")),

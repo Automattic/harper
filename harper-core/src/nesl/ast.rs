@@ -13,11 +13,6 @@ pub enum AstNode {
     Arr(Vec<AstNode>),
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Ast {
-    pub root: AstNode,
-}
-
 impl AstNode {
     /// Create an expression that fulfills the pattern matching contract defined by this tree.
     pub fn to_expr(&self) -> Box<dyn Expr> {

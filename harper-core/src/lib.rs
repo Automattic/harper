@@ -17,6 +17,7 @@ pub mod language_detection;
 mod lexing;
 pub mod linting;
 mod mask;
+mod nesl;
 mod number;
 pub mod parsers;
 pub mod patterns;
