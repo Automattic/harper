@@ -7,8 +7,8 @@ pub fn optimize(stmts: &mut Vec<AstStmtNode>) -> bool {
 
     for stmt in stmts {
         match stmt {
-            AstStmtNode::ProduceExpr(node) => {
-                if optimize_expr(node) {
+            AstStmtNode::SetExpr { value, .. } => {
+                if optimize_expr(value) {
                     edit = true;
                 }
             }

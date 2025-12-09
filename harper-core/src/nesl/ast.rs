@@ -16,10 +16,21 @@ impl Ast {
 
     pub fn get_variable_value(&self, var_name: &str) -> Option<&'_ str> {
         for stmt in self.stmts.iter().rev() {
-            if let AstStmtNode::SetVariable { name, value } = stmt
+            if let AstStmtNode::DeclareVariable { name, value } = stmt
                 && name == var_name
             {
                 return Some(value.as_str());
+            }
+        }
+        None
+    }
+
+    pub fn get_expr(&self, expr_name: &str) -> Option<&'_ AstExprNode> {
+        for stmt in self.stmts.iter().rev() {
+            if let AstStmtNode::SetExpr { name, value } = stmt
+                && name == expr_name
+            {
+                return Some(value);
             }
         }
         None
@@ -77,16 +88,23 @@ impl AstExprNode {
 
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstStmtNode {
-    SetVariable { name: String, value: String },
-    ProduceExpr(AstExprNode),
+    DeclareVariable { name: String, value: String },
+    SetExpr { name: String, value: AstExprNode },
     Comment(String),
 }
 
 impl AstStmtNode {
-    pub fn create_set_variable(name: impl ToString, value: impl ToString) -> Self {
-        Self::SetVariable {
+    pub fn create_declare_variable(name: impl ToString, value: impl ToString) -> Self {
+        Self::DeclareVariable {
             name: name.to_string(),
             value: value.to_string(),
+        }
+    }
+
+    pub fn create_set_expr(name: impl ToString, value: AstExprNode) -> Self {
+        Self::SetExpr {
+            name: name.to_string(),
+            value,
         }
     }
 }

@@ -59,21 +59,21 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstStmtNode
             let word_literal = key_token.span.get_content(source);
 
             match word_literal {
-                ['s', 'e', 't'] => Ok(FoundNode::new(
-                    AstStmtNode::SetVariable {
-                        name: tokens[cursor + 2].span.get_content_string(source),
-                        value: tokens[cursor + 4..end]
+                ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => Ok(FoundNode::new(
+                    AstStmtNode::create_declare_variable(
+                        tokens[cursor + 2].span.get_content_string(source),
+                        tokens[cursor + 4..end]
                             .span()
                             .unwrap()
                             .get_content_string(source),
-                    },
+                    ),
                     end + 1,
                 )),
-                ['p', 'r', 'o', 'd', 'u', 'c', 'e'] => Ok(FoundNode::new(
-                    AstStmtNode::ProduceExpr(AstExprNode::Seq(parse_seq(
-                        &tokens[cursor + 2..end],
-                        source,
-                    )?)),
+                ['s', 'e', 't'] => Ok(FoundNode::new(
+                    AstStmtNode::create_set_expr(
+                        tokens[cursor + 2].span.get_content_string(source),
+                        AstExprNode::Seq(parse_seq(&tokens[cursor + 4..end], source)?),
+                    ),
                     end + 1,
                 )),
                 _ => Err(Error::UnexpectedKeyword),
@@ -92,11 +92,11 @@ mod tests {
 
     #[test]
     fn parses_single_var_stmt() {
-        let ast = parse_str("set test to be this", true).unwrap();
+        let ast = parse_str("declare test to be this", true).unwrap();
 
         assert_eq!(
             ast.stmts,
-            vec![AstStmtNode::create_set_variable("test", "to be this")]
+            vec![AstStmtNode::create_declare_variable("test", "to be this")]
         );
         assert_eq!(ast.get_variable_value("test"), Some("to be this"));
     }
@@ -104,10 +104,11 @@ mod tests {
     #[test]
     fn parses_single_expr_stmt() {
         assert_eq!(
-            parse_str("produce word", true).unwrap().stmts,
-            vec![AstStmtNode::ProduceExpr(AstExprNode::Word(char_string!(
-                "word"
-            )))]
+            parse_str("set main word", true).unwrap().stmts,
+            vec![AstStmtNode::create_set_expr(
+                "main",
+                AstExprNode::Word(char_string!("word"))
+            )]
         )
     }
 
@@ -130,7 +131,7 @@ mod tests {
     #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
-            "set test to be this\nproduce word\n# this is a comment",
+            "declare test to be this\nset main word\n# this is a comment",
             true,
         )
         .unwrap();
@@ -138,12 +139,16 @@ mod tests {
         assert_eq!(
             ast.stmts,
             vec![
-                AstStmtNode::create_set_variable("test", "to be this"),
-                AstStmtNode::ProduceExpr(AstExprNode::Word(char_string!("word"))),
+                AstStmtNode::create_declare_variable("test", "to be this"),
+                AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word"))),
                 AstStmtNode::Comment("# this is a comment".to_string())
             ]
         );
 
         assert_eq!(ast.get_variable_value("test"), Some("to be this"));
+        assert_eq!(
+            ast.get_expr("main"),
+            Some(&AstExprNode::Word(char_string!("word")))
+        );
     }
 }
