@@ -91,7 +91,6 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
                     .get_content(src)
                     .eq_any_ignore_ascii_case_str(&["it", "me", "on", "that"])
                 {
-                    eprintln!("🍊 following token: {:?}", following_tok);
                     return None;
                 }
             }
