@@ -90,6 +90,12 @@ where
     }
 }
 
+impl Expr for Box<dyn Expr> {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run(cursor, tokens, source)
+    }
+}
+
 #[cfg(not(feature = "concurrent"))]
 impl<E> Expr for Rc<E>
 where
