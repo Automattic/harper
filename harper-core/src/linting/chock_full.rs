@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::expr::SpaceOrHyphen;
+use crate::nesl::nesl_to_expr;
 use crate::{Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -13,12 +14,7 @@ pub struct ChockFull {
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["chalk", "choke"]))
-                    .then(SpaceOrHyphen)
-                    .then_exact_word("full"),
-            ),
+            expr: nesl_to_expr("[chalk, choke][ , -]full").unwrap(),
         }
     }
 }
