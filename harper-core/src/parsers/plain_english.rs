@@ -1,5 +1,5 @@
 use super::Parser;
-use crate::lexing::{FoundToken, lex_token};
+use crate::lexing::{FoundToken, lex_english_token};
 use crate::{Span, Token};
 
 /// A parser that will attempt to lex as many tokens as possible,
@@ -19,7 +19,7 @@ impl Parser for PlainEnglish {
                 return tokens;
             }
 
-            if let Some(FoundToken { token, next_index }) = lex_token(&source[cursor..]) {
+            if let Some(FoundToken { token, next_index }) = lex_english_token(&source[cursor..]) {
                 tokens.push(Token {
                     span: Span::new(cursor, cursor + next_index),
                     kind: token,
