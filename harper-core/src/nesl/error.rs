@@ -12,4 +12,8 @@ pub enum Error {
     ExpectedComma,
     #[error("Expected a valid keyword.")]
     UnexpectedKeyword,
+    #[error("Expected a value to be defined.")]
+    ExpectedVariableUndefined,
+    #[error("Invalid LintKind")]
+    InvalidLintKind,
 }

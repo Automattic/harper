@@ -1,4 +1,5 @@
 use is_macro::Is;
+use itertools::Itertools;
 
 use crate::expr::{Expr, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{WhitespacePattern, Word};
@@ -34,6 +35,19 @@ impl Ast {
             }
         }
         None
+    }
+
+    pub fn iter_variable_values(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.stmts
+            .iter()
+            .rev()
+            .filter_map(|n| match n {
+                AstStmtNode::DeclareVariable { name, value } => {
+                    Some((name.as_str(), value.as_str()))
+                }
+                _ => None,
+            })
+            .unique_by(|(n, _)| *n)
     }
 }
 

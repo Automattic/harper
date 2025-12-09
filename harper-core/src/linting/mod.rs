@@ -212,7 +212,7 @@ mod wish_could;
 mod wordpress_dotcom;
 mod would_never_have;
 
-pub use expr_linter::ExprLinter;
+pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
 pub use lint_group::{LintGroup, LintGroupConfig};

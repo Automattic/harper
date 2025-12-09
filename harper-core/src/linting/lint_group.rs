@@ -356,11 +356,16 @@ impl LintGroup {
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+        self.add_boxed(name, Box::new(linter))
+    }
+
+    /// Add an already-boxed [`Linter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add_boxed(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+            self.linters.insert(name.as_ref().to_string(), linter);
             true
         }
     }
