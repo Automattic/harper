@@ -2,12 +2,13 @@ use is_macro::Is;
 
 use crate::expr::{Expr, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{WhitespacePattern, Word};
-use crate::{CharString, Token};
+use crate::{CharString, Punctuation, Token};
 
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstNode {
     Whitespace,
     Word(CharString),
+    Punctuation(Punctuation),
     Not(Box<AstNode>),
     Seq(Vec<AstNode>),
     Arr(Vec<AstNode>),
@@ -40,6 +41,13 @@ impl AstNode {
                 }
 
                 Box::new(expr)
+            }
+            AstNode::Punctuation(punct) => {
+                let punct = *punct;
+
+                Box::new(move |tok: &Token, _: &[char]| {
+                    tok.kind.as_punctuation().is_some_and(|p| *p == punct)
+                })
             }
         }
     }

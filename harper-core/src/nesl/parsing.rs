@@ -4,7 +4,7 @@ use error::Error;
 use crate::lexing::{FoundToken, lex_nesl_token};
 use crate::{CharString, Punctuation, Span, Token, TokenKind};
 
-use super::{ast, error};
+use super::{ast, error, optimize};
 
 fn lex(source: &[char]) -> Vec<Token> {
     let mut cursor = 0;
@@ -28,18 +28,16 @@ fn lex(source: &[char]) -> Vec<Token> {
     }
 }
 
-pub fn parse_str(nesl: &str) -> Result<AstNode, Error> {
+pub fn parse_str(nesl: &str, use_optimizer: bool) -> Result<AstNode, Error> {
     let chars: CharString = nesl.chars().collect();
     let tokens = lex(&chars);
 
-    let mut seq = parse_seq(&tokens, &chars)?;
+    let seq = parse_seq(&tokens, &chars)?;
+    let mut root = AstNode::Seq(seq);
 
-    // Easy and simple optimizations
-    let root = if seq.len() == 1 {
-        seq.pop().unwrap()
-    } else {
-        AstNode::Seq(seq)
-    };
+    if use_optimizer {
+        while optimize(&mut root) {}
+    }
 
     Ok(root)
 }
@@ -131,6 +129,7 @@ fn parse_node(tokens: &[Token], source: &[char]) -> Result<FoundNode, Error> {
 
             Ok(FoundNode::new(AstNode::Arr(children), close_idx + 1))
         }
+        TokenKind::Punctuation(p) => Ok(FoundNode::new(AstNode::Punctuation(p), 1)),
         _ => {
             dbg!(&tok.kind);
             Err(Error::UnsupportedToken)
@@ -169,19 +168,20 @@ fn locate_matching_brace(
 
 #[cfg(test)]
 mod tests {
+    use crate::Punctuation;
     use crate::char_string::char_string;
 
     use super::{AstNode, parse_str};
 
     #[test]
     fn parses_whitespace() {
-        assert_eq!(parse_str(" ").unwrap(), AstNode::Whitespace)
+        assert_eq!(parse_str(" ", true).unwrap(), AstNode::Whitespace)
     }
 
     #[test]
     fn parses_word() {
         assert_eq!(
-            parse_str("word").unwrap(),
+            parse_str("word", true).unwrap(),
             AstNode::Word(char_string!("word"))
         )
     }
@@ -189,7 +189,7 @@ mod tests {
     #[test]
     fn parses_word_space() {
         assert_eq!(
-            parse_str("word ").unwrap(),
+            parse_str("word ", true).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("word")),
                 AstNode::Whitespace
@@ -200,7 +200,7 @@ mod tests {
     #[test]
     fn parses_word_space_word() {
         assert_eq!(
-            parse_str("word word").unwrap(),
+            parse_str("word word", true).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("word")),
                 AstNode::Whitespace,
@@ -212,7 +212,7 @@ mod tests {
     #[test]
     fn parses_simple_seq() {
         assert_eq!(
-            parse_str("a (b c) d").unwrap(),
+            parse_str("a (b c) d", false).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -230,7 +230,7 @@ mod tests {
     #[test]
     fn parses_nested_seqs() {
         assert_eq!(
-            parse_str("a (b (c)) d").unwrap(),
+            parse_str("a (b (c)) d", false).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -248,7 +248,7 @@ mod tests {
     #[test]
     fn parses_paired_seqs() {
         assert_eq!(
-            parse_str("a (b) (c) d").unwrap(),
+            parse_str("a (b) (c) d", false).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -264,7 +264,7 @@ mod tests {
     #[test]
     fn parses_not() {
         assert_eq!(
-            parse_str("a !b c").unwrap(),
+            parse_str("a !b c", false).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -278,7 +278,7 @@ mod tests {
     #[test]
     fn parses_not_seq() {
         assert_eq!(
-            parse_str("a !(b c) d").unwrap(),
+            parse_str("a !(b c) d", false).unwrap(),
             AstNode::Seq(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Whitespace,
@@ -295,21 +295,37 @@ mod tests {
 
     #[test]
     fn parses_empty_array() {
-        assert_eq!(parse_str("[]").unwrap(), AstNode::Arr(vec![]))
+        assert_eq!(parse_str("[]", true).unwrap(), AstNode::Arr(vec![]))
     }
 
     #[test]
     fn parses_single_element_array() {
         assert_eq!(
-            parse_str("[a]").unwrap(),
-            AstNode::Arr(vec![AstNode::Word(char_string!("a"))])
+            parse_str("[a]", false).unwrap(),
+            AstNode::Seq(vec![AstNode::Arr(vec![AstNode::Word(char_string!("a"))])])
+        )
+    }
+
+    #[test]
+    fn optimizer_deconstructs_single_element_array() {
+        assert_eq!(
+            parse_str("[a]", true).unwrap(),
+            AstNode::Word(char_string!("a"))
+        )
+    }
+
+    #[test]
+    fn optimizer_deconstructs_single_element_seq() {
+        assert_eq!(
+            parse_str("(a)", true).unwrap(),
+            AstNode::Word(char_string!("a"))
         )
     }
 
     #[test]
     fn parses_double_element_array() {
         assert_eq!(
-            parse_str("[a, b]").unwrap(),
+            parse_str("[a, b]", true).unwrap(),
             AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b"))
@@ -320,7 +336,7 @@ mod tests {
     #[test]
     fn parses_triple_element_array() {
         assert_eq!(
-            parse_str("[a, b, c]").unwrap(),
+            parse_str("[a, b, c]", true).unwrap(),
             AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b")),
@@ -332,12 +348,35 @@ mod tests {
     #[test]
     fn parses_not_triple_element_array() {
         assert_eq!(
-            parse_str("![a, b, c]").unwrap(),
+            parse_str("![a, b, c]", true).unwrap(),
             AstNode::Not(Box::new(AstNode::Arr(vec![
                 AstNode::Word(char_string!("a")),
                 AstNode::Word(char_string!("b")),
                 AstNode::Word(char_string!("c"))
             ])))
+        )
+    }
+
+    #[test]
+    fn parses_triple_dot() {
+        assert_eq!(
+            parse_str("...", false).unwrap(),
+            AstNode::Seq(vec![
+                AstNode::Punctuation(Punctuation::Period),
+                AstNode::Punctuation(Punctuation::Period),
+                AstNode::Punctuation(Punctuation::Period),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_space_comma() {
+        assert_eq!(
+            parse_str("[ , (,)]", true).unwrap(),
+            AstNode::Arr(vec![
+                AstNode::Whitespace,
+                AstNode::Punctuation(Punctuation::Comma),
+            ])
         )
     }
 }
