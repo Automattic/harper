@@ -12,7 +12,7 @@ pub struct ChockFull {
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            expr: nesl_expr_to_expr("[chalk, choke][ , -]full").unwrap(),
+            expr: nesl_expr_to_expr("[chalk, choke][( ), -]full").unwrap(),
         }
     }
 }

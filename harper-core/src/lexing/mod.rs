@@ -73,10 +73,16 @@ pub fn lex_english_token(source: &[char]) -> Option<FoundToken> {
 }
 
 fn lex_word(source: &[char]) -> Option<FoundToken> {
-    let end = source
+    let is_tack = |c: char| lex_punctuation(&[c]).is_some_and(|t| t.token.is_apostrophe());
+
+    let mut end = source
         .iter()
-        .position(|c| !c.is_english_lingual() && !c.is_ascii_digit())
+        .position(|c| !c.is_english_lingual() && !c.is_ascii_digit() && !is_tack(*c))
         .unwrap_or(source.len());
+
+    while end >= 1 && is_tack(source[end - 1]) {
+        end -= 1;
+    }
 
     if end == 0 {
         None

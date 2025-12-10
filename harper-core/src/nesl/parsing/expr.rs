@@ -426,4 +426,18 @@ mod tests {
             ])
         )
     }
+
+    #[test]
+    fn parses_contraction() {
+        assert_eq!(
+            parse_expr_str("don't do this", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Word(char_string!("don't")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("do")),
+                AstExprNode::Whitespace,
+                AstExprNode::Word(char_string!("this")),
+            ])
+        )
+    }
 }
