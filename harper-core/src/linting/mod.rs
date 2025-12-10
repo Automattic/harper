@@ -56,7 +56,7 @@ mod expand_memory_shorthands;
 mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
-mod fascinated_about;
+mod fascinated_by;
 mod feel_fell;
 mod few_units_of_time_ago;
 mod filler_words;

@@ -42,7 +42,7 @@ impl ExprLinter for InterestedIn {
 
         Some(Lint {
             span: prep_span,
-            lint_kind: LintKind::Grammar,
+            lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "in".chars().collect(),
                 prep_chars,
