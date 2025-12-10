@@ -103,7 +103,7 @@ impl ExprLinter for RedundantAcronyms {
     }
 
     fn description(&self) -> &str {
-        "Identifies redundant acronyms where the last word repeats the last letter's meaning (e.g., 'ATM machine' → 'ATM' or 'automated teller machine')."
+        "Identifies redundant acronyms where the last word repeats the last letter's meaning (e.g., `ATM machine` → `ATM` or `automated teller machine`)."
     }
 }
 
