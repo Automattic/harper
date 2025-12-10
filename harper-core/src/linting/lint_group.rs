@@ -143,6 +143,7 @@ use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
+use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
@@ -610,6 +611,7 @@ impl LintGroup {
         insert_expr_rule!(QuantifierNumeralConflict, true);
         insert_expr_rule!(QuiteQuiet, true);
         insert_struct_rule!(QuoteSpacing, true);
+        insert_expr_rule!(RedundantAcronyms, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
