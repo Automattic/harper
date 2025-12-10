@@ -7,7 +7,7 @@ use ast::{Ast, AstExprNode, AstStmtNode};
 pub use expr::parse_expr_str;
 pub use stmt::parse_str;
 
-use crate::lexing::{FoundToken, lex_nesl_token};
+use crate::lexing::{FoundToken, lex_weir_token};
 use crate::{Span, Token};
 
 use super::{
@@ -25,7 +25,7 @@ fn lex(source: &[char]) -> Vec<Token> {
             return tokens;
         }
 
-        if let Some(FoundToken { token, next_index }) = lex_nesl_token(&source[cursor..]) {
+        if let Some(FoundToken { token, next_index }) = lex_weir_token(&source[cursor..]) {
             tokens.push(Token {
                 span: Span::new(cursor, cursor + next_index),
                 kind: token,

@@ -3,8 +3,8 @@ use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStrin
 use super::expr::parse_seq;
 use super::{Ast, AstExprNode, AstStmtNode, Error, FoundNode, lex, optimize};
 
-pub fn parse_str(nesl: &str, use_optimizer: bool) -> Result<Ast, Error> {
-    let chars: CharString = nesl.chars().collect();
+pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Ast, Error> {
+    let chars: CharString = weir_code.chars().collect();
     let tokens = lex(&chars);
 
     let mut stmts = parse_stmt_list(&tokens, &chars)?;
@@ -150,9 +150,8 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 #[cfg(test)]
 mod tests {
     use crate::char_string::char_string;
-    use crate::nesl::ast::AstExprNode;
 
-    use super::{AstStmtNode, parse_str};
+    use super::{AstExprNode, AstStmtNode, parse_str};
 
     #[test]
     fn parses_single_var_stmt() {

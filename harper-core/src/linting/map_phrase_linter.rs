@@ -5,7 +5,7 @@ use crate::expr::LongestMatchOf;
 use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
-use crate::nesl::nesl_expr_to_expr;
+use crate::weir::weir_expr_to_expr;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -54,7 +54,7 @@ impl MapPhraseLinter {
             phrase
                 .into_iter()
                 .map(|p| {
-                    let expr: Box<dyn Expr> = Box::new(nesl_expr_to_expr(p.as_ref()).unwrap());
+                    let expr: Box<dyn Expr> = Box::new(weir_expr_to_expr(p.as_ref()).unwrap());
                     expr
                 })
                 .collect(),

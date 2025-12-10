@@ -17,7 +17,6 @@ pub mod language_detection;
 mod lexing;
 pub mod linting;
 mod mask;
-mod nesl;
 mod number;
 pub mod parsers;
 pub mod patterns;
@@ -31,6 +30,7 @@ mod token;
 mod token_kind;
 mod token_string_ext;
 mod vec_ext;
+mod weir;
 
 use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};

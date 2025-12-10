@@ -1,10 +1,10 @@
-use crate::lexing::{FoundToken, lex_nesl_token};
+use crate::lexing::{FoundToken, lex_weir_token};
 use crate::{CharString, Currency, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::{AstExprNode, Error, FoundNode, lex, optimize_expr};
 
-pub fn parse_expr_str(nesl: &str, use_optimizer: bool) -> Result<AstExprNode, Error> {
-    let chars: CharString = nesl.chars().collect();
+pub fn parse_expr_str(weir_code: &str, use_optimizer: bool) -> Result<AstExprNode, Error> {
+    let chars: CharString = weir_code.chars().collect();
     let tokens = lex(&chars);
 
     let seq = parse_seq(&tokens, &chars)?;

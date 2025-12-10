@@ -13,8 +13,8 @@ use crate::{Document, Token, TokenStringExt, document};
 
 use self::ast::Ast;
 
-pub fn nesl_expr_to_expr(nesl_code: &str) -> Result<Box<dyn Expr>, Error> {
-    let ast = parse_expr_str(nesl_code, true)?;
+pub fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
+    let ast = parse_expr_str(weir_code, true)?;
     Ok(ast.to_expr())
 }
 
@@ -24,7 +24,7 @@ struct TestResult {
     got: String,
 }
 
-struct NeslLinter {
+struct WeirLinter {
     expr: Box<dyn Expr>,
     description: String,
     message: String,
@@ -33,7 +33,7 @@ struct NeslLinter {
     ast: Ast,
 }
 
-impl NeslLinter {
+impl WeirLinter {
     /// Counts the total number of tests defined.
     pub fn count_tests(&self) -> usize {
         self.ast.iter_tests().count()
@@ -70,7 +70,7 @@ impl NeslLinter {
     }
 }
 
-impl ExprLinter for NeslLinter {
+impl ExprLinter for WeirLinter {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -92,8 +92,8 @@ impl ExprLinter for NeslLinter {
     }
 }
 
-fn nesl_to_linter(nesl_code: &str) -> Result<NeslLinter, Error> {
-    let ast = parse_str(nesl_code, true)?;
+fn weir_to_linter(weir_code: &str) -> Result<WeirLinter, Error> {
+    let ast = parse_str(weir_code, true)?;
 
     let main_expr_name = "main";
     let description_name = "description";
@@ -126,7 +126,7 @@ fn nesl_to_linter(nesl_code: &str) -> Result<NeslLinter, Error> {
         .ok_or(Error::ExpectedVariableUndefined)?;
     let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
 
-    let linter = NeslLinter {
+    let linter = WeirLinter {
         ast,
         expr,
         lint_kind,
@@ -140,7 +140,7 @@ fn nesl_to_linter(nesl_code: &str) -> Result<NeslLinter, Error> {
 
 #[cfg(test)]
 mod tests {
-    use super::{TestResult, nesl_to_linter};
+    use super::{TestResult, weir_to_linter};
 
     #[test]
     fn simple_right_click_linter() {
@@ -161,7 +161,7 @@ mod tests {
             test "Middle click to open in a new tab." "Middle-click to open in a new tab."
             "#;
 
-        let mut linter = nesl_to_linter(source).unwrap();
+        let mut linter = weir_to_linter(source).unwrap();
 
         assert_eq!(Vec::<TestResult>::new(), linter.run_tests())
     }

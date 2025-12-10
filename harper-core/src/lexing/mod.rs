@@ -19,7 +19,7 @@ pub struct FoundToken {
     pub token: TokenKind,
 }
 
-pub fn lex_nesl_token(source: &[char]) -> Option<FoundToken> {
+pub fn lex_weir_token(source: &[char]) -> Option<FoundToken> {
     let lexers = [
         lex_punctuation,
         lex_tabs,
