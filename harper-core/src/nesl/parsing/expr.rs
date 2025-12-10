@@ -65,32 +65,48 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             )
             .ok_or(Error::UnmatchedBrace)?;
 
-            let mut children = Vec::new();
-
-            let mut cursor = 1;
-
-            while cursor < close_idx {
-                let new_child = parse_single_expr(&tokens[cursor..close_idx], source)?;
-                children.push(new_child.node);
-
-                cursor += new_child.next_idx;
-
-                if cursor != close_idx && !tokens[cursor].kind.is_comma() {
-                    return Err(Error::ExpectedComma);
-                }
-
-                cursor += 1;
-
-                if cursor < close_idx && tokens[cursor].kind.is_space() {
-                    cursor += 1;
-                }
-            }
+            let children = parse_collection(&tokens[1..close_idx], source)?;
 
             Ok(FoundNode::new(AstExprNode::Arr(children), close_idx + 1))
         }
+        TokenKind::Punctuation(Punctuation::LessThan) => {
+            let close_idx =
+                locate_matching_brace(tokens, TokenKind::is_less_than, TokenKind::is_greater_than)
+                    .ok_or(Error::UnmatchedBrace)?;
+
+            let children = parse_collection(&tokens[1..close_idx], source)?;
+
+            Ok(FoundNode::new(AstExprNode::Filter(children), close_idx + 1))
+        }
+
         TokenKind::Punctuation(p) => Ok(FoundNode::new(AstExprNode::Punctuation(p), 1)),
         _ => Err(Error::UnsupportedToken(tok.span.get_content_string(source))),
     }
+}
+
+fn parse_collection(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, Error> {
+    let mut children = Vec::new();
+
+    let mut cursor = 0;
+
+    while cursor < tokens.len() {
+        let new_child = parse_single_expr(&tokens[cursor..], source)?;
+        children.push(new_child.node);
+
+        cursor += new_child.next_idx;
+
+        if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
+            return Err(Error::ExpectedComma);
+        }
+
+        cursor += 1;
+
+        if cursor < tokens.len() && tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
+    }
+
+    Ok(children)
 }
 
 /// Locates the closing brace for the token at index zero.
@@ -335,6 +351,18 @@ mod tests {
             AstExprNode::Arr(vec![
                 AstExprNode::Whitespace,
                 AstExprNode::Punctuation(Punctuation::Comma),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_filter() {
+        assert_eq!(
+            parse_expr_str("<a, b, c>", true).unwrap(),
+            AstExprNode::Filter(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c")),
             ])
         )
     }

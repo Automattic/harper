@@ -145,11 +145,11 @@ mod tests {
     #[test]
     fn simple_right_click_linter() {
         let source = r#"
-            set main [right, middle, left] [click, clicked]
+            set main <([right, middle, left] [click, clicked, clicking, clicks]), ( )>
             declare message Hyphenate this mouse command
             declare description Hyphenates right-click style mouse commands.
             declare kind Punctuation
-            declare becomes right-click
+            declare becomes -
 
             test "Right click the icon." "Right-click the icon."
             test "Please right click on the link." "Please right-click on the link."

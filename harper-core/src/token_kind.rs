@@ -197,6 +197,14 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::CloseSquare))
     }
 
+    pub fn is_less_than(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::LessThan))
+    }
+
+    pub fn is_greater_than(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::GreaterThan))
+    }
+
     pub fn is_open_round(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::OpenRound))
     }

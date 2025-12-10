@@ -1,7 +1,7 @@
 use is_macro::Is;
 use itertools::Itertools;
 
-use crate::expr::{Expr, FirstMatchOf, SequenceExpr, UnlessStep};
+use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{WhitespacePattern, Word};
 use crate::{CharString, Punctuation, Token};
 
@@ -69,6 +69,7 @@ pub enum AstExprNode {
     Not(Box<AstExprNode>),
     Seq(Vec<AstExprNode>),
     Arr(Vec<AstExprNode>),
+    Filter(Vec<AstExprNode>),
 }
 
 impl AstExprNode {
@@ -98,6 +99,9 @@ impl AstExprNode {
                 }
 
                 Box::new(expr)
+            }
+            AstExprNode::Filter(children) => {
+                Box::new(Filter::new(children.iter().map(|n| n.to_expr()).collect()))
             }
             AstExprNode::Punctuation(punct) => {
                 let punct = *punct;
