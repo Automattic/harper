@@ -292,6 +292,14 @@ mod tests {
     }
 
     #[test]
+    fn dont_correct_pin_number_titlecase() {
+        assert_no_lints(
+            "Pin Number Match Project in Javascript.",
+            RedundantAcronyms::default(),
+        )
+    }
+
+    #[test]
     fn correct_tui_interface() {
         assert_good_and_bad_suggestions(
             "Could a history search TUI interface be added for xonsh?",
