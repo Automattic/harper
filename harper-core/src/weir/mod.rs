@@ -9,7 +9,7 @@ use parsing::{parse_expr_str, parse_str};
 
 use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
-use crate::{Document, Token, TokenStringExt, document};
+use crate::{Document, Token, TokenStringExt};
 
 use self::ast::Ast;
 
@@ -19,12 +19,12 @@ pub fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-struct TestResult {
+pub struct TestResult {
     expected: String,
     got: String,
 }
 
-struct WeirLinter {
+pub struct WeirLinter {
     expr: Box<dyn Expr>,
     description: String,
     message: String,
@@ -34,6 +34,52 @@ struct WeirLinter {
 }
 
 impl WeirLinter {
+    pub fn new(weir_code: &str) -> Result<WeirLinter, Error> {
+        let ast = parse_str(weir_code, true)?;
+
+        let main_expr_name = "main";
+        let description_name = "description";
+        let message_name = "message";
+        let lint_kind_name = "kind";
+        let replacement_name = "becomes";
+
+        let expr = ast
+            .get_expr(main_expr_name)
+            .ok_or(Error::ExpectedVariableUndefined)?
+            .to_expr();
+
+        let description = ast
+            .get_variable_value(description_name)
+            .ok_or(Error::ExpectedVariableUndefined)?
+            .to_string();
+
+        let message = ast
+            .get_variable_value(message_name)
+            .ok_or(Error::ExpectedVariableUndefined)?
+            .to_string();
+
+        let replacement = ast
+            .get_variable_value(replacement_name)
+            .ok_or(Error::ExpectedVariableUndefined)?
+            .to_string();
+
+        let lint_kind = ast
+            .get_variable_value(lint_kind_name)
+            .ok_or(Error::ExpectedVariableUndefined)?;
+        let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
+
+        let linter = WeirLinter {
+            ast,
+            expr,
+            lint_kind,
+            description,
+            message,
+            replacement,
+        };
+
+        Ok(linter)
+    }
+
     /// Counts the total number of tests defined.
     pub fn count_tests(&self) -> usize {
         self.ast.iter_tests().count()
@@ -92,55 +138,9 @@ impl ExprLinter for WeirLinter {
     }
 }
 
-fn weir_to_linter(weir_code: &str) -> Result<WeirLinter, Error> {
-    let ast = parse_str(weir_code, true)?;
-
-    let main_expr_name = "main";
-    let description_name = "description";
-    let message_name = "message";
-    let lint_kind_name = "kind";
-    let replacement_name = "becomes";
-
-    let expr = ast
-        .get_expr(main_expr_name)
-        .ok_or(Error::ExpectedVariableUndefined)?
-        .to_expr();
-
-    let description = ast
-        .get_variable_value(description_name)
-        .ok_or(Error::ExpectedVariableUndefined)?
-        .to_string();
-
-    let message = ast
-        .get_variable_value(message_name)
-        .ok_or(Error::ExpectedVariableUndefined)?
-        .to_string();
-
-    let replacement = ast
-        .get_variable_value(replacement_name)
-        .ok_or(Error::ExpectedVariableUndefined)?
-        .to_string();
-
-    let lint_kind = ast
-        .get_variable_value(lint_kind_name)
-        .ok_or(Error::ExpectedVariableUndefined)?;
-    let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
-
-    let linter = WeirLinter {
-        ast,
-        expr,
-        lint_kind,
-        description,
-        message,
-        replacement,
-    };
-
-    Ok(linter)
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{TestResult, weir_to_linter};
+    use super::{TestResult, WeirLinter};
 
     #[test]
     fn simple_right_click_linter() {
@@ -161,7 +161,7 @@ mod tests {
             test "Middle click to open in a new tab." "Middle-click to open in a new tab."
             "#;
 
-        let mut linter = weir_to_linter(source).unwrap();
+        let mut linter = WeirLinter::new(source).unwrap();
 
         assert_eq!(Vec::<TestResult>::new(), linter.run_tests())
     }

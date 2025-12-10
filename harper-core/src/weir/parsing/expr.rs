@@ -1,4 +1,3 @@
-use crate::lexing::{FoundToken, lex_weir_token};
 use crate::{CharString, Currency, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::{AstExprNode, Error, FoundNode, lex, optimize_expr};
