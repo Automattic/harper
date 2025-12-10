@@ -69,16 +69,28 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
             let word_literal = key_token.span.get_content(source);
 
             match word_literal {
-                ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => Ok(FoundNode::new(
-                    Some(AstStmtNode::create_declare_variable(
-                        tokens[cursor + 2].span.get_content_string(source),
-                        tokens[cursor + 4..end]
-                            .span()
-                            .unwrap()
-                            .get_content_string(source),
-                    )),
-                    end + 1,
-                )),
+                ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => {
+                    let str_contents = parse_quoted_string(&tokens[cursor + 4..end], source)?;
+
+                    if tokens[str_contents.next_idx + cursor + 4..end]
+                        .iter()
+                        .any(|t| !t.kind.is_space())
+                    {
+                        return Err(Error::UnexpectedToken(
+                            tokens[str_contents.next_idx + cursor + 4]
+                                .span
+                                .get_content_string(source),
+                        ));
+                    }
+
+                    Ok(FoundNode::new(
+                        Some(AstStmtNode::create_declare_variable(
+                            tokens[cursor + 2].span.get_content_string(source),
+                            str_contents.node,
+                        )),
+                        end + 1,
+                    ))
+                }
                 ['s', 'e', 't'] => Ok(FoundNode::new(
                     Some(AstStmtNode::create_set_expr(
                         tokens[cursor + 2].span.get_content_string(source),
@@ -155,7 +167,7 @@ mod tests {
 
     #[test]
     fn parses_single_var_stmt() {
-        let ast = parse_str("declare test to be this", true).unwrap();
+        let ast = parse_str("declare test \"to be this\"", true).unwrap();
 
         assert_eq!(
             ast.stmts,
@@ -207,7 +219,7 @@ mod tests {
     #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
-            "declare test to be this\nset main word\n# this is a comment",
+            "declare test \"to be this\"\nset main word\n# this is a comment",
             true,
         )
         .unwrap();
