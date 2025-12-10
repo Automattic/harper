@@ -145,7 +145,7 @@ mod tests {
     #[test]
     fn simple_right_click_linter() {
         let source = r#"
-            set main <([right, middle, left] [click, clicked, clicking, clicks]), ( )>
+            set main <([right, middle, left] $click), ( )>
             declare message Hyphenate this mouse command
             declare description Hyphenates right-click style mouse commands.
             declare kind Punctuation
@@ -159,7 +159,6 @@ mod tests {
             test "He RIGHT CLICKED the file." "He RIGHT-CLICKED the file."
             test "Left click the checkbox." "Left-click the checkbox."
             test "Middle click to open in a new tab." "Middle-click to open in a new tab."
-
             "#;
 
         let mut linter = nesl_to_linter(source).unwrap();

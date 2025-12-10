@@ -2,7 +2,7 @@ use is_macro::Is;
 use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
-use crate::patterns::{WhitespacePattern, Word};
+use crate::patterns::{DerivedFrom, WhitespacePattern, Word};
 use crate::{CharString, Punctuation, Token};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -65,6 +65,7 @@ impl Ast {
 pub enum AstExprNode {
     Whitespace,
     Word(CharString),
+    DerivativeOf(CharString),
     Punctuation(Punctuation),
     Not(Box<AstExprNode>),
     Seq(Vec<AstExprNode>),
@@ -78,6 +79,7 @@ impl AstExprNode {
         match self {
             AstExprNode::Whitespace => Box::new(WhitespacePattern),
             AstExprNode::Word(word) => Box::new(Word::from_chars(word)),
+            AstExprNode::DerivativeOf(word) => Box::new(DerivedFrom::new_from_chars(word)),
             AstExprNode::Not(ast_node) => Box::new(UnlessStep::new(
                 ast_node.to_expr(),
                 |_tok: &Token, _: &[char]| true,

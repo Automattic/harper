@@ -1,5 +1,5 @@
 use crate::lexing::{FoundToken, lex_nesl_token};
-use crate::{CharString, Punctuation, Token, TokenKind, TokenStringExt};
+use crate::{CharString, Currency, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::{AstExprNode, Error, FoundNode, lex, optimize_expr};
 
@@ -37,6 +37,12 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
+        TokenKind::Punctuation(Punctuation::Currency(Currency::Dollar)) => {
+            let word_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
+
+            let word = word_tok.span.get_content(source);
+            Ok(FoundNode::new(AstExprNode::DerivativeOf(word.into()), 2))
+        }
         TokenKind::Word(_) => Ok(FoundNode::new(
             AstExprNode::Word(tok.span.get_content(source).into()),
             1,
@@ -90,10 +96,18 @@ fn parse_collection(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode
     let mut cursor = 0;
 
     while cursor < tokens.len() {
+        while tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
+
         let new_child = parse_single_expr(&tokens[cursor..], source)?;
         children.push(new_child.node);
 
         cursor += new_child.next_idx;
+
+        while cursor != tokens.len() && tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
 
         if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
             return Err(Error::ExpectedComma);
@@ -347,7 +361,7 @@ mod tests {
     #[test]
     fn parses_space_comma() {
         assert_eq!(
-            parse_expr_str("[ , (,)]", true).unwrap(),
+            parse_expr_str("[( ), (,)]", true).unwrap(),
             AstExprNode::Arr(vec![
                 AstExprNode::Whitespace,
                 AstExprNode::Punctuation(Punctuation::Comma),
@@ -363,6 +377,52 @@ mod tests {
                 AstExprNode::Word(char_string!("a")),
                 AstExprNode::Word(char_string!("b")),
                 AstExprNode::Word(char_string!("c")),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_filter_with_space_prefixing_element() {
+        assert_eq!(
+            parse_expr_str("< a, b, c>", true).unwrap(),
+            AstExprNode::Filter(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c")),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_filter_with_space_postfixing_element() {
+        assert_eq!(
+            parse_expr_str("<a, b, c >", true).unwrap(),
+            AstExprNode::Filter(vec![
+                AstExprNode::Word(char_string!("a")),
+                AstExprNode::Word(char_string!("b")),
+                AstExprNode::Word(char_string!("c")),
+            ])
+        )
+    }
+
+    #[test]
+    fn parses_derivative() {
+        assert_eq!(
+            parse_expr_str("$word", true).unwrap(),
+            AstExprNode::DerivativeOf(char_string!("word"))
+        )
+    }
+
+    #[test]
+    fn parses_derivative_seq() {
+        assert_eq!(
+            parse_expr_str("$a $b $c", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::DerivativeOf(char_string!("a")),
+                AstExprNode::Whitespace,
+                AstExprNode::DerivativeOf(char_string!("b")),
+                AstExprNode::Whitespace,
+                AstExprNode::DerivativeOf(char_string!("c")),
             ])
         )
     }
