@@ -521,7 +521,7 @@ fn corrects_params() {
     assert_suggestion_result(
         "the params are not loaded in the R environment when using the terminal",
         lint_group(),
-        "the parameters are not loaded in the R environment when using the terminal.",
+        "the parameters are not loaded in the R environment when using the terminal",
     );
 }
 
