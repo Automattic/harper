@@ -53,7 +53,7 @@ impl Ast {
     pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
         self.stmts.iter().filter_map(|stmt| {
             if let AstStmtNode::Test { expect, to_be } = stmt {
-                (expect.as_str(), to_be.as_str())
+                Some((expect.as_str(), to_be.as_str()))
             } else {
                 None
             }

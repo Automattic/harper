@@ -3,25 +3,71 @@ mod error;
 mod optimize;
 mod parsing;
 
-use crate::Document;
 use crate::parsers::PlainEnglish;
 pub use error::Error;
 use parsing::{parse_expr_str, parse_str};
 
 use crate::expr::Expr;
-use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter};
-use crate::{Document, Token, TokenStringExt};
+use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
+use crate::{Document, Token, TokenStringExt, document};
+
+use self::ast::Ast;
 
 pub fn nesl_expr_to_expr(nesl_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(nesl_code, true)?;
     Ok(ast.to_expr())
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct TestResult {
+    expected: String,
+    got: String,
+}
+
 struct NeslLinter {
     expr: Box<dyn Expr>,
     description: String,
     message: String,
+    replacement: String,
     lint_kind: LintKind,
+    ast: Ast,
+}
+
+impl NeslLinter {
+    /// Counts the total number of tests defined.
+    pub fn count_tests(&self) -> usize {
+        self.ast.iter_tests().count()
+    }
+
+    /// Runs the tests defined in the source code, returning any failing results.
+    pub fn run_tests(&mut self) -> Vec<TestResult> {
+        let ast = self.ast.clone();
+        let mut results = Vec::new();
+
+        for (expect, to_be) in ast.iter_tests() {
+            let doc = Document::new_curated(expect, &PlainEnglish);
+            let lints = self.lint(&doc);
+
+            let mut output = expect.chars().collect();
+
+            for lint in lints {
+                if let Some(sug) = lint.suggestions.first() {
+                    sug.apply(lint.span, &mut output);
+                }
+            }
+
+            let output: String = output.into_iter().collect();
+
+            if !output.chars().eq(to_be.chars()) {
+                results.push(TestResult {
+                    expected: to_be.to_string(),
+                    got: output,
+                });
+            }
+        }
+
+        results
+    }
 }
 
 impl ExprLinter for NeslLinter {
@@ -35,7 +81,7 @@ impl ExprLinter for NeslLinter {
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: self.lint_kind,
-            suggestions: vec![],
+            suggestions: vec![Suggestion::ReplaceWith(self.replacement.chars().collect())],
             message: self.message.to_owned(),
             priority: 127,
         })
@@ -46,27 +92,14 @@ impl ExprLinter for NeslLinter {
     }
 }
 
-pub fn nesl_to_linter(nesl_code: &str) -> Result<Box<dyn Linter>, Error> {
+fn nesl_to_linter(nesl_code: &str) -> Result<NeslLinter, Error> {
     let ast = parse_str(nesl_code, true)?;
 
     let main_expr_name = "main";
     let description_name = "description";
     let message_name = "message";
     let lint_kind_name = "kind";
-
-    let exclusions = [
-        main_expr_name,
-        description_name,
-        message_name,
-        lint_kind_name,
-    ];
-
-    let mut examples = Vec::new();
-    for (name, value) in ast.iter_variable_values() {
-        if !exclusions.contains(&name) {
-            examples.push(value.to_string());
-        }
-    }
+    let replacement_name = "becomes";
 
     let expr = ast
         .get_expr(main_expr_name)
@@ -75,30 +108,39 @@ pub fn nesl_to_linter(nesl_code: &str) -> Result<Box<dyn Linter>, Error> {
 
     let description = ast
         .get_variable_value(description_name)
-        .ok_or(Error::ExpectedVariableUndefined)?;
+        .ok_or(Error::ExpectedVariableUndefined)?
+        .to_string();
 
     let message = ast
         .get_variable_value(message_name)
-        .ok_or(Error::ExpectedVariableUndefined)?;
+        .ok_or(Error::ExpectedVariableUndefined)?
+        .to_string();
+
+    let replacement = ast
+        .get_variable_value(replacement_name)
+        .ok_or(Error::ExpectedVariableUndefined)?
+        .to_string();
 
     let lint_kind = ast
         .get_variable_value(lint_kind_name)
         .ok_or(Error::ExpectedVariableUndefined)?;
     let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
 
-    let mut linter = NeslLinter {
+    let linter = NeslLinter {
+        ast,
         expr,
         lint_kind,
-        description: description.to_owned(),
-        message: message.to_owned(),
+        description,
+        message,
+        replacement,
     };
 
-    Ok(Box::new(linter))
+    Ok(linter)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::nesl_to_linter;
+    use super::{TestResult, nesl_to_linter};
 
     #[test]
     fn simple_right_click_linter() {
@@ -107,6 +149,7 @@ mod tests {
             declare message Hyphenate this mouse command
             declare description Hyphenates right-click style mouse commands.
             declare kind Punctuation
+            declare becomes right-click
 
             test "Right click the icon." "Right-click the icon."
             test "Please right click on the link." "Please right-click on the link."
@@ -119,6 +162,8 @@ mod tests {
 
             "#;
 
-        let linter = nesl_to_linter(source).unwrap();
+        let mut linter = nesl_to_linter(source).unwrap();
+
+        assert_eq!(Vec::<TestResult>::new(), linter.run_tests())
     }
 }

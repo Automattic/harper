@@ -16,6 +16,4 @@ pub enum Error {
     ExpectedVariableUndefined,
     #[error("Invalid LintKind")]
     InvalidLintKind,
-    #[error("Failed test")]
-    FailedTest,
 }
