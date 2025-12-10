@@ -3,12 +3,14 @@ mod error;
 mod optimize;
 mod parsing;
 
+use crate::Document;
+use crate::parsers::PlainEnglish;
 pub use error::Error;
 use parsing::{parse_expr_str, parse_str};
 
 use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter};
-use crate::{Token, TokenStringExt};
+use crate::{Document, Token, TokenStringExt};
 
 pub fn nesl_expr_to_expr(nesl_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(nesl_code, true)?;
@@ -84,12 +86,14 @@ pub fn nesl_to_linter(nesl_code: &str) -> Result<Box<dyn Linter>, Error> {
         .ok_or(Error::ExpectedVariableUndefined)?;
     let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
 
-    Ok(Box::new(NeslLinter {
+    let mut linter = NeslLinter {
         expr,
         lint_kind,
         description: description.to_owned(),
         message: message.to_owned(),
-    }))
+    };
+
+    Ok(Box::new(linter))
 }
 
 #[cfg(test)]
@@ -99,25 +103,19 @@ mod tests {
     #[test]
     fn simple_right_click_linter() {
         let source = r#"
-            let main [right, middle, left] [click, clicked]
+            set main [right, middle, left] [click, clicked]
             declare message Hyphenate this mouse command
             declare description Hyphenates right-click style mouse commands.
             declare kind Punctuation
 
-            declare hyphenates_basic_command Right click the icon.
-            declare hyphenates_with_preposition Please right click on the link.
-            declare hyphenates_past_tense They right clicked the submit button.
-            declare hyphenates_gerund Right clicking the item highlights it.
-            declare hyphenates_plural_noun Right clicks are tracked in the log.
-            declare hyphenates_all_caps He RIGHT CLICKED the file.
-            declare hyphenates_left_click Left click the checkbox.
-            declare hyphenates_middle_click Middle click to open in a new tab.
-            declare allows_hyphenated_form Right-click the icon.
-            declare ignores_unrelated_right_and_click Click the right button to continue.
-            
-            # Maybe syntax like this?
-
-            expect "test case" to be "result"
+            test "Right click the icon." "Right-click the icon."
+            test "Please right click on the link." "Please right-click on the link."
+            test "They right clicked the submit button." "They right-clicked the submit button."
+            test "Right clicking the item highlights it." "Right-clicking the item highlights it."
+            test "Right clicks are tracked in the log." "Right-clicks are tracked in the log."
+            test "He RIGHT CLICKED the file." "He RIGHT-CLICKED the file."
+            test "Left click the checkbox." "Left-click the checkbox."
+            test "Middle click to open in a new tab." "Middle-click to open in a new tab."
 
             "#;
 

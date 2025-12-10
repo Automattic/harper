@@ -89,7 +89,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             Ok(FoundNode::new(AstExprNode::Arr(children), close_idx + 1))
         }
         TokenKind::Punctuation(p) => Ok(FoundNode::new(AstExprNode::Punctuation(p), 1)),
-        _ => Err(Error::UnsupportedToken),
+        _ => Err(Error::UnsupportedToken(tok.span.get_content_string(source))),
     }
 }
 

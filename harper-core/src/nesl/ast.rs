@@ -49,6 +49,16 @@ impl Ast {
             })
             .unique_by(|(n, _)| *n)
     }
+
+    pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.stmts.iter().filter_map(|stmt| {
+            if let AstStmtNode::Test { expect, to_be } = stmt {
+                (expect.as_str(), to_be.as_str())
+            } else {
+                None
+            }
+        })
+    }
 }
 
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
@@ -105,6 +115,7 @@ pub enum AstStmtNode {
     DeclareVariable { name: String, value: String },
     SetExpr { name: String, value: AstExprNode },
     Comment(String),
+    Test { expect: String, to_be: String },
 }
 
 impl AstStmtNode {
@@ -119,6 +130,13 @@ impl AstStmtNode {
         Self::SetExpr {
             name: name.to_string(),
             value,
+        }
+    }
+
+    pub fn create_test(expect: impl ToString, to_be: impl ToString) -> Self {
+        Self::Test {
+            expect: expect.to_string(),
+            to_be: to_be.to_string(),
         }
     }
 }
