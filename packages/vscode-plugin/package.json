@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -353,6 +353,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `anywhere`."
 				},
+				"harper.linters.ApartFrom": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags the misspelling `apart form` and suggests `apart from`."
+				},
 				"harper.linters.AppleNames": {
 					"scope": "resource",
 					"type": "boolean",
@@ -551,6 +557,12 @@
 					"default": true,
 					"description": "Replaces the incorrect past-tense spelling `bough` with `bought` after subject pronouns."
 				},
+				"harper.linters.BrandBrandish": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for `brandish` wrongly used when `brand` is intended."
+				},
 				"harper.linters.Brutality": {
 					"scope": "resource",
 					"type": "boolean",
@@ -561,7 +573,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
+					"description": "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
 				},
 				"harper.linters.ByAccident": {
 					"scope": "resource",
@@ -719,6 +731,12 @@
 					"default": true,
 					"description": "The words “criteria” and “phenomena” are the plurals of “criterion” and “phenomenon”, respectively. They are often incorrectly used as singular."
 				},
+				"harper.linters.CureFor": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags `cure against` and prefers the standard `cure for` pairing."
+				},
 				"harper.linters.CurrencyPlacement": {
 					"scope": "resource",
 					"type": "boolean",
@@ -809,6 +827,12 @@
 					"default": true,
 					"description": "Removes unnecessary `about` after `discuss`."
 				},
+				"harper.linters.DisjointPrefixes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for words with their prefixes written with a space or hyphen between instead of joined."
+				},
 				"harper.linters.DoNotWant": {
 					"scope": "resource",
 					"type": "boolean",
@@ -886,6 +910,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects variants like `on route` or `in route` and suggests `en route`."
+				},
+				"harper.linters.EverEvery": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Tries to correct typos of `every` instead of `ever`."
 				},
 				"harper.linters.EverPresent": {
 					"scope": "resource",
@@ -1042,6 +1072,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags misuse of `far be it` and suggests using `from` when it is followed by `for`"
+				},
+				"harper.linters.FascinatedBy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures the correct prepositions are used with `fascinated` (e.g., `fascinated by` or `fascinated with`)."
 				},
 				"harper.linters.FastPaste": {
 					"scope": "resource",
@@ -1521,7 +1557,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Detects the possessive `its` before `had`, `been`, or `got` and offers `it's` or `it has`."
+					"description": "Detects places where the possessive `its` should be the contraction `it's`, including before verbs/clauses and before proper nouns after opinion verbs."
 				},
 				"harper.linters.ItsPossessive": {
 					"scope": "resource",
@@ -1547,11 +1583,23 @@
 					"default": true,
 					"description": "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement."
 				},
+				"harper.linters.JealousOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Encourages the standard preposition after `jealous`."
+				},
 				"harper.linters.JetpackNames": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of Jetpack-related terms."
+				},
+				"harper.linters.JohnsHopkins": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Recommends the proper spelling `Johns Hopkins`."
 				},
 				"harper.linters.JustDeserts": {
 					"scope": "resource",
@@ -1594,6 +1642,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+				},
+				"harper.linters.LastNight": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags `yesterday night` and suggests the standard phrasing `last night`."
 				},
 				"harper.linters.LeftRightHand": {
 					"scope": "resource",
@@ -1665,7 +1719,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects non-standard variants of `low-hanging fruit`."
+					"description": "Corrects nonstandard variants of `low-hanging fruit`."
 				},
 				"harper.linters.MakeDoWith": {
 					"scope": "resource",
@@ -1691,11 +1745,11 @@
 					"default": true,
 					"description": "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`."
 				},
-				"harper.linters.MassPlurals": {
+				"harper.linters.MassNouns": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Looks for plural forms of mass nouns that have no plural."
+					"description": "Detects mass nouns used as countable nouns."
 				},
 				"harper.linters.MergeWords": {
 					"scope": "resource",
@@ -1768,6 +1822,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the eggcorn `mixed bad` to `mixed bag`."
+				},
+				"harper.linters.ModalBeAdjective": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for `be` missing between a modal verb and adjective."
 				},
 				"harper.linters.ModalOf": {
 					"scope": "resource",
@@ -1960,12 +2020,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `notwithstanding`."
-				},
-				"harper.linters.NounCountability": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Correct mass nouns that are preceded by the wrong determiners or quantifiers."
 				},
 				"harper.linters.NounVerbConfusion": {
 					"scope": "resource",
@@ -2277,7 +2331,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage."
+					"description": "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered nonstandard usage."
 				},
 				"harper.linters.QuiteQuiet": {
 					"scope": "resource",
@@ -2308,6 +2362,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands an initialism."
+				},
+				"harper.linters.RedundantAcronyms": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Identifies redundant acronyms where the last word repeats the last letter's meaning (e.g., `ATM machine` → `ATM` or `automated teller machine`)."
 				},
 				"harper.linters.RedundantAdditiveAdverbs": {
 					"scope": "resource",
@@ -2351,11 +2411,23 @@
 					"default": true,
 					"description": "This rule looks for repetitions of words that are not homographs."
 				},
+				"harper.linters.Respond": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags uses of the noun `response` where the verb `respond` is needed after an auxiliary."
+				},
 				"harper.linters.RifeWith": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
+				},
+				"harper.linters.RightClick": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Hyphenates right-click style mouse commands."
 				},
 				"harper.linters.RiseTheQuestion": {
 					"scope": "resource",
@@ -2421,7 +2493,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects non-standard variants of 'shoot oneself in the foot'."
+					"description": "Corrects nonstandard variants of 'shoot oneself in the foot'."
 				},
 				"harper.linters.SimpleGrammatical": {
 					"scope": "resource",
@@ -2507,6 +2579,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `somewhere`."
 				},
+				"harper.linters.SoonToBe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Hyphenates `soon-to-be` when it appears before a noun."
+				},
 				"harper.linters.SoonerOrLater": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2590,6 +2668,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `take it personal` to `take it personally`."
+				},
+				"harper.linters.TakeMedicine": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Encourages pairing medicine-related nouns with verbs like `take` or `swallow` instead of `eat`."
 				},
 				"harper.linters.TalkToYouLater": {
 					"scope": "resource",
@@ -2861,6 +2945,12 @@
 					"default": false,
 					"description": "Looks for situations where the genitive case of \"there\" should be used."
 				},
+				"harper.linters.UseTitleCase": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Prompts you to use title case in relevant headings."
+				},
 				"harper.linters.VerbToAdjective": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3004,6 +3094,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `would/could have never` to `never would/could have`."
+				},
+				"harper.linters.WreakHavoc": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction."
 				},
 				"harper.linters.WroughtIron": {
 					"scope": "resource",

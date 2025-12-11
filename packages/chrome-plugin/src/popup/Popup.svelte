@@ -25,7 +25,7 @@ function openSettings() {
 }
 </script>
 
-<div class="w-[340px] border border-gray-200 bg-white font-sans flex flex-col rounded-lg shadow-sm select-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100">
+<div class="w-[340px] border border-gray-200 font-sans flex flex-col rounded-lg shadow-sm select-none dark:border-slate-800 dark:text-slate-100">
   <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 rounded-t-lg">
     <div class="flex flex-row justify-start items-center">
       <img src={logo} alt="Harper logo" class="h-6 w-auto rounded-lg mx-2" />

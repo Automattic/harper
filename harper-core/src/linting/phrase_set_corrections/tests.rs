@@ -832,7 +832,45 @@ fn correct_passer_bys_hyphen() {
 // Piggyback
 // -none-
 
+// WreakHavoc
+
 // Many to many tests
+
+#[test]
+fn fix_wreck_havoc() {
+    assert_suggestion_result(
+        "Tables with a \".\" in the name wreck havoc with the system",
+        lint_group(),
+        "Tables with a \".\" in the name wreak havoc with the system",
+    );
+}
+
+#[test]
+fn fix_wrecked_havoc() {
+    assert_suggestion_result(
+        "It would have been some weird local configuration of LO that wrecked havoc.",
+        lint_group(),
+        "It would have been some weird local configuration of LO that wreaked havoc.",
+    );
+}
+
+#[test]
+fn fix_wrecking_havoc() {
+    assert_suggestion_result(
+        "Multi-line edit is wrecking havoc with indention",
+        lint_group(),
+        "Multi-line edit is wreaking havoc with indention",
+    );
+}
+
+#[test]
+fn fix_wrecks_havoc() {
+    assert_suggestion_result(
+        "Small POC using rust with ptrace that wrecks havoc on msync",
+        lint_group(),
+        "Small POC using rust with ptrace that wreaks havoc on msync",
+    );
+}
 
 // AwaitFor
 

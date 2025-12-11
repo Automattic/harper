@@ -627,7 +627,7 @@ newest-dict-changes *numCommits:
     });
   });
 
-# Print the input string or file with nominal phrases highlighted.
+# Print the input string or file with nominal phrases highlighted. These are generated using Harper's chunker.
 getnps text:
   cargo run --bin harper-cli -- nominal-phrases "{{text}}"
 

@@ -252,6 +252,33 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+
+        // General litotes (double negatives) → direct positive suggestions
+        "LitotesDirectPositive" => (
+            &[
+                ("not uncommon", "common"),
+                ("not unusual", "common"),
+                ("not insignificant", "significant"),
+                ("not unimportant", "important"),
+                ("not unlikely", "likely"),
+                ("not infrequent", "frequent"),
+                ("not inaccurate", "accurate"),
+                ("not unclear", "clear"),
+                ("not irrelevant", "relevant"),
+                ("not unpredictable", "predictable"),
+                ("not inadequate", "adequate"),
+                ("not unpleasant", "pleasant"),
+                ("not unreasonable", "reasonable"),
+                ("not impossible", "possible"),
+                ("more preferable", "preferable"),
+                ("not online", "offline"),
+                ("not offline", "online"),
+            ],
+            "Consider the direct form.",
+            "Offers direct-positive alternatives when double negatives might feel heavy.",
+            LintKind::Style
+        ),
+
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -299,33 +326,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
-
-        // General litotes (double negatives) → direct positive suggestions
-        "LitotesDirectPositive" => (
-            &[
-                ("not uncommon", "common"),
-                ("not unusual", "common"),
-                ("not insignificant", "significant"),
-                ("not unimportant", "important"),
-                ("not unlikely", "likely"),
-                ("not infrequent", "frequent"),
-                ("not inaccurate", "accurate"),
-                ("not unclear", "clear"),
-                ("not irrelevant", "relevant"),
-                ("not unpredictable", "predictable"),
-                ("not inadequate", "adequate"),
-                ("not unpleasant", "pleasant"),
-                ("not unreasonable", "reasonable"),
-                ("not impossible", "possible"),
-                ("more preferable", "preferable"),
-                ("not online", "offline"),
-                ("not offline", "online"),
-            ],
-            "Consider the direct form.",
-            "Offers direct-positive alternatives when double negatives might feel heavy.",
-            LintKind::Style
-        ),
-
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -338,6 +338,17 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "WreakHavoc" => (
+            &[
+                ("wreck havoc", "wreak havoc"),
+                ("wrecked havoc", "wreaked havoc"),
+                ("wrecking havoc", "wreaking havoc"),
+                ("wrecks havoc", "wreaks havoc"),
+            ],
+            "Did you mean `wreak havoc`?",
+            "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
+            LintKind::Eggcorn
+        )
     });
 
     add_many_to_many_mappings!(group, {
