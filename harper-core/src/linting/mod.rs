@@ -24,6 +24,7 @@ mod back_in_the_day;
 mod be_allowed;
 mod best_of_all_time;
 mod boring_words;
+mod brand_brandish;
 mod bought;
 mod call_them;
 mod cant;
