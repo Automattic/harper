@@ -11,7 +11,7 @@ use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::{Document, Token, TokenStringExt};
 
-use self::ast::Ast;
+use self::ast::{Ast, AstVariable};
 
 pub fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;
@@ -28,7 +28,7 @@ pub struct WeirLinter {
     expr: Box<dyn Expr>,
     description: String,
     message: String,
-    replacement: String,
+    replacements: Vec<String>,
     lint_kind: LintKind,
     ast: Ast,
 }
@@ -51,21 +51,42 @@ impl WeirLinter {
         let description = ast
             .get_variable_value(description_name)
             .ok_or(Error::ExpectedVariableUndefined)?
-            .to_string();
+            .as_string()
+            .ok_or(Error::ExpectedDifferentVariableType)?
+            .to_owned();
 
         let message = ast
             .get_variable_value(message_name)
             .ok_or(Error::ExpectedVariableUndefined)?
-            .to_string();
+            .as_string()
+            .ok_or(Error::ExpectedDifferentVariableType)?
+            .to_owned();
 
-        let replacement = ast
+        let replacement_val = ast
             .get_variable_value(replacement_name)
-            .ok_or(Error::ExpectedVariableUndefined)?
-            .to_string();
+            .ok_or(Error::ExpectedVariableUndefined)?;
+
+        let replacements = match replacement_val {
+            AstVariable::String(s) => vec![s.to_owned()],
+            AstVariable::Array(arr) => {
+                let mut out = Vec::with_capacity(arr.len());
+                for item in arr.iter().map(|v| {
+                    v.as_string()
+                        .cloned()
+                        .ok_or(Error::ExpectedDifferentVariableType)
+                }) {
+                    let item = item?;
+                    out.push(item);
+                }
+                out
+            }
+        };
 
         let lint_kind = ast
             .get_variable_value(lint_kind_name)
-            .ok_or(Error::ExpectedVariableUndefined)?;
+            .ok_or(Error::ExpectedVariableUndefined)?
+            .as_string()
+            .ok_or(Error::ExpectedDifferentVariableType)?;
         let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
 
         let linter = WeirLinter {
@@ -74,7 +95,7 @@ impl WeirLinter {
             lint_kind,
             description,
             message,
-            replacement,
+            replacements,
         };
 
         Ok(linter)
@@ -127,7 +148,11 @@ impl ExprLinter for WeirLinter {
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: self.lint_kind,
-            suggestions: vec![Suggestion::ReplaceWith(self.replacement.chars().collect())],
+            suggestions: self
+                .replacements
+                .iter()
+                .map(|s| Suggestion::ReplaceWith(s.chars().collect()))
+                .collect(),
             message: self.message.to_owned(),
             priority: 127,
         })

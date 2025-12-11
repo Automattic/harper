@@ -1,6 +1,9 @@
 use crate::{CharString, Currency, Punctuation, Token, TokenKind, TokenStringExt};
 
-use super::{AstExprNode, Error, FoundNode, lex, optimize_expr};
+use super::{
+    AstExprNode, Error, FoundNode, inc_by_spaces, lex, locate_matching_brace, optimize_expr,
+    parse_collection,
+};
 
 pub fn parse_expr_str(weir_code: &str, use_optimizer: bool) -> Result<AstExprNode, Error> {
     let chars: CharString = weir_code.chars().collect();
@@ -32,7 +35,9 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
 }
 
 fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstExprNode>, Error> {
-    let tok = tokens.first().ok_or(Error::EndOfInput)?;
+    let mut cursor = 0;
+
+    let tok = tokens.get(cursor).ok_or(Error::EndOfInput)?;
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
@@ -70,7 +75,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             )
             .ok_or(Error::UnmatchedBrace)?;
 
-            let children = parse_collection(&tokens[1..close_idx], source)?;
+            let children = parse_collection(&tokens[1..close_idx], source, parse_single_expr)?;
 
             Ok(FoundNode::new(AstExprNode::Arr(children), close_idx + 1))
         }
@@ -79,73 +84,13 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
                 locate_matching_brace(tokens, TokenKind::is_less_than, TokenKind::is_greater_than)
                     .ok_or(Error::UnmatchedBrace)?;
 
-            let children = parse_collection(&tokens[1..close_idx], source)?;
+            let children = parse_collection(&tokens[1..close_idx], source, parse_single_expr)?;
 
             Ok(FoundNode::new(AstExprNode::Filter(children), close_idx + 1))
         }
 
         TokenKind::Punctuation(p) => Ok(FoundNode::new(AstExprNode::Punctuation(p), 1)),
         _ => Err(Error::UnsupportedToken(tok.span.get_content_string(source))),
-    }
-}
-
-fn parse_collection(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, Error> {
-    let mut children = Vec::new();
-
-    let mut cursor = 0;
-
-    while cursor < tokens.len() {
-        while tokens[cursor].kind.is_space() {
-            cursor += 1;
-        }
-
-        let new_child = parse_single_expr(&tokens[cursor..], source)?;
-        children.push(new_child.node);
-
-        cursor += new_child.next_idx;
-
-        while cursor != tokens.len() && tokens[cursor].kind.is_space() {
-            cursor += 1;
-        }
-
-        if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
-            return Err(Error::ExpectedComma);
-        }
-
-        cursor += 1;
-
-        if cursor < tokens.len() && tokens[cursor].kind.is_space() {
-            cursor += 1;
-        }
-    }
-
-    Ok(children)
-}
-
-/// Locates the closing brace for the token at index zero.
-fn locate_matching_brace(
-    tokens: &[Token],
-    is_open: impl Fn(&TokenKind) -> bool,
-    is_close: impl Fn(&TokenKind) -> bool,
-) -> Option<usize> {
-    // Locate closing brace
-    let mut visited_opens = 0;
-    let mut cursor = 1;
-
-    loop {
-        let cur = tokens.get(cursor)?;
-
-        if is_open(&cur.kind) {
-            visited_opens += 1;
-        } else if is_close(&cur.kind) {
-            if visited_opens == 0 {
-                return Some(cursor);
-            } else {
-                visited_opens -= 1;
-            }
-        }
-
-        cursor += 1;
     }
 }
 

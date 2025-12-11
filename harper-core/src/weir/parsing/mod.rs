@@ -8,7 +8,7 @@ pub use expr::parse_expr_str;
 pub use stmt::parse_str;
 
 use crate::lexing::{FoundToken, lex_weir_token};
-use crate::{Span, Token};
+use crate::{Span, Token, TokenKind};
 
 use super::{
     ast,
@@ -48,5 +48,92 @@ struct FoundNode<T> {
 impl<T> FoundNode<T> {
     pub fn new(node: T, next_idx: usize) -> Self {
         Self { node, next_idx }
+    }
+}
+
+fn parse_collection<T>(
+    tokens: &[Token],
+    source: &[char],
+    el_parser: impl Fn(&[Token], &[char]) -> Result<FoundNode<T>, Error>,
+) -> Result<Vec<T>, Error> {
+    let mut children = Vec::new();
+
+    let mut cursor = 0;
+
+    while cursor < tokens.len() {
+        while tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
+
+        let new_child = el_parser(&tokens[cursor..], source)?;
+        children.push(new_child.node);
+
+        cursor += new_child.next_idx;
+
+        while cursor != tokens.len() && tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
+
+        if cursor != tokens.len() && !tokens[cursor].kind.is_comma() {
+            return Err(Error::ExpectedComma);
+        }
+
+        cursor += 1;
+
+        if cursor < tokens.len() && tokens[cursor].kind.is_space() {
+            cursor += 1;
+        }
+    }
+
+    Ok(children)
+}
+
+/// Locates the closing brace for the token at index zero.
+fn locate_matching_brace(
+    tokens: &[Token],
+    is_open: impl Fn(&TokenKind) -> bool,
+    is_close: impl Fn(&TokenKind) -> bool,
+) -> Option<usize> {
+    // Locate closing brace
+    let mut visited_opens = 0;
+    let mut cursor = 1;
+
+    inc_by_spaces(&mut cursor, tokens);
+
+    loop {
+        let cur = tokens.get(cursor)?;
+
+        if is_open(&cur.kind) {
+            visited_opens += 1;
+        } else if is_close(&cur.kind) {
+            if visited_opens == 0 {
+                return Some(cursor);
+            } else {
+                visited_opens -= 1;
+            }
+        }
+
+        cursor += 1;
+    }
+}
+
+fn inc_by_spaces(cursor: &mut usize, tokens: &[Token]) {
+    // Skip whitespace at the beginning.
+    while matches!(
+        tokens.get(*cursor).map(|t| &t.kind),
+        Some(&TokenKind::Space(..))
+    ) {
+        *cursor += 1;
+    }
+}
+
+fn inc_by_whitespace(cursor: &mut usize, tokens: &[Token]) {
+    // Skip whitespace at the beginning.
+    while tokens
+        .get(*cursor)
+        .map(|t| &t.kind)
+        .is_some_and(|t| t.is_whitespace())
+    {
+        *cursor += 1;
     }
 }

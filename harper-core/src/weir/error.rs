@@ -16,4 +16,6 @@ pub enum Error {
     ExpectedVariableUndefined,
     #[error("Invalid LintKind")]
     InvalidLintKind,
+    #[error("Expected a variable type other than the one provided.")]
+    ExpectedDifferentVariableType,
 }

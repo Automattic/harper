@@ -15,12 +15,12 @@ impl Ast {
         Self { stmts }
     }
 
-    pub fn get_variable_value(&self, var_name: &str) -> Option<&'_ str> {
+    pub fn get_variable_value(&self, var_name: &str) -> Option<&'_ AstVariable> {
         for stmt in self.stmts.iter().rev() {
             if let AstStmtNode::DeclareVariable { name, value } = stmt
                 && name == var_name
             {
-                return Some(value.as_str());
+                return Some(value);
             }
         }
         None
@@ -37,14 +37,12 @@ impl Ast {
         None
     }
 
-    pub fn iter_variable_values(&self) -> impl Iterator<Item = (&str, &str)> {
+    pub fn iter_variable_values(&self) -> impl Iterator<Item = (&str, &AstVariable)> {
         self.stmts
             .iter()
             .rev()
             .filter_map(|n| match n {
-                AstStmtNode::DeclareVariable { name, value } => {
-                    Some((name.as_str(), value.as_str()))
-                }
+                AstStmtNode::DeclareVariable { name, value } => Some((name.as_str(), value)),
                 _ => None,
             })
             .unique_by(|(n, _)| *n)
@@ -117,18 +115,30 @@ impl AstExprNode {
 }
 
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
+pub enum AstVariable {
+    String(String),
+    Array(Vec<AstVariable>),
+}
+
+impl AstVariable {
+    pub fn create_string(val: impl ToString) -> Self {
+        Self::String(val.to_string())
+    }
+}
+
+#[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstStmtNode {
-    DeclareVariable { name: String, value: String },
+    DeclareVariable { name: String, value: AstVariable },
     SetExpr { name: String, value: AstExprNode },
     Comment(String),
     Test { expect: String, to_be: String },
 }
 
 impl AstStmtNode {
-    pub fn create_declare_variable(name: impl ToString, value: impl ToString) -> Self {
+    pub fn create_declare_variable(name: impl ToString, value: AstVariable) -> Self {
         Self::DeclareVariable {
             name: name.to_string(),
-            value: value.to_string(),
+            value,
         }
     }
 

@@ -1,7 +1,12 @@
+use crate::weir::ast::AstVariable;
+use crate::weir::parsing::inc_by_spaces;
 use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
-use super::{Ast, AstExprNode, AstStmtNode, Error, FoundNode, lex, optimize};
+use super::{
+    Ast, AstExprNode, AstStmtNode, Error, FoundNode, inc_by_whitespace, lex, locate_matching_brace,
+    optimize, parse_collection,
+};
 
 pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Ast, Error> {
     let chars: CharString = weir_code.chars().collect();
@@ -34,14 +39,7 @@ fn parse_stmt_list(tokens: &[Token], source: &[char]) -> Result<Vec<AstStmtNode>
 
 fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstStmtNode>>, Error> {
     let mut cursor = 0;
-
-    // Skip whitespace at the beginning.
-    while matches!(
-        tokens.get(cursor).map(|t| &t.kind),
-        Some(&TokenKind::Space(..) | &TokenKind::Newline(..))
-    ) {
-        cursor += 1;
-    }
+    inc_by_whitespace(&mut cursor, tokens);
 
     let end = tokens
         .iter()
@@ -70,26 +68,65 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
 
             match word_literal {
                 ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => {
-                    let str_contents = parse_quoted_string(&tokens[cursor + 4..end], source)?;
+                    let name = tokens[cursor + 2].span.get_content_string(source);
+                    let str_res = parse_quoted_string(&tokens[cursor + 4..end], source);
 
-                    if tokens[str_contents.next_idx + cursor + 4..end]
-                        .iter()
-                        .any(|t| !t.kind.is_space())
-                    {
-                        return Err(Error::UnexpectedToken(
-                            tokens[str_contents.next_idx + cursor + 4]
-                                .span
-                                .get_content_string(source),
-                        ));
+                    if let Ok(str_contents) = str_res {
+                        if tokens[str_contents.next_idx + cursor + 4..end]
+                            .iter()
+                            .any(|t| !t.kind.is_space())
+                        {
+                            return Err(Error::UnexpectedToken(
+                                tokens[str_contents.next_idx + cursor + 4]
+                                    .span
+                                    .get_content_string(source),
+                            ));
+                        }
+
+                        Ok(FoundNode::new(
+                            Some(AstStmtNode::create_declare_variable(
+                                name,
+                                AstVariable::String(str_contents.node),
+                            )),
+                            end + 1,
+                        ))
+                    } else {
+                        let open_brac_tok = &tokens[cursor + 4];
+                        dbg!(&open_brac_tok.kind);
+                        if !open_brac_tok.kind.is_open_square() {
+                            return Err(Error::UnexpectedToken(
+                                open_brac_tok.span.get_content_string(source),
+                            ));
+                        }
+
+                        let matching = locate_matching_brace(
+                            &tokens[cursor + 4..end],
+                            TokenKind::is_open_square,
+                            TokenKind::is_close_square,
+                        )
+                        .ok_or(Error::UnmatchedBrace)?
+                            + cursor
+                            + 4;
+
+                        let elements = parse_collection(
+                            &tokens[cursor + 5..matching],
+                            source,
+                            parse_quoted_string,
+                        )?;
+
+                        Ok(FoundNode::new(
+                            Some(AstStmtNode::create_declare_variable(
+                                name,
+                                AstVariable::Array(
+                                    elements
+                                        .into_iter()
+                                        .map(|s| AstVariable::String(s))
+                                        .collect(),
+                                ),
+                            )),
+                            end + 1,
+                        ))
                     }
-
-                    Ok(FoundNode::new(
-                        Some(AstStmtNode::create_declare_variable(
-                            tokens[cursor + 2].span.get_content_string(source),
-                            str_contents.node,
-                        )),
-                        end + 1,
-                    ))
                 }
                 ['s', 'e', 't'] => Ok(FoundNode::new(
                     Some(AstStmtNode::create_set_expr(
@@ -127,13 +164,8 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
 fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<String>, Error> {
     let mut cursor = 0;
 
-    // Skip whitespace at the beginning.
-    while matches!(
-        tokens.get(cursor).map(|t| &t.kind),
-        Some(&TokenKind::Space(..))
-    ) {
-        cursor += 1;
-    }
+    inc_by_spaces(&mut cursor, tokens);
+
     let quote_tok = tokens.get(cursor).ok_or(Error::EndOfInput)?;
     if !quote_tok.kind.is_quote() {
         return Err(Error::UnexpectedToken(
@@ -163,7 +195,7 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 mod tests {
     use crate::char_string::char_string;
 
-    use super::{AstExprNode, AstStmtNode, parse_str};
+    use super::{AstExprNode, AstStmtNode, AstVariable, parse_str};
 
     #[test]
     fn parses_single_var_stmt() {
@@ -171,9 +203,34 @@ mod tests {
 
         assert_eq!(
             ast.stmts,
-            vec![AstStmtNode::create_declare_variable("test", "to be this")]
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("to be this")
+            ),]
         );
-        assert_eq!(ast.get_variable_value("test"), Some("to be this"));
+        assert_eq!(
+            ast.get_variable_value("test"),
+            Some(&AstVariable::create_string("to be this"))
+        );
+    }
+
+    #[test]
+    fn parses_single_var_stmt_array() {
+        let ast = parse_str("declare test [\"to be this\", \"and this\"]", true).unwrap();
+
+        let correct_var_val = AstVariable::Array(vec![
+            AstVariable::create_string("to be this"),
+            AstVariable::create_string("and this"),
+        ]);
+
+        assert_eq!(ast.get_variable_value("test"), Some(&correct_var_val));
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                correct_var_val
+            ),]
+        );
     }
 
     #[test]
@@ -227,13 +284,19 @@ mod tests {
         assert_eq!(
             ast.stmts,
             vec![
-                AstStmtNode::create_declare_variable("test", "to be this"),
+                AstStmtNode::create_declare_variable(
+                    "test",
+                    AstVariable::create_string("to be this")
+                ),
                 AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word"))),
                 AstStmtNode::Comment("# this is a comment".to_string())
             ]
         );
 
-        assert_eq!(ast.get_variable_value("test"), Some("to be this"));
+        assert_eq!(
+            ast.get_variable_value("test"),
+            Some(&AstVariable::create_string("to be this"))
+        );
         assert_eq!(
             ast.get_expr("main"),
             Some(&AstExprNode::Word(char_string!("word")))
