@@ -1,5 +1,5 @@
 use crate::{
-    Lint, Token,
+    Lint, Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
@@ -14,7 +14,9 @@ impl Default for BrandBrandish {
             expr: Box::new(
                 SequenceExpr::word_set(&["brandish", "brandished", "brandishes", "brandishing"])
                     .t_ws()
-                    .then_object_pronoun(),
+                    // "her" is also a possessive determiner as in "she brandished her sword"
+                    // "it" and "them" can refer to objects as in "draw your sword(s) and brandish it/them"
+                    .then_kind_except(TokenKind::is_object_pronoun, &["her", "it", "them"]),
             ),
         }
     }
@@ -151,5 +153,50 @@ mod tests {
             BrandBrandish::default(),
             "One such reason that critics brand him with this label is due to Peterson's opposition to Canada's Bill C-16",
         );
+    }
+
+    #[test]
+    fn correct_brandished_us() {
+        assert_suggestion_result(
+            "The mark they brandished us with will fade to dust when we finally meet our end.",
+            BrandBrandish::default(),
+            "The mark they branded us with will fade to dust when we finally meet our end.",
+        )
+    }
+
+    #[test]
+    fn correct_brandishing_him() {
+        assert_suggestion_result(
+            "he said some words trying to hit back at the center for brandishing him as a Pakistani at an NRC rally",
+            BrandBrandish::default(),
+            "he said some words trying to hit back at the center for branding him as a Pakistani at an NRC rally",
+        )
+    }
+
+    #[test]
+    fn correct_brandish_us() {
+        assert_suggestion_result(
+            "Our resolute determination for the ultimate quality and all-inclusive directory of food commodities brandish us as a flawless associate in B2B",
+            BrandBrandish::default(),
+            "Our resolute determination for the ultimate quality and all-inclusive directory of food commodities brand us as a flawless associate in B2B",
+        )
+    }
+
+    #[test]
+    fn correct_brandished_him() {
+        assert_suggestion_result(
+            "Frank discovers Myra brandished him with the letter 'R', for rapist.",
+            BrandBrandish::default(),
+            "Frank discovers Myra branded him with the letter 'R', for rapist.",
+        )
+    }
+
+    #[test]
+    fn correct_brandishes_him() {
+        assert_suggestion_result(
+            "Whether one turns a blind eye to Tim's wrongs or brandishes him a traitor will plant audiences in their own personal line in the sand.",
+            BrandBrandish::default(),
+            "Whether one turns a blind eye to Tim's wrongs or brands him a traitor will plant audiences in their own personal line in the sand.",
+        )
     }
 }
