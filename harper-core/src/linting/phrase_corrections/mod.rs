@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input:expr, $corrections:expr, $hint:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseLinter::new_fixed_phrases(
@@ -249,7 +249,7 @@ pub fn lint_group() -> LintGroup {
             ["in built", "in-built", "built in"],
             ["built-in"],
             "Prefer the hyphenated compound `built-in`.",
-            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
+            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
         ),
         "ByAccident" => (
             ["on accident"],
@@ -425,13 +425,6 @@ pub fn lint_group() -> LintGroup {
             "Use `without` instead of `w/o`",
             "Expands the abbreviation `w/o` to the full word `without` for clarity.",
             LintKind::Style
-        ),
-        "Expatriate" => (
-            ["ex-patriot"],
-            ["expatriate"],
-            "Use the correct term for someone living abroad.",
-            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
-            LintKind::Eggcorn
         ),
         "FaceFirst" => (
             ["face first into"],
@@ -732,6 +725,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects wrong variations of the idiomatic adjective `last-ditch`.",
             LintKind::Usage
         ),
+        "LastNight" => (
+            ["yesterday night"],
+            ["last night"],
+            "The idiomatic phrase is `last night`.",
+            "Flags `yesterday night` and suggests the standard phrasing `last night`.",
+            LintKind::WordChoice
+        ),
         "LetAlone" => (
             ["let along"],
             ["let alone"],
@@ -756,7 +756,7 @@ pub fn lint_group() -> LintGroup {
             ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
             ["low-hanging fruit"],
             "The standard form is `low-hanging fruit` with a hyphen and singular form.",
-            "Corrects non-standard variants of `low-hanging fruit`.",
+            "Corrects nonstandard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
         "ManagerialReins" => (
@@ -866,6 +866,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `piece of mind` to `peace of mind`.",
             LintKind::Eggcorn
         ),
+        "PerSe" => (
+            ["per say", "per-se", "per-say"],
+            ["per se"],
+            "The correct spelling is `per se` (with no hyphen)",
+            "Corrects common misspellings of `per se`.",
+            LintKind::Spelling
+        ),
         "PointsOfView" => (
             ["point of views"],
             ["points of view"],
@@ -908,7 +915,7 @@ pub fn lint_group() -> LintGroup {
             ["quite many"],
             ["quite a few"],
             "Use `quite a few` instead of `quite many`.",
-            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered nonstandard usage.",
             LintKind::Nonstandard
         ),
         "RapidFire" => (

@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenKind,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -53,8 +54,8 @@ impl Default for Months {
             "by", "during", "in", "last", "next", "of", "until",
         ]);
 
-        let year_or_day_of_month = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
-            if let TokenKind::Number(number) = &tok.kind {
+        let year_or_day_of_month = SequenceExpr::default().then_kind_where(|kind| {
+            if let TokenKind::Number(number) = &kind {
                 let v = number.value.into_inner() as u32;
                 (1500..=2500).contains(&v) || (1..=31).contains(&v)
             } else {
@@ -87,6 +88,8 @@ impl Default for Months {
 }
 
 impl ExprLinter for Months {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

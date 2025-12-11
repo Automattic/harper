@@ -14,6 +14,7 @@ pub(crate) const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
     ("emphasis", "emphasize"), // TODO how to handle "emphasise" as well as "emphasize"?
     ("intent", "intend"),
     // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
+    ("weight", "weigh"),
     // Add more pairs here as needed
 ];
 
@@ -1359,6 +1360,42 @@ mod tests {
         assert_no_lints(
             "Changes that only affect static types, without breaking runtime behavior.",
             NounVerbConfusion::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2041() {
+        assert_suggestion_result(
+            "Let me give you a piece of advise.",
+            NounVerbConfusion::default(),
+            "Let me give you a piece of advice.",
+        );
+    }
+
+    #[test]
+    fn fix_helps_you_weight() {
+        assert_suggestion_result(
+            "An iOS app that helps you weight small things on the screen of your iPhone / iPad.",
+            NounVerbConfusion::default(),
+            "An iOS app that helps you weigh small things on the screen of your iPhone / iPad.",
+        );
+    }
+
+    #[test]
+    fn fix_do_you_weight() {
+        assert_suggestion_result(
+            "How much do you weight?",
+            NounVerbConfusion::default(),
+            "How much do you weigh?",
+        );
+    }
+
+    #[test]
+    fn fix_more_than_you_weight() {
+        assert_suggestion_result(
+            "contributed more than you weight",
+            NounVerbConfusion::default(),
+            "contributed more than you weigh",
         );
     }
 }

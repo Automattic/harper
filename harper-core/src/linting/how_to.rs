@@ -1,5 +1,6 @@
 use harper_brill::UPOS;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
@@ -15,8 +16,7 @@ impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequenceExpr::default()
-            .then_anything()
+        let pos_pattern = SequenceExpr::anything()
             .then_anything()
             .t_aco("how")
             .then_whitespace()
@@ -49,6 +49,8 @@ impl Default for HowTo {
 }
 
 impl ExprLinter for HowTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

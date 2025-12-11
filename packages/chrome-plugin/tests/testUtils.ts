@@ -38,6 +38,20 @@ export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
 }
 
+export async function assertLocatorIsFocused(page: Page, loc: Locator) {
+	await assertLocatorsResolveEqually(page, loc, page.locator(':focus'));
+}
+
+/**  Checks that the two provided locators resolve to the same element. */
+export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Locator) {
+	const areSame = await page.evaluate(
+		([a, b]) => a === b,
+		[await a.elementHandle(), await b.elementHandle()],
+	);
+
+	expect(areSame).toBe(true);
+}
+
 /** Locates the first Harper highlight on the page and clicks it.
  * It should result in the popup opening.
  * Returns whether the highlight was found. */
@@ -97,6 +111,7 @@ export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvid
 		await page.waitForTimeout(3000);
 
 		expect(editor).toHaveValue('This is a test');
+		await assertLocatorIsFocused(page, editor);
 	});
 }
 
@@ -126,6 +141,7 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlPr
 		// Nothing should change.
 		expect(editor).toHaveValue(cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
+		await assertLocatorIsFocused(page, editor);
 	});
 }
 
@@ -143,9 +159,10 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 
 		await page.getByTitle('Disable the AnA rule').click();
 
-		await page.waitForTimeout(500);
+		await page.waitForTimeout(1000);
 
 		await assertHarperHighlightBoxes(page, []);
+		await assertLocatorIsFocused(page, editor);
 	});
 }
 
@@ -161,6 +178,26 @@ export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Prom
 
 		assertBoxesClose(box, boxes[i]);
 	}
+}
+
+/** Create a test to assert that a page has a certain number highlights.
+ * Wraps `assertPageHasNHighlights` */
+export async function testPageHasNHighlights(testPageUrl: TestPageUrlProvider, n: number) {
+	test(`Page has ${n} highlights`, async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		await page.waitForTimeout(6000);
+
+		assertPageHasNHighlights(page, n);
+	});
+}
+
+/** Assert that the page has a specific number of highlights.
+ * Useful for making sure certain patterns are ignored. */
+export async function assertPageHasNHighlights(page: Page, n: number) {
+	const highlights = getHarperHighlights(page);
+	expect(await highlights.count()).toBe(n);
 }
 
 /** An assertion that checks to ensure that two boxes are _approximately_ equal.

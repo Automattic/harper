@@ -770,9 +770,6 @@ fn expand_cuz() {
 // ExpandWithout
 // -none-
 
-// Expatriate
-// -none-
-
 // FaceFirst
 // -none-
 
@@ -1103,6 +1100,48 @@ fn correct_last_ditch_space() {
         lint_group(),
         "There are unique use cases and is meant to be a last-ditch option.",
     );
+}
+
+// LastNight
+#[test]
+fn corrects_yesterday_night_basic() {
+    assert_suggestion_result(
+        "I was there yesterday night.",
+        lint_group(),
+        "I was there last night.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_capitalized() {
+    assert_suggestion_result(
+        "Yesterday night was fun.",
+        lint_group(),
+        "Last night was fun.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_with_comma() {
+    assert_suggestion_result(
+        "Yesterday night, we watched a movie.",
+        lint_group(),
+        "Last night, we watched a movie.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_across_newline() {
+    assert_suggestion_result(
+        "They left yesterday\nnight after the show.",
+        lint_group(),
+        "They left last night after the show.",
+    );
+}
+
+#[test]
+fn no_lint_for_last_night_phrase() {
+    assert_lint_count("I remember last night clearly.", lint_group(), 0);
 }
 
 // LetAlone
@@ -1442,6 +1481,34 @@ fn corrects_piece_of_mind() {
         lint_group(),
         "A Discord bot that gives you peace of mind knowing you are free from obnoxious intrusions in a Discord Voice Channel",
     )
+}
+
+// PerSe
+#[test]
+fn corrects_per_se_hyphenated() {
+    assert_suggestion_result(
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
+        lint_group(),
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
+    )
+}
+
+#[test]
+fn corrects_per_say() {
+    assert_suggestion_result(
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
+        lint_group(),
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
+        lint_group(),
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
+    );
 }
 
 // PointsOfView

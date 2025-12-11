@@ -2,6 +2,7 @@ use crate::Token;
 use crate::TokenStringExt;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind};
 
 pub struct GoSoFarAsTo {
@@ -22,6 +23,8 @@ impl Default for GoSoFarAsTo {
 }
 
 impl ExprLinter for GoSoFarAsTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.exp.as_ref()
     }
@@ -74,10 +77,8 @@ impl ExprLinter for GoSoFarAsTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        GoSoFarAsTo,
-        tests::{assert_no_lints, assert_suggestion_result},
-    };
+    use super::GoSoFarAsTo;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn go_so_far_to() {

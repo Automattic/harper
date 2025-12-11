@@ -3,6 +3,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct LeftRightHand {
     expr: Box<dyn Expr>,
@@ -24,6 +25,8 @@ impl Default for LeftRightHand {
 }
 
 impl ExprLinter for LeftRightHand {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

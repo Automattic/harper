@@ -9,6 +9,7 @@ use crate::{
 };
 
 use crate::linting::ExprLinter;
+use crate::linting::expr_linter::Chunk;
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -26,13 +27,14 @@ impl Default for NoContractionWithVerb {
             .then(WordSet::new(&["lets", "let"]))
             .then_whitespace();
 
-        // Match verbs that are only verbs (not also nouns/adjectives) and not in -ing form
-        let non_ing_verb = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
-            tok.kind.is_verb()
-                && !tok.kind.is_noun()
-                && !tok.kind.is_adjective()
-                && !tok.kind.is_verb_progressive_form()
-        });
+        let non_ing_verb = SequenceExpr::default().then_kind_is_but_isnt_any_of(
+            TokenKind::is_verb,
+            &[
+                TokenKind::is_noun,
+                TokenKind::is_adjective,
+                TokenKind::is_verb_progressive_form,
+            ] as &[_],
+        );
 
         // Ambiguous word is a verb determined by heuristic of following word's part of speech
         // Tests the next two words after "let".
@@ -57,6 +59,8 @@ impl Default for NoContractionWithVerb {
 }
 
 impl ExprLinter for NoContractionWithVerb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

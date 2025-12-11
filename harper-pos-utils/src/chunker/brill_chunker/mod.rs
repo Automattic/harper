@@ -13,6 +13,11 @@ use crate::{
 use patch::Patch;
 use serde::{Deserialize, Serialize};
 
+/// A [`Chunker`] implementation based on the work by Eric Brill.
+///
+/// Additional reading:
+///
+/// - [Continuations on Transformation-based Learning](https://elijahpotter.dev/articles/more-transformation-based-learning)
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BrillChunker {
     base: UPOSFreqDict,

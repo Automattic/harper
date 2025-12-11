@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       3 | # The Constitution Of The United States Of America
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# The Constitution of the United States of America”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        5 | **We the People** of the United States, in Order to form a more perfect Union,
@@ -20,8 +29,8 @@ Message: |
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
-  - Replace with: “defended”
-  - Replace with: “defect”
+  - Replace with: “decency”
+  - Replace with: “deface”
 
 
 
@@ -41,9 +50,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “In”
+  - Replace with: “I”
   - Replace with: “Id”
-  - Replace with: “IC”
+  - Replace with: “If”
 
 
 
@@ -225,16 +234,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-      89 | third Class at the Expiration of the sixth Year, so that one third may be
-         |                                                                    ^~~~~~ Did you mean the closed compound noun “maybe”?
-      90 | chosen every second Year; and when vacancies happen in the representation of
-Suggest:
-  - Replace with: “maybe”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       96 | No Person shall be a Senator who shall not have attained to the Age of thirty
@@ -361,8 +360,8 @@ Message: |
      125 | Regulations, except as to the Places of chusing Senators.
          |                                         ^~~~~~~ Did you mean to spell `chusing` this way?
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
+  - Replace with: “chasing”
   - Replace with: “casing”
 
 
@@ -396,9 +395,10 @@ Lint:    Spelling (63 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
      140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
-         |            ^~~~~~~~~ Did you mean `Behavior`?
+         |            ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -593,8 +593,8 @@ Message: |
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
-  - Replace with: “Terence”
-  - Replace with: “Geofence”
+  - Replace with: “Decency”
+  - Replace with: “Deface”
 
 
 
@@ -622,8 +622,9 @@ Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
          |                         ^~~~~~~~ Did you mean to spell `Piracies` this way?
 Suggest:
-  - Replace with: “Curacies”
-  - Replace with: “Miracles”
+  - Replace with: “Piracy's”
+  - Replace with: “Papacies”
+  - Replace with: “Pirates”
 
 
 
@@ -634,7 +635,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offender”
 
 
 
@@ -836,10 +838,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul
-         |                                                                       ^~~~~~~~ Did you mean `Control`?
+         |                                                                       ^~~~~~~~ Did you mean to spell `Controul` this way?
      316 | of the Congress.
 Suggest:
   - Replace with: “Control”
+  - Replace with: “Contour”
+  - Replace with: “Contrail”
 
 
 
@@ -1004,8 +1008,8 @@ Message: |
          |                                        ^~~~~~~ Did you mean to spell `chusing` this way?
      384 | which they shall give their Votes; which Day shall be the same throughout the
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
+  - Replace with: “chasing”
   - Replace with: “casing”
 
 
@@ -1360,7 +1364,8 @@ Message: |
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offender”
 
 
 
@@ -1423,10 +1428,11 @@ Lint:    Spelling (63 priority)
 Message: |
      525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
      526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
-         |                                      ^~~~~~~~~ Did you mean `Behavior`?
+         |                                      ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
      527 | receive for their Services, a Compensation, which shall not be diminished
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -1625,8 +1631,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1637,8 +1643,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1649,8 +1655,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Laborer”
+  - Replace with: “Layout”
 
 
 
@@ -1735,8 +1741,8 @@ Message: |
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
   - Replace with: “Vi”
-  - Replace with: “Va”
-  - Replace with: “Vs.”
+  - Replace with: “VA”
+  - Replace with: “Vb”
 
 
 
@@ -1776,6 +1782,15 @@ Message: |
 Suggest:
   - Replace with: “to all Intents and Purposes”
   - Replace with: “for alL intents anD purposes”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     677 | ## Article. VI.
+         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Article. Vi.”
 
 
 
@@ -1829,6 +1844,7 @@ Message: |
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
+  - Replace with: “Erasures”
   - Replace with: “Azure”
 
 

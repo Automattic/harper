@@ -4,6 +4,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct MostNumber {
     expr: Box<dyn Expr>,
@@ -22,8 +23,7 @@ impl Default for MostNumber {
                 ),
                 // Context pattern
                 Box::new(
-                    SequenceExpr::default()
-                        .then_anything()
+                    SequenceExpr::anything()
                         .then_anything()
                         .then_anything()
                         .then_anything()
@@ -35,6 +35,8 @@ impl Default for MostNumber {
 }
 
 impl ExprLinter for MostNumber {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

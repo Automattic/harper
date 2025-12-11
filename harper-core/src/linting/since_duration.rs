@@ -2,6 +2,7 @@ use crate::expr::{DurationExpr, Expr, LongestMatchOf, SequenceExpr};
 use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 const AGO_VARIANTS: [&[char]; 3] = [&['a', 'g', 'o'], &['A', 'g', 'o'], &['A', 'G', 'O']];
 const FOR_VARIANTS: [&[char]; 3] = [&['f', 'o', 'r'], &['F', 'o', 'r'], &['F', 'O', 'R']];
@@ -46,6 +47,8 @@ impl Default for SinceDuration {
 }
 
 impl ExprLinter for SinceDuration {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -90,7 +93,7 @@ impl ExprLinter for SinceDuration {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::SinceDuration;
+    use super::SinceDuration;
     use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]

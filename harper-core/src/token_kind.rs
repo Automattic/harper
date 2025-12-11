@@ -50,6 +50,7 @@ pub enum TokenKind {
     Unlintable,
     ParagraphBreak,
     Regexish,
+    HeadingStart,
 }
 
 impl TokenKind {

@@ -10,36 +10,36 @@
 # . I/Ddem . NPr/J/R/P NSg/J     NPl/V3   P    D/P NPr/VB P  NSg/VB+ NPl/V3+ .
 >
 #
-> Examples
-# NPl/V3+
+>              Examples
+# HeadingStart NPl/V3+
 >
 #
-> This   triangle is  nice     .
-# I/Ddem NSg      VL3 NPr/VB/J .
-> This    is  nice     .
-# I/Ddem+ VL3 NPr/VB/J .
-> That          triangle is  nice     .
-# NSg/I/C/Ddem+ NSg      VL3 NPr/VB/J .
-> That          is  nice     .
-# NSg/I/C/Ddem+ VL3 NPr/VB/J .
-> These  triangles are nice     .
-# I/Ddem NPl       VB  NPr/VB/J .
-> These   are nice     .
-# I/Ddem+ VB  NPr/VB/J .
-> Those  triangles are nice     .
-# I/Ddem NPl       VB  NPr/VB/J .
-> Those   are nice     .
-# I/Ddem+ VB  NPr/VB/J .
+> This   triangle is  nice  .
+# I/Ddem NSg      VL3 NPr/J .
+> This    is  nice  .
+# I/Ddem+ VL3 NPr/J .
+> That          triangle is  nice  .
+# NSg/I/C/Ddem+ NSg      VL3 NPr/J .
+> That          is  nice  .
+# NSg/I/C/Ddem+ VL3 NPr/J .
+> These  triangles are nice  .
+# I/Ddem NPl       VB  NPr/J .
+> These   are nice  .
+# I/Ddem+ VB  NPr/J .
+> Those  triangles are nice  .
+# I/Ddem NPl       VB  NPr/J .
+> Those   are nice  .
+# I/Ddem+ VB  NPr/J .
 >
 #
-> This    massage is  nice     .
-# I/Ddem+ NSg/VB+ VL3 NPr/VB/J .
-> That         massage is  nice     .
-# NSg/I/C/Ddem NSg/VB+ VL3 NPr/VB/J .
-> These   massages are nice     .
-# I/Ddem+ NPl/V3+  VB  NPr/VB/J .
-> Those   massages are nice     .
-# I/Ddem+ NPl/V3+  VB  NPr/VB/J .
+> This    massage is  nice  .
+# I/Ddem+ NSg/VB+ VL3 NPr/J .
+> That         massage is  nice  .
+# NSg/I/C/Ddem NSg/VB+ VL3 NPr/J .
+> These   massages are nice  .
+# I/Ddem+ NPl/V3+  VB  NPr/J .
+> Those   massages are nice  .
+# I/Ddem+ NPl/V3+  VB  NPr/J .
 > This    massages well       .
 # I/Ddem+ NPl/V3+  NSg/VB/J/R .
 > That          massages well       .
@@ -58,16 +58,16 @@
 #
 > This    is  all          that         I       have    .
 # I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem ISg/#r+ NSg/VXB .
-> This    is  all          that         solutions can     do      .
-# I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem NPl+      NPr/VXB NSg/VXB .
-> That         solution can     do      .
-# NSg/I/C/Ddem N🅪Sg+    NPr/VXB NSg/VXB .
+> This    is  all          that         solutions can     do  .
+# I/Ddem+ VL3 NSg/I/J/C/Dq NSg/I/C/Ddem NPl+      NPr/VXB VXB .
+> That         solution can     do  .
+# NSg/I/C/Ddem N🅪Sg+    NPr/VXB VXB .
 >
 #
-> We   can     do      this    !
-# IPl+ NPr/VXB NSg/VXB I/Ddem+ .
-> I       can     do      this   and  that          .
-# ISg/#r+ NPr/VXB NSg/VXB I/Ddem VB/C NSg/I/C/Ddem+ .
+> We   can     do  this    !
+# IPl+ NPr/VXB VXB I/Ddem+ .
+> I       can     do  this   and  that          .
+# ISg/#r+ NPr/VXB VXB I/Ddem VB/C NSg/I/C/Ddem+ .
 >
 #
 > We   unite  to stand  united in        unity .

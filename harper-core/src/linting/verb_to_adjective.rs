@@ -8,6 +8,7 @@ use crate::patterns::WordSet;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct VerbToAdjective {
     expr: Box<dyn Expr>,
@@ -18,18 +19,17 @@ impl Default for VerbToAdjective {
         let expr = SequenceExpr::default()
             .then(WordSet::new(&["the", "a", "an"]))
             .t_ws()
-            .then(|tok: &Token, _: &[char]| {
-                (tok.kind.is_verb()
-                    && !tok.kind.is_verb_past_form()
-                    && !tok.kind.is_adjective()
-                    && !tok.kind.is_noun())
-                    || tok.kind.is_degree_adverb()
+            .then_kind_where(|kind| {
+                (kind.is_verb()
+                    && !kind.is_verb_past_form()
+                    && !kind.is_adjective()
+                    && !kind.is_noun())
+                    || kind.is_degree_adverb()
             })
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
 
-        let exceptions = SequenceExpr::default()
-            .t_any()
+        let exceptions = SequenceExpr::anything()
             .t_any()
             .then_unless(WordSet::new(&["very"]));
 
@@ -40,6 +40,8 @@ impl Default for VerbToAdjective {
 }
 
 impl ExprLinter for VerbToAdjective {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

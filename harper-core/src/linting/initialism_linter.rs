@@ -4,6 +4,7 @@ use itertools::Itertools;
 use crate::{Token, patterns::Word};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 /// A struct that can be composed to expand initialisms, respecting the capitalization of each
 /// item.
@@ -29,6 +30,8 @@ impl InitialismLinter {
 }
 
 impl ExprLinter for InitialismLinter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

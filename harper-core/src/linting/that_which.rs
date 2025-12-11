@@ -6,6 +6,7 @@ use itertools::Itertools;
 use crate::{Lrc, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ThatWhich {
     expr: Box<dyn Expr>,
@@ -32,6 +33,8 @@ impl Default for ThatWhich {
 }
 
 impl ExprLinter for ThatWhich {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

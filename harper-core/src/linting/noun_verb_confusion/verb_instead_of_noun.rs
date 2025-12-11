@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token,
     expr::{Expr, SequenceExpr},
@@ -23,7 +24,7 @@ impl Default for VerbInsteadOfNoun {
         Self {
             expr: Box::new(
                 SequenceExpr::default()
-                    .then(UPOSSet::new(&[UPOS::ADJ]))
+                    .then(UPOSSet::new(&[UPOS::ADJ, UPOS::ADP]))
                     .then_whitespace()
                     .then(verbs.clone()),
             ),
@@ -32,6 +33,8 @@ impl Default for VerbInsteadOfNoun {
 }
 
 impl ExprLinter for VerbInsteadOfNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

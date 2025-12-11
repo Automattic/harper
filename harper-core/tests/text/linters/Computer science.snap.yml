@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       6 | # Computer science
+         | ^~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Computer Science”
+
+
+
 Lint:    Style (31 priority)
 Message: |
       27 | problem-solving, decision-making, environmental adaptation, planning and
@@ -11,8 +20,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical
-         |         ^~~~~~~~~ Did you mean `Schick`?
+         |         ^~~~~~~~~ Did you mean to spell `Schickard` this way?
 Suggest:
+  - Replace with: “Schick's”
+  - Replace with: “Shipyard”
   - Replace with: “Schick”
 
 
@@ -22,9 +33,9 @@ Message: |
       46 | calculator in 1623. In 1673, Gottfried Leibniz demonstrated a digital mechanical
          |                              ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
+  - Replace with: “Guttered”
   - Replace with: “Lotteries”
   - Replace with: “Notified”
-  - Replace with: “Pottered”
 
 
 
@@ -34,31 +45,9 @@ Message: |
       47 | calculator, called the Stepped Reckoner. Leibniz may be considered the first
          |                                ^~~~~~~~ Did you mean to spell `Reckoner` this way?
 Suggest:
-  - Replace with: “Rickover”
   - Replace with: “Reckoned”
-  - Replace with: “Beckoned”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-      49 | including the fact that he documented the binary number system. In 1820, Thomas
-      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         | ^~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      49 | including the fact that he documented the binary number system. In 1820, Thomas
-      50 | de Colmar launched the mechanical calculator industry[note 1] when he invented
-         | ^~ Did you mean to spell `de` this way?
-Suggest:
-  - Replace with: “den”
-  - Replace with: “db”
-  - Replace with: “dc”
+  - Replace with: “Recover”
+  - Replace with: “Rickover”
 
 
 
@@ -69,8 +58,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Colmar` this way?
 Suggest:
   - Replace with: “Collar”
-  - Replace with: “Colemak”
-  - Replace with: “Coleman”
+  - Replace with: “Cellar”
+  - Replace with: “Clear”
 
 
 
@@ -104,17 +93,19 @@ Message: |
          |                                                                ^~~~~~~ Did you mean to spell `Ludgate` this way?
       66 | published the 2nd of the only two designs for mechanical analytical engines in
 Suggest:
+  - Replace with: “Legate”
+  - Replace with: “Luggage”
   - Replace with: “Luddite”
-  - Replace with: “Vulgate”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
       67 | history. In 1914, the Spanish engineer Leonardo Torres Quevedo published his
-         |                                                        ^~~~~~~ Did you mean `Acevedo`?
+         |                                                        ^~~~~~~ Did you mean to spell `Quevedo` this way?
       68 | Essays on Automatics, and designed, inspired by Babbage, a theoretical
 Suggest:
+  - Replace with: “Queued”
   - Replace with: “Acevedo”
 
 
@@ -135,6 +126,9 @@ Message: |
       72 | Torres presented in Paris the Electromechanical Arithmometer, a prototype that
          |                                                 ^~~~~~~~~~~~ Did you mean to spell `Arithmometer` this way?
       73 | demonstrated the feasibility of an electromechanical analytical engine, on which
+Suggest:
+  - Replace with: “Arithmetic”
+  - Replace with: “Anemometer”
 
 
 
@@ -161,9 +155,9 @@ Message: |
       78 | ASCC/Harvard Mark I, based on Babbage's Analytical Engine, which itself used
          | ^~~~ Did you mean to spell `ASCC` this way?
 Suggest:
-  - Replace with: “AAC”
-  - Replace with: “ABC”
-  - Replace with: “ABCs”
+  - Replace with: “Ac”
+  - Replace with: “Ace”
+  - Replace with: “Act”
 
 
 
@@ -184,9 +178,9 @@ Message: |
          |                                                   ^~~~~ Did you mean to spell `ENIAC` this way?
       84 | to refer to the machines rather than their human predecessors. As it became
 Suggest:
-  - Replace with: “ENE's”
-  - Replace with: “Anzac”
-  - Replace with: “Fenian”
+  - Replace with: “Enact”
+  - Replace with: “Epic”
+  - Replace with: “Enc”
 
 
 
@@ -212,6 +206,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     102 | ## Etymology and scope
+         | ^~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Etymology and Scope”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      104 | Although first proposed in 1956, the term "computer science" appears in a 1959
@@ -231,20 +234,18 @@ Message: |
          |                                                      ^~~~ Did you mean to spell `Fein` this way?
      106 | creation of a Graduate School in Computer Sciences analogous to the creation of
 Suggest:
+  - Replace with: “Fen”
   - Replace with: “Fern”
-  - Replace with: “Vein”
-  - Replace with: “Rein”
+  - Replace with: “Fin”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      110 | and those of others such as numerical analyst George Forsythe, were rewarded:
-         |                                                      ^~~~~~~~ Did you mean to spell `Forsythe` this way?
+         |                                                      ^~~~~~~~ Did you mean `Forsythia`?
 Suggest:
   - Replace with: “Forsythia”
-  - Replace with: “Forster”
-  - Replace with: “Porsche”
 
 
 
@@ -254,8 +255,8 @@ Message: |
      116 | Peter Naur suggested the term datalogy, to reflect the fact that the scientific
          |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
-  - Replace with: “Nauru”
   - Replace with: “Nair”
+  - Replace with: “Nauru”
   - Replace with: “Na's”
 
 
@@ -290,8 +291,8 @@ Message: |
      120 | Peter Naur being the first professor in datalogy. The term is used mainly in the
          |       ^~~~ Did you mean to spell `Naur` this way?
 Suggest:
-  - Replace with: “Nauru”
   - Replace with: “Nair”
+  - Replace with: “Nauru”
   - Replace with: “Na's”
 
 
@@ -314,9 +315,19 @@ Message: |
          |                                                               ^~~~ Did you mean to spell `Naur` this way?
      122 | science; this is now used for a multi-disciplinary field of data analysis,
 Suggest:
-  - Replace with: “Nauru”
   - Replace with: “Nair”
+  - Replace with: “Nauru”
   - Replace with: “Na's”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     122 | science; this is now used for a multi-disciplinary field of data analysis,
+         |                                 ^~~~~~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     123 | including statistics and databases.
+Suggest:
+  - Replace with: “multidisciplinary”
 
 
 
@@ -493,24 +504,13 @@ Message: |
 
 Lint:    Spelling (63 priority)
 Message: |
-     137 | "In the U.S., however, informatics is linked with applied computing, or
-         |         ^~~~ Did you mean to spell `U.S.` this way?
-Suggest:
-  - Replace with: “P.S.”
-  - Replace with: “UBS”
-  - Replace with: “USA”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
      140 | A folkloric quotation, often attributed to—but almost certainly not first
      141 | formulated by—Edsger Dijkstra, states that "computer science is no more about
          |               ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
   - Replace with: “Edger”
-  - Replace with: “Easter”
-  - Replace with: “Edgar”
+  - Replace with: “Eager”
+  - Replace with: “Edge”
 
 
 
@@ -545,11 +545,9 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         |     ^~~~~~~ Did you mean to spell `Neumann` this way?
+         |     ^~~~~~~ Did you mean `Newman`?
 Suggest:
   - Replace with: “Newman”
-  - Replace with: “Newman's”
-  - Replace with: “Normans”
 
 
 
@@ -557,11 +555,9 @@ Lint:    Spelling (63 priority)
 Message: |
      155 | influenced by the work of mathematicians such as Kurt Gödel, Alan Turing, John
      156 | von Neumann, Rózsa Péter and Alonzo Church and there continues to be a useful
-         |              ^~~~~ Did you mean to spell `Rózsa` this way?
+         |              ^~~~~ Did you mean `Rosa`?
 Suggest:
   - Replace with: “Rosa”
-  - Replace with: “R's”
-  - Replace with: “RV's”
 
 
 
@@ -572,8 +568,8 @@ Message: |
          |                    ^~~~~ Did you mean to spell `Péter` this way?
 Suggest:
   - Replace with: “Peter”
-  - Replace with: “Patel”
-  - Replace with: “Pete”
+  - Replace with: “Pother”
+  - Replace with: “Paper”
 
 
 
@@ -610,9 +606,18 @@ Message: |
          |                                                                          ^~~~~~ Did you mean to spell `Parnas` this way?
      163 | taking a cue from the relationship between other engineering and science
 Suggest:
+  - Replace with: “Paras”
+  - Replace with: “Parkas”
   - Replace with: “Parana's”
-  - Replace with: “Parr's”
-  - Replace with: “Patna's”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     178 | ### Epistemology of computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Epistemology of Computer Science”
 
 
 
@@ -622,9 +627,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          | ^~~~~~ Did you mean to spell `Newell` this way?
 Suggest:
+  - Replace with: “Newel”
   - Replace with: “Newels”
-  - Replace with: “Jewell”
-  - Replace with: “Nell”
+  - Replace with: “Newel's”
 
 
 
@@ -634,9 +639,9 @@ Message: |
      182 | Newell and Herbert A. Simon argued in 1975,
          |                    ^~ Did you mean to spell `A.` this way?
 Suggest:
-  - Replace with: “Ax”
   - Replace with: “A”
   - Replace with: “Ab”
+  - Replace with: “Ac”
 
 
 
@@ -676,8 +681,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `Edsger` this way?
 Suggest:
   - Replace with: “Edger”
-  - Replace with: “Easter”
-  - Replace with: “Edgar”
+  - Replace with: “Eager”
+  - Replace with: “Edge”
 
 
 
@@ -704,6 +709,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     211 | ### Paradigms of computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Paradigms of Computer Science”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      214 | separate paradigms in computer science. Peter Wegner argued that those paradigms
@@ -712,7 +726,7 @@ Message: |
 Suggest:
   - Replace with: “Wagner”
   - Replace with: “Wigner”
-  - Replace with: “Warner”
+  - Replace with: “Wager”
 
 
 
@@ -724,7 +738,7 @@ Message: |
 Suggest:
   - Replace with: “Deming's”
   - Replace with: “Dennis's”
-  - Replace with: “Jennings's”
+  - Replace with: “Dancing's”
 
 
 
@@ -733,9 +747,9 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                           ^~~~~ Did you mean to spell `Amnon` this way?
 Suggest:
-  - Replace with: “Amnion”
   - Replace with: “Anon”
-  - Replace with: “Aaron”
+  - Replace with: “Amnion”
+  - Replace with: “Amazon”
 
 
 
@@ -765,9 +779,9 @@ Message: |
      216 | that they are theory, abstraction (modeling), and design. Amnon H. Eden
          |                                                                 ^~ Did you mean to spell `H.` this way?
 Suggest:
+  - Replace with: “Ha”
   - Replace with: “He”
   - Replace with: “Hi”
-  - Replace with: “Ht”
 
 
 
@@ -788,8 +802,8 @@ Message: |
      232 | Computing Sciences Accreditation Board—which is made up of representatives of
 Suggest:
   - Replace with: “Cab”
-  - Replace with: “CPA”
-  - Replace with: “CSON”
+  - Replace with: “Crab”
+  - Replace with: “Cad”
 
 
 
@@ -841,8 +855,26 @@ Message: |
          |                                  ^~~~ Did you mean to spell `CSAB` this way?
 Suggest:
   - Replace with: “Cab”
-  - Replace with: “CPA”
-  - Replace with: “CSON”
+  - Replace with: “Crab”
+  - Replace with: “Cad”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     243 | ### Theoretical computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Theoretical Computer Science”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     250 | #### Theory of computation
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Theory of Computation”
 
 
 
@@ -851,9 +883,9 @@ Message: |
      252 | According to Peter Denning, the fundamental question underlying computer science
          |                    ^~~~~~~ Did you mean to spell `Denning` this way?
 Suggest:
-  - Replace with: “Denying”
-  - Replace with: “Penning”
   - Replace with: “Dunning”
+  - Replace with: “Denting”
+  - Replace with: “Denying”
 
 
 
@@ -864,7 +896,7 @@ Message: |
 Suggest:
   - Replace with: “Nap”
   - Replace with: “Nip”
-  - Replace with: “Nu”
+  - Replace with: “No”
 
 
 
@@ -874,6 +906,33 @@ Message: |
          |                    ^~~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Problem”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     265 | #### Information and coding theory
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Information and Coding Theory”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     277 | #### Data structures and algorithms
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Data Structures and Algorithms”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     282 | #### Programming language theory and formal methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Programming Language Theory and Formal Methods”
 
 
 
@@ -913,6 +972,33 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     308 | ### Applied computer science
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Applied Computer Science”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     310 | #### Computer graphics and visualization
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Graphics and Visualization”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     318 | #### Image and sound processing
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Image and Sound Processing”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      320 | Information can take the form of images, sound, video or other multimedia. Bits
@@ -942,12 +1028,30 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     330 | #### Computational science, finance and engineering
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computational Science, Finance and Engineering”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      330 | #### Computational science, finance and engineering
          |                             ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     344 | #### Human–computer interaction
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Human–Computer Interaction”
 
 
 
@@ -958,7 +1062,7 @@ Message: |
 Suggest:
   - Replace with: “Hi”
   - Replace with: “Chi”
-  - Replace with: “CI”
+  - Replace with: “Sci”
 
 
 
@@ -970,7 +1074,16 @@ Message: |
 Suggest:
   - Replace with: “Hi”
   - Replace with: “Chi”
-  - Replace with: “CI”
+  - Replace with: “Sci”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     352 | #### Software engineering
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Software Engineering”
 
 
 
@@ -983,14 +1096,41 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     363 | #### Artificial intelligence
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Artificial Intelligence”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     383 | ### Computer systems
+         | ^~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Computer Systems”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     385 | #### Computer architecture and microarchitecture
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Architecture and Microarchitecture”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      393 | term "architecture" in computer literature can be traced to the work of Lyle R.
          |                                                                              ^~ Did you mean to spell `R.` this way?
 Suggest:
-  - Replace with: “Re”
   - Replace with: “RI”
   - Replace with: “Ra”
+  - Replace with: “Ru”
 
 
 
@@ -1000,8 +1140,17 @@ Message: |
          |                       ^~ Did you mean to spell `P.` this way?
 Suggest:
   - Replace with: “Pa”
-  - Replace with: “Po”
+  - Replace with: “Pi”
   - Replace with: “PE”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     397 | #### Concurrent, parallel and distributed computing
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Concurrent, Parallel and Distributed Computing”
 
 
 
@@ -1013,7 +1162,25 @@ Message: |
 Suggest:
   - Replace with: “Petra”
   - Replace with: “Perth”
-  - Replace with: “Perry”
+  - Replace with: “Pear”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     408 | #### Computer networks
+         | ^~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Networks”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     413 | #### Computer security and cryptography
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Computer Security and Cryptography”
 
 
 
@@ -1024,6 +1191,15 @@ Message: |
      422 | computations that can be attacked. Technologies studied in modern cryptography
 Suggest:
   - Replace with: “to distribute”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     427 | #### Databases and data mining
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Databases and Data Mining”
 
 
 
@@ -1044,6 +1220,7 @@ Message: |
 Suggest:
   - Replace with: “Rapport”
   - Replace with: “Rappaport”
+  - Replace with: “Rapports”
 
 
 
@@ -1052,31 +1229,19 @@ Message: |
      439 | - Gottfried Wilhelm Leibniz's, George Boole's, Alan Turing's, Claude Shannon's,
          |   ^~~~~~~~~ Did you mean to spell `Gottfried` this way?
 Suggest:
+  - Replace with: “Guttered”
   - Replace with: “Lotteries”
   - Replace with: “Notified”
-  - Replace with: “Pottered”
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Spelling (127 priority)
 Message: |
      444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
-         |                                                                  ^~ This word's canonical spelling is all-caps.
+         |                                                                  ^~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
      445 |   > "high-voltage/low-voltage", etc.).
 Suggest:
-  - Replace with: “DE”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-     444 |   > easily distinguishable states, such as "on/off", "magnetized/de-magnetized",
-         |                                                                  ^~ Did you mean to spell `de` this way?
-     445 |   > "high-voltage/low-voltage", etc.).
-Suggest:
-  - Replace with: “den”
-  - Replace with: “db”
-  - Replace with: “dc”
+  - Replace with: “demagnetized”
 
 
 
@@ -1094,9 +1259,9 @@ Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
          |   ^~~~~~~ Did you mean to spell `Corrado` this way?
 Suggest:
-  - Replace with: “Colorado”
-  - Replace with: “Conrad”
-  - Replace with: “Coronado”
+  - Replace with: “Comrade”
+  - Replace with: “Corral”
+  - Replace with: “Corridor”
 
 
 
@@ -1105,19 +1270,18 @@ Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
          |           ^~~~ Did you mean to spell `Böhm` this way?
 Suggest:
-  - Replace with: “Baum”
-  - Replace with: “Bohr”
-  - Replace with: “Ohm”
+  - Replace with: “Bah”
+  - Replace with: “Baht”
+  - Replace with: “Beam”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      458 | - Corrado Böhm and Giuseppe Jacopini's insight: there are only three ways of
-         |                             ^~~~~~~~~~ Did you mean to spell `Jacopini's` this way?
+         |                             ^~~~~~~~~~ Did you mean `Jacobin's`?
 Suggest:
   - Replace with: “Jacobin's”
-  - Replace with: “Jacobi's”
 
 
 
@@ -1147,7 +1311,7 @@ Message: |
 Suggest:
   - Replace with: “Boer's”
   - Replace with: “Bohr's”
-  - Replace with: “Ohm's”
+  - Replace with: “Beam's”
 
 
 
@@ -1155,10 +1319,9 @@ Lint:    Spelling (63 priority)
 Message: |
      467 |   - repetition: WHILE such-and-such is the case, DO this. The three rules of
      468 |     Boehm's and Jacopini's insight can be further simplified with the use of
-         |                 ^~~~~~~~~~ Did you mean to spell `Jacopini's` this way?
+         |                 ^~~~~~~~~~ Did you mean `Jacobin's`?
 Suggest:
   - Replace with: “Jacobin's”
-  - Replace with: “Jacobi's”
 
 
 
@@ -1168,8 +1331,8 @@ Message: |
      469 |     goto (which means it is more elementary than structured programming).
          |     ^~~~ Did you mean to spell `goto` this way?
 Suggest:
-  - Replace with: “got”
   - Replace with: “goo”
+  - Replace with: “got”
   - Replace with: “goths”
 
 
@@ -1181,6 +1344,15 @@ Message: |
          |     ^~~~ `goto` should probably be written as `go to`.
 Suggest:
   - Replace with: “go to”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     471 | ## Programming paradigms
+         | ^~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Programming Paradigms”
 
 
 

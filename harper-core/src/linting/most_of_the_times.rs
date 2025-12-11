@@ -1,4 +1,5 @@
 use crate::expr::{Expr, FixedPhrase, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::Word;
 use crate::{Lint, Token};
@@ -23,6 +24,8 @@ impl Default for MostOfTheTimes {
 }
 
 impl ExprLinter for MostOfTheTimes {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -342,7 +342,7 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 6;
     }
 
-    if sug.edit_distance == 2 {
+    if sug.edit_distance <= 2 {
         if is_ei_ie_misspelling(misspelled_word, sug.word) {
             score -= 11;
         }

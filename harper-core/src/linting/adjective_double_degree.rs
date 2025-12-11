@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -11,16 +12,20 @@ pub struct AdjectiveDoubleDegree {
 impl Default for AdjectiveDoubleDegree {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::word_set(&["more", "most"]).t_ws().then(
-                |tok: &Token, _src: &[char]| {
-                    tok.kind.is_comparative_adjective() || tok.kind.is_superlative_adjective()
-                },
-            )),
+            expr: Box::new(
+                SequenceExpr::word_set(&["more", "most"])
+                    .t_ws()
+                    .then_kind_where(|kind| {
+                        kind.is_comparative_adjective() || kind.is_superlative_adjective()
+                    }),
+            ),
         }
     }
 }
 
 impl ExprLinter for AdjectiveDoubleDegree {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
