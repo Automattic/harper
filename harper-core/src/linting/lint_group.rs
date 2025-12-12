@@ -68,6 +68,7 @@ use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
+use super::fledge_flesh_pledge::FledgeFleshPledge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
@@ -540,6 +541,7 @@ impl LintGroup {
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
+        insert_expr_rule!(FledgeFleshPledge, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
