@@ -782,6 +782,44 @@ fn corrects_making_due_with() {
     );
 }
 
+// MakeSense
+
+#[test]
+fn fix_make_senses() {
+    assert_suggestion_result(
+        "some symbols make senses only if you have a certain keyboard",
+        lint_group(),
+        "some symbols make sense only if you have a certain keyboard",
+    );
+}
+
+#[test]
+fn fix_made_senses() {
+    assert_suggestion_result(
+        "Usually on the examples of matlab central I have found all with positive magnitude and made senses to me.",
+        lint_group(),
+        "Usually on the examples of matlab central I have found all with positive magnitude and made sense to me.",
+    );
+}
+
+#[test]
+fn fix_makes_senses() {
+    assert_suggestion_result(
+        "If it makes senses I can open a PR.",
+        lint_group(),
+        "If it makes sense I can open a PR.",
+    );
+}
+
+#[test]
+fn fix_making_senses() {
+    assert_suggestion_result(
+        "I appreciate you mentioned the two use cases, which are making senses for both.",
+        lint_group(),
+        "I appreciate you mentioned the two use cases, which are making sense for both.",
+    );
+}
+
 // MootPoint
 
 // -point is mute-
