@@ -27,8 +27,7 @@ impl Default for SoonToBe {
         };
 
         let nominal_tail = || {
-            SequenceExpr::default()
-                .then_optional(SequenceExpr::default().then_one_or_more_adverbs().t_ws())
+            SequenceExpr::optional(SequenceExpr::default().then_one_or_more_adverbs().t_ws())
                 .then(NominalPhrase)
         };
 
