@@ -12,8 +12,8 @@
 #
 > My  favourite      color         is  blu .
 # D$+ NSg/VB/J/Comm+ N🅪Sg/VB/J/Am+ VL3 W?  .
-> I       must   defend my  honour        !
-# ISg/#r+ NSg/VB NSg/VB D$+ N🅪Sg/VB/Comm+ .
+> I       must    defend my  honour        !
+# ISg/#r+ NSg/VXB NSg/VB D$+ N🅪Sg/VB/Comm+ .
 > I       recognize that         you    recognise me       .
 # ISg/#r+ VB        NSg/I/C/Ddem ISgPl+ VB/Au/Br  NPr/ISg+ .
 > I       analyze how   you    infantilize me       .
