@@ -25,6 +25,7 @@ mod be_allowed;
 mod best_of_all_time;
 mod boring_words;
 mod bought;
+mod brand_brandish;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
@@ -51,11 +52,13 @@ mod double_click;
 mod double_modal;
 mod ellipsis_length;
 mod else_possessive;
+mod ever_every;
 mod everyday;
 mod expand_memory_shorthands;
 mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
+mod fascinated_by;
 mod feel_fell;
 mod few_units_of_time_ago;
 mod filler_words;
@@ -101,7 +104,7 @@ mod long_sentences;
 mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
-mod mass_plurals;
+mod mass_nouns;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
@@ -124,7 +127,6 @@ mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
-mod noun_countability;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod of_course;
@@ -154,6 +156,7 @@ mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
 mod quite_quiet;
 mod quote_spacing;
+mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod regionalisms;
 mod repeated_words;
@@ -331,7 +334,7 @@ pub mod tests {
         let transformed_str = transform_nth_str(text, &mut linter, n);
 
         if transformed_str.as_str() != expected_result {
-            panic!("Expected \"{expected_result}\"\n But got  \"{transformed_str}\"");
+            panic!("Expected \"{expected_result}\"\n But got \"{transformed_str}\"");
         }
 
         // Applying the suggestions should fix all the lints.

@@ -7,8 +7,14 @@ use smallvec::SmallVec;
 /// Most English words are fewer than 12 characters.
 pub type CharString = SmallVec<[char; 16]>;
 
+mod private {
+    pub trait Sealed {}
+
+    impl Sealed for [char] {}
+}
+
 /// Extensions to character sequences that make them easier to wrangle.
-pub trait CharStringExt {
+pub trait CharStringExt: private::Sealed {
     /// Convert all characters to lowercase, returning a new owned vector if any changes were made.
     fn to_lower(&'_ self) -> Cow<'_, [char]>;
 

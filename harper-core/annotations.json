@@ -997,6 +997,14 @@
 			"metadata": {
 				"//": "not yet implemented"
 			}
+		},
+		"(": {
+			"#": "prefix property",
+			"metadata": {
+				"affix": {
+					"is_prefix": true
+				}
+			}
 		}
 	}
 }
