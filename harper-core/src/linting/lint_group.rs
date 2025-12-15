@@ -122,6 +122,7 @@ use super::nominal_wants::NominalWants;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::of_course::OfCourse;
+use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
 use super::once_or_twice::OnceOrTwice;
 use super::one_and_the_same::OneAndTheSame;
@@ -508,8 +509,8 @@ impl LintGroup {
         insert_expr_rule!(BeAllowed, true);
         insert_expr_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
-        insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(Bought, true);
+        insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(CautionaryTale, true);
@@ -592,6 +593,7 @@ impl LintGroup {
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_expr_rule!(OfCourse, true);
+        insert_expr_rule!(OldestInTheBook, true);
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OnceOrTwice, true);
         insert_expr_rule!(OneAndTheSame, true);
