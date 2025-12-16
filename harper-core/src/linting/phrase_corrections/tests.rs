@@ -1473,6 +1473,16 @@ fn correct_on_top_of() {
     );
 }
 
+// PartOfSpeech
+#[test]
+fn corrects_part_of_speeches() {
+    assert_suggestion_result(
+        "The part of speeches (POS) or as follows:",
+        lint_group(),
+        "The parts of speech (POS) or as follows:",
+    )
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {

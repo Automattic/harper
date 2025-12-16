@@ -859,6 +859,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `ontop of` to `on top of`.",
             LintKind::BoundaryError
         ),
+        "PartsOfSpeech" => (
+            ["part of speeches"],
+            ["parts of speech"],
+            "The correct plural is `parts of speech`.",
+            "Corrects pluralizing the wrong noun in `part of speech`.",
+            LintKind::Grammar
+        ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],
