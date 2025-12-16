@@ -56,10 +56,10 @@ function openSettings() {
        }}><Fa icon={faArrowLeft}/></Button>
     {:else}
       <div>
-        <span class="text-sm font-mono">{version}</span>
         {#if versionMismatch}
           <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}`}>⚠️</span>
         {/if}
+        <span class="text-sm font-mono">{version}</span>
       </div>
     {/if}
   </header>
