@@ -860,7 +860,7 @@ pub fn lint_group() -> LintGroup {
             LintKind::BoundaryError
         ),
         "PartsOfSpeech" => (
-            ["part of speeches"],
+            ["part of speeches", "parts of speeches"],
             ["parts of speech"],
             "The correct plural is `parts of speech`.",
             "Corrects pluralizing the wrong noun in `part of speech`.",
@@ -881,7 +881,7 @@ pub fn lint_group() -> LintGroup {
             LintKind::Spelling
         ),
         "PointsOfView" => (
-            ["point of views"],
+            ["point of views", "points of views"],
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
@@ -960,7 +960,7 @@ pub fn lint_group() -> LintGroup {
             LintKind::WordChoice
         ),
         "RulesOfThumb" => (
-            ["rule of thumbs", "rule-of-thumbs"],
+            ["rule of thumbs", "rule-of-thumbs", "rules of thumbs"],
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
