@@ -188,6 +188,28 @@ mod tests {
 
         let mut linter = WeirLinter::new(source).unwrap();
 
-        assert_eq!(Vec::<TestResult>::new(), linter.run_tests())
+        assert_eq!(Vec::<TestResult>::new(), linter.run_tests());
+        assert_eq!(8, linter.count_tests());
+    }
+
+    #[test]
+    fn g_suite() {
+        let source = r#"
+            set main [(G [Suite, Suit]), (Google Apps for Work)]
+            declare message "Use the updated brand."
+            declare description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+            declare kind "Miscellaneous"
+            declare becomes "Google Workspace"
+
+            test "We migrated from G Suite last year." "We migrated from Google Workspace last year."
+            test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."
+            test "The pricing page mentions G Suit for legacy plans." "The pricing page mentions Google Workspace for legacy plans."
+            test "New customers sign up for Google Workspace." "New customers sign up for Google Workspace."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_eq!(Vec::<TestResult>::new(), linter.run_tests());
+        assert_eq!(4, linter.count_tests());
     }
 }
