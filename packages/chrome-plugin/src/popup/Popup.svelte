@@ -1,6 +1,7 @@
 <script lang="ts">
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Button, Link } from 'components';
+import { onMount } from 'svelte';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import { main, type PopupState } from '../PopupState';
@@ -10,7 +11,22 @@ import ReportProblematicLint from './ReportProblematicLint.svelte';
 
 let popupState: PopupState = $state({ page: 'main' });
 
-let version = chrome.runtime.getManifest().version;
+let version = `v${chrome.runtime.getManifest().version}`;
+let latestVersion: string | null = $state(null);
+let versionMismatch = $state(false);
+
+onMount(async () => {
+	try {
+		const response = await fetch('https://writewithharper.com/latestversion');
+		if (!response.ok) return;
+
+		const fetchedVersion = (await response.text()).trim();
+		latestVersion = fetchedVersion;
+		versionMismatch = !!fetchedVersion && fetchedVersion !== version;
+	} catch (err) {
+		console.error('Failed to fetch latest version', err);
+	}
+});
 
 $effect(() => {
 	chrome.storage.local.get({ popupState: { page: 'onboarding' } }).then((result) => {
@@ -39,7 +55,12 @@ function openSettings() {
           popupState = main();
        }}><Fa icon={faArrowLeft}/></Button>
     {:else}
-      <span class="text-sm font-mono ">{version}</span>
+      <div>
+        <span class="text-sm font-mono">{version}</span>
+        {#if versionMismatch}
+          <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}`}>⚠️</span>
+        {/if}
+      </div>
     {/if}
   </header>
 
