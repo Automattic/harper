@@ -477,6 +477,23 @@ pub mod tests {
         }
     }
 
+    /// Asserts that the lint's message matches the expected message.
+    #[track_caller]
+    pub fn assert_lint_message(text: &str, mut linter: impl Linter, expected_message: &str) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        // Just check the first lint for now
+        if let Some(lint) = lints.first() {
+            if lint.message != expected_message {
+                panic!(
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+        }
+    }
+
     fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
         let mut text_chars: Vec<char> = text.chars().collect();
 

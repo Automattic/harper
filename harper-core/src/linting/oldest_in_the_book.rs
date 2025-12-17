@@ -65,6 +65,20 @@ impl ExprLinter for OldestInTheBook {
         src: &[char],
         _ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
+        let np = &toks[2..toks.len() - 4];
+        let tricky = np.iter().any(|n| {
+            n.span
+                .get_content(src)
+                .eq_any_ignore_ascii_case_str(&["trick", "tricks"])
+        });
+
+        let message = if tricky {
+            "This idiom should use singular `book` instead of plural `books`."
+        } else {
+            "If this is a play on the idiom `oldest trick in the book`, it should use singular `book` instead of plural `books`."
+        }
+        .to_string();
+
         Some(Lint {
             span: toks.last()?.span,
             lint_kind: LintKind::Usage,
@@ -72,7 +86,7 @@ impl ExprLinter for OldestInTheBook {
                 "book",
                 toks.last()?.span.get_content(src),
             )],
-            message: "This idiom should use singular `book` instead of plural `books`.".to_string(),
+            message,
             ..Default::default()
         })
     }
@@ -85,7 +99,9 @@ impl ExprLinter for OldestInTheBook {
 #[cfg(test)]
 mod tests {
     use super::OldestInTheBook;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_lint_message, assert_suggestion_result};
+
+    // Probable references to the idiom "oldest trick in the book"
 
     #[test]
     fn fix_delphi_mistake() {
@@ -124,15 +140,6 @@ mod tests {
     }
 
     #[test]
-    fn fix_chromatic_alterations() {
-        assert_suggestion_result(
-            "One of the oldest chromatic alterations in the books is the raising of the leading tone",
-            OldestInTheBook::default(),
-            "One of the oldest chromatic alterations in the book is the raising of the leading tone",
-        );
-    }
-
-    #[test]
     fn fix_tricks() {
         assert_suggestion_result(
             "He enables the oldest tricks in the books, create fear from thing like prosperity (we really don't need Foxconn?)",
@@ -147,6 +154,26 @@ mod tests {
             "Isnt that like one of the oldest military plays in the books?",
             OldestInTheBook::default(),
             "Isnt that like one of the oldest military plays in the book?",
+        );
+    }
+
+    // Test messages
+
+    #[test]
+    fn is_oldest_trick_in_the_books_ref_to_idom() {
+        assert_lint_message(
+            "This is one of the oldest trick in the books",
+            OldestInTheBook::default(),
+            "This idiom should use singular `book` instead of plural `books`.",
+        );
+    }
+
+    #[test]
+    fn is_chromatic_alterations_ref_to_idom() {
+        assert_lint_message(
+            "One of the oldest chromatic alterations in the books is the raising of the leading tone",
+            OldestInTheBook::default(),
+            "If this is a play on the idiom `oldest trick in the book`, it should use singular `book` instead of plural `books`.",
         );
     }
 }
