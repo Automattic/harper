@@ -47,6 +47,7 @@ Some of the open-source projects using Harper include:
 - [Gherlint](https://github.com/gherlint/gherlint)
 - [walletbeat](https://github.com/walletbeat/walletbeat)
 - [Stencila](https://github.com/stencila/stencila)
+- [fixmyspelling](https://github.com/samedwardes/fixmyspelling)
 
 Are you using Harper in your open source work and want to be included in this list?
 If so, please open a PR. 
