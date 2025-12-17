@@ -45,7 +45,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
         .iter()
         .enumerate()
         .skip(cursor)
-        .find_map(|(i, t)| t.kind.is_newline().then(|| i))
+        .find_map(|(i, t)| t.kind.is_newline().then_some(i))
         .unwrap_or(tokens.len());
 
     let Some(key_token) = tokens.get(cursor) else {
@@ -117,10 +117,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                             Some(AstStmtNode::create_declare_variable(
                                 name,
                                 AstVariable::Array(
-                                    elements
-                                        .into_iter()
-                                        .map(|s| AstVariable::String(s))
-                                        .collect(),
+                                    elements.into_iter().map(AstVariable::String).collect(),
                                 ),
                             )),
                             end + 1,

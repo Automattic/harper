@@ -6,13 +6,10 @@ pub fn optimize(stmts: &mut Vec<AstStmtNode>) -> bool {
     let mut edit = false;
 
     for stmt in stmts {
-        match stmt {
-            AstStmtNode::SetExpr { value, .. } => {
-                if optimize_expr(value) {
-                    edit = true;
-                }
-            }
-            _ => (),
+        if let AstStmtNode::SetExpr { value, .. } = stmt
+            && optimize_expr(value)
+        {
+            edit = true;
         }
     }
 

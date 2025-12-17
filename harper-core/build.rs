@@ -8,7 +8,6 @@ fn main() {
 
     let mut files: Vec<PathBuf> = fs::read_dir(&weir_rule_dir)
         .unwrap()
-        .into_iter()
         .filter_map(Result::ok)
         .filter(|e| e.file_type().unwrap().is_file())
         .map(|e| e.path().to_path_buf())
