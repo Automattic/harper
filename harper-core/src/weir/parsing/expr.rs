@@ -1,8 +1,7 @@
-use crate::{CharString, Currency, Punctuation, Token, TokenKind, TokenStringExt};
+use crate::{CharString, Currency, Punctuation, Token, TokenKind};
 
 use super::{
-    AstExprNode, Error, FoundNode, inc_by_spaces, lex, locate_matching_brace, optimize_expr,
-    parse_collection,
+    AstExprNode, Error, FoundNode, lex, locate_matching_brace, optimize_expr, parse_collection,
 };
 
 pub fn parse_expr_str(weir_code: &str, use_optimizer: bool) -> Result<AstExprNode, Error> {
@@ -35,7 +34,7 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
 }
 
 fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstExprNode>, Error> {
-    let mut cursor = 0;
+    let cursor = 0;
 
     let tok = tokens.get(cursor).ok_or(Error::EndOfInput)?;
 
