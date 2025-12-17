@@ -4,8 +4,8 @@ use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStrin
 
 use super::expr::parse_seq;
 use super::{
-    Ast, AstExprNode, AstStmtNode, Error, FoundNode, inc_by_whitespace, lex, locate_matching_brace,
-    optimize, parse_collection,
+    Ast, AstExprNode, AstStmtNode, Error, FoundNode, expected_space, inc_by_whitespace, lex,
+    locate_matching_brace, optimize, parse_collection,
 };
 
 pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Ast, Error> {
@@ -68,7 +68,10 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
 
             match word_literal {
                 ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => {
+                    expected_space(cursor + 1, tokens, source)?;
                     let name = tokens[cursor + 2].span.get_content_string(source);
+                    expected_space(cursor + 3, tokens, source)?;
+
                     let str_res = parse_quoted_string(&tokens[cursor + 4..end], source);
 
                     if let Ok(str_contents) = str_res {
@@ -124,16 +127,23 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                         ))
                     }
                 }
-                ['s', 'e', 't'] => Ok(FoundNode::new(
-                    Some(AstStmtNode::create_set_expr(
-                        tokens[cursor + 2].span.get_content_string(source),
-                        AstExprNode::Seq(parse_seq(&tokens[cursor + 4..end], source)?),
-                    )),
-                    end + 1,
-                )),
+                ['s', 'e', 't'] => {
+                    expected_space(cursor + 1, tokens, source)?;
+
+                    Ok(FoundNode::new(
+                        Some(AstStmtNode::create_set_expr(
+                            tokens[cursor + 2].span.get_content_string(source),
+                            AstExprNode::Seq(parse_seq(&tokens[cursor + 4..end], source)?),
+                        )),
+                        end + 1,
+                    ))
+                }
                 ['t', 'e', 's', 't'] => {
                     let case = parse_quoted_string(&tokens[cursor + 1..], source)?;
                     cursor += 1 + case.next_idx;
+
+                    expected_space(cursor, tokens, source)?;
+
                     let sol = parse_quoted_string(&tokens[cursor + 1..], source)?;
                     cursor += 1 + sol.next_idx;
 
@@ -206,6 +216,8 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 
 #[cfg(test)]
 mod tests {
+    use quickcheck_macros::quickcheck;
+
     use crate::char_string::char_string;
 
     use super::{AstExprNode, AstStmtNode, AstVariable, parse_str};
@@ -213,6 +225,23 @@ mod tests {
     #[test]
     fn parses_single_var_stmt() {
         let ast = parse_str("declare test \"to be this\"", true).unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![AstStmtNode::create_declare_variable(
+                "test",
+                AstVariable::create_string("to be this")
+            ),]
+        );
+        assert_eq!(
+            ast.get_variable_value("test"),
+            Some(&AstVariable::create_string("to be this"))
+        );
+    }
+
+    #[test]
+    fn parses_single_var_stmt_with_lots_of_space() {
+        let ast = parse_str("declare            test \"to be this\"", true).unwrap();
 
         assert_eq!(
             ast.stmts,
@@ -287,6 +316,22 @@ mod tests {
     }
 
     #[test]
+    fn parses_multiple_spaces_in_tests() {
+        assert_eq!(
+            parse_str(
+                "test \"this is the case\"           \"this is the solution\"",
+                true
+            )
+            .unwrap()
+            .stmts,
+            vec![AstStmtNode::create_test(
+                "this is the case",
+                "this is the solution"
+            )]
+        )
+    }
+
+    #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
             "declare test \"to be this\"\nset main word\n# this is a comment",
@@ -314,5 +359,43 @@ mod tests {
             ast.get_expr("main"),
             Some(&AstExprNode::Word(char_string!("word")))
         );
+    }
+
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_set() {
+        parse_str("set+this is a test", false).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_test() {
+        parse_str("test+\"\" \"\"", false).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_between_test() {
+        parse_str("test \"\"+\"\"", false).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_declare() {
+        parse_str("declare+var \"\"", false).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_declare_var() {
+        parse_str("declare var+\"\"", false).unwrap();
+    }
+
+    #[quickcheck]
+    fn catches_anything_after_test(a: String) {
+        if !a.is_empty() {
+            let code = format!("test \"\" \"\"{a}");
+            assert!(parse_str(code.as_str(), false).is_err())
+        }
     }
 }

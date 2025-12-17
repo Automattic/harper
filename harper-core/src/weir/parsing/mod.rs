@@ -137,3 +137,15 @@ fn inc_by_whitespace(cursor: &mut usize, tokens: &[Token]) {
         *cursor += 1;
     }
 }
+
+fn expected_space(cursor: usize, tokens: &[Token], source: &[char]) -> Result<(), Error> {
+    let expected_space = &tokens[cursor];
+
+    if !expected_space.kind.is_space() {
+        return Err(Error::UnexpectedToken(
+            expected_space.span.get_content_string(source),
+        ));
+    }
+
+    Ok(())
+}
