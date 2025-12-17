@@ -1,0 +1,7 @@
+set main (°K)
+
+declare message "Use just the symbol `K` when discussing the unit Kelvin."
+declare description "Corrects use of `°K` to `K`."
+declare kind "Usage"
+declare becomes "K"
+

@@ -204,6 +204,7 @@ mod very_unique;
 mod vice_versa;
 mod was_aloud;
 mod way_too_adjective;
+mod weir_rules;
 mod well_educated;
 mod whereas;
 mod widely_accepted;

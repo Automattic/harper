@@ -1,0 +1,11 @@
+set main [(on the spurt of the moment), (at the spur of the moment), (in the spur of the moment)]
+set main [on, at, in] the [spur, spurt] of the moment
+
+declare message "Use the correct phrase for acting spontaneously."
+declare description "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
+declare kind "Eggcorn"
+declare becomes "on the spur of the moment"
+
+test "Quite often in the spurt of the moment, someone will say something which they think is witty." "Quite often on the spur of the moment, someone will say something which they think is witty."
+test "but at the spur of the moment, I'd say that ansible-lint should work exactly like ansible" "but on the spur of the moment, I'd say that ansible-lint should work exactly like ansible"
+test "an assortment of things I started yesterday in the spur of the moment" "an assortment of things I started yesterday on the spur of the moment"

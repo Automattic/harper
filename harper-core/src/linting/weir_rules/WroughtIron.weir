@@ -1,0 +1,10 @@
+set main [(rod iron), (rot iron), (rod-iron), (rot-iron)]
+
+declare message "Prefer the standard term `wrought iron`."
+declare description "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+declare kind "Eggcorn"
+declare becomes "wrought iron"
+
+test "The gate was crafted from rod iron." "The gate was crafted from wrought iron."
+test "The artisan works in rot iron." "The artisan works in wrought iron."
+test "She specialized in wrought iron artwork." "She specialized in wrought iron artwork."

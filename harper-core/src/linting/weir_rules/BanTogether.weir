@@ -1,0 +1,7 @@
+set main (ban together)
+
+declare message "Did you mean `band together`?"
+declare description "Detects and corrects the common error of using `ban together` instead of the idiom `band together`, which means to unite or join forces."
+declare kind "Eggcorn"
+declare becomes "band together"
+

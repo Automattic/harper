@@ -1,0 +1,8 @@
+set main (take it personal)
+
+declare message "The more standard, less colloquial form is `take it personally`."
+declare description "Corrects `take it personal` to `take it personally`."
+declare kind "Usage"
+declare becomes "take it personally"
+
+test "This is not personal, do not take it personal, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)" "This is not personal, do not take it personally, we also think Thingsboard is a extraordinary tool (we are using in several scenarios in fact)"

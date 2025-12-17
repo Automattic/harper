@@ -1,0 +1,7 @@
+set main (Port au Prince)
+
+declare message "The official spelling is hyphenated."
+declare description "Checks for the correct official name of the capital of Haiti."
+declare kind "Punctuation"
+declare becomes "Port-au-Prince"
+

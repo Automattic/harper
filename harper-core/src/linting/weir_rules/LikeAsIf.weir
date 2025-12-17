@@ -1,0 +1,7 @@
+set main (like as if)
+
+declare message "Avoid redundancy. Use either `like` or `as if`."
+declare description "Corrects redundant `like as if` to `like` or `as if`."
+declare becomes ["like", "as if"]
+
+test "And looks like as if linux-personality hasn't got any changes for 8 years." "And looks as if linux-personality hasn't got any changes for 8 years."

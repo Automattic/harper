@@ -1,0 +1,8 @@
+set main (another ones)
+
+declare message "`another` is singular but `ones` is plural. Or maybe you meant the possessive `one's`."
+declare description "Corrects `another ones`."
+declare kind "Agreement"
+declare becomes ["another one", "another one's", "other ones"]
+
+test "Change list params of a resource, another ones change too" "Change list params of a resource, other ones change too"

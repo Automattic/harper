@@ -1,0 +1,7 @@
+set main (to towards)
+
+declare message "Use `towards` without the preceding `to`."
+declare description "Removes redundant `to` before `towards`."
+declare kind "Redundancy"
+declare becomes "towards"
+

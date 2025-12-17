@@ -1,0 +1,17 @@
+set main (along side)
+
+declare message "Use the single word `alongside`."
+declare description "Replaces the spaced form `along side` with `alongside`."
+declare kind "WordChoice"
+declare becomes "alongside"
+
+test "They walked along side the river." "They walked alongside the river."
+test "Along side the road, we saw a parade." "Alongside the road, we saw a parade."
+test "The banner read ALONG SIDE THE TEAM!" "The banner read ALONGSIDE THE TEAM!"
+test "The skiff pulled along side." "The skiff pulled alongside."
+test "\"We drifted along side,\" she said." "\"We drifted alongside,\" she said."
+test "They stood along side, waiting patiently." "They stood alongside, waiting patiently."
+test "Cars lined up along side the curb." "Cars lined up alongside the curb."
+test "They walked alongside the river." "They walked alongside the river."
+test "They walked along the side of the river." "They walked along the side of the river."
+test "We camped along the lakeside all weekend." "We camped along the lakeside all weekend."

@@ -1,0 +1,8 @@
+set main (half an our)
+
+declare message "Remember the silent 'h' when writing `hour`: `half an hour`."
+declare description "Fixes the eggcorn `half an our` to the accepted `half an hour`."
+declare kind "Typo"
+declare becomes "half an hour"
+
+test "It took half an our to get there." "It took half an hour to get there."

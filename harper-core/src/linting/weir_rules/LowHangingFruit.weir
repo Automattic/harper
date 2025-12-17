@@ -1,0 +1,10 @@
+set main [(low hanging fruit), (low hanging fruits), (low-hanging fruits)]
+
+declare message "The standard form is `low-hanging fruit` with a hyphen and singular form."
+declare description "Corrects nonstandard variants of `low-hanging fruit`."
+declare kind "Usage"
+declare becomes "low-hanging fruit"
+
+test "If you add me as a collaborator i can start merging some of the low hanging fruit." "If you add me as a collaborator i can start merging some of the low-hanging fruit."
+test "Field guide to gather low-hanging fruits." "Field guide to gather low-hanging fruit."
+test "Will search for low hanging fruits and useful information for escalation on a compromised workstation." "Will search for low-hanging fruit and useful information for escalation on a compromised workstation."

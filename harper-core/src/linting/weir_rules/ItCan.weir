@@ -1,0 +1,7 @@
+set main (It cam)
+
+declare message "Did you mean `It can`?"
+declare description "Corrects the misspelling `It cam` to the proper phrase `It can`."
+declare kind "Typo"
+declare becomes "It can"
+

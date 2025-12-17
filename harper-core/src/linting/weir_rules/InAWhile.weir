@@ -1,0 +1,8 @@
+set main (in while)
+
+declare message "When describing a timeframe, use `a while`."
+declare description "Corrects the missing article in `in while`, forming `in a while`."
+declare kind "Grammar"
+declare becomes "in a while"
+
+test "We’ll talk again in while." "We’ll talk again in a while."

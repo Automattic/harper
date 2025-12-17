@@ -82,12 +82,16 @@ impl WeirLinter {
             }
         };
 
-        let lint_kind = ast
-            .get_variable_value(lint_kind_name)
-            .ok_or(Error::ExpectedVariableUndefined)?
-            .as_string()
-            .ok_or(Error::ExpectedDifferentVariableType)?;
-        let lint_kind = LintKind::from_string_key(lint_kind).ok_or(Error::InvalidLintKind)?;
+        let lint_kind_var = ast.get_variable_value(lint_kind_name);
+
+        let lint_kind = if let Some(lint_kind) = lint_kind_var {
+            let str = lint_kind
+                .as_string()
+                .ok_or(Error::ExpectedDifferentVariableType)?;
+            LintKind::from_string_key(str).ok_or(Error::InvalidLintKind)?
+        } else {
+            LintKind::Miscellaneous
+        };
 
         let linter = WeirLinter {
             ast,
@@ -108,6 +112,36 @@ impl WeirLinter {
 
     /// Runs the tests defined in the source code, returning any failing results.
     pub fn run_tests(&mut self) -> Vec<TestResult> {
+        fn matches_within_first_three_suggestions(
+            lints: &[Lint],
+            start: Vec<char>,
+            to_be: &str,
+        ) -> bool {
+            fn dfs(lints: &[Lint], i: usize, current: Vec<char>, to_be: &str) -> bool {
+                if i == lints.len() {
+                    return current.into_iter().collect::<String>() == to_be;
+                }
+
+                let lint = &lints[i];
+
+                if lint.suggestions.is_empty() {
+                    return dfs(lints, i + 1, current, to_be);
+                }
+
+                for sug in lint.suggestions.iter().take(3) {
+                    let mut next = current.clone();
+                    sug.apply(lint.span, &mut next);
+                    if dfs(lints, i + 1, next, to_be) {
+                        return true;
+                    }
+                }
+
+                false
+            }
+
+            dfs(lints, 0, start, to_be)
+        }
+
         let ast = self.ast.clone();
         let mut results = Vec::new();
 
@@ -115,20 +149,21 @@ impl WeirLinter {
             let doc = Document::new_curated(expect, &PlainEnglish);
             let lints = self.lint(&doc);
 
-            let mut output = expect.chars().collect();
-
-            for lint in lints {
-                if let Some(sug) = lint.suggestions.first() {
-                    sug.apply(lint.span, &mut output);
+            let mut default_output: Vec<char> = expect.chars().collect();
+            for lint in &lints {
+                if let Some(sug) = lint.suggestions.iter().take(3).next() {
+                    sug.apply(lint.span, &mut default_output);
                 }
             }
+            let default_output: String = default_output.into_iter().collect();
 
-            let output: String = output.into_iter().collect();
+            let passed =
+                matches_within_first_three_suggestions(&lints, expect.chars().collect(), to_be);
 
-            if !output.chars().eq(to_be.chars()) {
+            if !passed {
                 results.push(TestResult {
                     expected: to_be.to_string(),
-                    got: output,
+                    got: default_output,
                 });
             }
         }
@@ -144,14 +179,17 @@ impl ExprLinter for WeirLinter {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let span = matched_tokens.span()?;
+        let orig = span.get_content(source);
+
         Some(Lint {
-            span: matched_tokens.span()?,
+            span,
             lint_kind: self.lint_kind,
             suggestions: self
                 .replacements
                 .iter()
-                .map(|s| Suggestion::ReplaceWith(s.chars().collect()))
+                .map(|s| Suggestion::replace_with_match_case(s.chars().collect(), orig))
                 .collect(),
             message: self.message.to_owned(),
             priority: 127,
@@ -164,8 +202,13 @@ impl ExprLinter for WeirLinter {
 }
 
 #[cfg(test)]
-mod tests {
+pub mod tests {
     use super::{TestResult, WeirLinter};
+
+    #[track_caller]
+    pub fn assert_passes_all(linter: &mut WeirLinter) {
+        assert_eq!(Vec::<TestResult>::new(), linter.run_tests());
+    }
 
     #[test]
     fn simple_right_click_linter() {
@@ -187,8 +230,7 @@ mod tests {
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
-
-        assert_eq!(Vec::<TestResult>::new(), linter.run_tests());
+        assert_passes_all(&mut linter);
         assert_eq!(8, linter.count_tests());
     }
 
@@ -209,7 +251,7 @@ mod tests {
 
         let mut linter = WeirLinter::new(source).unwrap();
 
-        assert_eq!(Vec::<TestResult>::new(), linter.run_tests());
+        assert_passes_all(&mut linter);
         assert_eq!(4, linter.count_tests());
     }
 }

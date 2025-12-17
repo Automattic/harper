@@ -6,7 +6,7 @@ use super::{LintGroup, MapPhraseLinter};
 mod tests;
 
 /// Produce a [`LintGroup`] that looks for errors in common phrases.
-/// Comes pre-configured with the recommended default settings.
+/// Comes preconfigured with the recommended default settings.
 pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::default();
 

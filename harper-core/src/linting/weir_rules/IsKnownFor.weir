@@ -1,0 +1,7 @@
+set main (is know for)
+
+declare message "Did you mean `is known for`?"
+declare description "Typo: `known` is the correct past participle."
+declare kind "Typo"
+declare becomes "is known for"
+

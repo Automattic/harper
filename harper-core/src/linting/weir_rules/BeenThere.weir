@@ -1,0 +1,7 @@
+set main (bee there)
+
+declare message "Did you mean `been there`?"
+declare description "Corrects the misspelling `bee there` to the proper phrase `been there`."
+declare kind "Typo"
+declare becomes "been there"
+

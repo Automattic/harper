@@ -1,0 +1,8 @@
+set main [(on mass), (on masse), (in mass)]
+
+declare message "Did you mean `en masse`?"
+declare description "Detects variants like `on mass` or `in mass` and suggests `en masse`."
+declare kind "Eggcorn"
+declare becomes "en masse"
+
+test "in mass" "en masse"

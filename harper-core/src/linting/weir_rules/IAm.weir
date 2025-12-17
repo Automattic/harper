@@ -1,0 +1,7 @@
+set main (I a m)
+
+declare message "Did you mean `I am`?"
+declare description "Fixes the incorrect spacing in `I a m` to properly form `I am`."
+declare kind "Typo"
+declare becomes "I am"
+

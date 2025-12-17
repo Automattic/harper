@@ -1,0 +1,7 @@
+set main (w/)
+
+declare message "Use `with` instead of `w/`"
+declare description "Expands the abbreviation `w/` to the full word `with` for clarity."
+declare kind "Style"
+declare becomes "with"
+

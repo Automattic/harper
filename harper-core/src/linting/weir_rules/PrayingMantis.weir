@@ -1,0 +1,7 @@
+set main (preying mantis)
+
+declare message "Use the insect's correct name."
+declare description "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose."
+declare kind "Eggcorn"
+declare becomes "praying mantis"
+

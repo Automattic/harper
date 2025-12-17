@@ -1,0 +1,8 @@
+set main (hunger pain)
+
+declare message "Did you mean `hunger pang`?"
+declare description "Corrects `hunger pain` to `hunger pang`."
+declare kind "Eggcorn"
+declare becomes "hunger pang"
+
+test "hunger pain" "hunger pang"

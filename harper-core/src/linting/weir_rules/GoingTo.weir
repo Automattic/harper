@@ -1,0 +1,7 @@
+set main (gong to)
+
+declare message "Did you mean `going to`?"
+declare description "Corrects `gong to` to the intended phrase `going to`."
+declare kind "Typo"
+declare becomes "going to"
+

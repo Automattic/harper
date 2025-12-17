@@ -1,0 +1,7 @@
+set main (just desserts)
+
+declare message "Use the correct phrase for receiving what one deserves."
+declare description "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+declare kind "Spelling"
+declare becomes "just deserts"
+

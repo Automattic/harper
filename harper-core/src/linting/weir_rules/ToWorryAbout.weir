@@ -1,0 +1,8 @@
+set main (to worried about)
+
+declare message "Did you mean the progressive form?"
+declare description "Fixes incorrect use of `to worried about`."
+declare becomes ["to worry about", "too worried about"]
+
+test "I don't want you to worried about it." "I don't want you to worry about it."
+test "I don't want you to worried about it." "I don't want you too worried about it."

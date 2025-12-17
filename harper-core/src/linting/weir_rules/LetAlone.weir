@@ -1,0 +1,8 @@
+set main (let along)
+
+declare message "Did you mean `let alone`?"
+declare description "Changes `let along` to `let alone`."
+declare kind "Typo"
+declare becomes "let alone"
+
+test "let along" "let alone"

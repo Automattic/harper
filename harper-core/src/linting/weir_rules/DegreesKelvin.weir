@@ -1,0 +1,9 @@
+set main [(degrees kelvin), (degrees Kelvin), (degree kelvin), (degree Kelvin)]
+
+declare message "Use `kelvins` when discussing the unit Kelvin."
+declare description "Corrects use of `degrees kelvin` to `kelvins`."
+declare kind "Usage"
+declare becomes ["kelvins", "kelvin"]
+
+test "degrees kelvin" "kelvins"
+test "°K" "K"

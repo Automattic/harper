@@ -1,0 +1,9 @@
+set main [(last ditch), (last ditched), (last-ditched)]
+
+declare message "In this idiom, `ditch` is a noun and a hyphen is needed."
+declare description "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+declare kind "Usage"
+declare becomes "last-ditch"
+
+test "I was actually just trying that as a last ditched attempt to get it working, previously those ..." "I was actually just trying that as a last-ditch attempt to get it working, previously those ..."
+test "There are unique use cases and is meant to be a last ditch option." "There are unique use cases and is meant to be a last-ditch option."

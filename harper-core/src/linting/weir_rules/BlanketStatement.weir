@@ -1,0 +1,8 @@
+set main (blanketed statement)
+
+declare message "Use the more idiomatic phrasing."
+declare description "Corrects common errors in the phrase `blanket statement`."
+declare kind "Usage"
+declare becomes "blanket statement"
+
+test "This seems like a blanketed statement and I have not found any info to back up whether PyJWT is affected." "This seems like a blanket statement and I have not found any info to back up whether PyJWT is affected."

@@ -1,0 +1,8 @@
+set main (brutalness)
+
+declare message "This word has a more standard, more common synonym."
+declare description "Suggests the more standard and common synonym `brutality`."
+declare kind "WordChoice"
+declare becomes "brutality"
+
+test "the mildness and brutalness of the story rises." "the mildness and brutality of the story rises."

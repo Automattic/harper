@@ -1,0 +1,8 @@
+set main (kinda of)
+
+declare message "`Kinda` already means `kind of`, so `kinda of` is redundant."
+declare description "Corrects `kinda of` to `kind of`."
+declare kind "Redundancy"
+declare becomes ["kind of", "kinda"]
+
+test "Some kinda of Sync issue only with 0.79.1" "Some kind of Sync issue only with 0.79.1"

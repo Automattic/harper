@@ -1,0 +1,8 @@
+set main (case and point)
+
+declare message "`Case in point` is the correct form of the phrase."
+declare description "Corrects `case and point` to `case in point`."
+declare kind "Malapropism"
+declare becomes "case in point"
+
+test "They are just not as high of a priority as other tasks that user's are requesting for, a case and point is I have never ran into this issue." "They are just not as high of a priority as other tasks that user's are requesting for, a case in point is I have never ran into this issue."

@@ -1,0 +1,7 @@
+set main (free reign)
+
+declare message "Use the correct phrase for unrestricted control."
+declare description "Ensures the correct use of `free rein`, avoiding confusion with `free reign`, which incorrectly suggests authority rather than freedom of action."
+declare kind "Eggcorn"
+declare becomes "free rein"
+

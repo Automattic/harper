@@ -1,0 +1,7 @@
+set main (min)
+
+declare message "Use `minimum` instead of `min`"
+declare description "Expands the abbreviation `min` to the full word `minimum` for clarity."
+declare kind "Style"
+declare becomes "minimum"
+

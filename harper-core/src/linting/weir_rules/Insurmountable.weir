@@ -1,0 +1,8 @@
+set main (unsurmountable)
+
+declare message "This word has a more standard, more common synonym."
+declare description "Suggests the more standard and common synonym `insurmountable`."
+declare kind "WordChoice"
+declare becomes "insurmountable"
+
+test "That being said, if you find upgrading to newer versions to be unsurmountable, please open an issue." "That being said, if you find upgrading to newer versions to be insurmountable, please open an issue."

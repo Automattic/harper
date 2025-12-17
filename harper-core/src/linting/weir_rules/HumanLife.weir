@@ -1,0 +1,7 @@
+set main (human live)
+
+declare message "Did you mean `human life`?"
+declare description "Changes `human live` to `human life`."
+declare kind "Typo"
+declare becomes "human life"
+

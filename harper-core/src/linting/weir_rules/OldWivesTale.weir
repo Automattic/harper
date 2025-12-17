@@ -1,0 +1,7 @@
+set main (old wise tale)
+
+declare message "Use the correct phrase for a superstition or myth."
+declare description "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
+declare kind "Eggcorn"
+declare becomes "old wives' tale"
+

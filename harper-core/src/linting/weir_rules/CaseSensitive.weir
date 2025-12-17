@@ -1,0 +1,7 @@
+set main (case sensitive)
+
+declare message "Use the hyphenated form for `case-sensitive`."
+declare description "Ensures `case-sensitive` is correctly hyphenated."
+declare kind "Punctuation"
+declare becomes "case-sensitive"
+

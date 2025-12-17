@@ -1,0 +1,7 @@
+set main (w/o)
+
+declare message "Use `without` instead of `w/o`"
+declare description "Expands the abbreviation `w/o` to the full word `without` for clarity."
+declare kind "Style"
+declare becomes "without"
+

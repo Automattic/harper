@@ -1,0 +1,8 @@
+set main (in need for)
+
+declare message "Use `in need of` for when something is required or necessary."
+declare description "Corrects `in need for` to `in need of`."
+declare kind "Usage"
+declare becomes "in need of"
+
+test "In need for a native control for map symbols (map legend) #5203." "In need of a native control for map symbols (map legend) #5203."

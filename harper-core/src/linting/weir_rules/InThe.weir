@@ -1,0 +1,7 @@
+set main (int he)
+
+declare message "Did you mean `in the`?"
+declare description "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+declare kind "Typo"
+declare becomes "in the"
+

@@ -1,0 +1,9 @@
+set main (in anyway)
+
+declare message "Use `in any way` for emphasizing a point."
+declare description "Corrects ungrammatical `in anyway` to `in any way`."
+declare kind "BoundaryError"
+declare becomes "in any way"
+
+test "in anyway" "in any way"
+test "The names should not affect your application in anyway and you can override extension names." "The names should not affect your application in any way and you can override extension names."

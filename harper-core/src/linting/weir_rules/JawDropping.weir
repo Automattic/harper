@@ -1,0 +1,7 @@
+set main (jar-dropping)
+
+declare message "Use the correct phrase for something astonishing."
+declare description "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement."
+declare kind "Eggcorn"
+declare becomes "jaw-dropping"
+

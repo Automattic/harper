@@ -1,0 +1,7 @@
+set main [(fast paste), (fast-paste)]
+
+declare message "Did you mean `fast-paced`?"
+declare description "Detects incorrect usage of `fast paste` or `fast-paste` and suggests `fast-paced` as the correct phrase."
+declare kind "Eggcorn"
+declare becomes "fast-paced"
+

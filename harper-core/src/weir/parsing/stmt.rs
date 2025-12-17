@@ -92,7 +92,6 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                         ))
                     } else {
                         let open_brac_tok = &tokens[cursor + 4];
-                        dbg!(&open_brac_tok.kind);
                         if !open_brac_tok.kind.is_open_square() {
                             return Err(Error::UnexpectedToken(
                                 open_brac_tok.span.get_content_string(source),
@@ -162,6 +161,19 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
 }
 
 fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<String>, Error> {
+    fn is_escaped(pos: usize, source: &[char]) -> bool {
+        if pos == 0 {
+            return false;
+        }
+        let mut i = pos;
+        let mut n = 0;
+        while i > 0 && source[i - 1] == '\\' {
+            n += 1;
+            i -= 1;
+        }
+        n % 2 == 1
+    }
+
     let mut cursor = 0;
 
     inc_by_spaces(&mut cursor, tokens);
@@ -173,14 +185,18 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
         ));
     }
 
-    let end = tokens
-        .iter()
-        .enumerate()
-        .skip(cursor + 1)
-        .find_map(|(i, v)| v.kind.is_quote().then(|| i))
-        .ok_or(Error::EndOfInput)?;
+    let mut end = None;
+    for (i, tok) in tokens.iter().enumerate().skip(cursor + 1) {
+        if tok.kind.is_quote() {
+            let qpos = tok.span.start;
+            if !is_escaped(qpos, source) {
+                end = Some(i);
+                break;
+            }
+        }
+    }
 
-    dbg!(cursor, end);
+    let end = end.ok_or(Error::EndOfInput)?;
 
     Ok(FoundNode {
         node: tokens[cursor + 1..end]

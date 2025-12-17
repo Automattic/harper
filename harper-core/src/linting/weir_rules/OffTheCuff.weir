@@ -1,0 +1,7 @@
+set main (off the cuff)
+
+declare message "Use the hyphenated form for `off-the-cuff`."
+declare description "Ensures `off-the-cuff` is correctly hyphenated."
+declare kind "Punctuation"
+declare becomes "off-the-cuff"
+

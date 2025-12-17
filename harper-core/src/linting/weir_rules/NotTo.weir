@@ -1,0 +1,7 @@
+set main (no to)
+
+declare message "Did you mean `not to`?"
+declare description "Corrects `no to` to `not to`, ensuring proper negation."
+declare kind "Typo"
+declare becomes "not to"
+

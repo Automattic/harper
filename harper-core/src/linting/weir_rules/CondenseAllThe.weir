@@ -1,0 +1,7 @@
+set main (all of the)
+
+declare message "Consider simplifying to `all the`."
+declare description "Suggests removing `of` in `all of the` for a more concise phrase."
+declare kind "Redundancy"
+declare becomes "all the"
+

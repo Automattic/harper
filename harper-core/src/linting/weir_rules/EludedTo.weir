@@ -1,0 +1,7 @@
+set main (eluded to)
+
+declare message "Did you mean `alluded to`?"
+declare description "Corrects `eluded to` to `alluded to` in contexts referring to indirect references."
+declare kind "Malapropism"
+declare becomes "alluded to"
+

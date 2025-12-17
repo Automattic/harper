@@ -1,0 +1,7 @@
+set main (face first into)
+
+declare message "Should this be `face-first`?"
+declare description "Ensures `face first` is correctly hyphenated as `face-first` when used before `into`."
+declare kind "Punctuation"
+declare becomes "face-first into"
+

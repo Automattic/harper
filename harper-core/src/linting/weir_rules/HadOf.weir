@@ -1,0 +1,7 @@
+set main (had of)
+
+declare message "Did you mean `had have` or `had've`?"
+declare description "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
+declare kind "Grammar"
+declare becomes ["had have", "had've"]
+

@@ -1,0 +1,7 @@
+set main (back and call)
+
+declare message "Did you mean `beck and call`?"
+declare description "Fixes `back and call` to `beck and call`."
+declare kind "Eggcorn"
+declare becomes "beck and call"
+

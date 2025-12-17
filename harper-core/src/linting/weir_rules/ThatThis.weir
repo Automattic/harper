@@ -1,0 +1,7 @@
+set main (the this)
+
+declare message "Did you mean `that this`?"
+declare description "Fixes `the this` to the correct phrase `that this`."
+declare kind "Typo"
+declare becomes "that this"
+

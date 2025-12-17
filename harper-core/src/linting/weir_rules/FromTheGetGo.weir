@@ -1,0 +1,7 @@
+set main (from the get go)
+
+declare message "Use the hyphenated form: `from the get-go`."
+declare description "Ensures `from the get-go` is correctly hyphenated, preserving the idiom’s meaning of ‘from the very beginning’."
+declare kind "Punctuation"
+declare becomes "from the get-go"
+

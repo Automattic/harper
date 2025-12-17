@@ -1,0 +1,8 @@
+set main [(bed rap), (bad rep)]
+
+declare message "Did you mean `bad rap`?"
+declare description "Changes `bed rap` to the proper idiom `bad rap`."
+declare kind "Eggcorn"
+declare becomes "bad rap"
+
+test "bad rep" "bad rap"

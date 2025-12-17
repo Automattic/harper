@@ -1,0 +1,7 @@
+set main (real trooper)
+
+declare message "Use the correct phrase for someone who perseveres."
+declare description "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+declare kind "Eggcorn"
+declare becomes "real trouper"
+

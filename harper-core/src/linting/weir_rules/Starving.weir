@@ -1,0 +1,7 @@
+set main [(very hungry), (really hungry), (extremely hungry)]
+
+declare message "A more vivid adjective would better convey intense hunger."
+declare description "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
+declare kind "Enhancement"
+declare becomes "starving"
+

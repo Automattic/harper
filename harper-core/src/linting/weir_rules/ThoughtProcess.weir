@@ -1,0 +1,7 @@
+set main (though process)
+
+declare message "Did you mean `thought process`?"
+declare description "Changes `though process` to `thought process`."
+declare kind "Typo"
+declare becomes "thought process"
+

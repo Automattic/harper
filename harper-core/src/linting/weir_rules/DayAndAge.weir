@@ -1,0 +1,7 @@
+set main (day in age)
+
+declare message "Use `day and age` for referring to the present time."
+declare description "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
+declare kind "Eggcorn"
+declare becomes "day and age"
+

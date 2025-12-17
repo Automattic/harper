@@ -1,0 +1,7 @@
+set main (in one foul swoop)
+
+declare message "Use the correct phrase for something happening suddenly."
+declare description "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
+declare kind "Eggcorn"
+declare becomes "in one fell swoop"
+

@@ -1,0 +1,8 @@
+set main [(teh), (te)]
+
+declare message "Did you mean the definite article?"
+declare description "Fixes especially common misspellings of the word `the`"
+declare kind "Typo"
+declare becomes "the"
+
+test "I adore teh light of the moon." "I adore the light of the moon."

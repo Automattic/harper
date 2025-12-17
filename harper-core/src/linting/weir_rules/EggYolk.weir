@@ -1,0 +1,17 @@
+set main (egg yoke)
+
+declare message "Use `egg yolk` when you mean the yellow portion of an egg."
+declare description "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`."
+declare kind "Eggcorn"
+declare becomes "egg yolk"
+
+test "She whisked the egg yoke briskly." "She whisked the egg yolk briskly."
+test "Egg yoke is rich in nutrients." "Egg yolk is rich in nutrients."
+test "Add the EGG YOKE to the batter." "Add the EGG YOLK to the batter."
+test "Separate the egg yoke, then fold it in." "Separate the egg yolk, then fold it in."
+test "The runny egg yoke spilled over the toast." "The runny egg yolk spilled over the toast."
+test "Blend the cream with each egg yoke before baking." "Blend the cream with each egg yolk before baking."
+test "The custard calls for one egg yolk." "The custard calls for one egg yolk."
+test "Reserve the egg yolks for later." "Reserve the egg yolks for later."
+test "The artisan carved a wooden yoke for the oxen." "The artisan carved a wooden yoke for the oxen."
+test "Crack the eggs so no yoke spills." "Crack the eggs so no yoke spills."

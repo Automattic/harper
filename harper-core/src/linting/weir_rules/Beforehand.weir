@@ -1,0 +1,9 @@
+set main [(before hand), (before-hand)]
+
+declare message "Prefer the single-word adverb `beforehand`."
+declare description "`Beforehand` functions as a fixed adverb meaning ‘in advance’; writing it as two words or with a hyphen is nonstandard and can jar readers."
+declare becomes "beforehand"
+
+test "Let me know before hand if you will attend." "Let me know beforehand if you will attend."
+test "I prepared the documents before-hand." "I prepared the documents beforehand."
+test "We finished the preparations beforehand." "We finished the preparations beforehand."

@@ -1,0 +1,7 @@
+set main (beat regards)
+
+declare message "Use `best regards` to convey sincere well wishes in a closing."
+declare description "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+declare kind "Typo"
+declare becomes "best regards"
+

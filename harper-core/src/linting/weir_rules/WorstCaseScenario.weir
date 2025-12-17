@@ -1,0 +1,10 @@
+set main [(worst case scenario), (worst-case-scenario)]
+
+declare message "Hyphenate `worst-case`."
+declare description "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+declare kind "Punctuation"
+declare becomes "worst-case scenario"
+
+test "The worst case scenario can be calculated without looking at streams of data." "The worst-case scenario can be calculated without looking at streams of data."
+test "CAPD worst-case-scenario cloud simulator for naughty clouds." "CAPD worst-case scenario cloud simulator for naughty clouds."
+test "Those are now on hold for month." "Those are now on hold for month."

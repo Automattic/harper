@@ -1,0 +1,9 @@
+set main (each and everyone)
+
+declare message "Use `each and every one` for referring to a group of people or things."
+declare description "Corrects `each and everyone` to `each and every one`."
+declare kind "BoundaryError"
+declare becomes "each and every one"
+
+test "each and everyone" "each and every one"
+test "I have modified each and everyone of them to keep only the best of the best!" "I have modified each and every one of them to keep only the best of the best!"

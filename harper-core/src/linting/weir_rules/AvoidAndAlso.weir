@@ -1,0 +1,7 @@
+set main (and also)
+
+declare message "Consider using just `and`."
+declare description "Reduces redundancy by replacing `and also` with `and`."
+declare kind "Redundancy"
+declare becomes "and"
+

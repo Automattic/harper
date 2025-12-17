@@ -1,0 +1,7 @@
+set main (in of itself)
+
+declare message "Use `in itself` (more common) or `in and of itself` (more formal) to mean 'intrinsically'."
+declare description "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`."
+declare kind "Usage"
+declare becomes ["in itself", "in and of itself"]
+

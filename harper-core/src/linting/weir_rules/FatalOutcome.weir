@@ -1,0 +1,7 @@
+set main (fatal outcome)
+
+declare message "Consider using `death` for clarity."
+declare description "Replaces `fatal outcome` with the more direct term `death` for conciseness."
+declare kind "Style"
+declare becomes "death"
+

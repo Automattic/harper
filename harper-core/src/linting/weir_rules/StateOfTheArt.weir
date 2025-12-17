@@ -1,0 +1,7 @@
+set main (state of art)
+
+declare message "Did you mean `state of the art`?"
+declare description "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
+declare kind "Usage"
+declare becomes "state of the art"
+

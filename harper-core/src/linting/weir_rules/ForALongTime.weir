@@ -1,0 +1,8 @@
+set main (for along time)
+
+declare message "Use the standard phrase `for a long time` to indicate an extended duration."
+declare description "Eliminates the incorrect merging in `for along time`."
+declare kind "Grammar"
+declare becomes "for a long time"
+
+test "I was stuck there for along time." "I was stuck there for a long time."

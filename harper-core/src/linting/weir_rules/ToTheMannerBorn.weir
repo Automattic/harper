@@ -1,0 +1,7 @@
+set main (to the manor born)
+
+declare message "Use the correct phrase for being naturally suited to something."
+declare description "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
+declare kind "Eggcorn"
+declare becomes "to the manner born"
+

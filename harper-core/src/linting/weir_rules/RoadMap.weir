@@ -1,0 +1,7 @@
+set main (roadmap)
+
+declare message "Did you mean `road map`?"
+declare description "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
+declare kind "WordChoice"
+declare becomes "road map"
+

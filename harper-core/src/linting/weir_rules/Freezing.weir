@@ -1,0 +1,7 @@
+set main [(very cold), (really cold), (extremely cold)]
+
+declare message "A more vivid adjective would better capture extreme cold."
+declare description "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
+declare kind "Enhancement"
+declare becomes "freezing"
+

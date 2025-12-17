@@ -1,0 +1,8 @@
+set main (far and few between)
+
+declare message "The correct idiom is `few and far between`?"
+declare description "Corrects `far and few between` to the standard idiom `few and far between`."
+declare kind "Eggcorn"
+declare becomes "few and far between"
+
+test "Their neighbors were far and few between, which only made it even more unlikely that surveillance footage recovered from their properties could help." "Their neighbors were few and far between, which only made it even more unlikely that surveillance footage recovered from their properties could help."

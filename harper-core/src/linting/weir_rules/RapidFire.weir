@@ -1,0 +1,7 @@
+set main (rapid fire)
+
+declare message "It is more idiomatic to hypenate `rapid-fire`."
+declare description "Checks to ensure writers hyphenate `rapid-fire`."
+declare kind "Punctuation"
+declare becomes "rapid-fire"
+

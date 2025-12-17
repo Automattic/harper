@@ -1,0 +1,7 @@
+set main (ned help)
+
+declare message "Did you mean `need help`?"
+declare description "Changes `ned help` to the correct `need help`."
+declare kind "Typo"
+declare becomes "need help"
+

@@ -1,0 +1,8 @@
+set main (I does)
+
+declare message "`I` pairs with the bare verb `do`; the –s inflection `does` is reserved for third-person singular subjects."
+declare description "Corrects `I does` to `I do`."
+declare kind "Agreement"
+declare becomes "I do"
+
+test "I does enjoy writing Rust." "I do enjoy writing Rust."

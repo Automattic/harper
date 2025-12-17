@@ -1,0 +1,7 @@
+set main (the feeble position)
+
+declare message "Use the correct term for a curled-up posture."
+declare description "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
+declare kind "Malapropism"
+declare becomes "the fetal position"
+

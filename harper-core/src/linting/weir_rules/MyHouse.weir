@@ -1,0 +1,7 @@
+set main (mu house)
+
+declare message "Did you mean `my house`?"
+declare description "Fixes the typo `mu house` to `my house`."
+declare kind "Typo"
+declare becomes "my house"
+

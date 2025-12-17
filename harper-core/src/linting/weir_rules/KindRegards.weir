@@ -1,0 +1,7 @@
+set main (kid regards)
+
+declare message "Did you mean `kind regards`?"
+declare description "Changes `kid regards` to `kind regards`."
+declare kind "Typo"
+declare becomes "kind regards"
+

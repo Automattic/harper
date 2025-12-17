@@ -1,0 +1,8 @@
+set main (every since)
+
+declare message "Did you mean `ever since`?"
+declare description "Corrects `every since` to `ever since`."
+declare kind "Typo"
+declare becomes "ever since"
+
+test "einstein been real quiet every since this dropped" "einstein been real quiet ever since this dropped"

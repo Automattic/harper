@@ -1,0 +1,8 @@
+set main (that that)
+
+declare message "Consider whether the second `that` adds meaning in this context."
+declare description "There is rarely a situation where `that that` cannot be condensed into a single token."
+declare kind "Repetition"
+declare becomes "that"
+
+test "I know that that answer is correct" "I know that answer is correct"

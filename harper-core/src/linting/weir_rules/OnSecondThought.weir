@@ -1,0 +1,10 @@
+set main (on second though)
+
+declare message "Idiomatic expression: use `on second thought` instead of `on second though`"
+declare description "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+declare kind "Typo"
+declare becomes "on second thought"
+
+test "I was going to buy it, but on second though, maybe I'll wait." "I was going to buy it, but on second thought, maybe I'll wait."
+test "She considered driving home, but on second thought, she decided to walk." "She considered driving home, but on second thoughtt, she decided to walk."
+test "My second though is that I'd prefer something else entirely." "My second though is that I'd prefer something else entirely."

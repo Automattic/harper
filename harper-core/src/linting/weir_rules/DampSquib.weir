@@ -1,0 +1,7 @@
+set main (damp squid)
+
+declare message "Use the correct phrase for a disappointing outcome."
+declare description "Corrects the eggcorn `damp squid` to `damp squib`, ensuring the intended meaning of a failed or underwhelming outcome."
+declare kind "Eggcorn"
+declare becomes "damp squib"
+

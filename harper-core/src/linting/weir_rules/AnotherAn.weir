@@ -1,0 +1,8 @@
+set main (another an)
+
+declare message "Use `another` on its own."
+declare description "Corrects `another an` to `another`."
+declare kind "Redundancy"
+declare becomes "another"
+
+test "Yet another an atomic deployment tool." "Yet another atomic deployment tool."

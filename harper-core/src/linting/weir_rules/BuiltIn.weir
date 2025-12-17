@@ -1,0 +1,7 @@
+set main [(in built), (in-built), (built in)]
+
+declare message "Prefer the hyphenated compound `built-in`."
+declare description "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
+declare becomes "built-in"
+declare kind "Punctuation"
+

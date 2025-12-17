@@ -1,0 +1,6 @@
+set main (todo)
+
+declare message "Hyphenate `to-do`."
+declare description "Ensures `to-do` is correctly hyphenated."
+declare becomes "to-do"
+

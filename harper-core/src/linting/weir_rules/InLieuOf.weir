@@ -1,0 +1,10 @@
+set main (in lue of)
+
+declare message "Did you mean `in lieu of`?"
+declare description "Corrects the misspelling `in lue of` to `in lieu of`."
+declare kind "Spelling"
+declare becomes "in lieu of"
+
+test "Controller Emulation in lue of Direct Controller binding" "Controller Emulation in lieu of Direct Controller binding"
+test "in of itself" "in and of itself"
+test "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..." "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..."

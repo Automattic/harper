@@ -1,0 +1,8 @@
+set main (another things)
+
+declare message "`another` is singular but `things` is plural."
+declare description "Corrects `another things`."
+declare kind "Agreement"
+declare becomes ["another thing", "other things"]
+
+test "Another things to fix in the Mask editor" "Other things to fix in the Mask editor"

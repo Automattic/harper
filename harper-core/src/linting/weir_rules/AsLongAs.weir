@@ -1,0 +1,8 @@
+set main (aslong as)
+
+declare message "`As long` should be written as two words."
+declare description "Corrects `aslong as` to `as long as`."
+declare kind "BoundaryError"
+declare becomes "as long as"
+
+test "server loads up fine but cant log on client side aslong as the plugin is installed" "server loads up fine but cant log on client side as long as the plugin is installed"
