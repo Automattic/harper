@@ -1,7 +1,7 @@
-set main (all of the)
+expr main (all of the)
 
-declare message "Consider simplifying to `all the`."
-declare description "Suggests removing `of` in `all of the` for a more concise phrase."
-declare kind "Redundancy"
-declare becomes "all the"
+let message "Consider simplifying to `all the`."
+let description "Suggests removing `of` in `all of the` for a more concise phrase."
+let kind "Redundancy"
+let becomes "all the"
 

@@ -1,7 +1,7 @@
-set main (human live)
+expr main (human live)
 
-declare message "Did you mean `human life`?"
-declare description "Changes `human live` to `human life`."
-declare kind "Typo"
-declare becomes "human life"
+let message "Did you mean `human life`?"
+let description "Changes `human live` to `human life`."
+let kind "Typo"
+let becomes "human life"
 

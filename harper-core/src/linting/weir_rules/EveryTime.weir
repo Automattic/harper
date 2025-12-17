@@ -1,8 +1,8 @@
-set main (everytime)
+expr main (everytime)
 
-declare message "`Everytime` as a single word is proscribed. Use `every time` instead."
-declare description "Corrects `everytime` to `every time`."
-declare kind "Usage"
-declare becomes "every time"
+let message "`Everytime` as a single word is proscribed. Use `every time` instead."
+let description "Corrects `everytime` to `every time`."
+let kind "Usage"
+let becomes "every time"
 
 test "Init tool everytime a file in a directory is modified" "Init tool every time a file in a directory is modified"

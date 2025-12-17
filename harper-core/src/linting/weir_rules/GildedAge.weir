@@ -1,10 +1,10 @@
-set main (guilded age)
+expr main (guilded age)
 
-declare message "The period of economic prosperity is called the `Gilded Age`."
-declare description "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
-declare kind "Eggcorn"
-declare becomes "Gilded Age"
-declare strategy "Exact"
+let message "The period of economic prosperity is called the `Gilded Age`."
+let description "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
+let kind "Eggcorn"
+let becomes "Gilded Age"
+let strategy "Exact"
 
 test "It is especially a reflection of the socio-economic patterns in the Guilded Age." "It is especially a reflection of the socio-economic patterns in the Gilded Age."
 test "It is especially a reflection of the socio-economic patterns in the guilded age." "It is especially a reflection of the socio-economic patterns in the Gilded Age."

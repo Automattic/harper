@@ -1,9 +1,9 @@
-set main (ever present)
+expr main (ever present)
 
-declare message "Hyphenate `ever-present` when it functions as a compound adjective."
-declare description "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
-declare kind "Punctuation"
-declare becomes "ever-present"
+let message "Hyphenate `ever-present` when it functions as a compound adjective."
+let description "Corrects the missing hyphen in `ever present` to the compound adjective `ever-present`."
+let kind "Punctuation"
+let becomes "ever-present"
 
 test "ever present" "ever-present"
 test "Distrust was an ever present tension in the negotiations." "Distrust was an ever-present tension in the negotiations."

@@ -1,9 +1,9 @@
-set main (as early back as)
+expr main (as early back as)
 
-declare message "Use `as far back as` for referring to a time in the past."
-declare description "Corrects nonstandard `as early back as` to `as far back as`."
-declare kind "WordChoice"
-declare becomes "as far back as"
+let message "Use `as far back as` for referring to a time in the past."
+let description "Corrects nonstandard `as early back as` to `as far back as`."
+let kind "WordChoice"
+let becomes "as far back as"
 
 test "as early back as" "as far back as"
 test "skin overrides also supports a wide variety of minecraft versions - as early back as 1.14.4." "skin overrides also supports a wide variety of minecraft versions - as far back as 1.14.4."

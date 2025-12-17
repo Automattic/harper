@@ -1,7 +1,7 @@
-set main (sooner than later)
+expr main (sooner than later)
 
-declare message "Did you mean `sooner rather than later` or `sooner or later`?"
-declare description "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
-declare kind "Usage"
-declare becomes ["sooner rather than later", "sooner or later"]
+let message "Did you mean `sooner rather than later` or `sooner or later`?"
+let description "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
+let kind "Usage"
+let becomes ["sooner rather than later", "sooner or later"]
 

@@ -1,9 +1,9 @@
-set main (along time)
+expr main (along time)
 
-declare message "Use `a long time` for referring to a duration of time."
-declare description "Corrects `along time` to `a long time`."
-declare kind "Grammar"
-declare becomes "a long time"
+let message "Use `a long time` for referring to a duration of time."
+let description "Corrects `along time` to `a long time`."
+let kind "Grammar"
+let becomes "a long time"
 
 test "along time" "a long time"
 test "Fast refreshing is very slow had to wait along time for it to update." "Fast refreshing is very slow had to wait a long time for it to update."

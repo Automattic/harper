@@ -1,9 +1,9 @@
-set main [(human's beings), (humans beings)]
+expr main [(human's beings), (humans beings)]
 
-declare message "Use `human beings` to refer to people collectively."
-declare description "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`."
-declare kind "Grammar"
-declare becomes "human beings"
+let message "Use `human beings` to refer to people collectively."
+let description "Eliminates the incorrect possessive/plural usage like `human's beings` or `humans beings`."
+let kind "Grammar"
+let becomes "human beings"
 
 test "All humans beings deserve empathy." "All human beings deserve empathy."
 test "We should respect a human's beings fundamental rights." "We should respect a human beings fundamental rights."

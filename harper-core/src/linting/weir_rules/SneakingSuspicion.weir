@@ -1,8 +1,8 @@
-set main (sneaky suspicion)
+expr main (sneaky suspicion)
 
-declare message "Did you mean `sneaking suspicion`?"
-declare description "Changes `sneaky suspicion` to `sneaking suspicion`."
-declare kind "Eggcorn"
-declare becomes "sneaking suspicion"
+let message "Did you mean `sneaking suspicion`?"
+let description "Changes `sneaky suspicion` to `sneaking suspicion`."
+let kind "Eggcorn"
+let becomes "sneaking suspicion"
 
 test "sneaky suspicion" "sneaking suspicion"

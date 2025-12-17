@@ -67,7 +67,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
             let word_literal = key_token.span.get_content(source);
 
             match word_literal {
-                ['d', 'e', 'c', 'l', 'a', 'r', 'e'] => {
+                ['l', 'e', 't'] => {
                     expected_space(cursor + 1, tokens, source)?;
                     let name = tokens[cursor + 2].span.get_content_string(source);
                     expected_space(cursor + 3, tokens, source)?;
@@ -127,7 +127,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                         ))
                     }
                 }
-                ['s', 'e', 't'] => {
+                ['e', 'x', 'p', 'r'] => {
                     expected_space(cursor + 1, tokens, source)?;
 
                     Ok(FoundNode::new(
@@ -224,7 +224,7 @@ mod tests {
 
     #[test]
     fn parses_single_var_stmt() {
-        let ast = parse_str("declare test \"to be this\"", true).unwrap();
+        let ast = parse_str("let test \"to be this\"", true).unwrap();
 
         assert_eq!(
             ast.stmts,
@@ -241,7 +241,7 @@ mod tests {
 
     #[test]
     fn parses_single_var_stmt_with_lots_of_space() {
-        let ast = parse_str("declare            test \"to be this\"", true).unwrap();
+        let ast = parse_str("let            test \"to be this\"", true).unwrap();
 
         assert_eq!(
             ast.stmts,
@@ -258,7 +258,7 @@ mod tests {
 
     #[test]
     fn parses_single_var_stmt_array() {
-        let ast = parse_str("declare test [\"to be this\", \"and this\"]", true).unwrap();
+        let ast = parse_str("let test [\"to be this\", \"and this\"]", true).unwrap();
 
         let correct_var_val = AstVariable::Array(vec![
             AstVariable::create_string("to be this"),
@@ -278,7 +278,7 @@ mod tests {
     #[test]
     fn parses_single_expr_stmt() {
         assert_eq!(
-            parse_str("set main word", true).unwrap().stmts,
+            parse_str("expr main word", true).unwrap().stmts,
             vec![AstStmtNode::create_set_expr(
                 "main",
                 AstExprNode::Word(char_string!("word"))
@@ -334,7 +334,7 @@ mod tests {
     #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
-            "declare test \"to be this\"\nset main word\n# this is a comment",
+            "let test \"to be this\"\nexpr main word\n# this is a comment",
             true,
         )
         .unwrap();
@@ -363,8 +363,8 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn catches_non_whitespace_after_set() {
-        parse_str("set+this is a test", false).unwrap();
+    fn catches_non_whitespace_after_expr() {
+        parse_str("expr+this is a test", false).unwrap();
     }
 
     #[test]
@@ -381,14 +381,14 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn catches_non_whitespace_after_declare() {
-        parse_str("declare+var \"\"", false).unwrap();
+    fn catches_non_whitespace_after_let() {
+        parse_str("let+var \"\"", false).unwrap();
     }
 
     #[test]
     #[should_panic]
-    fn catches_non_whitespace_after_declare_var() {
-        parse_str("declare var+\"\"", false).unwrap();
+    fn catches_non_whitespace_after_let_var() {
+        parse_str("let var+\"\"", false).unwrap();
     }
 
     #[quickcheck]

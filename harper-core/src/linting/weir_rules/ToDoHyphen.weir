@@ -1,6 +1,6 @@
-set main (todo)
+expr main (todo)
 
-declare message "Hyphenate `to-do`."
-declare description "Ensures `to-do` is correctly hyphenated."
-declare becomes "to-do"
+let message "Hyphenate `to-do`."
+let description "Ensures `to-do` is correctly hyphenated."
+let becomes "to-do"
 

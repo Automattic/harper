@@ -1,8 +1,8 @@
-set main (statue of limitations)
+expr main (statue of limitations)
 
-declare message "A `statue` is a sculpture; in legal terms, the correct word is `statute`."
-declare description "Corrects `statue of limitations` to `statute of limitations`."
-declare kind "Eggcorn"
-declare becomes "statute of limitations"
+let message "A `statue` is a sculpture; in legal terms, the correct word is `statute`."
+let description "Corrects `statue of limitations` to `statute of limitations`."
+let kind "Eggcorn"
+let becomes "statute of limitations"
 
 test "Shouldn't there be a grandfathered-in or statue of limitations for posts before the original punishment?" "Shouldn't there be a grandfathered-in or statute of limitations for posts before the original punishment?"

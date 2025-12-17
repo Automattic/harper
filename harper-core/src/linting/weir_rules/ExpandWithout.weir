@@ -1,7 +1,7 @@
-set main (w/o)
+expr main (w/o)
 
-declare message "Use `without` instead of `w/o`"
-declare description "Expands the abbreviation `w/o` to the full word `without` for clarity."
-declare kind "Style"
-declare becomes "without"
+let message "Use `without` instead of `w/o`"
+let description "Expands the abbreviation `w/o` to the full word `without` for clarity."
+let kind "Style"
+let becomes "without"
 

@@ -1,7 +1,7 @@
-set main (beat regards)
+expr main (beat regards)
 
-declare message "Use `best regards` to convey sincere well wishes in a closing."
-declare description "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
-declare kind "Typo"
-declare becomes "best regards"
+let message "Use `best regards` to convey sincere well wishes in a closing."
+let description "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+let kind "Typo"
+let becomes "best regards"
 

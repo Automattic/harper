@@ -1,7 +1,7 @@
-set main (fatal outcome)
+expr main (fatal outcome)
 
-declare message "Consider using `death` for clarity."
-declare description "Replaces `fatal outcome` with the more direct term `death` for conciseness."
-declare kind "Style"
-declare becomes "death"
+let message "Consider using `death` for clarity."
+let description "Replaces `fatal outcome` with the more direct term `death` for conciseness."
+let kind "Style"
+let becomes "death"
 

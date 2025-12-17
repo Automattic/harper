@@ -1,7 +1,7 @@
-set main (though process)
+expr main (though process)
 
-declare message "Did you mean `thought process`?"
-declare description "Changes `though process` to `thought process`."
-declare kind "Typo"
-declare becomes "thought process"
+let message "Did you mean `thought process`?"
+let description "Changes `though process` to `thought process`."
+let kind "Typo"
+let becomes "thought process"
 

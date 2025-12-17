@@ -246,11 +246,11 @@ pub mod tests {
     #[test]
     fn simple_right_click_linter() {
         let source = r#"
-            set main <([right, middle, left] $click), ( )>
-            declare message "Hyphenate this mouse command"
-            declare description "Hyphenates right-click style mouse commands."
-            declare kind "Punctuation"
-            declare becomes "-"
+            expr main <([right, middle, left] $click), ( )>
+            let message "Hyphenate this mouse command"
+            let description "Hyphenates right-click style mouse commands."
+            let kind "Punctuation"
+            let becomes "-"
 
             test "Right click the icon." "Right-click the icon."
             test "Please right click on the link." "Please right-click on the link."
@@ -270,12 +270,12 @@ pub mod tests {
     #[test]
     fn g_suite() {
         let source = r#"
-            set main [(G [Suite, Suit]), (Google Apps for Work)]
-            declare message "Use the updated brand."
-            declare description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
-            declare kind "Miscellaneous"
-            declare becomes "Google Workspace"
-            declare strategy "Exact"
+            expr main [(G [Suite, Suit]), (Google Apps for Work)]
+            let message "Use the updated brand."
+            let description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+            let kind "Miscellaneous"
+            let becomes "Google Workspace"
+            let strategy "Exact"
 
             test "We migrated from G Suite last year." "We migrated from Google Workspace last year."
             test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."

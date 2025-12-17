@@ -1,8 +1,8 @@
-set main (besides the point)
+expr main (besides the point)
 
-declare message "Use `beside` in the idiom `beside the point`."
-declare description "Corrects `besides the point` to `beside the point`."
-declare kind "Eggcorn"
-declare becomes "beside the point"
+let message "Use `beside` in the idiom `beside the point`."
+let description "Corrects `besides the point` to `beside the point`."
+let kind "Eggcorn"
+let becomes "beside the point"
 
 test "we kind of focus on GPUs a lot but uh that's besides the point so uh sometime ago" "we kind of focus on GPUs a lot but uh that's beside the point so uh sometime ago"

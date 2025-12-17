@@ -1,7 +1,7 @@
-set main (and also)
+expr main (and also)
 
-declare message "Consider using just `and`."
-declare description "Reduces redundancy by replacing `and also` with `and`."
-declare kind "Redundancy"
-declare becomes "and"
+let message "Consider using just `and`."
+let description "Reduces redundancy by replacing `and also` with `and`."
+let kind "Redundancy"
+let becomes "and"
 

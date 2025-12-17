@@ -1,8 +1,8 @@
-set main (ontop of)
+expr main (ontop of)
 
-declare message "Did you mean `on top of`?"
-declare description "Corrects `ontop of` to `on top of`."
-declare kind "BoundaryError"
-declare becomes "on top of"
+let message "Did you mean `on top of`?"
+let description "Corrects `ontop of` to `on top of`."
+let kind "BoundaryError"
+let becomes "on top of"
 
 test "Initcpio hooks for overlayfs ontop of root." "Initcpio hooks for overlayfs on top of root."

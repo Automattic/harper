@@ -1,7 +1,7 @@
-set main (the this)
+expr main (the this)
 
-declare message "Did you mean `that this`?"
-declare description "Fixes `the this` to the correct phrase `that this`."
-declare kind "Typo"
-declare becomes "that this"
+let message "Did you mean `that this`?"
+let description "Fixes `the this` to the correct phrase `that this`."
+let kind "Typo"
+let becomes "that this"
 

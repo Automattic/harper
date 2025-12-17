@@ -1,9 +1,9 @@
-set main (monumentous)
+expr main (monumentous)
 
-declare message "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size."
-declare description "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
-declare kind "Nonstandard"
-declare becomes ["momentous", "monumental"]
+let message "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size."
+let description "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage."
+let kind "Nonstandard"
+let becomes ["momentous", "monumental"]
 
 test "monumentous" "momentous"
 test "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ..." "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ..."

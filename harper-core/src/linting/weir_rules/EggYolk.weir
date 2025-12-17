@@ -1,9 +1,9 @@
-set main (egg yoke)
+expr main (egg yoke)
 
-declare message "Use `egg yolk` when you mean the yellow portion of an egg."
-declare description "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`."
-declare kind "Eggcorn"
-declare becomes "egg yolk"
+let message "Use `egg yolk` when you mean the yellow portion of an egg."
+let description "Corrects the eggcorn `egg yoke`, replacing it with the standard culinary term `egg yolk`."
+let kind "Eggcorn"
+let becomes "egg yolk"
 
 test "She whisked the egg yoke briskly." "She whisked the egg yolk briskly."
 test "Egg yoke is rich in nutrients." "Egg yolk is rich in nutrients."

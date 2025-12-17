@@ -1,9 +1,9 @@
-set main (managerial reigns)
+expr main (managerial reigns)
 
-declare message "Swap in `reins` when talking about control of a team or project."
-declare description "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`."
-declare kind "Eggcorn"
-declare becomes "managerial reins"
+let message "Swap in `reins` when talking about control of a team or project."
+let description "Corrects the eggcorn `managerial reigns` to the idiomatic `managerial reins`."
+let kind "Eggcorn"
+let becomes "managerial reins"
 
 test "She grabbed the managerial reigns during the crisis." "She grabbed the managerial reins during the crisis."
 test "Managerial reigns are never easy to hand over." "Managerial reins are never easy to hand over."

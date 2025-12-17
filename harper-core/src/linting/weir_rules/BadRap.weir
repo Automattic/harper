@@ -1,8 +1,8 @@
-set main [(bed rap), (bad rep)]
+expr main [(bed rap), (bad rep)]
 
-declare message "Did you mean `bad rap`?"
-declare description "Changes `bed rap` to the proper idiom `bad rap`."
-declare kind "Eggcorn"
-declare becomes "bad rap"
+let message "Did you mean `bad rap`?"
+let description "Changes `bed rap` to the proper idiom `bad rap`."
+let kind "Eggcorn"
+let becomes "bad rap"
 
 test "bad rep" "bad rap"

@@ -1,8 +1,8 @@
-set main (point of views)
+expr main (point of views)
 
-declare message "The correct plural is `points of view`."
-declare description "Corrects pluralizing the wrong noun in `point of view`."
-declare kind "Grammar"
-declare becomes "points of view"
+let message "The correct plural is `points of view`."
+let description "Corrects pluralizing the wrong noun in `point of view`."
+let kind "Grammar"
+let becomes "points of view"
 
 test "This will produce a huge amount of raw data, representing the region in multiple point of views." "This will produce a huge amount of raw data, representing the region in multiple points of view."

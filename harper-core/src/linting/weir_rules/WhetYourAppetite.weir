@@ -1,7 +1,7 @@
-set main (wet your appetite)
+expr main (wet your appetite)
 
-declare message "Use the correct phrase for stimulating desire."
-declare description "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
-declare kind "Eggcorn"
-declare becomes "whet your appetite"
+let message "Use the correct phrase for stimulating desire."
+let description "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
+let kind "Eggcorn"
+let becomes "whet your appetite"
 

@@ -1,9 +1,9 @@
-set main (thanks lot)
+expr main (thanks lot)
 
-declare message "The indefinite article `a` is required in `thanks a lot`."
-declare description "Corrects the missing article in `thanks lot`, forming `thanks a lot`."
-declare kind "Grammar"
-declare becomes "thanks a lot"
+let message "The indefinite article `a` is required in `thanks a lot`."
+let description "Corrects the missing article in `thanks lot`, forming `thanks a lot`."
+let kind "Grammar"
+let becomes "thanks a lot"
 
 test "thanks lot" "thanks a lot"
 test "thanks a lot" "thanks a lot"

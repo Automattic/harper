@@ -1,8 +1,8 @@
-set main (don't can)
+expr main (don't can)
 
-declare message "The grammatically correct form is `can't` or `cannot`."
-declare description "Corrects `don't can` to `can't` or `cannot`."
-declare kind "Grammar"
-declare becomes ["can't", "cannot"]
+let message "The grammatically correct form is `can't` or `cannot`."
+let description "Corrects `don't can` to `can't` or `cannot`."
+let kind "Grammar"
+let becomes ["can't", "cannot"]
 
 test "And currently uh I'm looking at it when I don't can see it like you know where it is, right?" "And currently uh I'm looking at it when I can't see it like you know where it is, right?"

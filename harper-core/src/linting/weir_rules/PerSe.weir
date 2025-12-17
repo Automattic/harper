@@ -1,9 +1,9 @@
-set main [(per say), (per-se), (per-say)]
+expr main [(per say), (per-se), (per-say)]
 
-declare message "The correct spelling is `per se` (with no hyphen)"
-declare description "Corrects common misspellings of `per se`."
-declare kind "Spelling"
-declare becomes "per se"
+let message "The correct spelling is `per se` (with no hyphen)"
+let description "Corrects common misspellings of `per se`."
+let kind "Spelling"
+let becomes "per se"
 
 test "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps." "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps."
 test "Hi all - not really an issue per say, but more of a request for some suggestions and guidance." "Hi all - not really an issue per se, but more of a request for some suggestions and guidance."

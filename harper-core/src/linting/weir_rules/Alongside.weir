@@ -1,9 +1,9 @@
-set main (along side)
+expr main (along side)
 
-declare message "Use the single word `alongside`."
-declare description "Replaces the spaced form `along side` with `alongside`."
-declare kind "WordChoice"
-declare becomes "alongside"
+let message "Use the single word `alongside`."
+let description "Replaces the spaced form `along side` with `alongside`."
+let kind "WordChoice"
+let becomes "alongside"
 
 test "They walked along side the river." "They walked alongside the river."
 test "Along side the road, we saw a parade." "Alongside the road, we saw a parade."

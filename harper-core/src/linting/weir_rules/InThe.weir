@@ -1,7 +1,7 @@
-set main (int he)
+expr main (int he)
 
-declare message "Did you mean `in the`?"
-declare description "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
-declare kind "Typo"
-declare becomes "in the"
+let message "Did you mean `in the`?"
+let description "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+let kind "Typo"
+let becomes "in the"
 

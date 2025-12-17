@@ -1,8 +1,8 @@
-set main (Guinea Bissau)
+expr main (Guinea Bissau)
 
-declare message "The official spelling is hyphenated."
-declare description "Checks for the correct official name of the African country."
-declare kind "Punctuation"
-declare becomes "Guinea-Bissau"
+let message "The official spelling is hyphenated."
+let description "Checks for the correct official name of the African country."
+let kind "Punctuation"
+let becomes "Guinea-Bissau"
 
 test "Guinea Bissau" "Guinea-Bissau"

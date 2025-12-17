@@ -1,9 +1,9 @@
-set main (tongue and cheek)
+expr main (tongue and cheek)
 
-declare message "Use `tongue in cheek` for the idiom."
-declare description "Corrects the idiom when `and` replaces the needed preposition."
-declare kind "WordChoice"
-declare becomes "tongue in cheek"
+let message "Use `tongue in cheek` for the idiom."
+let description "Corrects the idiom when `and` replaces the needed preposition."
+let kind "WordChoice"
+let becomes "tongue in cheek"
 
 test "The remark was entirely tongue and cheek." "The remark was entirely tongue in cheek."
 test "It was a tongue and cheek response." "It was a tongue in cheek response."

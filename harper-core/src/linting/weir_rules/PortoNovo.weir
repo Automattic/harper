@@ -1,7 +1,7 @@
-set main (Porto Novo)
+expr main (Porto Novo)
 
-declare message "The official spelling is hyphenated."
-declare description "Checks for the correct official name of the capital of Benin."
-declare kind "Punctuation"
-declare becomes "Porto-Novo"
+let message "The official spelling is hyphenated."
+let description "Checks for the correct official name of the capital of Benin."
+let kind "Punctuation"
+let becomes "Porto-Novo"
 

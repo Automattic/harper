@@ -1,9 +1,9 @@
-set main [(once a while), (once and a while)]
+expr main [(once a while), (once and a while)]
 
-declare message "The correct idiom is `once in a while`."
-declare description "Corrects two common malapropisms of `once in a while`."
-declare kind "Usage"
-declare becomes "once in a while"
+let message "The correct idiom is `once in a while`."
+let description "Corrects two common malapropisms of `once in a while`."
+let kind "Usage"
+let becomes "once in a while"
 
 test "For me it is a SMB mount I have on the client device that I sync only once a while for a backup into the cloud." "For me it is a SMB mount I have on the client device that I sync only once in a while for a backup into the cloud."
 test "Every once and a while all the links on my page seem to stop working." "Every once in a while all the links on my page seem to stop working."

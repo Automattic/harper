@@ -1,8 +1,8 @@
-set main (cuz)
+expr main (cuz)
 
-declare message "Use `because` instead of informal `cuz`"
-declare description "Expands the informal abbreviation `cuz` to the full word `because` for formality."
-declare kind "Style"
-declare becomes "because"
+let message "Use `because` instead of informal `cuz`"
+let description "Expands the informal abbreviation `cuz` to the full word `because` for formality."
+let kind "Style"
+let becomes "because"
 
 test "Stick around cuz I got a surprise for you at the end." "Stick around because I got a surprise for you at the end."

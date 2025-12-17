@@ -1,9 +1,9 @@
-set main [(turn it of), (turn i of)]
+expr main [(turn it of), (turn i of)]
 
-declare message "Did you mean `turn it off`?"
-declare description "Fixes the mistake in the phrase `turn it off`."
-declare kind "Typo"
-declare becomes "turn it off"
+let message "Did you mean `turn it off`?"
+let description "Fixes the mistake in the phrase `turn it off`."
+let kind "Typo"
+let becomes "turn it off"
 
 test "Turn it of" "Turn it off"
 test "Turn i of" "Turn it off"

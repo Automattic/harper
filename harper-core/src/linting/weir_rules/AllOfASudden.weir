@@ -1,9 +1,9 @@
-set main [(all of the sudden), (all of sudden), (all the sudden)]
+expr main [(all of the sudden), (all of sudden), (all the sudden)]
 
-declare message "Prefer the standard phrasing `all of a sudden`."
-declare description "Guides this expression toward the standard `all of a sudden`."
-declare kind "Nonstandard"
-declare becomes "all of a sudden"
+let message "Prefer the standard phrasing `all of a sudden`."
+let description "Guides this expression toward the standard `all of a sudden`."
+let kind "Nonstandard"
+let becomes "all of a sudden"
 
 test "On an app that has been released since December, all of the sudden around February 5th ANRs started going up." "On an app that has been released since December, all of a sudden around February 5th ANRs started going up."
 test "It happened all the sudden when the lights went out." "It happened all of a sudden when the lights went out."

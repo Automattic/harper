@@ -1,6 +1,6 @@
-set main (want be)
+expr main (want be)
 
-declare message "Did you mean `won't be` or `want to be`?"
-declare description "Detects incorrect usage of `want be` and suggests `won't be` or `want to be` based on context."
-declare becomes ["won't be", "want to be"]
+let message "Did you mean `won't be` or `want to be`?"
+let description "Detects incorrect usage of `want be` and suggests `won't be` or `want to be` based on context."
+let becomes ["won't be", "want to be"]
 

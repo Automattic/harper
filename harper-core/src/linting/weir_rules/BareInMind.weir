@@ -1,7 +1,7 @@
-set main (bare in mind)
+expr main (bare in mind)
 
-declare message "Did you mean `bear in mind`?"
-declare description "Ensures the phrase `bear in mind` is used correctly instead of `bare in mind`."
-declare kind "Eggcorn"
-declare becomes "bear in mind"
+let message "Did you mean `bear in mind`?"
+let description "Ensures the phrase `bear in mind` is used correctly instead of `bare in mind`."
+let kind "Eggcorn"
+let becomes "bear in mind"
 

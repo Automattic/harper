@@ -1,8 +1,8 @@
-set main (baited breath)
+expr main (baited breath)
 
-declare message "Did you mean `bated breath`?"
-declare description "Changes `baited breath` to the correct `bated breath`."
-declare kind "Eggcorn"
-declare becomes "bated breath"
+let message "Did you mean `bated breath`?"
+let description "Changes `baited breath` to the correct `bated breath`."
+let kind "Eggcorn"
+let becomes "bated breath"
 
 test "baited breath" "bated breath"

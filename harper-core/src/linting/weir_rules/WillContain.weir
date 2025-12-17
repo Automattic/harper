@@ -1,7 +1,7 @@
-set main (will contains)
+expr main (will contains)
 
-declare message "Did you mean `will contain`?"
-declare description "Incorrect verb form: `will` should be followed by the base form `contain`."
-declare kind "Agreement"
-declare becomes "will contain"
+let message "Did you mean `will contain`?"
+let description "Incorrect verb form: `will` should be followed by the base form `contain`."
+let kind "Agreement"
+let becomes "will contain"
 

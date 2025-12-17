@@ -1,7 +1,7 @@
-set main (eluded to)
+expr main (eluded to)
 
-declare message "Did you mean `alluded to`?"
-declare description "Corrects `eluded to` to `alluded to` in contexts referring to indirect references."
-declare kind "Malapropism"
-declare becomes "alluded to"
+let message "Did you mean `alluded to`?"
+let description "Corrects `eluded to` to `alluded to` in contexts referring to indirect references."
+let kind "Malapropism"
+let becomes "alluded to"
 

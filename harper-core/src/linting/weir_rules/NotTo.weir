@@ -1,7 +1,7 @@
-set main (no to)
+expr main (no to)
 
-declare message "Did you mean `not to`?"
-declare description "Corrects `no to` to `not to`, ensuring proper negation."
-declare kind "Typo"
-declare becomes "not to"
+let message "Did you mean `not to`?"
+let description "Corrects `no to` to `not to`, ensuring proper negation."
+let kind "Typo"
+let becomes "not to"
 

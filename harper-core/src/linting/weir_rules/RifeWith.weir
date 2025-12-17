@@ -1,7 +1,7 @@
-set main (ripe with)
+expr main (ripe with)
 
-declare message "Use the correct phrase for something abundant."
-declare description "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
-declare kind "Eggcorn"
-declare becomes "rife with"
+let message "Use the correct phrase for something abundant."
+let description "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
+let kind "Eggcorn"
+let becomes "rife with"
 

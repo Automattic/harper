@@ -1,7 +1,7 @@
-set main (gong to)
+expr main (gong to)
 
-declare message "Did you mean `going to`?"
-declare description "Corrects `gong to` to the intended phrase `going to`."
-declare kind "Typo"
-declare becomes "going to"
+let message "Did you mean `going to`?"
+let description "Corrects `gong to` to the intended phrase `going to`."
+let kind "Typo"
+let becomes "going to"
 

@@ -1,8 +1,8 @@
-set main (unless if)
+expr main (unless if)
 
-declare message "`Unless if` is not idiomatic English. `Unless`, `except if`, and `except when` express a condition that is true in all cases except one."
-declare description "Corrects `unless if`."
-declare kind "Usage"
-declare becomes ["unless", "except if", "except when"]
+let message "`Unless if` is not idiomatic English. `Unless`, `except if`, and `except when` express a condition that is true in all cases except one."
+let description "Corrects `unless if`."
+let kind "Usage"
+let becomes ["unless", "except if", "except when"]
 
 test "Simplex does not interpret the following invite link as an invite link unless if it has https:// in front of it." "Simplex does not interpret the following invite link as an invite link unless it has https:// in front of it."

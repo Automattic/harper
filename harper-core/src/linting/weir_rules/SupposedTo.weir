@@ -1,8 +1,8 @@
-set main (suppose to)
+expr main (suppose to)
 
-declare message "Did you mean `supposed to`?"
-declare description "Fixes `suppose to` to the correct `supposed to`."
-declare kind "Usage"
-declare becomes "supposed to"
+let message "Did you mean `supposed to`?"
+let description "Fixes `suppose to` to the correct `supposed to`."
+let kind "Usage"
+let becomes "supposed to"
 
 test "suppose to" "supposed to"

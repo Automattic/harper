@@ -1,7 +1,7 @@
-set main (no in)
+expr main (no in)
 
-declare message "Use `not in` for correct grammar."
-declare description "Replaces `no in` with `not in`."
-declare kind "Typo"
-declare becomes "not in"
+let message "Use `not in` for correct grammar."
+let description "Replaces `no in` with `not in`."
+let kind "Typo"
+let becomes "not in"
 

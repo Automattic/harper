@@ -1,7 +1,7 @@
-set main (can be seem)
+expr main (can be seem)
 
-declare message "Did you mean `can be seen`?"
-declare description "Corrects `can be seem` to the proper phrase `can be seen`."
-declare kind "Typo"
-declare becomes "can be seen"
+let message "Did you mean `can be seen`?"
+let description "Corrects `can be seem` to the proper phrase `can be seen`."
+let kind "Typo"
+let becomes "can be seen"
 

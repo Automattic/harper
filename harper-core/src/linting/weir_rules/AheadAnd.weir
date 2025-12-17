@@ -1,7 +1,7 @@
-set main (ahead an)
+expr main (ahead an)
 
-declare message "Did you make a typo? Shouldn't it be `and`?"
-declare description "Corrects `an` to `and` after `ahead`."
-declare becomes "ahead and"
+let message "Did you make a typo? Shouldn't it be `and`?"
+let description "Corrects `an` to `and` after `ahead`."
+let becomes "ahead and"
 
 test "If it's important, go ahead an open an issue." "If it's important, go ahead and open an issue."

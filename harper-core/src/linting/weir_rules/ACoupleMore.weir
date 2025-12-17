@@ -1,8 +1,8 @@
-set main (a couple of more)
+expr main (a couple of more)
 
-declare message "The correct wording is `a couple more`, without the `of`."
-declare description "Corrects `a couple of more` to `a couple more`."
-declare kind "Redundancy"
-declare becomes "a couple more"
+let message "The correct wording is `a couple more`, without the `of`."
+let description "Corrects `a couple of more` to `a couple more`."
+let kind "Redundancy"
+let becomes "a couple more"
 
 test "There are a couple of more rules that could be added, how can I contribute?" "There are a couple more rules that could be added, how can I contribute?"

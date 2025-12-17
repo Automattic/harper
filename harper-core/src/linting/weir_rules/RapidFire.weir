@@ -1,7 +1,7 @@
-set main (rapid fire)
+expr main (rapid fire)
 
-declare message "It is more idiomatic to hypenate `rapid-fire`."
-declare description "Checks to ensure writers hyphenate `rapid-fire`."
-declare kind "Punctuation"
-declare becomes "rapid-fire"
+let message "It is more idiomatic to hypenate `rapid-fire`."
+let description "Checks to ensure writers hyphenate `rapid-fire`."
+let kind "Punctuation"
+let becomes "rapid-fire"
 

@@ -1,8 +1,8 @@
-set main (in lue of)
+expr main (in lue of)
 
-declare message "Did you mean `in lieu of`?"
-declare description "Corrects the misspelling `in lue of` to `in lieu of`."
-declare kind "Spelling"
-declare becomes "in lieu of"
+let message "Did you mean `in lieu of`?"
+let description "Corrects the misspelling `in lue of` to `in lieu of`."
+let kind "Spelling"
+let becomes "in lieu of"
 
 test "Controller Emulation in lue of Direct Controller binding" "Controller Emulation in lieu of Direct Controller binding"

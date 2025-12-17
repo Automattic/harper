@@ -1,9 +1,9 @@
-set main [(off course), (o course), (ofcourse)]
+expr main [(off course), (o course), (ofcourse)]
 
-declare message "Did you mean `of course`?"
-declare description "Detects the common mistake `off course` and suggests the correct form `of course`."
-declare kind "Eggcorn"
-declare becomes "of course"
+let message "Did you mean `of course`?"
+let description "Detects the common mistake `off course` and suggests the correct form `of course`."
+let kind "Eggcorn"
+let becomes "of course"
 
 test "Yes, off course we should do that." "Yes, of course we should do that."
 test "Yes, o course we should do that." "Yes, of course we should do that."

@@ -1,9 +1,9 @@
-set main (very good)
+expr main (very good)
 
-declare message "Vocabulary enhancement: use `excellent` instead of `very good`"
-declare description "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
-declare kind "Enhancement"
-declare becomes "excellent"
+let message "Vocabulary enhancement: use `excellent` instead of `very good`"
+let description "Provides a stronger word choice by replacing `very good` with `excellent` for clarity and emphasis."
+let kind "Enhancement"
+let becomes "excellent"
 
 test "Her results were very good this semester." "Her results were excellent this semester."
 test "The performance was excellent, drawing praise from all critics." "The performance was excellent, drawing praise from all critics."

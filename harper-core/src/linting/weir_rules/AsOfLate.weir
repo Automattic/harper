@@ -1,8 +1,8 @@
-set main (as of lately)
+expr main (as of lately)
 
-declare message "The standard form is `as of late`."
-declare description "Corrects `as of lately` to `as of late`."
-declare kind "WordChoice"
-declare becomes "as of late"
+let message "The standard form is `as of late`."
+let description "Corrects `as of lately` to `as of late`."
+let kind "WordChoice"
+let becomes "as of late"
 
 test "I haven't noticed any crashing with AMDGPU as of lately, so this looks to not be an issue anymore." "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore."

@@ -1,7 +1,7 @@
-set main (mu house)
+expr main (mu house)
 
-declare message "Did you mean `my house`?"
-declare description "Fixes the typo `mu house` to `my house`."
-declare kind "Typo"
-declare becomes "my house"
+let message "Did you mean `my house`?"
+let description "Fixes the typo `mu house` to `my house`."
+let kind "Typo"
+let becomes "my house"
 

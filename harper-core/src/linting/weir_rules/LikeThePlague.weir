@@ -1,8 +1,8 @@
-set main (like a plague)
+expr main (like a plague)
 
-declare message "`Things are avoided `like the plague` not `like a plague`."
-declare description "Corrects `like a plague` to `like the plague`."
-declare kind "Usage"
-declare becomes "like the plague"
+let message "`Things are avoided `like the plague` not `like a plague`."
+let description "Corrects `like a plague` to `like the plague`."
+let kind "Usage"
+let becomes "like the plague"
 
 test "Below is the worst example of them all (avoid such coding like a plague):" "Below is the worst example of them all (avoid such coding like the plague):"

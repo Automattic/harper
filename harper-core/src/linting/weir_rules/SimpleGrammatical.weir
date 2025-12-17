@@ -1,7 +1,7 @@
-set main (simply grammatical)
+expr main (simply grammatical)
 
-declare message "Use `simple grammatical` for correct adjective usage."
-declare description "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
-declare kind "Usage"
-declare becomes "simple grammatical"
+let message "Use `simple grammatical` for correct adjective usage."
+let description "Corrects `simply grammatical` to `simple grammatical` for proper adjective usage."
+let kind "Usage"
+let becomes "simple grammatical"
 

@@ -1,7 +1,7 @@
-set main (old-timers' disease)
+expr main (old-timers' disease)
 
-declare message "Use the correct medical term."
-declare description "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used."
-declare kind "Eggcorn"
-declare becomes "Alzheimer’s disease"
+let message "Use the correct medical term."
+let description "Fixes the common misnomer `old-timers' disease`, ensuring the correct medical term `Alzheimer’s disease` is used."
+let kind "Eggcorn"
+let becomes "Alzheimer’s disease"
 

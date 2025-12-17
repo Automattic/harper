@@ -1,7 +1,7 @@
-set main (w/)
+expr main (w/)
 
-declare message "Use `with` instead of `w/`"
-declare description "Expands the abbreviation `w/` to the full word `with` for clarity."
-declare kind "Style"
-declare becomes "with"
+let message "Use `with` instead of `w/`"
+let description "Expands the abbreviation `w/` to the full word `with` for clarity."
+let kind "Style"
+let becomes "with"
 

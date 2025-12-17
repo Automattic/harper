@@ -1,9 +1,9 @@
-set main (as if though)
+expr main (as if though)
 
-declare message "This should be `as if` or `as though`."
-declare description "Corrects redundant `as if though`."
-declare kind "Redundancy"
-declare becomes ["as if", "as though"]
+let message "This should be `as if` or `as though`."
+let description "Corrects redundant `as if though`."
+let kind "Redundancy"
+let becomes ["as if", "as though"]
 
 test "It's coming back to you. and looking as if though it's very bright red." "It's coming back to you. and looking as if it's very bright red."
 test "it passes right on by it as if though nothing happened." "it passes right on by it as though nothing happened."

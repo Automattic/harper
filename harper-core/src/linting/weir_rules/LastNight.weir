@@ -1,9 +1,9 @@
-set main (yesterday night)
+expr main (yesterday night)
 
-declare message "The idiomatic phrase is `last night`."
-declare description "Flags `yesterday night` and suggests the standard phrasing `last night`."
-declare kind "WordChoice"
-declare becomes "last night"
+let message "The idiomatic phrase is `last night`."
+let description "Flags `yesterday night` and suggests the standard phrasing `last night`."
+let kind "WordChoice"
+let becomes "last night"
 
 test "I was there yesterday night." "I was there last night."
 test "Yesterday night was fun." "Last night was fun."
