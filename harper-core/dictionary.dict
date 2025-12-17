@@ -3128,6 +3128,7 @@ Egyptian/JNOSg
 Egyptology/Ng
 Ehrenberg/Og
 Ehrlich/Og
+EiB                 # exbibyte
 Eichmann/Ng
 Eid/OgS             # festival
 Eiffel/Og
@@ -3922,7 +3923,7 @@ Ghats/Og
 Ghazvanid/g
 Ghent/Og
 Ghibelline/Ng
-GiB
+GiB                 # gibibyte
 Giacometti/g
 Giannini/Og
 Giauque/g
@@ -5478,6 +5479,7 @@ Khufu/Og
 Khulna/Og
 Khwarizmi/g
 Khyber/Og
+KiB                 # kibibyte
 Kickapoo/NOg
 Kidd/Og
 Kiel/Og
@@ -6816,6 +6818,7 @@ Meyers/Og
 Mfume/g
 Mg/Ng
 Mgr
+MiB                 # mebibyte
 MiG/Ng
 Mia/Og
 Miami/ONSg
@@ -8089,6 +8092,7 @@ Phyllis/Og
 Piaf/Og             # Edith -
 Piaget/Og
 Pianola/g
+PiB                 # pebibyte
 Picasso/Og          # Pablo -
 Piccadilly/Og
 Pickering/Og
@@ -8387,6 +8391,7 @@ Qaddafi/Og
 Qantas/Og           # airline
 Qatar/Og
 Qatari/NgSJ
+QiB                 # quebibyte
 Qingdao/Og
 Qinghai/Og
 Qiqihar/Og
@@ -8624,6 +8629,7 @@ Rhodesia/Og
 Rhodesian/JN
 Rhonda/Og
 Rhone/Og
+RiB                 # robibyte
 Ribbentrop/g
 Ricardo/Og
 Rice/Og
@@ -10066,6 +10072,7 @@ Thutmose/Og
 Ti/g                # titanium
 Tia/Og
 Tianjin/Og
+TiB                 # tebibyte
 Tiber/Og
 Tiberius/Og
 Tibet/Og
@@ -11031,6 +11038,7 @@ Yerkes/Og
 Yesenia/g
 Yevtushenko/g
 Yggdrasil/Og
+YiB                 # yobibyte
 Yiddish/JOg
 Ymir/Og
 Yoda/Og
@@ -11115,6 +11123,7 @@ Zhejiang/Og
 Zhengzhou/Og
 Zhivago/Og          # dr -
 Zhukov/Og
+ZiB                 # zebibyte
 Zibo/Og
 Ziegfeld/g
 Ziegler/Og
