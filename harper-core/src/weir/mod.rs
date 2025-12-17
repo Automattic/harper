@@ -3,9 +3,13 @@ mod error;
 mod optimize;
 mod parsing;
 
+use std::str::FromStr;
+
 use crate::parsers::PlainEnglish;
 pub use error::Error;
+use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
+use strum_macros::{AsRefStr, EnumString};
 
 use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
@@ -18,6 +22,12 @@ pub fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     Ok(ast.to_expr())
 }
 
+#[derive(Debug, Is, EnumString, AsRefStr)]
+enum ReplacementStrategy {
+    MatchCase,
+    Exact,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TestResult {
     expected: String,
@@ -28,6 +38,7 @@ pub struct WeirLinter {
     expr: Box<dyn Expr>,
     description: String,
     message: String,
+    strategy: ReplacementStrategy,
     replacements: Vec<String>,
     lint_kind: LintKind,
     ast: Ast,
@@ -42,6 +53,7 @@ impl WeirLinter {
         let message_name = "message";
         let lint_kind_name = "kind";
         let replacement_name = "becomes";
+        let replacement_strat_name = "strategy";
 
         let expr = ast
             .get_expr(main_expr_name)
@@ -82,8 +94,19 @@ impl WeirLinter {
             }
         };
 
-        let lint_kind_var = ast.get_variable_value(lint_kind_name);
+        let replacement_strat_var = ast.get_variable_value(replacement_strat_name);
+        let replacement_strat = if let Some(replacement_strat) = replacement_strat_var {
+            let str = replacement_strat
+                .as_string()
+                .ok_or(Error::ExpectedDifferentVariableType)?;
+            ReplacementStrategy::from_str(str)
+                .ok()
+                .ok_or(Error::InvalidReplacementStrategy)?
+        } else {
+            ReplacementStrategy::MatchCase
+        };
 
+        let lint_kind_var = ast.get_variable_value(lint_kind_name);
         let lint_kind = if let Some(lint_kind) = lint_kind_var {
             let str = lint_kind
                 .as_string()
@@ -94,6 +117,7 @@ impl WeirLinter {
         };
 
         let linter = WeirLinter {
+            strategy: replacement_strat,
             ast,
             expr,
             lint_kind,
@@ -183,14 +207,23 @@ impl ExprLinter for WeirLinter {
         let span = matched_tokens.span()?;
         let orig = span.get_content(source);
 
-        Some(Lint {
-            span,
-            lint_kind: self.lint_kind,
-            suggestions: self
+        let suggestions = match self.strategy {
+            ReplacementStrategy::MatchCase => self
                 .replacements
                 .iter()
                 .map(|s| Suggestion::replace_with_match_case(s.chars().collect(), orig))
                 .collect(),
+            ReplacementStrategy::Exact => self
+                .replacements
+                .iter()
+                .map(|r| Suggestion::ReplaceWith(r.chars().collect()))
+                .collect(),
+        };
+
+        Some(Lint {
+            span,
+            lint_kind: self.lint_kind,
+            suggestions,
             message: self.message.to_owned(),
             priority: 127,
         })

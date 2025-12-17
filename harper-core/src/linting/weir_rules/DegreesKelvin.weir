@@ -6,4 +6,3 @@ declare kind "Usage"
 declare becomes ["kelvins", "kelvin"]
 
 test "degrees kelvin" "kelvins"
-test "°K" "K"

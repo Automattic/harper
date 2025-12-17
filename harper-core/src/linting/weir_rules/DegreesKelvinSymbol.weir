@@ -5,3 +5,4 @@ declare description "Corrects use of `°K` to `K`."
 declare kind "Usage"
 declare becomes "K"
 
+test "°K" "K"

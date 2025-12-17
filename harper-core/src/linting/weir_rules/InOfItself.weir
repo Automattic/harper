@@ -5,3 +5,5 @@ declare description "Corrects nonstandard `in of itself` to standard `in itself`
 declare kind "Usage"
 declare becomes ["in itself", "in and of itself"]
 
+test "in of itself" "in and of itself"
+test "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..." "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..."

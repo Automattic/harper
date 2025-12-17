@@ -7,4 +7,4 @@ declare becomes ["don't want", "do not want"]
 
 test "I don't wan to pay for this." "I don't want to pay for this."
 test "Don't Wan that option." "Don't Want that option."
-test "I don't want to leave." "I don't wantt to leave."
+test "I don't want to leave." "I don't want to leave."
