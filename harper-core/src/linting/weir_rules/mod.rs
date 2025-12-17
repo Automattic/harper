@@ -12,6 +12,8 @@ macro_rules! generate_boilerplate {
                     )+
                 }
 
+            group.set_all_rules_to(Some(true));
+
             group
         }
 

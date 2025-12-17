@@ -225,7 +225,7 @@ impl ExprLinter for WeirLinter {
             lint_kind: self.lint_kind,
             suggestions,
             message: self.message.to_owned(),
-            priority: 127,
+            priority: 31,
         })
     }
 
@@ -275,6 +275,7 @@ pub mod tests {
             declare description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
             declare kind "Miscellaneous"
             declare becomes "Google Workspace"
+            declare strategy "Exact"
 
             test "We migrated from G Suite last year." "We migrated from Google Workspace last year."
             test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."

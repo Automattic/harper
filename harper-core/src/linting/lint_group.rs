@@ -203,7 +203,7 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -477,7 +477,7 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(&mut phrase_corrections::lint_group());
+        out.merge_from(&mut weir_rules::lint_group());
         out.merge_from(&mut phrase_set_corrections::lint_group());
         out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
             dictionary.clone(),

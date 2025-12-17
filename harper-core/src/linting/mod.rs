@@ -139,7 +139,6 @@ mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
 mod phrasal_verb_as_compound_noun;
-mod phrase_corrections;
 mod phrase_set_corrections;
 mod pique_interest;
 mod possessive_noun;
