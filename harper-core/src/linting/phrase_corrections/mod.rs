@@ -44,6 +44,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `a couple of more` to `a couple more`.",
             LintKind::Redundancy
         ),
+        "AdNauseam" => (
+            ["as nauseam"],
+            ["ad nauseam"],
+            "This phrase comes from Latin, where `ad` means `to`.",
+            "Corrects `as nauseam` to `ad nauseam`.",
+            LintKind::Spelling
+        ),
         "AfterAWhile" => (
             ["after while"],
             ["after a while"],
