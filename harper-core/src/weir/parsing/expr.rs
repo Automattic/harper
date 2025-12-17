@@ -1,9 +1,10 @@
-use crate::{CharString, Currency, Punctuation, Token, TokenKind};
+use crate::{CharString, Currency, Punctuation, Token, TokenKind, document};
 
 use super::{
     AstExprNode, Error, FoundNode, lex, locate_matching_brace, optimize_expr, parse_collection,
 };
 
+/// Parse a raw expression string.
 pub fn parse_expr_str(weir_code: &str, use_optimizer: bool) -> Result<AstExprNode, Error> {
     let chars: CharString = weir_code.chars().collect();
     let tokens = lex(&chars);
@@ -18,6 +19,7 @@ pub fn parse_expr_str(weir_code: &str, use_optimizer: bool) -> Result<AstExprNod
     Ok(root)
 }
 
+/// Parse a sequence of expressions, one after the other.
 pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, Error> {
     let mut seq = Vec::new();
 
@@ -33,6 +35,7 @@ pub fn parse_seq(tokens: &[Token], source: &[char]) -> Result<Vec<AstExprNode>, 
     Ok(seq)
 }
 
+/// Parse an individual expression.
 fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstExprNode>, Error> {
     let cursor = 0;
 
@@ -40,6 +43,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
+        // The derivation notation.
         TokenKind::Punctuation(Punctuation::Currency(Currency::Dollar)) => {
             let word_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
 
@@ -50,6 +54,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             AstExprNode::Word(tok.span.get_content(source).into()),
             1,
         )),
+        // The sequence notation. Useful for representing strings.
         TokenKind::Punctuation(Punctuation::OpenRound) => {
             let close_idx =
                 locate_matching_brace(tokens, TokenKind::is_open_round, TokenKind::is_close_round)
@@ -57,7 +62,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             let child = parse_seq(&tokens[1..close_idx], source)?;
             Ok(FoundNode::new(AstExprNode::Seq(child), close_idx + 1))
         }
-
+        // The _not_ or _unless_ notation
         TokenKind::Punctuation(Punctuation::Bang) => {
             let res = parse_single_expr(&tokens[1..], source)?;
 
@@ -66,6 +71,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
                 res.next_idx + 1,
             ))
         }
+        // The array notation
         TokenKind::Punctuation(Punctuation::OpenSquare) => {
             let close_idx = locate_matching_brace(
                 tokens,
@@ -78,6 +84,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
             Ok(FoundNode::new(AstExprNode::Arr(children), close_idx + 1))
         }
+        // The filter notation
         TokenKind::Punctuation(Punctuation::LessThan) => {
             let close_idx =
                 locate_matching_brace(tokens, TokenKind::is_less_than, TokenKind::is_greater_than)

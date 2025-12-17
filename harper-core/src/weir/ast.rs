@@ -11,10 +11,12 @@ pub struct Ast {
 }
 
 impl Ast {
+    /// Construct a new abstract syntax tree from individual statements.
     pub fn new(stmts: Vec<AstStmtNode>) -> Self {
         Self { stmts }
     }
 
+    /// Get the value of a variable from the last time it was set.
     pub fn get_variable_value(&self, var_name: &str) -> Option<&'_ AstVariable> {
         for stmt in self.stmts.iter().rev() {
             if let AstStmtNode::DeclareVariable { name, value } = stmt
@@ -26,6 +28,7 @@ impl Ast {
         None
     }
 
+    /// Get the value of an expression from the last time it was set.
     pub fn get_expr(&self, expr_name: &str) -> Option<&'_ AstExprNode> {
         for stmt in self.stmts.iter().rev() {
             if let AstStmtNode::SetExpr { name, value } = stmt
@@ -37,6 +40,7 @@ impl Ast {
         None
     }
 
+    /// Iterate through all unique variable values, from the last time they were set.
     pub fn iter_variable_values(&self) -> impl Iterator<Item = (&str, &AstVariable)> {
         self.stmts
             .iter()
@@ -48,6 +52,8 @@ impl Ast {
             .unique_by(|(n, _)| *n)
     }
 
+    /// Iterate through all the tests in the tree, starting with the one first declared in the
+    /// tree.
     pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
         self.stmts.iter().filter_map(|stmt| {
             if let AstStmtNode::Test { expect, to_be } = stmt {
@@ -59,6 +65,7 @@ impl Ast {
     }
 }
 
+/// A node that represents an expression that can be used to search through natural language.
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstExprNode {
     Whitespace,
@@ -72,7 +79,7 @@ pub enum AstExprNode {
 }
 
 impl AstExprNode {
-    /// Create an expression that fulfills the pattern matching contract defined by this tree.
+    /// Create an actual expression that fulfills the pattern matching contract defined by this tree.
     pub fn to_expr(&self) -> Box<dyn Expr> {
         match self {
             AstExprNode::Whitespace => Box::new(WhitespacePattern),
@@ -114,6 +121,7 @@ impl AstExprNode {
     }
 }
 
+/// A variable defined by the `let` keyword.
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstVariable {
     String(String),
@@ -126,6 +134,7 @@ impl AstVariable {
     }
 }
 
+/// An AST node that represents a top-level statement.
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstStmtNode {
     DeclareVariable { name: String, value: AstVariable },

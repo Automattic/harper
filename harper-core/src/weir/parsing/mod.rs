@@ -15,6 +15,7 @@ use super::{
     optimize::{optimize, optimize_expr},
 };
 
+/// Lex the entirety of a Weir document.
 fn lex(source: &[char]) -> Vec<Token> {
     let mut cursor = 0;
 
@@ -51,6 +52,8 @@ impl<T> FoundNode<T> {
     }
 }
 
+/// A utility for parsing a collection of items, separated by commas.
+/// Requires a parser used for parsing individual elements.
 fn parse_collection<T>(
     tokens: &[Token],
     source: &[char],
@@ -117,6 +120,7 @@ fn locate_matching_brace(
     }
 }
 
+/// Increments the cursor until it is no longer over a space.
 fn inc_by_spaces(cursor: &mut usize, tokens: &[Token]) {
     // Skip whitespace at the beginning.
     while matches!(
@@ -127,6 +131,7 @@ fn inc_by_spaces(cursor: &mut usize, tokens: &[Token]) {
     }
 }
 
+/// Increments the cursor until it is no longer over whitespace.
 fn inc_by_whitespace(cursor: &mut usize, tokens: &[Token]) {
     // Skip whitespace at the beginning.
     while tokens
@@ -138,6 +143,8 @@ fn inc_by_whitespace(cursor: &mut usize, tokens: &[Token]) {
     }
 }
 
+/// Asserts that a space is expected in the location of the cursor.
+/// Returns the proper arrow type that can be handled with the `?` syntax.
 fn expected_space(cursor: usize, tokens: &[Token], source: &[char]) -> Result<(), Error> {
     let expected_space = &tokens[cursor];
 
