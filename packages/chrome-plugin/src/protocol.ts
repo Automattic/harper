@@ -20,6 +20,7 @@ export type Request =
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
 	| OpenOptionsRequest
+	| GetInstalledOnRequest
 	| OpenReportErrorRequest
 	| PostFormDataRequest;
 
@@ -34,6 +35,7 @@ export type Response =
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
 	| GetActivationKeyResponse
+	| GetInstalledOnResponse
 	| PostFormDataResponse;
 
 export type LintRequest = {
@@ -144,6 +146,15 @@ export type GetUserDictionaryRequest = {
 export type GetUserDictionaryResponse = {
 	kind: 'getUserDictionary';
 	words: string[];
+};
+
+export type GetInstalledOnRequest = {
+	kind: 'getInstalledOn';
+};
+
+export type GetInstalledOnResponse = {
+	kind: 'getInstalledOn';
+	installedOn: string | null;
 };
 
 export type IgnoreLintRequest = {

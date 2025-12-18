@@ -20,6 +20,8 @@ import {
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
+	type GetInstalledOnRequest,
+	type GetInstalledOnResponse,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
@@ -52,6 +54,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 let linter: LocalLinter;
 
 getDialect().then(setDialect);
+setInstalledOnIfMissing();
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
@@ -154,6 +157,8 @@ function handleRequest(message: Request): Promise<Response> {
 			return Promise.resolve(createUnitResponse());
 		case 'postFormData':
 			return handlePostFormData(message);
+		case 'getInstalledOn':
+			return handleGetInstalledOn(message);
 	}
 }
 
@@ -321,6 +326,12 @@ async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDat
 	}
 }
 
+async function handleGetInstalledOn(
+	_req: GetInstalledOnRequest,
+): Promise<GetInstalledOnResponse> {
+	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
+}
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -452,4 +463,20 @@ async function addToDictionary(words: string[]): Promise<void> {
 async function getUserDictionary(): Promise<string[]> {
 	const resp = await chrome.storage.local.get({ userDictionary: [] });
 	return resp.userDictionary;
+}
+
+/** Record the date the extension was installed, if it's missing. */
+async function setInstalledOnIfMissing(): Promise<void> {
+	const current = await getInstalledOn();
+	if (current !== null) {
+		return;
+	}
+
+	const installedOn = new Date().toISOString();
+	await chrome.storage.local.set({ installedOn });
+}
+
+async function getInstalledOn(): Promise<string | null> {
+	const resp = await chrome.storage.local.get({ installedOn: null });
+	return resp.installedOn;
 }
