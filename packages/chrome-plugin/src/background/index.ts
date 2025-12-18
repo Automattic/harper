@@ -18,6 +18,8 @@ import {
 	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetReviewedRequest,
+	type GetReviewedResponse,
 	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
@@ -32,6 +34,7 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
@@ -159,6 +162,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handlePostFormData(message);
 		case 'getInstalledOn':
 			return handleGetInstalledOn(message);
+		case 'getReviewed':
+			return handleGetReviewed(message);
+		case 'setReviewed':
+			return handleSetReviewed(message);
 	}
 }
 
@@ -330,6 +337,15 @@ async function handleGetInstalledOn(_req: GetInstalledOnRequest): Promise<GetIns
 	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
 }
 
+async function handleGetReviewed(_req: GetReviewedRequest): Promise<GetReviewedResponse> {
+	return { kind: 'getReviewed', reviewed: await getReviewed() };
+}
+
+async function handleSetReviewed(req: SetReviewedRequest): Promise<UnitResponse> {
+	await setReviewed(req.reviewed);
+	return createUnitResponse();
+}
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -477,4 +493,13 @@ async function setInstalledOnIfMissing(): Promise<void> {
 async function getInstalledOn(): Promise<string | null> {
 	const resp = await chrome.storage.local.get({ installedOn: null });
 	return resp.installedOn;
+}
+
+async function getReviewed(): Promise<boolean> {
+	const resp = await chrome.storage.local.get({ reviewed: false });
+	return Boolean(resp.reviewed);
+}
+
+async function setReviewed(reviewed: boolean): Promise<void> {
+	await chrome.storage.local.set({ reviewed });
 }
