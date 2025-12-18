@@ -14,14 +14,14 @@ import {
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
 	type GetEnabledDomainsResponse,
+	type GetInstalledOnRequest,
+	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
-	type GetInstalledOnRequest,
-	type GetInstalledOnResponse,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
@@ -326,9 +326,7 @@ async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDat
 	}
 }
 
-async function handleGetInstalledOn(
-	_req: GetInstalledOnRequest,
-): Promise<GetInstalledOnResponse> {
+async function handleGetInstalledOn(_req: GetInstalledOnRequest): Promise<GetInstalledOnResponse> {
 	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
 }
 

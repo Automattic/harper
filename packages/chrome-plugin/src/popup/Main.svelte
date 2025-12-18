@@ -1,5 +1,6 @@
 <script lang="ts">
-import { Button, Select, Toggle } from 'components';
+import { Button } from 'components';
+import generateGreeting from '../generateGreeting';
 import ProtocolClient from '../ProtocolClient';
 
 let enabled = $state(true);
@@ -40,12 +41,10 @@ function toggleDomainEnabled() {
 }
 </script>
 
-<main class="p-6 space-y-5 text-gray-800">
-  <!-- power button section -->
-  <section class="flex flex-row items-center gap-3 py-6">
+<main class="p-6 space-y-5 text-gray-800 flex flex-row">
     <Button
       size="lg"
-      class="rounded-full! aspect-square h-16 w-16 p-0 shadow-lg transition-colors flex! flex-row justify-center"
+      class="rounded-full! aspect-square h-24 w-24 p-0 shadow-lg transition-colors flex! flex-row justify-center"
       color={enabled ? 'var(--color-primary)' : 'var(--color-cream-50)'}
       on:click={toggleDomainEnabled}
     >
@@ -66,8 +65,13 @@ function toggleDomainEnabled() {
       </svg>
     </Button>
 
-    <p class="text-sm font-medium dark:text-white">
-      {enabled ? 'Enabled on ' : 'Disabled on '}{domain}
+  <section class="items-end">
+    <h1 class="text-2xl dark:text-white text-right">
+      {generateGreeting()}
+    </h1>
+
+    <p class="text-sm font-medium font-sans dark:text-white text-right">
+      Harper is {enabled ? 'enabled on ' : 'disabled on '}{domain}
     </p>
   </section>
 </main>
