@@ -97,7 +97,7 @@ function daysSince(date: Date): number {
         </svg>
       </Button>
   
-    <section class="items-end">
+    <section class="items-end p-2">
       <h1 class="text-2xl dark:text-white text-right">
         {generateGreeting()}
       </h1>
