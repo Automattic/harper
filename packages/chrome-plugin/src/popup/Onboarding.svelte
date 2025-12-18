@@ -10,8 +10,8 @@ const steps = [
 ];
 </script>
 
-<main class="p-6 space-y-6 text-gray-900 dark:text-slate-100">
-  <h2 class="text-base font-semibold text-gray-900 dark:text-slate-100">
+<main class="p-6 space-y-6">
+  <h2 class="text-base font-semibold">
     Welcome! Let’s see Harper in action:
   </h2>
 
