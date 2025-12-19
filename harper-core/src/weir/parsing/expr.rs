@@ -320,6 +320,17 @@ mod tests {
     }
 
     #[test]
+    fn parses_space_dash() {
+        assert_eq!(
+            parse_expr_str("[( ), (-)]", true).unwrap(),
+            AstExprNode::Arr(vec![
+                AstExprNode::Whitespace,
+                AstExprNode::Punctuation(Punctuation::Hyphen),
+            ])
+        )
+    }
+
+    #[test]
     fn parses_filter() {
         assert_eq!(
             parse_expr_str("<a, b, c>", true).unwrap(),
