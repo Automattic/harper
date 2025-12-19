@@ -1,4 +1,4 @@
-expr main [(low hanging fruit), (low hanging fruits), (low-hanging fruits)]
+expr main [(low[-, ( )]hanging fruits), (low hanging fruit)]
 
 let message "The standard form is `low-hanging fruit` with a hyphen and singular form."
 let description "Corrects nonstandard variants of `low-hanging fruit`."

@@ -5,7 +5,6 @@ mod parsing;
 
 use std::str::FromStr;
 
-use crate::parsers::PlainEnglish;
 pub use error::Error;
 use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
@@ -13,6 +12,8 @@ use strum_macros::{AsRefStr, EnumString};
 
 use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
+use crate::parsers::Markdown;
+use crate::spell::FstDictionary;
 use crate::{Document, Token, TokenStringExt};
 
 use self::ast::{Ast, AstVariable};
@@ -136,59 +137,84 @@ impl WeirLinter {
 
     /// Runs the tests defined in the source code, returning any failing results.
     pub fn run_tests(&mut self) -> Vec<TestResult> {
-        fn matches_within_first_three_suggestions(
-            lints: &[Lint],
-            start: Vec<char>,
-            to_be: &str,
-        ) -> bool {
-            fn dfs(lints: &[Lint], i: usize, current: Vec<char>, to_be: &str) -> bool {
-                if i == lints.len() {
-                    return current.into_iter().collect::<String>() == to_be;
-                }
+        fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
+            let mut text_chars: Vec<char> = text.chars().collect();
+            let mut iter_count = 0;
 
-                let lint = &lints[i];
+            loop {
+                let test = Document::new_from_vec(
+                    text_chars.clone().into(),
+                    &Markdown::default(),
+                    &FstDictionary::curated(),
+                );
+                let lints = linter.lint(&test);
 
-                if lint.suggestions.is_empty() {
-                    return dfs(lints, i + 1, current, to_be);
-                }
-
-                for sug in lint.suggestions.iter().take(3) {
-                    let mut next = current.clone();
-                    sug.apply(lint.span, &mut next);
-                    if dfs(lints, i + 1, next, to_be) {
-                        return true;
+                if let Some(lint) = lints.first() {
+                    if let Some(suggestion) = lint.suggestions.get(n) {
+                        suggestion.apply(lint.span, &mut text_chars);
+                    } else {
+                        break;
                     }
+                } else {
+                    break;
                 }
 
-                false
+                iter_count += 1;
+                if iter_count == 100 {
+                    break;
+                }
             }
 
-            dfs(lints, 0, start, to_be)
+            text_chars.iter().collect()
         }
 
-        let ast = self.ast.clone();
+        fn lint_count(text: &str, linter: &mut impl Linter) -> usize {
+            let document = Document::new_from_vec(
+                text.chars().collect::<Vec<_>>().into(),
+                &Markdown::default(),
+                &FstDictionary::curated(),
+            );
+
+            linter.lint(&document).len()
+        }
+
         let mut results = Vec::new();
+        let tests: Vec<(String, String)> = self
+            .ast
+            .iter_tests()
+            .map(|(text, expected)| (text.to_string(), expected.to_string()))
+            .collect();
 
-        for (expect, to_be) in ast.iter_tests() {
-            let doc = Document::new_curated(expect, &PlainEnglish);
-            let lints = self.lint(&doc);
+        for (text, expected) in tests {
+            let zeroth = transform_nth_str(&text, self, 0);
+            let first = transform_nth_str(&text, self, 1);
+            let second = transform_nth_str(&text, self, 2);
 
-            let mut default_output: Vec<char> = expect.chars().collect();
-            for lint in &lints {
-                if let Some(sug) = lint.suggestions.iter().take(3).next() {
-                    sug.apply(lint.span, &mut default_output);
+            let matched = if zeroth == expected {
+                Some(zeroth.clone())
+            } else if first == expected {
+                Some(first.clone())
+            } else if second == expected {
+                Some(second.clone())
+            } else {
+                None
+            };
+
+            match matched {
+                Some(result) => {
+                    let remaining_lints = lint_count(&result, self);
+
+                    if remaining_lints != 0 {
+                        results.push(TestResult {
+                            expected: expected.to_string(),
+                            got: result,
+                        });
+                    }
                 }
-            }
-            let default_output: String = default_output.into_iter().collect();
-
-            let passed =
-                matches_within_first_three_suggestions(&lints, expect.chars().collect(), to_be);
-
-            if !passed {
-                results.push(TestResult {
-                    expected: to_be.to_string(),
-                    got: default_output,
-                });
+                None => results.push(TestResult {
+                    expected: expected.to_string(),
+                    got: zeroth,
+                }),
             }
         }
 

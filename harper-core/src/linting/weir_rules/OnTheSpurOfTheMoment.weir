@@ -1,5 +1,4 @@
-expr main [(on the spurt of the moment), (at the spur of the moment), (in the spur of the moment)]
-expr main [on, at, in] the [spur, spurt] of the moment
+expr main [(on the spurt of the moment), (at the spur of the moment), (in the spur of the moment), (in the spurt of the moment)]
 
 let message "Use the correct phrase for acting spontaneously."
 let description "Ensures the correct use of `on the spur of the moment`, avoiding nonstandard variations."
