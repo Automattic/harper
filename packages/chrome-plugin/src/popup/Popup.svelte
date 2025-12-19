@@ -1,6 +1,7 @@
 <script lang="ts">
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Button, Link } from 'components';
+import { onMount } from 'svelte';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import { main, type PopupState } from '../PopupState';
@@ -9,6 +10,23 @@ import Onboarding from './Onboarding.svelte';
 import ReportProblematicLint from './ReportProblematicLint.svelte';
 
 let popupState: PopupState = $state({ page: 'main' });
+
+let version = `v${chrome.runtime.getManifest().version}`;
+let latestVersion: string | null = $state(null);
+let versionMismatch = $state(false);
+
+onMount(async () => {
+	try {
+		const response = await fetch('https://writewithharper.com/latestversion');
+		if (!response.ok) return;
+
+		const fetchedVersion = (await response.text()).trim();
+		latestVersion = fetchedVersion;
+		versionMismatch = !!fetchedVersion && fetchedVersion !== version;
+	} catch (err) {
+		console.error('Failed to fetch latest version', err);
+	}
+});
 
 $effect(() => {
 	chrome.storage.local.get({ popupState: { page: 'onboarding' } }).then((result) => {
@@ -27,7 +45,7 @@ function openSettings() {
 
 <div class="w-[340px] border border-gray-200 font-sans flex flex-col rounded-lg shadow-sm select-none dark:border-slate-800 dark:text-slate-100">
   <header class="flex flex-row justify-between items-center gap-2 px-3 py-2 rounded-t-lg">
-    <div class="flex flex-row justify-start items-center">
+    <div class="flex flex-row justify-start items-center gap-1">
       <img src={logo} alt="Harper logo" class="h-6 w-auto rounded-lg mx-2" />
       <span class="font-semibold text-sm">Harper</span>
     </div>
@@ -36,6 +54,13 @@ function openSettings() {
        <Button on:click={() => { 
           popupState = main();
        }}><Fa icon={faArrowLeft}/></Button>
+    {:else}
+      <div>
+        {#if versionMismatch}
+          <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}`}>⚠️</span>
+        {/if}
+        <span class="text-sm font-mono">{version}</span>
+      </div>
     {/if}
   </header>
 
