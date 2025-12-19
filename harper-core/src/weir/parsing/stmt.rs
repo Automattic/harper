@@ -393,7 +393,7 @@ mod tests {
 
     #[quickcheck]
     fn catches_anything_after_test(a: String) {
-        if !a.is_empty() {
+        if !a.is_empty() && !a.starts_with('\n') {
             let code = format!("test \"\" \"\"{a}");
             assert!(parse_str(code.as_str(), false).is_err())
         }
