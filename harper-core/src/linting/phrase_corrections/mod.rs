@@ -384,6 +384,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `every since` to `ever since`.",
             LintKind::Typo
         ),
+        "EveryOnceAndAgain" => (
+            ["every once and again"],
+            ["every once in a while", "once again"],
+            "For things that happen only occasionaly use `every once in a while. For things that persistently happen use `once again`.",
+            "Corrects `every once and again` to `every once in a while` or `once again`.",
+            LintKind::Usage
+        ),
         "EveryTime" => (
             ["everytime"],
             ["every time"],

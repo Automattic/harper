@@ -713,6 +713,16 @@ fn detect_ever_since() {
     );
 }
 
+// EveryOnceAndAgain
+#[test]
+fn fix_every_once_and_again() {
+    assert_suggestion_result(
+        "Ys have been replaced with Ps, happens randomly every once and again with different letters",
+        lint_group(),
+        "Ys have been replaced with Ps, happens randomly every once in a while with different letters",
+    );
+}
+
 // EveryTime
 #[test]
 fn fix_everytime() {
