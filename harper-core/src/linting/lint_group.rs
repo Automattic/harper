@@ -185,6 +185,7 @@ use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
+use super::transposed_space::TransposedSpace;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_genitive::UseGenitive;
@@ -705,6 +706,9 @@ impl LintGroup {
             DisjointPrefixes::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
+
+        out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
+        out.config.set_rule_enabled("TransposedSpace", true);
 
         out
     }

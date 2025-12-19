@@ -6197,6 +6197,37 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |      ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “R”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |      ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |                                    ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
@@ -6205,6 +6236,26 @@ Suggest:
   - Replace with: “of”
   - Replace with: “oh”
   - Replace with: “oi”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4490 | “r—” said the policeman, “o———”
+         |  ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “R”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4490 | “r—” said the policeman, “o———”
+         |  ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
 
 
 

@@ -8968,16 +8968,16 @@
 # . NPr/VB/J/#r . D/P . NSg/P/#r . . D+  NSg+      VPt N🅪Sg/Vg/J . . . NPr/J/P . . . .
 >
 #
-> “ No       , r        — ” corrected the man       , “ M           - a   - v        - r        - o       — — — ”
-# . NPr/Dq/P . NPr/VB/J . . VP/J      D+  NPr/VB/J+ . . NPr/VB/J/#r . D/P . NSg/P/#r . NPr/VB/J . NPr/J/P . . . .
+> “ No       , r     — ” corrected the man       , “ M           - a   - v        - r     - o       — — — ”
+# . NPr/Dq/P . NPr/J . . VP/J      D+  NPr/VB/J+ . . NPr/VB/J/#r . D/P . NSg/P/#r . NPr/J . NPr/J/P . . . .
 >
 #
 > “ Listen to me       ! ” muttered Tom     fiercely .
 # . NSg/VB P  NPr/ISg+ . . VP/J     NPr/VB+ R        .
 >
 #
-> “ r        — ” said the policeman , “ o       — — — ”
-# . NPr/VB/J . . VP/J D+  NSg+      . . NPr/J/P . . . .
+> “ r     — ” said the policeman , “ o       — — — ”
+# . NPr/J . . VP/J D+  NSg+      . . NPr/J/P . . . .
 >
 #
 > “ g    — — — ”
