@@ -1,3 +1,5 @@
+//! Methods for extracting nominal phrases from datasets.
+
 use std::collections::VecDeque;
 
 use hashbrown::HashSet;

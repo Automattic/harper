@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -28,15 +29,15 @@ impl ModalSeem {
     fn adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 
     fn adverb_then_adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adverb())
+            .then_kind_where(|kind| kind.is_adverb())
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 }
 
@@ -68,6 +69,8 @@ impl Default for ModalSeem {
 }
 
 impl ExprLinter for ModalSeem {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

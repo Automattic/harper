@@ -3,6 +3,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::patterns::WhitespacePattern;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct BestOfAllTime {
     expr: Box<dyn Expr>,
@@ -37,6 +38,8 @@ impl Default for BestOfAllTime {
 }
 
 impl ExprLinter for BestOfAllTime {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

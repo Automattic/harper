@@ -2,6 +2,7 @@ use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct SoughtAfter {
     expr: Box<dyn Expr>,
@@ -35,6 +36,8 @@ impl Default for SoughtAfter {
 }
 
 impl ExprLinter for SoughtAfter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

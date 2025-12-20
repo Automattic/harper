@@ -250,12 +250,6 @@ fn correct_a_another() {
     );
 }
 
-// AndIn
-// -none-
-
-// AndTheLike
-// -none-
-
 // AnotherAn
 #[test]
 fn correct_another_an() {
@@ -776,9 +770,6 @@ fn expand_cuz() {
 // ExpandWithout
 // -none-
 
-// Expatriate
-// -none-
-
 // FaceFirst
 // -none-
 
@@ -917,6 +908,17 @@ fn corrects_i_does() {
         "I does enjoy writing Rust.",
         lint_group(),
         "I do enjoy writing Rust.",
+    );
+}
+
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
     );
 }
 
@@ -1098,6 +1100,48 @@ fn correct_last_ditch_space() {
         lint_group(),
         "There are unique use cases and is meant to be a last-ditch option.",
     );
+}
+
+// LastNight
+#[test]
+fn corrects_yesterday_night_basic() {
+    assert_suggestion_result(
+        "I was there yesterday night.",
+        lint_group(),
+        "I was there last night.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_capitalized() {
+    assert_suggestion_result(
+        "Yesterday night was fun.",
+        lint_group(),
+        "Last night was fun.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_with_comma() {
+    assert_suggestion_result(
+        "Yesterday night, we watched a movie.",
+        lint_group(),
+        "Last night, we watched a movie.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_across_newline() {
+    assert_suggestion_result(
+        "They left yesterday\nnight after the show.",
+        lint_group(),
+        "They left last night after the show.",
+    );
+}
+
+#[test]
+fn no_lint_for_last_night_phrase() {
+    assert_lint_count("I remember last night clearly.", lint_group(), 0);
 }
 
 // LetAlone
@@ -1429,6 +1473,26 @@ fn correct_on_top_of() {
     );
 }
 
+// PartOfSpeech
+#[test]
+fn corrects_part_of_speeches() {
+    assert_suggestion_result(
+        "The part of speeches (POS) or as follows:",
+        lint_group(),
+        "The parts of speech (POS) or as follows:",
+    )
+}
+
+// It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.
+#[test]
+fn corrects_parts_of_speeches() {
+    assert_suggestion_result(
+        "It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.",
+        lint_group(),
+        "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.",
+    )
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -1439,13 +1503,51 @@ fn corrects_piece_of_mind() {
     )
 }
 
+// PerSe
+#[test]
+fn corrects_per_se_hyphenated() {
+    assert_suggestion_result(
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
+        lint_group(),
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
+    )
+}
+
+#[test]
+fn corrects_per_say() {
+    assert_suggestion_result(
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
+        lint_group(),
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
+        lint_group(),
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
+    );
+}
+
 // PointsOfView
 #[test]
-fn corrects_points_of_view() {
+fn corrects_point_of_views() {
     assert_suggestion_result(
         "This will produce a huge amount of raw data, representing the region in multiple point of views.",
         lint_group(),
         "This will produce a huge amount of raw data, representing the region in multiple points of view.",
+    )
+}
+
+// log events, places, moods and self-reflect from various points of views
+#[test]
+fn corrects_points_of_views() {
+    assert_suggestion_result(
+        "log events, places, moods and self-reflect from various points of views",
+        lint_group(),
+        "log events, places, moods and self-reflect from various points of view",
     )
 }
 
@@ -1506,11 +1608,20 @@ fn correct_iirc_correctly() {
 // RulesOfThumb
 
 #[test]
-fn correct_rules_of_thumbs() {
+fn correct_rule_of_thumbs() {
     assert_suggestion_result(
         "Thanks. 0.2 is just from my rule of thumbs.",
         lint_group(),
         "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
+        lint_group(),
+        "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
     );
 }
 
@@ -1950,5 +2061,14 @@ fn fixes_teh() {
         "I adore teh light of the moon.",
         lint_group(),
         "I adore the light of the moon.",
+    );
+}
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
     );
 }

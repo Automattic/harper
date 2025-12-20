@@ -17,7 +17,7 @@ import {
 	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
-import lintKindColor, { type LintKind } from './lintKindColor';
+import { type LintKind, lintKindColor } from './lintKindColor';
 import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';
@@ -190,6 +190,7 @@ export default class Highlights {
 		}
 
 		const queries = [
+			getQuillJsRoot,
 			getNotionRoot,
 			getGhostRoot,
 			getDraftRoot,
@@ -198,7 +199,6 @@ export default class Highlights {
 			getSlateRoot,
 			getMediumRoot,
 			getShredditComposerRoot,
-			getQuillJsRoot,
 			getLexicalRoot,
 			getP2Root,
 			getGutenbergRoot,

@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input:expr, $corrections:expr, $hint:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseLinter::new_fixed_phrases(
@@ -91,20 +91,6 @@ pub fn lint_group() -> LintGroup {
             "Use `another` on its own.",
             "Corrects `an another` and `a another`.",
             LintKind::Redundancy
-        ),
-        "AndIn" => (
-            ["an in"],
-            ["and in"],
-            "Did you mean `and in`?",
-            "Fixes the incorrect phrase `an in` to `and in` for proper conjunction usage.",
-            LintKind::Typo
-        ),
-        "AndTheLike" => (
-            ["an the like"],
-            ["and the like"],
-            "Did you mean `and the like`?",
-            "Fixes the typo in `and the like`.",
-            LintKind::Typo
         ),
         "AnotherAn" => (
             ["another an"],
@@ -263,7 +249,7 @@ pub fn lint_group() -> LintGroup {
             ["in built", "in-built", "built in"],
             ["built-in"],
             "Prefer the hyphenated compound `built-in`.",
-            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are non-standard and can feel awkward to readers."
+            "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
         ),
         "ByAccident" => (
             ["on accident"],
@@ -440,13 +426,6 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `w/o` to the full word `without` for clarity.",
             LintKind::Style
         ),
-        "Expatriate" => (
-            ["ex-patriot"],
-            ["expatriate"],
-            "Use the correct term for someone living abroad.",
-            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
-            LintKind::Eggcorn
-        ),
         "FaceFirst" => (
             ["face first into"],
             ["face-first into"],
@@ -606,6 +585,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
         ),
+        "InLieuOf" => (
+            ["in lue of"],
+            ["in lieu of"],
+            "Did you mean `in lieu of`?",
+            "Corrects the misspelling `in lue of` to `in lieu of`.",
+            LintKind::Spelling
+        ),
         "InOfItself" => (
             ["in of itself"],
             ["in itself", "in and of itself"],
@@ -739,6 +725,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects wrong variations of the idiomatic adjective `last-ditch`.",
             LintKind::Usage
         ),
+        "LastNight" => (
+            ["yesterday night"],
+            ["last night"],
+            "The idiomatic phrase is `last night`.",
+            "Flags `yesterday night` and suggests the standard phrasing `last night`.",
+            LintKind::WordChoice
+        ),
         "LetAlone" => (
             ["let along"],
             ["let alone"],
@@ -763,7 +756,7 @@ pub fn lint_group() -> LintGroup {
             ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
             ["low-hanging fruit"],
             "The standard form is `low-hanging fruit` with a hyphen and singular form.",
-            "Corrects non-standard variants of `low-hanging fruit`.",
+            "Corrects nonstandard variants of `low-hanging fruit`.",
             LintKind::Usage
         ),
         "LoAndBehold" => (
@@ -873,6 +866,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `ontop of` to `on top of`.",
             LintKind::BoundaryError
         ),
+        "PartsOfSpeech" => (
+            ["part of speeches", "parts of speeches"],
+            ["parts of speech"],
+            "The correct plural is `parts of speech`.",
+            "Corrects pluralizing the wrong noun in `part of speech`.",
+            LintKind::Grammar
+        ),
         "PeaceOfMind" => (
             ["piece of mind"],
             ["peace of mind"],
@@ -880,8 +880,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `piece of mind` to `peace of mind`.",
             LintKind::Eggcorn
         ),
+        "PerSe" => (
+            ["per say", "per-se", "per-say"],
+            ["per se"],
+            "The correct spelling is `per se` (with no hyphen)",
+            "Corrects common misspellings of `per se`.",
+            LintKind::Spelling
+        ),
         "PointsOfView" => (
-            ["point of views"],
+            ["point of views", "points of views"],
             ["points of view"],
             "The correct plural is `points of view`.",
             "Corrects pluralizing the wrong noun in `point of view`.",
@@ -922,7 +929,7 @@ pub fn lint_group() -> LintGroup {
             ["quite many"],
             ["quite a few"],
             "Use `quite a few` instead of `quite many`.",
-            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered non-standard usage.",
+            "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered nonstandard usage.",
             LintKind::Nonstandard
         ),
         "RapidFire" => (
@@ -942,7 +949,7 @@ pub fn lint_group() -> LintGroup {
         "RedundantIIRC" => (
             ["if IIRC", "IIRC correctly"], ["IIRC"],
             "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant.",
-            "Flags redundant use of 'if' or 'correctly' with 'IIRC', since 'IIRC' already stands for 'if I recall correctly'.",
+            "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'.",
             LintKind::Redundancy
         ),
         "RifeWith" => (
@@ -960,7 +967,7 @@ pub fn lint_group() -> LintGroup {
             LintKind::WordChoice
         ),
         "RulesOfThumb" => (
-            ["rule of thumbs", "rule-of-thumbs"],
+            ["rule of thumbs", "rule-of-thumbs", "rules of thumbs"],
             ["rules of thumb"],
             "The correct plural is `rules of thumb`.",
             "Corrects pluralizing the wrong noun in `rule of thumb`.",
@@ -1224,11 +1231,18 @@ pub fn lint_group() -> LintGroup {
             "Fixes incorrect use of `to worried about`."
         ),
         "The" => (
-            ["teh"],
+            ["teh", "te"],
             ["the"],
             "Did you mean the definite article?",
             "Fixes especially common misspellings of the word `the`",
             LintKind::Typo
+        ),
+        "RedundantThat" => (
+            ["that that"],
+            ["that"],
+            "Consider whether the second `that` adds meaning in this context.",
+            "There is rarely a situation where `that that` cannot be condensed into a single token.",
+            LintKind::Repetition
         )
     });
 

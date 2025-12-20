@@ -2,6 +2,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     patterns::{Word, WordSet},
@@ -36,6 +37,8 @@ impl Default for TheMy {
 }
 
 impl ExprLinter for TheMy {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

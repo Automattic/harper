@@ -1,5 +1,6 @@
 use crate::Token;
 use crate::expr::{DurationExpr, Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
@@ -41,6 +42,8 @@ impl Default for AfterLater {
 }
 
 impl ExprLinter for AfterLater {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -70,7 +73,8 @@ impl ExprLinter for AfterLater {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{AfterLater, tests::assert_top3_suggestion_result};
+    use super::AfterLater;
+    use crate::linting::tests::assert_top3_suggestion_result;
 
     #[test]
     fn after_90_days_later() {

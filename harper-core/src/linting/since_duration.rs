@@ -1,7 +1,8 @@
-use crate::expr::{DurationExpr, Expr, LongestMatchOf, SequenceExpr};
-use crate::{Lrc, Token, TokenStringExt};
+use crate::expr::{DurationExpr, Expr, SequenceExpr};
+use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 const AGO_VARIANTS: [&[char]; 3] = [&['a', 'g', 'o'], &['A', 'g', 'o'], &['A', 'G', 'O']];
 const FOR_VARIANTS: [&[char]; 3] = [&['f', 'o', 'r'], &['F', 'o', 'r'], &['F', 'O', 'R']];
@@ -24,35 +25,36 @@ pub struct SinceDuration {
 
 impl Default for SinceDuration {
     fn default() -> Self {
-        let pattern_without_ago = Lrc::new(
-            SequenceExpr::default()
-                .then_any_capitalization_of("since")
-                .then_whitespace()
-                .then(DurationExpr),
-        );
-
-        let pattern_with_ago = SequenceExpr::default()
-            .then(pattern_without_ago.clone())
-            .then_whitespace()
-            .then_any_capitalization_of("ago");
-
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(pattern_without_ago),
-                Box::new(pattern_with_ago),
-            ])),
+            expr: Box::new(
+                SequenceExpr::default()
+                    .then_any_capitalization_of("since")
+                    .then_whitespace()
+                    .then(DurationExpr)
+                    .then_optional(
+                        SequenceExpr::default()
+                            .t_ws()
+                            .then_word_set(&["ago", "old"]),
+                    ),
+            ),
         }
     }
 }
 
 impl ExprLinter for SinceDuration {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let last = toks.last()?;
-        if last.span.get_content_string(src).to_lowercase() == "ago" {
+        if last
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_chars(&[&['a', 'g', 'o'], &['o', 'l', 'd']])
+        {
             return None;
         }
 
@@ -90,8 +92,10 @@ impl ExprLinter for SinceDuration {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::SinceDuration;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use super::SinceDuration;
+    use crate::linting::tests::{
+        assert_lint_count, assert_no_lints, assert_top3_suggestion_result,
+    };
 
     #[test]
     fn catches_spelled() {
@@ -104,10 +108,9 @@ mod tests {
 
     #[test]
     fn permits_spelled_with_ago() {
-        assert_lint_count(
+        assert_no_lints(
             "I have been waiting since two hours ago.",
             SinceDuration::default(),
-            0,
         );
     }
 
@@ -122,10 +125,9 @@ mod tests {
 
     #[test]
     fn permits_numerals_with_ago() {
-        assert_lint_count(
+        assert_no_lints(
             "I have been waiting since 2 hours ago.",
             SinceDuration::default(),
-            0,
         );
     }
 
@@ -282,6 +284,14 @@ mod tests {
             "I use a Wacom Cintiq 27QHDT since several years on Linux",
             SinceDuration::default(),
             "I use a Wacom Cintiq 27QHDT for several years on Linux",
+        );
+    }
+
+    #[test]
+    fn ignore_since_years_old() {
+        assert_no_lints(
+            "I've been coding since 11 years old and I'm now 57",
+            SinceDuration::default(),
         );
     }
 }

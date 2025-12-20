@@ -3,6 +3,7 @@ use crate::patterns::WordSet;
 use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct LessWorse {
     expr: Box<dyn Expr>,
@@ -22,6 +23,8 @@ impl Default for LessWorse {
 }
 
 impl ExprLinter for LessWorse {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

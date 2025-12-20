@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Textarea } from 'flowbite-svelte';
+import { Link, Textarea } from 'components';
 
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
@@ -8,7 +8,7 @@ let demoText =
 <div class="fixed left-0 top-0 w-screen h-screen bg-white dark:bg-black z-1000">
   <div class="max-w-6xl mx-auto shadow-md border-gray-300 dark:border-x h-full overflow-y-auto">
     <section class="px-6 sm:px-10 py-16 sm:py-24">
-      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl leading-tight mb-6">
+      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl mb-6">
         Thanks for Installing Harper!
       </h1>
 
@@ -48,7 +48,7 @@ let demoText =
         <Textarea
           rows={10}
           bind:value={demoText}
-          class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl!"
+          class="w-full rounded-lg border border-base-300 focus:ring-4 focus:ring-primary/30 transition text-xl! dark:text-white"
         />
       </div>
 
@@ -66,7 +66,7 @@ let demoText =
         If you work somewhere that isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
         <br/>
         <br/>
-        Alternatively, <a href="/request-browser-support">let us know</a> which sites you want us to support and we'll add it as soon as we can.
+        Alternatively, <Link href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
       </p>
 
       <img
