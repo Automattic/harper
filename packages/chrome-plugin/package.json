@@ -22,7 +22,7 @@
 		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
 		"zip-for-chrome": "TARGET_BROWSER=chrome npm run build && node src/zip.js harper-chrome-plugin.zip",
 		"zip-for-firefox": "TARGET_BROWSER=firefox npm run build && node src/zip.js harper-firefox-plugin.zip",
-		"test": "playwright test --headed --reporter=dot --quiet"
+		"test": "DEBUG=pw:* playwright test --headed --reporter=dot"
 	},
 	"devDependencies": {
 		"@crxjs/vite-plugin": "^2.0.0-beta.26",
