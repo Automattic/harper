@@ -48,6 +48,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::damages::Damages;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
@@ -523,6 +524,7 @@ impl LintGroup {
         insert_expr_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
+        insert_expr_rule!(Damages, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);

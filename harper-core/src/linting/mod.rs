@@ -41,6 +41,7 @@ mod correct_number_suffix;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
+mod damages;
 mod dashes;
 mod despite_of;
 mod determiner_without_noun;
@@ -253,6 +254,44 @@ where
     fn description_html(&self) -> String {
         let desc = self.description();
         render_markdown(desc)
+    }
+}
+
+pub mod debug {
+    use crate::{Token, token_string_ext::TokenStringExt};
+
+    /// Formats a lint match with surrounding context for debug output.
+    ///
+    /// The function takes the same `matched_tokens` and `source`, and `context` parameters
+    /// passed to `[match_to_lint_with_context]`.
+    ///
+    /// # Arguments
+    /// * `log` - `matched_tokens`
+    /// * `ctx` - `context`, or `None` if calling from `[match_to_lint]`
+    /// * `src` - `source` from `[match_to_lint]` / `[match_to_lint_with_context]`
+    ///
+    /// # Returns
+    /// A string with ANSI escape codes where:
+    /// - Context tokens are dimmed before and after the matched tokens in normal weight.
+    /// - Markup and formatting text hidden in whitespace tokens is filtered out.
+    pub fn format_lint_match(
+        log: &[Token],
+        ctx: Option<(&[Token], &[Token])>,
+        src: &[char],
+    ) -> String {
+        if let Some((pro, epi)) = ctx {
+            let [pro, log, epi] = [pro, log, epi].map(|tt| {
+                tt.iter()
+                    .filter(|t| !t.kind.is_whitespace() && !t.kind.is_newline())
+                    .map(|t| t.span.get_content_string(src))
+                    .collect::<Vec<_>>()
+                    .join(" ")
+            });
+            format!("\x1b[2m{}\x1b[0m {} \x1b[2m{}\x1b[0m", pro, log, epi,)
+        } else {
+            log.span()
+                .map_or_else(String::new, |span| span.get_content_string(src))
+        }
     }
 }
 
