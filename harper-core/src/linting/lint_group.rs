@@ -524,7 +524,6 @@ impl LintGroup {
         insert_expr_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
-        insert_expr_rule!(Damages, true);
         insert_expr_rule!(Dashes, true);
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
@@ -707,6 +706,11 @@ impl LintGroup {
             DisjointPrefixes::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add("Damages", Damages::default());
+        out.config.set_rule_enabled("Damages", true);
 
         out
     }
