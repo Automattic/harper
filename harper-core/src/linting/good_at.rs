@@ -1,7 +1,7 @@
 use crate::{
-    CharStringExt, Lint, Token,
+    Lint, Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -25,14 +25,14 @@ impl Default for GoodAt {
             .then_optional(SequenceExpr::default().then_degree_adverb().t_ws())
             .then_word_set(&["good", "bad", "great", "okay", "OK"])
             .t_ws()
-            .then_word_set(&["at", "in"])
+            .t_aco("in")
             .t_ws()
             .then_any_word();
 
         let good_in_skill_or_subject =
             SequenceExpr::word_set(&["good", "bad", "great", "okay", "OK"])
                 .t_ws()
-                .then_word_set(&["at", "in"])
+                .t_aco("in")
                 .t_ws()
                 .then_word_set(&[
                     // sciences
@@ -79,27 +79,10 @@ impl ExprLinter for GoodAt {
         self.expr.as_ref()
     }
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        // eprintln!("{}", format_lint_match(toks, ctx, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let prep_idx = toks.len() - 3;
         let prep_tok = &toks[prep_idx];
         let prep_span = prep_tok.span;
-        let prep_chars = prep_span.get_content(src);
-
-        let emoji = if prep_chars.eq_ignore_ascii_case_chars(&['i', 'n']) {
-            "📥"
-        } else {
-            "🎯"
-        };
-        eprintln!("{emoji} {}", format_lint_match(toks, ctx, src));
-        if emoji == "🎯" {
-            return None;
-        }
 
         Some(Lint {
             span: prep_span,
