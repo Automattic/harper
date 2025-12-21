@@ -1,7 +1,8 @@
 use crate::{
-    expr::{Expr, SequenceExpr},
+    CharStringExt, Lint, Token,
+    expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
-    {CharStringExt, Lint, Token, TokenStringExt},
+    patterns::{InflectionOfBe, WordSet},
 };
 
 pub struct GoodAt {
@@ -10,12 +11,60 @@ pub struct GoodAt {
 
 impl Default for GoodAt {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .t_aco("good")
+        let we_re_not_always_very_good_in_sth = SequenceExpr::default()
+            .then_any_of(vec![
+                Box::new(InflectionOfBe::default()),
+                Box::new(WordSet::new(&[
+                    "I'm", "we're", "you're", "he's", "she's", "it's", "they're", "Im", "were",
+                    "youre", "your", "hes", "shes", "its", "theyre",
+                ])),
+            ])
+            .t_ws()
+            .then_optional(SequenceExpr::aco("not").t_ws())
+            .then_optional(SequenceExpr::default().then_frequency_adverb().t_ws())
+            .then_optional(SequenceExpr::default().then_degree_adverb().t_ws())
+            .then_word_set(&["good", "bad", "great", "okay", "OK"])
             .t_ws()
             .then_word_set(&["at", "in"])
             .t_ws()
             .then_any_word();
+
+        let good_in_skill_or_subject =
+            SequenceExpr::word_set(&["good", "bad", "great", "okay", "OK"])
+                .t_ws()
+                .then_word_set(&["at", "in"])
+                .t_ws()
+                .then_word_set(&[
+                    // sciences
+                    "biology",
+                    "chemistry",
+                    "math",
+                    "mathematics",
+                    "physics",
+                    // programming
+                    "programming",
+                    "coding",
+                    "c", // Note: C++ would be multiple tokens
+                    "debugging",
+                    "go",
+                    "java",
+                    "javascript",
+                    "laravel",
+                    "python",
+                    "ruby",
+                    // languages
+                    "english",
+                    "chinese",
+                    "french",
+                    "german",
+                    "japanese",
+                    "spanish",
+                ]);
+
+        let expr = FirstMatchOf::new(vec![
+            Box::new(we_re_not_always_very_good_in_sth),
+            Box::new(good_in_skill_or_subject),
+        ]);
 
         Self {
             expr: Box::new(expr),
@@ -36,7 +85,8 @@ impl ExprLinter for GoodAt {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let prep_idx = 2;
+        // eprintln!("{}", format_lint_match(toks, ctx, src));
+        let prep_idx = toks.len() - 3;
         let prep_tok = &toks[prep_idx];
         let prep_span = prep_tok.span;
         let prep_chars = prep_span.get_content(src);
