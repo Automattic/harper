@@ -129,6 +129,33 @@ Importantly, we can refactor this into just two sequences, by moving the arrays 
 expr main [(low[-, ( )]hanging fruits), (low hanging fruit)]
 ```
 
+### Filters
+
+Filters in Weir allow you to locate an expression, then narrow down the search to a shorter segment that same expression.
+This can be done as many times as you like.
+The example below uses the filter syntax (the `<>`) to first select the broader phrase, then another to select the whitespace in-between (that's the `( )` part).
+
+```plaintext
+set main <([right, middle, left] $click), ( )>
+declare message "Hyphenate this mouse command"
+declare description "Hyphenates right-click style mouse commands."
+declare kind "Punctuation"
+declare becomes "-"
+
+test "Right click the icon." "Right-click the icon."
+test "Please right click on the link." "Please right-click on the link."
+test "They right clicked the submit button." "They right-clicked the submit button."
+test "Right clicking the item highlights it." "Right-clicking the item highlights it."
+test "Right clicks are tracked in the log." "Right-clicks are tracked in the log."
+test "He RIGHT CLICKED the file." "He RIGHT-CLICKED the file."
+test "Left click the checkbox." "Left-click the checkbox."
+test "Middle click to open in a new tab." "Middle-click to open in a new tab."
+```
+
+This is extremely useful for identifying exceptions to a rule, since you can include the expections in the first layer of the filter, then slowly become more specific.
+
+See the testing section of this document for a more detailed description of the `test` syntax.
+
 ## Adding Tests
 
 The Weir language supports the inclusion of tests directly in the file.
