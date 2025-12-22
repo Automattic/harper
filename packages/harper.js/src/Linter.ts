@@ -53,13 +53,16 @@ export default interface Linter {
 	/** Get the linting rule descriptions as an object, formatted in Markdown. */
 	getLintDescriptions(): Promise<Record<string, string>>;
 
-	/** Get the linting rule descriptions as a JSON map, formatted in HTML. */
+	/** Get the linting rule descriptions as a JSON map, formatted in HTML.
+	 * Wraps the function on the BinaryModule by the same name. */
 	getLintDescriptionsHTMLAsJSON(): Promise<string>;
 
-	/** Get the linting rule descriptions as an object, formatted in HTML */
+	/** Get the linting rule descriptions as an object, formatted in HTML.
+	 * Wraps the function on the BinaryModule by the same name. */
 	getLintDescriptionsHTML(): Promise<Record<string, string>>;
 
-	/** Convert a string to Chicago-style title case. */
+	/** Convert a string to Chicago-style title case. 
+	 Wraps the function on the BinaryModule by the same name. */
 	toTitleCase(text: string): Promise<string>;
 
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
@@ -110,6 +113,7 @@ export default interface Linter {
 	importStatsFile(statsFile: string): Promise<void>;
 }
 
+/** The properties and information needed to construct a Linter. */
 export interface LinterInit {
 	/** The module or path to the WebAssembly binary. */
 	binary: BinaryModule;

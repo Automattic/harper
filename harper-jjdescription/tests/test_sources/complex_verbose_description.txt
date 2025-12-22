@@ -1,0 +1,20 @@
+This is the the subject
+
+This is a first line without typos
+JJ: This is a comment with a typoo that should be ignored
+This is a line below the comment with typooos
+
+JJ: This commit contains the following changes:
+JJ:     myfile.txt | 1 +
+JJ:     1 file changed, 1 insertion(+), 0 deletions(-)
+
+JJ: ignore-rest
+diff --git a/myfile.txt b/myfile.txt
+new file mode 100644
+index 0000000000..54f266d2db
+--- /dev/null
++++ b/myfile.txt
+@@ -0,0 +1,1 @@
++typooo in the file
+
+JJ: Lines starting with "JJ:" (like this one) will be removed.

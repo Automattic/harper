@@ -13,6 +13,7 @@ pub use cached_chunker::CachedChunker;
 pub use upos_freq_dict::UPOSFreqDict;
 
 /// An implementer of this trait is capable of identifying the noun phrases in a provided sentence.
+/// [See here](https://en.wikipedia.org/wiki/Shallow_parsing) for more details on what this is and how it can work.
 pub trait Chunker {
     /// Iterate over the sentence, identifying the noun phrases contained within.
     /// A token marked `true` is a component of a noun phrase.

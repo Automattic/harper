@@ -47,8 +47,18 @@ macro_rules! create_fns_for {
     };
 }
 
+mod private {
+    use crate::{Document, Token};
+
+    pub trait Sealed {}
+
+    impl Sealed for [Token] {}
+
+    impl Sealed for Document {}
+}
+
 /// Extension methods for [`Token`] sequences that make them easier to wrangle and query.
-pub trait TokenStringExt {
+pub trait TokenStringExt: private::Sealed {
     fn first_sentence_word(&self) -> Option<&Token>;
     fn first_non_whitespace(&self) -> Option<&Token>;
     /// Grab the span that represents the beginning of the first element and the
@@ -78,6 +88,7 @@ pub trait TokenStringExt {
     create_decl_for!(verb);
     create_decl_for!(word);
     create_decl_for!(word_like);
+    create_decl_for!(heading_start);
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
@@ -95,6 +106,12 @@ pub trait TokenStringExt {
     /// Get an iterator over token slices that represent the individual
     /// paragraphs in a document.
     fn iter_paragraphs(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
+    /// Get an iterator over token slices that represent headings.
+    ///
+    /// A heading begins with a [`TokenKind::HeadingStart`] token and ends with
+    /// the next [`TokenKind::ParagraphBreak`].
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
 
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
@@ -129,6 +146,7 @@ impl TokenStringExt for [Token] {
     create_fns_for!(verb);
     create_fns_for!(word_like);
     create_fns_for!(word);
+    create_fns_for!(heading_start);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())
@@ -218,6 +236,17 @@ impl TokenStringExt for [Token] {
         };
 
         first_pg.into_iter().chain(rest).chain(last_pg)
+    }
+
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
+        self.iter_heading_start_indices().map(|start| {
+            let end = self[start..]
+                .iter()
+                .position(|t| t.kind.is_paragraph_break())
+                .unwrap_or(self[start..].len() - 1);
+
+            &self[start..=start + end]
+        })
     }
 
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {

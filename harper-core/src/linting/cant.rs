@@ -2,6 +2,7 @@ use super::{ExprLinter, Suggestion};
 use crate::Lint;
 use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::linting::LintKind;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
 
@@ -31,6 +32,8 @@ impl Default for Cant {
 }
 
 impl ExprLinter for Cant {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

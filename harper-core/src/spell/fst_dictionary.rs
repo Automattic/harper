@@ -1,5 +1,6 @@
 use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
+use hashbrown::HashMap;
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
@@ -54,7 +55,7 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a word list as a source.
+    /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
@@ -121,12 +122,12 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_lexeme_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_lexeme_metadata(word)
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata(word)
     }
 
-    fn get_lexeme_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_lexeme_metadata_str(word)
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.mutable_dict.get_word_metadata_str(word)
     }
 
     fn fuzzy_match(
@@ -150,28 +151,35 @@ impl Dictionary for FstDictionary {
         let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
         let lower_dists = stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
 
-        let mut merged = Vec::with_capacity(upper_dists.len());
+        // Merge the two results, keeping the smallest distance when both DFAs match.
+        // The uppercase and lowercase searches can return different result counts, so
+        // we can't simply zip the vectors without losing matches.
+        let mut merged = Vec::with_capacity(upper_dists.len().max(lower_dists.len()));
+        let mut best_distances = HashMap::<u64, u8>::new();
 
-        // Merge the two results
-        for ((i_u, dist_u), (i_l, dist_l)) in upper_dists.into_iter().zip(lower_dists.into_iter()) {
-            let (chosen_index, edit_distance) = if dist_u <= dist_l {
-                (i_u, dist_u)
-            } else {
-                (i_l, dist_l)
-            };
+        for (idx, dist) in upper_dists.into_iter().chain(lower_dists.into_iter()) {
+            best_distances
+                .entry(idx)
+                .and_modify(|existing| *existing = (*existing).min(dist))
+                .or_insert(dist);
+        }
 
-            let (word, metadata) = &self.words[chosen_index as usize];
-
+        for (index, edit_distance) in best_distances {
+            let (word, metadata) = &self.words[index as usize];
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
                 metadata: Cow::Borrowed(metadata),
-            })
+            });
         }
 
-        merged.sort_unstable_by_key(|v| v.word);
-        merged.dedup_by_key(|v| v.word);
-        merged.sort_unstable_by_key(|v| v.edit_distance);
+        // Ignore exact matches
+        merged.retain(|v| v.edit_distance > 0);
+        merged.sort_unstable_by(|a, b| {
+            a.edit_distance
+                .cmp(&b.edit_distance)
+                .then_with(|| a.word.cmp(b.word))
+        });
         merged.truncate(max_results);
 
         merged
@@ -212,6 +220,14 @@ impl Dictionary for FstDictionary {
 
     fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
         self.mutable_dict.get_word_from_id(id)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.mutable_dict.find_words_with_common_prefix(word)
     }
 }
 
@@ -256,10 +272,7 @@ mod tests {
             dbg!(&misspelled_lower);
 
             assert!(!misspelled_word.is_empty());
-            assert!(
-                dict.word_map.contains_key(misspelled_word)
-                    || dict.word_map.contains_key(misspelled_lower)
-            );
+            assert!(dict.word_map.contains_key(misspelled_word));
         }
     }
 
@@ -283,7 +296,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_lexeme_metadata_str("on").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -316,7 +329,7 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_lexeme_metadata_str(contraction)
+                dict.get_word_metadata_str(contraction)
                     .unwrap()
                     .derived_from
                     .is_none()
@@ -329,7 +342,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("llamas")
+            dict.get_word_metadata_str("llamas")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -342,7 +355,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("cats")
+            dict.get_word_metadata_str("cats")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -355,7 +368,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("unhappy")
+            dict.get_word_metadata_str("unhappy")
                 .unwrap()
                 .derived_from
                 .unwrap(),
@@ -368,7 +381,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_lexeme_metadata_str("quickly")
+            dict.get_word_metadata_str("quickly")
                 .unwrap()
                 .derived_from
                 .unwrap(),

@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
 
 pub struct InOnTheCards {
     expr: Box<dyn Expr>,
@@ -41,6 +42,8 @@ impl InOnTheCards {
 }
 
 impl ExprLinter for InOnTheCards {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -85,12 +88,10 @@ impl ExprLinter for InOnTheCards {
 
 #[cfg(test)]
 mod tests {
+    use super::InOnTheCards;
     use crate::{
         Dialect,
-        linting::{
-            InOnTheCards,
-            tests::{assert_lint_count, assert_suggestion_result},
-        },
+        linting::tests::{assert_lint_count, assert_suggestion_result},
     };
 
     // On the cards

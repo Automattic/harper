@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::one_to_one(
@@ -36,7 +36,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::many_to_many(
@@ -252,44 +252,6 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
-        "MakeDoWith" => (
-            &[
-                ("make due with", "make do with"),
-                ("made due with", "made do with"),
-                ("makes due with", "makes do with"),
-                ("making due with", "making do with"),
-            ],
-            "Use `do` instead of `due` when referring to a resource scarcity.",
-            "Corrects `make due` to `make do` when followed by `with`."
-        ),
-        "MootPoint" => (
-            &[
-                ("mute point", "moot point"),
-                ("point is mute", "point is moot"),
-            ],
-            "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
-            "Corrects `mute` to `moot` in the phrase `moot point`.",
-            LintKind::Eggcorn
-        ),
-        "OperatingSystem" => (
-            &[
-                ("operative system", "operating system"),
-                ("operative systems", "operating systems"),
-            ],
-            "Did you mean `operating system`?",
-            "Ensures `operating system` is used correctly instead of `operative system`.",
-            LintKind::Usage
-        ),
-        "Piggyback" => (
-            &[
-                ("piggy bag", "piggyback"),
-                ("piggy bagged", "piggybacked"),
-                ("piggy bagging", "piggybacking"),
-            ],
-            "Did you mean `piggyback`?",
-            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
-            LintKind::Eggcorn
-        ),
 
         // General litotes (double negatives) → direct positive suggestions
         "LitotesDirectPositive" => (
@@ -317,6 +279,64 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
+        "MakeDoWith" => (
+            &[
+                ("make due with", "make do with"),
+                ("made due with", "made do with"),
+                ("makes due with", "makes do with"),
+                ("making due with", "making do with"),
+            ],
+            "Use `do` instead of `due` when referring to a resource scarcity.",
+            "Corrects `make due` to `make do` when followed by `with`."
+        ),
+        "MakeSense" => (
+            &[
+                ("make senses", "make sense"),
+                ("made senses", "made sense"),
+                ("makes senses", "makes sense"),
+                ("making senses", "making sense")
+            ],
+            "Use `sense` instead of `senses`.",
+            "Corrects `make senses` to `make sense`.",
+            LintKind::Usage
+        ),
+        "MootPoint" => (
+            &[
+                ("mute point", "moot point"),
+                ("point is mute", "point is moot"),
+            ],
+            "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
+            "Corrects `mute` to `moot` in the phrase `moot point`.",
+            LintKind::Eggcorn
+        ),
+        "OperatingSystem" => (
+            &[
+                ("operative system", "operating system"),
+                ("operative systems", "operating systems"),
+            ],
+            "Did you mean `operating system`?",
+            "Ensures `operating system` is used correctly instead of `operative system`.",
+            LintKind::Usage
+        ),
+        "PassersBy" => (
+            &[
+                ("passerbys", "passersby"),
+                ("passer-bys", "passers-by"),
+            ],
+            "The correct plural is `passersby` or `passers-by`.",
+            "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
+            LintKind::Grammar
+        ),
+        "Piggyback" => (
+            &[
+                ("piggy bag", "piggyback"),
+                ("piggy bagged", "piggybacked"),
+                ("piggy bagging", "piggybacking"),
+            ],
+            "Did you mean `piggyback`?",
+            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
+            LintKind::Eggcorn
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -329,23 +349,60 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "WreakHavoc" => (
+            &[
+                ("wreck havoc", "wreak havoc"),
+                ("wrecked havoc", "wreaked havoc"),
+                ("wrecking havoc", "wreaking havoc"),
+                ("wrecks havoc", "wreaks havoc"),
+            ],
+            "Did you mean `wreak havoc`?",
+            "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
+            LintKind::Eggcorn
+        )
     });
 
     add_many_to_many_mappings!(group, {
-        "ChangeTack" => (
+        "AwaitFor" => (
             &[
-                // verb
-                (&["change tact", "change tacks", "change tacts"], &["change tack"]),
-                (&["changed tact", "changed tacks", "changed tacts"], &["changed tack"]),
-                (&["changes tact", "changes tacks", "changes tacts"], &["changes tack"]),
-                (&["changing tact", "changing tacks", "changing tacts"], &["changing tack"]),
-                // noun
-                (&["change of tact", "change of tacks", "change of tacts"], &["change of tack"]),
-                (&["changes of tact", "changes of tacks", "changes of tacts"], &["changes of tack"]),
-                (&["changing of tact", "changing of tacks", "changing of tacts"], &["changing of tack"])
+                (&["await for"], &["await", "wait for"]),
+                (&["awaited for"], &["awaited", "waited for"]),
+                (&["awaiting for"], &["awaiting", "waiting for"]),
+                (&["awaits for"], &["awaits", "waits for"])
             ],
-            "A change in direction or approach is a change of `tack`. Not `tact` (or `tacks` or `tacts`).",
-            "Locates errors in the idioms `to change tack` and `change of tack` to convey the correct meaning of altering one's course or strategy.",
+            "`Await` and `for` are redundant when used together - use one or the other",
+            "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
+            LintKind::Redundancy
+        ),
+        "Copyright" => (
+            &[
+                (&["copywrite"], &["copyright"]),
+                (&["copywrites"], &["copyrights"]),
+                (&["copywriting"], &["copyrighting"]),
+                (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
+            ],
+            "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
+            "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
+            LintKind::WordChoice
+        ),
+        "Expat" => (
+            &[
+                (&["ex-pat", "ex pat"], &["expat"]),
+                (&["ex-pats", "ex pats"], &["expats"]),
+                (&["ex-pat's", "ex pat's"], &["expat's"]),
+            ],
+            "The correct spelling is `expat` with no hyphen or space.",
+            "Corrects the mistake of writing `expat` as two words.",
+            LintKind::Spelling
+        ),
+        "Expatriate" => (
+            &[
+                (&["ex-patriot", "expatriot", "ex patriot"], &["expatriate"]),
+                (&["ex-patriots", "expatriots", "ex patriots"], &["expatriates"]),
+                (&["ex-patriot's", "expatriot's", "ex patriot's"], &["expatriate's"]),
+            ],
+            "Use the correct term for someone living abroad.",
+            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
             LintKind::Eggcorn
         ),
         "GetRidOf" => (
@@ -359,6 +416,15 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
+        ),
+        "HolyWar" => (
+            &[
+                (&["holey war", "holly war"], &["holy war"]),
+                (&["holey wars", "holly wars"], &["holy wars"]),
+            ],
+            "Literally for religious conflicts and metaphorically for tech preference debats, the correct spelling is `holy war`.",
+            "Corrects misspellings of `holy war`.",
+            LintKind::Malapropism
         ),
         "HowItLooksLike" => (
             &[
@@ -380,6 +446,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
+        ),
+        "NervousWreck" => (
+            &[
+                (&["nerve wreck", "nerve-wreck"], &["nervous wreck"]),
+                (&["nerve wrecks", "nerve-wrecks"], &["nervous wrecks"]),
+            ],
+            "Use `nervous wreck` when referring to a person who is extremely anxious or upset. `Nerve wreck` is non-standard but sometimes used for events or situations.",
+            "Suggests using `nervous wreck` when referring to a person's emotional state.",
+            LintKind::Eggcorn
         ),
         "RiseTheQuestion" => (
             &[

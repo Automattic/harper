@@ -1,6 +1,7 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
 use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{Invert, Word, WordSet};
 use crate::{CharStringExt, Token, TokenKind};
 
@@ -69,6 +70,8 @@ impl Default for ThenThan {
 }
 
 impl ExprLinter for ThenThan {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

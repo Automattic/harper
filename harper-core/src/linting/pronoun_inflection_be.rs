@@ -6,6 +6,7 @@ use crate::{Lrc, Token, TokenKind};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PronounInflectionBe {
     expr: Box<dyn Expr>,
@@ -51,9 +52,8 @@ impl PronounInflectionBe {
         map.insert(arent, "isn't");
 
         let is = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind
-                    .as_word()
+            .then_kind_where(|kind| {
+                kind.as_word()
                     .as_ref()
                     .and_then(|m| m.as_ref().and_then(|m| m.np_member))
                     .unwrap_or_default()
@@ -143,6 +143,8 @@ impl Default for PronounInflectionBe {
 }
 
 impl ExprLinter for PronounInflectionBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

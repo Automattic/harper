@@ -103,8 +103,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “central”
   - Replace with: “censure”
+  - Replace with: “cent”
 
 
 
@@ -171,11 +171,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       74 | again. “Dinah’ll miss me very much to-night, I should think!” (Dinah was the
-         |         ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
+         |         ^~~~~~~~ Did you mean `Dinah's`?
 Suggest:
   - Replace with: “Dinah's”
-  - Replace with: “Dina's”
-  - Replace with: “Dinah”
 
 
 
@@ -668,9 +666,18 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                   ^~ Did you mean to spell `Où` this way?
 Suggest:
-  - Replace with: “Os”
-  - Replace with: “O”
-  - Replace with: “OD”
+  - Replace with: “Of”
+  - Replace with: “Oh”
+  - Replace with: “Oi”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     320 | she began again: “Où est ma chatte?” which was the first sentence in her French
+         |                      ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “EST”
 
 
 
@@ -690,9 +697,9 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                             ^~~~~~ Did you mean to spell `chatte` this way?
 Suggest:
-  - Replace with: “chatty”
   - Replace with: “chaste”
   - Replace with: “chatted”
+  - Replace with: “chattel”
 
 
 
@@ -752,9 +759,9 @@ Message: |
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -800,9 +807,9 @@ Message: |
          |                                                ^~~~ Did you mean to spell `Lory` this way?
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -812,9 +819,9 @@ Message: |
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -836,8 +843,8 @@ Message: |
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Molnar”
-  - Replace with: “Mopar”
+  - Replace with: “Mercer”
+  - Replace with: “Molar”
 
 
 
@@ -853,9 +860,9 @@ Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -864,9 +871,9 @@ Message: |
      397 | “Not I!” said the Lory hastily.
          |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -877,8 +884,8 @@ Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Molnar”
-  - Replace with: “Mopar”
+  - Replace with: “Mercer”
+  - Replace with: “Molar”
 
 
 
@@ -893,10 +900,12 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
-         |                                                       ^~~~~~~ Did you mean `Brigand`?
+         |                                                       ^~~~~~~ Did you mean to spell `Stigand` this way?
      401 | archbishop of Canterbury, found it advisable—’”
 Suggest:
-  - Replace with: “Brigand”
+  - Replace with: “Stand”
+  - Replace with: “Stipend”
+  - Replace with: “Strand”
 
 
 
@@ -906,8 +915,9 @@ Message: |
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
-  - Replace with: “Steeling”
-  - Replace with: “Theming”
+  - Replace with: “Gathering”
+  - Replace with: “Adhering”
+  - Replace with: “Fathering”
 
 
 
@@ -958,9 +968,9 @@ Message: |
          |                                            ^~~~ Did you mean to spell `Lory` this way?
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -969,9 +979,18 @@ Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
 
 
 
@@ -1019,18 +1038,16 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
      585 | I suppose Dinah’ll be sending me on messages next!” And she began fancying the
-         |           ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
+         |           ^~~~~~~~ Did you mean `Dinah's`?
 Suggest:
   - Replace with: “Dinah's”
-  - Replace with: “Dina's”
-  - Replace with: “Dinah”
 
 
 
@@ -1148,6 +1165,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
+         |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
+Suggest:
+  - Replace with: “arr um”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      672 | “Sure, it does, yer honour: but it’s an arm for all that.”
@@ -1202,6 +1228,16 @@ Lint:    Formatting (255 priority)
 Message: |
      692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
          |                        ^ This quote has no termination.
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+     692 | below!” (a loud crash)—“Now, who did that?—It was Bill, I fancy—Who’s to go down
+         |                                                                 ^~~~~ The canonical dictionary spelling is `who's`.
+     693 | the chimney?—Nay, I shan’t! You do it!—That I won’t, then!—Bill’s to go
+Suggest:
+  - Replace with: “who's”
 
 
 
@@ -1390,6 +1426,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     796 | ## CHAPTER V: Advice from a Caterpillar
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER v: Advice from a Caterpillar”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
@@ -1462,6 +1507,25 @@ Message: |
 Suggest:
   - Replace with: “left-hand”
   - Replace with: “leftward”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     961 | her foot, that there was hardly room to open her mouth; but she did it at last,
+     962 | and managed to swallow a morsel of the lefthand bit.
+         |                                        ^~~~~~~~ `lefthand` should probably be written as `left hand`.
+Suggest:
+  - Replace with: “left hand”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
+         |           ^~~~~~ The canonical dictionary spelling is title case: `head's`.
+Suggest:
+  - Replace with: “head's”
 
 
 
@@ -1583,6 +1647,25 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    1055 | this size: why, I should frighten them out of their wits!” So she began nibbling
+    1056 | at the righthand bit again, and did not venture to go near the house till she
+         |        ^~~~~~~~~ `righthand` should probably be written as `right hand`.
+Suggest:
+  - Replace with: “right hand”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1059 | ## CHAPTER VI: Pig and Pepper
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi: Pig and Pepper”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1061 | For a minute or two she stood looking at the house, and wondering what to do
@@ -1608,6 +1691,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | the sky.
          | ~~~~~~~~ This sentence is 49 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
+         |                                                                  ^~~~ The canonical dictionary spelling is title case: `he's`.
+    1128 | idiotic!” And she opened the door and went in.
+Suggest:
+  - Replace with: “he's”
 
 
 
@@ -1791,6 +1884,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    1349 | did not like to go nearer till she had nibbled some more of the lefthand bit of
+         |                                                                 ^~~~~~~~ `lefthand` should probably be written as `left hand`.
+    1350 | mushroom, and raised herself to about two feet high: even then she walked up
+Suggest:
+  - Replace with: “left hand”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1356 | There was a table set out under a tree in front of the house, and the March Hare
@@ -1891,7 +1994,7 @@ Message: |
 Suggest:
   - Replace with: “Lace”
   - Replace with: “Lacier”
-  - Replace with: “Lacey”
+  - Replace with: “Lac”
 
 
 
@@ -1900,9 +2003,18 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
-  - Replace with: “Billie”
-  - Replace with: “Lillie”
-  - Replace with: “Millie”
+  - Replace with: “Tile”
+  - Replace with: “Till”
+  - Replace with: “Till's”
+
+
+
+Lint:    Capitalization (31 priority)
+Message: |
+    1582 | “Who’s making personal remarks now?” the Hatter asked triumphantly.
+         |  ^~~~~ The canonical dictionary spelling is `who's`.
+Suggest:
+  - Replace with: “who's”
 
 
 
@@ -2278,9 +2390,9 @@ Message: |
     1985 | “’Tis so,” said the Duchess: “and the moral of that is—‘Oh, ’tis love, ’tis
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -2290,8 +2402,8 @@ Message: |
          |                                                              ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -2302,8 +2414,8 @@ Message: |
          |                                                                         ^~~ Did you mean to spell `tis` this way?
     1986 | love, that makes the world go round!’”
 Suggest:
-  - Replace with: “tic”
   - Replace with: “this”
+  - Replace with: “tic”
   - Replace with: “ti's”
 
 
@@ -2472,7 +2584,7 @@ Message: |
          |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
   - Replace with: “Hacker”
-  - Replace with: “Hackish”
+  - Replace with: “Hickory”
   - Replace with: “Hackers”
 
 
@@ -2605,9 +2717,9 @@ Message: |
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
          |                                                   ^~~~~~~~~~ Did you mean to spell `Seaography` this way?
 Suggest:
+  - Replace with: “Scenography”
+  - Replace with: “Stenography”
   - Replace with: “Demography”
-  - Replace with: “Geography”
-  - Replace with: “Xerography”
 
 
 
@@ -2830,6 +2942,16 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
+    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
+         |                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
+Suggest:
+  - Replace with: “he's”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2333 | “Yes,” said Alice, “I’ve often seen them at dinn—” she checked herself hastily.
@@ -2847,8 +2969,8 @@ Message: |
          |                     ^~~~ Did you mean to spell `Dinn` this way?
 Suggest:
   - Replace with: “Din”
+  - Replace with: “Dine”
   - Replace with: “Ding”
-  - Replace with: “Diann”
 
 
 
@@ -2989,9 +3111,9 @@ Message: |
     2418 | “Stand up and repeat ‘’Tis the voice of the sluggard,’” said the Gryphon.
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3016,9 +3138,9 @@ Message: |
     2425 | > “’Tis the voice of the Lobster; I heard him declare, “You have baked me too
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
+  - Replace with: “This”
   - Replace with: “Tic”
   - Replace with: “T's”
-  - Replace with: “This”
 
 
 
@@ -3097,14 +3219,23 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
+         |                                                            ^~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “HM”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “H'm”
   - Replace with: “Ha”
   - Replace with: “Ham”
+  - Replace with: “He”
 
 
 
@@ -3131,9 +3262,18 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                             ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3164,9 +3304,18 @@ Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                   ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3187,9 +3336,19 @@ Message: |
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                            ^~~ This word's canonical spelling is all-caps.
+    2486 | > of the e—e—evening, Beautiful, beautiful Soup!
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3241,9 +3400,18 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                    ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3274,9 +3442,18 @@ Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                          ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3297,9 +3474,19 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                                   ^~~ This word's canonical spelling is all-caps.
+    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
+Suggest:
+  - Replace with: “OOP”
 
 
 
@@ -3327,15 +3514,25 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
+         |                           ^~~~~~ `beauti` should probably be written as `beau ti`.
+Suggest:
+  - Replace with: “beau ti”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
          |                                  ^~~ Did you mean to spell `FUL` this way?
 Suggest:
-  - Replace with: “FUD”
-  - Replace with: “F's”
-  - Replace with: “UL”
+  - Replace with: “Full”
+  - Replace with: “Flu”
+  - Replace with: “Fol”
 
 
 
@@ -3372,9 +3569,18 @@ Message: |
     2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
-  - Replace with: “Solo”
-  - Replace with: “Sop”
-  - Replace with: “Sou”
+  - Replace with: “So”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
+         |        ^~~ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “OOP”
 
 
 

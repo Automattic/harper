@@ -3,7 +3,7 @@ use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
 use crate::pos_conv::range_to_span;
 use harper_core::linting::{Lint, LintGroup, Linter};
 use harper_core::spell::{MergedDictionary, MutableDictionary};
-use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps};
+use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps_map};
 use harper_core::{Lrc, Token};
 use tower_lsp_server::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Uri};
 
@@ -26,15 +26,23 @@ impl DocumentState {
         let temp = self.linter.config.clone();
         self.linter.config.fill_with_curated();
 
-        let mut lints = self.linter.lint(&self.document);
+        let mut lints = self.linter.organized_lints(&self.document);
 
         self.linter.config = temp;
 
-        remove_overlaps(&mut lints);
-        self.ignored_lints
-            .remove_ignored(&mut lints, &self.document);
+        for value in lints.values_mut() {
+            self.ignored_lints.remove_ignored(value, &self.document);
+        }
 
-        lints_to_diagnostics(self.document.get_full_content(), &lints, severity)
+        remove_overlaps_map(&mut lints);
+
+        lints_to_diagnostics(
+            self.document.get_full_content(),
+            lints
+                .iter()
+                .map(|(origin_tag, lints)| (origin_tag.as_str(), lints.as_slice())),
+            severity,
+        )
     }
 
     /// Generate code actions results for a selected area.

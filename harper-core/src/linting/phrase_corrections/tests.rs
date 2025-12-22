@@ -45,6 +45,95 @@ fn corrects_all_of_a_sudden() {
     )
 }
 
+#[test]
+fn corrects_all_the_sudden_basic() {
+    assert_suggestion_result(
+        "It happened all the sudden when the lights went out.",
+        lint_group(),
+        "It happened all of a sudden when the lights went out.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_sentence_start() {
+    assert_suggestion_result(
+        "All the sudden the room fell quiet.",
+        lint_group(),
+        "All of a sudden the room fell quiet.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_with_comma() {
+    assert_suggestion_result(
+        "The music stopped, all the sudden, during the chorus.",
+        lint_group(),
+        "The music stopped, all of a sudden, during the chorus.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_question() {
+    assert_suggestion_result(
+        "Did the power cut all the sudden?",
+        lint_group(),
+        "Did the power cut all of a sudden?",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_in_quotes() {
+    assert_suggestion_result(
+        "He whispered, \"all the sudden we were alone.\"",
+        lint_group(),
+        "He whispered, \"all of a sudden we were alone.\"",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_all_caps() {
+    assert_suggestion_result(
+        "ALL THE SUDDEN THE ROOM WENT DARK.",
+        lint_group(),
+        "ALL OF A SUDDEN THE ROOM WENT DARK.",
+    );
+}
+
+#[test]
+fn corrects_all_the_sudden_end_period() {
+    assert_suggestion_result(
+        "They were laughing all the sudden.",
+        lint_group(),
+        "They were laughing all of a sudden.",
+    );
+}
+
+#[test]
+fn counts_all_the_sudden_once() {
+    assert_lint_count(
+        "This all the sudden change surprised everyone.",
+        lint_group(),
+        1,
+    );
+}
+
+#[test]
+fn corrects_all_of_sudden_variant() {
+    assert_suggestion_result(
+        "It stormed all of sudden after a warm morning.",
+        lint_group(),
+        "It stormed all of a sudden after a warm morning.",
+    );
+}
+
+#[test]
+fn ignores_all_the_suddenness() {
+    assert_no_lints(
+        "Their excitement and suddenness were all the suddenness she remembered.",
+        lint_group(),
+    );
+}
+
 // ALongTime
 #[test]
 fn detect_a_long_time() {
@@ -58,6 +147,85 @@ fn detect_a_long_time_real_world() {
         lint_group(),
         "Fast refreshing is very slow had to wait a long time for it to update.",
     );
+}
+
+// Alongside
+#[test]
+fn corrects_along_side_basic() {
+    assert_suggestion_result(
+        "They walked along side the river.",
+        lint_group(),
+        "They walked alongside the river.",
+    );
+}
+
+#[test]
+fn corrects_along_side_sentence_start() {
+    assert_suggestion_result(
+        "Along side the road, we saw a parade.",
+        lint_group(),
+        "Alongside the road, we saw a parade.",
+    );
+}
+
+#[test]
+fn corrects_along_side_all_caps() {
+    assert_suggestion_result(
+        "The banner read ALONG SIDE THE TEAM!",
+        lint_group(),
+        "The banner read ALONGSIDE THE TEAM!",
+    );
+}
+
+#[test]
+fn corrects_along_side_with_period() {
+    assert_suggestion_result(
+        "The skiff pulled along side.",
+        lint_group(),
+        "The skiff pulled alongside.",
+    );
+}
+
+#[test]
+fn corrects_along_side_in_quotes() {
+    assert_suggestion_result(
+        "\"We drifted along side,\" she said.",
+        lint_group(),
+        "\"We drifted alongside,\" she said.",
+    );
+}
+
+#[test]
+fn corrects_along_side_before_comma() {
+    assert_suggestion_result(
+        "They stood along side, waiting patiently.",
+        lint_group(),
+        "They stood alongside, waiting patiently.",
+    );
+}
+
+#[test]
+fn corrects_along_side_plural_subject() {
+    assert_suggestion_result(
+        "Cars lined up along side the curb.",
+        lint_group(),
+        "Cars lined up alongside the curb.",
+    );
+}
+
+#[test]
+fn allows_correct_alongside() {
+    assert_lint_count("They walked alongside the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_along_the_side_phrase() {
+    assert_lint_count("They walked along the side of the river.", lint_group(), 0);
+}
+
+#[test]
+fn allows_lakeside_usage() {
+    assert_lint_count("We camped along the lakeside all weekend.", lint_group(), 0);
 }
 
 // AlzheimersDisease
@@ -81,12 +249,6 @@ fn correct_a_another() {
         "Audit login is another package for laravel framework.",
     );
 }
-
-// AndIn
-// -none-
-
-// AndTheLike
-// -none-
 
 // AnotherAn
 #[test]
@@ -375,6 +537,85 @@ fn does_not_flag_already_correct() {
     assert_lint_count("I don't want to leave.", lint_group(), 0);
 }
 
+// EggYolk
+#[test]
+fn corrects_simple_egg_yoke() {
+    assert_suggestion_result(
+        "She whisked the egg yoke briskly.",
+        lint_group(),
+        "She whisked the egg yolk briskly.",
+    );
+}
+
+#[test]
+fn corrects_sentence_start_egg_yoke() {
+    assert_suggestion_result(
+        "Egg yoke is rich in nutrients.",
+        lint_group(),
+        "Egg yolk is rich in nutrients.",
+    );
+}
+
+#[test]
+fn corrects_all_caps_egg_yoke() {
+    assert_suggestion_result(
+        "Add the EGG YOKE to the batter.",
+        lint_group(),
+        "Add the EGG YOLK to the batter.",
+    );
+}
+
+#[test]
+fn corrects_punctuated_egg_yoke() {
+    assert_suggestion_result(
+        "Separate the egg yoke, then fold it in.",
+        lint_group(),
+        "Separate the egg yolk, then fold it in.",
+    );
+}
+
+#[test]
+fn corrects_adjective_egg_yoke() {
+    assert_suggestion_result(
+        "The runny egg yoke spilled over the toast.",
+        lint_group(),
+        "The runny egg yolk spilled over the toast.",
+    );
+}
+
+#[test]
+fn corrects_plural_context_egg_yoke() {
+    assert_suggestion_result(
+        "Blend the cream with each egg yoke before baking.",
+        lint_group(),
+        "Blend the cream with each egg yolk before baking.",
+    );
+}
+
+#[test]
+fn allows_correct_egg_yolk() {
+    assert_lint_count("The custard calls for one egg yolk.", lint_group(), 0);
+}
+
+#[test]
+fn allows_plural_egg_yolks() {
+    assert_lint_count("Reserve the egg yolks for later.", lint_group(), 0);
+}
+
+#[test]
+fn allows_yoke_without_egg() {
+    assert_lint_count(
+        "The artisan carved a wooden yoke for the oxen.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn does_not_flag_partial_phrase() {
+    assert_lint_count("Crack the eggs so no yoke spills.", lint_group(), 0);
+}
+
 // DontCan
 #[test]
 fn corrects_dont_can() {
@@ -529,9 +770,6 @@ fn expand_cuz() {
 // ExpandWithout
 // -none-
 
-// Expatriate
-// -none-
-
 // FaceFirst
 // -none-
 
@@ -670,6 +908,17 @@ fn corrects_i_does() {
         "I does enjoy writing Rust.",
         lint_group(),
         "I do enjoy writing Rust.",
+    );
+}
+
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
     );
 }
 
@@ -851,6 +1100,48 @@ fn correct_last_ditch_space() {
         lint_group(),
         "There are unique use cases and is meant to be a last-ditch option.",
     );
+}
+
+// LastNight
+#[test]
+fn corrects_yesterday_night_basic() {
+    assert_suggestion_result(
+        "I was there yesterday night.",
+        lint_group(),
+        "I was there last night.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_capitalized() {
+    assert_suggestion_result(
+        "Yesterday night was fun.",
+        lint_group(),
+        "Last night was fun.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_with_comma() {
+    assert_suggestion_result(
+        "Yesterday night, we watched a movie.",
+        lint_group(),
+        "Last night, we watched a movie.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_across_newline() {
+    assert_suggestion_result(
+        "They left yesterday\nnight after the show.",
+        lint_group(),
+        "They left last night after the show.",
+    );
+}
+
+#[test]
+fn no_lint_for_last_night_phrase() {
+    assert_lint_count("I remember last night clearly.", lint_group(), 0);
 }
 
 // LetAlone
@@ -1182,6 +1473,26 @@ fn correct_on_top_of() {
     );
 }
 
+// PartOfSpeech
+#[test]
+fn corrects_part_of_speeches() {
+    assert_suggestion_result(
+        "The part of speeches (POS) or as follows:",
+        lint_group(),
+        "The parts of speech (POS) or as follows:",
+    )
+}
+
+// It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.
+#[test]
+fn corrects_parts_of_speeches() {
+    assert_suggestion_result(
+        "It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.",
+        lint_group(),
+        "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.",
+    )
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -1192,9 +1503,37 @@ fn corrects_piece_of_mind() {
     )
 }
 
+// PerSe
+#[test]
+fn corrects_per_se_hyphenated() {
+    assert_suggestion_result(
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
+        lint_group(),
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
+    )
+}
+
+#[test]
+fn corrects_per_say() {
+    assert_suggestion_result(
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
+        lint_group(),
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
+        lint_group(),
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
+    );
+}
+
 // PointsOfView
 #[test]
-fn corrects_points_of_view() {
+fn corrects_point_of_views() {
     assert_suggestion_result(
         "This will produce a huge amount of raw data, representing the region in multiple point of views.",
         lint_group(),
@@ -1202,8 +1541,28 @@ fn corrects_points_of_view() {
     )
 }
 
+// log events, places, moods and self-reflect from various points of views
+#[test]
+fn corrects_points_of_views() {
+    assert_suggestion_result(
+        "log events, places, moods and self-reflect from various points of views",
+        lint_group(),
+        "log events, places, moods and self-reflect from various points of view",
+    )
+}
+
 // PrayingMantis
 // -none-
+
+// QuiteMany
+#[test]
+fn corrects_quite_many() {
+    assert_suggestion_result(
+        "To me it seems it might be caused by a2aaa55 which contains quite many build-related changes.",
+        lint_group(),
+        "To me it seems it might be caused by a2aaa55 which contains quite a few build-related changes.",
+    );
+}
 
 // RapidFire
 // -none-
@@ -1249,11 +1608,20 @@ fn correct_iirc_correctly() {
 // RulesOfThumb
 
 #[test]
-fn correct_rules_of_thumbs() {
+fn correct_rule_of_thumbs() {
     assert_suggestion_result(
         "Thanks. 0.2 is just from my rule of thumbs.",
         lint_group(),
         "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
+        lint_group(),
+        "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
     );
 }
 
@@ -1440,6 +1808,93 @@ fn correct_to_a_great_length() {
 // ToTheMannerBorn
 // -none-
 
+// TongueInCheek
+#[test]
+fn tongue_and_cheek_plain() {
+    assert_suggestion_result(
+        "The remark was entirely tongue and cheek.",
+        lint_group(),
+        "The remark was entirely tongue in cheek.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_article() {
+    assert_suggestion_result(
+        "It was a tongue and cheek response.",
+        lint_group(),
+        "It was a tongue in cheek response.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_with_comma() {
+    assert_suggestion_result(
+        "He delivered it tongue and cheek, expecting a laugh.",
+        lint_group(),
+        "He delivered it tongue in cheek, expecting a laugh.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_quotes() {
+    assert_suggestion_result(
+        "\"tongue and cheek\" jokes are tough to read.",
+        lint_group(),
+        "\"tongue in cheek\" jokes are tough to read.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_all_caps() {
+    assert_suggestion_result(
+        "Their tone was TONGUE AND CHEEK all night.",
+        lint_group(),
+        "Their tone was TONGUE IN CHEEK all night.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_capitalized() {
+    assert_suggestion_result(
+        "Tongue and cheek banter kept the meeting light.",
+        lint_group(),
+        "Tongue in cheek banter kept the meeting light.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_in_parentheses() {
+    assert_suggestion_result(
+        "Her note (totally tongue and cheek) made us smile.",
+        lint_group(),
+        "Her note (totally tongue in cheek) made us smile.",
+    );
+}
+
+#[test]
+fn tongue_and_cheek_question() {
+    assert_suggestion_result(
+        "Was that tongue and cheek or sincere?",
+        lint_group(),
+        "Was that tongue in cheek or sincere?",
+    );
+}
+
+#[test]
+fn tongue_in_cheek_is_allowed() {
+    assert_lint_count(
+        "Their comments were deliberately tongue in cheek.",
+        lint_group(),
+        0,
+    );
+}
+
+#[test]
+fn tongue_in_cheek_hyphenated_is_allowed() {
+    assert_lint_count("That was a tongue-in-cheek reply.", lint_group(), 0);
+}
+
 // Towards
 // -none-
 
@@ -1562,6 +2017,20 @@ fn thanks_a_lot_clean() {
     assert_lint_count("thanks a lot", lint_group(), 0);
 }
 
+#[test]
+fn fixes_to_worry_about() {
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you to worry about it.",
+    );
+    assert_top3_suggestion_result(
+        "I don't want you to worried about it.",
+        lint_group(),
+        "I don't want you too worried about it.",
+    );
+}
+
 // WroughtIron
 #[test]
 fn corrects_rod_iron() {
@@ -1592,5 +2061,14 @@ fn fixes_teh() {
         "I adore teh light of the moon.",
         lint_group(),
         "I adore the light of the moon.",
+    );
+}
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
     );
 }

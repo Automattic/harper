@@ -5,6 +5,7 @@ use crate::expr::{All, Expr, OwnedExprExt, SequenceExpr};
 use crate::patterns::{UPOSSet, WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct WayTooAdjective {
     expr: Box<dyn Expr>,
@@ -19,8 +20,7 @@ impl Default for WayTooAdjective {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ]).or(WordSet::new(&["much"])));
 
-        let exceptions = SequenceExpr::default()
-            .t_any()
+        let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()
@@ -38,6 +38,8 @@ impl Default for WayTooAdjective {
 }
 
 impl ExprLinter for WayTooAdjective {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

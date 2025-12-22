@@ -103,10 +103,10 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             // So far we only have a small number of phrasal verbs in the dictionary.
             let (verb_part_is_verb, phrasal_verb_is_verb) = (
                 self.dict
-                    .get_lexeme_metadata(verb_part)
+                    .get_word_metadata(verb_part)
                     .is_some_and(|md| md.verb.is_some()),
                 self.dict
-                    .get_lexeme_metadata_str(&phrasal_verb)
+                    .get_word_metadata_str(&phrasal_verb)
                     .is_some_and(|md| md.verb.is_some()),
             );
 
@@ -221,6 +221,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         "suite",
                         "support",
                     ][..],
+                    ['p', 'o', 'p', 'u', 'p'] => &["window"][..],
                     ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["logic", "status"][..],
                     ['s', 't', 'a', 'r', 't', 'u', 'p'] => &["environments"][..],
                     ['t', 'h', 'r', 'o', 'w', 'b', 'a', 'c', 'k'] => &["machine"][..],
@@ -731,5 +732,29 @@ mod tests {
     #[test]
     fn dont_flag_plugin_interface() {
         assert_no_lints("[Plugin interface]", PhrasalVerbAsCompoundNoun::default());
+    }
+
+    #[test]
+    fn issue_1918() {
+        assert_no_lints(
+            "Boost your productivity with our JetBrains plugin!",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_pop_up_2217() {
+        assert_no_lints(
+            "Popup window instead of command line.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn issue_1772() {
+        assert_no_lints(
+            "By default, only one tile size is instantiated for each data type, math instruction, and layout.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
     }
 }

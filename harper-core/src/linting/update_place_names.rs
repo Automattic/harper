@@ -1,4 +1,5 @@
 use crate::expr::{Expr, FixedPhrase, LongestMatchOf};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::{Lint, Token, TokenStringExt};
 
@@ -97,6 +98,8 @@ impl<'a> UpdatePlaceNames<'a> {
 }
 
 impl<'a> ExprLinter for UpdatePlaceNames<'a> {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

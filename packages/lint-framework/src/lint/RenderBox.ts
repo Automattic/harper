@@ -13,7 +13,7 @@ export default class RenderBox {
 	private shadowHost: HTMLElement;
 
 	constructor(parent: Node) {
-		this.shadowHost = document.createElement('div');
+		this.shadowHost = document.createElement('harper-render-box');
 		parent.appendChild(this.shadowHost);
 	}
 

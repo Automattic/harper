@@ -5,21 +5,25 @@ use harper_core::{CharStringExt, Document};
 use harper_stats::RecordKind;
 use serde_json::Value;
 use tower_lsp_server::lsp_types::{
-    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, TextEdit, Uri,
-    WorkspaceEdit,
+    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, NumberOrString, TextEdit,
+    Uri, WorkspaceEdit,
 };
 
 use crate::config::{CodeActionConfig, DiagnosticSeverity};
 use crate::pos_conv::span_to_range;
 
-pub fn lints_to_diagnostics(
+pub fn lints_to_diagnostics<'a>(
     source: &[char],
-    lints: &[Lint],
+    lints: impl IntoIterator<Item = (&'a str, &'a [Lint])>,
     severity: DiagnosticSeverity,
 ) -> Vec<Diagnostic> {
     lints
-        .iter()
-        .map(|lint| lint_to_diagnostic(lint, source, severity))
+        .into_iter()
+        .flat_map(|(origin_tag, lints)| {
+            lints
+                .iter()
+                .map(|lint| lint_to_diagnostic(lint, source, origin_tag, severity))
+        })
         .collect()
 }
 
@@ -116,15 +120,20 @@ pub fn lint_to_code_actions<'a>(
     results
 }
 
-fn lint_to_diagnostic(lint: &Lint, source: &[char], severity: DiagnosticSeverity) -> Diagnostic {
+fn lint_to_diagnostic(
+    lint: &Lint,
+    source: &[char],
+    origin_tag: &str,
+    severity: DiagnosticSeverity,
+) -> Diagnostic {
     let range = span_to_range(source, lint.span);
 
     Diagnostic {
         range,
         severity: Some(severity.to_lsp()),
-        code: None,
         code_description: None,
-        source: Some("Harper".to_string()),
+        source: Some("Harper".to_owned()),
+        code: Some(NumberOrString::String(origin_tag.to_string())),
         message: lint.message.clone(),
         related_information: None,
         tags: None,

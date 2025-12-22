@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Select, Toggle } from 'flowbite-svelte';
+import { Button, Select, Toggle } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let enabled = $state(true);
@@ -22,7 +22,6 @@ $effect(() => {
  */
 export async function getCurrentTabDomain(): Promise<string | undefined> {
 	const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-	console.log(tab);
 
 	if (!tab?.url) return undefined;
 
@@ -46,19 +45,20 @@ function toggleDomainEnabled() {
   <section class="flex flex-row items-center gap-3 py-6">
     <Button
       size="lg"
-      class="rounded-full aspect-square h-16 w-16 p-0 shadow-md transition-colors flex flex-row justify-center"
-      style="background-color: {enabled ? 'var(--color-primary-500)' : '#d1d5db'};"
+      class="rounded-full! aspect-square h-16 w-16 p-0 shadow-lg transition-colors flex! flex-row justify-center"
+      color={enabled ? 'var(--color-primary)' : 'var(--color-cream-50)'}
       on:click={toggleDomainEnabled}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-9 w-9 text-white"
+        class="h-9 w-9"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
         stroke-width="2"
       >
         <path
+        color={enabled ? 'var(--color-cream-50)' : 'var(--color-primary)'}
           stroke-linecap="round"
           stroke-linejoin="round"
           d="M12 5v7m5.657-4.657a8 8 0 11-11.314 0"
@@ -66,7 +66,7 @@ function toggleDomainEnabled() {
       </svg>
     </Button>
 
-    <p class="text-sm font-medium">
+    <p class="text-sm font-medium dark:text-white">
       {enabled ? 'Enabled on ' : 'Disabled on '}{domain}
     </p>
   </section>
