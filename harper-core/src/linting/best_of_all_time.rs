@@ -28,7 +28,7 @@ impl Default for BestOfAllTime {
                 Box::new(most_superlative),
                 Box::new(fave),
             ])
-            .then_one_or_more(SequenceExpr::default().then(WhitespacePattern).then_noun())
+            .then_one_or_more(SequenceExpr::with(WhitespacePattern).then_noun())
             .then_fixed_phrase(" of all times");
 
         Self {

@@ -504,6 +504,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     179 | States; If he approve he shall sign it, but if not he shall return it, with his
+         |               ^~~~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “approves”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      181 | Objections at large on their Journal, and proceed to reconsider it. If after
@@ -1285,6 +1294,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      458 | States."
          | ~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+     454 | Before he enter on the Execution of his Office, he shall take the following
+         |           ^~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “enters”
 
 
 

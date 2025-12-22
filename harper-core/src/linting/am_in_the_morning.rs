@@ -16,11 +16,11 @@ impl Default for AmInTheMorning {
         let pm = WordSet::new(&["pm", "p.m."]);
 
         let maybe_ws_am = LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(am.clone())),
+            Box::new(SequenceExpr::with(am.clone())),
             Box::new(SequenceExpr::default().then_whitespace().then(am)),
         ]);
         let maybe_ws_pm = LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(pm.clone())),
+            Box::new(SequenceExpr::with(pm.clone())),
             Box::new(SequenceExpr::default().then_whitespace().then(pm)),
         ]);
 

@@ -24,7 +24,7 @@ impl ExpandTimeShorthands {
                 SequenceExpr::default()
                     .then(ImpliesQuantity)
                     .then_longest_of(vec![
-                        Box::new(SequenceExpr::default().then(hotwords.clone())),
+                        Box::new(SequenceExpr::with(hotwords.clone())),
                         Box::new(
                             SequenceExpr::default()
                                 .then(SpaceOrHyphen)

@@ -37,8 +37,8 @@ impl Default for OnFloor {
 
         let stop = Lrc::new(WordSet::new(&["stop", "stopping", "stops", "stopped"]));
         let exceptions = Lrc::new(LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(look_up_phrase.clone())),
-            Box::new(SequenceExpr::default().then(stop.clone())),
+            Box::new(SequenceExpr::with(look_up_phrase.clone())),
+            Box::new(SequenceExpr::with(stop.clone())),
         ]));
 
         let pattern = LongestMatchOf::new(vec![
