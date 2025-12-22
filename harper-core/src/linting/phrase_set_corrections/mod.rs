@@ -289,6 +289,17 @@ pub fn lint_group() -> LintGroup {
             "Use `do` instead of `due` when referring to a resource scarcity.",
             "Corrects `make due` to `make do` when followed by `with`."
         ),
+        "MakeSense" => (
+            &[
+                ("make senses", "make sense"),
+                ("made senses", "made sense"),
+                ("makes senses", "makes sense"),
+                ("making senses", "making sense")
+            ],
+            "Use `sense` instead of `senses`.",
+            "Corrects `make senses` to `make sense`.",
+            LintKind::Usage
+        ),
         "MootPoint" => (
             &[
                 ("mute point", "moot point"),

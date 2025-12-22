@@ -1,18 +1,19 @@
 {
 	"name": "obsidian-plugin",
 	"private": true,
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"main": "main.js",
 	"devDependencies": {
-		"@playwright/test": "^1.52.0",
+		"@playwright/test": "^1.57.0",
 		"@rollup/plugin-node-resolve": "^16.0.0",
 		"@types/lodash-es": "^4.17.12",
-		"@vitest/browser": "^3.0.6",
+		"@vitest/browser": "^4.0.16",
+		"@vitest/browser-playwright": "^4.0.16",
 		"obsidian": "^1.7.2",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-svg-import": "^3.0.0",
 		"vite": "^6.3.5",
-		"vitest": "^3.0.8"
+		"vitest": "^4.0.16"
 	},
 	"scripts": {
 		"build": "vite build -l warn",

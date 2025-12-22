@@ -742,6 +742,25 @@ Suggest:
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+     276 | No Capitation, or other direct, Tax shall be laid, unless in Proportion to the
+         |                                              ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
+     277 | Census or Enumeration herein before directed to be taken. Congress shall have
+Suggest:
+  - Replace with: “lain”
+
+
+
+Lint:    Grammar (127 priority)
+Message: |
+     282 | No Tax or Duty shall be laid on Articles exported from any State.
+         |                         ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
+Suggest:
+  - Replace with: “lain”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      284 | No Preference shall be given by any Regulation of Commerce or Revenue to the
