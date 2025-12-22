@@ -2747,6 +2747,7 @@ dependencies = [
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
+ "harper-thesaurus",
  "hashbrown 0.16.1",
  "is-macro",
  "itertools 0.14.0",
@@ -2886,6 +2887,14 @@ dependencies = [
  "serde",
  "serde_json",
  "uuid",
+]
+
+[[package]]
+name = "harper-thesaurus"
+version = "1.2.0"
+dependencies = [
+ "hashbrown 0.16.1",
+ "itertools 0.14.0",
 ]
 
 [[package]]
