@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+import { playwright } from '@vitest/browser-playwright';
 import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -64,7 +65,7 @@ export default defineConfig({
 	test: {
 		retry: process.env.CI ? 5 : 0,
 		browser: {
-			provider: 'playwright',
+			provider: playwright(),
 			enabled: true,
 			headless: true,
 			screenshotFailures: false,

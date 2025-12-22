@@ -16,7 +16,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["vite/client"],
+		"types": ["vite/client", "node"],
 		"paths": {
 			"harper-wasm": ["../../harper-wasm/pkg"]
 		}
