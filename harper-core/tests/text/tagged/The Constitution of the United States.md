@@ -365,7 +365,7 @@
 > excepted ) after it       shall have    been    presented to him  , the Same shall be      a   Law     ,
 # VP/J     . P     NPr/ISg+ VXB   NSg/VXB NSg/VPp VP/J      P  ISg+ . D   I/J  VXB   NSg/VXB D/P N🅪Sg/VB .
 > in        like         Manner as    if    he       had signed it       , unless the Congress by      their Adjournment
-# NPr/J/R/P NSg/VB/J/C/P NSg+   NSg/R NSg/C NPr/ISg+ VB  VP/J   NPr/ISg+ . C      D+  NPr/VB+  NSg/J/P D$+   NSg
+# NPr/J/R/P NSg/VB/J/C/P NSg+   NSg/R NSg/C NPr/ISg+ VP  VP/J   NPr/ISg+ . C      D+  NPr/VB+  NSg/J/P D$+   NSg
 > prevent its     Return , in        which Case       it       shall not     be      a   Law      .
 # VB      ISg/D$+ NSg/VB . NPr/J/R/P I/C+  NPr🅪Sg/VB+ NPr/ISg+ VXB   NSg/R/C NSg/VXB D/P N🅪Sg/VB+ .
 >

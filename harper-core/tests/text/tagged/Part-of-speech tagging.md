@@ -291,7 +291,7 @@
 > CLAWS   pioneered the field  of HMM - based part     of speech   tagging but     was quite
 # NPl/V3+ VP/J      D   NSg/VB P  VB  . VP/J  NSg/VB/J P  N🅪Sg/VB+ NSg/Vg  NSg/C/P VPt R
 > expensive since it       enumerated all          possibilities . It       sometimes had to resort to
-# J         C/P   NPr/ISg+ VP/J       NSg/I/J/C/Dq NPl+          . NPr/ISg+ R         VB  P  NSg/VB P
+# J         C/P   NPr/ISg+ VP/J       NSg/I/J/C/Dq NPl+          . NPr/ISg+ R         VP  P  NSg/VB P
 > backup methods when    there were    simply too many       options ( the Brown        Corpus
 # NSg/J  NPl/V3+ NSg/I/C R+    NSg/VPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
 > contains a   case       with 17 ambiguous words  in        a    row     , and  there are words   such  as
