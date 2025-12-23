@@ -196,7 +196,6 @@ mod to_two_too;
 mod touristic;
 mod unclosed_quotes;
 mod update_place_names;
-mod use_genitive;
 mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;

@@ -184,7 +184,6 @@ use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
-use super::use_genitive::UseGenitive;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
@@ -653,7 +652,6 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
-        insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
