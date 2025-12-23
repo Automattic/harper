@@ -1,12 +1,12 @@
 #![warn(clippy::pedantic)]
 
-use std::ops::Range;
 use std::sync::OnceLock;
 
 use hashbrown::HashMap;
-use hashbrown::HashSet;
+use indexmap::IndexSet;
 
-static RAW_THESAURUS_TEXT: &str = include_str!("../thesaurus.txt");
+static COMPRESSED_THESAURUS: &[u8] =
+    include_bytes!(concat!(env!("OUT_DIR"), "/compressed-thesaurus.zst"));
 static RAW_WORD_FREQUENCY_TEXT: &str = include_str!("../word-freq.txt");
 
 /// Gets a read-only reference to the thesaurus.
@@ -15,18 +15,8 @@ pub fn thesaurus() -> &'static Thesaurus {
     THESAURUS.get_or_init(Thesaurus::new)
 }
 
-/// The set of all words mentioned in the thesaurus.
-fn deduped_word_set() -> &'static HashSet<&'static str> {
-    static DEDUPED_WORD_SET: OnceLock<HashSet<&str>> = OnceLock::new();
-    DEDUPED_WORD_SET.get_or_init(|| {
-        let mut deduped_word_set = HashSet::new();
-        for line in RAW_THESAURUS_TEXT.lines() {
-            deduped_word_set.extend(line.split(','));
-        }
-        deduped_word_set
-    })
-}
-
+// TODO: maybe make this a member of `Thesaurus` and use deduped_word_set indices rather than
+// strings?
 /// A list of words sorted by frequency of use, in descending order.
 fn word_freq_map() -> &'static HashMap<String, u32> {
     static WORD_FREQ_LIST: OnceLock<HashMap<String, u32>> = OnceLock::new();
@@ -40,62 +30,60 @@ fn word_freq_map() -> &'static HashMap<String, u32> {
 }
 
 pub struct Thesaurus {
-    /// Contains the words in the thesaurus and their corresponding synonyms.
-    entries: HashMap<&'static str, Range<usize>>,
-    /// Holds references to words in the [`deduped_word_set()`]. Slices from this list are used by
-    /// [`Self::entries`] to store the list of synonyms for each word.
-    ///
-    /// This is an optimization that avoids having to store each slice of synonyms as a separate
-    /// heap allocation. Instead, all such would be slices are stored in one [`Vec<&'static str>`],
-    /// and subslices of that collection are used instead.
-    ///
-    /// Note that ranges are used in place of direct slices to avoid creating a self-referential
-    /// struct. The actual words can be retrieved by calling [`WordRefListCollection::get_words()`]
-    /// with the range in question.
-    word_ref_list_collection: WordRefListCollection,
+    /// Contains the words in the thesaurus and their corresponding synonyms, both as indices into
+    /// [`Self::deduped_word_set`].
+    entries: HashMap<usize, Vec<usize>>,
+    /// Contains (and holds ownership of) all words that occur in the thesaurus, deduped.
+    deduped_word_set: IndexSet<String>,
 }
 impl Thesaurus {
     fn new() -> Thesaurus {
         let mut entries = HashMap::new();
-        let mut word_ref_list_collection = WordRefListCollection::new();
+        let mut deduped_word_set = IndexSet::<String>::new();
 
-        for line in RAW_THESAURUS_TEXT.lines() {
+        let raw_thesaurus_text = zstd::stream::decode_all(COMPRESSED_THESAURUS)
+            .expect("Compressed thesaurus is a valid ZSTD file")
+            .into_boxed_slice();
+        let raw_thesaurus_text =
+            str::from_utf8(&raw_thesaurus_text).expect("Thesaurus content is valid UTF-8");
+
+        for line in raw_thesaurus_text.lines() {
             let mut words = line.split(',');
             let Some(entry_word) = words.next() else {
                 // Skip empty lines in thesaurus.
                 continue;
             };
-            let entry_word = deduped_word_set()
-                .get(entry_word)
-                .expect("Deduped wordset contains all words from thesaurus");
-            let synonyms = words.map(|word| {
-                deduped_word_set()
-                    .get(&word)
-                    .expect("Deduped wordset contains all words from thesaurus")
-            });
+            let word_idx = deduped_word_set.get_or_insert_word(entry_word);
+            let synonym_indices = words.map(|word| deduped_word_set.get_or_insert_word(word));
             entries
-                .try_insert(
-                    *entry_word,
-                    word_ref_list_collection.create_word_ref_list(synonyms),
-                )
+                .try_insert(word_idx, synonym_indices.collect())
                 .expect("Only one entry per word in thesaurus");
         }
 
         Self {
             entries,
-            word_ref_list_collection,
+            deduped_word_set,
         }
     }
 
     /// Retrieves a list of synonyms for a given word.
-    pub fn get_synonyms(&self, word: &str) -> Option<&[&'static str]> {
-        self.word_ref_list_collection
-            .get_words(self.entries.get(word)?)
+    pub fn get_synonyms(&self, word: &str) -> Option<Vec<&str>> {
+        Some(
+            self.entries
+                .get(&self.deduped_word_set.get_index_of(word)?)?
+                .iter()
+                .map(|word_idx| -> &str {
+                    self.deduped_word_set
+                        .get_index(*word_idx)
+                        .expect("Deduped word set contains all words in thesaurus")
+                })
+                .collect(),
+        )
     }
 
     /// Retrieves a list of synonyms, sorted by the frequency of their use.
-    pub fn get_synonyms_freq_sorted(&self, word: &str) -> Option<Vec<&'static str>> {
-        let mut syns = self.get_synonyms(word)?.to_owned();
+    pub fn get_synonyms_freq_sorted(&self, word: &str) -> Option<Vec<&str>> {
+        let mut syns = self.get_synonyms(word)?;
         syns.sort_unstable_by_key(|syn| {
             word_freq_map()
                 .get(&syn.to_ascii_lowercase())
@@ -105,51 +93,25 @@ impl Thesaurus {
     }
 }
 
-struct WordRefListCollection {
-    aggregator: Vec<&'static str>,
+trait DedupedWordSetExt {
+    fn get_or_insert_word(&mut self, word: &str) -> usize;
 }
-impl WordRefListCollection {
-    /// Creates an empty [`WordRefListCollection`].
-    fn new() -> Self {
-        Self {
-            aggregator: Vec::new(),
+impl DedupedWordSetExt for IndexSet<String> {
+    /// Gets or insert the provided word.
+    ///
+    /// Returns the index of the word.
+    fn get_or_insert_word(&mut self, word: &str) -> usize {
+        if let Some(idx) = self.get_index_of(word) {
+            idx
+        } else {
+            // Avoid cloning unless we're inserting a new word.
+            self.insert_full(word.to_owned()).0
         }
-    }
-
-    /// Creates a new word ref list and returns a range to it.
-    ///
-    /// The range can then be used with [`Self::get_words()`], to retrieve the list of words.
-    ///
-    /// Expects a reference to an entry in the [`deduped_word_set`], which itself points to a slice in
-    /// the [`RAW_THESAURUS_TEXT`]. Internally, this `&&` is flattened to a `&`, which means that
-    /// later accesses with [`Self::get_words()`] or similar will return references to
-    /// [`RAW_THESAURUS_TEXT`] directly.
-    ///
-    /// This is designed to improve caching, since all occurrences of a given word will only ever
-    /// point to a single instance of that word in [`RAW_THESAURUS_TEXT`].
-    fn create_word_ref_list(
-        &mut self,
-        words: impl IntoIterator<Item = &'static &'static str>,
-    ) -> Range<usize> {
-        let start_idx_of_new_words = self.aggregator.len();
-        self.aggregator.extend(words);
-        start_idx_of_new_words..self.aggregator.len()
-    }
-
-    /// Retrieves the words from a range previously generated by [`Self::create_word_ref_list()`].
-    ///
-    /// Returns [`None`] on any failure.
-    fn get_words(&self, range: &Range<usize>) -> Option<&[&'static str]> {
-        self.aggregator.get(range.clone())
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use itertools::Itertools;
-
-    use crate::thesaurus::deduped_word_set;
-
     #[test]
     fn great_is_synonym_of_large() {
         assert!(

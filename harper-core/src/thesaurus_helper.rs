@@ -9,7 +9,7 @@ use crate::{
 ///
 /// If the `thesaurus` feature is not enabled, will always return [`None`].
 #[allow(unreachable_code)]
-pub fn get_synonyms(word: &str) -> Option<&'static [&'static str]> {
+pub fn get_synonyms(word: &str) -> Option<Vec<&str>> {
     #[cfg(feature = "thesaurus")]
     {
         return harper_thesaurus::thesaurus().get_synonyms(word);
@@ -27,9 +27,7 @@ pub fn get_synonyms_sorted(word: &str, token: &TokenKind) -> Option<Vec<&'static
     #[cfg(feature = "thesaurus")]
     {
         // Sorting by frequency.
-        let mut syns = harper_thesaurus::thesaurus()
-            .get_synonyms_freq_sorted(word)?
-            .to_owned();
+        let mut syns = harper_thesaurus::thesaurus().get_synonyms_freq_sorted(word)?;
 
         // Sorting by TokenKind difference.
         if let Some(Some(word_meta)) = token.as_word() {

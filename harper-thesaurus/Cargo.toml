@@ -8,4 +8,9 @@ repository = "https://github.com/automattic/harper"
 
 [dependencies]
 hashbrown = "0.16.0"
+indexmap = "2.12.1"
 itertools = "0.14.0"
+zstd = { version = "0.13.3", default-features = false }
+
+[build-dependencies]
+zstd = { version = "0.13.3", default-features = false }
