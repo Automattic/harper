@@ -685,3 +685,6 @@ runsnapshots:
 
   cd harper-core
   cargo test -- test_pos_tagger test_most_lints
+
+checklinters:
+  cargo run --bin harper-cli -- check-linters
