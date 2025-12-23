@@ -7,7 +7,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
 // use std::sync::Arc;
-use std::fs;
+use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
@@ -16,6 +16,7 @@ use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
+use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, Document, OrthFlags, Span, TokenKind, TokenStringExt,
 };
@@ -185,6 +186,11 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<Input>,
+    },
+    /// Run the tests contained within a Weir file.
+    Test {
+        /// The location of the Weir file to test
+        input: PathBuf,
     },
 }
 
@@ -920,6 +926,20 @@ fn main() -> anyhow::Result<()> {
             println!();
 
             Ok(())
+        }
+        Args::Test { input } => {
+            let weir_file = fs::read_to_string(input)?;
+            let mut linter = WeirLinter::new(&weir_file)?;
+
+            let failing_tests = linter.run_tests();
+
+            if failing_tests.is_empty() {
+                eprintln!("All tests pass!");
+                Ok(())
+            } else {
+                eprintln!("{:?}", failing_tests);
+                process::exit(1);
+            }
         }
     }
 }

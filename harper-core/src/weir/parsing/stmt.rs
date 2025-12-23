@@ -1,5 +1,5 @@
-use crate::weir::ast::AstVariable;
-use crate::weir::parsing::inc_by_spaces;
+use super::ast::AstVariable;
+use super::inc_by_spaces;
 use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
