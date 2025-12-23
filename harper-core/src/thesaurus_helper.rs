@@ -1,18 +1,19 @@
-use crate::spell::Dictionary;
-use crate::spell::FstDictionary;
 use crate::{
     TokenKind,
     linting::{Suggestion, SuggestionCollectionExt},
 };
 
+#[cfg(feature = "thesaurus")]
+use crate::spell::{Dictionary, FstDictionary};
+
 /// Gets synonyms for a provided word.
 ///
 /// If the `thesaurus` feature is not enabled, will always return [`None`].
 #[allow(unreachable_code)]
-pub fn get_synonyms(word: &str) -> Option<Vec<&str>> {
+pub fn get_synonyms(_word: &str) -> Option<Vec<&str>> {
     #[cfg(feature = "thesaurus")]
     {
-        return harper_thesaurus::thesaurus().get_synonyms(word);
+        return harper_thesaurus::thesaurus().get_synonyms(_word);
     }
     None
 }
@@ -23,14 +24,14 @@ pub fn get_synonyms(word: &str) -> Option<Vec<&str>> {
 ///
 /// If the `thesaurus` feature is not enabled, will always return [`None`].
 #[allow(unreachable_code)]
-pub fn get_synonyms_sorted(word: &str, token: &TokenKind) -> Option<Vec<&'static str>> {
+pub fn get_synonyms_sorted(_word: &str, _token: &TokenKind) -> Option<Vec<&'static str>> {
     #[cfg(feature = "thesaurus")]
     {
         // Sorting by frequency.
-        let mut syns = harper_thesaurus::thesaurus().get_synonyms_freq_sorted(word)?;
+        let mut syns = harper_thesaurus::thesaurus().get_synonyms_freq_sorted(_word)?;
 
         // Sorting by TokenKind difference.
-        if let Some(Some(word_meta)) = token.as_word() {
+        if let Some(Some(word_meta)) = _token.as_word() {
             let dict = FstDictionary::curated();
             syns.sort_by_key(|syn| {
                 if let Some(syn_meta) = dict.get_word_metadata_str(syn) {
