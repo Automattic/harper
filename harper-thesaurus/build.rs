@@ -6,10 +6,10 @@ use std::io::{BufReader, BufWriter};
 use std::path::Path;
 
 const THESAURUS_PATH: &str = "thesaurus.txt";
-const DICT_PATH: &str = "../harper-core/dictionary.dict";
+// const DICT_PATH: &str = "../harper-core/dictionary.dict";
 
 fn main() {
-    println!("cargo::rerun-if-changed={DICT_PATH}");
+    println!("cargo::rerun-if-changed={THESAURUS_PATH}");
     let out_dir = env::var_os("OUT_DIR").unwrap();
     let dest_path = Path::new(&out_dir).join("compressed-thesaurus.zst");
 
