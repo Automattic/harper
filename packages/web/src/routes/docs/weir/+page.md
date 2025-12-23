@@ -183,25 +183,40 @@ This is useful for excluding certain contexts from a match.
 For example, if we wanted to locate all determiners when they are not followed by a noun, we can do this:
 
 ```
-set main DET !NOUN
+expr main DET !NOUN
 ```
 
 Similarly, we can do the same with arrays or sequences of words:
 
 ```
-set main DET ![break, braking]
+expr main DET ![break, braking]
 ```
 
 ### Wildcards
 
 If you need to allow a token between two others, or otherwise want to include an unknown and unrestricted token in the expression, you can use a wildcard.
-Although it looks like a single-character wildcard from regex (Weir borrows the `*` syntax), Weir wildcards match over entire tokens.
+Although they look like the single-character wildcard from regex (Weir borrows the `*` syntax), Weir wildcards match over entire tokens, including words, punctuation, and whitespace.
 
 Example:
 
 ```weir
 # To match any token that is preceded by a noun and succeeded by a noun.
-set main NOUN * NOUN
+expr main NOUN * NOUN
+```
+
+### Punctuation
+
+Any punctuation that does not otherwise hold semantic meaning in Weir (like wildcards, etc.) is an expression that matches itself.
+That means you can match a period with `.` or a question mark with `?`.
+
+```
+# Looks for all doubled hyphens.
+expr main --
+
+let message "The second mark is redundant."
+let description "Looks for redundant doubling of hyphens."
+let kind "Punctuation"
+let becomes "-"
 ```
 
 ## Adding Tests

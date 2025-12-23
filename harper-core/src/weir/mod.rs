@@ -334,4 +334,23 @@ pub mod tests {
         assert_passes_all(&mut linter);
         assert_eq!(2, linter.count_tests());
     }
+
+    #[test]
+    fn dashes() {
+        let source = r#"
+            expr main --
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes "-"
+            let strategy "Exact"
+
+            test "This--and--that" "This-and-that"
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+        assert_eq!(1, linter.count_tests());
+    }
 }
