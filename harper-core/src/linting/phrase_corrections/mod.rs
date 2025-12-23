@@ -419,6 +419,13 @@ pub fn lint_group() -> LintGroup {
             "Expands the informal abbreviation `cuz` to the full word `because` for formality.",
             LintKind::Style
         ),
+        "ExpandForward" => (
+            ["fwd"],
+            ["forward"],
+            "Use `forward` instead of `fwd`",
+            "Expands the abbreviation `fwd` to the full word `forward` for clarity.",
+            LintKind::Style
+        ),
         "ExpandMinimum" => (
             ["min"],
             ["minimum"],
