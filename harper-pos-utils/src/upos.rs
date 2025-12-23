@@ -2,10 +2,11 @@ use std::fmt::Display;
 
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
-use strum_macros::{AsRefStr, EnumIter};
+use strum_macros::{AsRefStr, EnumIter, EnumString};
 
 /// Represents the universal parts of speech as outlined by [universaldependencies.org](https://universaldependencies.org/u/pos/index.html).
 #[derive(
+    EnumString,
     Debug,
     Default,
     Hash,

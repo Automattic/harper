@@ -1,3 +1,7 @@
+use std::str::FromStr;
+
+use harper_brill::UPOS;
+
 use crate::{CharString, Currency, Punctuation, Token, TokenKind, document};
 
 use super::{
@@ -50,10 +54,23 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             let word = word_tok.span.get_content(source);
             Ok(FoundNode::new(AstExprNode::DerivativeOf(word.into()), 2))
         }
-        TokenKind::Word(_) => Ok(FoundNode::new(
-            AstExprNode::Word(tok.span.get_content(source).into()),
+        TokenKind::Word(_) => {
+            let text = tok.span.get_content_string(source);
+
+            if let Ok(upos) = UPOS::from_str(&text){
+
+            Ok(FoundNode::new(
+            AstExprNode::UPOSSet(vec![upos]),
             1,
-        )),
+            ))
+            }else{
+
+            Ok(FoundNode::new(
+            AstExprNode::Word(text.chars().collect()),
+            1,
+            ))}
+        }
+        ,
         // The sequence notation. Useful for representing strings.
         TokenKind::Punctuation(Punctuation::OpenRound) => {
             let close_idx =
@@ -102,6 +119,8 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
 #[cfg(test)]
 mod tests {
+    use harper_brill::UPOS;
+
     use crate::Punctuation;
     use crate::char_string::char_string;
 
@@ -399,6 +418,28 @@ mod tests {
                 AstExprNode::Whitespace,
                 AstExprNode::Word(char_string!("this")),
             ])
+        )
+    }
+
+    #[test]
+    fn parses_upos() {
+        assert_eq!(
+            parse_expr_str("PROPN NOUN VERB", false).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::UPOSSet(vec![UPOS::PROPN]),
+                AstExprNode::Whitespace,
+                AstExprNode::UPOSSet(vec![UPOS::NOUN]),
+                AstExprNode::Whitespace,
+                AstExprNode::UPOSSet(vec![UPOS::VERB]),
+            ])
+        )
+    }
+
+    #[test]
+    fn optimizes_upos_set() {
+        assert_eq!(
+            parse_expr_str("[PROPN, NOUN, VERB]", true).unwrap(),
+            AstExprNode::UPOSSet(vec![UPOS::PROPN, UPOS::NOUN, UPOS::VERB]),
         )
     }
 }

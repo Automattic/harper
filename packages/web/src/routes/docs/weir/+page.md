@@ -35,7 +35,7 @@ There are two cases here:
 Here is a semantically equivalent example that you may find a bit easier to read:
 
 ```plaintext
-set main [(G Suite), (G Suit), (Google Apps for Work)]
+ [(G Suite), (G Suit), (Google Apps for Work)]
 ```
 
 The remaining lines describe:
@@ -51,7 +51,7 @@ Comments are written using a single hashtag (`#`) like so:
 
 ```plaintext
 # This is a comment and has no effect on the rest of the file.
-set main [(G Suite), (G Suit), (Google Apps for Work)]
+ [(G Suite), (G Suit), (Google Apps for Work)]
 ```
 
 ## The Various Kinds of Expressions
@@ -136,11 +136,11 @@ This can be done as many times as you like.
 The example below uses the filter syntax (the `<>`) to first select the broader phrase, then another to select the whitespace in-between (that's the `( )` part).
 
 ```plaintext
-set main <([right, middle, left] $click), ( )>
-declare message "Hyphenate this mouse command"
-declare description "Hyphenates right-click style mouse commands."
-declare kind "Punctuation"
-declare becomes "-"
+expr main <([right, middle, left] $click), ( )>
+let message "Hyphenate this mouse command"
+let description "Hyphenates right-click style mouse commands."
+let kind "Punctuation"
+let becomes "-"
 
 test "Right click the icon." "Right-click the icon."
 test "Please right click on the link." "Please right-click on the link."
@@ -155,6 +155,17 @@ test "Middle click to open in a new tab." "Middle-click to open in a new tab."
 This is extremely useful for identifying exceptions to a rule, since you can include the expections in the first layer of the filter, then slowly become more specific.
 
 See the testing section of this document for a more detailed description of the `test` syntax.
+
+### UPOS
+
+Weir allows you to require that certain words assume a specific role in the sentence by writing the [Universal Part-Of-Speech tag](https://universaldependencies.org/u/pos/index.html), literally, in the position you wish to require it..
+For example, if you wanted to locate phrases that start with a determiner and are succeeded by a noun, you can write:
+
+```plaintext
+expr main DET NOUN
+```
+
+This will match against "the word", "a banana", "an apple", among others.
 
 ## Adding Tests
 

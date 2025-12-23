@@ -1,8 +1,9 @@
+use harper_brill::UPOS;
 use is_macro::Is;
 use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
-use crate::patterns::{DerivedFrom, WhitespacePattern, Word};
+use crate::patterns::{DerivedFrom, UPOSSet, WhitespacePattern, Word};
 use crate::{CharString, Punctuation, Token};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -69,6 +70,7 @@ impl Ast {
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstExprNode {
     Whitespace,
+    UPOSSet(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
     Punctuation(Punctuation),
@@ -82,6 +84,7 @@ impl AstExprNode {
     /// Create an actual expression that fulfills the pattern matching contract defined by this tree.
     pub fn to_expr(&self) -> Box<dyn Expr> {
         match self {
+            AstExprNode::UPOSSet(upos) => Box::new(UPOSSet::new(&upos)),
             AstExprNode::Whitespace => Box::new(WhitespacePattern),
             AstExprNode::Word(word) => Box::new(Word::from_chars(word)),
             AstExprNode::DerivativeOf(word) => Box::new(DerivedFrom::new_from_chars(word)),

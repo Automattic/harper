@@ -38,6 +38,14 @@ pub fn optimize_expr(ast: &mut AstExprNode) -> bool {
             if children.len() == 1 {
                 *ast = children.pop().unwrap();
                 edit = true;
+            } else if !children.is_empty() && children.iter().all(|n| n.is_upos_set()) {
+                *ast = AstExprNode::UPOSSet(
+                    children
+                        .into_iter()
+                        .flat_map(|n| n.as_upos_set().unwrap())
+                        .copied()
+                        .collect(),
+                )
             } else {
                 children.iter_mut().for_each(|child| {
                     if optimize_expr(child) {
