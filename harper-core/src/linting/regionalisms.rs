@@ -28,6 +28,7 @@ enum Concept {
     AubergineEggplant,
     // BiscuitCookie - biscuit names different foods in UK/Aus vs US; cookie has other meanings
     // BiscuitCracker - cracker also has other meanings
+    BloodNoseNosebleed,
     BumBagFannyPack,
     BurglarizeBurgle,
     CampervanRv,
@@ -83,6 +84,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[British],
         concept: AubergineEggplant,
+    },
+    Term {
+        term: "blood nose",
+        flag: Flag,
+        dialects: &[Australian],
+        concept: BloodNoseNosebleed,
     },
     Term {
         term: "bum bag",
@@ -299,6 +306,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[Australian, British],
         concept: DiaperNappy,
+    },
+    Term {
+        term: "nosebleed",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: BloodNoseNosebleed,
     },
     Term {
         term: "pacifier",
@@ -653,5 +666,14 @@ mod tests {
             Regionalisms::new(Dialect::American),
             "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
         )
+    }
+
+    #[test]
+    fn au_to_uk_blood_nose() {
+        assert_top3_suggestion_result(
+            "Oh no! I got a blood nose.",
+            Regionalisms::new(Dialect::British),
+            "Oh no! I got a nosebleed.",
+        );
     }
 }
