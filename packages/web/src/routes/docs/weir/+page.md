@@ -167,6 +167,15 @@ expr main DET NOUN
 
 This will match against "the word", "a banana", "an apple", among others.
 
+## Progressive Verbs
+
+You can require that a token be a progressive word with the keyword PROG.
+For example:
+
+```plaintext
+expr main PROG
+```
+
 ## Adding Tests
 
 The Weir language supports the inclusion of tests directly in the file.
@@ -190,6 +199,8 @@ test "A" "A"
 ```
 
 In the future, expect new types of tests to become available.
+
+If you have `harper-cli` available, you can run the tests in a given Weir file by running `harper-cli lint <path to the Weir file>`.
 
 ## See Also:
 

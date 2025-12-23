@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{DerivedFrom, UPOSSet, WhitespacePattern, Word};
-use crate::{CharString, Punctuation, Token};
+use crate::{CharString, Punctuation, Token, TokenKind};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Ast {
@@ -70,6 +70,8 @@ impl Ast {
 #[derive(Debug, Clone, Is, Eq, PartialEq)]
 pub enum AstExprNode {
     Whitespace,
+    /// A progressive verb.
+    Progressive,
     UPOSSet(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
@@ -84,6 +86,9 @@ impl AstExprNode {
     /// Create an actual expression that fulfills the pattern matching contract defined by this tree.
     pub fn to_expr(&self) -> Box<dyn Expr> {
         match self {
+            AstExprNode::Progressive => {
+                Box::new(|tok: &Token, _: &[char]| tok.kind.is_verb_progressive_form())
+            }
             AstExprNode::UPOSSet(upos) => Box::new(UPOSSet::new(&upos)),
             AstExprNode::Whitespace => Box::new(WhitespacePattern),
             AstExprNode::Word(word) => Box::new(Word::from_chars(word)),

@@ -58,17 +58,21 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             let text = tok.span.get_content_string(source);
 
             if let Ok(upos) = UPOS::from_str(&text){
-
-            Ok(FoundNode::new(
-            AstExprNode::UPOSSet(vec![upos]),
-            1,
-            ))
+                Ok(FoundNode::new(
+                    AstExprNode::UPOSSet(vec![upos]),
+                1,
+                ))
             }else{
+                let node = match text.as_str() {
+                    "PROG" => AstExprNode::Progressive,
+                    _ => AstExprNode::Word(text.chars().collect()),
+                };
 
-            Ok(FoundNode::new(
-            AstExprNode::Word(text.chars().collect()),
-            1,
-            ))}
+                Ok(FoundNode::new(
+                        node,
+                1,
+                ))
+            }
         }
         ,
         // The sequence notation. Useful for representing strings.
@@ -440,6 +444,13 @@ mod tests {
         assert_eq!(
             parse_expr_str("[PROPN, NOUN, VERB]", true).unwrap(),
             AstExprNode::UPOSSet(vec![UPOS::PROPN, UPOS::NOUN, UPOS::VERB]),
+        )
+    }
+
+    fn parses_prog() {
+        assert_eq!(
+            parse_expr_str("PROG", true).unwrap(),
+            AstExprNode::Progressive
         )
     }
 }
