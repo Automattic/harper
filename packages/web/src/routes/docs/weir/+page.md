@@ -152,7 +152,7 @@ test "Left click the checkbox." "Left-click the checkbox."
 test "Middle click to open in a new tab." "Middle-click to open in a new tab."
 ```
 
-This is extremely useful for identifying exceptions to a rule, since you can include the expections in the first layer of the filter, then slowly become more specific.
+This is extremely useful for identifying exceptions to a rule, since you can include the exceptions in the first layer of the filter, then slowly become more specific.
 
 See the testing section of this document for a more detailed description of the `test` syntax.
 
@@ -167,13 +167,29 @@ expr main DET NOUN
 
 This will match against "the word", "a banana", "an apple", among others.
 
-## Progressive Verbs
+### Progressive Verbs
 
 You can require that a token be a progressive word with the keyword PROG.
 For example:
 
 ```plaintext
 expr main PROG
+```
+
+### Exceptions
+
+You can add exceptions to expressions by throwing an exclamation mark in front of any other expression.
+This is useful for excluding certain contexts from a match.
+For example, if we wanted to locate all determiners when they are not followed by a noun, we can do this:
+
+```
+set main DET !NOUN
+```
+
+Similarly, we can do the same with arrays or sequences of words:
+
+```
+set main DET ![break, braking]
 ```
 
 ## Adding Tests
@@ -200,7 +216,7 @@ test "A" "A"
 
 In the future, expect new types of tests to become available.
 
-If you have `harper-cli` available, you can run the tests in a given Weir file by running `harper-cli lint <path to the Weir file>`.
+If you have `harper-cli` available, you can run the tests in a given Weir file by running `harper-cli test <path to the Weir file>`.
 
 ## See Also:
 
