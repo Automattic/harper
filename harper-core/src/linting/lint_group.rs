@@ -156,6 +156,7 @@ use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
 use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
+use super::sentence_casing::SentenceCasing;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
@@ -623,6 +624,7 @@ impl LintGroup {
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
+        insert_struct_rule!(SentenceCasing, false);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
