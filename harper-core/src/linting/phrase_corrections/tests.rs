@@ -15,6 +15,24 @@ fn corrects_a_couple_of_more() {
     )
 }
 
+// AdNauseam
+#[test]
+fn corrects_as_nauseam_1() {
+    assert_suggestion_result(
+        "As you say, discussed as nauseam, but no nearer a solution.",
+        lint_group(),
+        "As you say, discussed ad nauseam, but no nearer a solution.",
+    );
+}
+#[test]
+fn corrects_as_nauseam_2() {
+    assert_suggestion_result(
+        "no more autism please, hearing about it as nauseam is starting to make me sick",
+        lint_group(),
+        "no more autism please, hearing about it ad nauseam is starting to make me sick",
+    );
+}
+
 // AfterAWhile
 #[test]
 fn correct_after_while() {
@@ -710,6 +728,16 @@ fn detect_ever_since() {
         "einstein been real quiet every since this dropped",
         lint_group(),
         "einstein been real quiet ever since this dropped",
+    );
+}
+
+// EveryOnceAndAgain
+#[test]
+fn fix_every_once_and_again() {
+    assert_suggestion_result(
+        "Ys have been replaced with Ps, happens randomly every once and again with different letters",
+        lint_group(),
+        "Ys have been replaced with Ps, happens randomly every once in a while with different letters",
     );
 }
 

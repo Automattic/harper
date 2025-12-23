@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -184,6 +184,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enforces `awhile` after verbs and `a while` everywhere else."
+				},
+				"harper.linters.AdNauseam": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as nauseam` to `ad nauseam`."
 				},
 				"harper.linters.Addicting": {
 					"scope": "resource",
@@ -928,6 +934,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `every since` to `ever since`."
+				},
+				"harper.linters.EveryOnceAndAgain": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `every once and again` to `every once in a while` or `once again`."
 				},
 				"harper.linters.EveryTime": {
 					"scope": "resource",
@@ -1733,6 +1745,12 @@
 					"default": true,
 					"description": "Corrects `make it seems` to `make it seem`."
 				},
+				"harper.linters.MakeSense": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `make senses` to `make sense`."
+				},
 				"harper.linters.Malaysia": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2069,6 +2087,12 @@
 					"default": true,
 					"description": "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
 				},
+				"harper.linters.OldestInTheBook": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the idiom `oldest X in the books`, which should use singular `book`."
+				},
 				"harper.linters.OnFloor": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2182,6 +2206,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags oxymoronic phrases (e.g. `amateur expert`, `increasingly less`, etc.)."
+				},
+				"harper.linters.PartsOfSpeech": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects pluralizing the wrong noun in `part of speech`."
 				},
 				"harper.linters.PassersBy": {
 					"scope": "resource",
@@ -2872,6 +2902,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Removes redundant `to` before `towards`."
+				},
+				"harper.linters.TransposedSpace": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for a space one character too early or too late between words."
 				},
 				"harper.linters.TrialAndError": {
 					"scope": "resource",

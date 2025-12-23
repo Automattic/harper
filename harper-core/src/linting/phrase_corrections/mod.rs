@@ -44,6 +44,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `a couple of more` to `a couple more`.",
             LintKind::Redundancy
         ),
+        "AdNauseam" => (
+            ["as nauseam"],
+            ["ad nauseam"],
+            "This phrase comes from Latin, where `ad` means `to`.",
+            "Corrects `as nauseam` to `ad nauseam`.",
+            LintKind::Spelling
+        ),
         "AfterAWhile" => (
             ["after while"],
             ["after a while"],
@@ -383,6 +390,13 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `ever since`?",
             "Corrects `every since` to `ever since`.",
             LintKind::Typo
+        ),
+        "EveryOnceAndAgain" => (
+            ["every once and again"],
+            ["every once in a while", "once again"],
+            "For things that happen only occasionaly use `every once in a while. For things that persistently happen use `once again`.",
+            "Corrects `every once and again` to `every once in a while` or `once again`.",
+            LintKind::Usage
         ),
         "EveryTime" => (
             ["everytime"],

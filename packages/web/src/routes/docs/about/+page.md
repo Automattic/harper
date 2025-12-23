@@ -39,3 +39,16 @@ We do this because we view Harper not as a disparate set of integrations, but as
 
 For the time being, we only actively develop and maintain the latest version of Harper (seen in the `master` branch on GitHub). 
 If long-term support for older versions is desired, please let us know and we will do our best to accommodate you.
+
+## Projects Using Harper
+
+Some of the open-source projects using Harper include:
+
+- [Gherlint](https://github.com/gherlint/gherlint)
+- [walletbeat](https://github.com/walletbeat/walletbeat)
+- [Stencila](https://github.com/stencila/stencila)
+- [fixmyspelling](https://github.com/samedwardes/fixmyspelling)
+
+Are you using Harper in your open source work and want to be included in this list?
+If so, please open a PR. 
+We would be happy to add it.
