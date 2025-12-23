@@ -3,7 +3,7 @@ use is_macro::Is;
 use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
-use crate::patterns::{DerivedFrom, UPOSSet, WhitespacePattern, Word};
+use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
 use crate::{CharString, Punctuation, Token, TokenKind};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -80,12 +80,14 @@ pub enum AstExprNode {
     Seq(Vec<AstExprNode>),
     Arr(Vec<AstExprNode>),
     Filter(Vec<AstExprNode>),
+    Anything,
 }
 
 impl AstExprNode {
     /// Create an actual expression that fulfills the pattern matching contract defined by this tree.
     pub fn to_expr(&self) -> Box<dyn Expr> {
         match self {
+            AstExprNode::Anything => Box::new(AnyPattern),
             AstExprNode::Progressive => {
                 Box::new(|tok: &Token, _: &[char]| tok.kind.is_verb_progressive_form())
             }

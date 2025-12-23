@@ -41,13 +41,20 @@ impl Expr for Filter {
         let mut result = self.steps.first()?.run(cursor, tokens, source)?;
 
         for step in self.steps.iter().skip(1) {
+            let mut found = false;
+
             for i in 0..result.len() {
                 let step_res = step.run(i, result.get_content(tokens), source);
 
                 if let Some(step) = step_res {
                     result = step.pushed_by(result.start);
+                    found = true;
                     break;
                 }
+            }
+
+            if !found {
+                return None;
             }
         }
 

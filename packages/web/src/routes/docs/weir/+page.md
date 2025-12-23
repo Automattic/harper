@@ -192,6 +192,18 @@ Similarly, we can do the same with arrays or sequences of words:
 set main DET ![break, braking]
 ```
 
+### Wildcards
+
+If you need to allow a token between two others, or otherwise want to include an unknown and unrestricted token in the expression, you can use a wildcard.
+Although it looks like a single-character wildcard from regex (Weir borrows the `*` syntax), Weir wildcards match over entire tokens.
+
+Example:
+
+```weir
+# To match any token that is preceded by a noun and succeeded by a noun.
+set main NOUN * NOUN
+```
+
 ## Adding Tests
 
 The Weir language supports the inclusion of tests directly in the file.

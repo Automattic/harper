@@ -54,6 +54,9 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
             let word = word_tok.span.get_content(source);
             Ok(FoundNode::new(AstExprNode::DerivativeOf(word.into()), 2))
         }
+        TokenKind::Punctuation(Punctuation::Star) => {
+            Ok(FoundNode::new(AstExprNode::Anything, 1))
+        }
         TokenKind::Word(_) => {
             let text = tok.span.get_content_string(source);
 
@@ -447,10 +450,30 @@ mod tests {
         )
     }
 
+    #[test]
     fn parses_prog() {
         assert_eq!(
             parse_expr_str("PROG", true).unwrap(),
             AstExprNode::Progressive
+        )
+    }
+
+    #[test]
+    fn parses_anything() {
+        assert_eq!(parse_expr_str("*", true).unwrap(), AstExprNode::Anything)
+    }
+
+    #[test]
+    fn parses_anything_seq() {
+        assert_eq!(
+            parse_expr_str("* * *", true).unwrap(),
+            AstExprNode::Seq(vec![
+                AstExprNode::Anything,
+                AstExprNode::Whitespace,
+                AstExprNode::Anything,
+                AstExprNode::Whitespace,
+                AstExprNode::Anything,
+            ])
         )
     }
 }

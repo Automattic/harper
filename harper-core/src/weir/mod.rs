@@ -314,4 +314,24 @@ pub mod tests {
         assert_passes_all(&mut linter);
         assert_eq!(4, linter.count_tests());
     }
+
+    #[test]
+    fn wildcard() {
+        let source = r#"
+            expr main <(NOUN * NOUN), (* NOUN), *>
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes ""
+            let strategy "Exact"
+
+            test "I like trees and plants of all kinds" "I like trees  plants of all kinds"
+            test "homework tempts teachers" "homework  teachers"
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+        assert_eq!(2, linter.count_tests());
+    }
 }
