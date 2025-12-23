@@ -35,7 +35,7 @@ pub fn get_synonyms_sorted(word: &str, token: &TokenKind) -> Option<Vec<&'static
         if let Some(Some(word_meta)) = token.as_word() {
             let dict = FstDictionary::curated();
             syns.sort_by_key(|syn| {
-                if let Some(syn_meta) = dict.get_lexeme_metadata_str(syn) {
+                if let Some(syn_meta) = dict.get_word_metadata_str(syn) {
                     word_meta.difference(&syn_meta)
                 } else {
                     u8::MAX
