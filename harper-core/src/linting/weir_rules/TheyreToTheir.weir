@@ -1,4 +1,4 @@
-expr main [<(they're NOUN), they're>, <(they're NOUN NOUN), they're>, <(they're ADJ NOUN), they're>, <(they're ADV ADJ NOUN), they're>, <(they're VERB NOUN), they're>, <(they're ADV VERB NOUN), they're>, <(they're ADV ADV VERB NOUN), they're>, <(they're ADJ PUNCT ADJ NOUN), they're>, <[(they're mittens), (they're sketches), (they're past), (they're needs), (they're pawn), (they're ability), (they're return), (they're potential to), (they're understanding), (they're new)], they're>]
+expr main [<(they're [NOUN, (NOUN NOUN), (ADJ NOUN), (ADV ADJ NOUN), (VERB NOUN), (ADV VERB NOUN), (ADV ADV VERB NOUN), (ADJ PUNCT ADJ NOUN), (mittens), (sketches), (past), (needs), (pawn), (ability), (return), (potential to), (understanding), (new)]), they're>]
 
 let message "Did you mean `their`?"
 let description "Corrects `they're` when the intended meaning is `their`."
