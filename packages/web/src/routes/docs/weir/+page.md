@@ -131,7 +131,7 @@ expr main [(low[-, ( )]hanging fruits), (low hanging fruit)]
 
 ### Filters
 
-Filters in Weir allow you to locate an expression, then narrow down the search to a shorter segment that same expression.
+Filters in Weir allow you to locate an expression, then narrow down the search to a shorter segment of that same expression.
 This can be done as many times as you like.
 The example below uses the filter syntax (the `<>`) to first select the broader phrase, then another to select the whitespace in-between (that's the `( )` part).
 
