@@ -54,6 +54,8 @@ impl Default for ItsPossessive {
                 UPOS::NOUN,
                 UPOS::PRON,
                 UPOS::SCONJ,
+                UPOS::CCONJ,
+                UPOS::ADV,
             ]));
 
         map.insert(start_of_sentence, 0);
@@ -91,7 +93,7 @@ impl ExprLinter for ItsPossessive {
                 "its",
                 span.get_content(source),
             )],
-            message: "Prefer the possessive pronoun `its` here to denote ownership.".to_string(),
+            message: "Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.".to_string(),
             priority: 31,
         })
     }
@@ -333,5 +335,26 @@ mod tests {
             "It's worth highlighting that while using a fork instead of a spoon is easy, it sometimes isn't.",
             ItsPossessive::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_issue_1722_its_whats_accessible() {
+        assert_no_lints(
+            "The base execution context is the global execution context: it's what's accessible everywhere in your code.",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_issue_1722_its_early_and() {
+        assert_no_lints(
+            "it's early and there's plenty of room for novel and potentially",
+            ItsPossessive::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_issue_1722_its_big_enough() {
+        assert_no_lints("It's big enough.", ItsPossessive::default());
     }
 }

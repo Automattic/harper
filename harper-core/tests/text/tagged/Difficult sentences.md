@@ -849,7 +849,7 @@
 > Three squared or    three to the second    power      is  nine .
 # NSg   VP/J    NPr/C NSg   P  D+  NSg/VB/J+ N🅪Sg/VB/J+ VL3 NSg  .
 > What's the time       ? – It's quarter   to four in        the afternoon ( or    3 : 45 pm      ) .
-# NSg$   D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
+# K      D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
 >
 #
 >              Adverb

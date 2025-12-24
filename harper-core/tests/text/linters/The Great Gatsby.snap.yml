@@ -5798,17 +5798,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    4192 | “I told you what’s been going on,” said Gatsby. “Going on for five years—and you
-         |         ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t

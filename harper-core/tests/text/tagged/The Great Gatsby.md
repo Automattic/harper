@@ -3615,7 +3615,7 @@
 >
 #
 > “ What’s that          got to do  with it       ? ”
-# . NSg$   NSg/I/C/Ddem+ VP  P  VXB P    NPr/ISg+ . .
+# . K      NSg/I/C/Ddem+ VP  P  VXB P    NPr/ISg+ . .
 >
 #
 > “ They’ll keep   out          of my  way    , ” she  insisted . “ It       takes  two to make   an   accident . ”
@@ -3875,7 +3875,7 @@
 >
 #
 > “ Look   here    , old    sport   , ” he       broke     out          surprisingly , “ what’s your opinion of me       ,
-# . NSg/VB NSg/J/R . NSg/J+ NSg/VB+ . . NPr/ISg+ NSg/VPt/J NSg/VB/J/R/P R            . . NSg$   D$+  N🅪Sg    P  NPr/ISg+ .
+# . NSg/VB NSg/J/R . NSg/J+ NSg/VB+ . . NPr/ISg+ NSg/VPt/J NSg/VB/J/R/P R            . . K      D$+  N🅪Sg    P  NPr/ISg+ .
 > anyhow ? ”
 # J      . .
 >
@@ -4687,7 +4687,7 @@
 >
 #
 > “ What’s the matter   , Daisy ? ”
-# . NSg$   D   N🅪Sg/VB+ . NPr+  . .
+# . K      D   N🅪Sg/VB+ . NPr+  . .
 >
 #
 > I       was scared , I       can     tell   you    ; I’d never seen    a   girl    like         that          before .
@@ -5299,7 +5299,7 @@
 >
 #
 > “ What’s funny ? ”
-# . NSg$   NSg/J . .
+# . K      NSg/J . .
 >
 #
 > She  turned her     head      as    there was a    light      dignified knocking at    the front     door    . I
@@ -5431,7 +5431,7 @@
 >
 #
 > “ What’s the matter   ? ”
-# . NSg$   D+  N🅪Sg/VB+ . .
+# . K      D+  N🅪Sg/VB+ . .
 >
 #
 > “ This    is  a   terrible mistake , ” he       said , shaking his     head      from side      to side     , ‘          ‘          a
@@ -7491,7 +7491,7 @@
 >
 #
 > “ Come       on  ! ” His     temper     cracked a   little     . “ What’s the matter   , anyhow ? If    we’re
-# . NSg/VBPp/P J/P . . ISg/D$+ NSg/VB/JC+ VP/J    D/P NPr/I/J/Dq . . NSg$   D+  N🅪Sg/VB+ . J      . NSg/C K
+# . NSg/VBPp/P J/P . . ISg/D$+ NSg/VB/JC+ VP/J    D/P NPr/I/J/Dq . . K      D+  N🅪Sg/VB+ . J      . NSg/C K
 > going   to town , let’s start  . ”
 # Nᴹ/Vg/J P  NSg  . NSg$  NSg/VB . .
 >
@@ -7779,7 +7779,7 @@
 >
 #
 > “ What’s the matter   ? ”
-# . NSg$   D+  N🅪Sg/VB+ . .
+# . K      D+  N🅪Sg/VB+ . .
 >
 #
 > “ I’m all          run      down        . ”
@@ -8377,11 +8377,11 @@
 > “ Sit    down        , Daisy , ” Tom’s voice   groped unsuccessfully for   the paternal note    .
 # . NSg/VB N🅪Sg/VB/J/P . NPr+  . . NSg$  NSg/VB+ VP/J   R              R/C/P D   J        NSg/VB+ .
 > “ What’s been    going   on  ? I       want   to hear all          about it       . ”
-# . NSg$   NSg/VPp Nᴹ/Vg/J J/P . ISg/#r+ NSg/VB P  VB   NSg/I/J/C/Dq J/P   NPr/ISg+ . .
+# . K      NSg/VPp Nᴹ/Vg/J J/P . ISg/#r+ NSg/VB P  VB   NSg/I/J/C/Dq J/P   NPr/ISg+ . .
 >
 #
 > “ I       told you    what’s been    going   on  , ” said Gatsby . “ Going   on  for   five years — and  you
-# . ISg/#r+ VP   ISgPl+ NSg$   NSg/VPp Nᴹ/Vg/J J/P . . VP/J NPr    . . Nᴹ/Vg/J J/P R/C/P NSg+ NPl+  . VB/C ISgPl+
+# . ISg/#r+ VP   ISgPl+ K      NSg/VPp Nᴹ/Vg/J J/P . . VP/J NPr    . . Nᴹ/Vg/J J/P R/C/P NSg+ NPl+  . VB/C ISgPl+
 > didn’t know   . ”
 # VXPt   NSg/VB . .
 >
@@ -8429,7 +8429,7 @@
 > “ She  does    , though . The trouble  is  that          sometimes she  gets   foolish ideas in        her
 # . ISg+ NPl/VX3 . VB/C   . D+  N🅪Sg/VB+ VL3 NSg/I/C/Ddem+ R         ISg+ NPl/V3 J       NPl+  NPr/J/R/P ISg/D$+
 > head      and  doesn’t know   what   she’s doing   . ” He       nodded sagely . “ And  what’s more         , I
-# NPr/VB/J+ VB/C VX3     NSg/VB NSg/I+ K     Nᴹ/Vg/J . . NPr/ISg+ VP     R      . . VB/C NSg$   NPr/I/J/R/Dq . ISg/#r+
+# NPr/VB/J+ VB/C VX3     NSg/VB NSg/I+ K     Nᴹ/Vg/J . . NPr/ISg+ VP     R      . . VB/C K      NPr/I/J/R/Dq . ISg/#r+
 > love      Daisy too . Once  in        a    while       I       go       off        on  a    spree   and  make   a   fool     of myself ,
 # NPr🅪Sg/VB NPr+  R   . NSg/C NPr/J/R/P D/P+ NSg/VB/C/P+ ISg/#r+ NSg/VB/J NSg/VB/J/P J/P D/P+ NSg/VB+ VB/C NSg/VB D/P NSg/VB/J P  ISg+   .
 > but     I       always come       back     , and  in        my  heart    I       love      her     all           the time       . ”
@@ -8511,7 +8511,7 @@
 > “ Oh     , you    want   too much         ! ” she  cried to Gatsby . “ I       love      you    now       — isn’t   that          enough ?
 # . NPr/VB . ISgPl+ NSg/VB R   NSg/I/J/R/Dq . . ISg+ VP/J  P  NPr    . . ISg/#r+ NPr🅪Sg/VB ISgPl+ NSg/J/R/C . NSg/VX3 NSg/I/C/Ddem+ NSg/I  .
 > I       can’t help   what’s past       . ” She  began to sob    helplessly . “ I       did  love      him  once  — but
-# ISg/#r+ VXB   NSg/VB NSg$   NSg/VB/J/P . . ISg+ VPt   P  NSg/VB R          . . ISg/#r+ VXPt NPr🅪Sg/VB ISg+ NSg/C . NSg/C/P
+# ISg/#r+ VXB   NSg/VB K      NSg/VB/J/P . . ISg+ VPt   P  NSg/VB R          . . ISg/#r+ VXPt NPr🅪Sg/VB ISg+ NSg/C . NSg/C/P
 > I       loved you    too . ”
 # ISg/#r+ VP/J  ISgPl+ R   . .
 >
@@ -9023,7 +9023,7 @@
 >
 #
 > “ What’s the name   of this   place    here    ? ” demanded the officer .
-# . NSg$   D   NSg/VB P  I/Ddem N🅪Sg/VB+ NSg/J/R . . VP/J     D+  NSg/VB+ .
+# . K      D   NSg/VB P  I/Ddem N🅪Sg/VB+ NSg/J/R . . VP/J     D+  NSg/VB+ .
 >
 #
 > “ Hasn’t got any    name    . ”
@@ -9099,7 +9099,7 @@
 >
 #
 > “ What’s all          that          ? ” he       demanded .
-# . NSg$   NSg/I/J/C/Dq NSg/I/C/Ddem+ . . NPr/ISg+ VP/J     .
+# . K      NSg/I/J/C/Dq NSg/I/C/Ddem+ . . NPr/ISg+ VP/J     .
 >
 #
 > “ I’m a   friend   of his     . ” Tom     turned his     head      but     kept his     hands   firm      on  Wilson’s
@@ -11495,7 +11495,7 @@
 >
 #
 > “ What’s the matter   , Nick    ? Do  you    object  to shaking hands   with me       ? ”
-# . NSg$   D   N🅪Sg/VB+ . NPr/VB+ . VXB ISgPl+ NSg/VB+ P  Nᴹ/Vg/J NPl/V3+ P    NPr/ISg+ . .
+# . K      D   N🅪Sg/VB+ . NPr/VB+ . VXB ISgPl+ NSg/VB+ P  Nᴹ/Vg/J NPl/V3+ P    NPr/ISg+ . .
 >
 #
 > “ Yes    . You    know   what   I       think  of you    . ”
@@ -11503,7 +11503,7 @@
 >
 #
 > “ You're crazy , Nick    , ” he       said quickly . “ Crazy as    hell    . I       don’t know   what’s the
-# . +      NSg/J . NPr/VB+ . . NPr/ISg+ VP/J R       . . NSg/J NSg/R NPr/VB+ . ISg/#r+ VXB   NSg/VB NSg$   D
+# . +      NSg/J . NPr/VB+ . . NPr/ISg+ VP/J R       . . NSg/J NSg/R NPr/VB+ . ISg/#r+ VXB   NSg/VB K      D
 > matter   with you    . ”
 # N🅪Sg/VB+ P    ISgPl+ . .
 >
