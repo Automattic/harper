@@ -363,6 +363,10 @@ impl LintGroup {
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
         if self.contains_key(&name) {
+            eprintln!(
+                "⚠️ [LintGroup::add] Linter with name `{}` already exists",
+                name.as_ref()
+            );
             false
         } else {
             self.linters
@@ -383,6 +387,10 @@ impl LintGroup {
         linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
+            eprintln!(
+                "⚠️ [LintGroup::add_chunk_expr_linter] Linter with name `{}` already exists",
+                name.as_ref()
+            );
             false
         } else {
             self.chunk_expr_linters
@@ -397,9 +405,23 @@ impl LintGroup {
         self.config.merge_from(&mut other.config);
 
         let other_linters = std::mem::take(&mut other.linters);
+        if let Some((conflicting_key, _)) = other_linters.iter().find(|(k, _)| self.contains_key(k))
+        {
+            eprintln!(
+                "⚠️ [LintGroup::merge_from] Linter with name `{conflicting_key}` already exists"
+            );
+        }
         self.linters.extend(other_linters);
 
         let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
+        if let Some((conflicting_key, _)) = other_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            eprintln!(
+                "⚠️ [LintGroup::merge_from] ExprLinter with name `{conflicting_key}` already exists"
+            );
+        }
         self.chunk_expr_linters.extend(other_expr_linters);
     }
 

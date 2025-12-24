@@ -386,6 +386,14 @@ fn configure_lint_group(
             .iter()
             .for_each(|rule| lint_group.config.set_rule_enabled(rule, false));
     }
+
+    // Have all rules been disabled somehow?
+    if !lint_group
+        .iter_keys()
+        .any(|rule| lint_group.config.is_rule_enabled(rule))
+    {
+        eprintln!("Warning: No rules are enabled.");
+    }
 }
 
 fn count_lint_kinds_and_rules(
