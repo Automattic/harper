@@ -27829,7 +27829,7 @@ headhunter/Ng
 headhunting/NmgV
 headily/Ry
 headiness/Nmg
-heading/~VSNg
+heading/~VSNwg
 headlamp/NgS
 headland/~NgS
 headless/~J
@@ -53178,6 +53178,7 @@ OCaml/Og            # programming language
 OG/NgS
 OOP/Nmg
 ORM/NOS             # object-relational mapping
+Obsidian/Og         # note-taking app
 Ollama/Og           # AI tool
 OpenAI/Og
 OpenBSD/Og          # operating system
