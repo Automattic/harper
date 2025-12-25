@@ -1011,6 +1011,53 @@ fn copywrote() {
     );
 }
 
+// DoubleEdgedSword
+
+#[test]
+fn correct_double_edge_hyphen() {
+    assert_suggestion_result(
+        "I thought the global defaultTranslationValues was potentially a double-edge sword as it also obfuscates the full set of values",
+        lint_group(),
+        "I thought the global defaultTranslationValues was potentially a double-edged sword as it also obfuscates the full set of values",
+    );
+}
+
+#[test]
+fn correct_double_edge_space() {
+    assert_suggestion_result(
+        "It becomes a double edge sword when it should not be used in cases like this.",
+        lint_group(),
+        "It becomes a double-edged sword when it should not be used in cases like this.",
+    );
+}
+
+#[test]
+fn correct_double_edge_space_plural() {
+    assert_suggestion_result(
+        "Wake locks are really double edge swords.",
+        lint_group(),
+        "Wake locks are really double-edged swords.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space() {
+    assert_suggestion_result(
+        "Use case. currently OPTIMIZE is a double edged sword and potentially a very dangerous tool to use.",
+        lint_group(),
+        "Use case. currently OPTIMIZE is a double-edged sword and potentially a very dangerous tool to use.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space_plural() {
+    assert_suggestion_result(
+        "Change: Ambushers and Crusaders now protect their targets too, making them double edged swords",
+        lint_group(),
+        "Change: Ambushers and Crusaders now protect their targets too, making them double-edged swords",
+    );
+}
+
 // Expat
 
 #[test]

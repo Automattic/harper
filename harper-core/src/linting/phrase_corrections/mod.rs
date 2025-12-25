@@ -155,6 +155,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `as of lately` to `as of late`.",
             LintKind::WordChoice
         ),
+        "AsOpposedTo" => (
+            ["as oppose to"],
+            ["as opposed to"],
+            "Did you mean `as opposed to`?",
+            "Corrects `as oppose to` to `as opposed to`.",
+            LintKind::Usage
+        ),
         "AtFaceValue" => (
             ["on face value"],
             ["at face value"],

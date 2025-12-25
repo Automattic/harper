@@ -385,6 +385,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
+        "DoubleEdgedSword" => (
+            &[
+                (&["double edge sword", "double-edge sword", "double edge-sword", "double-edge-sword",
+                   "double edged sword", "double edged-sword", "double-edged-sword"], &["double-edged sword"]),
+                (&["double edge swords", "double-edge swords", "double edge-swords", "double-edge-swords",
+                   "double edged swords", "double edged-swords", "double-edged-swords"], &["double-edged swords"]),
+            ],
+            "Did you mean `double-edged sword`?",
+            "Corrects variants of `double-edged sword`.",
+            LintKind::Spelling
+        ),
         "Expat" => (
             &[
                 (&["ex-pat", "ex pat"], &["expat"]),

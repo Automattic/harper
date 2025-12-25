@@ -364,6 +364,16 @@ fn corrects_as_of_lately() {
     )
 }
 
+// AsOpposedTo
+#[test]
+fn correct_as_oppose_to() {
+    assert_suggestion_result(
+        "Distorted image upon opening the app as oppose to running the app after successful build",
+        lint_group(),
+        "Distorted image upon opening the app as opposed to running the app after successful build",
+    );
+}
+
 // AtFaceValue
 #[test]
 fn correct_on_face_value() {
