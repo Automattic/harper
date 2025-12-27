@@ -25,6 +25,7 @@ mod render_markdown;
 mod span;
 pub mod spell;
 mod sync;
+mod thesaurus_helper;
 mod title_case;
 mod token;
 mod token_kind;
