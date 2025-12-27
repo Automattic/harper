@@ -15,9 +15,8 @@ pub fn thesaurus() -> &'static Thesaurus {
     THESAURUS.get_or_init(Thesaurus::new)
 }
 
-// TODO: maybe make this a member of `Thesaurus` and use deduped_word_set indices rather than
-// strings?
-/// A list of words sorted by frequency of use, in descending order.
+/// A list of words numbered by frequency of use. The most common word will have a number of 0, and
+/// rarer words count up from there.
 fn word_freq_map() -> &'static HashMap<String, u32> {
     static WORD_FREQ_LIST: OnceLock<HashMap<String, u32>> = OnceLock::new();
     WORD_FREQ_LIST.get_or_init(|| {
@@ -94,12 +93,12 @@ impl Thesaurus {
 }
 
 trait DedupedWordSetExt {
-    fn get_or_insert_word(&mut self, word: &str) -> usize;
-}
-impl DedupedWordSetExt for IndexSet<String> {
     /// Gets or insert the provided word.
     ///
     /// Returns the index of the word.
+    fn get_or_insert_word(&mut self, word: &str) -> usize;
+}
+impl DedupedWordSetExt for IndexSet<String> {
     fn get_or_insert_word(&mut self, word: &str) -> usize {
         if let Some(idx) = self.get_index_of(word) {
             idx
