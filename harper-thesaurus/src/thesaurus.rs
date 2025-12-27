@@ -1,5 +1,3 @@
-#![warn(clippy::pedantic)]
-
 use std::sync::OnceLock;
 
 use hashbrown::HashMap;
