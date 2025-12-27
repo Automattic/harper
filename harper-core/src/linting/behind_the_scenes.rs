@@ -33,7 +33,18 @@ impl ExprLinter for BehindTheScenes {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if let Some((before, _)) = ctx
+            && before.last().is_some_and(|t| t.kind.is_hyphen())
+        {
+            return None;
+        }
+
         let span = toks.last()?.span;
         Some(Lint {
             span,
@@ -51,14 +62,44 @@ impl ExprLinter for BehindTheScenes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{behind_the_scenes::BehindTheScenes, tests::assert_suggestion_result};
+    use crate::linting::{
+        behind_the_scenes::BehindTheScenes,
+        tests::{assert_no_lints, assert_suggestion_result},
+    };
 
     #[test]
-    fn fix_work_bts() {
+    fn pluralize_work_bts() {
         assert_suggestion_result(
             "How does this tool work behind the scene.",
             BehindTheScenes::default(),
             "How does this tool work behind the scenes.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Correcting hyphenation is not yet implemented."]
+    fn pluralize_and_hyphenate() {
+        assert_suggestion_result(
+            "So, to open the 'real' behind the scene menu i need to do these steps:",
+            BehindTheScenes::default(),
+            "So, to open the 'real' behind-the-scenes menu i need to do these steps:",
+        );
+    }
+
+    #[test]
+    fn dont_flag_when_hyphenated_to_previous_word() {
+        assert_no_lints(
+            "Contribute to techking11/react-behind-the-scene development by creating an account on GitHub.",
+            BehindTheScenes::default(),
+        );
+    }
+
+    #[test]
+    fn pluralize_bts_processing() {
+        assert_suggestion_result(
+            "Behind-the-scene processing details are printed in the Log window.",
+            BehindTheScenes::default(),
+            "Behind-the-scenes processing details are printed in the Log window.",
         );
     }
 }
