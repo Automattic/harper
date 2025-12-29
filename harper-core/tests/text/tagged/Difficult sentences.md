@@ -125,7 +125,7 @@
 > I       discovered it       by      chance    .
 # ISg/#r+ VP/J       NPr/ISg+ NSg/J/P NPr/VB/J+ .
 > By      ' maybe   ' she  means  ' no       ' .
-# NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/Dq/P . .
+# NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NSg/Dq/P . .
 > The electricity was cut       off        , so          we   had to read    by      candlelight .
 # D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VP  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in        me       , I       now       pronounce you    man      and  wife      .
@@ -166,8 +166,8 @@
 # NPr/ISg+ VL3 NSg/VB/J P  NSg/VB/J D/P # . NSg/J/P . # NSg+   .
 > The room       was about 4 foot   by      6 foot    .
 # D+  N🅪Sg/VB/J+ VPt J/P   # NSg/VB NSg/J/P # NSg/VB+ .
-> The bricks  used to build  the wall    measured 10 by      20 by      30 cm      .
-# D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  NSg/#r+ .
+> The bricks  used to build  the wall    measured 10 by      20 by      30 cm  .
+# D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  #r+ .
 > She's a   lovely little     filly , by      Big   Lad , out          of Damsel in        Distress .
 # K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/R/P Nᴹ/VB+   .
 > Are you    eating  by      Rabbi Fischer ? ( at    the house  of )
@@ -180,8 +180,8 @@
 # HeadingStart NSg/VB+
 >
 #
-> I       watched the parade  as        it       passed by      .
-# ISg/#r+ VP/J    D+  NSg/VB+ NSg/R/C/P NPr/ISg+ VP/J   NSg/J/P .
+> I       watched the parade  as    it       passed by      .
+# ISg/#r+ VP/J    D+  NSg/VB+ R/C/P NPr/ISg+ VP/J   NSg/J/P .
 > There was a    shepherd close    by      .
 # R+    VPt D/P+ NPr/VB+  NSg/VB/J NSg/J/P .
 > I'll stop   by      on  my  way    home     from work     .
@@ -433,15 +433,15 @@
 > He's met his     match   in        her     .
 # NSg$ VP  ISg/D$+ NSg/VB+ NPr/J/R/P ISg/D$+ .
 > There has been    no       change  in        his     condition .
-# R+    V3  NSg/VPp NPr/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
+# R+    V3  NSg/VPp NSg/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
 > What   grade   did  he       get    in        English      ?
 # NSg/I+ NSg/VB+ VXPt NPr/ISg+ NSg/VB NPr/J/R/P NPr🅪Sg/VB/J+ .
 > Please pay      me       in        cash       — preferably in        tens and  twenties .
 # VB     NSg/VB/J NPr/ISg+ NPr/J/R/P NPrᴹ/VB/J+ . R          NPr/J/R/P W?   VB/C NPl+     .
 > The deposit can     be      in        any    legal tender   , even       in        gold     .
 # D+  NSg/VB+ NPr/VXB NSg/VXB NPr/J/R/P I/R/Dq NSg/J NSg/VB/J . NSg/VB/J/R NPr/J/R/P Nᴹ/VB/J+ .
-> Beethoven's " Symphony No       . 5 " in        C            minor    is  among his     most         popular .
-# NSg$        . NSg+     NPr/Dq/P . # . NPr/J/R/P NPr/VB/J/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
+> Beethoven's " Symphony No       . 5 " in        C          minor    is  among his     most         popular .
+# NSg$        . NSg+     NSg/Dq/P . # . NPr/J/R/P NPr/VB/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech   was in        French      , but     was simultaneously translated into eight  languages .
 # ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl/V3+   .
 > When    you    write  in        cursive , it's illegible .
@@ -719,7 +719,7 @@
 > The city hosted the World   Summit  on  the Information Society
 # D+  NSg+ VP/J   D+  NSg/VB+ NSg/VB+ J/P D+  Nᴹ+         N🅪Sg+
 > I       have    no       opinion on  this    subject   .
-# ISg/#r+ NSg/VXB NPr/Dq/P N🅪Sg+   J/P I/Ddem+ NSg/VB/J+ .
+# ISg/#r+ NSg/VXB NSg/Dq/P N🅪Sg+   J/P I/Ddem+ NSg/VB/J+ .
 > I       saw     it       on  television .
 # ISg/#r+ NSg/VPt NPr/ISg+ J/P N🅪Sg/VB+   .
 > Can't you    see    I'm on  the phone   ?
@@ -827,7 +827,7 @@
 > He       made several bad      - taste    jokes  to groans from the audience .
 # NPr/ISg+ VP   J/Dq    NSg/VB/J . NSg/VB/J NPl/V3 P  NPl/V3 P    D+  NSg+     .
 > I       tried complaining , but     it       was to no        effect  .
-# ISg/#r+ VP/J  Nᴹ/Vg/J     . NSg/C/P NPr/ISg+ VPt P  NPr/Dq/P+ NSg/VB+ .
+# ISg/#r+ VP/J  Nᴹ/Vg/J     . NSg/C/P NPr/ISg+ VPt P  NSg/Dq/P+ NSg/VB+ .
 > It       was to a   large extent true     .
 # NPr/ISg+ VPt P  D/P NSg/J NSg/J+ NSg/VB/J .
 > We   manufacture these   parts   to a   very high        tolerance .
@@ -911,7 +911,7 @@
 > It       was small    and  bumpy , with a   tinge  of orange      .
 # NPr/ISg+ VPt NPr/VB/J VB/C J     . P    D/P NSg/VB P  NPr🅪Sg/VB/J .
 > There are lots   of people  with no        homes   after the wildfire .
-# R+    VB  NPl/V3 P  NPl/VB+ P    NPr/Dq/P+ NPl/V3+ P     D   NSg      .
+# R+    VB  NPl/V3 P  NPl/VB+ P    NSg/Dq/P+ NPl/V3+ P     D   NSg      .
 > Speak  with confidence .
 # NSg/VB P    Nᴹ+        .
 > He       spoke   with sadness in        his     voice   .

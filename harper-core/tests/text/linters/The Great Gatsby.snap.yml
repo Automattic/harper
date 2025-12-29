@@ -7102,9 +7102,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gd's”
   - Replace with: “Gab's”
+  - Replace with: “Gag's”
+  - Replace with: “Gal's”
 
 
 
@@ -7114,9 +7114,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Ga's”
-  - Replace with: “Gd's”
   - Replace with: “Gab's”
+  - Replace with: “Gag's”
+  - Replace with: “Gal's”
 
 
 
