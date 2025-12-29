@@ -511,7 +511,7 @@ impl LintGroup {
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
         insert_expr_rule!(BehindTheScenes, true);
-        insert_expr_rule!(BestOfAllTime, true);
+        insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
