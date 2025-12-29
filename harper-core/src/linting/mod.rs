@@ -135,6 +135,7 @@ mod oldest_in_the_book;
 mod on_floor;
 mod once_or_twice;
 mod one_and_the_same;
+mod one_of_the_singular;
 mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;

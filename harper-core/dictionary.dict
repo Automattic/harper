@@ -1031,7 +1031,7 @@ Baylor/Og
 Bayonne/Og
 Bayreuth/Og
 Baywatch/g
-Be/gH
+Be/g
 Beach/Og
 Beadle/Og
 Beamer/NgS          # nickname for BMW
@@ -3760,7 +3760,7 @@ GTO/NSg
 GTR/NgS
 GTS/NSg
 GU/N
-GUI/ONg
+GUI/ONgS
 Ga/ONg
 Gable/Og
 Gabon/Og
@@ -13146,7 +13146,7 @@ artwork/~NgS
 arty/~J^>Np
 arugula/N
 arum/NSg
-as/~R
+as/~RCP
 asap/
 asbestos/~NmgV
 ascend/~VGdSr
@@ -15853,7 +15853,7 @@ builder/~Ng
 building/~NwgSV
 buildout/NwgS
 buildup/~NSg
-built/~JNVtTri
+built/~JVtTri
 builtin/JN
 bulb/~NgSV
 bulbous/J
@@ -26947,6 +26947,7 @@ graph/~N0gVdG
 grapheme/NSg
 graphic/~JNgS
 graphical/~JY
+graphics/N09
 graphite/~NwgV
 graphologist/NgS
 graphology/Nmg
@@ -28089,7 +28090,7 @@ herd/~NgSVd>GZ
 herder/~NgS
 herdsman/N9g
 herdsmen/N9
-here/~NJR
+here/~JR            # removed `N` marginal noun sense complicates linting
 here's
 hereabout/S
 hereafter/~NSgJ
@@ -32430,7 +32431,7 @@ lorgnette/NSg
 loris/NgS
 lorn/JV
 lorry/~NSgV
-lose/~VbG>SNZz
+lose/~VbG>SZz
 loser/~NgS
 losing/~VJNmg
 loss/~NwgSV
@@ -32804,10 +32805,11 @@ mainsail/NgS
 mainspring/NgS
 mainstay/~NgS
 mainstream/~JNSgVdG
-maintain/~VGd>SZB
+maintain/~VGdSB
 maintainability/Nmg
 maintainable/JU
 maintained/~JVU
+maintainer/NgS
 maintenance/~Nmg
 maintop/NSg
 maisonette/NgS
@@ -32908,7 +32910,7 @@ manage/~VGd>SNZL
 manageability/Nmg
 manageable/~JU
 management/~NwgS
-manager/~Ng
+manager/~NgS
 manageress/NS
 managerial/~J
 manana/Ngm
@@ -35213,7 +35215,7 @@ nearshore/NV
 nearside/N
 nearsighted/JYp
 nearsightedness/Ng
-neat/~J>Y^NnpX
+neat/~J>Y^npX       # removed `N` as in `the neats vs the scruffies`
 neaten/VGd
 neath/~P
 neatness/Ng
@@ -46111,7 +46113,7 @@ staff's
 staffer/~NgS
 staffing/~VNg
 stag/~NgSVdGz
-stage/~NSgV
+stage/~NSgVdGU
 stagecoach/~NgSV
 stagecraft/Nmg
 stagehand/NgS
@@ -50480,6 +50482,7 @@ unspecific/J
 unspectacular/J
 unsporting/J
 unstable/~JV
+unstage/VdSG
 unsteady/J^>Vp
 unstick/VSG
 unstinting/JY
@@ -52004,7 +52007,7 @@ whizzbang/NgS
 whizzed/VtT
 whizzes/NVh
 whizzing/V6NJ
-who/~INg
+who/~Ig
 who'd/
 who'll/
 who're/
@@ -52457,7 +52460,7 @@ worshipful/~JN
 worshipped/VtT!@_
 worshipper/NgS!@_
 worshipping/V6N!@_
-worst/~JuNSgVGd
+worst/~JuVGd        # removed noun sense
 worsted/NgVJ
 wort/~Ng
 worth/~JNgV

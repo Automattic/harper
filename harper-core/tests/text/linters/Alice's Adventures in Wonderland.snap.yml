@@ -579,6 +579,14 @@ Suggest:
 
 
 
+Lint:    Usage (127 priority)
+Message: |
+     271 | As she said this she looked down at her hands, and was surprised to see that she
+     272 | had put on one of the Rabbit’s little white kid gloves while she was talking.
+         |                       ^~~~~~~~ The construction `one of the ...` uses a singular noun.
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      273 | “How can I have done that?” she thought. “I must be growing small again.” She

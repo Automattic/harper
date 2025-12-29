@@ -127,6 +127,7 @@ use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
 use super::once_or_twice::OnceOrTwice;
 use super::one_and_the_same::OneAndTheSame;
+use super::one_of_the_singular::OneOfTheSingular;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
@@ -713,6 +714,12 @@ impl LintGroup {
 
         out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
         out.config.set_rule_enabled("TransposedSpace", true);
+
+        out.add_chunk_expr_linter(
+            "OneOfTheSingular",
+            OneOfTheSingular::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("OneOfTheSingular", true);
 
         out
     }

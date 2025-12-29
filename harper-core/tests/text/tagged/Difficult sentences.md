@@ -180,8 +180,8 @@
 # HeadingStart NSg/VB+
 >
 #
-> I       watched the parade  as    it       passed by      .
-# ISg/#r+ VP/J    D+  NSg/VB+ NSg/R NPr/ISg+ VP/J   NSg/J/P .
+> I       watched the parade  as        it       passed by      .
+# ISg/#r+ VP/J    D+  NSg/VB+ NSg/R/C/P NPr/ISg+ VP/J   NSg/J/P .
 > There was a    shepherd close    by      .
 # R+    VPt D/P+ NPr/VB+  NSg/VB/J NSg/J/P .
 > I'll stop   by      on  my  way    home     from work     .
@@ -266,8 +266,8 @@
 # IPl+ VP/J  D   N🅪Sg R/C/P NSg/VB+ NPl+       .
 > Police combed his     flat     for   clues   .
 # Nᴹ/VB+ VP/J   ISg/D$+ NSg/VB/J R/C/P NPl/V3+ .
-> I've lived here    for   three years .
-# K    VP/J  NSg/J/R R/C/P NSg   NPl+  .
+> I've lived here for   three years .
+# K    VP/J  J/R  R/C/P NSg   NPl+  .
 > They fought for   days over    a    silly  pencil  .
 # IPl+ VB     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
 > The store   is  closed for   the day     .
@@ -348,8 +348,8 @@
 # NSg/VB Nᴹ/Vg/J  P    # .
 > You    can     study  anything  from math to literature .
 # ISgPl+ NPr/VXB NSg/VB NSg/I/VB+ P    +    P  Nᴹ         .
-> It's hard     to tell   from here    .
-# +    N🅪Sg/J/R P  NPr/VB P    NSg/J/R .
+> It's hard     to tell   from here .
+# +    N🅪Sg/J/R P  NPr/VB P    J/R  .
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
 > The bomb      went     off        just 100 yards   from where   they were    standing .
