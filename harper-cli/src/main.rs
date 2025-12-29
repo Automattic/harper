@@ -31,8 +31,8 @@ use input::{
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
 
-mod annotate_tokens;
-use annotate_tokens::{Annotation, AnnotationType};
+mod annotate;
+use annotate::{Annotation, AnnotationType};
 
 mod lint;
 use crate::lint::lint;
@@ -84,12 +84,12 @@ enum Args {
         #[arg(short, long)]
         include_newlines: bool,
     },
-    /// Parse a provided document and annotate its tokens.
-    AnnotateTokens {
+    /// Parse and annotate a provided document.
+    Annotate {
         /// The text or file you wish to parse. If not provided, it will be read from standard
         /// input.
         input: Option<SingleInput>,
-        /// How the tokens should be annotated.
+        /// How the document should be annotated.
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
     },
@@ -281,7 +281,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AnnotateTokens {
+        Args::Annotate {
             input,
             annotation_type,
         } => {
@@ -294,7 +294,7 @@ fn main() -> anyhow::Result<()> {
             let input_identifier = input.get_identifier();
 
             let mut report_builder = Report::build(
-                ReportKind::Custom("AnnotateTokens", Color::Blue),
+                ReportKind::Custom("Annotate", Color::Blue),
                 &*input_identifier,
                 0,
             );
