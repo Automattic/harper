@@ -126,18 +126,18 @@ impl Input {
 // https://docs.rs/clap/latest/clap/macro.value_parser.html
 impl From<String> for Input {
     /// Converts the given string into an `Input`. `Input` is automatically set to the correct variant
-    /// depending on whether `input_string` is a valid file path or not.
+    /// depending on whether `input_string` is a valid filepath or not.
     fn from(input_string: String) -> Self {
         let metadata = std::fs::metadata(&input_string);
         let metadata = metadata.as_ref();
         if metadata.is_ok_and(|m| m.is_file()) {
-            // Input is a valid file path.
+            // Input is a valid filepath.
             Self::File(input_string.into())
         } else if metadata.is_ok_and(|m| m.is_dir()) {
             // Input is a valid directory path.
             Self::Dir(input_string.into())
         } else {
-            // Input is not a valid file path, we assume it's intended to be a string.
+            // Input is not a valid filepath, we assume it's intended to be a string.
             Self::Text(input_string)
         }
     }
