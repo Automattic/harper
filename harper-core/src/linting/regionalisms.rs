@@ -25,7 +25,9 @@ use CanFlag::*;
 /// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
 #[derive(PartialEq)]
 enum Concept {
-    AubergineEggplant,
+    AubergineBrinjalEggplant,
+    AuberginesBrinjalsEggplants,
+    BharatIndia,
     // BiscuitCookie - biscuit names different foods in UK/Aus vs US; cookie has other meanings
     // BiscuitCracker - cracker also has other meanings
     BritBritisher,
@@ -91,7 +93,31 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         term: "aubergine",
         flag: Flag,
         dialects: &[British],
-        concept: AubergineEggplant,
+        concept: AubergineBrinjalEggplant,
+    },
+    Term {
+        term: "aubergines",
+        flag: Flag,
+        dialects: &[British],
+        concept: AuberginesBrinjalsEggplants,
+    },
+    Term {
+        term: "Bharat",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: BharatIndia,
+    },
+    Term {
+        term: "brinjal",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: AubergineBrinjalEggplant,
+    },
+    Term {
+        term: "brinjals",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: AuberginesBrinjalsEggplants,
     },
     Term {
         term: "Brit",
@@ -235,7 +261,13 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         term: "eggplant",
         flag: Flag,
         dialects: &[American, Australian],
-        concept: AubergineEggplant,
+        concept: AubergineBrinjalEggplant,
+    },
+    Term {
+        term: "eggplants",
+        flag: Flag,
+        dialects: &[American, Australian],
+        concept: AuberginesBrinjalsEggplants,
     },
     Term {
         term: "esky",
@@ -296,6 +328,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: GasolinePetrol,
+    },
+    Term {
+        term: "India",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian, Indian],
+        concept: BharatIndia,
     },
     Term {
         term: "jumper",
@@ -645,7 +683,9 @@ impl ExprLinter for Regionalisms {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
+    };
 
     #[test]
     fn uk_to_us_food() {
@@ -772,5 +812,23 @@ mod tests {
             Regionalisms::new(Dialect::Indian),
             0,
         )
+    }
+
+    #[test]
+    fn a_brinjal_is_an_aubergine() {
+        assert_suggestion_result(
+            "Is brinjal used in curries or chutneys?",
+            Regionalisms::new(Dialect::British),
+            "Is aubergine used in curries or chutneys?",
+        );
+    }
+
+    #[test]
+    fn a_brinjal_is_an_eggplant() {
+        assert_suggestion_result(
+            "Is brinjal used in curries or chutneys?",
+            Regionalisms::new(Dialect::Australian),
+            "Is eggplant used in curries or chutneys?",
+        );
     }
 }
