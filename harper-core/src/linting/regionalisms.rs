@@ -28,6 +28,8 @@ enum Concept {
     AubergineEggplant,
     // BiscuitCookie - biscuit names different foods in UK/Aus vs US; cookie has other meanings
     // BiscuitCracker - cracker also has other meanings
+    BritBritisher,
+    BritsBritishers,
     BumBagFannyPack,
     BurglarizeBurgle,
     CampervanRv,
@@ -90,6 +92,30 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[British],
         concept: AubergineEggplant,
+    },
+    Term {
+        term: "Brit",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: BritBritisher,
+    },
+    Term {
+        term: "Brits",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: BritsBritishers,
+    },
+    Term {
+        term: "Britisher",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: BritBritisher,
+    },
+    Term {
+        term: "Britishers",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: BritsBritishers,
     },
     Term {
         term: "bum bag",
