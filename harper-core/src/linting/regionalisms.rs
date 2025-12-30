@@ -1,5 +1,5 @@
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian},
+    Dialect::{self, American, Australian, British, Canadian, Indian},
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
@@ -37,6 +37,8 @@ enum Concept {
     CoolboxCoolerEsky,
     ChipsCrisps,
     CilantroCoriander,
+    Crore,
+    Crores,
     DiaperNappy,
     DoonaDuvet,
     DummyPacifier,
@@ -48,6 +50,8 @@ enum Concept {
     GasStationPetrolStationServiceStation,
     // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
+    Lakh,
+    Lakhs,
     LightBulbLightGlobe,
     LorryTruck,
     MotorhomeRv,
@@ -55,8 +59,11 @@ enum Concept {
     PhotocopyXerox,
     PickupUte,
     PramStroller,
+    Prepone,
     SpannerWrench,
     StationWagonEstate,
+    UpdateUpdation,
+    UpdatesUpdations,
     WindscreenWindshield,
 }
 
@@ -163,6 +170,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: ChipsCrisps,
     },
     Term {
+        term: "crore",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: Crore,
+    },
+    Term {
+        term: "crores",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: Crores,
+    },
+    Term {
         term: "diaper",
         flag: Flag,
         dialects: &[American, Canadian],
@@ -265,6 +284,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: CatsupKetchupTomatoSauce,
     },
     Term {
+        term: "lakh",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: Lakh,
+    },
+    Term {
+        term: "lakhs",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: Lakhs,
+    },
+    Term {
         term: "light bulb",
         flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian],
@@ -349,6 +380,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: PramStroller,
     },
     Term {
+        term: "prepone",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: Prepone,
+    },
+    Term {
         // Must be normalized to lowercase
         term: "rv",
         flag: Flag,
@@ -426,6 +463,30 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: HasOtherMeanings,
         dialects: &[American, Australian, Canadian],
         concept: LorryTruck,
+    },
+    Term {
+        term: "update",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: UpdateUpdation,
+    },
+    Term {
+        term: "updates",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: UpdateUpdation,
+    },
+    Term {
+        term: "updation",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: UpdateUpdation,
+    },
+    Term {
+        term: "updations",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: UpdatesUpdations,
     },
     Term {
         term: "ute",
@@ -526,10 +587,6 @@ impl ExprLinter for Regionalisms {
                 }
             })
             .collect::<Vec<_>>();
-
-        if other_terms.is_empty() {
-            return None;
-        }
 
         let suggestions = other_terms
             .iter()
@@ -652,6 +709,42 @@ mod tests {
             "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
             Regionalisms::new(Dialect::American),
             "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
+        )
+    }
+
+    #[test]
+    fn in_to_non_in_updation() {
+        assert_top3_suggestion_result(
+            "Add apps to queue for updation or installation and resize it.",
+            Regionalisms::new(Dialect::American),
+            "Add apps to queue for update or installation and resize it.",
+        )
+    }
+
+    #[test]
+    fn dont_flag_update_or_updation_for_indian() {
+        assert_lint_count(
+            "Hey, the colab notebook which you have provided, required lot of updations, Can you pls update it.",
+            Regionalisms::new(Dialect::Indian),
+            0,
+        )
+    }
+
+    #[test]
+    fn flag_crore_and_lakh_for_non_indian() {
+        assert_lint_count(
+            "There are 100 lakhs in one crore.",
+            Regionalisms::new(Dialect::American),
+            2,
+        )
+    }
+
+    #[test]
+    fn dont_flag_lakh_or_crore_for_indian() {
+        assert_lint_count(
+            "There are 100 lakhs in one crore.",
+            Regionalisms::new(Dialect::Indian),
+            0,
         )
     }
 }
