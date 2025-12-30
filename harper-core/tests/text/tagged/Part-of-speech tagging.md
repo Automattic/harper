@@ -343,7 +343,7 @@
 > levels of linguistic analysis : syntax , morphology , semantics , and  so          on  . CLAWS   ,
 # NPl/V3 P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . VB/C NSg/I/J/R/C J/P . NPl/V3+ .
 > DeRose's and  Church's methods did  fail     for   some     of the known cases   where
-# ?        VB/C NSg$     NPl/V3+ VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
+# ?        VB/C NPr$     NPl/V3+ VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
 > semantics is  required , but     those  proved negligibly rare     . This   convinced many       in
 # NPl+      VL3 VP/J     . NSg/C/P I/Ddem VP/J   R          NSg/VB/J . I/Ddem VP/J      NSg/I/J/Dq NPr/J/R/P
 > the field   that          part      - of - speech   tagging could   usefully be      separated from the other

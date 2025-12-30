@@ -306,7 +306,7 @@ mod tests {
     }
 
     #[test]
-    fn proper_noun_propages_to_possessives_2327() {
+    fn proper_noun_propagates_to_possessives_2327() {
         if let Some(vw_possessive) = FstDictionary::curated().get_word_metadata_str("Volkswagen's")
         {
             assert!(vw_possessive.is_possessive_noun());

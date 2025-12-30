@@ -95,7 +95,7 @@
 > their respective numbers   , counting the whole number     of persons in        each State    ,
 # D$+   J          NPrPl/V3+ . Nᴹ/Vg/J  D   NSg/J N🅪Sg/VB/JC P  NPl/V3+ NPr/J/R/P Dq   N🅪Sg/VB+ .
 > excluding Indians not     taxed . But     when    the right     to vote   at    any    election for   the
-# Nᴹ/Vg/J   NPl+    NSg/R/C VP/J  . NSg/C/P NSg/I/C D+  NPr/VB/J+ P  NSg/VB NSg/P I/R/Dq NSg+     R/C/P D
+# Nᴹ/Vg/J   NPrPl+  NSg/R/C VP/J  . NSg/C/P NSg/I/C D+  NPr/VB/J+ P  NSg/VB NSg/P I/R/Dq NSg+     R/C/P D
 > choice of electors for   President and  Vice        President of the United States    ,
 # N🅪Sg/J P  NPl      R/C/P NSg/VB    VB/C NSg/VB/J/P+ NSg/VB    P  D   VP/J   NPrPl/V3+ .
 > Representatives in        Congress , the Executive and  Judicial officers of a   State    , or
