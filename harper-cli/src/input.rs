@@ -128,14 +128,12 @@ impl From<String> for Input {
     /// Converts the given string into an `Input`. `Input` is automatically set to the correct variant
     /// depending on whether `input_string` is a valid file path or not.
     fn from(input_string: String) -> Self {
-        if let Ok(metadata) = std::fs::metadata(&input_string)
-            && metadata.is_file()
-        {
+        let metadata = std::fs::metadata(&input_string);
+        let metadata = metadata.as_ref();
+        if metadata.is_ok_and(|m| m.is_file()) {
             // Input is a valid file path.
             Self::File(input_string.into())
-        } else if let Ok(metadata) = std::fs::metadata(&input_string)
-            && metadata.is_dir()
-        {
+        } else if metadata.is_ok_and(|m| m.is_dir()) {
             // Input is a valid directory path.
             Self::Dir(input_string.into())
         } else {
