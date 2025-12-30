@@ -1,10 +1,16 @@
+use std::path::Path;
 use std::{borrow::Cow, io::Read, path::PathBuf};
 
+use harper_comments::CommentParser;
+use harper_core::parsers::{Markdown, OrgMode};
 use harper_core::spell::Dictionary;
 use harper_core::{
     Document,
     parsers::{MarkdownOptions, PlainEnglish},
 };
+use harper_ink::InkParser;
+use harper_literate_haskell::LiterateHaskellParser;
+use harper_python::PythonParser;
 
 /// Represents an input/source passed via the command line. For example, this can be a file, or
 /// text passed via the command line directly.
@@ -29,7 +35,7 @@ impl Input {
         dictionary: &impl Dictionary,
     ) -> anyhow::Result<(Option<Document>, String)> {
         match self {
-            Input::File(file) => super::load_file(
+            Input::File(file) => Self::load_file(
                 file,
                 Some(&self.get_identifier()),
                 batch_mode,
@@ -64,6 +70,56 @@ impl Input {
         let mut buf = String::new();
         std::io::stdin().lock().read_to_string(&mut buf)?;
         Ok(Self::Stdin(buf))
+    }
+
+    fn load_file(
+        file: &Path,
+        input_identifier: Option<&str>,
+        batch_mode: bool,
+        markdown_options: MarkdownOptions,
+        dictionary: &impl Dictionary,
+    ) -> anyhow::Result<(Option<Document>, String)> {
+        let source = std::fs::read_to_string(file)?;
+
+        let parser: Box<dyn harper_core::parsers::Parser> =
+            match file.extension().map(|v| v.to_str().unwrap()) {
+                Some("md") => Box::new(Markdown::default()),
+                Some("ink") => Box::new(InkParser::default()),
+
+                Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
+                    MarkdownOptions::default(),
+                )),
+                Some("org") => Box::new(OrgMode),
+                Some("typ") => Box::new(harper_typst::Typst),
+                Some("py") | Some("pyi") => Box::new(PythonParser::default()),
+                Some("txt") => Box::new(PlainEnglish),
+                _ => {
+                    if let Some(comment_parser) =
+                        CommentParser::new_from_filename(file, markdown_options)
+                    {
+                        Box::new(comment_parser)
+                    } else {
+                        eprintln!(
+                            "{}Warning: Could not detect language ID; {}",
+                            input_identifier
+                                .map(|id| format!("{}: ", id))
+                                .unwrap_or_default(),
+                            if batch_mode {
+                                "skipping file."
+                            } else {
+                                "falling back to PlainEnglish parser."
+                            }
+                        );
+                        if batch_mode {
+                            return Ok((None, source));
+                        } else {
+                            Box::new(PlainEnglish)
+                        }
+                    }
+                }
+            };
+
+        Ok((Some(Document::new(&source, &parser, dictionary)), source))
     }
 }
 // This allows this type to be directly used with clap as an argument.

@@ -5,7 +5,7 @@ use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 // use std::sync::Arc;
 use std::fs;
 
@@ -13,17 +13,13 @@ use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
-use harper_comments::CommentParser;
 use harper_core::linting::LintGroup;
-use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
+use harper_core::parsers::MarkdownOptions;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, Document, OrthFlags, Span, TokenKind, TokenStringExt,
 };
-use harper_ink::InkParser;
-use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
@@ -465,13 +461,9 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
         Args::MineWords { file } => {
-            let (doc, _source) = load_file(
-                &file,
-                None,
-                false,
-                MarkdownOptions::default(),
-                &curated_dictionary,
-            )?;
+            let file = Input::File(file);
+            let (doc, _source) =
+                file.load(false, MarkdownOptions::default(), &curated_dictionary)?;
             let doc = doc.expect("Failed to load document");
 
             let mut words = HashMap::new();
@@ -922,56 +914,6 @@ fn main() -> anyhow::Result<()> {
             Ok(())
         }
     }
-}
-
-fn load_file(
-    file: &Path,
-    input_identifier: Option<&str>,
-    batch_mode: bool,
-    markdown_options: MarkdownOptions,
-    dictionary: &impl Dictionary,
-) -> anyhow::Result<(Option<Document>, String)> {
-    let source = std::fs::read_to_string(file)?;
-
-    let parser: Box<dyn harper_core::parsers::Parser> = match file
-        .extension()
-        .map(|v| v.to_str().unwrap())
-    {
-        Some("md") => Box::new(Markdown::default()),
-        Some("ink") => Box::new(InkParser::default()),
-
-        Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
-            MarkdownOptions::default(),
-        )),
-        Some("org") => Box::new(OrgMode),
-        Some("typ") => Box::new(harper_typst::Typst),
-        Some("py") | Some("pyi") => Box::new(PythonParser::default()),
-        Some("txt") => Box::new(PlainEnglish),
-        _ => {
-            if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
-                Box::new(comment_parser)
-            } else {
-                eprintln!(
-                    "{}Warning: Could not detect language ID; {}",
-                    input_identifier
-                        .map(|id| format!("{}: ", id))
-                        .unwrap_or_default(),
-                    if batch_mode {
-                        "skipping file."
-                    } else {
-                        "falling back to PlainEnglish parser."
-                    }
-                );
-                if batch_mode {
-                    return Ok((None, source));
-                } else {
-                    Box::new(PlainEnglish)
-                }
-            }
-        }
-    };
-
-    Ok((Some(Document::new(&source, &parser, dictionary)), source))
 }
 
 /// Split a dictionary line into its word and annotation segments
