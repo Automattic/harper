@@ -188,7 +188,7 @@ mod tests {
         assert_suggestion_result(
             "People from npm actually get death threats for these sort of thing",
             ThisTypeOfThing::default(),
-            "People from npm actually get death threats for these sorts of things",
+            "People from npm actually get death threats for this sort of thing",
         );
     }
 
