@@ -195,6 +195,7 @@ mod then_than;
 mod theres;
 mod theses_these;
 mod thing_think;
+mod this_type_of_thing;
 mod though_thought;
 mod throw_away;
 mod throw_rubbish;
