@@ -164,6 +164,7 @@ use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
+use super::sneaked_snuck::SneakedSnuck;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -636,6 +637,7 @@ impl LintGroup {
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SingleBe, true);
+        // insert_struct_rule!(SneakedSnuck, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -717,6 +719,10 @@ impl LintGroup {
 
         out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
         out.config.set_rule_enabled("TransposedSpace", true);
+
+        out.add("SneakedSnuck", SneakedSnuck::default());
+        out.config.set_rule_enabled("PreferSneaked", true);
+        out.config.set_rule_enabled("PreferSnuck", false);
 
         out
     }
