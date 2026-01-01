@@ -13,6 +13,7 @@ use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
+use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
@@ -24,7 +25,6 @@ use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_python::PythonParser;
-use harper_asciidoc::AsciidocParser;
 
 use harper_stats::Stats;
 use serde::Serialize;

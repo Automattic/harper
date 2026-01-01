@@ -12,6 +12,7 @@ use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
 use futures::future::join;
+use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
@@ -20,7 +21,6 @@ use harper_core::parsers::{
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
-use harper_asciidoc::AsciidocParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
