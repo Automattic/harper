@@ -627,6 +627,7 @@
 		},
 		"O": {
 			"#": "proper noun property",
+			"propagate": true,
 			"metadata": {
 				"noun": {
 					"is_proper": true
