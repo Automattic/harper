@@ -20,7 +20,7 @@ impl Default for AsciidocParser {
     fn default() -> Self {
         Self {
             inner: parsers::Mask::new(
-                TreeSitterMasker::new(tree_sitter_asciidoc::language().into(), Self::node_condition),
+                TreeSitterMasker::new(tree_sitter_asciidoc::language(), Self::node_condition),
                 PlainEnglish,
             ),
         }
