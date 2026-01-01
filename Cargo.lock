@@ -2695,7 +2695,6 @@ dependencies = [
  "ariadne",
  "clap",
  "dirs 6.0.0",
- "either",
  "harper-asciidoc",
  "harper-comments",
  "harper-core",
@@ -2710,7 +2709,6 @@ dependencies = [
  "serde",
  "serde_json",
  "strum",
- "strum_macros",
 ]
 
 [[package]]
@@ -2848,9 +2846,7 @@ dependencies = [
  "harper-python",
  "harper-stats",
  "harper-typst",
- "indexmap",
  "itertools 0.14.0",
- "once_cell",
  "open",
  "resolve-path",
  "serde",
@@ -3265,8 +3261,6 @@ checksum = "0ad4bb2b565bca0645f4d68c5c9af97fba094e9791da685bf83cb5f3ce74acf2"
 dependencies = [
  "equivalent",
  "hashbrown 0.16.1",
- "serde",
- "serde_core",
 ]
 
 [[package]]
