@@ -843,7 +843,7 @@
 > “ Speak  English      ! ” said the Eaglet . “ I       don’t know   the meaning   of half      those  long
 # . NSg/VB NPr🅪Sg/VB/J+ . . VP/J D   NSg    . . ISg/#r+ VXB   NSg/VB D   N🅪Sg/Vg/J P  N🅪Sg/J/P+ I/Ddem NPr/VB/J
 > words   , and  , what’s more         , I       don’t believe you    do  either ! ” And  the Eaglet bent
-# NPl/V3+ . VB/C . NSg$   NPr/I/J/R/Dq . ISg/#r+ VXB   VB      ISgPl+ VXB I/C    . . VB/C D   NSg    NSg/VP/J
+# NPl/V3+ . VB/C . K      NPr/I/J/R/Dq . ISg/#r+ VXB   VB      ISgPl+ VXB I/C    . . VB/C D   NSg    NSg/VP/J
 > down        its     head      to hide   a   smile   : some     of the other    birds   tittered audibly .
 # N🅪Sg/VB/J/P ISg/D$+ NPr/VB/J+ P  NSg/VB D/P NSg/VB+ . I/J/R/Dq P  D   NSg/VB/J NPl/V3+ VP/J     R       .
 >
@@ -1331,7 +1331,7 @@
 >
 #
 > “ Now       tell   me       , Pat       , what’s that          in        the window  ? ”
-# . NSg/J/R/C NPr/VB NPr/ISg+ . NPr/VB/J+ . NSg$   NSg/I/C/Ddem+ NPr/J/R/P D   NSg/VB+ . .
+# . NSg/J/R/C NPr/VB NPr/ISg+ . NPr/VB/J+ . K      NSg/I/C/Ddem+ NPr/J/R/P D   NSg/VB+ . .
 >
 #
 > “ Sure , it’s an  arm       , yer honour        ! ” ( He       pronounced it       “ arrum . ” )
@@ -2921,7 +2921,7 @@
 >
 #
 > “ No       , I       give   it       up         , ” Alice replied : “ what’s the answer  ? ”
-# . NSg/Dq/P . ISg/#r+ NSg/VB NPr/ISg+ NSg/VB/J/P . . NPr+  VP/J    . . NSg$   D+  NSg/VB+ . .
+# . NSg/Dq/P . ISg/#r+ NSg/VB NPr/ISg+ NSg/VB/J/P . . NPr+  VP/J    . . K      D+  NSg/VB+ . .
 >
 #
 > “ I       haven’t the slightest idea , ” said the Hatter .
@@ -3461,7 +3461,7 @@
 > “ Idiot  ! ” said the Queen     , tossing her     head      impatiently ; and  , turning to Alice ,
 # . NSg/J+ . . VP/J D+  NPr/VB/J+ . Nᴹ/Vg/J ISg/D$+ NPr/VB/J+ R           . VB/C . Nᴹ/Vg/J P  NPr+  .
 > she  went    on  , “ What’s your name    , child   ? ”
-# ISg+ NSg/VPt J/P . . NSg$   D$+  NSg/VB+ . NSg/VB+ . .
+# ISg+ NSg/VPt J/P . . K      D$+  NSg/VB+ . NSg/VB+ . .
 >
 #
 > “ My  name    is  Alice , so          please your Majesty , ” said Alice very politely ; but     she
@@ -5645,7 +5645,7 @@
 >
 #
 > “ What’s in        it       ? ” said the Queen     .
-# . NSg$   NPr/J/R/P NPr/ISg+ . . VP/J D+  NPr/VB/J+ .
+# . K      NPr/J/R/P NPr/ISg+ . . VP/J D+  NPr/VB/J+ .
 >
 #
 > “ I       haven’t opened it       yet      , ” said the White       Rabbit  , “ but     it       seems to be      a   letter  ,
