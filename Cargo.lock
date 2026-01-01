@@ -2668,6 +2668,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-asciidoc"
+version = "1.0.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-asciidoc",
+]
+
+[[package]]
 name = "harper-brill"
 version = "1.3.0"
 dependencies = [
@@ -2685,6 +2696,7 @@ dependencies = [
  "clap",
  "dirs 6.0.0",
  "either",
+ "harper-asciidoc",
  "harper-comments",
  "harper-core",
  "harper-ink",
@@ -2826,6 +2838,7 @@ dependencies = [
  "dirs 6.0.0",
  "futures",
  "globset",
+ "harper-asciidoc",
  "harper-comments",
  "harper-core",
  "harper-html",
@@ -5747,6 +5760,16 @@ dependencies = [
  "serde_json",
  "streaming-iterator",
  "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-asciidoc"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cebb4c0029a4b3942c8cfab42ae38f774855ad4c16fd06ad8e7ad07a8347c616"
+dependencies = [
+ "cc",
+ "tree-sitter",
 ]
 
 [[package]]

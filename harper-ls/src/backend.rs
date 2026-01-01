@@ -20,6 +20,7 @@ use harper_core::parsers::{
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
+use harper_asciidoc::AsciidocParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
@@ -363,6 +364,7 @@ impl Backend {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
+            "asciidoc" => Some(Box::new(AsciidocParser::default())),
             "ink" => Some(Box::new(InkParser::default())),
             "jj-commit" | "jjdescription" => {
                 Some(Box::new(JJDescriptionParser::new(markdown_options)))

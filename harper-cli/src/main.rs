@@ -24,6 +24,7 @@ use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_python::PythonParser;
+use harper_asciidoc::AsciidocParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
@@ -946,6 +947,7 @@ fn load_file(
         Some("org") => Box::new(OrgMode),
         Some("typ") => Box::new(harper_typst::Typst),
         Some("py") | Some("pyi") => Box::new(PythonParser::default()),
+        Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
         Some("txt") => Box::new(PlainEnglish),
         _ => {
             if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
