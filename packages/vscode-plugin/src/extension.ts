@@ -209,5 +209,6 @@ function getFlagAndCode(dialect: string): string[] | undefined {
 		Australian: ['🇦🇺', 'AU'],
 		British: ['🇬🇧', 'GB'],
 		Canadian: ['🇨🇦', 'CA'],
+		Indian: ['🇮🇳', 'IN'],
 	}[dialect];
 }

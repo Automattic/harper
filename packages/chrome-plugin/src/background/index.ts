@@ -56,6 +56,8 @@ getDialect().then(setDialect);
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
 		'old.reddit.com',
+		'sh.reddit.com',
+		'www.reddit.com',
 		'chatgpt.com',
 		'www.perplexity.ai',
 		'textarea.online',
@@ -73,7 +75,6 @@ async function enableDefaultDomains() {
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
-		'www.reddit.com',
 		'www.linkedin.com',
 		'bsky.app',
 		'pootlewriter.com',

@@ -52,6 +52,8 @@ export interface Diagnostic {
 	actions?: readonly Action[];
 	/// A callback for when the user selects to "ignore" the diagnostic.
 	ignore?: () => void;
+	/// A callback for when the user selects to "disable" the source of the diagnostic.
+	disable?: () => void;
 }
 
 /// An action associated with a diagnostic.
@@ -428,21 +430,37 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 				);
 			}),
 		),
-		diagnostic.ignore &&
-			elt(
-				'div',
-				{
-					class: 'cm-diagnosticIgnore',
-					onclick: (e) => {
-						e.preventDefault();
-						if (diagnostic.ignore) {
-							diagnostic.ignore();
-						}
+		elt('div', { class: 'cm-diagnosticRow' }, [
+			diagnostic.ignore &&
+				elt(
+					'div',
+					{
+						class: 'cm-diagnosticIgnore',
+						onclick: (e) => {
+							e.preventDefault();
+							if (diagnostic.ignore) {
+								diagnostic.ignore();
+							}
+						},
 					},
-				},
-				'Ignore Diagnostic',
-			),
-		diagnostic.source && elt('div', { class: 'cm-diagnosticSource' }, diagnostic.source),
+					'Ignore Diagnostic',
+				),
+			diagnostic.disable &&
+				elt(
+					'div',
+					{
+						class: 'cm-diagnosticDisable',
+						onclick: (e) => {
+							e.preventDefault();
+							if (diagnostic.disable) {
+								diagnostic.disable();
+							}
+						},
+						title: `Disable ${diagnostic.source}`,
+					},
+					'Disable Rule',
+				),
+		]),
 	);
 }
 
@@ -514,6 +532,12 @@ const baseTheme = EditorView.baseTheme({
 		gap: 'var(--size-4-2)',
 	},
 
+	'.cm-diagnosticRow': {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+
 	'.cm-diagnosticAction': {
 		font: 'inherit',
 		border: 'none',
@@ -550,6 +574,15 @@ const baseTheme = EditorView.baseTheme({
 	},
 
 	'.cm-diagnosticIgnore:hover': {
+		textDecoration: 'underline',
+	},
+
+	'.cm-diagnosticDisable': {
+		padding: 'var(--size-4-1) 0px',
+		fontSize: 'var(--font-ui-small)',
+	},
+
+	'.cm-diagnosticDisable:hover': {
 		textDecoration: 'underline',
 	},
 

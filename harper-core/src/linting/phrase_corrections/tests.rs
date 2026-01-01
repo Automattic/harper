@@ -15,6 +15,24 @@ fn corrects_a_couple_of_more() {
     )
 }
 
+// AdNauseam
+#[test]
+fn corrects_as_nauseam_1() {
+    assert_suggestion_result(
+        "As you say, discussed as nauseam, but no nearer a solution.",
+        lint_group(),
+        "As you say, discussed ad nauseam, but no nearer a solution.",
+    );
+}
+#[test]
+fn corrects_as_nauseam_2() {
+    assert_suggestion_result(
+        "no more autism please, hearing about it as nauseam is starting to make me sick",
+        lint_group(),
+        "no more autism please, hearing about it ad nauseam is starting to make me sick",
+    );
+}
+
 // AfterAWhile
 #[test]
 fn correct_after_while() {
@@ -710,6 +728,16 @@ fn detect_ever_since() {
         "einstein been real quiet every since this dropped",
         lint_group(),
         "einstein been real quiet ever since this dropped",
+    );
+}
+
+// EveryOnceAndAgain
+#[test]
+fn fix_every_once_and_again() {
+    assert_suggestion_result(
+        "Ys have been replaced with Ps, happens randomly every once and again with different letters",
+        lint_group(),
+        "Ys have been replaced with Ps, happens randomly every once in a while with different letters",
     );
 }
 
@@ -1483,6 +1511,26 @@ fn correct_on_top_of() {
     );
 }
 
+// PartOfSpeech
+#[test]
+fn corrects_part_of_speeches() {
+    assert_suggestion_result(
+        "The part of speeches (POS) or as follows:",
+        lint_group(),
+        "The parts of speech (POS) or as follows:",
+    )
+}
+
+// It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.
+#[test]
+fn corrects_parts_of_speeches() {
+    assert_suggestion_result(
+        "It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.",
+        lint_group(),
+        "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.",
+    )
+}
+
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -1523,11 +1571,21 @@ fn corrects_per_say_hyphenated() {
 
 // PointsOfView
 #[test]
-fn corrects_points_of_view() {
+fn corrects_point_of_views() {
     assert_suggestion_result(
         "This will produce a huge amount of raw data, representing the region in multiple point of views.",
         lint_group(),
         "This will produce a huge amount of raw data, representing the region in multiple points of view.",
+    )
+}
+
+// log events, places, moods and self-reflect from various points of views
+#[test]
+fn corrects_points_of_views() {
+    assert_suggestion_result(
+        "log events, places, moods and self-reflect from various points of views",
+        lint_group(),
+        "log events, places, moods and self-reflect from various points of view",
     )
 }
 
@@ -1588,11 +1646,20 @@ fn correct_iirc_correctly() {
 // RulesOfThumb
 
 #[test]
-fn correct_rules_of_thumbs() {
+fn correct_rule_of_thumbs() {
     assert_suggestion_result(
         "Thanks. 0.2 is just from my rule of thumbs.",
         lint_group(),
         "Thanks. 0.2 is just from my rules of thumb.",
+    );
+}
+
+#[test]
+fn correct_rules_of_thumbs() {
+    assert_suggestion_result(
+        "But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
+        lint_group(),
+        "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
     );
 }
 

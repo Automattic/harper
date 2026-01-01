@@ -100,7 +100,8 @@ function scan() {
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
-			element.getAttribute('spellcheck') === 'false'
+			(element.getAttribute('spellcheck') === 'false' &&
+				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;
 		}

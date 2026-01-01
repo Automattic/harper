@@ -1009,17 +1009,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-     806 | “That dog?” He looked at it admiringly. “That dog will cost you ten dollars.”
-         |                                                             ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Style (31 priority)
 Message: |
      819 | We drove over to Fifth Avenue, warm and soft, almost pastoral, on the summer
@@ -1770,18 +1759,6 @@ Suggest:
   - Replace with: “banjo's”
   - Replace with: “banjos”
   - Replace with: “bandies”
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1428 | “I was in the Sixteenth until June nineteen-eighteen. I knew I’d seen you
-         |                                                                       ^~~ The possessive version of this word is more common in this context.
-    1429 | somewhere before.”
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
 
 
 
@@ -3032,17 +3009,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1914 | nervous, sporadic games. This quality was continually breaking through his
          | ~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1951 | “I’ll tell you God’s truth.” His right hand suddenly ordered divine retribution
-         |            ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
 
 
 
@@ -4405,17 +4371,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    2968 | “I’m all out of practice, you see. I told you I couldn’t play. I’m all out of
-         |                                           ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Repetition (63 priority)
 Message: |
     2968 | “I’m all out of practice, you see. I told you I couldn’t play. I’m all out of
@@ -5752,17 +5707,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    4115 | “I told you I went there,” said Gatsby.
-         |         ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Repetition (63 priority)
 Message: |
     4115 | “I told you I went there,” said Gatsby.
@@ -5795,17 +5739,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4187 | conceal and it would be a privilege to partake vicariously of their emotions.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    4192 | “I told you what’s been going on,” said Gatsby. “Going on for five years—and you
-         |         ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
 
 
 
@@ -6197,6 +6130,37 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |      ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “R”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |      ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4486 | “No, r—” corrected the man, “M-a-v-r-o———”
+         |                                    ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4486 | “No, r—” corrected the man, “M-a-v-r-o———”
@@ -6205,6 +6169,26 @@ Suggest:
   - Replace with: “of”
   - Replace with: “oh”
   - Replace with: “oi”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    4490 | “r—” said the policeman, “o———”
+         |  ^ This word's canonical spelling is all-caps.
+Suggest:
+  - Replace with: “R”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4490 | “r—” said the policeman, “o———”
+         |  ^ Did you mean to spell `r` this way?
+Suggest:
+  - Replace with: “re”
+  - Replace with: “a”
+  - Replace with: “e”
 
 
 
