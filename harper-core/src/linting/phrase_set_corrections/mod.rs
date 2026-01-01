@@ -155,11 +155,20 @@ pub fn lint_group() -> LintGroup {
         ),
         "ExpandDependencies" => (
             &[
-                ("deps", "dependencies"),
                 ("dep", "dependency"),
+                ("deps", "dependencies"),
             ],
             "Use `dependencies` instead of `deps`",
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandParameter" => (
+            &[
+                ("param", "parameter"),
+                ("params", "parameters"),
+            ],
+            "Use `parameter` instead of `param`",
+            "Expands the abbreviation `param` to the full word `parameter` for clarity.",
             LintKind::Style
         ),
         "ExpandStandardInputAndOutput" => (
@@ -395,6 +404,15 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `double-edged sword`?",
             "Corrects variants of `double-edged sword`.",
             LintKind::Spelling
+        ),
+        "ExpandDecl" => (
+            &[
+                (&["decl"], &["declaration", "declarator"]),
+                (&["decls"], &["declarations", "declarators"])
+            ],
+            "Use `declaration` or `declarator` instead of `decl`",
+            "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
         ),
         "Expat" => (
             &[

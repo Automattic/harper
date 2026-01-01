@@ -937,7 +937,7 @@ fn load_file(
         .extension()
         .map(|v| v.to_str().unwrap())
     {
-        Some("md") => Box::new(Markdown::default()),
+        Some("md") | Some("markdown") => Box::new(Markdown::default()),
         Some("ink") => Box::new(InkParser::default()),
 
         Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(

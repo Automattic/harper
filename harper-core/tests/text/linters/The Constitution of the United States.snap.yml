@@ -848,7 +848,7 @@ Lint:    Agreement (31 priority)
 Message: |
      312 | on Imports or Exports, except what may be absolutely necessary for executing
      313 | it's inspection Laws: and the net Produce of all Duties and Imposts, laid by
-         | ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+         | ^~~~ Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.
 Suggest:
   - Replace with: “its”
 
