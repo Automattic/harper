@@ -9,7 +9,10 @@ pub struct AsciidocParser {
 
 impl AsciidocParser {
     fn node_condition(n: &Node) -> bool {
-        matches!(n.kind(), "line" | "body" | "table_cell_content")
+        matches!(
+            n.kind(),
+            "line" | "body" | "table_cell_content" | "author" | "ident_block_line"
+        )
     }
 }
 

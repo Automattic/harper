@@ -39,3 +39,4 @@ macro_rules! create_test {
 create_test!(basic.adoc, 2);
 create_test!(table.adoc, 1);
 create_test!(comment.adoc, 2);
+create_test!(comprehensive.adoc, 13);
