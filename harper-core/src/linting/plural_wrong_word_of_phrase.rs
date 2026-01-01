@@ -76,25 +76,24 @@ impl ExprLinter for PluralWrongWordOfPhrase {
             last_noun_span.get_content(src),
         );
 
-        if let Some((main_noun, last_noun)) = PAIRS.iter().find(|(main, last)| {
+        let (main_noun, last_noun) = PAIRS.iter().find(|(main, last)| {
             main_noun_chars.starts_with_ignore_ascii_case_str(main)
                 && last_noun_chars.starts_with_ignore_ascii_case_str(last[0])
-        }) {
-            return Some(Lint {
-                lint_kind: LintKind::Usage,
-                span: toks.span()?,
-                suggestions: vec![Suggestion::replace_with_match_case(
-                    format!("{}s of {}", *main_noun, last_noun[0])
-                        .chars()
-                        .collect::<Vec<char>>(),
-                    toks.span()?.get_content(src),
-                )],
-                message: "This phrase is pluralized on the main noun, not on the last noun."
-                    .to_string(),
-                ..Default::default()
-            });
-        }
-        None
+        })?;
+
+        Some(Lint {
+            lint_kind: LintKind::Usage,
+            span: toks.span()?,
+            suggestions: vec![Suggestion::replace_with_match_case(
+                format!("{}s of {}", *main_noun, last_noun[0])
+                    .chars()
+                    .collect::<Vec<char>>(),
+                toks.span()?.get_content(src),
+            )],
+            message: "This phrase is pluralized on the main noun, not on the last noun."
+                .to_string(),
+            ..Default::default()
+        })
     }
 }
 
