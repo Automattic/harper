@@ -1198,6 +1198,35 @@ fn correct_like_a_plague() {
     );
 }
 
+// LinesOfCode
+#[test]
+fn corrects_line_of_codes() {
+    assert_suggestion_result(
+        "desktop application used to estimate the line of codes to certain software application",
+        lint_group(),
+        "desktop application used to estimate the lines of code to certain software application",
+    );
+}
+
+#[test]
+#[ignore = "Wrong letters capitalized due to how `Suggstion::replace_with_match_case` works by index."]
+fn corrects_line_of_codes_title_case() {
+    assert_suggestion_result(
+        "A simple tool for Line Of Codes (LOC) calculation.",
+        lint_group(),
+        "A simple tool for Lines Of Code (LOC) calculation.",
+    );
+}
+
+#[test]
+fn corrects_lines_of_codes() {
+    assert_suggestion_result(
+        "I myself don't have something against giving users the ability to show the lines of codes they wrote.",
+        lint_group(),
+        "I myself don't have something against giving users the ability to show the lines of code they wrote.",
+    );
+}
+
 // LowHangingFruit
 #[test]
 fn corrects_low_hanging_fruit() {

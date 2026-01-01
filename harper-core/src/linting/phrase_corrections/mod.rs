@@ -766,6 +766,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `like a plague` to `like the plague`.",
             LintKind::Usage
         ),
+        "LinesOfCode" => (
+            ["line of codes", "lines of codes"],
+            ["lines of code"],
+            "The correct plural is `lines of code`.",
+            "Corrects pluralizing the wrong noun in `lines of code`.",
+            LintKind::Usage
+        ),
         "LowHangingFruit" => (
             ["low hanging fruit", "low hanging fruits", "low-hanging fruits"],
             ["low-hanging fruit"],
