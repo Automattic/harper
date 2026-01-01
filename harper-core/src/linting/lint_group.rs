@@ -137,6 +137,7 @@ use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
+use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
 use super::progressive_needs_be::ProgressiveNeedsBe;
@@ -612,6 +613,7 @@ impl LintGroup {
         insert_expr_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
+        insert_expr_rule!(PluralWrongWordOfPhrase, true);
         insert_expr_rule!(PossessiveYour, true);
         insert_expr_rule!(ProgressiveNeedsBe, true);
         insert_expr_rule!(PronounAre, true);
