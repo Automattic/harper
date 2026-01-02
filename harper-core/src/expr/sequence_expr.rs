@@ -111,6 +111,11 @@ impl SequenceExpr {
 
     // Expressions of more than one token
 
+    /// Optionally match an expression.
+    pub fn optional(expr: impl Expr + 'static) -> Self {
+        Self::default().then_optional(expr)
+    }
+
     /// Match a fixed phrase.
     pub fn fixed_phrase(phrase: &'static str) -> Self {
         Self::default().then_fixed_phrase(phrase)
