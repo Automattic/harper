@@ -288,10 +288,10 @@ fn lint_one_input(
     let mut lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
     let mut spellos: HashMap<String, usize> = HashMap::new();
 
-    // Create a new merged dictionary for this input.
-    let mut merged_dictionary = curated_plus_user_dict.clone();
-
     if let Some(single_input) = current.input.try_as_single_ref() {
+        // Create a new merged dictionary for this input.
+        let mut merged_dictionary = curated_plus_user_dict.clone();
+
         // If processing a file, try to load its per-file dictionary
         if let Some(file) = single_input.try_as_file_ref() {
             let dict_path = file_dict_path.join(file_dict_name(file.path()));
