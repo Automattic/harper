@@ -191,8 +191,6 @@ pub fn lint(
                 parent_input_id,
                 input,
             } = job;
-            let parent_id_ref = parent_input_id.as_str();
-
             lint_one_input(
                 // Common properties of harper-cli
                 markdown_options,
@@ -210,7 +208,7 @@ pub fn lint(
                 batch_mode,
                 // The current input to be linted
                 InputInfo {
-                    parent_input_id: parent_id_ref,
+                    parent_input_id: parent_input_id.as_str(),
                     input: &input,
                 },
             )
