@@ -48,10 +48,10 @@ fn file_dict_name(path: &Path) -> PathBuf {
     rewritten.into()
 }
 
-pub struct LintOptions<'a> {
+pub struct LintOptions {
     pub count: bool,
-    pub ignore: &'a Option<Vec<String>>,
-    pub only: &'a Option<Vec<String>>,
+    pub ignore: Option<Vec<String>>,
+    pub only: Option<Vec<String>>,
     pub dialect: Dialect,
 }
 enum ReportStyle {
@@ -85,15 +85,15 @@ pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
     mut inputs: Vec<AnyInput>,
-    lint_options: LintOptions,
+    mut lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
     file_dict_path: PathBuf,
 ) -> anyhow::Result<()> {
     let LintOptions {
         count,
-        ignore,
-        only,
+        ref mut ignore,
+        ref mut only,
         dialect,
     } = lint_options;
 
@@ -105,10 +105,8 @@ pub fn lint(
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
     let config = LintGroupConfig::new_curated();
-    let mut ignore = ignore.clone();
-    let mut only = only.clone();
 
-    if let Some(ref mut only) = only {
+    if let Some(only) = only {
         only.retain(|rule| {
             if !config.has_rule(rule) {
                 eprintln!("Warning: Cannot enable unknown rule '{}'.", rule);
@@ -118,7 +116,7 @@ pub fn lint(
         });
     }
 
-    if let Some(ref mut ignore) = ignore {
+    if let Some(ignore) = ignore {
         ignore.retain(|rule| {
             if !config.has_rule(rule) {
                 eprintln!("Warning: Cannot disable unknown rule '{}'.", rule);
@@ -195,12 +193,7 @@ pub fn lint(
                 &curated_plus_user_dict,
                 // Passed from the user for the `lint` subcommand
                 &report_mode,
-                LintOptions {
-                    count,
-                    ignore: &ignore,
-                    only: &only,
-                    dialect,
-                },
+                &lint_options,
                 &file_dict_path,
                 // Are we linting multiple inputs inside a directory?
                 batch_mode,
@@ -264,7 +257,7 @@ fn lint_one_input(
     curated_plus_user_dict: &MergedDictionary,
     report_mode: &ReportStyle,
     // Options passed from the user specific to the `lint` subcommand
-    lint_options: LintOptions,
+    lint_options: &LintOptions,
     file_dict_path: &Path,
     // Are we linting multiple inputs?
     batch_mode: bool,
@@ -309,7 +302,7 @@ fn lint_one_input(
             Err(err) => eprintln!("{}", err),
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), dialect);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 // Turn specified rules on or off
                 configure_lint_group(&mut lint_group, only, ignore);

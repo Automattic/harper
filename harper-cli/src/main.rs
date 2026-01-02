@@ -209,8 +209,8 @@ fn main() -> anyhow::Result<()> {
                 inputs,
                 LintOptions {
                     count,
-                    ignore: &ignore,
-                    only: &only,
+                    ignore,
+                    only,
                     dialect,
                 },
                 user_dict_path,
