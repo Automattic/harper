@@ -21,7 +21,7 @@ pub(crate) trait InputTrait {
 /// a directory, or text passed via the command line directly.
 #[enum_dispatch(InputTrait)]
 #[derive(Clone, EnumTryAs)]
-pub(super) enum AnyInput {
+pub(crate) enum AnyInput {
     /// An input of a single source. For instance, a specific file, or input from standard input.
     Single(SingleInput),
     /// An input of multiple sources. For instance, a path to a directory.
