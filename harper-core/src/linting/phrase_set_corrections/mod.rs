@@ -349,6 +349,16 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "ScapeGoat" => (
+            &[
+                ("an escape goat", "a scapegoat"),
+                ("escape goat", "scapegoat"),
+                ("escape goats", "scapegoats"),
+            ],
+            "If you're referring someone is being blamed unfairly, write it as a single word: `scapegoat`.",
+            "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures.",
+            LintKind::Eggcorn
+        ),
         "WreakHavoc" => (
             &[
                 ("wreck havoc", "wreak havoc"),
