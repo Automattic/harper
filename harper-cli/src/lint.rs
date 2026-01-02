@@ -70,11 +70,7 @@ struct InputJob {
     input: AnyInput,
 }
 
-trait InputPath {
-    fn format_path(&self) -> String;
-}
-
-impl InputPath for InputInfo<'_> {
+impl InputInfo<'_> {
     fn format_path(&self) -> String {
         let child = self.input.get_identifier();
         if self.parent_input_id.is_empty() {
