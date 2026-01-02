@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
@@ -27,6 +28,8 @@ impl Default for CautionaryTale {
 }
 
 impl ExprLinter for CautionaryTale {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -54,10 +57,8 @@ impl ExprLinter for CautionaryTale {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        CautionaryTale,
-        tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use super::CautionaryTale;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn catches_cautionary_tail() {

@@ -25,6 +25,7 @@ test('Can apply basic suggestion.', async ({ page }) => {
 	expect(slate).toContainText('This is a test');
 
 	// Slate has be known to revert changes after typing some more.
+	await slate.press('End');
 	await slate.pressSequentially(" of Harper's grammar checking.");
 	expect(slate).toContainText("This is a test of Harper's grammar checking.");
 });

@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind,
     expr::{Expr, SequenceExpr},
@@ -27,6 +28,8 @@ impl Default for ThatThan {
 }
 
 impl ExprLinter for ThatThan {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -58,10 +61,8 @@ impl ExprLinter for ThatThan {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        ThatThan,
-        tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use super::ThatThan;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // adj-er that
 

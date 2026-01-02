@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ShootOneselfInTheFoot {
     pattern: Box<dyn Expr>,
@@ -34,6 +35,8 @@ impl Default for ShootOneselfInTheFoot {
 }
 
 impl ExprLinter for ShootOneselfInTheFoot {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.pattern.as_ref()
     }
@@ -81,7 +84,7 @@ impl ExprLinter for ShootOneselfInTheFoot {
     }
 
     fn description(&self) -> &str {
-        "Corrects non-standard variants of 'shoot oneself in the foot'."
+        "Corrects nonstandard variants of 'shoot oneself in the foot'."
     }
 }
 

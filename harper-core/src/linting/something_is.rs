@@ -3,6 +3,7 @@ use crate::patterns::WordSet;
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct SomethingIs {
     expr: Box<dyn Expr>,
@@ -25,6 +26,8 @@ impl Default for SomethingIs {
 }
 
 impl ExprLinter for SomethingIs {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

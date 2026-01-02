@@ -1,5 +1,6 @@
 use super::{MutableDictionary, WordId};
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
+use hashbrown::HashMap;
 use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
@@ -150,28 +151,35 @@ impl Dictionary for FstDictionary {
         let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
         let lower_dists = stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
 
-        let mut merged = Vec::with_capacity(upper_dists.len());
+        // Merge the two results, keeping the smallest distance when both DFAs match.
+        // The uppercase and lowercase searches can return different result counts, so
+        // we can't simply zip the vectors without losing matches.
+        let mut merged = Vec::with_capacity(upper_dists.len().max(lower_dists.len()));
+        let mut best_distances = HashMap::<u64, u8>::new();
 
-        // Merge the two results
-        for ((i_u, dist_u), (i_l, dist_l)) in upper_dists.into_iter().zip(lower_dists.into_iter()) {
-            let (chosen_index, edit_distance) = if dist_u <= dist_l {
-                (i_u, dist_u)
-            } else {
-                (i_l, dist_l)
-            };
+        for (idx, dist) in upper_dists.into_iter().chain(lower_dists.into_iter()) {
+            best_distances
+                .entry(idx)
+                .and_modify(|existing| *existing = (*existing).min(dist))
+                .or_insert(dist);
+        }
 
-            let (word, metadata) = &self.words[chosen_index as usize];
-
+        for (index, edit_distance) in best_distances {
+            let (word, metadata) = &self.words[index as usize];
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
                 metadata: Cow::Borrowed(metadata),
-            })
+            });
         }
 
-        merged.sort_unstable_by_key(|v| v.word);
-        merged.dedup_by_key(|v| v.word);
-        merged.sort_unstable_by_key(|v| v.edit_distance);
+        // Ignore exact matches
+        merged.retain(|v| v.edit_distance > 0);
+        merged.sort_unstable_by(|a, b| {
+            a.edit_distance
+                .cmp(&b.edit_distance)
+                .then_with(|| a.word.cmp(b.word))
+        });
         merged.truncate(max_results);
 
         merged

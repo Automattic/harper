@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
 use crate::Document;
+use crate::linting::expr_linter::Chunk;
 use crate::parsers::PlainEnglish;
 use crate::spell::Dictionary;
 use crate::{Token, TokenStringExt};
@@ -66,6 +67,8 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
 }
 
 impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.pattern_map
     }
@@ -117,7 +120,7 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
 
     for (key, rule) in rules.into_iter() {
-        group.add_expr_linter(
+        group.add_chunk_expr_linter(
             key,
             Box::new(ProperNounCapitalizationLinter::new_strs(
                 rule.canonical,

@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
@@ -43,6 +43,7 @@ export type LintRequest = {
 	kind: 'lint';
 	domain: string;
 	text: string;
+	options: LintOptions;
 };
 
 export type LintResponse = {

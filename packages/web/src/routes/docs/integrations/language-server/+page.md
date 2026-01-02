@@ -274,6 +274,7 @@ These configs are under the `markdown` key:
 | CMake               |            `cmake`            |            ✅ |
 | C++                 |             `cpp`             |            ✅ |
 | C#                  |           `csharp`            |            ✅ |
+| DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
 | Go                  |             `go`              |            ✅ |

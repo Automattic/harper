@@ -27,7 +27,11 @@ WORKDIR /usr/build/
 COPY . .
 COPY --from=wasm-build /usr/build/harper-wasm/pkg /usr/build/harper-wasm/pkg
 
-RUN pnpm install --shamefully-hoist
+RUN pnpm install --engine-strict=false --shamefully-hoist
+
+WORKDIR /usr/build/packages/components
+RUN pnpm install --engine-strict=false --shamefully-hoist
+RUN pnpm build
 
 WORKDIR /usr/build/packages/harper.js
 
@@ -37,7 +41,7 @@ WORKDIR /usr/build/packages/lint-framework
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web
-RUN pnpm install --shamefully-hoist
+RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 
 FROM node:${NODE_VERSION}

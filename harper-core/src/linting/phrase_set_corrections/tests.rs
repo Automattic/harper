@@ -1,5 +1,6 @@
 use crate::linting::tests::{
-    assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
+    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+    assert_nth_suggestion_result, assert_suggestion_result,
 };
 
 use super::lint_group;
@@ -781,6 +782,44 @@ fn corrects_making_due_with() {
     );
 }
 
+// MakeSense
+
+#[test]
+fn fix_make_senses() {
+    assert_suggestion_result(
+        "some symbols make senses only if you have a certain keyboard",
+        lint_group(),
+        "some symbols make sense only if you have a certain keyboard",
+    );
+}
+
+#[test]
+fn fix_made_senses() {
+    assert_suggestion_result(
+        "Usually on the examples of matlab central I have found all with positive magnitude and made senses to me.",
+        lint_group(),
+        "Usually on the examples of matlab central I have found all with positive magnitude and made sense to me.",
+    );
+}
+
+#[test]
+fn fix_makes_senses() {
+    assert_suggestion_result(
+        "If it makes senses I can open a PR.",
+        lint_group(),
+        "If it makes sense I can open a PR.",
+    );
+}
+
+#[test]
+fn fix_making_senses() {
+    assert_suggestion_result(
+        "I appreciate you mentioned the two use cases, which are making senses for both.",
+        lint_group(),
+        "I appreciate you mentioned the two use cases, which are making sense for both.",
+    );
+}
+
 // MootPoint
 
 // -point is mute-
@@ -831,7 +870,223 @@ fn correct_passer_bys_hyphen() {
 // Piggyback
 // -none-
 
+// WreakHavoc
+
 // Many to many tests
+
+#[test]
+fn fix_wreck_havoc() {
+    assert_suggestion_result(
+        "Tables with a \".\" in the name wreck havoc with the system",
+        lint_group(),
+        "Tables with a \".\" in the name wreak havoc with the system",
+    );
+}
+
+#[test]
+fn fix_wrecked_havoc() {
+    assert_suggestion_result(
+        "It would have been some weird local configuration of LO that wrecked havoc.",
+        lint_group(),
+        "It would have been some weird local configuration of LO that wreaked havoc.",
+    );
+}
+
+#[test]
+fn fix_wrecking_havoc() {
+    assert_suggestion_result(
+        "Multi-line edit is wrecking havoc with indention",
+        lint_group(),
+        "Multi-line edit is wreaking havoc with indention",
+    );
+}
+
+#[test]
+fn fix_wrecks_havoc() {
+    assert_suggestion_result(
+        "Small POC using rust with ptrace that wrecks havoc on msync",
+        lint_group(),
+        "Small POC using rust with ptrace that wreaks havoc on msync",
+    );
+}
+
+// AwaitFor
+
+#[test]
+fn correct_awaits_for() {
+    assert_good_and_bad_suggestions(
+        "Headless mode awaits for requested user feedback without showing any text for what that feedback should be",
+        lint_group(),
+        &[
+            "Headless mode awaits requested user feedback without showing any text for what that feedback should be",
+            "Headless mode waits for requested user feedback without showing any text for what that feedback should be",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_awaiting_for() {
+    assert_good_and_bad_suggestions(
+        "gpg import fails awaiting for prompt answer",
+        lint_group(),
+        &[
+            "gpg import fails waiting for prompt answer",
+            "gpg import fails awaiting prompt answer",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_await_for() {
+    assert_good_and_bad_suggestions(
+        "I still await for a college course on \"Followership 101\"",
+        lint_group(),
+        &[
+            "I still wait for a college course on \"Followership 101\"",
+            "I still await a college course on \"Followership 101\"",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn correct_awaited_for() {
+    assert_good_and_bad_suggestions(
+        "I have long awaited for the rise of the Dagoat agenda, and it is glorious.",
+        lint_group(),
+        &[
+            "I have long awaited the rise of the Dagoat agenda, and it is glorious.",
+            "I have long waited for the rise of the Dagoat agenda, and it is glorious.",
+        ],
+        &[],
+    );
+}
+
+// Copyright
+
+#[test]
+fn copywritten() {
+    assert_suggestion_result(
+        "Including digital copies of copywritten artwork with the project isn't advised.",
+        lint_group(),
+        "Including digital copies of copyrighted artwork with the project isn't advised.",
+    );
+}
+
+#[test]
+fn copywrites() {
+    assert_suggestion_result(
+        "Code is 99% copy/pasted from OpenSSH with an attempt to retain all copywrites",
+        lint_group(),
+        "Code is 99% copy/pasted from OpenSSH with an attempt to retain all copyrights",
+    );
+}
+
+#[test]
+fn copywrited() {
+    assert_suggestion_result(
+        "Proprietary copywrited code",
+        lint_group(),
+        "Proprietary copyrighted code",
+    );
+}
+
+#[test]
+fn copywrited_all_caps() {
+    assert_suggestion_result(
+        "URLS MAY CONTAIN COPYWRITED MATERIAL",
+        lint_group(),
+        "URLS MAY CONTAIN COPYRIGHTED MATERIAL",
+    );
+}
+
+#[test]
+fn copywrote() {
+    assert_suggestion_result(
+        "How do you find out if someone copywrote a movie",
+        lint_group(),
+        "How do you find out if someone copyrighted a movie",
+    );
+}
+
+// Expat
+
+#[test]
+fn correct_ex_pat_hyphen() {
+    assert_suggestion_result(
+        "It seems ex-pat means the person will be in a foreign country temporarily",
+        lint_group(),
+        "It seems expat means the person will be in a foreign country temporarily",
+    );
+}
+
+#[test]
+fn correct_ex_pats_hyphen() {
+    assert_suggestion_result(
+        "So, it might be correct to call most Brits ex-pats.",
+        lint_group(),
+        "So, it might be correct to call most Brits expats.",
+    );
+}
+
+#[test]
+fn correct_ex_pat_space() {
+    assert_suggestion_result(
+        "For me, the term ex pat embodies the exquisite hypocrisy of certain people feeling entitled",
+        lint_group(),
+        "For me, the term expat embodies the exquisite hypocrisy of certain people feeling entitled",
+    );
+}
+
+#[test]
+#[ignore = "replace_with_match_case results in ExPats"]
+fn correct_ex_pats_space() {
+    assert_suggestion_result(
+        "Why are Brits who emigrate \"Ex Pats\" but people who come here \"immigrants\"?",
+        lint_group(),
+        "Why are Brits who emigrate \"Expats\" but people who come here \"immigrants\"?",
+    );
+}
+
+// Expatriate
+
+#[test]
+fn correct_expatriot() {
+    assert_suggestion_result(
+        "Another expatriot of the era, James Joyce, also followed Papa's writing and drinking schedule.",
+        lint_group(),
+        "Another expatriate of the era, James Joyce, also followed Papa's writing and drinking schedule.",
+    );
+}
+
+#[test]
+fn correct_expatriots() {
+    assert_suggestion_result(
+        "Expatriots, upon discovering the delightful nuances of Dutch pronunciation, often find themselves in stitches.",
+        lint_group(),
+        "Expatriates, upon discovering the delightful nuances of Dutch pronunciation, often find themselves in stitches.",
+    );
+}
+
+#[test]
+fn correct_ex_patriot_hyphen() {
+    assert_suggestion_result(
+        "Then I added we should all be using the word 移民 immigrant, not ex-patriot, not 外国人 gaikokujin, and definitely not 外人 gaijin",
+        lint_group(),
+        "Then I added we should all be using the word 移民 immigrant, not expatriate, not 外国人 gaikokujin, and definitely not 外人 gaijin",
+    );
+}
+
+#[test]
+fn correct_ex_patriots_hyphen() {
+    assert_suggestion_result(
+        "Ex-patriots who move to Hong Kong to seek greener pastures and to experience a new culture seem to bring their own cultural baggage with them.",
+        lint_group(),
+        "Expatriates who move to Hong Kong to seek greener pastures and to experience a new culture seem to bring their own cultural baggage with them.",
+    );
+}
 
 // GetRidOf
 
@@ -931,6 +1186,27 @@ fn got_ride_of() {
         "I had to adjust the labels on the free version because you guys got ride of ...",
         lint_group(),
         "I had to adjust the labels on the free version because you guys got rid of ...",
+    );
+}
+
+// HolyWar
+
+#[test]
+#[ignore = "Known failure due to replace_with_match_case working by character index"]
+fn correct_holy_war() {
+    assert_suggestion_result(
+        "I know it is Holly War about idempotent in HTTP and DELETE",
+        lint_group(),
+        "I know it is Holy War about idempotent in HTTP and DELETE",
+    );
+}
+
+#[test]
+fn correct_holly_wars() {
+    assert_suggestion_result(
+        "Anyway I'm not starting some holly wars about this point.",
+        lint_group(),
+        "Anyway I'm not starting some holy wars about this point.",
     );
 }
 
@@ -1084,6 +1360,63 @@ fn corrects_made_it_seemed() {
         "The path made it seemed a bit \"internal\".",
         lint_group(),
         "The path made it seem a bit \"internal\".",
+    );
+}
+
+// NervousWreck
+
+#[test]
+#[ignore = "Harper matches case by letter index as 'How Not to Be a Complete NervoUs wreck in an Interview'"]
+fn correct_nerve_wreck_space_title_case() {
+    assert_suggestion_result(
+        "How Not to Be a Complete Nerve Wreck in an Interview",
+        lint_group(),
+        "How Not to Be a Complete Nervous Wreck in an Interview",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_space() {
+    assert_suggestion_result(
+        "The nerve wreck you are makes you seem anxious and agitated so your employer will believe the complaints.",
+        lint_group(),
+        "The nervous wreck you are makes you seem anxious and agitated so your employer will believe the complaints.",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_hyphen() {
+    assert_suggestion_result(
+        "the child receives little education and grows up to be a nerve-wreck",
+        lint_group(),
+        "the child receives little education and grows up to be a nervous wreck",
+    );
+}
+
+#[test]
+fn correct_nerve_wreck_hyphen_plural() {
+    assert_suggestion_result(
+        "This helps us not to become nerve wrecks while looking at the side mirrors",
+        lint_group(),
+        "This helps us not to become nervous wrecks while looking at the side mirrors",
+    );
+}
+
+#[test]
+#[ignore = "We can't detect when the altered form is used for an event rather than a person."]
+fn dont_correct_it_was_a_nerve_wreck() {
+    assert_no_lints(
+        "It was a nerve-wreck, but I was also excited to see what would happen next.",
+        lint_group(),
+    );
+}
+
+#[test]
+#[ignore = "We can't detect when the altered form is used for an event rather than a person."]
+fn dont_correct_so_much_nerve_wreck() {
+    assert_no_lints(
+        "So much nerve wreck for such a simple game ...",
+        lint_group(),
     );
 }
 

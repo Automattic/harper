@@ -31,6 +31,7 @@ impl CommentParser {
             "dart" => harper_tree_sitter_dart::LANGUAGE,
             "go" => tree_sitter_go::LANGUAGE,
             "haskell" => tree_sitter_haskell::LANGUAGE,
+            "daml" => tree_sitter_haskell::LANGUAGE,
             "java" => tree_sitter_java::LANGUAGE,
             "javascript" => tree_sitter_javascript::LANGUAGE,
             "javascriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
@@ -89,6 +90,7 @@ impl CommentParser {
             "dart" => "dart",
             "go" => "go",
             "hs" => "haskell",
+            "daml" => "daml",
             "java" => "java",
             "js" => "javascript",
             "jsx" => "javascriptreact",
@@ -117,5 +119,30 @@ impl CommentParser {
 impl Parser for CommentParser {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         self.inner.parse(source)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::CommentParser;
+    use harper_core::parsers::{MarkdownOptions, StrParser};
+
+    #[test]
+    fn hang() {
+        use std::sync::mpsc::channel;
+        use std::thread;
+        use std::time::Duration;
+
+        let (tx, rx) = channel::<()>();
+
+        let handle = thread::spawn(move || {
+            let opts = MarkdownOptions::default();
+            let parser = CommentParser::new_from_language_id("java", opts).unwrap();
+            let _res = parser.parse_str("//{@j");
+            tx.send(()).expect("send failed");
+        });
+
+        rx.recv_timeout(Duration::from_secs(10)).expect("timed out");
+        handle.join().expect("failed to join");
     }
 }

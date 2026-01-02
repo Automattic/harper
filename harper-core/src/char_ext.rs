@@ -3,7 +3,13 @@ use unicode_width::UnicodeWidthChar;
 
 use crate::Punctuation;
 
-pub trait CharExt {
+mod private {
+    pub trait Sealed {}
+
+    impl Sealed for char {}
+}
+
+pub trait CharExt: private::Sealed {
     fn is_cjk(&self) -> bool;
     /// Whether a character can be a component of an English word.
     fn is_english_lingual(&self) -> bool;

@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::ExprLinter;
+use crate::linting::expr_linter::Chunk;
 
 #[derive(PartialEq)]
 enum CanFlag {
@@ -485,6 +486,8 @@ impl Regionalisms {
 }
 
 impl ExprLinter for Regionalisms {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

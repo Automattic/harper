@@ -10,6 +10,7 @@ const config = {
 			trustedOrigins: [
 				'chrome-extension://lodbfhdipoipcjmlebjbgmmgekckhpfb',
 				'chrome-extension://hkjdmakdmihopipoiplebkelbhebigea',
+				'chrome-extension://ihjkkjfembmnjldmdchmadigpmapkpdh',
 			],
 		},
 		prerender: {

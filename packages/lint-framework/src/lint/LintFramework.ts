@@ -1,10 +1,10 @@
+import type { LintOptions } from 'harper.js';
+import type { IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
-import { isVisible } from './domUtils';
+import { isHeading, isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
-import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient'
-import type { IgnorableLintBox } from './Box';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -30,17 +30,22 @@ export default class LintFramework {
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
+	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
 	private updateEventCallback: () => void;
 
 	/** Function used to fetch lints for a given text/domain. */
-	private lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>;
+	private lintProvider: (
+		text: string,
+		domain: string,
+		options?: LintOptions,
+	) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
-		getHotkey?: () => Promise<Hotkey>;
+		getHotkey: () => Promise<Hotkey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -48,11 +53,15 @@ export default class LintFramework {
 	};
 
 	constructor(
-		lintProvider: (text: string, domain: string) => Promise<UnpackedLintGroups>,
+		lintProvider: (
+			text: string,
+			domain: string,
+			options?: LintOptions,
+		) => Promise<UnpackedLintGroups>,
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
-			getHotkey?: () => Promise<Hotkey>;
+			getHotkey: () => Promise<Hotkey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -130,7 +139,9 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lintsBySource = await this.lintProvider(text, window.location.hostname);
+				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
+					forceAllHeadings: isHeading(target),
+				});
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
@@ -144,7 +155,7 @@ export default class LintFramework {
 	 * Hotkey to apply the suggestion of the most likely word
 	 */
 	public async lintHotkey() {
-		let hotkey = await ProtocolClient.getHotkey();
+		let hotkey = await this.actions.getHotkey();
 
 		document.addEventListener('keydown', (event: KeyboardEvent) => {
 
@@ -195,6 +206,11 @@ export default class LintFramework {
 		} else {
 			throw new Error('HTMLElement not added.');
 		}
+	}
+
+	/** Return the last known ignorable lint boxes rendered on-screen. */
+	public getLastIgnorableLintBoxes(): IgnorableLintBox[] {
+		return this.lastLintBoxes;
 	}
 
 	private attachTargetListeners(target: Node) {
@@ -256,6 +272,7 @@ export default class LintFramework {
 						)
 					: [],
 			);
+			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);
 

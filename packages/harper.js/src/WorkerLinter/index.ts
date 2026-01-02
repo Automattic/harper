@@ -1,8 +1,10 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
-import type { BinaryModule, DeserializedRequest } from '../binary';
+import type { BinaryModule } from '../binary';
 import type Linter from '../Linter';
 import type { LinterInit } from '../Linter';
 import type { LintConfig, LintOptions } from '../main';
+import type { DeserializedRequest } from '../Serializer';
+import Serializer from '../Serializer';
 import Worker from './worker.ts?worker&inline';
 
 /** The data necessary to complete a request once the worker has responded. */
@@ -18,6 +20,7 @@ export interface RequestItem {
  * NOTE: This class will not work properly in Node. In that case, just use `LocalLinter`. */
 export default class WorkerLinter implements Linter {
 	private binary: BinaryModule;
+	private serializer: Serializer;
 	private dialect?: Dialect;
 	private worker: Worker;
 	private requestQueue: RequestItem[];
@@ -25,6 +28,7 @@ export default class WorkerLinter implements Linter {
 
 	constructor(init: LinterInit) {
 		this.binary = init.binary;
+		this.serializer = new Serializer(this.binary);
 		this.dialect = init.dialect;
 		this.worker = new Worker();
 		this.requestQueue = [];
@@ -43,7 +47,7 @@ export default class WorkerLinter implements Linter {
 	private setupMainEventListeners() {
 		this.worker.onmessage = (e: MessageEvent) => {
 			const { resolve } = this.requestQueue.shift()!;
-			this.binary.deserializeArg(e.data).then((v) => {
+			this.serializer.deserializeArg(e.data).then((v) => {
 				resolve(v);
 
 				this.working = false;
@@ -209,7 +213,7 @@ export default class WorkerLinter implements Linter {
 
 		if (this.requestQueue.length > 0) {
 			const { request } = this.requestQueue[0];
-			const serialized = await this.binary.serialize(request);
+			const serialized = await this.serializer.serialize(request);
 			this.worker.postMessage(serialized);
 		} else {
 			this.working = false;

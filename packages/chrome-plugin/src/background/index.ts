@@ -60,6 +60,8 @@ getDialect().then(setDialect);
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
 		'old.reddit.com',
+		'sh.reddit.com',
+		'www.reddit.com',
 		'chatgpt.com',
 		'www.perplexity.ai',
 		'textarea.online',
@@ -74,11 +76,9 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
-		'www.reddit.com',
 		'www.linkedin.com',
 		'bsky.app',
 		'pootlewriter.com',
@@ -100,6 +100,8 @@ async function enableDefaultDomains() {
 		'www.upwork.com',
 		'news.ycombinator.com',
 		'classroom.google.com',
+		'quilljs.com',
+		'www.wattpad.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -169,7 +171,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 		return { kind: 'lints', lints: {} };
 	}
 
-	const grouped = await linter.organizedLints(req.text);
+	const grouped = await linter.organizedLints(req.text, req.options);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -399,7 +401,7 @@ async function setHotkey(hotkey: Hotkey) {
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({
-		binary: new BinaryModule(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 

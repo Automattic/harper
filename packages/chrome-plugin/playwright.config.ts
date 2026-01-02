@@ -18,10 +18,11 @@ export default defineConfig({
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
 	},
+	globalTimeout: 120000,
 	webServer: {
-		command: 'pnpm http-server ./tests/pages/ -p 8081',
-		url: 'http://localhost:8081',
-		stdout: 'ignore',
+		command: 'pnpm exec http-server ./tests/pages -p 8081 -a 127.0.0.1',
+		url: 'http://127.0.0.1:8081',
+		stdout: 'pipe',
 		stderr: 'pipe',
 	},
 	/* Configure projects for major browsers */

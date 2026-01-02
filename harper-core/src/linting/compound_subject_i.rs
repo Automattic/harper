@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind,
     expr::{AnchorStart, Expr, SequenceExpr},
@@ -41,6 +42,8 @@ impl Default for CompoundSubjectI {
 }
 
 impl ExprLinter for CompoundSubjectI {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

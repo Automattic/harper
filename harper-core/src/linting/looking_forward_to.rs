@@ -1,5 +1,6 @@
 use hashbrown::HashSet;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -27,6 +28,8 @@ impl Default for LookingForwardTo {
 }
 
 impl ExprLinter for LookingForwardTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

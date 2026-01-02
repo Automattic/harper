@@ -4,6 +4,7 @@ use crate::linting::{LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
 
 pub struct LetToDo {
     expr: Box<dyn Expr>,
@@ -47,6 +48,8 @@ impl Default for LetToDo {
 }
 
 impl ExprLinter for LetToDo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

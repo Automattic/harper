@@ -1,6 +1,7 @@
 <script lang="ts">
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/serif.css';
+import { Link } from 'components';
 import Reveal from 'reveal.js';
 import { onMount } from 'svelte';
 import Logo from '$lib/components/Logo.svelte';
@@ -111,7 +112,7 @@ onMount(() => {
 		<section>
 			<h2>Try It!</h2>
 			<p>
-				Go to <a href="https://writewithharper.com">https://writewithharper.com</a> on a laptop.
+				Go to <Link href="https://writewithharper.com">https://writewithharper.com</Link> on a laptop.
 				<img
 					alt="The QR code for the website."
 					src=" https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://writewithharper.com"

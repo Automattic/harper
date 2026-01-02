@@ -26,7 +26,7 @@ impl Annotation {
 
     /// Gets an iterator of annotation `Label` from the given document.
     ///
-    /// This is similar to [`self::iter_from_document()`], but this additionally converts
+    /// This is similar to [`Self::iter_from_document`], but this additionally converts
     /// the [`Annotation`] into [`ariadne::Label`] for convenience.
     pub(super) fn iter_labels_from_document<'inpt_id>(
         annotation_type: AnnotationType,
