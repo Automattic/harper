@@ -4429,7 +4429,7 @@
 >
 #
 > “ Hadn’t time       , ” said the Gryphon : “ I       went    to the Classics master    , though . He       was
-# . VPt    N🅪Sg/VB/J+ . . VP/J D   ?       . . ISg/#r+ NSg/VPt P  D   NSgPl+   NPr/VB/J+ . VB/C   . NPr/ISg+ VPt
+# . VPt    N🅪Sg/VB/J+ . . VP/J D   ?       . . ISg/#r+ NSg/VPt P  D   N🅪Pl+    NPr/VB/J+ . VB/C   . NPr/ISg+ VPt
 > an  old   crab   , he       was . ”
 # D/P NSg/J NSg/VB . NPr/ISg+ VPt . .
 >
