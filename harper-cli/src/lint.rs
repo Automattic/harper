@@ -84,7 +84,7 @@ impl InputInfo<'_> {
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
-    inputs: Vec<AnyInput>,
+    mut inputs: Vec<AnyInput>,
     lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
@@ -98,11 +98,9 @@ pub fn lint(
     } = lint_options;
 
     // Zero or more inputs, default to stdin if not provided
-    let all_user_inputs = if inputs.is_empty() {
-        vec![SingleInput::from(StdinInput).into()]
-    } else {
-        inputs
-    };
+    if inputs.is_empty() {
+        inputs.push(SingleInput::from(StdinInput).into());
+    }
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
@@ -159,7 +157,7 @@ pub fn lint(
     };
 
     let mut input_jobs = Vec::new();
-    for user_input in all_user_inputs {
+    for user_input in inputs {
         if let Some(dir_input) = user_input
             .try_as_multi_ref()
             .and_then(MultiInput::try_as_dir_ref)
