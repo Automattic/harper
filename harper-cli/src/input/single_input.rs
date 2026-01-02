@@ -18,7 +18,7 @@ use harper_python::PythonParser;
 use super::InputTrait;
 
 /// An input of a single source. This would not include a directory for instance, which may have
-/// multiple (file) Sources.
+/// multiple (file) sources.
 #[enum_dispatch]
 pub(crate) trait SingleInputTrait: InputTrait {
     /// Loads the contained file/string into a conventional format. Returns a `Result` containing
@@ -33,21 +33,31 @@ pub(crate) trait SingleInputTrait: InputTrait {
         Ok((Document::new(&text, &parser, &dictionary), text))
     }
 
+    /// The parser that should be used to parse this input.
     fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
         Box::new(PlainEnglish)
     }
 
+    /// Get/load the raw content of this input.
     fn get_content(&self) -> anyhow::Result<Cow<'_, str>>;
 }
 
 #[derive(Clone, EnumTryAs)]
 #[enum_dispatch(SingleInputTrait)]
 pub(crate) enum SingleInput {
+    /// Read from a file.
     File(FileInput),
+    /// Direct text input via the command line.
     Text(TextInput),
+    /// Read from standard input.
     Stdin(StdinInput),
 }
 impl SingleInput {
+    /// Parse a string into a [`SingleInput`], trying to automatically detect the input
+    /// type based on its contents.
+    ///
+    /// For instance, an `input_string` that corresponds to a valid filepath will be parsed as
+    /// a [`SingleInput::File`].
     pub(crate) fn parse_string(input_string: &str) -> Self {
         if let Ok(file) = FileInput::try_from_path(Path::new(input_string)) {
             // Input is a valid filepath.
@@ -71,6 +81,7 @@ impl InputTrait for SingleInput {
 }
 
 pub trait SingleInputOptionExt {
+    /// Returns the contained [`Some`] value if some, otherwise returns [`SingleInput::Stdin`].
     fn unwrap_or_read_from_stdin(self) -> SingleInput;
 }
 impl SingleInputOptionExt for Option<SingleInput> {
@@ -85,9 +96,13 @@ pub(crate) struct FileInput {
     path: PathBuf,
 }
 impl FileInput {
+    /// The path of the file.
     pub(crate) fn path(&self) -> &PathBuf {
         &self.path
     }
+
+    /// Try to create a `FileInput` from the given path. If the path does not point to a valid
+    /// file, this will fail.
     pub(crate) fn try_from_path(path: &Path) -> anyhow::Result<Self> {
         let metadata = std::fs::metadata(path);
         if metadata?.is_file() {
@@ -100,6 +115,9 @@ impl FileInput {
             )
         }
     }
+
+    /// Create a file input from the given path, without checking if that path points to a valid
+    /// file.
     pub(crate) fn from_path_unchecked(path: &Path) -> Self {
         Self {
             path: path.to_owned(),
@@ -107,9 +125,12 @@ impl FileInput {
     }
 }
 impl SingleInputTrait for FileInput {
+    /// Read content from the file.
     fn get_content(&self) -> anyhow::Result<Cow<'_, str>> {
         Ok(std::fs::read_to_string(&self.path)?.into())
     }
+
+    /// Detect the parser that should be used for the given file.
     fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
         match self.path.extension().map(|ext| ext.to_str().unwrap()) {
             Some("md") => Box::new(Markdown::default()),

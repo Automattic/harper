@@ -9,6 +9,7 @@ pub mod multi_input;
 use multi_input::MultiInput;
 use strum_macros::EnumTryAs;
 
+/// The general trait implemented by all input types.
 #[enum_dispatch]
 pub(crate) trait InputTrait {
     /// Gets a human-readable identifier for the input. For example, this can be a filename, or
@@ -30,8 +31,7 @@ pub(super) enum AnyInput {
 // This allows this type to be directly used with clap as an argument.
 // https://docs.rs/clap/latest/clap/macro.value_parser.html
 impl From<String> for AnyInput {
-    /// Converts the given string into an `Input`. `Input` is automatically set to the correct variant
-    /// depending on whether `input_string` is a valid filepath or not.
+    /// Converts the given string into an `Input` by trying to detect the input type.
     fn from(input_string: String) -> Self {
         if let Ok(multi_input) = MultiInput::try_parse_string(&input_string) {
             Self::Multi(multi_input)

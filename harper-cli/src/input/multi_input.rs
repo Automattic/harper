@@ -9,6 +9,10 @@ use super::InputTrait;
 
 #[enum_dispatch]
 pub(crate) trait MultiInputTrait: InputTrait {
+    /// Get an iterator of [`SingleInput`] from this `MultiInput`.
+    ///
+    /// For instance, if this is a directory input, the returned inputs might correspond to the
+    /// files inside that directory.
     #[allow(dead_code)]
     fn iter_inputs(&self) -> anyhow::Result<Box<dyn Iterator<Item = SingleInput> + '_>>;
 }
@@ -16,9 +20,12 @@ pub(crate) trait MultiInputTrait: InputTrait {
 #[derive(Clone, EnumTryAs)]
 #[enum_dispatch(MultiInputTrait)]
 pub(crate) enum MultiInput {
+    /// A directory.
     Dir(DirInput),
 }
 impl MultiInput {
+    /// Try to parse a `MultiInput` from the provided string. This might fail if the provided
+    /// string cannot be parsed as a supported `MultiInput`.
     pub(crate) fn try_parse_string(input_string: &str) -> anyhow::Result<Self> {
         let metadata = std::fs::metadata(input_string);
         if metadata?.is_dir() {
@@ -44,11 +51,14 @@ impl InputTrait for MultiInput {
     }
 }
 
+/// A directory.
 #[derive(Clone)]
 pub(crate) struct DirInput {
+    /// The path pointing to the directory.
     path: PathBuf,
 }
 impl DirInput {
+    /// An iterator of the files inside the directory, as [`FileInput`].
     pub(crate) fn iter_files(&self) -> anyhow::Result<impl Iterator<Item = FileInput>> {
         Ok(std::fs::read_dir(&self.path)?.filter_map(|dir_entry| {
             if let Ok(dir_entry) = dir_entry
