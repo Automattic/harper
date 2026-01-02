@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
@@ -14,7 +15,11 @@ use harper_core::{
     {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
-use crate::input::Input;
+use crate::input::{
+    AnyInput, InputTrait,
+    multi_input::MultiInput,
+    single_input::{SingleInput, SingleInputTrait, StdinInput},
+};
 
 /// Sync version of harper-ls/src/dictionary_io@load_dict
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
@@ -56,13 +61,13 @@ enum ReportStyle {
 
 struct InputInfo<'a> {
     parent_input_id: &'a str,
-    input: Input,
+    input: &'a AnyInput,
 }
 
 struct InputJob {
     batch_mode: bool,
     parent_input_id: String,
-    input: Input,
+    input: AnyInput,
 }
 
 trait InputPath {
@@ -83,7 +88,7 @@ impl InputPath for InputInfo<'_> {
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
-    inputs: Vec<Input>,
+    inputs: Vec<AnyInput>,
     lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
@@ -98,7 +103,7 @@ pub fn lint(
 
     // Zero or more inputs, default to stdin if not provided
     let all_user_inputs = if inputs.is_empty() {
-        vec![Input::try_from_stdin().unwrap()]
+        vec![SingleInput::from(StdinInput).into()]
     } else {
         inputs
     };
@@ -159,36 +164,25 @@ pub fn lint(
 
     let mut input_jobs = Vec::new();
     for user_input in all_user_inputs {
-        let (batch_mode, maybe_dir) = match &user_input {
-            Input::Dir(dir) => (true, std::fs::read_dir(dir).ok()),
-            _ => (false, None),
-        };
+        if let Some(dir_input) = user_input
+            .try_as_multi_ref()
+            .and_then(MultiInput::try_as_dir_ref)
+        {
+            let mut file_entries: Vec<_> = dir_input.iter_files()?.collect();
 
-        let parent_input_id = if batch_mode {
-            user_input.get_identifier().to_string()
-        } else {
-            String::new()
-        };
+            file_entries.sort_by(|a, b| a.path().file_name().cmp(&b.path().file_name()));
 
-        if let Some(dir) = maybe_dir {
-            let mut entries: Vec<_> = dir
-                .filter_map(Result::ok)
-                .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
-                .collect();
-
-            entries.sort_by_key(|entry| entry.file_name());
-
-            for entry in entries {
+            for entry in file_entries.into_iter().map(SingleInput::from) {
                 input_jobs.push(InputJob {
-                    batch_mode,
-                    parent_input_id: parent_input_id.clone(),
-                    input: Input::File(entry.path()),
+                    batch_mode: true,
+                    parent_input_id: user_input.get_identifier().to_string(),
+                    input: entry.into(),
                 });
             }
         } else {
             input_jobs.push(InputJob {
-                batch_mode,
-                parent_input_id,
+                batch_mode: false,
+                parent_input_id: String::new(),
                 input: user_input.clone(),
             });
         }
@@ -221,7 +215,7 @@ pub fn lint(
                 // The current input to be linted
                 InputInfo {
                     parent_input_id: parent_id_ref,
-                    input,
+                    input: &input,
                 },
             )
         };
@@ -269,7 +263,7 @@ type SpelloCount = HashMap<String, usize>;
 struct FullInputInfo<'a> {
     input: InputInfo<'a>,
     doc: Document,
-    source: String,
+    source: Cow<'a, str>,
 }
 
 fn lint_one_input(
@@ -305,26 +299,23 @@ fn lint_one_input(
     // Create a new merged dictionary for this input.
     let mut merged_dictionary = curated_plus_user_dict.clone();
 
-    // If processing a file, try to load its per-file dictionary
-    if let Input::File(ref file) = current.input {
-        let dict_path = file_dict_path.join(file_dict_name(file));
-        if let Ok(file_dictionary) = load_dict(&dict_path) {
-            merged_dictionary.add_dictionary(Arc::new(file_dictionary));
-            println!(
-                "{}: Note: Using per-file dictionary: {}",
-                current.format_path(),
-                dict_path.display()
-            );
+    if let Some(single_input) = current.input.try_as_single_ref() {
+        // If processing a file, try to load its per-file dictionary
+        if let Some(file) = single_input.try_as_file_ref() {
+            let dict_path = file_dict_path.join(file_dict_name(file.path()));
+            if let Ok(file_dictionary) = load_dict(&dict_path) {
+                merged_dictionary.add_dictionary(Arc::new(file_dictionary));
+                println!(
+                    "{}: Note: Using per-file dictionary: {}",
+                    current.format_path(),
+                    dict_path.display()
+                );
+            }
         }
-    }
 
-    match current
-        .input
-        .load(batch_mode, markdown_options, &merged_dictionary)
-    {
-        Err(err) => eprintln!("{}", err),
-        Ok((maybe_doc, source)) => {
-            if let Some(doc) = maybe_doc {
+        match single_input.load(markdown_options, &merged_dictionary) {
+            Err(err) => eprintln!("{}", err),
+            Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), dialect);
 
