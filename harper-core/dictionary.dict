@@ -9938,8 +9938,6 @@ Tb/                 # Terbium
 Tbilisi/Og
 Tc/                 # Technetium
 Tchaikovsky/Og
-TeX/Og              # Typesetting engine
-TeXes
 Teasdale/Og
 Technicolor/NgJ
 Tecumseh/Og
@@ -9995,7 +9993,7 @@ Tetris/Og
 Teuton/NgSJ
 Teutonic/JNg
 Tevet/Og
-Tex/Og
+Tex/Og              # Man's name - must come before TeX!
 Texaco/g            # company
 Texan/JNgS
 Texarkana/Og
@@ -53345,6 +53343,8 @@ Tandy/Og            # surname, given name, old computer company
 TechCrunch/g
 Tencent/Og
 TensorFlow/Og
+TeX/Og              # Typesetting engine; must come after Tex!
+TeXes
 ThinkPad/OgS        # pc brand
 TikTok/Sg
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
