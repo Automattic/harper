@@ -40,6 +40,8 @@ mod lint;
 use crate::lint::lint;
 use lint::LintOptions;
 
+mod check_linters;
+
 /// A debugging tool for the Harper grammar checker.
 #[derive(Debug, Parser)]
 #[command(version, about)]
@@ -186,6 +188,12 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<Input>,
+    },
+    /// Check the linters
+    CheckLinters {
+        /// Show detailed output
+        #[arg(short, long)]
+        verbose: bool,
     },
 }
 
@@ -922,6 +930,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::CheckLinters { verbose } => check_linters::check_linters(verbose),
     }
 }
 
