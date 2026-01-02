@@ -14,7 +14,7 @@ pub(crate) trait MultiInputTrait: InputTrait {
     /// For instance, if this is a directory input, the returned inputs might correspond to the
     /// files inside that directory.
     #[allow(dead_code)]
-    fn iter_inputs(&self) -> anyhow::Result<Box<dyn Iterator<Item = SingleInput> + '_>>;
+    fn iter_inputs(&self) -> anyhow::Result<impl Iterator<Item = SingleInput>>;
 }
 
 #[derive(Clone, EnumTryAs)]
@@ -72,8 +72,8 @@ impl DirInput {
     }
 }
 impl MultiInputTrait for DirInput {
-    fn iter_inputs(&self) -> anyhow::Result<Box<dyn Iterator<Item = SingleInput> + '_>> {
-        Ok(Box::new(self.iter_files()?.map(|file| file.into())))
+    fn iter_inputs(&self) -> anyhow::Result<impl Iterator<Item = SingleInput>> {
+        Ok(self.iter_files()?.map(|file| file.into()))
     }
 }
 impl InputTrait for DirInput {
