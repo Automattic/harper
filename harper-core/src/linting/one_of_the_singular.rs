@@ -1,6 +1,6 @@
 use crate::{
-    CharStringExt, Lint, Lrc, Token,
-    expr::{Expr, Repeating, SequenceExpr},
+    CharStringExt, Lint, Token,
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
@@ -12,8 +12,6 @@ pub struct OneOfTheSingular<D: Dictionary + 'static> {
 
 pub trait SeqExprExt {
     fn then_my_noun_or_adjective(self) -> Self;
-    // fn then_one_or_more_ws_separated(self, expr: impl Expr + 'static) -> Self;
-    fn one_or_more_ws_separated(expr: impl Expr + 'static) -> Self;
 }
 
 impl SeqExprExt for SequenceExpr {
@@ -23,9 +21,8 @@ impl SeqExprExt for SequenceExpr {
             // leading up to but not including a plural noun, even when that plural noun is the result of
             // this linter having corrected a mistake.
             // eg. "one of the train station" -> "one of the train stations" will now match on "one of the train".
-            (t.kind.is_noun() || t.kind.is_adjective())
+            (t.kind.is_non_possessive_noun() || t.kind.is_adjective())
                 && !t.kind.is_preposition() // "in" etc.
-                // && !t.kind.is_conjunction()
                 && !t.kind.is_pronoun() // "who" etc.
                 && !t
                     .span
@@ -33,22 +30,15 @@ impl SeqExprExt for SequenceExpr {
                     .eq_any_ignore_ascii_case_str(&["ah", "few", "first", "said", "uh"])
         })
     }
-
-    fn one_or_more_ws_separated(expr: impl Expr + 'static) -> Self {
-        let expr = Lrc::new(expr);
-        SequenceExpr::default().then(SequenceExpr::default().then(expr.clone()).then(
-            Repeating::new(Box::new(SequenceExpr::default().t_ws().then(expr)), 0),
-        ))
-    }
 }
 
 impl<D: Dictionary + 'static> OneOfTheSingular<D> {
     pub fn new(dict: D) -> Self {
-        let adj_or_nouns = SequenceExpr::one_or_more_ws_separated(
-            SequenceExpr::default().then_my_noun_or_adjective(),
-        );
+        let advs =
+            SequenceExpr::default().then_one_or_more_spaced(SequenceExpr::default().then_adverb());
 
-        let advs = SequenceExpr::one_or_more_ws_separated(SequenceExpr::default().then_adverb());
+        let adj_or_nouns = SequenceExpr::default()
+            .then_one_or_more_spaced(SequenceExpr::default().then_my_noun_or_adjective());
 
         Self {
             expr: Box::new(
@@ -297,6 +287,14 @@ mod tests {
     fn dont_flag_being() {
         assert_no_lints(
             "HMMs underlie the functioning of stochastic taggers and are used in various algorithms one of the most widely used being the bi-directional inference algorithm.",
+            OneOfTheSingular::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_one_of_the_rabbits_gloves() {
+        assert_no_lints(
+            "As she said this she looked down at her hands, and was surprised to see that she had put on one of the Rabbit’s little white kid gloves while she was talking.",
             OneOfTheSingular::new(FstDictionary::curated()),
         );
     }
