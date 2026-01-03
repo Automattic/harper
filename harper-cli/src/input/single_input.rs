@@ -43,7 +43,7 @@ pub(crate) trait SingleInputTrait: InputTrait {
 }
 
 #[derive(Clone, EnumTryAs)]
-#[enum_dispatch(SingleInputTrait)]
+#[enum_dispatch(SingleInputTrait, InputTrait)]
 pub(crate) enum SingleInput {
     /// Read from a file.
     File(FileInput),
@@ -70,15 +70,6 @@ impl SingleInput {
         }
     }
 }
-impl InputTrait for SingleInput {
-    fn get_identifier(&self) -> Cow<'_, str> {
-        match self {
-            SingleInput::File(input) => input.get_identifier(),
-            SingleInput::Text(input) => input.get_identifier(),
-            SingleInput::Stdin(input) => input.get_identifier(),
-        }
-    }
-}
 
 pub trait SingleInputOptionExt {
     /// Returns the contained [`Some`] value if some, otherwise returns [`SingleInput::Stdin`].
@@ -86,7 +77,7 @@ pub trait SingleInputOptionExt {
 }
 impl SingleInputOptionExt for Option<SingleInput> {
     fn unwrap_or_read_from_stdin(self) -> SingleInput {
-        self.unwrap_or_else(|| SingleInput::from(StdinInput))
+        self.unwrap_or_else(|| StdinInput.into())
     }
 }
 

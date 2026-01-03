@@ -18,7 +18,7 @@ pub(crate) trait MultiInputTrait: InputTrait {
 }
 
 #[derive(Clone, EnumTryAs)]
-#[enum_dispatch(MultiInputTrait)]
+#[enum_dispatch(MultiInputTrait, InputTrait)]
 pub(crate) enum MultiInput {
     /// A directory.
     Dir(DirInput),
@@ -39,14 +39,6 @@ impl MultiInput {
                 input_string,
                 std::any::type_name::<Self>()
             )
-        }
-    }
-}
-
-impl InputTrait for MultiInput {
-    fn get_identifier(&self) -> Cow<'_, str> {
-        match self {
-            MultiInput::Dir(input) => input.get_identifier(),
         }
     }
 }
