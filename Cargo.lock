@@ -1911,6 +1911,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "enum_dispatch"
+version = "0.3.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aa18ce2bc66555b3218614519ac839ddb759a7d6720732f979ef8d13be147ecd"
+dependencies = [
+ "once_cell",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "enumset"
 version = "1.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2695,6 +2707,7 @@ dependencies = [
  "ariadne",
  "clap",
  "dirs 6.0.0",
+ "enum_dispatch",
  "harper-asciidoc",
  "harper-comments",
  "harper-core",
@@ -2709,6 +2722,7 @@ dependencies = [
  "serde",
  "serde_json",
  "strum",
+ "strum_macros",
 ]
 
 [[package]]
