@@ -75,6 +75,7 @@ use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::go_so_far_as_to::GoSoFarAsTo;
 use super::good_at::GoodAt;
+use super::handful::Handful;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -136,6 +137,7 @@ use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
+use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
 use super::progressive_needs_be::ProgressiveNeedsBe;
@@ -500,7 +502,6 @@ impl LintGroup {
         insert_expr_rule!(AllowTo, true);
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
-        insert_struct_rule!(AnA, true);
         insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
@@ -553,6 +554,7 @@ impl LintGroup {
         insert_expr_rule!(FriendOfMe, true);
         insert_expr_rule!(GoSoFarAsTo, true);
         insert_expr_rule!(GoodAt, true);
+        insert_expr_rule!(Handful, true);
         insert_expr_rule!(HavePronoun, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
@@ -611,6 +613,7 @@ impl LintGroup {
         insert_expr_rule!(Oxymorons, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
+        insert_expr_rule!(PluralWrongWordOfPhrase, true);
         insert_expr_rule!(PossessiveYour, true);
         insert_expr_rule!(ProgressiveNeedsBe, true);
         insert_expr_rule!(PronounAre, true);
@@ -715,6 +718,9 @@ impl LintGroup {
 
         out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
         out.config.set_rule_enabled("TransposedSpace", true);
+
+        out.add("AnA", AnA::new(dialect));
+        out.config.set_rule_enabled("AnA", true);
 
         out
     }

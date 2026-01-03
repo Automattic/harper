@@ -99,7 +99,7 @@ Absalom/Og
 Abuja/Og
 Abyssinia/OgJ
 Abyssinian/JNOg
-Ac/Ng
+Ac/                 # Actinium
 Acadia/Og
 Acapulco/Og
 Accenture/g
@@ -176,7 +176,7 @@ Afro/NSg
 Afrocentric/J
 Afrocentrism/Ng
 Afrofuturism/Ng
-Ag/Ng
+Ag/                 # Silver
 Agamemnon/Og
 Agana/O
 Agassi/Og
@@ -220,7 +220,7 @@ Akita/ONg
 Akiva/Og
 Akkad/Og
 Akron/Og
-Al/NOg              # aluminium, aluminum; given name
+Al/Og               # aluminium, aluminum; given name
 Ala/NOS
 Alabama/NOg
 Alabaman/JNgS
@@ -367,7 +367,7 @@ Alyce/g
 Alyson/Og
 Alyssa/Og
 Alzheimer/Ng
-Am/J>gn
+Am/                 # Americium
 Amadeus/Og
 Amado/Og
 Amalia/Og
@@ -572,7 +572,7 @@ Aquila/Og
 Aquinas/Og
 Aquino/Og
 Aquitaine/Og
-Ar/Ng
+Ar/                 # Argon
 Ara/Og
 Arab/JNSg
 Arabia/Og
@@ -669,7 +669,7 @@ Artie/Og
 Arturo/g
 Aruba/Og
 Aryan/NOSgJ
-As/Ng
+As/                 # Arsenic
 Asahi/Og
 Asama/g
 Ascella/Og
@@ -752,7 +752,7 @@ Attlee/Og
 Attn
 Attucks/g
 Atwood/Og
-Au/Og
+Au/                 # Gold
 Aubrey/Og
 Auburn/Og
 Auckland/Og
@@ -829,7 +829,7 @@ Azov/Og
 Aztec/NOSgJ         # ancient civilization
 Aztecan/JNg
 Aztlan/Og
-B/NOg^n
+B/                  # Boron
 BA/NOgJ
 BASIC/OgS
 BB/NOg
@@ -859,7 +859,7 @@ BSD/ONSg
 BTU/N
 BTW/
 BYOB/
-Ba/ONg
+Ba/                 # Barium
 Baal/OgS
 Baath/Og
 Baathist/JNg
@@ -1031,7 +1031,7 @@ Baylor/Og
 Bayonne/Og
 Bayreuth/Og
 Baywatch/g
-Be/gH
+Be/                 # Beryllium
 Beach/Og
 Beadle/Og
 Beamer/NgS          # nickname for BMW
@@ -1214,7 +1214,7 @@ Bhopal/Og
 Bhutan/Og
 Bhutanese/JONg
 Bhutto/Og
-Bi/g
+Bi/                 # Bismuth
 Bialystok/Og
 Bianca/Og
 Bib
@@ -1254,7 +1254,7 @@ BitTorrent/Og
 Bizet/Ng
 Bjerknes/g
 Bjork/Og
-Bk/g
+Bk/                 # Berkelium
 BlackBerry/NgV
 Blackbeard/Og
 Blackburn/Og
@@ -1399,7 +1399,7 @@ Bowman/Og
 Boyd/Og
 Boyer/Og
 Boyle/Og
-Br/NgJ^             # bromine
+Br/                 # Bromine
 Brad/OgY
 Bradbury/ONg        # ray =
 Braddock/Og
@@ -1634,7 +1634,7 @@ Byron/Og
 Byronic/Jg
 Byzantine/JNgS
 Byzantium/ONg
-C/NOSgVJ
+C/NOg               # Carbon
 CA/ON               # US state (California)
 CAD/Ng              # computer-aided design; canadian dollar
 CAI/NO
@@ -1689,7 +1689,7 @@ CUDA/ONg            # computing architecture
 CV/NOSJ             # curriculum vitae
 CVS/NOg             # version control
 CZ/N
-Ca/g                # calcium
+Ca/                 # Calcium
 Cabernet/g
 Cabot/Og
 Cabral/g
@@ -1935,8 +1935,8 @@ Cayman/JOg
 Cayuga/NOSg
 Cayuse/N
 Cb/
-Cd/g
-Ce/Og
+Cd/                 # Cadmium
+Ce/                 # Cerium
 Ceausescu/g
 Cebu/Og
 Cebuano/OgJ
@@ -1973,7 +1973,7 @@ Cetus/Og
 Ceylon/ONg          # old name of Sri Lanka
 Ceylonese/JN
 Cezanne/g
-Cf/g
+Cf/                 # Californium
 Ch'in/Og
 Chablis/ONg
 Chad/ONg
@@ -2173,7 +2173,7 @@ Cisco/Og
 Citibank/Og
 Citigroup/Og
 Citroen/Og
-Cl/Ngv
+Cl/                 # Chlorine
 Claiborne/Og
 Clair/Og
 Claire/Og
@@ -2233,9 +2233,9 @@ Clovis/Og
 Clyde/Og
 Clydesdale/NOg
 Clytemnestra/Og
-Cm/g
+Cm/                 # Curium
 Cmdr/N
-Co/Ng
+Co/                 # Cobalt
 Cobain/Og
 Cobb/Og
 Cochabamba/Og
@@ -2436,7 +2436,7 @@ Coy/Og
 Coyle/Og
 Cozumel/Og
 Cpl/N
-Cr/Ng^
+Cr/                 # Chromium
 Crabbe/Og
 Craft/Og
 Craig/Og
@@ -2496,7 +2496,7 @@ Csonka/g
 Ct/N
 Ctesiphon/Og
 Cthulhu/Og
-Cu/Ng
+Cu/                 # Copper
 Cuba/Og
 Cuban/NSgJ
 Cuchulain/g
@@ -3021,7 +3021,7 @@ Dvina/g
 Dvorak/OgJ
 Dwayne/Og
 Dwight/Og
-Dy/Og
+Dy/                 # Dysprosium
 Dyer/Og
 Dylan/Og
 DynamoDB/g
@@ -3259,7 +3259,7 @@ Epsom/Og
 Epson/g
 Epstein/OgV
 Equuleus/Og
-Er/g
+Er/                 # Erbium
 Erasmus/ONg
 Erato/Og
 Eratosthenes/Og
@@ -3336,7 +3336,7 @@ Eton/Og
 Etruria/Og
 Etruscan/JNOg
 Etta/Og
-Eu/g
+Eu/                 # Europium
 Eucharist/NgS
 Eucharistic/J
 Euclid/Og
@@ -3401,7 +3401,7 @@ Eyre/Og
 Eysenck/g
 Ezekiel/Og
 Ezra/Og
-F/JNOgVd
+F/                  # Fluorine
 F1/9g
 FAA/O
 FAQ/NSg
@@ -3483,7 +3483,7 @@ Fawkes/Og
 Fay/Og
 Faye/Og
 Fayetteville/Og
-Fe/Ng
+Fe/                 # Iron
 Feb/Og
 February/OgS
 Fed/OgS
@@ -3582,7 +3582,7 @@ FLOSS/ONV           # free libre open source software
 Flowers/Og
 Floyd/Og
 Flynn/Og
-Fm/g
+Fm/                 # Fermium
 Foch/ONg
 Fokker/ONg
 Foley/Og
@@ -3613,7 +3613,7 @@ Fourneyron/g
 Fourth/O
 Fowler/Og
 Fox/NOSg
-Fr/Ngd
+Fr/                 # Francium
 Fragonard/g
 Fran/Og
 France/OgS
@@ -3760,8 +3760,8 @@ GTO/NSg
 GTR/NgS
 GTS/NSg
 GU/N
-GUI/ONg
-Ga/ONg
+GUI/ONgS
+Ga/                 # Gallium
 Gable/Og
 Gabon/Og
 Gabonese/NgJ
@@ -3866,10 +3866,10 @@ Gay/Og
 Gayle/Og
 Gaza/Og
 Gaziantep/Og
-Gd/g
+Gd/                 # Gadolinium
 Gdańsk/Og
 Gdansk/Og
-Ge/Og
+Ge/                 # Germanium
 Geffen/Og
 Gehenna/Og
 Gehrig/Og
@@ -4394,7 +4394,7 @@ Hayworth/Og
 Hazel/Og
 Hazleton/Og
 Hazlitt/g
-He/Ia3Og            # I~pronoun a~personal 3~person .~singular s~subject / Og~proper noun+possessive
+He/Ia3Og            # Helium; I~pronoun a~personal 3~person .~singular s~subject / Og~proper noun+possessive
 Head/Og
 Healey/Og
 Healy/Og
@@ -4531,8 +4531,8 @@ Heyerdahl/g
 Heywood/Og
 Hezbollah/Og
 Hezekiah/Og
-Hf/g                # hafnium
-Hg/g                # mercury
+Hf/                 # Hafnium
+Hg/                 # Mercury
 Hialeah/Og
 Hiawatha/Og
 Hibernia/Og
@@ -4588,7 +4588,7 @@ Hitchcock/Og
 Hitler/ONSg
 Hittite/NOSgJ
 Hmong/NOgJ
-Ho/NOg
+Ho/O                    # Holmium; Ho Chi Minh
 Hobart/Og
 Hobbes/Og
 Hobbs/Og
@@ -4754,7 +4754,7 @@ Hymen/Og
 Hyperion/Og
 Hyundai/Ng
 Hz/g
-I/~Ia1s.            # I~pronoun a~personal 1~person .~singular s~subject
+I/~Ia1s.            # Iodone; I~pronoun a~personal 1~person .~singular s~subject
 I'd/~
 I'd've/
 I'll/~
@@ -4847,7 +4847,7 @@ Imhotep/Og
 Imodium/g
 Imogene/Og
 Imus/Og
-In/g
+In/                 # Indium
 Ina/Og
 Inc/J
 Inca/NSg
@@ -4907,7 +4907,7 @@ Ipswich/O
 Iqaluit/Og
 Iqbal/Og
 Iquitos/Og
-Ir/g
+Ir/                 # Iridium
 Ira/Og
 Iran/Og
 Iranian/NOSgJ
@@ -5287,7 +5287,7 @@ Justine/Og
 Justinian/OgJ
 Jutland/Og
 Juvenal/Og
-K/NSgn
+K/                  # Potassium
 KB/NOg              # kilobyte, cf. Kb
 KC/ON
 KFC/Og              # company
@@ -5593,7 +5593,7 @@ Kosygin/g
 Kotlin/Og
 Koufax/g
 Kowloon/Og
-Kr/Og
+Kr/                 # Krypton
 Kraft/Og
 Krakatoa/Og
 Kraken/OgS
@@ -5688,7 +5688,7 @@ LPN/NSg
 LSAT
 LSD/Ng
 LVN/N
-La/ONSg
+La/                 # Lanthanum
 Lab/NO
 Laban/Og
 Labor/Og_           # the australian political party doesn't use the normal australian spelling of 'labour'
@@ -5927,7 +5927,7 @@ Lexington/Og
 Lexus/ONSg
 Lhasa/OgS
 Lhotse/Og
-Li/OgY
+Li/                 # Lithium
 Liam/Og
 Liaoning/Og
 Libby/Og
@@ -6106,10 +6106,10 @@ Lowlands/O
 Loyang/Og
 Loyd/Og
 Loyola/Og
-Lr/
+Lr/                 # Lawrencium
 Lt/N
 Ltd/JN
-Lu/Og
+Lu/                 # Lutetium
 Luanda/Og
 Luann/Og
 Lubavitcher/NgJ
@@ -6682,7 +6682,7 @@ McNeil/Og
 McPherson/Og
 McQueen/Og
 McVeigh/Og
-Md/Og
+Md/                 # Mendelevium
 Me/NOI
 Mead/Og
 Meade/Og
@@ -6816,7 +6816,7 @@ Meyer/OgS
 Meyerbeer/g
 Meyers/Og
 Mfume/g
-Mg/Ng
+Mg/                 # Magnesium
 Mgr
 MiB                 # mebibyte
 MiG/Ng
@@ -6951,9 +6951,9 @@ Mizar/Og
 Mk/N
 Mlle/N
 Mme/NS
-Mn/Ng               # manganese
+Mn/                 # Manganese
 Mnemosyne/Og
-Mo/Og               # molybdenum
+Mo/                 # Molybdenum
 Mobil/Og
 Mobile/Og
 Mobutu/g
@@ -7109,7 +7109,7 @@ Mozilla/g           # company
 Mr/NSg
 Ms/NS
 Msgr
-Mt/N
+Mt/                 # Meitnerium
 Muawiya/g
 Mubarak/Og          # president
 Mueller/Og
@@ -7184,7 +7184,7 @@ Myrtle/Og
 Mysore/Og           # old name of karnataka state and mysuru city
 Mysuru/Og
 Myst/g
-N/Ng
+N/                  # Nitrogen
 N'Djamena/O         # capital of Chad
 NAACP/Og
 NAFTA/Og            # trade agreement
@@ -7242,7 +7242,7 @@ NY/O                # US state (New York)
 NYC/O
 NYSE/O              # stock exchange
 NZ/Og               # New Zealand
-Na/Og               # sodium
+Na/                 # Sodium
 Nabisco/g           # company
 Nabokov/g
 Nader/Og
@@ -7318,10 +7318,10 @@ Nazareth/Og
 Nazca/Og
 Nazi/NOSgJ
 Nazism/NgS
-Nb/g                # niobium
-Nd/g                # neodymium
+Nb/                 # Niobium
+Nd/                 # Neodymium
 Ndjamena/g
-Ne/g                # neon
+Ne/                 # Neon
 Neal/Og
 Neanderthal/JNSg
 Neapolitan/JNOg
@@ -7394,7 +7394,7 @@ Newtonian/JNg
 Nexis/g
 Ngaliema/g
 Nguyen/Og
-Ni/Og
+Ni/                 # Nickel
 Niagara/ONg
 Niamey/Og
 Nibelung/Ng
@@ -7454,7 +7454,7 @@ Nita/g
 Nivea/g
 Nixon/ONg
 Nkrumah/g
-No/NOSg
+No/                 # Nobelium
 NoDoz/g             # trademark
 Noah/ONg
 Nobel/ONg           # prize
@@ -7518,7 +7518,7 @@ Novosibirsk/Og
 Noxzema/g
 Noyce/Og
 Noyes/Og
-Np/g
+Np/                 # Neptunium
 Nubia/Og
 Nubian/NgJ
 Nukualofa/Og
@@ -7534,7 +7534,7 @@ NutraSweet/g        # trademark
 NyQuil/g            # trademark
 Nyasa/g
 Nyerere/Og
-O/NOSgPJ
+O/NOSgPJ            # Oxygen
 O'Brien/Og
 O'Casey/Og
 O'Connell/Og
@@ -7728,7 +7728,7 @@ Orval/g
 Orville/Og
 Orwell/Og
 Orwellian/Jg
-Os/Ng               # osmium
+Os/                 # Osmium
 Osage/OgS
 Osaka/Og            # city
 Osbert/g
@@ -7771,7 +7771,7 @@ Ozark/ONSg
 Ozarks/NOg
 Ozymandias/Ng
 Ozzie/ONgJ
-P/NOgJn
+P/                  # Phosphorus
 PA/ONgJ             # US state (Pennsylvania)
 PAC/NOg             # political action committee
 PARC/S              # xerox
@@ -7827,7 +7827,7 @@ PTO/ON
 PVC/Ng              # plastic
 PW/ON
 PX/N
-Pa/Ng               # protactinium
+Pa/                 # Protactinium
 Paar/Og
 Pablo/Og
 Pablum/Og
@@ -7955,8 +7955,8 @@ Pavlovian/Jg
 Pawnee/ONSgJ
 PayPal/ONgV         # company
 Payne/Og
-Pb/g                # lead
-Pd/g                # palladium
+Pb/                 # Lead
+Pd/                 # Palladium
 Peabody/Og
 Peace/ONg
 Peale/Og
@@ -8162,8 +8162,8 @@ Plutarch/ONg
 Pluto/Og
 Plymouth/ONg
 Plymouths/9
-Pm/g                # promethium
-Po/Og               # polonium
+Pm/                 # Promethium
+Po/                 # Polonium
 Pocahontas/ONg
 Pocatello/Og
 Pocono/Sg
@@ -8253,7 +8253,7 @@ PowerPoint/ONgV
 Powers/NOg
 Powhatan/NOg
 Poznan/Og
-Pr/Ng
+Pr/                 # Praseodymium
 Prada/g
 Prado/Og
 Praetorian/Ng
@@ -8324,11 +8324,11 @@ Pryor/Og
 Psalms/Og
 Psalter/Sg
 Psyche/Og
-Pt/g                # platinum
+Pt/                 # Platinum
 Ptah/Og
 Ptolemaic/Jg
 Ptolemy/OgS
-Pu/Og               # plutonium
+Pu/                 # Plutonium
 Puccini/Og
 Puck/Og
 Puckett/Og
@@ -8467,7 +8467,7 @@ RSVP'd/VtT
 RSVPed/VtT
 RTFM/
 RV/ONSgV
-Ra/ONg
+Ra/                 # Radium
 Rabat/Og
 Rabelais/Og
 Rabelaisian/Jg
@@ -8537,9 +8537,9 @@ Rayburn/ONg
 Rayleigh/Og
 Raymond/Og
 Raymundo/g
-Rb/g
+Rb/                 # Rubidium
 Rd
-Re/Og
+Re/                 # Rhenium
 Reading/Og
 Reagan/Og
 Reaganomics/Ng
@@ -8614,7 +8614,7 @@ Reykjavik/Og
 Reyna/g
 Reynaldo/g
 Reynolds/Og
-Rf/g
+Rf/                 # Rutherfordium
 Rhea/Og
 Rhee/Og
 Rheingau/g
@@ -8680,7 +8680,7 @@ Riverside/Og
 Riviera/OgS
 Riyadh/Og
 Rizal/Og
-Rn/g
+Rn/                 # Radon
 Roach/Og
 Roanoke/Og
 Rob/Og
@@ -8831,7 +8831,7 @@ Royal/ONgJ
 Royce/Og
 Rozelle/Og
 Rte
-Ru/gH
+Ru/                 # Ruthenium
 Rubaiyat/g
 Rubbermaid/g
 Ruben/OgS
@@ -9098,8 +9098,8 @@ Sawyer/Og
 Saxon/NOSgJ
 Saxony/ONg
 Sayers/Og
-Sb/g
-Sc/Ng
+Sb/                 # Antimony
+Sc/                 # Scandium
 Scala/Og
 Scan
 Scandinavia/Og
@@ -9181,7 +9181,7 @@ Sculley/Og
 Scylla/Og
 Scythia/Og
 Scythian/JNOg
-Se/gH
+Se/                 # Selenium
 Seaborg/Og
 Seagate/Og          # hard drive company
 Seagram/Og
@@ -9376,7 +9376,7 @@ Shropshire/ONg
 Shula/Og
 Shylock/ONg
 Shylockian/g
-Si/Og
+Si/                 # Silicon
 Siam/Og             # old name of Thailand
 Siamese/JONg
 Sibelius/g
@@ -9465,7 +9465,7 @@ Slovene/JNOSg
 Slovenia/Og
 Slovenian/JNgS
 Slurpee/Ng
-Sm/JNg
+Sm/                 # Samarium
 Small/Og
 Smetana/Og
 Smirnoff/ONg
@@ -9477,7 +9477,7 @@ Smolensk/Og
 Smollett/Og
 Smuts/g
 Smyrna/O
-Sn/NgJ
+Sn/                 # Tin
 Snake/Og
 Snapple/g
 Snead/Og
@@ -9591,7 +9591,7 @@ Sputnik/NOg
 Sq
 Squanto/g
 Squibb/Og
-Sr/JNg
+Sr/                 # Strontium
 Srinagar/Og
 Srivijaya/g
 St/N
@@ -9836,7 +9836,7 @@ TVR/NOSg            # car company
 TWA/ONg
 TWX/O
 TX/ONV              # US state (Texas)
-Ta/g
+Ta/                 # Tantalum
 Tabasco/ONSg
 Tabatha/Og
 Tabernacle/Sg
@@ -9935,9 +9935,9 @@ Taurus/ONSg
 Tavares/Og
 Tawney/Og
 Taylor/Og
-Tb/g
+Tb/                 # Terbium
 Tbilisi/Og
-Tc/g
+Tc/                 # Technetium
 Tchaikovsky/Og
 Teasdale/Og
 Technicolor/NgJ
@@ -10001,7 +10001,7 @@ Texan/JNgS
 Texarkana/Og
 Texas/Og
 TeXes
-Th/NOg              # thorium
+Th/                 # Thorium
 Thackeray/Og
 Thad/Og
 Thaddeus/Og
@@ -10069,7 +10069,7 @@ Thurman/Og
 Thurmond/Og
 Thursday/NSg
 Thutmose/Og
-Ti/g                # titanium
+Ti/                 # Titanium
 Tia/Og
 Tianjin/Og
 TiB                 # tebibyte
@@ -10120,10 +10120,10 @@ Tito/Og             # president
 Titograd/Og         # old name of Podgorica
 Titus/Og
 Titusville/Og
-Tl/g                # thallium
+Tl/                 # Thallium
 Tlaloc/Og
 Tlingit/NOgJ
-Tm/Ng               # thulium
+Tm/                 # Thulium
 Tobago/Og
 Tobit/ONg
 Toby/ONg
@@ -10328,7 +10328,7 @@ Tyree/Og
 Tyrolean/JN
 Tyrone/ONg
 Tyson/Og
-U/g                 # removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
+U/                  # Uranium; removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 UAE/Og              # United Arab Emirates
 UAR/O
 UART/NgS            # electronics
@@ -10438,7 +10438,7 @@ Utrillo/g
 Uzbek/NOgJ
 Uzbekistan/Og
 Uzi/NSg
-V/NgP               # vanadium; ...
+V/                  # Canadium
 V10/NgS
 V12/NgS
 V6/NgS
@@ -10967,7 +10967,7 @@ Xamarin/g
 Xanadu/ONg
 Xanthippe/Ng
 Xavier/Og
-Xe/Sg
+Xe/                 # Xenon
 Xenakis/Og
 Xenia/Og
 Xenophon/Og
@@ -10986,7 +10986,7 @@ Xizang/Og
 Xmas/OgSV
 Xochipilli/g
 Xuzhou/Og
-Y/NOg
+Y/                  # Yttrium
 YMCA/ONg
 YMHA/O
 YMMV/
@@ -11022,7 +11022,7 @@ Yaroslavl/Og
 Yataro/g
 Yates/Og
 Yauco/Og
-Yb/g
+Yb/                 # Ytterbium
 Yeager/Og
 Yeats/Og
 Yekaterinburg/Og
@@ -11139,7 +11139,7 @@ Zionism/NwSg
 Zionist/NSgJ
 Ziploc/Ng           # trademark
 Žižek/Og            # slavoj -
-Zn/g                # zinc
+Zn/                 # Zinc
 Zoë/Og
 Zoe/Og
 Zola/Og
@@ -11152,7 +11152,7 @@ Zoroastrian/NgSJ
 Zoroastrianism/OgSw
 Zorro/ONg
 Zosma/Og
-Zr/g                # zirconium
+Zr/                 # Zirconium
 Zsigmondy/g
 Zubenelgenubi/Og
 Zubeneschamali/Og
@@ -13146,7 +13146,7 @@ artwork/~NgS
 arty/~J^>Np
 arugula/N
 arum/NSg
-as/~R
+as/~RCP
 asap/
 asbestos/~NmgV
 ascend/~VGdSr
@@ -13360,6 +13360,7 @@ atoll/~NgS
 atom/~NSg
 atomic/~JNQ
 atomicity/Nmg
+atomics/Nm          # like 'physics' looks plural but is a mass noun
 atomisation/NwgS!_₹
 atomise/VGd>SZ!_₹
 atomiser/NgS!_₹
@@ -15854,7 +15855,7 @@ builder/~Ng
 building/~NwgSV
 buildout/NwgS
 buildup/~NSg
-built/~JNVtTri
+built/~JVtTri
 builtin/JN
 bulb/~NgSV
 bulbous/J
@@ -26950,6 +26951,7 @@ graph/~N0gVdG
 grapheme/NSg
 graphic/~JNgS
 graphical/~JY
+graphics/N09
 graphite/~NwgV
 graphologist/NgS
 graphology/Nmg
@@ -27832,7 +27834,7 @@ headhunter/Ng
 headhunting/NmgV
 headily/Ry
 headiness/Nmg
-heading/~VSNg
+heading/~VSNwg
 headlamp/NgS
 headland/~NgS
 headless/~J
@@ -28092,7 +28094,7 @@ herd/~NgSVd>GZ
 herder/~NgS
 herdsman/N9g
 herdsmen/N9
-here/~NJR
+here/~JR            # removed `N` marginal noun sense complicates linting
 here's
 hereabout/S
 hereafter/~NSgJ
@@ -32434,7 +32436,7 @@ lorgnette/NSg
 loris/NgS
 lorn/JV
 lorry/~NSgV
-lose/~VbG>SNZz
+lose/~VbG>SZz
 loser/~NgS
 losing/~VJNmg
 loss/~NwgSV
@@ -32808,10 +32810,11 @@ mainsail/NgS
 mainspring/NgS
 mainstay/~NgS
 mainstream/~JNSgVdG
-maintain/~VGd>SZB
+maintain/~VGdSB
 maintainability/Nmg
 maintainable/JU
 maintained/~JVU
+maintainer/NgS
 maintenance/~Nmg
 maintop/NSg
 maisonette/NgS
@@ -32912,7 +32915,7 @@ manage/~VGd>SNZL
 manageability/Nmg
 manageable/~JU
 management/~NwgS
-manager/~Ng
+manager/~NgS
 manageress/NS
 managerial/~J
 manana/Ngm
@@ -35217,7 +35220,7 @@ nearshore/NV
 nearside/N
 nearsighted/JYp
 nearsightedness/Ng
-neat/~J>Y^NnpX
+neat/~J>Y^npX       # removed `N` as in `the neats vs the scruffies`
 neaten/VGd
 neath/~P
 neatness/Ng
@@ -46117,7 +46120,7 @@ staff's
 staffer/~NgS
 staffing/~VNg
 stag/~NgSVdGz
-stage/~NSgV
+stage/~NSgVdGU
 stagecoach/~NgSV
 stagecraft/Nmg
 stagehand/NgS
@@ -50486,6 +50489,7 @@ unspecific/J
 unspectacular/J
 unsporting/J
 unstable/~JV
+unstage/VdSG
 unsteady/J^>Vp
 unstick/VSG
 unstinting/JY
@@ -52012,7 +52016,7 @@ whizzbang/NgS
 whizzed/VtT
 whizzes/NVh
 whizzing/V6NJ
-who/~INg
+who/~Ig
 who'd/
 who'll/
 who're/
@@ -52465,7 +52469,7 @@ worshipful/~JN
 worshipped/VtT!@_₹
 worshipper/NgS!@_₹
 worshipping/V6N!@_₹
-worst/~JuNSgVGd
+worst/~JuVGd        # removed noun sense
 worsted/NgVJ
 wort/~Ng
 worth/~JNgV
@@ -53137,6 +53141,7 @@ MSE/NgS             # mean squared error
 MSNBC/Og            # media company
 MSVC                # Microsoft Visual C++
 MTA/NSg
+MVC                 # model-view-controller
 MacBook/OgS         # Apple product
 Manilas/N
 Manilla/Og
@@ -53186,6 +53191,7 @@ OCaml/Og            # programming language
 OG/NgS
 OOP/Nmg
 ORM/NOS             # object-relational mapping
+Obsidian/Og         # note-taking app
 Ollama/Og           # AI tool
 OpenAI/Og
 OpenBSD/Og          # operating system
@@ -53356,7 +53362,7 @@ WebSocket/Sg
 WhatsApp/NOgVG      # messaging app
 Wikilink/NSg        # !! please check and comment !! elsewhere we have wikilink
 Wikimedia/Og        # foundation that runs Wikipedia etc.
-Wireguard/Sg
+WireGuard/Sg
 WooCommerce/Og
 XFS/Ng              # file system
 XLR/Ng              # connector

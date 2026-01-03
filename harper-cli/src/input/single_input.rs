@@ -4,6 +4,7 @@ use std::{borrow::Cow, io::Read, path::PathBuf};
 use enum_dispatch::enum_dispatch;
 use strum_macros::EnumTryAs;
 
+use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::parsers::{Markdown, OrgMode, Parser};
 use harper_core::spell::Dictionary;
@@ -124,7 +125,7 @@ impl SingleInputTrait for FileInput {
     /// Detect the parser that should be used for the given file.
     fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
         match self.path.extension().map(|ext| ext.to_str().unwrap()) {
-            Some("md") => Box::new(Markdown::default()),
+            Some("md") | Some("markdown") => Box::new(Markdown::default()),
             Some("ink") => Box::new(InkParser::default()),
             Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
                 MarkdownOptions::default(),
@@ -132,6 +133,7 @@ impl SingleInputTrait for FileInput {
             Some("org") => Box::new(OrgMode),
             Some("typ") => Box::new(harper_typst::Typst),
             Some("py") | Some("pyi") => Box::new(PythonParser::default()),
+            Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
             Some("txt") => Box::new(PlainEnglish),
             _ => {
                 if let Some(comment_parser) =
