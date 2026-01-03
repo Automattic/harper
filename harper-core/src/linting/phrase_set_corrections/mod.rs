@@ -497,10 +497,16 @@ pub fn lint_group() -> LintGroup {
         ),
         "RiseTheQuestion" => (
             &[
-                (&["rise the question"], &["raise the question"]),
-                (&["rises the question"], &["raises the question"]),
-                (&["risen the question", "rose the question"], &["raised the question"]),
-                (&["rising the question"], &["raising the question"])
+                (&["rise the question", "arise the question"], &["raise the question"]),
+                (&["rises the question", "arises the question"], &["raises the question"]),
+                (
+                    &[
+                        "risen the question", "rose the question", "rised the question",
+                        "arisen the question", "arose the question", "arised the question"
+                    ],
+                    &["raised the question"]
+                ),
+                (&["rising the question", "arising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
