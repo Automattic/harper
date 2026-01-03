@@ -145,7 +145,7 @@
 		},
 		">": {
 			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
-			"//": "mnemonic: greater than is better",
+			"//": "mnemonic: greater than is better; singular of 'Z'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -267,6 +267,7 @@
 		},
 		"Z": {
 			"#": "'-(i)(e)rs' suffix",
+			"//": "plural of '>' agent noun suffix '-(i)(e)r'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
