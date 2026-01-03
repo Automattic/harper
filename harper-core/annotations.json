@@ -861,6 +861,14 @@
 				"dialects": "AUSTRALIAN"
 			}
 		},
+		"₹": {
+			"#": "IN property",
+			"//": "mnemonic: rupee symbol",
+			"propagate": true,
+			"metadata": {
+				"dialects": "INDIAN"
+			}
+		},
 		"F": {
 			"#": "reflexive property",
 			"metadata": {

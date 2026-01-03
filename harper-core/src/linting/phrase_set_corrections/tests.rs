@@ -462,8 +462,70 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandArgument
+
+#[test]
+fn corrects_arg() {
+    assert_suggestion_result(
+        "but I cannot figure out how to flag an arg as required",
+        lint_group(),
+        "but I cannot figure out how to flag an argument as required",
+    );
+}
+
+#[test]
+fn corrects_args() {
+    assert_suggestion_result(
+        "but every test I've done shows args as being about 65% faster",
+        lint_group(),
+        "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandDecl
+
+#[test]
+fn corrects_decl() {
+    assert_suggestion_result(
+        "Yeah, I agree a forward decl would be preferable in this case.",
+        lint_group(),
+        "Yeah, I agree a forward declaration would be preferable in this case.",
+    );
+}
+
+#[test]
+fn corrects_decls() {
+    assert_suggestion_result(
+        "Accessing type decls from pointer types",
+        lint_group(),
+        "Accessing type declarations from pointer types",
+    );
+}
+
 // ExpandDependency
 // -none-
+
+// ExpandParam
+
+#[test]
+fn corrects_param() {
+    assert_suggestion_result(
+        "If I use the following to set an endDate param with a default value",
+        lint_group(),
+        "If I use the following to set an endDate parameter with a default value",
+    );
+}
+
+#[test]
+fn corrects_params() {
+    assert_suggestion_result(
+        "the params are not loaded in the R environment when using the terminal",
+        lint_group(),
+        "the parameters are not loaded in the R environment when using the terminal",
+    );
+}
+
+// ExpandSpecification
 
 // ExpandStandardInput
 // -none-
@@ -870,7 +932,40 @@ fn correct_passer_bys_hyphen() {
 // Piggyback
 // -none-
 
+// RedundantSuperlatives
+// -none-
+
+// ScapeGoat
+
+#[test]
+fn fix_an_escape_goat() {
+    assert_suggestion_result(
+        "I see too many times the cable and ps thingy being used as an escape goat.",
+        lint_group(),
+        "I see too many times the cable and ps thingy being used as a scapegoat.",
+    );
+}
+
+#[test]
+fn fix_escape_goat() {
+    assert_suggestion_result(
+        "It helps shift the reason for the failure on to what the manager did not do (making them the escape goat when it fails).",
+        lint_group(),
+        "It helps shift the reason for the failure on to what the manager did not do (making them the scapegoat when it fails).",
+    );
+}
+
+#[test]
+fn fix_escape_goats() {
+    assert_suggestion_result(
+        "People might be using Americans as escape goats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+        lint_group(),
+        "People might be using Americans as scapegoats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+    );
+}
+
 // WreakHavoc
+// -none-
 
 // Many to many tests
 
@@ -1008,6 +1103,53 @@ fn copywrote() {
         "How do you find out if someone copywrote a movie",
         lint_group(),
         "How do you find out if someone copyrighted a movie",
+    );
+}
+
+// DoubleEdgedSword
+
+#[test]
+fn correct_double_edge_hyphen() {
+    assert_suggestion_result(
+        "I thought the global defaultTranslationValues was potentially a double-edge sword as it also obfuscates the full set of values",
+        lint_group(),
+        "I thought the global defaultTranslationValues was potentially a double-edged sword as it also obfuscates the full set of values",
+    );
+}
+
+#[test]
+fn correct_double_edge_space() {
+    assert_suggestion_result(
+        "It becomes a double edge sword when it should not be used in cases like this.",
+        lint_group(),
+        "It becomes a double-edged sword when it should not be used in cases like this.",
+    );
+}
+
+#[test]
+fn correct_double_edge_space_plural() {
+    assert_suggestion_result(
+        "Wake locks are really double edge swords.",
+        lint_group(),
+        "Wake locks are really double-edged swords.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space() {
+    assert_suggestion_result(
+        "Use case. currently OPTIMIZE is a double edged sword and potentially a very dangerous tool to use.",
+        lint_group(),
+        "Use case. currently OPTIMIZE is a double-edged sword and potentially a very dangerous tool to use.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space_plural() {
+    assert_suggestion_result(
+        "Change: Ambushers and Crusaders now protect their targets too, making them double edged swords",
+        lint_group(),
+        "Change: Ambushers and Crusaders now protect their targets too, making them double-edged swords",
     );
 }
 

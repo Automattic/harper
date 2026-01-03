@@ -155,6 +155,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `as of lately` to `as of late`.",
             LintKind::WordChoice
         ),
+        "AsOpposedTo" => (
+            ["as oppose to"],
+            ["as opposed to"],
+            "Did you mean `as opposed to`?",
+            "Corrects `as oppose to` to `as opposed to`.",
+            LintKind::Usage
+        ),
         "AtFaceValue" => (
             ["on face value"],
             ["at face value"],
@@ -417,6 +424,13 @@ pub fn lint_group() -> LintGroup {
             ["because"],
             "Use `because` instead of informal `cuz`",
             "Expands the informal abbreviation `cuz` to the full word `because` for formality.",
+            LintKind::Style
+        ),
+        "ExpandForward" => (
+            ["fwd"],
+            ["forward"],
+            "Use `forward` instead of `fwd`",
+            "Expands the abbreviation `fwd` to the full word `forward` for clarity.",
             LintKind::Style
         ),
         "ExpandMinimum" => (
@@ -764,6 +778,13 @@ pub fn lint_group() -> LintGroup {
             ["like the plague"],
             "`Things are avoided `like the plague` not `like a plague`.",
             "Corrects `like a plague` to `like the plague`.",
+            LintKind::Usage
+        ),
+        "LinesOfCode" => (
+            ["line of codes", "lines of codes"],
+            ["lines of code"],
+            "The correct plural is `lines of code`.",
+            "Corrects pluralizing the wrong noun in `lines of code`.",
             LintKind::Usage
         ),
         "LowHangingFruit" => (
