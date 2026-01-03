@@ -1,13 +1,13 @@
 use std::borrow::Cow;
 
 use enum_dispatch::enum_dispatch;
+use strum_macros::EnumTryAs;
 
 pub mod single_input;
 use single_input::SingleInput;
 
 pub mod multi_input;
 use multi_input::MultiInput;
-use strum_macros::EnumTryAs;
 
 /// The general trait implemented by all input types.
 #[enum_dispatch]
