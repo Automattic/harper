@@ -280,7 +280,7 @@ mod tests {
         assert_eq!(tokens.len(), 4);
 
         assert_eq!(
-            tokens[3]
+            tokens[2]
                 .to_fat(source.chars().collect_vec().as_ref())
                 .content,
             "errorz".chars().collect_vec()
