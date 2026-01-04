@@ -35007,6 +35007,7 @@ mutational/J
 mute/~JY^>pNgSVGdB
 mutedness/Nmg
 muteness/Nmg
+mutex/NgS
 mutilate/VdSGJnX
 mutilation/~NgS
 mutilator/NSg
@@ -53274,6 +53275,7 @@ Qin/OgS
 QoL/Nmg             # quality of life
 QoS/Nmg             # quality of service
 Quora/Og            # Q&A platform
+RAII                # resource acquisition is initialization
 RDBMS/NOSg          # relational database management system
 REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
@@ -53473,6 +53475,7 @@ gzip/VS             # GNU compression utility
 gzipped/VtT
 gzipping/V6
 hardcode/VGdS       # dictionaries prefer: hard code
+hashmap/NgS         # data structure
 heapsort
 hoster/NgS
 hostname/NSg
