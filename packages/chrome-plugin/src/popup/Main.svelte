@@ -11,17 +11,21 @@ let hasBeenReviewed: boolean | null = $state(null);
 const REVIEW_URL =
 	'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews';
 
-ProtocolClient.getInstalledOn().then((d) => {
-	if (d == null) {
-		return;
-	}
+const isFirefox = isFirefoxExtension();
 
-	installDate = new Date(d);
-});
+if (!isFirefox) {
+	ProtocolClient.getInstalledOn().then((d) => {
+		if (d == null) {
+			return;
+		}
 
-ProtocolClient.getReviewed().then((r) => {
-	hasBeenReviewed = r;
-});
+		installDate = new Date(d);
+	});
+
+	ProtocolClient.getReviewed().then((r) => {
+		hasBeenReviewed = r;
+	});
+}
 
 getCurrentTabDomain().then((d) => {
 	domain = d ?? '';
@@ -60,6 +64,14 @@ function toggleDomainEnabled() {
 function openReviewPage() {
 	ProtocolClient.setReviewed(true);
 	chrome.tabs.create({ url: REVIEW_URL });
+}
+
+function isFirefoxExtension(): boolean {
+	try {
+		return new URL(chrome.runtime.getURL('')).protocol === 'moz-extension:';
+	} catch {
+		return false;
+	}
 }
 
 /** Get the number of days since a given Date. */
@@ -108,7 +120,7 @@ function daysSince(date: Date): number {
     </section>
   </section>
   
-  {#if installDate != null && daysSince(installDate) > 7 && hasBeenReviewed === false}
+  {#if !isFirefox && installDate != null && daysSince(installDate) > 7 && hasBeenReviewed === false}
     <section class="bg-primary flex flex-row justify-between p-4">
       <div class="font-bold">
         It looks like you're enjoying Harper.<br>
