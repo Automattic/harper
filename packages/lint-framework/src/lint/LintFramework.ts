@@ -11,8 +11,8 @@ type ActivationKey = 'off' | 'shift' | 'control';
 type Modifier = 'Ctrl' | 'Shift' | 'Alt';
 
 type Hotkey = {
-  modifiers: Modifier[];
-  key: string;
+	modifiers: Modifier[];
+	key: string;
 };
 
 /** Events on an input (any kind) that can trigger a re-render. */
@@ -45,7 +45,7 @@ export default class LintFramework {
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
-		getHotkey: () => Promise<Hotkey>;
+		getHotkey?: () => Promise<Hotkey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -61,7 +61,7 @@ export default class LintFramework {
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
-			getHotkey: () => Promise<Hotkey>;
+			getHotkey?: () => Promise<Hotkey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -155,40 +155,38 @@ export default class LintFramework {
 	 * Hotkey to apply the suggestion of the most likely word
 	 */
 	public async lintHotkey() {
-		let hotkey = await this.actions.getHotkey();
+		const hotkey = await this.actions.getHotkey?.();
 
-		document.addEventListener('keydown', (event: KeyboardEvent) => {
+		document.addEventListener(
+			'keydown',
+			(event: KeyboardEvent) => {
+				if (!hotkey) return;
 
-			if (!hotkey) return;
+				const key = event.key.toLowerCase();
+				const expectedKey = hotkey.key.toLowerCase();
 
-			let key = event.key.toLowerCase();
-			let expectedKey = hotkey.key.toLowerCase();
+				const hasCtrl = event.ctrlKey === hotkey.modifiers.includes('Ctrl');
+				const hasAlt = event.altKey === hotkey.modifiers.includes('Alt');
+				const hasShift = event.shiftKey === hotkey.modifiers.includes('Shift');
 
-			let hasCtrl = event.ctrlKey === hotkey.modifiers.includes('Ctrl');
-			let hasAlt = event.altKey === hotkey.modifiers.includes('Alt');
-			let hasShift = event.shiftKey === hotkey.modifiers.includes('Shift');
+				const match = key === expectedKey && hasCtrl && hasAlt && hasShift;
 
-			let match = key === expectedKey && hasCtrl && hasAlt && hasShift;
-
-			if (match) {
-				event.preventDefault();
-				event.stopImmediatePropagation();
-				let previousBox = this.lastBoxes[this.lastBoxes.length - 1];
-				let previousLint = this.lastLints[this.lastLints.length - 1];
-				if(previousBox.lint.suggestions.length > 0) {
-					const allLints = Object.values(previousLint.lints).flat();
-					previousBox.applySuggestion(allLints[allLints.length - 1].suggestions[0]);
-
-				} else {
-					previousBox.ignoreLint?.();
+				if (match) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					const previousBox = this.lastBoxes[this.lastBoxes.length - 1];
+					const previousLint = this.lastLints[this.lastLints.length - 1];
+					if (previousBox.lint.suggestions.length > 0) {
+						const allLints = Object.values(previousLint.lints).flat();
+						previousBox.applySuggestion(allLints[allLints.length - 1].suggestions[0]);
+					} else {
+						previousBox.ignoreLint?.();
+					}
 				}
-
-			}
-
-		}, {capture: true});
-
+			},
+			{ capture: true },
+		);
 	}
-
 
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {

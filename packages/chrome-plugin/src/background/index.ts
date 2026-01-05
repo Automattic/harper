@@ -3,11 +3,9 @@ import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
-	type Hotkey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
 	type GetActivationKeyRequest,
-	type GetHotkeyResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -17,9 +15,11 @@ import {
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
 	type GetEnabledDomainsResponse,
+	type GetHotkeyResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetUserDictionaryResponse,
+	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
@@ -29,11 +29,11 @@ import {
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
-	type SetHotkeyRequest,
 	type SetConfigRequest,
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetHotkeyRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
@@ -299,7 +299,7 @@ async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
 	// Create a plain object to avoid proxy cloning issues
 	const hotkey = {
 		modifiers: [...req.hotkey.modifiers],
-		key: req.hotkey.key
+		key: req.hotkey.key,
 	};
 	await setHotkey(hotkey);
 }

@@ -95,11 +95,11 @@ export default class ProtocolClient {
 	}
 
 	public static async setHotkey(hotkey: Hotkey): Promise<void> {
-		let modifiers = hotkey.modifiers;
-		let hotkeyCopy = {
+		const modifiers = hotkey.modifiers;
+		const hotkeyCopy = {
 			modifiers: [...modifiers], // Create a new array
-			key: hotkey.key
-		  };
+			key: hotkey.key,
+		};
 		await chrome.runtime.sendMessage({ kind: 'setHotkey', hotkey: hotkeyCopy });
 	}
 

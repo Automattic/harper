@@ -175,7 +175,7 @@ export type GetActivationKeyRequest = {
 
 export type GetHotkeyRequest = {
 	kind: 'getHotkey';
-}
+};
 
 export type GetActivationKeyResponse = {
 	kind: 'getActivationKey';
@@ -209,8 +209,8 @@ export type SetHotkeyRequest = {
 export type Modifier = 'Ctrl' | 'Shift' | 'Alt';
 
 export type Hotkey = {
-  modifiers: Modifier[];
-  key: string;
+	modifiers: Modifier[];
+	key: string;
 };
 export type OpenReportErrorRequest = {
 	kind: 'openReportError';
