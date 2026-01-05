@@ -16,20 +16,18 @@ use harper_core::parsers::PlainEnglish;
 use harper_core::spell::FstDictionary;
 use harper_core::{Dialect, Document};
 
-fn main() {
-    let text = "This is an test.";
-    let parser = PlainEnglish;
+let text = "This is an test.";
+let parser = PlainEnglish;
 
-    let document = Document::new_curated(text, &parser);
+let document = Document::new_curated(text, &parser);
 
-    let dict = FstDictionary::curated();
-    let mut linter = LintGroup::new_curated(dict, Dialect::American);
+let dict = FstDictionary::curated();
+let mut linter = LintGroup::new_curated(dict, Dialect::American);
 
-    let lints = linter.lint(&document);
+let lints = linter.lint(&document);
 
-    for lint in lints {
-        println!("{:?}", lint);
-    }
+for lint in lints {
+    println!("{:?}", lint);
 }
 ```
 

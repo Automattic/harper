@@ -1,0 +1,9 @@
+expr main [(line of codes), (lines of codes)]
+
+let message "The correct plural is `lines of code`."
+let description "Corrects pluralizing the wrong noun in `lines of code`."
+let kind "Usage"
+let becomes "lines of code"
+
+test "These are line of codes we should refactor." "These are lines of code we should refactor."
+test "We removed several lines of codes yesterday." "We removed several lines of code yesterday."

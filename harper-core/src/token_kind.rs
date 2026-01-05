@@ -68,6 +68,7 @@ impl TokenKind {
         is_singular_noun,
         is_plural_noun,
         is_non_plural_noun,
+        is_non_possessive_noun,
         is_countable_noun,
         is_non_countable_noun,
         is_mass_noun,

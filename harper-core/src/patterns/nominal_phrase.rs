@@ -2,6 +2,9 @@ use crate::Token;
 
 use super::Pattern;
 
+/// A pattern that uses primitive syntax-tree heuristics to locate nominal phrases.
+/// Given that it does not take context into account, it is not recommended for new code.
+/// Please prefer [`DictWordMetadata::np_member`](crate::DictWordMetadata::np_member).
 #[derive(Default)]
 pub struct NominalPhrase;
 
