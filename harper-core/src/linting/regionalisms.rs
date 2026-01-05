@@ -799,7 +799,7 @@ mod tests {
             "Oh no! I got a nosebleed.",
         )
     }
-  
+
     #[test]
     fn in_to_non_in_updation() {
         assert_top3_suggestion_result(
