@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use harper_brill::UPOS;
 
-use crate::{CharString, Currency, Punctuation, Token, TokenKind, document};
+use crate::{CharString, Currency, Punctuation, Token, TokenKind};
 
 use super::{
     AstExprNode, Error, FoundNode, lex, locate_matching_brace, optimize_expr, parse_collection,

@@ -41,7 +41,7 @@ pub fn optimize_expr(ast: &mut AstExprNode) -> bool {
             } else if !children.is_empty() && children.iter().all(|n| n.is_upos_set()) {
                 *ast = AstExprNode::UPOSSet(
                     children
-                        .into_iter()
+                        .iter_mut()
                         .flat_map(|n| n.as_upos_set().unwrap())
                         .copied()
                         .collect(),

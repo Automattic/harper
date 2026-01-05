@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
-use crate::{CharString, Punctuation, Token, TokenKind};
+use crate::{CharString, Punctuation, Token};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Ast {
@@ -91,7 +91,7 @@ impl AstExprNode {
             AstExprNode::Progressive => {
                 Box::new(|tok: &Token, _: &[char]| tok.kind.is_verb_progressive_form())
             }
-            AstExprNode::UPOSSet(upos) => Box::new(UPOSSet::new(&upos)),
+            AstExprNode::UPOSSet(upos) => Box::new(UPOSSet::new(upos)),
             AstExprNode::Whitespace => Box::new(WhitespacePattern),
             AstExprNode::Word(word) => Box::new(Word::from_chars(word)),
             AstExprNode::DerivativeOf(word) => Box::new(DerivedFrom::new_from_chars(word)),
