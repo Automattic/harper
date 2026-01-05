@@ -44,6 +44,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `a couple of more` to `a couple more`.",
             LintKind::Redundancy
         ),
+        "AdNauseam" => (
+            ["as nauseam"],
+            ["ad nauseam"],
+            "This phrase comes from Latin, where `ad` means `to`.",
+            "Corrects `as nauseam` to `ad nauseam`.",
+            LintKind::Spelling
+        ),
         "AfterAWhile" => (
             ["after while"],
             ["after a while"],
@@ -147,6 +154,13 @@ pub fn lint_group() -> LintGroup {
             "The standard form is `as of late`.",
             "Corrects `as of lately` to `as of late`.",
             LintKind::WordChoice
+        ),
+        "AsOpposedTo" => (
+            ["as oppose to"],
+            ["as opposed to"],
+            "Did you mean `as opposed to`?",
+            "Corrects `as oppose to` to `as opposed to`.",
+            LintKind::Usage
         ),
         "AtFaceValue" => (
             ["on face value"],
@@ -384,6 +398,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `every since` to `ever since`.",
             LintKind::Typo
         ),
+        "EveryOnceAndAgain" => (
+            ["every once and again"],
+            ["every once in a while", "once again"],
+            "For things that happen only occasionaly use `every once in a while. For things that persistently happen use `once again`.",
+            "Corrects `every once and again` to `every once in a while` or `once again`.",
+            LintKind::Usage
+        ),
         "EveryTime" => (
             ["everytime"],
             ["every time"],
@@ -403,6 +424,13 @@ pub fn lint_group() -> LintGroup {
             ["because"],
             "Use `because` instead of informal `cuz`",
             "Expands the informal abbreviation `cuz` to the full word `because` for formality.",
+            LintKind::Style
+        ),
+        "ExpandForward" => (
+            ["fwd"],
+            ["forward"],
+            "Use `forward` instead of `fwd`",
+            "Expands the abbreviation `fwd` to the full word `forward` for clarity.",
             LintKind::Style
         ),
         "ExpandMinimum" => (
@@ -750,6 +778,13 @@ pub fn lint_group() -> LintGroup {
             ["like the plague"],
             "`Things are avoided `like the plague` not `like a plague`.",
             "Corrects `like a plague` to `like the plague`.",
+            LintKind::Usage
+        ),
+        "LinesOfCode" => (
+            ["line of codes", "lines of codes"],
+            ["lines of code"],
+            "The correct plural is `lines of code`.",
+            "Corrects pluralizing the wrong noun in `lines of code`.",
             LintKind::Usage
         ),
         "LowHangingFruit" => (

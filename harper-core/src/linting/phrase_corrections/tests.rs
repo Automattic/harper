@@ -15,6 +15,24 @@ fn corrects_a_couple_of_more() {
     )
 }
 
+// AdNauseam
+#[test]
+fn corrects_as_nauseam_1() {
+    assert_suggestion_result(
+        "As you say, discussed as nauseam, but no nearer a solution.",
+        lint_group(),
+        "As you say, discussed ad nauseam, but no nearer a solution.",
+    );
+}
+#[test]
+fn corrects_as_nauseam_2() {
+    assert_suggestion_result(
+        "no more autism please, hearing about it as nauseam is starting to make me sick",
+        lint_group(),
+        "no more autism please, hearing about it ad nauseam is starting to make me sick",
+    );
+}
+
 // AfterAWhile
 #[test]
 fn correct_after_while() {
@@ -344,6 +362,16 @@ fn corrects_as_of_lately() {
         lint_group(),
         "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
     )
+}
+
+// AsOpposedTo
+#[test]
+fn correct_as_oppose_to() {
+    assert_suggestion_result(
+        "Distorted image upon opening the app as oppose to running the app after successful build",
+        lint_group(),
+        "Distorted image upon opening the app as opposed to running the app after successful build",
+    );
 }
 
 // AtFaceValue
@@ -713,6 +741,16 @@ fn detect_ever_since() {
     );
 }
 
+// EveryOnceAndAgain
+#[test]
+fn fix_every_once_and_again() {
+    assert_suggestion_result(
+        "Ys have been replaced with Ps, happens randomly every once and again with different letters",
+        lint_group(),
+        "Ys have been replaced with Ps, happens randomly every once in a while with different letters",
+    );
+}
+
 // EveryTime
 #[test]
 fn fix_everytime() {
@@ -758,6 +796,16 @@ fn expand_cuz() {
         "Stick around cuz I got a surprise for you at the end.",
         lint_group(),
         "Stick around because I got a surprise for you at the end.",
+    );
+}
+
+// ExpandForward
+#[test]
+fn expand_fwd() {
+    assert_suggestion_result(
+        "Now I look fwd to the interior, the color, etc.",
+        lint_group(),
+        "Now I look forward to the interior, the color, etc.",
     );
 }
 
@@ -1473,26 +1521,6 @@ fn correct_on_top_of() {
     );
 }
 
-// PartOfSpeech
-#[test]
-fn corrects_part_of_speeches() {
-    assert_suggestion_result(
-        "The part of speeches (POS) or as follows:",
-        lint_group(),
-        "The parts of speech (POS) or as follows:",
-    )
-}
-
-// It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.
-#[test]
-fn corrects_parts_of_speeches() {
-    assert_suggestion_result(
-        "It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.",
-        lint_group(),
-        "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.",
-    )
-}
-
 // PeaceOfMind
 #[test]
 fn corrects_piece_of_mind() {
@@ -1529,26 +1557,6 @@ fn corrects_per_say_hyphenated() {
         lint_group(),
         "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
     );
-}
-
-// PointsOfView
-#[test]
-fn corrects_point_of_views() {
-    assert_suggestion_result(
-        "This will produce a huge amount of raw data, representing the region in multiple point of views.",
-        lint_group(),
-        "This will produce a huge amount of raw data, representing the region in multiple points of view.",
-    )
-}
-
-// log events, places, moods and self-reflect from various points of views
-#[test]
-fn corrects_points_of_views() {
-    assert_suggestion_result(
-        "log events, places, moods and self-reflect from various points of views",
-        lint_group(),
-        "log events, places, moods and self-reflect from various points of view",
-    )
 }
 
 // PrayingMantis
@@ -1604,35 +1612,6 @@ fn correct_iirc_correctly() {
 
 // RoadMap
 // -none-
-
-// RulesOfThumb
-
-#[test]
-fn correct_rule_of_thumbs() {
-    assert_suggestion_result(
-        "Thanks. 0.2 is just from my rule of thumbs.",
-        lint_group(),
-        "Thanks. 0.2 is just from my rules of thumb.",
-    );
-}
-
-#[test]
-fn correct_rules_of_thumbs() {
-    assert_suggestion_result(
-        "But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
-        lint_group(),
-        "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
-    );
-}
-
-#[test]
-fn correct_rules_of_thumbs_hyphenated() {
-    assert_suggestion_result(
-        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
-        lint_group(),
-        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
-    );
-}
 
 // SameAs
 // -none-

@@ -370,8 +370,8 @@ const testimonials = [
 			</Collapsible>
 			<Collapsible title="What Human Languages Do You Support?">
 				<p>
-					We currently only support English and its dialects British, American, Canadian, and
-					Australian. Other languages are on the horizon, but we want our English support to be truly
+					We currently only support English and its dialects British, American, Canadian,
+					Australian, and Indian. Other languages are on the horizon, but we want our English support to be truly
 					amazing before we diversify.
 				</p>
 			</Collapsible>
