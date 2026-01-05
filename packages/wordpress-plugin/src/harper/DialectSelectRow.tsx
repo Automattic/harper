@@ -29,6 +29,10 @@ export default function DialectSelectRow() {
 						label: 'British',
 						value: Dialect.British.toString(),
 					},
+					{
+						label: 'Indian',
+						value: Dialect.Indian.toString(),
+					},
 				]}
 				onChange={(value) => setDialect(Number.parseInt(value, 10))}
 			/>

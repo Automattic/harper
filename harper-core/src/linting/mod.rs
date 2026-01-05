@@ -22,6 +22,7 @@ mod ask_no_preposition;
 mod avoid_curses;
 mod back_in_the_day;
 mod be_allowed;
+mod behind_the_scenes;
 mod best_of_all_time;
 mod boring_words;
 mod bought;
@@ -64,10 +65,12 @@ mod few_units_of_time_ago;
 mod filler_words;
 mod find_fine;
 mod first_aid_kit;
+mod flesh_out_vs_full_fledged;
 mod for_noun;
 mod free_predicate;
 mod friend_of_me;
 mod go_so_far_as_to;
+mod good_at;
 mod handful;
 mod have_pronoun;
 mod have_take_a_look;
@@ -130,9 +133,11 @@ mod nominal_wants;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod of_course;
+mod oldest_in_the_book;
 mod on_floor;
 mod once_or_twice;
 mod one_and_the_same;
+mod one_of_the_singular;
 mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;
@@ -144,6 +149,7 @@ mod phrasal_verb_as_compound_noun;
 mod phrase_corrections;
 mod phrase_set_corrections;
 mod pique_interest;
+mod plural_wrong_word_of_phrase;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -188,6 +194,7 @@ mod that_than;
 mod that_which;
 mod the_how_why;
 mod the_my;
+mod the_proper_noun_possessive;
 mod then_than;
 mod theres;
 mod theses_these;
@@ -198,6 +205,7 @@ mod throw_rubbish;
 mod to_adverb;
 mod to_two_too;
 mod touristic;
+mod transposed_space;
 mod unclosed_quotes;
 mod update_place_names;
 mod use_genitive;
@@ -473,6 +481,23 @@ pub mod tests {
                 "\n✅ All {} good suggestions found, no bad suggestions\n",
                 found_good.len()
             );
+        }
+    }
+
+    /// Asserts that the lint's message matches the expected message.
+    #[track_caller]
+    pub fn assert_lint_message(text: &str, mut linter: impl Linter, expected_message: &str) {
+        let test = Document::new_markdown_default_curated(text);
+        let lints = linter.lint(&test);
+
+        // Just check the first lint for now
+        if let Some(lint) = lints.first() {
+            if lint.message != expected_message {
+                panic!(
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
         }
     }
 

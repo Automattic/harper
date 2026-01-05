@@ -235,6 +235,7 @@ function startHotkeyCapture(modifyHotkeyButton: Button) {
             <option value={Dialect.British}>🇬🇧 British</option>
             <option value={Dialect.Australian}>🇦🇺 Australian</option>
             <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
+            <option value={Dialect.Indian}>🇮🇳 Indian</option>
           </Select>
         </div>
       </div>

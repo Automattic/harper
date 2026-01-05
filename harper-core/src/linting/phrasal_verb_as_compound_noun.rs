@@ -212,6 +212,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                         "architecture",
                         "classes",
                         "development",
+                        "developer",
                         "docs",
                         "ecosystem",
                         "files",
@@ -754,6 +755,14 @@ mod tests {
     fn issue_1772() {
         assert_no_lints(
             "By default, only one tile size is instantiated for each data type, math instruction, and layout.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn issue_2369() {
+        assert_no_lints(
+            "## Plugin developer documentation",
             PhrasalVerbAsCompoundNoun::default(),
         );
     }

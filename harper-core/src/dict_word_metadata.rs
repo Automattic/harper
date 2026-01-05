@@ -1014,6 +1014,7 @@ pub enum Dialect {
     Canadian = 1 << 1,
     Australian = 1 << 2,
     British = 1 << 3,
+    Indian = 1 << 4,
 }
 impl Dialect {
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
@@ -1031,13 +1032,14 @@ impl Dialect {
     /// ```
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["US", "CA", "AU", "GB"];
+    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
     /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
     ///
     /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
     /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
     /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
+    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
     /// ```
     #[must_use]
     pub fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -1046,6 +1048,7 @@ impl Dialect {
             "CA" => Some(Self::Canadian),
             "AU" => Some(Self::Australian),
             "GB" => Some(Self::British),
+            "IN" => Some(Self::Indian),
             _ => None,
         }
     }
@@ -1067,6 +1070,7 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::Canadian) => Ok(Dialect::Canadian),
                 df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
+                df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
                 _ => Err(()),
             }
         } else {
@@ -1092,6 +1096,7 @@ bitflags::bitflags! {
         const CANADIAN = Dialect::Canadian as DialectFlagsUnderlyingType;
         const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
+        const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags {

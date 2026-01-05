@@ -1907,6 +1907,16 @@ Message: |
 
 
 
+Lint:    Grammar (127 priority)
+Message: |
+    1379 | “I didn’t know it was your table,” said Alice; “it’s laid for a great many more
+         |                                                      ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
+    1380 | than three.”
+Suggest:
+  - Replace with: “lain”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
     1415 | dropped, and the party sat silent for a minute, while Alice thought over all she
