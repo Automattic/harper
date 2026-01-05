@@ -1,0 +1,18 @@
+expr main (send an email to)
+
+let message "Use the shorter verb form."
+let description "Replaces the verbose phrase `send an email to` with the concise verb `email`."
+let kind "Style"
+let becomes "email"
+let strategy "Exact"
+
+test "Please send an email to John." "Please email John."
+test "I will send an email to the team later." "I will email the team later."
+test "SEND AN EMAIL TO support." "email support."
+test "Send An Email To HR." "email HR."
+test "Can you send an email to her?" "Can you email her?"
+test "They decided to send an email to all users." "They decided to email all users."
+test "Send an email to John, please." "email John, please."
+test "Before noon, send an email to marketing." "Before noon, email marketing."
+test "Please write an email to John." "Please write an email to John."
+test "She sent a message to John." "She sent a message to John."
