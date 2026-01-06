@@ -614,6 +614,44 @@ fn correct_to_an_extend() {
     );
 }
 
+// FoamAtTheMouth
+
+#[test]
+fn correct_foam_out_the_mouth() {
+    assert_suggestion_result(
+        "and he gave him a drink that made him foam out the mouth and die",
+        lint_group(),
+        "and he gave him a drink that made him foam at the mouth and die",
+    );
+}
+
+#[test]
+fn correct_foamed_out_the_mouth() {
+    assert_suggestion_result(
+        "You can see in some shots they've foamed out the mouth, and it's apparent their poisoned.",
+        lint_group(),
+        "You can see in some shots they've foamed at the mouth, and it's apparent their poisoned.",
+    );
+}
+
+#[test]
+fn correct_foaming_out_the_mouth() {
+    assert_suggestion_result(
+        "choking or foaming out the mouth or something like that, leading up to death",
+        lint_group(),
+        "choking or foaming at the mouth or something like that, leading up to death",
+    );
+}
+
+#[test]
+fn correct_foams_out_the_mouth() {
+    assert_suggestion_result(
+        "Elaine can't swallow, foams out the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
+        lint_group(),
+        "Elaine can't swallow, foams at the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
+    );
+}
+
 // FootTheBill
 
 #[test]

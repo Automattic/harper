@@ -203,6 +203,17 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
+        "FoamAtTheMouth" => (
+            &[
+                ("foam out the mouth", "foam at the mouth"),
+                ("foamed out the mouth", "foamed at the mouth"),
+                ("foaming out the mouth", "foaming at the mouth"),
+                ("foams out the mouth", "foams at the mouth"),
+            ],
+            "The correct idiom is `foam at the mouth`.",
+            "Corrects the idiom `foam out the mouth` to the standard `foam at the mouth`.",
+            LintKind::Nonstandard
+        ),
         "FootTheBill" => (
             &[
                 ("flip the bill", "foot the bill"),
