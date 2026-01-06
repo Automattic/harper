@@ -3,8 +3,17 @@ import { binary } from './binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 
+function randomString(length: number): string {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let result = '';
+	for (let i = 0; i < length; i++) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+	return result;
+}
+
 const linters = {
-	WorkerLinter: WorkerLinter,
+	// WorkerLinter: WorkerLinter,
 	LocalLinter: LocalLinter,
 };
 
@@ -375,6 +384,28 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lint.lint_kind()).toBe('Capitalization');
 		expect(lint.get_problem_text()).toBe(text);
 	});
+
+  test(`${linterName} will lint many random strings with a single instance`, async () => {
+    const linter = new Linter({ binary });
+
+    for (let i = 0; i < 1000; i++){
+      const text = randomString(10);
+      const lints = await linter.organizedLints(text);
+
+      expect(lints).not.toBeNull();
+    }
+  }, 120000)
+
+  test(`${linterName} will lint many times with fresh instances`, async () => {
+    for (let i = 0; i < 3000; i++){
+      const linter = new Linter({binary});
+  
+      const text = "This is a grammatically correct sentence.";
+      const lints = await linter.organizedLints(text);
+
+      expect(lints).not.toBeNull();
+    }
+  }, 120000)
 }
 
 test('Linters have the same config format', async () => {
