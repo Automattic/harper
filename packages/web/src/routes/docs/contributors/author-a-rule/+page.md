@@ -147,7 +147,6 @@ mod avoid_curses;
 mod boring_words;
 mod capitalize_personal_pronouns;
 // [svp! df:+]mod my_rule;
-// [svp! df:+]pub use my_rule::MyRule;
 ```
 
 Next, we need to configure whether your rule will be enabled by default.

@@ -1,6 +1,6 @@
 import type { Lint } from 'harper.js';
 import { useCallback, useEffect, useState } from 'react';
-import { type IgnorableLintBox, LintBox } from './Box';
+import type { IgnorableLintBox } from './Box';
 import { useLinter } from './LinterProvider';
 import type RichText from './RichText';
 import useDialect from './useDialect';
@@ -73,7 +73,9 @@ export default function useLintBoxes(richTexts: RichText[]): [IgnorableLintBox[]
 		});
 
 		return () => {
-			observers.forEach((observer) => observer.disconnect());
+			observers.forEach((observer) => {
+				observer.disconnect();
+			});
 		};
 	}, [richTexts, updateLints]);
 

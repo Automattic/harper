@@ -5,6 +5,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdjVerbEdPunct {
     expr: Box<dyn Expr>,
@@ -22,10 +23,7 @@ impl Default for ToTooAdjVerbEdPunct {
                     && tok
                         .span
                         .get_content(src)
-                        .iter()
-                        .collect::<String>()
-                        .to_lowercase()
-                        .ends_with("ed")
+                        .ends_with_ignore_ascii_case_chars(&['e', 'd'])
             })
             .then_sentence_terminator();
 
@@ -36,6 +34,8 @@ impl Default for ToTooAdjVerbEdPunct {
 }
 
 impl ExprLinter for ToTooAdjVerbEdPunct {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

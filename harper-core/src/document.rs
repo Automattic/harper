@@ -918,6 +918,7 @@ impl TokenStringExt for Document {
     create_fns_on_doc!(verb);
     create_fns_on_doc!(word);
     create_fns_on_doc!(word_like);
+    create_fns_on_doc!(heading_start);
 
     fn first_sentence_word(&self) -> Option<&Token> {
         self.tokens.first_sentence_word()
@@ -945,6 +946,10 @@ impl TokenStringExt for Document {
 
     fn iter_paragraphs(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
         self.tokens.iter_paragraphs()
+    }
+
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
+        self.tokens.iter_headings()
     }
 
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {

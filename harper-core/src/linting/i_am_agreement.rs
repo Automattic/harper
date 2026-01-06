@@ -1,8 +1,10 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{AnchorStart, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
+
 pub struct IAmAgreement {
     expr: Box<dyn Expr>,
 }
@@ -16,9 +18,7 @@ impl Default for IAmAgreement {
             .then(i_are.clone());
 
         let non_and_word_before_i_are = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                !tok.kind.is_word() || tok.span.get_content_string(src).to_lowercase() != "and"
-            })
+            .then_word_except(&["and"])
             .t_ws()
             .then(i_are);
 
@@ -34,6 +34,8 @@ impl Default for IAmAgreement {
 }
 
 impl ExprLinter for IAmAgreement {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

@@ -1,22 +1,36 @@
+import type { Page } from '@playwright/test';
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
 	getTextarea,
 	replaceEditorContent,
 	testBasicSuggestionTextarea,
+	testCanBlockRuleTextareaSuggestion,
 	testCanIgnoreTextareaSuggestion,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://news.ycombinator.com/item?id=45610226';
+/** Must be computed. */
+async function getTestPageUrl(page: Page) {
+	await page.goto('https://news.ycombinator.com');
 
-testBasicSuggestionTextarea(TEST_PAGE_URL);
-testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
+	const firstLink = page.locator('.subline').first().locator('a').last();
+	await firstLink.click();
+
+	return page.url();
+}
+
+testBasicSuggestionTextarea(getTestPageUrl);
+testCanIgnoreTextareaSuggestion(getTestPageUrl);
+testCanBlockRuleTextareaSuggestion(getTestPageUrl);
 
 test('Hacker News wraps correctly', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
+	await page.goto(await getTestPageUrl(page));
 
 	await page.waitForTimeout(2000);
 	await page.reload();
+
+	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
+	await page.locator('.toptext').evaluate((el) => el.remove());
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(
@@ -33,10 +47,13 @@ test('Hacker News wraps correctly', async ({ page }) => {
 });
 
 test('Hacker News scrolls correctly', async ({ page }) => {
-	await page.goto(TEST_PAGE_URL);
+	await page.goto(await getTestPageUrl(page));
 
 	await page.waitForTimeout(2000);
 	await page.reload();
+
+	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
+	await page.locator('.toptext').evaluate((el) => el.remove());
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(

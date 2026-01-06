@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
@@ -24,6 +25,8 @@ impl Default for Hedging {
 }
 
 impl ExprLinter for Hedging {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

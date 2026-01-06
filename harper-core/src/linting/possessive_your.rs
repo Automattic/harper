@@ -4,6 +4,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PossessiveYour {
     expr: Box<dyn Expr>,
@@ -26,11 +27,26 @@ impl Default for PossessiveYour {
 }
 
 impl ExprLinter for PossessiveYour {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        // Is 'you' the object of a verb? (#1920)
+        if let [.., v, ws] = ctx?.0
+            && ws.kind.is_whitespace()
+            && v.kind.is_verb()
+        {
+            return None;
+        }
+
         let span = matched_tokens.first()?.span;
         let orig_chars = span.get_content(source);
 
@@ -62,7 +78,7 @@ mod tests {
     use super::PossessiveYour;
 
     #[test]
-    #[should_panic] // currently fails because comments is a homographs (verb or noun)
+    #[ignore = "currently fails because comments is a homographs (verb or noun)"]
     fn your_comments() {
         assert_suggestion_result(
             "You comments may end up in the documentation.",
@@ -131,6 +147,24 @@ mod tests {
         assert_no_lints(
             "Note that in a world with modules everywhere, you almost never need an IIFE",
             PossessiveYour::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_brought_you() {
+        assert_lint_count(
+            "team who also brought you [BloodHound Enterprise](http://specterops.io/bloodhound-verview/).",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_teaches_you() {
+        assert_lint_count(
+            "Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.",
+            PossessiveYour::default(),
+            0,
         );
     }
 }

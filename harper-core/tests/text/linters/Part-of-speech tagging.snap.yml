@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       6 | # Part-of-speech tagging
+         | ^~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Part-of-Speech Tagging”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
@@ -11,15 +20,25 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+       8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
+         |                                                               ^~~ This word's canonical spelling is all-caps.
+       9 | POST), also called grammatical tagging is the process of marking up a word in a
+Suggest:
+  - Replace with: “POS”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
          |                                                               ^~~ Did you mean to spell `PoS` this way?
        9 | POST), also called grammatical tagging is the process of marking up a word in a
 Suggest:
-  - Replace with: “PBS”
-  - Replace with: “PMS”
-  - Replace with: “POS”
+  - Replace with: “Pod”
+  - Replace with: “Poi”
+  - Replace with: “Pol”
 
 
 
@@ -28,9 +47,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “Em”
   - Replace with: “E”
   - Replace with: “Ea”
+  - Replace with: “Ed”
 
 
 
@@ -42,7 +61,7 @@ Message: |
 Suggest:
   - Replace with: “Brillo's”
   - Replace with: “Bill's”
-  - Replace with: “Trill's”
+  - Replace with: “Drill's”
 
 
 
@@ -61,14 +80,32 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+      39 | ### Tag sets
+         | ^~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Tag Sets”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+      43 | However, there are clearly many more categories and sub-categories. For nouns,
+         |                                                     ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+Suggest:
+  - Replace with: “subcategories”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
       49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
          |                    ^~ Did you mean to spell `NN` this way?
 Suggest:
-  - Replace with: “Nun”
+  - Replace with: “No”
   - Replace with: “Non”
-  - Replace with: “NT”
+  - Replace with: “Nu”
 
 
 
@@ -78,9 +115,9 @@ Message: |
          |                                                  ^~~ Did you mean to spell `NNS` this way?
       50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
 Suggest:
-  - Replace with: “NBS”
   - Replace with: “NES”
-  - Replace with: “NS”
+  - Replace with: “Nos”
+  - Replace with: “Nuns”
 
 
 
@@ -92,7 +129,7 @@ Message: |
 Suggest:
   - Replace with: “Nap”
   - Replace with: “Nip”
-  - Replace with: “Nu”
+  - Replace with: “No”
 
 
 
@@ -102,9 +139,9 @@ Message: |
       56 | Koine Greek (DeRose 1990) has used over 1,000 parts of speech and found that
          | ^~~~~ Did you mean to spell `Koine` this way?
 Suggest:
-  - Replace with: “Kine”
   - Replace with: “Kline”
-  - Replace with: “Kane”
+  - Replace with: “Kine”
+  - Replace with: “Kin”
 
 
 
@@ -115,8 +152,8 @@ Message: |
          |              ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -147,9 +184,8 @@ Message: |
          |                                                        ^~~~~~ Did you mean to spell `Ncmsan` this way?
       60 | Type = common, Gender = masculine, Number = singular, Case = accusative, Animate
 Suggest:
-  - Replace with: “Nissan”
   - Replace with: “Nisan”
-  - Replace with: “Nampa”
+  - Replace with: “Nissan”
 
 
 
@@ -159,9 +195,9 @@ Message: |
       64 | Penn tag set, developed in the Penn Treebank project. It is largely similar to
          |                                     ^~~~~~~~ Did you mean to spell `Treebank` this way?
 Suggest:
-  - Replace with: “Freeman”
-  - Replace with: “Reembark”
-  - Replace with: “Debank”
+  - Replace with: “Tie back”
+  - Replace with: “Tieback”
+  - Replace with: “Traceback”
 
 
 
@@ -176,25 +212,13 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-      74 | Greek and Latin can be very large; tagging words in agglutinative languages such
-         |                                                     ^~~~~~~~~~~~~ Did you mean to spell `agglutinative` this way?
-      75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
-Suggest:
-  - Replace with: “agglutinate”
-  - Replace with: “agglutinating”
-  - Replace with: “agglutination”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
       75 | as Inuit languages may be virtually impossible. At the other extreme, Petrov et
          |                                                                       ^~~~~~ Did you mean to spell `Petrov` this way?
       76 | al. have proposed a "universal" tag set, with 12 categories (for example, no
 Suggest:
   - Replace with: “Petrol”
-  - Replace with: “Pedro”
-  - Replace with: “Peron”
+  - Replace with: “Patrol”
+  - Replace with: “Patron”
 
 
 
@@ -228,7 +252,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -238,9 +262,9 @@ Message: |
          |                                                                             ^ Did you mean to spell `s` this way?
       99 | the tagging was nearly perfect (allowing for some cases on which even human
 Suggest:
-  - Replace with: “sf”
-  - Replace with: “sh”
   - Replace with: “so”
+  - Replace with: “as”
+  - Replace with: “is”
 
 
 
@@ -260,6 +284,10 @@ Lint:    Spelling (63 priority)
 Message: |
      105 | later part-of-speech tagging systems, such as CLAWS and VOLSUNGA. However, by
          |                                                         ^~~~~~~~ Did you mean to spell `VOLSUNGA` this way?
+Suggest:
+  - Replace with: “Volcanic”
+  - Replace with: “Volcano”
+  - Replace with: “Voltage”
 
 
 
@@ -276,15 +304,24 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     117 | ### Use of hidden Markov models
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Use of Hidden Markov Models”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      119 | In the mid-1980s, researchers in Europe began to use hidden Markov models (HMMs)
          |                                                                            ^~~~ Did you mean to spell `HMMs` this way?
      120 | to disambiguate parts of speech, when working to tag the Lancaster-Oslo-Bergen
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -293,9 +330,9 @@ Message: |
      121 | Corpus of British English. HMMs involve counting cases (such as from the Brown
          |                            ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -304,9 +341,9 @@ Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
          |                                ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
 
 
 
@@ -330,9 +367,9 @@ Message: |
      141 | Eugene Charniak points out in Statistical techniques for natural language
          |        ^~~~~~~~ Did you mean to spell `Charniak` this way?
 Suggest:
-  - Replace with: “Carina”
-  - Replace with: “Carnap”
-  - Replace with: “Chadian”
+  - Replace with: “Cardiac”
+  - Replace with: “Carnal”
+  - Replace with: “Carnival”
 
 
 
@@ -364,9 +401,28 @@ Message: |
      153 | HMMs underlie the functioning of stochastic taggers and are used in various
          | ^~~~ Did you mean to spell `HMMs` this way?
 Suggest:
-  - Replace with: “Hems”
   - Replace with: “Hams”
-  - Replace with: “HMO's”
+  - Replace with: “Hems”
+  - Replace with: “Hums”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     154 | algorithms one of the most widely used being the bi-directional inference
+         |                                                  ^~~~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     155 | algorithm.
+Suggest:
+  - Replace with: “bidirectional”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     157 | ### Dynamic programming methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “### Dynamic Programming Methods”
 
 
 
@@ -376,8 +432,8 @@ Message: |
          |                 ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -388,7 +444,7 @@ Message: |
 Suggest:
   - Replace with: “We”
   - Replace with: “WA”
-  - Replace with: “WC”
+  - Replace with: “WI”
 
 
 
@@ -399,8 +455,8 @@ Message: |
          |                             ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -410,8 +466,8 @@ Message: |
          |         ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Defoe”
-  - Replace with: “Denise”
+  - Replace with: “Debase”
+  - Replace with: “Decode”
 
 
 
@@ -436,7 +492,7 @@ Message: |
 Suggest:
   - Replace with: “Defoe's”
   - Replace with: “Denise's”
-  - Replace with: “Repose's”
+  - Replace with: “Demise's”
 
 
 
@@ -460,7 +516,7 @@ Message: |
 Suggest:
   - Replace with: “Defoe's”
   - Replace with: “Denise's”
-  - Replace with: “Repose's”
+  - Replace with: “Demise's”
 
 
 
@@ -479,6 +535,34 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     182 | #### Unsupervised taggers
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Unsupervised Taggers”
+
+
+
+Lint:    Spelling (127 priority)
+Message: |
+     184 | The methods already discussed involve working from a pre-existing corpus to
+         |                                                      ^~~~~~~~~~~~ This looks like a prefix that can be joined with the rest of the word.
+     185 | learn tag probabilities. It is, however, also possible to bootstrap using
+Suggest:
+  - Replace with: “preexisting”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     198 | #### Other taggers and methods
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “#### Other Taggers and Methods”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      200 | Some current major algorithms for part-of-speech tagging include the Viterbi
@@ -486,8 +570,8 @@ Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -498,8 +582,8 @@ Message: |
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
-  - Replace with: “Belch”
-  - Replace with: “Walsh”
+  - Replace with: “Wench”
+  - Replace with: “Watch”
 
 
 
@@ -509,8 +593,8 @@ Message: |
          |                                                 ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verdi”
-  - Replace with: “Vite”
+  - Replace with: “Verb”
+  - Replace with: “Veteran”
 
 
 
@@ -520,8 +604,8 @@ Message: |
          |                          ^~~ Did you mean to spell `SVM` this way?
 Suggest:
   - Replace with: “Sim”
+  - Replace with: “Sum”
   - Replace with: “SCM”
-  - Replace with: “SVG”
 
 
 
@@ -531,9 +615,9 @@ Message: |
          |                                                                 ^~~~~~~~ Did you mean to spell `Treebank` this way?
      214 | so the results are directly comparable. However, many significant taggers are
 Suggest:
-  - Replace with: “Freeman”
-  - Replace with: “Reembark”
-  - Replace with: “Debank”
+  - Replace with: “Tie back”
+  - Replace with: “Tieback”
+  - Replace with: “Traceback”
 
 
 

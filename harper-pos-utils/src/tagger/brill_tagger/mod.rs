@@ -13,6 +13,12 @@ use super::error_counter::{ErrorCounter, ErrorKind};
 
 use crate::{Tagger, UPOS};
 
+/// A [`Tagger`] implementation based on the work by Eric Brill.
+///
+/// Additional reading:
+///
+/// - [Brill tagger](https://en.wikipedia.org/wiki/Brill_tagger)
+/// - [Transformation-based Learning for POS Tagging](https://elijahpotter.dev/articles/transformation-based-learning)
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BrillTagger<B>
 where

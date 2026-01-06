@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Input, Select } from 'flowbite-svelte';
+import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
@@ -14,6 +14,7 @@ let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 let spellCheckingMode: SpellCheckingMode = $state(SpellCheckingMode.Default);
+let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -106,6 +107,34 @@ export function dictToString(values: string[]): string {
 	return values.map((v) => v.trim()).join('\n');
 }
 
+function resetRulesToDefaults(): void {
+	const keys = Object.keys(lintConfig ?? {});
+	if (keys.length === 0) return;
+
+	const nextConfig: LintConfig = { ...lintConfig };
+	for (const key of keys) {
+		nextConfig[key] = null;
+	}
+	lintConfig = nextConfig;
+}
+
+function updateAllRules(enabled: boolean): void {
+	const keys = Object.keys(lintConfig ?? {});
+	if (keys.length === 0) {
+		return;
+	}
+
+	const nextConfig: LintConfig = { ...lintConfig };
+	for (const key of keys) {
+		nextConfig[key] = enabled;
+	}
+	lintConfig = nextConfig;
+}
+
+function toggleAllRules(): void {
+	updateAllRules(!anyRulesEnabled);
+}
+
 async function exportEnabledDomainsCSV() {
 	try {
 		const enabledDomains = await ProtocolClient.getEnabledDomains();
@@ -124,30 +153,38 @@ async function exportEnabledDomainsCSV() {
 		console.error('Failed to export enabled domains JSON:', e);
 	}
 }
-
-// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
-<div class="mx-auto max-w-screen-md px-4">
-  <header class="flex items-center gap-2 px-3 py-2 bg-gray-50/60 border-b border-gray-200 rounded-t-lg">
-    <img src={logo} alt="Harper logo" class="h-6 w-auto" />
-    <span class="font-semibold text-sm">Harper</span>
-  </header>
+<div class="min-h-screen px-4 py-10">
+  <div class="mx-auto max-w-screen-lg space-y-4">
+    <Card class="flex items-center gap-3">
+      <div class="flex h-9 w-9 items-center justify-center rounded-xl">
+        <img src={logo} alt="Harper logo" class="h-5 w-auto" />
+      </div>
+      <div class="flex flex-col">
+        <h1 class="text-base tracking-wide font-serif">Harper</h1>
+        <p class="text-xs">Chrome Extension Settings</p>
+      </div>
+    </Card>
 
-  <main class="p-6 space-y-10 text-sm text-gray-800 border border-gray-200 rounded-b-lg shadow-sm">
     <!-- ── GENERAL ───────────────────────────── -->
-    <section class="space-y-6">
-      <h3 class="pb-1 border-b border-gray-200 text-xs font-semibold uppercase tracking-wider text-gray-500">General</h3>
+    <Card class="space-y-6">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">General</h2>
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <span class="font-medium">English Dialect</span>
-          <Select size="sm" color="primary" class="w-44" bind:value={dialect}>
+          <h3 class="text-sm">English Dialect</h3>
+          <Select
+            size="sm"
+            class="w-44"
+            bind:value={dialect}
+          >
             <option value={Dialect.American}>🇺🇸 American</option>
             <option value={Dialect.British}>🇬🇧 British</option>
             <option value={Dialect.Australian}>🇦🇺 Australian</option>
             <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
+            <option value={Dialect.Indian}>🇮🇳 Indian</option>
           </Select>
         </div>
       </div>
@@ -155,20 +192,20 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Enable on New Sites by Default</span>
-            <span class="font-light">Can make some apps behave abnormally.</span>
+            <h3 class="text-sm">Enable on New Sites by Default</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Can make some apps behave abnormally.</p>
           </div>
-          <input type="checkbox" bind:checked={defaultEnabled}/>
+          <input type="checkbox" bind:checked={defaultEnabled} class="h-5 w-5" />
         </div>
       </div>
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Export Enabled Domains</span>
-            <span class="font-light">Downloads JSON of domains explicitly enabled.</span>
+            <h3 class="text-sm">Export Enabled Domains</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Downloads JSON of domains explicitly enabled.</p>
           </div>
-          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+          <Button size="sm" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
         </div>
       </div>
 
@@ -190,10 +227,16 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Activation Key</span>
-            <span class="font-light">If you're finding that you're accidentally triggering Harper.</span>
+            <h3 class="text-sm">Activation Key</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              If you're finding that you're accidentally triggering Harper.
+            </p>
           </div>
-          <Select size="sm" color="primary" class="w-44" bind:value={activationKey}>
+          <Select
+            size="sm"
+            class="w-44"
+            bind:value={activationKey}
+          >
             <option value={ActivationKey.Shift}>Double Shift</option>
             <option value={ActivationKey.Control}>Double Control</option>
             <option value={ActivationKey.Off}>Off</option>
@@ -204,38 +247,53 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">User Dictionary</span>
-            <span class="font-light">Each word should be on its own line.</span>
+            <h3 class="text-sm">User Dictionary</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
           </div>
-          <textarea bind:value={userDict} />
+          <Textarea
+            bind:value={userDict}
+          ></Textarea>
         </div>
       </div>
 
-    </section>
+    </Card>
 
     <!-- ── RULES ─────────────────────────────── -->
-    <section class="space-y-4">
+    <Card class="space-y-4">
       <div class="flex items-center justify-between gap-4">
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500">Rules</h3>
-        <Input bind:value={searchQuery} placeholder="Search for a rule…" size="sm" class="w-60" />
+        <h2 class="text-xs uppercase tracking-wider">Rules</h2>
+        <Input
+          bind:value={searchQuery}
+          placeholder="Search for a rule…"
+          size="sm"
+          class="w-60"
+        />
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <Button size="sm" on:click={resetRulesToDefaults}>Reset to Default Rules</Button>
+        <Button size="sm" on:click={toggleAllRules}>
+          {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
+        </Button>
       </div>
 
-      {#each Object.entries(lintConfig).filter(([key]) => lintDescriptions[key].toLowerCase().includes(searchQueryLower) || key.toLowerCase().includes(searchQueryLower)) as [key, value]}
-        <div class="space-y-4 max-h-80 overflow-y-auto pr-1">
+      {#each Object.entries(lintConfig).filter(
+        ([key]) =>
+          (lintDescriptions[key] ?? '').toLowerCase().includes(searchQueryLower) ||
+          key.toLowerCase().includes(searchQueryLower)
+      ) as [key, value]}
+        <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
           <!-- rule card sample -->
-          <div class="rounded-lg border border-gray-200 p-3 shadow-sm">
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
-                <p class="font-medium">{key}</p>
-                <p class="text-xs text-gray-600">{@html lintDescriptions[key]}</p>
+                <h3 class="text-sm">{key}</h3>
+                <p class="text-xs">{@html lintDescriptions[key]}</p>
               </div>
               <Select
-                size="sm"
+                size="md"
                 value={configValueToString(value)}
                 on:change={(e) => {
                   lintConfig[key] = configStringToValue(e.target.value);
                 }}
-                class="max-w-[10rem]"
               >
                 <option value="default">⚙️ Default</option>
                 <option value="enable">✅ On</option>
@@ -243,9 +301,8 @@ async function exportEnabledDomainsCSV() {
               </Select>
             </div>
           </div>
-        </div>
       {/each}
 
-    </section>
-  </main>
+    </Card>
+  </div>
 </div>

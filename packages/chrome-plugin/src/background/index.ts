@@ -14,10 +14,14 @@ import {
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
 	type GetEnabledDomainsResponse,
+	type GetInstalledOnRequest,
+	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetSpellCheckingModeResponse,
 	type GetSpellCheckingModeRequest,
+	type GetReviewedRequest,
+	type GetReviewedResponse,
 	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
@@ -34,6 +38,7 @@ import {
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
 	type SetSpellCheckingModeRequest,
+	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
@@ -47,7 +52,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 	handleRequest(request).then(sendResponse);
 
 	return true;
@@ -56,10 +61,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 let linter: LocalLinter;
 
 getDialect().then(setDialect);
+setInstalledOnIfMissing();
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
 		'old.reddit.com',
+		'sh.reddit.com',
+		'www.reddit.com',
 		'chatgpt.com',
 		'www.perplexity.ai',
 		'textarea.online',
@@ -74,11 +82,9 @@ async function enableDefaultDomains() {
 		'playground.lexical.dev',
 		'discord.com',
 		'www.youtube.com',
-		'www.google.com',
 		'www.instagram.com',
 		'web.whatsapp.com',
 		'outlook.live.com',
-		'www.reddit.com',
 		'www.linkedin.com',
 		'bsky.app',
 		'pootlewriter.com',
@@ -99,6 +105,9 @@ async function enableDefaultDomains() {
 		'www.facebook.com',
 		'www.upwork.com',
 		'news.ycombinator.com',
+		'classroom.google.com',
+		'quilljs.com',
+		'www.wattpad.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -159,6 +168,12 @@ function handleRequest(message: Request): Promise<Response> {
 			return Promise.resolve(createUnitResponse());
 		case 'postFormData':
 			return handlePostFormData(message);
+		case 'getInstalledOn':
+			return handleGetInstalledOn(message);
+		case 'getReviewed':
+			return handleGetReviewed(message);
+		case 'setReviewed':
+			return handleSetReviewed(message);
 	}
 }
 
@@ -168,7 +183,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 		return { kind: 'lints', lints: {} };
 	}
 
-	const grouped = await linter.organizedLints(req.text);
+	const grouped = await linter.organizedLints(req.text, req.options);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -179,7 +194,7 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	return { kind: 'lints', lints: unpackedBySource };
 }
 
-async function handleGetConfig(req: GetConfigRequest): Promise<GetConfigResponse> {
+async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
 	return { kind: 'getConfig', config: await getLintConfig() };
 }
 
@@ -195,7 +210,7 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 	return createUnitResponse();
 }
 
-async function handleGetDialect(req: GetDialectRequest): Promise<GetDialectResponse> {
+async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
@@ -247,7 +262,7 @@ async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<Uni
 }
 
 async function handleGetLintDescriptions(
-	req: GetLintDescriptionsRequest,
+	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
@@ -338,6 +353,19 @@ async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDat
 	}
 }
 
+async function handleGetInstalledOn(_req: GetInstalledOnRequest): Promise<GetInstalledOnResponse> {
+	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
+}
+
+async function handleGetReviewed(_req: GetReviewedRequest): Promise<GetReviewedResponse> {
+	return { kind: 'getReviewed', reviewed: await getReviewed() };
+}
+
+async function handleSetReviewed(req: SetReviewedRequest): Promise<UnitResponse> {
+	await setReviewed(req.reviewed);
+	return createUnitResponse();
+}
+
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
@@ -396,7 +424,7 @@ async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({
-		binary: new BinaryModule(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 
@@ -479,4 +507,29 @@ async function addToDictionary(words: string[]): Promise<void> {
 async function getUserDictionary(): Promise<string[]> {
 	const resp = await chrome.storage.local.get({ userDictionary: [] });
 	return resp.userDictionary;
+}
+
+/** Record the date the extension was installed, if it's missing. */
+async function setInstalledOnIfMissing(): Promise<void> {
+	const current = await getInstalledOn();
+	if (current !== null) {
+		return;
+	}
+
+	const installedOn = new Date().toISOString();
+	await chrome.storage.local.set({ installedOn });
+}
+
+async function getInstalledOn(): Promise<string | null> {
+	const resp = await chrome.storage.local.get({ installedOn: null });
+	return resp.installedOn;
+}
+
+async function getReviewed(): Promise<boolean> {
+	const resp = await chrome.storage.local.get({ reviewed: false });
+	return Boolean(resp.reviewed);
+}
+
+async function setReviewed(reviewed: boolean): Promise<void> {
+	await chrome.storage.local.set({ reviewed });
 }

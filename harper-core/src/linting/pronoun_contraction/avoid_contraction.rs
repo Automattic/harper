@@ -2,6 +2,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::{Token, TokenKind};
 
 use super::super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct AvoidContraction {
     expr: Box<dyn Expr>,
@@ -20,6 +21,8 @@ impl Default for AvoidContraction {
 }
 
 impl ExprLinter for AvoidContraction {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

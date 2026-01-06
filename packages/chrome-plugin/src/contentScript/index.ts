@@ -1,5 +1,11 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
+import {
+	getClosestBlockAncestor,
+	isVisible,
+	LintFramework,
+	leafNodes,
+	type UnpackedLint,
+} from 'lint-framework';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
@@ -7,18 +13,25 @@ if (isWordPress()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
 
-const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
-	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
-	getActivationKey: () => ProtocolClient.getActivationKey(),
-	openOptions: () => ProtocolClient.openOptions(),
-	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
-	reportError: (lint: UnpackedLint, ruleId: string) =>
-		ProtocolClient.openReportError(
-			padWithContext(lint.source, lint.span.start, lint.span.end, 15),
-			ruleId,
-			'',
-		),
-});
+const fw = new LintFramework(
+	(text, domain, options) => ProtocolClient.lint(text, domain, options),
+	{
+		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
+		getActivationKey: () => ProtocolClient.getActivationKey(),
+		openOptions: () => ProtocolClient.openOptions(),
+		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+		reportError: (lint: UnpackedLint, ruleId: string) =>
+			ProtocolClient.openReportError(
+				padWithContext(lint.source, lint.span.start, lint.span.end, 15),
+				ruleId,
+				'',
+			),
+		setRuleEnabled: async (ruleId, enabled) => {
+			await ProtocolClient.setRuleEnabled(ruleId, enabled);
+			fw.update();
+		},
+	},
+);
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
@@ -30,7 +43,7 @@ function padWithContext(source: string, start: number, end: number, contextLengt
 }
 
 const keepAliveCallback = () => {
-	ProtocolClient.lint('', 'example.com');
+	ProtocolClient.lint('', 'example.com', {});
 
 	setTimeout(keepAliveCallback, 400);
 };
@@ -64,32 +77,57 @@ function scan() {
 	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
-		if (element.matches('[role="combobox"]')) {
+		if (
+			element.matches('[role="combobox"]') ||
+			element.getAttribute('data-enable-grammarly') === 'false' ||
+			(element.getAttribute('spellcheck') === 'false' &&
+				element.getAttribute('data-language') !== 'markdown')
+		) {
 			return;
 		}
 
 		const leafs = leafNodes(element);
+
+		const seenBlockContainers = new Set<Element>();
 
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
 				continue;
 			}
 
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 }

@@ -59,7 +59,9 @@
 			"target": [
 				{
 					"metadata": {
-						"adverb": {}
+						"adverb": {
+							"is_manner": true
+						}
 					}
 				}
 			],
@@ -143,7 +145,7 @@
 		},
 		">": {
 			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
-			"//": "mnemonic: greater than is better",
+			"//": "mnemonic: greater than is better; singular of 'Z'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -265,6 +267,7 @@
 		},
 		"Z": {
 			"#": "'-(i)(e)rs' suffix",
+			"//": "plural of '>' agent noun suffix '-(i)(e)r'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -646,6 +649,14 @@
 				"verb": {}
 			}
 		},
+		"j": {
+			"#": "verb past property",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
 		"J": {
 			"#": "adjective property",
 			"metadata": {
@@ -850,6 +861,14 @@
 				"dialects": "AUSTRALIAN"
 			}
 		},
+		"₹": {
+			"#": "IN property",
+			"//": "mnemonic: rupee symbol",
+			"propagate": true,
+			"metadata": {
+				"dialects": "INDIAN"
+			}
+		},
 		"F": {
 			"#": "reflexive property",
 			"metadata": {
@@ -940,6 +959,59 @@
 			"metadata": {
 				"verb": {
 					"verb_form": "THIRD_PERSON_SINGULAR"
+				}
+			}
+		},
+		"y": {
+			"#": "adverb of manner property",
+			"//": "mnemonic: 'y' looks like 'ly'",
+			"metadata": {
+				"adverb": {
+					"is_manner": true
+				}
+			}
+		},
+		"8": {
+			"#": "adverb of frequency property",
+			"//": "mnemonic: '8' looks like '♾️'",
+			"metadata": {
+				"adverb": {
+					"is_frequency": true
+				}
+			}
+		},
+		"%": {
+			"#": "adverb of degree property",
+			"//": "mnemonic: '%' reminds of '°'",
+			"metadata": {
+				"adverb": {
+					"is_degree": true
+				}
+			}
+		},
+		"♂": {
+			"#": "masculine property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
+		},
+		"♀": {
+			"#": "feminine property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
+		},
+		"ª": {
+			"#": "animate property",
+			"metadata": {
+				"//": "not yet implemented"
+			}
+		},
+		"(": {
+			"#": "prefix property",
+			"metadata": {
+				"affix": {
+					"is_prefix": true
 				}
 			}
 		}

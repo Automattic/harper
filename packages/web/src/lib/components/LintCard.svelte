@@ -1,5 +1,11 @@
 <script lang="ts">
-import { lintKindColor, type UnpackedLint, type UnpackedSuggestion } from 'lint-framework';
+import { Button } from 'components';
+import {
+	lintKindColor,
+	lintKindTextColor,
+	type UnpackedLint,
+	type UnpackedSuggestion,
+} from 'lint-framework';
 import { slide } from 'svelte/transition';
 
 export let lint: UnpackedLint;
@@ -60,14 +66,16 @@ function suggestionText(s: UnpackedSuggestion): string {
       {#if lint.suggestions && lint.suggestions.length > 0}
         <div class="flex flex-wrap gap-2 justify-end">
           {#each lint.suggestions as s}
-            <button
-              class="inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-semibold"
-              style="background:#2DA44E;color:#FFFFFF"
+            <Button
+              size="xs"
+              color={lintKindColor(lint.lint_kind)}
+              textColor={lintKindTextColor(lint.lint_kind)}
+              class="!px-2 !py-1 text-xs font-semibold"
               title={`Replace with \"${suggestionText(s)}\"`}
               on:click={() => onApply?.(s)}
             >
               {suggestionText(s)}
-            </button>
+            </Button>
           {/each}
         </div>
       {:else}

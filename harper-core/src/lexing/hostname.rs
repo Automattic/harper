@@ -19,6 +19,11 @@ pub fn lex_hostname_token(source: &[char]) -> Option<FoundToken> {
         return None;
     }
 
+    // For the sake of semantics and downstream grammar checking.
+    if !ends_with_common_tld(&source[0..len]) {
+        return None;
+    }
+
     Some(FoundToken {
         next_index: len,
         token: TokenKind::Hostname,
@@ -31,14 +36,14 @@ pub fn lex_hostname(source: &[char]) -> Option<usize> {
     // The beginning has different requirements from the rest of the hostname.
     let first = source.first()?;
 
-    if !matches!(first, 'A'..='Z' | 'a'..='z' | '0'..='9' ) {
+    if !matches!(first,  'A'..='Z' |  'a'..='z' | '0'..='9' ) {
         return None;
     }
 
     for label in source.split(|c| *c == '.') {
         for c in label {
             passed_chars += 1;
-            if !matches!(c, 'A'..='Z' | 'a'..='z' | '0'..='9' | '-') {
+            if !matches!(c,  'A'..='Z' |  'a'..='z' | '0'..='9' | '-') {
                 return Some(passed_chars - 1);
             }
         }
@@ -51,6 +56,34 @@ pub fn lex_hostname(source: &[char]) -> Option<usize> {
     } else {
         Some(passed_chars - 1)
     }
+}
+
+const COMMON_TLDS: &[&[char]] = &[
+    &['c', 'o', 'm'],
+    &['n', 'e', 't'],
+    &['o', 'r', 'g'],
+    &['e', 'd', 'u'],
+    &['g', 'o', 'v'],
+    &['m', 'i', 'l'],
+    &['t', 'x', 't'],
+    &['i', 'o'],
+    &['c', 'o'],
+    &['u', 's'],
+    &['u', 'k'],
+    &['d', 'e'],
+    &['c', 'a'],
+    &['a', 'u'],
+    &['j', 'p'],
+];
+
+fn ends_with_common_tld(input: &[char]) -> bool {
+    for tld in COMMON_TLDS {
+        let n = tld.len();
+        if input.len() >= n && &input[input.len() - n..] == *tld {
+            return true;
+        }
+    }
+    false
 }
 
 #[cfg(test)]

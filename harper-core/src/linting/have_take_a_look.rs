@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Dialect, Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -31,6 +32,8 @@ impl HaveTakeALook {
 }
 
 impl ExprLinter for HaveTakeALook {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -90,10 +93,8 @@ impl ExprLinter for HaveTakeALook {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        Dialect,
-        linting::{HaveTakeALook, tests::assert_suggestion_result},
-    };
+    use super::HaveTakeALook;
+    use crate::{Dialect, linting::tests::assert_suggestion_result};
 
     #[test]
     fn correct_taking_a_look() {

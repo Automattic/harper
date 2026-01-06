@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdverb {
     expr: Box<dyn Expr>,
@@ -16,7 +17,7 @@ impl Default for ToTooAdverb {
         let expr = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_kind_is_but_is_not_except(TokenKind::is_adverb, |_| false, &["as"])
+            .then_kind_is_but_is_not_except(TokenKind::is_adverb, TokenKind::is_determiner, &["as"])
             .then_optional(WhitespacePattern)
             .then_any_of(vec![
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
@@ -34,6 +35,8 @@ impl Default for ToTooAdverb {
 }
 
 impl ExprLinter for ToTooAdverb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

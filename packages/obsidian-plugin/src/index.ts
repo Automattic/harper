@@ -1,5 +1,5 @@
 import { Dialect } from 'harper.js';
-import { type App, editorViewField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
+import { type App, editorInfoField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
 import { HarperSettingTab } from './HarperSettingTab';
@@ -15,7 +15,7 @@ export default class HarperPlugin extends Plugin {
 		this.state = new State(
 			(n) => this.saveData(n),
 			() => this.app.workspace.updateOptions(),
-			editorViewField,
+			editorInfoField,
 		);
 	}
 

@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
@@ -22,6 +22,9 @@ export type Request =
 	| GetSpellCheckingModeRequest
 	| SetSpellCheckingModeRequest
 	| OpenOptionsRequest
+	| GetInstalledOnRequest
+	| GetReviewedRequest
+	| SetReviewedRequest
 	| OpenReportErrorRequest
 	| PostFormDataRequest;
 
@@ -36,14 +39,16 @@ export type Response =
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
 	| GetActivationKeyResponse
-	| PostFormDataResponse
-	| GetSpellCheckingModeResponse;
-
+	| GetSpellCheckingModeResponse
+	| GetInstalledOnResponse
+	| GetReviewedResponse
+	| PostFormDataResponse;
 
 export type LintRequest = {
 	kind: 'lint';
 	domain: string;
 	text: string;
+	options: LintOptions;
 };
 
 export type LintResponse = {
@@ -147,6 +152,29 @@ export type GetUserDictionaryRequest = {
 export type GetUserDictionaryResponse = {
 	kind: 'getUserDictionary';
 	words: string[];
+};
+
+export type GetInstalledOnRequest = {
+	kind: 'getInstalledOn';
+};
+
+export type GetInstalledOnResponse = {
+	kind: 'getInstalledOn';
+	installedOn: string | null;
+};
+
+export type GetReviewedRequest = {
+	kind: 'getReviewed';
+};
+
+export type GetReviewedResponse = {
+	kind: 'getReviewed';
+	reviewed: boolean;
+};
+
+export type SetReviewedRequest = {
+	kind: 'setReviewed';
+	reviewed: boolean;
 };
 
 export type IgnoreLintRequest = {
