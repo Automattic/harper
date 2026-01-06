@@ -42,7 +42,7 @@ impl<T: Dictionary> SpellCheck<T> {
         // Back off until we find a match.
         for dist in 2..5 {
             let suggestions: Vec<CharString> =
-                suggest_correct_spelling(word, 100, dist, &self.dictionary)
+                suggest_correct_spelling(word, 200, dist, &self.dictionary)
                     .into_iter()
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
@@ -464,5 +464,45 @@ mod tests {
                 SpellCheck::new(FstDictionary::curated(), dialect),
             );
         }
+    }
+
+    #[test]
+    fn issue_2026() {
+        assert_top3_suggestion_result(
+            "'Tere' is supposed to be 'There'",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "'There' is supposed to be 'There'",
+        );
+
+        assert_top3_suggestion_result(
+            "'fll' is supposed to be 'fill'",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "'fill' is supposed to be 'fill'",
+        );
+    }
+    #[test]
+    fn issue_2261() {
+        assert_top3_suggestion_result(
+            "Generaly",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "Generally",
+        );
+    }
+
+    #[test]
+    fn flag_prepone_in_non_indian_english() {
+        assert_lint_count(
+            "We had to prepone the meeting",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn dont_flag_prepone_in_indian_english() {
+        assert_no_lints(
+            "We had to prepone the meeting",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Indian),
+        );
     }
 }

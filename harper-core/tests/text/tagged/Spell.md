@@ -1,19 +1,19 @@
-> Spell
-# NSg/VB
+>              Spell
+# HeadingStart NSg/VB
 >
 #
 > This    document contains example sentences with misspelled words   that          we   want   to test   the spell  checker on  .
 # I/Ddem+ NSg/VB+  V3       NSg/VB+ NPl/V3+   P    VP/J       NPl/V3+ NSg/I/C/Ddem+ IPl+ NSg/VB P  NSg/VB D   NSg/VB NSg/VB  J/P .
 >
 #
-> Example Sentences
-# NSg/VB+ NPl/V3+
+>              Example Sentences
+# HeadingStart NSg/VB+ NPl/V3+
 >
 #
 > My  favourite      color         is  blu .
 # D$+ NSg/VB/J/Comm+ N🅪Sg/VB/J/Am+ VL3 W?  .
-> I       must   defend my  honour        !
-# ISg/#r+ NSg/VB NSg/VB D$+ N🅪Sg/VB/Comm+ .
+> I       must    defend my  honour        !
+# ISg/#r+ NSg/VXB NSg/VB D$+ N🅪Sg/VB/Comm+ .
 > I       recognize that         you    recognise me       .
 # ISg/#r+ VB        NSg/I/C/Ddem ISgPl+ VB/Au/Br  NPr/ISg+ .
 > I       analyze how   you    infantilize me       .

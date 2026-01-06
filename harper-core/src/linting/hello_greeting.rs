@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{AnchorStart, Expr, SequenceExpr},
@@ -27,6 +28,8 @@ impl Default for HelloGreeting {
 }
 
 impl ExprLinter for HelloGreeting {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

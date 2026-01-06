@@ -6,6 +6,8 @@ use crate::spell::{Dictionary, FstDictionary};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
+use crate::linting::expr_linter::Chunk;
+
 pub struct OrthographicConsistency {
     dict: Arc<FstDictionary>,
     expr: Box<dyn Expr>,
@@ -27,6 +29,8 @@ impl Default for OrthographicConsistency {
 }
 
 impl ExprLinter for OrthographicConsistency {
+    type Unit = Chunk;
+
     fn description(&self) -> &str {
         "Ensures word casing matches the dictionary's canonical orthography."
     }
@@ -35,7 +39,26 @@ impl ExprLinter for OrthographicConsistency {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if let Some((pre, post)) = context {
+            if let Some(pre_tok) = pre.last()
+                && pre_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+
+            if let Some(post_tok) = post.first()
+                && post_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+        }
+
         let word = &matched_tokens[0];
 
         let Some(Some(metadata)) = word.kind.as_word() else {
@@ -48,6 +71,7 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_allcaps()
             && !metadata.is_lowercase()
+            && !metadata.is_upper_camel()
             && !cur_flags.contains(OrthFlags::ALLCAPS)
         {
             return Some(Lint {
@@ -70,9 +94,12 @@ impl ExprLinter for OrthographicConsistency {
         ];
 
         if flags_to_check
-            .iter()
-            .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .into_iter()
+            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .count()
+            == 1
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && canonical != chars
         {
             return Some(Lint {
                 span: word.span,
@@ -82,7 +109,7 @@ impl ExprLinter for OrthographicConsistency {
                     "The canonical dictionary spelling is `{}`.",
                     canonical.iter().collect::<String>()
                 ),
-                priority: 127,
+                priority: 31,
             });
         }
 
@@ -96,7 +123,7 @@ impl ExprLinter for OrthographicConsistency {
                 lint_kind: LintKind::Capitalization,
                 suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
                 message: format!(
-                    "The canonical dictionary spelling is `{}`.",
+                    "The canonical dictionary spelling is title case: `{}`.",
                     canonical.iter().collect::<String>()
                 ),
                 priority: 127,
@@ -351,5 +378,13 @@ mod tests {
         for sentence in sentences {
             assert_no_lints(sentence, OrthographicConsistency::default());
         }
+    }
+
+    #[test]
+    fn allows_news() {
+        assert_no_lints(
+            "This is the best part of the news broadcast.",
+            OrthographicConsistency::default(),
+        );
     }
 }

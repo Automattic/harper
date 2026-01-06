@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
@@ -23,6 +24,8 @@ impl Default for FriendOfMe {
 }
 
 impl ExprLinter for FriendOfMe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

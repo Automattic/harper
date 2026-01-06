@@ -1,5 +1,6 @@
 use crate::TokenKind;
 use crate::expr::{AnchorStart, Expr, ExprMap, FixedPhrase, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -60,6 +61,8 @@ impl Default for OughtToBe {
 }
 
 impl ExprLinter for OughtToBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

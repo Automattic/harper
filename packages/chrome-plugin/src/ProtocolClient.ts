@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey, SpellCheckingMode } from './protocol';
@@ -9,16 +9,20 @@ export default class ProtocolClient {
 		ttl: 5_000,
 	});
 
-	private static cacheKey(text: string, domain: string): string {
-		return `${domain}:${text}`;
+	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
+		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
 	}
 
-	public static async lint(text: string, domain: string): Promise<UnpackedLintGroups> {
-		const key = this.cacheKey(text, domain);
+	public static async lint(
+		text: string,
+		domain: string,
+		options?: LintOptions,
+	): Promise<UnpackedLintGroups> {
+		const key = this.cacheKey(text, domain, options);
 		let p = this.lintCache.get(key);
 		if (!p) {
 			p = chrome.runtime
-				.sendMessage({ kind: 'lint', text, domain })
+				.sendMessage({ kind: 'lint', text, domain, options })
 				.then((r) => r.lints as UnpackedLintGroups);
 			this.lintCache.set(key, p);
 		}
@@ -111,6 +115,18 @@ export default class ProtocolClient {
 
 	public static async getUserDictionary(): Promise<string[]> {
 		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
+	}
+
+	public static async getInstalledOn(): Promise<string | null> {
+		return (await chrome.runtime.sendMessage({ kind: 'getInstalledOn' })).installedOn;
+	}
+
+	public static async getReviewed(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getReviewed' })).reviewed;
+	}
+
+	public static async setReviewed(reviewed: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {

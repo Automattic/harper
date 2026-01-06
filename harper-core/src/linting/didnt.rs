@@ -1,5 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Didnt {
@@ -9,7 +10,7 @@ pub struct Didnt {
 impl Default for Didnt {
     fn default() -> Self {
         let pattern = SequenceExpr::default()
-            .then_personal_pronoun()
+            .then_subject_pronoun()
             .t_ws()
             .t_aco("dint");
 
@@ -20,6 +21,8 @@ impl Default for Didnt {
 }
 
 impl ExprLinter for Didnt {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

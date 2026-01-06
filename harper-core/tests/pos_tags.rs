@@ -80,10 +80,10 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
-use harper_core::dict_word_metadata::VerbFormFlags;
-use harper_core::dict_word_metadata_orthography::OrthFlags;
 use harper_core::spell::FstDictionary;
-use harper_core::{Degree, Dialect, DictWordMetadata, Document, TokenKind};
+use harper_core::{
+    Degree, Dialect, DictWordMetadata, Document, OrthFlags, TokenKind, VerbFormFlags,
+};
 
 mod snapshot;
 
@@ -302,6 +302,7 @@ fn format_tag(kind: &TokenKind) -> Cow<'static, str> {
         TokenKind::Unlintable => Cow::Borrowed("Unlintable"),
         TokenKind::Regexish => Cow::Borrowed("Regexish"),
         TokenKind::ParagraphBreak => Cow::Borrowed("ParagraphBreak"),
+        TokenKind::HeadingStart => Cow::Borrowed("HeadingStart"),
     }
 }
 

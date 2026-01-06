@@ -15,6 +15,24 @@ fn corrects_a_couple_of_more() {
     )
 }
 
+// AdNauseam
+#[test]
+fn corrects_as_nauseam_1() {
+    assert_suggestion_result(
+        "As you say, discussed as nauseam, but no nearer a solution.",
+        lint_group(),
+        "As you say, discussed ad nauseam, but no nearer a solution.",
+    );
+}
+#[test]
+fn corrects_as_nauseam_2() {
+    assert_suggestion_result(
+        "no more autism please, hearing about it as nauseam is starting to make me sick",
+        lint_group(),
+        "no more autism please, hearing about it ad nauseam is starting to make me sick",
+    );
+}
+
 // AfterAWhile
 #[test]
 fn correct_after_while() {
@@ -250,12 +268,6 @@ fn correct_a_another() {
     );
 }
 
-// AndIn
-// -none-
-
-// AndTheLike
-// -none-
-
 // AnotherAn
 #[test]
 fn correct_another_an() {
@@ -350,6 +362,16 @@ fn corrects_as_of_lately() {
         lint_group(),
         "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore.",
     )
+}
+
+// AsOpposedTo
+#[test]
+fn correct_as_oppose_to() {
+    assert_suggestion_result(
+        "Distorted image upon opening the app as oppose to running the app after successful build",
+        lint_group(),
+        "Distorted image upon opening the app as opposed to running the app after successful build",
+    );
 }
 
 // AtFaceValue
@@ -719,6 +741,16 @@ fn detect_ever_since() {
     );
 }
 
+// EveryOnceAndAgain
+#[test]
+fn fix_every_once_and_again() {
+    assert_suggestion_result(
+        "Ys have been replaced with Ps, happens randomly every once and again with different letters",
+        lint_group(),
+        "Ys have been replaced with Ps, happens randomly every once in a while with different letters",
+    );
+}
+
 // EveryTime
 #[test]
 fn fix_everytime() {
@@ -767,6 +799,16 @@ fn expand_cuz() {
     );
 }
 
+// ExpandForward
+#[test]
+fn expand_fwd() {
+    assert_suggestion_result(
+        "Now I look fwd to the interior, the color, etc.",
+        lint_group(),
+        "Now I look forward to the interior, the color, etc.",
+    );
+}
+
 // ExpandMinimum
 // -none
 
@@ -774,9 +816,6 @@ fn expand_cuz() {
 // -none-
 
 // ExpandWithout
-// -none-
-
-// Expatriate
 // -none-
 
 // FaceFirst
@@ -917,6 +956,17 @@ fn corrects_i_does() {
         "I does enjoy writing Rust.",
         lint_group(),
         "I do enjoy writing Rust.",
+    );
+}
+
+// InLieuOf
+
+#[test]
+fn corrects_in_lue_of() {
+    assert_suggestion_result(
+        "Controller Emulation in lue of Direct Controller binding",
+        lint_group(),
+        "Controller Emulation in lieu of Direct Controller binding",
     );
 }
 
@@ -1098,6 +1148,48 @@ fn correct_last_ditch_space() {
         lint_group(),
         "There are unique use cases and is meant to be a last-ditch option.",
     );
+}
+
+// LastNight
+#[test]
+fn corrects_yesterday_night_basic() {
+    assert_suggestion_result(
+        "I was there yesterday night.",
+        lint_group(),
+        "I was there last night.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_capitalized() {
+    assert_suggestion_result(
+        "Yesterday night was fun.",
+        lint_group(),
+        "Last night was fun.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_with_comma() {
+    assert_suggestion_result(
+        "Yesterday night, we watched a movie.",
+        lint_group(),
+        "Last night, we watched a movie.",
+    );
+}
+
+#[test]
+fn corrects_yesterday_night_across_newline() {
+    assert_suggestion_result(
+        "They left yesterday\nnight after the show.",
+        lint_group(),
+        "They left last night after the show.",
+    );
+}
+
+#[test]
+fn no_lint_for_last_night_phrase() {
+    assert_lint_count("I remember last night clearly.", lint_group(), 0);
 }
 
 // LetAlone
@@ -1439,14 +1531,32 @@ fn corrects_piece_of_mind() {
     )
 }
 
-// PointsOfView
+// PerSe
 #[test]
-fn corrects_points_of_view() {
+fn corrects_per_se_hyphenated() {
     assert_suggestion_result(
-        "This will produce a huge amount of raw data, representing the region in multiple point of views.",
+        "It's not a problem per-se, but it would make the desktop more consistent when using QT and KDE apps.",
         lint_group(),
-        "This will produce a huge amount of raw data, representing the region in multiple points of view.",
+        "It's not a problem per se, but it would make the desktop more consistent when using QT and KDE apps.",
     )
+}
+
+#[test]
+fn corrects_per_say() {
+    assert_suggestion_result(
+        "Hi all - not really an issue per say, but more of a request for some suggestions and guidance.",
+        lint_group(),
+        "Hi all - not really an issue per se, but more of a request for some suggestions and guidance.",
+    );
+}
+
+#[test]
+fn corrects_per_say_hyphenated() {
+    assert_suggestion_result(
+        "Whilst I don't think this is wrong per-say, I'm not confident it is necessary.",
+        lint_group(),
+        "Whilst I don't think this is wrong per se, I'm not confident it is necessary.",
+    );
 }
 
 // PrayingMantis
@@ -1502,26 +1612,6 @@ fn correct_iirc_correctly() {
 
 // RoadMap
 // -none-
-
-// RulesOfThumb
-
-#[test]
-fn correct_rules_of_thumbs() {
-    assert_suggestion_result(
-        "Thanks. 0.2 is just from my rule of thumbs.",
-        lint_group(),
-        "Thanks. 0.2 is just from my rules of thumb.",
-    );
-}
-
-#[test]
-fn correct_rules_of_thumbs_hyphenated() {
-    assert_suggestion_result(
-        "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
-        lint_group(),
-        "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
-    );
-}
 
 // SameAs
 // -none-
@@ -1950,5 +2040,14 @@ fn fixes_teh() {
         "I adore teh light of the moon.",
         lint_group(),
         "I adore the light of the moon.",
+    );
+}
+
+#[test]
+fn issue_2132() {
+    assert_suggestion_result(
+        "I know that that answer is correct",
+        lint_group(),
+        "I know that answer is correct",
     );
 }

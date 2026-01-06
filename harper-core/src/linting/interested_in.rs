@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, SequenceExpr},
@@ -25,6 +26,8 @@ impl Default for InterestedIn {
 }
 
 impl ExprLinter for InterestedIn {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -39,7 +42,7 @@ impl ExprLinter for InterestedIn {
 
         Some(Lint {
             span: prep_span,
-            lint_kind: LintKind::Grammar,
+            lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "in".chars().collect(),
                 prep_chars,

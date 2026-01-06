@@ -50,6 +50,7 @@ pub enum TokenKind {
     Unlintable,
     ParagraphBreak,
     Regexish,
+    HeadingStart,
 }
 
 impl TokenKind {
@@ -67,6 +68,7 @@ impl TokenKind {
         is_singular_noun,
         is_plural_noun,
         is_non_plural_noun,
+        is_non_possessive_noun,
         is_countable_noun,
         is_non_countable_noun,
         is_mass_noun,
@@ -93,6 +95,7 @@ impl TokenKind {
         is_auxiliary_verb,
         is_linking_verb,
         is_verb_lemma,
+        is_verb_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
         is_verb_progressive_form,
@@ -106,6 +109,9 @@ impl TokenKind {
 
         // Adverb methods
         is_adverb,
+        is_manner_adverb,
+        is_frequency_adverb,
+        is_degree_adverb,
 
         // Determiner methods
         is_determiner,
@@ -113,6 +119,7 @@ impl TokenKind {
         is_possessive_determiner,
         is_quantifier,
         is_non_quantifier_determiner,
+        is_non_demonstrative_determiner,
 
         // Conjunction methods
         is_conjunction,
@@ -163,6 +170,22 @@ impl TokenKind {
     /// `false` if the token is a word found in the dictionary or is not a word token.
     pub fn is_oov(&self) -> bool {
         matches!(self, TokenKind::Word(None))
+    }
+
+    // Number is-methods
+
+    pub fn is_cardinal_number(&self) -> bool {
+        matches!(self, TokenKind::Number(Number { suffix: None, .. }))
+    }
+
+    pub fn is_ordinal_number(&self) -> bool {
+        matches!(
+            self,
+            TokenKind::Number(Number {
+                suffix: Some(_),
+                ..
+            })
+        )
     }
 
     // Punctuation and symbol is-methods

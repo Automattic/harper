@@ -1,5 +1,5 @@
 <script>
-import { Button } from 'flowbite-svelte';
+import { Button } from 'components';
 import { binary, LocalLinter } from 'harper.js';
 
 let linter = new LocalLinter({ binary });

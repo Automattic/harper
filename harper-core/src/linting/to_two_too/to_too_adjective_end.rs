@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdjectiveEnd {
     expr: Box<dyn Expr>,
@@ -13,23 +14,18 @@ pub struct ToTooAdjectiveEnd {
 
 impl Default for ToTooAdjectiveEnd {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_optional(
-                SequenceExpr::default()
-                    .then_any_word()
-                    .then(WhitespacePattern),
-            )
-            .t_aco("to")
-            .t_ws()
-            .then_kind_is_but_is_not_except(
-                TokenKind::is_adjective,
-                TokenKind::is_verb,
-                &["standard"],
-            )
-            .then_optional(WhitespacePattern)
-            .then_optional(SequenceExpr::default().then_any_word())
-            .then_optional(WhitespacePattern)
-            .then_optional(SequenceExpr::default().then_punctuation());
+        let expr = SequenceExpr::optional(
+            SequenceExpr::default()
+                .then_any_word()
+                .then(WhitespacePattern),
+        )
+        .t_aco("to")
+        .t_ws()
+        .then_kind_is_but_is_not_except(TokenKind::is_adjective, TokenKind::is_verb, &["standard"])
+        .then_optional(WhitespacePattern)
+        .then_optional(SequenceExpr::default().then_any_word())
+        .then_optional(WhitespacePattern)
+        .then_optional(SequenceExpr::default().then_punctuation());
 
         Self {
             expr: Box::new(expr),
@@ -38,6 +34,8 @@ impl Default for ToTooAdjectiveEnd {
 }
 
 impl ExprLinter for ToTooAdjectiveEnd {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

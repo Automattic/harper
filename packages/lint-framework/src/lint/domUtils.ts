@@ -33,6 +33,27 @@ export function getNodesFromQuerySelector(element: Element, query: string) {
 	return extractFromNodeList(element.querySelectorAll(query));
 }
 
+/** Get a node's closest ancestor that has `display: block`. */
+export function getClosestBlockAncestor(leaf: Node, root: Element): Element | null {
+	let current: Node | null = leaf;
+
+	while (current) {
+		if (current instanceof Element) {
+			if (getComputedStyle(current).display === 'block') {
+				return current;
+			}
+
+			if (current === root) {
+				break;
+			}
+		}
+
+		current = current.parentNode;
+	}
+
+	return null;
+}
+
 /**
  * Flatten a provided node, and its children into a single array.
  * @param node
@@ -90,6 +111,17 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 }
 
 const sharedRange: Range | null = typeof document !== 'undefined' ? document.createRange() : null;
+
+/** Check if a node represents a heading (native heading tags or role="heading"). */
+export function isHeading(node: Node): boolean {
+	if (!(node instanceof Element)) return false;
+
+	const tag = node.tagName.toLowerCase();
+	if (/^h[1-6]$/.test(tag)) return true;
+
+	const role = node.getAttribute('role');
+	return role?.toLowerCase() === 'heading';
+}
 
 /** Check if an element is visible to the user.
  *

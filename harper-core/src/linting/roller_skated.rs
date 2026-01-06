@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
     expr::{AnchorStart, Expr, ExprMap, SequenceExpr},
@@ -68,6 +69,8 @@ impl Default for RollerSkated {
 }
 
 impl ExprLinter for RollerSkated {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

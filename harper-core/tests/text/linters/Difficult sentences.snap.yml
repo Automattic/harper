@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       1 | # Difficult sentences
+         | ^~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Difficult Sentences”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
       20 | at the bottom of the page; sitting at the table; at church; at sea
@@ -42,8 +51,9 @@ Message: |
       88 | By Chabad, it's different. (with, among)
          |    ^~~~~~ Did you mean to spell `Chabad` this way?
 Suggest:
-  - Replace with: “Canad”
-  - Replace with: “Chiba”
+  - Replace with: “Cabal”
+  - Replace with: “Chad”
+  - Replace with: “Charade”
 
 
 
@@ -56,7 +66,7 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      126 | Who's for ice-cream?
          | ^~~~~ The canonical dictionary spelling is `who's`.
@@ -71,15 +81,6 @@ Message: |
          | ^~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “To”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     166 | You can't get all your news from the Internet.
-         |                        ^~~~ The canonical dictionary spelling is `news`.
-Suggest:
-  - Replace with: “news”
 
 
 
@@ -105,12 +106,12 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
+Lint:    Typo (127 priority)
 Message: |
      243 | His parents got him an in with the company.
-         |                     ^~~~~ Did you mean `and in`?
+         |                     ^~ Did you mean `and in`?
 Suggest:
-  - Replace with: “and in”
+  - Replace with: “and”
 
 
 
@@ -213,8 +214,9 @@ Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          | ^~~~~~~~ Did you mean to spell `Ponsonby` this way?
 Suggest:
-  - Replace with: “Jonson's”
-  - Replace with: “Jonson”
+  - Replace with: “Poison”
+  - Replace with: “Poison's”
+  - Replace with: “Poisoned”
 
 
 
@@ -224,8 +226,8 @@ Message: |
          |          ^~~~~~ Did you mean to spell `Smythe` this way?
 Suggest:
   - Replace with: “Scythe”
-  - Replace with: “Myth”
-  - Replace with: “Myths”
+  - Replace with: “Smith”
+  - Replace with: “Smiths”
 
 
 
@@ -306,11 +308,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      358 | Smith scored again on twelve minutes, doubling Mudchester Rovers' lead.
-         |                                                ^~~~~~~~~~ Did you mean to spell `Mudchester` this way?
+         |                                                ^~~~~~~~~~ Did you mean `Manchester`?
 Suggest:
   - Replace with: “Manchester”
-  - Replace with: “Rochester”
-  - Replace with: “Winchester”
 
 
 
@@ -341,9 +341,9 @@ Message: |
      443 | With their reputation on the line, they decided to fire their PR team.
          |                                                               ^~ Did you mean to spell `PR` this way?
 Suggest:
-  - Replace with: “Pry”
-  - Replace with: “P”
   - Replace with: “Pa”
+  - Replace with: “Par”
+  - Replace with: “Pi”
 
 
 

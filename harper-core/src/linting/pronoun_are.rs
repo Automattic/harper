@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -12,12 +13,12 @@ pub struct PronounAre {
 impl Default for PronounAre {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(|tok: &Token, _src: &[char]| {
-                tok.kind.is_pronoun()
-                    && tok.kind.is_subject_pronoun()
-                    && (tok.kind.is_second_person_pronoun()
-                        || tok.kind.is_first_person_plural_pronoun()
-                        || tok.kind.is_third_person_plural_pronoun())
+            .then_kind_where(|kind| {
+                kind.is_pronoun()
+                    && kind.is_subject_pronoun()
+                    && (kind.is_second_person_pronoun()
+                        || kind.is_first_person_plural_pronoun()
+                        || kind.is_third_person_plural_pronoun())
             })
             .t_ws()
             .t_aco("r");
@@ -29,6 +30,8 @@ impl Default for PronounAre {
 }
 
 impl ExprLinter for PronounAre {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

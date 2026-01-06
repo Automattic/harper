@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::one_to_one(
@@ -36,7 +36,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::many_to_many(
@@ -155,11 +155,20 @@ pub fn lint_group() -> LintGroup {
         ),
         "ExpandDependencies" => (
             &[
-                ("deps", "dependencies"),
                 ("dep", "dependency"),
+                ("deps", "dependencies"),
             ],
             "Use `dependencies` instead of `deps`",
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandParameter" => (
+            &[
+                ("param", "parameter"),
+                ("params", "parameters"),
+            ],
+            "Use `parameter` instead of `param`",
+            "Expands the abbreviation `param` to the full word `parameter` for clarity.",
             LintKind::Style
         ),
         "ExpandStandardInputAndOutput" => (
@@ -252,6 +261,33 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+
+        // General litotes (double negatives) → direct positive suggestions
+        "LitotesDirectPositive" => (
+            &[
+                ("not uncommon", "common"),
+                ("not unusual", "common"),
+                ("not insignificant", "significant"),
+                ("not unimportant", "important"),
+                ("not unlikely", "likely"),
+                ("not infrequent", "frequent"),
+                ("not inaccurate", "accurate"),
+                ("not unclear", "clear"),
+                ("not irrelevant", "relevant"),
+                ("not unpredictable", "predictable"),
+                ("not inadequate", "adequate"),
+                ("not unpleasant", "pleasant"),
+                ("not unreasonable", "reasonable"),
+                ("not impossible", "possible"),
+                ("more preferable", "preferable"),
+                ("not online", "offline"),
+                ("not offline", "online"),
+            ],
+            "Consider the direct form.",
+            "Offers direct-positive alternatives when double negatives might feel heavy.",
+            LintKind::Style
+        ),
+
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -261,6 +297,17 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `do` instead of `due` when referring to a resource scarcity.",
             "Corrects `make due` to `make do` when followed by `with`."
+        ),
+        "MakeSense" => (
+            &[
+                ("make senses", "make sense"),
+                ("made senses", "made sense"),
+                ("makes senses", "makes sense"),
+                ("making senses", "making sense")
+            ],
+            "Use `sense` instead of `senses`.",
+            "Corrects `make senses` to `make sense`.",
+            LintKind::Usage
         ),
         "MootPoint" => (
             &[
@@ -299,33 +346,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
-
-        // General litotes (double negatives) → direct positive suggestions
-        "LitotesDirectPositive" => (
-            &[
-                ("not uncommon", "common"),
-                ("not unusual", "common"),
-                ("not insignificant", "significant"),
-                ("not unimportant", "important"),
-                ("not unlikely", "likely"),
-                ("not infrequent", "frequent"),
-                ("not inaccurate", "accurate"),
-                ("not unclear", "clear"),
-                ("not irrelevant", "relevant"),
-                ("not unpredictable", "predictable"),
-                ("not inadequate", "adequate"),
-                ("not unpleasant", "pleasant"),
-                ("not unreasonable", "reasonable"),
-                ("not impossible", "possible"),
-                ("more preferable", "preferable"),
-                ("not online", "offline"),
-                ("not offline", "online"),
-            ],
-            "Consider the direct form.",
-            "Offers direct-positive alternatives when double negatives might feel heavy.",
-            LintKind::Style
-        ),
-
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -338,9 +358,92 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "ScapeGoat" => (
+            &[
+                ("an escape goat", "a scapegoat"),
+                ("escape goat", "scapegoat"),
+                ("escape goats", "scapegoats"),
+            ],
+            "If you're referring someone is being blamed unfairly, write it as a single word: `scapegoat`.",
+            "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures.",
+            LintKind::Eggcorn
+        ),
+        "WreakHavoc" => (
+            &[
+                ("wreck havoc", "wreak havoc"),
+                ("wrecked havoc", "wreaked havoc"),
+                ("wrecking havoc", "wreaking havoc"),
+                ("wrecks havoc", "wreaks havoc"),
+            ],
+            "Did you mean `wreak havoc`?",
+            "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
+            LintKind::Eggcorn
+        )
     });
 
     add_many_to_many_mappings!(group, {
+        "AwaitFor" => (
+            &[
+                (&["await for"], &["await", "wait for"]),
+                (&["awaited for"], &["awaited", "waited for"]),
+                (&["awaiting for"], &["awaiting", "waiting for"]),
+                (&["awaits for"], &["awaits", "waits for"])
+            ],
+            "`Await` and `for` are redundant when used together - use one or the other",
+            "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
+            LintKind::Redundancy
+        ),
+        "Copyright" => (
+            &[
+                (&["copywrite"], &["copyright"]),
+                (&["copywrites"], &["copyrights"]),
+                (&["copywriting"], &["copyrighting"]),
+                (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
+            ],
+            "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
+            "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
+            LintKind::WordChoice
+        ),
+        "DoubleEdgedSword" => (
+            &[
+                (&["double edge sword", "double-edge sword", "double edge-sword", "double-edge-sword",
+                   "double edged sword", "double edged-sword", "double-edged-sword"], &["double-edged sword"]),
+                (&["double edge swords", "double-edge swords", "double edge-swords", "double-edge-swords",
+                   "double edged swords", "double edged-swords", "double-edged-swords"], &["double-edged swords"]),
+            ],
+            "Did you mean `double-edged sword`?",
+            "Corrects variants of `double-edged sword`.",
+            LintKind::Spelling
+        ),
+        "ExpandDecl" => (
+            &[
+                (&["decl"], &["declaration", "declarator"]),
+                (&["decls"], &["declarations", "declarators"])
+            ],
+            "Use `declaration` or `declarator` instead of `decl`",
+            "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
+        ),
+        "Expat" => (
+            &[
+                (&["ex-pat", "ex pat"], &["expat"]),
+                (&["ex-pats", "ex pats"], &["expats"]),
+                (&["ex-pat's", "ex pat's"], &["expat's"]),
+            ],
+            "The correct spelling is `expat` with no hyphen or space.",
+            "Corrects the mistake of writing `expat` as two words.",
+            LintKind::Spelling
+        ),
+        "Expatriate" => (
+            &[
+                (&["ex-patriot", "expatriot", "ex patriot"], &["expatriate"]),
+                (&["ex-patriots", "expatriots", "ex patriots"], &["expatriates"]),
+                (&["ex-patriot's", "expatriot's", "ex patriot's"], &["expatriate's"]),
+            ],
+            "Use the correct term for someone living abroad.",
+            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
+            LintKind::Eggcorn
+        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),
@@ -352,6 +455,15 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
+        ),
+        "HolyWar" => (
+            &[
+                (&["holey war", "holly war"], &["holy war"]),
+                (&["holey wars", "holly wars"], &["holy wars"]),
+            ],
+            "Literally for religious conflicts and metaphorically for tech preference debats, the correct spelling is `holy war`.",
+            "Corrects misspellings of `holy war`.",
+            LintKind::Malapropism
         ),
         "HowItLooksLike" => (
             &[
@@ -374,12 +486,27 @@ pub fn lint_group() -> LintGroup {
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
         ),
+        "NervousWreck" => (
+            &[
+                (&["nerve wreck", "nerve-wreck"], &["nervous wreck"]),
+                (&["nerve wrecks", "nerve-wrecks"], &["nervous wrecks"]),
+            ],
+            "Use `nervous wreck` when referring to a person who is extremely anxious or upset. `Nerve wreck` is non-standard but sometimes used for events or situations.",
+            "Suggests using `nervous wreck` when referring to a person's emotional state.",
+            LintKind::Eggcorn
+        ),
         "RiseTheQuestion" => (
             &[
-                (&["rise the question"], &["raise the question"]),
-                (&["rises the question"], &["raises the question"]),
-                (&["risen the question", "rose the question"], &["raised the question"]),
-                (&["rising the question"], &["raising the question"])
+                (&["rise the question", "arise the question"], &["raise the question"]),
+                (&["rises the question", "arises the question"], &["raises the question"]),
+                (
+                    &[
+                        "risen the question", "rose the question", "rised the question",
+                        "arisen the question", "arose the question", "arised the question"
+                    ],
+                    &["raised the question"]
+                ),
+                (&["rising the question", "arising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
