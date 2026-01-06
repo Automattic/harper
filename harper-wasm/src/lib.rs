@@ -657,4 +657,19 @@ mod tests {
         let lints = linter.lint(text, Language::Plain, false);
         assert!(lints.is_empty());
     }
+
+    #[test]
+    fn does_not_oom_with_repeated_lints() {
+        for _ in 0..3000 {
+            let mut linter = Linter::new(Dialect::American);
+
+            let results = linter.lint(
+                "This is a grammatically correct sentence.".to_string(),
+                Language::Plain,
+                false,
+            );
+
+            assert!(results.is_empty())
+        }
+    }
 }
