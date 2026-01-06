@@ -121,6 +121,18 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
 	}
 
+	public static async getInstalledOn(): Promise<string | null> {
+		return (await chrome.runtime.sendMessage({ kind: 'getInstalledOn' })).installedOn;
+	}
+
+	public static async getReviewed(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getReviewed' })).reviewed;
+	}
+
+	public static async setReviewed(reviewed: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
+	}
+
 	public static async ignoreHash(hash: string): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'ignoreLint', contextHash: hash });
 		this.lintCache.clear();

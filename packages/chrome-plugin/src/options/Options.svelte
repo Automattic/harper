@@ -3,8 +3,8 @@ import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
+import type { Hotkey, Modifier } from '../protocol';
 import { ActivationKey } from '../protocol';
-import type { Modifier, Hotkey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});
@@ -15,7 +15,7 @@ let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 let modifyHotkeyButton: Button;
-let hotkey : Hotkey = $state({modifiers: ['Ctrl'], key: 'e'});
+let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
 
 $effect(() => {
@@ -62,11 +62,10 @@ ProtocolClient.getHotkey().then((d) => {
 	// Ensure we have a plain object, not a Proxy
 	hotkey = {
 		modifiers: [...d.modifiers],
-		key: d.key
+		key: d.key,
 	};
 	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
 });
-
 
 ProtocolClient.getUserDictionary().then((d) => {
 	userDict = dictToString(d.toSorted());
@@ -159,49 +158,44 @@ async function exportEnabledDomainsCSV() {
 
 let buttonText = $state('Set Hotkey');
 let isBlue = $state(false); // modify color of hotkey button once it is pressed
-function startHotkeyCapture(modifyHotkeyButton: Button) {
+function startHotkeyCapture(_modifyHotkeyButton: Button) {
+	const handleKeydown = (event: KeyboardEvent) => {
+		event.preventDefault();
 
-  const handleKeydown = (event: KeyboardEvent) => {
-    event.preventDefault();
+		const modifiers: Modifier[] = [];
+		if (event.ctrlKey) modifiers.push('Ctrl');
+		if (event.shiftKey) modifiers.push('Shift');
+		if (event.altKey) modifiers.push('Alt');
 
-    const modifiers: Modifier[] = [];
-    if (event.ctrlKey) modifiers.push('Ctrl');
-    if (event.shiftKey) modifiers.push('Shift');
-    if (event.altKey) modifiers.push('Alt');
+		let key = event.key;
 
-    let key = event.key;
+		if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
+			if (modifiers.length === 0) {
+				return;
+			}
+			buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
+			// Create a plain object to avoid proxy cloning issues
+			const newHotkey = {
+				modifiers: [...modifiers],
+				key: key,
+			};
 
-    if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
-        if (modifiers.length === 0) {
-          return;
-        }
-        buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
-        // Create a plain object to avoid proxy cloning issues
-        const newHotkey = {
-          modifiers: [...modifiers],
-          key: key
-        };
-        hotkey = newHotkey;
-        
-        // Call ProtocolClient directly with the plain object to avoid proxy issues
-        ProtocolClient.setHotkey(newHotkey);
-        
-        // Remove listener
-        window.removeEventListener('keydown', handleKeydown);
+			hotkey = newHotkey;
 
-        // change button color
-        isBlue = !isBlue;
-      }
+			// Call ProtocolClient directly with the plain object to avoid proxy issues
+			ProtocolClient.setHotkey(newHotkey);
 
-    }
+			// Remove listener
+			window.removeEventListener('keydown', handleKeydown);
 
-    // Add temporary key listener
-    window.addEventListener('keydown', handleKeydown);
+			// change button color
+			isBlue = !isBlue;
+		}
+	};
 
-
-  };
-
-
+	// Add temporary key listener
+	window.addEventListener('keydown', handleKeydown);
+}
 
 // Import removed
 </script>
