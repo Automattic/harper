@@ -162,6 +162,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
             LintKind::Style
         ),
+        "ExpandDeref" => (
+            &[
+                ("deref", "dereference"),
+                ("derefs", "dereferences"),
+            ],
+            "Use `dereference` instead of `deref`",
+            "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
         "ExpandParameter" => (
             &[
                 ("param", "parameter"),
@@ -169,6 +178,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `parameter` instead of `param`",
             "Expands the abbreviation `param` to the full word `parameter` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandPointer" => (
+            &[
+                ("ptr", "pointer"),
+                ("ptrs", "pointers"),
+            ],
+            "Use `pointer` instead of `ptr`",
+            "Expands the abbreviation `ptr` to the full word `pointer` for clarity.",
             LintKind::Style
         ),
         "ExpandStandardInputAndOutput" => (
@@ -414,6 +432,15 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `double-edged sword`?",
             "Corrects variants of `double-edged sword`.",
             LintKind::Spelling
+        ),
+        "ExpandAlloc" => (
+            &[
+                (&["alloc"], &["allocate", "allocation"]),
+                (&["allocs"], &["allocates", "allocations"]),
+            ],
+            "Use `allocate` or `allocation` instead of `alloc`",
+            "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
+            LintKind::Style
         ),
         "ExpandDecl" => (
             &[

@@ -1,6 +1,6 @@
 use crate::linting::tests::{
     assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
-    assert_nth_suggestion_result, assert_suggestion_result,
+    assert_nth_suggestion_result, assert_suggestion_result, assert_top3_suggestion_result,
 };
 
 use super::lint_group;
@@ -505,6 +505,26 @@ fn corrects_decls() {
 // ExpandDependency
 // -none-
 
+// ExpandDereference
+
+#[test]
+fn expand_deref() {
+    assert_suggestion_result(
+        "Should raw pointer deref/projections have to be in-bounds?",
+        lint_group(),
+        "Should raw pointer dereference/projections have to be in-bounds?",
+    );
+}
+
+#[test]
+fn corrects_derefs() {
+    assert_suggestion_result(
+        "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
+        lint_group(),
+        "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
 // ExpandParam
 
 #[test]
@@ -522,6 +542,24 @@ fn corrects_params() {
         "the params are not loaded in the R environment when using the terminal",
         lint_group(),
         "the parameters are not loaded in the R environment when using the terminal",
+    );
+}
+
+// ExpandPointer
+
+fn correct_ptr() {
+    assert_suggestion_result(
+        "How else would you construct a slice from a ptr and a length?",
+        lint_group(),
+        "How else would you construct a slice from a pointer and a length?",
+    );
+}
+
+fn correct_ptrs() {
+    assert_suggestion_result(
+        "FixedBufferAllocator.free not freeing ptrs",
+        lint_group(),
+        "FixedBufferAllocator.free not freeing pointers",
     );
 }
 
@@ -965,9 +1003,6 @@ fn fix_escape_goats() {
 }
 
 // WreakHavoc
-// -none-
-
-// Many to many tests
 
 #[test]
 fn fix_wreck_havoc() {
@@ -1004,6 +1039,8 @@ fn fix_wrecks_havoc() {
         "Small POC using rust with ptrace that wreaks havoc on msync",
     );
 }
+
+// Many to many tests
 
 // AwaitFor
 
@@ -1150,6 +1187,26 @@ fn correct_double_edged_space_plural() {
         "Change: Ambushers and Crusaders now protect their targets too, making them double edged swords",
         lint_group(),
         "Change: Ambushers and Crusaders now protect their targets too, making them double-edged swords",
+    );
+}
+
+// ExpandAlloc
+
+#[test]
+fn corrects_allocs() {
+    assert_top3_suggestion_result(
+        "cmd/compile: avoid allocs by better tracking of literals for interface conversions and make",
+        lint_group(),
+        "cmd/compile: avoid allocations by better tracking of literals for interface conversions and make",
+    );
+}
+
+#[test]
+fn expand_alloc() {
+    assert_top3_suggestion_result(
+        "Used to find system libraries that alloc RWX regions on load.",
+        lint_group(),
+        "Used to find system libraries that allocate RWX regions on load.",
     );
 }
 
