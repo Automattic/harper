@@ -613,6 +613,13 @@ pub fn lint_group() -> LintGroup {
             "Corrects `I does` to `I do`.",
             LintKind::Agreement
         ),
+        "Initiatively" => (
+            ["initiatively"],
+            ["proactively", "initially"],
+            "Did you mean `proactive` (taking initiative, acting in advance) or `initially` (at first, in the beginning)?",
+            "Corrects nonstandard `initiatively`.",
+            LintKind::Nonstandard
+        ),
         "InLieuOf" => (
             ["in lue of"],
             ["in lieu of"],

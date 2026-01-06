@@ -959,6 +959,16 @@ fn corrects_i_does() {
     );
 }
 
+// Initiatively
+#[test]
+fn corrects_initiatively_2422() {
+    assert_suggestion_result(
+        "I have initiatively signed up for the course.",
+        lint_group(),
+        "I have proactively signed up for the course.",
+    );
+}
+
 // InLieuOf
 
 #[test]
