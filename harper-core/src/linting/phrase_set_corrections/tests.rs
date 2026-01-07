@@ -614,6 +614,44 @@ fn correct_to_an_extend() {
     );
 }
 
+// FoamAtTheMouth
+
+#[test]
+fn correct_foam_out_the_mouth() {
+    assert_suggestion_result(
+        "and he gave him a drink that made him foam out the mouth and die",
+        lint_group(),
+        "and he gave him a drink that made him foam at the mouth and die",
+    );
+}
+
+#[test]
+fn correct_foamed_out_the_mouth() {
+    assert_suggestion_result(
+        "You can see in some shots they've foamed out the mouth, and it's apparent their poisoned.",
+        lint_group(),
+        "You can see in some shots they've foamed at the mouth, and it's apparent their poisoned.",
+    );
+}
+
+#[test]
+fn correct_foaming_out_the_mouth() {
+    assert_suggestion_result(
+        "choking or foaming out the mouth or something like that, leading up to death",
+        lint_group(),
+        "choking or foaming at the mouth or something like that, leading up to death",
+    );
+}
+
+#[test]
+fn correct_foams_out_the_mouth() {
+    assert_suggestion_result(
+        "Elaine can't swallow, foams out the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
+        lint_group(),
+        "Elaine can't swallow, foams at the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
+    );
+}
+
 // FootTheBill
 
 #[test]
@@ -1566,7 +1604,7 @@ fn dont_correct_so_much_nerve_wreck() {
 
 // -raise the question-
 #[test]
-fn detect_raise_the_question() {
+fn detect_rise_the_question() {
     assert_suggestion_result(
         "That would rise the question how to deal with syntax errors etc.",
         lint_group(),
@@ -1574,9 +1612,18 @@ fn detect_raise_the_question() {
     );
 }
 
+#[test]
+fn detect_arise_the_question() {
+    assert_suggestion_result(
+        "As e.g. UTC+1, might arise the question whether it includes summer and winter time",
+        lint_group(),
+        "As e.g. UTC+1, might raise the question whether it includes summer and winter time",
+    );
+}
+
 // -raises the question-
 #[test]
-fn detect_raises_the_question() {
+fn detect_rises_the_question() {
     assert_suggestion_result(
         "However, this rises the question as to whether this test is conceptually sound.",
         lint_group(),
@@ -1584,9 +1631,18 @@ fn detect_raises_the_question() {
     );
 }
 
+#[test]
+fn detect_arises_the_question() {
+    assert_suggestion_result(
+        "And it arises the question, why?",
+        lint_group(),
+        "And it raises the question, why?",
+    );
+}
+
 // -raising the question-
 #[test]
-fn detect_raising_the_question() {
+fn detect_rising_the_question() {
     assert_suggestion_result(
         "as soon as a infoHash query is performed, a Torrent file is retried, rising the question of:",
         lint_group(),
@@ -1594,7 +1650,16 @@ fn detect_raising_the_question() {
     );
 }
 
-// -rose the question-
+#[test]
+fn detect_arising_the_question() {
+    assert_suggestion_result(
+        "arising the question whether the requirement of wgpu::Features::DEPTH24PLUS_STENCIL8 is precise",
+        lint_group(),
+        "raising the question whether the requirement of wgpu::Features::DEPTH24PLUS_STENCIL8 is precise",
+    );
+}
+
+// -raised the question-
 #[test]
 fn detect_rose_the_question() {
     assert_suggestion_result(
@@ -1604,13 +1669,58 @@ fn detect_rose_the_question() {
     );
 }
 
-// -risen the question-
 #[test]
 fn detect_risen_the_question() {
     assert_suggestion_result(
         "That has risen the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
         lint_group(),
         "That has raised the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+    );
+}
+
+#[test]
+fn detect_rised_the_question() {
+    assert_suggestion_result(
+        "I rised the question to Emax Support and they just came back to me inmediately with the below response.",
+        lint_group(),
+        "I raised the question to Emax Support and they just came back to me inmediately with the below response.",
+    );
+}
+
+#[test]
+#[ignore = "Not actually an error after when it's 'there arose'"]
+fn dont_fag_there_arose_the_question() {
+    assert_suggestion_result(
+        "Hello, while I have been using modals manager there arose the question related to customizing of modal header.",
+        lint_group(),
+        "Hello, while I have been using modals manager there arose the question related to customizing of modal header.",
+    );
+}
+
+#[test]
+fn detect_arised_the_question() {
+    assert_suggestion_result(
+        "and that fact arised the question in my mind, what does exactly is happening",
+        lint_group(),
+        "and that fact raised the question in my mind, what does exactly is happening",
+    );
+}
+
+#[test]
+fn detect_arose_the_question() {
+    assert_suggestion_result(
+        "This arose the question, could I store 32 digits on the stack?",
+        lint_group(),
+        "This raised the question, could I store 32 digits on the stack?",
+    );
+}
+
+#[test]
+fn detect_arisen_the_question() {
+    assert_suggestion_result(
+        "Some have arisen the question like how to use this wireless HD mini camera",
+        lint_group(),
+        "Some have raised the question like how to use this wireless HD mini camera",
     );
 }
 

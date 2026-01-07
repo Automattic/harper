@@ -203,6 +203,17 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
+        "FoamAtTheMouth" => (
+            &[
+                ("foam out the mouth", "foam at the mouth"),
+                ("foamed out the mouth", "foamed at the mouth"),
+                ("foaming out the mouth", "foaming at the mouth"),
+                ("foams out the mouth", "foams at the mouth"),
+            ],
+            "The correct idiom is `foam at the mouth`.",
+            "Corrects the idiom `foam out the mouth` to the standard `foam at the mouth`.",
+            LintKind::Nonstandard
+        ),
         "FootTheBill" => (
             &[
                 ("flip the bill", "foot the bill"),
@@ -497,10 +508,16 @@ pub fn lint_group() -> LintGroup {
         ),
         "RiseTheQuestion" => (
             &[
-                (&["rise the question"], &["raise the question"]),
-                (&["rises the question"], &["raises the question"]),
-                (&["risen the question", "rose the question"], &["raised the question"]),
-                (&["rising the question"], &["raising the question"])
+                (&["rise the question", "arise the question"], &["raise the question"]),
+                (&["rises the question", "arises the question"], &["raises the question"]),
+                (
+                    &[
+                        "risen the question", "rose the question", "rised the question",
+                        "arisen the question", "arose the question", "arised the question"
+                    ],
+                    &["raised the question"]
+                ),
+                (&["rising the question", "arising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
