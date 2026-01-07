@@ -280,7 +280,7 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
             <span class="font-medium">Apply Last Suggestion Hotkey</span>
             <span class="font-light">Hotkey to apply the most likely suggestion to previously incorrect lint.</span>
           </div>
-          <textarea readonly bind:value={buttonText} />
+          <Textarea readonly bind:value={buttonText} />
           <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
 
         </div>
