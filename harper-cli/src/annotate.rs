@@ -1,6 +1,6 @@
 use ariadne::{Color, Label};
 use clap::ValueEnum;
-use harper_core::{Document, Span, Token, TokenKind};
+use harper_core::{Document, Span, TokenKind, TokenStringExt};
 use strum::IntoEnumIterator;
 
 /// Represents an annotation.
@@ -37,40 +37,43 @@ impl Annotation {
             .map(|annotation| annotation.into_label(input_identifier))
     }
 
-    /// Constructs an [`Annotation`] from the given `token` based on the given `annotation_type`.
-    ///
-    /// This will return `None` when the `token` should not be annotated according to
-    /// `annotation_type`.
-    #[must_use]
-    fn from_token(annotation_type: AnnotationType, token: &Token) -> Option<Self> {
-        let span = token.span;
-        match annotation_type {
-            AnnotationType::Upos => {
-                if let TokenKind::Word(Some(metadata)) = &token.kind {
-                    // Only annotate words (with dict word metadata) for `AnnotationType::Upos`.
-                    let pos_tag = metadata.pos_tag;
-                    Some(Self {
-                        span,
-                        annotation_text: pos_tag.map_or("NONE".to_owned(), |upos| upos.to_string()),
-                        color: pos_tag.map_or(Color::Red, get_color_for_enum_variant),
-                    })
-                } else {
-                    // Not a word, or a word with no metadata.
-                    None
-                }
-            }
-        }
-    }
-
     /// Gets an iterator of [`Annotation`] for a given document. The annotations will be based on
     /// `annotation_type`.
     fn iter_from_document(
         annotation_type: AnnotationType,
         document: &Document,
-    ) -> impl Iterator<Item = Self> {
-        document
-            .tokens()
-            .filter_map(move |token| Self::from_token(annotation_type, token))
+    ) -> Box<dyn Iterator<Item = Self> + '_> {
+        match annotation_type {
+            AnnotationType::Upos => Box::new({
+                document.tokens().filter_map(|token| {
+                    let span = token.span;
+                    if let TokenKind::Word(Some(metadata)) = &token.kind {
+                        // Only annotate words (with dict word metadata) for `AnnotationType::Upos`.
+                        let pos_tag = metadata.pos_tag;
+                        Some(Self {
+                            span,
+                            annotation_text: pos_tag
+                                .map_or("NONE".to_owned(), |upos| upos.to_string()),
+                            color: pos_tag.map_or(Color::Red, get_color_for_enum_variant),
+                        })
+                    } else {
+                        // Not a word, or a word with no metadata.
+                        None
+                    }
+                })
+            }),
+            AnnotationType::Chunks => Box::new(
+                document
+                    .iter_chunks()
+                    .zip(RandomColorIter::new())
+                    .enumerate()
+                    .map(|(i, (chunk, color))| Self {
+                        span: chunk.span().unwrap(),
+                        annotation_text: i.to_string(),
+                        color,
+                    }),
+            ),
+        }
     }
 }
 
@@ -79,6 +82,7 @@ impl Annotation {
 pub(super) enum AnnotationType {
     /// UPOS (part of speech)
     Upos,
+    Chunks,
 }
 
 struct RandomColorIter {
