@@ -12,6 +12,7 @@ use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
 use futures::future::join;
+use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
@@ -363,6 +364,7 @@ impl Backend {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
+            "asciidoc" => Some(Box::new(AsciidocParser::default())),
             "ink" => Some(Box::new(InkParser::default())),
             "jj-commit" | "jjdescription" => {
                 Some(Box::new(JJDescriptionParser::new(markdown_options)))

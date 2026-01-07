@@ -462,8 +462,70 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandArgument
+
+#[test]
+fn corrects_arg() {
+    assert_suggestion_result(
+        "but I cannot figure out how to flag an arg as required",
+        lint_group(),
+        "but I cannot figure out how to flag an argument as required",
+    );
+}
+
+#[test]
+fn corrects_args() {
+    assert_suggestion_result(
+        "but every test I've done shows args as being about 65% faster",
+        lint_group(),
+        "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandDecl
+
+#[test]
+fn corrects_decl() {
+    assert_suggestion_result(
+        "Yeah, I agree a forward decl would be preferable in this case.",
+        lint_group(),
+        "Yeah, I agree a forward declaration would be preferable in this case.",
+    );
+}
+
+#[test]
+fn corrects_decls() {
+    assert_suggestion_result(
+        "Accessing type decls from pointer types",
+        lint_group(),
+        "Accessing type declarations from pointer types",
+    );
+}
+
 // ExpandDependency
 // -none-
+
+// ExpandParam
+
+#[test]
+fn corrects_param() {
+    assert_suggestion_result(
+        "If I use the following to set an endDate param with a default value",
+        lint_group(),
+        "If I use the following to set an endDate parameter with a default value",
+    );
+}
+
+#[test]
+fn corrects_params() {
+    assert_suggestion_result(
+        "the params are not loaded in the R environment when using the terminal",
+        lint_group(),
+        "the parameters are not loaded in the R environment when using the terminal",
+    );
+}
+
+// ExpandSpecification
 
 // ExpandStandardInput
 // -none-
@@ -549,6 +611,44 @@ fn correct_to_an_extend() {
         "It mimics (to an extend) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
         lint_group(),
         "It mimics (to an extent) the way in which Chrome requests SSO cookies with the Windows 10 accounts extension.",
+    );
+}
+
+// FoamAtTheMouth
+
+#[test]
+fn correct_foam_out_the_mouth() {
+    assert_suggestion_result(
+        "and he gave him a drink that made him foam out the mouth and die",
+        lint_group(),
+        "and he gave him a drink that made him foam at the mouth and die",
+    );
+}
+
+#[test]
+fn correct_foamed_out_the_mouth() {
+    assert_suggestion_result(
+        "You can see in some shots they've foamed out the mouth, and it's apparent their poisoned.",
+        lint_group(),
+        "You can see in some shots they've foamed at the mouth, and it's apparent their poisoned.",
+    );
+}
+
+#[test]
+fn correct_foaming_out_the_mouth() {
+    assert_suggestion_result(
+        "choking or foaming out the mouth or something like that, leading up to death",
+        lint_group(),
+        "choking or foaming at the mouth or something like that, leading up to death",
+    );
+}
+
+#[test]
+fn correct_foams_out_the_mouth() {
+    assert_suggestion_result(
+        "Elaine can't swallow, foams out the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
+        lint_group(),
+        "Elaine can't swallow, foams at the mouth and Kramer says she has rabies just like his friend Bob Sacamano after she gets bit by the guy's dog",
     );
 }
 
@@ -870,7 +970,40 @@ fn correct_passer_bys_hyphen() {
 // Piggyback
 // -none-
 
+// RedundantSuperlatives
+// -none-
+
+// ScapeGoat
+
+#[test]
+fn fix_an_escape_goat() {
+    assert_suggestion_result(
+        "I see too many times the cable and ps thingy being used as an escape goat.",
+        lint_group(),
+        "I see too many times the cable and ps thingy being used as a scapegoat.",
+    );
+}
+
+#[test]
+fn fix_escape_goat() {
+    assert_suggestion_result(
+        "It helps shift the reason for the failure on to what the manager did not do (making them the escape goat when it fails).",
+        lint_group(),
+        "It helps shift the reason for the failure on to what the manager did not do (making them the scapegoat when it fails).",
+    );
+}
+
+#[test]
+fn fix_escape_goats() {
+    assert_suggestion_result(
+        "People might be using Americans as escape goats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+        lint_group(),
+        "People might be using Americans as scapegoats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+    );
+}
+
 // WreakHavoc
+// -none-
 
 // Many to many tests
 
@@ -1008,6 +1141,53 @@ fn copywrote() {
         "How do you find out if someone copywrote a movie",
         lint_group(),
         "How do you find out if someone copyrighted a movie",
+    );
+}
+
+// DoubleEdgedSword
+
+#[test]
+fn correct_double_edge_hyphen() {
+    assert_suggestion_result(
+        "I thought the global defaultTranslationValues was potentially a double-edge sword as it also obfuscates the full set of values",
+        lint_group(),
+        "I thought the global defaultTranslationValues was potentially a double-edged sword as it also obfuscates the full set of values",
+    );
+}
+
+#[test]
+fn correct_double_edge_space() {
+    assert_suggestion_result(
+        "It becomes a double edge sword when it should not be used in cases like this.",
+        lint_group(),
+        "It becomes a double-edged sword when it should not be used in cases like this.",
+    );
+}
+
+#[test]
+fn correct_double_edge_space_plural() {
+    assert_suggestion_result(
+        "Wake locks are really double edge swords.",
+        lint_group(),
+        "Wake locks are really double-edged swords.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space() {
+    assert_suggestion_result(
+        "Use case. currently OPTIMIZE is a double edged sword and potentially a very dangerous tool to use.",
+        lint_group(),
+        "Use case. currently OPTIMIZE is a double-edged sword and potentially a very dangerous tool to use.",
+    );
+}
+
+#[test]
+fn correct_double_edged_space_plural() {
+    assert_suggestion_result(
+        "Change: Ambushers and Crusaders now protect their targets too, making them double edged swords",
+        lint_group(),
+        "Change: Ambushers and Crusaders now protect their targets too, making them double-edged swords",
     );
 }
 
@@ -1424,7 +1604,7 @@ fn dont_correct_so_much_nerve_wreck() {
 
 // -raise the question-
 #[test]
-fn detect_raise_the_question() {
+fn detect_rise_the_question() {
     assert_suggestion_result(
         "That would rise the question how to deal with syntax errors etc.",
         lint_group(),
@@ -1432,9 +1612,18 @@ fn detect_raise_the_question() {
     );
 }
 
+#[test]
+fn detect_arise_the_question() {
+    assert_suggestion_result(
+        "As e.g. UTC+1, might arise the question whether it includes summer and winter time",
+        lint_group(),
+        "As e.g. UTC+1, might raise the question whether it includes summer and winter time",
+    );
+}
+
 // -raises the question-
 #[test]
-fn detect_raises_the_question() {
+fn detect_rises_the_question() {
     assert_suggestion_result(
         "However, this rises the question as to whether this test is conceptually sound.",
         lint_group(),
@@ -1442,9 +1631,18 @@ fn detect_raises_the_question() {
     );
 }
 
+#[test]
+fn detect_arises_the_question() {
+    assert_suggestion_result(
+        "And it arises the question, why?",
+        lint_group(),
+        "And it raises the question, why?",
+    );
+}
+
 // -raising the question-
 #[test]
-fn detect_raising_the_question() {
+fn detect_rising_the_question() {
     assert_suggestion_result(
         "as soon as a infoHash query is performed, a Torrent file is retried, rising the question of:",
         lint_group(),
@@ -1452,7 +1650,16 @@ fn detect_raising_the_question() {
     );
 }
 
-// -rose the question-
+#[test]
+fn detect_arising_the_question() {
+    assert_suggestion_result(
+        "arising the question whether the requirement of wgpu::Features::DEPTH24PLUS_STENCIL8 is precise",
+        lint_group(),
+        "raising the question whether the requirement of wgpu::Features::DEPTH24PLUS_STENCIL8 is precise",
+    );
+}
+
+// -raised the question-
 #[test]
 fn detect_rose_the_question() {
     assert_suggestion_result(
@@ -1462,13 +1669,58 @@ fn detect_rose_the_question() {
     );
 }
 
-// -risen the question-
 #[test]
 fn detect_risen_the_question() {
     assert_suggestion_result(
         "That has risen the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
         lint_group(),
         "That has raised the question in my mind if it is still possible to embed your own Flash player on Facebook today?",
+    );
+}
+
+#[test]
+fn detect_rised_the_question() {
+    assert_suggestion_result(
+        "I rised the question to Emax Support and they just came back to me inmediately with the below response.",
+        lint_group(),
+        "I raised the question to Emax Support and they just came back to me inmediately with the below response.",
+    );
+}
+
+#[test]
+#[ignore = "Not actually an error after when it's 'there arose'"]
+fn dont_fag_there_arose_the_question() {
+    assert_suggestion_result(
+        "Hello, while I have been using modals manager there arose the question related to customizing of modal header.",
+        lint_group(),
+        "Hello, while I have been using modals manager there arose the question related to customizing of modal header.",
+    );
+}
+
+#[test]
+fn detect_arised_the_question() {
+    assert_suggestion_result(
+        "and that fact arised the question in my mind, what does exactly is happening",
+        lint_group(),
+        "and that fact raised the question in my mind, what does exactly is happening",
+    );
+}
+
+#[test]
+fn detect_arose_the_question() {
+    assert_suggestion_result(
+        "This arose the question, could I store 32 digits on the stack?",
+        lint_group(),
+        "This raised the question, could I store 32 digits on the stack?",
+    );
+}
+
+#[test]
+fn detect_arisen_the_question() {
+    assert_suggestion_result(
+        "Some have arisen the question like how to use this wireless HD mini camera",
+        lint_group(),
+        "Some have raised the question like how to use this wireless HD mini camera",
     );
 }
 

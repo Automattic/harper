@@ -1,0 +1,35 @@
+= Document Title
+Author Name <author@example.com>
+:revdate: 2026-01-01
+:custom-attr: Value with typpo.
+
+This is a paragraph with a deliberate typpo.
+
+== Section Titlre
+
+* List item with errorr
+* Another item
+
+.Block Titlle
+[NOTE]
+====
+Admonition with mistacke.
+====
+
+|===
+| Header with errorr | Header 2
+
+| Cell with typpo | Cell 1.2
+|===
+
+// Comment with mistacke.
+
+////
+Block comment with errorr.
+////
+
+Indented block:
+    This has a typpo too.
+
+Term with errorr::
+    Definition with mistacke.

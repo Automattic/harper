@@ -8,7 +8,7 @@ use crate::DictWordMetadata;
 /// An in-memory database that contains everything necessary to parse and analyze English text.
 ///
 /// See also: [`super::FstDictionary`] and [`super::MutableDictionary`].
-#[blanket(derive(Arc))]
+#[blanket(derive(Arc, Ref))]
 pub trait Dictionary: Send + Sync {
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool;

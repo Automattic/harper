@@ -88,13 +88,13 @@ Each user of `harper-ls` has their own dictionary, created on-demand the first t
 | macOS            |                            `$HOME/Library/Application Support/harper-ls/dictionary.txt` |
 | Windows          |                                    `%FOLDERID_RoamingAppData%/harper-ls/dictionary.txt` |
 
-This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Directories).
 
 ### Workspace Dictionary
 
 Each workspace in which you use `harper-ls` has its own dictionary, which by default is located at `.harper-dictionary.txt` in the root of the workspace.
 
-This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Directories).
 
 ### File-Local Dictionary
 
@@ -108,7 +108,7 @@ You can find the file-local dictionaries in the following directories by default
 | macOS            |                                  `$HOME/Library/Application Support/harper-ls/file_dictionaries` |
 | Windows          |                                            `%FOLDERID_LocalAppData%/harper-ls/file_dictionaries` |
 
-The format of these files is identical to user dictionaries and [their location can also be configured](#Dictionaries_).
+The format of these files is identical to user dictionaries and [their location can also be configured](#Directories).
 
 ### Static Dictionary
 

@@ -1,0 +1,16 @@
+[package]
+name = "harper-asciidoc"
+version = "1.4.0"
+edition = "2024"
+description = "The language checker for developers."
+license = "Apache-2.0"
+repository = "https://github.com/automattic/harper"
+
+[dependencies]
+harper-core = { path = "../harper-core", version = "1.0.0" }
+harper-tree-sitter = { path = "../harper-tree-sitter", version = "1.0.0" }
+tree-sitter-asciidoc = "0.6.0"
+tree-sitter = "0.25.10"
+
+[dev-dependencies]
+paste = "1.0.15"
