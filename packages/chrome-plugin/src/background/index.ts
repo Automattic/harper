@@ -18,15 +18,14 @@ import {
 	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
-	type GetSpellCheckingModeResponse,
-	type GetSpellCheckingModeRequest,
 	type GetReviewedRequest,
 	type GetReviewedResponse,
+	type GetSpellCheckingModeRequest,
+	type GetSpellCheckingModeResponse,
 	type GetUserDictionaryResponse,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
-	SpellCheckingMode,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
@@ -37,9 +36,10 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
-	type SetSpellCheckingModeRequest,
 	type SetReviewedRequest,
+	type SetSpellCheckingModeRequest,
 	type SetUserDictionaryRequest,
+	SpellCheckingMode,
 	type UnitResponse,
 } from '../protocol';
 
@@ -312,6 +312,8 @@ async function handleSetSpellCheckingMode(req: SetSpellCheckingModeRequest): Pro
 		throw new Error(`Invalid spell checking mode: ${req.spellCheckingMode}`);
 	}
 	await setSpellCheckingMode(req.spellCheckingMode);
+	
+	return createUnitResponse();
 }
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
 	const popupState: PopupState = {
@@ -417,10 +419,9 @@ async function getSpellCheckingMode(): Promise<SpellCheckingMode> {
 	return resp.spellCheckingMode;
 }
 
-async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
-	await chrome.storage.local.set({ spellCheckingMode: spellCheckingMode });
+async function setSpellCheckingMode(mode: SpellCheckingMode) {
+	await chrome.storage.local.set({ spellCheckingMode: mode });
 }
-
 
 function initializeLinter(dialect: Dialect) {
 	linter = new LocalLinter({

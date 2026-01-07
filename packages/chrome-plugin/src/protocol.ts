@@ -236,7 +236,6 @@ export type SetSpellCheckingModeRequest = {
 	spellCheckingMode: SpellCheckingMode;
 };
 
-
 export type OpenOptionsRequest = {
 	kind: 'openOptions';
 };

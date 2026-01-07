@@ -5,7 +5,6 @@ import { isHeading, isVisible } from './domUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
-import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -108,8 +107,8 @@ export default class LintFramework {
 	}
 
 	async update() {
-		this.determineSpellCheckingMode();
 		this.requestRender();
+		this.determineSpellCheckingMode();
 	}
 
 	async requestLintUpdate() {
@@ -210,30 +209,32 @@ export default class LintFramework {
 	}
 
 	private async determineSpellCheckingMode() {
-		let spellCheckingMode: SpellCheckingMode = await ProtocolClient.getSpellCheckingMode();
-		switch(spellCheckingMode) {
+		const spellCheckingMode = await this.actions.getSpellCheckingMode?.();
+		switch (spellCheckingMode) {
 			case 'space':
 				window.addEventListener('keyup', (event: KeyboardEvent) => {
-					let key = event.code;
-					let expectedKey = 'Space';
-					if(key === expectedKey) {
+					const key = event.code;
+					const expectedKey = 'Space';
+					if (key === expectedKey) {
 						this.requestLintUpdate();
 					}
 				});
 				break;
 			case 'stop':
-				window.addEventListener('input', () => {
-						if(renderTimer) clearTimeout(renderTimer);
+				window.addEventListener(
+					'input',
+					() => {
+						if (renderTimer) clearTimeout(renderTimer);
 						renderTimer = setTimeout(() => {
 							this.requestLintUpdate();
 						}, 2000);
-					}, {once: true});
+					},
+					{ once: true },
+				);
 				break;
 			case 'default':
 				this.requestLintUpdate();
-
 		}
-
 	}
 
 	private requestRender() {

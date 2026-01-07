@@ -94,7 +94,6 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getSpellCheckingMode' })).spellCheckingMode;
 	}
 
-
 	public static async setActivationKey(key: ActivationKey): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });
 	}

@@ -19,6 +19,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		openOptions: () => ProtocolClient.openOptions(),
+		getSpellCheckingMode: () => ProtocolClient.getSpellCheckingMode(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
 			ProtocolClient.openReportError(
