@@ -61,6 +61,9 @@ enum Args {
         /// If omitted, `harper-cli` will run every rule.
         #[arg(long, value_delimiter = ',')]
         only: Option<Vec<String>>,
+        /// Overlapping lints are removed by default. This option disables that behavior.
+        #[arg(short = 'o', long)]
+        keep_overlapping_lints: bool,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -200,6 +203,7 @@ fn main() -> anyhow::Result<()> {
             count,
             ignore,
             only,
+            keep_overlapping_lints,
             dialect,
             user_dict_path,
             // TODO workspace_dict_path?
@@ -213,6 +217,7 @@ fn main() -> anyhow::Result<()> {
                     count,
                     ignore: &ignore,
                     only: &only,
+                    keep_overlapping_lints,
                     dialect,
                 },
                 user_dict_path,
