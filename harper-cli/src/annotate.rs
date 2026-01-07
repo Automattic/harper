@@ -81,18 +81,42 @@ pub(super) enum AnnotationType {
     Upos,
 }
 
+struct RandomColorIter {
+    color_gen: ariadne::ColorGenerator,
+}
+impl RandomColorIter {
+    fn new() -> Self {
+        Self {
+            // Using a lower than default `min_brightness` to hopefully create more distinguishable colors.
+            color_gen: ariadne::ColorGenerator::from_state([31715, 3528, 21854], 0.2),
+        }
+    }
+}
+impl Iterator for RandomColorIter {
+    type Item = Color;
+    fn next(&mut self) -> Option<Self::Item> {
+        Some(self.color_gen.next())
+    }
+}
+
 /// Gets a random `Color` for an enum variant.
 ///
 /// A given enum variant's color is consistent, meaning it will not change throughout multiple
 /// calls of this function or multiple runs of the application.
 #[must_use]
 fn get_color_for_enum_variant<T: IntoEnumIterator + PartialEq>(variant_to_color: T) -> Color {
-    // Using a lower than default `min_brightness` to hopefully create more distinguishable colors.
-    let mut color_gen = ariadne::ColorGenerator::from_state([31715, 3528, 21854], 0.2);
-    T::iter()
-        // Note: `ColorGenerator` does not implement `Iterator`, so we can't just zip it.
-        .map(|enum_variant| (enum_variant, color_gen.next()))
-        .find(|(enum_variant, _)| *enum_variant == variant_to_color)
-        .unwrap()
-        .1
+    get_color_for_index(
+        T::iter()
+            .position(|variant| variant == variant_to_color)
+            .unwrap(),
+    )
+}
+
+/// Gets the nth random `Color` for a numeric index.
+///
+/// A given index's color is consistent, meaning it will not change throughout multiple calls of
+/// this function or multiple runs of the application.
+#[must_use]
+fn get_color_for_index(idx_to_color: usize) -> Color {
+    RandomColorIter::new().nth(idx_to_color).unwrap()
 }
