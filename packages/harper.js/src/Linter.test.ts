@@ -13,7 +13,7 @@ function randomString(length: number): string {
 }
 
 const linters = {
-  WorkerLinter: WorkerLinter,
+	WorkerLinter: WorkerLinter,
 	LocalLinter: LocalLinter,
 };
 
