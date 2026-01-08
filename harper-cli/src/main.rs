@@ -14,7 +14,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
-use harper_core::parsers::MarkdownOptions;
+use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
 };
@@ -92,6 +92,8 @@ enum Args {
         /// How the document should be annotated.
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
+        #[arg(short, long)]
+        isolate_english: bool,
     },
     /// Get the metadata associated with one or more words.
     Metadata {
@@ -284,12 +286,22 @@ fn main() -> anyhow::Result<()> {
         Args::Annotate {
             input,
             annotation_type,
+            isolate_english,
         } => {
             // Try to read from standard input if `input` was not provided.
             let input = input.unwrap_or_read_from_stdin();
 
+            let parser = if isolate_english {
+                Box::new(IsolateEnglish::new(
+                    input.get_parser(markdown_options),
+                    &curated_dictionary,
+                ))
+            } else {
+                input.get_parser(markdown_options)
+            };
+
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &curated_dictionary)?;
+            let (doc, source) = input.load_with_parser(&parser, &curated_dictionary)?;
 
             let input_identifier = input.get_identifier();
 
