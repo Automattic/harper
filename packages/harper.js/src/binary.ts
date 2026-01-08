@@ -5,8 +5,6 @@ import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
 import type { LintConfig } from './main';
 
-const wasmInstances = new WeakMap<object, { memory?: WebAssembly.Memory }>();
-
 const loadBinary = pMemoize(async (binary: string) => {
 	const exports = await import('harper-wasm');
 
@@ -22,8 +20,7 @@ const loadBinary = pMemoize(async (binary: string) => {
 	} else {
 		input = binary;
 	}
-	const wasm = await exports.default({ module_or_path: input });
-	wasmInstances.set(exports as object, wasm as { memory?: WebAssembly.Memory });
+	await exports.default({ module_or_path: input });
 
 	return exports;
 });
@@ -63,22 +60,6 @@ export class BinaryModule {
 	public async setup(): Promise<void> {
 		const exported = await this.inner!;
 		exported.setup();
-	}
-
-	public async getWasmMemoryUsageBytes(): Promise<number | undefined> {
-		if (!this.inner) {
-			return undefined;
-		}
-
-		const exported = await this.inner;
-		const wasm = wasmInstances.get(exported as object);
-		const memory = wasm?.memory;
-
-		if (!memory?.buffer) {
-			return undefined;
-		}
-
-		return memory.buffer.byteLength;
 	}
 }
 
