@@ -13,7 +13,7 @@
     // Every time the `<textarea/>` received an input, we process it and update our list.
     async function onInput(e) {
       const linter = new LocalLinter({ binary: binaryInlined });
-      let config = await linter.getLintConfig();
+      const config = await linter.getLintConfig();
 
       // for (let key of Object.keys(config)){
       //   config[key] = false;

@@ -13,9 +13,9 @@ function randomString(length: number): string {
 
 type HeapUsage = { used: number; limit: number; wasmUsed: number };
 
-async function getWasmMemoryUsageBytes(
-	linter?: { getWasmMemoryUsageBytes?: () => Promise<number | undefined> },
-): Promise<number> {
+async function getWasmMemoryUsageBytes(linter?: {
+	getWasmMemoryUsageBytes?: () => Promise<number | undefined>;
+}): Promise<number> {
 	try {
 		const usage = await linter?.getWasmMemoryUsageBytes?.();
 		return typeof usage === 'number' ? usage : 0;
@@ -24,9 +24,9 @@ async function getWasmMemoryUsageBytes(
 	}
 }
 
-async function getHeapUsage(
-	linter?: { getWasmMemoryUsageBytes?: () => Promise<number | undefined> },
-): Promise<HeapUsage | null> {
+async function getHeapUsage(linter?: {
+	getWasmMemoryUsageBytes?: () => Promise<number | undefined>;
+}): Promise<HeapUsage | null> {
 	const wasmUsed = await getWasmMemoryUsageBytes(linter);
 	const perfMemory = (globalThis as any).performance?.memory as
 		| { usedJSHeapSize?: number; jsHeapSizeLimit?: number }
@@ -63,7 +63,7 @@ async function assertHeapUsageBelow(
 		throw new Error('Memory usage metrics are unavailable; cannot guard against OOM in this test.');
 	}
 
-  // console.log(heap.used / heap.limit);
+	// console.log(heap.used / heap.limit);
 
 	if (heap.used / heap.limit >= limitRatio) {
 		const usedMb = Math.round(heap.used / 1024 / 1024);
@@ -447,42 +447,42 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lint.get_problem_text()).toBe(text);
 	});
 
-  test(`${linterName} will lint many random strings with a single instance`, async () => {
-    const linter = new Linter({ binary });
+	test(`${linterName} will lint many random strings with a single instance`, async () => {
+		const linter = new Linter({ binary });
 
-    for (let i = 0; i < 1000; i++){
-      const text = randomString(10);
-      const lints = await linter.organizedLints(text);
+		for (let i = 0; i < 1000; i++) {
+			const text = randomString(10);
+			const lints = await linter.organizedLints(text);
 
-      expect(lints).not.toBeNull();
-    }
-  }, 120000)
+			expect(lints).not.toBeNull();
+		}
+	}, 120000);
 
-  test.only(`${linterName} will lint many times with fresh instances`, async () => {
-    const heapLimitRatio = 0.5;
+	test.only(`${linterName} will lint many times with fresh instances`, async () => {
+		const heapLimitRatio = 0.5;
 
-    for (let i = 0; i < 10000; i++){
-      const iteration = i + 1;
-      const linter = new Linter({binary});
-      await assertHeapUsageBelow(heapLimitRatio, `before iteration ${iteration}`, linter);
+		for (let i = 0; i < 10000; i++) {
+			const iteration = i + 1;
+			const linter = new Linter({ binary });
+			await assertHeapUsageBelow(heapLimitRatio, `before iteration ${iteration}`, linter);
 
-      let config = await linter.getLintConfig();
+			const config = await linter.getLintConfig();
 
-      for (let key in Object.keys(config)){
-        config[key] = false;
-      }
+			for (const key in Object.keys(config)) {
+				config[key] = false;
+			}
 
-      await linter.setLintConfig(config)
+			await linter.setLintConfig(config);
 
-      const text = "This is a grammatically correct sentence.";
-      const lints = await linter.organizedLints(text);
+			const text = 'This is a grammatically correct sentence.';
+			const lints = await linter.organizedLints(text);
 
-      expect(lints).not.toBeNull();
+			expect(lints).not.toBeNull();
 
-      await assertHeapUsageBelow(heapLimitRatio, `after iteration ${iteration}`, linter);
-      await linter.dispose();
-    }
-  }, 12000000)
+			await assertHeapUsageBelow(heapLimitRatio, `after iteration ${iteration}`, linter);
+			await linter.dispose();
+		}
+	}, 12000000);
 }
 
 test('Linters have the same config format', async () => {
