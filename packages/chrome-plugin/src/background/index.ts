@@ -393,6 +393,10 @@ async function setActivationKey(key: ActivationKey) {
 }
 
 function initializeLinter(dialect: Dialect) {
+	if (linter != null) {
+		linter.dispose();
+	}
+
 	linter = new LocalLinter({
 		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
