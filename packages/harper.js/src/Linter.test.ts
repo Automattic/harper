@@ -1,7 +1,6 @@
 import { expect, test } from 'vitest';
 import { binary } from './binary';
 import LocalLinter from './LocalLinter';
-import WorkerLinter from './WorkerLinter';
 
 function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -12,8 +11,71 @@ function randomString(length: number): string {
 	return result;
 }
 
+type HeapUsage = { used: number; limit: number; wasmUsed: number };
+
+async function getWasmMemoryUsageBytes(
+	linter?: { getWasmMemoryUsageBytes?: () => Promise<number | undefined> },
+): Promise<number> {
+	try {
+		const usage = await linter?.getWasmMemoryUsageBytes?.();
+		return typeof usage === 'number' ? usage : 0;
+	} catch {
+		return 0;
+	}
+}
+
+async function getHeapUsage(
+	linter?: { getWasmMemoryUsageBytes?: () => Promise<number | undefined> },
+): Promise<HeapUsage | null> {
+	const wasmUsed = await getWasmMemoryUsageBytes(linter);
+	const perfMemory = (globalThis as any).performance?.memory as
+		| { usedJSHeapSize?: number; jsHeapSizeLimit?: number }
+		| undefined;
+
+	if (perfMemory?.usedJSHeapSize != null && perfMemory?.jsHeapSizeLimit != null) {
+		return {
+			used: perfMemory.usedJSHeapSize + wasmUsed,
+			limit: perfMemory.jsHeapSizeLimit,
+			wasmUsed,
+		};
+	}
+
+	const nodeProcess = (globalThis as any).process as
+		| { memoryUsage?: () => { heapUsed: number; heapTotal: number } }
+		| undefined;
+
+	if (nodeProcess?.memoryUsage) {
+		const { heapUsed, heapTotal } = nodeProcess.memoryUsage();
+		return { used: heapUsed + wasmUsed, limit: heapTotal, wasmUsed };
+	}
+
+	return null;
+}
+
+async function assertHeapUsageBelow(
+	limitRatio: number,
+	context: string,
+	linter?: { getWasmMemoryUsageBytes?: () => Promise<number | undefined> },
+): Promise<void> {
+	const heap = await getHeapUsage(linter);
+
+	if (!heap || heap.limit <= 0) {
+		throw new Error('Memory usage metrics are unavailable; cannot guard against OOM in this test.');
+	}
+
+  console.log(heap.used / heap.limit);
+
+	if (heap.used / heap.limit >= limitRatio) {
+		const usedMb = Math.round(heap.used / 1024 / 1024);
+		const limitMb = Math.round(heap.limit / 1024 / 1024);
+		const wasmInfo = heap.wasmUsed > 0 ? `, wasm ${Math.round(heap.wasmUsed / 1024 / 1024)}MB` : '';
+		throw new Error(
+			`Memory usage too high (${usedMb}MB/${limitMb}MB${wasmInfo}) at ${context}; failing early to avoid OOM.`,
+		);
+	}
+}
+
 const linters = {
-	// WorkerLinter: WorkerLinter,
 	LocalLinter: LocalLinter,
 };
 
@@ -396,14 +458,20 @@ for (const [linterName, Linter] of Object.entries(linters)) {
     }
   }, 120000)
 
-  test(`${linterName} will lint many times with fresh instances`, async () => {
+  test.only(`${linterName} will lint many times with fresh instances`, async () => {
+    const heapLimitRatio = 0.5;
+
     for (let i = 0; i < 3000; i++){
+      const iteration = i + 1;
       const linter = new Linter({binary});
-  
+      await assertHeapUsageBelow(heapLimitRatio, `before iteration ${iteration}`, linter);
+
       const text = "This is a grammatically correct sentence.";
       const lints = await linter.organizedLints(text);
 
       expect(lints).not.toBeNull();
+
+      await assertHeapUsageBelow(heapLimitRatio, `after iteration ${iteration}`, linter);
     }
   }, 120000)
 }

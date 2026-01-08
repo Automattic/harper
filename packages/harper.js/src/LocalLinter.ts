@@ -199,4 +199,8 @@ export default class LocalLinter implements Linter {
 		const inner = await this.inner;
 		return inner.import_stats_file(statsFile);
 	}
+
+	async getWasmMemoryUsageBytes(): Promise<number | undefined> {
+		return this.binary.getWasmMemoryUsageBytes();
+	}
 }

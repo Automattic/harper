@@ -31,11 +31,11 @@ export default interface Linter {
 	getLintConfig(): Promise<LintConfig>;
 
 	/** Get the default (unset) linter configuration as JSON.
-	 * This method does not effect the caller's lint configuration, nor does it return the current one. */
+	 * This method does not affect the caller's lint configuration, nor does it return the current one. */
 	getDefaultLintConfigAsJSON(): Promise<string>;
 
 	/** Get the default (unset) linter configuration.
-	 * This method does not effect the caller's lint configuration, nor does it return the current one. */
+	 * This method does not affect the caller's lint configuration, nor does it return the current one. */
 	getDefaultLintConfig(): Promise<LintConfig>;
 
 	/** Set the linter's current configuration. */
@@ -64,6 +64,9 @@ export default interface Linter {
 	/** Convert a string to Chicago-style title case. 
 	 Wraps the function on the BinaryModule by the same name. */
 	toTitleCase(text: string): Promise<string>;
+
+	/** Get current WebAssembly memory usage, if available. */
+	getWasmMemoryUsageBytes(): Promise<number | undefined>;
 
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;

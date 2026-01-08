@@ -133,6 +133,15 @@ export default class WorkerLinter implements Linter {
 		return JSON.parse(await this.getDefaultLintConfigAsJSON()) as LintConfig;
 	}
 
+	async getWasmMemoryUsageBytes(): Promise<number | undefined> {
+		const [workerUsage, mainUsage] = await Promise.all([
+			this.rpc('getWasmMemoryUsageBytes', []),
+			this.binary.getWasmMemoryUsageBytes(),
+		]);
+		const total = (workerUsage ?? 0) + (mainUsage ?? 0);
+		return total > 0 ? total : undefined;
+	}
+
 	ignoreLint(source: string, lint: Lint): Promise<void> {
 		return this.rpc('ignoreLint', [source, lint]);
 	}
