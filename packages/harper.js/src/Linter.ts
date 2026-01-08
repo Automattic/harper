@@ -65,9 +65,6 @@ export default interface Linter {
 	 Wraps the function on the BinaryModule by the same name. */
 	toTitleCase(text: string): Promise<string>;
 
-	/** Get current WebAssembly memory usage, if available. */
-	getWasmMemoryUsageBytes(): Promise<number | undefined>;
-
 	/** Release resources held by this linter instance. */
 	dispose(): Promise<void>;
 
