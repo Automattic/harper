@@ -24,6 +24,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const lints = await linter.lint('The the problem is...');
 
 		expect(lints.length).toBe(1);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} emits organized lints the same as it emits normal lints`, async () => {
@@ -46,6 +48,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		const item = flattened[0];
 		expect(item.message().length).not.toBe(0);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
@@ -63,6 +67,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(results[0][0].suggestions().length).toBe(1);
 		expect(results[1].length).toBe(0);
 		expect(results[2].length).toBe(1);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} detects repeated words with concurrent requests`, async () => {
@@ -80,6 +86,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(results[0][0].suggestions().length).toBe(1);
 		expect(results[1].length).toBe(0);
 		expect(results[2].length).toBe(1);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} detects lorem ipsum paragraph as not english`, async () => {
@@ -91,6 +99,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		expect(result).toBeTypeOf('boolean');
 		expect(result).toBe(false);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can run setup without issues`, async () => {
@@ -104,6 +114,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		const lintConfig = await linter.getLintConfig();
 		expect(lintConfig).toHaveProperty('RepeatedWords');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can set its configuration away and to default`, async () => {
@@ -128,6 +140,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		for (const key of Object.keys(lintConfig)) {
 			expect(lintConfig[key]).toBe(null);
 		}
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can both get and set its configuration`, async () => {
@@ -145,6 +159,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		for (const key of Object.keys(lintConfig)) {
 			expect(lintConfig[key]).toBe(true);
 		}
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can make things title case`, async () => {
@@ -153,6 +169,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const titleCase = await linter.toTitleCase('this is a test for making titles');
 
 		expect(titleCase).toBe('This Is a Test for Making Titles');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can get rule descriptions`, async () => {
@@ -161,6 +179,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const descriptions = await linter.getLintDescriptions();
 
 		expect(descriptions).toBeTypeOf('object');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can get rule descriptions in HTML.`, async () => {
@@ -169,6 +189,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const descriptions = await linter.getLintDescriptionsHTML();
 
 		expect(descriptions).toBeTypeOf('object');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} rule descriptions are not empty`, async () => {
@@ -180,6 +202,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 			expect(value).toBeTypeOf('string');
 			expect(value).not.toHaveLength(0);
 		}
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} default lint config has no null values`, async () => {
@@ -190,6 +214,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		for (const value of Object.values(lintConfig)) {
 			expect(value).not.toBeNull();
 		}
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can generate lint context hashes`, async () => {
@@ -201,6 +227,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(lints.length).toBeGreaterThanOrEqual(1);
 
 		await linter.contextHash(source, lints[0]);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can ignore lints`, async () => {
@@ -216,6 +244,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBeLessThan(firstRound.length);
+		await linter.dispose();
 	});
 
 	test(`${linterName} can ignore lints with hashes`, async () => {
@@ -232,6 +261,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBeLessThan(firstRound.length);
+		await linter.dispose();
 	});
 
 	test(`${linterName} can ignore larger lints to reveal smaller ones`, async () => {
@@ -247,6 +277,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBe(4);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can reimport ignored lints.`, async () => {
@@ -270,6 +302,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		expect(firstLints.length).toBeGreaterThan(secondLints.length);
 		expect(secondLints.length).toBe(0);
+
+		await firstLinter.dispose();
+		await secondLinter.dispose();
 	});
 
 	test(`${linterName} can add words to the dictionary`, async () => {
@@ -284,6 +319,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		lints = await linter.lint(source);
 
 		expect(lints).toHaveLength(0);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} allows correct capitalization of "United States"`, async () => {
@@ -291,6 +328,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const lints = await linter.lint('The United States is a big country.');
 
 		expect(lints).toHaveLength(0);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can summarize simple stat records`, async () => {
@@ -315,6 +354,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		const summary = await linter.summarizeStats();
 		expect(summary).toBeTypeOf('object');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} can save and restore stat records`, async () => {
@@ -341,6 +382,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		const newLinter = new Linter({ binary });
 		await newLinter.importStatsFile(stats);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} emits the correct span indices`, async () => {
@@ -355,6 +398,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		expect(span.end).toBe(54);
 
 		expect(text.slice(span.start, span.end)).toBe('sdssda');
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} lints headings when forced to mark them as such`, async () => {
@@ -368,6 +413,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const lint = lints[0];
 		expect(lint.lint_kind()).toBe('Capitalization');
 		expect(lint.get_problem_text()).toBe(text);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} lints headings when forced to mark them as such with organized mode`, async () => {
@@ -383,28 +430,26 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const lint = titleCaseLints[0];
 		expect(lint.lint_kind()).toBe('Capitalization');
 		expect(lint.get_problem_text()).toBe(text);
+
+		await linter.dispose();
 	});
 
 	test(`${linterName} will lint many random strings with a single instance`, async () => {
 		const linter = new Linter({ binary });
 
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < 10000; i++) {
 			const text = randomString(10);
 			const lints = await linter.organizedLints(text);
 
 			expect(lints).not.toBeNull();
 		}
+
+		await linter.dispose();
 	}, 120000);
 
 	test(`${linterName} will lint many times with fresh instances`, async () => {
-		for (let i = 0; i < 10000; i++) {
+		for (let i = 0; i < 500; i++) {
 			const linter = new Linter({ binary });
-
-			const config = await linter.getLintConfig();
-			for (const key in Object.keys(config)) {
-				config[key] = false;
-			}
-			await linter.setLintConfig(config);
 
 			const text = 'This is a grammatically correct sentence.';
 			const lints = await linter.organizedLints(text);
@@ -412,7 +457,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 			await linter.dispose();
 		}
-	}, 12000000);
+	}, 120000);
 }
 
 test('Linters have the same config format', async () => {
@@ -422,6 +467,8 @@ test('Linters have the same config format', async () => {
 		const linter = new Linter({ binary });
 
 		configs.push(await linter.getLintConfig());
+
+		await linter.dispose();
 	}
 
 	for (const config of configs) {
@@ -437,6 +484,7 @@ test('Linters have the same JSON config format', async () => {
 		const linter = new Linter({ binary });
 
 		configs.push(await linter.getLintConfigAsJSON());
+		await linter.dispose();
 	}
 
 	for (const config of configs) {

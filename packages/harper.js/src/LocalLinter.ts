@@ -48,8 +48,9 @@ export default class LocalLinter implements Linter {
 
 		const output: Record<string, Lint[]> = {};
 
-		for (const { group, lints } of lintGroups) {
-			output[group] = lints;
+		for (const group of lintGroups) {
+			output[group.group] = group.lints;
+			group.free();
 		}
 
 		return output;
