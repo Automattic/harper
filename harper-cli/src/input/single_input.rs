@@ -125,7 +125,9 @@ impl SingleInputTrait for FileInput {
     /// Detect the parser that should be used for the given file.
     fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
         match self.path.extension().map(|ext| ext.to_str().unwrap()) {
-            Some("md") | Some("markdown") => Box::new(Markdown::default()),
+            Some("md" | "markdown" | "mkd" | "mdwn" | "mdown" | "mdtxt" | "mdtext") => {
+                Box::new(Markdown::default())
+            }
             Some("ink") => Box::new(InkParser::default()),
             Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
                 MarkdownOptions::default(),
