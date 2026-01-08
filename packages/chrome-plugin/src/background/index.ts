@@ -312,7 +312,7 @@ async function handleSetSpellCheckingMode(req: SetSpellCheckingModeRequest): Pro
 		throw new Error(`Invalid spell checking mode: ${req.spellCheckingMode}`);
 	}
 	await setSpellCheckingMode(req.spellCheckingMode);
-	
+
 	return createUnitResponse();
 }
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
