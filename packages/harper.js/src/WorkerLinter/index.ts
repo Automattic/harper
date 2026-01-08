@@ -139,6 +139,8 @@ export default class WorkerLinter implements Linter {
 			return;
 		}
 
+		await this.rpc('dispose', []);
+
 		this.disposed = true;
 		this.requestQueue = [];
 		this.worker.terminate();

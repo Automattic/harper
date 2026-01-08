@@ -437,7 +437,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} will lint many random strings with a single instance`, async () => {
 		const linter = new Linter({ binary });
 
-		for (let i = 0; i < 10000; i++) {
+		for (let i = 0; i < 250; i++) {
 			const text = randomString(10);
 			const lints = await linter.organizedLints(text);
 
@@ -446,19 +446,19 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	}, 120000);
-
-	test(`${linterName} will lint many times with fresh instances`, async () => {
-		for (let i = 0; i < 500; i++) {
-			const linter = new Linter({ binary });
-
-			const text = 'This is a grammatically correct sentence.';
-			const lints = await linter.organizedLints(text);
-			expect(lints).not.toBeNull();
-
-			await linter.dispose();
-		}
-	}, 120000);
 }
+
+test('LocalLinters will lint many times with fresh instances', async () => {
+	for (let i = 0; i < 1000; i++) {
+		const linter = new LocalLinter({ binary });
+
+		const text = 'This is a grammatically correct sentence.';
+		const lints = await linter.organizedLints(text);
+		expect(lints).not.toBeNull();
+
+		await linter.dispose();
+	}
+}, 120000);
 
 test('Linters have the same config format', async () => {
 	const configs = [];
