@@ -6,20 +6,13 @@
   <script type="module">
     // We can import `harper.js` using native ECMAScript syntax.
     // TODO: Update to the latest version.
-    import { binaryInlined, LocalLinter } from './harper.js';
+    import {binaryInlined, WorkerLinter } from 'https://unpkg.com/harper.js@0.54.0/dist/harper.js';
 
     // Since we are working in the browser, we can use either `WorkerLinter`, which doesn't block the event loop, or `LocalLinter`, which does.
+    const linter = new WorkerLinter({binary: binaryInlined});
 
     // Every time the `<textarea/>` received an input, we process it and update our list.
     async function onInput(e) {
-      const linter = new LocalLinter({ binary: binaryInlined });
-      const config = await linter.getLintConfig();
-
-      // for (let key of Object.keys(config)){
-      //   config[key] = false;
-      // }
-
-      await linter.setLintConfig(config);
       const lints = await linter.lint(e.target.value);
 
       const list = document.getElementById('errorlist');
@@ -31,8 +24,6 @@
         const text = document.createTextNode(lint.message());
         item.appendChild(text);
         list.appendChild(item);
-
-        lint.free();
       }
     }
 
