@@ -72,6 +72,7 @@ pub enum Dialect {
     British,
     Australian,
     Canadian,
+    Indian,
 }
 
 impl From<Dialect> for harper_core::Dialect {
@@ -81,6 +82,7 @@ impl From<Dialect> for harper_core::Dialect {
             Dialect::Canadian => harper_core::Dialect::Canadian,
             Dialect::Australian => harper_core::Dialect::Australian,
             Dialect::British => harper_core::Dialect::British,
+            Dialect::Indian => harper_core::Dialect::Indian,
         }
     }
 }
