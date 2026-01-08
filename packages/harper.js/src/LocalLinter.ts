@@ -11,6 +11,7 @@ import type { LintConfig, LintOptions } from './main';
 export default class LocalLinter implements Linter {
 	binary: SuperBinaryModule;
 	private inner: Promise<WasmLinter>;
+	private disposed = false;
 
 	constructor(init: LinterInit) {
 		this.binary = init.binary as SuperBinaryModule;
@@ -179,6 +180,7 @@ export default class LocalLinter implements Linter {
 		const inner = await this.inner;
 
 		if (inner.get_dialect() !== dialect) {
+			inner.free();
 			this.inner = this.createInner(dialect);
 		}
 
@@ -202,5 +204,15 @@ export default class LocalLinter implements Linter {
 
 	async getWasmMemoryUsageBytes(): Promise<number | undefined> {
 		return this.binary.getWasmMemoryUsageBytes();
+	}
+
+	async dispose(): Promise<void> {
+		if (this.disposed) {
+			return;
+		}
+
+		this.disposed = true;
+		const inner = await this.inner;
+		inner.free();
 	}
 }

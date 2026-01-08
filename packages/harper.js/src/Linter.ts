@@ -68,6 +68,9 @@ export default interface Linter {
 	/** Get current WebAssembly memory usage, if available. */
 	getWasmMemoryUsageBytes(): Promise<number | undefined>;
 
+	/** Release resources held by this linter instance. */
+	dispose(): Promise<void>;
+
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;
 

@@ -63,7 +63,7 @@ async function assertHeapUsageBelow(
 		throw new Error('Memory usage metrics are unavailable; cannot guard against OOM in this test.');
 	}
 
-  console.log(heap.used / heap.limit);
+  // console.log(heap.used / heap.limit);
 
 	if (heap.used / heap.limit >= limitRatio) {
 		const usedMb = Math.round(heap.used / 1024 / 1024);
@@ -461,10 +461,18 @@ for (const [linterName, Linter] of Object.entries(linters)) {
   test.only(`${linterName} will lint many times with fresh instances`, async () => {
     const heapLimitRatio = 0.5;
 
-    for (let i = 0; i < 3000; i++){
+    for (let i = 0; i < 10000; i++){
       const iteration = i + 1;
       const linter = new Linter({binary});
       await assertHeapUsageBelow(heapLimitRatio, `before iteration ${iteration}`, linter);
+
+      let config = await linter.getLintConfig();
+
+      for (let key in Object.keys(config)){
+        config[key] = false;
+      }
+
+      await linter.setLintConfig(config)
 
       const text = "This is a grammatically correct sentence.";
       const lints = await linter.organizedLints(text);
@@ -472,8 +480,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
       expect(lints).not.toBeNull();
 
       await assertHeapUsageBelow(heapLimitRatio, `after iteration ${iteration}`, linter);
+      await linter.dispose();
     }
-  }, 120000)
+  }, 12000000)
 }
 
 test('Linters have the same config format', async () => {
