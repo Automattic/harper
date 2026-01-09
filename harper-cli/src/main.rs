@@ -14,7 +14,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
-use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
+use harper_core::parsers::MarkdownOptions;
 use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
