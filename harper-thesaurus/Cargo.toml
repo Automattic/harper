@@ -13,5 +13,4 @@ itertools = "0.14.0"
 zstd = { version = "0.13.3", default-features = false }
 
 [build-dependencies]
-hashbrown = "0.16.0"
 zstd = { version = "0.13.3", default-features = false }
