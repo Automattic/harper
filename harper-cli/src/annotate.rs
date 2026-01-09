@@ -1,4 +1,6 @@
-use ariadne::{Color, Label};
+use std::{borrow::Cow, ops::Range};
+
+use ariadne::{Color, Label, Report, ReportKind};
 use clap::ValueEnum;
 use harper_core::{Document, Span, TokenKind, TokenStringExt};
 use strum::IntoEnumIterator;
@@ -83,6 +85,47 @@ pub(super) enum AnnotationType {
     /// UPOS (part of speech)
     Upos,
     Chunks,
+}
+impl AnnotationType {
+    /// Build a `Report` from the provided [`Document`], `input_identifier`, and `report_title`.
+    pub(super) fn build_report<'input_id>(
+        &self,
+        doc: &Document,
+        input_identifier: &'input_id str,
+        report_title: &'input_id str,
+    ) -> Report<'input_id, (&'input_id str, Range<usize>)> {
+        Report::build(
+            ReportKind::Custom(report_title, Color::Blue),
+            input_identifier,
+            0,
+        )
+        .with_labels(Annotation::iter_labels_from_document(
+            *self,
+            doc,
+            input_identifier,
+        ))
+        .finish()
+    }
+
+    /// The title that should be used for the printed output.
+    pub(super) fn get_title(&self) -> &'static str {
+        match self {
+            AnnotationType::Upos => "UPOS Tags",
+            AnnotationType::Chunks => "Chunks",
+        }
+    }
+
+    /// The title that should be used for the printed output, with added tags.
+    ///
+    /// The tags are used to provide additional information about the output.
+    pub(super) fn get_title_with_tags(&self, tags: &[&str]) -> Cow<'static, str> {
+        if tags.is_empty() {
+            self.get_title().into()
+        } else {
+            let tags = tags.join(", ");
+            (self.get_title().to_owned() + &format!(" ({tags})")).into()
+        }
+    }
 }
 
 struct RandomColorIter {

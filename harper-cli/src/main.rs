@@ -32,7 +32,7 @@ use input::{
 };
 
 mod annotate;
-use annotate::{Annotation, AnnotationType};
+use annotate::AnnotationType;
 
 mod lint;
 use crate::lint::lint;
@@ -305,20 +305,17 @@ fn main() -> anyhow::Result<()> {
 
             let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(
-                ReportKind::Custom("Annotate", Color::Blue),
-                &*input_identifier,
-                0,
-            );
-
-            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
-                annotation_type,
-                &doc,
-                &input_identifier,
-            ));
-
-            let report = report_builder.finish();
-            report.print((&*input_identifier, Source::from(source)))?;
+            annotation_type
+                .build_report(
+                    &doc,
+                    &input_identifier,
+                    &annotation_type.get_title_with_tags(if isolate_english {
+                        &["Isolate english"]
+                    } else {
+                        &[]
+                    }),
+                )
+                .print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
