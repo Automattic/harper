@@ -1,7 +1,7 @@
 use paste::paste;
 
 use crate::{
-    CharStringExt, Span, Token, TokenKind,
+    CharStringExt, Lrc, Span, Token, TokenKind,
     expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
@@ -111,6 +111,11 @@ impl SequenceExpr {
 
     // Expressions of more than one token
 
+    /// Optionally match an expression.
+    pub fn optional(expr: impl Expr + 'static) -> Self {
+        Self::default().then_optional(expr)
+    }
+
     /// Match a fixed phrase.
     pub fn fixed_phrase(phrase: &'static str) -> Self {
         Self::default().then_fixed_phrase(phrase)
@@ -200,6 +205,18 @@ impl SequenceExpr {
 
     pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {
         self.then(Repeating::new(Box::new(expr), 1))
+    }
+
+    pub fn then_one_or_more_spaced(self, expr: impl Expr + 'static) -> Self {
+        let expr = Lrc::new(expr);
+        self.then(
+            SequenceExpr::default()
+                .then(expr.clone())
+                .then(Repeating::new(
+                    Box::new(SequenceExpr::default().t_ws().then(expr)),
+                    0,
+                )),
+        )
     }
 
     /// Create a new condition that will step one token forward if met.
@@ -496,6 +513,7 @@ impl SequenceExpr {
     gen_then_from_is!(noun);
     gen_then_from_is!(proper_noun);
     gen_then_from_is!(plural_noun);
+    gen_then_from_is!(singular_noun);
     gen_then_from_is!(mass_noun_only);
 
     // Pronouns
