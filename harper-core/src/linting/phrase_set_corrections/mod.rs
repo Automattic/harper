@@ -290,6 +290,22 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+        "JackOLantern" => (
+            &[
+                // Singular
+                ("jack o lantern", "jack o'lantern"),
+                ("jack olantern", "jack o'lantern"),
+                ("jackolantern", "jack-o'-lantern"),
+                ("jack-o-lantern", "jack-o'-lantern"),
+                // Plural
+                ("jack o lanterns", "jack o'lanterns"),
+                ("jack olantern", "jack o'lanterns"),
+                ( "jackolanterns", "jack-o'-lanterns"),
+                ( "jack-o-lanterns", "jack-o'-lanterns"),
+            ],
+            "Use contraction when referring to `jack-o'-lantern`",
+            LintKind::Punctuation
+        ),
 
         // General litotes (double negatives) → direct positive suggestions
         "LitotesDirectPositive" => (
