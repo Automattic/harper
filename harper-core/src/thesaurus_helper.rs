@@ -37,7 +37,7 @@ pub fn get_synonyms_sorted(_word: &str, _token: &TokenKind) -> Option<Vec<&'stat
                 if let Some(syn_meta) = dict.get_word_metadata_str(syn) {
                     word_meta.difference(&syn_meta)
                 } else {
-                    u8::MAX
+                    u32::MAX
                 }
             });
         }
