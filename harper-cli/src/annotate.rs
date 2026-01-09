@@ -87,7 +87,7 @@ pub(super) enum AnnotationType {
     Chunks,
 }
 impl AnnotationType {
-    /// Build a `Report` from the provided [`Document`], `input_identifier`, and `report_title`.
+    /// Build a [`Report`] from the provided [`Document`], `input_identifier`, and `report_title`.
     pub(super) fn build_report<'input_id>(
         &self,
         doc: &Document,
@@ -128,6 +128,8 @@ impl AnnotationType {
     }
 }
 
+/// An infinite iterator that produces random colors. This uses a fixed seed, so all instances of
+/// this iterator will produce colors in the same order.
 struct RandomColorIter {
     color_gen: ariadne::ColorGenerator,
 }

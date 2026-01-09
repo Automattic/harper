@@ -92,6 +92,7 @@ enum Args {
         /// How the document should be annotated.
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
+        /// Attempt to detect and ignore non-English spans of text.
         #[arg(short, long)]
         isolate_english: bool,
     },
