@@ -145,17 +145,17 @@
 > commands could   be      typed and  the results printed automatically . In        1937 , one
 # NPl/V3+  NSg/VXB NSg/VXB VP/J  VB/C D   NPl/V3+ VP/J    R             . NPr/J/R/P #    . NSg/I/J
 > hundred years after Babbage's impossible dream     , Howard Aiken convinced IBM  ,
-# NSg     NPl+  P     NSg$      NSg/J      NSg/VB/J+ . NPr+   NPr   VP/J      NPr+ .
+# NSg     NPl+  P     NPr$      NSg/J      NSg/VB/J+ . NPr+   NPr   VP/J      NPr+ .
 > which was making  all          kinds of punched card     equipment and  was also in        the
 # I/C+  VPt Nᴹ/Vg/J NSg/I/J/C/Dq NPl   P  VP/J    N🅪Sg/VB+ Nᴹ+       VB/C VPt R/C  NPr/J/R/P D
 > calculator business to develop his     giant programmable calculator , the
 # NSg+       N🅪Sg/J+  P  VB      ISg/D$+ NSg/J NSg/J        NSg+       . D
 > ASCC / Harvard Mark    I       , based on  Babbage's Analytical Engine  , which itself used
-# ?    . NPr+    NPr/VB+ ISg/#r+ . VP/J  J/P NSg$      J          NSg/VB+ . I/C+  ISg+   VP/J
+# ?    . NPr+    NPr/VB+ ISg/#r+ . VP/J  J/P NPr$      J          NSg/VB+ . I/C+  ISg+   VP/J
 > cards  and  a   central computing unit . When    the machine was finished , some     hailed
 # NPl/V3 VB/C D/P NPr/J   Nᴹ/Vg/J+  NSg+ . NSg/I/C D+  NSg/VB+ VPt VP/J     . I/J/R/Dq VP/J
 > it       as    " Babbage's dream     come       true     " .
-# NPr/ISg+ R/C/P . NSg$      NSg/VB/J+ NSg/VBPp/P NSg/VB/J . .
+# NPr/ISg+ R/C/P . NPr$      NSg/VB/J+ NSg/VBPp/P NSg/VB/J . .
 >
 #
 > During the 1940s , with the development of new   and  more         powerful computing
@@ -171,11 +171,11 @@
 > 1945 , IBM  founded the Watson Scientific Computing Laboratory at    Columbia
 # #    . NPr+ VP/J    D+  NPr+   J+         Nᴹ/Vg/J+  NSg+       NSg/P NPr+
 > University in        New    York City . The renovated fraternity house  on  Manhattan's West
-# NSg        NPr/J/R/P NSg/J+ NPr+ NSg+ . D   VP/J      NSg+       NPr/VB J/P NSg$        NPr/VB/J+
+# NSg        NPr/J/R/P NSg/J+ NPr+ NSg+ . D   VP/J      NSg+       NPr/VB J/P NPr$        NPr/VB/J+
 > Side      was IBM's first laboratory devoted to pure     science  . The lab  is  the
-# NSg/VB/J+ VPt NSg$  NSg/J NSg+       VP/J    P  NSg/VB/J N🅪Sg/VB+ . D+  NPr+ VL3 D
+# NSg/VB/J+ VPt NPr$  NSg/J NSg+       VP/J    P  NSg/VB/J N🅪Sg/VB+ . D+  NPr+ VL3 D
 > forerunner of IBM's Research Division , which today  operates research facilities
-# NSg        P  NSg$  Nᴹ/VB+   NSg+     . I/C+  NSg/J+ V3       Nᴹ/VB+   NPl+
+# NSg        P  NPr$  Nᴹ/VB+   NSg+     . I/C+  NSg/J+ V3       Nᴹ/VB+   NPl+
 > around the world   . Ultimately , the close    relationship between IBM and  Columbia
 # J/P    D   NSg/VB+ . R          . D   NSg/VB/J NSg          NSg/P   NPr VB/C NPr+
 > University was instrumental in        the emergence of a   new   scientific discipline ,
@@ -382,8 +382,8 @@
 # NPr/ISg+ V3  C/P+  NSg/VPp VP/J   NSg/I/C/Ddem NSg/VB+  N🅪Sg/VB+ NPr/VXB NSg/VXB NSg/VP/J   R/C/P D/P+ NSg/J+
 > science  since it       makes  use     of empirical testing  to evaluate the correctness of
 # N🅪Sg/VB+ C/P   NPr/ISg+ NPl/V3 N🅪Sg/VB P  NSg/J     Nᴹ/Vg/J+ P  VB       D   NSg         P
-> programs , but     a    problem remains in        defining the laws    and  theorems of computer
-# NPl/V3+  . NSg/C/P D/P+ NSg/J+  NPl/V3  NPr/J/R/P Nᴹ/Vg/J  D+  NPl/V3+ VB/C NPl/V3   P  NSg/VB+
+> programs  , but     a    problem remains in        defining the laws    and  theorems of computer
+# NPrPl/V3+ . NSg/C/P D/P+ NSg/J+  NPl/V3  NPr/J/R/P Nᴹ/Vg/J  D+  NPl/V3+ VB/C NPl/V3   P  NSg/VB+
 > science  ( if    any    exist ) and  defining the nature  of experiments in        computer
 # N🅪Sg/VB+ . NSg/C I/R/Dq VB+   . VB/C Nᴹ/Vg/J  D   N🅪Sg/VB P  NPl/V3+     NPr/J/R/P NSg/VB+
 > science  . Proponents of classifying computer science  as    an  engineering discipline
@@ -404,14 +404,14 @@
 #
 > Proponents of classifying computer science  as    a   mathematical discipline argue
 # NPl        P  Nᴹ/Vg/J     NSg/VB+  N🅪Sg/VB+ R/C/P D/P J            NSg/VB+    VB
-> that         computer programs are physical realizations of mathematical entities and
-# NSg/I/C/Ddem NSg/VB+  NPl/V3+  VB  NSg/J    NPl/NoAm     P  J            NPl      VB/C
-> programs that          can     be      deductively reasoned through mathematical formal methods .
-# NPl/V3+  NSg/I/C/Ddem+ NPr/VXB NSg/VXB R           VP/J     NSg/J/P J            NSg/J  NPl/V3+ .
+> that         computer programs  are physical realizations of mathematical entities and
+# NSg/I/C/Ddem NSg/VB+  NPrPl/V3+ VB  NSg/J    NPl/NoAm     P  J            NPl      VB/C
+> programs  that          can     be      deductively reasoned through mathematical formal methods .
+# NPrPl/V3+ NSg/I/C/Ddem+ NPr/VXB NSg/VXB R           VP/J     NSg/J/P J            NSg/J  NPl/V3+ .
 > Computer scientists Edsger W. Dijkstra and  Tony  Hoare regard  instructions for
 # NSg/VB+  NPl+       ?      ?  NSg      VB/C NPr/J ?     NSg/VB+ NPl          R/C/P
-> computer programs as    mathematical sentences and  interpret formal semantics for
-# NSg/VB+  NPl/V3+  R/C/P J            NPl/V3+   VB/C VB        NSg/J  NPl       R/C/P
+> computer programs  as    mathematical sentences and  interpret formal semantics for
+# NSg/VB+  NPrPl/V3+ R/C/P J            NPl/V3+   VB/C VB        NSg/J  NPl       R/C/P
 > programming languages as    mathematical axiomatic systems .
 # Nᴹ/Vg/J+    NPl/V3+   R/C/P J            J         NPl+    .
 >
@@ -745,7 +745,7 @@
 > component in        areas of software development , which require computational
 # NSg/J     NPr/J/R/P NPl   P  Nᴹ+      N🅪Sg+       . I/C+  NSg/VB  J+
 > understanding . The starting point   in        the late   1940s was Alan Turing's question
-# N🅪Sg/Vg/J+    . D   Nᴹ/Vg/J  NSg/VB+ NPr/J/R/P D+  NSg/J+ #d    VPt NPr  NSg$     NSg/VB+
+# N🅪Sg/Vg/J+    . D   Nᴹ/Vg/J  NSg/VB+ NPr/J/R/P D+  NSg/J+ #d    VPt NPr  NPr$     NSg/VB+
 > " Can     computers think  ? " , and  the question remains effectively unanswered ,
 # . NPr/VXB NPl/V3+   NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           J          .
 > although the Turing test    is  still      used to assess computer output    on  the scale   of
@@ -785,7 +785,7 @@
 > Johnson and  Frederick P. Brooks   Jr     . , members of the Machine Organization
 # NPr     VB/C NPr+      ?  NPrPl/V3 NSg/J+ . . NPl/V3  P  D+  NSg/VB+ N🅪Sg+
 > department in        IBM's main      research center    in        1959 .
-# NSg+       NPr/J/R/P NSg$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J+ NPr/J/R/P #    .
+# NSg+       NPr/J/R/P NPr$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J+ NPr/J/R/P #    .
 >
 #
 >              Concurrent , parallel and  distributed computing
@@ -877,9 +877,9 @@
 >
 #
 > Gottfried Wilhelm Leibniz's , George Boole's , Alan Turing's , Claude Shannon's ,
-# ?         NPr     NSg$      . NPr+   NSg$    . NPr+ NSg$     . NPr+   NSg$      .
+# ?         NPr     NPr$      . NPr+   NPr$    . NPr+ NPr$     . NPr+   NPr$      .
 > and  Samuel Morse's insight : there are only  two objects that         a   computer has to
-# VB/C NPr+   NSg$    N🅪Sg+   . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
+# VB/C NPr+   NPr$    N🅪Sg+   . R+    VB  J/R/C NSg NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
 > deal     with in        order    to represent " anything  " . [ note    4 ]
 # NSg/VB/J P    NPr/J/R/P N🅪Sg/VB+ P  VB        . NSg/I/VB+ . . . NSg/VB+ # .
 >
@@ -899,7 +899,7 @@
 >
 #
 > Alan Turing's insight : there are only  five actions that         a   computer has to
-# NPr+ NSg$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
+# NPr+ NPr$     N🅪Sg+   . R+    VB  J/R/C NSg  NPl/V3+ NSg/I/C/Ddem D/P NSg/VB+  V3  P
 > perform in        order    to do  " anything  " .
 # VB      NPr/J/R/P N🅪Sg/VB+ P  VXB . NSg/I/VB+ . .
 >
@@ -992,8 +992,8 @@
 #
 > Functional programming , a   style  of building   the structure and  elements of
 # NSg/J+     Nᴹ/Vg/J+    . D/P NSg/VB P  N🅪Sg/Vg/J+ D   N🅪Sg/VB   VB/C NPl/V3   P
-> computer programs that          treats  computation as    the evaluation of mathematical
-# NSg/VB+  NPl/V3+  NSg/I/C/Ddem+ NPl/V3+ NSg         R/C/P D   N🅪Sg       P  J
+> computer programs  that          treats  computation as    the evaluation of mathematical
+# NSg/VB+  NPrPl/V3+ NSg/I/C/Ddem+ NPl/V3+ NSg         R/C/P D   N🅪Sg       P  J
 > functions and  avoids state    and  mutable data  . It       is  a   declarative programming
 # NPl/V3+   VB/C V3     N🅪Sg/VB+ VB/C J       N🅪Pl+ . NPr/ISg+ VL3 D/P NSg/J       Nᴹ/Vg/J+
 > paradigm , which means  programming is  done      with expressions or    declarations
@@ -1005,7 +1005,7 @@
 > Imperative programming , a    programming paradigm that          uses   statements that
 # NSg/J+     Nᴹ/Vg/J+    . D/P+ Nᴹ/Vg/J+    NSg+     NSg/I/C/Ddem+ NPl/V3 NPl/V3+    NSg/I/C/Ddem+
 > change  a   program's state    . In        much         the same way    that         the imperative mood in
-# N🅪Sg/VB D/P NSg$      N🅪Sg/VB+ . NPr/J/R/P NSg/I/J/R/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      N🅪Sg NPr/J/R/P
+# N🅪Sg/VB D/P NPr$      N🅪Sg/VB+ . NPr/J/R/P NSg/I/J/R/Dq D   I/J  NSg/J+ NSg/I/C/Ddem D   NSg/J      N🅪Sg NPr/J/R/P
 > natural languages expresses commands , an   imperative program consists of
 # NSg/J+  NPl/V3+   NPl/V3    NPl/V3+  . D/P+ NSg/J+     NPr/VB+ NPl/V3   P
 > commands for   the computer to perform . Imperative programming focuses on
@@ -1015,7 +1015,7 @@
 >
 #
 > Object  - oriented programming , a    programming paradigm based on  the concept of
-# NSg/VB+ . VP/J     Nᴹ/Vg/J+    . D/P+ Nᴹ/Vg/J+    NSg+     VP/J  J/P D   NSg/VB  P
+# NSg/VB+ . NPr/VP/J Nᴹ/Vg/J+    . D/P+ Nᴹ/Vg/J+    NSg+     VP/J  J/P D   NSg/VB  P
 > " objects " , which may     contain data  , in        the form    of fields    , often known as
 # . NPl/V3+ . . I/C+  NPr/VXB VB      N🅪Pl+ . NPr/J/R/P D   N🅪Sg/VB P  NPrPl/V3+ . R     VPp/J R/C/P
 > attributes ; and  code     , in        the form    of procedures , often known as    methods . A
@@ -1024,18 +1024,18 @@
 # NSg/VB  P  NPl/V3+ VL3 NSg/I/C/Ddem D/P NSg$     NPl+       NPr/VXB N🅪Sg/VB+ VB/C R     VB
 > the data  fields   of the object  with which they are associated . Thus
 # D   N🅪Pl+ NPrPl/V3 P  D   NSg/VB+ P    I/C+  IPl+ VB  VP/J       . NSg
-> object  - oriented computer programs are made out          of objects that          interact with
-# NSg/VB+ . VP/J     NSg/VB+  NPl/V3+  VB  VP   NSg/VB/J/R/P P  NPl/V3+ NSg/I/C/Ddem+ NSg/VB   P
+> object  - oriented computer programs  are made out          of objects that          interact with
+# NSg/VB+ . NPr/VP/J NSg/VB+  NPrPl/V3+ VB  VP   NSg/VB/J/R/P P  NPl/V3+ NSg/I/C/Ddem+ NSg/VB   P
 > one     another .
 # NSg/I/J I/D     .
 >
 #
 > Service - oriented programming , a    programming paradigm that          uses   " services " as
-# NSg/VB+ . VP/J     Nᴹ/Vg/J+    . D/P+ Nᴹ/Vg/J+    NSg+     NSg/I/C/Ddem+ NPl/V3 . NPl/V3+  . R/C/P
+# NSg/VB+ . NPr/VP/J Nᴹ/Vg/J+    . D/P+ Nᴹ/Vg/J+    NSg+     NSg/I/C/Ddem+ NPl/V3 . NPl/V3+  . R/C/P
 > the unit of computer work     , to design  and  implement integrated business
 # D   NSg  P  NSg/VB+  N🅪Sg/VB+ . P  N🅪Sg/VB VB/C NSg/VB    VP/J       N🅪Sg/J+
-> applications and  mission critical software programs .
-# NPl          VB/C NSg/VB+ NSg/J+   Nᴹ+      NPl/V3+  .
+> applications and  mission critical software programs  .
+# NPl          VB/C NSg/VB+ NSg/J+   Nᴹ+      NPrPl/V3+ .
 >
 #
 > Many        languages offer     support for   multiple  paradigms , making  the distinction more

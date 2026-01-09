@@ -25,6 +25,7 @@ export default class WorkerLinter implements Linter {
 	private worker: Worker;
 	private requestQueue: RequestItem[];
 	private working = true;
+	private disposed = false;
 
 	constructor(init: LinterInit) {
 		this.binary = init.binary;
@@ -133,6 +134,18 @@ export default class WorkerLinter implements Linter {
 		return JSON.parse(await this.getDefaultLintConfigAsJSON()) as LintConfig;
 	}
 
+	async dispose(): Promise<void> {
+		if (this.disposed) {
+			return;
+		}
+
+		await this.rpc('dispose', []);
+
+		this.disposed = true;
+		this.requestQueue = [];
+		this.worker.terminate();
+	}
+
 	ignoreLint(source: string, lint: Lint): Promise<void> {
 		return this.rpc('ignoreLint', [source, lint]);
 	}
@@ -191,6 +204,10 @@ export default class WorkerLinter implements Linter {
 
 	/** Run a procedure on the remote worker. */
 	private async rpc(procName: string, args: unknown[]): Promise<any> {
+		if (this.disposed) {
+			throw new Error('WorkerLinter has been disposed.');
+		}
+
 		const promise = new Promise((resolve, reject) => {
 			this.requestQueue.push({
 				resolve,
