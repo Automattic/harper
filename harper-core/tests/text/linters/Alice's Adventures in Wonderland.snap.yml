@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       1 | # Alice’s Adventures in Wonderland
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# Alice's Adventures in Wonderland”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        9 | Alice was beginning to get very tired of sitting by her sister on the bank, and
@@ -1997,17 +2006,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1545 | feeble voice: “I heard every word you fellows were saying.”
-         |                                   ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
@@ -2093,6 +2091,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1666 | bright flower-beds and the cool fountains.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 53 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    1668 | ## CHAPTER VIII: The Queen’s Croquet-Ground
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER VIII: The Queen's Croquet-Ground”
 
 
 
@@ -3808,6 +3815,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+    2745 | ## CHAPTER XII: Alice’s Evidence
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER XII: Alice's Evidence”
 
 
 

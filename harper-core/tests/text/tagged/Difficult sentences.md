@@ -3,7 +3,7 @@
 >
 #
 > A   collection of difficult sentences to test   Harper's ability to correctly tag     unusual / uncommon but     correct  sentences .
-# D/P N🅪Sg       P  VB/J      NPl/V3+   P  NSg/VB NSg$     N🅪Sg+   P  R         NSg/VB+ NSg/J   . NSg/VB/J NSg/C/P NSg/VB/J NPl/V3+   .
+# D/P N🅪Sg       P  VB/J      NPl/V3+   P  NSg/VB NPr$     N🅪Sg+   P  R         NSg/VB+ NSg/J   . NSg/VB/J NSg/C/P NSg/VB/J NPl/V3+   .
 >
 #
 > Note    that         some      word    may     not     be      tagged correctly right    now       .
@@ -35,7 +35,7 @@
 > Caesar was at    Rome ; a   climate  treaty  was signed at    Kyoto in        1997 .
 # NPr    VPt NSg/P NPr+ . D/P N🅪Sg/VB+ NSg/VB+ VPt VP/J   NSg/P NPr+  NPr/J/R/P #    .
 > I       was at    Jim’s house   at    the corner of Fourth   Street   and  Vine .
-# ISg/#r+ VPt NSg/P NSg$  NPr/VB+ NSg/P D   NSg/VB P  NPr/VB/J NSg/VB/J VB/C NSg+ .
+# ISg/#r+ VPt NSg/P NPr$  NPr/VB+ NSg/P D   NSg/VB P  NPr/VB/J NSg/VB/J VB/C NSg+ .
 > at    the bottom   of the page    ; sitting  at    the table   ; at    church     ; at    sea
 # NSg/P D   NSg/VB/J P  D+  NPr/VB+ . NSg/Vg/J NSg/P D+  NSg/VB+ . NSg/P NPr🅪Sg/VB+ . NSg/P NSg+
 > Target  at    five miles  . Prepare torpedoes !
@@ -110,8 +110,8 @@
 # D+  NSg/VB+ VPt VP/J    NSg/J/P D+  N🅪Sg/VB+ .
 > He       was protected by      his     body    armour       .
 # NPr/ISg+ VPt VP/J      NSg/J/P ISg/D$+ NSg/VB+ NPr/VB/Comm+ .
-> There was a    call    by      the unions for   a   30 % pay      rise    .
-# R+    VPt D/P+ NSg/VB+ NSg/J/P D   NPl/V3 R/C/P D/P #  . NSg/VB/J NSg/VB+ .
+> There was a    call    by      the unions   for   a   30 % pay      rise    .
+# R+    VPt D/P+ NSg/VB+ NSg/J/P D   NPrPl/V3 R/C/P D/P #  . NSg/VB/J NSg/VB+ .
 > I       was aghast by      what   I       saw     .
 # ISg/#r+ VPt J      NSg/J/P NSg/I+ ISg/#r+ NSg/VPt .
 > There are many       well       - known plays  by      William Shakespeare .
@@ -125,7 +125,7 @@
 > I       discovered it       by      chance    .
 # ISg/#r+ VP/J       NPr/ISg+ NSg/J/P NPr/VB/J+ .
 > By      ' maybe   ' she  means  ' no       ' .
-# NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NPr/Dq/P . .
+# NSg/J/P . NSg/J/R . ISg+ NPl/V3 . NSg/Dq/P . .
 > The electricity was cut       off        , so          we   had to read    by      candlelight .
 # D+  Nᴹ+         VPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VP  P  NSg/VBP NSg/J/P Nᴹ          .
 > By      the power      vested in        me       , I       now       pronounce you    man      and  wife      .
@@ -166,8 +166,8 @@
 # NPr/ISg+ VL3 NSg/VB/J P  NSg/VB/J D/P # . NSg/J/P . # NSg+   .
 > The room       was about 4 foot   by      6 foot    .
 # D+  N🅪Sg/VB/J+ VPt J/P   # NSg/VB NSg/J/P # NSg/VB+ .
-> The bricks  used to build  the wall    measured 10 by      20 by      30 cm      .
-# D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  NSg/#r+ .
+> The bricks  used to build  the wall    measured 10 by      20 by      30 cm  .
+# D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/J/P #  NSg/J/P #  #r+ .
 > She's a   lovely little     filly , by      Big   Lad , out          of Damsel in        Distress .
 # K     D/P NSg/J  NPr/I/J/Dq NSg   . NSg/J/P NSg/J NSg . NSg/VB/J/R/P P  NSg    NPr/J/R/P Nᴹ/VB+   .
 > Are you    eating  by      Rabbi Fischer ? ( at    the house  of )
@@ -181,7 +181,7 @@
 >
 #
 > I       watched the parade  as    it       passed by      .
-# ISg/#r+ VP/J    D+  NSg/VB+ NSg/R NPr/ISg+ VP/J   NSg/J/P .
+# ISg/#r+ VP/J    D+  NSg/VB+ R/C/P NPr/ISg+ VP/J   NSg/J/P .
 > There was a    shepherd close    by      .
 # R+    VPt D/P+ NPr/VB+  NSg/VB/J NSg/J/P .
 > I'll stop   by      on  my  way    home     from work     .
@@ -237,7 +237,7 @@
 > This    is  a   new   bell   for   my  bicycle .
 # I/Ddem+ VL3 D/P NSg/J NPr/VB R/C/P D$+ NSg/VB+ .
 > The cake     is  for   Tom    and  Helen's anniversary .
-# D+  N🅪Sg/VB+ VL3 R/C/P NPr/VB VB/C NSg$    NSg+        .
+# D+  N🅪Sg/VB+ VL3 R/C/P NPr/VB VB/C NPr$    NSg+        .
 > This    medicine is  for   your cough   .
 # I/Ddem+ N🅪Sg/VB+ VL3 R/C/P D$+  NSg/VB+ .
 > He       wouldn't apologize ; and  just for   that          , she  refused to help   him  .
@@ -249,7 +249,7 @@
 > All          those  for   the motion   , raise  your hands   .
 # NSg/I/J/C/Dq I/Ddem R/C/P D+  N🅪Sg/VB+ . NSg/VB D$+  NPl/V3+ .
 > Who's for   ice        - cream      ?
-# NSg$+ R/C/P NPr🅪Sg/VB+ . N🅪Sg/VB/J+ .
+# NPr$+ R/C/P NPr🅪Sg/VB+ . N🅪Sg/VB/J+ .
 > I'm for   going   by      train
 # K   R/C/P Nᴹ/Vg/J NSg/J/P NSg/VB+
 > Ten voted for   , and  three against . ( with implied object  )
@@ -266,8 +266,8 @@
 # IPl+ VP/J  D   N🅪Sg R/C/P NSg/VB+ NPl+       .
 > Police combed his     flat     for   clues   .
 # Nᴹ/VB+ VP/J   ISg/D$+ NSg/VB/J R/C/P NPl/V3+ .
-> I've lived here    for   three years .
-# K    VP/J  NSg/J/R R/C/P NSg   NPl+  .
+> I've lived here for   three years .
+# K    VP/J  J/R  R/C/P NSg   NPl+  .
 > They fought for   days over    a    silly  pencil  .
 # IPl+ VB     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
 > The store   is  closed for   the day     .
@@ -285,7 +285,7 @@
 > I       am       aiming  for   completion by      the end    of business Thursday .
 # ISg/#r+ NPr/VB/J Nᴹ/Vg/J R/C/P NSg+       NSg/J/P D   NSg/VB P  N🅪Sg/J+  NSg+     .
 > He's going   for   his     doctorate .
-# NSg$ Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB+   .
+# NPr$ Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB+   .
 > Do  you    want   to go       for   coffee     ?
 # VXB ISgPl+ NSg/VB P  NSg/VB/J R/C/P N🅪Sg/VB/J+ .
 > I'm saving      up         for   a   car  .
@@ -309,7 +309,7 @@
 > He       is  named for   his     grandfather .
 # NPr/ISg+ VL3 VP/J  R/C/P ISg/D$+ NSg/VB/J+   .
 > He       totally screwed up         that          project . Now       he's surely for   the sack   .
-# NPr/ISg+ R       VP/J    NSg/VB/J/P NSg/I/C/Ddem+ NSg/VB+ . NSg/J/R/C NSg$ R      R/C/P D   NSg/VB .
+# NPr/ISg+ R       VP/J    NSg/VB/J/P NSg/I/C/Ddem+ NSg/VB+ . NSg/J/R/C NPr$ R      R/C/P D   NSg/VB .
 > In        term     of base      hits   , Jones   was three for   four on  the day
 # NPr/J/R/P NSg/VB/J P  NSg/VB/J+ NPl/V3 . NPr/VB+ VPt NSg   R/C/P NSg  J/P D+  NPr🅪Sg+
 > At    close    of play    , England were    305 for   3 .
@@ -348,8 +348,8 @@
 # NSg/VB Nᴹ/Vg/J  P    # .
 > You    can     study  anything  from math to literature .
 # ISgPl+ NPr/VXB NSg/VB NSg/I/VB+ P    +    P  Nᴹ         .
-> It's hard     to tell   from here    .
-# +    N🅪Sg/J/R P  NPr/VB P    NSg/J/R .
+> It's hard     to tell   from here .
+# +    N🅪Sg/J/R P  NPr/VB P    J/R  .
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
 > The bomb      went     off        just 100 yards   from where   they were    standing .
@@ -359,7 +359,7 @@
 > I’ve been    doing   this    from pickney .
 # K    NSg/VPp Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
-# D$+  NPl+     NSg/VB/JC P    NSg/I/VB+ .
+# D$+  NPl+     NPr/VB/JC P    NSg/I/VB+ .
 > He       knows  right    from wrong      .
 # NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
 >
@@ -431,17 +431,17 @@
 > You've got a   friend    in        me       .
 # K      VP  D/P NPr/VB/J+ NPr/J/R/P NPr/ISg+ .
 > He's met his     match   in        her     .
-# NSg$ VP  ISg/D$+ NSg/VB+ NPr/J/R/P ISg/D$+ .
+# NPr$ VP  ISg/D$+ NSg/VB+ NPr/J/R/P ISg/D$+ .
 > There has been    no       change  in        his     condition .
-# R+    V3  NSg/VPp NPr/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
+# R+    V3  NSg/VPp NSg/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
 > What   grade   did  he       get    in        English      ?
 # NSg/I+ NSg/VB+ VXPt NPr/ISg+ NSg/VB NPr/J/R/P NPr🅪Sg/VB/J+ .
 > Please pay      me       in        cash       — preferably in        tens and  twenties .
 # VB     NSg/VB/J NPr/ISg+ NPr/J/R/P NPrᴹ/VB/J+ . R          NPr/J/R/P W?   VB/C NPl+     .
 > The deposit can     be      in        any    legal tender   , even       in        gold     .
 # D+  NSg/VB+ NPr/VXB NSg/VXB NPr/J/R/P I/R/Dq NSg/J NSg/VB/J . NSg/VB/J/R NPr/J/R/P Nᴹ/VB/J+ .
-> Beethoven's " Symphony No       . 5 " in        C            minor    is  among his     most         popular .
-# NSg$        . NSg+     NPr/Dq/P . # . NPr/J/R/P NPr/VB/J/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
+> Beethoven's " Symphony No       . 5 " in        C          minor    is  among his     most         popular .
+# NPr$        . NSg+     NSg/Dq/P . # . NPr/J/R/P NPr/VB/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech   was in        French      , but     was simultaneously translated into eight  languages .
 # ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl/V3+   .
 > When    you    write  in        cursive , it's illegible .
@@ -603,7 +603,7 @@
 > Are we   still      on  for   tonight ?
 # VB  IPl+ NSg/VB/J/R J/P R/C/P NSg+    .
 > Mike    just threw coffee     onto Paul's lap       . It's on  now       .
-# NPr/VB+ J/R  VPt   N🅪Sg/VB/J+ J/P  NSg$   NSg/VB/J+ . +    J/P NSg/J/R/C .
+# NPr/VB+ J/R  VPt   N🅪Sg/VB/J+ J/P  NPr$   NSg/VB/J+ . +    J/P NSg/J/R/C .
 > England need     a   hundred runs   , with twenty - five overs remaining . Game      on  !
 # NPr+    N🅪Sg/VXB D/P NSg     NPl/V3 . P    NSg    . NSg  NPl   Nᴹ/Vg/J   . NSg/VB/J+ J/P .
 > Your feet will    soon warm     up         once  your socks   are on  .
@@ -657,7 +657,7 @@
 > Please lie    down        on  the couch   .
 # VB     NPr/VB N🅪Sg/VB/J/P J/P D+  NSg/VB+ .
 > The parrot  was sitting  on  Jim's shoulder .
-# D+  NSg/VB+ VPt NSg/Vg/J J/P NSg$  NSg/VB+  .
+# D+  NSg/VB+ VPt NSg/Vg/J J/P NPr$  NSg/VB+  .
 > He       had a   scar    on  the side     of his     face    .
 # NPr/ISg+ VP  D/P NSg/VB+ J/P D   NSg/VB/J P  ISg/D$+ NSg/VB+ .
 > There is  a   dirty smudge on  this    window  .
@@ -701,7 +701,7 @@
 > After resting  on  his     elbows  , he       stood on  his     toes    , then      walked on  his     heels   .
 # P     Nᴹ/Vg/J+ J/P ISg/D$+ NPl/V3+ . NPr/ISg+ VP    J/P ISg/D$+ NPl/V3+ . NSg/J/R/C VP/J   J/P ISg/D$+ NPl/V3+ .
 > The Tories are on  twenty - five percent in        this   constituency .
-# D   NPl    VB  J/P NSg    . NSg  NSg     NPr/J/R/P I/Ddem NSg+         .
+# D   NPrPl  VB  J/P NSg    . NSg  NSg     NPr/J/R/P I/Ddem NSg+         .
 > The blue       team    are on  six points and  the red     team    on  five .
 # D+  N🅪Sg/VB/J+ NSg/VB+ VB  J/P NSg NPl/V3 VB/C D+  N🅪Sg/J+ NSg/VB+ J/P NSg  .
 > I'm on  question four .
@@ -719,7 +719,7 @@
 > The city hosted the World   Summit  on  the Information Society
 # D+  NSg+ VP/J   D+  NSg/VB+ NSg/VB+ J/P D+  Nᴹ+         N🅪Sg+
 > I       have    no       opinion on  this    subject   .
-# ISg/#r+ NSg/VXB NPr/Dq/P N🅪Sg+   J/P I/Ddem+ NSg/VB/J+ .
+# ISg/#r+ NSg/VXB NSg/Dq/P N🅪Sg+   J/P I/Ddem+ NSg/VB/J+ .
 > I       saw     it       on  television .
 # ISg/#r+ NSg/VPt NPr/ISg+ J/P N🅪Sg/VB+   .
 > Can't you    see    I'm on  the phone   ?
@@ -741,7 +741,7 @@
 > I       haven't got any    money   on  me       .
 # ISg/#r+ VXB     VP  I/R/Dq N🅪Sg/J+ J/P NPr/ISg+ .
 > On  Jack's entry , William got up         to leave  .
-# J/P NSg$   NSg+  . NPr+    VP  NSg/VB/J/P P  NSg/VB .
+# J/P NPr$   NSg+  . NPr+    VP  NSg/VB/J/P P  NSg/VB .
 > On  the addition of ammonia , a    chemical reaction   begins .
 # J/P D   NSg      P  Nᴹ+     . D/P+ NSg/J+   N🅪Sg/VB/J+ NPl/V3 .
 > The drinks  are on  me       tonight , boys    .
@@ -753,7 +753,7 @@
 > Have    pity    or    compassion on  him  .
 # NSg/VXB N🅪Sg/VB NPr/C Nᴹ/VB+     J/P ISg+ .
 > He's on  his     lunch    break   .
-# NSg$ J/P ISg/D$+ N🅪Sg/VB+ NSg/VB+ .
+# NPr$ J/P ISg/D$+ N🅪Sg/VB+ NSg/VB+ .
 > I'm on  nights  all          this   week   .
 # K   J/P NPl/V3+ NSg/I/J/C/Dq I/Ddem NSg/J+ .
 > You've been    on  these  antidepressants far      too long     .
@@ -796,8 +796,8 @@
 # NPr/I+ NPr/VB/J ISg/#r+ P  VB/Au/Br  . K    NSg/VPp/J NSg/VB/JC+ NPl+   ISg+   .
 > Precisely to get    away from you    was why    I       did  what   I       did  .
 # R         P  NSg/VB VB/J P    ISgPl+ VPt NSg/VB ISg/#r+ VXPt NSg/I+ ISg/#r+ VXPt .
-> I       need     some     more         books   to read    and  friends to go       partying with .
-# ISg/#r+ N🅪Sg/VXB I/J/R/Dq NPr/I/J/R/Dq NPl/V3+ P  NSg/VBP VB/C NPl/V3+ P  NSg/VB/J Nᴹ/Vg/J  P    .
+> I       need     some     more         books   to read    and  friends   to go       partying with .
+# ISg/#r+ N🅪Sg/VXB I/J/R/Dq NPr/I/J/R/Dq NPl/V3+ P  NSg/VBP VB/C NPrPl/V3+ P  NSg/VB/J Nᴹ/Vg/J  P    .
 > If    he       hasn't read    it       yet      , he       ought     to .
 # NSg/C NPr/ISg+ V3     NSg/VBP NPr/ISg+ NSg/VB/C . NPr/ISg+ NSg/I/VXB P  .
 > I       went    to the shops   to buy    some      bread    .
@@ -827,7 +827,7 @@
 > He       made several bad      - taste    jokes  to groans from the audience .
 # NPr/ISg+ VP   J/Dq    NSg/VB/J . NSg/VB/J NPl/V3 P  NPl/V3 P    D+  NSg+     .
 > I       tried complaining , but     it       was to no        effect  .
-# ISg/#r+ VP/J  Nᴹ/Vg/J     . NSg/C/P NPr/ISg+ VPt P  NPr/Dq/P+ NSg/VB+ .
+# ISg/#r+ VP/J  Nᴹ/Vg/J     . NSg/C/P NPr/ISg+ VPt P  NSg/Dq/P+ NSg/VB+ .
 > It       was to a   large extent true     .
 # NPr/ISg+ VPt P  D/P NSg/J NSg/J+ NSg/VB/J .
 > We   manufacture these   parts   to a   very high        tolerance .
@@ -849,7 +849,7 @@
 > Three squared or    three to the second    power      is  nine .
 # NSg   VP/J    NPr/C NSg   P  D+  NSg/VB/J+ N🅪Sg/VB/J+ VL3 NSg  .
 > What's the time       ? – It's quarter   to four in        the afternoon ( or    3 : 45 pm      ) .
-# NSg$   D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
+# K      D+  N🅪Sg/VB/J+ . . +    NSg/VB/J+ P  NSg  NPr/J/R/P D+  N🅪Sg+     . NPr/C # . #  NSg/VB+ . .
 >
 #
 >              Adverb
@@ -870,8 +870,8 @@
 #
 > He       picked a   fight  with the class      bully     .
 # NPr/ISg+ VP/J   D/P NSg/VB P    D+  N🅪Sg/VB/J+ NSg/VB/J+ .
-> He       went    with his     friends .
-# NPr/ISg+ NSg/VPt P    ISg/D$+ NPl/V3+ .
+> He       went    with his     friends   .
+# NPr/ISg+ NSg/VPt P    ISg/D$+ NPrPl/V3+ .
 > She  owns   a    motorcycle with a   sidecar .
 # ISg+ NPl/V3 D/P+ NSg/VB+    P    D/P NSg     .
 > Jim  was listening to Bach with his     eyes    closed .
@@ -911,7 +911,7 @@
 > It       was small    and  bumpy , with a   tinge  of orange      .
 # NPr/ISg+ VPt NPr/VB/J VB/C J     . P    D/P NSg/VB P  NPr🅪Sg/VB/J .
 > There are lots   of people  with no        homes   after the wildfire .
-# R+    VB  NPl/V3 P  NPl/VB+ P    NPr/Dq/P+ NPl/V3+ P     D   NSg      .
+# R+    VB  NPl/V3 P  NPl/VB+ P    NSg/Dq/P+ NPl/V3+ P     D   NSg      .
 > Speak  with confidence .
 # NSg/VB P    Nᴹ+        .
 > He       spoke   with sadness in        his     voice   .

@@ -145,7 +145,7 @@
 		},
 		">": {
 			"#": "'-(i)er' comparative suffix; agent suffix. see also 'c' which marks a comparative form",
-			"//": "mnemonic: greater than is better",
+			"//": "mnemonic: greater than is better; singular of 'Z'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -267,6 +267,7 @@
 		},
 		"Z": {
 			"#": "'-(i)(e)rs' suffix",
+			"//": "plural of '>' agent noun suffix '-(i)(e)r'",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -627,6 +628,7 @@
 		},
 		"O": {
 			"#": "proper noun property",
+			"propagate": true,
 			"metadata": {
 				"noun": {
 					"is_proper": true
@@ -860,6 +862,14 @@
 				"dialects": "AUSTRALIAN"
 			}
 		},
+		"₹": {
+			"#": "IN property",
+			"//": "mnemonic: rupee symbol",
+			"propagate": true,
+			"metadata": {
+				"dialects": "INDIAN"
+			}
+		},
 		"F": {
 			"#": "reflexive property",
 			"metadata": {
@@ -1003,6 +1013,14 @@
 			"metadata": {
 				"affix": {
 					"is_prefix": true
+				}
+			}
+		},
+		"/": {
+			"#": "phrasal verb property",
+			"metadata": {
+				"verb": {
+					"is_phrasal": true
 				}
 			}
 		}
