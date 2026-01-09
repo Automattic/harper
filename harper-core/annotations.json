@@ -1014,6 +1014,14 @@
 					"is_prefix": true
 				}
 			}
+		},
+		"/": {
+			"#": "phrasal verb property",
+			"metadata": {
+				"verb": {
+					"is_phrasal": true
+				}
+			}
 		}
 	}
 }
