@@ -3,7 +3,7 @@ use std::{borrow::Borrow, fmt::Display};
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::Span;
+use crate::{Span, case};
 
 /// A suggested edit that could resolve a [`Lint`](super::Lint).
 #[derive(Debug, Clone, Serialize, Deserialize, Is, PartialEq, Eq, Hash)]
@@ -31,35 +31,10 @@ impl Suggestion {
     /// For example, if we want to replace "You're" with "You are", we can provide "you are" and
     /// "You're".
     pub fn replace_with_match_case(
-        mut value: Vec<char>,
+        value: Vec<char>,
         template: impl IntoIterator<Item = impl Borrow<char>>,
     ) -> Self {
-        let mut template = template.into_iter();
-        // Repeat the last character if we still need characters past the end of `template`.
-        let template = itertools::iterate(
-            template.next().map(|first_char| *first_char.borrow()),
-            |prev_c| {
-                if let Some(c) = template.next() {
-                    Some(*c.borrow())
-                } else {
-                    *prev_c
-                }
-            },
-        );
-
-        for (v, t) in value
-            .iter_mut()
-            .filter(|v| v.is_alphabetic())
-            .zip(template.filter(|v| v.is_none_or(|v| v.is_alphabetic())))
-        {
-            if t.is_some_and(|t| t.is_uppercase()) {
-                *v = v.to_ascii_uppercase();
-            } else {
-                *v = v.to_ascii_lowercase();
-            }
-        }
-
-        Self::ReplaceWith(value)
+        Self::ReplaceWith(case::copy_casing(template, value).to_vec())
     }
 
     /// Apply a suggestion to a given text.

@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![allow(dead_code)]
 
+pub mod case;
 mod char_ext;
 mod char_string;
 mod currency;
@@ -35,6 +36,7 @@ mod vec_ext;
 use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};
 
+pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dict_word_metadata::{
