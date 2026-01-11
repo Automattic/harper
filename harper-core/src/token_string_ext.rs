@@ -90,6 +90,43 @@ pub trait TokenStringExt: private::Sealed {
     create_decl_for!(word_like);
     create_decl_for!(heading_start);
 
+    /// Get a reference to a token by index, with negative numbers counting from the end.
+    ///
+    /// # Examples
+    /// ```
+    /// # use harper_core::{Token, TokenStringExt};
+    /// # fn main() {
+    /// let tokens = []; // In a real test, this would be actual tokens
+    /// let _last = tokens.get_rel(-1);  // Gets the last token
+    /// let _third_last = tokens.get_rel(-3);  // Gets the third last token
+    /// let _first = tokens.get_rel(0);  // Gets the first token
+    /// # }
+    /// ```
+    ///
+    /// # Returns
+    ///
+    /// * `Some(&Token)` - If the index is in bounds
+    /// * `None` - If the index is out of bounds
+    fn get_rel(&self, index: isize) -> Option<&Token>
+    where
+        Self: AsRef<[Token]>,
+    {
+        let slice = self.as_ref();
+        let len = slice.len() as isize;
+
+        if index >= len || -index > len {
+            return None;
+        }
+
+        let idx = if index >= 0 {
+            index as usize
+        } else {
+            (len + index) as usize
+        };
+
+        slice.get(idx)
+    }
+
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
 
