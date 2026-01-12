@@ -21484,6 +21484,7 @@ discourage/~VGdSNL
 discouragement/NwSg
 discouraging/V6JYN
 discover/~VSdGr
+discoverable/J
 discoverability/Ng
 discovered/~VU
 discoverer/~NgS
@@ -27591,8 +27592,9 @@ handler/~NgS
 handmade/~JN
 handmaid/NgSXn
 handmaiden/Ng
+handoff/NSg         # some dictionaries say 'handoff' is US, 'handover' is Commonwealth
 handout/NSgJ
-handover/~NS
+handover/~NSg       # some dictionaries say 'handover' is Commonwealth, 'handoff' is US
 handpick/VGdS
 handpiece/NgS
 handprint/NSg
@@ -34846,6 +34848,7 @@ multiculturalism/~Nmg
 multicurrency/J
 multidevice/J
 multidimensional/J
+multidirectional/J
 multidisciplinary/~J
 multidomain/J
 multiethnic/J
