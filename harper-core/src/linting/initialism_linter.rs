@@ -49,7 +49,8 @@ impl ExprLinter for InitialismLinter {
         let tok = matched_tokens.first()?;
         let source = tok.span.get_content(source);
 
-        let suggestions = self.expansions_lower
+        let suggestions = self
+            .expansions_lower
             .iter()
             .map(|expansion_lower| {
                 let mut expansion = expansion_lower.clone();
@@ -64,7 +65,7 @@ impl ExprLinter for InitialismLinter {
                         .iter()
                         .flat_map(|word| std::iter::once(' ').chain(word.iter().copied()))
                         .skip(1)
-                        .collect::<Vec<_>>()
+                        .collect::<Vec<_>>(),
                 )
             })
             .collect::<Vec<_>>();
