@@ -245,6 +245,47 @@ In the future, expect new types of tests to become available.
 
 If you have `harper-cli` available, you can run the tests in a given Weir file by running `harper-cli test <path to the Weir file>`.
 
+## Weirpacks
+
+Weirpacks are zip archives of Weir rules meant for distribution. They use the `.weirpack` extension for clarity, but the contents are standard ZIP.
+
+### Layout
+
+- The archive root contains one or more `.weir` files.
+- Each rule name is the filename stem (for example, `TheirToThere.weir` becomes `TheirToThere`).
+- A `manifest.json` file is required at the root.
+
+### Manifest
+
+The manifest is JSON. It must include the required fields below and may include any extra metadata you want.
+
+Required fields:
+- `author`
+- `version`
+- `description`
+- `license`
+
+Example:
+
+```json
+{
+  "author": "Ada Lovelace",
+  "version": "1.0.0",
+  "description": "Rules for Victorian technical writing.",
+  "license": "MIT",
+  "keywords": ["victorian", "technical", "style"],
+  "website": "https://example.com"
+}
+```
+
+### Loading
+
+In `harper-cli`, use `--weirpack` to load one or more packs at lint time:
+
+```bash
+harper-cli lint --weirpack path/to/rules.weirpack README.md
+```
+
 ## See Also:
 
 - [Building the Weir Language](https://elijahpotter.dev/articles/building-the-weir-language)
