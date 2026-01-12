@@ -1,0 +1,7 @@
+expr main (sooner than later)
+
+let message "Did you mean `sooner rather than later` or `sooner or later`?"
+let description "Fixes the improper phrase `sooner than later` by suggesting standard alternatives."
+let kind "Usage"
+let becomes ["sooner rather than later", "sooner or later"]
+

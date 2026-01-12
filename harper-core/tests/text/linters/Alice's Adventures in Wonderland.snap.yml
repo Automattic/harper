@@ -1997,17 +1997,6 @@ Message: |
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1545 | feeble voice: “I heard every word you fellows were saying.”
-         |                                   ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at

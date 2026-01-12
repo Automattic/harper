@@ -1,0 +1,8 @@
+expr main (in while)
+
+let message "When describing a timeframe, use `a while`."
+let description "Corrects the missing article in `in while`, forming `in a while`."
+let kind "Grammar"
+let becomes "in a while"
+
+test "We’ll talk again in while." "We’ll talk again in a while."

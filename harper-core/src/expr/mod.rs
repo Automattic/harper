@@ -18,6 +18,7 @@ mod anchor_end;
 mod anchor_start;
 mod duration_expr;
 mod expr_map;
+mod filter;
 mod first_match_of;
 mod fixed_phrase;
 mod longest_match_of;
@@ -43,6 +44,7 @@ pub use anchor_end::AnchorEnd;
 pub use anchor_start::AnchorStart;
 pub use duration_expr::DurationExpr;
 pub use expr_map::ExprMap;
+pub use filter::Filter;
 pub use first_match_of::FirstMatchOf;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
@@ -84,6 +86,12 @@ impl<E> Expr for Arc<E>
 where
     E: Expr,
 {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run(cursor, tokens, source)
+    }
+}
+
+impl Expr for Box<dyn Expr> {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
     }

@@ -1,0 +1,7 @@
+expr main (beat regards)
+
+let message "Use `best regards` to convey sincere well wishes in a closing."
+let description "In valedictions, `best` expresses your highest regard—avoid the typo `beat regards`."
+let kind "Typo"
+let becomes "best regards"
+

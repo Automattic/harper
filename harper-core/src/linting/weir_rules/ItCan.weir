@@ -1,0 +1,7 @@
+expr main (It cam)
+
+let message "Did you mean `It can`?"
+let description "Corrects the misspelling `It cam` to the proper phrase `It can`."
+let kind "Typo"
+let becomes "It can"
+

@@ -1,0 +1,7 @@
+expr main (to towards)
+
+let message "Use `towards` without the preceding `to`."
+let description "Removes redundant `to` before `towards`."
+let kind "Redundancy"
+let becomes "towards"
+

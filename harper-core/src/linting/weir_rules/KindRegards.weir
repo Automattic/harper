@@ -1,0 +1,7 @@
+expr main (kid regards)
+
+let message "Did you mean `kind regards`?"
+let description "Changes `kid regards` to `kind regards`."
+let kind "Typo"
+let becomes "kind regards"
+

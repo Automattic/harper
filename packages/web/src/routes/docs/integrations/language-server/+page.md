@@ -88,13 +88,13 @@ Each user of `harper-ls` has their own dictionary, created on-demand the first t
 | macOS            |                            `$HOME/Library/Application Support/harper-ls/dictionary.txt` |
 | Windows          |                                    `%FOLDERID_RoamingAppData%/harper-ls/dictionary.txt` |
 
-This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Directories).
 
 ### Workspace Dictionary
 
 Each workspace in which you use `harper-ls` has its own dictionary, which by default is located at `.harper-dictionary.txt` in the root of the workspace.
 
-This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Dictionaries_).
+This dictionary is a simple line-separated word list in plaintext. You can add and remove words at will. Code actions on misspelled words allow you to add elements to this list. Additionally, [its location is configurable](#Directories).
 
 ### File-Local Dictionary
 
@@ -108,7 +108,7 @@ You can find the file-local dictionaries in the following directories by default
 | macOS            |                                  `$HOME/Library/Application Support/harper-ls/file_dictionaries` |
 | Windows          |                                            `%FOLDERID_LocalAppData%/harper-ls/file_dictionaries` |
 
-The format of these files is identical to user dictionaries and [their location can also be configured](#Dictionaries_).
+The format of these files is identical to user dictionaries and [their location can also be configured](#Directories).
 
 ### Static Dictionary
 
@@ -255,13 +255,13 @@ These configs are under the `markdown` key:
 
 ### Other Configs
 
-| Config               | Type                                                    | Default Value | Description                                                                                                                                                               |
-| -------------------- | ------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"`       | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
-| `isolateEnglish`     | `boolean`                                               | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
-| `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
-| `maxFileLength`      | `number`                                                | `120000`      | Maximum length of file to be linted (in bytes). If a file is larger/longer than this, it will not be linted.                                                              |
-| `excludePatterns`    | `array`                                                 | `[]`          | A set of globs to ignore. If a file matches any of the globs, it will not be linted.                                                                                      |
+| Config               | Type                                                                | Default Value | Description                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `diagnosticSeverity` | `"error"`, `"hint"`, `"information"`, `"warning"`                   | `"hint"`      | Configures how severe diagnostics appear in your editor                                                                                                                   |
+| `isolateEnglish`     | `boolean`                                                           | `false`       | In documents that are a mixture of English and another language, only lint English text. This feature is incredibly new and unstable. Do not expect it to work perfectly. |
+| `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"`, `"Indian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
+| `maxFileLength`      | `number`                                                            | `120000`      | Maximum length of file to be linted (in bytes). If a file is larger/longer than this, it will not be linted.                                                              |
+| `excludePatterns`    | `array`                                                             | `[]`          | A set of globs to ignore. If a file matches any of the globs, it will not be linted.                                                                                      |
 
 ## Supported Languages
 

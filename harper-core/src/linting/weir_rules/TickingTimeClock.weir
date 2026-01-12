@@ -1,0 +1,9 @@
+expr main (ticking time clock)
+
+let message "Use `ticking time bomb` for disastrous consequences, otherwise avoid redundancy with just `ticking clock`."
+let description "Corrects `ticking time clock` to `ticking time bomb` for idiomatic urgency or `ticking clock` otherwise."
+let kind "Usage"
+let becomes ["ticking time bomb", "ticking clock"]
+
+test "One element that can help up the stakes (and tension!) is a \“ticking time clock.\”" "One element that can help up the stakes (and tension!) is a \“ticking time bomb.\”"
+test "The opportunity itself has a ticking time clock as all great opportunities do." "The opportunity itself has a ticking clock as all great opportunities do."
