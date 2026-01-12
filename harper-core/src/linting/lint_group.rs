@@ -79,6 +79,7 @@ use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
+use super::have_the_nerve::HaveTheNerve;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::hereby::Hereby;
@@ -565,6 +566,7 @@ impl LintGroup {
         insert_expr_rule!(GoodAt, true);
         insert_expr_rule!(Handful, true);
         insert_expr_rule!(HavePronoun, true);
+        insert_expr_rule!(HaveTheNerve, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
         insert_expr_rule!(Hereby, true);
