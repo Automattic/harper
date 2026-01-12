@@ -1,0 +1,9 @@
+expr main (in anyway)
+
+let message "Use `in any way` for emphasizing a point."
+let description "Corrects ungrammatical `in anyway` to `in any way`."
+let kind "BoundaryError"
+let becomes "in any way"
+
+test "in anyway" "in any way"
+test "The names should not affect your application in anyway and you can override extension names." "The names should not affect your application in any way and you can override extension names."

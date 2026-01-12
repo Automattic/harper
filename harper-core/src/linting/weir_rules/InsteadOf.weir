@@ -1,0 +1,9 @@
+expr main (in stead of)
+
+let message "Use the modern single word `instead of` to indicate a replacement."
+let description "Corrects the archaic or mistaken separation `in stead of` to `instead of` in everyday usage."
+let kind "BoundaryError"
+let becomes "instead of"
+
+test "He used water in stead of soda." "He used water instead of soda."
+test "He used water instead of soda." "He used water instead of soda."

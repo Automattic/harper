@@ -1,0 +1,20 @@
+expr main (pretty decent)
+
+let message "Avoid redundancy."
+let description "`Pretty` is redundant when modifying `decent`. Use `decent` alone."
+let kind "Style"
+let becomes "decent"
+
+test "The movie was pretty decent." "The movie was decent."
+test "It is pretty decent work." "It is decent work."
+test "She did a pretty decent job." "She did a decent job."
+test "That sounds pretty decent to me." "That sounds decent to me."
+test "We had a pretty decent time." "We had a decent time."
+
+test "The movie was Pretty Decent." "The movie was Decent."
+test "The movie was PRETTY DECENT." "The movie was DECENT."
+
+test "The movie was pretty good." "The movie was pretty good."
+test "The movie was decent." "The movie was decent."
+test "It was quite decent." "It was quite decent."
+test "Pretty much anything works." "Pretty much anything works."

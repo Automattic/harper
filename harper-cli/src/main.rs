@@ -7,7 +7,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
 // use std::sync::Arc;
-use std::fs;
+use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
@@ -15,6 +15,7 @@ use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
+use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
 };
@@ -59,6 +60,9 @@ enum Args {
         /// If omitted, `harper-cli` will run every rule.
         #[arg(long, value_delimiter = ',')]
         only: Option<Vec<String>>,
+        /// Overlapping lints are removed by default. This option disables that behavior.
+        #[arg(short = 'o', long)]
+        keep_overlapping_lints: bool,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -188,6 +192,11 @@ enum Args {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<SingleInput>,
     },
+    /// Run the tests contained within a Weir file.
+    Test {
+        /// The location of the Weir file to test
+        input: PathBuf,
+    },
 }
 
 fn main() -> anyhow::Result<()> {
@@ -201,6 +210,7 @@ fn main() -> anyhow::Result<()> {
             count,
             ignore,
             only,
+            keep_overlapping_lints,
             dialect,
             user_dict_path,
             // TODO workspace_dict_path?
@@ -214,6 +224,7 @@ fn main() -> anyhow::Result<()> {
                     count,
                     ignore,
                     only,
+                    keep_overlapping_lints,
                     dialect,
                 },
                 user_dict_path,
@@ -916,6 +927,20 @@ fn main() -> anyhow::Result<()> {
             println!();
 
             Ok(())
+        }
+        Args::Test { input } => {
+            let weir_file = fs::read_to_string(input)?;
+            let mut linter = WeirLinter::new(&weir_file)?;
+
+            let failing_tests = linter.run_tests();
+
+            if failing_tests.is_empty() {
+                eprintln!("All tests pass!");
+                Ok(())
+            } else {
+                eprintln!("{:?}", failing_tests);
+                process::exit(1);
+            }
         }
     }
 }

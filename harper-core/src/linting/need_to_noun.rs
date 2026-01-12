@@ -31,7 +31,7 @@ impl Default for NeedToNoun {
             .t_any()
             .t_any()
             .t_any()
-            .then_word_set(&["be"]);
+            .then_word_set(&["be", "match"]);
 
         let a = SequenceExpr::default()
             .then_kind_where(|kind| kind.is_nominal())
@@ -456,5 +456,18 @@ mod tests {
             "So that they don't need to run into this problem in the future.",
             NeedToNoun::default(),
         );
+    }
+
+    #[test]
+    fn allows_need_to_match_2446() {
+        assert_no_lints(
+            "You don't need to match string errors explicitly.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_match_exactly_2446() {
+        assert_no_lints("They need to match exactly.", NeedToNoun::default());
     }
 }

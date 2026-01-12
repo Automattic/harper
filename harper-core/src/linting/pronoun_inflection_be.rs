@@ -2,7 +2,7 @@ use harper_brill::UPOS;
 
 use crate::expr::{All, AnchorStart, Expr, ExprMap, SequenceExpr};
 use crate::patterns::{NominalPhrase, UPOSSet};
-use crate::{Lrc, Token, TokenKind};
+use crate::{Lrc, Token, TokenKind, TokenStringExt};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
@@ -150,7 +150,7 @@ impl ExprLinter for PronounInflectionBe {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens.get(matched_tokens.len() - 3)?.span;
+        let span = matched_tokens.get_rel(-3)?.span;
 
         // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;

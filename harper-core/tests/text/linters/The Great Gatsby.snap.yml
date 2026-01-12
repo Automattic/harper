@@ -2201,6 +2201,15 @@ Suggest:
 
 
 
+Lint:    Grammar (31 priority)
+Message: |
+    1839 | honey, and pour me a last drop into that there crystal glass.”
+         |                                          ^~~~~ Did you mean `their`?
+Suggest:
+  - Replace with: “their”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1848 | From East Egg, then, came the Chester Beckers and the Leeches, and a man named

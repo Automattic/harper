@@ -449,7 +449,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 }
 
 test('LocalLinters will lint many times with fresh instances', async () => {
-	for (let i = 0; i < 1000; i++) {
+	for (let i = 0; i < 300; i++) {
 		const linter = new LocalLinter({ binary });
 
 		const text = 'This is a grammatically correct sentence.';

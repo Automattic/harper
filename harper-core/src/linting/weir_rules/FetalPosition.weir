@@ -1,0 +1,7 @@
+expr main (the feeble position)
+
+let message "Use the correct term for a curled-up posture."
+let description "Ensures the correct use of `fetal position`, avoiding confusion with `feeble position`, which is not a standard phrase."
+let kind "Malapropism"
+let becomes "the fetal position"
+

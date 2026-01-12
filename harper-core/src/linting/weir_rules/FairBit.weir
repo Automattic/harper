@@ -1,0 +1,8 @@
+expr main (fare bit)
+
+let message "A `decent amount` is a `fair bit`. `Fare` is the price of a ticket."
+let description "Corrects malapropisms of `a fair bit`."
+let kind "Eggcorn"
+let becomes "fair bit"
+
+test "I've read through a fare bit of the ecosystem framework, but I am not clear on what is modified..." "I've read through a fair bit of the ecosystem framework, but I am not clear on what is modified..."
