@@ -5,6 +5,7 @@
 `harper-core` is [available on `crates.io`](https://crates.io/crates/harper-core) to enable Rust engineers to integrate high-quality grammar checking directly into their apps and workflows.
 Feel free to use `harper-core` in your projects.
 If you run into problems with the code, open an issue or, even better, create a pull request.
+We are also happy to chat with you on [Discord](https://discord.com/invite/JBqcAaKrzQ).
 
 [The documentation for `harper-core` is available online.](https://docs.rs/harper-core/latest/harper_core/)
 
