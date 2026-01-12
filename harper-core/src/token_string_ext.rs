@@ -94,12 +94,14 @@ pub trait TokenStringExt: private::Sealed {
     ///
     /// # Examples
     /// ```
-    /// # use harper_core::{Token, TokenStringExt};
+    /// # use harper_core::{Token, TokenStringExt, parsers::{Parser, PlainEnglish}};
     /// # fn main() {
-    /// let tokens = []; // In a real test, this would be actual tokens
-    /// let _last = tokens.get_rel(-1);  // Gets the last token
-    /// let _third_last = tokens.get_rel(-3);  // Gets the third last token
-    /// let _first = tokens.get_rel(0);  // Gets the first token
+    /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
+    /// let tokens = PlainEnglish.parse(&source);
+    /// assert_eq!(tokens.get_rel(0).unwrap().span.get_content_string(&source), "The");
+    /// assert_eq!(tokens.get_rel(1).unwrap().kind.is_whitespace(), true);
+    /// assert_eq!(tokens.get_rel(-1).unwrap().kind.is_punctuation(), true);
+    /// assert_eq!(tokens.get_rel(-2).unwrap().span.get_content_string(&source), "mat");
     /// # }
     /// ```
     ///
@@ -118,11 +120,7 @@ pub trait TokenStringExt: private::Sealed {
             return None;
         }
 
-        let idx = if index >= 0 {
-            index as usize
-        } else {
-            (len + index) as usize
-        };
+        let idx = if index >= 0 { index } else { len + index } as usize;
 
         slice.get(idx)
     }
