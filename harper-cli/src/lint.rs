@@ -36,12 +36,20 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     Ok(dict)
 }
 
-fn load_weirpacks(paths: &[PathBuf]) -> anyhow::Result<Vec<Weirpack>> {
+fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     let mut packs = Vec::new();
-    for path in paths {
-        let file = fs::File::open(path)
-            .with_context(|| format!("Failed to open weirpack {}", path.display()))?;
-        let pack = Weirpack::from_reader(file)
+    for input in inputs {
+        let Some(file) = input.try_as_file_ref() else {
+            anyhow::bail!(
+                "Weirpack inputs must be files, got {}",
+                input.get_identifier()
+            );
+        };
+
+        let path = file.path();
+        let bytes = fs::read(path)
+            .with_context(|| format!("Failed to read weirpack {}", path.display()))?;
+        let pack = Weirpack::from_bytes(&bytes)
             .with_context(|| format!("Failed to load weirpack {}", path.display()))?;
         packs.push(pack);
     }
@@ -68,7 +76,7 @@ pub struct LintOptions {
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
-    pub weirpack_paths: Vec<PathBuf>,
+    pub weirpack_inputs: Vec<SingleInput>,
 }
 enum ReportStyle {
     FullAriadneLintReport,
@@ -111,7 +119,7 @@ pub fn lint(
         ref mut ignore,
         ref mut only,
         dialect,
-        ref weirpack_paths,
+        ref weirpack_inputs,
         ..
     } = lint_options;
 
@@ -120,7 +128,7 @@ pub fn lint(
         inputs.push(SingleInput::from(StdinInput).into());
     }
 
-    let weirpacks = load_weirpacks(weirpack_paths)?;
+    let weirpacks = load_weirpacks(weirpack_inputs)?;
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
@@ -303,7 +311,7 @@ fn lint_one_input(
         only,
         keep_overlapping_lints,
         dialect,
-        weirpack_paths: _,
+        weirpack_inputs: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();

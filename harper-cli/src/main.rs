@@ -74,7 +74,7 @@ enum Args {
         file_dict_path: PathBuf,
         /// Path to a Weirpack file to load. May be supplied multiple times.
         #[arg(long, value_name = "WEIRPACK")]
-        weirpacks: Vec<PathBuf>,
+        weirpacks: Vec<SingleInput>,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -227,7 +227,7 @@ fn main() -> anyhow::Result<()> {
                     only,
                     keep_overlapping_lints,
                     dialect,
-                    weirpack_paths: weirpacks,
+                    weirpack_inputs: weirpacks,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
