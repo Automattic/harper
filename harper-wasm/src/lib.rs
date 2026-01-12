@@ -9,6 +9,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
+use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
@@ -433,6 +434,14 @@ impl Linter {
         let mut new_stats = Stats::read(&mut read).map_err(|err| err.to_string())?;
         self.stats.records.append(&mut new_stats.records);
 
+        Ok(())
+    }
+
+    /// Load a Weirpack from raw bytes, merging its rules into the current linter.
+    pub fn import_weirpack(&mut self, bytes: Vec<u8>) -> Result<(), String> {
+        let pack = Weirpack::from_bytes(&bytes).map_err(|err| err.to_string())?;
+        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(&mut group);
         Ok(())
     }
 }

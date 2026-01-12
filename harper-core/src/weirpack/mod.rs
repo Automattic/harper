@@ -49,11 +49,7 @@ impl Weirpack {
         }
     }
 
-    pub fn add_rule(
-        &mut self,
-        name: impl Into<String>,
-        rule: impl Into<String>,
-    ) -> Option<String> {
+    pub fn add_rule(&mut self, name: impl Into<String>, rule: impl Into<String>) -> Option<String> {
         self.rules.insert(name.into(), rule.into())
     }
 
@@ -148,8 +144,7 @@ impl Weirpack {
 
     pub fn to_bytes(&self) -> Result<Vec<u8>, WeirpackError> {
         let mut zip = ZipWriter::new(std::io::Cursor::new(Vec::new()));
-        let options =
-            FileOptions::<()>::default().compression_method(CompressionMethod::Deflated);
+        let options = FileOptions::<()>::default().compression_method(CompressionMethod::Deflated);
 
         let mut manifest_bytes = Vec::new();
         self.manifest.write_to(&mut manifest_bytes)?;

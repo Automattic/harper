@@ -202,6 +202,17 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('importStatsFile', [statsFile]);
 	}
 
+	async loadWeirpackFromBlob(blob: Blob): Promise<void> {
+		const bytes = new Uint8Array(await blob.arrayBuffer());
+		const arr = Array.from(bytes);
+		return await this.rpc('loadWeirpackFromBytes', [arr]);
+	}
+
+	async loadWeirpackFromBytes(bytes: Uint8Array | number[]): Promise<void> {
+		const arr = Array.from(bytes);
+		return await this.rpc('loadWeirpackFromBytes', [arr]);
+	}
+
 	/** Run a procedure on the remote worker. */
 	private async rpc(procName: string, args: unknown[]): Promise<any> {
 		if (this.disposed) {

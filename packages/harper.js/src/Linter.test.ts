@@ -12,6 +12,18 @@ function randomString(length: number): string {
 	return result;
 }
 
+const WEIRPACK_BASE64 =
+	'UEsDBBQAAAAIAFR7LFx+V+AhbQAAAIgAAAANAAAAbWFuaWZlc3QuanNvbi2MMQuDMBBG9/yKI3MJdnXrWNBNcE7iaQ9DLlxil+J/l5iO33u876cAtD3Kh0X3oCfMBV5tPqr6omTiWF1nOvNsdMHshVL5m7uakSRZv8PKAjPLjjJQLCjgAjsIbBeKm2kHgTzGjDUe35NW5wVQSwMEFAAAAAgAVHssXLV8hxV2AAAAoQAAABUAAABXZWlycGFja1Rlc3RSdWxlLndlaXJNzrENwzAMBMBeUxDskx0yQMoMQEtvh7BECaKMePwYdorgyz/gH3vrVESNJrEjIWQMKnCXBcQvB4036APtTeJKHS1LRIGNO582wWPXNrQa8eNPbhk0104DPtSWH1/VEvFTPSJnMdTNr2JCrMcu8XXkNuuOxOELUEsBAhQDFAAAAAgAVHssXH5X4CFtAAAAiAAAAA0AAAAAAAAAAAAAAIABAAAAAG1hbmlmZXN0Lmpzb25QSwECFAMUAAAACABUeyxctXyHFXYAAAChAAAAFQAAAAAAAAAAAAAAgAGYAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyUEsFBgAAAAACAAIAfgAAAEEBAAAAAA==';
+
+function base64ToBytes(value: string): Uint8Array {
+	const raw = atob(value);
+	const bytes = new Uint8Array(raw.length);
+	for (let i = 0; i < raw.length; i++) {
+		bytes[i] = raw.charCodeAt(i);
+	}
+	return bytes;
+}
+
 const linters = {
 	WorkerLinter: WorkerLinter,
 	LocalLinter: LocalLinter,
@@ -446,6 +458,34 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	}, 120000);
+
+	test(`${linterName} can load Weirpacks from a Blob`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_BASE64);
+		const arr = new Uint8Array(bytes);
+		const blob = new Blob([arr], { type: 'application/zip' });
+		await linter.loadWeirpackFromBlob(blob);
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toHaveLength(1);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can load Weirpacks from Uint8Array`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_BASE64);
+		await linter.loadWeirpackFromBytes(bytes);
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toHaveLength(1);
+
+		await linter.dispose();
+	});
 }
 
 test('LocalLinters will lint many times with fresh instances', async () => {

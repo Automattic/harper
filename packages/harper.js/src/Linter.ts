@@ -114,6 +114,12 @@ export default interface Linter {
 
 	/** Import a statistics log file. */
 	importStatsFile(statsFile: string): Promise<void>;
+
+	/** Load a Weirpack from a Blob, merging its rules into the current linter. */
+	loadWeirpackFromBlob(blob: Blob): Promise<void>;
+
+	/** Load a Weirpack from an array of bytes, merging its rules into the current linter. */
+	loadWeirpackFromBytes(bytes: Uint8Array): Promise<void>;
 }
 
 /** The properties and information needed to construct a Linter. */

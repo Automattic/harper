@@ -203,6 +203,17 @@ export default class LocalLinter implements Linter {
 		return inner.import_stats_file(statsFile);
 	}
 
+	async loadWeirpackFromBlob(blob: Blob): Promise<void> {
+		const bytes = new Uint8Array(await blob.arrayBuffer());
+		await this.loadWeirpackFromBytes(bytes);
+	}
+
+	async loadWeirpackFromBytes(bytes: Uint8Array | number[]): Promise<void> {
+		const inner = await this.inner;
+		const data = bytes instanceof Uint8Array ? bytes : Uint8Array.from(bytes);
+		return inner.import_weirpack(data);
+	}
+
 	async dispose(): Promise<void> {
 		if (this.disposed) {
 			return;
