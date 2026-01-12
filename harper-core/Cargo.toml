@@ -34,6 +34,7 @@ ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "1.0.0" }
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
+zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
 criterion = { version = "0.8.1", default-features = false }
