@@ -645,6 +645,7 @@ pub struct OrganizedGroup {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use sysinfo::{Pid, ProcessRefreshKind, ProcessesToUpdate, System};
 
     /// If a word from another dialect is added to the user dictionary, it should be considered
     /// part of the user's dialect as well.
@@ -661,17 +662,44 @@ mod tests {
     }
 
     #[test]
-    fn does_not_oom_with_repeated_lints() {
-        for _ in 0..3000 {
-            let mut linter = Linter::new(Dialect::American);
+    fn no_memory_leak_with_repeated_lints() {
+        let pid = Pid::from_u32(std::process::id());
+        let mut sys = System::new();
 
-            let results = linter.lint(
-                "This is a grammatically correct sentence.".to_string(),
-                Language::Plain,
-                false,
-            );
+        macro_rules! refresh_sys {
+            () => {
+                sys.refresh_processes_specifics(
+                    ProcessesToUpdate::Some(&[pid]),
+                    false,
+                    ProcessRefreshKind::nothing().with_memory(),
+                );
+            };
+        }
 
-            assert!(results.is_empty())
+        refresh_sys!();
+        let mut prev_memory_usage = sys.process(pid).unwrap().memory();
+
+        if (0..10).all(|_| {
+            // Run a few times.
+            for _ in 0..10 {
+                let mut linter = Linter::new(Dialect::American);
+
+                let results = linter.lint(
+                    "This is a grammatically correct sentence.".to_string(),
+                    Language::Plain,
+                    false,
+                );
+
+                assert!(results.is_empty())
+            }
+            // Check if our process' memory usage increased.
+            refresh_sys!();
+            let curr_memory_usage = sys.process(pid).unwrap().memory();
+            let memory_usage_increased = curr_memory_usage > prev_memory_usage;
+            prev_memory_usage = curr_memory_usage;
+            memory_usage_increased
+        }) {
+            panic!("Memory leak!");
         }
     }
 }
