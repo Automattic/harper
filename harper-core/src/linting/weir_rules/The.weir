@@ -1,0 +1,8 @@
+expr main [(teh), (te)]
+
+let message "Did you mean the definite article?"
+let description "Fixes especially common misspellings of the word `the`"
+let kind "Typo"
+let becomes "the"
+
+test "I adore teh light of the moon." "I adore the light of the moon."

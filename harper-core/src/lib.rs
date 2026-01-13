@@ -30,6 +30,7 @@ mod token;
 mod token_kind;
 mod token_string_ext;
 mod vec_ext;
+pub mod weir;
 
 use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};

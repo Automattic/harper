@@ -65,6 +65,14 @@ export default defineConfig(async () => {
 								],
 							},
 							{
+								items: [
+									{
+										title: 'Weir',
+										to: '/docs/weir',
+									},
+								],
+							},
+							{
 								title: 'Integrations',
 								items: [
 									{

@@ -1,30 +1,39 @@
 use crate::expr::Expr;
-use itertools::Itertools;
 
 use crate::{Token, patterns::Word};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
+/// Alias for a word in an initialism expansion
+type InitialismWord = Vec<char>;
+/// Alias for a phrase an initialism expands to
+type InitialismPhrase = Vec<InitialismWord>;
+
 /// A struct that can be composed to expand initialisms, respecting the capitalization of each
 /// item.
 pub struct InitialismLinter {
     expr: Box<dyn Expr>,
     /// The lowercase-normalized expansion of the initialism.
-    expansion_lower: Vec<Vec<char>>,
+    expansions_lower: Vec<InitialismPhrase>,
 }
 
 impl InitialismLinter {
     /// Construct a linter that can correct an initialism to
-    pub fn new(initialism: &str, expansion: &str) -> Self {
-        let expansion_lower = expansion
-            .split(' ')
-            .map(|s| s.chars().map(|v| v.to_ascii_lowercase()).collect())
+    pub fn new(initialism: &str, expansions: &[&str]) -> Self {
+        let expansions_lower = expansions
+            .iter()
+            .map(|expansion| {
+                expansion
+                    .split(' ')
+                    .map(|s| s.chars().map(|v| v.to_ascii_lowercase()).collect())
+                    .collect()
+            })
             .collect();
 
         Self {
             expr: Box::new(Word::from_char_string(initialism.chars().collect())),
-            expansion_lower,
+            expansions_lower,
         }
     }
 }
@@ -40,26 +49,31 @@ impl ExprLinter for InitialismLinter {
         let tok = matched_tokens.first()?;
         let source = tok.span.get_content(source);
 
-        let mut expansion_lower = self.expansion_lower.to_owned();
-        let first_letter = &mut expansion_lower[0][0];
-
-        *first_letter = if source[0].is_ascii_uppercase() {
-            first_letter.to_ascii_uppercase()
-        } else {
-            first_letter.to_ascii_lowercase()
-        };
-
-        let phrase = Itertools::intersperse_with(expansion_lower.into_iter(), || vec![' '])
-            .reduce(|mut left, mut right| {
-                left.append(&mut right);
-                left
+        let suggestions = self
+            .expansions_lower
+            .iter()
+            .map(|expansion_lower| {
+                let mut expansion = expansion_lower.clone();
+                let first_letter = &mut expansion[0][0];
+                *first_letter = if source[0].is_ascii_uppercase() {
+                    first_letter.to_ascii_uppercase()
+                } else {
+                    first_letter.to_ascii_lowercase()
+                };
+                Suggestion::ReplaceWith(
+                    expansion
+                        .iter()
+                        .flat_map(|word| std::iter::once(' ').chain(word.iter().copied()))
+                        .skip(1)
+                        .collect::<Vec<_>>(),
+                )
             })
-            .unwrap();
+            .collect::<Vec<_>>();
 
         Some(Lint {
             span: tok.span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::ReplaceWith(phrase)],
+            suggestions,
             message: "Try expanding this initialism.".to_owned(),
             priority: 127,
         })

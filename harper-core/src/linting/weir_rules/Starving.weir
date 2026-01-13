@@ -1,0 +1,7 @@
+expr main [(very hungry), (really hungry), (extremely hungry)]
+
+let message "A more vivid adjective would better convey intense hunger."
+let description "Encourages vivid writing by suggesting `starving` instead of weaker expressions like `very hungry.`"
+let kind "Enhancement"
+let becomes "starving"
+

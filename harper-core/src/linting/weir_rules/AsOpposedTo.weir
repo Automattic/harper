@@ -1,0 +1,8 @@
+expr main (as oppose to)
+
+let message "Did you mean `as opposed to`?"
+let description "Corrects `as oppose to` to `as opposed to`."
+let kind "Usage"
+let becomes "as opposed to"
+
+test "Distorted image upon opening the app as oppose to running the app after successful build" "Distorted image upon opening the app as opposed to running the app after successful build"

@@ -1,0 +1,8 @@
+expr main (after while)
+
+let message "When describing a timeframe, use `a while`."
+let description "Corrects the missing article in `after while`, forming `after a while`."
+let kind "Grammar"
+let becomes "after a while"
+
+test "bromite Crashes on all sites after while." "bromite Crashes on all sites after a while."

@@ -1,0 +1,7 @@
+expr main (on accident)
+
+let message "Did you mean `by accident`?"
+let description "Incorrect preposition: `by accident` is the idiomatic expression."
+let kind "Usage"
+let becomes "by accident"
+

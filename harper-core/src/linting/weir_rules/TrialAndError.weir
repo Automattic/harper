@@ -1,0 +1,8 @@
+expr main (trail and error)
+
+let message "You misspelled `trial`."
+let description "Corrects `trail` to `trial` in `trial and error`."
+let kind "Typo"
+let becomes "trial and error"
+
+test "It was produced through trail and error." "It was produced through trial and error."

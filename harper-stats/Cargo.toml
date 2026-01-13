@@ -1,6 +1,6 @@
 [package]
 name = "harper-stats"
-version = "1.3.0"
+version = "1.4.1"
 edition = "2021"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ repository = "https://github.com/automattic/harper"
 serde = { version = "1.0.228", features = ["derive"] }
 harper-core = { path = "../harper-core", version = "1.0.0", features = ["concurrent"] }
 uuid = { version = "1.19.0", features = ["serde", "v4"] }
-serde_json = "1.0.148"
+serde_json = "1.0.149"
 chrono = "0.4.42"
 
 [features]

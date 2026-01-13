@@ -107,6 +107,22 @@ function scan() {
 			return;
 		}
 
+		if (element.classList.contains('ck-editor__editable')) {
+			element.querySelectorAll('p').forEach((paragraph) => {
+				if (paragraph.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+					return;
+				}
+
+				if (!isVisible(paragraph)) {
+					return;
+				}
+
+				fw.addTarget(paragraph);
+			});
+
+			return;
+		}
+
 		const leafs = leafNodes(element);
 
 		const seenBlockContainers = new Set<Element>();

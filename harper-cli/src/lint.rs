@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
@@ -14,7 +15,11 @@ use harper_core::{
     {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
-use crate::input::Input;
+use crate::input::{
+    AnyInput, InputTrait,
+    multi_input::MultiInput,
+    single_input::{SingleInput, SingleInputTrait, StdinInput},
+};
 
 /// Sync version of harper-ls/src/dictionary_io@load_dict
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
@@ -43,10 +48,11 @@ fn file_dict_name(path: &Path) -> PathBuf {
     rewritten.into()
 }
 
-pub struct LintOptions<'a> {
+pub struct LintOptions {
     pub count: bool,
-    pub ignore: &'a Option<Vec<String>>,
-    pub only: &'a Option<Vec<String>>,
+    pub ignore: Option<Vec<String>>,
+    pub only: Option<Vec<String>>,
+    pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
 }
 enum ReportStyle {
@@ -56,20 +62,16 @@ enum ReportStyle {
 
 struct InputInfo<'a> {
     parent_input_id: &'a str,
-    input: Input,
+    input: &'a AnyInput,
 }
 
 struct InputJob {
     batch_mode: bool,
     parent_input_id: String,
-    input: Input,
+    input: AnyInput,
 }
 
-trait InputPath {
-    fn format_path(&self) -> String;
-}
-
-impl InputPath for InputInfo<'_> {
+impl InputInfo<'_> {
     fn format_path(&self) -> String {
         let child = self.input.get_identifier();
         if self.parent_input_id.is_empty() {
@@ -83,33 +85,30 @@ impl InputPath for InputInfo<'_> {
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
-    inputs: Vec<Input>,
-    lint_options: LintOptions,
+    mut inputs: Vec<AnyInput>,
+    mut lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
     file_dict_path: PathBuf,
 ) -> anyhow::Result<()> {
     let LintOptions {
         count,
-        ignore,
-        only,
+        ref mut ignore,
+        ref mut only,
         dialect,
+        ..
     } = lint_options;
 
     // Zero or more inputs, default to stdin if not provided
-    let all_user_inputs = if inputs.is_empty() {
-        vec![Input::try_from_stdin().unwrap()]
-    } else {
-        inputs
-    };
+    if inputs.is_empty() {
+        inputs.push(SingleInput::from(StdinInput).into());
+    }
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
     let config = LintGroupConfig::new_curated();
-    let mut ignore = ignore.clone();
-    let mut only = only.clone();
 
-    if let Some(ref mut only) = only {
+    if let Some(only) = only {
         only.retain(|rule| {
             if !config.has_rule(rule) {
                 eprintln!("Warning: Cannot enable unknown rule '{}'.", rule);
@@ -119,7 +118,7 @@ pub fn lint(
         });
     }
 
-    if let Some(ref mut ignore) = ignore {
+    if let Some(ignore) = ignore {
         ignore.retain(|rule| {
             if !config.has_rule(rule) {
                 eprintln!("Warning: Cannot disable unknown rule '{}'.", rule);
@@ -158,37 +157,26 @@ pub fn lint(
     };
 
     let mut input_jobs = Vec::new();
-    for user_input in all_user_inputs {
-        let (batch_mode, maybe_dir) = match &user_input {
-            Input::Dir(dir) => (true, std::fs::read_dir(dir).ok()),
-            _ => (false, None),
-        };
+    for user_input in inputs {
+        if let Some(dir_input) = user_input
+            .try_as_multi_ref()
+            .and_then(MultiInput::try_as_dir_ref)
+        {
+            let mut file_entries: Vec<_> = dir_input.iter_files()?.collect();
 
-        let parent_input_id = if batch_mode {
-            user_input.get_identifier().to_string()
-        } else {
-            String::new()
-        };
+            file_entries.sort_by(|a, b| a.path().file_name().cmp(&b.path().file_name()));
 
-        if let Some(dir) = maybe_dir {
-            let mut entries: Vec<_> = dir
-                .filter_map(Result::ok)
-                .filter(|entry| entry.file_type().map(|ft| !ft.is_dir()).unwrap_or(false))
-                .collect();
-
-            entries.sort_by_key(|entry| entry.file_name());
-
-            for entry in entries {
+            for entry in file_entries.into_iter().map(SingleInput::from) {
                 input_jobs.push(InputJob {
-                    batch_mode,
-                    parent_input_id: parent_input_id.clone(),
-                    input: Input::File(entry.path()),
+                    batch_mode: true,
+                    parent_input_id: user_input.get_identifier().to_string(),
+                    input: entry.into(),
                 });
             }
         } else {
             input_jobs.push(InputJob {
-                batch_mode,
-                parent_input_id,
+                batch_mode: false,
+                parent_input_id: String::new(),
                 input: user_input.clone(),
             });
         }
@@ -201,27 +189,20 @@ pub fn lint(
                 parent_input_id,
                 input,
             } = job;
-            let parent_id_ref = parent_input_id.as_str();
-
             lint_one_input(
                 // Common properties of harper-cli
                 markdown_options,
                 &curated_plus_user_dict,
                 // Passed from the user for the `lint` subcommand
                 &report_mode,
-                LintOptions {
-                    count,
-                    ignore: &ignore,
-                    only: &only,
-                    dialect,
-                },
+                &lint_options,
                 &file_dict_path,
                 // Are we linting multiple inputs inside a directory?
                 batch_mode,
                 // The current input to be linted
                 InputInfo {
-                    parent_input_id: parent_id_ref,
-                    input,
+                    parent_input_id: parent_input_id.as_str(),
+                    input: &input,
                 },
             )
         };
@@ -269,7 +250,7 @@ type SpelloCount = HashMap<String, usize>;
 struct FullInputInfo<'a> {
     input: InputInfo<'a>,
     doc: Document,
-    source: String,
+    source: Cow<'a, str>,
 }
 
 fn lint_one_input(
@@ -278,7 +259,7 @@ fn lint_one_input(
     curated_plus_user_dict: &MergedDictionary,
     report_mode: &ReportStyle,
     // Options passed from the user specific to the `lint` subcommand
-    lint_options: LintOptions,
+    lint_options: &LintOptions,
     file_dict_path: &Path,
     // Are we linting multiple inputs?
     batch_mode: bool,
@@ -294,6 +275,7 @@ fn lint_one_input(
         count: _,
         ignore,
         only,
+        keep_overlapping_lints,
         dialect,
     } = lint_options;
 
@@ -302,31 +284,28 @@ fn lint_one_input(
     let mut lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
     let mut spellos: HashMap<String, usize> = HashMap::new();
 
-    // Create a new merged dictionary for this input.
-    let mut merged_dictionary = curated_plus_user_dict.clone();
+    if let Some(single_input) = current.input.try_as_single_ref() {
+        // Create a new merged dictionary for this input.
+        let mut merged_dictionary = curated_plus_user_dict.clone();
 
-    // If processing a file, try to load its per-file dictionary
-    if let Input::File(ref file) = current.input {
-        let dict_path = file_dict_path.join(file_dict_name(file));
-        if let Ok(file_dictionary) = load_dict(&dict_path) {
-            merged_dictionary.add_dictionary(Arc::new(file_dictionary));
-            println!(
-                "{}: Note: Using per-file dictionary: {}",
-                current.format_path(),
-                dict_path.display()
-            );
+        // If processing a file, try to load its per-file dictionary
+        if let Some(file) = single_input.try_as_file_ref() {
+            let dict_path = file_dict_path.join(file_dict_name(file.path()));
+            if let Ok(file_dictionary) = load_dict(&dict_path) {
+                merged_dictionary.add_dictionary(Arc::new(file_dictionary));
+                println!(
+                    "{}: Note: Using per-file dictionary: {}",
+                    current.format_path(),
+                    dict_path.display()
+                );
+            }
         }
-    }
 
-    match current
-        .input
-        .load(batch_mode, markdown_options, &merged_dictionary)
-    {
-        Err(err) => eprintln!("{}", err),
-        Ok((maybe_doc, source)) => {
-            if let Some(doc) = maybe_doc {
+        match single_input.load(markdown_options, &merged_dictionary) {
+            Err(err) => eprintln!("{}", err),
+            Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), dialect);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 // Turn specified rules on or off
                 configure_lint_group(&mut lint_group, only, ignore);
@@ -336,7 +315,9 @@ fn lint_one_input(
 
                 // Lint counts, for brief reporting
                 let lint_count_before = named_lints.values().map(|v| v.len()).sum::<usize>();
-                remove_overlaps_map(&mut named_lints);
+                if !keep_overlapping_lints {
+                    remove_overlaps_map(&mut named_lints);
+                }
                 let lint_count_after = named_lints.values().map(|v| v.len()).sum::<usize>();
 
                 // Extract the lint kinds and rules etc. for reporting
@@ -497,9 +478,14 @@ fn single_input_report(
                     report_builder = report_builder.with_label(
                         Label::new((&input_identifier, lint.span.into()))
                             .with_message(format!(
-                                "{}: {}",
+                                "{} {}: {}",
                                 format_args!("[{}::{}]", lint.lint_kind, rule_name)
                                     .fg(ariadne::Color::Rgb(r, g, b)),
+                                format_args!("(pri {})", lint.priority).fg(ariadne::Color::Rgb(
+                                    (r as f32 * 0.66) as u8,
+                                    (g as f32 * 0.66) as u8,
+                                    (b as f32 * 0.66) as u8
+                                )),
                                 lint.message
                             ))
                             .with_color(primary_color),

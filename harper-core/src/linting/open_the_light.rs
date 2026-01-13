@@ -68,8 +68,7 @@ impl ExprLinter for OpenTheLight {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         // If I try to do this in the Pattern, the shorter pattern matches, without the context token.
         if toks.len() == 7 {
-            let device_tok = &toks[toks.len() - 3];
-            let context_tok = &toks[toks.len() - 1];
+            let (device_tok, context_tok) = (toks.get_rel(-3)?, toks.get_rel(-1)?);
             // The device word is part of compound noun if it's singular and followed by another noun
             if !device_tok.kind.is_plural_noun() || !context_tok.kind.is_noun() {
                 return None;

@@ -1,0 +1,7 @@
+expr main (had of)
+
+let message "Did you mean `had have` or `had've`?"
+let description "Flags the unnecessary use of `of` after `had` and suggests the correct forms."
+let kind "Grammar"
+let becomes ["had have", "had've"]
+

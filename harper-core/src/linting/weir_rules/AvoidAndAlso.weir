@@ -1,0 +1,7 @@
+expr main (and also)
+
+let message "Consider using just `and`."
+let description "Reduces redundancy by replacing `and also` with `and`."
+let kind "Redundancy"
+let becomes "and"
+

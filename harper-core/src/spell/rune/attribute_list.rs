@@ -292,3 +292,24 @@ impl HumanReadableAttributeList {
         })
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::spell::{Dictionary, FstDictionary};
+
+    #[test]
+    fn proper_noun_property_propagates_to_plurals() {
+        let fst_dict = FstDictionary::curated();
+        if let Some(vw_plural) = fst_dict.get_word_metadata_str("Volkswagens") {
+            assert!(vw_plural.is_proper_noun());
+        }
+    }
+
+    #[test]
+    fn proper_noun_propagates_to_possessives_2327() {
+        if let Some(vw_possessive) = FstDictionary::curated().get_word_metadata_str("Volkswagen's")
+        {
+            assert!(vw_possessive.is_possessive_noun());
+        }
+    }
+}

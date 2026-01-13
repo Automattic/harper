@@ -187,6 +187,7 @@ use super::then_than::ThenThan;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::thing_think::ThingThink;
+use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
@@ -196,7 +197,6 @@ use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
-use super::use_genitive::UseGenitive;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
@@ -215,7 +215,7 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
+use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -368,11 +368,16 @@ impl LintGroup {
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+        self.add_boxed(name, Box::new(linter))
+    }
+
+    /// Add an already-boxed [`Linter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add_boxed(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+            self.linters.insert(name.as_ref().to_string(), linter);
             true
         }
     }
@@ -484,7 +489,7 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(&mut phrase_corrections::lint_group());
+        out.merge_from(&mut weir_rules::lint_group());
         out.merge_from(&mut phrase_set_corrections::lint_group());
         out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
             dictionary.clone(),
@@ -660,6 +665,7 @@ impl LintGroup {
         insert_expr_rule!(Theres, true);
         insert_expr_rule!(ThesesThese, true);
         insert_expr_rule!(ThingThink, true);
+        insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
@@ -668,7 +674,6 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
-        insert_expr_rule!(UseGenitive, false);
         insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
