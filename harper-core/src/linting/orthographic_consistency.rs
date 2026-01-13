@@ -387,4 +387,12 @@ mod tests {
             OrthographicConsistency::default(),
         );
     }
+
+    #[test]
+    fn allows_issue_2465() {
+        assert_no_lints(
+            "The post’s problem was not in its complexity.",
+            OrthographicConsistency::default(),
+        );
+    }
 }
