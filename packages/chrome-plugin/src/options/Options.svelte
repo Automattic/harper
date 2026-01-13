@@ -277,8 +277,8 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Apply Last Suggestion Hotkey</span>
-            <span class="font-light">Hotkey to apply the most likely suggestion to previously incorrect lint.</span>
+            <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Hotkey to apply the most likely suggestion to previously incorrect lint.</p>
           </div>
           <Textarea readonly bind:value={buttonText} />
           <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
@@ -289,8 +289,6 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">User Dictionary</span>
-            <span class="font-light">Each word should be on its own line.</span>
             <h3 class="text-sm">User Dictionary</h3>
             <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
           </div>
