@@ -3,7 +3,7 @@ import { Language } from 'harper-wasm';
 import LazyPromise from 'p-lazy';
 import type { SuperBinaryModule } from './binary';
 import type Linter from './Linter';
-import type { LinterInit } from './Linter';
+import type { LinterInit, WeirpackTestFailures } from './Linter';
 import type { LintConfig, LintOptions } from './main';
 
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
@@ -203,15 +203,31 @@ export default class LocalLinter implements Linter {
 		return inner.import_stats_file(statsFile);
 	}
 
-	async loadWeirpackFromBlob(blob: Blob): Promise<void> {
+	/**
+	 * Load a Weirpack from a Blob.
+	 *
+	 * Returns `undefined` if tests pass and rules are imported, otherwise returns
+	 * the Weirpack test failures.
+	 */
+	async loadWeirpackFromBlob(blob: Blob): Promise<WeirpackTestFailures | undefined> {
 		const bytes = new Uint8Array(await blob.arrayBuffer());
-		await this.loadWeirpackFromBytes(bytes);
+		return this.loadWeirpackFromBytes(bytes);
 	}
 
-	async loadWeirpackFromBytes(bytes: Uint8Array | number[]): Promise<void> {
+	/**
+	 * Load a Weirpack from a byte array.
+	 *
+	 * Returns `undefined` if tests pass and rules are imported, otherwise returns
+	 * the Weirpack test failures.
+	 */
+	async loadWeirpackFromBytes(
+		bytes: Uint8Array | number[],
+	): Promise<WeirpackTestFailures | undefined> {
 		const inner = await this.inner;
 		const data = bytes instanceof Uint8Array ? bytes : Uint8Array.from(bytes);
-		return inner.import_weirpack(data);
+		const result = (inner as unknown as { import_weirpack: (input: Uint8Array) => unknown })
+			.import_weirpack(data);
+		return result as WeirpackTestFailures | undefined;
 	}
 
 	async dispose(): Promise<void> {

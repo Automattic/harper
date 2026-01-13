@@ -12,8 +12,10 @@ function randomString(length: number): string {
 	return result;
 }
 
-const WEIRPACK_BASE64 =
+const WEIRPACK_PASS_BASE64 =
 	'UEsDBBQAAAAIAFR7LFx+V+AhbQAAAIgAAAANAAAAbWFuaWZlc3QuanNvbi2MMQuDMBBG9/yKI3MJdnXrWNBNcE7iaQ9DLlxil+J/l5iO33u876cAtD3Kh0X3oCfMBV5tPqr6omTiWF1nOvNsdMHshVL5m7uakSRZv8PKAjPLjjJQLCjgAjsIbBeKm2kHgTzGjDUe35NW5wVQSwMEFAAAAAgAVHssXLV8hxV2AAAAoQAAABUAAABXZWlycGFja1Rlc3RSdWxlLndlaXJNzrENwzAMBMBeUxDskx0yQMoMQEtvh7BECaKMePwYdorgyz/gH3vrVESNJrEjIWQMKnCXBcQvB4036APtTeJKHS1LRIGNO582wWPXNrQa8eNPbhk0104DPtSWH1/VEvFTPSJnMdTNr2JCrMcu8XXkNuuOxOELUEsBAhQDFAAAAAgAVHssXH5X4CFtAAAAiAAAAA0AAAAAAAAAAAAAAIABAAAAAG1hbmlmZXN0Lmpzb25QSwECFAMUAAAACABUeyxctXyHFXYAAAChAAAAFQAAAAAAAAAAAAAAgAGYAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyUEsFBgAAAAACAAIAfgAAAEEBAAAAAA==';
+const WEIRPACK_FAIL_BASE64 =
+	'UEsDBBQAAAAIABtOLVw9tWbJYgAAAH0AAAANAAAAbWFuaWZlc3QuanNvbi3LMQ9AMBCG4d2vuHSWhtVmNNgk5qYOF01J7zCI/07V+H1P3isDUGaXeQ2qAtUhC9Rp5pEODEyrj1boQpfpHZBtoE1++aoeKWzGLnCSzDAacuQnkJdYp8qRRc8Yi7bpVHY/UEsDBBQAAAAIABtOLVylaCfNfgAAALkAAAAVAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyTY5RDsIwDEP/e4oo/3AHDsAnB+g6b0Rr06rJxI7PYICQf6z4WTG21qlEURqi7gohw6nALM4gvhnI76AHpLeYFupoOSYUqJ/5zY6w1KW5VCW+/JFrBk21k8NcdP7gi+hIfBVLyDkq6mpHMCDV/S/xMeQ0yYaRQ3jVv0f+mfAEUEsBAhQDFAAAAAgAG04tXD21ZsliAAAAfQAAAA0AAAAAAAAAAAAAAIABAAAAAG1hbmlmZXN0Lmpzb25QSwECFAMUAAAACAAbTi1cpWgnzX4AAAC5AAAAFQAAAAAAAAAAAAAAgAGNAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyUEsFBgAAAAACAAIAfgAAAD4BAAAAAA==';
 
 function base64ToBytes(value: string): Uint8Array {
 	const raw = atob(value);
@@ -463,10 +465,12 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 		await linter.setup();
 
-		const bytes = base64ToBytes(WEIRPACK_BASE64);
-		const arr = new Uint8Array(bytes);
+		const bytes = base64ToBytes(WEIRPACK_PASS_BASE64);
+    const arr = new Uint8Array(bytes);
 		const blob = new Blob([arr], { type: 'application/zip' });
-		await linter.loadWeirpackFromBlob(blob);
+		const failures = await linter.loadWeirpackFromBlob(blob);
+
+		expect(failures).toBeUndefined();
 
 		const lints = await linter.organizedLints('banana');
 		expect(lints.WeirpackTestRule).toHaveLength(1);
@@ -478,11 +482,47 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 		await linter.setup();
 
-		const bytes = base64ToBytes(WEIRPACK_BASE64);
-		await linter.loadWeirpackFromBytes(bytes);
+		const bytes = base64ToBytes(WEIRPACK_PASS_BASE64);
+		const failures = await linter.loadWeirpackFromBytes(bytes);
+
+		expect(failures).toBeUndefined();
 
 		const lints = await linter.organizedLints('banana');
 		expect(lints.WeirpackTestRule).toHaveLength(1);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} rejects Weirpacks with failing tests (Blob)`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_FAIL_BASE64);
+    const arr = new Uint8Array(bytes);
+		const blob = new Blob([arr], { type: 'application/zip' });
+		const failures = await linter.loadWeirpackFromBlob(blob);
+
+		expect(failures).toBeTypeOf('object');
+		expect(failures?.WeirpackTestRule?.[0]?.expected).toBe('banana');
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toBeUndefined();
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} rejects Weirpacks with failing tests (Uint8Array)`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_FAIL_BASE64);
+		const failures = await linter.loadWeirpackFromBytes(bytes);
+
+		expect(failures).toBeTypeOf('object');
+		expect(failures?.WeirpackTestRule?.[0]?.expected).toBe('banana');
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toBeUndefined();
 
 		await linter.dispose();
 	});

@@ -1,7 +1,7 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type { BinaryModule } from '../binary';
 import type Linter from '../Linter';
-import type { LinterInit } from '../Linter';
+import type { LinterInit, WeirpackTestFailures } from '../Linter';
 import type { LintConfig, LintOptions } from '../main';
 import type { DeserializedRequest } from '../Serializer';
 import Serializer from '../Serializer';
@@ -202,13 +202,26 @@ export default class WorkerLinter implements Linter {
 		return this.rpc('importStatsFile', [statsFile]);
 	}
 
-	async loadWeirpackFromBlob(blob: Blob): Promise<void> {
+	/**
+	 * Load a Weirpack from a Blob via the worker thread.
+	 *
+	 * Returns `undefined` when the tests pass and the pack is imported, otherwise
+	 * forwards the failure report back to the caller.
+	 */
+	async loadWeirpackFromBlob(blob: Blob): Promise<WeirpackTestFailures | undefined> {
 		const bytes = new Uint8Array(await blob.arrayBuffer());
 		const arr = Array.from(bytes);
 		return await this.rpc('loadWeirpackFromBytes', [arr]);
 	}
 
-	async loadWeirpackFromBytes(bytes: Uint8Array | number[]): Promise<void> {
+	/**
+	 * Load a Weirpack from bytes via the worker thread.
+	 *
+	 * Returns the failure report if tests fail or `undefined` when the pack is imported.
+	 */
+	async loadWeirpackFromBytes(
+		bytes: Uint8Array | number[],
+	): Promise<WeirpackTestFailures | undefined> {
 		const arr = Array.from(bytes);
 		return await this.rpc('loadWeirpackFromBytes', [arr]);
 	}

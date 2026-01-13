@@ -5,7 +5,12 @@ export {
 	binary,
 	binaryInlined,
 } from './binary';
-export type { default as Linter, LinterInit } from './Linter';
+export type {
+	default as Linter,
+	LinterInit,
+	WeirpackTestFailure,
+	WeirpackTestFailures,
+} from './Linter';
 export { default as LocalLinter } from './LocalLinter';
 export type { default as Summary } from './Summary';
 export { default as WorkerLinter } from './WorkerLinter';
