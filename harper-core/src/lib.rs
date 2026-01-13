@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![allow(dead_code)]
 
+pub mod case;
 mod char_ext;
 mod char_string;
 mod currency;
@@ -25,6 +26,7 @@ mod render_markdown;
 mod span;
 pub mod spell;
 mod sync;
+mod thesaurus_helper;
 mod title_case;
 mod token;
 mod token_kind;
@@ -35,6 +37,7 @@ pub mod weir;
 use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};
 
+pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dict_word_metadata::{
