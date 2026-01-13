@@ -159,6 +159,9 @@ async function exportEnabledDomainsCSV() {
 let buttonText = $state('Set Hotkey');
 let isBlue = $state(false); // modify color of hotkey button once it is pressed
 function startHotkeyCapture(_modifyHotkeyButton: Button) {
+
+  buttonText = "Press desired hotkey combination now.";
+
 	const handleKeydown = (event: KeyboardEvent) => {
 		event.preventDefault();
 
