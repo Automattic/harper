@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use crate::expr::Expr;
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{OrthFlags, Token};
+use crate::{CharStringExt, OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
@@ -99,7 +99,7 @@ impl ExprLinter for OrthographicConsistency {
             .count()
             == 1
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && canonical != chars
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
@@ -116,7 +116,7 @@ impl ExprLinter for OrthographicConsistency {
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && canonical != chars
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
@@ -132,6 +132,14 @@ impl ExprLinter for OrthographicConsistency {
 
         None
     }
+}
+
+/// Check if the alphabetic characters in the string differ from one another.
+/// Ignores non-alphabetic characters.
+fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
+    a.iter()
+        .zip(b.iter())
+        .any(|(a, b)| a.is_alphabetic() && b.is_alphabetic() && a != b)
 }
 
 #[cfg(test)]
