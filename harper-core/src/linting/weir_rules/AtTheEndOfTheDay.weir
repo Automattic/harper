@@ -1,0 +1,8 @@
+expr main (in the end of the day)
+
+let message "Did you mean `at the end of the day`?"
+let description "Corrects `in the end of the day` to `at the end of the day`."
+let kind "WordChoice"
+let becomes "at the end of the day"
+
+test "In the end of the day, it's not a big deal." "At the end of the day, it's not a big deal."

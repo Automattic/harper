@@ -1,0 +1,8 @@
+expr main initiatively
+
+let message "Did you mean `proactive` (taking initiative, acting in advance) or `initially` (at first, in the beginning)?"
+let description "Corrects nonstandard `initiatively`."
+let kind "Nonstandard"
+let becomes ["proactively", "initially"]
+
+test "I have initiatively signed up for the course." "I have proactively signed up for the course."

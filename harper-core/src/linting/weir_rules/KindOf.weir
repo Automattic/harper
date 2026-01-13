@@ -1,0 +1,8 @@
+expr main (kinda of)
+
+let message "`Kinda` already means `kind of`, so `kinda of` is redundant."
+let description "Corrects `kinda of` to `kind of`."
+let kind "Redundancy"
+let becomes ["kind of", "kinda"]
+
+test "Some kinda of Sync issue only with 0.79.1" "Some kind of Sync issue only with 0.79.1"

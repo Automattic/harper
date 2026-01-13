@@ -1,0 +1,7 @@
+expr main (back and call)
+
+let message "Did you mean `beck and call`?"
+let description "Fixes `back and call` to `beck and call`."
+let kind "Eggcorn"
+let becomes "beck and call"
+

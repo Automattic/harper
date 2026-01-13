@@ -1,0 +1,7 @@
+expr main (wet your appetite)
+
+let message "Use the correct phrase for stimulating desire."
+let description "Ensures `whet your appetite` is used correctly, distinguishing it from the incorrect `wet` variation."
+let kind "Eggcorn"
+let becomes "whet your appetite"
+

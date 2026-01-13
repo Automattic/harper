@@ -1,0 +1,17 @@
+expr main (tongue and cheek)
+
+let message "Use `tongue in cheek` for the idiom."
+let description "Corrects the idiom when `and` replaces the needed preposition."
+let kind "WordChoice"
+let becomes "tongue in cheek"
+
+test "The remark was entirely tongue and cheek." "The remark was entirely tongue in cheek."
+test "It was a tongue and cheek response." "It was a tongue in cheek response."
+test "He delivered it tongue and cheek, expecting a laugh." "He delivered it tongue in cheek, expecting a laugh."
+test "\"tongue and cheek\" jokes are tough to read." "\"tongue in cheek\" jokes are tough to read."
+test "Their tone was TONGUE AND CHEEK all night." "Their tone was TONGUE IN CHEEK all night."
+test "Tongue and cheek banter kept the meeting light." "Tongue in cheek banter kept the meeting light."
+test "Her note (totally tongue and cheek) made us smile." "Her note (totally tongue in cheek) made us smile."
+test "Was that tongue and cheek or sincere?" "Was that tongue in cheek or sincere?"
+test "Their comments were deliberately tongue in cheek." "Their comments were deliberately tongue in cheek."
+test "That was a tongue-in-cheek reply." "That was a tongue-in-cheek reply."

@@ -1,0 +1,7 @@
+expr main (old wise tale)
+
+let message "Use the correct phrase for a superstition or myth."
+let description "Corrects `old wise tale` to `old wives' tale`, preserving the phrase’s meaning as an unfounded traditional belief."
+let kind "Eggcorn"
+let becomes "old wives' tale"
+

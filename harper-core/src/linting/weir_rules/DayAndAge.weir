@@ -1,0 +1,7 @@
+expr main (day in age)
+
+let message "Use `day and age` for referring to the present time."
+let description "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
+let kind "Eggcorn"
+let becomes "day and age"
+

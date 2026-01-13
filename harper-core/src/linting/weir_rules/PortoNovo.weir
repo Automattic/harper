@@ -1,0 +1,7 @@
+expr main (Porto Novo)
+
+let message "The official spelling is hyphenated."
+let description "Checks for the correct official name of the capital of Benin."
+let kind "Punctuation"
+let becomes "Porto-Novo"
+

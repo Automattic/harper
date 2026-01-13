@@ -1,0 +1,7 @@
+expr main (preying mantis)
+
+let message "Use the insect's correct name."
+let description "Corrects `preying mantis` to `praying mantis`, ensuring accurate reference to the insect’s characteristic pose."
+let kind "Eggcorn"
+let becomes "praying mantis"
+

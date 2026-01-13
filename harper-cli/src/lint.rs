@@ -52,6 +52,7 @@ pub struct LintOptions {
     pub count: bool,
     pub ignore: Option<Vec<String>>,
     pub only: Option<Vec<String>>,
+    pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
 }
 enum ReportStyle {
@@ -95,6 +96,7 @@ pub fn lint(
         ref mut ignore,
         ref mut only,
         dialect,
+        ..
     } = lint_options;
 
     // Zero or more inputs, default to stdin if not provided
@@ -273,6 +275,7 @@ fn lint_one_input(
         count: _,
         ignore,
         only,
+        keep_overlapping_lints,
         dialect,
     } = lint_options;
 
@@ -312,7 +315,9 @@ fn lint_one_input(
 
                 // Lint counts, for brief reporting
                 let lint_count_before = named_lints.values().map(|v| v.len()).sum::<usize>();
-                remove_overlaps_map(&mut named_lints);
+                if !keep_overlapping_lints {
+                    remove_overlaps_map(&mut named_lints);
+                }
                 let lint_count_after = named_lints.values().map(|v| v.len()).sum::<usize>();
 
                 // Extract the lint kinds and rules etc. for reporting
@@ -473,9 +478,14 @@ fn single_input_report(
                     report_builder = report_builder.with_label(
                         Label::new((&input_identifier, lint.span.into()))
                             .with_message(format!(
-                                "{}: {}",
+                                "{} {}: {}",
                                 format_args!("[{}::{}]", lint.lint_kind, rule_name)
                                     .fg(ariadne::Color::Rgb(r, g, b)),
+                                format_args!("(pri {})", lint.priority).fg(ariadne::Color::Rgb(
+                                    (r as f32 * 0.66) as u8,
+                                    (g as f32 * 0.66) as u8,
+                                    (b as f32 * 0.66) as u8
+                                )),
                                 lint.message
                             ))
                             .with_color(primary_color),

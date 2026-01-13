@@ -1,0 +1,8 @@
+expr main (hunger pain)
+
+let message "Did you mean `hunger pang`?"
+let description "Corrects `hunger pain` to `hunger pang`."
+let kind "Eggcorn"
+let becomes "hunger pang"
+
+test "hunger pain" "hunger pang"

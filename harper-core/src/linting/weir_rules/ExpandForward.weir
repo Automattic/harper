@@ -1,0 +1,8 @@
+expr main (fwd)
+
+let message "Use `forward` instead of `fwd`"
+let description "Expands the abbreviation `fwd` to the full word `forward` for clarity."
+let kind "Style"
+let becomes "forward"
+
+test "Now I look fwd to the interior, the color, etc." "Now I look forward to the interior, the color, etc."

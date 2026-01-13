@@ -1,12 +1,3 @@
-Lint:    Capitalization (127 priority)
-Message: |
-       1 | # Alice’s Adventures in Wonderland
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “# Alice's Adventures in Wonderland”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
        9 | Alice was beginning to get very tired of sitting by her sister on the bank, and
@@ -2094,15 +2085,6 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1668 | ## CHAPTER VIII: The Queen’s Croquet-Ground
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER VIII: The Queen's Croquet-Ground”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     1691 | Seven flung down his brush, and had just begun “Well, of all the unjust things—”
@@ -3815,15 +3797,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2745 | ## CHAPTER XII: Alice’s Evidence
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER XII: Alice's Evidence”
 
 
 

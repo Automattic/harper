@@ -1,0 +1,9 @@
+expr main (as nauseam)
+
+let message "This phrase comes from Latin, where `ad` means `to`."
+let description "Corrects `as nauseam` to `ad nauseam`."
+let kind "Spelling"
+let becomes "ad nauseam"
+
+test "As you say, discussed as nauseam, but no nearer a solution." "As you say, discussed ad nauseam, but no nearer a solution."
+test "no more autism please, hearing about it as nauseam is starting to make me sick" "no more autism please, hearing about it ad nauseam is starting to make me sick"

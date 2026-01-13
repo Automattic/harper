@@ -17,26 +17,26 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
-        "ByTheWay"           => ("btw", "by the way"),
-        "ForYourInformation" => ("fyi", "for your information"),
-        "AsSoonAsPossible"   => ("asap", "as soon as possible"),
-        "InMyOpinion"        => ("imo", "in my opinion"),
-        "InMyHumbleOpinion"  => ("imho", "in my humble opinion"),
-        "OhMyGod"            => ("omg", "oh my god"),
-        "BeRightBack"        => ("brb", "be right back"),
-        "TalkToYouLater"     => ("ttyl", "talk to you later"),
-        "NeverMind"          => ("nvm", "never mind"),
-        "ToBeHonest"         => ("tbh", "to be honest"),
-        "AsFarAsIKnow"       => ("afaik", "as far as I know"),
-        "Really"             => ("rly", "really"),
-        "ExplainLikeImFive"  => ("eli5", "explain like i'm five"),
-        "ForWhatItsWorth"    => ("fwiw", "for what it's worth"),
-        "IDontKnow"          => ("idk", "I don't know"),
-        "IfIRecallCorrectly" => ("iirc", "if I recall correctly"),
-        "IfYouKnowYouKnow"   => ("iykyk", "if you know, you know"),
-        "InCaseYouMissedIt"  => ("icymi", "in case you missed it"),
-        "InRealLife"         => ("irl", "in real life"),
-        "PleaseTakeALook"    => ("ptal", "please take a look"),
+        "ByTheWay"           => ("btw", &["by the way"]),
+        "ForYourInformation" => ("fyi", &["for your information"]),
+        "AsSoonAsPossible"   => ("asap", &["as soon as possible"]),
+        "InMyOpinion"        => ("imo", &["in my opinion"]),
+        "InMyHumbleOpinion"  => ("imho", &["in my humble opinion", "in my honest opinion"]),
+        "OhMyGod"            => ("omg", &["oh my god"]),
+        "BeRightBack"        => ("brb", &["be right back"]),
+        "TalkToYouLater"     => ("ttyl", &["talk to you later"]),
+        "NeverMind"          => ("nvm", &["never mind"]),
+        "ToBeHonest"         => ("tbh", &["to be honest"]),
+        "AsFarAsIKnow"       => ("afaik", &["as far as I know"]),
+        "Really"             => ("rly", &["really"]),
+        "ExplainLikeImFive"  => ("eli5", &["explain like i'm five"]),
+        "ForWhatItsWorth"    => ("fwiw", &["for what it's worth"]),
+        "IDontKnow"          => ("idk", &["I don't know"]),
+        "IfIRecallCorrectly" => ("iirc", &["if I recall correctly"]),
+        "IfYouKnowYouKnow"   => ("iykyk", &["if you know, you know"]),
+        "InCaseYouMissedIt"  => ("icymi", &["in case you missed it"]),
+        "InRealLife"         => ("irl", &["in real life"]),
+        "PleaseTakeALook"    => ("ptal", &["please take a look"]),
     });
 
     group.set_all_rules_to(Some(true));
@@ -46,7 +46,7 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     use super::lint_group;
 
@@ -205,6 +205,19 @@ mod tests {
             "Ptal at the document I sent.",
             lint_group(),
             "Please take a look at the document I sent.",
+        );
+    }
+
+    #[test]
+    fn expands_imho_both_ways() {
+        assert_good_and_bad_suggestions(
+            "Imho, this is a good idea.",
+            lint_group(),
+            &[
+                "In my humble opinion, this is a good idea.",
+                "In my honest opinion, this is a good idea.",
+            ],
+            &["In my horrible opinion, this is a good idea."],
         );
     }
 }

@@ -1,0 +1,7 @@
+expr main (no to)
+
+let message "Did you mean `not to`?"
+let description "Corrects `no to` to `not to`, ensuring proper negation."
+let kind "Typo"
+let becomes "not to"
+
