@@ -141,6 +141,12 @@ impl SequenceExpr {
         self
     }
 
+    /// Push an already-boxed [expression](Expr) to the operation list.
+    pub fn then_boxed(mut self, expr: Box<dyn Expr>) -> Self {
+        self.exprs.push(expr);
+        self
+    }
+
     /// Pushes an expression that could move the cursor to the sequence, but does not require it.
     pub fn then_optional(mut self, expr: impl Expr + 'static) -> Self {
         self.exprs.push(Box::new(Optional::new(expr)));

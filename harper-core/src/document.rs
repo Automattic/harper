@@ -133,7 +133,6 @@ impl Document {
         self.condense_spaces();
         self.condense_newlines();
         self.newlines_to_breaks();
-        self.condense_contractions();
         self.condense_dotted_initialisms();
         self.condense_number_suffixes();
         self.condense_ellipsis();
@@ -843,27 +842,6 @@ impl Document {
         self.condense_expr(&expr, |tok| {
             tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
         });
-    }
-
-    fn uncached_contraction_expr() -> Lrc<SequenceExpr> {
-        Lrc::new(
-            SequenceExpr::default()
-                .then_any_word()
-                .then_apostrophe()
-                .then_any_word(),
-        )
-    }
-
-    thread_local! {
-        static CONTRACTION_EXPR: Lrc<SequenceExpr> = Document::uncached_contraction_expr();
-    }
-
-    /// Searches for contractions and condenses them down into single
-    /// tokens.
-    fn condense_contractions(&mut self) {
-        let expr = Self::CONTRACTION_EXPR.with(|v| v.clone());
-
-        self.condense_expr(&expr, |_| {})
     }
 }
 

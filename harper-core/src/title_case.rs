@@ -77,7 +77,9 @@ pub fn try_make_title_case(
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
                 for (i, c) in correct_caps.iter().enumerate() {
-                    set_output_char(word.span.start - start_index + i, *c);
+                    if c.is_alphabetic() {
+                        set_output_char(word.span.start - start_index + i, *c);
+                    }
                 }
             }
         };
@@ -503,6 +505,18 @@ mod tests {
         assert_eq!(
             make_title_case_str("winter road", &PlainEnglish, &FstDictionary::curated()),
             "Winter Road",
+        );
+    }
+
+    #[test]
+    fn maintains_same_apostrophe_type() {
+        assert_eq!(
+            make_title_case_str(
+                "Alice’s Adventures in Wonderland",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Alice’s Adventures in Wonderland",
         );
     }
 }

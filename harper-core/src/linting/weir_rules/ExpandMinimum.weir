@@ -1,0 +1,7 @@
+expr main (min)
+
+let message "Use `minimum` instead of `min`"
+let description "Expands the abbreviation `min` to the full word `minimum` for clarity."
+let kind "Style"
+let becomes "minimum"
+

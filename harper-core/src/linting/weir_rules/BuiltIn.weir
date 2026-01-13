@@ -1,0 +1,7 @@
+expr main [(in built), (in-built), (built in)]
+
+let message "Prefer the hyphenated compound `built-in`."
+let description "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
+let becomes "built-in"
+let kind "Punctuation"
+
