@@ -1,0 +1,7 @@
+expr main (no in)
+
+let message "Use `not in` for correct grammar."
+let description "Replaces `no in` with `not in`."
+let kind "Typo"
+let becomes "not in"
+

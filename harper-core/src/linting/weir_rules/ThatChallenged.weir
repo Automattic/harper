@@ -1,0 +1,6 @@
+expr main (the challenged)
+
+let message "Use `that challenged` for correct relative clause."
+let description "Corrects `the challenged` to `that challenged` for proper relative clause usage."
+let becomes "that challenged"
+

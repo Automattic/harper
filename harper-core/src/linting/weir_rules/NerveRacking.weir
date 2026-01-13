@@ -1,0 +1,12 @@
+expr main [(nerve racking), (nerve wracking), (nerve wrecking), (nerve-wracking), (nerve-wrecking)]
+
+let message "Use `nerve-racking` for something that causes anxiety or tension."
+let description "Corrects common misspellings and missing hyphen in `nerve-racking`."
+let kind "Eggcorn"
+let becomes "nerve-racking"
+
+test "We've gone through several major changes / upgrades to atlantis, and it's always a little bit nerve-wracking because if we mess something up we ..." "We've gone through several major changes / upgrades to atlantis, and it's always a little bit nerve-racking because if we mess something up we ..."
+test "The issue happens to me on a daily basis, and it is nerve-wrecking because I become unsure if I have actually saved the diagram, but every time ..." "The issue happens to me on a daily basis, and it is nerve-racking because I become unsure if I have actually saved the diagram, but every time ..."
+test "Very nerve wracking landing in an unfamiliar mountainous airport in dead of night with no radar to show surrounding terrain." "Very nerve-racking landing in an unfamiliar mountainous airport in dead of night with no radar to show surrounding terrain."
+test "I appreciate any kind of help since this is kind of nerve wrecking." "I appreciate any kind of help since this is kind of nerve-racking."
+test "It's nerve racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so .." "It's nerve-racking to think about it because I have code inside the callback that resolves the member and somehow I feel like it's so .."

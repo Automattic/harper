@@ -1,0 +1,7 @@
+expr main (can be seem)
+
+let message "Did you mean `can be seen`?"
+let description "Corrects `can be seem` to the proper phrase `can be seen`."
+let kind "Typo"
+let becomes "can be seen"
+

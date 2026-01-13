@@ -1,0 +1,7 @@
+expr main (will contains)
+
+let message "Did you mean `will contain`?"
+let description "Incorrect verb form: `will` should be followed by the base form `contain`."
+let kind "Agreement"
+let becomes "will contain"
+

@@ -1,0 +1,7 @@
+expr main (jar-dropping)
+
+let message "Use the correct phrase for something astonishing."
+let description "Corrects `jar-dropping` to `jaw-dropping`, ensuring the intended meaning of something that causes amazement."
+let kind "Eggcorn"
+let becomes "jaw-dropping"
+

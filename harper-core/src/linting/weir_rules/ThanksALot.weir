@@ -1,0 +1,9 @@
+expr main (thanks lot)
+
+let message "The indefinite article `a` is required in `thanks a lot`."
+let description "Corrects the missing article in `thanks lot`, forming `thanks a lot`."
+let kind "Grammar"
+let becomes "thanks a lot"
+
+test "thanks lot" "thanks a lot"
+test "thanks a lot" "thanks a lot"

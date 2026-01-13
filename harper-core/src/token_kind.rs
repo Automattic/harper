@@ -68,6 +68,7 @@ impl TokenKind {
         is_singular_noun,
         is_plural_noun,
         is_non_plural_noun,
+        is_non_possessive_noun,
         is_countable_noun,
         is_non_countable_noun,
         is_mass_noun,
@@ -195,6 +196,14 @@ impl TokenKind {
 
     pub fn is_close_square(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::CloseSquare))
+    }
+
+    pub fn is_less_than(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::LessThan))
+    }
+
+    pub fn is_greater_than(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::GreaterThan))
     }
 
     pub fn is_open_round(&self) -> bool {

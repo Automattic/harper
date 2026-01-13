@@ -24,14 +24,14 @@ impl Default for NeedToNoun {
                     || tok.kind.is_unlintable()
                     || tok.kind.is_pronoun()
             }),
-            Box::new(WordSet::new(&["about", "it"])),
+            Box::new(WordSet::new(&["about", "into", "it"])),
         ]);
 
         let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()
-            .then_word_set(&["be"]);
+            .then_word_set(&["be", "match"]);
 
         let a = SequenceExpr::default()
             .then_kind_where(|kind| kind.is_nominal())
@@ -448,5 +448,26 @@ mod tests {
             "We believe every family deserves the opportunity to flourish, and we are committed to providing the resources they need to overcome adversity.",
             NeedToNoun::default(),
         );
+    }
+
+    #[test]
+    fn allows_need_to_run_into_2433() {
+        assert_no_lints(
+            "So that they don't need to run into this problem in the future.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_match_2446() {
+        assert_no_lints(
+            "You don't need to match string errors explicitly.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_match_exactly_2446() {
+        assert_no_lints("They need to match exactly.", NeedToNoun::default());
     }
 }

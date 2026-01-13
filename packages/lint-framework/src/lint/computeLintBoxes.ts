@@ -1,7 +1,7 @@
 import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getLexicalRoot, getSlateRoot } from './editorUtils';
+import { getCkEditorRoot, getLexicalRoot, getSlateRoot } from './editorUtils';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
 
@@ -92,6 +92,8 @@ function replaceValue(el: HTMLElement, value: string) {
 	} else if (getLexicalRoot(el) != null) {
 		replaceRichTextValue(el, value, { mode: 'lexical' });
 	} else if (getSlateRoot(el) != null) {
+		replaceRichTextValue(el, value, { mode: 'slate' });
+	} else if (getCkEditorRoot(el) != null) {
 		replaceRichTextValue(el, value, { mode: 'slate' });
 	} else {
 		replaceGenericContentEditable(el, value);

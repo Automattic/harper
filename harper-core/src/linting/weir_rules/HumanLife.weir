@@ -1,0 +1,7 @@
+expr main (human live)
+
+let message "Did you mean `human life`?"
+let description "Changes `human live` to `human life`."
+let kind "Typo"
+let becomes "human life"
+
