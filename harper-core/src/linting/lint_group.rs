@@ -178,6 +178,7 @@ use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
+use super::take_a_look_to::TakeALookTo;
 use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
@@ -656,6 +657,7 @@ impl LintGroup {
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(SplitWords, true);
         insert_struct_rule!(SubjectPronoun, true);
+        insert_expr_rule!(TakeALookTo, true);
         insert_expr_rule!(TakeMedicine, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);

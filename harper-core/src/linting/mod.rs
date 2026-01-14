@@ -188,6 +188,7 @@ mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
 mod suggestion;
+mod take_a_look_to;
 mod take_medicine;
 mod take_serious;
 mod that_than;
