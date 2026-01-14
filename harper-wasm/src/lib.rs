@@ -466,7 +466,9 @@ impl Linter {
                 .collect();
 
             let serializer = Serializer::json_compatible();
-            let value = mapped.serialize(&serializer).map_err(|err| err.to_string())?;
+            let value = mapped
+                .serialize(&serializer)
+                .map_err(|err| err.to_string())?;
             return Ok(value);
         }
 

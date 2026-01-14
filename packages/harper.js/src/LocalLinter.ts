@@ -225,8 +225,9 @@ export default class LocalLinter implements Linter {
 	): Promise<WeirpackTestFailures | undefined> {
 		const inner = await this.inner;
 		const data = bytes instanceof Uint8Array ? bytes : Uint8Array.from(bytes);
-		const result = (inner as unknown as { import_weirpack: (input: Uint8Array) => unknown })
-			.import_weirpack(data);
+		const result = (
+			inner as unknown as { import_weirpack: (input: Uint8Array) => unknown }
+		).import_weirpack(data);
 		return result as WeirpackTestFailures | undefined;
 	}
 

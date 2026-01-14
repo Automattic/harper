@@ -466,7 +466,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.setup();
 
 		const bytes = base64ToBytes(WEIRPACK_PASS_BASE64);
-    const arr = new Uint8Array(bytes);
+		const arr = new Uint8Array(bytes);
 		const blob = new Blob([arr], { type: 'application/zip' });
 		const failures = await linter.loadWeirpackFromBlob(blob);
 
@@ -498,7 +498,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.setup();
 
 		const bytes = base64ToBytes(WEIRPACK_FAIL_BASE64);
-    const arr = new Uint8Array(bytes);
+		const arr = new Uint8Array(bytes);
 		const blob = new Blob([arr], { type: 'application/zip' });
 		const failures = await linter.loadWeirpackFromBlob(blob);
 
