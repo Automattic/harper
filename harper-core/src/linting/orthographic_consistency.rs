@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use crate::expr::Expr;
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{CharStringExt, OrthFlags, Token};
+use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
