@@ -182,10 +182,9 @@ export default class LintFramework {
 						const closestIdx = closestBox(caretPosition, this.lastBoxes);
 
 						const previousBox = this.lastBoxes[closestIdx];
-						const previousLint = this.lastLints[closestIdx];
-						if (previousBox.lint.suggestions.length > 0) {
-							const allLints = Object.values(previousLint.lints).flat();
-							previousBox.applySuggestion(allLints[allLints.length - 1].suggestions[0]);
+						const suggestions = previousBox.lint.suggestions;
+						if (suggestions.length > 0) {
+							previousBox.applySuggestion(suggestions[0]);
 						} else {
 							previousBox.ignoreLint?.();
 						}
