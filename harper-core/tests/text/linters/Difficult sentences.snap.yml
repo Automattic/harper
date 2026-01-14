@@ -336,17 +336,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     443 | With their reputation on the line, they decided to fire their PR team.
-         |                                                               ^~ Did you mean to spell `PR` this way?
-Suggest:
-  - Replace with: “Pa”
-  - Replace with: “Par”
-  - Replace with: “Pi”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      449 | slain with robbers.

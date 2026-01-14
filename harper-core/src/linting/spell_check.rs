@@ -505,4 +505,12 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::Indian),
         );
     }
+
+    #[test]
+    fn dont_flag_pr() {
+        assert_no_lints(
+            "PR",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
 }
