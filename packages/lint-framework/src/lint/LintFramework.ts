@@ -1,8 +1,8 @@
 import type { LintOptions } from 'harper.js';
-import { type IgnorableLintBox, closestBox } from './Box';
-import { getCaretPosition } from './editorUtils';
+import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
+import { getCaretPosition } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
@@ -178,7 +178,7 @@ export default class LintFramework {
 
 					const caretPosition = getCaretPosition();
 
-					if(caretPosition != null) {
+					if (caretPosition != null) {
 						const closestIdx = closestBox(caretPosition, this.lastBoxes);
 
 						const previousBox = this.lastBoxes[closestIdx];
@@ -189,7 +189,6 @@ export default class LintFramework {
 						} else {
 							previousBox.ignoreLint?.();
 						}
-
 					}
 				}
 			},
