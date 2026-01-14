@@ -1,5 +1,6 @@
 import type { LintOptions } from 'harper.js';
-import type { IgnorableLintBox } from './Box';
+import { type IgnorableLintBox, closestBox } from './Box';
+import { getCaretPosition } from './editorUtils';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
 import Highlights from './Highlights';
@@ -174,13 +175,21 @@ export default class LintFramework {
 				if (match) {
 					event.preventDefault();
 					event.stopImmediatePropagation();
-					const previousBox = this.lastBoxes[this.lastBoxes.length - 1];
-					const previousLint = this.lastLints[this.lastLints.length - 1];
-					if (previousBox.lint.suggestions.length > 0) {
-						const allLints = Object.values(previousLint.lints).flat();
-						previousBox.applySuggestion(allLints[allLints.length - 1].suggestions[0]);
-					} else {
-						previousBox.ignoreLint?.();
+
+					const caretPosition = getCaretPosition();
+
+					if(caretPosition != null) {
+						const closestIdx = closestBox(caretPosition, this.lastBoxes);
+
+						const previousBox = this.lastBoxes[closestIdx];
+						const previousLint = this.lastLints[closestIdx];
+						if (previousBox.lint.suggestions.length > 0) {
+							const allLints = Object.values(previousLint.lints).flat();
+							previousBox.applySuggestion(allLints[allLints.length - 1].suggestions[0]);
+						} else {
+							previousBox.ignoreLint?.();
+						}
+
 					}
 				}
 			},
