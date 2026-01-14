@@ -146,6 +146,33 @@ function scan() {
 			fw.addTarget(blockContainer);
 		}
 	});
+
+	const tryAddTinyMceTarget = () => {
+		const body = document.body;
+		if (!body || !isVisible(body)) {
+			return;
+		}
+
+		if (
+			body.closest('[contenteditable="false"],[disabled],[readonly]') != null ||
+			body.matches('[role="combobox"]')
+		) {
+			return;
+		}
+
+		const isTinyMceBody =
+			body.classList.contains('mce-content-body') ||
+			body.id === 'tinymce' ||
+			body.getAttribute('data-mce-contenteditable') === 'true';
+
+		if (!isTinyMceBody) {
+			return;
+		}
+
+		fw.addTarget(body);
+	};
+
+	tryAddTinyMceTarget();
 }
 
 scan();
