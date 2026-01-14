@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TinyMCE CDN Demo</title>
+
+    <script src="https://unpkg.com/tinymce@8.3.2/tinymce.min.js" referrerpolicy="origin"></script>
+  </head>
+
+  <body>
+    <h1>TinyMCE CDN Demo</h1>
+
+    <textarea id="editor">
+      <p>Hello from <strong>TinyMCE</strong>. This is an test.</p>
+    </textarea>
+
+    <div style="margin-top: 16px;">
+      <button id="get-html">Get HTML</button>
+      <button id="set-html">Set HTML</button>
+      <button id="destroy">Destroy</button>
+      <button id="reinit">Re-init</button>
+    </div>
+
+    <pre id="output" style="margin-top: 16px; white-space: pre-wrap;"></pre>
+
+    <script>
+      const init = () => {
+        tinymce.init({
+          selector: "#editor",
+          height: 360,
+          menubar: true,
+          plugins: "lists link code table",
+          license_key: 'gpl',
+          toolbar:
+            "undo redo | blocks | bold italic underline | bullist numlist | link table | code",
+          content_style:
+            "body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; font-size: 16px; }",
+          setup: (editor) => {
+            editor.on("init", () => {
+              document.getElementById("output").textContent = "Editor ready.";
+            });
+          },
+        });
+      };
+
+      init();
+
+      document.getElementById("get-html").addEventListener("click", () => {
+        const ed = tinymce.get("editor");
+        document.getElementById("output").textContent = ed ? ed.getContent() : "(no editor instance)";
+      });
+
+      document.getElementById("set-html").addEventListener("click", () => {
+        const ed = tinymce.get("editor");
+        if (ed) ed.setContent("<p>Set at " + new Date().toISOString() + ".</p>");
+      });
+
+      document.getElementById("destroy").addEventListener("click", () => {
+        const ed = tinymce.get("editor");
+        if (ed) ed.remove();
+        document.getElementById("output").textContent = "Destroyed.";
+      });
+
+      document.getElementById("reinit").addEventListener("click", () => {
+        if (!tinymce.get("editor")) init();
+        document.getElementById("output").textContent = "Re-initialized.";
+      });
+    </script>
+  </body>
+</html>
