@@ -99,7 +99,7 @@ impl ExprLinter for OrthographicConsistency {
             .count()
             == 1
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && canonical != chars
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
@@ -116,7 +116,7 @@ impl ExprLinter for OrthographicConsistency {
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && canonical != chars
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
@@ -132,6 +132,14 @@ impl ExprLinter for OrthographicConsistency {
 
         None
     }
+}
+
+/// Check if the alphabetic characters in the string differ from one another.
+/// Ignores non-alphabetic characters.
+fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
+    a.iter()
+        .zip(b.iter())
+        .any(|(a, b)| a.is_alphabetic() && b.is_alphabetic() && a != b)
 }
 
 #[cfg(test)]
@@ -384,6 +392,14 @@ mod tests {
     fn allows_news() {
         assert_no_lints(
             "This is the best part of the news broadcast.",
+            OrthographicConsistency::default(),
+        );
+    }
+
+    #[test]
+    fn allows_issue_2465() {
+        assert_no_lints(
+            "The post’s problem was not in its complexity.",
             OrthographicConsistency::default(),
         );
     }
