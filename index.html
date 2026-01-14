@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Textarea Ancestor Positioning Hierarchy Test</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      #hgl-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50vw;
+        height: 50vh;
+        z-index: 2147483647;
+        background: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border: 1px solid #ccc;
+        padding: 0;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      #hgl-titlebar {
+        background-color: #f0f0f0;
+        color: rgb(0, 0, 0);
+        padding: 8px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: move;
+        user-select: none;
+        border-bottom: 1px solid #ccc;
+        font-size: 13px;
+        font-weight: 500;
+        min-height: 32px;
+        box-sizing: border-box;
+      }
+
+      #hgl-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 0 4px;
+        color: rgb(0, 0, 0);
+        min-width: 32px;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+      }
+
+      #hgl-wrapper {
+        flex: 1;
+        overflow: hidden;
+        padding: 4px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      #hgl-textarea {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border: none;
+        font-family: monospace;
+        font-size: 13px;
+        resize: none;
+        padding: 8px;
+        color: rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
+      }
+
+      #hgl-resize {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        cursor: nwse-resize;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #999;
+        pointer-events: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hgl-container">
+      <div id="hgl-titlebar">
+        <span>🧐 Harper Glasses • Layout test</span>
+        <button id="hgl-close" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div id="hgl-wrapper">
+        <textarea id="hgl-textarea" spellcheck="false">Textarea content…</textarea>
+        <div id="hgl-resize">⋱</div>
+      </div>
+    </div>
+  </body>
+</html>
