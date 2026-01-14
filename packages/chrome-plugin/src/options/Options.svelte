@@ -159,8 +159,7 @@ async function exportEnabledDomainsCSV() {
 let buttonText = $state('Set Hotkey');
 let isBlue = $state(false); // modify color of hotkey button once it is pressed
 function startHotkeyCapture(_modifyHotkeyButton: Button) {
-
-  buttonText = "Press desired hotkey combination now.";
+	buttonText = 'Press desired hotkey combination now.';
 
 	const handleKeydown = (event: KeyboardEvent) => {
 		event.preventDefault();
@@ -281,7 +280,7 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">Hotkey to apply the most likely suggestion to previously incorrect lint.</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestion to last highlighted word.</p>
           </div>
           <Textarea readonly bind:value={buttonText} />
           <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
