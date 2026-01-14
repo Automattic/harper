@@ -199,7 +199,7 @@ Although they look like the single-character wildcard from regex (Weir borrows t
 
 Example:
 
-```weir
+```plaintext
 # To match any token that is preceded by a noun and succeeded by a noun.
 expr main NOUN * NOUN
 ```
@@ -217,6 +217,22 @@ let message "The second mark is redundant."
 let description "Looks for redundant doubling of hyphens."
 let kind "Punctuation"
 let becomes "-"
+```
+
+## Replacement Strategies
+
+You can dictate how Harper will suggest a replacement using the `strategy` tag.
+This allows rule authors to describe which strategy Harper will use when applying the replacements.
+Right now, the only two options are `Exact` or `MatchCase`, which apply either the exact text, or the exact text but matching the capitalization of the text it replaces.
+In the below example, we use `Exact` because we want to correct the capitalization of a proper noun, and it doesn't matter what the original text looked like.
+
+```plaintext
+expr main [(G [Suite, Suit]), (Google Apps for Work)]
+let message "Use the updated brand."
+let description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+let kind "Miscellaneous"
+let becomes "Google Workspace"
+let strategy "Exact"
 ```
 
 ## Adding Tests
