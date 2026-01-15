@@ -1,0 +1,10 @@
+expr main (very less)
+
+let message "English doesn't use `very` with `less`."
+let description "Corrects `very less`."
+let kind "Grammar"
+let becomes ["much less", "far less"]
+
+test "here is a simple way to do it with very less coding ... ;)" "here is a simple way to do it with much less coding ... ;)"
+test "algorithm for processing large datasets with very less pre-configuration" "algorithm for processing large datasets with far less pre-configuration"
+#test "Also the gpu memory usage is very less. " "Also the gpu memory usage is a lot less."
