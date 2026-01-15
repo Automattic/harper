@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
+import { Button, Card, Input } from 'components';
 import { zipSync, strToU8 } from 'fflate';
 
 type FileEntry = {
@@ -43,7 +44,7 @@ test "She lacks w/o experience." "She lacks without experience."
 test "He has w/o skills w/o knowledge." "He has without skills without knowledge."
 `;
 
-let nextId = 1;
+let nextId = 2;
 let drawerOpen = true;
 let renamingId: string | null = null;
 let renameValue = '';
@@ -55,6 +56,7 @@ let linterReady = false;
 let linter: import('harper.js').WorkerLinter | null = null;
 let AceEditorComponent: typeof import('svelte-ace').AceEditor | null = null;
 let editorReady = false;
+let activeFile: FileEntry | null = null;
 
 let files: FileEntry[] = [
 	{
@@ -90,15 +92,17 @@ const modeByExtension: Record<string, string> = {
 };
 
 const makeId = () => {
-	nextId += 1;
-	return `file-${nextId}`;
+	let candidate = nextId;
+	while (files.some((entry) => entry.id === `file-${candidate}`)) {
+		candidate += 1;
+	}
+	nextId = candidate + 1;
+	return `file-${candidate}`;
 };
 
-$: {
-	const file = files.find((entry) => entry.id === activeFileId);
-	if (file && file.content !== activeContent) {
-		activeContent = file.content;
-	}
+$: activeFile = files.find((entry) => entry.id === activeFileId) ?? null;
+$: if (activeFile && activeFile.content !== activeContent) {
+	activeContent = activeFile.content;
 }
 
 const getEditorMode = (name: string) => {
@@ -108,8 +112,6 @@ const getEditorMode = (name: string) => {
 	}
 	return modeByExtension[ext] ?? 'text';
 };
-
-const getActiveFile = () => files.find((entry) => entry.id === activeFileId) ?? null;
 
 const setActiveFile = (id: string) => {
 	activeFileId = id;
@@ -330,8 +332,10 @@ onMount(async () => {
 			<div class="flex items-center justify-between px-3 py-3">
 				{#if drawerOpen}
 					<div class="text-sm font-semibold uppercase tracking-wider text-black/70">Weirpack</div>
-					<button
-						class="flex h-8 w-8 items-center justify-center rounded-lg border border-black/10 bg-white text-black/70 hover:bg-black/5"
+					<Button
+						size="xs"
+						color="white"
+						className="h-8 w-8 !p-0"
 						on:click={() => (drawerOpen = false)}
 						title="Collapse drawer"
 						aria-label="Collapse drawer"
@@ -339,10 +343,12 @@ onMount(async () => {
 						<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 							<path d="M11.78 4.22a.75.75 0 0 1 0 1.06L8.06 9l3.72 3.72a.75.75 0 1 1-1.06 1.06L6.47 9.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0z" />
 						</svg>
-					</button>
+					</Button>
 				{:else}
-					<button
-						class="mx-auto flex h-8 w-8 items-center justify-center rounded-lg border border-black/10 bg-white text-black/70 hover:bg-black/5"
+					<Button
+						size="xs"
+						color="white"
+						className="mx-auto h-8 w-8 !p-0"
 						on:click={() => (drawerOpen = true)}
 						title="Expand drawer"
 						aria-label="Expand drawer"
@@ -350,21 +356,23 @@ onMount(async () => {
 						<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 							<path d="M8.22 4.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 9 8.22 5.28a.75.75 0 0 1 0-1.06z" />
 						</svg>
-					</button>
+					</Button>
 				{/if}
 			</div>
 
 			{#if drawerOpen}
 				<div class="px-3 pb-2">
-					<button
-						class="flex w-full items-center justify-center gap-2 rounded-lg border border-black/10 bg-black px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white hover:bg-black/90"
+					<Button
+						color="dark"
+						size="sm"
+						className="w-full uppercase tracking-wide"
 						on:click={createFile}
 					>
 						<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 							<path d="M10 4a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 10 4z" />
 						</svg>
 						New file
-					</button>
+					</Button>
 				</div>
 
 				<div class="flex-1 overflow-auto px-2 pb-4">
@@ -378,8 +386,9 @@ onMount(async () => {
 							>
 								<span class="h-2 w-2 rounded-full bg-black/30"></span>
 								{#if renamingId === file.id}
-									<input
-										class="w-full rounded-md border border-black/10 bg-white px-2 py-1 text-xs focus:border-black/40 focus:outline-none"
+									<Input
+										size="sm"
+										className="w-full text-xs"
 										bind:value={renameValue}
 										on:keydown={(event) => {
 											if (event.key === 'Enter') {
@@ -397,8 +406,10 @@ onMount(async () => {
 							</button>
 
 							<div class="flex items-center gap-1 text-black/50 opacity-0 transition group-hover:opacity-100">
-								<button
-									class="rounded-md p-1 hover:bg-black/10"
+								<Button
+									size="xs"
+									color="white"
+									className="h-6 w-6 !p-0"
 									on:click={() => startRename(file)}
 									title="Rename file"
 									aria-label="Rename file"
@@ -407,10 +418,12 @@ onMount(async () => {
 										<path d="M13.64 2.86a1.5 1.5 0 0 1 2.12 2.12l-8.5 8.5-3.36.84.84-3.36 8.5-8.5z" />
 										<path d="M11.5 4.99 15 8.5" stroke="currentColor" stroke-width="1.2" />
 									</svg>
-								</button>
+								</Button>
 								{#if files.length > 1}
-									<button
-										class="rounded-md p-1 hover:bg-black/10"
+									<Button
+										size="xs"
+										color="white"
+										className="h-6 w-6 !p-0"
 										on:click={() => deleteFile(file)}
 										title="Delete file"
 										aria-label="Delete file"
@@ -418,7 +431,7 @@ onMount(async () => {
 										<svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
 											<path d="M7.5 3a1 1 0 0 0-1 1v1H4.75a.75.75 0 0 0 0 1.5h.57l.6 9.01A2 2 0 0 0 7.91 17h4.18a2 2 0 0 0 1.99-1.49l.6-9.01h.57a.75.75 0 0 0 0-1.5H13.5V4a1 1 0 0 0-1-1h-5zM8 6h4v8H8V6z" />
 										</svg>
-									</button>
+									</Button>
 								{/if}
 							</div>
 						</div>
@@ -436,7 +449,7 @@ onMount(async () => {
 				<div class="flex items-center gap-3">
 					<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">Playground</div>
 					<div class="text-sm font-medium text-black/80">
-						{getActiveFile()?.name ?? 'No file selected'}
+						{activeFile?.name ?? 'No file selected'}
 					</div>
 				</div>
 				<div class="text-xs uppercase tracking-[0.18em] text-black/40">
@@ -445,14 +458,14 @@ onMount(async () => {
 			</div>
 
 			<div class="flex-1 overflow-hidden p-4">
-				<div class="h-full rounded-2xl border border-black/10 bg-white shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)]">
+				<Card className="h-full border-black/10 bg-white/95 p-0 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)]">
 					{#if editorReady && AceEditorComponent}
 						<svelte:component
 							this={AceEditorComponent}
 							width="100%"
 							height="100%"
 							value={activeContent}
-							lang={getEditorMode(getActiveFile()?.name ?? '')}
+							lang={getEditorMode(activeFile?.name ?? '')}
 							theme="chrome"
 							options={editorOptions}
 							on:input={(event) => updateActiveContent(event.detail)}
@@ -462,13 +475,16 @@ onMount(async () => {
 							Loading editor…
 						</div>
 					{/if}
-				</div>
+				</Card>
 			</div>
 		</main>
 
 		<div class="fixed bottom-6 right-6 z-20 flex items-center gap-3">
-			<button
-				class={`flex items-center gap-2 rounded-full border border-black/10 px-4 py-3 text-sm font-semibold uppercase tracking-wide shadow-lg transition ${runningTests ? 'bg-black text-white opacity-70' : 'bg-black text-white hover:bg-black/90'}`}
+			<Button
+				size="md"
+				color="dark"
+				pill
+				className={runningTests ? 'opacity-70' : undefined}
 				on:click={runTests}
 				disabled={runningTests}
 			>
@@ -476,9 +492,11 @@ onMount(async () => {
 					<path d="M6.75 4.25a.75.75 0 0 1 .78.02l7.5 4.75a.75.75 0 0 1 0 1.26l-7.5 4.75A.75.75 0 0 1 6 14.5v-9a.75.75 0 0 1 .75-.75z" />
 				</svg>
 				{runningTests ? 'Running' : 'Run tests'}
-			</button>
-			<button
-				class="flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-3 text-sm font-semibold uppercase tracking-wide text-black shadow-lg hover:bg-black/5"
+			</Button>
+			<Button
+				size="md"
+				color="white"
+				pill
 				on:click={downloadWeirpack}
 			>
 				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
@@ -486,7 +504,7 @@ onMount(async () => {
 					<path d="M4 13.75a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 .75.75v1.5A2.75 2.75 0 0 1 13.25 18h-6.5A2.75 2.75 0 0 1 4 15.25v-1.5z" />
 				</svg>
 				Download
-			</button>
+			</Button>
 		</div>
 
 		<div class="fixed bottom-24 right-6 z-20 flex w-[320px] flex-col gap-3">
