@@ -347,6 +347,7 @@ pub struct LintGroup {
     /// of the key.
     chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
+    clashing_linter_names: Option<Vec<String>>,
 }
 
 impl LintGroup {
@@ -357,6 +358,7 @@ impl LintGroup {
             chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
+            clashing_linter_names: None,
         }
     }
 
@@ -376,6 +378,14 @@ impl LintGroup {
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add_boxed(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
         if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else {
+                self.clashing_linter_names
+                    .as_mut()
+                    .unwrap()
+                    .push(name.as_ref().to_string());
+            }
             false
         } else {
             self.linters.insert(name.as_ref().to_string(), linter);
@@ -395,6 +405,14 @@ impl LintGroup {
         linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else {
+                self.clashing_linter_names
+                    .as_mut()
+                    .unwrap()
+                    .push(name.as_ref().to_string());
+            }
             false
         } else {
             self.chunk_expr_linters
@@ -409,9 +427,33 @@ impl LintGroup {
         self.config.merge_from(&mut other.config);
 
         let other_linters = std::mem::take(&mut other.linters);
+        if let Some((conflicting_key, _)) = other_linters.iter().find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else {
+                self.clashing_linter_names
+                    .as_mut()
+                    .unwrap()
+                    .push(conflicting_key.clone());
+            }
+        }
         self.linters.extend(other_linters);
 
         let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
+        if let Some((conflicting_key, _)) = other_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else {
+                self.clashing_linter_names
+                    .as_mut()
+                    .unwrap()
+                    .push(conflicting_key.clone());
+            }
+        }
         self.chunk_expr_linters.extend(other_expr_linters);
     }
 
@@ -470,7 +512,7 @@ impl LintGroup {
     pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
-        /// Add a `Linter` to the group, setting it to be enabled by default.
+        /// Add a `Linter` to the group, setting it to be enabled or disabled.
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
                 out.add(stringify!($rule), $rule::default());
@@ -479,12 +521,39 @@ impl LintGroup {
             };
         }
 
-        /// Add a chunk-based `ExprLinter` to the group, setting it to be enabled by default.
+        /// Add a `Linter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_struct_rule_with_dict {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), $rule::new(dictionary.clone()));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a `Linter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_struct_rule_with_dialect {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), $rule::new(dialect));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a chunk-based `ExprLinter` to the group, setting it to be enabled or disabled.
         /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
                 out.add_chunk_expr_linter(stringify!($rule), $rule::default());
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a chunk-based `ExprLinter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_expr_rule_with_dict {
+            ($rule:ident, $default_config:expr) => {
+                out.add_chunk_expr_linter(stringify!($rule), $rule::new(dictionary.clone()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -511,6 +580,7 @@ impl LintGroup {
         insert_expr_rule!(AllowTo, true);
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
+        insert_struct_rule_with_dialect!(AnA, true);
         insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
@@ -542,6 +612,7 @@ impl LintGroup {
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
         insert_struct_rule!(DiscourseMarkers, true);
+        insert_expr_rule_with_dict!(DisjointPrefixes, true);
         insert_expr_rule!(DotInitialisms, true);
         insert_expr_rule!(DoubleClick, true);
         insert_expr_rule!(DoubleModal, true);
@@ -566,6 +637,7 @@ impl LintGroup {
         insert_expr_rule!(GoodAt, true);
         insert_expr_rule!(Handful, true);
         insert_expr_rule!(HavePronoun, true);
+        insert_struct_rule_with_dialect!(HaveTakeALook, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
         insert_expr_rule!(Hereby, true);
@@ -574,6 +646,8 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
+        insert_struct_rule_with_dialect!(InOnTheCards, true);
+        insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
         insert_struct_rule!(ItsContraction, true);
@@ -587,6 +661,7 @@ impl LintGroup {
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
         insert_expr_rule!(LookingForwardTo, true);
+        insert_struct_rule_with_dict!(MassNouns, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
         insert_expr_rule!(MissingTo, true);
@@ -614,6 +689,7 @@ impl LintGroup {
         insert_expr_rule!(OnFloor, true);
         insert_expr_rule!(OnceOrTwice, true);
         insert_expr_rule!(OneAndTheSame, true);
+        insert_expr_rule_with_dict!(OneOfTheSingular, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OrthographicConsistency, true);
@@ -624,6 +700,7 @@ impl LintGroup {
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
+        insert_struct_rule_with_dict!(PossessiveNoun, false);
         insert_expr_rule!(PossessiveYour, true);
         insert_expr_rule!(ProgressiveNeedsBe, true);
         insert_expr_rule!(PronounAre, true);
@@ -636,6 +713,7 @@ impl LintGroup {
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAcronyms, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
+        insert_struct_rule_with_dialect!(Regionalisms, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
         insert_expr_rule!(RightClick, true);
@@ -643,6 +721,7 @@ impl LintGroup {
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
         insert_expr_rule!(SemicolonApostrophe, true);
+        insert_struct_rule_with_dict!(SentenceCapitalization, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
@@ -674,8 +753,10 @@ impl LintGroup {
         insert_expr_rule!(ToAdverb, true);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
+        insert_expr_rule_with_dict!(TransposedSpace, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
+        insert_struct_rule_with_dict!(UseTitleCase, true);
         insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
@@ -691,54 +772,6 @@ impl LintGroup {
 
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
-
-        out.add(
-            "InflectedVerbAfterTo",
-            InflectedVerbAfterTo::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("InflectedVerbAfterTo", true);
-
-        out.add("InOnTheCards", InOnTheCards::new(dialect));
-        out.config.set_rule_enabled("InOnTheCards", true);
-
-        out.add(
-            "SentenceCapitalization",
-            SentenceCapitalization::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("SentenceCapitalization", true);
-
-        out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
-        out.config.set_rule_enabled("PossessiveNoun", false);
-
-        out.add("Regionalisms", Regionalisms::new(dialect));
-        out.config.set_rule_enabled("Regionalisms", true);
-
-        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
-        out.config.set_rule_enabled("HaveTakeALook", true);
-
-        out.add("MassNouns", MassNouns::new(dictionary.clone()));
-        out.config.set_rule_enabled("MassNouns", true);
-
-        out.add("UseTitleCase", UseTitleCase::new(dictionary.clone()));
-        out.config.set_rule_enabled("UseTitleCase", true);
-
-        out.add_chunk_expr_linter(
-            "DisjointPrefixes",
-            DisjointPrefixes::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("DisjointPrefixes", true);
-
-        out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
-        out.config.set_rule_enabled("TransposedSpace", true);
-
-        out.add_chunk_expr_linter(
-            "OneOfTheSingular",
-            OneOfTheSingular::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("OneOfTheSingular", true);
-
-        out.add("AnA", AnA::new(dialect));
-        out.config.set_rule_enabled("AnA", true);
 
         out
     }
@@ -901,6 +934,22 @@ mod tests {
             if !group.lint(&doc).is_empty() {
                 dbg!(&group.lint(&doc));
                 panic!();
+            }
+        }
+    }
+
+    #[test]
+    fn no_linter_names_clash() {
+        let group =
+            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+
+        if let Some(names) = &group.clashing_linter_names {
+            if !names.is_empty() {
+                panic!(
+                    "⚠️ Found {} clashing linter names: {}",
+                    names.len(),
+                    names.join(", ")
+                );
             }
         }
     }
