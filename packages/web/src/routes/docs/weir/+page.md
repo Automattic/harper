@@ -47,7 +47,7 @@ The remaining lines describe:
 
 ## Comments
 
-Comments are written using a single hashtag (`#`) like so:
+Comments are written using a single pound sign (`#`), like so:
 
 ```plaintext
 # This is a comment and has no effect on the rest of the file.
@@ -106,10 +106,10 @@ The top-level expression assumed to be a sequence, so the first line can be repl
 expr main gong to
 ```
 
-### Arrays
+### Alternatives
 
-Arrays in Weir, notated with `[]`, allow Harper to search for multiple potential options at a time.
-For a document to match, it only needs to fulfill one of the options in the array.
+Alternatives in Weir, notated with `[]`, allow Harper to search for multiple potential options at a time.
+For a document to match, it only needs to fulfill one of the options in the alternative array.
 
 This syntax should look familiar from the first example we looked at in the introduction.
 We have multiple specific phrases we want to look for, and change all of them, should they exist, to the same thing.
@@ -169,7 +169,7 @@ This will match against "the word", "a banana", "an apple", among others.
 
 ### Progressive Verbs
 
-You can require that a token be a progressive word with the keyword PROG.
+You can require that a token be a progressive verb with the keyword PROG.
 For example:
 
 ```plaintext
