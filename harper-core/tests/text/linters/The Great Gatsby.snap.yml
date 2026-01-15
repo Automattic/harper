@@ -531,6 +531,17 @@ Message: |
 
 
 
+Lint:    Style (127 priority)
+Message: |
+     397 | There was something pathetic in his concentration, as if his complacency, more
+         |                                                                           ^~~~~
+     398 | acute than of old, was not enough to him any more. When, almost immediately, the
+         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “acuter”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      416 | For a moment the last sunshine fell with romantic affection upon her glowing
@@ -1147,6 +1158,15 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    1017 | “It’d be more discreet to go to Europe.”
+         |          ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “discreeter”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1029 | over twelve hundred dollars when we started, but we got gyped out of it all in
@@ -1168,6 +1188,15 @@ Suggest:
   - Replace with: “kike”
   - Replace with: “dyke”
   - Replace with: “tyke”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    1060 | I never was any more crazy about him than I was about that man there.”
+         |                 ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “crazier”
 
 
 
@@ -1454,6 +1483,16 @@ Message: |
          |           ^~~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    1202 | confident girls who weave here and there among the stouter and more stable,
+         |                                                                ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    1203 | become for a sharp, joyous moment the centre of a group, and then, excited with
+Suggest:
+  - Replace with: “stabler”
 
 
 
@@ -1787,6 +1826,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    1528 | drinking helped to set him off from his guests, for it seemed to me that he grew
+    1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
+         | ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “correcter”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
@@ -2081,6 +2130,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    1800 | “You’re a rotten driver,” I protested. “Either you ought to be more careful, or
+         |                                                                ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    1801 | you oughtn’t to drive at all.”
+Suggest:
+  - Replace with: “carefuller”
 
 
 
@@ -3090,6 +3149,16 @@ Message: |
          |               ^~~~~~~~~~ Did you mean `Greensboro`?
 Suggest:
   - Replace with: “Greensboro”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    2073 | A dead man passed us in a hearse heaped with blooms, followed by two carriages
+    2074 | with drawn blinds, and by more cheerful carriages for friends. The friends
+         |                           ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “cheerfuller”
 
 
 
@@ -6420,6 +6489,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    4883 | “Of course she might have loved him just for a minute, when they were first
+    4884 | married—and loved me more even then, do you see?”
+         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “evener”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4921 | “I’m going to drain the pool to-day, Mr. Gatsby. Leaves’ll start falling pretty
@@ -6607,6 +6686,17 @@ Message: |
          |                     ^~~~~~~~~~ Did you mean the closed compound noun “workbench”?
 Suggest:
   - Replace with: “workbench”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    5062 | morning—and from time to time sat down beside Wilson trying to keep him more
+         |                                                                         ^~~~~
+    5063 | quiet.
+         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “quieter”
 
 
 
@@ -7450,6 +7540,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    5568 | admiration from my eyes. He had shown it so often that I think it was more real
+         |                                                                       ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    5569 | to him now than the house itself.
+Suggest:
+  - Replace with: “realer”
+
+
+
 Lint:    Agreement (30 priority)
 Message: |
     5575 | “He come out to see me two years ago and bought me the house I live in now. Of
@@ -7602,6 +7702,15 @@ Message: |
          |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “They”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    5659 | One of my most vivid memories is of coming back West from prep school and later
+         |           ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “vividest”
 
 
 
