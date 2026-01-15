@@ -19,6 +19,8 @@ export type Request =
 	| GetUserDictionaryRequest
 	| GetActivationKeyRequest
 	| SetActivationKeyRequest
+	| GetSpellCheckingModeRequest
+	| SetSpellCheckingModeRequest
 	| OpenOptionsRequest
 	| GetInstalledOnRequest
 	| GetReviewedRequest
@@ -37,6 +39,7 @@ export type Response =
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
 	| GetActivationKeyResponse
+	| GetSpellCheckingModeResponse
 	| GetInstalledOnResponse
 	| GetReviewedResponse
 	| PostFormDataResponse;
@@ -211,6 +214,26 @@ export type PostFormDataResponse = {
 export type SetActivationKeyRequest = {
 	kind: 'setActivationKey';
 	key: ActivationKey;
+};
+
+export enum SpellCheckingMode {
+	Default = 'default',
+	Space = 'space',
+	Stop = 'stop',
+}
+
+export type GetSpellCheckingModeRequest = {
+	kind: 'getSpellCheckingMode';
+};
+
+export type GetSpellCheckingModeResponse = {
+	kind: 'getSpellCheckingMode';
+	spellCheckingMode: SpellCheckingMode;
+};
+
+export type SetSpellCheckingModeRequest = {
+	kind: 'setSpellCheckingMode';
+	spellCheckingMode: SpellCheckingMode;
 };
 
 export type OpenOptionsRequest = {
