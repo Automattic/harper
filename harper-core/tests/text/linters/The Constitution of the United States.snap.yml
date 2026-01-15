@@ -22,6 +22,16 @@ Message: |
 
 
 
+Lint:    Style (127 priority)
+Message: |
+       5 | **We the People** of the United States, in Order to form a more perfect Union,
+         |                                                            ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
+Suggest:
+  - Replace with: “perfecter”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
