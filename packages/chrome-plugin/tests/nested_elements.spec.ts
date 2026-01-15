@@ -3,7 +3,7 @@ import { assertHarperHighlightBoxes, getTextarea, replaceEditorContent } from '.
 
 const TEST_PAGE_URL = 'http://localhost:8081/nested_elements.html';
 
-test('Positions properly in oddly nested page.', async ({ page }, testInfo) => {
+test('Positions properly in oddly nested page.', async ({ page }, _testInfo) => {
 	await page.goto(TEST_PAGE_URL);
 
 	const editor = getTextarea(page);
