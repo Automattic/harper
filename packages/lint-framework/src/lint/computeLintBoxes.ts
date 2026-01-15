@@ -1,19 +1,15 @@
 import type { Span } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
-import { getCkEditorRoot, getLexicalRoot, getSlateRoot } from './editorUtils';
+import {
+	getCkEditorRoot,
+	getDraftRoot,
+	getLexicalRoot,
+	getSlateRoot,
+	isFormEl,
+} from './editorUtils';
 import TextFieldRange from './TextFieldRange';
 import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
-
-function isFormEl(el: HTMLElement): el is HTMLTextAreaElement | HTMLInputElement {
-	switch (el.tagName) {
-		case 'TEXTAREA':
-		case 'INPUT':
-			return true;
-		default:
-			return false;
-	}
-}
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -74,7 +70,8 @@ export default function computeLintBoxes(
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value
 						: (el.textContent ?? '');
-					replaceValue(el, applySuggestion(current, lint.span, sug));
+					const newValue = applySuggestion(current, lint.span, sug);
+					replaceValue(el, newValue, lint.span, sug.replacement_text);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -86,7 +83,12 @@ export default function computeLintBoxes(
 	}
 }
 
-function replaceValue(el: HTMLElement, value: string) {
+function replaceValue(
+	el: HTMLElement,
+	value: string,
+	span?: { start: number; end: number },
+	replacementText?: string,
+) {
 	if (isFormEl(el)) {
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
 	} else if (getLexicalRoot(el) != null) {
@@ -95,6 +97,8 @@ function replaceValue(el: HTMLElement, value: string) {
 		replaceRichTextValue(el, value, { mode: 'slate' });
 	} else if (getCkEditorRoot(el) != null) {
 		replaceRichTextValue(el, value, { mode: 'slate' });
+	} else if (getDraftRoot(el) != null && span && replacementText) {
+		replaceDraftJsValue(el, span, replacementText);
 	} else {
 		replaceGenericContentEditable(el, value);
 	}
@@ -111,6 +115,30 @@ function replaceFormElementValue(el: HTMLTextAreaElement | HTMLInputElement, val
 function replaceRichTextValue(el: HTMLElement, value: string, opts: { mode: 'lexical' | 'slate' }) {
 	specialSelectAllText(el);
 	specialInsertText(el, value, opts);
+}
+
+function replaceDraftJsValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const doc = el.ownerDocument;
+	const sel = doc.defaultView?.getSelection();
+
+	if (!sel) {
+		return;
+	}
+
+	el.focus();
+
+	const range = getRangeForTextSpan(el, span as Span);
+	if (!range) {
+		return;
+	}
+
+	sel.removeAllRanges();
+	sel.addRange(range);
+	doc.execCommand('insertText', false, replacementText);
 }
 
 function replaceGenericContentEditable(el: HTMLElement, value: string) {
