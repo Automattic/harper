@@ -165,6 +165,7 @@ mod quote_spacing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod regionalisms;
+mod regular_irregulars;
 mod repeated_words;
 mod respond;
 mod right_click;
