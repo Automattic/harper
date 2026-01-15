@@ -8,6 +8,8 @@ It could declare that a certain word should be capitalized in a specific context
 Harper can cover *most* of the rules in *most* style guides, but there will always be outliers that we can't support (or simply don't know about).
 That is why it is critical that Harper allow individuals and organizations to define rules and conventions for Harper to enforce.
 
+Try the in-browser [Weir playground](/weir/playground) to experiment with rules and tests.
+
 ## Introducing Weir
 
 The heart of Weir is an expression language that mimics the pseudocode Harper contributors tend to use when describing the Rust code they intend to write.
