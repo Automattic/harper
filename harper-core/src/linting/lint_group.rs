@@ -207,10 +207,12 @@ use super::way_too_adjective::WayTooAdjective;
 use super::well_educated::WellEducated;
 use super::whereas::Whereas;
 use super::widely_accepted::WidelyAccepted;
+use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::would_never_have::WouldNeverHave;
+
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
@@ -739,6 +741,9 @@ impl LintGroup {
 
         out.add("AnA", AnA::new(dialect));
         out.config.set_rule_enabled("AnA", true);
+
+        out.add("WillNonLemma", WillNonLemma::new(dictionary.clone()));
+        out.config.set_rule_enabled("WillNonLemma", true);
 
         out
     }

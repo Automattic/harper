@@ -37188,24 +37188,24 @@ overproduction/Nmg
 overpromise/VSGd
 overprotect/VSdGv
 overqualified/J
-overran/~V
+overran/~Vt
 overrange/VGdSN
 overrate/VGdSN
 overreach/VGdSN
 overreact/VSdG
 overreaction/NwSg
-overread/JVSdG
+overread/JVbtTSG
 overrefined/VJ
 overregulate/VdSGn
 overreliance/Nmg
 overrepresent/VGdS
 overrepresentation/Nmg
-overridden/V
-override/~VGSNg
+overridden/VT
+override/~VbGSNg
 overripe/Jg
-overrode/V
+overrode/Vt
 overrule/VGdS
-overrun/~VSNg
+overrun/~VSNgbT
 overrunning/V6
 oversampling/VNmg
 oversaturate/VdSGn
@@ -40278,7 +40278,7 @@ pronouncement/NSg
 pronto/
 pronunciation/~NgS
 proof/~NwSgJVdGr
-proofread/V>GSNZ
+proofread/VbtT>GSNZ
 proofreader/Ng
 prop/~NgSV
 propaganda/~Nmg
@@ -41153,7 +41153,7 @@ ramrod/NSgV
 ramrodded/VtT
 ramrodding/V6
 ramshackle/JV
-ran/~VtNr
+ran/~Vtr            # removed nautical noun sense
 ranch/~NgSVd>GZ
 rancher/~Ng
 ranching/~VNg
@@ -44578,7 +44578,7 @@ sight/~NwgSVGdz
 sighting/~NgV6
 sightless/J
 sightly/J^>U
-sightread/Vb
+sightread/VbtT
 sightseeing/~NgV6
 sightseer/NgS
 sigma/~NgS
