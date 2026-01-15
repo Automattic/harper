@@ -172,6 +172,7 @@ mod safe_to_save;
 mod save_to_safe;
 mod semicolon_apostrophe;
 mod sentence_capitalization;
+mod sentence_casing;
 mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
 mod since_duration;
