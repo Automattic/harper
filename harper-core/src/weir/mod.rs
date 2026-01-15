@@ -262,6 +262,8 @@ impl ExprLinter for WeirLinter {
 
 #[cfg(test)]
 pub mod tests {
+    use quickcheck_macros::quickcheck;
+
     use crate::weir::Error;
 
     use super::{TestResult, WeirLinter};
@@ -361,5 +363,10 @@ pub mod tests {
         let source = "expr main";
         let res = WeirLinter::new(source);
         assert_eq!(res.err(), Some(Error::ExpectedVariableUndefined))
+    }
+
+    #[quickcheck]
+    fn does_not_panic(s: String) {
+        let _ = WeirLinter::new(s.as_str());
     }
 }
