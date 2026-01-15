@@ -4,18 +4,12 @@ import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
 import { Button, Card, Input } from 'components';
 import { zipSync, strToU8 } from 'fflate';
+import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 
 type FileEntry = {
 	id: string;
 	name: string;
 	content: string;
-};
-
-type Toast = {
-	id: number;
-	title: string;
-	body?: string;
-	tone: 'success' | 'error' | 'info';
 };
 
 type WeirpackTestFailure = {
@@ -252,7 +246,7 @@ const runTests = async () => {
 		if (!failures || Object.keys(failures).length === 0) {
 			pushToast({
 				title: 'All tests passed',
-				body: 'Your Weirpack is green.',
+				body: 'The tests in your Weirpack all pass.',
 				tone: 'success',
 			});
 		} else {
@@ -507,23 +501,6 @@ onMount(async () => {
 			</Button>
 		</div>
 
-		<div class="fixed bottom-24 right-6 z-20 flex w-[320px] flex-col gap-3">
-			{#each toasts as toast (toast.id)}
-				<div
-					class={`rounded-2xl border px-4 py-3 text-sm shadow-xl ${
-						toast.tone === 'success'
-							? 'border-green-200 bg-green-50 text-green-900'
-							: toast.tone === 'error'
-								? 'border-red-200 bg-red-50 text-red-900'
-								: 'border-black/10 bg-white text-black'
-					}`}
-				>
-					<div class="text-sm font-semibold">{toast.title}</div>
-					{#if toast.body}
-						<div class="mt-1 text-xs leading-snug text-black/70">{toast.body}</div>
-					{/if}
-				</div>
-			{/each}
-		</div>
+		<Toasts {toasts} />
 	</div>
 </Isolate>
