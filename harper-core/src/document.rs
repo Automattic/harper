@@ -93,7 +93,7 @@ impl Document {
     ///
     /// This avoids running potentially expensive metadata generation code, so this is more
     /// efficient if you don't need that information.
-    pub fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
+    pub(crate) fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
         let source = Lrc::new(text.chars().collect_vec());
         let tokens = parser.parse(&source);
         let mut document = Self { source, tokens };
