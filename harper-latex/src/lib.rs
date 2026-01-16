@@ -85,6 +85,18 @@ impl Parser for Latex {
 
                     Some(harper_tokens_mod)
                 }
+                SyntaxKind::SECTION | SyntaxKind::SUBSECTION | SyntaxKind::SUBSUBSECTION => {
+                    let [span_start, span_end] = [
+                        u32::from(node.text_range().start()) + 1,
+                        u32::from(node.first_child().unwrap().text_range().start()), // re-indexing not necessary?
+                    ]
+                    .map(|p| byte_to_char[p as usize] as usize);
+
+                    Some(vec![Token {
+                        span: Span::new(span_start, span_end),
+                        kind: TokenKind::HeadingStart,
+                    }])
+                }
                 _ => None,
             })
             .flatten()
@@ -356,5 +368,22 @@ mod tests {
             let token = &tokens[i];
             assert_eq!(token.span.end - token.span.start, len);
         });
+    }
+
+    #[test]
+    fn section() {
+        let source = r#"
+            \section{Section}
+
+            Words, words.
+        "#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert!(tokens[0].kind.is_heading_start());
+        assert_eq!(tokens[0].span.end + 1, tokens[1].span.start);
+        assert!(tokens[1].kind.is_word());
     }
 }
