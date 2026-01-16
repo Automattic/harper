@@ -1,0 +1,24 @@
+expr main <([([VERB, AUX, ADJ] do to ADJ NOUN), ([VERB, AUX, ADJ] do to NOUN NOUN), ([VERB, AUX, ADJ] do to DET * NOUN), ([VERB, AUX, ADJ] ADV do to ADJ NOUN), ([VERB, AUX, ADJ] ADV do to NOUN NOUN), ([VERB, AUX, ADJ] ADV do to DET * NOUN)]), (do to)>
+
+let message "Did you mean `due to`?"
+let description "Corrects the typo `do to` when it is intended to mean `due to` in causal phrases."
+let kind "Usage"
+let becomes "due to"
+
+test "Many restaurants will close do to the corona restrictions." "Many restaurants will close due to the corona restrictions."
+test "The event was canceled do to bad weather." "The event was canceled due to bad weather."
+test "Production stopped do to a supply shortage." "Production stopped due to a supply shortage."
+test "Flights were delayed do to heavy fog." "Flights were delayed due to heavy fog."
+test "The server rebooted do to power issues." "The server rebooted due to power issues."
+test "They left early do to a family emergency." "They left early due to a family emergency."
+test "The cancelation happened do to unexpected maintenance." "The cancelation happened due to unexpected maintenance."
+test "Our plan changed do to the new policy." "Our plan changed due to the new policy."
+test "The app crashed do to memory leaks." "The app crashed due to memory leaks."
+test "Tickets sold quickly do to a viral post." "Tickets sold quickly due to a viral post."
+test "It failed do to data loss." "It failed due to data loss."
+
+test "What did you do to the file?" "What did you do to the file?"
+test "Please do to the file what you did to the other one." "Please do to the file what you did to the other one."
+test "Don't do to others what you wouldn't want done to you." "Don't do to others what you wouldn't want done to you."
+test "We need to do to this spreadsheet what we did last week." "We need to do to this spreadsheet what we did last week."
+test "She asked what the update would do to her settings." "She asked what the update would do to her settings."

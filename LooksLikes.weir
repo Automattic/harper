@@ -1,0 +1,25 @@
+expr main <([looks, looked, looking] likes), likes>
+
+let message "Drop the extra `s` in `likes` when it immediately follows a form of `look`."
+let description "This rule turns `looks likes`, `looked likes`, and `looking likes` into the idiomatic `look ... like`."
+let kind "Typo"
+let becomes "like"
+
+test "It looks likes the same story." "It looks like the same story."
+test "The memoir looked likes a diary." "The memoir looked like a diary."
+test "The detective is looking likes the culprit." "The detective is looking like the culprit."
+test "She looks likes, honestly, a champion." "She looks like, honestly, a champion."
+test "LOOKS LIKES a bad omen." "LOOKS LIKE a bad omen."
+test "It looked LIKES a mirage." "It looked LIKE a mirage."
+test "He is looking LIKES his brother." "He is looking LIKE his brother."
+test "Looks likes both people are arriving." "Looks like both people are arriving."
+test "She looked likes, well there it is." "She looked like, well there it is."
+test "Those who are looking likes a miracle never arrive." "Those who are looking like a miracle never arrive."
+test "Looks  likes the worst scenario." "Looks  like the worst scenario."
+
+test "Looks like the winner." "Looks like the winner."
+test "He likes to code every day." "He likes to code every day."
+test "She looked like a star." "She looked like a star."
+test "I was looking carefully." "I was looking carefully."
+test "I like how it looks." "I like how it looks."
+test "Like how he likes the team." "Like how he likes the team."
