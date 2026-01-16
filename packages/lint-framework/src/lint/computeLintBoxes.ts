@@ -93,8 +93,8 @@ function replaceValue(
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
 	} else if (getLexicalRoot(el) != null) {
 		replaceRichTextValue(el, value, { mode: 'lexical' });
-	} else if (getSlateRoot(el) != null) {
-		replaceRichTextValue(el, value, { mode: 'slate' });
+	} else if (getSlateRoot(el) != null && span && replacementText) {
+		replaceSlateValue(el, span, replacementText);
 	} else if (getCkEditorRoot(el) != null) {
 		replaceRichTextValue(el, value, { mode: 'slate' });
 	} else if (getDraftRoot(el) != null && span && replacementText) {
@@ -138,6 +138,46 @@ function replaceDraftJsValue(
 
 	sel.removeAllRanges();
 	sel.addRange(range);
+	doc.execCommand('insertText', false, replacementText);
+}
+
+function replaceSlateValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const doc = el.ownerDocument;
+	const win = doc.defaultView;
+	const sel = win?.getSelection();
+
+	if (!sel) {
+		return;
+	}
+
+	el.focus();
+
+	const range = getRangeForTextSpan(el, span as Span);
+	if (!range) {
+		return;
+	}
+
+	sel.removeAllRanges();
+	sel.addRange(range);
+
+	const evInit: InputEventInit = {
+		bubbles: true,
+		cancelable: true,
+		inputType: 'insertText',
+		data: replacementText,
+	};
+
+	if ('StaticRange' in self) {
+		evInit.targetRanges = [new StaticRange(range)];
+	}
+
+	const beforeEvt = new InputEvent('beforeinput', evInit);
+	el.dispatchEvent(beforeEvt);
+
 	doc.execCommand('insertText', false, replacementText);
 }
 
