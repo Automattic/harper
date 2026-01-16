@@ -1314,6 +1314,16 @@ Message: |
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     713 | flustered to tell you—all I know is, something comes at me like a
+     714 | Jack-in-the-box, and up I goes like a sky-rocket!”
+         |                           ^~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “go”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      723 | minute or two, they began moving about again, and Alice heard the Rabbit say, “A
@@ -1885,16 +1895,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1359 | it, and talking over its head. “Very uncomfortable for the Dormouse,” thought
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 54 words long.
-
-
-
-Lint:    Grammar (127 priority)
-Message: |
-    1379 | “I didn’t know it was your table,” said Alice; “it’s laid for a great many more
-         |                                                      ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
-    1380 | than three.”
-Suggest:
-  - Replace with: “lain”
 
 
 
@@ -2565,6 +2565,16 @@ Message: |
          |                                  ^~~~~~~ Did you mean `Krypton`?
 Suggest:
   - Replace with: “Krypton”
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+    2121 | “This here young lady,” said the Gryphon, “she wants for to know your history,
+    2122 | she do.”
+         |     ^~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “does”
 
 
 

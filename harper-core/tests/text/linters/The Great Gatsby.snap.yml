@@ -7461,6 +7461,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+    5507 | First time I saw him was when he come into Winebrenner’s poolroom at Forty-third
+         |                                  ^~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “comes”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5507 | First time I saw him was when he come into Winebrenner’s poolroom at Forty-third
@@ -7550,6 +7559,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+    5575 | “He come out to see me two years ago and bought me the house I live in now. Of
+         |     ^~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “comes”
+
+
+
 Lint:    Agreement (30 priority)
 Message: |
     5575 | “He come out to see me two years ago and bought me the house I live in now. Of
@@ -7567,6 +7585,16 @@ Message: |
          |               ^~~~~ Use the past participle `broken` instead of `broke` when using compound tenses or passive voice.
 Suggest:
   - Replace with: “broken”
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+    5575 | “He come out to see me two years ago and bought me the house I live in now. Of
+    5576 | course we was broke up when he run off from home, but I see now there was a
+         |                                ^~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “runs”
 
 
 

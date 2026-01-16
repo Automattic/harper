@@ -59,7 +59,7 @@
 >
 #
 > The fundamental concern of computer science  is  determining what   can     and  cannot
-# D   NSg/J       N🅪Sg/VB P  NSg/VB+  N🅪Sg/VB+ VL3 Nᴹ/Vg/J     NSg/I+ NPr/VXB VB/C NSg/VB
+# D   NSg/J       N🅪Sg/VB P  NSg/VB+  N🅪Sg/VB+ VL3 Nᴹ/Vg/J     NSg/I+ NPr/VXB VB/C NSg/VXB
 > be      automated . The Turing Award   is  generally recognized as    the highest
 # NSg/VXB VP/J      . D   NPr    NSg/VB+ VL3 R         VP/J       R/C/P D   JS
 > distinction in        computer science  .

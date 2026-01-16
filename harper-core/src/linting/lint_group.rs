@@ -148,6 +148,7 @@ use super::pronoun_are::PronounAre;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
+use super::pronoun_verb_agreement::PronounVerbAgreement;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
@@ -630,6 +631,12 @@ impl LintGroup {
             DisjointPrefixes::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
+
+        out.add(
+            "PronounVerbAgreement",
+            PronounVerbAgreement::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("PronounVerbAgreement", true);
 
         out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
         out.config.set_rule_enabled("TransposedSpace", true);

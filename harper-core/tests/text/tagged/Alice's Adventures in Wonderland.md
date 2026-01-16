@@ -81,7 +81,7 @@
 > noticed that         they were    filled with cupboards and  book    - shelves ; here and  there
 # VP/J    NSg/I/C/Ddem IPl+ NSg/VPt VP/J   P    NPl/V3    VB/C NSg/VB+ . NPl/V3+ . J/R  VB/C R+
 > she  saw     maps   and  pictures hung     upon pegs   . She  took down        a    jar     from one     of the
-# ISg+ NSg/VPt NPl/V3 VB/C NPl/V3+  NPr/VB/J P    NPl/V3 . ISg+ VPt  N🅪Sg/VB/J/P D/P+ NSg/VB+ P    NSg/I/J P  D+
+# ISg+ NSg/VPt NPl/V3 VB/C NPl/V3+  NPr/VP/J P    NPl/V3 . ISg+ VPt  N🅪Sg/VB/J/P D/P+ NSg/VB+ P    NSg/I/J P  D+
 > shelves as    she  passed ; it       was labelled  “ ORANGE      MARMALADE ” , but     to her     great
 # NPl/V3+ R/C/P ISg+ VP/J   . NPr/ISg+ VPt VB/J/Comm . NPr🅪Sg/VB/J Nᴹ/VB     . . NSg/C/P P  ISg/D$+ NSg/J
 > disappointment it       was empty    : she  did  not     like         to drop   the jar     for   fear     of
@@ -5516,8 +5516,8 @@
 # VP/J      NSg/P NSg/C VB/C NSg/VBP NSg/VB/J P    D   NSg/VB/J+ . NSg/VB+ . NPr/C IPl+ VXB   NSg/VB .
 >
 #
-> “ The trial     cannot proceed , ” said the King      in        a   very grave     voice   , “ until all          the
-# . D+  NSg/VB/J+ NSg/VB VB      . . VP/J D   NPr/VB/J+ NPr/J/R/P D/P J/R  NSg/VB/J+ NSg/VB+ . . C/P   NSg/I/J/C/Dq D
+> “ The trial     cannot  proceed , ” said the King      in        a   very grave     voice   , “ until all          the
+# . D+  NSg/VB/J+ NSg/VXB VB      . . VP/J D   NPr/VB/J+ NPr/J/R/P D/P J/R  NSg/VB/J+ NSg/VB+ . . C/P   NSg/I/J/C/Dq D
 > jurymen are back     in        their proper places  — all          , ” he       repeated with great emphasis ,
 # NPl     VB  NSg/VB/J NPr/J/R/P D$+   NSg/J  NPl/V3+ . NSg/I/J/C/Dq . . NPr/ISg+ VP/J     P    NSg/J NSg+     .
 > looking hard     at    Alice as    he       said so          .

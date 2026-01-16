@@ -1350,8 +1350,8 @@
 # D/P NSg/J      N🅪Sg/VB P  N🅪Sg+      . VB/C VXB   VB      Dq   P  NSg/IPl+ C/P
 > Invasion ; and  on  Application of the Legislature , or    of the Executive ( when    the
 # NSg+     . VB/C J/P NSg         P  D+  NSg+        . NPr/C P  D   NSg/J     . NSg/I/C D+
-> Legislature cannot be      convened ) against domestic Violence .
-# NSg+        NSg/VB NSg/VXB VP/J     . C/P     NSg/J    Nᴹ/VB+   .
+> Legislature cannot  be      convened ) against domestic Violence .
+# NSg+        NSg/VXB NSg/VXB VP/J     . C/P     NSg/J    Nᴹ/VB+   .
 >
 #
 >              Section . 5 .
