@@ -1,0 +1,23 @@
+expr main without out
+
+let message "Drop the duplicated `out` when it follows `without`."
+let description "When writers accidentally type `without out`, Harper can collapse the two words back into the single preposition."
+let kind "Typo"
+let becomes "without"
+let strategy "MatchCase"
+
+test "Without out a doubt, the team delivered." "Without a doubt, the team delivered."
+test "She ran without out hesitation this morning." "She ran without hesitation this morning."
+test "Without out fail, the backup completed." "Without fail, the backup completed."
+test "We proceed without out complaint from clients." "We proceed without complaint from clients."
+test "Without out this addition, the plan collapses." "Without this addition, the plan collapses."
+test "Without out any warning, the lights went out." "Without any warning, the lights went out."
+test "Without OUT, the process would stop." "Without, the process would stop."
+test "WITHOUT OUT luck, the players backed down." "WITHOUT luck, the players backed down."
+test "without out all hope, we succeeded." "without all hope, we succeeded."
+test "Last week we moved without out delay." "Last week we moved without delay."
+test "Without outstanding debts we can pivot." "Without outstanding debts we can pivot."
+test "There is a without output fallback." "There is a without output fallback."
+test "The absence of outbuildings was puzzling." "The absence of outbuildings was puzzling."
+test "Without doubt, the plan succeeded." "Without doubt, the plan succeeded."
+test "Mind the output to ensure correctness." "Mind the output to ensure correctness."

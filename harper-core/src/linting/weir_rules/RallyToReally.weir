@@ -1,0 +1,27 @@
+expr main <([(am rally PROG), (am not rally PROG), (am PRON rally PROG), (am PRON not rally PROG), (is rally PROG), (is not rally PROG), (is PRON rally PROG), (is PRON not rally PROG), (isn't rally PROG), (isn't PRON rally PROG), (are rally PROG), (are not rally PROG), (are PRON rally PROG), (are PRON not rally PROG), (aren't rally PROG), (aren't PRON rally PROG), (was rally PROG), (was not rally PROG), (was PRON rally PROG), (was PRON not rally PROG), (wasn't rally PROG), (wasn't PRON rally PROG), (were rally PROG), (were not rally PROG), (were PRON rally PROG), (were PRON not rally PROG), (weren't rally PROG), (weren't PRON rally PROG), (be rally PROG), (be not rally PROG), (be PRON rally PROG), (be PRON not rally PROG), (being rally PROG), (being not rally PROG), (been rally PROG), (been not rally PROG), (ain't rally PROG), (ain't PRON rally PROG)]), (rally)>
+
+let message "Replace `rally` with `really` whenever a form of `be` introduces a progressive verb."
+let description "Catches the typo where `rally` sneaks into `be + ...ing` constructions, including common contractions."
+let kind "Typo"
+let becomes "really"
+let strategy "MatchCase"
+
+test "It is rally going to happen." "It is really going to happen."
+test "We are rally getting closer to shipping." "We are really getting closer to shipping."
+test "I am rally trying to finish this before midnight." "I am really trying to finish this before midnight."
+test "She is not rally learning the concept." "She is not really learning the concept."
+test "It isn't rally raining anymore." "It isn't really raining anymore."
+test "They were rally practicing their lines." "They were really practicing their lines."
+test "It was not rally raining on our drive." "It was not really raining on our drive."
+test "He had been rally preparing to leave." "He had been really preparing to leave."
+test "Ain't rally happening yet?" "Ain't really happening yet?"
+test "Weren't we rally celebrating that plan?" "Weren't we really celebrating that plan?"
+test "Be rally precise when you describe the steps." "Be rally precise when you describe the steps."
+test "He was RALLY going to go all night." "He was REALLY going to go all night."
+
+test "The rally celebrating our victory lasted forever." "The rally celebrating our victory lasted forever."
+test "I really appreciate your effort." "I really appreciate your effort."
+test "Rally fans gathered outside the stadium." "Rally fans gathered outside the stadium."
+test "We had a rally before the game." "We had a rally before the game."
+test "The news rallied the team but left them motivated." "The news rallied the team but left them motivated."
+test "We were ready to rally around the idea." "We were ready to rally around the idea."
