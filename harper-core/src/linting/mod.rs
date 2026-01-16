@@ -120,6 +120,7 @@ mod modal_be_adjective;
 mod modal_of;
 mod modal_seem;
 mod months;
+mod more_adjective;
 mod more_better;
 mod most_number;
 mod most_of_the_times;
@@ -188,6 +189,7 @@ mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
 mod suggestion;
+mod take_a_look_to;
 mod take_medicine;
 mod take_serious;
 mod that_than;
@@ -232,7 +234,7 @@ pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use spell_check::SpellCheck;
-pub use suggestion::Suggestion;
+pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
 

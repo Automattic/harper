@@ -5,6 +5,7 @@ ARG NODE_VERSION=24
 
 FROM rust:latest AS wasm-build
 RUN rustup toolchain install
+RUN apt-get update -y && apt-get install clang -y
 
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
@@ -15,6 +16,7 @@ COPY . .
 
 WORKDIR /usr/build/harper-wasm
 RUN wasm-pack build --target web
+RUN cargo clean
 
 FROM node:${NODE_VERSION} AS node-build
 

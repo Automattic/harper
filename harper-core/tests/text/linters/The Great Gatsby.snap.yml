@@ -178,15 +178,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-      57 | reference to the rather hard-boiled painting that hangs in father’s office. I
-         |                                                            ^~~~~~~~ The canonical dictionary spelling is title case: `father's`.
-Suggest:
-  - Replace with: “father's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       61 | restless. Instead of being the warm centre of the world, the Middle West now
@@ -540,22 +531,14 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Style (127 priority)
 Message: |
-     402 | “I’ll tell you a family secret,” she whispered enthusiastically. “It’s about the
-     403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         | ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
+     397 | There was something pathetic in his concentration, as if his complacency, more
+         |                                                                           ^~~~~
+     398 | acute than of old, was not enough to him any more. When, almost immediately, the
+         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
 Suggest:
-  - Replace with: “butler's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     403 | butler’s nose. Do you want to hear about the butler’s nose?”
-         |                                              ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
-Suggest:
-  - Replace with: “butler's”
+  - Replace with: “acuter”
 
 
 
@@ -967,16 +950,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     764 | “Wilson? He thinks she goes to see her sister in New York. He’s so dumb he
-     765 | doesn’t know he’s alive.”
-         |              ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      768 | together, for Mrs. Wilson sat discreetly in another car. Tom deferred that much
@@ -1173,15 +1146,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     964 | “Well, they say he’s a nephew or a cousin of Kaiser Wilhelm’s. That’s where all
-         |                 ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      989 | studies of him.” His lips moved silently for a moment as he invented. “‘George
@@ -1191,6 +1155,15 @@ Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
   - Replace with: “Bu”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    1017 | “It’d be more discreet to go to Europe.”
+         |          ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “discreeter”
 
 
 
@@ -1218,12 +1191,12 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Style (127 priority)
 Message: |
-    1039 | kept saying to me: ‘Lucille, that man’s ’way below you!’ But if I hadn’t met
-         |                                   ^~~~~ The canonical dictionary spelling is title case: `man's`.
+    1060 | I never was any more crazy about him than I was about that man there.”
+         |                 ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
 Suggest:
-  - Replace with: “man's”
+  - Replace with: “crazier”
 
 
 
@@ -1401,16 +1374,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    1174 | juice of two hundred oranges in half an hour if a little button was pressed two
-    1175 | hundred times by a butler’s thumb.
-         |                    ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
-Suggest:
-  - Replace with: “butler's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1179 | enormous garden. On buffet tables, garnished with glistening hors-d’œuvre,
@@ -1520,6 +1483,16 @@ Message: |
          |           ^~~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    1202 | confident girls who weave here and there among the stouter and more stable,
+         |                                                                ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    1203 | become for a sharp, joyous moment the centre of a group, and then, excited with
+Suggest:
+  - Replace with: “stabler”
 
 
 
@@ -1853,6 +1826,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    1528 | drinking helped to set him off from his guests, for it seemed to me that he grew
+    1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
+         | ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “correcter”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
@@ -1889,16 +1872,6 @@ Message: |
          |                                ^~~~~~~~ Did you mean the closed compound `someone`?
 Suggest:
   - Replace with: “someone”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1569 | “She had a fight with a man who says he’s her husband,” explained a girl at my
-         |                                      ^~~~ The canonical dictionary spelling is title case: `he's`.
-    1570 | elbow.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -2160,13 +2133,13 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Style (127 priority)
 Message: |
-    1797 | passed so close to some workmen that our fender flicked a button on one man’s
-         |                                                                         ^~~~~ The canonical dictionary spelling is title case: `man's`.
-    1798 | coat.
+    1800 | “You’re a rotten driver,” I protested. “Either you ought to be more careful, or
+         |                                                                ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    1801 | you oughtn’t to drive at all.”
 Suggest:
-  - Replace with: “man's”
+  - Replace with: “carefuller”
 
 
 
@@ -3158,16 +3131,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2056 | “All right, old sport,” called Gatsby. We slowed down. Taking a white card from
-    2057 | his wallet, he waved it before the man’s eyes.
-         |                                    ^~~~~ The canonical dictionary spelling is title case: `man's`.
-Suggest:
-  - Replace with: “man's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2067 | Over the great bridge, with the sunlight through the girders making a constant
@@ -3186,6 +3149,16 @@ Message: |
          |               ^~~~~~~~~~ Did you mean `Greensboro`?
 Suggest:
   - Replace with: “Greensboro”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    2073 | A dead man passed us in a hearse heaped with blooms, followed by two carriages
+    2074 | with drawn blinds, and by more cheerful carriages for friends. The friends
+         |                           ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “cheerfuller”
 
 
 
@@ -3503,15 +3476,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2215 | about women. He would never so much as look at a friend’s wife.”
-         |                                                  ^~~~~~~~ The canonical dictionary spelling is title case: `friend's`.
-Suggest:
-  - Replace with: “friend's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2218 | Mr. Wolfshiem drank his coffee with a jerk and got to his feet.
@@ -3549,15 +3513,6 @@ Message: |
          |        ^~~~~~~~~ Did you mean `Bolshie`?
 Suggest:
   - Replace with: “Bolshie”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2243 | “Meyer Wolfshiem? No, he’s a gambler.” Gatsby hesitated, then added coolly:
-         |                       ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -3821,25 +3776,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
-         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2425 | “He’s afraid, he’s waited so long. He thought you might be offended. You see,
-    2426 | he’s regular tough underneath it all.”
-         | ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2437 | “I think he half expected her to wander into one of his parties, some night,”
@@ -3852,16 +3788,6 @@ Lint:    Formatting (255 priority)
 Message: |
     2444 | “‘I don’t want to do anything out of the way!’ he kept saying. ‘I want to see
          | ^ This quote has no termination.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2448 | whole idea. He doesn’t know very much about Tom, though he says he’s read a
-         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
-    2449 | Chicago paper for years just on the chance of catching a glimpse of Daisy’s
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -4314,16 +4240,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2926 | said a small town. . . . He must know what a small town is. . . . Well, he’s no
-         |                                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
-    2927 | use to us if Detroit is his idea of a small town. . . .” He rang off.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4696,15 +4612,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3213 | “My God, I believe the man’s coming,” said Tom. “Doesn’t he know she doesn’t
-         |                        ^~~~~ The canonical dictionary spelling is title case: `man's`.
-Suggest:
-  - Replace with: “man's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3235 | in my memory from Gatsby’s other parties that summer. There were the same
@@ -4851,16 +4758,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3396 | hadn’t been invited. They simply force their way in and he’s too polite to
-         |                                                         ^~~~ The canonical dictionary spelling is title case: `he's`.
-    3397 | object.”
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
     3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
@@ -4926,16 +4823,6 @@ Message: |
          |     ^~~~~~~~~~ Did you mean the closed compound noun “heartbeat”?
 Suggest:
   - Replace with: “heartbeat”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3488 | somewhere a long time ago. For a moment a phrase tried to take shape in my mouth
-    3489 | and my lips parted like a dumb man’s, as though there was more struggling upon
-         |                                ^~~~~ The canonical dictionary spelling is title case: `man's`.
-Suggest:
-  - Replace with: “man's”
 
 
 
@@ -5136,15 +5023,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
-         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3612 | “No, he’s not,” I assured her. “It’s a bona-fide deal. I happen to know about
@@ -5234,29 +5112,10 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3686 | “I read somewhere that the sun’s getting hotter every year,” said Tom genially.
-         |                            ^~~~~ The canonical dictionary spelling is title case: `sun's`.
-Suggest:
-  - Replace with: “sun's”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
          | ^ This quote has no termination.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3687 | “It seems that pretty soon the earth’s going to fall into the sun—or wait a
-    3688 | minute—it’s just the opposite—the sun’s getting colder every year.
-         |                                   ^~~~~ The canonical dictionary spelling is title case: `sun's`.
-Suggest:
-  - Replace with: “sun's”
 
 
 
@@ -5309,15 +5168,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    3795 | song of it. . . . High in a white palace the king’s daughter, the golden girl. .
-         |                                              ^~~~~~ The canonical dictionary spelling is title case: `king's`.
-Suggest:
-  - Replace with: “king's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3809 | “Well, you take my coupé and let me drive your car to town.”
@@ -5356,15 +5206,6 @@ Message: |
          |  ^~~~~~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3864 | “Nevertheless he’s an Oxford man.”
-         |               ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -6494,16 +6335,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    4622 | house. I sat down for a few minutes with my head in my hands, until I heard the
-    4623 | phone taken up inside and the butler’s voice calling a taxi. Then I walked
-         |                               ^~~~~~~~ The canonical dictionary spelling is title case: `butler's`.
-Suggest:
-  - Replace with: “butler's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4635 | the house in a moment; I wouldn’t have been surprised to see sinister faces, the
@@ -6655,6 +6486,16 @@ Message: |
          |              ^~~~~~~~~~~~~ Did you mean `challenging`?
 Suggest:
   - Replace with: “challenging”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    4883 | “Of course she might have loved him just for a minute, when they were first
+    4884 | married—and loved me more even then, do you see?”
+         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “evener”
 
 
 
@@ -6845,6 +6686,17 @@ Message: |
          |                     ^~~~~~~~~~ Did you mean the closed compound noun “workbench”?
 Suggest:
   - Replace with: “workbench”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    5062 | morning—and from time to time sat down beside Wilson trying to keep him more
+         |                                                                         ^~~~~
+    5063 | quiet.
+         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “quieter”
 
 
 
@@ -7309,16 +7161,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    5330 | thought this would be Daisy at last. But the connection came through as a man’s
-         |                                                                           ^~~~~ The canonical dictionary spelling is title case: `man's`.
-    5331 | voice, very thin and far away.
-Suggest:
-  - Replace with: “man's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5333 | “This is Slagle speaking . . .”
@@ -7601,35 +7443,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    5487 | “But I know he’s there.”
-         |             ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                ^~~~ The canonical dictionary spelling is title case: `he's`.
-    5494 | Chicago.”
-Suggest:
-  - Replace with: “he's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    5493 | “We’re getting sick in tired of it. When I say he’s in Chicago, he’s in
-         |                                                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
-    5494 | Chicago.”
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     5498 | “Oh-h!” She looked at me over again. ‘‘Will you just— What was your name?”
@@ -7705,15 +7518,6 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    5528 | “Now he’s dead,” I said after a moment. “You were his closest friend, so I know
-         |      ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7736,13 +7540,13 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
+Lint:    Style (127 priority)
 Message: |
-    5560 | up and down excitedly in the hall. His pride in his son and in his son’s
-         |                                                                    ^~~~~ The canonical dictionary spelling is title case: `son's`.
-    5561 | possessions was continually increasing and now he had something to show me.
+    5568 | admiration from my eyes. He had shown it so often that I think it was more real
+         |                                                                       ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+    5569 | to him now than the house itself.
 Suggest:
-  - Replace with: “son's”
+  - Replace with: “realer”
 
 
 
@@ -7798,15 +7602,6 @@ Suggest:
   - Replace with: “smoking”
   - Replace with: “shoeing”
   - Replace with: “smocking”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    5612 | something. Do you notice what he’s got about improving his mind? He was always
-         |                               ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -7907,6 +7702,15 @@ Message: |
          |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “They”
+
+
+
+Lint:    Style (127 priority)
+Message: |
+    5659 | One of my most vivid memories is of coming back West from prep school and later
+         |           ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “vividest”
 
 
 

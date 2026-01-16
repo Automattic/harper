@@ -113,6 +113,7 @@ use super::modal_be_adjective::ModalBeAdjective;
 use super::modal_of::ModalOf;
 use super::modal_seem::ModalSeem;
 use super::months::Months;
+use super::more_adjective::MoreAdjective;
 use super::more_better::MoreBetter;
 use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
@@ -178,6 +179,7 @@ use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
+use super::take_a_look_to::TakeALookTo;
 use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
@@ -350,6 +352,8 @@ pub struct LintGroup {
 }
 
 impl LintGroup {
+    // Constructor methods
+
     pub fn empty() -> Self {
         Self {
             config: LintGroupConfig::default(),
@@ -358,107 +362,6 @@ impl LintGroup {
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
         }
-    }
-
-    /// Check if the group already contains a linter with a given name.
-    pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
-        self.linters.contains_key(name.as_ref())
-            || self.chunk_expr_linters.contains_key(name.as_ref())
-    }
-
-    /// Add a [`Linter`] to the group, returning whether the operation was successful.
-    /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
-        self.add_boxed(name, Box::new(linter))
-    }
-
-    /// Add an already-boxed [`Linter`] to the group, returning whether the operation was successful.
-    /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add_boxed(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter>) -> bool {
-        if self.contains_key(&name) {
-            false
-        } else {
-            self.linters.insert(name.as_ref().to_string(), linter);
-            true
-        }
-    }
-
-    /// Add a chunk-based [`ExprLinter`] to the group, returning whether the operation was successful.
-    /// If it returns `false`, it is because a linter with that key already existed in the group.
-    ///
-    /// This function is not significantly different from [`Self::add`], but allows us to take
-    /// advantage of some properties of chunk-based [`ExprLinter`]s for cache optimization.
-    pub fn add_chunk_expr_linter(
-        &mut self,
-        name: impl AsRef<str>,
-        // linter: impl ExprLinter + 'static,
-        linter: impl ExprLinter<Unit = Chunk> + 'static,
-    ) -> bool {
-        if self.contains_key(&name) {
-            false
-        } else {
-            self.chunk_expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter) as _);
-            true
-        }
-    }
-
-    /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
-    pub fn merge_from(&mut self, other: &mut LintGroup) {
-        self.config.merge_from(&mut other.config);
-
-        let other_linters = std::mem::take(&mut other.linters);
-        self.linters.extend(other_linters);
-
-        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
-        self.chunk_expr_linters.extend(other_expr_linters);
-    }
-
-    pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
-        self.linters
-            .keys()
-            .chain(self.chunk_expr_linters.keys())
-            .map(|v| v.as_str())
-    }
-
-    /// Set all contained rules to a specific value.
-    /// Passing `None` will unset that rule, allowing it to assume its default state.
-    pub fn set_all_rules_to(&mut self, enabled: Option<bool>) {
-        let keys = self.iter_keys().map(|v| v.to_string()).collect::<Vec<_>>();
-
-        for key in keys {
-            match enabled {
-                Some(v) => self.config.set_rule_enabled(key, v),
-                None => self.config.unset_rule_enabled(key),
-            }
-        }
-    }
-
-    /// Get map from each contained linter's name to its associated description.
-    pub fn all_descriptions(&self) -> HashMap<&str, &str> {
-        self.linters
-            .iter()
-            .map(|(key, value)| (key.as_str(), value.description()))
-            .chain(
-                self.chunk_expr_linters
-                    .iter()
-                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
-            )
-            .collect()
-    }
-
-    /// Get map from each contained linter's name to its associated description, rendered to HTML.
-    pub fn all_descriptions_html(&self) -> HashMap<&str, String> {
-        self.linters
-            .iter()
-            .map(|(key, value)| (key.as_str(), value.description_html()))
-            .chain(
-                self.chunk_expr_linters
-                    .iter()
-                    .map(|(key, value)| (key.as_str(), value.description_html())),
-            )
-            .collect()
     }
 
     /// Swap out [`Self::config`] with another [`LintGroupConfig`].
@@ -656,6 +559,7 @@ impl LintGroup {
         insert_struct_rule!(SpelledNumbers, false);
         insert_expr_rule!(SplitWords, true);
         insert_struct_rule!(SubjectPronoun, true);
+        insert_expr_rule!(TakeALookTo, true);
         insert_expr_rule!(TakeMedicine, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
@@ -744,6 +648,9 @@ impl LintGroup {
         out.add("AnA", AnA::new(dialect));
         out.config.set_rule_enabled("AnA", true);
 
+        out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
+        out.config.set_rule_enabled("MoreAdjective", true);
+
         out
     }
 
@@ -755,6 +662,104 @@ impl LintGroup {
         let mut group = Self::new_curated(dictionary, dialect);
         group.config.clear();
         group
+    }
+
+    // Non-constructor methods
+
+    /// Check if the group already contains a linter with a given name.
+    pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
+        self.linters.contains_key(name.as_ref())
+            || self.chunk_expr_linters.contains_key(name.as_ref())
+    }
+
+    /// Add a [`Linter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+        if self.contains_key(&name) {
+            false
+        } else {
+            self.linters
+                .insert(name.as_ref().to_string(), Box::new(linter));
+            true
+        }
+    }
+
+    /// Add a chunk-based [`ExprLinter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    ///
+    /// This function is not significantly different from [`Self::add`], but allows us to take
+    /// advantage of some properties of chunk-based [`ExprLinter`]s for cache optimization.
+    pub fn add_chunk_expr_linter(
+        &mut self,
+        name: impl AsRef<str>,
+        // linter: impl ExprLinter + 'static,
+        linter: impl ExprLinter<Unit = Chunk> + 'static,
+    ) -> bool {
+        if self.contains_key(&name) {
+            false
+        } else {
+            self.chunk_expr_linters
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+            true
+        }
+    }
+
+    /// Merge the contents of another [`LintGroup`] into this one.
+    /// The other lint group will be left empty after this operation.
+    pub fn merge_from(&mut self, other: &mut LintGroup) {
+        self.config.merge_from(&mut other.config);
+
+        let other_linters = std::mem::take(&mut other.linters);
+        self.linters.extend(other_linters);
+
+        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
+        self.chunk_expr_linters.extend(other_expr_linters);
+    }
+
+    pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
+        self.linters
+            .keys()
+            .chain(self.chunk_expr_linters.keys())
+            .map(|v| v.as_str())
+    }
+
+    /// Set all contained rules to a specific value.
+    /// Passing `None` will unset that rule, allowing it to assume its default state.
+    pub fn set_all_rules_to(&mut self, enabled: Option<bool>) {
+        let keys = self.iter_keys().map(|v| v.to_string()).collect::<Vec<_>>();
+
+        for key in keys {
+            match enabled {
+                Some(v) => self.config.set_rule_enabled(key, v),
+                None => self.config.unset_rule_enabled(key),
+            }
+        }
+    }
+
+    /// Get map from each contained linter's name to its associated description.
+    pub fn all_descriptions(&self) -> HashMap<&str, &str> {
+        self.linters
+            .iter()
+            .map(|(key, value)| (key.as_str(), value.description()))
+            .chain(
+                self.chunk_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
+            )
+            .collect()
+    }
+
+    /// Get map from each contained linter's name to its associated description, rendered to HTML.
+    pub fn all_descriptions_html(&self) -> HashMap<&str, String> {
+        self.linters
+            .iter()
+            .map(|(key, value)| (key.as_str(), value.description_html()))
+            .chain(
+                self.chunk_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), value.description_html())),
+            )
+            .collect()
     }
 
     pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
@@ -837,7 +842,8 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use super::LintGroup;
+    use super::{LintGroup, LintGroupConfig};
+    use crate::linting::LintKind;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document, linting::Linter};
@@ -889,21 +895,45 @@ mod tests {
         );
     }
 
+    /// Tests that no linters' descriptions contain errors handled by other linters.
+    ///
+    /// This test verifies that the description of each linter (which is written in natural language)
+    /// doesn't trigger any other linter's rules, with the exception of certain linters that
+    /// suggest mere alternatives rather than flagging actual errors.
+    ///
+    /// For example, we disable the "MoreAdjective" linter since some comparative and superlative
+    /// adjectives can be more awkward than their two-word counterparts, even if technically correct.
+    ///
+    /// If this test fails, it means either:
+    /// 1. A linter's description contains an actual error that should be fixed, or
+    /// 2. A linter is being too aggressive in flagging text that is actually correct English
+    ///    in the context of another linter's description.
     #[test]
     fn lint_descriptions_are_clean() {
-        let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
-        let pairs: Vec<_> = group
+        let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        let enforcer_config = LintGroupConfig::new_curated();
+        let mut lints_to_enforce =
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+                .with_lint_config(enforcer_config);
+
+        let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()
             .into_iter()
-            .map(|(a, b)| (a.to_string(), b.to_string()))
+            .map(|(n, d)| (n.to_string(), d.to_string()))
             .collect();
 
-        for (key, value) in pairs {
-            let doc = Document::new_markdown_default_curated(&value);
-            eprintln!("{key}: {value}");
+        for (lint_name, description) in name_description_pairs {
+            let doc = Document::new_markdown_default_curated(&description);
+            eprintln!("{lint_name}: {description}");
 
-            if !group.lint(&doc).is_empty() {
-                dbg!(&group.lint(&doc));
+            let mut lints = lints_to_enforce.lint(&doc);
+
+            // Remove ones related to style
+            lints.retain(|l| l.lint_kind != LintKind::Style);
+
+            if !lints.is_empty() {
+                dbg!(lints);
                 panic!();
             }
         }
