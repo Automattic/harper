@@ -302,7 +302,7 @@ pub mod tests {
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
-        dbg!(&lints);
+        // dbg!(&lints);
         if lints.len() != count {
             panic!(
                 "Expected \"{text}\" to create {count} lints, but it created {}.",
@@ -520,8 +520,8 @@ pub mod tests {
                 if let Some(sug) = lint.suggestions.get(n) {
                     sug.apply(lint.span, &mut text_chars);
 
-                    let transformed_str: String = text_chars.iter().collect();
-                    dbg!(transformed_str);
+                    // let transformed_str: String = text_chars.iter().collect();
+                    // dbg!(transformed_str);
                 } else {
                     break;
                 }
