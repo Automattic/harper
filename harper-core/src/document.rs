@@ -88,6 +88,19 @@ impl Document {
         Self::new(text, &PlainEnglish, &FstDictionary::curated())
     }
 
+    /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
+    /// contained words will not contain any metadata.
+    ///
+    /// This avoids running potentially expensive metadata generation code, so this is more
+    /// efficient if you don't need that information.
+    pub(crate) fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
+        let source = Lrc::new(text.chars().collect_vec());
+        let tokens = parser.parse(&source);
+        let mut document = Self { source, tokens };
+        document.apply_fixups();
+        document
+    }
+
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and a provided dictionary.
     pub fn new_plain_english(text: &str, dictionary: &impl Dictionary) -> Self {
@@ -126,10 +139,7 @@ impl Document {
         Self::new_markdown(text, MarkdownOptions::default(), dictionary)
     }
 
-    /// Re-parse important language constructs.
-    ///
-    /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    fn apply_fixups(&mut self) {
         self.condense_spaces();
         self.condense_newlines();
         self.newlines_to_breaks();
@@ -142,6 +152,13 @@ impl Document {
         self.condense_ampersand_pairs();
         self.condense_slash_pairs();
         self.match_quotes();
+    }
+
+    /// Re-parse important language constructs.
+    ///
+    /// Should be run after every change to the underlying [`Self::source`].
+    fn parse(&mut self, dictionary: &impl Dictionary) {
+        self.apply_fixups();
 
         let chunker = burn_chunker();
         let tagger = brill_tagger();
