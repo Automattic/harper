@@ -44,7 +44,7 @@ export async function openUntitled(text: string): Promise<Uri> {
 
 export async function setTextDocumentLanguage(uri: Uri, languageId: string): Promise<void> {
 	const document = await workspace.openTextDocument(uri);
-	languages.setTextDocumentLanguage(document, languageId);
+	await languages.setTextDocumentLanguage(document, languageId);
 }
 
 export function createExpectedDiagnostics(
