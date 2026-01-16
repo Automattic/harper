@@ -3,7 +3,7 @@ expr main <(true to [my, your, his, her, its, our, their, one's] words), words>
 let message "Replace the plural `words` with the idiomatic singular form when someone stays true to a promise."
 let description "Normalizes phrasing around `true to <possessive>` so it follows the conventional `true to one's word`."
 let kind "Style"
-let becomes ["word", "Word", "WORD"]
+let becomes "word"
 
 test "She was true to her words." "She was true to her word."
 test "He stays TRUE to his words daily." "He stays TRUE to his word daily."

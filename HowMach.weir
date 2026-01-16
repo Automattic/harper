@@ -3,7 +3,7 @@ expr main <(how [mach, match] !PUNCT), [mach, match]>
 let message "Use `how much` when you're asking about quantity, not the brand name or verb."
 let description "Swaps `how mach` or `how match` with the correct quantifier `how much`."
 let kind "Typo"
-let becomes ["much", "Much", "MUCH"]
+let becomes "much"
 
 test "Do you know how mach it weighs?" "Do you know how much it weighs?"
 test "Tell me how match sugar you want." "Tell me how much sugar you want."

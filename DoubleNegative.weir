@@ -3,7 +3,7 @@ expr main <([(didn't), (did not), (did n't)] [need, have, want, make, take, get]
 let message "A negated auxiliary followed by `no` creates a double negative; replace `no` with `any` to keep a single negation."
 let description "Replaces determiners like `no` with `any` when they appear right after `didn't`/`did not` paired with verbs such as want, need, or get followed by a noun so that the sentence keeps only one negative."
 let kind "Grammar"
-let becomes ["any", "Any"]
+let becomes "any"
 
 test "I didn't have no idea what to say." "I didn't have any idea what to say."
 test "She didn't want no trouble last night." "She didn't want any trouble last night."

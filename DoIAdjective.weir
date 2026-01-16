@@ -3,7 +3,7 @@ expr main <([(Do I [interested, excited, tired, ready, curious, comfortable, pre
 let message "When describing how you feel, `I` pairs with `am`, not `do`."
 let description "Swaps the helping verb `do` for `am` in `Do I <adjective>` questions so they use the correct linking verb."
 let kind "Grammar"
-let becomes ["Am", "am"]
+let becomes "am"
 
 test "Do I interested in music?" "Am I interested in music?"
 test "Do I excited about the launch?" "Am I excited about the launch?"
