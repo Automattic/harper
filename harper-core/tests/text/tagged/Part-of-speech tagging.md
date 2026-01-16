@@ -188,8 +188,8 @@
 # I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I/VB+ . VB    NSg/P
 > all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
-> cannot . The program got about 70 % correct  . Its     results were    repeatedly reviewed
-# NSg/VB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
+> cannot  . The program got about 70 % correct  . Its     results were    repeatedly reviewed
+# NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
 > and  corrected by    hand    , and  later users sent   in        errata so          that          by    the late  70 s
 # VB/C VP/J      NSg/P NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C NSg/I/C/Ddem+ NSg/P D   NSg/J #  ?
 > the tagging was nearly perfect  ( allowing for   some     cases   on  which even       human
@@ -218,8 +218,8 @@
 # R/C/P I/J/R/Dq N🅪Sg/VB/J+ . NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VPt VP/J       D/P NSg/J       NSg/VB/J P
 > natural language processing , because there are certain cases   where   the correct
 # NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J+   . C/P     R+    VB  I/J     NPl/V3+ NSg/R/C D   NSg/VB/J
-> part     of speech   cannot be      decided  without understanding the semantics or    even       the
-# NSg/VB/J P  N🅪Sg/VB+ NSg/VB NSg/VXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
+> part     of speech   cannot  be      decided  without understanding the semantics or    even       the
+# NSg/VB/J P  N🅪Sg/VB+ NSg/VXB NSg/VXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
 > pragmatics of the context  . This    is  extremely expensive , especially because
 # NPl        P  D   N🅪Sg/VB+ . I/Ddem+ VL3 R         J         . R          C/P
 > analyzing the higher  levels  is  much         harder when    multiple part     - of - speech

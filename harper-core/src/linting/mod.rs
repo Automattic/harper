@@ -157,6 +157,7 @@ mod pronoun_are;
 mod pronoun_contraction;
 mod pronoun_inflection_be;
 mod pronoun_knew;
+mod pronoun_verb_agreement;
 mod proper_noun_capitalization_linters;
 mod quantifier_needs_of;
 mod quantifier_numeral_conflict;

@@ -37,7 +37,7 @@
 > unjustly accused of being       a   politician , because I       was privy to the secret   griefs
 # R        VP/J    P  N🅪Sg/Vg/J/C D/P NSg+       . C/P     ISg/#r+ VPt NSg/J P  D   NSg/VB/J NPl/V3
 > of wild     , unknown  men  . Most         of the confidences were    unsought — frequently I       have
-# P  NSg/VB/J . NSg/VB/J NPl+ . NSg/I/J/R/Dq P  D   NPl         NSg/VPt VB       . R          ISg/#r+ NSg/VXB
+# P  NSg/VB/J . NSg/VB/J NPl+ . NSg/I/J/R/Dq P  D   NPl         NSg/VPt VP       . R          ISg/#r+ NSg/VXB
 > feigned sleep    , preoccupation , or    a   hostile levity when    I       realized  by    some
 # VP/J    N🅪Sg/VB+ . NSg           . NPr/C D/P NSg/J   Nᴹ     NSg/I/C ISg/#r+ VP/J/NoAm NSg/P I/J/R/Dq
 > unmistakable sign    that         an  intimate revelation was quivering on  the horizon ; for
@@ -5803,7 +5803,7 @@
 > darkness . A   large photograph of an   elderly man       in        yachting costume attracted me       ,
 # Nᴹ+      . D/P NSg/J NSg/VB     P  D/P+ R+      NPr/VB/J+ NPr/J/R/P Nᴹ/Vg/J  NSg/VB  VP/J      NPr/ISg+ .
 > hung     on  the wall    over    his     desk    .
-# NPr/VB/J J/P D   NPr/VB+ NSg/J/P ISg/D$+ NSg/VB+ .
+# NPr/VP/J J/P D   NPr/VB+ NSg/J/P ISg/D$+ NSg/VB+ .
 >
 #
 > “ Who’s this    ? ”
@@ -6815,7 +6815,7 @@
 >
 #
 > Her     glance  left     me       and  sought the lighted top      of the steps   , where   “ Three o’Clock
-# ISg/D$+ NSg/VB+ NPr/VP/J NPr/ISg+ VB/C VB     D   VP/J    NSg/VB/J P  D+  NPl/V3+ . NSg/R/C . NSg   R
+# ISg/D$+ NSg/VB+ NPr/VP/J NPr/ISg+ VB/C VP     D   VP/J    NSg/VB/J P  D+  NPl/V3+ . NSg/R/C . NSg   R
 > in        the Morning    , ” a   neat , sad      little     waltz  of that         year , was drifting out          the
 # NPr/J/R/P D+  N🅪Sg/Vg/J+ . . D/P J    . NSg/VB/J NPr/I/J/Dq NSg/VB P  NSg/I/C/Ddem NSg+ . VPt Nᴹ/Vg/J  NSg/VB/J/R/P D
 > open     door    . After all          , in        the very casualness of Gatsby’s party     there were
@@ -10007,7 +10007,7 @@
 > We   talked like         that         for   a    while       , and  then      abruptly we   weren’t talking any
 # IPl+ VP/J   NSg/VB/J/C/P NSg/I/C/Ddem R/C/P D/P+ NSg/VB/C/P+ . VB/C NSg/J/R/C R        IPl+ VPt     Nᴹ/Vg/J I/R/Dq
 > longer . I       don’t know   which of us       hung     up         with a   sharp    click   , but     I       know   I       didn’t
-# NSg/JC . ISg/#r+ VXB   NSg/VB I/C   P  NPr/IPl+ NPr/VB/J NSg/VB/J/P P    D/P NPr/VB/J NSg/VB+ . NSg/C/P ISg/#r+ NSg/VB ISg/#r+ VXPt
+# NSg/JC . ISg/#r+ VXB   NSg/VB I/C   P  NPr/IPl+ NPr/VP/J NSg/VB/J/P P    D/P NPr/VB/J NSg/VB+ . NSg/C/P ISg/#r+ NSg/VB ISg/#r+ VXPt
 > care     . I       couldn’t have    talked to her     across a   tea      - table   that          day     if    I       never
 # N🅪Sg/VB+ . ISg/#r+ VXB      NSg/VXB VP/J   P  ISg/D$+ NSg/P  D/P N🅪Sg/VB+ . NSg/VB+ NSg/I/C/Ddem+ NPr🅪Sg+ NSg/C ISg/#r+ R
 > talked to her     again in        this   world   .
@@ -10626,10 +10626,10 @@
 # NSg/VB/J+ NSg+ . ?        . I/Ddem+ V3  NSg/VPp NSg/I/J P  D   NSg/I/J/R/Dq J        NPl    P  D$+ N🅪Sg/VB+ P
 > me       I       hardly can     believe it       that         it       is  true     at    all          . Such  a   mad      act     as    that         man
 # NPr/ISg+ ISg/#r+ R      NPr/VXB VB      NPr/ISg+ NSg/I/C/Ddem NPr/ISg+ VL3 NSg/VB/J NSg/P NSg/I/J/C/Dq . NSg/I D/P NSg/VB/J NPr/VB+ R/C/P NSg/I/C/Ddem NPr/VB/J+
-> did  should make   us       all           think   . I       cannot come       down        now       as    I       am       tied up         in        some
-# VXPt VXB    NSg/VB NPr/IPl+ NSg/I/J/C/Dq+ NSg/VB+ . ISg/#r+ NSg/VB NSg/VBPp/P N🅪Sg/VB/J/P NSg/J/R/C R/C/P ISg/#r+ NPr/VB/J VP/J NSg/VB/J/P NPr/J/R/P I/J/R/Dq
-> very important business and  cannot get    mixed up         in        this   thing now       . If    there is
-# J/R  J         N🅪Sg/J+  VB/C NSg/VB NSg/VB VP/J  NSg/VB/J/P NPr/J/R/P I/Ddem NSg+  NSg/J/R/C . NSg/C R+    VL3
+> did  should make   us       all           think   . I       cannot  come       down        now       as    I       am       tied up         in        some
+# VXPt VXB    NSg/VB NPr/IPl+ NSg/I/J/C/Dq+ NSg/VB+ . ISg/#r+ NSg/VXB NSg/VBPp/P N🅪Sg/VB/J/P NSg/J/R/C R/C/P ISg/#r+ NPr/VB/J VP/J NSg/VB/J/P NPr/J/R/P I/J/R/Dq
+> very important business and  cannot  get    mixed up         in        this   thing now       . If    there is
+# J/R  J         N🅪Sg/J+  VB/C NSg/VXB NSg/VB VP/J  NSg/VB/J/P NPr/J/R/P I/Ddem NSg+  NSg/J/R/C . NSg/C R+    VL3
 > anything  I       can     do  a   little     later let     me       know   in        a   letter  by    Edgar . I       hardly know
 # NSg/I/VB+ ISg/#r+ NPr/VXB VXB D/P NPr/I/J/Dq JC    NSg/VBP NPr/ISg+ NSg/VB NPr/J/R/P D/P NSg/VB+ NSg/P NPr+  . ISg/#r+ R      NSg/VB
 > where   I       am       when    I       hear about a    thing like         this    and  am       completely knocked down
@@ -10911,7 +10911,7 @@
 >
 #
 > I       didn’t hear the rest   of the name    , because I       hung     up         the receiver .
-# ISg/#r+ VXPt   VB   D   NSg/VB P  D   NSg/VB+ . C/P     ISg/#r+ NPr/VB/J NSg/VB/J/P D   NSg+     .
+# ISg/#r+ VXPt   VB   D   NSg/VB P  D   NSg/VB+ . C/P     ISg/#r+ NPr/VP/J NSg/VB/J/P D   NSg+     .
 >
 #
 > After that         I       felt      a    certain shame      for   Gatsby — one     gentleman to whom I       telephoned
@@ -11131,7 +11131,7 @@
 > It       was a   photograph of the house   , cracked in        the corners and  dirty with many
 # NPr/ISg+ VPt D/P NSg/VB     P  D+  NPr/VB+ . VP/J    NPr/J/R/P D+  NPl/V3+ VB/C VB/J  P    NSg/I/J/Dq+
 > hands   . He       pointed out          every detail     to me       eagerly . “ Look   there ! ” and  then      sought
-# NPl/V3+ . NPr/ISg+ VP/J    NSg/VB/J/R/P Dq+   N🅪Sg/VB/J+ P  NPr/ISg+ R       . . NSg/VB R     . . VB/C NSg/J/R/C VB
+# NPl/V3+ . NPr/ISg+ VP/J    NSg/VB/J/R/P Dq+   N🅪Sg/VB/J+ P  NPr/ISg+ R       . . NSg/VB R     . . VB/C NSg/J/R/C VP
 > admiration from my  eyes    . He       had shown it       so          often that         I       think  it       was more         real
 # NSg+       P    D$+ NPl/V3+ . NPr/ISg+ VP  VPp   NPr/ISg+ NSg/I/J/R/C R     NSg/I/C/Ddem ISg/#r+ NSg/VB NPr/ISg+ VPt NPr/I/J/R/Dq NSg/J
 > to him  now       than the house   itself .
