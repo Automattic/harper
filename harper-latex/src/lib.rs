@@ -1,10 +1,13 @@
+use std::collections::HashMap;
+
 use itertools::Itertools;
+use regex::Regex;
 
 use parser::{SyntaxConfig, parse_latex};
 use syntax::latex::{SyntaxKind, SyntaxNode};
 
 use harper_core::{
-    Punctuation, Span, Token, TokenKind,
+    Punctuation, Quote, Span, Token, TokenKind,
     parsers::{Parser, PlainEnglish, StrParser},
 };
 
@@ -24,20 +27,63 @@ impl Parser for Latex {
             .descendants()
             .filter_map(|node| match node.kind() {
                 SyntaxKind::TEXT => {
-                    // dbg!(&node.text());
+                    let text = String::from(node.text());
 
-                    Some(
-                        PlainEnglish
-                            .parse_str(String::from(node.text()).as_str())
-                            .into_iter()
-                            .map(|mut t| {
-                                let span_start =
-                                    byte_to_char[u32::from(node.text_range().start()) as usize];
-                                t.span.push_by(span_start as usize);
-                                t
-                            })
-                            .collect_vec(),
-                    )
+                    let double_quotes_re = Regex::new(r"``.+''").unwrap();
+                    let double_quotes_open_close: HashMap<usize, usize> = HashMap::from_iter(
+                        double_quotes_re
+                            .find_iter(&text)
+                            .map(|m| (m.start(), m.end())),
+                    );
+                    let double_quotes_close_open: HashMap<usize, usize> =
+                        HashMap::from_iter(double_quotes_open_close.iter().map(|(k, v)| (*v, *k)));
+
+                    let harper_tokens = PlainEnglish
+                        .parse_str(text)
+                        .into_iter()
+                        .map(|mut t| {
+                            let span_start =
+                                byte_to_char[u32::from(node.text_range().start()) as usize];
+                            t.span.push_by(span_start as usize);
+                            t
+                        })
+                        .collect_vec();
+
+                    let mut harper_tokens_mod = vec![];
+                    let mut i = 0;
+
+                    while i < harper_tokens.len() {
+                        let t = harper_tokens.get(i).unwrap();
+                        let start = t.span.start;
+
+                        harper_tokens_mod.push(t.clone());
+
+                        if double_quotes_open_close.contains_key(&start) {
+                            let quote_token = harper_tokens_mod.last_mut().unwrap();
+                            quote_token.span.end += 1;
+                            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
+                                twin_loc: Some(*double_quotes_open_close.get(&start).unwrap() - 2),
+                            }));
+
+                            i += 1;
+                        }
+
+                        if double_quotes_close_open.contains_key(&(start + 2)) {
+                            let quote_token = harper_tokens_mod.last_mut().unwrap();
+                            quote_token.span.end += 1;
+                            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
+                                twin_loc: Some(
+                                    *double_quotes_close_open.get(&(start + 2)).unwrap(),
+                                ),
+                            }));
+
+                            i += 1;
+                        }
+
+                        i += 1;
+                    }
+
+                    Some(harper_tokens_mod)
                 }
                 _ => None,
             })
@@ -211,7 +257,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn double_quotes() {
         let source = r#"``stuff''"#;
 
@@ -219,7 +264,27 @@ mod tests {
         let tokens = document.tokens().map(|t| t.clone()).collect_vec();
         dbg!(&tokens);
 
+        let (open_start, close_start) = (0, 7);
+        let (open, close) = (&tokens[0], &tokens[2]);
+
         assert_eq!(tokens.len(), 3);
+        assert_eq!(
+            open.kind,
+            TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(close_start)
+            }))
+        );
+        assert_eq!(open.span.start, open_start);
+        assert_eq!(open.span.end, open_start + 2);
+
+        assert_eq!(
+            close.kind,
+            TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(open_start)
+            }))
+        );
+        assert_eq!(close.span.start, close_start);
+        assert_eq!(close.span.end, close_start + 2);
     }
 
     #[test]

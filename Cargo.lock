@@ -2861,6 +2861,7 @@ dependencies = [
  "itertools 0.14.0",
  "parser",
  "paste",
+ "regex",
  "syntax",
 ]
 
