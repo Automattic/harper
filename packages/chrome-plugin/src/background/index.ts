@@ -1,5 +1,4 @@
-import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
-import { detectBrowserDialect } from './detectDialect';
+import { BinaryModule, type Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
@@ -43,6 +42,7 @@ import {
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
+import { detectBrowserDialect } from './detectDialect';
 
 console.log('background is running');
 
