@@ -1,4 +1,5 @@
 import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { detectBrowserDialect } from './detectDialect';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
@@ -52,27 +53,13 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-let linter: LocalLinter;
-let linterReady = false;
-
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
-	// Wait for linter to be ready before handling requests
-	const handleWhenReady = async () => {
-		while (!linterReady) {
-			await new Promise((resolve) => setTimeout(resolve, 10));
-		}
-		return handleRequest(request);
-	};
-
-	handleWhenReady()
-		.then(sendResponse)
-		.catch((err) => {
-			console.error('Error handling request:', err);
-			sendResponse({ error: err?.message || 'Unknown error' });
-		});
+	handleRequest(request).then(sendResponse);
 
 	return true;
 });
+
+let linter: LocalLinter;
 
 getDialect()
 	.then(setDialect)
@@ -429,43 +416,6 @@ async function getDialect(): Promise<Dialect> {
 	return resp.dialect;
 }
 
-/** Detect English dialect from browser language settings */
-function detectBrowserDialect(): Dialect {
-	// Try chrome.i18n API first
-	if (chrome.i18n?.getUILanguage) {
-		const locale = chrome.i18n.getUILanguage();
-		return localeToDialect(locale);
-	}
-
-	// Fallback to navigator.language
-	const lang = navigator.language || navigator.languages?.[0] || 'en-US';
-	return localeToDialect(lang);
-}
-
-/** Map locale string to Dialect */
-function localeToDialect(locale: string): Dialect {
-	const lower = locale.toLowerCase();
-
-	// Explicit matches
-	if (lower.includes('en-gb') || lower.includes('en_gb')) return Dialect.British;
-	if (lower.includes('en-au') || lower.includes('en_au')) return Dialect.Australian;
-	if (lower.includes('en-ca') || lower.includes('en_ca')) return Dialect.Canadian;
-	if (lower.includes('en-in') || lower.includes('en_in')) return Dialect.Indian;
-
-	// Fallback for English variants
-	if (lower.startsWith('en')) {
-		// New Zealand → Australian (closest match)
-		if (lower.includes('en-nz') || lower.includes('en_nz')) return Dialect.Australian;
-		// Other English variants → British as fallback
-		if (lower.match(/^en[-_]/)) return Dialect.British;
-		// Plain 'en' → American (default)
-		return Dialect.American;
-	}
-
-	// Non-English languages → American (fallback)
-	return Dialect.American;
-}
-
 async function getActivationKey(): Promise<ActivationKey> {
 	const resp = await chrome.storage.local.get({ activationKey: ActivationKey.Off });
 	return resp.activationKey;
@@ -484,12 +434,10 @@ async function setHotkey(hotkey: Hotkey) {
 	await chrome.storage.local.set({ hotkey: hotkey });
 }
 
-async function initializeLinter(dialect: Dialect) {
+function initializeLinter(dialect: Dialect) {
 	if (linter != null) {
 		linter.dispose();
 	}
-
-	linterReady = false;
 
 	linter = new LocalLinter({
 		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
@@ -499,14 +447,12 @@ async function initializeLinter(dialect: Dialect) {
 	getIgnoredLints().then((i) => linter.importIgnoredLints(i));
 	getUserDictionary().then((u) => linter.importWords(u));
 	getLintConfig().then((c) => linter.setLintConfig(c));
-	await linter.setup();
-
-	linterReady = true;
+	linter.setup();
 }
 
 async function setDialect(dialect: Dialect) {
 	await chrome.storage.local.set({ dialect });
-	await initializeLinter(dialect);
+	initializeLinter(dialect);
 }
 
 /** Format the key to be used in local storage to store domain status. */
@@ -559,7 +505,7 @@ async function isDomainSet(domain: string): Promise<boolean> {
 async function resetDictionary(): Promise<void> {
 	await chrome.storage.local.set({ userDictionary: null });
 
-	await initializeLinter(await linter.getDialect());
+	initializeLinter(await linter.getDialect());
 }
 
 /** Add words to the persistent user dictionary. */
