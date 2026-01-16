@@ -267,45 +267,6 @@ where
     }
 }
 
-pub mod debug {
-    use crate::{Token, token_string_ext::TokenStringExt};
-
-    /// Formats a lint match with surrounding context for debug output.
-    ///
-    /// The function takes the same `matched_tokens` and `source`, and `context` parameters
-    /// passed to `[match_to_lint_with_context]`.
-    ///
-    /// # Arguments
-    /// * `log` - `matched_tokens`
-    /// * `ctx` - `context`, or `None` if calling from `[match_to_lint]`
-    /// * `src` - `source` from `[match_to_lint]` / `[match_to_lint_with_context]`
-    ///
-    /// # Returns
-    /// A string with ANSI escape codes where:
-    /// - Context tokens are dimmed before and after the matched tokens in normal weight.
-    /// - Markup and formatting text hidden in whitespace tokens is filtered out.
-    pub fn format_lint_match(
-        log: &[Token],
-        ctx: Option<(&[Token], &[Token])>,
-        src: &[char],
-    ) -> String {
-        if let Some((pro, epi)) = ctx {
-            let [pro, log, epi] = [pro, log, epi].map(|tt| {
-                tt.iter()
-                    .filter(|t| !t.kind.is_whitespace() && !t.kind.is_newline())
-                    .map(|t| t.span.get_content_string(src))
-                    .collect::<Vec<_>>()
-                    .join(" ")
-            });
-            format!("\x1b[2m{}\x1b[0m {} \x1b[2m{}\x1b[0m", pro, log, epi,)
-        } else {
-            log.span()
-                .map_or_else(String::new, |span| span.get_content_string(src))
-        }
-    }
-}
-
-#[cfg(test)]
 pub mod tests {
     use crate::parsers::Markdown;
     use crate::{Document, Span, Token};
@@ -532,13 +493,13 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now
-        if let Some(lint) = lints.first() {
-            if lint.message != expected_message {
-                panic!(
-                    "Expected lint message \"{expected_message}\", but got \"{}\"",
-                    lint.message
-                );
-            }
+        if let Some(lint) = lints.first()
+            && lint.message != expected_message
+        {
+            panic!(
+                "Expected lint message \"{expected_message}\", but got \"{}\"",
+                lint.message
+            );
         }
     }
 

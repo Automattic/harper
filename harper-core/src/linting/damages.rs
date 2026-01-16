@@ -119,23 +119,16 @@ impl ExprLinter for Damages {
             .then_optional(SequenceExpr::default().t_ws().then_determiner())
             .t_ws();
 
-        for i in (pretoks.len() - 4..pretoks.len() - 2).step_by(2) {
-            if pay_det.run(i, pretoks, src).is_some() {
-                return None;
-            }
+        if pretoks
+            .windows(2)
+            .enumerate()
+            .rev()
+            .take_while(|(i, _)| pay_det.run(*i, pretoks, src).is_none())
+            .count()
+            < pretoks.len() / 2
+        {
+            return None;
         }
-
-        // TODO: Is this functional-style code better than the for loop version above?
-        // if pretoks
-        //     .windows(2)
-        //     .enumerate()
-        //     .rev()
-        //     .take_while(|(i, _)| pay_det.run(*i, pretoks, src).is_none())
-        //     .count()
-        //     < pretoks.len() / 2
-        // {
-        //     return None;
-        // }
 
         // Check all the tokens for words that are used in the legal compesation context
         // TODO: this fails when "damages" is misuses in a diclaimer:
