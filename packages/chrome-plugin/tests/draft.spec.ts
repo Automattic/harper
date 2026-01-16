@@ -26,10 +26,17 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	expect(draft).toContainText('This is a test');
 
-	// Verify typing still works after applying suggestion.
+	// Verify editor state is preserved: arrow keys and backspace must work.
+	// Position cursor before 's' in 'test', then backspace to delete 'e'.
 	await draft.press('End');
-	await draft.pressSequentially(" of Harper's grammar checking.");
-	expect(draft).toContainText("This is a test of Harper's grammar checking.");
+	await draft.press('ArrowLeft');
+	await draft.press('ArrowLeft');
+	await draft.press('Backspace');
+	expect(draft).toContainText('This is a tst');
+
+	// Verify typing still works.
+	await draft.pressSequentially('e');
+	expect(draft).toContainText('This is a test');
 });
 
 test('Can ignore suggestion.', async ({ page }) => {
