@@ -1,7 +1,9 @@
+use ruzstd::io::Read;
 use std::sync::OnceLock;
 
 use hashbrown::HashMap;
 use indexmap::IndexSet;
+use ruzstd::decoding::StreamingDecoder;
 
 static COMPRESSED_THESAURUS: &[u8] =
     include_bytes!(concat!(env!("OUT_DIR"), "/compressed-thesaurus.zst"));
@@ -38,9 +40,12 @@ impl Thesaurus {
         let mut entries = HashMap::new();
         let mut deduped_word_set = IndexSet::<String>::new();
 
-        let raw_thesaurus_text = zstd::stream::decode_all(COMPRESSED_THESAURUS)
-            .expect("Compressed thesaurus is a valid ZSTD file")
-            .into_boxed_slice();
+        let mut decoder = StreamingDecoder::new(COMPRESSED_THESAURUS).unwrap();
+        let mut raw_thesaurus_text = Vec::new();
+        decoder
+            .read_to_end(&mut raw_thesaurus_text)
+            .expect("Compressed thesaurus is a valid ZSTD file");
+
         let raw_thesaurus_text =
             str::from_utf8(&raw_thesaurus_text).expect("Thesaurus content is valid UTF-8");
 
