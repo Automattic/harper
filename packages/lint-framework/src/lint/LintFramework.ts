@@ -1,12 +1,20 @@
 import type { LintOptions } from 'harper.js';
-import type { IgnorableLintBox } from './Box';
+import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
+import { getCaretPosition } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
+
+type Modifier = 'Ctrl' | 'Shift' | 'Alt';
+
+type Hotkey = {
+	modifiers: Modifier[];
+	key: string;
+};
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
@@ -22,6 +30,7 @@ export default class LintFramework {
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
@@ -37,6 +46,7 @@ export default class LintFramework {
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
+		getHotkey?: () => Promise<Hotkey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -52,6 +62,7 @@ export default class LintFramework {
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
+			getHotkey?: () => Promise<Hotkey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -141,6 +152,49 @@ export default class LintFramework {
 		this.requestRender();
 	}
 
+	/**
+	 * Hotkey to apply the suggestion of the most likely word
+	 */
+	public async lintHotkey() {
+		const hotkey = await this.actions.getHotkey?.();
+
+		document.addEventListener(
+			'keydown',
+			(event: KeyboardEvent) => {
+				if (!hotkey) return;
+
+				const key = event.key.toLowerCase();
+				const expectedKey = hotkey.key.toLowerCase();
+
+				const hasCtrl = event.ctrlKey === hotkey.modifiers.includes('Ctrl');
+				const hasAlt = event.altKey === hotkey.modifiers.includes('Alt');
+				const hasShift = event.shiftKey === hotkey.modifiers.includes('Shift');
+
+				const match = key === expectedKey && hasCtrl && hasAlt && hasShift;
+
+				if (match) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+
+					const caretPosition = getCaretPosition();
+
+					if (caretPosition != null) {
+						const closestIdx = closestBox(caretPosition, this.lastBoxes);
+
+						const previousBox = this.lastBoxes[closestIdx];
+						const suggestions = previousBox.lint.suggestions;
+						if (suggestions.length > 0) {
+							previousBox.applySuggestion(suggestions[0]);
+						} else {
+							previousBox.ignoreLint?.();
+						}
+					}
+				}
+			},
+			{ capture: true },
+		);
+	}
+
 	public async addTarget(target: Node) {
 		if (!this.targets.has(target)) {
 			this.targets.add(target);
@@ -198,6 +252,7 @@ export default class LintFramework {
 	}
 
 	private attachWindowListeners() {
+		this.lintHotkey();
 		for (const event of PAGE_EVENTS) {
 			window.addEventListener(event, this.updateEventCallback);
 		}
@@ -227,6 +282,7 @@ export default class LintFramework {
 			this.popupHandler.updateLintBoxes(boxes);
 
 			this.renderRequested = false;
+			this.lastBoxes = boxes;
 		});
 	}
 }

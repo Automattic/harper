@@ -35,3 +35,4 @@ harper-ink = { version = "1.0.0", path = "../harper-ink" }
 
 [features]
 default = []
+thesaurus = ["harper-core/thesaurus"]

@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey } from './protocol';
+import type { ActivationKey, Hotkey } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -88,6 +88,19 @@ export default class ProtocolClient {
 
 	public static async getActivationKey(): Promise<ActivationKey> {
 		return (await chrome.runtime.sendMessage({ kind: 'getActivationKey' })).key;
+	}
+
+	public static async getHotkey(): Promise<Hotkey> {
+		return (await chrome.runtime.sendMessage({ kind: 'getHotkey' })).hotkey;
+	}
+
+	public static async setHotkey(hotkey: Hotkey): Promise<void> {
+		const modifiers = hotkey.modifiers;
+		const hotkeyCopy = {
+			modifiers: [...modifiers], // Create a new array
+			key: hotkey.key,
+		};
+		await chrome.runtime.sendMessage({ kind: 'setHotkey', hotkey: hotkeyCopy });
 	}
 
 	public static async setActivationKey(key: ActivationKey): Promise<void> {

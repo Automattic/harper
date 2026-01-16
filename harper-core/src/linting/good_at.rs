@@ -1,5 +1,5 @@
 use crate::{
-    Lint, Token,
+    Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
@@ -80,9 +80,7 @@ impl ExprLinter for GoodAt {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let prep_idx = toks.len() - 3;
-        let prep_tok = &toks[prep_idx];
-        let prep_span = prep_tok.span;
+        let prep_span = toks.get_rel(-3)?.span;
 
         Some(Lint {
             span: prep_span,
