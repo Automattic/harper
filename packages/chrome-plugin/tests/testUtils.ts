@@ -26,6 +26,11 @@ export function getProseMirrorEditor(page: Page): Locator {
 	return page.locator('.ProseMirror');
 }
 
+/** Locate the Draft.js editor on the page (targets #rich-example on draftjs.org). */
+export function getDraftEditor(page: Page): Locator {
+	return page.locator('#rich-example .public-DraftEditor-content');
+}
+
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();
