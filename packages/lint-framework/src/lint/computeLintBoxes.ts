@@ -178,7 +178,9 @@ function replaceSlateValue(
 	const beforeEvt = new InputEvent('beforeinput', evInit);
 	el.dispatchEvent(beforeEvt);
 
-	doc.execCommand('insertText', false, replacementText);
+	if (!beforeEvt.defaultPrevented) {
+		doc.execCommand('insertText', false, replacementText);
+	}
 }
 
 function replaceGenericContentEditable(el: HTMLElement, value: string) {
