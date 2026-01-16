@@ -360,8 +360,8 @@
 # K    NSg/VPp Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
 # D$+  NPl+     NPr/VB/JC P    NSg/I/VB+ .
-> He       knows  right    from wrong      .
-# NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
+> He       knows right    from wrong      .
+# NPr/ISg+ V3    NPr/VB/J P    NSg/VB/J/R .
 >
 #
 >              In

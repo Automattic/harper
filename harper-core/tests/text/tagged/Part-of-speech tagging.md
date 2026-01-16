@@ -248,8 +248,8 @@
 # NPr/VB+ NPr/VXB VB     NSg/I/C/Ddem+ . NPr/VXB . NPr/J/R/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/J/R/Dq NSg/J  P  NSg/VXB D/P NSg/VB C/P
 > a    verb    or    a   modal . The same method  can     , of course  , be      used to benefit from
 # D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg/VB+ NPr/VXB . P  NSg/VB+ . NSg/VXB VP/J P  NSg/VB  P
-> knowledge about the following words   .
-# Nᴹ+       J/P   D+  Nᴹ/Vg/J/P NPl/V3+ .
+> knowledge about the following   words   .
+# Nᴹ+       J/P   D+  N🅪Sg/Vg/J/P NPl/V3+ .
 >
 #
 > More         advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs

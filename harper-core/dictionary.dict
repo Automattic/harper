@@ -25263,7 +25263,7 @@ foll/J
 follicle/~NgS
 follow/~Vd>GSNZz
 follower/~NgS
-following/~JPNgSV
+following/~JPNwgSV
 followup/NgS
 folly/~NSgV
 foment/VGdSN
@@ -31295,7 +31295,7 @@ knothole/NSg
 knotted/JVtT
 knotting/V6N
 knotty/J^>
-know/~VbSNB
+know/~VbSB
 knowing/~JYPV6SNU
 knowledge/~Nmg
 knowledgeable/~JN
@@ -32122,7 +32122,7 @@ linguistic/~JSQ
 linguistics/~Nmg
 liniment/NSgV
 lining/~NgV
-link/~NgSVdG
+link/~NgSVdGB
 linkage/~NgS
 linker/NgS
 linkman/N
@@ -38315,7 +38315,7 @@ perm/~NgSVdG
 permafrost/~Ng
 permanence/Nmg
 permanency/Nmg
-permanent/~JYNSgV
+permanent/~JYNSg
 permeability/~Ng
 permeable/~J
 permeate/VGdSNn
@@ -53444,6 +53444,7 @@ backend/NSg         # dictionaries prefer: back end
 backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
+bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
 blogpost/NgS
 chroot/NgS
 clickstream/NgS
@@ -53597,6 +53598,7 @@ blow-up/JNgS
 blue-blooded/J
 blue-collar/J
 bona fide/RJ
+boo-boo/NgS
 boot camp/Nmg
 boot loader/NgS
 break out/V

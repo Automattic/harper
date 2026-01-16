@@ -959,7 +959,7 @@
 >
 #
 > Before he       enter  on  the Execution of his     Office  , he       shall take   the following
-# C/P    NPr/ISg+ NSg/VB J/P D   N🅪Sg      P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   Nᴹ/Vg/J/P
+# C/P    NPr/ISg+ NSg/VB J/P D   N🅪Sg      P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   N🅪Sg/Vg/J/P
 > Oath    or    Affirmation : - - " I       do  solemnly swear    ( or    affirm ) that         I       will    faithfully
 # NSg/VB+ NPr/C NSg         . . . . ISg/#r+ VXB R        NSg/VB/J . NPr/C VB     . NSg/I/C/Ddem ISg/#r+ NPr/VXB R
 > execute the Office of President of the United States    , and  will    to the best       of

@@ -124,8 +124,8 @@
 # J/P    #    . NPr+   NPr       VP/J     D   NSg       . I/C+  VP/J VP/J    NPl/V3+
 > to process statistical information ; eventually his     company  became part     of IBM  .
 # P  NSg/VB  J           Nᴹ+         . R          ISg/D$+ N🅪Sg/VB+ VPt    NSg/VB/J P  NPr+ .
-> Following Babbage , although unaware of his     earlier work     , Percy Ludgate in        1909
-# Nᴹ/Vg/J/P NPr     . C        VB/J    P  ISg/D$+ JC      N🅪Sg/VB+ . NPr+  ?       NPr/J/R/P #
+> Following   Babbage , although unaware of his     earlier work     , Percy Ludgate in        1909
+# N🅪Sg/Vg/J/P NPr     . C        VB/J    P  ISg/D$+ JC      N🅪Sg/VB+ . NPr+  ?       NPr/J/R/P #
 > published the 2nd of the only  two designs for   mechanical analytical engines in
 # VP/J      D   #   P  D   J/R/C NSg NPl/V3+ R/C/P NSg/J      J          NPl/V3  NPr/J/R/P
 > history . In        1914 , the Spanish engineer Leonardo Torres Quevedo published his
