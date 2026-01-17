@@ -393,6 +393,38 @@ mod tests {
     }
 
     #[test]
+    fn dont_misrecognize_as_acronym() {
+        assert_lint_count("a UPD connection", AnA::new(Dialect::American), 0);
+        assert_lint_count("a UPB device", AnA::new(Dialect::American), 0);
+        assert_lint_count("a UPS or power device", AnA::new(Dialect::American), 0);
+        assert_lint_count("a USB 2.0 port", AnA::new(Dialect::American), 0);
+        assert_lint_count("an HEVC HLS stream", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn assorted_abbreviation_esque() {
+        assert_lint_count("a udev rule", AnA::new(Dialect::American), 0);
+        assert_lint_count("an mDNS tool", AnA::new(Dialect::American), 0);
+        assert_lint_count("an RFLink device", AnA::new(Dialect::American), 0);
+        assert_lint_count(
+            "an FFmpeg-compatible input file",
+            AnA::new(Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
+    fn assorted() {
+        assert_lint_count("a Honeywell alarm panel", AnA::new(Dialect::American), 0);
+        assert_lint_count("a OneDrive folder", AnA::new(Dialect::American), 0);
+        assert_lint_count(
+            "a Ubiquiti UniFi Network application",
+            AnA::new(Dialect::American),
+            0,
+        );
+    }
+
+    #[test]
     fn dont_flag_an_herb_for_american() {
         assert_lint_count("an herb", AnA::new(Dialect::American), 0);
     }
