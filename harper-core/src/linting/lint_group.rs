@@ -53,6 +53,7 @@ use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
+use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
@@ -445,6 +446,7 @@ impl LintGroup {
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
         insert_struct_rule!(DiscourseMarkers, true);
+        insert_expr_rule!(DoMistake, true);
         insert_expr_rule!(DotInitialisms, true);
         insert_expr_rule!(DoubleClick, true);
         insert_expr_rule!(DoubleModal, true);
