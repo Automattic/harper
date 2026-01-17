@@ -8,11 +8,13 @@ pub struct PluralWrongWordOfPhrase {
     expr: Box<dyn Expr>,
 }
 
-const PAIRS: &[(&str, &[&str])] = &[
-    ("line", &["code"]),
-    ("part", &["speech", "speeches"]),
-    ("point", &["view"]),
-    ("rule", &["thumb"]),
+// If a noun needs other than an -s suffix to be pluralized, include it as the 2nd array element.
+const PATTERNS: &[(&[&str], &str, &[&str])] = &[
+    (&["body", "bodies"], "in", &["white"]),
+    (&["line"], "of", &["code"]),
+    (&["part"], "of", &["speech", "speeches"]),
+    (&["point"], "of", &["view"]),
+    (&["rule"], "of", &["thumb"]),
 ];
 
 impl Default for PluralWrongWordOfPhrase {
@@ -31,8 +33,12 @@ impl Default for PluralWrongWordOfPhrase {
 
         let mut mistakes = vec![];
 
-        for &(main_sg, last_noun) in PAIRS {
-            let main_pl = format!("{}s", main_sg);
+        for &(main_noun, prep, last_noun) in PATTERNS {
+            let main_pl = if main_noun.len() == 2 {
+                main_noun[1].to_string()
+            } else {
+                format!("{}s", main_noun[0])
+            };
             let last_pl = if last_noun.len() == 2 {
                 last_noun[1].to_string()
             } else {
@@ -41,11 +47,11 @@ impl Default for PluralWrongWordOfPhrase {
 
             mistakes.push(Box::new(
                 SequenceExpr::any_of(vec![
-                    Box::new(word_str(main_sg)),
+                    Box::new(word_str(main_noun[0])),
                     Box::new(word_string(main_pl)),
                 ])
                 .t_ws_h()
-                .t_aco("of")
+                .t_aco(prep)
                 .t_ws_h()
                 .then(word_string(last_pl)),
             ) as Box<dyn Expr>);
@@ -76,16 +82,22 @@ impl ExprLinter for PluralWrongWordOfPhrase {
             last_noun_span.get_content(src),
         );
 
-        let (main_noun, last_noun) = PAIRS.iter().find(|(main, last)| {
-            main_noun_chars.starts_with_ignore_ascii_case_str(main)
+        let (main_noun, prep, last_noun) = PATTERNS.iter().find(|(main, _, last)| {
+            main_noun_chars.starts_with_ignore_ascii_case_str(main[0])
                 && last_noun_chars.starts_with_ignore_ascii_case_str(last[0])
         })?;
+
+        let main_noun_pl = if main_noun.len() == 2 {
+            main_noun[1].to_string()
+        } else {
+            format!("{}s", main_noun[0])
+        };
 
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
             suggestions: vec![Suggestion::replace_with_match_case(
-                format!("{}s of {}", *main_noun, last_noun[0])
+                format!("{} {} {}", main_noun_pl, prep, last_noun[0])
                     .chars()
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
@@ -103,6 +115,7 @@ mod tests {
     use crate::linting::tests::assert_suggestion_result;
 
     // LinesOfCode
+
     #[test]
     fn corrects_line_of_codes() {
         assert_suggestion_result(
@@ -131,7 +144,8 @@ mod tests {
         );
     }
 
-    // PartOfSpeech
+    // PartsOfSpeech
+
     #[test]
     fn corrects_part_of_speeches() {
         assert_suggestion_result(
@@ -141,7 +155,6 @@ mod tests {
         )
     }
 
-    // It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.
     #[test]
     fn corrects_parts_of_speeches() {
         assert_suggestion_result(
@@ -152,6 +165,7 @@ mod tests {
     }
 
     // PointsOfView
+
     #[test]
     fn corrects_point_of_views() {
         assert_suggestion_result(
@@ -161,7 +175,6 @@ mod tests {
         )
     }
 
-    // log events, places, moods and self-reflect from various points of views
     #[test]
     fn corrects_points_of_views() {
         assert_suggestion_result(
@@ -197,6 +210,26 @@ mod tests {
             "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
             PluralWrongWordOfPhrase::default(),
             "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+        );
+    }
+
+    // BodiesInWhite
+
+    #[test]
+    fn correct_body_in_whites_1() {
+        assert_suggestion_result(
+            "Normally, when they manufacture these body in whites, they would spot weld a lot of the components on.",
+            PluralWrongWordOfPhrase::default(),
+            "Normally, when they manufacture these bodies in white, they would spot weld a lot of the components on.",
+        );
+    }
+
+    #[test]
+    fn correct_body_in_whites_2() {
+        assert_suggestion_result(
+            "I'm not sure, but just having seen a lot of body in whites, I know normally they try to spot weld it.",
+            PluralWrongWordOfPhrase::default(),
+            "I'm not sure, but just having seen a lot of bodies in white, I know normally they try to spot weld it.",
         );
     }
 }
