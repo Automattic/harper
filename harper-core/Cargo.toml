@@ -49,6 +49,6 @@ name = "parse_essay"
 harness = false
 
 [features]
-default = ["thesaurus"]
+default = []
 concurrent = []
 thesaurus = ["dep:harper-thesaurus"]
