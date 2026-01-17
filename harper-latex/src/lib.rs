@@ -23,25 +23,53 @@ impl Parser for Latex {
         let latex_document = parse_latex(source_str.as_str(), &SyntaxConfig::default());
         let latex_ast = SyntaxNode::new_root(latex_document);
 
+        let mut heading_open = false; // jank (use sane ast traversal instead?)
         let mut harper_tokens_initial = latex_ast
-            .descendants()
-            .filter_map(|node| match node.kind() {
-                SyntaxKind::TEXT => Some(text_node_to_tokens(node, &byte_to_char)),
-                SyntaxKind::SECTION | SyntaxKind::SUBSECTION | SyntaxKind::SUBSUBSECTION => {
-                    dbg!(&node);
+            .descendants_with_tokens()
+            .filter_map(|node| {
+                match node.kind() {
+                    SyntaxKind::TEXT => Some(text_node_to_tokens(
+                        node.into_node().unwrap(),
+                        &byte_to_char,
+                    )),
+                    SyntaxKind::SECTION | SyntaxKind::SUBSECTION | SyntaxKind::SUBSUBSECTION => {
+                        heading_open = true;
 
-                    let [span_start, span_end] = [
-                        u32::from(node.text_range().start()) + 1,
-                        u32::from(node.first_child().unwrap().text_range().start()), // re-indexing not necessary?
-                    ]
-                    .map(|p| byte_to_char[p as usize] as usize);
+                        let [span_start, span_end] = [
+                            u32::from(node.text_range().start()) + 1,
+                            u32::from(
+                                node.into_node()
+                                    .unwrap()
+                                    .first_child()
+                                    .unwrap()
+                                    .text_range()
+                                    .start(),
+                            ), // re-indexing not necessary?
+                        ]
+                        .map(|p| byte_to_char[p as usize] as usize);
 
-                    Some(vec![Token {
-                        span: Span::new(span_start, span_end),
-                        kind: TokenKind::HeadingStart,
-                    }])
+                        Some(vec![Token {
+                            span: Span::new(span_start, span_end),
+                            kind: TokenKind::HeadingStart,
+                        }])
+                    }
+                    SyntaxKind::R_CURLY => {
+                        if heading_open {
+                            heading_open = false;
+
+                            Some(vec![Token {
+                                span: Span::new(
+                                    (u32::from(node.text_range().start()) + 1) as usize,
+                                    (u32::from(node.text_range().end()) + 1) as usize,
+                                ),
+                                kind: TokenKind::ParagraphBreak,
+                            }])
+                        } else {
+                            None
+                        }
+                    }
+                    _ => None,
                 }
-                _ => None,
             })
             .flatten()
             .collect_vec();
@@ -130,7 +158,7 @@ fn post_process_tokens(source: &[char], harper_tokens_initial: &mut Vec<Token>) 
     harper_tokens
 }
 
-fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &Vec<u32>) -> Vec<Token> {
+fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
     let text = String::from(node.text());
 
     let double_quotes_re = Regex::new(r"``.+''").unwrap();
@@ -390,5 +418,6 @@ mod tests {
         assert!(tokens[0].kind.is_heading_start());
         assert_eq!(tokens[0].span.end + 1, tokens[1].span.start);
         assert!(tokens[1].kind.is_word());
+        assert!(tokens[2].kind.is_paragraph_break());
     }
 }
