@@ -57,14 +57,14 @@ impl PhrasalVerbAsCompoundNoun {
         document: &Document,
         i: usize,
         token: &crate::Token,
-    ) -> (Why, Option<(String, Confidence)>) {
+    ) -> Result<(String, Confidence), Why> {
         // It would be handy if there could be a dict flag for nouns which are compounds of phrasal verbs.
         // Instead, let's use a few heuristics.
 
         // let no_phrasal_verb = String::new();
         // * Can't also be a proper noun or a real verb.
         if token.kind.is_proper_noun() || token.kind.is_verb() {
-            return (Why::ItsAProperNounOrVerb, None);
+            return Err(Why::ItsAProperNounOrVerb);
         }
         let nountok_charsl = document.get_span_content(&token.span);
         // * Can't contain space, hyphen or apostrophe
@@ -73,7 +73,7 @@ impl PhrasalVerbAsCompoundNoun {
             || nountok_charsl.contains(&'\'')
             || nountok_charsl.contains(&'’')
         {
-            return (Why::ItContainsSpaceHyphenOrApostrophe, None);
+            return Err(Why::ItContainsSpaceHyphenOrApostrophe);
         }
 
         let nountok_lower = nountok_charsl.to_lower();
@@ -83,7 +83,7 @@ impl PhrasalVerbAsCompoundNoun {
         if nountok_lower == ['g', 'a', 'l', 'l', 'o', 'n']
             || nountok_lower == ['d', 'r', 'a', 'g', 'o', 'n']
         {
-            return (Why::ItsAKnownFalsePositive, None);
+            return Err(Why::ItsAKnownFalsePositive);
         }
 
         // * Must end with the same letters as one of the particles used in phrasal verbs.
@@ -113,7 +113,7 @@ impl PhrasalVerbAsCompoundNoun {
                 false
             }
         }) {
-            return (Why::ItDoesntEndWithOneOfTheParticles, None);
+            return Err(Why::ItDoesntEndWithOneOfTheParticles);
         }
 
         let verb_part = &nountok_charsl[..nountok_charsl.len() - found_particle_len];
@@ -137,10 +137,7 @@ impl PhrasalVerbAsCompoundNoun {
 
         // If neither is a verb, then it's not a phrasal verb
         if !verb_part_is_verb && !phrasal_verb_is_verb {
-            return (
-                Why::NeitherTheWholeWordNorThePartBeforeTheParticleIsAVerb,
-                None,
-            );
+            return Err(Why::NeitherTheWholeWordNorThePartBeforeTheParticleIsAVerb);
         }
 
         // Now we know it matches the pattern of a phrasal verb erroneously written as a compound noun.
@@ -153,18 +150,18 @@ impl PhrasalVerbAsCompoundNoun {
 
         // If it's in isolation, a compound noun is fine.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_none() {
-            return (Why::ItsInIsolation, None);
+            return Err(Why::ItsInIsolation);
         }
 
         let confidence = match (phrasal_verb_is_verb, verb_part_is_verb) {
             (true, _) => Confidence::DefinitelyVerb,
             (false, true) => Confidence::PossiblyVerb,
-            _ => return (Why::IHaveNoConfidenceThatItsAVerb, None),
+            _ => return Err(Why::IHaveNoConfidenceThatItsAVerb),
         };
 
         if let Some(prev_tok) = maybe_prev_tok {
             if prev_tok.kind.is_adjective() || prev_tok.kind.is_determiner() {
-                return (Why::TheresAnAdjectiveOrDeterminerBeforeIt, None);
+                return Err(Why::TheresAnAdjectiveOrDeterminerBeforeIt);
             }
 
             // "dictionary lookup" is not a mistake but "couples breakup" is.
@@ -175,11 +172,11 @@ impl PhrasalVerbAsCompoundNoun {
                     .get_content(document.get_source())
                     .eq_ignore_ascii_case_str("settings")
             {
-                return (Why::ItsPrecededByANonPluralNoun, None);
+                return Err(Why::ItsPrecededByANonPluralNoun);
             }
 
             if is_part_of_noun_list(document, i) {
-                return (Why::ItsAnItemInAListOfNouns, None);
+                return Err(Why::ItsAnItemInAListOfNouns);
             }
 
             // If the previous word is (only) a preposition, this word is surely a noun
@@ -189,12 +186,12 @@ impl PhrasalVerbAsCompoundNoun {
                     .get_content(document.get_source())
                     .eq_ignore_ascii_case_str("to")
             {
-                return (Why::ItsPrecededByAPreposition, None);
+                return Err(Why::ItsPrecededByAPreposition);
             }
 
             // If the previous word is OOV, those are most commonly nouns
             if prev_tok.kind.is_oov() {
-                return (Why::ItsPrecededByAnUnknownWord, None);
+                return Err(Why::ItsPrecededByAnUnknownWord);
             }
         }
 
@@ -204,7 +201,7 @@ impl PhrasalVerbAsCompoundNoun {
         // ✅ Plugin for text editors.
         // ✅ Plug in for faster performance.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_some_and(|t| t.kind.is_preposition()) {
-            return (Why::TheresNothingBeforeItAndAPrepositionAfterIt, None);
+            return Err(Why::TheresNothingBeforeItAndAPrepositionAfterIt);
         }
 
         if let Some(next_tok) = maybe_next_tok {
@@ -218,7 +215,7 @@ impl PhrasalVerbAsCompoundNoun {
                         &['w', 'h', 'i', 'c', 'h'][..],
                     ])
             {
-                return (Why::ItsFollowedByThatOrWhich, None);
+                return Err(Why::ItsFollowedByThatOrWhich);
             }
         }
 
@@ -269,13 +266,10 @@ impl PhrasalVerbAsCompoundNoun {
                     .as_ref(),
             )
         {
-            return (Why::ItsActuallyPartOfANounPhrase, None);
+            return Err(Why::ItsActuallyPartOfANounPhrase);
         }
 
-        (
-            Why::TheresNothingWrongWithIt,
-            Some((phrasal_verb, confidence)),
-        )
+        Ok((phrasal_verb, confidence))
     }
 }
 
@@ -286,9 +280,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
         for i in document.iter_noun_indices() {
             let token = document.get_token(i).unwrap();
 
-            if let (Why::TheresNothingWrongWithIt, Some((phrasal_verb, confidence))) =
-                self.logic_and_heuristics(document, i, token)
-            {
+            if let Ok((phrasal_verb, confidence)) = self.logic_and_heuristics(document, i, token) {
                 let message = match confidence {
                     Confidence::DefinitelyVerb => {
                         "This word should be a phrasal verb, not a compound noun."
