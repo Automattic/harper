@@ -25,6 +25,7 @@
 		"@fortawesome/free-solid-svg-icons": "^7.1.0",
 		"bowser": "^2.12.1",
 		"colorjs.io": "^0.5.2",
+		"harper-wasm": "workspace:*",
 		"virtual-dom": "^2.1.1"
 	},
 	"peerDependencies": {

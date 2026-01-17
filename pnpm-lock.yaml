@@ -249,6 +249,9 @@ importers:
       colorjs.io:
         specifier: ^0.5.2
         version: 0.5.2
+      harper-wasm:
+        specifier: workspace:*
+        version: link:../../harper-wasm/pkg
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
