@@ -14,6 +14,7 @@ harper-core = { path = "../harper-core", version = "1.0.0", features = ["concurr
 harper-comments = { path = "../harper-comments", version = "1.0.0" }
 harper-jjdescription = { path = "../harper-jjdescription", version = "1.0.0" }
 harper-typst = { path = "../harper-typst", version = "1.0.0" }
+harper-latex = { path = "../harper-latex", version = "1.0.0" }
 harper-html = { path = "../harper-html", version = "1.0.0" }
 harper-python = { path = "../harper-python", version = "1.0.0" }
 harper-asciidoc = { path = "../harper-asciidoc", version = "1.0.0" }
