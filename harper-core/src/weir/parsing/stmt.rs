@@ -133,7 +133,10 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                     Ok(FoundNode::new(
                         Some(AstStmtNode::create_set_expr(
                             tokens[cursor + 2].span.get_content_string(source),
-                            AstExprNode::Seq(parse_seq(&tokens[cursor + 4..end], source)?),
+                            AstExprNode::Seq(parse_seq(
+                                &tokens[(cursor + 4).min(end)..end],
+                                source,
+                            )?),
                         )),
                         end + 1,
                     ))

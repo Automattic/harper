@@ -8252,7 +8252,6 @@ PowerPoint/ONgV
 Powers/NOg
 Powhatan/NOg
 Poznan/Og
-Pr/                 # Praseodymium
 Prada/g
 Prado/Og
 Praetorian/Ng
@@ -14165,7 +14164,7 @@ batter/~VGd>SNwgzZ
 batterer/Ng
 battery/~NSg
 batting/~NgV6
-battle/~NSgVd>GJLZ
+battle/~NSgVdGJLZ
 battleaxe/NgS
 battledore/NSg
 battledress/N
@@ -14173,7 +14172,7 @@ battlefield/~NgS
 battlefront/NgS
 battleground/~NgS
 battlement/NSg
-battler/Ng
+battler/NgS
 battleship/~NSg
 batty/J>^N
 bauble/NSg
@@ -14981,7 +14980,8 @@ blitz/~NgSVGd
 blitzkrieg/NgS
 blivet/NS
 blizzard/~NSgV
-bloat/VGd>SNJZ
+bloat/VGdSNJZ
+bloater/NgS
 bloatware/Nmg
 blob/~NSgV
 blobbed/VtT
@@ -16090,7 +16090,7 @@ buzzkill/NSg
 buzzword/NSg
 bx/~N
 bxs/N
-by/~PJNg
+by/~PNg             # removed adjective sense
 bye/~NSgJP
 bygone/JNSg
 bylaw/NSg
@@ -16375,7 +16375,7 @@ canning/~V6N
 cannon/~NgS09VGdJ   # singular and plural, also has a plural in -s
 cannonade/NgSVGd
 cannonball/~NSgV
-cannot/~VN
+cannot/~VAN
 canny/J^>U
 canoe/~NgSVd
 canoeing/~NV6
@@ -18618,7 +18618,7 @@ conciliation/Ngr
 conciliator/NSg
 conciliatoriness/Ng
 conciliatory/J
-concise/~JY^>pVn
+concise/~JY^pVn
 conciseness/Ng
 concision/Ng
 conclave/~NSg
@@ -21408,7 +21408,6 @@ diptych/N0g
 diptychs/N9
 dire/~JY^>
 direct/~J^VSdGrv
-directer/JcN
 direction/~Nw0gi
 directional/~JYNgS
 directionality/Nmg
@@ -21883,7 +21882,7 @@ done/~JVTNWrU
 dong/~NgS09VdG      # singular and plural, currency plural is dong or dongs
 dongle/NSg
 donkey/~NSg
-donned/~V
+donned/~VtT
 donning/V6
 donnish/J
 donnybrook/NgSJ
@@ -27156,11 +27155,11 @@ grouch/NgSVGd
 grouchily/Ry
 grouchiness/Nmg
 grouchy/J>^p
-ground/~NwgSVGd>JZz
+ground/~NwgSVGdJZz
 groundbreaking/~JNgS
 groundcloth/N0
 groundcloths/N9
-grounder/Ng
+grounder/NgS
 groundhog/NgS
 grounding/~NwgSV6
 groundless/JY
@@ -28839,7 +28838,7 @@ hundredfold/JV
 hundredth/~JN0g
 hundredths/N9
 hundredweight/NSg
-hung/~VJ
+hung/~VtTJ
 hunger/~NmSgVdG
 hungover/J
 hungrily/Ry
@@ -32035,7 +32034,7 @@ lii
 likability/Nmg
 likable/JpE
 likableness/Nmg
-like/~VGdSNgJ^CPE
+like/~VGdSNgJCPE
 likeability/Ng!@_₹
 likeable/Jp!@_₹
 likeableness/Ng!@_₹
@@ -34305,7 +34304,7 @@ modality/~NwSg
 modded/VtT
 modding/V6Nm
 mode/~NgS
-model/~NSgJ>VGdZz
+model/~NSgJVGdZz
 modeler/NgS
 modeling/~VNg
 modelled/JVr!@_₹
@@ -39716,7 +39715,7 @@ precipitate/~VGdSJYNgXn
 precipitation/~Ng
 precipitous/JY
 precis/NgV
-precise/~JY^>pVdSGn
+precise/~JY^pVdSGn
 preciseness/Ng
 precision/~NgJ
 preclude/~VGdS
@@ -45586,7 +45585,7 @@ sou'wester/N
 souffle/NwSgV
 sough/VdGNg
 soughs/V
-sought/~VU
+sought/~VtTU
 souk/NS
 soul/~NwgSV
 soulful/JYpN
@@ -48718,7 +48717,7 @@ timberland/NSg
 timberline/~NgS
 timbre/~NSg
 timbrel/NSgV
-time/~NwgSVGd>YZz
+time/~NwgSVGdYZz
 timekeeper/NgS
 timekeeping/NgV
 timeless/~JYpN
@@ -48728,7 +48727,7 @@ timeliness/NmgU
 timely/~J>^pU
 timeout/NSg
 timepiece/NgS
-timer/~Ng
+timer/~NgS
 timescale/~NS
 timeserver/NSg
 timeserving/NgJ
@@ -50513,6 +50512,7 @@ unseen/~JVNg
 unselect/VGdS
 unsentimental/J
 unset/JV
+unsettlingly/R
 unshakable/J
 unshakably/Ry
 unshakeable/J!_₹

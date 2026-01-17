@@ -32,6 +32,7 @@ strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "1.0.0" }
+harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional = true }
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
 
@@ -48,5 +49,6 @@ name = "parse_essay"
 harness = false
 
 [features]
-default = []
+default = ["thesaurus"]
 concurrent = []
+thesaurus = ["dep:harper-thesaurus"]
