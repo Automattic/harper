@@ -26,66 +26,10 @@ impl Parser for Latex {
         let mut harper_tokens_initial = latex_ast
             .descendants()
             .filter_map(|node| match node.kind() {
-                SyntaxKind::TEXT => {
-                    let text = String::from(node.text());
-
-                    let double_quotes_re = Regex::new(r"``.+''").unwrap();
-                    let double_quotes_open_close: HashMap<usize, usize> = HashMap::from_iter(
-                        double_quotes_re
-                            .find_iter(&text)
-                            .map(|m| (m.start(), m.end())),
-                    );
-                    let double_quotes_close_open: HashMap<usize, usize> =
-                        HashMap::from_iter(double_quotes_open_close.iter().map(|(k, v)| (*v, *k)));
-
-                    let harper_tokens = PlainEnglish
-                        .parse_str(text)
-                        .into_iter()
-                        .map(|mut t| {
-                            let span_start =
-                                byte_to_char[u32::from(node.text_range().start()) as usize];
-                            t.span.push_by(span_start as usize);
-                            t
-                        })
-                        .collect_vec();
-
-                    let mut harper_tokens_mod = vec![];
-                    let mut i = 0;
-
-                    while i < harper_tokens.len() {
-                        let t = harper_tokens.get(i).unwrap();
-                        let start = t.span.start;
-
-                        harper_tokens_mod.push(t.clone());
-
-                        if double_quotes_open_close.contains_key(&start) {
-                            let quote_token = harper_tokens_mod.last_mut().unwrap();
-                            quote_token.span.end += 1;
-                            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
-                                twin_loc: Some(*double_quotes_open_close.get(&start).unwrap() - 2),
-                            }));
-
-                            i += 1;
-                        }
-
-                        if double_quotes_close_open.contains_key(&(start + 2)) {
-                            let quote_token = harper_tokens_mod.last_mut().unwrap();
-                            quote_token.span.end += 1;
-                            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
-                                twin_loc: Some(
-                                    *double_quotes_close_open.get(&(start + 2)).unwrap(),
-                                ),
-                            }));
-
-                            i += 1;
-                        }
-
-                        i += 1;
-                    }
-
-                    Some(harper_tokens_mod)
-                }
+                SyntaxKind::TEXT => Some(text_node_to_tokens(node, &byte_to_char)),
                 SyntaxKind::SECTION | SyntaxKind::SUBSECTION | SyntaxKind::SUBSUBSECTION => {
+                    dbg!(&node);
+
                     let [span_start, span_end] = [
                         u32::from(node.text_range().start()) + 1,
                         u32::from(node.first_child().unwrap().text_range().start()), // re-indexing not necessary?
@@ -102,84 +46,145 @@ impl Parser for Latex {
             .flatten()
             .collect_vec();
 
-        // dummy token to allow counting consecutive hyphens at the right edge
-        harper_tokens_initial.push(Token::new(Span::new(0, 0), TokenKind::Unlintable));
+        post_process_tokens(source, &mut harper_tokens_initial)
+    }
+}
 
-        let mut consecutive_hyphens = 0;
-        let mut consecutive_spaces = 0;
+fn post_process_tokens(source: &[char], harper_tokens_initial: &mut Vec<Token>) -> Vec<Token> {
+    // dummy token to allow counting consecutive hyphens at the right edge
+    harper_tokens_initial.push(Token::new(Span::new(0, 0), TokenKind::Unlintable));
 
-        let mut harper_tokens: Vec<Token> = vec![];
-        for mut token in harper_tokens_initial {
-            if matches!(token.kind, TokenKind::Newline(1)) {
-                token.kind = TokenKind::Space(1);
-            }
+    let mut consecutive_hyphens = 0;
+    let mut consecutive_spaces = 0;
 
-            if matches!(token.kind, TokenKind::Space(_)) {
-                token.kind = TokenKind::Space(1);
-
-                consecutive_spaces += 1;
-            } else if consecutive_spaces > 1 {
-                let mut spaces = vec![];
-                for _ in 0..consecutive_spaces {
-                    spaces.push(harper_tokens.pop().unwrap());
-                }
-                let mut total_span = spaces.first().expect("at least two").span;
-                for h in &spaces[1..] {
-                    total_span.expand_to_include(h.span.end);
-                }
-
-                harper_tokens.push(Token {
-                    span: total_span,
-                    kind: TokenKind::Space(1),
-                });
-
-                consecutive_spaces = 0;
-            } else {
-                consecutive_spaces = 0;
-            }
-
-            if matches!(token.kind, TokenKind::Punctuation(_))
-                && token.span.get_content_string(source) == "~"
-            {
-                // non-breaking space
-                token.kind = TokenKind::Space(1);
-            }
-
-            if matches!(token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
-                consecutive_hyphens += 1;
-            } else if consecutive_hyphens == 2 || consecutive_hyphens == 3 {
-                let mut hyphens = vec![];
-                for _ in 0..consecutive_hyphens {
-                    hyphens.push(harper_tokens.pop().unwrap());
-                }
-                let mut total_span = hyphens.first().expect("at least two").span;
-                for h in &hyphens[1..] {
-                    total_span.expand_to_include(h.span.end);
-                }
-
-                harper_tokens.push(Token {
-                    span: total_span,
-                    kind: TokenKind::Punctuation(match consecutive_hyphens {
-                        2 => Punctuation::EnDash,
-                        3 => Punctuation::EmDash,
-                        _ => unreachable!("already narrowed"),
-                    }),
-                });
-
-                consecutive_hyphens = 0;
-            } else {
-                consecutive_hyphens = 0;
-            }
-
-            harper_tokens.push(token);
+    let mut harper_tokens: Vec<Token> = vec![];
+    for token in harper_tokens_initial {
+        if matches!(token.kind, TokenKind::Newline(1)) {
+            token.kind = TokenKind::Space(1);
         }
 
-        harper_tokens
-            .pop()
-            .expect("it will have at least the dummy token");
+        if matches!(token.kind, TokenKind::Space(_)) {
+            token.kind = TokenKind::Space(1);
 
-        harper_tokens
+            consecutive_spaces += 1;
+        } else if consecutive_spaces > 1 {
+            let mut spaces = vec![];
+            for _ in 0..consecutive_spaces {
+                spaces.push(harper_tokens.pop().unwrap());
+            }
+            let mut total_span = spaces.first().expect("at least two").span;
+            for h in &spaces[1..] {
+                total_span.expand_to_include(h.span.end);
+            }
+
+            harper_tokens.push(Token {
+                span: total_span,
+                kind: TokenKind::Space(1),
+            });
+
+            consecutive_spaces = 0;
+        } else {
+            consecutive_spaces = 0;
+        }
+
+        if matches!(token.kind, TokenKind::Punctuation(_))
+            && token.span.get_content_string(source) == "~"
+        {
+            // non-breaking space
+            token.kind = TokenKind::Space(1);
+        }
+
+        if matches!(token.kind, TokenKind::Punctuation(Punctuation::Hyphen)) {
+            consecutive_hyphens += 1;
+        } else if consecutive_hyphens == 2 || consecutive_hyphens == 3 {
+            let mut hyphens = vec![];
+            for _ in 0..consecutive_hyphens {
+                hyphens.push(harper_tokens.pop().unwrap());
+            }
+            let mut total_span = hyphens.first().expect("at least two").span;
+            for h in &hyphens[1..] {
+                total_span.expand_to_include(h.span.end);
+            }
+
+            harper_tokens.push(Token {
+                span: total_span,
+                kind: TokenKind::Punctuation(match consecutive_hyphens {
+                    2 => Punctuation::EnDash,
+                    3 => Punctuation::EmDash,
+                    _ => unreachable!("already narrowed"),
+                }),
+            });
+
+            consecutive_hyphens = 0;
+        } else {
+            consecutive_hyphens = 0;
+        }
+
+        harper_tokens.push(token.clone());
     }
+
+    harper_tokens
+        .pop()
+        .expect("it will have at least the dummy token");
+
+    harper_tokens
+}
+
+fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &Vec<u32>) -> Vec<Token> {
+    let text = String::from(node.text());
+
+    let double_quotes_re = Regex::new(r"``.+''").unwrap();
+    let double_quotes_open_close: HashMap<usize, usize> = HashMap::from_iter(
+        double_quotes_re
+            .find_iter(&text)
+            .map(|m| (m.start(), m.end())),
+    );
+    let double_quotes_close_open: HashMap<usize, usize> =
+        HashMap::from_iter(double_quotes_open_close.iter().map(|(k, v)| (*v, *k)));
+
+    let harper_tokens = PlainEnglish
+        .parse_str(text)
+        .into_iter()
+        .map(|mut t| {
+            let span_start = byte_to_char[u32::from(node.text_range().start()) as usize];
+            t.span.push_by(span_start as usize);
+            t
+        })
+        .collect_vec();
+
+    let mut harper_tokens_mod = vec![];
+    let mut i = 0;
+
+    while i < harper_tokens.len() {
+        let t = harper_tokens.get(i).unwrap();
+        let start = t.span.start;
+
+        harper_tokens_mod.push(t.clone());
+
+        if double_quotes_open_close.contains_key(&start) {
+            let quote_token = harper_tokens_mod.last_mut().unwrap();
+            quote_token.span.end += 1;
+            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(*double_quotes_open_close.get(&start).unwrap() - 2),
+            }));
+
+            i += 1;
+        }
+
+        if double_quotes_close_open.contains_key(&(start + 2)) {
+            let quote_token = harper_tokens_mod.last_mut().unwrap();
+            quote_token.span.end += 1;
+            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(*double_quotes_close_open.get(&(start + 2)).unwrap()),
+            }));
+
+            i += 1;
+        }
+
+        i += 1;
+    }
+
+    harper_tokens_mod
 }
 
 fn make_byte_to_char_mapping(source_str: &str) -> Vec<u32> {
