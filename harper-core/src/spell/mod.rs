@@ -623,6 +623,7 @@ mod tests {
 
     // s/z as in realise/realize
     #[test]
+    #[ignore = "both spellings are acceptable in UK, AU, and IN despite popular opinion"]
     fn suggest_realise_for_realize() {
         assert_suggestion_result(
             "realize",
@@ -641,6 +642,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "both spellings are acceptable in UK, AU, and IN despite popular opinion"]
     fn suggest_realise_for_realize_titlecase() {
         assert_suggestion_result(
             "Realize",
