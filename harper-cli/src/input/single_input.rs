@@ -29,8 +29,18 @@ pub(crate) trait SingleInputTrait: InputTrait {
         markdown_options: MarkdownOptions,
         dictionary: &dyn Dictionary,
     ) -> anyhow::Result<(Document, Cow<'_, str>)> {
+        self.load_with_parser(&self.get_parser(markdown_options), dictionary)
+    }
+
+    /// Loads the contained file/string into a conventional format using the provided
+    /// parser. Returns a `Result` containing a tuple of a `Document` and its corresponding source
+    /// text as a string.
+    fn load_with_parser(
+        &self,
+        parser: &dyn Parser,
+        dictionary: &dyn Dictionary,
+    ) -> anyhow::Result<(Document, Cow<'_, str>)> {
         let text = self.get_content()?;
-        let parser = self.get_parser(markdown_options);
         Ok((Document::new(&text, &parser, &dictionary), text))
     }
 
