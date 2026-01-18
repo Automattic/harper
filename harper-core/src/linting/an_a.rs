@@ -64,7 +64,9 @@ impl Linter for AnA {
                     continue;
                 };
 
-                let should_be_a_an = match starts_with_vowel(chars_second, self.dialect) {
+                let should_be_a_an = match starts_with_vowel(chars_second, self.dialect)
+                    .expect("No empty word tokens")
+                {
                     InitialSound::Vowel => false,
                     InitialSound::Consonant => true,
                     InitialSound::Either => return lints,
@@ -110,45 +112,51 @@ fn to_lower_word(word: &[char]) -> Cow<'_, [char]> {
     }
 }
 
-/// Checks whether a provided word begins with a vowel _sound_.
+/// Checks whether a provided word begins with a vowel _sound_. Returns `None` if `word` is empty.
 ///
 /// It was produced through trial and error.
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
-fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
+fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
+    if word.is_empty() {
+        return None;
+    }
+
     let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
-    if is_likely_initialism && !word.is_empty() && !is_likely_acronym(word) {
+    if is_likely_initialism && !is_likely_acronym(word) {
         if matches!(word, ['S', 'Q', 'L']) {
-            return InitialSound::Either;
+            return Some(InitialSound::Either);
         }
-        return if matches!(
-            word[0],
-            'A' | 'E' | 'F' | 'H' | 'I' | 'L' | 'M' | 'N' | 'O' | 'R' | 'S' | 'X'
-        ) {
-            InitialSound::Vowel
-        } else {
-            InitialSound::Consonant
-        };
+        return Some(
+            if matches!(
+                word[0],
+                'A' | 'E' | 'F' | 'H' | 'I' | 'L' | 'M' | 'N' | 'O' | 'R' | 'S' | 'X'
+            ) {
+                InitialSound::Vowel
+            } else {
+                InitialSound::Consonant
+            },
+        );
     }
 
     let word = to_lower_word(word);
     let word = word.as_ref();
 
     if matches!(word, ['e', 'u', 'l', 'e', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(
         word,
-        [] | ['u', 'k', ..]
+        ['u', 'k', ..]
             | ['u', 'b', 'i', ..]
             | ['e', 'u', 'p', 'h', ..]
             | ['e', 'u', 'g' | 'l' | 'c', ..]
             | ['o', 'n', 'e', ..]
             | ['o', 'n', 'c', 'e']
     ) {
-        return InitialSound::Consonant;
+        return Some(InitialSound::Consonant);
     }
 
     if matches!(
@@ -159,43 +167,43 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
             | ['u', 'r', 'b', ..]
             | ['i', 'n', 't', ..]
     ) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['h', 'e', 'r', 'b', ..] if dialect == Dialect::American || dialect == Dialect::Canadian)
     {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['u', 'n' | 's', 'i' | 'a' | 'u', ..]) {
-        return InitialSound::Consonant;
+        return Some(InitialSound::Consonant);
     }
 
     if matches!(word, ['u', 'n', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['u', 'r', 'g', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['u', 't', 't', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(
         word,
         ['u', 't' | 'r' | 'n', ..] | ['e', 'u', 'r', ..] | ['u', 'w', ..] | ['u', 's', 'e', ..]
     ) {
-        return InitialSound::Consonant;
+        return Some(InitialSound::Consonant);
     }
 
     if matches!(word, ['o', 'n', 'e', 'a' | 'e' | 'i' | 'u', 'l' | 'd', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['o', 'n', 'e', 'a' | 'e' | 'i' | 'u' | '-' | 's', ..]) {
-        return InitialSound::Consonant;
+        return Some(InitialSound::Consonant);
     }
 
     if matches!(
@@ -209,25 +217,25 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
             | ['h', 'e', 'i', 'r', ..]
             | ['h', 'o', 'n', 'o', 'r', ..]
     ) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(
         word,
         ['j', 'u' | 'o', 'n', ..] | ['j', 'u', 'r', 'a' | 'i' | 'o', ..]
     ) {
-        return InitialSound::Consonant;
+        return Some(InitialSound::Consonant);
     }
 
     if matches!(word, ['x', '-' | '\'' | '.' | 'o' | 's', ..]) {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
     if word[0].is_vowel() {
-        return InitialSound::Vowel;
+        return Some(InitialSound::Vowel);
     }
 
-    InitialSound::Consonant
+    Some(InitialSound::Consonant)
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
