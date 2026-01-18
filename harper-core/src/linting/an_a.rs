@@ -232,7 +232,6 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
             | ['r', 'z', ..]
             | ['n', 'g', ..]
             | ['n', 'v', ..]
-            | ['x']
             | ['x', 'b', 'o', 'x']
             | ['h', 'e', 'i', 'r', ..]
             | ['h', 'o', 'n', 'o', 'r', ..]
