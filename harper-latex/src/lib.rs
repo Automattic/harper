@@ -171,11 +171,12 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
         })
         .collect_vec();
 
-    let double_quotes_re = Regex::new(r"``|''").unwrap();
-    let double_quotes_by_start: HashMap<usize, _> =
-        HashMap::from_iter(double_quotes_re.find_iter(&text).map(|m| (m.start(), m)));
+    let quotes_re = Regex::new(r"``?|''?").unwrap();
+    let quotes_by_start: HashMap<usize, _> =
+        HashMap::from_iter(quotes_re.find_iter(&text).map(|m| (m.start(), m)));
 
-    let mut double_quote_open_stack: Vec<usize> = vec![]; // indices of currently open quote tokens
+    let mut single_quote_open_stack: Vec<usize> = vec![]; // indices of currently open quote tokens
+    let mut double_quote_open_stack: Vec<usize> = vec![];
 
     let mut harper_tokens_mod = vec![];
     let mut i = 0;
@@ -186,12 +187,25 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
 
         harper_tokens_mod.push(t.clone());
 
-        if double_quotes_by_start.contains_key(&start) {
-            let m = double_quotes_by_start.get(&start).unwrap();
+        if quotes_by_start.contains_key(&start) {
+            let m = quotes_by_start.get(&start).unwrap();
             let match_text = m.as_str();
 
-            let is_open = match_text == "``";
-            let corresponding_open_idx = double_quote_open_stack.pop();
+            let is_double = match_text == "``" || match_text == "''";
+            let is_open = match_text == "``" || match_text == "`";
+
+            if !is_double && !is_open && single_quote_open_stack.is_empty() {
+                i += 1;
+                continue; // it's probably just an apostrophe
+            }
+
+            let open_stack = if is_double {
+                &mut double_quote_open_stack
+            } else {
+                &mut single_quote_open_stack
+            };
+
+            let corresponding_open_idx = open_stack.pop();
 
             let twin_loc = if is_open {
                 None
@@ -203,11 +217,14 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
             };
 
             let quote_token = harper_tokens_mod.last_mut().unwrap();
-            quote_token.span.end += 1;
             quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote { twin_loc }));
 
+            if is_double {
+                quote_token.span.end += 1;
+            }
+
             if is_open {
-                double_quote_open_stack.push(i);
+                open_stack.push(i);
             } else {
                 let corresponding_open = harper_tokens_mod
                     .get_mut(corresponding_open_idx.unwrap())
@@ -217,7 +234,9 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
                 }));
             }
 
-            i += 1; // skip the next backtick/apostrophe token
+            if is_double {
+                i += 1; // skip the next backtick/apostrophe token
+            }
         }
 
         i += 1;
@@ -346,7 +365,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn single_quotes() {
         let source = r#"`stuff'"#;
 
@@ -354,19 +372,49 @@ mod tests {
         let tokens = document.tokens().map(|t| t.clone()).collect_vec();
         dbg!(&tokens);
 
+        let (open_start, close_start) = (0, 6);
+        let (open, close) = (&tokens[0], &tokens[2]);
+
         assert_eq!(tokens.len(), 3);
+        assert_eq!(
+            open.kind,
+            TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(close_start)
+            }))
+        );
+        assert_eq!(open.span.end - open.span.start, 1);
+        assert_eq!(open.span.start, open_start);
+        assert_eq!(open.span.end, open_start + 1);
+
+        assert_eq!(
+            close.kind,
+            TokenKind::Punctuation(Punctuation::Quote(Quote {
+                twin_loc: Some(open_start)
+            }))
+        );
+        assert_eq!(close.span.end - close.span.start, 1);
+        assert_eq!(close.span.start, close_start);
+        assert_eq!(close.span.end, close_start + 1);
     }
 
     #[test]
-    #[ignore]
     fn apostrophe() {
         let source = r#"The book's cover"#;
 
         let document = Document::new_curated(source, &Latex);
+        assert!(!document.tokens().any(|t| t.kind.is_quote()));
+
         let tokens = document.tokens().map(|t| t.clone()).collect_vec();
         dbg!(&tokens);
+    }
 
-        assert_eq!(tokens.len(), 7);
+    #[test]
+    fn apostrophe_in_single_quote() {
+        let source = r#"`It's not'"#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
     }
 
     #[test]
@@ -395,21 +443,21 @@ mod tests {
 
     #[test]
     fn multi_byte_chars() {
-        let source = r#"An errorz."#;
+        let source = r#"An “errorz”."#; // this is not very latex but that's not the point
 
         let document = Document::new_curated(source, &Latex);
         let tokens = document.tokens().map(|t| t.clone()).collect_vec();
 
-        assert_eq!(tokens.len(), 4);
+        assert_eq!(tokens.len(), 6);
 
         assert_eq!(
-            tokens[2]
+            tokens[3]
                 .to_fat(source.chars().collect_vec().as_ref())
                 .content,
             "errorz".chars().collect_vec()
         );
 
-        let lens: [usize; _] = [2, 1, 6, 1];
+        let lens: [usize; _] = [2, 1, 1, 6, 1, 1];
         lens.into_iter().enumerate().for_each(|(i, len)| {
             let token = &tokens[i];
             assert_eq!(token.span.end - token.span.start, len);
