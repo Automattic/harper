@@ -68,6 +68,13 @@ impl Parser for Latex {
                             None
                         }
                     }
+                    SyntaxKind::HREF => Some(vec![Token {
+                        span: Span::new(
+                            (u32::from(node.text_range().start())) as usize,
+                            (u32::from(node.text_range().end())) as usize,
+                        ),
+                        kind: TokenKind::Url,
+                    }]),
                     _ => None,
                 }
             })
@@ -506,5 +513,25 @@ mod tests {
         dbg!(&tokens);
 
         assert!(!tokens.iter().any(|t| t.kind.is_paragraph_break()));
+    }
+
+    #[test]
+    fn href() {
+        let source = r#"
+            Visit \href{https://example.com}.
+        "#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        let href_token = tokens.iter().find(|t| t.kind.is_url());
+        assert!(href_token.is_some());
+
+        let src: Vec<char> = source.chars().collect();
+        assert_eq!(
+            href_token.unwrap().span.get_content(&src),
+            "https://example.com".chars().collect_vec()
+        );
     }
 }
