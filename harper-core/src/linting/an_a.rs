@@ -167,6 +167,7 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
         word,
         ['u', 'k', ..]
             | ['u', 'b', 'i', ..]
+            | ['u', 'd', 'e', ..] // for 'udev'
             | ['e', 'u', 'p', 'h', ..]
             | ['e', 'u', 'g' | 'l' | 'c', ..]
             | ['o', 'n', 'e', ..]
