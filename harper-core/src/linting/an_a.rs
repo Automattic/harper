@@ -495,6 +495,11 @@ mod tests {
     }
 
     #[test]
+    fn an_honest() {
+        assert_lint_count("an honest mistake", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
     fn dont_flag_an_herb_for_american() {
         assert_lint_count("an herb", AnA::new(Dialect::American), 0);
     }
