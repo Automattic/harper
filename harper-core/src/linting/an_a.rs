@@ -228,15 +228,36 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
-    // If it's three letters or longer, and the first two letters are not consonants, the initialism might be an acronym.
-    // (Like MAC, NASA, LAN, etc.)
-    word.get(..3).is_some_and(|first_chars| {
-        first_chars
+    fn word_contains_false_positive_sequence(word: &[char]) -> bool {
+        let likely_false_positive_sequences = [['V', 'C']];
+        for fp_sequence in likely_false_positive_sequences {
+            if word
+                .windows(fp_sequence.len())
+                .any(|subslice| subslice == fp_sequence)
+            {
+                return true;
+            }
+        }
+        false
+    }
+
+    // If the initialism is shorter than this, skip it.
+    const MIN_LEN: usize = 3;
+
+    if let Some(first_chars) = word.get(..MIN_LEN)
+        // Unlikely to be an acronym if it contains non-alphabetic characters.
+        && first_chars.iter().copied().all(char::is_alphabetic)
+        && !word_contains_false_positive_sequence(word)
+    {
+        let vowel_map = first_chars
             .iter()
-            .take(2)
-            .fold(0, |acc, char| acc + !char.is_vowel() as u8)
-            < 2
-    })
+            .map(CharExt::is_vowel)
+            .collect_array::<MIN_LEN>()
+            .unwrap();
+        matches!(vowel_map, [false, true, false] | [false, true, true])
+    } else {
+        false
+    }
 }
 
 #[cfg(test)]
