@@ -423,10 +423,22 @@ mod tests {
     }
 
     #[test]
-    fn assorted_abbreviation_esque() {
+    fn a_udev() {
         assert_lint_count("a udev rule", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn an_mdns() {
         assert_lint_count("an mDNS tool", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn an_rflink() {
         assert_lint_count("an RFLink device", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn an_ffmpeg() {
         assert_lint_count(
             "an FFmpeg-compatible input file",
             AnA::new(Dialect::American),
@@ -435,9 +447,17 @@ mod tests {
     }
 
     #[test]
-    fn assorted() {
+    fn a_honey() {
         assert_lint_count("a Honeywell alarm panel", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn an_onedrive() {
         assert_lint_count("a OneDrive folder", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn a_ubiquiti() {
         assert_lint_count(
             "a Ubiquiti UniFi Network application",
             AnA::new(Dialect::American),
