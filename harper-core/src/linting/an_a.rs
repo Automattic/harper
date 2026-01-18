@@ -142,9 +142,10 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
     if matches!(
         word,
         [] | ['u', 'k', ..]
+            | ['u', 'b', 'i', ..]
             | ['e', 'u', 'p', 'h', ..]
             | ['e', 'u', 'g' | 'l' | 'c', ..]
-            | ['o', 'n', 'e']
+            | ['o', 'n', 'e', ..]
             | ['o', 'n', 'c', 'e']
     ) {
         return InitialSound::Consonant;
