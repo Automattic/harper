@@ -126,12 +126,14 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
     let word = {
         let word_casing = word.get_casing_unfiltered();
         match word_casing.as_slice() {
+            // Lower-upper or upper-upper, possibly a (partial) initialism.
             [Some(first_char_case), Some(Upper), ..] => {
                 &word[0..word_casing
                     .iter()
                     .position(|c| *c != Some(*first_char_case))
                     .unwrap_or(word.len())]
             }
+            // Lower-lower or upper-lower, unlikely to be a partial initialism.
             _ => word,
         }
     };
@@ -253,6 +255,7 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
+    /// Does the word contain any sequences that might indicate it's not an acronym?
     fn word_contains_false_positive_sequence(word: &[char]) -> bool {
         let likely_false_positive_sequences = [['V', 'C']];
         for fp_sequence in likely_false_positive_sequences {
