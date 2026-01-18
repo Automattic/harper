@@ -2,9 +2,10 @@ use std::borrow::Cow;
 
 use itertools::Itertools;
 
+use crate::case::Case::Upper;
 use crate::char_ext::CharExt;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dialect, Document, TokenStringExt};
+use crate::{CaseIterExt, Dialect, Document, TokenStringExt};
 
 #[derive(PartialEq)]
 pub enum InitialSound {
@@ -122,15 +123,28 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
         return None;
     }
 
+    let word = {
+        let word_casing = word.get_casing_unfiltered();
+        match word_casing.as_slice() {
+            [Some(first_char_case), Some(Upper), ..] => {
+                &word[0..word_casing
+                    .iter()
+                    .position(|c| *c != Some(*first_char_case))
+                    .unwrap_or(word.len())]
+            }
+            _ => word,
+        }
+    };
+
     let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
-    if is_likely_initialism && !is_likely_acronym(word) {
+    if word.len() == 1 || (is_likely_initialism && !is_likely_acronym(word)) {
         if matches!(word, ['S', 'Q', 'L']) {
             return Some(InitialSound::Either);
         }
         return Some(
             if matches!(
-                word[0],
+                word[0].to_ascii_uppercase(),
                 'A' | 'E' | 'F' | 'H' | 'I' | 'L' | 'M' | 'N' | 'O' | 'R' | 'S' | 'X'
             ) {
                 InitialSound::Vowel
