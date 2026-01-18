@@ -153,7 +153,6 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> InitialSound {
     if matches!(
         word,
         ['h', 'o', 'u', 'r', ..]
-            | ['h', 'o', 'n', ..]
             | ['u', 'n', 'i', 'n' | 'm', ..]
             | ['u', 'n', 'a' | 'u', ..]
             | ['u', 'r', 'b', ..]
