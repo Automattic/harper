@@ -159,6 +159,10 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
     let word = to_lower_word(word);
     let word = word.as_ref();
 
+    if matches!(word, ['u', 'b', 'i', ..]) {
+        return Some(InitialSound::Either);
+    }
+
     if matches!(word, ['e', 'u', 'l', 'e', ..]) {
         return Some(InitialSound::Vowel);
     }
@@ -166,7 +170,6 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
     if matches!(
         word,
         ['u', 'k', ..]
-            | ['u', 'b', 'i', ..]
             | ['u', 'd', 'e', ..] // for 'udev'
             | ['e', 'u', 'p', 'h', ..]
             | ['e', 'u', 'g' | 'l' | 'c', ..]
@@ -233,6 +236,7 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
             | ['x', 'b', 'o', 'x']
             | ['h', 'e', 'i', 'r', ..]
             | ['h', 'o', 'n', 'o', 'r', ..]
+            | ['h', 'o', 'n', 'e', 's', ..]
     ) {
         return Some(InitialSound::Vowel);
     }
