@@ -481,4 +481,30 @@ mod tests {
         assert!(tokens[1].kind.is_word());
         assert!(tokens[2].kind.is_paragraph_break());
     }
+
+    #[test]
+    fn paragraph_break() {
+        let source = r#"
+            Here is a sentence.
+
+            It's followed by a paragraph break.
+        "#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert!(tokens.iter().any(|t| t.kind.is_paragraph_break()));
+
+        let source = r#"
+            Here is a sentence.
+            It's \emph{not} followed by a paragraph break.
+        "#;
+
+        let document = Document::new_curated(source, &Latex);
+        let tokens = document.tokens().map(|t| t.clone()).collect_vec();
+        dbg!(&tokens);
+
+        assert!(!tokens.iter().any(|t| t.kind.is_paragraph_break()));
+    }
 }
