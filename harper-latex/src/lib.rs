@@ -161,17 +161,8 @@ fn post_process_tokens(source: &[char], harper_tokens_initial: &mut Vec<Token>) 
 fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
     let text = String::from(node.text());
 
-    let double_quotes_re = Regex::new(r"``.+''").unwrap();
-    let double_quotes_open_close: HashMap<usize, usize> = HashMap::from_iter(
-        double_quotes_re
-            .find_iter(&text)
-            .map(|m| (m.start(), m.end())),
-    );
-    let double_quotes_close_open: HashMap<usize, usize> =
-        HashMap::from_iter(double_quotes_open_close.iter().map(|(k, v)| (*v, *k)));
-
     let harper_tokens = PlainEnglish
-        .parse_str(text)
+        .parse_str(&text)
         .into_iter()
         .map(|mut t| {
             let span_start = byte_to_char[u32::from(node.text_range().start()) as usize];
@@ -179,6 +170,12 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
             t
         })
         .collect_vec();
+
+    let double_quotes_re = Regex::new(r"``|''").unwrap();
+    let double_quotes_by_start: HashMap<usize, _> =
+        HashMap::from_iter(double_quotes_re.find_iter(&text).map(|m| (m.start(), m)));
+
+    let mut double_quote_open_stack: Vec<usize> = vec![]; // indices of currently open quote tokens
 
     let mut harper_tokens_mod = vec![];
     let mut i = 0;
@@ -189,24 +186,38 @@ fn text_node_to_tokens(node: SyntaxNode, byte_to_char: &[u32]) -> Vec<Token> {
 
         harper_tokens_mod.push(t.clone());
 
-        if double_quotes_open_close.contains_key(&start) {
+        if double_quotes_by_start.contains_key(&start) {
+            let m = double_quotes_by_start.get(&start).unwrap();
+            let match_text = m.as_str();
+
+            let is_open = match_text == "``";
+            let corresponding_open_idx = double_quote_open_stack.pop();
+
+            let twin_loc = if is_open {
+                None
+            } else {
+                let corresponding_open = harper_tokens_mod
+                    .get(corresponding_open_idx.unwrap())
+                    .unwrap();
+                Some(corresponding_open.span.start)
+            };
+
             let quote_token = harper_tokens_mod.last_mut().unwrap();
             quote_token.span.end += 1;
-            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
-                twin_loc: Some(*double_quotes_open_close.get(&start).unwrap() - 2),
-            }));
+            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote { twin_loc }));
 
-            i += 1;
-        }
+            if is_open {
+                double_quote_open_stack.push(i);
+            } else {
+                let corresponding_open = harper_tokens_mod
+                    .get_mut(corresponding_open_idx.unwrap())
+                    .unwrap();
+                corresponding_open.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
+                    twin_loc: Some(start),
+                }));
+            }
 
-        if double_quotes_close_open.contains_key(&(start + 2)) {
-            let quote_token = harper_tokens_mod.last_mut().unwrap();
-            quote_token.span.end += 1;
-            quote_token.kind = TokenKind::Punctuation(Punctuation::Quote(Quote {
-                twin_loc: Some(*double_quotes_close_open.get(&(start + 2)).unwrap()),
-            }));
-
-            i += 1;
+            i += 1; // skip the next backtick/apostrophe token
         }
 
         i += 1;
@@ -319,6 +330,7 @@ mod tests {
                 twin_loc: Some(close_start)
             }))
         );
+        assert_eq!(open.span.end - open.span.start, 2);
         assert_eq!(open.span.start, open_start);
         assert_eq!(open.span.end, open_start + 2);
 
@@ -328,6 +340,7 @@ mod tests {
                 twin_loc: Some(open_start)
             }))
         );
+        assert_eq!(close.span.end - close.span.start, 2);
         assert_eq!(close.span.start, close_start);
         assert_eq!(close.span.end, close_start + 2);
     }
