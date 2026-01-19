@@ -4,7 +4,7 @@ use std::borrow::Cow;
 use smallvec::SmallVec;
 
 // TODO: remove this when `SmallVec` allows retrieving this value in a const context.
-pub const CHAR_STRING_INLINE_SIZE: usize = 16;
+pub(crate) const CHAR_STRING_INLINE_SIZE: usize = 16;
 
 /// A char sequence that improves cache locality.
 /// Most English words are fewer than 12 characters.
