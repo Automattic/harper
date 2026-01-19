@@ -123,6 +123,10 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
         return None;
     }
 
+    // Try to get the first chunk of a word that appears to be a partial initialism.
+    // For example:
+    // - `RFL` from `RFLink`
+    // - `m` from `mDNS`
     let word = {
         let word_casing = word.get_casing_unfiltered();
         match word_casing.as_slice() {
