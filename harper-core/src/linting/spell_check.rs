@@ -87,7 +87,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             if let Some(mis_f) = word_chars.first()
                 && mis_f.is_uppercase()
             {
-                for sug_f in possibilities.iter_mut().filter_map(|w| w.first_mut()) {
+                for sug_f in possibilities.iter_mut().filter_map(|w| {
+                    // Skip words that have uppercase chars in any position except the first.
+                    // (For words with specific capitalization, like 'macOS')
+                    w.iter()
+                        .skip(1)
+                        .all(|c| !c.is_uppercase())
+                        .then_some(w.first_mut())
+                        .flatten()
+                }) {
                     *sug_f = sug_f.to_uppercase().next().unwrap();
                 }
             }
