@@ -126,6 +126,7 @@ use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
 use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
@@ -512,6 +513,7 @@ impl LintGroup {
         insert_expr_rule!(NominalWants, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_expr_rule!(ObsessPreposition, true);
         insert_expr_rule!(OfCourse, true);
         insert_expr_rule!(OldestInTheBook, true);
         insert_expr_rule!(OnFloor, true);
