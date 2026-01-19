@@ -134,7 +134,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -511,6 +511,16 @@ mod tests {
         assert_no_lints(
             "PR",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn no_improper_suggestion_for_macos() {
+        assert_good_and_bad_suggestions(
+            "MacOS",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            &["macOS"],
+            &["MacOS"],
         );
     }
 }
