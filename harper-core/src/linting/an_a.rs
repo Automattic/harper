@@ -263,6 +263,11 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
 }
 
 fn is_likely_acronym(word: &[char]) -> bool {
+    // "LED" is commonly spelled out letter-by-letter, not pronounced as a word.
+    if matches!(word, ['L', 'E', 'D']) {
+        return false;
+    }
+
     /// Does the word contain any sequences that might indicate it's not an acronym?
     fn word_contains_false_positive_sequence(word: &[char]) -> bool {
         let likely_false_positive_sequences = [['V', 'C']];
@@ -534,5 +539,15 @@ mod tests {
     #[test]
     fn dont_flag_an_sql() {
         assert_lint_count("an SQL query", AnA::new(Dialect::Australian), 0);
+    }
+
+    #[test]
+    fn dont_flag_an_led() {
+        assert_lint_count("an LED", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
+    fn flag_a_led() {
+        assert_lint_count("a LED", AnA::new(Dialect::American), 1);
     }
 }
