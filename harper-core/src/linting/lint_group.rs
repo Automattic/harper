@@ -209,6 +209,7 @@ use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::well_educated::WellEducated;
 use super::whereas::Whereas;
+use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
@@ -587,6 +588,7 @@ impl LintGroup {
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
         insert_expr_rule!(Whereas, true);
+        insert_expr_rule!(WhomSubjectOfVerb, true);
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_expr_rule!(WishCould, true);
