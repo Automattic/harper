@@ -220,6 +220,7 @@ mod way_too_adjective;
 mod weir_rules;
 mod well_educated;
 mod whereas;
+mod whom_subject_of_verb;
 mod widely_accepted;
 mod win_prize;
 mod wish_could;
