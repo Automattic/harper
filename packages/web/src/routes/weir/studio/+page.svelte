@@ -20,7 +20,7 @@ type WeirpackTestFailure = {
 type WeirpackTestFailures = Record<string, WeirpackTestFailure[]>;
 
 const defaultManifest = {
-	name: 'Weirpack Playground',
+	name: 'Weirpack Studio',
 	author: 'Anonymous',
 	version: '0.1.0',
 	description: 'Exploring Weir rules in the browser.',
@@ -441,7 +441,7 @@ onMount(async () => {
 		<main class="relative z-10 flex flex-1 flex-col">
 			<div class="flex items-center justify-between border-b border-black/10 bg-white/70 px-4 py-3">
 				<div class="flex items-center gap-3">
-					<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">Playground</div>
+					<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">Studio</div>
 					<div class="text-sm font-medium text-black/80">
 						{activeFile?.name ?? 'No file selected'}
 					</div>
