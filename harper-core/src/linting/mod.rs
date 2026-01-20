@@ -217,6 +217,7 @@ mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
 mod vice_versa;
+mod vicious_loop;
 mod was_aloud;
 mod way_too_adjective;
 mod weir_rules;
