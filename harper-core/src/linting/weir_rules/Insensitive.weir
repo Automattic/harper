@@ -1,0 +1,8 @@
+expr main (unsensitive)
+
+let message "This word has a more standard, more common synonym."
+let description "Suggests the more standard and common synonym `insensitive`."
+let kind "WordChoice"
+let becomes "insensitive"
+
+test "We want to potentially make an unsensitive header" "We want to potentially make an insensitive header"

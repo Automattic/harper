@@ -1,0 +1,8 @@
+expr main (far and few between)
+
+let message "The correct idiom is `few and far between`?"
+let description "Corrects `far and few between` to the standard idiom `few and far between`."
+let kind "Eggcorn"
+let becomes "few and far between"
+
+test "Their neighbors were far and few between, which only made it even more unlikely that surveillance footage recovered from their properties could help." "Their neighbors were few and far between, which only made it even more unlikely that surveillance footage recovered from their properties could help."

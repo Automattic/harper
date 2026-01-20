@@ -17,7 +17,7 @@ impl Linter for CapitalizePersonalPronouns {
                     span_content,
                     ['i']
                         | ['i', '\'', 'd']
-                        | ['i', '\'', 'd', '\\', 'v', 'e']
+                        | ['i', '\'', 'd', '\'', 'v', 'e']
                         | ['i', '\'', 'l', 'l']
                         | ['i', '\'', 'm']
                         | ['i', '\'', 'v', 'e']

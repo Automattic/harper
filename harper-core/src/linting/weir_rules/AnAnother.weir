@@ -1,0 +1,9 @@
+expr main [(an another), (a another)]
+
+let message "Use `another` on its own."
+let description "Corrects `an another` and `a another`."
+let kind "Redundancy"
+let becomes "another"
+
+test "Render shader to use it as texture in an another shader." "Render shader to use it as texture in another shader."
+test "Audit login is a another package for laravel framework." "Audit login is another package for laravel framework."

@@ -1,0 +1,9 @@
+expr main [(somebody's else), (somebody's else's)]
+
+let message "This should be `somebody else's`?"
+let description "Corrects `somebody else's` when the `'s` is in the wrong place."
+let kind "Grammar"
+let becomes "somebody else's"
+
+test "I really like your component and change to somebody's else would be really bad for now." "I really like your component and change to somebody else's would be really bad for now."
+test "Nice to know it's somebody's else's problem for a change." "Nice to know it's somebody else's problem for a change."

@@ -22,24 +22,9 @@ pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
 }
 
 impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
-    /// Wrapper function around [`Self::new`] that allows construction with Strings.
+    /// Create a linter that corrects the capitalization of phrases provided.
     pub fn new_strs(
         canonical_versions: impl IntoIterator<Item = impl AsRef<str>>,
-        description: impl ToString,
-        dictionary: D,
-    ) -> Self {
-        Self::new(
-            canonical_versions
-                .into_iter()
-                .map(|s| s.as_ref().chars().collect::<Vec<_>>()),
-            description,
-            dictionary,
-        )
-    }
-
-    /// Create a linter that corrects the capitalization of phrases provided.
-    pub fn new(
-        canonical_versions: impl IntoIterator<Item = impl AsRef<[char]>>,
         description: impl ToString,
         dictionary: D,
     ) -> Self {
@@ -48,11 +33,8 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
         let mut expr_map = ExprMap::default();
 
         for can_vers in canonical_versions {
-            let doc = Document::new_from_vec(
-                can_vers.as_ref().to_vec().into(),
-                &PlainEnglish,
-                &dictionary,
-            );
+            let doc = Document::new_basic_tokenize(can_vers.as_ref(), &PlainEnglish);
+
             let expr = FixedPhrase::from_document(&doc);
 
             expr_map.insert(expr, doc);

@@ -1314,6 +1314,16 @@ Message: |
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     713 | flustered to tell you—all I know is, something comes at me like a
+     714 | Jack-in-the-box, and up I goes like a sky-rocket!”
+         |                           ^~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “go”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      723 | minute or two, they began moving about again, and Alice heard the Rabbit say, “A
@@ -1520,15 +1530,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
-         |           ^~~~~~ The canonical dictionary spelling is title case: `head's`.
-Suggest:
-  - Replace with: “head's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
@@ -1691,16 +1692,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | the sky.
          | ~~~~~~~~ This sentence is 49 words long.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
-         |                                                                  ^~~~ The canonical dictionary spelling is title case: `he's`.
-    1128 | idiotic!” And she opened the door and went in.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -1907,16 +1898,6 @@ Message: |
 
 
 
-Lint:    Grammar (127 priority)
-Message: |
-    1379 | “I didn’t know it was your table,” said Alice; “it’s laid for a great many more
-         |                                                      ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
-    1380 | than three.”
-Suggest:
-  - Replace with: “lain”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1415 | dropped, and the party sat silent for a minute, while Alice thought over all she
@@ -1994,17 +1975,6 @@ Lint:    Formatting (255 priority)
 Message: |
     1510 | > ‘Up above the world you fly, Like a tea-tray in the sky. Twinkle, twinkle—’”
          |                                                                              ^ This quote has no termination.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    1545 | feeble voice: “I heard every word you fellows were saying.”
-         |                                   ^~~ The possessive version of this word is more common in this context.
-Suggest:
-  - Replace with: “your”
-  - Replace with: “you're a”
-  - Replace with: “you're an”
 
 
 
@@ -2598,6 +2568,16 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+    2121 | “This here young lady,” said the Gryphon, “she wants for to know your history,
+    2122 | she do.”
+         |     ^~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “does”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2133 | These words were followed by a very long silence, broken only by an occasional
@@ -2960,16 +2940,6 @@ Message: |
     2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
          |                                                               ^ This quote has no termination.
     2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
-    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-         |                                 ^~~~ The canonical dictionary spelling is title case: `he's`.
-Suggest:
-  - Replace with: “he's”
 
 
 

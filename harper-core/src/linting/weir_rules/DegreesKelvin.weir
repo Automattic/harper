@@ -1,0 +1,8 @@
+expr main [(degrees kelvin), (degrees Kelvin), (degree kelvin), (degree Kelvin)]
+
+let message "Use `kelvins` when discussing the unit Kelvin."
+let description "Corrects use of `degrees kelvin` to `kelvins`."
+let kind "Usage"
+let becomes ["kelvins", "kelvin"]
+
+test "degrees kelvin" "kelvins"

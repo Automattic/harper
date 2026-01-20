@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey } from './protocol';
+import type { ActivationKey, Hotkey } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -90,6 +90,19 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getActivationKey' })).key;
 	}
 
+	public static async getHotkey(): Promise<Hotkey> {
+		return (await chrome.runtime.sendMessage({ kind: 'getHotkey' })).hotkey;
+	}
+
+	public static async setHotkey(hotkey: Hotkey): Promise<void> {
+		const modifiers = hotkey.modifiers;
+		const hotkeyCopy = {
+			modifiers: [...modifiers], // Create a new array
+			key: hotkey.key,
+		};
+		await chrome.runtime.sendMessage({ kind: 'setHotkey', hotkey: hotkeyCopy });
+	}
+
 	public static async setActivationKey(key: ActivationKey): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });
 	}
@@ -106,6 +119,18 @@ export default class ProtocolClient {
 
 	public static async getUserDictionary(): Promise<string[]> {
 		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
+	}
+
+	public static async getInstalledOn(): Promise<string | null> {
+		return (await chrome.runtime.sendMessage({ kind: 'getInstalledOn' })).installedOn;
+	}
+
+	public static async getReviewed(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getReviewed' })).reviewed;
+	}
+
+	public static async setReviewed(reviewed: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {

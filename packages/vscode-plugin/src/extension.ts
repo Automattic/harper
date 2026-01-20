@@ -1,5 +1,5 @@
-import type { ExtensionContext } from 'vscode';
-import { commands, StatusBarAlignment, type StatusBarItem, Uri, window, workspace } from 'vscode';
+import type { ExtensionContext, QuickPickItem, StatusBarItem } from 'vscode';
+import { ConfigurationTarget, commands, StatusBarAlignment, Uri, window, workspace } from 'vscode';
 import type { Executable, LanguageClientOptions } from 'vscode-languageclient/node';
 import { LanguageClient, ResponseError, TransportKind } from 'vscode-languageclient/node';
 
@@ -100,6 +100,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
 		commands.registerCommand('harper.languageserver.restart', startLanguageServer),
 	);
 
+	context.subscriptions.push(commands.registerCommand('harper.changeDialect', changeDialect));
+
 	await startLanguageServer();
 
 	// VS Code:
@@ -111,6 +113,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 	// 101 is left of line/column
 	dialectStatusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 100);
 	dialectStatusBarItem.tooltip = 'Harper English dialect';
+	dialectStatusBarItem.command = 'harper.changeDialect';
 	context.subscriptions.push(dialectStatusBarItem);
 
 	context.subscriptions.push(
@@ -195,6 +198,23 @@ function updateDialectStatusBar(): void {
 	console.log(`** dialect set to ${dialect} **`, dialect);
 }
 
+async function changeDialect(): Promise<void> {
+	const dialectNames = ['American', 'British', 'Australian', 'Canadian', 'Indian'];
+	const dialects: QuickPickItem[] = dialectNames.map((name) => ({
+		label: name,
+	}));
+
+	const selected = await window.showQuickPick(dialects, {
+		placeHolder: 'Select Harper dialect',
+	});
+
+	if (selected && typeof selected !== 'string') {
+		await workspace
+			.getConfiguration('harper')
+			.update('dialect', selected.label, ConfigurationTarget.Global);
+	}
+}
+
 export function deactivate(): Thenable<void> | undefined {
 	if (!client) {
 		return undefined;
@@ -209,5 +229,6 @@ function getFlagAndCode(dialect: string): string[] | undefined {
 		Australian: ['🇦🇺', 'AU'],
 		British: ['🇬🇧', 'GB'],
 		Canadian: ['🇨🇦', 'CA'],
+		Indian: ['🇮🇳', 'IN'],
 	}[dialect];
 }

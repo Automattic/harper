@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "1.3.0"
+version = "1.4.1"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -18,20 +18,21 @@ ordered-float = { version = "5.1.0", features = ["serde"] }
 paste = "1.0.14"
 pulldown-cmark = "0.13.0"
 serde = { version = "1.0.228", features = ["derive"] }
-serde_json = "1.0.145"
+serde_json = "1.0.149"
 smallvec = { version = "1.15.1", features = ["serde"] }
-thiserror = "2.0.17"
+thiserror = "2.0.18"
 unicode-blocks = "0.1.9"
 unicode-script = "0.5.8"
 unicode-width = "0.2.2"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.56.0"
-lru = "0.16.2"
+lru = "0.16.3"
 foldhash = "0.2.0"
 strum_macros = "0.27.2"
 strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "1.0.0" }
+harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional = true }
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
 
@@ -48,5 +49,6 @@ name = "parse_essay"
 harness = false
 
 [features]
-default = []
+default = ["thesaurus"]
 concurrent = []
+thesaurus = ["dep:harper-thesaurus"]

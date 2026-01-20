@@ -488,4 +488,29 @@ mod tests {
             "Generally",
         );
     }
+
+    #[test]
+    fn flag_prepone_in_non_indian_english() {
+        assert_lint_count(
+            "We had to prepone the meeting",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+    }
+
+    #[test]
+    fn dont_flag_prepone_in_indian_english() {
+        assert_no_lints(
+            "We had to prepone the meeting",
+            SpellCheck::new(FstDictionary::curated(), Dialect::Indian),
+        );
+    }
+
+    #[test]
+    fn dont_flag_pr() {
+        assert_no_lints(
+            "PR",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
 }

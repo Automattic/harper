@@ -1,0 +1,7 @@
+expr main (I a m)
+
+let message "Did you mean `I am`?"
+let description "Fixes the incorrect spacing in `I a m` to properly form `I am`."
+let kind "Typo"
+let becomes "I am"
+

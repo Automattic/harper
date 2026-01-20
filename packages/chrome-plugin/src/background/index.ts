@@ -5,6 +5,7 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
+	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -14,9 +15,15 @@ import {
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
 	type GetEnabledDomainsResponse,
+	type GetHotkeyResponse,
+	type GetInstalledOnRequest,
+	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetReviewedRequest,
+	type GetReviewedResponse,
 	type GetUserDictionaryResponse,
+	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
@@ -30,6 +37,8 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
+	type SetHotkeyRequest,
+	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
@@ -52,6 +61,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 let linter: LocalLinter;
 
 getDialect().then(setDialect);
+setInstalledOnIfMissing();
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
@@ -98,6 +108,7 @@ async function enableDefaultDomains() {
 		'classroom.google.com',
 		'quilljs.com',
 		'www.wattpad.com',
+		'ckeditor.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -147,6 +158,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'getHotkey':
+			return handleGetHotkey();
+		case 'setHotkey':
+			return handleSetHotkey(message);
 		case 'openReportError':
 			return handleOpenReportError(message);
 		case 'openOptions':
@@ -154,6 +169,12 @@ function handleRequest(message: Request): Promise<Response> {
 			return Promise.resolve(createUnitResponse());
 		case 'postFormData':
 			return handlePostFormData(message);
+		case 'getInstalledOn':
+			return handleGetInstalledOn(message);
+		case 'getReviewed':
+			return handleGetReviewed(message);
+		case 'setReviewed':
+			return handleSetReviewed(message);
 	}
 }
 
@@ -281,6 +302,21 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	return createUnitResponse();
 }
 
+async function handleGetHotkey(): Promise<GetHotkeyResponse> {
+	const hotkey = await getHotkey();
+
+	return { kind: 'getHotkey', hotkey };
+}
+
+async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
+	// Create a plain object to avoid proxy cloning issues
+	const hotkey = {
+		modifiers: [...req.hotkey.modifiers],
+		key: req.hotkey.key,
+	};
+	await setHotkey(hotkey);
+}
+
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
@@ -319,6 +355,19 @@ async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDat
 		console.error('Failed to post form data', error);
 		return { kind: 'postFormData', success: false };
 	}
+}
+
+async function handleGetInstalledOn(_req: GetInstalledOnRequest): Promise<GetInstalledOnResponse> {
+	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
+}
+
+async function handleGetReviewed(_req: GetReviewedRequest): Promise<GetReviewedResponse> {
+	return { kind: 'getReviewed', reviewed: await getReviewed() };
+}
+
+async function handleSetReviewed(req: SetReviewedRequest): Promise<UnitResponse> {
+	await setReviewed(req.reviewed);
+	return createUnitResponse();
 }
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
@@ -363,11 +412,24 @@ async function getActivationKey(): Promise<ActivationKey> {
 	return resp.activationKey;
 }
 
+async function getHotkey(): Promise<Hotkey> {
+	const resp = await chrome.storage.local.get({ hotkey: { modifiers: ['Ctrl'], key: 'e' } });
+	return resp.hotkey;
+}
+
 async function setActivationKey(key: ActivationKey) {
 	await chrome.storage.local.set({ activationKey: key });
 }
 
+async function setHotkey(hotkey: Hotkey) {
+	await chrome.storage.local.set({ hotkey: hotkey });
+}
+
 function initializeLinter(dialect: Dialect) {
+	if (linter != null) {
+		linter.dispose();
+	}
+
 	linter = new LocalLinter({
 		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
@@ -452,4 +514,29 @@ async function addToDictionary(words: string[]): Promise<void> {
 async function getUserDictionary(): Promise<string[]> {
 	const resp = await chrome.storage.local.get({ userDictionary: [] });
 	return resp.userDictionary;
+}
+
+/** Record the date the extension was installed, if it's missing. */
+async function setInstalledOnIfMissing(): Promise<void> {
+	const current = await getInstalledOn();
+	if (current !== null) {
+		return;
+	}
+
+	const installedOn = new Date().toISOString();
+	await chrome.storage.local.set({ installedOn });
+}
+
+async function getInstalledOn(): Promise<string | null> {
+	const resp = await chrome.storage.local.get({ installedOn: null });
+	return resp.installedOn;
+}
+
+async function getReviewed(): Promise<boolean> {
+	const resp = await chrome.storage.local.get({ reviewed: false });
+	return Boolean(resp.reviewed);
+}
+
+async function setReviewed(reviewed: boolean): Promise<void> {
+	await chrome.storage.local.set({ reviewed });
 }

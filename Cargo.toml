@@ -1,5 +1,5 @@
 [workspace]
-members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "fuzz"]
+members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "harper-thesaurus", "harper-asciidoc", "fuzz"]
 resolver = "2"
 
 [profile.test]

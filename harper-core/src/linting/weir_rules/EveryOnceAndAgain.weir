@@ -1,0 +1,8 @@
+expr main (every once and again)
+
+let message "For things that happen only occasionaly use `every once in a while. For things that persistently happen use `once again`."
+let description "Corrects `every once and again` to `every once in a while` or `once again`."
+let kind "Usage"
+let becomes ["every once in a while", "once again"]
+
+test "Ys have been replaced with Ps, happens randomly every once and again with different letters" "Ys have been replaced with Ps, happens randomly every once in a while with different letters"
