@@ -1,6 +1,14 @@
 <script lang="ts">
 import { Button, Card, Input } from 'components';
 import type { AceEditor } from 'svelte-ace';
+import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
+import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
+import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
+import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
+import EditIcon from '$lib/components/icons/EditIcon.svelte';
+import PlayIcon from '$lib/components/icons/PlayIcon.svelte';
+import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
+import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 
 export type FileEntry = {
 	id: string;
@@ -52,9 +60,7 @@ export let getEditorMode: (name: string) => string;
 				title="Collapse drawer"
 				aria-label="Collapse drawer"
 			>
-				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
-					<path d="M11.78 4.22a.75.75 0 0 1 0 1.06L8.06 9l3.72 3.72a.75.75 0 1 1-1.06 1.06L6.47 9.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0z" />
-				</svg>
+				<ChevronLeftIcon className="h-4 w-4" />
 			</Button>
 		{:else}
 			<Button
@@ -65,9 +71,7 @@ export let getEditorMode: (name: string) => string;
 				title="Expand drawer"
 				aria-label="Expand drawer"
 			>
-				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
-					<path d="M8.22 4.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 9 8.22 5.28a.75.75 0 0 1 0-1.06z" />
-				</svg>
+				<ChevronRightIcon className="h-4 w-4" />
 			</Button>
 		{/if}
 	</div>
@@ -81,9 +85,7 @@ export let getEditorMode: (name: string) => string;
 				on:click={onCreateFile}
 				disabled={!packLoaded}
 			>
-				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
-					<path d="M10 4a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 10 4z" />
-				</svg>
+				<PlusIcon className="h-4 w-4" />
 				New file
 			</Button>
 		</div>
@@ -128,10 +130,7 @@ export let getEditorMode: (name: string) => string;
 							title="Rename file"
 							aria-label="Rename file"
 						>
-							<svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
-								<path d="M13.64 2.86a1.5 1.5 0 0 1 2.12 2.12l-8.5 8.5-3.36.84.84-3.36 8.5-8.5z" />
-								<path d="M11.5 4.99 15 8.5" stroke="currentColor" stroke-width="1.2" />
-							</svg>
+							<EditIcon className="h-3.5 w-3.5" />
 						</Button>
 						{#if files.length > 1}
 							<Button
@@ -142,9 +141,7 @@ export let getEditorMode: (name: string) => string;
 								title="Delete file"
 								aria-label="Delete file"
 							>
-								<svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
-									<path d="M7.5 3a1 1 0 0 0-1 1v1H4.75a.75.75 0 0 0 0 1.5h.57l.6 9.01A2 2 0 0 0 7.91 17h4.18a2 2 0 0 0 1.99-1.49l.6-9.01h.57a.75.75 0 0 0 0-1.5H13.5V4a1 1 0 0 0-1-1h-5zM8 6h4v8H8V6z" />
-								</svg>
+								<TrashIcon className="h-3.5 w-3.5" />
 							</Button>
 						{/if}
 					</div>
@@ -176,9 +173,7 @@ export let getEditorMode: (name: string) => string;
 				aria-label="Close Weirpack"
 				on:click={onClosePack}
 			>
-				<svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
-					<path d="M5.72 5.72a.75.75 0 0 1 1.06 0L10 8.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L11.06 10l3.22 3.22a.75.75 0 1 1-1.06 1.06L10 11.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L8.94 10 5.72 6.78a.75.75 0 0 1 0-1.06z" />
-				</svg>
+				<CloseIcon className="h-3.5 w-3.5" />
 			</Button>
 		</div>
 	</div>
@@ -216,16 +211,11 @@ export let getEditorMode: (name: string) => string;
 		on:click={onRunTests}
 		disabled={!packLoaded || runningTests}
 	>
-		<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
-			<path d="M6.75 4.25a.75.75 0 0 1 .78.02l7.5 4.75a.75.75 0 0 1 0 1.26l-7.5 4.75A.75.75 0 0 1 6 14.5v-9a.75.75 0 0 1 .75-.75z" />
-		</svg>
+		<PlayIcon className="h-4 w-4" />
 		{runningTests ? 'Running' : 'Run tests'}
 	</Button>
 	<Button size="md" color="white" pill on:click={onDownload} disabled={!packLoaded}>
-		<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
-			<path d="M10 3.5a.75.75 0 0 1 .75.75v6.19l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 1 1 1.06-1.06l2.22 2.22V4.25A.75.75 0 0 1 10 3.5z" />
-			<path d="M4 13.75a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 .75.75v1.5A2.75 2.75 0 0 1 13.25 18h-6.5A2.75 2.75 0 0 1 4 15.25v-1.5z" />
-		</svg>
+		<DownloadIcon className="h-4 w-4" />
 		Download
 	</Button>
 </div>
