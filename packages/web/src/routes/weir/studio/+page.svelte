@@ -1,9 +1,9 @@
 <script lang="ts">
+import { Button, Card, Input } from 'components';
+import { strFromU8, strToU8, unzipSync, zipSync } from 'fflate';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
-import { Button, Card, Input } from 'components';
-import { zipSync, strToU8 } from 'fflate';
 import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 
 type FileEntry = {
@@ -42,7 +42,7 @@ let nextId = 2;
 let drawerOpen = true;
 let renamingId: string | null = null;
 let renameValue = '';
-let activeFileId = 'file-1';
+let activeFileId = '';
 let activeContent = '';
 let toasts: Toast[] = [];
 let runningTests = false;
@@ -51,19 +51,10 @@ let linter: import('harper.js').WorkerLinter | null = null;
 let AceEditorComponent: typeof import('svelte-ace').AceEditor | null = null;
 let editorReady = false;
 let activeFile: FileEntry | null = null;
+let packLoaded = false;
+let fileInputEl: HTMLInputElement | null = null;
 
-let files: FileEntry[] = [
-	{
-		id: 'file-1',
-		name: 'manifest.json',
-		content: JSON.stringify(defaultManifest, null, 2),
-	},
-	{
-		id: 'file-2',
-		name: 'ExampleRule.weir',
-		content: defaultRule,
-	},
-];
+let files: FileEntry[] = [];
 
 const editorOptions = {
 	enableBasicAutocompletion: true,
@@ -114,9 +105,7 @@ const setActiveFile = (id: string) => {
 
 const updateActiveContent = (value: string) => {
 	activeContent = value;
-	files = files.map((entry) =>
-		entry.id === activeFileId ? { ...entry, content: value } : entry,
-	);
+	files = files.map((entry) => (entry.id === activeFileId ? { ...entry, content: value } : entry));
 };
 
 const createFile = () => {
@@ -156,9 +145,7 @@ const commitRename = (file: FileEntry) => {
 		counter += 1;
 		candidate = `${trimmed.replace(/\.[^/.]+$/, '')}-${counter}${trimmed.includes('.') ? '.' + trimmed.split('.').pop() : ''}`;
 	}
-	files = files.map((entry) =>
-		entry.id === file.id ? { ...entry, name: candidate } : entry,
-	);
+	files = files.map((entry) => (entry.id === file.id ? { ...entry, name: candidate } : entry));
 	renamingId = null;
 };
 
@@ -175,6 +162,108 @@ const pushToast = (toast: Omit<Toast, 'id'>) => {
 	setTimeout(() => {
 		toasts = toasts.filter((item) => item.id !== id);
 	}, 4500);
+};
+
+const initializePack = (entries: FileEntry[]) => {
+	files = entries;
+	activeFileId = entries[0]?.id ?? '';
+	activeContent = entries[0]?.content ?? '';
+	packLoaded = true;
+};
+
+const openExamplePack = () => {
+	initializePack([
+		{
+			id: 'file-1',
+			name: 'manifest.json',
+			content: JSON.stringify(defaultManifest, null, 2),
+		},
+		{
+			id: 'file-2',
+			name: 'ExampleRule.weir',
+			content: defaultRule,
+		},
+	]);
+};
+
+const createEmptyPack = () => {
+	const manifest = {
+		...defaultManifest,
+		name: 'Untitled Weirpack',
+	};
+	initializePack([
+		{
+			id: 'file-1',
+			name: 'manifest.json',
+			content: JSON.stringify(manifest, null, 2),
+		},
+	]);
+};
+
+const resetToStartScreen = () => {
+	files = [];
+	activeFileId = '';
+	activeContent = '';
+	packLoaded = false;
+	renamingId = null;
+};
+
+const loadWeirpackFromBytes = (bytes: Uint8Array) => {
+	try {
+		const archive = unzipSync(bytes);
+		const manifestBytes = archive['manifest.json'];
+		if (!manifestBytes) {
+			pushToast({
+				title: 'manifest.json missing',
+				body: 'The weirpack must include a manifest.json file.',
+				tone: 'error',
+			});
+			return;
+		}
+
+		const manifestText = strFromU8(manifestBytes);
+		const manifest = JSON.parse(manifestText);
+		const entries: FileEntry[] = [
+			{
+				id: 'file-1',
+				name: 'manifest.json',
+				content: JSON.stringify(manifest, null, 2),
+			},
+		];
+
+		let counter = 1;
+		for (const [name, data] of Object.entries(archive)) {
+			if (name === 'manifest.json' || !name.endsWith('.weir')) {
+				continue;
+			}
+			counter += 1;
+			entries.push({
+				id: `file-${counter}`,
+				name,
+				content: strFromU8(data as Uint8Array),
+			});
+		}
+
+		nextId = entries.length + 1;
+		initializePack(entries);
+	} catch (error) {
+		pushToast({
+			title: 'Unable to load Weirpack',
+			body: 'Make sure the file is a valid .weirpack archive.',
+			tone: 'error',
+		});
+	}
+};
+
+const handleUpload = async (event: Event) => {
+	const input = event.currentTarget as HTMLInputElement;
+	if (!input.files?.length) {
+		return;
+	}
+	const file = input.files[0];
+	const bytes = new Uint8Array(await file.arrayBuffer());
+	loadWeirpackFromBytes(bytes);
+	input.value = '';
 };
 
 const parseManifest = () => {
@@ -228,6 +317,14 @@ const buildWeirpackBytes = () => {
 };
 
 const runTests = async () => {
+	if (!packLoaded) {
+		pushToast({
+			title: 'No Weirpack loaded',
+			body: 'Choose a Weirpack to run tests.',
+			tone: 'info',
+		});
+		return;
+	}
 	if (!linter) {
 		pushToast({
 			title: 'Linter still loading',
@@ -242,7 +339,9 @@ const runTests = async () => {
 	}
 	runningTests = true;
 	try {
-		const failures = (await linter.loadWeirpackFromBytes(bytes)) as WeirpackTestFailures | undefined;
+		const failures = (await linter.loadWeirpackFromBytes(bytes)) as
+			| WeirpackTestFailures
+			| undefined;
 		if (!failures || Object.keys(failures).length === 0) {
 			pushToast({
 				title: 'All tests passed',
@@ -272,6 +371,14 @@ const runTests = async () => {
 };
 
 const downloadWeirpack = () => {
+	if (!packLoaded) {
+		pushToast({
+			title: 'No Weirpack loaded',
+			body: 'Choose a Weirpack to download.',
+			tone: 'info',
+		});
+		return;
+	}
 	const bytes = buildWeirpackBytes();
 	if (!bytes) {
 		return;
@@ -361,6 +468,7 @@ onMount(async () => {
 						size="sm"
 						className="w-full uppercase tracking-wide"
 						on:click={createFile}
+						disabled={!packLoaded}
 					>
 						<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 							<path d="M10 4a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 10 4z" />
@@ -446,8 +554,22 @@ onMount(async () => {
 						{activeFile?.name ?? 'No file selected'}
 					</div>
 				</div>
-				<div class="text-xs uppercase tracking-[0.18em] text-black/40">
-					{linterReady ? 'Weir runner online' : 'Warming up harper.js'}
+				<div class="flex items-center gap-3">
+					<div class="text-xs uppercase tracking-[0.18em] text-black/40">
+						{linterReady ? 'Weir runner online' : 'Warming up harper.js'}
+					</div>
+					<Button
+						size="xs"
+						color="white"
+						className="h-8 w-8 !p-0"
+						title="Close Weirpack"
+						aria-label="Close Weirpack"
+						on:click={resetToStartScreen}
+					>
+						<svg viewBox="0 0 20 20" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+							<path d="M5.72 5.72a.75.75 0 0 1 1.06 0L10 8.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L11.06 10l3.22 3.22a.75.75 0 1 1-1.06 1.06L10 11.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L8.94 10 5.72 6.78a.75.75 0 0 1 0-1.06z" />
+						</svg>
+					</Button>
 				</div>
 			</div>
 
@@ -480,7 +602,7 @@ onMount(async () => {
 				pill
 				className={runningTests ? 'opacity-70' : undefined}
 				on:click={runTests}
-				disabled={runningTests}
+				disabled={!packLoaded || runningTests}
 			>
 				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 					<path d="M6.75 4.25a.75.75 0 0 1 .78.02l7.5 4.75a.75.75 0 0 1 0 1.26l-7.5 4.75A.75.75 0 0 1 6 14.5v-9a.75.75 0 0 1 .75-.75z" />
@@ -492,6 +614,7 @@ onMount(async () => {
 				color="white"
 				pill
 				on:click={downloadWeirpack}
+				disabled={!packLoaded}
 			>
 				<svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor" aria-hidden="true">
 					<path d="M10 3.5a.75.75 0 0 1 .75.75v6.19l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 1 1 1.06-1.06l2.22 2.22V4.25A.75.75 0 0 1 10 3.5z" />
@@ -502,5 +625,46 @@ onMount(async () => {
 		</div>
 
 		<Toasts {toasts} />
+
+		{#if !packLoaded}
+			<div class="absolute inset-0 z-30 flex items-center justify-center bg-[#fef4e7]/95">
+				<Card className="w-[min(640px,90vw)] space-y-6 border-black/10 bg-white/95 p-8">
+					<div class="space-y-2">
+						<div class="text-xs font-semibold uppercase tracking-[0.25em] text-black/50">Weir Studio</div>
+						<h2 class="text-2xl font-semibold text-black">Choose how to start</h2>
+						<p class="text-sm text-black/60">
+							Load a Weirpack to edit rules, run tests, and export updates.
+						</p>
+					</div>
+
+					<div class="grid gap-3">
+						<input
+							class="hidden"
+							type="file"
+							accept=".weirpack,application/zip"
+							bind:this={fileInputEl}
+							on:change={handleUpload}
+						/>
+						<Button
+							color="dark"
+							size="md"
+							className="w-full justify-between"
+							on:click={() => fileInputEl?.click()}
+						>
+							<span>Upload an existing Weirpack</span>
+							<span class="text-xs uppercase tracking-[0.2em] text-white/60">Upload</span>
+						</Button>
+						<Button color="white" size="md" className="w-full justify-between" on:click={openExamplePack}>
+							<span>Open example Weirpack</span>
+							<span class="text-xs uppercase tracking-[0.2em] text-black/40">Example</span>
+						</Button>
+						<Button color="white" size="md" className="w-full justify-between" on:click={createEmptyPack}>
+							<span>Create an empty Weirpack</span>
+							<span class="text-xs uppercase tracking-[0.2em] text-black/40">Empty</span>
+						</Button>
+					</div>
+				</Card>
+			</div>
+		{/if}
 	</div>
 </Isolate>
