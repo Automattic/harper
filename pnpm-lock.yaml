@@ -176,6 +176,10 @@ importers:
         version: 7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
 
   packages/harper.js:
+    dependencies:
+      fflate:
+        specifier: ^0.8.2
+        version: 0.8.2
     devDependencies:
       '@microsoft/api-documenter':
         specifier: ^7.28.1
@@ -411,9 +415,6 @@ importers:
       drizzle-zod:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.44.6(@libsql/client@0.15.15)(mysql2@3.15.2))(zod@4.1.12)
-      fflate:
-        specifier: ^0.8.2
-        version: 0.8.2
       harper.js:
         specifier: workspace:*
         version: link:../harper.js

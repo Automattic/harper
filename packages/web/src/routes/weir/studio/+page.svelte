@@ -1,11 +1,11 @@
 <script lang="ts">
-import { strFromU8, strToU8, unzipSync, zipSync } from 'fflate';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
 import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
 import WeirStudioWorkspace, { type FileEntry } from '$lib/components/WeirStudioWorkspace.svelte';
+import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 
 type WeirpackTestFailure = {
 	expected: string;
@@ -212,39 +212,19 @@ const resetToStartScreen = () => {
 
 const loadWeirpackFromBytes = (bytes: Uint8Array) => {
 	try {
-		const archive = unzipSync(bytes);
-		const manifestBytes = archive['manifest.json'];
-		if (!manifestBytes) {
-			pushToast({
-				title: 'manifest.json missing',
-				body: 'The weirpack must include a manifest.json file.',
-				tone: 'error',
-			});
-			return;
-		}
-
-		const manifestText = strFromU8(manifestBytes);
-		const manifest = JSON.parse(manifestText);
+		const unpacked = unpackWeirpackBytes(bytes);
 		const entries: FileEntry[] = [
 			{
 				id: 'file-1',
 				name: 'manifest.json',
-				content: JSON.stringify(manifest, null, 2),
+				content: JSON.stringify(unpacked.manifest, null, 2),
 			},
+			...unpacked.rules.map((rule, index) => ({
+				id: `file-${index + 2}`,
+				name: rule.name,
+				content: rule.content,
+			})),
 		];
-
-		let counter = 1;
-		for (const [name, data] of Object.entries(archive)) {
-			if (name === 'manifest.json' || !name.endsWith('.weir')) {
-				continue;
-			}
-			counter += 1;
-			entries.push({
-				id: `file-${counter}`,
-				name,
-				content: strFromU8(data as Uint8Array),
-			});
-		}
 
 		nextId = entries.length + 1;
 		initializePack(entries);
@@ -306,16 +286,23 @@ const buildWeirpackBytes = () => {
 	if (!manifest || !validateManifest(manifest)) {
 		return null;
 	}
-	const entries: Record<string, Uint8Array> = {
-		'manifest.json': strToU8(JSON.stringify(manifest, null, 2)),
-	};
-	for (const entry of files) {
-		if (entry.name === 'manifest.json') {
-			continue;
-		}
-		entries[entry.name] = strToU8(entry.content);
+
+	const normalizedFiles = files.map((entry) =>
+		entry.name === 'manifest.json'
+			? { ...entry, content: JSON.stringify(manifest, null, 2) }
+			: entry,
+	);
+
+	try {
+		return packWeirpackFiles(normalizedFiles);
+	} catch (error) {
+		pushToast({
+			title: 'Weirpack export failed',
+			body: 'manifest.json is required to save a Weirpack.',
+			tone: 'error',
+		});
+		return null;
 	}
-	return zipSync(entries, { level: 6 });
 };
 
 const bytesToBase64 = (bytes: Uint8Array) => {

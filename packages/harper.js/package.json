@@ -46,5 +46,8 @@
 	"sideEffects": false,
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"fflate": "^0.8.2"
+	}
 }

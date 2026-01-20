@@ -14,6 +14,8 @@ export type {
 export { default as LocalLinter } from './LocalLinter';
 export type { default as Summary } from './Summary';
 export { default as WorkerLinter } from './WorkerLinter';
+export type { WeirpackArchive, WeirpackFileEntry, WeirpackManifest } from './weirpack';
+export { packWeirpackFiles, unpackWeirpackBytes } from './weirpack';
 /** A linting rule configuration dependent on upstream Harper's available rules.
  * This is a record, since you shouldn't hard-code the existence of any particular rules and should generalize based on this struct. */
 export type LintConfig = Record<string, boolean | null>;
