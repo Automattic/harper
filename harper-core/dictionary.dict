@@ -16905,10 +16905,10 @@ centavo/NSg
 centenarian/NgSJ
 centenary/~JNSgV
 centennial/~JYNgS
-center/~NgJVdG
-centerboard/NSg
-centerfold/NgS
-centerpiece/~NgS
+center/~NgJVdG<
+centerboard/NSg<
+centerfold/NgS<
+centerpiece/~NgS<
 # centi             # prefixes that are not also words in their own right don't belong in the dictionary
 centigrade/JN
 centigram/NSg
@@ -16931,9 +16931,7 @@ centralizer/NgS
 centre/NgSVGd!@_₹
 centreboard/NSg!@_₹
 centrefold/NSg!@_₹
-centreleft/NgS!@_₹
 centrepiece/NSg!@_₹
-centreright/NgS!@_₹
 centric/~J
 centrifugal/~JYN
 centrifuge/~NSgVdG
@@ -53621,6 +53619,8 @@ carbon-intensive/J
 cash flow/NgS
 cash-strapped/J
 CD-ROM/NgS
+centre-left/NgS!@_₹
+centre-right/NgS!@_₹
 centre-left/J!@_₹
 centre-right/J!@_₹
 cheat sheet/NgS

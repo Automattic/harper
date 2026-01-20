@@ -784,8 +784,8 @@
 # NSg/VB/J . N🅪Sg+        . NPr/J/R/P NSg/VB+  Nᴹ+        NPr/VXB NSg/VXB VP/J   P  D   N🅪Sg/VB P  NPr  ?
 > Johnson and  Frederick P. Brooks   Jr     . , members of the Machine Organization
 # NPr     VB/C NPr+      ?  NPrPl/V3 NSg/J+ . . NPl/V3  P  D+  NSg/VB+ N🅪Sg+
-> department in        IBM's main      research center    in        1959 .
-# NSg+       NPr/J/R/P NPr$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J+ NPr/J/R/P #    .
+> department in        IBM's main      research center       in        1959 .
+# NSg+       NPr/J/R/P NPr$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J/Am+ NPr/J/R/P #    .
 >
 #
 >              Concurrent , parallel and  distributed computing
