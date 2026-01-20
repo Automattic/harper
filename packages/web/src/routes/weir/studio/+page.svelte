@@ -5,7 +5,7 @@ import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
 import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
-import WeirStudioWorkspace, { type FileEntry } from '$lib/components/WeirStudioWorkspace.svelte';
+import WeirStudioWorkspace from '$lib/components/WeirStudioWorkspace.svelte';
 
 type WeirpackTestFailure = {
 	expected: string;
@@ -22,6 +22,8 @@ const defaultManifest = {
 	license: 'MIT',
 };
 
+const newRuleTemplate = `expr main`
+
 const defaultRule = `expr main (w/o)
 
 let message "Use \`without\` instead of \`w/o\`"
@@ -33,12 +35,22 @@ test "She lacks w/o experience." "She lacks without experience."
 test "He has w/o skills w/o knowledge." "He has without skills without knowledge."
 `;
 
+/** Used for generating new filenames */
 let nextId = 2;
+
+/** Is the drawer open? */
 let drawerOpen = true;
+
+/** The filename that is currently being renamed. */
 let renamingId: string | null = null;
+
+/** The current prospective value to rename the file to.
+ Not relevant if renamingId is null */
 let renameValue = '';
-let activeFileId = '';
-let activeContent = '';
+
+/** The name of the file currently in the viewport. */
+let activeFileId : string | null = '';
+
 let toasts: Toast[] = [];
 let runningTests = false;
 let linterReady = false;
@@ -53,7 +65,7 @@ let checkingStorage = true;
 
 const storageKey = 'harper-weirpack-studio';
 
-let files: FileEntry[] = [];
+let files: Map<string, string> = new Map();
 
 const editorOptions = {
 	enableBasicAutocompletion: true,
@@ -75,158 +87,101 @@ const modeByExtension: Record<string, string> = {
 	yml: 'yaml',
 };
 
-const makeId = () => {
-	let candidate = nextId;
-	while (files.some((entry) => entry.id === `file-${candidate}`)) {
-		candidate += 1;
-	}
-	nextId = candidate + 1;
-	return `file-${candidate}`;
-};
-
-$: activeFile = files.find((entry) => entry.id === activeFileId) ?? null;
-$: if (activeFile && activeFile.content !== activeContent) {
-	activeContent = activeFile.content;
+function createFileName(): string {
+  return `NewRule-${nextId++}`;
 }
 
-const getEditorMode = (name: string) => {
-	const ext = name.split('.').pop()?.toLowerCase();
-	if (!ext) {
-		return 'text';
-	}
-	return modeByExtension[ext] ?? 'text';
-};
+function getEditorMode(name: string): string {
+  let ext = name.split('.', 2)[1];
+  if (ext == null){
+    'text'
+  }
 
-const setActiveFile = (id: string) => {
-	activeFileId = id;
-	renamingId = null;
-};
+  let mode = modeByExtension[ext];
+  return mode;
+}
 
-const updateActiveContent = (value: string) => {
-	activeContent = value;
-	files = files.map((entry) => (entry.id === activeFileId ? { ...entry, content: value } : entry));
-};
+function setActiveFile(id: string) {
+  activeFile = id;
+}
 
-const createFile = () => {
-	const baseName = 'NewRule.weir';
-	let candidate = baseName;
-	let counter = 1;
-	const names = new Set(files.map((entry) => entry.name));
-	while (names.has(candidate)) {
-		counter += 1;
-		candidate = `NewRule${counter}.weir`;
-	}
-	const newFile = {
-		id: makeId(),
-		name: candidate,
-		content: 'expr main',
-	};
-	files = [...files, newFile];
-	setActiveFile(newFile.id);
-};
+function updateActiveContent(value: string) {
+  files.set(activeFile, value);
+}
 
-const startRename = (file: FileEntry) => {
-	renamingId = file.id;
-	renameValue = file.name;
-};
+function createFile() {
+  files.set(createFileName(), newRuleTemplate);
+}
 
-const commitRename = (file: FileEntry) => {
-	const trimmed = renameValue.trim();
-	if (!trimmed) {
-		renamingId = null;
-		return;
-	}
-	let candidate = trimmed;
-	let counter = 1;
-	const names = new Set(files.map((entry) => entry.name));
-	names.delete(file.name);
-	while (names.has(candidate)) {
-		counter += 1;
-		candidate = `${trimmed.replace(/\.[^/.]+$/, '')}-${counter}${trimmed.includes('.') ? '.' + trimmed.split('.').pop() : ''}`;
-	}
-	files = files.map((entry) => (entry.id === file.id ? { ...entry, name: candidate } : entry));
-	renamingId = null;
-};
+function deleteFile(file: string) {
+  files.delete(file);
+}
 
-const deleteFile = (file: FileEntry) => {
-	files = files.filter((entry) => entry.id !== file.id);
-	if (activeFileId === file.id) {
-		activeFileId = files[0]?.id ?? '';
-	}
-};
-
-const pushToast = (toast: Omit<Toast, 'id'>) => {
+function pushToast(toast: Omit<Toast, 'id'>) {
 	const id = Date.now() + Math.floor(Math.random() * 1000);
 	toasts = [...toasts, { ...toast, id }];
 	setTimeout(() => {
 		toasts = toasts.filter((item) => item.id !== id);
 	}, 4500);
-};
+}
 
-const initializePack = (entries: FileEntry[]) => {
+function initializePack(entries: Map<string, string>) {
 	files = entries;
-	activeFileId = entries[0]?.id ?? '';
-	activeContent = entries[0]?.content ?? '';
+	activeFileId = entries.keys().next().value ?? null;
 	packLoaded = true;
-};
+}
 
-const openExamplePack = () => {
-	initializePack([
-		{
-			id: 'file-1',
-			name: 'manifest.json',
-			content: JSON.stringify(defaultManifest, null, 2),
-		},
-		{
-			id: 'file-2',
-			name: 'ExampleRule.weir',
-			content: defaultRule,
-		},
-	]);
-};
+function openExamplePack() {
+	initializePack(new Map([
+  [
+			 'manifest.json',
+			 JSON.stringify(defaultManifest, null, 2),
+       ],
+       [
+			 'ExampleRule.weir',
+			 defaultRule,
+       ]
+	]));
+}
 
-const createEmptyPack = () => {
+function createEmptyPack() {
 	const manifest = {
 		...defaultManifest,
 		name: 'Untitled Weirpack',
 	};
-	initializePack([
-		{
-			id: 'file-1',
-			name: 'manifest.json',
-			content: JSON.stringify(manifest, null, 2),
-		},
-	]);
-};
+	initializePack(new Map([
+  [
+			 'manifest.json',
+			 JSON.stringify(manifest, null, 2),
+		],
+	]));
+}
 
-const resetToStartScreen = () => {
-	files = [];
+function resetToStartScreen() {
+	files = new Map();
 	activeFileId = '';
-	activeContent = '';
 	packLoaded = false;
 	renamingId = null;
 	if (browser) {
 		localStorage.removeItem(storageKey);
 	}
-};
+}
 
-const loadWeirpackFromBytes = (bytes: Uint8Array) => {
+function loadWeirpackFromBytes(bytes: Uint8Array) {
 	try {
 		const unpacked = unpackWeirpackBytes(bytes);
-		const entries: FileEntry[] = [
-			{
-				id: 'file-1',
-				name: 'manifest.json',
-				content: JSON.stringify(unpacked.manifest, null, 2),
-			},
-			...unpacked.rules.map((rule, index) => ({
-				id: `file-${index + 2}`,
-				name: rule.name,
-				content: rule.content,
-			})),
-		];
+		const entries: Map<string, string> = new Map([
+			[
+				 'manifest.json',
+				 JSON.stringify(unpacked.manifest, null, 2),
+			],
+			...unpacked.rules.map((rule) => ([
+				 rule.name,
+				 rule.content,
+			])),
+		]);
 
-		nextId = entries.length + 1;
+		nextId = entries.size + 1;
 		initializePack(entries);
 	} catch (error) {
 		pushToast({
@@ -235,9 +190,9 @@ const loadWeirpackFromBytes = (bytes: Uint8Array) => {
 			tone: 'error',
 		});
 	}
-};
+}
 
-const handleUpload = async (event: Event) => {
+async function handleUpload(event: Event) {
 	const input = event.currentTarget as HTMLInputElement;
 	if (!input.files?.length) {
 		return;
@@ -246,15 +201,14 @@ const handleUpload = async (event: Event) => {
 	const bytes = new Uint8Array(await file.arrayBuffer());
 	loadWeirpackFromBytes(bytes);
 	input.value = '';
-};
+}
 
-const parseManifest = () => {
-	const manifestFile = files.find((entry) => entry.name === 'manifest.json');
-	if (!manifestFile) {
+function parseManifest() {
+	if (!files.has('manifest.json')) {
 		return defaultManifest;
 	}
 	try {
-		const parsed = JSON.parse(manifestFile.content);
+		const parsed = JSON.parse(files.get("manifest.json")!);
 		return parsed;
 	} catch (error) {
 		pushToast({
@@ -264,9 +218,9 @@ const parseManifest = () => {
 		});
 		return null;
 	}
-};
+}
 
-const validateManifest = (manifest: Record<string, unknown>) => {
+function validateManifest(manifest: Record<string, unknown>) {
 	const required = ['author', 'version', 'description', 'license'];
 	for (const key of required) {
 		if (typeof manifest[key] !== 'string' || manifest[key] === '') {
@@ -279,16 +233,16 @@ const validateManifest = (manifest: Record<string, unknown>) => {
 		}
 	}
 	return true;
-};
+}
 
-const buildWeirpackBytes = () => {
+function buildWeirpackBytes(): Uint8Array<ArrayBufferLike>|null {
 	const manifest = parseManifest();
 	if (!manifest || !validateManifest(manifest)) {
 		return null;
 	}
 
-	const normalizedFiles = files.map((entry) =>
-		entry.name === 'manifest.json'
+	const normalizedFiles = files.entries().map(([key, val]) =>
+		key === 'manifest.json'
 			? { ...entry, content: JSON.stringify(manifest, null, 2) }
 			: entry,
 	);
@@ -303,26 +257,26 @@ const buildWeirpackBytes = () => {
 		});
 		return null;
 	}
-};
+}
 
-const bytesToBase64 = (bytes: Uint8Array) => {
+function bytesToBase64(bytes: Uint8Array) {
 	let binary = '';
 	for (const byte of bytes) {
 		binary += String.fromCharCode(byte);
 	}
 	return btoa(binary);
-};
+}
 
-const base64ToBytes = (base64: string) => {
+function base64ToBytes(base64: string) {
 	const binary = atob(base64);
 	const bytes = new Uint8Array(binary.length);
 	for (let i = 0; i < binary.length; i += 1) {
 		bytes[i] = binary.charCodeAt(i);
 	}
 	return bytes;
-};
+}
 
-const saveWeirpackToStorage = () => {
+function saveWeirpackToStorage() {
 	if (!browser || !packLoaded) {
 		return;
 	}
@@ -335,16 +289,9 @@ const saveWeirpackToStorage = () => {
 	} catch (error) {
 		console.warn('Unable to store Weirpack', error);
 	}
-};
-
-$: if (browser && packLoaded && files.length) {
-	if (saveTimeout) {
-		window.clearTimeout(saveTimeout);
-	}
-	saveTimeout = window.setTimeout(saveWeirpackToStorage, 350);
 }
 
-const runTests = async () => {
+async function runTests() {
 	if (!packLoaded) {
 		pushToast({
 			title: 'No Weirpack loaded',
@@ -367,9 +314,7 @@ const runTests = async () => {
 	}
 	runningTests = true;
 	try {
-		const failures = (await linter.loadWeirpackFromBytes(bytes)) as
-			| WeirpackTestFailures
-			| undefined;
+		const failures = (await linter.loadWeirpackFromBytes(bytes)) as WeirpackTestFailures | undefined;
 		if (!failures || Object.keys(failures).length === 0) {
 			pushToast({
 				title: 'All tests passed',
@@ -396,9 +341,9 @@ const runTests = async () => {
 	} finally {
 		runningTests = false;
 	}
-};
+}
 
-const downloadWeirpack = () => {
+function downloadWeirpack() {
 	if (!packLoaded) {
 		pushToast({
 			title: 'No Weirpack loaded',
@@ -421,7 +366,7 @@ const downloadWeirpack = () => {
 	link.download = `${safeName}.weirpack`;
 	link.click();
 	URL.revokeObjectURL(url);
-};
+}
 
 onMount(async () => {
 	if (!browser) {
@@ -470,7 +415,6 @@ onMount(async () => {
 			{drawerOpen}
 			{files}
 			{activeFile}
-			{activeContent}
 			{editorReady}
 			{AceEditorComponent}
 			{editorOptions}

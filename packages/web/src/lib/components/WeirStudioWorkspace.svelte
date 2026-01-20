@@ -5,13 +5,11 @@ import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 import PlayIcon from '$lib/components/icons/PlayIcon.svelte';
 import WeirStudioFileExplorer, {
-	type FileEntry,
 } from '$lib/components/WeirStudioFileExplorer.svelte';
 
 export let drawerOpen = true;
-export let files: FileEntry[] = [];
-export let activeFile: FileEntry | null = null;
-export let activeContent = '';
+export let files: Map<string, string> = new Map();
+export let activeFile: string | null = null;
 export let editorReady = false;
 export let AceEditorComponent: typeof AceEditor | null = null;
 export let editorOptions: Record<string, unknown>;
@@ -22,18 +20,12 @@ export let packLoaded = false;
 export let onToggleDrawer: () => void;
 export let onCreateFile: () => void;
 export let onSelectFile: (id: string) => void;
-export let onRenameFile: (file: FileEntry) => void;
-export let onDeleteFile: (file: FileEntry) => void;
+export let onRenameFile: (from: string, to: string) => void;
+export let onDeleteFile: (file: string) => void;
 export let onUpdateContent: (value: string) => void;
 export let onRunTests: () => void;
 export let onDownload: () => void;
 export let onClosePack: () => void;
-
-export let renamingId: string | null = null;
-export let renameValue = '';
-export let onRenameValueChange: (value: string) => void;
-export let onCommitRename: (file: FileEntry) => void;
-export let onCancelRename: () => void;
 
 export let getEditorMode: (name: string) => string;
 </script>
@@ -42,24 +34,18 @@ export let getEditorMode: (name: string) => string;
 	{drawerOpen}
 	{files}
 	{activeFile}
-	{renamingId}
-	{renameValue}
-	{packLoaded}
 	{onToggleDrawer}
 	{onCreateFile}
 	{onSelectFile}
-	{onRenameFile}
 	{onDeleteFile}
-	{onRenameValueChange}
-	{onCommitRename}
-	{onCancelRename}
+  {onRenameFile}
 />
 
 <main class="relative z-10 flex flex-1 flex-col">
 	<div class="flex items-center justify-between border-b border-black/10 bg-white/70 px-4 py-3">
 		<div class="flex items-center gap-3">
 			<div class="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">Studio</div>
-			<div class="text-sm font-medium text-black/80">{activeFile?.name ?? 'No file selected'}</div>
+			<div class="text-sm font-medium text-black/80">{activeFile ?? 'No file selected'}</div>
 		</div>
 		<div class="flex items-center gap-3">
 			<div class="text-xs uppercase tracking-[0.18em] text-black/40">
@@ -81,13 +67,13 @@ export let getEditorMode: (name: string) => string;
 	<div class="flex-1 overflow-hidden p-4">
 		<Card className="h-full border-black/10 bg-white/95 p-0 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)]">
 			{#if editorReady && AceEditorComponent}
-				{#key activeFile?.id}
+				{#key activeFile}
 					<svelte:component
 						this={AceEditorComponent}
 						width="100%"
 						height="100%"
-						value={activeContent}
-						lang={getEditorMode(activeFile?.name ?? '')}
+						value={activeFile ? files.get(activeFile) : ""}
+						lang={getEditorMode(activeFile ?? '')}
 						theme="chrome"
 						options={editorOptions}
 						on:input={(event) => onUpdateContent(event.detail)}

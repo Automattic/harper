@@ -6,27 +6,20 @@ import EditIcon from '$lib/components/icons/EditIcon.svelte';
 import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 
-export type FileEntry = {
-	id: string;
-	name: string;
-	content: string;
-};
-
+/** Whether to render the file explorer as a closed drawer or an open one. */
 export let drawerOpen = true;
-export let files: FileEntry[] = [];
-export let activeFile: FileEntry | null = null;
-export let renamingId: string | null = null;
-export let renameValue = '';
-export let packLoaded = false;
+export let files: Map<string, string> = new Map();
+/** The filename of the currently selected file. */
+export let activeFile: string | null = null;
+
+let renamingFile : string | null = null;
+let renameValue = '';
 
 export let onToggleDrawer: () => void;
 export let onCreateFile: () => void;
 export let onSelectFile: (id: string) => void;
-export let onRenameFile: (file: FileEntry) => void;
-export let onDeleteFile: (file: FileEntry) => void;
-export let onRenameValueChange: (value: string) => void;
-export let onCommitRename: (file: FileEntry) => void;
-export let onCancelRename: () => void;
+export let onDeleteFile: (file: string) => void;
+export let onRenameFile: (from: string, to: string) => void;
 </script>
 
 <aside
@@ -66,7 +59,6 @@ export let onCancelRename: () => void;
 				size="sm"
 				className="w-full uppercase tracking-wide"
 				on:click={onCreateFile}
-				disabled={!packLoaded}
 			>
 				<PlusIcon className="h-4 w-4" />
 				New file
@@ -74,34 +66,33 @@ export let onCancelRename: () => void;
 		</div>
 
 		<div class="flex-1 overflow-auto px-2 pb-4">
-			{#each files as file (file.id)}
+			{#each files as [file]}
 				<div
-					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file.id === activeFile?.id ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
+					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file === activeFile? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
 				>
 					<div class="flex flex-1 items-center gap-2 text-left">
 						<span class="h-2 w-2 rounded-full bg-black/30"></span>
-						{#if renamingId === file.id}
-							<div on:mousedown|stopPropagation on:click|stopPropagation class="flex-1">
+						{#if renamingFile === file}
+							<div class="flex-1">
 								<Input
 									size="sm"
 									className="w-full text-xs"
 									autofocus
 									bind:value={renameValue}
-									on:input={(event) => onRenameValueChange((event.target as HTMLInputElement).value)}
-									on:keydown={(event) => {
+									on:keydown={(event: KeyboardEvent) => {
 										if (event.key === 'Enter') {
-											onCommitRename(file);
+											onRenameFile(file, renameValue);
 										}
 										if (event.key === 'Escape') {
-											onCancelRename();
+                      renamingFile = null;
 										}
 									}}
-									on:blur={() => onCommitRename(file)}
+									on:blur={() => onRenameFile(file, renameValue)}
 								/>
 							</div>
 						{:else}
-							<button class="flex-1 truncate text-left" on:click={() => onSelectFile(file.id)}>
-								{file.name}
+							<button class="flex-1 truncate text-left" on:click={() => onSelectFile(file)}>
+								{file}
 							</button>
 						{/if}
 					</div>
@@ -111,13 +102,13 @@ export let onCancelRename: () => void;
 							size="xs"
 							color="white"
 							className="h-6 w-6 !p-0"
-							on:click={() => onRenameFile(file)}
+							on:click={() => renameValue = file}
 							title="Rename file"
 							aria-label="Rename file"
 						>
 							<EditIcon className="h-3.5 w-3.5" />
 						</Button>
-						{#if files.length > 1}
+						{#if files.size > 1}
 							<Button
 								size="xs"
 								color="white"
