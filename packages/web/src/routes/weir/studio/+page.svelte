@@ -5,9 +5,7 @@ import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
 import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
-import WeirStudioWorkspace, {
-	type FileEntry,
-} from '$lib/components/WeirStudioWorkspace.svelte';
+import WeirStudioWorkspace, { type FileEntry } from '$lib/components/WeirStudioWorkspace.svelte';
 
 type WeirpackTestFailure = {
 	expected: string;
@@ -50,6 +48,10 @@ let editorReady = false;
 let activeFile: FileEntry | null = null;
 let packLoaded = false;
 let fileInputEl: HTMLInputElement | null = null;
+let saveTimeout: number | null = null;
+let checkingStorage = true;
+
+const storageKey = 'harper-weirpack-studio';
 
 let files: FileEntry[] = [];
 
@@ -203,6 +205,9 @@ const resetToStartScreen = () => {
 	activeContent = '';
 	packLoaded = false;
 	renamingId = null;
+	if (browser) {
+		localStorage.removeItem(storageKey);
+	}
 };
 
 const loadWeirpackFromBytes = (bytes: Uint8Array) => {
@@ -313,6 +318,45 @@ const buildWeirpackBytes = () => {
 	return zipSync(entries, { level: 6 });
 };
 
+const bytesToBase64 = (bytes: Uint8Array) => {
+	let binary = '';
+	for (const byte of bytes) {
+		binary += String.fromCharCode(byte);
+	}
+	return btoa(binary);
+};
+
+const base64ToBytes = (base64: string) => {
+	const binary = atob(base64);
+	const bytes = new Uint8Array(binary.length);
+	for (let i = 0; i < binary.length; i += 1) {
+		bytes[i] = binary.charCodeAt(i);
+	}
+	return bytes;
+};
+
+const saveWeirpackToStorage = () => {
+	if (!browser || !packLoaded) {
+		return;
+	}
+	const bytes = buildWeirpackBytes();
+	if (!bytes) {
+		return;
+	}
+	try {
+		localStorage.setItem(storageKey, bytesToBase64(bytes));
+	} catch (error) {
+		console.warn('Unable to store Weirpack', error);
+	}
+};
+
+$: if (browser && packLoaded && files.length) {
+	if (saveTimeout) {
+		window.clearTimeout(saveTimeout);
+	}
+	saveTimeout = window.setTimeout(saveWeirpackToStorage, 350);
+}
+
 const runTests = async () => {
 	if (!packLoaded) {
 		pushToast({
@@ -396,6 +440,17 @@ onMount(async () => {
 	if (!browser) {
 		return;
 	}
+	const stored = localStorage.getItem(storageKey);
+	if (stored) {
+		try {
+			const bytes = base64ToBytes(stored);
+			loadWeirpackFromBytes(bytes);
+		} catch (error) {
+			console.warn('Unable to restore Weirpack', error);
+		}
+	}
+	checkingStorage = false;
+
 	const [{ WorkerLinter, binary }, { AceEditor }] = await Promise.all([
 		import('harper.js'),
 		import('svelte-ace'),
@@ -461,6 +516,8 @@ onMount(async () => {
 				onCreateEmpty={createEmptyPack}
 				onUploadChange={handleUpload}
 				bind:fileInputEl
+				loading={checkingStorage}
+				loadingLabel="Checking local storage for a saved Weirpack."
 			/>
 		{/if}
 	</div>

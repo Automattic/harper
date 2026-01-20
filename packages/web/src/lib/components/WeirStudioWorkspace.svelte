@@ -186,16 +186,18 @@ export let getEditorMode: (name: string) => string;
 	<div class="flex-1 overflow-hidden p-4">
 		<Card className="h-full border-black/10 bg-white/95 p-0 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.4)]">
 			{#if editorReady && AceEditorComponent}
-				<svelte:component
-					this={AceEditorComponent}
-					width="100%"
-					height="100%"
-					value={activeContent}
-					lang={getEditorMode(activeFile?.name ?? '')}
-					theme="chrome"
-					options={editorOptions}
-					on:input={(event) => onUpdateContent(event.detail)}
-				/>
+				{#key activeFile?.id}
+					<svelte:component
+						this={AceEditorComponent}
+						width="100%"
+						height="100%"
+						value={activeContent}
+						lang={getEditorMode(activeFile?.name ?? '')}
+						theme="chrome"
+						options={editorOptions}
+						on:input={(event) => onUpdateContent(event.detail)}
+					/>
+				{/key}
 			{:else}
 				<div class="flex h-full items-center justify-center text-sm uppercase tracking-[0.3em] text-black/40">
 					Loading editor…
