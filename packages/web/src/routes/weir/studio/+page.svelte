@@ -1,11 +1,11 @@
 <script lang="ts">
+import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
 import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
 import WeirStudioWorkspace, { type FileEntry } from '$lib/components/WeirStudioWorkspace.svelte';
-import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 
 type WeirpackTestFailure = {
 	expected: string;

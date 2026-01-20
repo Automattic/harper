@@ -135,7 +135,7 @@ export let onCancelRename: () => void;
 		</div>
 	{:else}
 		<div class="flex flex-1 flex-col items-center gap-4 pt-6 text-xs text-black/50">
-			<div class="rotate-90 text-xs font-semibold tracking-widest uppercase">Files</div>
+			<div class="rotate-135 text-xs font-semibold tracking-widest uppercase">Files</div>
 		</div>
 	{/if}
 </aside>
