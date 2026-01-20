@@ -49,7 +49,7 @@ The remaining lines describe:
 
 ## Comments
 
-Comments are written using a single hashtag (`#`) like so:
+Comments are written using a single pound sign (`#`), like so:
 
 ```plaintext
 # This is a comment and has no effect on the rest of the file.
@@ -108,10 +108,10 @@ The top-level expression assumed to be a sequence, so the first line can be repl
 expr main gong to
 ```
 
-### Arrays
+### Alternatives
 
-Arrays in Weir, notated with `[]`, allow Harper to search for multiple potential options at a time.
-For a document to match, it only needs to fulfill one of the options in the array.
+Alternatives in Weir, notated with `[]`, allow Harper to search for multiple potential options at a time.
+For a document to match, it only needs to fulfill one of the options in the alternative array.
 
 This syntax should look familiar from the first example we looked at in the introduction.
 We have multiple specific phrases we want to look for, and change all of them, should they exist, to the same thing.
@@ -171,7 +171,7 @@ This will match against "the word", "a banana", "an apple", among others.
 
 ### Progressive Verbs
 
-You can require that a token be a progressive word with the keyword PROG.
+You can require that a token be a progressive verb with the keyword PROG.
 For example:
 
 ```plaintext
@@ -201,7 +201,7 @@ Although they look like the single-character wildcard from regex (Weir borrows t
 
 Example:
 
-```weir
+```plaintext
 # To match any token that is preceded by a noun and succeeded by a noun.
 expr main NOUN * NOUN
 ```
@@ -219,6 +219,22 @@ let message "The second mark is redundant."
 let description "Looks for redundant doubling of hyphens."
 let kind "Punctuation"
 let becomes "-"
+```
+
+## Replacement Strategies
+
+You can dictate how Harper will suggest a replacement using the `strategy` tag.
+This allows rule authors to describe which strategy Harper will use when applying the replacements.
+Right now, the only two options are `Exact` or `MatchCase`, which apply either the exact text, or the exact text but matching the capitalization of the text it replaces.
+In the below example, we use `Exact` because we want to correct the capitalization of a proper noun, and it doesn't matter what the original text looked like.
+
+```plaintext
+expr main [(G [Suite, Suit]), (Google Apps for Work)]
+let message "Use the updated brand."
+let description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+let kind "Miscellaneous"
+let becomes "Google Workspace"
+let strategy "Exact"
 ```
 
 ## Adding Tests

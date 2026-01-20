@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-#[derive(Debug, Error)]
+#[derive(Debug, Error, Eq, PartialEq)]
 pub enum Error {
     #[error("Encountered a token that is unsupported by the parser.")]
     UnsupportedToken(String),

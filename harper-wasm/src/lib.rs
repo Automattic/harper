@@ -686,6 +686,20 @@ pub struct OrganizedGroup {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use sysinfo::{Pid, ProcessRefreshKind, ProcessesToUpdate, System};
+
+    /// Get memory usage for the process with the given PID, in bytes.
+    ///
+    /// This will fail if the requested process does not exist.
+    #[must_use]
+    fn get_mem_usage_of_process(sys: &mut System, pid: Pid) -> Option<u64> {
+        sys.refresh_processes_specifics(
+            ProcessesToUpdate::Some(&[pid]),
+            false,
+            ProcessRefreshKind::nothing().with_memory(),
+        );
+        sys.process(pid).map(|process| process.memory())
+    }
 
     /// If a word from another dialect is added to the user dictionary, it should be considered
     /// part of the user's dialect as well.
@@ -702,17 +716,32 @@ mod tests {
     }
 
     #[test]
-    fn does_not_oom_with_repeated_lints() {
-        for _ in 0..3000 {
-            let mut linter = Linter::new(Dialect::American);
+    fn no_memory_leak_with_repeated_lints() {
+        let pid = Pid::from_u32(std::process::id());
+        let mut sys = System::new();
 
-            let results = linter.lint(
-                "This is a grammatically correct sentence.".to_string(),
-                Language::Plain,
-                false,
-            );
+        let mut prev_memory_usage = get_mem_usage_of_process(&mut sys, pid).unwrap();
 
-            assert!(results.is_empty())
+        if (0..10).all(|_| {
+            // Run a few times.
+            for _ in 0..10 {
+                let mut linter = Linter::new(Dialect::American);
+
+                let results = linter.lint(
+                    "This is a grammatically correct sentence.".to_string(),
+                    Language::Plain,
+                    false,
+                );
+
+                assert!(results.is_empty())
+            }
+            // Check if our process' memory usage increased.
+            let curr_memory_usage = get_mem_usage_of_process(&mut sys, pid).unwrap();
+            let memory_usage_increased = curr_memory_usage > prev_memory_usage;
+            prev_memory_usage = curr_memory_usage;
+            memory_usage_increased
+        }) {
+            panic!("Memory leak!");
         }
     }
 }

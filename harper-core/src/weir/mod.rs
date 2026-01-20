@@ -262,6 +262,10 @@ impl ExprLinter for WeirLinter {
 
 #[cfg(test)]
 pub mod tests {
+    use quickcheck_macros::quickcheck;
+
+    use crate::weir::Error;
+
     use super::{TestResult, WeirLinter};
 
     #[track_caller]
@@ -352,5 +356,17 @@ pub mod tests {
 
         assert_passes_all(&mut linter);
         assert_eq!(1, linter.count_tests());
+    }
+
+    #[test]
+    fn errors_properly_with_missing_expr() {
+        let source = "expr main";
+        let res = WeirLinter::new(source);
+        assert_eq!(res.err(), Some(Error::ExpectedVariableUndefined))
+    }
+
+    #[quickcheck]
+    fn does_not_panic(s: String) {
+        let _ = WeirLinter::new(s.as_str());
     }
 }

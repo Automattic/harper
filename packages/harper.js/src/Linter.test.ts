@@ -528,17 +528,18 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 }
 
-test('LocalLinters will lint many times with fresh instances', async () => {
-	for (let i = 0; i < 300; i++) {
-		const linter = new LocalLinter({ binary });
-
-		const text = 'This is a grammatically correct sentence.';
-		const lints = await linter.organizedLints(text);
-		expect(lints).not.toBeNull();
-
-		await linter.dispose();
-	}
-}, 120000);
+// Disabled because it significantly slows down CI
+// test('LocalLinters will lint many times with fresh instances', async () => {
+// 	for (let i = 0; i < 300; i++) {
+// 		const linter = new LocalLinter({ binary });
+//
+// 		const text = 'This is a grammatically correct sentence.';
+// 		const lints = await linter.organizedLints(text);
+// 		expect(lints).not.toBeNull();
+//
+// 		await linter.dispose();
+// 	}
+// }, 120000);
 
 test('Linters have the same config format', async () => {
 	const configs = [];
