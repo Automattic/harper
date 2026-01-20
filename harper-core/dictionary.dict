@@ -19835,7 +19835,7 @@ cropper/NgS
 cropping/VN
 croquet/NgSVdG
 croquette/NSg
-crore/NS₹
+crore/NgS₹
 crosier/NgS
 cross/~NSJ^PVGdrU
 cross's
@@ -31423,7 +31423,8 @@ laity/~Ng
 lake/~NgSV
 lakefront/JNS
 lakeside/~NJ
-lakh/NS₹
+lakh/N0g₹
+lakhs/N9₹
 lam/~VSNg
 lama/~NgS
 lamasery/NSg
@@ -41351,9 +41352,9 @@ realist/~NSgJ
 realistic/~JUQ
 realities/~N9
 reality/~Nw0gU
-realization/~NgS<@
-realize/~VdSGBU<@
-realized/~VU<@
+realization/~NgS<@!_₹
+realize/~VdSGBU<@!_₹
+realized/~VU<@!_₹
 reallocation/NwgS
 really/R%
 realm/~NgS
