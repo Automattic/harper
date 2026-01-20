@@ -58,6 +58,7 @@ mod everyday;
 mod expand_memory_shorthands;
 mod expand_time_shorthands;
 mod expr_linter;
+mod extraneous_did_past;
 mod far_be_it;
 mod fascinated_by;
 mod feel_fell;

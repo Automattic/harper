@@ -3579,6 +3579,14 @@ Suggest:
 
 
 
+Lint:    Redundancy (127 priority)
+Message: |
+    2315 | remembered the incident ever since. His name was Jay Gatsby, and I didn’t lay
+         |                                                                    ^~~~~~~~~~ It's redundant to use the past form `did` and also the past form of the main verb.
+    2316 | eyes on him again for over four years—even after I'd met him on Long Island I
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
