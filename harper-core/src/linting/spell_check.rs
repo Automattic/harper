@@ -513,4 +513,12 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
         );
     }
+
+    #[test]
+    fn dont_flag_mb() {
+        assert_no_lints(
+            "MB",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
 }
