@@ -1,26 +1,23 @@
 import { strFromU8, strToU8, unzipSync, zipSync } from 'fflate';
 
 export type WeirpackManifest = Record<string, unknown>;
-export type WeirpackFileEntry = {
-	name: string;
-	content: string;
-};
+export type WeirpackFileMap = Map<string, string>;
 
 export type WeirpackArchive = {
 	manifest: WeirpackManifest;
-	rules: WeirpackFileEntry[];
+	files: WeirpackFileMap;
 };
 
 const manifestFilename = 'manifest.json';
 
-export function packWeirpackFiles(files: WeirpackFileEntry[]): Uint8Array {
-	if (!files.some((file) => file.name === manifestFilename)) {
+export function packWeirpackFiles(files: WeirpackFileMap): Uint8Array {
+	if (!files.has(manifestFilename)) {
 		throw new Error('Weirpack is missing manifest.json');
 	}
 
 	const entries: Record<string, Uint8Array> = {};
-	for (const file of files) {
-		entries[file.name] = strToU8(file.content);
+	for (const [name, content] of files.entries()) {
+		entries[name] = strToU8(content);
 	}
 
 	return zipSync(entries, { level: 6 });
@@ -35,21 +32,18 @@ export function unpackWeirpackBytes(bytes: Uint8Array): WeirpackArchive {
 
 	const manifestText = strFromU8(manifestBytes);
 	const manifest = JSON.parse(manifestText) as WeirpackManifest;
-	const rules: WeirpackFileEntry[] = [];
+	const files: WeirpackFileMap = new Map();
+	files.set(manifestFilename, manifestText);
 
-	const ruleNames = Object.keys(archive).filter((name) => name.endsWith('.weir'));
-	ruleNames.sort();
-
-	for (const name of ruleNames) {
+	const fileNames = Object.keys(archive);
+	fileNames.sort();
+	for (const name of fileNames) {
 		const data = archive[name];
-		if (!data) {
+		if (!data || name === manifestFilename) {
 			continue;
 		}
-		rules.push({
-			name,
-			content: strFromU8(data),
-		});
+		files.set(name, strFromU8(data));
 	}
 
-	return { manifest, rules };
+	return { manifest, files };
 }

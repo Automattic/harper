@@ -41,13 +41,6 @@ let nextId = 2;
 /** Is the drawer open? */
 let drawerOpen = true;
 
-/** The filename that is currently being renamed. */
-let renamingId: string | null = null;
-
-/** The current prospective value to rename the file to.
- Not relevant if renamingId is null */
-let renameValue = '';
-
 /** The name of the file currently in the viewport. */
 let activeFileId : string | null = '';
 
@@ -57,10 +50,8 @@ let linterReady = false;
 let linter: import('harper.js').WorkerLinter | null = null;
 let AceEditorComponent: typeof import('svelte-ace').AceEditor | null = null;
 let editorReady = false;
-let activeFile: FileEntry | null = null;
 let packLoaded = false;
 let fileInputEl: HTMLInputElement | null = null;
-let saveTimeout: number | null = null;
 let checkingStorage = true;
 
 const storageKey = 'harper-weirpack-studio';
@@ -88,7 +79,7 @@ const modeByExtension: Record<string, string> = {
 };
 
 function createFileName(): string {
-  return `NewRule-${nextId++}`;
+  return `NewRule-${nextId++}.weir`;
 }
 
 function getEditorMode(name: string): string {
@@ -102,19 +93,23 @@ function getEditorMode(name: string): string {
 }
 
 function setActiveFile(id: string) {
-  activeFile = id;
+  activeFileId = id;
 }
 
 function updateActiveContent(value: string) {
-  files.set(activeFile, value);
+  if (activeFileId)
+  files.set(activeFileId, value);
+  files = new Map(files);
 }
 
 function createFile() {
   files.set(createFileName(), newRuleTemplate);
+  files = new Map(files);
 }
 
 function deleteFile(file: string) {
   files.delete(file);
+  files = new Map(files);
 }
 
 function pushToast(toast: Omit<Toast, 'id'>) {
@@ -144,6 +139,17 @@ function openExamplePack() {
 	]));
 }
 
+function onRenameFile(from: string, to:string){
+  let origVal = files.get(from);
+
+  if (origVal == undefined){
+    return;
+  }
+
+  files.set(to, origVal);
+  files.delete(from);
+}
+
 function createEmptyPack() {
 	const manifest = {
 		...defaultManifest,
@@ -159,9 +165,8 @@ function createEmptyPack() {
 
 function resetToStartScreen() {
 	files = new Map();
-	activeFileId = '';
+	activeFileId = null;
 	packLoaded = false;
-	renamingId = null;
 	if (browser) {
 		localStorage.removeItem(storageKey);
 	}
@@ -170,16 +175,8 @@ function resetToStartScreen() {
 function loadWeirpackFromBytes(bytes: Uint8Array) {
 	try {
 		const unpacked = unpackWeirpackBytes(bytes);
-		const entries: Map<string, string> = new Map([
-			[
-				 'manifest.json',
-				 JSON.stringify(unpacked.manifest, null, 2),
-			],
-			...unpacked.rules.map((rule) => ([
-				 rule.name,
-				 rule.content,
-			])),
-		]);
+		const entries: Map<string, string> = new Map(unpacked.files);
+		entries.set('manifest.json', JSON.stringify(unpacked.manifest, null, 2));
 
 		nextId = entries.size + 1;
 		initializePack(entries);
@@ -241,11 +238,8 @@ function buildWeirpackBytes(): Uint8Array<ArrayBufferLike>|null {
 		return null;
 	}
 
-	const normalizedFiles = files.entries().map(([key, val]) =>
-		key === 'manifest.json'
-			? { ...entry, content: JSON.stringify(manifest, null, 2) }
-			: entry,
-	);
+	const normalizedFiles = new Map(files);
+	normalizedFiles.set('manifest.json', JSON.stringify(manifest, null, 2));
 
 	try {
 		return packWeirpackFiles(normalizedFiles);
@@ -409,33 +403,28 @@ onMount(async () => {
 
 <Isolate>
 	<div class="relative flex h-screen w-screen overflow-hidden bg-[#fef4e7] text-black">
-		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(244,168,62,0.25),_transparent_55%)]"></div>
+		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,168,62,0.25),transparent_55%)]"></div>
 
 		<WeirStudioWorkspace
 			{drawerOpen}
 			{files}
-			{activeFile}
 			{editorReady}
 			{AceEditorComponent}
 			{editorOptions}
 			{linterReady}
 			{runningTests}
 			{packLoaded}
-			{renamingId}
-			{renameValue}
 			{getEditorMode}
+      activeFile={activeFileId}
 			onToggleDrawer={() => (drawerOpen = !drawerOpen)}
 			onCreateFile={createFile}
 			onSelectFile={setActiveFile}
-			onRenameFile={startRename}
+			onRenameFile={onRenameFile}
 			onDeleteFile={deleteFile}
 			onUpdateContent={updateActiveContent}
 			onRunTests={runTests}
 			onDownload={downloadWeirpack}
 			onClosePack={resetToStartScreen}
-			onRenameValueChange={(value) => (renameValue = value)}
-			onCommitRename={commitRename}
-			onCancelRename={() => (renamingId = null)}
 		/>
 
 		<Toasts {toasts} />

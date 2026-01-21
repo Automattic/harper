@@ -11,45 +11,23 @@ describe('weirpack helpers', () => {
 			license: 'MIT',
 		};
 
-		const files = [
-			{
-				name: 'manifest.json',
-				content: JSON.stringify(manifest, null, 2),
-			},
-			{
-				name: 'ExampleRule.weir',
-				content: 'expr main test',
-			},
-			{
-				name: 'AnotherRule.weir',
-				content: 'expr main banana',
-			},
-		];
+		const files = new Map([
+			['manifest.json', JSON.stringify(manifest, null, 2)],
+			['ExampleRule.weir', 'expr main test'],
+			['AnotherRule.weir', 'expr main banana'],
+		]);
 
 		const bytes = packWeirpackFiles(files);
 		const unpacked = unpackWeirpackBytes(bytes);
 
 		expect(unpacked.manifest).toEqual(manifest);
-		expect(unpacked.rules).toEqual([
-			{
-				name: 'AnotherRule.weir',
-				content: 'expr main banana',
-			},
-			{
-				name: 'ExampleRule.weir',
-				content: 'expr main test',
-			},
-		]);
+		expect(unpacked.files.get('ExampleRule.weir')).toBe('expr main test');
+		expect(unpacked.files.get('AnotherRule.weir')).toBe('expr main banana');
 	});
 
 	test('packWeirpackFiles requires a manifest.json file', () => {
 		expect(() =>
-			packWeirpackFiles([
-				{
-					name: 'Rule.weir',
-					content: 'expr main test',
-				},
-			]),
+			packWeirpackFiles(new Map([['Rule.weir', 'expr main test']])),
 		).toThrow('Weirpack is missing manifest.json');
 	});
 
