@@ -1,13 +1,13 @@
 <script lang="ts">
 import { Button, Input } from 'components';
 import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 import EditIcon from '$lib/components/icons/EditIcon.svelte';
 import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
+import ChevronRightIcon from './icons/ChevronRightIcon.svelte';
 
 /** Whether to render the file explorer as a closed drawer or an open one. */
-export let drawerOpen = true;
+let drawerOpen = true;
 export let files: Map<string, string> = new Map();
 /** The filename of the currently selected file. */
 export let activeFile: string | null = null;
@@ -15,11 +15,14 @@ export let activeFile: string | null = null;
 let renamingFile: string | null = null;
 let renameValue = '';
 
-export let onToggleDrawer: () => void;
 export let onCreateFile: () => void;
 export let onSelectFile: (id: string) => void;
 export let onDeleteFile: (file: string) => void;
 export let onRenameFile: (from: string, to: string) => void;
+
+function onToggleDrawer() {
+	drawerOpen = !drawerOpen;
+}
 </script>
 
 <aside
@@ -67,11 +70,12 @@ export let onRenameFile: (from: string, to: string) => void;
 
 		<div class="flex-1 overflow-auto px-2 pb-4">
 			{#each files as [file]}
+        {console.log(file, activeFile)}
 				<div
-					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file === activeFile? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
+					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file == activeFile ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
 				>
 					<div class="flex flex-1 items-center gap-2 text-left">
-						<span class="h-2 w-2 rounded-full bg-black/30"></span>
+						<span class={`h-2 w-2 rounded-full ${file == activeFile ? 'bg-primary': ''} bg-cream`}></span>
 						{#if renamingFile === file}
 							<div class="flex-1">
 								<Input
