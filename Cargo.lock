@@ -2961,6 +2961,7 @@ dependencies = [
  "getrandom 0.3.4",
  "harper-core",
  "harper-stats",
+ "harper-typst",
  "once_cell",
  "serde",
  "serde-wasm-bindgen",
