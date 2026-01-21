@@ -535,4 +535,10 @@ mod tests {
     fn dont_flag_an_sql() {
         assert_lint_count("an SQL query", AnA::new(Dialect::Australian), 0);
     }
+
+    #[test]
+    fn allow_an_and_a_for_led_2550() {
+        assert_lint_count("an LED", AnA::new(Dialect::American), 0);
+        assert_lint_count("a LED", AnA::new(Dialect::American), 0);
+    }
 }
