@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::Token;
 
-/// A window in a [`T`] sequence.
+/// A window in a `T` sequence.
 ///
 /// Note that the range covered by a [`Span`] is end-exclusive, meaning that the end index is not
 /// included in the range covered by the [`Span`]. If you're familiar with the Rust range syntax,
