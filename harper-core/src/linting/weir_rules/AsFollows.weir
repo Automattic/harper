@@ -1,7 +1,7 @@
-expr main as follow
+expr main (as follow)
 
-let message "Introduce the following details with `as follows` when presenting a list or explanation."
-let description "Transforms the outdated phrase `as follow` into the standard `as follows` when it introduces additional content."
+let message "Use `as follows`."
+let description "Corrects the phrase `as follow`, which is sometimes produced by hypercorrection. While it appeared briefly in 19th-century English, it is now considered archaic; modern standard usage requires `as follows` regardless of number."
 let kind "Grammar"
 let becomes "as follows"
 
@@ -15,6 +15,7 @@ test "The instructions are listed as follow in the appendix." "The instructions 
 test "We were told as follow the timeline would slip." "We were told as follows the timeline would slip."
 test "Is this description as follow the sample?" "Is this description as follows the sample?"
 test "You can verify as follow once the build completes." "You can verify as follows once the build completes."
+
 test "Follow the instructions as written." "Follow the instructions as written."
 test "We follow-up on these requests weekly." "We follow-up on these requests weekly."
 test "This is the way to follow as best you can." "This is the way to follow as best you can."

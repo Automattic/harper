@@ -1,7 +1,7 @@
 expr main pedal to the medal
 
-let message "Reserve `pedal to the metal` for the classic acceleration idiom."
-let description "Replaces the misspelled `pedal to the medal` with the intended `metal` spelling whenever the phrase refers to putting the throttle down."
+let message "Use the idiom `pedal to the metal`."
+let description "Corrects the eggcorn `pedal to the medal` to the standard idiom `pedal to the metal`, meaning to accelerate at full speed."
 let kind "Typo"
 let becomes "pedal to the metal"
 
