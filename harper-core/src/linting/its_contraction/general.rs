@@ -72,6 +72,18 @@ impl General {
             return None;
         }
 
+        // Handle past participles that can also be adjectives before nouns
+        // (e.g., "its connected devices" where "connected" is ADJ + VERB)
+        if let Some(tok2) = toks.get(2) {
+            if tok2.kind.is_adjective()
+                && tok2.kind.is_verb_past_participle_form()
+                && toks.get(3).is_some_and(|t| t.kind.is_whitespace())
+                && toks.get(4).is_some_and(|t| t.kind.is_noun())
+            {
+                return None;
+            }
+        }
+
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Punctuation,
