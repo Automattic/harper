@@ -143,6 +143,8 @@ function onRenameFile(from: string, to: string) {
 
 	files.set(to, origVal);
 	files.delete(from);
+
+	files = new Map(files);
 }
 
 function createEmptyPack() {

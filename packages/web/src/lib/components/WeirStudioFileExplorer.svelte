@@ -1,5 +1,6 @@
 <script lang="ts">
 import { Button, Input } from 'components';
+import CheckIcon from '$lib/components/icons/CheckIcon.svelte';
 import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 import EditIcon from '$lib/components/icons/EditIcon.svelte';
 import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
@@ -22,6 +23,26 @@ export let onRenameFile: (from: string, to: string) => void;
 
 function onToggleDrawer() {
 	drawerOpen = !drawerOpen;
+}
+
+function startRename(file: string) {
+	renamingFile = file;
+	renameValue = file;
+}
+
+function commitRename(from: string) {
+	if (renamingFile !== from) {
+		return;
+	}
+
+	const trimmed = renameValue.trim();
+	renamingFile = null;
+
+	if (trimmed.length === 0 || trimmed === from) {
+		return;
+	}
+
+	onRenameFile(from, trimmed);
 }
 </script>
 
@@ -70,7 +91,6 @@ function onToggleDrawer() {
 
 		<div class="flex-1 overflow-auto px-2 pb-4">
 			{#each files as [file]}
-        {console.log(file, activeFile)}
 				<div
 					class={`group flex items-center justify-between rounded-lg px-2 py-2 text-sm ${file == activeFile ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
 				>
@@ -85,13 +105,13 @@ function onToggleDrawer() {
 									bind:value={renameValue}
 									on:keydown={(event: KeyboardEvent) => {
 										if (event.key === 'Enter') {
-											onRenameFile(file, renameValue);
+											commitRename(file);
 										}
 										if (event.key === 'Escape') {
-                      renamingFile = null;
+											renamingFile = null;
 										}
 									}}
-									on:blur={() => onRenameFile(file, renameValue)}
+									on:blur={() => commitRename(file)}
 								/>
 							</div>
 						{:else}
@@ -101,28 +121,43 @@ function onToggleDrawer() {
 						{/if}
 					</div>
 
-					<div class="flex items-center gap-1 text-black/50 opacity-0 transition group-hover:opacity-100">
-						<Button
-							size="xs"
-							color="white"
-							className="h-6 w-6 !p-0"
-							on:click={() => renameValue = file}
-							title="Rename file"
-							aria-label="Rename file"
-						>
-							<EditIcon className="h-3.5 w-3.5" />
-						</Button>
-						{#if files.size > 1}
+					<div
+						class={`flex items-center gap-1 text-black/50 transition ${renamingFile === file ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+					>
+						{#if renamingFile === file}
 							<Button
 								size="xs"
 								color="white"
 								className="h-6 w-6 !p-0"
-								on:click={() => onDeleteFile(file)}
-								title="Delete file"
-								aria-label="Delete file"
+								on:click={() => commitRename(file)}
+								title="Confirm rename"
+								aria-label="Confirm rename"
 							>
-								<TrashIcon className="h-3.5 w-3.5" />
+								<CheckIcon className="h-3.5 w-3.5" />
 							</Button>
+						{:else}
+							<Button
+								size="xs"
+								color="white"
+								className="h-6 w-6 !p-0"
+								on:click={() => startRename(file)}
+								title="Rename file"
+								aria-label="Rename file"
+							>
+								<EditIcon className="h-3.5 w-3.5" />
+							</Button>
+							{#if files.size > 1}
+								<Button
+									size="xs"
+									color="white"
+									className="h-6 w-6 !p-0"
+									on:click={() => onDeleteFile(file)}
+									title="Delete file"
+									aria-label="Delete file"
+								>
+									<TrashIcon className="h-3.5 w-3.5" />
+								</Button>
+							{/if}
 						{/if}
 					</div>
 				</div>
