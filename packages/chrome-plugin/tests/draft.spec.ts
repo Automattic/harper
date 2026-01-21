@@ -1,19 +1,21 @@
 import { expect, test } from './fixtures';
 import {
 	clickHarperHighlight,
+	getDraftEditor,
 	getHarperHighlights,
-	getSlateEditor,
 	randomString,
 	replaceEditorContent,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://slatejs.org';
+const TEST_PAGE_URL = 'https://draftjs.org/';
 
 test('Can apply basic suggestion.', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 
-	const slate = getSlateEditor(page);
-	await replaceEditorContent(slate, 'This is an test');
+	const draft = getDraftEditor(page);
+	await draft.scrollIntoViewIfNeeded();
+	await draft.click();
+	await replaceEditorContent(draft, 'This is an test');
 
 	await page.waitForTimeout(3000);
 
@@ -22,27 +24,30 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-	expect(slate).toContainText('This is a test');
+	expect(draft).toContainText('This is a test');
 
 	// Verify editor state is preserved: arrow keys and backspace must work.
 	// Position cursor before 's' in 'test', then backspace to delete 'e'.
-	await slate.press('End');
-	await slate.press('ArrowLeft');
-	await slate.press('ArrowLeft');
-	await slate.press('Backspace');
-	expect(slate).toContainText('This is a tst');
+	await draft.press('End');
+	await draft.press('ArrowLeft');
+	await draft.press('ArrowLeft');
+	await draft.press('Backspace');
+	expect(draft).toContainText('This is a tst');
 
 	// Verify typing still works.
-	await slate.pressSequentially('e');
-	expect(slate).toContainText('This is a test');
+	await draft.pressSequentially('e');
+	expect(draft).toContainText('This is a test');
 });
 
 test('Can ignore suggestion.', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
-	const slate = getSlateEditor(page);
+	const draft = getDraftEditor(page);
+
+	await draft.scrollIntoViewIfNeeded();
+	await draft.click();
 
 	const cacheSalt = randomString(5);
-	await replaceEditorContent(slate, cacheSalt);
+	await replaceEditorContent(draft, cacheSalt);
 
 	await page.waitForTimeout(3000);
 
@@ -53,6 +58,6 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await expect(getHarperHighlights(page)).toHaveCount(0);
 
 	// Nothing should change.
-	expect(slate).toContainText(cacheSalt);
+	expect(draft).toContainText(cacheSalt);
 	expect(await clickHarperHighlight(page)).toBe(false);
 });
