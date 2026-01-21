@@ -26,9 +26,9 @@ describe('weirpack helpers', () => {
 	});
 
 	test('packWeirpackFiles requires a manifest.json file', () => {
-		expect(() =>
-			packWeirpackFiles(new Map([['Rule.weir', 'expr main test']])),
-		).toThrow('Weirpack is missing manifest.json');
+		expect(() => packWeirpackFiles(new Map([['Rule.weir', 'expr main test']]))).toThrow(
+			'Weirpack is missing manifest.json',
+		);
 	});
 
 	test('unpackWeirpackBytes requires a manifest.json file', () => {

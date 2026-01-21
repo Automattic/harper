@@ -4,8 +4,7 @@ import type { AceEditor } from 'svelte-ace';
 import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 import PlayIcon from '$lib/components/icons/PlayIcon.svelte';
-import WeirStudioFileExplorer, {
-} from '$lib/components/WeirStudioFileExplorer.svelte';
+import WeirStudioFileExplorer, {} from '$lib/components/WeirStudioFileExplorer.svelte';
 
 export let drawerOpen = true;
 export let files: Map<string, string> = new Map();

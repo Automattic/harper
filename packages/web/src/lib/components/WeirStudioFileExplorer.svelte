@@ -12,7 +12,7 @@ export let files: Map<string, string> = new Map();
 /** The filename of the currently selected file. */
 export let activeFile: string | null = null;
 
-let renamingFile : string | null = null;
+let renamingFile: string | null = null;
 let renameValue = '';
 
 export let onToggleDrawer: () => void;

@@ -22,7 +22,7 @@ const defaultManifest = {
 	license: 'MIT',
 };
 
-const newRuleTemplate = `expr main`
+const newRuleTemplate = 'expr main';
 
 const defaultRule = `expr main (w/o)
 
@@ -42,12 +42,12 @@ let nextId = 2;
 let drawerOpen = true;
 
 /** The name of the file currently in the viewport. */
-let activeFileId : string | null = '';
+let activeFileId: string | null = '';
 
 let toasts: Toast[] = [];
 let runningTests = false;
 let linterReady = false;
-let linter: import('harper.js').WorkerLinter | null = null;
+let linter: import('harper.js').LocalLinter | null = null;
 let AceEditorComponent: typeof import('svelte-ace').AceEditor | null = null;
 let editorReady = false;
 let packLoaded = false;
@@ -79,37 +79,36 @@ const modeByExtension: Record<string, string> = {
 };
 
 function createFileName(): string {
-  return `NewRule-${nextId++}.weir`;
+	return `NewRule-${nextId++}.weir`;
 }
 
 function getEditorMode(name: string): string {
-  let ext = name.split('.', 2)[1];
-  if (ext == null){
-    'text'
-  }
+	let ext = name.split('.', 2)[1];
+	if (ext == null) {
+		('text');
+	}
 
-  let mode = modeByExtension[ext];
-  return mode;
+	let mode = modeByExtension[ext];
+	return mode;
 }
 
 function setActiveFile(id: string) {
-  activeFileId = id;
+	activeFileId = id;
 }
 
 function updateActiveContent(value: string) {
-  if (activeFileId)
-  files.set(activeFileId, value);
-  files = new Map(files);
+	if (activeFileId) files.set(activeFileId, value);
+	files = new Map(files);
 }
 
 function createFile() {
-  files.set(createFileName(), newRuleTemplate);
-  files = new Map(files);
+	files.set(createFileName(), newRuleTemplate);
+	files = new Map(files);
 }
 
 function deleteFile(file: string) {
-  files.delete(file);
-  files = new Map(files);
+	files.delete(file);
+	files = new Map(files);
 }
 
 function pushToast(toast: Omit<Toast, 'id'>) {
@@ -127,27 +126,23 @@ function initializePack(entries: Map<string, string>) {
 }
 
 function openExamplePack() {
-	initializePack(new Map([
-  [
-			 'manifest.json',
-			 JSON.stringify(defaultManifest, null, 2),
-       ],
-       [
-			 'ExampleRule.weir',
-			 defaultRule,
-       ]
-	]));
+	initializePack(
+		new Map([
+			['manifest.json', JSON.stringify(defaultManifest, null, 2)],
+			['ExampleRule.weir', defaultRule],
+		]),
+	);
 }
 
-function onRenameFile(from: string, to:string){
-  let origVal = files.get(from);
+function onRenameFile(from: string, to: string) {
+	let origVal = files.get(from);
 
-  if (origVal == undefined){
-    return;
-  }
+	if (origVal == undefined) {
+		return;
+	}
 
-  files.set(to, origVal);
-  files.delete(from);
+	files.set(to, origVal);
+	files.delete(from);
 }
 
 function createEmptyPack() {
@@ -155,12 +150,7 @@ function createEmptyPack() {
 		...defaultManifest,
 		name: 'Untitled Weirpack',
 	};
-	initializePack(new Map([
-  [
-			 'manifest.json',
-			 JSON.stringify(manifest, null, 2),
-		],
-	]));
+	initializePack(new Map([['manifest.json', JSON.stringify(manifest, null, 2)]]));
 }
 
 function resetToStartScreen() {
@@ -205,7 +195,7 @@ function parseManifest() {
 		return defaultManifest;
 	}
 	try {
-		const parsed = JSON.parse(files.get("manifest.json")!);
+		const parsed = JSON.parse(files.get('manifest.json')!);
 		return parsed;
 	} catch (error) {
 		pushToast({
@@ -232,7 +222,7 @@ function validateManifest(manifest: Record<string, unknown>) {
 	return true;
 }
 
-function buildWeirpackBytes(): Uint8Array<ArrayBufferLike>|null {
+function buildWeirpackBytes(): Uint8Array<ArrayBufferLike> | null {
 	const manifest = parseManifest();
 	if (!manifest || !validateManifest(manifest)) {
 		return null;
@@ -308,7 +298,9 @@ async function runTests() {
 	}
 	runningTests = true;
 	try {
-		const failures = (await linter.loadWeirpackFromBytes(bytes)) as WeirpackTestFailures | undefined;
+		const failures = (await linter.loadWeirpackFromBytes(bytes)) as
+			| WeirpackTestFailures
+			| undefined;
 		if (!failures || Object.keys(failures).length === 0) {
 			pushToast({
 				title: 'All tests passed',
@@ -329,7 +321,7 @@ async function runTests() {
 	} catch (error) {
 		pushToast({
 			title: 'Unable to run tests',
-			body: 'The Weirpack could not be evaluated.',
+			body: 'The Weirpack could not be evaluated. Make sure your rules are syntactically correct.',
 			tone: 'error',
 		});
 	} finally {
@@ -377,7 +369,7 @@ onMount(async () => {
 	}
 	checkingStorage = false;
 
-	const [{ WorkerLinter, binary }, { AceEditor }] = await Promise.all([
+	const [{ LocalLinter, binary }, { AceEditor }] = await Promise.all([
 		import('harper.js'),
 		import('svelte-ace'),
 	]);
@@ -392,13 +384,15 @@ onMount(async () => {
 		import('brace/theme/chrome'),
 	]);
 
-	const newLinter = new WorkerLinter({ binary });
+	const newLinter = new LocalLinter({ binary });
 	await newLinter.setup();
 	linter = newLinter;
 	linterReady = true;
 	AceEditorComponent = AceEditor;
 	editorReady = true;
 });
+
+setInterval(saveWeirpackToStorage, 5000);
 </script>
 
 <Isolate>
