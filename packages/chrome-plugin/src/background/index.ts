@@ -111,6 +111,7 @@ async function enableDefaultDomains() {
 		'quilljs.com',
 		'www.wattpad.com',
 		'ckeditor.com',
+		'app.slack.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
