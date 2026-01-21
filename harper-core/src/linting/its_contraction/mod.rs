@@ -283,4 +283,13 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn issue_2549_ignores_its_connected_devices() {
+        assert_lint_count(
+            "The integration allows you to control the gateway and its connected devices.",
+            ItsContraction::default(),
+            0,
+        );
+    }
 }
