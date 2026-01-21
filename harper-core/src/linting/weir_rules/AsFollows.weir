@@ -16,6 +16,7 @@ test "We were told as follow the timeline would slip." "We were told as follows 
 test "Is this description as follow the sample?" "Is this description as follows the sample?"
 test "You can verify as follow once the build completes." "You can verify as follows once the build completes."
 
+# Ensure unrelated uses of "follow" are not affected
 test "Follow the instructions as written." "Follow the instructions as written."
 test "We follow-up on these requests weekly." "We follow-up on these requests weekly."
 test "This is the way to follow as best you can." "This is the way to follow as best you can."

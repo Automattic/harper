@@ -61,7 +61,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                 .span()
                 .unwrap()
                 .get_content_string(source);
-            Ok(FoundNode::new(Some(AstStmtNode::Comment(comment)), end + 2))
+            Ok(FoundNode::new(Some(AstStmtNode::Comment(comment)), end + 1))
         }
         TokenKind::Word(_) => {
             let word_literal = key_token.span.get_content(source);
@@ -351,6 +351,36 @@ mod tests {
                 ),
                 AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word"))),
                 AstStmtNode::Comment("# this is a comment".to_string())
+            ]
+        );
+
+        assert_eq!(
+            ast.get_variable_value("test"),
+            Some(&AstVariable::create_string("to be this"))
+        );
+        assert_eq!(
+            ast.get_expr("main"),
+            Some(&AstExprNode::Word(char_string!("word")))
+        );
+    }
+
+    #[test]
+    fn parses_comment_in_middle() {
+        let ast = parse_str(
+            "let test \"to be this\"\n# this is a comment\nexpr main word",
+            true,
+        )
+        .unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![
+                AstStmtNode::create_declare_variable(
+                    "test",
+                    AstVariable::create_string("to be this")
+                ),
+                AstStmtNode::Comment("# this is a comment".to_string()),
+                AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word")))
             ]
         );
 
