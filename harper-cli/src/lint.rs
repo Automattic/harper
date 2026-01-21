@@ -286,6 +286,7 @@ struct FullInputInfo<'a> {
     source: Cow<'a, str>,
 }
 
+#[allow(clippy::too_many_arguments)]
 fn lint_one_input(
     // Common properties of harper-cli
     markdown_options: MarkdownOptions,
