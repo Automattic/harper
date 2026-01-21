@@ -112,6 +112,7 @@ async function enableDefaultDomains() {
 		'www.wattpad.com',
 		'ckeditor.com',
 		'app.slack.com',
+		'openrouter.ai',
 	];
 
 	for (const item of defaultEnabledDomains) {
