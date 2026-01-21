@@ -180,11 +180,7 @@ impl DictWordMetadata {
         candidates.sort();
         candidates.dedup();
 
-        if candidates.len() == 1 {
-            candidates.first().copied()
-        } else {
-            None
-        }
+        candidates.into_iter().exactly_one().ok()
     }
 
     /// Produce a copy of `self` with the known properties of `other` set.
