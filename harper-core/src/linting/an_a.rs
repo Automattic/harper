@@ -123,6 +123,10 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
         return None;
     }
 
+    if matches!(word, ['S', 'Q', 'L'] | ['L', 'E', 'D']) {
+        return Some(InitialSound::Either);
+    }
+
     // Try to get the first chunk of a word that appears to be a partial initialism.
     // For example:
     // - `RFL` from `RFLink`
@@ -145,9 +149,6 @@ fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
     let is_likely_initialism = word.iter().all(|c| !c.is_alphabetic() || c.is_uppercase());
 
     if word.len() == 1 || (is_likely_initialism && !is_likely_acronym(word)) {
-        if matches!(word, ['S', 'Q', 'L']) {
-            return Some(InitialSound::Either);
-        }
         return Some(
             if matches!(
                 word[0].to_ascii_uppercase(),
@@ -534,5 +535,11 @@ mod tests {
     #[test]
     fn dont_flag_an_sql() {
         assert_lint_count("an SQL query", AnA::new(Dialect::Australian), 0);
+    }
+
+    #[test]
+    fn allow_an_and_a_for_led_2550() {
+        assert_lint_count("an LED", AnA::new(Dialect::American), 0);
+        assert_lint_count("a LED", AnA::new(Dialect::American), 0);
     }
 }
