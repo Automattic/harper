@@ -283,4 +283,24 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn ignores_does_its_best() {
+        // Issue #2548: "does its best" should not be flagged
+        assert_lint_count(
+            "Home Assistant does its best to determine what task is most important.",
+            ItsContraction::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn corrects_its_best_to() {
+        // "Its best to leave" should be "It's best to leave" (not possessive use)
+        assert_suggestion_result(
+            "Its best to leave early.",
+            ItsContraction::default(),
+            "It's best to leave early.",
+        );
+    }
 }
