@@ -144,8 +144,8 @@ pub trait TokenStringExt: private::Sealed {
 
     /// Get an iterator over token slices that represent headings.
     ///
-    /// A heading begins with a [`TokenKind::HeadingStart`] token and ends with
-    /// the next [`TokenKind::ParagraphBreak`].
+    /// A heading begins with a [`TokenKind::HeadingStart`](crate::TokenKind::HeadingStart) token and ends with
+    /// the next [`TokenKind::ParagraphBreak`](crate::TokenKind::ParagraphBreak).
     fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
 
     /// Get an iterator over token slices that represent the individual
