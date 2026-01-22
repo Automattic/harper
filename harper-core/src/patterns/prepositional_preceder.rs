@@ -1,4 +1,4 @@
-use lazy_static::lazy_static;
+use std::sync::LazyLock;
 
 use super::{SingleTokenPattern, WordSet};
 use crate::Token;
@@ -50,10 +50,8 @@ impl SingleTokenPattern for PrepositionalPrecederPattern {
     }
 }
 
-lazy_static! {
-    static ref PREPOSITIONAL_PRECEDER_PATTERN: PrepositionalPrecederPattern =
-        PrepositionalPrecederPattern::default();
-}
+static PREPOSITIONAL_PRECEDER_PATTERN: LazyLock<PrepositionalPrecederPattern> =
+    LazyLock::new(PrepositionalPrecederPattern::default);
 
 /// Shared accessor for the lazily-initialized [`PrepositionalPrecederPattern`].
 pub fn prepositional_preceder() -> &'static PrepositionalPrecederPattern {

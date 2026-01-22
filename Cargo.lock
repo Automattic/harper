@@ -2775,7 +2775,6 @@ dependencies = [
  "hashbrown 0.16.1",
  "is-macro",
  "itertools 0.14.0",
- "lazy_static",
  "levenshtein_automata",
  "lru",
  "once_cell",
