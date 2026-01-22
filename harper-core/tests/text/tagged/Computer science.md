@@ -124,8 +124,8 @@
 # J/P    #    . NPr+   NPr       VP/J     D   NSg       . I/C+  VP/J VP/J    NPl/V3+
 > to process statistical information ; eventually his     company  became part     of IBM  .
 # P  NSg/VB  J           Nᴹ+         . R          ISg/D$+ N🅪Sg/VB+ VPt    NSg/VB/J P  NPr+ .
-> Following Babbage , although unaware of his     earlier work     , Percy Ludgate in        1909
-# Nᴹ/Vg/J/P NPr     . C        VB/J    P  ISg/D$+ JC      N🅪Sg/VB+ . NPr+  ?       NPr/J/R/P #
+> Following   Babbage , although unaware of his     earlier work     , Percy Ludgate in        1909
+# N🅪Sg/Vg/J/P NPr     . C        VB/J    P  ISg/D$+ JC      N🅪Sg/VB+ . NPr+  ?       NPr/J/R/P #
 > published the 2nd of the only  two designs for   mechanical analytical engines in
 # VP/J      D   #   P  D   J/R/C NSg NPl/V3+ R/C/P NSg/J      J          NPl/V3  NPr/J/R/P
 > history . In        1914 , the Spanish engineer Leonardo Torres Quevedo published his
@@ -784,8 +784,8 @@
 # NSg/VB/J . N🅪Sg+        . NPr/J/R/P NSg/VB+  Nᴹ+        NPr/VXB NSg/VXB VP/J   P  D   N🅪Sg/VB P  NPr  ?
 > Johnson and  Frederick P. Brooks   Jr     . , members of the Machine Organization
 # NPr     VB/C NPr+      ?  NPrPl/V3 NSg/J+ . . NPl/V3  P  D+  NSg/VB+ N🅪Sg+
-> department in        IBM's main      research center    in        1959 .
-# NSg+       NPr/J/R/P NPr$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J+ NPr/J/R/P #    .
+> department in        IBM's main      research center       in        1959 .
+# NSg+       NPr/J/R/P NPr$  NSg/VB/J+ Nᴹ/VB+   NSg/VB/J/Am+ NPr/J/R/P #    .
 >
 #
 >              Concurrent , parallel and  distributed computing

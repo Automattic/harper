@@ -1,0 +1,23 @@
+expr main <([leave, leaves, left, leaving] to [PROPN] [next, tomorrow, soon]), to>
+
+let message "Use `for` when pointing a departure toward a place."
+let description "When describing travel plans that include a destination and a time frame, prefer `leave for a destination` instead of `leave to a destination`."
+let kind "Usage"
+let becomes "for"
+let strategy "MatchCase"
+
+test "They are leaving to England soon." "They are leaving for England soon."
+test "We leave to Japan tomorrow morning." "We leave for Japan tomorrow morning."
+test "He leaves to Canada next week." "He leaves for Canada next week."
+test "We're leaving to Morocco next fall." "We're leaving for Morocco next fall."
+test "They're leaving to France tomorrow." "They're leaving for France tomorrow."
+test "My team leaves to London soon for the conference." "My team leaves for London soon for the conference."
+test "We are leaving to Brazil soon." "We are leaving for Brazil soon."
+test "I leave to Spain next Monday." "I leave for Spain next Monday."
+test "He left to Italy soon after the ceremony." "He left for Italy soon after the ceremony."
+test "The crew is leaving to Paris soon." "The crew is leaving for Paris soon."
+test "I leave it to you." "I leave it to you."
+test "Leave it to me, and I'll handle it." "Leave it to me, and I'll handle it."
+test "We are leaving to the west soon." "We are leaving to the west soon."
+test "We left to surprise them." "We left to surprise them."
+test "They leave to inform the board tomorrow." "They leave to inform the board tomorrow."

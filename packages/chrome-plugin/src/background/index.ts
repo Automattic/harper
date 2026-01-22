@@ -1,11 +1,10 @@
-import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { BinaryModule, type Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
-	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -42,6 +41,7 @@ import {
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
+import { detectBrowserDialect } from './detectDialect';
 
 console.log('background is running');
 
@@ -60,7 +60,9 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 
 let linter: LocalLinter;
 
-getDialect().then(setDialect);
+getDialect()
+	.then(setDialect)
+	.catch((err) => console.error('Failed to initialize linter:', err));
 setInstalledOnIfMissing();
 
 async function enableDefaultDomains() {
@@ -109,6 +111,8 @@ async function enableDefaultDomains() {
 		'quilljs.com',
 		'www.wattpad.com',
 		'ckeditor.com',
+		'app.slack.com',
+		'openrouter.ai',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -403,7 +407,13 @@ async function getIgnoredLints(): Promise<string> {
 }
 
 async function getDialect(): Promise<Dialect> {
-	const resp = await chrome.storage.local.get({ dialect: Dialect.American });
+	const resp = await chrome.storage.local.get('dialect');
+
+	// If user hasn't set a dialect, try to detect from browser language
+	if (resp.dialect === undefined) {
+		return detectBrowserDialect();
+	}
+
 	return resp.dialect;
 }
 

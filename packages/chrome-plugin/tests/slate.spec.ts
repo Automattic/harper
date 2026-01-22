@@ -24,10 +24,17 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	expect(slate).toContainText('This is a test');
 
-	// Slate has be known to revert changes after typing some more.
+	// Verify editor state is preserved: arrow keys and backspace must work.
+	// Position cursor before 's' in 'test', then backspace to delete 'e'.
 	await slate.press('End');
-	await slate.pressSequentially(" of Harper's grammar checking.");
-	expect(slate).toContainText("This is a test of Harper's grammar checking.");
+	await slate.press('ArrowLeft');
+	await slate.press('ArrowLeft');
+	await slate.press('Backspace');
+	expect(slate).toContainText('This is a tst');
+
+	// Verify typing still works.
+	await slate.pressSequentially('e');
+	expect(slate).toContainText('This is a test');
 });
 
 test('Can ignore suggestion.', async ({ page }) => {

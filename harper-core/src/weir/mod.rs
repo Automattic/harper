@@ -1,3 +1,6 @@
+//! Weir is a programming language for finding errors in natural language.
+//! See our [main documentation](https://writewithharper.com/docs/weir) for more details.
+
 mod ast;
 mod error;
 mod optimize;
@@ -18,7 +21,7 @@ use crate::{Document, Token, TokenStringExt};
 
 use self::ast::{Ast, AstVariable};
 
-pub fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
+pub(crate) fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;
     Ok(ast.to_expr())
 }

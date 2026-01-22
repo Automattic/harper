@@ -1,0 +1,171 @@
+use std::{borrow::Cow, ops::Range};
+
+use ariadne::{Color, Label, Report, ReportKind};
+use clap::ValueEnum;
+use harper_core::{Document, Span, TokenKind, TokenStringExt};
+use strum::IntoEnumIterator;
+
+/// Represents an annotation.
+pub(super) struct Annotation {
+    /// The range the annotation covers in the source. For instance, this might be a single word.
+    span: Span<char>,
+    /// The message displayed by the annotation.
+    annotation_text: String,
+    /// The color of the annotation.
+    color: Color,
+}
+impl Annotation {
+    /// Converts the annotation into an [`ariadne::Label`].
+    #[must_use]
+    pub(super) fn into_label(
+        self,
+        input_identifier: &str,
+    ) -> Label<(&str, std::ops::Range<usize>)> {
+        Label::new((input_identifier, self.span.into()))
+            .with_message(self.annotation_text)
+            .with_color(self.color)
+    }
+
+    /// Gets an iterator of annotation `Label` from the given document.
+    ///
+    /// This is similar to [`Self::iter_from_document`], but this additionally converts
+    /// the [`Annotation`] into [`ariadne::Label`] for convenience.
+    pub(super) fn iter_labels_from_document<'inpt_id>(
+        annotation_type: AnnotationType,
+        document: &Document,
+        input_identifier: &'inpt_id str,
+    ) -> impl Iterator<Item = Label<(&'inpt_id str, std::ops::Range<usize>)>> {
+        Self::iter_from_document(annotation_type, document)
+            .map(|annotation| annotation.into_label(input_identifier))
+    }
+
+    /// Gets an iterator of [`Annotation`] for a given document. The annotations will be based on
+    /// `annotation_type`.
+    fn iter_from_document(
+        annotation_type: AnnotationType,
+        document: &Document,
+    ) -> Box<dyn Iterator<Item = Self> + '_> {
+        match annotation_type {
+            AnnotationType::Upos => Box::new({
+                document.tokens().filter_map(|token| {
+                    let span = token.span;
+                    if let TokenKind::Word(Some(metadata)) = &token.kind {
+                        // Only annotate words (with dict word metadata) for `AnnotationType::Upos`.
+                        let pos_tag = metadata.pos_tag;
+                        Some(Self {
+                            span,
+                            annotation_text: pos_tag
+                                .map_or("NONE".to_owned(), |upos| upos.to_string()),
+                            color: pos_tag.map_or(Color::Red, get_color_for_enum_variant),
+                        })
+                    } else {
+                        // Not a word, or a word with no metadata.
+                        None
+                    }
+                })
+            }),
+            AnnotationType::Chunks => Box::new(
+                document
+                    .iter_chunks()
+                    .zip(RandomColorIter::new())
+                    .enumerate()
+                    .map(|(i, (chunk, color))| Self {
+                        span: chunk.span().unwrap(),
+                        annotation_text: i.to_string(),
+                        color,
+                    }),
+            ),
+        }
+    }
+}
+
+/// Represents how the tokens should be annotated.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub(super) enum AnnotationType {
+    /// UPOS (part of speech)
+    Upos,
+    Chunks,
+}
+impl AnnotationType {
+    /// Build a [`Report`] from the provided [`Document`], `input_identifier`, and `report_title`.
+    pub(super) fn build_report<'input_id>(
+        &self,
+        doc: &Document,
+        input_identifier: &'input_id str,
+        report_title: &'input_id str,
+    ) -> Report<'input_id, (&'input_id str, Range<usize>)> {
+        Report::build(
+            ReportKind::Custom(report_title, Color::Blue),
+            input_identifier,
+            0,
+        )
+        .with_labels(Annotation::iter_labels_from_document(
+            *self,
+            doc,
+            input_identifier,
+        ))
+        .finish()
+    }
+
+    /// The title that should be used for the printed output.
+    pub(super) fn get_title(&self) -> &'static str {
+        match self {
+            AnnotationType::Upos => "UPOS Tags",
+            AnnotationType::Chunks => "Chunks",
+        }
+    }
+
+    /// The title that should be used for the printed output, with added tags.
+    ///
+    /// The tags are used to provide additional information about the output.
+    pub(super) fn get_title_with_tags(&self, tags: &[&str]) -> Cow<'static, str> {
+        if tags.is_empty() {
+            self.get_title().into()
+        } else {
+            let tags = tags.join(", ");
+            (self.get_title().to_owned() + &format!(" ({tags})")).into()
+        }
+    }
+}
+
+/// An infinite iterator that produces random colors. This uses a fixed seed, so all instances of
+/// this iterator will produce colors in the same order.
+struct RandomColorIter {
+    color_gen: ariadne::ColorGenerator,
+}
+impl RandomColorIter {
+    fn new() -> Self {
+        Self {
+            // Using a lower than default `min_brightness` to hopefully create more distinguishable colors.
+            color_gen: ariadne::ColorGenerator::from_state([31715, 3528, 21854], 0.2),
+        }
+    }
+}
+impl Iterator for RandomColorIter {
+    type Item = Color;
+    fn next(&mut self) -> Option<Self::Item> {
+        Some(self.color_gen.next())
+    }
+}
+
+/// Gets a random `Color` for an enum variant.
+///
+/// A given enum variant's color is consistent, meaning it will not change throughout multiple
+/// calls of this function or multiple runs of the application.
+#[must_use]
+fn get_color_for_enum_variant<T: IntoEnumIterator + PartialEq>(variant_to_color: T) -> Color {
+    get_color_for_index(
+        T::iter()
+            .position(|variant| variant == variant_to_color)
+            .unwrap(),
+    )
+}
+
+/// Gets the nth random `Color` for a numeric index.
+///
+/// A given index's color is consistent, meaning it will not change throughout multiple calls of
+/// this function or multiple runs of the application.
+#[must_use]
+fn get_color_for_index(idx_to_color: usize) -> Color {
+    RandomColorIter::new().nth(idx_to_color).unwrap()
+}

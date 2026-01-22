@@ -35,7 +35,20 @@ export default class LocalLinter implements Linter {
 
 	async lint(text: string, options?: LintOptions): Promise<Lint[]> {
 		const inner = await this.inner;
-		const language = options?.language === 'plaintext' ? Language.Plain : Language.Markdown;
+
+		let language = Language.Markdown;
+
+		switch (options?.language) {
+			case 'plaintext':
+				language = Language.Plain;
+				break;
+			case 'markdown':
+				language = Language.Markdown;
+				break;
+			case 'typst':
+				language = Language.Typst;
+		}
+
 		const lints = inner.lint(text, language, options?.forceAllHeadings ?? false);
 
 		return lints;

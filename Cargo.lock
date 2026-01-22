@@ -2681,7 +2681,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2692,7 +2692,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-pos-utils",
  "lazy_static",
@@ -2727,7 +2727,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2761,7 +2761,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "ammonia",
  "bitflags 2.10.0",
@@ -2775,7 +2775,6 @@ dependencies = [
  "hashbrown 0.16.1",
  "is-macro",
  "itertools 0.14.0",
- "lazy_static",
  "levenshtein_automata",
  "lru",
  "once_cell",
@@ -2800,7 +2799,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2811,7 +2810,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2822,7 +2821,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2833,7 +2832,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2844,7 +2843,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "anyhow",
  "clap",
@@ -2874,7 +2873,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2892,7 +2891,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2903,7 +2902,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2914,7 +2913,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2925,7 +2924,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2944,7 +2943,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "1.4.1"
+version = "1.5.1"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2961,6 +2960,7 @@ dependencies = [
  "getrandom 0.3.4",
  "harper-core",
  "harper-stats",
+ "harper-typst",
  "once_cell",
  "serde",
  "serde-wasm-bindgen",
@@ -6117,11 +6117,12 @@ checksum = "562d481066bde0658276a35467c4af00bdc6ee726305698a55b86e61d7ad82bb"
 
 [[package]]
 name = "typst-syntax"
-version = "0.13.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ba949ac75a374ea6b2f61d32e6c63acb818e6179d16f78b2cba988fbb5e23a8"
+checksum = "a95d9192060e23b1e491b0b94dff676acddc92a4d672aeb8ca3890a5a734e879"
 dependencies = [
  "ecow",
+ "rustc-hash 2.1.1",
  "serde",
  "toml 0.8.23",
  "typst-timing",
@@ -6135,9 +6136,9 @@ dependencies = [
 
 [[package]]
 name = "typst-timing"
-version = "0.13.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ba4541664e98be2023db2267d92af206190eb903063a0229c668e1ab9dca976"
+checksum = "7be94f8faf19841b49574ef5c7fd7a12e2deb7c3d8deba5a596f35d2222024cd"
 dependencies = [
  "parking_lot",
  "serde",
@@ -6146,13 +6147,14 @@ dependencies = [
 
 [[package]]
 name = "typst-utils"
-version = "0.13.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0eb71d59967e0fb32341f8a94f41ced8da520c63705cca2686ae653c9408fd96"
+checksum = "a3966c92e8fa48c7ce898130d07000d985f18206d92b250f0f939287fbccdee3"
 dependencies = [
  "once_cell",
  "portable-atomic",
  "rayon",
+ "rustc-hash 2.1.1",
  "siphasher",
  "thin-vec",
  "unicode-math-class",
