@@ -1,4 +1,4 @@
-use crate::OffsetCursor;
+use crate::offset_cursor::OffsetCursor;
 use harper_core::{
     Punctuation, Token, TokenKind,
     parsers::{PlainEnglish, StrParser},
@@ -48,6 +48,64 @@ pub struct TypstTranslator<'a> {
 impl<'a> TypstTranslator<'a> {
     pub fn new(doc: &'a Source) -> Self {
         Self { doc }
+    }
+
+    pub fn parse_exprs(self, exprs: &[Expr]) -> Vec<Token> {
+        let base_offset = OffsetCursor::new(self.doc);
+        let mut tokens = Vec::new();
+        let mut index = 0;
+
+        while index < exprs.len() {
+            // Treat Text + apostrophe + Text as a single contraction token stream.
+            if let Some((mut parsed, consumed)) = self.parse_contraction(exprs, index) {
+                tokens.append(&mut parsed);
+                index += consumed;
+                continue;
+            }
+
+            if let Some(mut parsed) = self.parse_expr(exprs[index], base_offset) {
+                tokens.append(&mut parsed);
+            }
+            index += 1;
+        }
+
+        tokens
+    }
+
+    fn parse_contraction(self, exprs: &[Expr], index: usize) -> Option<(Vec<Token>, usize)> {
+        let exprs = exprs.get(index..index + 3)?;
+        let [expr1, expr2, expr3] = exprs else {
+            return None;
+        };
+
+        let (Expr::Text(left), Expr::SmartQuote(quote), Expr::Text(right)) =
+            (*expr1, *expr2, *expr3)
+        else {
+            return None;
+        };
+
+        if quote.double() {
+            return None;
+        }
+
+        let left_char = left.get().chars().last()?;
+        let right_char = right.get().chars().next()?;
+        if !left_char.is_alphabetic() || !right_char.is_alphabetic() {
+            return None;
+        }
+
+        let left_range = self.doc.range(left.span())?;
+        let quote_range = self.doc.range(quote.span())?;
+        let right_range = self.doc.range(right.span())?;
+        if left_range.end != quote_range.start || quote_range.end != right_range.start {
+            return None;
+        }
+
+        let joined = self.doc.get(left_range.start..right_range.end)?;
+        let offset = OffsetCursor::new(self.doc).push_to_span(left.span())?;
+        let parsed = self.parse_english(joined, offset)?;
+
+        Some((parsed, 3))
     }
 
     /// Use the [`PlainEnglish`] parser to parse plain text from a Typst expression.
