@@ -158,12 +158,12 @@ function replaceRichTextEditorValue(
 	const setup = selectSpanInEditor(el, span);
 	if (!setup) return;
 
-	const { doc, range } = setup;
+	const { doc, sel, range } = setup;
 
 	const evInit: InputEventInit = {
 		bubbles: true,
 		cancelable: true,
-		inputType: 'insertText',
+		inputType: 'insertReplacementText',
 		data: replacementText,
 	};
 
@@ -175,7 +175,8 @@ function replaceRichTextEditorValue(
 	el.dispatchEvent(beforeEvt);
 
 	if (!beforeEvt.defaultPrevented) {
-		doc.execCommand('insertText', false, replacementText);
+		replaceTextInRange(doc, sel, range, replacementText);
+		el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
 	}
 }
 
