@@ -215,7 +215,8 @@ fn main() -> anyhow::Result<()> {
             user_dict_path,
             file_dict_path,
         } => {
-            let dialect = parse_dialect(&dialect_str).map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
             lint(
                 markdown_options,
