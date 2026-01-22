@@ -407,7 +407,7 @@ async function getIgnoredLints(): Promise<string> {
 }
 
 async function getDialect(): Promise<Dialect> {
-	const resp = await chrome.storage.local.get({ dialect: undefined });
+	const resp = await chrome.storage.local.get('dialect');
 
 	// If user hasn't set a dialect, try to detect from browser language
 	if (resp.dialect === undefined) {

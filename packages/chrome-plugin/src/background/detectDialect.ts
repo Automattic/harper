@@ -27,6 +27,8 @@ function localeToDialect(locale: string): Dialect {
 	if (lower.startsWith('en')) {
 		// New Zealand → Australian (closest match)
 		if (lower.includes('en-nz') || lower.includes('en_nz')) return Dialect.Australian;
+		// American
+		if (lower.includes('en-us') || lower.includes('en_us')) return Dialect.American;
 		// Other English variants → British as fallback
 		if (lower.match(/^en[-_]/)) return Dialect.British;
 		// Plain 'en' → American (default)
