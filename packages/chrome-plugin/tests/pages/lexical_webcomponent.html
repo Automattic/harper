@@ -43,6 +43,20 @@
             if (mirror) mirror.textContent = editor.textContent ?? '';
           };
 
+          // Simulates WhatsApp's Lexical: tracks cursor internally, ignores programmatic selection
+          let internalCursorPosition = 0;
+
+          editor.addEventListener('click', () => {
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0) {
+              const range = sel.getRangeAt(0);
+              const preRange = document.createRange();
+              preRange.selectNodeContents(editor);
+              preRange.setEnd(range.startContainer, range.startOffset);
+              internalCursorPosition = preRange.toString().length;
+            }
+          });
+
           editor.addEventListener('beforeinput', (event) => {
             if (
               event.isTrusted === false &&
@@ -54,7 +68,12 @@
               // in response to synthetic beforeinput events emitted by our
               // extension when a suggestion is accepted.
               setTimeout(() => {
-                editor.textContent = `${event.data}\n`;
+                const currentText = editor.textContent ?? '';
+                const newText =
+                  currentText.slice(0, internalCursorPosition) +
+                  event.data +
+                  currentText.slice(internalCursorPosition);
+                editor.textContent = newText;
                 syncMirror();
               }, 0);
             }
