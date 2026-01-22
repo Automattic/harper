@@ -125,7 +125,7 @@
 > Penn tag     set       , developed in        the Penn Treebank project . It       is  largely similar to
 # NPr+ NSg/VB+ NPr/VBP/J . VP/J      NPr/J/R/P D   NPr+ ?        NSg/VB+ . NPr/ISg+ VL3 R       NSg/J   P
 > the earlier Brown       Corpus and  LOB    Corpus tag     sets   , though much         smaller . In
-# D   JC      NPr🅪Sg/VB/J NSg    VB/C NSg/VB NSg+   NSg/VB+ NPl/V3 . VB/C   NSg/I/J/R/Dq NSg/JC  . NPr/J/R/P
+# D   JC      NPr🅪Sg/VB/J NSg    VB/C NSg/VB NSg+   NSg/VB+ NPl/V3 . C      NSg/I/J/R/Dq NSg/JC  . NPr/J/R/P
 > Europe , tag     sets   from the Eagles Guidelines see    wide  use      and  include versions
 # NPr+   . NSg/VB+ NPl/V3 P    D   NPl/V3 NPl+       NSg/VB NSg/J N🅪Sg/VB+ VB/C NSg/VB  NPl/V3+
 > for   multiple languages .
@@ -209,7 +209,7 @@
 > this    time       ( 2005 ) it       has been    superseded by    larger corpora such  as    the 100
 # I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  NSg/VPp VP/J       NSg/P JC     NPl+    NSg/I R/C/P D   #
 > million word    British National Corpus , even       though larger corpora are rarely so
-# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J/R VB/C   JC     NPl+    VB  R      NSg/I/J/R/C
+# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J/R C      JC     NPl+    VB  R      NSg/I/J/R/C
 > thoroughly curated .
 # R          VP/J    .
 >
@@ -248,8 +248,8 @@
 # NPr/VB+ NPr/VXB VB     NSg/I/C/Ddem+ . NPr/VXB . NPr/J/R/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/J/R/Dq NSg/J  P  NSg/VXB D/P NSg/VB C/P
 > a    verb    or    a   modal . The same method  can     , of course  , be      used to benefit from
 # D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg/VB+ NPr/VXB . P  NSg/VB+ . NSg/VXB VP/J P  NSg/VB  P
-> knowledge about the following words   .
-# Nᴹ+       J/P   D+  Nᴹ/Vg/J/P NPl/V3+ .
+> knowledge about the following   words   .
+# Nᴹ+       J/P   D+  N🅪Sg/Vg/J/P NPl/V3+ .
 >
 #
 > More         advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs

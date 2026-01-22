@@ -13250,7 +13250,7 @@ assign's
 assignable/J
 assignation/NgS
 assigned/~JVtTU
-assignee/Ng
+assignee/NgS
 assigner/NgS
 assignment/~NgSr
 assignor/NgS
@@ -15385,7 +15385,7 @@ bothersome/J
 botlike/J
 botnet/NSg
 bottle/~NSgVd>GZ
-bottleneck/~NgSV
+bottleneck/~NgSVdG
 bottler/Ng
 bottom/~NSgVdGJ
 bottomless/J
@@ -17018,7 +17018,7 @@ challenge/~NwSgVd>GZ
 challenged/~JVtTU
 challenger/~NgS
 challis/Ng
-chamber/~NSgVd
+chamber/~NSgVdG
 chamberlain/~NgS
 chambermaid/NgS
 chambray/Nmg
@@ -19531,13 +19531,12 @@ covariant/JNgS
 cove/~NgSV
 coven/~NSg
 covenant/~NgSVdG
-cover/~NwSJVGdrEU
+cover/~NwSJVGdrEUB
 cover's
 coverage/~Nmg
 coverall/NgS
 coverglass/Ng
-covering's
-coverings/~N9
+covering/NwgS
 coverlet/NgS
 covert/~JYpNSg
 covertness/Nmg
@@ -19814,6 +19813,7 @@ crocheting/VNg
 crock/NSgVd
 crockery/Nmg
 crocodile/~NSgV
+crocodilian/NSgJ
 crocus/~NgS
 croft/~NSV>GZ
 croissant/NgS
@@ -25261,7 +25261,7 @@ foll/J
 follicle/~NgS
 follow/~Vd>GSNZz
 follower/~NgS
-following/~JPNgSV
+following/~JPNwgSV
 followup/NgS
 folly/~NSgV
 foment/VGdSN
@@ -28962,6 +28962,9 @@ hyperbole/~N0g
 hyperbolic/~JQ
 hypercar/NgS
 hyperconservative/J
+hypercorrect/JVSGd
+hypercorrection/NwgS
+hypercorrectness/Nm
 hypercritical/JY
 hypercube/NgS
 hyperfast/J
@@ -31295,7 +31298,7 @@ knothole/NSg
 knotted/JVtT
 knotting/V6N
 knotty/J^>
-know/~VbSNB
+know/~VbSB
 knowing/~JYPV6SNU
 knowledge/~Nmg
 knowledgeable/~JN
@@ -32125,7 +32128,7 @@ linguistic/~JSQ
 linguistics/~Nmg
 liniment/NSgV
 lining/~NgV
-link/~NgSVdG
+link/~NgSVdGB
 linkage/~NgS
 linker/NgS
 linkman/N
@@ -34213,7 +34216,7 @@ missioner/NSg
 missive/NgSJ
 misspeak/VGS
 misspell/VGdSz
-misspelling/~NgV
+misspelling/~NwgSV6
 misspend/VGS
 misspent/JV
 misspoke/V
@@ -38319,7 +38322,7 @@ perm/~NgSVdG
 permafrost/~Ng
 permanence/Nmg
 permanency/Nmg
-permanent/~JYNSgV
+permanent/~JYNSg
 permeability/~Ng
 permeable/~J
 permeate/VGdSNn
@@ -38371,6 +38374,7 @@ personable/J
 personae/N9
 personage/NgS
 personal/~JYNgS
+personalisation/NwgS!_₹
 personalise/VdSGe!_₹
 personality/~NwSg
 personalization/NwgS
@@ -40391,6 +40395,8 @@ protest/NwgS
 protestant/~JNgS
 protestation/NwgS
 protocol/~NwgSV
+protocolise/VGdS!_₹
+protocolize/VGdS
 proton/~NSg
 protoplasm/Nmg
 # proto             # prefixes that are not also words in their own right don't belong in the dictionary
@@ -40585,6 +40591,7 @@ pulchritudinous/J
 pule/NSVGd
 pull/~VGd>SNgZ
 pullback/NgS
+pulldown/NgS
 puller/NgS
 pullet/NSg
 pulley/~NSgV
@@ -41482,6 +41489,7 @@ reconnoiter/VdGSN
 reconnoitre/VGdSN!@_₹
 reconstruct/~Vv
 reconstructed/~VJU
+reconstructible/J
 recontest/VSdG
 recorded/~VJU
 recorder/~NgS
@@ -42065,7 +42073,7 @@ resistless/J
 resistor/~NgS
 resit/VSN
 resitting/NV6
-resizable/J<
+resizable/J
 resizeable/J!₹
 reskilling/V6
 reskin/VSN
@@ -44044,7 +44052,7 @@ settle's
 settlement/~N0gr
 settlements/~N9
 settler/~NSg
-setup/~NgSV
+setup/~NgS
 seven/~NgSH
 seventeen/~SgH
 seventeenth/~JN0g
@@ -47264,7 +47272,7 @@ superheat/VdSG
 superhero/~N0gS
 superheroes/~N9
 superhighway/NSg
-superhuman/~JN
+superhuman/~JNY
 superimpose/VGdS
 superimposition/Ng
 superintelligence/NwSg
@@ -48535,7 +48543,7 @@ thoroughgoing/J
 thoroughness/Nmg
 those/~IDM
 thou/~I2s
-though/~CV
+though/~C
 thought/~NwSgVtT
 thoughtful/~JYp
 thoughtfulness/Nmg
@@ -49077,7 +49085,7 @@ touchily/Ry
 touchiness/Nmg
 touching/~V6JYPN
 touchline/NS
-touchpad/Sg
+touchpad/NSg
 touchpaper/NS
 touchscreen/NgS
 touchstone/~NgS
@@ -49159,6 +49167,7 @@ track/~NSgVGd>Z
 trackball/NSg
 tracker/~NgS
 trackless/J
+trackpad/NgS
 tracksuit/NS
 tract/~NSVeEKWr
 tract's
@@ -50029,6 +50038,7 @@ unaesthetic/J
 unaffected/J
 unaffordable/J
 unalive/NgSVdGJ
+unallocated/J
 unalterably/Ry
 unambitious/J
 unanimity/Ng
@@ -50338,6 +50348,7 @@ ungenerous/J
 ungentle/J
 ungodly/J^
 ungraceful/JY
+ungrounded/J
 ungrudging/JY
 unguarded/J
 unguent/NSgJ
@@ -50466,6 +50477,8 @@ unpick/VGdS
 unpin/VS
 unpleasing/J
 unpolitical/J
+unpolymerised/J!_₹
+unpolymerized/J
 unpopular/~J
 unpowered/J
 unpractical/J
@@ -52927,6 +52940,7 @@ AngularJS/Og
 Anker/Sg
 Anki/Og             # flashcard app
 Anthropic/Og        # AI company
+AppKit/Og           # macOS framework
 Archytas/Sg         # !! please check and comment !! we also have archytas
 Atlassian/Og        # Company behind Jira, Confluence, Bitbucket
 AutoGPT/Og
@@ -53029,6 +53043,7 @@ DuckDuckGo/Og       # search engine
 EBITDA/N            # earnings before interest, taxes, depreciation, and amortization
 ECMA/Og             # European Computer Manufacturers Association
 EEA/O               # European Economic Area
+EFI/Og              # Extensible Firmware Interface
 EGR/                # exhaust gas recirculation
 EMR/NOSg
 EOF/NgS             # end of file
@@ -53057,8 +53072,9 @@ FPGA/NSg            # field-programmable gate array
 FPM/Sg
 FSD/Ng              # full self-driving
 Famicom/NOSg        # game console
+Figma/Og
 FireWire/Sg         # trademark
-Firestore/g
+Firestore/Og
 Foddy/Sg
 Forgejo/Og          # programming forge / git host
 Frankl/Sg
@@ -53198,6 +53214,7 @@ MapReduce/N
 Marchus/Sg
 Mbps                # megabits per second
 MediaWiki/Og        # the software Wikimedia runs on
+#Metal/Og           # 3D graphics API - not working yet due to canonical spelling bug
 Metasploit/ONSg
 Minecraft/Og
 Minhaj/OgS
@@ -53336,9 +53353,10 @@ Soros/Og            # financier George Soros
 SpaceX/Og
 Spotify/Og
 Stellantis/Og       # car company
-Subversion/Ng       # version control
+Substack/Og
+Subversion/Og       # version control
 Svelte/Og           # js framework
-SwiftUI/Og          # framework
+SwiftUI/Og          # Apple framework
 Systemd/Sg          # Linux system software
 TARGET2/O           # RTGS system for the Eurozone
 TCP/JOgS            # internet protocol
@@ -53372,6 +53390,7 @@ Typst/Sg
 UAC                 # User Account Control (Windows)
 UDP/NOSg            # internet protocol
 UEFI/Og             # Unified Extensible Firmware Interface
+UIKit/Og            # Apple framework
 ULA/NgS             # uncommitted logic array
 URI/NSg             # uniform resource identifier
 UUID/NgS            # universal unique identifier
@@ -53393,7 +53412,7 @@ Vimeo/Og            # video platform
 VirtualBox/ONSg
 Vite/Sg
 Vue/Og              # framework
-Vulkan/Og
+Vulkan/Og           # 3D graphics API
 WAL/ONSg
 WASI/Sg
 WASM/Sg             # see WebAssembly
@@ -53449,6 +53468,7 @@ backend/NSg         # dictionaries prefer: back end
 backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
+bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
 blogpost/NgS
 chroot/NgS
 clickstream/NgS
@@ -53517,6 +53537,7 @@ pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
+plist/NgS           # Apple property list
 postfix/NgSVdG
 pre/~PNV(           # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
@@ -53544,10 +53565,12 @@ standup/Sg          # dictionaries prefer: stand-up
 strat/NgS           # gamer slang strategy
 subchannel/NgS
 subkey/NgS
+subreddit/NgS       # see Reddit
 supersequence/NgS
 tagset/NgS
 terraform/VGdS
 timespan/NgS
+tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
 unicast/JVSdG
@@ -53602,6 +53625,7 @@ blow-up/JNgS
 blue-blooded/J
 blue-collar/J
 bona fide/RJ
+boo-boo/NgS
 boot camp/Nmg
 boot loader/NgS
 break out/V
@@ -53616,6 +53640,7 @@ camel case/Nmg
 car bomb/NgS
 car-bomb/V
 carbon-intensive/J
+carte blanche/Nmg
 cash flow/NgS
 cash-strapped/J
 CD-ROM/NgS
@@ -53730,6 +53755,7 @@ gray wolves/9<
 Greco-Roman/J
 grey wolf/Ng!@_₹
 grey wolves/9!@_₹
+grid line/NgS       # Two-word spelling is in Collins and Merriam-Webster
 ground-based/J
 GT R/N
 GT-R/NgS
@@ -54148,6 +54174,7 @@ melt down/V/
 pay out/V/
 pick up/V/
 plug in/V/
+pull down/V/
 push back/V/
 roll back/V/
 roll out/V/
