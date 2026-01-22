@@ -101,7 +101,7 @@ impl<'a> TypstTranslator<'a> {
             return None;
         }
 
-        let joined = self.doc.get(left_range.start..right_range.end)?;
+        let joined = self.doc.text().get(left_range.start..right_range.end)?;
         let offset = OffsetCursor::new(self.doc).push_to_span(left.span())?;
         let parsed = self.parse_english(joined, offset)?;
 
@@ -205,6 +205,7 @@ impl<'a> TypstTranslator<'a> {
         macro_rules! get_text {
             ($expr:expr) => {
                 self.doc
+                    .text()
                     .get(self.doc.range($expr.span())?)
                     .expect("Unable to get text from typst document span!")
             };
@@ -342,9 +343,9 @@ impl<'a> TypstTranslator<'a> {
             Expr::Emph(emph) => iter_recurse(&mut emph.body().exprs()),
             Expr::Link(a) => token!(a, TokenKind::Url),
             Expr::Heading(heading) => iter_recurse(&mut heading.body().exprs()),
-            Expr::List(list_item) => iter_recurse(&mut list_item.body().exprs()),
-            Expr::Enum(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
-            Expr::Term(term_item) => iter_recurse(
+            Expr::ListItem(list_item) => iter_recurse(&mut list_item.body().exprs()),
+            Expr::EnumItem(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
+            Expr::TermItem(term_item) => iter_recurse(
                 &mut term_item
                     .term()
                     .exprs()
@@ -365,7 +366,7 @@ impl<'a> TypstTranslator<'a> {
                         .collect_vec(),
                 )
             }
-            Expr::Content(content_block) => {
+            Expr::ContentBlock(content_block) => {
                 isolate(iter_recurse(&mut content_block.body().exprs()))
             }
             Expr::Parenthesized(parenthesized) => recurse!(parenthesized.expr()),
@@ -401,22 +402,22 @@ impl<'a> TypstTranslator<'a> {
                 recurse!(field_access.target()),
                 token!(field_access.field(), TokenKind::Word(None))
             ],
-            Expr::Let(let_binding) => merge![
+            Expr::LetBinding(let_binding) => merge![
                 match let_binding.kind() {
                     LetBindingKind::Normal(pattern) => self.parse_pattern(pattern, offset),
                     LetBindingKind::Closure(ident) => self.parse_ident(ident, offset),
                 },
                 let_binding.init().and_then(|e| recurse!(e))
             ],
-            Expr::DestructAssign(destruct_assignment) => {
+            Expr::DestructAssignment(destruct_assignment) => {
                 recurse!(destruct_assignment.value())
             }
-            Expr::Set(set_rule) => merge![
+            Expr::SetRule(set_rule) => merge![
                 recurse!(set_rule.target()),
                 set_rule.condition().and_then(|expr| recurse!(expr)),
                 parse_args(&mut set_rule.args().items())
             ],
-            Expr::Show(show_rule) => merge![
+            Expr::ShowRule(show_rule) => merge![
                 recurse!(show_rule.transform()),
                 show_rule.selector().and_then(|expr| recurse!(expr))
             ],
@@ -425,9 +426,9 @@ impl<'a> TypstTranslator<'a> {
                 recurse!(conditional.condition(), conditional.if_body()),
                 conditional.else_body().and_then(|expr| recurse!(expr))
             ],
-            Expr::While(while_loop) => recurse!(while_loop.condition(), while_loop.body()),
-            Expr::For(for_loop) => recurse!(for_loop.iterable(), for_loop.body()),
-            Expr::Code(code) => iter_recurse(&mut code.body().exprs()),
+            Expr::WhileLoop(while_loop) => recurse!(while_loop.condition(), while_loop.body()),
+            Expr::ForLoop(for_loop) => recurse!(for_loop.iterable(), for_loop.body()),
+            Expr::CodeBlock(code) => iter_recurse(&mut code.body().exprs()),
             Expr::Closure(closure) => merge![
                 closure
                     .name()
