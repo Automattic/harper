@@ -91,14 +91,14 @@ function replaceValue(
 ) {
 	if (isFormEl(el)) {
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
-	} else if (getLexicalRoot(el) != null) {
-		replaceLexicalValue(el, value);
-	} else if (getSlateRoot(el) != null && span && replacementText !== undefined) {
-		replaceSlateValue(el, span, replacementText);
-	} else if (getCkEditorRoot(el) != null && span && replacementText !== undefined) {
-		replaceSlateValue(el, span, replacementText);
-	} else if (getDraftRoot(el) != null && span && replacementText !== undefined) {
-		replaceDraftJsValue(el, span, replacementText);
+	} else if (getLexicalRoot(el) != null && span && replacementText !== undefined) {
+		replaceLexicalValue(el, span, replacementText);
+	} else if (
+		(getSlateRoot(el) != null || getCkEditorRoot(el) != null || getDraftRoot(el) != null) &&
+		span &&
+		replacementText !== undefined
+	) {
+		replaceRichTextEditorValue(el, span, replacementText);
 	} else {
 		replaceGenericContentEditable(el, value);
 	}
@@ -112,47 +112,21 @@ function replaceFormElementValue(el: HTMLTextAreaElement | HTMLInputElement, val
 	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 }
 
-function replaceLexicalValue(el: HTMLElement, value: string) {
-	// Select all text
-	const range = el.ownerDocument!.createRange();
-	if (el.nodeType === Node.TEXT_NODE) {
-		const len = (el as unknown as Text).data.length;
-		range.setStart(el, 0);
-		range.setEnd(el, len);
-	} else {
-		range.selectNodeContents(el);
-	}
-	const sel = el.ownerDocument!.defaultView!.getSelection();
-	sel?.removeAllRanges();
-	sel?.addRange(range);
+function replaceLexicalValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const setup = selectSpanInEditor(el, span);
+	if (!setup) return;
 
-	// Insert new text
-	const evInit: InputEventInit = {
-		bubbles: true,
-		cancelable: true,
-		inputType: 'insertText',
-		data: value,
-	};
+	const { doc, sel, range } = setup;
 
-	if ('StaticRange' in self && 'getTargetRanges' in InputEvent.prototype) {
-		if (sel?.rangeCount) evInit.targetRanges = [new StaticRange(sel.getRangeAt(0))];
-	}
+	// Direct DOM replacement
+	replaceTextInRange(doc, sel, range, replacementText);
 
-	el.dispatchEvent(new InputEvent('beforeinput', evInit));
-	if (getEditorText(el) === value) {
-		return;
-	}
-
-	el.dispatchEvent(new InputEvent('textInput', evInit));
-	if (getEditorText(el) === value) {
-		return;
-	}
-
-	setTimeout(() => {
-		if (getEditorText(el) !== value) {
-			el.textContent = value;
-		}
-	}, 0);
+	// Notify
+	el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
 }
 
 function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number }) {
@@ -173,21 +147,10 @@ function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number 
 	sel.removeAllRanges();
 	sel.addRange(range);
 
-	return { doc, range };
+	return { doc, sel, range };
 }
 
-function replaceDraftJsValue(
-	el: HTMLElement,
-	span: { start: number; end: number },
-	replacementText: string,
-) {
-	const setup = selectSpanInEditor(el, span);
-	if (!setup) return;
-
-	setup.doc.execCommand('insertText', false, replacementText);
-}
-
-function replaceSlateValue(
+function replaceRichTextEditorValue(
 	el: HTMLElement,
 	span: { start: number; end: number },
 	replacementText: string,
@@ -216,17 +179,44 @@ function replaceSlateValue(
 	}
 }
 
+function replaceTextInRange(doc: Document, sel: Selection, range: Range, replacementText: string) {
+	const startContainer = range.startContainer;
+	const endContainer = range.endContainer;
+
+	if (startContainer === endContainer && startContainer.nodeType === Node.TEXT_NODE) {
+		const textNode = startContainer as Text;
+		const startOffset = range.startOffset;
+		const endOffset = range.endOffset;
+
+		const oldText = textNode.textContent || '';
+		const newText =
+			oldText.substring(0, startOffset) + replacementText + oldText.substring(endOffset);
+
+		textNode.textContent = newText;
+
+		// Set cursor after replacement
+		const newRange = doc.createRange();
+		const cursorPosition = startOffset + replacementText.length;
+		newRange.setStart(textNode, cursorPosition);
+		newRange.setEnd(textNode, cursorPosition);
+		sel.removeAllRanges();
+		sel.addRange(newRange);
+	} else {
+		// Multi node range fallback
+		range.deleteContents();
+		const textNode = doc.createTextNode(replacementText);
+		range.insertNode(textNode);
+
+		const newRange = doc.createRange();
+		newRange.setStartAfter(textNode);
+		newRange.setEndAfter(textNode);
+		sel.removeAllRanges();
+		sel.addRange(newRange);
+	}
+}
+
 function replaceGenericContentEditable(el: HTMLElement, value: string) {
 	el.textContent = value;
 	el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
-}
-
-function getEditorText(el: HTMLElement): string {
-	const text = el.textContent ?? '';
-	return normalizeEditorText(text);
-}
-
-function normalizeEditorText(text: string): string {
-	return text.replace(/\u200b/g, '').replace(/[\n\r]+$/g, '');
 }
