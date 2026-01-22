@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![allow(dead_code)]
 
-pub mod case;
+mod case;
 mod char_ext;
 mod char_string;
 mod currency;

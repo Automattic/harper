@@ -86,7 +86,7 @@ impl<I: IntoIterator<Item = T>, T: Borrow<char>> CaseIterExt for I {
             .filter_map(|char| (*char.borrow()).try_into().ok())
     }
 
-    /// Get casing for the provided string. Unlike [`Self::get_casing()`], the output will always
+    /// Get casing for the provided string. Unlike [`Self::get_casing`], the output will always
     /// be the same length as the input string. If a character is neither uppercase nor lowercase,
     /// its corresponding case will be `None`.
     fn get_casing_unfiltered(self) -> SmallVec<[Option<Case>; CHAR_STRING_INLINE_SIZE]> {

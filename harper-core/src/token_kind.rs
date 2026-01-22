@@ -302,7 +302,7 @@ impl TokenKind {
         }
     }
 
-    pub(crate) fn is_sentence_terminator(&self) -> bool {
+    pub fn is_sentence_terminator(&self) -> bool {
         match self {
             TokenKind::Punctuation(punct) => [
                 Punctuation::Period,
