@@ -49,8 +49,8 @@ fn convert_parbreaks<'a>(buf: &'a mut Vec<SyntaxNode>, exprs: &'a [Expr]) -> Vec
 
     let should_parbreak = |e1, e2, e3| {
         matches!(e2, Expr::Space(_))
-            && (matches!(e1, Expr::Heading(_) | Expr::List(_))
-                || matches!(e3, Expr::Heading(_) | Expr::List(_)))
+            && (matches!(e1, Expr::Heading(_) | Expr::ListItem(_))
+                || matches!(e3, Expr::Heading(_) | Expr::ListItem(_)))
     };
 
     let mut res: Vec<Expr> = Vec::new();
