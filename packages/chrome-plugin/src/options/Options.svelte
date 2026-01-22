@@ -211,7 +211,7 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
       </div>
       <div class="flex flex-col">
         <h1 class="text-base tracking-wide font-serif">Harper</h1>
-        <p class="text-xs">Chrome Extension Settings</p>
+        <p class="text-xs">Settings</p>
       </div>
     </Card>
 
