@@ -263,8 +263,7 @@ fn main() -> anyhow::Result<()> {
 
             let mut report_builder = Report::build(
                 ReportKind::Custom("Spans", primary_color),
-                &input_identifier,
-                0,
+                (&input_identifier, 0..0),
             );
             let mut color = primary_color;
 

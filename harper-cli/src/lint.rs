@@ -470,7 +470,7 @@ fn single_input_report(
         let input_identifier = input.input.get_identifier();
 
         if lint_count_after != 0 {
-            let mut report_builder = Report::build(ReportKind::Advice, &input_identifier, 0);
+            let mut report_builder = Report::build(ReportKind::Advice, (&input_identifier, 0..0));
 
             for (rule_name, lints) in named_lints {
                 for lint in lints {
