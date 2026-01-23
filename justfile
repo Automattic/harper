@@ -205,6 +205,19 @@ test-vscode:
     pnpm test
   fi
 
+  if [[ -d .vscode-test ]]; then
+    all_versions=$(ls -1 .vscode-test | grep "^vscode-" | sort -V)
+    latest_version=$(echo "$all_versions" | tail -n 1)
+    old_versions=$(echo "$all_versions" | sed '$d')  # Delete last line instead
+    if [[ -n "$old_versions" ]]; then
+      count=$(echo "$old_versions" | wc -l)
+      echo "$old_versions" | xargs -I {} rm -rf .vscode-test/{}
+      echo "✓ Deleted $count old VSCode versions, keeping $latest_version"
+    else
+      echo "✓ No old versions to clean (keeping $latest_version)"
+    fi
+  fi
+
 # Build and package the Visual Studio Code extension.
 # If `target` is passed, it is assumed that `harper-ls` has been compiled beforehand and is in `packages/vscode-plugin/bin`. This is used in CI.
 package-vscode target="":
