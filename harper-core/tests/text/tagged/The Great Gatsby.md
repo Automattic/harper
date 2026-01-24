@@ -1376,8 +1376,8 @@
 #
 > I       think  he’d tanked up         a   good     deal      at    luncheon , and  his     determination to have    my
 # ISg/#r+ NSg/VB K    VP/J   NSg/VB/J/P D/P NPr/VB/J NSg/VB/J+ NSg/P NSg/VB+  . VB/C ISg/D$+ NSg+          P  NSg/VXB D$+
-> company  bordered on  violence . The supercilious assumption was that          on  Sunday
-# N🅪Sg/VB+ VP/J     J/P Nᴹ/VB+   . D   J            N🅪Sg+      VPt NSg/I/C/Ddem+ J/P NSg/VB+
+> company bordered on  violence . The supercilious assumption was that          on  Sunday
+# N🅪Sg+   VP/J     J/P Nᴹ/VB+   . D   J            N🅪Sg+      VPt NSg/I/C/Ddem+ J/P NSg/VB+
 > afternoon I       had nothing  better     to do  .
 # N🅪Sg+     ISg/#r+ VP  NSg/I/J+ NSg/VXB/JC P  VXB .
 >
@@ -1599,7 +1599,7 @@
 > voice   . “ It’s more         of an  Airedale . ” He       passed his     hand    over    the brown       washrag of
 # NSg/VB+ . . K    NPr/I/J/R/Dq P  D/P NPr      . . NPr/ISg+ VP/J   ISg/D$+ NSg/VB+ NSg/J/P D   NPr🅪Sg/VB/J NSg     P
 > a   back      . “ Look   at    that          coat    . Some      coat    . That’s a    dog       that’ll never bother you
-# D/P NSg/VB/J+ . . NSg/VB NSg/P NSg/I/C/Ddem+ NSg/VB+ . I/J/R/Dq+ NSg/VB+ . NSg$   D/P+ NSg/VB/J+ K       R     NSg/VB ISgPl+
+# D/P NSg/VB/J+ . . NSg/VB NSg/P NSg/I/C/Ddem+ NSg/VB+ . I/J/R/Dq+ NSg/VB+ . NSg$   D/P+ NSg/VB/J+ K       R     Nᴹ/VB  ISgPl+
 > with catching cold  . ”
 # P    Nᴹ/Vg/J  NSg/J . .
 >
@@ -1728,8 +1728,8 @@
 #
 > Just as    Tom     and  Myrtle ( after the first drink   Mrs  . Wilson and  I       called each
 # J/R  R/C/P NPr/VB+ VB/C NPr    . P     D   NSg/J NSg/VB+ NPl+ . NPr+   VB/C ISg/#r+ VP/J   Dq
-> other    by    our first  names   ) reappeared , company  commenced to arrive at    the
-# NSg/VB/J NSg/P D$+ NSg/J+ NPl/V3+ . VP/J       . N🅪Sg/VB+ VP/J      P  VB     NSg/P D
+> other    by    our first  names   ) reappeared , company commenced to arrive at    the
+# NSg/VB/J NSg/P D$+ NSg/J+ NPl/V3+ . VP/J       . N🅪Sg+   VP/J      P  VB     NSg/P D
 > apartment - door    .
 # NSg+      . NSg/VB+ .
 >
@@ -2721,7 +2721,7 @@
 >
 #
 > “ About that          . As    a   matter  of fact you    needn’t bother to ascertain . I       ascertained .
-# . J/P   NSg/I/C/Ddem+ . R/C/P D/P N🅪Sg/VB P  NSg+ ISgPl+ VXB     NSg/VB P  VB        . ISg/#r+ VP/J        .
+# . J/P   NSg/I/C/Ddem+ . R/C/P D/P N🅪Sg/VB P  NSg+ ISgPl+ VXB     Nᴹ/VB  P  VB        . ISg/#r+ VP/J        .
 > They’re real  . ”
 # K       NSg/J . .
 >
@@ -7102,8 +7102,8 @@
 # D+  NSg/J/P+ NPr🅪Sg+ VPt Nᴹ/Vg/J  . R      D   NSg/VB/J . R         D   JS      . P  D
 > summer     . As    my  train   emerged from the tunnel  into sunlight , only  the hot      whistles
 # NPr🅪Sg/VB+ . R/C/P D$+ NSg/VB+ VP/J    P    D+  NSg/VB+ P    NSg/VB+  . J/R/C D   NSg/VB/J NPl/V3
-> of the National Biscuit Company  broke     the simmering hush    at    noon    . The straw
-# P  D   NSg/J    NSg     N🅪Sg/VB+ NSg/VPt/J D   Nᴹ/Vg/J   NSg/VB+ NSg/P NSg/VB+ . D   N🅪Sg/VB/J+
+> of the National Biscuit Company broke     the simmering hush    at    noon    . The straw
+# P  D   NSg/J    NSg     N🅪Sg+   NSg/VPt/J D   Nᴹ/Vg/J   NSg/VB+ NSg/P NSg/VB+ . D   N🅪Sg/VB/J+
 > seats  of the car  hovered on  the edge   of combustion ; the woman   next    to me
 # NPl/V3 P  D+  NSg+ VP/J    J/P D   NSg/VB P  Nᴹ         . D   NSg/VB+ NSg/J/P P  NPr/ISg+
 > perspired delicately for   a   while       into her     white       shirtwaist , and  then      , as    her
@@ -9365,7 +9365,7 @@
 > “ She'll be      all          right     to - morrow , ” he       said presently . “ I’m just going   to wait   here
 # . K      NSg/VXB NSg/I/J/C/Dq NPr/VB/J+ P  . NPr/VB . . NPr/ISg+ VP/J R         . . K   J/R  Nᴹ/Vg/J P  NSg/VB J/R
 > and  see    if    he       tries  to bother her     about that          unpleasantness this   afternoon .
-# VB/C NSg/VB NSg/C NPr/ISg+ NPl/V3 P  NSg/VB ISg/D$+ J/P   NSg/I/C/Ddem+ NSg            I/Ddem N🅪Sg+     .
+# VB/C NSg/VB NSg/C NPr/ISg+ NPl/V3 P  Nᴹ/VB  ISg/D$+ J/P   NSg/I/C/Ddem+ NSg            I/Ddem N🅪Sg+     .
 > She’s locked herself into her     room       , and  if    he       tries  any    brutality she’s going   to
 # K     VP/J   ISg+    P    ISg/D$+ N🅪Sg/VB/J+ . VB/C NSg/C NPr/ISg+ NPl/V3 I/R/Dq Nᴹ+       K     Nᴹ/Vg/J P
 > turn   the light      out          and  on  again . ”
@@ -10928,8 +10928,8 @@
 # D   N🅪Sg/Vg/J P  D+  NSg/J+  ISg/#r+ NSg/VPt NSg/VB/J/P P  NSg/J+ NPr+ P  NSg/VB NPr   ?         . ISg/#r+
 > couldn’t seem to reach  him  any    other    way    . The door    that          I       pushed open     , on  the
 # VXB      VB   P  NSg/VB ISg+ I/R/Dq NSg/VB/J NSg/J+ . D+  NSg/VB+ NSg/I/C/Ddem+ ISg/#r+ VP/J   NSg/VB/J . J/P D
-> advice of an   elevator boy     , was marked “ The Swastika Holding Company  , ” and  at
-# Nᴹ     P  D/P+ NSg/VB+  NSg/VB+ . VPt VP/J   . D   NSg      Nᴹ/Vg/J N🅪Sg/VB+ . . VB/C NSg/P
+> advice of an   elevator boy     , was marked “ The Swastika Holding Company , ” and  at
+# Nᴹ     P  D/P+ NSg/VB+  NSg/VB+ . VPt VP/J   . D   NSg      Nᴹ/Vg/J N🅪Sg+   . . VB/C NSg/P
 > first there didn’t seem to be      any    one      inside  . But     when    I’d shouted “ hello  ”
 # NSg/J R+    VXPt   VB   P  NSg/VXB I/R/Dq NSg/I/J+ NSg/J/P . NSg/C/P NSg/I/C K   VP/J    . NSg/VB .
 > several times   in        vain , an  argument broke     out          behind  a   partition , and  presently a

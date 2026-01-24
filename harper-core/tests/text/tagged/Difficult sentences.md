@@ -426,8 +426,8 @@
 # NPr+ VL3 NPr/J/R/P D/P NSg  .
 > My  fruit    trees   are in        bud        .
 # D$+ N🅪Sg/VB+ NPl/V3+ VB  NPr/J/R/P NPr🅪Sg/VB+ .
-> The company  is  in        profit      .
-# D+  N🅪Sg/VB+ VL3 NPr/J/R/P N🅪Sg/VBP/J+ .
+> The company is  in        profit      .
+# D+  N🅪Sg+   VL3 NPr/J/R/P N🅪Sg/VBP/J+ .
 > You've got a   friend    in        me       .
 # K      VP  D/P NPr/VB/J+ NPr/J/R/P NPr/ISg+ .
 > He's met his     match   in        her     .
@@ -443,7 +443,7 @@
 > Beethoven's " Symphony No       . 5 " in        C          minor    is  among his     most         popular .
 # NPr$        . NSg+     NSg/Dq/P . # . NPr/J/R/P NPr/VB/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech   was in        French      , but     was simultaneously translated into eight  languages .
-# ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl/V3+   .
+# ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl+      .
 > When    you    write  in        cursive , it's illegible .
 # NSg/I/C ISgPl+ NSg/VB NPr/J/R/P NSg/J   . +    J         .
 > Military letters should be      formal in        tone       , but     not     stilted .
@@ -482,8 +482,8 @@
 # HeadingStart NSg/VB+
 >
 #
-> His     parents got him  an  in        with the company  .
-# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg/VB+ .
+> His     parents got him  an  in        with the company .
+# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg+   .
 >
 #
 >              Adjective

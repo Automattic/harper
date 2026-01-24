@@ -2381,7 +2381,7 @@
 >
 #
 > “ Oh     , don’t bother me       , ” said the Duchess ; “ I       never could   abide figures ! ” And  with
-# . NPr/VB . VXB   NSg/VB NPr/ISg+ . . VP/J D   NSg/VB  . . ISg/#r+ R     NSg/VXB VB    NPl/V3+ . . VB/C P
+# . NPr/VB . VXB   Nᴹ/VB  NPr/ISg+ . . VP/J D   NSg/VB  . . ISg/#r+ R     NSg/VXB VB    NPl/V3+ . . VB/C P
 > that         she  began nursing her     child   again , singing a   sort    of lullaby to it       as    she
 # NSg/I/C/Ddem ISg+ VPt   Nᴹ/Vg/J ISg/D$+ NSg/VB+ P     . Nᴹ/Vg/J D/P NSg/VB+ P  NSg/VB  P  NPr/ISg+ R/C/P ISg+
 > did  so          , and  giving  it       a   violent  shake   at    the end    of every line    :
@@ -4172,8 +4172,8 @@
 #
 > As    they walked off        together , Alice heard the King      say    in        a    low         voice   , to the
 # R/C/P IPl+ VP/J   NSg/VB/J/P J        . NPr+  VP/J  D+  NPr/VB/J+ NSg/VB NPr/J/R/P D/P+ NSg/VB/J/R+ NSg/VB+ . P  D+
-> company  generally , “ You    are all          pardoned . ” “ Come       , that’s a    good     thing ! ” she  said
-# N🅪Sg/VB+ R         . . ISgPl+ VB  NSg/I/J/C/Dq VP/J     . . . NSg/VBPp/P . NSg$   D/P+ NPr/VB/J NSg+  . . ISg+ VP/J
+> company generally , “ You    are all          pardoned . ” “ Come       , that’s a    good     thing ! ” she  said
+# N🅪Sg+   R         . . ISgPl+ VB  NSg/I/J/C/Dq VP/J     . . . NSg/VBPp/P . NSg$   D/P+ NPr/VB/J NSg+  . . ISg+ VP/J
 > to herself , for   she  had felt      quite unhappy  at    the number     of executions the Queen
 # P  ISg+    . R/C/P ISg+ VP  N🅪Sg/VP/J R     NSg/VB/J NSg/P D   N🅪Sg/VB/JC P  NPl+       D+  NPr/VB/J+
 > had ordered .

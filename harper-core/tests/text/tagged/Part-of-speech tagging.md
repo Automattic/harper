@@ -47,7 +47,7 @@
 > at    different times   , and  because some     parts  of speech   are complex  . This    is  not
 # NSg/P NSg/J     NPl/V3+ . VB/C C/P     I/J/R/Dq NPl/V3 P  N🅪Sg/VB+ VB  NSg/VB/J . I/Ddem+ VL3 NSg/R/C
 > rare     — in        natural languages ( as    opposed to many        artificial languages ) , a   large
-# NSg/VB/J . NPr/J/R/P NSg/J+  NPl/V3+   . R/C/P VP/J    P  NSg/I/J/Dq+ J+         NPl/V3+   . . D/P NSg/J
+# NSg/VB/J . NPr/J/R/P NSg/J+  NPl+      . R/C/P VP/J    P  NSg/I/J/Dq+ J+         NPl+      . . D/P NSg/J
 > percentage of word    - forms   are ambiguous . For   example , even       " dogs    " , which is
 # N🅪Sg       P  NSg/VB+ . NPl/V3+ VB  J         . R/C/P NSg/VB+ . NSg/VB/J/R . NPl/V3+ . . I/C+  VL3
 > usually thought of as    just a    plural noun    , can     also be      a    verb    :
@@ -85,7 +85,7 @@
 > the plural , possessive , and  singular forms   can     be      distinguished . In        many
 # D   NSg/J  . NSg/J      . VB/C NSg/J    NPl/V3+ NPr/VXB NSg/VXB VP/J          . NPr/J/R/P NSg/I/J/Dq+
 > languages words   are also marked for   their " case       " ( role as    subject   , object  ,
-# NPl/V3+   NPl/V3+ VB  R/C  VP/J   R/C/P D$+   . NPr🅪Sg/VB+ . . NSg  R/C/P NSg/VB/J+ . NSg/VB+ .
+# NPl+      NPl/V3+ VB  R/C  VP/J   R/C/P D$+   . NPr🅪Sg/VB+ . . NSg  R/C/P NSg/VB/J+ . NSg/VB+ .
 > etc. ) , grammatical gender     , and  so          on  ; while      verbs   are marked for   tense    , aspect   ,
 # +    . . J+          N🅪Sg/VB/J+ . VB/C NSg/I/J/R/C J/P . NSg/VB/C/P NPl/V3+ VB  VP/J   R/C/P NSg/VB/J . N🅪Sg/VB+ .
 > and  other     things . In        some     tagging systems , different inflections of the same
@@ -103,15 +103,15 @@
 >
 #
 > In        part      - of - speech   tagging by    computer , it       is  typical to distinguish from 50 to
-# NPr/J/R/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/P NSg/VB+  . NPr/ISg+ VL3 NSg/J   P  VB          P    #  P
+# NPr/J/R/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/P NSg+     . NPr/ISg+ VL3 NSg/J   P  VB          P    #  P
 > 150 separate parts  of speech  for   English      . Work    on  stochastic methods for   tagging
 # #   NSg/VB/J NPl/V3 P  N🅪Sg/VB R/C/P NPr🅪Sg/VB/J+ . N🅪Sg/VB J/P J          NPl/V3+ R/C/P NSg/Vg
 > Koine Greek    ( DeRose 1990 ) has used over    1 , 000 parts  of speech   and  found  that
 # ?     NPr/VB/J . ?      #    . V3  VP/J NSg/J/P # . #   NPl/V3 P  N🅪Sg/VB+ VB/C NSg/VP NSg/I/C/Ddem
 > about as    many       words   were    ambiguous in        that         language as    in        English      . A
-# J/P   R/C/P NSg/I/J/Dq NPl/V3+ NSg/VPt J         NPr/J/R/P NSg/I/C/Ddem N🅪Sg/VB+ R/C/P NPr/J/R/P NPr🅪Sg/VB/J+ . D/P
+# J/P   R/C/P NSg/I/J/Dq NPl/V3+ NSg/VPt J         NPr/J/R/P NSg/I/C/Ddem N🅪Sg+    R/C/P NPr/J/R/P NPr🅪Sg/VB/J+ . D/P
 > morphosyntactic descriptor in        the case      of morphologically rich     languages is
-# ?               NSg        NPr/J/R/P D   NPr🅪Sg/VB P  ?               NPr/VB/J NPl/V3+   VL3
+# ?               NSg        NPr/J/R/P D   NPr🅪Sg/VB P  ?               NPr/VB/J NPl+      VL3
 > commonly expressed using   very short      mnemonics , such  as    Ncmsan for   Category = Noun    ,
 # R        VP/J      Nᴹ/Vg/J J/R  NPr/VB/J/P NPl       . NSg/I R/C/P ?      R/C/P NSg+     . NSg/VB+ .
 > Type    = common   , Gender     = masculine , Number      = singular , Case       = accusative , Animate
@@ -129,23 +129,23 @@
 > Europe , tag     sets   from the Eagles Guidelines see    wide  use      and  include versions
 # NPr+   . NSg/VB+ NPl/V3 P    D   NPl/V3 NPl+       NSg/VB NSg/J N🅪Sg/VB+ VB/C NSg/VB  NPl/V3+
 > for   multiple languages .
-# R/C/P NSg/J/Dq NPl/V3+   .
+# R/C/P NSg/J/Dq NPl+      .
 >
 #
 > POS  tagging work     has been    done      in        a   variety of languages , and  the set       of POS
-# NSg+ NSg/Vg  N🅪Sg/VB+ V3  NSg/VPp NSg/VPp/J NPr/J/R/P D/P N🅪Sg    P  NPl/V3+   . VB/C D   NPr/VBP/J P  NSg+
+# NSg+ NSg/Vg  N🅪Sg/VB+ V3  NSg/VPp NSg/VPp/J NPr/J/R/P D/P N🅪Sg    P  NPl+      . VB/C D   NPr/VBP/J P  NSg+
 > tags    used varies greatly with language . Tags    usually are designed to include
-# NPl/V3+ VP/J NPl/V3 R       P    N🅪Sg/VB+ . NPl/V3+ R       VB  VP/J     P  NSg/VB
+# NPl/V3+ VP/J NPl/V3 R       P    N🅪Sg+    . NPl/V3+ R       VB  VP/J     P  NSg/VB
 > overt  morphological distinctions , although this   leads  to inconsistencies such  as
 # NSg/J+ J+            NPl+         . C        I/Ddem NPl/V3 P  NPl             NSg/I R/C/P
 > case       - marking for   pronouns but     not     nouns  in        English      , and  much         larger
 # NPr🅪Sg/VB+ . Nᴹ/Vg/J R/C/P NPl/V3   NSg/C/P NSg/R/C NPl/V3 NPr/J/R/P NPr🅪Sg/VB/J+ . VB/C NSg/I/J/R/Dq JC
 > cross       - language differences . The tag     sets   for   heavily inflected languages such  as
-# NPr/VB/J/P+ . N🅪Sg/VB+ NPl/VB+     . D+  NSg/VB+ NPl/V3 R/C/P R       VP/J      NPl/V3+   NSg/I R/C/P
+# NPr/VB/J/P+ . N🅪Sg+    NPl/VB+     . D+  NSg/VB+ NPl/V3 R/C/P R       VP/J      NPl+      NSg/I R/C/P
 > Greek    and  Latin can     be      very large ; tagging words   in        agglutinative languages such
-# NPr/VB/J VB/C NPr/J NPr/VXB NSg/VXB J/R  NSg/J . NSg/Vg  NPl/V3+ NPr/J/R/P J             NPl/V3+   NSg/I
+# NPr/VB/J VB/C NPr/J NPr/VXB NSg/VXB J/R  NSg/J . NSg/Vg  NPl/V3+ NPr/J/R/P J             NPl+      NSg/I
 > as    Inuit languages may     be      virtually impossible . At    the other    extreme , Petrov et
-# R/C/P NPr/J NPl/V3+   NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
+# R/C/P NPr/J NPl+      NPr/VXB NSg/VXB R         NSg/J      . NSg/P D   NSg/VB/J NSg/J   . ?      ?
 > al. have    proposed a   " universal " tag     set       , with 12 categories ( for   example , no
 # ?   NSg/VXB VP/J     D/P . NSg/J     . NSg/VB+ NPr/VBP/J . P    #  NPl+       . R/C/P NSg/VB+ . NSg/Dq/P
 > subtypes of nouns  , verbs   , punctuation , and  so          on  ) . Whether a   very small    set       of
@@ -167,7 +167,7 @@
 > Research on  part      - of - speech   tagging has been    closely tied to corpus linguistics .
 # Nᴹ/VB    J/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  V3  NSg/VPp R       VP/J P  NSg    Nᴹ+         .
 > The first major    corpus of English     for   computer analysis was the Brown       Corpus
-# D   NSg/J NPr/VB/J NSg    P  NPr🅪Sg/VB/J R/C/P NSg/VB+  N🅪Sg+    VPt D   NPr🅪Sg/VB/J NSg
+# D   NSg/J NPr/VB/J NSg    P  NPr🅪Sg/VB/J R/C/P NSg+     N🅪Sg+    VPt D   NPr🅪Sg/VB/J NSg
 > developed at    Brown       University by    Henry Kučera and  W. Nelson Francis , in        the
 # VP/J      NSg/P NPr🅪Sg/VB/J NSg+       NSg/P NPr+  ?      VB/C ?  NPr+   NPr+    . NPr/J/R/P D
 > mid      - 1960s . It       consists of about 1 , 000 , 000 words  of running   English      prose text     ,
@@ -203,7 +203,7 @@
 > part      - of - speech   and  inspired the development of similar " tagged " corpora in        many
 # NSg/VB/J+ . P  . N🅪Sg/VB+ VB/C VP/J     D   N🅪Sg        P  NSg/J   . VP/J   . NPl+    NPr/J/R/P NSg/I/J/Dq
 > other    languages . Statistics derived by    analyzing it       formed the basis for   most
-# NSg/VB/J NPl/V3+   . NPl/V3+    VP/J    NSg/P Nᴹ/Vg/J   NPr/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
+# NSg/VB/J NPl+      . NPl/V3+    VP/J    NSg/P Nᴹ/Vg/J   NPr/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
 # JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . NSg/P
 > this    time       ( 2005 ) it       has been    superseded by    larger corpora such  as    the 100
@@ -217,7 +217,7 @@
 > For   some     time       , part      - of - speech   tagging was considered an  inseparable part     of
 # R/C/P I/J/R/Dq N🅪Sg/VB/J+ . NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VPt VP/J       D/P NSg/J       NSg/VB/J P
 > natural language processing , because there are certain cases   where   the correct
-# NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J+   . C/P     R+    VB  I/J     NPl/V3+ NSg/R/C D   NSg/VB/J
+# NSg/J   N🅪Sg+    Nᴹ/Vg/J+   . C/P     R+    VB  I/J     NPl/V3+ NSg/R/C D   NSg/VB/J
 > part     of speech   cannot  be      decided  without understanding the semantics or    even       the
 # NSg/VB/J P  N🅪Sg/VB+ NSg/VXB NSg/VXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
 > pragmatics of the context  . This    is  extremely expensive , especially because
@@ -277,7 +277,7 @@
 >
 #
 > Eugene Charniak points  out          in        Statistical techniques for   natural language
-# NPr+   ?        NPl/V3+ NSg/VB/J/R/P NPr/J/R/P J           NPl        R/C/P NSg/J+  N🅪Sg/VB+
+# NPr+   ?        NPl/V3+ NSg/VB/J/R/P NPr/J/R/P J           NPl        R/C/P NSg/J+  N🅪Sg+
 > parsing ( 1997 ) that          merely assigning the most         common   tag     to each known word    and
 # Nᴹ/Vg/J . #    . NSg/I/C/Ddem+ R      Nᴹ/Vg/J   D   NSg/I/J/R/Dq NSg/VB/J NSg/VB+ P  Dq   VPp/J NSg/VB+ VB/C
 > the tag     " proper noun    " to all          unknowns will    approach 90 % accuracy because many
@@ -335,7 +335,7 @@
 >
 #
 > These   findings were    surprisingly disruptive to the field  of natural language
-# I/Ddem+ NSg+     NSg/VPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg/VB+
+# I/Ddem+ NSg+     NSg/VPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
 > processing . The accuracy reported was higher than the typical accuracy of very
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that          integrated part     of speech   choice  with many       higher
@@ -351,7 +351,7 @@
 > levels of processing ; this    , in        turn   , simplified the theory and  practice of
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/R/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
-# VP/J         N🅪Sg/VB+ N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
+# VP/J         N🅪Sg+    N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
 > separate other    pieces  as    well       . Markov Models  became the standard method  for   the
 # NSg/VB/J NSg/VB/J NPl/V3+ R/C/P NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ R/C/P D
 > part      - of - speech   assignment .
