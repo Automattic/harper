@@ -205,6 +205,7 @@ test-vscode:
     pnpm test
   fi
 
+  # Over time, VSCode test versions take up space that can be hard to track down
   if [[ -d .vscode-test ]]; then
     all_versions=$(ls -1 .vscode-test | grep "^vscode-" | sort -V)
     latest_version=$(echo "$all_versions" | tail -n 1)
