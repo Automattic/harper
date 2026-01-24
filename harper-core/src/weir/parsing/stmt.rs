@@ -1,6 +1,11 @@
+use std::num::NonZeroUsize;
+use std::sync::{Arc, LazyLock, RwLock};
+
+use lru::LruCache;
+
 use super::ast::AstVariable;
 use super::inc_by_spaces;
-use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
+use crate::{CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
 use super::{
@@ -8,17 +13,42 @@ use super::{
     locate_matching_brace, optimize, parse_collection,
 };
 
-pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Ast, Error> {
-    let chars: CharString = weir_code.chars().collect();
-    let tokens = lex(&chars);
+/// Parse the provided string using caching to speed up repeated requests.
+///
+/// Will return the cached AST if the provided code has previously been cached. Otherwise, it will
+/// parse the code and cache the resulting AST.
+pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error> {
+    static PARSE_CACHE: LazyLock<
+        RwLock<LruCache<(String, bool), Arc<Ast>, hashbrown::DefaultHashBuilder>>,
+    > = LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
 
-    let mut stmts = parse_stmt_list(&tokens, &chars)?;
+    Ok(
+        if let Some(cached) = PARSE_CACHE
+            .read()
+            .unwrap()
+            .peek(&(weir_code.to_owned(), use_optimizer))
+        {
+            cached.clone()
+        } else {
+            let chars: Vec<char> = weir_code.chars().collect();
+            let tokens = lex(&chars);
 
-    if use_optimizer {
-        while optimize(&mut stmts) {}
-    }
+            let mut stmts = parse_stmt_list(&tokens, &chars)?;
 
-    Ok(Ast { stmts })
+            if use_optimizer {
+                while optimize(&mut stmts) {}
+            }
+
+            let ast = Arc::new(Ast { stmts });
+
+            PARSE_CACHE
+                .write()
+                .unwrap()
+                .put((weir_code.to_owned(), use_optimizer), ast.clone());
+
+            ast
+        },
+    )
 }
 
 fn parse_stmt_list(tokens: &[Token], source: &[char]) -> Result<Vec<AstStmtNode>, Error> {
