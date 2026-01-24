@@ -2695,7 +2695,6 @@ name = "harper-brill"
 version = "1.5.1"
 dependencies = [
  "harper-pos-utils",
- "lazy_static",
  "serde_json",
 ]
 
