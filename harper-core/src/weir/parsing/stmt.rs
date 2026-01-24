@@ -18,8 +18,10 @@ use super::{
 /// Will return the cached AST if the provided code has previously been cached. Otherwise, it will
 /// parse the code and cache the resulting AST.
 pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error> {
+    type ParseStrParams = (String, bool);
+
     static PARSE_CACHE: LazyLock<
-        RwLock<LruCache<(String, bool), Arc<Ast>, hashbrown::DefaultHashBuilder>>,
+        RwLock<LruCache<ParseStrParams, Arc<Ast>, hashbrown::DefaultHashBuilder>>,
     > = LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
 
     Ok(
