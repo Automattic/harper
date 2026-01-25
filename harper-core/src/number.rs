@@ -69,12 +69,12 @@ impl OrdinalSuffix {
         })
     }
 
-    pub fn to_chars(self) -> Vec<char> {
+    pub const fn to_chars(self) -> &'static [char] {
         match self {
-            OrdinalSuffix::Th => vec!['t', 'h'],
-            OrdinalSuffix::St => vec!['s', 't'],
-            OrdinalSuffix::Nd => vec!['n', 'd'],
-            OrdinalSuffix::Rd => vec!['r', 'd'],
+            OrdinalSuffix::Th => &['t', 'h'],
+            OrdinalSuffix::St => &['s', 't'],
+            OrdinalSuffix::Nd => &['n', 'd'],
+            OrdinalSuffix::Rd => &['r', 'd'],
         }
     }
 
