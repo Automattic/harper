@@ -60,19 +60,13 @@ impl OrdinalSuffix {
             return Some(Self::Th);
         };
 
-        match integer % 10 {
-            0 => Some(Self::Th),
-            1 => Some(Self::St),
-            2 => Some(Self::Nd),
-            3 => Some(Self::Rd),
-            4 => Some(Self::Th),
-            5 => Some(Self::Th),
-            6 => Some(Self::Th),
-            7 => Some(Self::Th),
-            8 => Some(Self::Th),
-            9 => Some(Self::Th),
-            _ => None,
-        }
+        Some(match integer % 10 {
+            0 | 4..=9 => Self::Th,
+            1 => Self::St,
+            2 => Self::Nd,
+            3 => Self::Rd,
+            _ => unreachable!(),
+        })
     }
 
     pub fn to_chars(self) -> Vec<char> {
