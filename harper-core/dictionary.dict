@@ -7565,10 +7565,10 @@ OMB/Og
 OMG                 # exclamation
 OPEC/Og             # organization
 OR/CNO              # Oregon
-OS/ONgJ
+OS/Ng               # removed `O` proper noun and `J` adjective flags
 OSHA/Og             # agency
 OSS/ONV             # open source software
-OSes/N
+OSes/N9
 OT/NOJ
 OTB/J
 OTC/JNO             # over the counter
@@ -26633,6 +26633,9 @@ globular/~JN
 globule/NgS
 globulin/Ng
 glockenspiel/NSg
+glom/VS
+glommed/VtT
+glomming/V6N
 gloom/NmgV
 gloomily/Ry
 gloominess/Nmg
@@ -53055,6 +53058,7 @@ ESLint/Og           # JavaScript linter
 EV/NSg              # electric vehicle
 EXIF                # metadata
 ElasticSearch/Sg
+Electron/Og         # web-tech framework for desktop apps
 Elon/Og
 Erdoğan/Og          # surname, Turkish politician
 Ethereum/Og         # digital currency
@@ -53374,6 +53378,7 @@ TSR/NgS             # terminate and stay resident
 TTS/Ng              # text-to-speech
 TUI/NOSg            # text user interface
 Tandy/Og            # surname, given name, old computer company
+Tauri/Og            # web-tech framework for desktop apps
 TechCrunch/g
 Tencent/Og
 TensorFlow/Og
