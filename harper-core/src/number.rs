@@ -1,6 +1,7 @@
 use std::fmt::Display;
 
 use is_macro::Is;
+use itertools::Itertools;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 
@@ -81,27 +82,13 @@ impl OrdinalSuffix {
     /// Check the first several characters in a buffer to see if it matches a
     /// number suffix.
     pub fn from_chars(chars: &[char]) -> Option<Self> {
-        if chars.len() != 2 {
-            return None;
-        }
+        let lower_chars: [char; 2] = chars.iter().map(char::to_ascii_lowercase).collect_array()?;
 
-        match (chars[0], chars[1]) {
-            ('t', 'h') => Some(OrdinalSuffix::Th),
-            ('T', 'h') => Some(OrdinalSuffix::Th),
-            ('t', 'H') => Some(OrdinalSuffix::Th),
-            ('T', 'H') => Some(OrdinalSuffix::Th),
-            ('s', 't') => Some(OrdinalSuffix::St),
-            ('S', 't') => Some(OrdinalSuffix::St),
-            ('s', 'T') => Some(OrdinalSuffix::St),
-            ('S', 'T') => Some(OrdinalSuffix::St),
-            ('n', 'd') => Some(OrdinalSuffix::Nd),
-            ('N', 'd') => Some(OrdinalSuffix::Nd),
-            ('n', 'D') => Some(OrdinalSuffix::Nd),
-            ('N', 'D') => Some(OrdinalSuffix::Nd),
-            ('r', 'd') => Some(OrdinalSuffix::Rd),
-            ('R', 'd') => Some(OrdinalSuffix::Rd),
-            ('r', 'D') => Some(OrdinalSuffix::Rd),
-            ('R', 'D') => Some(OrdinalSuffix::Rd),
+        match lower_chars {
+            ['t', 'h'] => Some(OrdinalSuffix::Th),
+            ['s', 't'] => Some(OrdinalSuffix::St),
+            ['n', 'd'] => Some(OrdinalSuffix::Nd),
+            ['r', 'd'] => Some(OrdinalSuffix::Rd),
             _ => None,
         }
     }
