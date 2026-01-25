@@ -18,17 +18,21 @@ use super::{
 /// Will return the cached AST if the provided code has previously been cached. Otherwise, it will
 /// parse the code and cache the resulting AST.
 pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error> {
-    type ParseStrParams = (String, bool);
+    // The parameters that might influence the generated AST.
+    // This is used as the key for the cache hashmap.
+    type ParseStrParams = (Arc<String>, bool);
 
     static PARSE_CACHE: LazyLock<
         RwLock<LruCache<ParseStrParams, Arc<Ast>, hashbrown::DefaultHashBuilder>>,
     > = LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
 
+    let weir_code = Arc::new(weir_code.to_owned());
+
     Ok(
         if let Some(cached) = PARSE_CACHE
             .read()
             .unwrap()
-            .peek(&(weir_code.to_owned(), use_optimizer))
+            .peek(&(weir_code.clone(), use_optimizer))
         {
             cached.clone()
         } else {
@@ -46,7 +50,7 @@ pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error
             PARSE_CACHE
                 .write()
                 .unwrap()
-                .put((weir_code.to_owned(), use_optimizer), ast.clone());
+                .put((weir_code, use_optimizer), ast.clone());
 
             ast
         },
