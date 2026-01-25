@@ -127,20 +127,15 @@ pub trait TokenStringExt: private::Sealed {
 
     /// Get a slice of tokens using relative indices.
     ///
-    /// # Arguments
-    /// * `rel_start` - Starting index (negative values count from the end)
-    /// * `inclusive_end` - Ending index (inclusive, negative values count from the end)
-    ///
-    /// # Returns
-    /// `Some(&[Token])` if the indices are valid, `None` otherwise
-    ///
     /// # Examples
     /// ```
-    /// let tokens = /* ... */;
-    /// // Get last 3 tokens
-    /// let slice = tokens.get_rel_slice(-3, -1).unwrap();
-    /// // Get first 3 tokens
-    /// let slice = tokens.get_rel_slice(0, 2).unwrap();
+    /// # use harper_core::{Token, TokenStringExt, parsers::{Parser, PlainEnglish}};
+    /// # fn main() {
+    /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
+    /// let tokens = PlainEnglish.parse(&source);
+    /// assert_eq!(tokens.get_rel_slice(0, 2).unwrap().span().unwrap().get_content_string(&source), "The cat");
+    /// assert_eq!(tokens.get_rel_slice(-3, -1).unwrap().span().unwrap().get_content_string(&source), " mat.");
+    /// # }
     /// ```
     fn get_rel_slice(&self, rel_start: isize, inclusive_end: isize) -> Option<&[Token]>
     where
