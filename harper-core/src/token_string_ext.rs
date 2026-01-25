@@ -125,6 +125,54 @@ pub trait TokenStringExt: private::Sealed {
         slice.get(idx)
     }
 
+    /// Get a slice of tokens using relative indices.
+    ///
+    /// # Arguments
+    /// * `rel_start` - Starting index (negative values count from the end)
+    /// * `inclusive_end` - Ending index (inclusive, negative values count from the end)
+    ///
+    /// # Returns
+    /// `Some(&[Token])` if the indices are valid, `None` otherwise
+    ///
+    /// # Examples
+    /// ```
+    /// let tokens = /* ... */;
+    /// // Get last 3 tokens
+    /// let slice = tokens.get_rel_slice(-3, -1).unwrap();
+    /// // Get first 3 tokens
+    /// let slice = tokens.get_rel_slice(0, 2).unwrap();
+    /// ```
+    fn get_rel_slice(&self, rel_start: isize, inclusive_end: isize) -> Option<&[Token]>
+    where
+        Self: AsRef<[Token]>,
+    {
+        let slice = self.as_ref();
+        let len = slice.len() as isize;
+
+        // Convert relative indices to absolute indices
+        let start_idx = if rel_start >= 0 {
+            rel_start
+        } else {
+            len + rel_start
+        } as usize;
+
+        let end_idx_plus_one = if inclusive_end >= 0 {
+            inclusive_end + 1 // +1 to make end exclusive
+        } else {
+            len + inclusive_end + 1
+        } as usize;
+
+        // Check bounds
+        if start_idx >= slice.len()
+            || end_idx_plus_one > slice.len()
+            || start_idx >= end_idx_plus_one
+        {
+            return None;
+        }
+
+        Some(&slice[start_idx..end_idx_plus_one])
+    }
+
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
 
