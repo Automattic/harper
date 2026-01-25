@@ -79,8 +79,7 @@ impl OrdinalSuffix {
         }
     }
 
-    /// Check the first several characters in a buffer to see if it matches a
-    /// number suffix.
+    /// Check the characters in a buffer to see if it matches a number suffix.
     pub fn from_chars(chars: &[char]) -> Option<Self> {
         let lower_chars: [char; 2] = chars.iter().map(char::to_ascii_lowercase).collect_array()?;
 
