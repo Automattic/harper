@@ -31,11 +31,18 @@ export function getDraftEditor(page: Page): Locator {
 	return page.locator('#rich-example .public-DraftEditor-content');
 }
 
-/** Replace the content of a text editor. */
+/** Replace the content of a text editor. Handles newlines by pressing Enter. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
-	await editorEl.pressSequentially(text);
+
+	const lines = text.split('\n');
+	for (let i = 0; i < lines.length; i++) {
+		await editorEl.pressSequentially(lines[i]);
+		if (i < lines.length - 1) {
+			await editorEl.press('Enter');
+		}
+	}
 }
 
 /** Locate the Harper highlights on a page. */
@@ -88,6 +95,9 @@ export function getTextarea(page: Page): Locator {
 
 /** A string or function that resolves to a test page. */
 export type TestPageUrlProvider = string | ((page: Page) => Promise<string>);
+
+/** A function that returns an editor locator. */
+export type EditorLocatorProvider = (page: Page) => Locator;
 
 async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<string> {
 	if (typeof prov === 'string') {
@@ -171,17 +181,62 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 	});
 }
 
+/** Test multiline suggestion replacement and undo. */
+export async function testMultipleSuggestionsAndUndo(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Multiple suggestions and undo.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
+
+		await page.waitForTimeout(3000);
+
+		const highlights = getHarperHighlights(page);
+		await expect(highlights).toHaveCount(3);
+
+		// Click on the middle highlight (second "tset")
+		const box = await highlights.nth(1).boundingBox();
+		expect(box).not.toBeNull();
+		await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2);
+
+		// Move cursor away to test whether it handles race condition
+		await editor.press('End');
+
+		await page.getByTitle('Replace with "test"').click();
+		await page.waitForTimeout(500);
+
+		// Verify only second "tset" was corrected
+		await expect(editor).toContainText('first tset');
+		await expect(editor).toContainText('second test');
+		await expect(editor).toContainText('third tset');
+
+		// Undo
+		await editor.press('Control+z');
+		await page.waitForTimeout(300);
+		await expect(editor).toContainText('The second tset');
+	});
+}
+
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
 	expect(await highlights.count()).toBe(boxes.length);
 
 	for (let i = 0; i < (await highlights.count()); i++) {
 		const box = await highlights.nth(i).boundingBox();
+		expect(box).not.toBeNull();
 
 		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
 		console.log(`Got: ${JSON.stringify(box)}`);
 
-		assertBoxesClose(box, boxes[i]);
+		assertBoxesClose(box!, boxes[i]);
 	}
 }
 

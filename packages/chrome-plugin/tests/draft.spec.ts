@@ -5,6 +5,7 @@ import {
 	getHarperHighlights,
 	randomString,
 	replaceEditorContent,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'https://draftjs.org/';
@@ -24,7 +25,7 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-	expect(draft).toContainText('This is a test');
+	await expect(draft).toContainText('This is a test');
 
 	// Verify editor state is preserved: arrow keys and backspace must work.
 	// Position cursor before 's' in 'test', then backspace to delete 'e'.
@@ -32,11 +33,16 @@ test('Can apply basic suggestion.', async ({ page }) => {
 	await draft.press('ArrowLeft');
 	await draft.press('ArrowLeft');
 	await draft.press('Backspace');
-	expect(draft).toContainText('This is a tst');
+	await expect(draft).toContainText('This is a tst');
 
 	// Verify typing still works.
 	await draft.pressSequentially('e');
-	expect(draft).toContainText('This is a test');
+	await expect(draft).toContainText('This is a test');
+});
+
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getDraftEditor, async (editor) => {
+	await editor.scrollIntoViewIfNeeded();
+	await editor.click();
 });
 
 test('Can ignore suggestion.', async ({ page }) => {
@@ -58,6 +64,6 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await expect(getHarperHighlights(page)).toHaveCount(0);
 
 	// Nothing should change.
-	expect(draft).toContainText(cacheSalt);
+	await expect(draft).toContainText(cacheSalt);
 	expect(await clickHarperHighlight(page)).toBe(false);
 });
