@@ -181,6 +181,24 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 	});
 }
 
+/** Get highlight bounding boxes sorted by visual position (top to bottom, left to right). */
+async function getSortedHighlightBoxes(page: Page) {
+	const highlights = getHarperHighlights(page);
+	const count = await highlights.count();
+	const boxes: NonNullable<Awaited<ReturnType<Locator['boundingBox']>>>[] = [];
+
+	for (let i = 0; i < count; i++) {
+		const box = await highlights.nth(i).boundingBox();
+		if (box) {
+			boxes.push(box);
+		}
+	}
+
+	boxes.sort((a, b) => (Math.abs(a.y - b.y) > 5 ? a.y - b.y : a.x - b.x));
+
+	return boxes;
+}
+
 /** Test multiline suggestion replacement and undo. */
 export async function testMultipleSuggestionsAndUndo(
 	testPageUrl: TestPageUrlProvider,
@@ -202,10 +220,11 @@ export async function testMultipleSuggestionsAndUndo(
 		const highlights = getHarperHighlights(page);
 		await expect(highlights).toHaveCount(3);
 
-		// Click on the middle highlight (second "tset")
-		const box = await highlights.nth(1).boundingBox();
-		expect(box).not.toBeNull();
-		await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2);
+		// Get highlights sorted by visual position and click on the middle one
+		const sortedBoxes = await getSortedHighlightBoxes(page);
+		expect(sortedBoxes.length).toBe(3);
+		const box = sortedBoxes[1];
+		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
 		// Move cursor away to test whether it handles race condition
 		await editor.press('End');
