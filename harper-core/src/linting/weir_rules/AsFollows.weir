@@ -1,0 +1,25 @@
+expr main (as follow)
+
+let message "Use `as follows`."
+let description "Corrects the phrase `as follow`, which is sometimes produced by overcorrection. While it appeared briefly in 19th-century English, it is now considered archaic; modern standard usage requires `as follows` regardless of number."
+let kind "Grammar"
+let becomes "as follows"
+
+test "The main points are as follow:" "The main points are as follows:"
+test "Please read the steps as follow before you begin." "Please read the steps as follows before you begin."
+test "As follow you requested, I have compiled the list." "As follows you requested, I have compiled the list."
+test "I write this as follow for future reference." "I write this as follows for future reference."
+test "as follow" "as follows"
+test "AS FOLLOW" "AS FOLLOWS"
+test "The instructions are listed as follow in the appendix." "The instructions are listed as follows in the appendix."
+test "We were told as follow the timeline would slip." "We were told as follows the timeline would slip."
+test "Is this description as follow the sample?" "Is this description as follows the sample?"
+test "You can verify as follow once the build completes." "You can verify as follows once the build completes."
+
+# Ensure unrelated uses of "follow" are not affected
+test "Follow the instructions as written." "Follow the instructions as written."
+test "We follow-up on these requests weekly." "We follow-up on these requests weekly."
+test "This is the way to follow as best you can." "This is the way to follow as best you can."
+test "As follows the plan will unfold." "As follows the plan will unfold."
+test "I will follow your lead." "I will follow your lead."
+test "The as follows section is helpful." "The as follows section is helpful."

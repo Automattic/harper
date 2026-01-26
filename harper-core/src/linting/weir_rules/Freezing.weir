@@ -1,0 +1,7 @@
+expr main [(very cold), (really cold), (extremely cold)]
+
+let message "A more vivid adjective would better capture extreme cold."
+let description "Encourages vivid writing by suggesting `freezing` instead of weaker expressions like `very cold.`"
+let kind "Enhancement"
+let becomes "freezing"
+

@@ -116,20 +116,30 @@ export default class Highlights {
 			if (cpa != null) {
 				const hostStyle = host.style;
 
-				hostStyle.contain = 'layout';
 				hostStyle.position = 'absolute';
 				hostStyle.top = '0px';
 				hostStyle.left = '0px';
-				hostStyle.transform = `translate(${-cpa.x}px, ${-cpa.y}px)`;
 				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
 				hostStyle.width = '0px';
 				hostStyle.height = '0px';
+				hostStyle.contain = 'none';
+				hostStyle.transform = 'none';
 			} else if (host.hasAttribute('style')) {
 				host.removeAttribute('style');
 			}
 
-			renderBox.render(this.renderTree(boxes));
+			renderBox.render(
+				this.renderTree(
+					boxes,
+					cpa
+						? {
+								x: cpa.x,
+								y: cpa.y,
+							}
+						: null,
+				),
+			);
 			updated.add(source);
 		}
 
@@ -152,8 +162,10 @@ export default class Highlights {
 		}
 	}
 
-	private renderTree(boxes: LintBox[]): VNode {
+	private renderTree(boxes: LintBox[], offset: { x: number; y: number } | null): VNode {
 		const elements = [];
+		const offsetX = offset?.x ?? 0;
+		const offsetY = offset?.y ?? 0;
 
 		for (const box of boxes) {
 			const boxEl = h(
@@ -163,7 +175,7 @@ export default class Highlights {
 						position: 'fixed',
 						left: '0px',
 						top: '0px',
-						transform: `translate(${box.x}px, ${box.y}px)`,
+						transform: `translate(${box.x - offsetX}px, ${box.y - offsetY}px)`,
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',

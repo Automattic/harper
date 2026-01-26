@@ -24,12 +24,12 @@
 # NPl/V3  . +
 >
 #
-> Once  performed by      hand    , POS  tagging is  now       done      in        the context of computational
-# NSg/C VP/J      NSg/J/P NSg/VB+ . NSg+ NSg/Vg  VL3 NSg/J/R/C NSg/VPp/J NPr/J/R/P D   N🅪Sg/VB P  J
+> Once  performed by    hand    , POS  tagging is  now       done      in        the context of computational
+# NSg/C VP/J      NSg/P NSg/VB+ . NSg+ NSg/Vg  VL3 NSg/J/R/C NSg/VPp/J NPr/J/R/P D   N🅪Sg/VB P  J
 > linguistics , using   algorithms which associate discrete terms   , as    well       as    hidden
 # Nᴹ+         . Nᴹ/Vg/J NPl+       I/C+  NSg/VB/J+ J        NPl/V3+ . R/C/P NSg/VB/J/R R/C/P VB/J
-> parts  of speech   , by      a   set       of descriptive tags    . POS  - tagging algorithms fall     into
-# NPl/V3 P  N🅪Sg/VB+ . NSg/J/P D/P NPr/VBP/J P  NSg/J       NPl/V3+ . NSg+ . NSg/Vg  NPl+       N🅪Sg/VB+ P
+> parts  of speech   , by    a   set       of descriptive tags    . POS  - tagging algorithms fall     into
+# NPl/V3 P  N🅪Sg/VB+ . NSg/P D/P NPr/VBP/J P  NSg/J       NPl/V3+ . NSg+ . NSg/Vg  NPl+       N🅪Sg/VB+ P
 > two distinctive groups  : rule    - based and  stochastic . E. Brill's tagger , one     of the
 # NSg NSg/J       NPl/V3+ . NSg/VB+ . VP/J  VB/C J          . ?  ?       NSg    . NSg/I/J P  D
 > first and  most         widely used English      POS  - taggers , employs rule    - based algorithms .
@@ -102,8 +102,8 @@
 # NSg/VB/J+ NSg/IPl+ R/C/P NPl/V3+  NSg/I/R  NSg/J       P    NSg/VB/J+ . P  . N🅪Sg/VB+ .
 >
 #
-> In        part      - of - speech   tagging by      computer , it       is  typical to distinguish from 50 to
-# NPr/J/R/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/J/P NSg/VB+  . NPr/ISg+ VL3 NSg/J   P  VB          P    #  P
+> In        part      - of - speech   tagging by    computer , it       is  typical to distinguish from 50 to
+# NPr/J/R/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/P NSg/VB+  . NPr/ISg+ VL3 NSg/J   P  VB          P    #  P
 > 150 separate parts  of speech  for   English      . Work    on  stochastic methods for   tagging
 # #   NSg/VB/J NPl/V3 P  N🅪Sg/VB R/C/P NPr🅪Sg/VB/J+ . N🅪Sg/VB J/P J          NPl/V3+ R/C/P NSg/Vg
 > Koine Greek    ( DeRose 1990 ) has used over    1 , 000 parts  of speech   and  found  that
@@ -125,7 +125,7 @@
 > Penn tag     set       , developed in        the Penn Treebank project . It       is  largely similar to
 # NPr+ NSg/VB+ NPr/VBP/J . VP/J      NPr/J/R/P D   NPr+ ?        NSg/VB+ . NPr/ISg+ VL3 R       NSg/J   P
 > the earlier Brown       Corpus and  LOB    Corpus tag     sets   , though much         smaller . In
-# D   JC      NPr🅪Sg/VB/J NSg    VB/C NSg/VB NSg+   NSg/VB+ NPl/V3 . VB/C   NSg/I/J/R/Dq NSg/JC  . NPr/J/R/P
+# D   JC      NPr🅪Sg/VB/J NSg    VB/C NSg/VB NSg+   NSg/VB+ NPl/V3 . C      NSg/I/J/R/Dq NSg/JC  . NPr/J/R/P
 > Europe , tag     sets   from the Eagles Guidelines see    wide  use      and  include versions
 # NPr+   . NSg/VB+ NPl/V3 P    D   NPl/V3 NPl+       NSg/VB NSg/J N🅪Sg/VB+ VB/C NSg/VB  NPl/V3+
 > for   multiple languages .
@@ -168,8 +168,8 @@
 # Nᴹ/VB    J/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  V3  NSg/VPp R       VP/J P  NSg    Nᴹ+         .
 > The first major    corpus of English     for   computer analysis was the Brown       Corpus
 # D   NSg/J NPr/VB/J NSg    P  NPr🅪Sg/VB/J R/C/P NSg/VB+  N🅪Sg+    VPt D   NPr🅪Sg/VB/J NSg
-> developed at    Brown       University by      Henry Kučera and  W. Nelson Francis , in        the
-# VP/J      NSg/P NPr🅪Sg/VB/J NSg+       NSg/J/P NPr+  ?      VB/C ?  NPr+   NPr+    . NPr/J/R/P D
+> developed at    Brown       University by    Henry Kučera and  W. Nelson Francis , in        the
+# VP/J      NSg/P NPr🅪Sg/VB/J NSg+       NSg/P NPr+  ?      VB/C ?  NPr+   NPr+    . NPr/J/R/P D
 > mid      - 1960s . It       consists of about 1 , 000 , 000 words  of running   English      prose text     ,
 # NSg/J/P+ . #d    . NPr/ISg+ NPl/V3   P  J/P   # . #   . #   NPl/V3 P  Nᴹ/Vg/J/P NPr🅪Sg/VB/J+ Nᴹ/VB N🅪Sg/VB+ .
 > made up         of 500 samples from randomly chosen   publications . Each sample  is  2 , 000
@@ -182,16 +182,16 @@
 #
 > The Brown        Corpus was painstakingly " tagged " with part      - of - speech   markers over
 # D+  NPr🅪Sg/VB/J+ NSg+   VPt R             . VP/J   . P    NSg/VB/J+ . P  . N🅪Sg/VB+ NPl/V3  NSg/J/P
-> many        years . A    first  approximation was done      with a    program by      Greene and  Rubin ,
-# NSg/I/J/Dq+ NPl+  . D/P+ NSg/J+ N🅪Sg+         VPt NSg/VPp/J P    D/P+ NPr/VB+ NSg/J/P NPr    VB/C NPr   .
+> many        years . A    first  approximation was done      with a    program by    Greene and  Rubin ,
+# NSg/I/J/Dq+ NPl+  . D/P+ NSg/J+ N🅪Sg+         VPt NSg/VPp/J P    D/P+ NPr/VB+ NSg/P NPr    VB/C NPr   .
 > which consisted of a   huge handmade list   of what   categories could   co        - occur at
 # I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I/VB+ . VB    NSg/P
 > all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
-> cannot . The program got about 70 % correct  . Its     results were    repeatedly reviewed
-# NSg/VB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
-> and  corrected by      hand    , and  later users sent   in        errata so          that          by      the late  70 s
-# VB/C VP/J      NSg/J/P NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C NSg/I/C/Ddem+ NSg/J/P D   NSg/J #  ?
+> cannot  . The program got about 70 % correct  . Its     results were    repeatedly reviewed
+# NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VPt R          VP/J
+> and  corrected by    hand    , and  later users sent   in        errata so          that          by    the late  70 s
+# VB/C VP/J      NSg/P NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C NSg/I/C/Ddem+ NSg/P D   NSg/J #  ?
 > the tagging was nearly perfect  ( allowing for   some     cases   on  which even       human
 # D   NSg/Vg  VPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J/R NSg/VB/J+
 > speakers might    not     agree ) .
@@ -202,14 +202,14 @@
 # I/Ddem+ NSg+   V3  NSg/VPp VP/J R/C/P J           NPl/V3  P  NSg/VB+ . NSg       VB/C P
 > part      - of - speech   and  inspired the development of similar " tagged " corpora in        many
 # NSg/VB/J+ . P  . N🅪Sg/VB+ VB/C VP/J     D   N🅪Sg        P  NSg/J   . VP/J   . NPl+    NPr/J/R/P NSg/I/J/Dq
-> other    languages . Statistics derived by      analyzing it       formed the basis for   most
-# NSg/VB/J NPl/V3+   . NPl/V3+    VP/J    NSg/J/P Nᴹ/Vg/J   NPr/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
+> other    languages . Statistics derived by    analyzing it       formed the basis for   most
+# NSg/VB/J NPl/V3+   . NPl/V3+    VP/J    NSg/P Nᴹ/Vg/J   NPr/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
-# JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . NSg/J/P
-> this    time       ( 2005 ) it       has been    superseded by      larger corpora such  as    the 100
-# I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  NSg/VPp VP/J       NSg/J/P JC     NPl+    NSg/I R/C/P D   #
+# JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . NSg/P
+> this    time       ( 2005 ) it       has been    superseded by    larger corpora such  as    the 100
+# I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  NSg/VPp VP/J       NSg/P JC     NPl+    NSg/I R/C/P D   #
 > million word    British National Corpus , even       though larger corpora are rarely so
-# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J/R VB/C   JC     NPl+    VB  R      NSg/I/J/R/C
+# NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J/R C      JC     NPl+    VB  R      NSg/I/J/R/C
 > thoroughly curated .
 # R          VP/J    .
 >
@@ -218,8 +218,8 @@
 # R/C/P I/J/R/Dq N🅪Sg/VB/J+ . NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VPt VP/J       D/P NSg/J       NSg/VB/J P
 > natural language processing , because there are certain cases   where   the correct
 # NSg/J   N🅪Sg/VB+ Nᴹ/Vg/J+   . C/P     R+    VB  I/J     NPl/V3+ NSg/R/C D   NSg/VB/J
-> part     of speech   cannot be      decided  without understanding the semantics or    even       the
-# NSg/VB/J P  N🅪Sg/VB+ NSg/VB NSg/VXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
+> part     of speech   cannot  be      decided  without understanding the semantics or    even       the
+# NSg/VB/J P  N🅪Sg/VB+ NSg/VXB NSg/VXB NSg/VP/J C/P     N🅪Sg/Vg/J+    D   NPl+      NPr/C NSg/VB/J/R D
 > pragmatics of the context  . This    is  extremely expensive , especially because
 # NPl        P  D   N🅪Sg/VB+ . I/Ddem+ VL3 R         J         . R          C/P
 > analyzing the higher  levels  is  much         harder when    multiple part     - of - speech
@@ -248,16 +248,16 @@
 # NPr/VB+ NPr/VXB VB     NSg/I/C/Ddem+ . NPr/VXB . NPr/J/R/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/J/R/Dq NSg/J  P  NSg/VXB D/P NSg/VB C/P
 > a    verb    or    a   modal . The same method  can     , of course  , be      used to benefit from
 # D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg/VB+ NPr/VXB . P  NSg/VB+ . NSg/VXB VP/J P  NSg/VB  P
-> knowledge about the following words   .
-# Nᴹ+       J/P   D+  Nᴹ/Vg/J/P NPl/V3+ .
+> knowledge about the following   words   .
+# Nᴹ+       J/P   D+  N🅪Sg/Vg/J/P NPl/V3+ .
 >
 #
 > More         advanced ( " higher - order   " ) HMMs learn  the probabilities not     only  of pairs
 # NPr/I/J/R/Dq VP/J     . . NSg/JC . N🅪Sg/VB . . ?    NSg/VB D   NPl+          NSg/R/C J/R/C P  NPl/V3+
 > but     triples or    even       larger sequences . So          , for   example , if    you've just seen    a
 # NSg/C/P NPl/V3  NPr/C NSg/VB/J/R JC     NPl/V3+   . NSg/I/J/R/C . R/C/P NSg/VB+ . NSg/C K      J/R  NSg/VPp D/P
-> noun    followed by      a   verb    , the next    item    may     be      very likely a   preposition ,
-# NSg/VB+ VP/J     NSg/J/P D/P NSg/VB+ . D   NSg/J/P NSg/VB+ NPr/VXB NSg/VXB J/R  NSg/J  D/P NSg/VB      .
+> noun    followed by    a   verb    , the next    item    may     be      very likely a   preposition ,
+# NSg/VB+ VP/J     NSg/P D/P NSg/VB+ . D   NSg/J/P NSg/VB+ NPr/VXB NSg/VXB J/R  NSg/J  D/P NSg/VB      .
 > article , or    noun    , but     much         less       likely another verb    .
 # NSg/VB+ . NPr/C NSg/VB+ . NSg/C/P NSg/I/J/R/Dq VB/J/R/C/P NSg/J  I/D     NSg/VB+ .
 >
@@ -266,8 +266,8 @@
 # NSg/I/C J/Dq+   J+        NPl/V3+ VB    J        . D+  NPl+          NSg/VB   .
 > However , it       is  easy     to enumerate every combination and  to assign a   relative
 # C       . NPr/ISg+ VL3 NSg/VB/J P  VB        Dq+   N🅪Sg+       VB/C P  NSg/VB D/P NSg/J
-> probability to each one      , by      multiplying together the probabilities of each
-# NSg+        P  Dq   NSg/I/J+ . NSg/J/P Nᴹ/Vg/J     J        D   NPl           P  Dq
+> probability to each one      , by    multiplying together the probabilities of each
+# NSg+        P  Dq   NSg/I/J+ . NSg/P Nᴹ/Vg/J     J        D   NPl           P  Dq
 > choice  in        turn   . The combination with the highest probability is  then      chosen   . The
 # N🅪Sg/J+ NPr/J/R/P NSg/VB . D   N🅪Sg        P    D+  JS+     NSg+        VL3 NSg/J/R/C Nᴹ/VPp/J . D+
 > European group   developed CLAWS   , a   tagging program that          did  exactly this   and
@@ -343,7 +343,7 @@
 > levels of linguistic analysis : syntax , morphology , semantics , and  so          on  . CLAWS   ,
 # NPl/V3 P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . VB/C NSg/I/J/R/C J/P . NPl/V3+ .
 > DeRose's and  Church's methods did  fail     for   some     of the known cases   where
-# ?        VB/C NSg$     NPl/V3+ VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
+# ?        VB/C NPr$     NPl/V3+ VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
 > semantics is  required , but     those  proved negligibly rare     . This   convinced many       in
 # NPl+      VL3 VP/J     . NSg/C/P I/Ddem VP/J   R          NSg/VB/J . I/Ddem VP/J      NSg/I/J/Dq NPr/J/R/P
 > the field   that          part      - of - speech   tagging could   usefully be      separated from the other
@@ -368,8 +368,8 @@
 # NSg/VB NSg/VB+ NPl+          . NPr/ISg+ VL3 . C       . R/C  NSg/J    P  NSg/VB    Nᴹ/Vg/J
 > " unsupervised " tagging . Unsupervised tagging techniques use     an  untagged corpus
 # . VB/J         . NSg/Vg  . VB/J         NSg/Vg  NPl+       N🅪Sg/VB D/P J        NSg+
-> for   their training data  and  produce the tagset by      induction . That          is  , they
-# R/C/P D$+   Nᴹ/Vg/J+ N🅪Pl+ VB/C Nᴹ/VB   D   NSg    NSg/J/P N🅪Sg      . NSg/I/C/Ddem+ VL3 . IPl+
+> for   their training data  and  produce the tagset by    induction . That          is  , they
+# R/C/P D$+   Nᴹ/Vg/J+ N🅪Pl+ VB/C Nᴹ/VB   D   NSg    NSg/P N🅪Sg      . NSg/I/C/Ddem+ VL3 . IPl+
 > observe patterns in        word    use     , and  derive part      - of - speech   categories themselves .
 # NSg/VB  NPl/V3+  NPr/J/R/P NSg/VB+ N🅪Sg/VB . VB/C NSg/VB NSg/VB/J+ . P  . N🅪Sg/VB+ NPl+       IPl+       .
 > For   example , statistics readily reveal that          " the " , " a   " , and  " an  " occur in

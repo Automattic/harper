@@ -1,0 +1,8 @@
+expr main (baited breath)
+
+let message "Did you mean `bated breath`?"
+let description "Changes `baited breath` to the correct `bated breath`."
+let kind "Eggcorn"
+let becomes "bated breath"
+
+test "baited breath" "bated breath"

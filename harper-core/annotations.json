@@ -628,6 +628,7 @@
 		},
 		"O": {
 			"#": "proper noun property",
+			"propagate": true,
 			"metadata": {
 				"noun": {
 					"is_proper": true
@@ -1012,6 +1013,14 @@
 			"metadata": {
 				"affix": {
 					"is_prefix": true
+				}
+			}
+		},
+		"/": {
+			"#": "phrasal verb property",
+			"metadata": {
+				"verb": {
+					"is_phrasal": true
 				}
 			}
 		}

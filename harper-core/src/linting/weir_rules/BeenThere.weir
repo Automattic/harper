@@ -1,0 +1,7 @@
+expr main (bee there)
+
+let message "Did you mean `been there`?"
+let description "Corrects the misspelling `bee there` to the proper phrase `been there`."
+let kind "Typo"
+let becomes "been there"
+

@@ -1,10 +1,10 @@
 use std::borrow::Cow;
+use std::sync::LazyLock;
 
 use crate::Lrc;
 use crate::Token;
 use crate::TokenKind;
 use hashbrown::HashSet;
-use lazy_static::lazy_static;
 
 use crate::Punctuation;
 use crate::spell::Dictionary;
@@ -77,7 +77,9 @@ pub fn try_make_title_case(
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
                 for (i, c) in correct_caps.iter().enumerate() {
-                    set_output_char(word.span.start - start_index + i, *c);
+                    if c.is_alphabetic() {
+                        set_output_char(word.span.start - start_index + i, *c);
+                    }
                 }
             }
         };
@@ -130,17 +132,18 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
     match &tok.kind {
         TokenKind::Word(Some(metadata)) => {
             // Only specific conjunctions are not capitalized.
-            lazy_static! {
-                static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
-                    ["and", "but", "for", "or", "nor", "as"]
-                        .iter()
-                        .map(|v| v.chars().collect())
-                        .collect();
-                static ref SPECIAL_ARTICLES: HashSet<Vec<char>> = ["a", "an", "the"]
+            static SPECIAL_CONJUNCTIONS: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
+                ["and", "but", "for", "or", "nor", "as"]
                     .iter()
                     .map(|v| v.chars().collect())
-                    .collect();
-            }
+                    .collect()
+            });
+            static SPECIAL_ARTICLES: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
+                ["a", "an", "the"]
+                    .iter()
+                    .map(|v| v.chars().collect())
+                    .collect()
+            });
 
             let chars = tok.span.get_content(source);
             let chars_lower = chars.to_lower();
@@ -503,6 +506,18 @@ mod tests {
         assert_eq!(
             make_title_case_str("winter road", &PlainEnglish, &FstDictionary::curated()),
             "Winter Road",
+        );
+    }
+
+    #[test]
+    fn maintains_same_apostrophe_type() {
+        assert_eq!(
+            make_title_case_str(
+                "Alice’s Adventures in Wonderland",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Alice’s Adventures in Wonderland",
         );
     }
 }

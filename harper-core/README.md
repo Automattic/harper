@@ -1,10 +1,15 @@
 # `harper-core`
 
-`harper-core` is the fundamental engine behind [Harper](https://writewithharper.com), the grammar checker for developers.
+`harper-core` is the fundamental engine behind [Harper](https://writewithharper.com), the private grammar checker.
 
-`harper-core` _is_ [available on `crates.io`](https://crates.io/crates/harper-core). However, improving the API is not currently a high priority.
+`harper-core` is [available on `crates.io`](https://crates.io/crates/harper-core) to enable Rust engineers to integrate high-quality grammar checking directly into their apps and workflows.
 Feel free to use `harper-core` in your projects.
-If you run into issues, create a pull request.
+If you run into problems with the code, open an issue or, even better, create a pull request.
+We are also happy to chat with you on [Discord](https://discord.com/invite/JBqcAaKrzQ).
+
+[The documentation for `harper-core` is available online.](https://docs.rs/harper-core/latest/harper_core/)
+
+If you would prefer to run Harper from inside a JavaScript runtime, [we have a package for that as well.](https://www.npmjs.com/package/harper.js)
 
 ## Example
 
@@ -35,3 +40,8 @@ for lint in lints {
 
 `concurrent`: Whether to use thread-safe primitives (`Arc` vs `Rc`). Disabled by default.
 It is not recommended unless you need thread-safely (i.e. you want to use something like `tokio`).
+
+## Other Relevant Packages
+
+- [`harper-ls`](https://crates.io/crates/harper-ls)
+- [`harper-tree-sitter`](https://crates.io/crates/harper-tree-sitter)

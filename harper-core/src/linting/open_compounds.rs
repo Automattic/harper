@@ -38,7 +38,7 @@ impl Default for OpenCompounds {
         for compound in compound_to_phrase.keys().cloned().collect::<Vec<_>>() {
             compound_wordset.add(&compound);
         }
-        let compound = Lrc::new(SequenceExpr::default().then(compound_wordset));
+        let compound = Lrc::new(SequenceExpr::with(compound_wordset));
 
         let with_prev = SequenceExpr::anything().then(compound.clone());
 

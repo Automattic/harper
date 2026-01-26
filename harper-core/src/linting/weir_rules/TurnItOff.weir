@@ -1,0 +1,12 @@
+expr main [(turn it of), (turn i of)]
+
+let message "Did you mean `turn it off`?"
+let description "Fixes the mistake in the phrase `turn it off`."
+let kind "Typo"
+let becomes "turn it off"
+
+test "Turn it of" "Turn it off"
+test "Turn i of" "Turn it off"
+test "turn it off" "turn it off"
+test "Turn it off" "Turn it off"
+test "run by one" "run by one"

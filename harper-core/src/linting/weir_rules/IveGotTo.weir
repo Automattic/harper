@@ -1,0 +1,8 @@
+expr main (I've go to)
+
+let message "Use `I've got to` for necessity or obligation."
+let description "Corrects the slip `I've go to` to the idiomatic `I've got to`."
+let kind "Typo"
+let becomes "I've got to"
+
+test "I've go to finish this before Monday." "I've got to finish this before Monday."

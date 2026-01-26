@@ -80,6 +80,11 @@ impl Expr for SequenceExpr {
 impl SequenceExpr {
     // Constructor methods
 
+    // Match an [expression](Expr).
+    pub fn with(expr: impl Expr + 'static) -> Self {
+        Self::default().then(expr)
+    }
+
     // Single token methods
 
     /// Construct a new sequence with an [`AnyPattern`] at the beginning of the operation list.
@@ -138,6 +143,12 @@ impl SequenceExpr {
     /// Push an [expression](Expr) to the operation list.
     pub fn then(mut self, expr: impl Expr + 'static) -> Self {
         self.exprs.push(Box::new(expr));
+        self
+    }
+
+    /// Push an already-boxed [expression](Expr) to the operation list.
+    pub fn then_boxed(mut self, expr: Box<dyn Expr>) -> Self {
+        self.exprs.push(expr);
         self
     }
 
@@ -415,8 +426,23 @@ impl SequenceExpr {
         })
     }
 
-    gen_then_from_is!(sentence_terminator);
     // More than two kinds
+
+    /// Match a token where both of the first two token kind predicates return true,
+    /// and the third returns false.
+    /// For instance, a word that must be both noun and verb, but not adjective.
+    pub fn then_kind_both_but_not<F1, F2, F3>(
+        self,
+        (pred_is_1, pred_is_2): (F1, F2),
+        pred_not: F3,
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F3: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then_kind_where(move |k| pred_is_1(k) && pred_is_2(k) && !pred_not(k))
+    }
 
     /// Match a token where any of the token kind predicates returns true.
     /// Like `then_kind_either` but for more than two predicates.
@@ -538,6 +564,7 @@ impl SequenceExpr {
     gen_then_from_is!(verb_simple_past_form);
     gen_then_from_is!(verb_past_participle_form);
     gen_then_from_is!(verb_progressive_form);
+    gen_then_from_is!(verb_third_person_singular_present_form);
 
     // Adjectives
 
@@ -591,6 +618,7 @@ impl SequenceExpr {
 
     gen_then_from_is!(case_separator);
     gen_then_from_is!(likely_homograph);
+    gen_then_from_is!(sentence_terminator);
 }
 
 impl<S> From<S> for SequenceExpr

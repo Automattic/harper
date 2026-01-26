@@ -1,0 +1,6 @@
+expr main (todo)
+
+let message "Hyphenate `to-do`."
+let description "Ensures `to-do` is correctly hyphenated."
+let becomes "to-do"
+

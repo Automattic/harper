@@ -253,6 +253,9 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
     devDependencies:
+      '@types/chrome':
+        specifier: 0.1.27
+        version: 0.1.27
       '@types/virtual-dom':
         specifier: ^2.1.4
         version: 2.1.4
@@ -3849,6 +3852,9 @@ packages:
 
   '@types/chrome@0.0.246':
     resolution: {integrity: sha512-MxGxEomGxsJiL9xe/7ZwVgwdn8XVKWbPvxpVQl3nWOjrS0Ce63JsfzxUc4aU3GvRcUPYsfufHmJ17BFyKxeA4g==}
+
+  '@types/chrome@0.1.27':
+    resolution: {integrity: sha512-pkkCb0Ft8X+Igi751POzT+YqchSxUCtB6s4Gs6ttgSj8qzJga/qlJMgSW1mKxuQTW4i0sTqQbqVtzXDS5AU+4A==}
 
   '@types/codemirror@5.60.8':
     resolution: {integrity: sha512-VjFgDF/eB+Aklcy15TtOTLQeMjTo07k7KAjql8OK5Dirr7a6sJY4T1uVBDuTVG9VEmn1uUsohOpYnVfgC6/jyw==}
@@ -16399,6 +16405,11 @@ snapshots:
       assertion-error: 2.0.1
 
   '@types/chrome@0.0.246':
+    dependencies:
+      '@types/filesystem': 0.0.36
+      '@types/har-format': 1.2.16
+
+  '@types/chrome@0.1.27':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16

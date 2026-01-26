@@ -18,7 +18,7 @@ impl Default for ToTooPronounEnd {
         // "leave it to." where `it` is an object pronoun.
         let expr = SequenceExpr::default()
             .then_any_of(vec![
-                Box::new(SequenceExpr::default().then(AnchorStart)),
+                Box::new(SequenceExpr::with(AnchorStart)),
                 Box::new(
                     SequenceExpr::default()
                         .then_kind_is_but_is_not_except(

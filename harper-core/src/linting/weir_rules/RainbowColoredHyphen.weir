@@ -1,0 +1,23 @@
+expr main <(([rainbow, cream] [colored, coloured]) NOUN), ( )>
+
+let message "Keep these compound color modifiers hyphenated before their nouns."
+let description "When rainbow-colored or cream-colored describe a noun, replace the space between the color words with a hyphen to keep the modifier cohesive."
+let kind "Style"
+let becomes "-"
+
+test "The rainbow colored leaves shimmered in the morning light." "The rainbow-colored leaves shimmered in the morning light."
+test "A cream colored sofa anchored the living room." "A cream-colored sofa anchored the living room."
+test "Bright rainbow colored banners lined the promenade." "Bright rainbow-colored banners lined the promenade."
+test "Bring the cream colored napkins to the table." "Bring the cream-colored napkins to the table."
+test "RAINBOW COLORED FLAGS fluttered over the pier." "RAINBOW-COLORED FLAGS fluttered over the pier."
+test "Our designer introduced cream coloured sneakers for fall." "Our designer introduced cream-coloured sneakers for fall."
+test "These rainbow colored posters mark the festival days." "These rainbow-colored posters mark the festival days."
+test "Cream coloured curtains softened the gallery lights." "Cream-coloured curtains softened the gallery lights."
+test "The designer chose rainbow colored tiles for the backsplash." "The designer chose rainbow-colored tiles for the backsplash."
+test "Our lineup now shows cream colored lipsticks and rainbow colored gloss." "Our lineup now shows cream-colored lipsticks and rainbow-colored gloss."
+
+test "The rainbow colored the sky with a soft gradient." "The rainbow colored the sky with a soft gradient."
+test "She rainbow colored every triangle on the quilt." "She rainbow colored every triangle on the quilt."
+test "The artist cream colored the mural in minutes." "The artist cream colored the mural in minutes."
+test "The leaves were rainbow colored after the festival lights." "The leaves were rainbow colored after the festival lights."
+test "Cream colored the vase intentionally for the commission." "Cream colored the vase intentionally for the commission."

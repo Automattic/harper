@@ -1,0 +1,8 @@
+expr main (every since)
+
+let message "Did you mean `ever since`?"
+let description "Corrects `every since` to `ever since`."
+let kind "Typo"
+let becomes "ever since"
+
+test "einstein been real quiet every since this dropped" "einstein been real quiet ever since this dropped"

@@ -1,0 +1,8 @@
+expr main (quite many)
+
+let message "Use `quite a few` instead of `quite many`."
+let description "Corrects `quite many` to `quite a few`, which is the more natural and idiomatic phrase in standard English. `Quite many` is considered nonstandard usage."
+let kind "Nonstandard"
+let becomes "quite a few"
+
+test "To me it seems it might be caused by a2aaa55 which contains quite many build-related changes." "To me it seems it might be caused by a2aaa55 which contains quite a few build-related changes."
