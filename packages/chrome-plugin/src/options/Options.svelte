@@ -65,6 +65,7 @@ ProtocolClient.getActivationKey().then((d) => {
 
 ProtocolClient.getSpellCheckingMode().then((d) => {
 	spellCheckingMode = d;
+});
 ProtocolClient.getHotkey().then((d) => {
 	// Ensure we have a plain object, not a Proxy
 	hotkey = {
@@ -267,8 +268,8 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Spell Checking Mode</span>
-            <span class="font-light">Controls the timing when spell checking is applied.</span>
+            <span class="text-sm">Spell Checking Mode</span>
+            <span class="text-xs text-gray-600 dark:text-gray-400">Controls the timing when spell checking is applied.</span>
           </div>
           <Select size="sm" color="primary" class="w-44" bind:value={spellCheckingMode}>
             <option value={SpellCheckingMode.Default}>Instant (Default)</option>
