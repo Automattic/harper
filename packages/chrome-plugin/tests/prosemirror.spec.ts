@@ -5,6 +5,7 @@ import {
 	getProseMirrorEditor,
 	randomString,
 	replaceEditorContent,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'https://prosemirror.net/';
@@ -29,6 +30,8 @@ test('Can apply basic suggestion.', async ({ page }) => {
 	await expect(pm).toContainText('This is a test of Harper’s grammar checking.');
 });
 
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getProseMirrorEditor);
+
 test('Can ignore suggestion.', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 	const pm = getProseMirrorEditor(page);
@@ -45,6 +48,6 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await expect(getHarperHighlights(page)).toHaveCount(0);
 
 	// Nothing should change.
-	expect(pm).toContainText(cacheSalt);
+	await expect(pm).toContainText(cacheSalt);
 	expect(await clickHarperHighlight(page)).toBe(false);
 });
