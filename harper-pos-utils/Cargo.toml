@@ -15,7 +15,7 @@ serde = { version = "1.0.228", features = ["derive"] }
 is-macro = "0.3.7"
 rand = { version = "0.9.1", optional = true }
 burn = { version = "0.19.1", default-features = false, features = ["std"] }
-burn-ndarray = { version = "0.19.0", default-features = false }
+burn-ndarray = { version = "0.20.1", default-features = false }
 serde_json = "1.0.149"
 lru = "0.16.3"
 rayon = { version = "1.11.0", optional = true }
