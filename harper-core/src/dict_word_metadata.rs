@@ -79,6 +79,21 @@ macro_rules! generate_metadata_queries {
                 )*].iter().map(|b| *b as u8).sum::<u8>() > 1
             }
 
+            /// How different is this word from another?
+            pub fn difference(&self, other: &Self) -> u32 {
+                [
+                    $(
+                        Self::[< is_ $category >],
+                        $(
+                            Self::[< is_ $sub _ $category >],
+                            Self::[< is_non_ $sub _ $category >],
+                        )*
+                    )*
+                ]
+                .iter()
+                .fold(0, |acc, func| acc + (func(self) ^ func(other)) as u32)
+            }
+
             $(
                 #[doc = concat!("Checks if the word is definitely a ", stringify!($category), ".")]
                 pub fn [< is_ $category >](&self) -> bool {
@@ -165,11 +180,7 @@ impl DictWordMetadata {
         candidates.sort();
         candidates.dedup();
 
-        if candidates.len() == 1 {
-            candidates.first().copied()
-        } else {
-            None
-        }
+        candidates.into_iter().exactly_one().ok()
     }
 
     /// Produce a copy of `self` with the known properties of `other` set.

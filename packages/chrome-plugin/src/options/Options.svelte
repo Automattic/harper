@@ -4,6 +4,7 @@ import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
 import { ActivationKey, SpellCheckingMode } from '../protocol';
+import type { Hotkey, Modifier } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});
@@ -13,11 +14,10 @@ let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
-<<<<<<< HEAD
 let spellCheckingMode: SpellCheckingMode = $state(SpellCheckingMode.Default);
-=======
+let modifyHotkeyButton: Button;
+let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
->>>>>>> f0a789a49dd201ad27b048e1647bbc7000432494
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -40,7 +40,6 @@ $effect(() => {
 });
 
 $effect(() => {
-	console.log('hit');
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
@@ -66,6 +65,13 @@ ProtocolClient.getActivationKey().then((d) => {
 
 ProtocolClient.getSpellCheckingMode().then((d) => {
 	spellCheckingMode = d;
+ProtocolClient.getHotkey().then((d) => {
+	// Ensure we have a plain object, not a Proxy
+	hotkey = {
+		modifiers: [...d.modifiers],
+		key: d.key,
+	};
+	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
 });
 
 ProtocolClient.getUserDictionary().then((d) => {
@@ -156,6 +162,51 @@ async function exportEnabledDomainsCSV() {
 		console.error('Failed to export enabled domains JSON:', e);
 	}
 }
+
+let buttonText = $state('Set Hotkey');
+let isBlue = $state(false); // modify color of hotkey button once it is pressed
+function startHotkeyCapture(_modifyHotkeyButton: Button) {
+	buttonText = 'Press desired hotkey combination now.';
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		event.preventDefault();
+
+		const modifiers: Modifier[] = [];
+		if (event.ctrlKey) modifiers.push('Ctrl');
+		if (event.shiftKey) modifiers.push('Shift');
+		if (event.altKey) modifiers.push('Alt');
+
+		let key = event.key;
+
+		if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
+			if (modifiers.length === 0) {
+				return;
+			}
+			buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
+			// Create a plain object to avoid proxy cloning issues
+			const newHotkey = {
+				modifiers: [...modifiers],
+				key: key,
+			};
+
+			hotkey = newHotkey;
+
+			// Call ProtocolClient directly with the plain object to avoid proxy issues
+			ProtocolClient.setHotkey(newHotkey);
+
+			// Remove listener
+			window.removeEventListener('keydown', handleKeydown);
+
+			// change button color
+			isBlue = !isBlue;
+		}
+	};
+
+	// Add temporary key listener
+	window.addEventListener('keydown', handleKeydown);
+}
+
+// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -167,7 +218,7 @@ async function exportEnabledDomainsCSV() {
       </div>
       <div class="flex flex-col">
         <h1 class="text-base tracking-wide font-serif">Harper</h1>
-        <p class="text-xs">Chrome Extension Settings</p>
+        <p class="text-xs">Settings</p>
       </div>
     </Card>
 
@@ -212,7 +263,6 @@ async function exportEnabledDomainsCSV() {
         </div>
       </div>
 
-<<<<<<< HEAD
       
       <div class="space-y-5">
         <div class="flex items-center justify-between">
@@ -228,8 +278,6 @@ async function exportEnabledDomainsCSV() {
         </div>
       </div>
 
-=======
->>>>>>> f0a789a49dd201ad27b048e1647bbc7000432494
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
@@ -247,6 +295,18 @@ async function exportEnabledDomainsCSV() {
             <option value={ActivationKey.Control}>Double Control</option>
             <option value={ActivationKey.Off}>Off</option>
           </Select>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestion to last highlighted word.</p>
+          </div>
+          <Textarea readonly bind:value={buttonText} />
+          <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
+
         </div>
       </div>
 

@@ -1,0 +1,7 @@
+expr main (w/)
+
+let message "Use `with` instead of `w/`"
+let description "Expands the abbreviation `w/` to the full word `with` for clarity."
+let kind "Style"
+let becomes "with"
+

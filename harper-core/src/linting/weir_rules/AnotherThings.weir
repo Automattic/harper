@@ -1,0 +1,8 @@
+expr main (another things)
+
+let message "`another` is singular but `things` is plural."
+let description "Corrects `another things`."
+let kind "Agreement"
+let becomes ["another thing", "other things"]
+
+test "Another things to fix in the Mask editor" "Other things to fix in the Mask editor"

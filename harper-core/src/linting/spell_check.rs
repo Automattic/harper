@@ -87,7 +87,15 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             if let Some(mis_f) = word_chars.first()
                 && mis_f.is_uppercase()
             {
-                for sug_f in possibilities.iter_mut().filter_map(|w| w.first_mut()) {
+                for sug_f in possibilities.iter_mut().filter_map(|w| {
+                    // Skip words that have uppercase chars in any position except the first.
+                    // (For words with specific capitalization, like 'macOS')
+                    w.iter()
+                        .skip(1)
+                        .all(|c| !c.is_uppercase())
+                        .then_some(w.first_mut())
+                        .flatten()
+                }) {
                     *sug_f = sug_f.to_uppercase().next().unwrap();
                 }
             }
@@ -134,7 +142,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -503,6 +511,24 @@ mod tests {
         assert_no_lints(
             "We had to prepone the meeting",
             SpellCheck::new(FstDictionary::curated(), Dialect::Indian),
+        );
+    }
+
+    #[test]
+    fn dont_flag_pr() {
+        assert_no_lints(
+            "PR",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn no_improper_suggestion_for_macos() {
+        assert_good_and_bad_suggestions(
+            "MacOS",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            &["macOS"],
+            &["MacOS"],
         );
     }
 }

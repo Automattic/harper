@@ -19,8 +19,8 @@ pub use plain_english::PlainEnglish;
 
 use crate::{LSend, Token, TokenStringExt};
 
-#[cfg_attr(feature = "concurrent", blanket(derive(Box, Arc)))]
-#[cfg_attr(not(feature = "concurrent"), blanket(derive(Box, Rc)))]
+#[cfg_attr(feature = "concurrent", blanket(derive(Ref, Box, Arc)))]
+#[cfg_attr(not(feature = "concurrent"), blanket(derive(Ref, Box, Rc)))]
 pub trait Parser: LSend {
     fn parse(&self, source: &[char]) -> Vec<Token>;
 }

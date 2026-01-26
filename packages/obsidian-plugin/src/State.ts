@@ -73,8 +73,10 @@ export default class State {
 			settings.dialect !== oldSettings.dialect
 		) {
 			if (settings.useWebWorker) {
+				this.harper.dispose();
 				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
 			} else {
+				this.harper.dispose();
 				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
 			}
 		} else {

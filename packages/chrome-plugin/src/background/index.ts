@@ -1,4 +1,4 @@
-import { BinaryModule, Dialect, type LintConfig, LocalLinter } from 'harper.js';
+import { BinaryModule, type Dialect, type LintConfig, LocalLinter } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
@@ -14,18 +14,17 @@ import {
 	type GetDomainStatusRequest,
 	type GetDomainStatusResponse,
 	type GetEnabledDomainsResponse,
+	type GetHotkeyResponse,
 	type GetInstalledOnRequest,
 	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
-<<<<<<< HEAD
 	type GetSpellCheckingModeResponse,
 	type GetSpellCheckingModeRequest,
-=======
 	type GetReviewedRequest,
 	type GetReviewedResponse,
->>>>>>> f0a789a49dd201ad27b048e1647bbc7000432494
 	type GetUserDictionaryResponse,
+	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
@@ -40,14 +39,13 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
-<<<<<<< HEAD
 	type SetSpellCheckingModeRequest,
-=======
+	type SetHotkeyRequest,
 	type SetReviewedRequest,
->>>>>>> f0a789a49dd201ad27b048e1647bbc7000432494
 	type SetUserDictionaryRequest,
 	type UnitResponse,
 } from '../protocol';
+import { detectBrowserDialect } from './detectDialect';
 
 console.log('background is running');
 
@@ -66,7 +64,9 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 
 let linter: LocalLinter;
 
-getDialect().then(setDialect);
+getDialect()
+	.then(setDialect)
+	.catch((err) => console.error('Failed to initialize linter:', err));
 setInstalledOnIfMissing();
 
 async function enableDefaultDomains() {
@@ -114,6 +114,9 @@ async function enableDefaultDomains() {
 		'classroom.google.com',
 		'quilljs.com',
 		'www.wattpad.com',
+		'ckeditor.com',
+		'app.slack.com',
+		'openrouter.ai',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -167,6 +170,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetActivationKey();
 		case 'setActivationKey':
 			return handleSetActivationKey(message);
+		case 'getHotkey':
+			return handleGetHotkey();
+		case 'setHotkey':
+			return handleSetHotkey(message);
 		case 'openReportError':
 			return handleOpenReportError(message);
 		case 'openOptions':
@@ -318,7 +325,24 @@ async function handleSetSpellCheckingMode(req: SetSpellCheckingModeRequest): Pro
 		throw new Error(`Invalid spell checking mode: ${req.spellCheckingMode}`);
 	}
 	await setSpellCheckingMode(req.spellCheckingMode);
+
+	return createUnitResponse();
 }
+async function handleGetHotkey(): Promise<GetHotkeyResponse> {
+	const hotkey = await getHotkey();
+
+	return { kind: 'getHotkey', hotkey };
+}
+
+async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
+	// Create a plain object to avoid proxy cloning issues
+	const hotkey = {
+		modifiers: [...req.hotkey.modifiers],
+		key: req.hotkey.key,
+	};
+	await setHotkey(hotkey);
+}
+
 async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
@@ -405,13 +429,24 @@ async function getIgnoredLints(): Promise<string> {
 }
 
 async function getDialect(): Promise<Dialect> {
-	const resp = await chrome.storage.local.get({ dialect: Dialect.American });
+	const resp = await chrome.storage.local.get('dialect');
+
+	// If user hasn't set a dialect, try to detect from browser language
+	if (resp.dialect === undefined) {
+		return detectBrowserDialect();
+	}
+
 	return resp.dialect;
 }
 
 async function getActivationKey(): Promise<ActivationKey> {
 	const resp = await chrome.storage.local.get({ activationKey: ActivationKey.Off });
 	return resp.activationKey;
+}
+
+async function getHotkey(): Promise<Hotkey> {
+	const resp = await chrome.storage.local.get({ hotkey: { modifiers: ['Ctrl'], key: 'e' } });
+	return resp.hotkey;
 }
 
 async function setActivationKey(key: ActivationKey) {
@@ -428,7 +463,15 @@ async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
 }
 
 
+async function setHotkey(hotkey: Hotkey) {
+	await chrome.storage.local.set({ hotkey: hotkey });
+}
+
 function initializeLinter(dialect: Dialect) {
+	if (linter != null) {
+		linter.dispose();
+	}
+
 	linter = new LocalLinter({
 		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,

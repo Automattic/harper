@@ -80,5 +80,7 @@ describe('Serializer', () => {
 
 		expect(end.message()).toBe(start.message());
 		expect(end.lint_kind()).toBe(start.lint_kind());
+
+		await linter.dispose();
 	});
 });

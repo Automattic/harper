@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey, SpellCheckingMode } from './protocol';
+import type { ActivationKey, SpellCheckingMode, Hotkey } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -94,6 +94,18 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getSpellCheckingMode' })).spellCheckingMode;
 	}
 
+	public static async getHotkey(): Promise<Hotkey> {
+		return (await chrome.runtime.sendMessage({ kind: 'getHotkey' })).hotkey;
+	}
+
+	public static async setHotkey(hotkey: Hotkey): Promise<void> {
+		const modifiers = hotkey.modifiers;
+		const hotkeyCopy = {
+			modifiers: [...modifiers], // Create a new array
+			key: hotkey.key,
+		};
+		await chrome.runtime.sendMessage({ kind: 'setHotkey', hotkey: hotkeyCopy });
+	}
 
 	public static async setActivationKey(key: ActivationKey): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });

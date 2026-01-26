@@ -1,0 +1,23 @@
+expr main <([([have, has, had] [I, you, he, she, it, we, they] [heart, herd] [of, about, from, in, on, for, to, with]), ([have, has, had] [I, you, he, she, it, we, they] ADV [heart, herd] [of, about, from, in, on, for, to, with]), ([have, has, had] n't [I, you, he, she, it, we, they] [heart, herd] [of, about, from, in, on, for, to, with]), ([have, has, had] n't [I, you, he, she, it, we, they] ADV [heart, herd] [of, about, from, in, on, for, to, with]), ([have, has, had] DET NOUN ADV [heart, herd] [of, about, from, in, on, for, to, with]), ([have, has, had] n't DET NOUN ADV [heart, herd] [of, about, from, in, on, for, to, with]), ([haven't, hasn't, hadn't] [I, you, he, she, it, we, they] [heart, herd] [of, about, from, in, on, for, to, with]), ([haven't, hasn't, hadn't] [I, you, he, she, it, we, they] ADV [heart, herd] [of, about, from, in, on, for, to, with]), ([haven't, hasn't, hadn't] DET NOUN ADV [heart, herd] [of, about, from, in, on, for, to, with])]), [heart, herd]>
+
+let message "Did you mean the verb `heard` (= past tense of `hear`)?"
+let description "Corrects `heart` or `herd` to `heard` in common `have ... heard of/about` questions."
+let kind "Usage"
+let becomes "heard"
+
+test "Have you heart of this band?" "Have you heard of this band?"
+test "Have you herd of this band?" "Have you heard of this band?"
+test "Have you ever heart of this band?" "Have you ever heard of this band?"
+test "Have you ever herd of this band?" "Have you ever heard of this band?"
+test "Has she heart of the update?" "Has she heard of the update?"
+test "Has she ever heart of the update?" "Has she ever heard of the update?"
+test "Had they heart of the plan?" "Had they heard of the plan?"
+test "Have the police ever heart of this?" "Have the police ever heard of this?"
+test "Have the staff ever herd of the policy?" "Have the staff ever heard of the policy?"
+test "Haven't you heart of that movie?" "Haven't you heard of that movie?"
+test "Haven't you ever herd of that movie?" "Haven't you ever heard of that movie?"
+test "Have you heard of this band?" "Have you heard of this band?"
+test "Have the police heard of this?" "Have the police heard of this?"
+test "Have the heart of this story been told?" "Have the heart of this story been told?"
+test "I have a herd of cattle." "I have a herd of cattle."
+test "I have heart of the matter already." "I have heart of the matter already."

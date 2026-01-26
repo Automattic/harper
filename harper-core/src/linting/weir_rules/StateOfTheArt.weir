@@ -1,0 +1,7 @@
+expr main (state of art)
+
+let message "Did you mean `state of the art`?"
+let description "Detects incorrect usage of `state of art` and suggests `state of the art` as the correct phrase."
+let kind "Usage"
+let becomes "state of the art"
+

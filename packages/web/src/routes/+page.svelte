@@ -127,7 +127,7 @@ const testimonials = [
 	      	><EdgeLogo width="40px" height="40px" />Add to Edge</Link
 	      >
       {:else}
-	      <Link href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 skew-hover"
+	      <Link href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-homepage&utm_medium=referral" class="flex flex-row items-center [&>*]:m-2 skew-hover"
 	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</Link
 	      >
       {/if}

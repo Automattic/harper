@@ -1,9 +1,9 @@
-use std::fmt::Display;
+use std::{borrow::Borrow, fmt::Display};
 
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
-use crate::Span;
+use crate::{Span, case};
 
 /// A suggested edit that could resolve a [`Lint`](super::Lint).
 #[derive(Debug, Clone, Serialize, Deserialize, Is, PartialEq, Eq, Hash)]
@@ -18,7 +18,10 @@ pub enum Suggestion {
 
 impl Suggestion {
     /// Variant of [`Self::replace_with_match_case`] that accepts a static string.
-    pub fn replace_with_match_case_str(value: &'static str, template: &[char]) -> Self {
+    pub fn replace_with_match_case_str(
+        value: &str,
+        template: impl IntoIterator<Item = impl Borrow<char>>,
+    ) -> Self {
         Self::replace_with_match_case(value.chars().collect(), template)
     }
 
@@ -27,27 +30,11 @@ impl Suggestion {
     ///
     /// For example, if we want to replace "You're" with "You are", we can provide "you are" and
     /// "You're".
-    pub fn replace_with_match_case(mut value: Vec<char>, template: &[char]) -> Self {
-        // If the value is longer than the template, use this.
-        let template_term = [template.last().copied().unwrap_or('l')]
-            .into_iter()
-            .cycle();
-
-        for (v, t) in value.iter_mut().filter(|v| v.is_alphabetic()).zip(
-            template
-                .iter()
-                .filter(|v| v.is_alphabetic())
-                .copied()
-                .chain(template_term),
-        ) {
-            if t.is_uppercase() {
-                *v = v.to_ascii_uppercase();
-            } else {
-                *v = v.to_ascii_lowercase();
-            }
-        }
-
-        Self::ReplaceWith(value)
+    pub fn replace_with_match_case(
+        value: Vec<char>,
+        template: impl IntoIterator<Item = impl Borrow<char>>,
+    ) -> Self {
+        Self::ReplaceWith(case::copy_casing(template, value).to_vec())
     }
 
     /// Apply a suggestion to a given text.
@@ -93,6 +80,28 @@ impl Display for Suggestion {
             }
             Suggestion::Remove => write!(f, "Remove error"),
         }
+    }
+}
+
+pub trait SuggestionCollectionExt {
+    fn to_replace_suggestions(
+        self,
+        case_template: impl IntoIterator<Item = impl Borrow<char>> + Clone,
+    ) -> impl Iterator<Item = Suggestion>;
+}
+
+impl<I, T> SuggestionCollectionExt for I
+where
+    I: IntoIterator<Item = T>,
+    T: AsRef<str>,
+{
+    fn to_replace_suggestions(
+        self,
+        case_template: impl IntoIterator<Item = impl Borrow<char>> + Clone,
+    ) -> impl Iterator<Item = Suggestion> {
+        self.into_iter().map(move |s| {
+            Suggestion::replace_with_match_case_str(s.as_ref(), case_template.clone())
+        })
     }
 }
 

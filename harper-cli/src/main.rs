@@ -5,50 +5,49 @@ use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 // use std::sync::Arc;
-use std::fs;
+use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
-use harper_asciidoc::AsciidocParser;
-use harper_comments::CommentParser;
 use harper_core::linting::LintGroup;
-use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish};
+use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
+use harper_core::weir::WeirLinter;
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, Document, OrthFlags, Span, TokenKind, TokenStringExt,
+    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
 };
-use harper_ink::InkParser;
-use harper_literate_haskell::LiterateHaskellParser;
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-use harper_python::PythonParser;
 
 use harper_stats::Stats;
 use serde::Serialize;
 use serde_json::Value;
 
 mod input;
-use input::Input;
+use input::{
+    AnyInput, InputTrait,
+    single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
+};
 
-mod annotate_tokens;
-use annotate_tokens::{Annotation, AnnotationType};
+mod annotate;
+use annotate::AnnotationType;
 
 mod lint;
 use crate::lint::lint;
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
-#[derive(Debug, Parser)]
+#[derive(Parser)]
 #[command(version, about)]
 enum Args {
     /// Lint provided documents.
     Lint {
         /// The text or file you wish to grammar check. If not provided, it will be read from
         /// standard input.
-        inputs: Vec<Input>,
+        inputs: Vec<AnyInput>,
         /// Whether to merely print out the number of errors encountered,
         /// without further details.
         #[arg(short, long)]
@@ -61,6 +60,9 @@ enum Args {
         /// If omitted, `harper-cli` will run every rule.
         #[arg(long, value_delimiter = ',')]
         only: Option<Vec<String>>,
+        /// Overlapping lints are removed by default. This option disables that behavior.
+        #[arg(short = 'o', long)]
+        keep_overlapping_lints: bool,
         /// Specify the dialect.
         #[arg(short, long, default_value = Dialect::American.to_string())]
         dialect: Dialect,
@@ -75,25 +77,28 @@ enum Args {
     Parse {
         /// The text or file you wish to parse. If not provided, it will be read from standard
         /// input.
-        input: Option<Input>,
+        input: Option<SingleInput>,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
         /// The file or text for which you wish to display the spans. If not provided, it will be
         /// read from standard input.
-        input: Option<Input>,
+        input: Option<SingleInput>,
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
     },
-    /// Parse a provided document and annotate its tokens.
-    AnnotateTokens {
+    /// Parse and annotate a provided document.
+    Annotate {
         /// The text or file you wish to parse. If not provided, it will be read from standard
         /// input.
-        input: Option<Input>,
-        /// How the tokens should be annotated.
+        input: Option<SingleInput>,
+        /// How the document should be annotated.
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
+        /// Attempt to detect and ignore non-English spans of text.
+        #[arg(short, long)]
+        isolate_english: bool,
     },
     /// Get the metadata associated with one or more words.
     Metadata {
@@ -113,7 +118,7 @@ enum Args {
     /// Print a list of all the words in a document, sorted by frequency.
     MineWords {
         /// The document to mine words from.
-        file: PathBuf,
+        input: Option<SingleInput>,
     },
     #[cfg(feature = "training")]
     TrainBrillTagger {
@@ -185,7 +190,12 @@ enum Args {
     /// Emit a list of each noun phrase contained within the input
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
-        input: Option<Input>,
+        input: Option<SingleInput>,
+    },
+    /// Run the tests contained within a Weir file.
+    Test {
+        /// The location of the Weir file to test
+        input: PathBuf,
     },
 }
 
@@ -200,6 +210,7 @@ fn main() -> anyhow::Result<()> {
             count,
             ignore,
             only,
+            keep_overlapping_lints,
             dialect,
             user_dict_path,
             // TODO workspace_dict_path?
@@ -211,8 +222,9 @@ fn main() -> anyhow::Result<()> {
                 inputs,
                 LintOptions {
                     count,
-                    ignore: &ignore,
-                    only: &only,
+                    ignore,
+                    only,
+                    keep_overlapping_lints,
                     dialect,
                 },
                 user_dict_path,
@@ -222,11 +234,10 @@ fn main() -> anyhow::Result<()> {
         }
         Args::Parse { input } => {
             // Try to read from standard input if `input` was not provided.
-            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+            let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
-            let (doc, _) = input.load(false, markdown_options, &curated_dictionary)?;
-            let doc = doc.expect("Failed to load document");
+            let (doc, _) = input.load(markdown_options, &curated_dictionary)?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -240,11 +251,10 @@ fn main() -> anyhow::Result<()> {
             include_newlines,
         } => {
             // Try to read from standard input if `input` was not provided.
-            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+            let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
-            let (doc, source) = input.load(false, markdown_options, &curated_dictionary)?;
-            let doc = doc.expect("Failed to load document");
+            let (doc, source) = input.load(markdown_options, &curated_dictionary)?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -285,33 +295,39 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AnnotateTokens {
+        Args::Annotate {
             input,
             annotation_type,
+            isolate_english,
         } => {
             // Try to read from standard input if `input` was not provided.
-            let input = input.unwrap_or_else(|| Input::try_from_stdin().unwrap());
+            let input = input.unwrap_or_read_from_stdin();
+
+            let parser = if isolate_english {
+                Box::new(IsolateEnglish::new(
+                    input.get_parser(markdown_options),
+                    &curated_dictionary,
+                ))
+            } else {
+                input.get_parser(markdown_options)
+            };
 
             // Load the file/text.
-            let (doc, source) = input.load(false, markdown_options, &curated_dictionary)?;
-            let doc = doc.expect("Failed to load document");
+            let (doc, source) = input.load_with_parser(&parser, &curated_dictionary)?;
 
             let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(
-                ReportKind::Custom("AnnotateTokens", Color::Blue),
-                &*input_identifier,
-                0,
-            );
-
-            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
-                annotation_type,
-                &doc,
-                &input_identifier,
-            ));
-
-            let report = report_builder.finish();
-            report.print((&*input_identifier, Source::from(source)))?;
+            annotation_type
+                .build_report(
+                    &doc,
+                    &input_identifier,
+                    &annotation_type.get_title_with_tags(if isolate_english {
+                        &["Isolate english"]
+                    } else {
+                        &[]
+                    }),
+                )
+                .print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
@@ -465,15 +481,9 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::MineWords { file } => {
-            let (doc, _source) = load_file(
-                &file,
-                None,
-                false,
-                MarkdownOptions::default(),
-                &curated_dictionary,
-            )?;
-            let doc = doc.expect("Failed to load document");
+        Args::MineWords { input } => {
+            let input = input.unwrap_or_read_from_stdin();
+            let (doc, _source) = input.load(MarkdownOptions::default(), &curated_dictionary)?;
 
             let mut words = HashMap::new();
 
@@ -869,14 +879,10 @@ fn main() -> anyhow::Result<()> {
         }
         Args::NominalPhrases { input } => {
             // Get input from either file or direct text
-            let input = match input {
-                Some(Input::File(path)) => std::fs::read_to_string(path)?,
-                Some(Input::Dir(_)) => anyhow::bail!("Directory input is not supported"),
-                Some(Input::Text(text)) | Some(Input::Stdin(text)) => text,
-                None => std::io::read_to_string(std::io::stdin())?,
-            };
+            let (doc, _) = input
+                .unwrap_or_read_from_stdin()
+                .load(MarkdownOptions::default(), &curated_dictionary)?;
 
-            let doc = Document::new_markdown_default_curated(&input);
             let phrases: Vec<_> = doc
                 .iter_nominal_phrases()
                 .map(|toks| {
@@ -922,58 +928,21 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-    }
-}
+        Args::Test { input } => {
+            let weir_file = fs::read_to_string(input)?;
+            let mut linter = WeirLinter::new(&weir_file)?;
 
-fn load_file(
-    file: &Path,
-    input_identifier: Option<&str>,
-    batch_mode: bool,
-    markdown_options: MarkdownOptions,
-    dictionary: &impl Dictionary,
-) -> anyhow::Result<(Option<Document>, String)> {
-    let source = std::fs::read_to_string(file)?;
+            let failing_tests = linter.run_tests();
 
-    let parser: Box<dyn harper_core::parsers::Parser> = match file
-        .extension()
-        .map(|v| v.to_str().unwrap())
-    {
-        Some("md") | Some("markdown") => Box::new(Markdown::default()),
-        Some("ink") => Box::new(InkParser::default()),
-
-        Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
-            MarkdownOptions::default(),
-        )),
-        Some("org") => Box::new(OrgMode),
-        Some("typ") => Box::new(harper_typst::Typst),
-        Some("py") | Some("pyi") => Box::new(PythonParser::default()),
-        Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
-        Some("txt") => Box::new(PlainEnglish),
-        _ => {
-            if let Some(comment_parser) = CommentParser::new_from_filename(file, markdown_options) {
-                Box::new(comment_parser)
+            if failing_tests.is_empty() {
+                eprintln!("All tests pass!");
+                Ok(())
             } else {
-                eprintln!(
-                    "{}Warning: Could not detect language ID; {}",
-                    input_identifier
-                        .map(|id| format!("{}: ", id))
-                        .unwrap_or_default(),
-                    if batch_mode {
-                        "skipping file."
-                    } else {
-                        "falling back to PlainEnglish parser."
-                    }
-                );
-                if batch_mode {
-                    return Ok((None, source));
-                } else {
-                    Box::new(PlainEnglish)
-                }
+                eprintln!("{:?}", failing_tests);
+                process::exit(1);
             }
         }
-    };
-
-    Ok((Some(Document::new(&source, &parser, dictionary)), source))
+    }
 }
 
 /// Split a dictionary line into its word and annotation segments

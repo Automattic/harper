@@ -14,7 +14,7 @@
 			"Gold Coast",
 			"Sunshine Coast"
 		],
-		"description": "When referring to the states of Australia, make sure to treat them as a proper noun."
+		"description": "When referring to states, territories, and cities in Australia, make sure to treat them as a proper noun."
 	},
 	"OceansAndSeas": {
 		"canonical": [
@@ -45,11 +45,14 @@
 			"Prince Edward Island",
 			"Quebec City"
 		],
-		"description": "When referring to the provinces of Canada, make sure to treat them as a proper noun."
+		"description": "When referring to provinces, territories, and cities in Canada, make sure to treat them as a proper noun."
+	},
+	"Laos": {
+		"canonical": ["La Mam", "Luang Namtha", "Luang Prabang", "Xam Neua"],
+		"description": "When referring to provinces and cities in Laos, make sure to treat them as a proper noun."
 	},
 	"Malaysia": {
 		"canonical": [
-			"Negeri Sembilan",
 			"Alor Setar",
 			"George Town",
 			"Johor Bahru",
@@ -57,6 +60,7 @@
 			"Kota Kinabalu",
 			"Kuala Lumpur",
 			"Kuala Terengganu",
+			"Negeri Sembilan",
 			"Shah Alam"
 		],
 		"description": "When referring to the states of Malaysia and their capitals, make sure to treat them as a proper noun."

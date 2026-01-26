@@ -1,0 +1,7 @@
+expr main (int he)
+
+let message "Did you mean `in the`?"
+let description "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
+let kind "Typo"
+let becomes "in the"
+

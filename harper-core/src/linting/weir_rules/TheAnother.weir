@@ -1,0 +1,8 @@
+expr main (the another)
+
+let message "Use `the other` or `another`, not both."
+let description "Corrects `the another`."
+let kind "Grammar"
+let becomes ["the other", "another"]
+
+test "Another possible cause is simply that the application does not have file creation permissions on the another machine." "Another possible cause is simply that the application does not have file creation permissions on the other machine."
