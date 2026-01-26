@@ -6,6 +6,15 @@ settings:
 
 catalogs:
   default:
+    '@babel/runtime':
+      specifier: ^7.26.10
+      version: 7.26.10
+    '@types/node':
+      specifier: ^22.13.10
+      version: 22.13.10
+    tslib:
+      specifier: ^2.8.1
+      version: 2.8.1
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
@@ -60,8 +69,8 @@ importers:
         specifier: ^2.0.0-beta.26
         version: 2.0.0-beta.32
       '@playwright/test':
-        specifier: ^1.57.0
-        version: 1.57.0
+        specifier: ^1.58.0
+        version: 1.58.0
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.0
         version: 4.0.4(svelte@5.43.12)(vite@5.4.17(@types/node@22.13.10)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0))
@@ -91,7 +100,7 @@ importers:
         version: 14.1.1
       playwright-webextext:
         specifier: ^0.0.4
-        version: 0.0.4(@playwright/test@1.57.0)(playwright@1.57.0)
+        version: 0.0.4(@playwright/test@1.58.0)(playwright@1.58.0)
       prettier:
         specifier: ^3.1.0
         version: 3.5.3
@@ -325,7 +334,7 @@ importers:
         version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       '@vitest/browser-playwright':
         specifier: ^4.0.16
-        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.57.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
+        version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
       obsidian:
         specifier: ^1.7.2
         version: 1.8.7(@codemirror/state@6.5.2)(@codemirror/view@6.36.4)
@@ -508,7 +517,7 @@ importers:
     devDependencies:
       '@wordpress/scripts':
         specifier: ^30.9.0
-        version: 30.13.0(@playwright/test@1.57.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)
+        version: 30.13.0(@playwright/test@1.58.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)
       '@wp-now/wp-now':
         specifier: ^0.1.74
         version: 0.1.74
@@ -2761,6 +2770,11 @@ packages:
 
   '@playwright/test@1.57.0':
     resolution: {integrity: sha512-6TyEnHgd6SArQO8UO2OMTxshln3QMWBtPGrOCgs3wVEmQmwyuNtB10IZMfmYDE0riwNR1cu4q+pPcxMVtaG3TA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@playwright/test@1.58.0':
+    resolution: {integrity: sha512-fWza+Lpbj6SkQKCrU6si4iu+fD2dD3gxNHFhUPxsfXBPhnv3rRSQVd0NtBUT9Z/RhF/boCBcuUaMUSTRTopjZg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9527,6 +9541,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.58.0:
+    resolution: {integrity: sha512-aaoB1RWrdNi3//rOeKuMiS65UCcgOVljU46At6eFcOFPFHWtd2weHRRow6z/n+Lec0Lvu0k9ZPKJSjPugikirw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright-webextext@0.0.4:
     resolution: {integrity: sha512-B5uIZSRtH6wi5HPhEwbEkZxEoAY5bUKCjqVW2qCsAYWQTQZ4ULOfsyglI+gfiohxrAzHT+mtkZMXZvHTtunsDg==}
     engines: {node: '20'}
@@ -9541,6 +9560,11 @@ packages:
 
   playwright@1.57.0:
     resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.58.0:
+    resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -15234,6 +15258,10 @@ snapshots:
     dependencies:
       playwright: 1.57.0
 
+  '@playwright/test@1.58.0':
+    dependencies:
+      playwright: 1.58.0
+
   '@pmmmwh/react-refresh-webpack-plugin@0.5.15(@types/webpack@4.41.40)(react-refresh@0.14.2)(type-fest@4.37.0)(webpack-dev-server@4.15.2)(webpack@5.98.0)':
     dependencies:
       ansi-html: 0.0.9
@@ -16980,6 +17008,19 @@ snapshots:
       - utf-8-validate
       - vite
 
+  '@vitest/browser-playwright@4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(playwright@1.58.0)(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)':
+    dependencies:
+      '@vitest/browser': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
+      '@vitest/mocker': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      playwright: 1.58.0
+      tinyrainbow: 3.0.3
+      vitest: 4.0.16(@types/node@22.13.10)(@vitest/browser-playwright@4.0.16)(@vitest/ui@4.0.16)(jiti@2.6.1)(jsdom@20.0.3)(lightningcss@1.30.2)(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
   '@vitest/browser@4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)':
     dependencies:
       '@vitest/mocker': 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
@@ -17690,9 +17731,9 @@ snapshots:
       '@babel/runtime': 7.25.7
       '@wordpress/deprecated': 4.20.0
 
-  '@wordpress/e2e-test-utils-playwright@1.20.0(@playwright/test@1.57.0)':
+  '@wordpress/e2e-test-utils-playwright@1.20.0(@playwright/test@1.58.0)':
     dependencies:
-      '@playwright/test': 1.57.0
+      '@playwright/test': 1.58.0
       change-case: 4.1.2
       form-data: 4.0.2
       get-port: 5.1.1
@@ -18171,16 +18212,16 @@ snapshots:
       react: 18.3.1
       route-recognizer: 0.3.4
 
-  '@wordpress/scripts@30.13.0(@playwright/test@1.57.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)':
+  '@wordpress/scripts@30.13.0(@playwright/test@1.58.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.25.7
-      '@playwright/test': 1.57.0
+      '@playwright/test': 1.58.0
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(@types/webpack@4.41.40)(react-refresh@0.14.2)(type-fest@4.37.0)(webpack-dev-server@4.15.2)(webpack@5.98.0)
       '@svgr/webpack': 8.1.0(typescript@5.9.3)
       '@wordpress/babel-preset-default': 8.20.0
       '@wordpress/browserslist-config': 6.20.0
       '@wordpress/dependency-extraction-webpack-plugin': 6.20.0(webpack@5.98.0)
-      '@wordpress/e2e-test-utils-playwright': 1.20.0(@playwright/test@1.57.0)
+      '@wordpress/e2e-test-utils-playwright': 1.20.0(@playwright/test@1.58.0)
       '@wordpress/eslint-plugin': 22.6.0(@babel/core@7.25.7)(@types/eslint@9.6.1)(eslint@8.57.1)(jest@29.7.0(@types/node@22.13.10)(babel-plugin-macros@3.1.0))(typescript@5.9.3)(wp-prettier@3.0.3)
       '@wordpress/jest-preset-default': 12.20.0(@babel/core@7.25.7)(jest@29.7.0(@types/node@22.13.10)(babel-plugin-macros@3.1.0))
       '@wordpress/npm-package-json-lint-config': 5.20.0(npm-package-json-lint@6.4.0(typescript@5.9.3))
@@ -23945,14 +23986,22 @@ snapshots:
 
   playwright-core@1.57.0: {}
 
-  playwright-webextext@0.0.4(@playwright/test@1.57.0)(playwright@1.57.0):
+  playwright-core@1.58.0: {}
+
+  playwright-webextext@0.0.4(@playwright/test@1.58.0)(playwright@1.58.0):
     optionalDependencies:
-      '@playwright/test': 1.57.0
-      playwright: 1.57.0
+      '@playwright/test': 1.58.0
+      playwright: 1.58.0
 
   playwright@1.57.0:
     dependencies:
       playwright-core: 1.57.0
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.58.0:
+    dependencies:
+      playwright-core: 1.58.0
     optionalDependencies:
       fsevents: 2.3.2
 
