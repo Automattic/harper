@@ -26,7 +26,7 @@ export default class HarperPlugin extends Plugin {
 		}
 
 		const data = await this.loadData();
-		await this.state.initializeFromSettings(data);
+		this.state.initializeFromSettings(data);
 		this.registerEditorExtension(this.state.getCMEditorExtensions());
 		this.setupCommands();
 		this.setupStatusBar();
