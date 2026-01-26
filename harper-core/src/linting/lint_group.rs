@@ -125,6 +125,7 @@ use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
+use super::nor_modal_pronoun::NorModalPronoun;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::obsess_preposition::ObsessPreposition;
@@ -518,6 +519,7 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
+        insert_expr_rule!(NorModalPronoun, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_expr_rule!(ObsessPreposition, true);
@@ -592,8 +594,8 @@ impl LintGroup {
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
         insert_expr_rule!(ViciousCircle, true);
-        insert_expr_rule!(ViciousCycle, false);
         insert_expr_rule!(ViciousCircleOrCycle, false);
+        insert_expr_rule!(ViciousCycle, false);
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
