@@ -188,7 +188,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                     }
 
                     Ok(FoundNode::new(
-                        Some(AstStmtNode::create_ignore_test(case.node)),
+                        Some(AstStmtNode::create_allow_test(case.node)),
                         end + 1,
                     ))
                 }
@@ -391,7 +391,7 @@ mod tests {
             parse_str("allows \"this is the case\"", true)
                 .unwrap()
                 .stmts,
-            vec![AstStmtNode::create_ignore_test("this is the case",)]
+            vec![AstStmtNode::create_allow_test("this is the case",)]
         )
     }
 

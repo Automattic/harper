@@ -58,7 +58,7 @@ impl Ast {
     pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
         self.stmts.iter().filter_map(|stmt| match stmt {
             AstStmtNode::Test { expect, to_be } => Some((expect.as_str(), to_be.as_str())),
-            AstStmtNode::Ignores { value } => Some((value.as_str(), value.as_str())),
+            AstStmtNode::Allows { value } => Some((value.as_str(), value.as_str())),
             _ => None,
         })
     }
@@ -149,7 +149,7 @@ pub enum AstStmtNode {
     SetExpr { name: String, value: AstExprNode },
     Comment(String),
     Test { expect: String, to_be: String },
-    Ignores { value: String },
+    Allows { value: String },
 }
 
 impl AstStmtNode {
@@ -174,8 +174,8 @@ impl AstStmtNode {
         }
     }
 
-    pub fn create_ignore_test(value: impl ToString) -> Self {
-        Self::Ignores {
+    pub fn create_allow_test(value: impl ToString) -> Self {
+        Self::Allows {
             value: value.to_string(),
         }
     }
