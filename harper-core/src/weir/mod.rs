@@ -190,6 +190,14 @@ impl WeirLinter {
             .collect();
 
         for (text, expected) in tests {
+            if text == expected && lint_count(&text, self) != 0 {
+                results.push(TestResult {
+                    expected: text.to_string(),
+                    got: text.to_string(),
+                });
+                continue;
+            }
+
             let zeroth = transform_nth_str(&text, self, 0);
             let first = transform_nth_str(&text, self, 1);
             let second = transform_nth_str(&text, self, 2);
