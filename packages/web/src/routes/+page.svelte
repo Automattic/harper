@@ -407,6 +407,11 @@ const testimonials = [
 					<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/discussions">GitHub</Link>.
 				</p>
 			</Collapsible>
+			<Collapsible title="Why Isn't Harper Working in Gmail?">
+				<p>
+          Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please <Link class="text-blue-600 dark:text-blue-400" href="https://support.google.com/mail/answer/7987?hl=en">disable the built-in grammar checker.</Link>
+				</p>
+			</Collapsible>
 		</div>
 	</Section>
 
