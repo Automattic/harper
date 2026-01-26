@@ -7,4 +7,4 @@ let becomes "worst-case scenario"
 
 test "The worst case scenario can be calculated without looking at streams of data." "The worst-case scenario can be calculated without looking at streams of data."
 test "CAPD worst-case-scenario cloud simulator for naughty clouds." "CAPD worst-case scenario cloud simulator for naughty clouds."
-test "Those are now on hold for month." "Those are now on hold for month."
+ignores "Those are now on hold for month."

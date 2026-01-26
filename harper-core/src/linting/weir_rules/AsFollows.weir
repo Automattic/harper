@@ -17,9 +17,9 @@ test "Is this description as follow the sample?" "Is this description as follows
 test "You can verify as follow once the build completes." "You can verify as follows once the build completes."
 
 # Ensure unrelated uses of "follow" are not affected
-test "Follow the instructions as written." "Follow the instructions as written."
-test "We follow-up on these requests weekly." "We follow-up on these requests weekly."
-test "This is the way to follow as best you can." "This is the way to follow as best you can."
-test "As follows the plan will unfold." "As follows the plan will unfold."
-test "I will follow your lead." "I will follow your lead."
-test "The as follows section is helpful." "The as follows section is helpful."
+ignores "Follow the instructions as written."
+ignores "We follow-up on these requests weekly."
+ignores "This is the way to follow as best you can."
+ignores "As follows the plan will unfold."
+ignores "I will follow your lead."
+ignores "The as follows section is helpful."

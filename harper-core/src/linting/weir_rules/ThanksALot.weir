@@ -6,4 +6,4 @@ let kind "Grammar"
 let becomes "thanks a lot"
 
 test "thanks lot" "thanks a lot"
-test "thanks a lot" "thanks a lot"
+ignores "thanks a lot"

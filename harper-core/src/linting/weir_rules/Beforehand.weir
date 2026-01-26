@@ -6,4 +6,4 @@ let becomes "beforehand"
 
 test "Let me know before hand if you will attend." "Let me know beforehand if you will attend."
 test "I prepared the documents before-hand." "I prepared the documents beforehand."
-test "We finished the preparations beforehand." "We finished the preparations beforehand."
+ignores "We finished the preparations beforehand."

@@ -8,5 +8,5 @@ test "And looks like as if linux-personality hasn't got any changes for 8 years.
 test "She looks like as if she’s tired." "She looks as if she’s tired."
 test "He seems like as if he’s happy." "He seems as if he’s happy."
 test "It feels like as if it’s a dream." "It feels as if it’s a dream."
-test "She acts like a hero." "She acts like a hero."
+ignores "She acts like a hero."
 test "She seems like as if she’s in love." "She seems as if she’s in love."

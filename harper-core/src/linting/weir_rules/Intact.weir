@@ -6,4 +6,4 @@ let kind "BoundaryError"
 let becomes "intact"
 
 test "The code remains in tact after the merge." "The code remains intact after the merge."
-test "The data set remains intact." "The data set remains intact."
+ignores "The data set remains intact."

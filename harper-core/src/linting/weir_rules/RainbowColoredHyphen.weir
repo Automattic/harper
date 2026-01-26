@@ -16,8 +16,8 @@ test "Cream coloured curtains softened the gallery lights." "Cream-coloured curt
 test "The designer chose rainbow colored tiles for the backsplash." "The designer chose rainbow-colored tiles for the backsplash."
 test "Our lineup now shows cream colored lipsticks and rainbow colored gloss." "Our lineup now shows cream-colored lipsticks and rainbow-colored gloss."
 
-test "The rainbow colored the sky with a soft gradient." "The rainbow colored the sky with a soft gradient."
-test "She rainbow colored every triangle on the quilt." "She rainbow colored every triangle on the quilt."
-test "The artist cream colored the mural in minutes." "The artist cream colored the mural in minutes."
-test "The leaves were rainbow colored after the festival lights." "The leaves were rainbow colored after the festival lights."
-test "Cream colored the vase intentionally for the commission." "Cream colored the vase intentionally for the commission."
+ignores "The rainbow colored the sky with a soft gradient."
+ignores "She rainbow colored every triangle on the quilt."
+ignores "The artist cream colored the mural in minutes."
+ignores "The leaves were rainbow colored after the festival lights."
+ignores "Cream colored the vase intentionally for the commission."
