@@ -254,7 +254,7 @@ You can also assert that the rule _will not_ change anything.
 
 ```plaintext
 # I don't expect the rule to change anything
-ignores "A"
+allows "A"
 ```
 
 In the future, expect new types of tests to become available.

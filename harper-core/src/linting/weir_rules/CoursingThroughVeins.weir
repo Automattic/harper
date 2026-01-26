@@ -7,4 +7,4 @@ let becomes "coursing through veins"
 
 test "cursing through veins" "coursing through veins"
 test "It felt like the drugs were cursing through veins." "It felt like the drugs were coursing through veins."
-ignores "He was cursing through the entire meeting."
+allows "He was cursing through the entire meeting."

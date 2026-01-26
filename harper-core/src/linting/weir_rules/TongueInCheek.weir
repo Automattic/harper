@@ -13,5 +13,5 @@ test "Their tone was TONGUE AND CHEEK all night." "Their tone was TONGUE IN CHEE
 test "Tongue and cheek banter kept the meeting light." "Tongue in cheek banter kept the meeting light."
 test "Her note (totally tongue and cheek) made us smile." "Her note (totally tongue in cheek) made us smile."
 test "Was that tongue and cheek or sincere?" "Was that tongue in cheek or sincere?"
-ignores "Their comments were deliberately tongue in cheek."
-ignores "That was a tongue-in-cheek reply."
+allows "Their comments were deliberately tongue in cheek."
+allows "That was a tongue-in-cheek reply."

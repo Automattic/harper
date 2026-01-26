@@ -6,6 +6,6 @@ let kind "Enhancement"
 let becomes "excellent"
 
 test "Her results were very good this semester." "Her results were excellent this semester."
-ignores "The performance was excellent, drawing praise from all critics."
-ignores "He radiated a sense of very goodness in his charitable acts."
+allows "The performance was excellent, drawing praise from all critics."
+allows "He radiated a sense of very goodness in his charitable acts."
 test "She generally gave herself very good advice" "She generally gave herself excellent advice"

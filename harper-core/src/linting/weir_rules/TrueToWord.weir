@@ -19,8 +19,8 @@ test "One stays true to one's words while keeping a diary." "One stays true to o
 test "I'm true to my words." "I'm true to my word."
 test "True to your words, you resumed the pledge." "True to your word, you resumed the pledge."
 
-ignores "She was true to her word."
-ignores "They were true to the words they heard in class."
-ignores "Being true to your word is the goal."
-ignores "The article praised her true words."
-ignores "Our team is true to the word we said earlier."
+allows "She was true to her word."
+allows "They were true to the words they heard in class."
+allows "Being true to your word is the goal."
+allows "The article praised her true words."
+allows "Our team is true to the word we said earlier."

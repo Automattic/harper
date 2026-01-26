@@ -303,7 +303,7 @@ pub mod tests {
             test "Left click the checkbox." "Left-click the checkbox."
             test "Middle click to open in a new tab." "Middle-click to open in a new tab."
 
-            ignores "This test contains the correct version of right-click and therefore shouldn't error."
+            allows "This test contains the correct version of right-click and therefore shouldn't error."
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
@@ -326,7 +326,7 @@ pub mod tests {
             test "The pricing page mentions G Suit for legacy plans." "The pricing page mentions Google Workspace for legacy plans."
             test "New customers sign up for Google Workspace." "New customers sign up for Google Workspace."
 
-            ignores "This test contains the correct version of Google Workspace and therefore shouldn't error."
+            allows "This test contains the correct version of Google Workspace and therefore shouldn't error."
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
@@ -367,7 +367,7 @@ pub mod tests {
 
             test "This--and--that" "This-and-that"
 
-            ignores "this-and-that"
+            allows "this-and-that"
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
@@ -386,7 +386,7 @@ pub mod tests {
             let becomes "-"
             let strategy "Exact"
 
-            ignores "test"
+            allows "test"
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();

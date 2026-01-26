@@ -6,4 +6,4 @@ let kind "BoundaryError"
 let becomes "instead of"
 
 test "He used water in stead of soda." "He used water instead of soda."
-ignores "He used water instead of soda."
+allows "He used water instead of soda."

@@ -177,7 +177,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                         end + 1,
                     ))
                 }
-                ['i', 'g', 'n', 'o', 'r', 'e', 's'] => {
+                ['a', 'l', 'l', 'o', 'w', 's'] => {
                     let case = parse_quoted_string(&tokens[cursor + 1..], source)?;
                     cursor += 1 + case.next_idx;
 
@@ -386,9 +386,9 @@ mod tests {
     }
 
     #[test]
-    fn parses_ignores() {
+    fn parses_allows() {
         assert_eq!(
-            parse_str("ignores \"this is the case\"", true)
+            parse_str("allows \"this is the case\"", true)
                 .unwrap()
                 .stmts,
             vec![AstStmtNode::create_ignore_test("this is the case",)]
@@ -487,8 +487,8 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn catches_non_whitespace_after_ignores() {
-        parse_str("ignores+\"\"", false).unwrap();
+    fn catches_non_whitespace_after_allows() {
+        parse_str("allows+\"\"", false).unwrap();
     }
 
     #[quickcheck]
@@ -500,9 +500,9 @@ mod tests {
     }
 
     #[quickcheck]
-    fn catches_anything_after_ignores(a: String) {
+    fn catches_anything_after_allows(a: String) {
         if !a.is_empty() && !a.starts_with('\n') {
-            let code = format!("ignores \"\" {a}");
+            let code = format!("allows \"\" {a}");
             assert!(parse_str(code.as_str(), false).is_err())
         }
     }
