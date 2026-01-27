@@ -219,6 +219,16 @@ let kind "Punctuation"
 let becomes "-"
 ```
 
+### Expression References
+
+You can refer back to a previous expression you've defined using the `@` symbol.
+This is useful for creating lists of words or patterns that might be used in multiple places in the rule.
+
+```
+expr vehicles [bikes, trains, automobiles]
+expr main @vehicles aren't fast enough
+```
+
 ## Replacement Strategies
 
 You can dictate how Harper will suggest a replacement using the `strategy` tag.
