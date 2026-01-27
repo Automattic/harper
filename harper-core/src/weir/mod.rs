@@ -10,6 +10,7 @@ use std::str::FromStr;
 use std::sync::Arc;
 
 pub use error::Error;
+use hashbrown::HashMap;
 use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
@@ -18,13 +19,13 @@ use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
-use crate::{Document, Token, TokenStringExt};
+use crate::{CharString, Document, Lrc, Token, TokenStringExt};
 
 use self::ast::{Ast, AstVariable};
 
 pub(crate) fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;
-    Ok(ast.to_expr())
+    ast.to_expr(&HashMap::new())
 }
 
 #[derive(Debug, Is, EnumString, AsRefStr)]
@@ -40,7 +41,7 @@ pub struct TestResult {
 }
 
 pub struct WeirLinter {
-    expr: Box<dyn Expr>,
+    expr: Lrc<Box<dyn Expr>>,
     description: String,
     message: String,
     strategy: ReplacementStrategy,
@@ -60,10 +61,11 @@ impl WeirLinter {
         let replacement_name = "becomes";
         let replacement_strat_name = "strategy";
 
-        let expr = ast
-            .get_expr(main_expr_name)
-            .ok_or(Error::ExpectedVariableUndefined)?
-            .to_expr();
+        let resolved = resolve_exprs(&ast)?;
+
+        let expr = resolved
+            .get(main_expr_name)
+            .ok_or(Error::ExpectedVariableUndefined)?;
 
         let description = ast
             .get_variable_value(description_name)
@@ -124,7 +126,7 @@ impl WeirLinter {
         let linter = WeirLinter {
             strategy: replacement_strat,
             ast,
-            expr,
+            expr: expr.clone(),
             lint_kind,
             description,
             message,
@@ -264,6 +266,17 @@ impl ExprLinter for WeirLinter {
     }
 }
 
+fn resolve_exprs(ast: &Ast) -> Result<HashMap<String, Lrc<Box<dyn Expr>>>, Error> {
+    let mut resolved_exprs = HashMap::new();
+
+    for (name, val) in ast.iter_exprs() {
+        let expr = val.to_expr(&resolved_exprs)?;
+        resolved_exprs.insert(name.to_owned(), Lrc::new(expr));
+    }
+
+    Ok(resolved_exprs)
+}
+
 #[cfg(test)]
 pub mod tests {
     use quickcheck_macros::quickcheck;
@@ -321,6 +334,51 @@ pub mod tests {
 
         assert_passes_all(&mut linter);
         assert_eq!(4, linter.count_tests());
+    }
+
+    #[test]
+    fn g_suite_with_refs() {
+        let source = r#"
+            expr a (G [Suite, Suit])
+            expr b (Google Apps For Work)
+            expr incorrect [@a, @b]
+
+            expr main @incorrect
+            let message "Use the updated brand."
+            let description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+            let kind "Miscellaneous"
+            let becomes "Google Workspace"
+            let strategy "Exact"
+
+            test "We migrated from G Suite last year." "We migrated from Google Workspace last year."
+            test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."
+            test "The pricing page mentions G Suit for legacy plans." "The pricing page mentions Google Workspace for legacy plans."
+            test "New customers sign up for Google Workspace." "New customers sign up for Google Workspace."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+        assert_eq!(4, linter.count_tests());
+    }
+
+    #[test]
+    fn fails_on_unresolved_expr() {
+        let source = r#"
+            expr main @missing
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes ""
+            let strategy "Exact"
+        "#;
+
+        let res = WeirLinter::new(source);
+
+        assert_eq!(
+            res.err().unwrap(),
+            Error::UnableToResolveExpr("missing".to_string())
+        )
     }
 
     #[test]
