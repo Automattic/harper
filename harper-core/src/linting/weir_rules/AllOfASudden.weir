@@ -14,5 +14,5 @@ test "He whispered, \"all the sudden we were alone.\"" "He whispered, \"all of a
 test "ALL THE SUDDEN THE ROOM WENT DARK." "ALL OF A SUDDEN THE ROOM WENT DARK."
 test "They were laughing all the sudden." "They were laughing all of a sudden."
 test "It stormed all of sudden after a warm morning." "It stormed all of a sudden after a warm morning."
-test "Their excitement and suddenness were all the suddenness she remembered." "Their excitement and suddenness were all the suddenness she remembered."
+allows "Their excitement and suddenness were all the suddenness she remembered."
 test "This all the sudden change surprised everyone." "This all of a sudden change surprised everyone."
