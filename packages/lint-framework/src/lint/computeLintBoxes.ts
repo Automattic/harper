@@ -70,8 +70,10 @@ export default function computeLintBoxes(
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value
 						: (el.textContent ?? '');
+					const suggestionAppliedEvent = new CustomEvent('suggestionApplied');
 					const newValue = applySuggestion(current, lint.span, sug);
 					replaceValue(el, newValue, lint.span, sug.replacement_text);
+					window.dispatchEvent(suggestionAppliedEvent);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});

@@ -190,6 +190,8 @@ export default class LintFramework {
 						const suggestions = previousBox.lint.suggestions;
 						if (suggestions.length > 0) {
 							previousBox.applySuggestion(suggestions[0]);
+							this.requestLintUpdate();
+							this.requestRender();
 						} else {
 							previousBox.ignoreLint?.();
 						}
@@ -261,6 +263,10 @@ export default class LintFramework {
 		for (const event of PAGE_EVENTS) {
 			window.addEventListener(event, this.updateEventCallback);
 		}
+		window.addEventListener('suggestionApplied', () => {
+				this.requestLintUpdate();
+				this.requestRender();
+		})
 	}
 
 	private async determineSpellCheckingMode() {
