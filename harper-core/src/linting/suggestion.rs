@@ -1,4 +1,7 @@
-use std::{borrow::Borrow, fmt::Display};
+use std::{
+    borrow::Borrow,
+    fmt::{Debug, Display},
+};
 
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
@@ -6,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use crate::{Span, case};
 
 /// A suggested edit that could resolve a [`Lint`](super::Lint).
-#[derive(Debug, Clone, Serialize, Deserialize, Is, PartialEq, Eq, Hash)]
+#[derive(Clone, Serialize, Deserialize, Is, PartialEq, Eq, Hash)]
 pub enum Suggestion {
     /// Replace the offending text with a specific character sequence.
     ReplaceWith(Vec<char>),
@@ -80,6 +83,12 @@ impl Display for Suggestion {
             }
             Suggestion::Remove => write!(f, "Remove error"),
         }
+    }
+}
+
+impl Debug for Suggestion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        <Self as Display>::fmt(self, f)
     }
 }
 
