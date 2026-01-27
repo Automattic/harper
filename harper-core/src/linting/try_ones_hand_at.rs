@@ -33,7 +33,6 @@ impl ExprLinter for TryOnesHandAt {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        eprintln!("{}", toks.span()?.get_content_string(src));
         let hands_idx = 4;
         let hands_tok = toks.get(hands_idx)?;
         let hands_span = hands_tok.span;
