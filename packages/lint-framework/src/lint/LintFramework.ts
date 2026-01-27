@@ -1,5 +1,4 @@
 import type { LintOptions } from 'harper.js';
-import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient';
 import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
@@ -270,7 +269,7 @@ export default class LintFramework {
 	}
 
 	private async determineSpellCheckingMode() {
-		const spellCheckingMode: SpellCheckingMode = await ProtocolClient.getSpellCheckingMode();
+		const spellCheckingMode = await this.actions.getSpellCheckingMode?.();
 		switch (spellCheckingMode) {
 			case 'space':
 				window.addEventListener('keyup', (event: KeyboardEvent) => {
