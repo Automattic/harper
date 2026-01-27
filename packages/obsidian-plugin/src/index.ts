@@ -6,9 +6,10 @@ import { HarperSettingTab } from './HarperSettingTab';
 import State from './State';
 
 export default class HarperPlugin extends Plugin {
-	private state: State;
+	state: State;
 	private dialectSpan: HTMLSpanElement | null = null;
 	private logo: HTMLSpanElement | null = null;
+	private settings: HarperSettingTab | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
@@ -23,22 +24,26 @@ export default class HarperPlugin extends Plugin {
 		const data = await this.loadData();
 
 		this.app.workspace.onLayoutReady(async () => {
-                    this.state = new State(
-                        (n) => this.saveData(n),
-                        () => this.app.workspace.updateOptions(),
-                        editorInfoField,
-                    );
+			this.state = new State(
+				(n) => this.saveData(n),
+				() => this.app.workspace.updateOptions(),
+				editorInfoField,
+			);
 
-                    await this.state.initializeFromSettings(data);
-                    this.registerEditorExtension(this.state.getCMEditorExtensions());
-                    this.setupCommands();
-                    this.setupStatusBar();
-                    if (!(data?.lintEnabled ?? true)) {
-                        this.state.disableEditorLinter();
-                    } else this.state.enableEditorLinter();
+			await this.state.initializeFromSettings(data);
+			this.registerEditorExtension(this.state.getCMEditorExtensions());
+			if (!(data?.lintEnabled ?? true)) {
+				this.state.disableEditorLinter(false);
+			} else this.state.enableEditorLinter(false);
+			this.settings?.update();
 
-		    this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
-                });
+			this.setupStatusBar();
+		});
+
+		this.settings = new HarperSettingTab(this.app, this);
+		this.addSettingTab(this.settings);
+
+		this.setupCommands();
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {
