@@ -297,7 +297,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
 		// Move cursor away to test whether it handles race condition
-		await page.press('body', 'End');
+		await editor.press('End');
 
 		await page.getByTitle('Replace with "test"').click();
 		await page.waitForTimeout(500);
@@ -308,7 +308,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await expect(editor).toContainText('third tset');
 
 		// Undo
-		await page.press('body', 'Control+z');
+		await editor.press('Control+z');
 		await page.waitForTimeout(300);
 		await expect(editor).toContainText('The second tset');
 	});
