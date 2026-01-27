@@ -27,10 +27,10 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	// Verify editor state is preserved: arrow keys and backspace must work.
 	// Position cursor before 's' in 'test', then backspace to delete 'e'.
-	await slate.press('End');
-	await slate.press('ArrowLeft');
-	await slate.press('ArrowLeft');
-	await slate.press('Backspace');
+	await page.press('body', 'End');
+	await page.press('body', 'ArrowLeft');
+	await page.press('body', 'ArrowLeft');
+	await page.press('body', 'Backspace');
 	await expect(slate).toContainText('This is a tst');
 
 	// Verify typing still works.
