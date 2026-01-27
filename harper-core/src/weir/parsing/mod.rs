@@ -18,7 +18,6 @@ use super::{
 /// Lex the entirety of a Weir document.
 fn lex(source: &[char]) -> Vec<Token> {
     let mut cursor = 0;
-
     let mut tokens = Vec::new();
 
     loop {
@@ -26,15 +25,13 @@ fn lex(source: &[char]) -> Vec<Token> {
             return tokens;
         }
 
-        if let Some(FoundToken { token, next_index }) = lex_weir_token(&source[cursor..]) {
-            tokens.push(Token {
-                span: Span::new(cursor, cursor + next_index),
-                kind: token,
-            });
-            cursor += next_index;
-        } else {
-            panic!()
-        }
+        let FoundToken { token, next_index } = lex_weir_token(&source[cursor..]);
+
+        tokens.push(Token {
+            span: Span::new(cursor, cursor + next_index),
+            kind: token,
+        });
+        cursor += next_index;
     }
 }
 

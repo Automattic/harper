@@ -19,7 +19,7 @@ pub struct FoundToken {
     pub token: TokenKind,
 }
 
-pub fn lex_weir_token(source: &[char]) -> Option<FoundToken> {
+pub fn lex_weir_token(source: &[char]) -> FoundToken {
     let lexers = [
         lex_punctuation,
         lex_tabs,
@@ -33,19 +33,18 @@ pub fn lex_weir_token(source: &[char]) -> Option<FoundToken> {
         lex_email_address,
         lex_hostname_token,
         lex_word,
-        lex_catch,
     ];
 
     for lexer in lexers {
         if let Some(f) = lexer(source) {
-            return Some(f);
+            return f;
         }
     }
 
-    None
+    lex_catch()
 }
 
-pub fn lex_english_token(source: &[char]) -> Option<FoundToken> {
+pub fn lex_english_token(source: &[char]) -> FoundToken {
     let lexers = [
         lex_regexish,
         lex_punctuation,
@@ -60,16 +59,15 @@ pub fn lex_english_token(source: &[char]) -> Option<FoundToken> {
         lex_email_address,
         lex_hostname_token,
         lex_word,
-        lex_catch,
     ];
 
     for lexer in lexers {
         if let Some(f) = lexer(source) {
-            return Some(f);
+            return f;
         }
     }
 
-    None
+    lex_catch()
 }
 
 fn lex_word(source: &[char]) -> Option<FoundToken> {
@@ -333,11 +331,11 @@ fn lex_quote(source: &[char]) -> Option<FoundToken> {
 }
 
 /// Covers cases not covered by the other lints.
-fn lex_catch(_source: &[char]) -> Option<FoundToken> {
-    Some(FoundToken {
+fn lex_catch() -> FoundToken {
+    FoundToken {
         next_index: 1,
         token: TokenKind::Unlintable,
-    })
+    }
 }
 
 #[cfg(test)]
@@ -461,10 +459,10 @@ mod tests {
         let source: Vec<_> = "youtube.com".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Hostname,
                 next_index: source.len()
-            })
+            }
         );
     }
 
@@ -473,10 +471,10 @@ mod tests {
         let source: Vec<_> = "[]".chars().collect();
         assert!(!matches!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 2
-            })
+            }
         ))
     }
 
@@ -485,10 +483,10 @@ mod tests {
         let source: Vec<_> = "[a]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 3
-            })
+            }
         );
     }
 
@@ -497,10 +495,10 @@ mod tests {
         let source: Vec<_> = "[az]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 4
-            })
+            }
         );
     }
 
@@ -509,10 +507,10 @@ mod tests {
         let source: Vec<_> = "[123]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 5
-            })
+            }
         );
     }
 
@@ -521,10 +519,10 @@ mod tests {
         let source: Vec<_> = "[a0b1c2]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 8
-            })
+            }
         );
     }
 
@@ -533,10 +531,10 @@ mod tests {
         let source: Vec<_> = "[a-z]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 5
-            })
+            }
         );
     }
 
@@ -545,10 +543,10 @@ mod tests {
         let source: Vec<_> = "[ax-z]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 6
-            })
+            }
         );
     }
 
@@ -557,10 +555,10 @@ mod tests {
         let source: Vec<_> = "[a-cz]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 6
-            })
+            }
         );
     }
 
@@ -569,10 +567,10 @@ mod tests {
         let source: Vec<_> = "[a-cx-z]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 next_index: 8
-            })
+            }
         );
     }
 
@@ -582,10 +580,10 @@ mod tests {
         let source: Vec<_> = "[a-x-z]".chars().collect();
         assert_eq!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Punctuation(Punctuation::OpenSquare),
                 next_index: 1
-            })
+            }
         );
     }
 
@@ -594,10 +592,10 @@ mod tests {
         let source: Vec<_> = "[a-]".chars().collect();
         assert!(!matches!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 ..
-            })
+            }
         ));
     }
 
@@ -606,10 +604,10 @@ mod tests {
         let source: Vec<_> = "[-z]".chars().collect();
         assert!(!matches!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Regexish,
                 ..
-            })
+            }
         ));
     }
 
@@ -814,10 +812,10 @@ mod tests {
         let source: Vec<_> = "late 1980s".chars().collect();
         assert!(matches!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Word(_),
                 ..
-            })
+            }
         ));
     }
 
@@ -826,10 +824,10 @@ mod tests {
         let source: Vec<_> = "1980s and".chars().collect();
         assert!(matches!(
             lex_english_token(&source),
-            Some(FoundToken {
+            FoundToken {
                 token: TokenKind::Decade,
                 ..
-            })
+            }
         ));
     }
 
@@ -901,7 +899,7 @@ mod tests {
                 break; // Exit if we've processed the entire source
             }
 
-            let token = lex_english_token(&sentence[next_index..]).expect("Failed to lex token");
+            let token = lex_english_token(&sentence[next_index..]);
             assert_eq!(token.token, *expected_token);
             next_index += token.next_index;
         }
@@ -927,7 +925,7 @@ mod tests {
                 break; // Exit if we've processed the entire source
             }
 
-            let token = lex_english_token(&sentence[next_index..]).expect("Failed to lex token");
+            let token = lex_english_token(&sentence[next_index..]);
 
             if i < 6 {
                 assert_eq!(token.token, *expected_token);
