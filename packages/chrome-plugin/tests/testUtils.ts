@@ -199,6 +199,76 @@ async function getSortedHighlightBoxes(page: Page) {
 	return boxes;
 }
 
+/** Test applying a basic suggestion in a rich text editor and verify editor state is preserved. */
+export async function testBasicSuggestionRichText(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Can apply basic suggestion.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(3000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Replace with "a"').click();
+
+		await page.waitForTimeout(3000);
+
+		await expect(editor).toContainText('This is a test');
+
+		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
+		await editor.press('ArrowRight');
+		await editor.press('ArrowRight');
+		await editor.press('ArrowRight');
+		await editor.press('Backspace');
+		await expect(editor).toContainText('This is a tst');
+
+		// Verify typing still works.
+		await editor.pressSequentially('e');
+		await expect(editor).toContainText('This is a test');
+	});
+}
+
+/** Test ignoring a suggestion in a rich text editor. */
+export async function testCanIgnoreRichTextSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Can ignore suggestion.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+
+		const cacheSalt = randomString(5);
+		await replaceEditorContent(editor, cacheSalt);
+
+		await page.waitForTimeout(3000);
+
+		const opened = await clickHarperHighlight(page);
+		expect(opened).toBe(true);
+		await page.getByTitle('Ignore this lint').click();
+
+		await expect(getHarperHighlights(page)).toHaveCount(0);
+
+		// Nothing should change.
+		await expect(editor).toContainText(cacheSalt);
+		expect(await clickHarperHighlight(page)).toBe(false);
+	});
+}
+
 /** Test multiline suggestion replacement and undo. */
 export async function testMultipleSuggestionsAndUndo(
 	testPageUrl: TestPageUrlProvider,
