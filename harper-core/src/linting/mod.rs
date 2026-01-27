@@ -132,6 +132,7 @@ mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
+mod nor_modal_pronoun;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod obsess_preposition;

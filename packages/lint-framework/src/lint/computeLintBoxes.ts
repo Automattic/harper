@@ -93,8 +93,10 @@ function replaceValue(
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
 	} else if (getLexicalRoot(el) != null && span && replacementText !== undefined) {
 		replaceLexicalValue(el, span, replacementText);
+	} else if (getDraftRoot(el) != null && span && replacementText !== undefined) {
+		replaceDraftValue(el, span, replacementText);
 	} else if (
-		(getSlateRoot(el) != null || getCkEditorRoot(el) != null || getDraftRoot(el) != null) &&
+		(getSlateRoot(el) != null || getCkEditorRoot(el) != null) &&
 		span &&
 		replacementText !== undefined
 	) {
@@ -127,6 +129,33 @@ function replaceLexicalValue(
 
 	// Notify
 	el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
+}
+
+function replaceDraftValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const setup = selectSpanInEditor(el, span);
+	if (!setup) return;
+
+	const { doc, sel, range } = setup;
+
+	setTimeout(() => {
+		const beforeEvt = new InputEvent('beforeinput', {
+			bubbles: true,
+			cancelable: true,
+			inputType: 'insertText',
+			data: replacementText,
+		});
+		el.dispatchEvent(beforeEvt);
+
+		if (!beforeEvt.defaultPrevented) {
+			replaceTextInRange(doc, sel, range, replacementText);
+		}
+
+		el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+	}, 0);
 }
 
 function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number }) {

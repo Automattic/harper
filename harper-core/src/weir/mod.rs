@@ -7,6 +7,7 @@ mod optimize;
 mod parsing;
 
 use std::str::FromStr;
+use std::sync::Arc;
 
 pub use error::Error;
 use is_macro::Is;
@@ -45,7 +46,7 @@ pub struct WeirLinter {
     strategy: ReplacementStrategy,
     replacements: Vec<String>,
     lint_kind: LintKind,
-    ast: Ast,
+    ast: Arc<Ast>,
 }
 
 impl WeirLinter {
