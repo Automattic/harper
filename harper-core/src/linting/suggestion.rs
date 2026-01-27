@@ -86,6 +86,9 @@ impl Display for Suggestion {
     }
 }
 
+// To make debug output more readable.
+// The default debug implementation for Vec<char> isn't ideal in this scenario, as it prints
+// characters one at a time, line by line.
 impl Debug for Suggestion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         <Self as Display>::fmt(self, f)
