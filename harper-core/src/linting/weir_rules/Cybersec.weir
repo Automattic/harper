@@ -1,0 +1,27 @@
+expr main (cybersec)
+
+let message "Use `cybersecurity` instead of `cybersec`."
+let description "Expands the informal abbreviation `cybersec` to `cybersecurity`."
+let kind "Style"
+let becomes "cybersecurity"
+let strategy "MatchCase"
+
+test "We hired a cybersec analyst." "We hired a cybersecurity analyst."
+test "Cybersec teams are growing." "Cybersecurity teams are growing."
+test "CYBERSEC is a priority." "CYBERSECURITY is a priority."
+test "Our cybersec program needs funding." "Our cybersecurity program needs funding."
+test "They focus on cybersec in healthcare." "They focus on cybersecurity in healthcare."
+test "cybersec." "cybersecurity."
+test "cybersec," "cybersecurity,"
+test "cybersec?" "cybersecurity?"
+test "cybersec!" "cybersecurity!"
+test "The cybersec training starts Monday." "The cybersecurity training starts Monday."
+test "A cybersec role opened today." "A cybersecurity role opened today."
+test "We discussed cybersec risks." "We discussed cybersecurity risks."
+
+test "Cybersecurity is important." "Cybersecurity is important."
+test "cybersecurity is important." "cybersecurity is important."
+test "This is about cyber-sec systems." "This is about cyber-sec systems."
+test "We build cybersecops tooling." "We build cybersecops tooling."
+test "The cybersecx team is separate." "The cybersecx team is separate."
+test "CyberSec is a proper noun." "CyberSec is a proper noun."
