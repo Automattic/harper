@@ -1,4 +1,3 @@
-use crate::token_string_ext::TokenStringExt;
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr},
