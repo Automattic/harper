@@ -3,8 +3,8 @@ import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
-import { ActivationKey, SpellCheckingMode } from '../protocol';
 import type { Hotkey, Modifier } from '../protocol';
+import { ActivationKey, SpellCheckingMode } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
 let lintDescriptions: Record<string, string> = $state({});

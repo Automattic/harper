@@ -1,4 +1,5 @@
 import type { LintOptions } from 'harper.js';
+import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient';
 import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
@@ -6,7 +7,6 @@ import { getCaretPosition } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
-import ProtocolClient from '../../../chrome-plugin/src/ProtocolClient';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -264,36 +264,38 @@ export default class LintFramework {
 			window.addEventListener(event, this.updateEventCallback);
 		}
 		window.addEventListener('suggestionApplied', () => {
-				this.requestLintUpdate();
-				this.requestRender();
-		})
+			this.requestLintUpdate();
+			this.requestRender();
+		});
 	}
 
 	private async determineSpellCheckingMode() {
-		let spellCheckingMode: SpellCheckingMode = await ProtocolClient.getSpellCheckingMode();
-		switch(spellCheckingMode) {
+		const spellCheckingMode: SpellCheckingMode = await ProtocolClient.getSpellCheckingMode();
+		switch (spellCheckingMode) {
 			case 'space':
 				window.addEventListener('keyup', (event: KeyboardEvent) => {
-					let key = event.code;
-					let expectedKey = 'Space';
-					if(key === expectedKey) {
+					const key = event.code;
+					const expectedKey = 'Space';
+					if (key === expectedKey) {
 						this.requestLintUpdate();
 					}
 				});
 				break;
 			case 'stop':
-				window.addEventListener('input', () => {
-						if(renderTimer) clearTimeout(renderTimer);
+				window.addEventListener(
+					'input',
+					() => {
+						if (renderTimer) clearTimeout(renderTimer);
 						renderTimer = setTimeout(() => {
 							this.requestLintUpdate();
 						}, 2000);
-					}, {once: true});
+					},
+					{ once: true },
+				);
 				break;
 			case 'default':
 				this.requestLintUpdate();
-
 		}
-
 	}
 
 	private requestRender() {

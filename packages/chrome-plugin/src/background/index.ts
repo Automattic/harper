@@ -19,16 +19,15 @@ import {
 	type GetInstalledOnResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
-	type GetSpellCheckingModeResponse,
-	type GetSpellCheckingModeRequest,
 	type GetReviewedRequest,
 	type GetReviewedResponse,
+	type GetSpellCheckingModeRequest,
+	type GetSpellCheckingModeResponse,
 	type GetUserDictionaryResponse,
 	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
-	SpellCheckingMode,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
@@ -39,10 +38,11 @@ import {
 	type SetDefaultStatusRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
-	type SetSpellCheckingModeRequest,
 	type SetHotkeyRequest,
 	type SetReviewedRequest,
+	type SetSpellCheckingModeRequest,
 	type SetUserDictionaryRequest,
+	SpellCheckingMode,
 	type UnitResponse,
 } from '../protocol';
 import { detectBrowserDialect } from './detectDialect';
@@ -461,7 +461,6 @@ async function getSpellCheckingMode(): Promise<SpellCheckingMode> {
 async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
 	await chrome.storage.local.set({ spellCheckingMode: spellCheckingMode });
 }
-
 
 async function setHotkey(hotkey: Hotkey) {
 	await chrome.storage.local.set({ hotkey: hotkey });
