@@ -225,10 +225,10 @@ export async function testBasicSuggestionRichText(
 		await expect(editor).toContainText('This is a test');
 
 		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
-		await editor.press('ArrowRight');
-		await editor.press('ArrowRight');
-		await editor.press('ArrowRight');
-		await editor.press('Backspace');
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'Backspace');
 		await expect(editor).toContainText('This is a tst');
 
 		// Verify typing still works.
@@ -297,7 +297,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
 		// Move cursor away to test whether it handles race condition
-		await editor.press('End');
+		await page.press('body', 'End');
 
 		await page.getByTitle('Replace with "test"').click();
 		await page.waitForTimeout(500);
@@ -308,7 +308,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await expect(editor).toContainText('third tset');
 
 		// Undo
-		await editor.press('Control+z');
+		await page.press('body', 'Control+z');
 		await page.waitForTimeout(300);
 		await expect(editor).toContainText('The second tset');
 	});
