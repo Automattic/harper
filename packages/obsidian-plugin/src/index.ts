@@ -12,11 +12,6 @@ export default class HarperPlugin extends Plugin {
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
-		this.state = new State(
-			(n) => this.saveData(n),
-			() => this.app.workspace.updateOptions(),
-			editorInfoField,
-		);
 	}
 
 	async onload() {
@@ -26,15 +21,24 @@ export default class HarperPlugin extends Plugin {
 		}
 
 		const data = await this.loadData();
-		await this.state.initializeFromSettings(data);
-		this.registerEditorExtension(this.state.getCMEditorExtensions());
-		this.setupCommands();
-		this.setupStatusBar();
-		if (!(data?.lintEnabled ?? true)) {
-			this.state.disableEditorLinter();
-		} else this.state.enableEditorLinter();
 
-		this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
+		this.app.workspace.onLayoutReady(async () => {
+                    this.state = new State(
+                        (n) => this.saveData(n),
+                        () => this.app.workspace.updateOptions(),
+                        editorInfoField,
+                    );
+
+                    await this.state.initializeFromSettings(data);
+                    this.registerEditorExtension(this.state.getCMEditorExtensions());
+                    this.setupCommands();
+                    this.setupStatusBar();
+                    if (!(data?.lintEnabled ?? true)) {
+                        this.state.disableEditorLinter();
+                    } else this.state.enableEditorLinter();
+
+		    this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
+                });
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {
