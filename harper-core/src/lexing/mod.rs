@@ -9,7 +9,7 @@ use url::lex_url;
 use self::email_address::lex_email_address;
 use crate::char_ext::CharExt;
 use crate::punctuation::{Punctuation, Quote};
-use crate::{Number, TokenKind};
+use crate::{Number, Span, Token, TokenKind};
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct FoundToken {
@@ -17,6 +17,25 @@ pub struct FoundToken {
     pub next_index: usize,
     /// Token lexed
     pub token: TokenKind,
+}
+
+pub fn lex_with(source: &[char], lex_fn: fn(&[char]) -> FoundToken) -> Vec<Token> {
+    let mut cursor = 0;
+    let mut tokens = Vec::new();
+
+    loop {
+        if cursor >= source.len() {
+            return tokens;
+        }
+
+        let FoundToken { token, next_index } = lex_fn(&source[cursor..]);
+
+        tokens.push(Token {
+            span: Span::new(cursor, cursor + next_index),
+            kind: token,
+        });
+        cursor += next_index;
+    }
 }
 
 pub fn lex_weir_token(source: &[char]) -> FoundToken {
