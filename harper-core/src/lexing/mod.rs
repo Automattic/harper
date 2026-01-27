@@ -19,6 +19,10 @@ pub struct FoundToken {
     pub token: TokenKind,
 }
 
+/// Lex `source` with the provided `lex_fn`.
+///
+/// `lex_fn` should be a function that takes a subslice of the source, and returns the first found
+/// token.
 pub fn lex_with(source: &[char], lex_fn: fn(&[char]) -> FoundToken) -> Vec<Token> {
     let mut cursor = 0;
     let mut tokens = Vec::new();
