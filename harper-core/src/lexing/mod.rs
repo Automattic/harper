@@ -20,7 +20,7 @@ pub struct FoundToken {
 }
 
 pub fn lex_weir_token(source: &[char]) -> FoundToken {
-    let lexers = [
+    [
         lex_punctuation,
         lex_tabs,
         lex_spaces,
@@ -33,19 +33,14 @@ pub fn lex_weir_token(source: &[char]) -> FoundToken {
         lex_email_address,
         lex_hostname_token,
         lex_word,
-    ];
-
-    for lexer in lexers {
-        if let Some(f) = lexer(source) {
-            return f;
-        }
-    }
-
-    lex_catch()
+    ]
+    .into_iter()
+    .find_map(|lexer| lexer(source))
+    .unwrap_or_else(lex_catch)
 }
 
 pub fn lex_english_token(source: &[char]) -> FoundToken {
-    let lexers = [
+    [
         lex_regexish,
         lex_punctuation,
         lex_tabs,
@@ -59,15 +54,10 @@ pub fn lex_english_token(source: &[char]) -> FoundToken {
         lex_email_address,
         lex_hostname_token,
         lex_word,
-    ];
-
-    for lexer in lexers {
-        if let Some(f) = lexer(source) {
-            return f;
-        }
-    }
-
-    lex_catch()
+    ]
+    .into_iter()
+    .find_map(|lexer| lexer(source))
+    .unwrap_or_else(lex_catch)
 }
 
 fn lex_word(source: &[char]) -> Option<FoundToken> {
