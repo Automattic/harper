@@ -533,6 +533,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests using `nervous wreck` when referring to a person's emotional state.",
             LintKind::Eggcorn
         ),
+        "NotOnly" => (
+            &[
+                (&["no only are"], &["not only are"]),
+                (&["no only is"], &["not only is"]),
+                (&["no only was"], &["not only was"]),
+                (&["no only were"], &["not only were"]),
+            ],
+            "Use `not only` instead of `no only` in this expression.",
+            "Corrects `no only` to `not only` before forms of `to be`.",
+            LintKind::Grammar
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),

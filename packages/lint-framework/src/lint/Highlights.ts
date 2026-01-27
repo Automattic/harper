@@ -1,4 +1,3 @@
-import Bowser from 'bowser';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
@@ -300,7 +299,7 @@ function isContainingBlock(el: Element): boolean {
 	return false;
 }
 
-export function supportsCustomHighlights(ua = navigator.userAgent) {
+export function supportsCustomHighlights() {
 	const root = globalThis.document?.documentElement;
 	const disableFlag =
 		root?.getAttribute?.('data-harper-disable-css-highlights') === 'true' ||
@@ -312,9 +311,6 @@ export function supportsCustomHighlights(ua = navigator.userAgent) {
 	if (isAutomated) {
 		return false;
 	}
-	const parser = Bowser.getParser(ua);
-	const isFirefox = parser.getBrowserName(true) === 'firefox';
-	if (isFirefox) return false;
 	if (!('CSS' in window) || typeof CSS.supports !== 'function') return false;
 	const supportsSelector = CSS.supports('selector(::highlight(__x))');
 	const reg = CSS?.highlights as any;
