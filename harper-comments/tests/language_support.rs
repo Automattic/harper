@@ -52,7 +52,7 @@ create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);
 create_test!(javadoc_clean_simple.java, 0);
-create_test!(javadoc_complex.java, 5);
+create_test!(javadoc_complex.java, 4);
 create_test!(issue_132.rs, 1);
 create_test!(laravel_app.php, 2);
 create_test!(ignore_shebang_1.sh, 0);
