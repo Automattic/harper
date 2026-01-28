@@ -1,16 +1,13 @@
-use std::num::NonZero;
-
-use lru::LruCache;
-use smallvec::ToSmallVec;
-
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::languages::Language;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{
     CharString, CharStringExt, DialectFlags, DialectsEnum, EnglishDialect, TokenStringExt,
 };
+use lru::LruCache;
+use smallvec::ToSmallVec;
+use std::num::NonZero;
 
 pub struct SpellCheck<T>
 where
@@ -30,16 +27,6 @@ impl<T: Dictionary> SpellCheck<T> {
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             // language: Language::English(dialect),
             dialect: DialectsEnum::English(dialect),
-        }
-    }
-
-    pub fn new_with_language(dictionary: T, language: Language) -> Self {
-        let dialect: DialectsEnum = language.into();
-        Self {
-            dictionary,
-            suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
-            // language,
-            dialect,
         }
     }
 
@@ -595,31 +582,6 @@ mod tests {
             ),
             "'fill' is supposed to be 'fill'",
             LanguageFamily::English,
-        );
-    }
-}
-
-#[cfg(test)]
-mod tests_portuguese {
-    use super::SpellCheck;
-    use crate::PortugueseDialect;
-    use crate::languages::{Language, LanguageFamily};
-    use crate::linting::english::tests::assert_suggestion_result;
-    use crate::spell::FstDictionary;
-
-    // Capitalization tests
-
-    #[test]
-    fn brasil_capitalized() {
-        let language = Language::Portuguese(PortugueseDialect::default());
-        assert_suggestion_result(
-            "The word brasil should be capitalized.",
-            SpellCheck::new_with_language(
-                FstDictionary::curated(LanguageFamily::Portuguese),
-                language,
-            ),
-            "The word Brasil should be capitalized.",
-            LanguageFamily::Portuguese,
         );
     }
 }
