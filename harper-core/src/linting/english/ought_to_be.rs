@@ -2,7 +2,7 @@ use crate::TokenKind;
 use crate::expr::{AnchorStart, Expr, ExprMap, FixedPhrase, SequenceExpr};
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 /// Detects the eggcorn `out to be` when the intended phrase is `ought to be`.
@@ -91,22 +91,37 @@ impl ExprLinter for OughtToBe {
 #[cfg(test)]
 mod tests {
     use super::OughtToBe;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     // Flagged examples
     #[test]
     fn flags_you_out_to_be_able_to_see() {
-        assert_suggestion_result("you out to be able to see", OughtToBe::default(), "you ought to be able to see", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "you out to be able to see",
+            OughtToBe::default(),
+            "you ought to be able to see",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_as_it_out_to_be() {
-        assert_suggestion_result("as it out to be", OughtToBe::default(), "as it ought to be", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "as it out to be",
+            OughtToBe::default(),
+            "as it ought to be",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_then_it_out_to_be() {
-        assert_suggestion_result("then it out to be", OughtToBe::default(), "then it ought to be", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "then it out to be",
+            OughtToBe::default(),
+            "then it ought to be",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Legit phrasal-verb cases that should be ignored

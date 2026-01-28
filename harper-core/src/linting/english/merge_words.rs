@@ -93,7 +93,7 @@ impl Linter for MergeWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::MergeWords;
 
@@ -122,7 +122,12 @@ mod tests {
 
     #[test]
     fn that_is_contraction() {
-        assert_suggestion_result("That s", MergeWords::default(), "That's", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That s",
+            MergeWords::default(),
+            "That's",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

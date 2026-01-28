@@ -133,114 +133,241 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
 }
 
 pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
-    lint_group_from_json(include_str!("../../proper_noun_rules.json"), dictionary)
+    lint_group_from_json(include_str!("../../../proper_noun_rules.json"), dictionary)
 }
 
 #[cfg(test)]
 mod tests {
     use super::lint_group;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     #[test]
     fn americas_lowercase() {
-        assert_suggestion_result("south america", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "South America", crate::languages::LanguageFamily::English);
-        assert_suggestion_result("north america", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "North America", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "south america",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "South America",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "north america",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "North America",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn americas_uppercase() {
-        assert_suggestion_result("SOUTH AMERICA", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "South America", crate::languages::LanguageFamily::English);
-        assert_suggestion_result("NORTH AMERICA", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "North America", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "SOUTH AMERICA",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "South America",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "NORTH AMERICA",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "North America",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn americas_allow_correct() {
-        assert_lint_count("South America", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), 0);
-        assert_lint_count("North America", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), 0);
+        assert_lint_count(
+            "South America",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            0,
+        );
+        assert_lint_count(
+            "North America",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            0,
+        );
     }
 
     #[test]
     fn issue_798() {
-        assert_suggestion_result("The United states is a big country.", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "The United States is a big country.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The United states is a big country.",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "The United States is a big country.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn united_nations_uppercase() {
-        assert_suggestion_result("UNITED NATIONS", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "United Nations", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "UNITED NATIONS",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "United Nations",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn united_arab_emirates_lowercase() {
-        assert_suggestion_result("UNITED ARAB EMIRATES", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "United Arab Emirates", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "UNITED ARAB EMIRATES",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "United Arab Emirates",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn united_nations_allow_correct() {
-        assert_lint_count("United Nations", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), 0);
+        assert_lint_count(
+            "United Nations",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            0,
+        );
     }
 
     #[test]
     fn meta_allow_correct() {
-        assert_lint_count("Meta Quest", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), 0);
+        assert_lint_count(
+            "Meta Quest",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            0,
+        );
     }
 
     #[test]
     fn microsoft_lowercase() {
-        assert_suggestion_result("microsoft visual studio", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "Microsoft Visual Studio", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "microsoft visual studio",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "Microsoft Visual Studio",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn microsoft_first_word_is_correct() {
-        assert_suggestion_result("Microsoft visual studio", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "Microsoft Visual Studio", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Microsoft visual studio",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "Microsoft Visual Studio",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_atlantic_ocean_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("atlantic ocean", lint_group(dictionary), "Atlantic Ocean", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "atlantic ocean",
+            lint_group(dictionary),
+            "Atlantic Ocean",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_pacific_ocean_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("pacific ocean", lint_group(dictionary), "Pacific Ocean", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "pacific ocean",
+            lint_group(dictionary),
+            "Pacific Ocean",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_indian_ocean_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("indian ocean", lint_group(dictionary), "Indian Ocean", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "indian ocean",
+            lint_group(dictionary),
+            "Indian Ocean",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_southern_ocean_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("southern ocean", lint_group(dictionary), "Southern Ocean", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "southern ocean",
+            lint_group(dictionary),
+            "Southern Ocean",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_arctic_ocean_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("arctic ocean", lint_group(dictionary), "Arctic Ocean", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "arctic ocean",
+            lint_group(dictionary),
+            "Arctic Ocean",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_mediterranean_sea_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("mediterranean sea", lint_group(dictionary), "Mediterranean Sea", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "mediterranean sea",
+            lint_group(dictionary),
+            "Mediterranean Sea",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_caribbean_sea_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("caribbean sea", lint_group(dictionary), "Caribbean Sea", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "caribbean sea",
+            lint_group(dictionary),
+            "Caribbean Sea",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_south_china_sea_lowercase() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_suggestion_result("south china sea", lint_group(dictionary), "South China Sea", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "south china sea",
+            lint_group(dictionary),
+            "South China Sea",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -275,11 +402,25 @@ mod tests {
 
     #[test]
     fn day_one_in_sentence() {
-        assert_suggestion_result("I love day one. It is the best journaling app.", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "I love Day One. It is the best journaling app.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I love day one. It is the best journaling app.",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "I love Day One. It is the best journaling app.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn gilded_age_in_sentence() {
-        assert_suggestion_result("Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.", lint_group(FstDictionary::curated(crate::languages::LanguageFamily::English)), "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
+            lint_group(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

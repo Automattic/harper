@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -53,15 +53,25 @@ impl ExprLinter for FillerWords {
 #[cfg(test)]
 mod tests {
     use super::FillerWords;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     #[test]
     fn remove_uh() {
-        assert_suggestion_result("Let's remove all the uh filler words.", FillerWords::default(), "Let's remove all the filler words.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Let's remove all the uh filler words.",
+            FillerWords::default(),
+            "Let's remove all the filler words.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn remove_um_st_start() {
-        assert_suggestion_result("Um but I'll just add some context for this.", FillerWords::default(), "but I'll just add some context for this.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Um but I'll just add some context for this.",
+            FillerWords::default(),
+            "but I'll just add some context for this.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

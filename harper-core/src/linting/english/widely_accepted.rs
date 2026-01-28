@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{Word, WordSet},
 };
 
@@ -49,16 +49,26 @@ impl ExprLinter for WidelyAccepted {
 #[cfg(test)]
 mod tests {
     use super::WidelyAccepted;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn wide_accepted_lowercase() {
-        assert_suggestion_result("It is wide accepted that exercise improves health.", WidelyAccepted::default(), "It is widely accepted that exercise improves health.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It is wide accepted that exercise improves health.",
+            WidelyAccepted::default(),
+            "It is widely accepted that exercise improves health.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn wide_acceptable_mixed_case() {
-        assert_suggestion_result("Wide acceptable standards are used in the design.", WidelyAccepted::default(), "Widely acceptable standards are used in the design.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Wide acceptable standards are used in the design.",
+            WidelyAccepted::default(),
+            "Widely acceptable standards are used in the design.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -81,11 +91,21 @@ mod tests {
 
     #[test]
     fn wide_accepted_in_long_text() {
-        assert_suggestion_result("This is an example paragraph, and it is wide accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.", WidelyAccepted::default(), "This is an example paragraph, and it is widely accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is an example paragraph, and it is wide accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.",
+            WidelyAccepted::default(),
+            "This is an example paragraph, and it is widely accepted that these changes will improve performance. In fact, widely used frameworks have already adopted them.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn wide_twice_in_one_sentence() {
-        assert_suggestion_result("It is wide accepted and wide used by many professionals.", WidelyAccepted::default(), "It is widely accepted and widely used by many professionals.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It is wide accepted and wide used by many professionals.",
+            WidelyAccepted::default(),
+            "It is widely accepted and widely used by many professionals.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -1,5 +1,5 @@
 use crate::expr::{Expr, FixedPhrase, LongestMatchOf};
-use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, LintKind, Suggestion};
 use crate::{Lint, Token, TokenStringExt};
 
 type PlaceNameMappings<'a> = &'a [((i16, &'a str), &'a [&'a str])];
@@ -136,49 +136,89 @@ impl<'a> ExprLinter for UpdatePlaceNames<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         tests::{assert_lint_count, assert_suggestion_result},
         update_place_names::UpdatePlaceNames,
     };
 
     #[test]
     fn update_single_word_name_alone() {
-        assert_suggestion_result("Bombay", UpdatePlaceNames::default(), "Mumbai", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Bombay",
+            UpdatePlaceNames::default(),
+            "Mumbai",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_single_word_name_after_space() {
-        assert_suggestion_result(" Bombay", UpdatePlaceNames::default(), " Mumbai", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            " Bombay",
+            UpdatePlaceNames::default(),
+            " Mumbai",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_single_word_name_after_punctuation() {
-        assert_suggestion_result(";Bombay", UpdatePlaceNames::default(), ";Mumbai", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            ";Bombay",
+            UpdatePlaceNames::default(),
+            ";Mumbai",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_to_single_word_alone() {
-        assert_suggestion_result("Ayers Rock", UpdatePlaceNames::default(), "Uluru", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ayers Rock",
+            UpdatePlaceNames::default(),
+            "Uluru",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_to_single_word_after_space() {
-        assert_suggestion_result(" Ayers Rock", UpdatePlaceNames::default(), " Uluru", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            " Ayers Rock",
+            UpdatePlaceNames::default(),
+            " Uluru",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_to_single_word_after_punctuation() {
-        assert_suggestion_result(";Ayers Rock", UpdatePlaceNames::default(), ";Uluru", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            ";Ayers Rock",
+            UpdatePlaceNames::default(),
+            ";Uluru",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_single_word_name_to_multi_word_name_alone() {
-        assert_suggestion_result("Saigon", UpdatePlaceNames::default(), "Ho Chi Minh City", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Saigon",
+            UpdatePlaceNames::default(),
+            "Ho Chi Minh City",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_to_two_word_name_alone() {
-        assert_suggestion_result("The Olgas", UpdatePlaceNames::default(), "Kata Tjuta", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Olgas",
+            UpdatePlaceNames::default(),
+            "Kata Tjuta",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -207,32 +247,62 @@ mod tests {
 
     #[test]
     fn update_two_word_name_to_single_word_at_end_of_sentence() {
-        assert_suggestion_result("It's dangerous to climb Ayers Rock.", UpdatePlaceNames::default(), "It's dangerous to climb Uluru.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's dangerous to climb Ayers Rock.",
+            UpdatePlaceNames::default(),
+            "It's dangerous to climb Uluru.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_to_single_word_at_start_of_sentence() {
-        assert_suggestion_result("Ayers Rock is dangerous to climb.", UpdatePlaceNames::default(), "Uluru is dangerous to climb.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ayers Rock is dangerous to climb.",
+            UpdatePlaceNames::default(),
+            "Uluru is dangerous to climb.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_first_old_name() {
-        assert_suggestion_result("Leningrad", UpdatePlaceNames::default(), "Saint Petersburg", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Leningrad",
+            UpdatePlaceNames::default(),
+            "Saint Petersburg",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_second_old_name() {
-        assert_suggestion_result("Have you ever been to Petrograd before?", UpdatePlaceNames::default(), "Have you ever been to Saint Petersburg before?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Have you ever been to Petrograd before?",
+            UpdatePlaceNames::default(),
+            "Have you ever been to Saint Petersburg before?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn update_two_word_name_with_two_word_name() {
-        assert_suggestion_result("Upper Volta is in Africa.", UpdatePlaceNames::default(), "Burkina Faso is in Africa.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Upper Volta is in Africa.",
+            UpdatePlaceNames::default(),
+            "Burkina Faso is in Africa.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     // NOTE: Can't handle place names with obligatory or compulsory "The" perfectly.
     #[test]
     fn update_to_name_with_punctuation() {
-        assert_suggestion_result("I've never been to Ivory Coast.", UpdatePlaceNames::default(), "I've never been to Côte d'Ivoire.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "I've never been to Ivory Coast.",
+            UpdatePlaceNames::default(),
+            "I've never been to Côte d'Ivoire.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

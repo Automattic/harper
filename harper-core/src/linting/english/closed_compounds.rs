@@ -1,4 +1,4 @@
-use crate::linting::LintGroup;
+use crate::linting::english::LintGroup;
 
 use super::MapPhraseLinter;
 
@@ -80,7 +80,7 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::lint_group;
 

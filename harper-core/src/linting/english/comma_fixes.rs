@@ -118,7 +118,7 @@ impl Linter for CommaFixes {
 #[cfg(test)]
 mod tests {
     use super::CommaFixes;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn allows_english_comma_atomic() {
@@ -137,12 +137,22 @@ mod tests {
 
     #[test]
     fn corrects_fullwidth_comma_real_world() {
-        assert_suggestion_result("higher 2 bits of the number of nodes， whether abandoned or not decided by .index section", CommaFixes, "higher 2 bits of the number of nodes, whether abandoned or not decided by .index section", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "higher 2 bits of the number of nodes， whether abandoned or not decided by .index section",
+            CommaFixes,
+            "higher 2 bits of the number of nodes, whether abandoned or not decided by .index section",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ideographic_comma_real_world() {
-        assert_suggestion_result("cout、endl、string", CommaFixes, "cout, endl, string", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "cout、endl、string",
+            CommaFixes,
+            "cout, endl, string",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -167,32 +177,62 @@ mod tests {
 
     #[test]
     fn corrects_comma_between_words_with_no_space() {
-        assert_suggestion_result("foo,bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo,bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_asian_comma_between_words_with_no_space() {
-        assert_suggestion_result("foo，bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo，bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_space_on_wrong_side_of_comma_between_words() {
-        assert_suggestion_result("foo ,bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo ,bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_comma_on_wrong_side_of_asian_comma_between_words() {
-        assert_suggestion_result("foo ，bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo ，bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_comma_between_words_with_space_on_both_sides() {
-        assert_suggestion_result("foo , bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo , bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_asian_comma_between_words_with_space_on_both_sides() {
-        assert_suggestion_result("foo 、 bar", CommaFixes, "foo, bar", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "foo 、 bar",
+            CommaFixes,
+            "foo, bar",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]

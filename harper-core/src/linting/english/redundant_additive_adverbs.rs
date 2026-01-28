@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -114,7 +114,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         RedundantAdditiveAdverbs,
         tests::{assert_lint_count, assert_top3_suggestion_result},
     };
@@ -123,12 +123,22 @@ mod tests {
 
     #[test]
     fn flag_as_well_too() {
-        assert_top3_suggestion_result("Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well too, specifically.", RedundantAdditiveAdverbs::default(), "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well, specifically.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well too, specifically.",
+            RedundantAdditiveAdverbs::default(),
+            "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well, specifically.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_too_also() {
-        assert_top3_suggestion_result("The #1 uptime service with many servers and is easy to setup. It is free too also.", RedundantAdditiveAdverbs::default(), "The #1 uptime service with many servers and is easy to setup. It is free also.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "The #1 uptime service with many servers and is easy to setup. It is free too also.",
+            RedundantAdditiveAdverbs::default(),
+            "The #1 uptime service with many servers and is easy to setup. It is free also.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -160,6 +170,11 @@ mod tests {
 
     #[test]
     fn flag_too_as_well() {
-        assert_top3_suggestion_result("Module name itself was changed too as well.", RedundantAdditiveAdverbs::default(), "Module name itself was changed as well.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Module name itself was changed too as well.",
+            RedundantAdditiveAdverbs::default(),
+            "Module name itself was changed as well.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

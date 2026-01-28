@@ -98,7 +98,7 @@ impl ExprLinter for AmountsFor {
 #[cfg(test)]
 mod tests {
     use super::AmountsFor;
-    use crate::linting::tests::assert_top3_suggestion_result;
+    use crate::linting::english::tests::assert_top3_suggestion_result;
 
     #[test]
     fn corrects_that_amounts_for_to_amounts_to_entire_value() {

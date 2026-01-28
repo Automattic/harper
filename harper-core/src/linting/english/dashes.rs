@@ -64,19 +64,29 @@ impl ExprLinter for Dashes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_suggestion_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_suggestion_count, assert_suggestion_result};
 
     use super::Dashes;
     use super::{EM_DASH, EN_DASH};
 
     #[test]
     fn catches_en_dash() {
-        assert_suggestion_result("pre--Industrial Revolution", Dashes::default(), &format!("pre{EN_DASH}Industrial Revolution"), crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "pre--Industrial Revolution",
+            Dashes::default(),
+            &format!("pre{EN_DASH}Industrial Revolution"),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_em_dash() {
-        assert_suggestion_result("'There is no box' --- Scott", Dashes::default(), &format!("'There is no box' {EM_DASH} Scott"), crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "'There is no box' --- Scott",
+            Dashes::default(),
+            &format!("'There is no box' {EM_DASH} Scott"),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

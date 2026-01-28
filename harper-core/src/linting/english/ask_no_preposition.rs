@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Span, Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -63,7 +63,7 @@ impl ExprLinter for AskNoPreposition {
 #[cfg(test)]
 mod tests {
     use super::AskNoPreposition;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flags_ask() {

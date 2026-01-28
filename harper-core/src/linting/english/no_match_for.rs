@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -69,46 +69,86 @@ impl ExprLinter for NoMatchFor {
 #[cfg(test)]
 pub mod tests {
     use super::NoMatchFor;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_against() {
-        assert_suggestion_result("Erlang was no match against my sweeping gale.", NoMatchFor::default(), "Erlang was no match for my sweeping gale.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Erlang was no match against my sweeping gale.",
+            NoMatchFor::default(),
+            "Erlang was no match for my sweeping gale.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_to() {
-        assert_suggestion_result("My BW5 was no match to his BW7.", NoMatchFor::default(), "My BW5 was no match for his BW7.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My BW5 was no match to his BW7.",
+            NoMatchFor::default(),
+            "My BW5 was no match for his BW7.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_of() {
-        assert_suggestion_result("This Attack Plane Was No Match Of Me So I Did This To Him", NoMatchFor::default(), "This Attack Plane Was No Match For Me So I Did This To Him", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This Attack Plane Was No Match Of Me So I Did This To Him",
+            NoMatchFor::default(),
+            "This Attack Plane Was No Match For Me So I Did This To Him",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_its_to() {
-        assert_suggestion_result("cuz AI is bull crap and its no match to human voice", NoMatchFor::default(), "cuz AI is bull crap and its no match for human voice", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "cuz AI is bull crap and its no match to human voice",
+            NoMatchFor::default(),
+            "cuz AI is bull crap and its no match for human voice",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_im_to() {
-        assert_suggestion_result("Im no match to you but like let me no what u think", NoMatchFor::default(), "Im no match for you but like let me no what u think", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Im no match to you but like let me no what u think",
+            NoMatchFor::default(),
+            "Im no match for you but like let me no what u think",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn theyre_to() {
-        assert_suggestion_result("Theyre no match to late 60s early 70s sansuis.", NoMatchFor::default(), "Theyre no match for late 60s early 70s sansuis.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Theyre no match to late 60s early 70s sansuis.",
+            NoMatchFor::default(),
+            "Theyre no match for late 60s early 70s sansuis.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_hes_to() {
-        assert_suggestion_result("Even ouki on drinks with renpa said hes no match to him.", NoMatchFor::default(), "Even ouki on drinks with renpa said hes no match for him.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Even ouki on drinks with renpa said hes no match to him.",
+            NoMatchFor::default(),
+            "Even ouki on drinks with renpa said hes no match for him.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_shes_to() {
-        assert_suggestion_result("Izma tries to struggle but she's no match to your superior strength", NoMatchFor::default(), "Izma tries to struggle but she's no match for your superior strength", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Izma tries to struggle but she's no match to your superior strength",
+            NoMatchFor::default(),
+            "Izma tries to struggle but she's no match for your superior strength",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

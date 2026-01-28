@@ -35,7 +35,7 @@ pub mod tests {
     use super::DurationExpr;
     use crate::Document;
     use crate::expr::ExprExt;
-    use crate::linting::tests::SpanVecExt;
+    use crate::linting::english::tests::SpanVecExt;
 
     #[test]
     fn detect_10_days() {

@@ -1,6 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{LintKind, Suggestion};
+use crate::linting::english::{LintKind, Suggestion};
 
 use super::{ExprLinter, Lint};
 
@@ -248,7 +248,7 @@ impl ExprLinter for AvoidCurses {
 #[cfg(test)]
 mod tests {
     use super::AvoidCurses;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
     fn detects_shit() {
@@ -261,31 +261,61 @@ mod tests {
 
     #[test]
     fn fix_shit() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "crap", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "shit",
+            AvoidCurses::default(),
+            "crap",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_shit_titlecase() {
-        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Crap", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "Shit",
+            AvoidCurses::default(),
+            "Crap",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_shit_allcaps() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "CRAP", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "SHIT",
+            AvoidCurses::default(),
+            "CRAP",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_f_word_to_all_asterisks() {
-        assert_top3_suggestion_result("fuck those fucking fuckers", AvoidCurses::default(), "**** those ****ing ****ers", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "fuck those fucking fuckers",
+            AvoidCurses::default(),
+            "**** those ****ing ****ers",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_shit_with_single_asterisk() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "sh*t", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "shit",
+            AvoidCurses::default(),
+            "sh*t",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_shite_all_caps_with_single_asterisk() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "SH*T", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "SHIT",
+            AvoidCurses::default(),
+            "SH*T",
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

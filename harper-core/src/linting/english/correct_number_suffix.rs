@@ -44,7 +44,7 @@ impl Linter for CorrectNumberSuffix {
 #[cfg(test)]
 mod tests {
     use super::CorrectNumberSuffix;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::english::tests::assert_lint_count;
 
     #[test]
     fn passes_correct_cases() {

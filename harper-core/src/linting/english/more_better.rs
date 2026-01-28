@@ -1,5 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
@@ -71,15 +71,25 @@ impl ExprLinter for MoreBetter {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{MoreBetter, tests::assert_suggestion_result};
+    use crate::linting::english::{MoreBetter, tests::assert_suggestion_result};
 
     #[test]
     fn flag_most_biggest() {
-        assert_suggestion_result("Most biggest", MoreBetter::default(), "Biggest", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Most biggest",
+            MoreBetter::default(),
+            "Biggest",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_more_better_and_more_better() {
-        assert_suggestion_result("More bigger is more better", MoreBetter::default(), "Bigger is better", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "More bigger is more better",
+            MoreBetter::default(),
+            "Bigger is better",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

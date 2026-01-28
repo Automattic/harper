@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::expr::WordExprGroup;
-use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::Word;
 use crate::{Lint, Lrc, Token};
 
@@ -83,18 +83,28 @@ impl Default for UseGenitive {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::UseGenitive;
 
     #[test]
     fn catches_adjective_noun() {
-        assert_suggestion_result("What are there big problems?", UseGenitive::default(), "What are their big problems?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "What are there big problems?",
+            UseGenitive::default(),
+            "What are their big problems?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn catches_just_noun() {
-        assert_suggestion_result("What are there problems?", UseGenitive::default(), "What are their problems?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "What are there problems?",
+            UseGenitive::default(),
+            "What are their problems?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -123,7 +133,12 @@ mod tests {
     #[test]
     #[should_panic] // currently fails, because "received" is ambiguous between verb and adjective
     fn catches_they_are() {
-        assert_suggestion_result("The students received they're test results today.", UseGenitive::default(), "The students received their test results today.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "The students received they're test results today.",
+            UseGenitive::default(),
+            "The students received their test results today.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]

@@ -49,12 +49,17 @@ impl ExprLinter for Hereby {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::Hereby;
 
     #[test]
     fn declare() {
-        assert_suggestion_result("I here by declare this state to be free.", Hereby::default(), "I hereby declare this state to be free.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I here by declare this state to be free.",
+            Hereby::default(),
+            "I hereby declare this state to be free.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

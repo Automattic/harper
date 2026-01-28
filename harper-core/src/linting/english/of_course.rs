@@ -7,7 +7,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -82,16 +82,26 @@ impl ExprLinter for OfCourse {
 #[cfg(test)]
 mod tests {
     use super::OfCourse;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flags_of_curse() {
-        assert_suggestion_result("Yes, of curse!", OfCourse::default(), "Yes, of course!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Yes, of curse!",
+            OfCourse::default(),
+            "Yes, of course!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_of_corse() {
-        assert_suggestion_result("Well, of corse we can.", OfCourse::default(), "Well, of course we can.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Well, of corse we can.",
+            OfCourse::default(),
+            "Well, of course we can.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

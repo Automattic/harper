@@ -1,5 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind};
+use crate::linting::english::{ExprLinter, Lint, LintKind};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
@@ -53,7 +53,7 @@ impl ExprLinter for AllowTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         AllowTo,
         tests::{assert_lint_count, assert_no_lints},
     };

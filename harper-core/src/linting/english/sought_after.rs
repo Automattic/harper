@@ -61,13 +61,18 @@ impl ExprLinter for SoughtAfter {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::SoughtAfter;
 
     #[test]
     fn fix_abit_sort_after() {
-        assert_suggestion_result("Blue mountain buffalo no damage abit sort after,$120 ono.", SoughtAfter::default(), "Blue mountain buffalo no damage abit sought after,$120 ono.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Blue mountain buffalo no damage abit sort after,$120 ono.",
+            SoughtAfter::default(),
+            "Blue mountain buffalo no damage abit sought after,$120 ono.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -81,48 +86,93 @@ mod tests {
 
     #[test]
     fn fix_are_sort_after() {
-        assert_suggestion_result("Ux engineers are sort after, but it requires experience.", SoughtAfter::default(), "Ux engineers are sought after, but it requires experience.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Ux engineers are sort after, but it requires experience.",
+            SoughtAfter::default(),
+            "Ux engineers are sought after, but it requires experience.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_are_sort_after_hyphenated() {
-        assert_suggestion_result("optimistic people are sort-after for their life", SoughtAfter::default(), "optimistic people are sought-after for their life", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "optimistic people are sort-after for their life",
+            SoughtAfter::default(),
+            "optimistic people are sought-after for their life",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_bit_sort_after() {
-        assert_suggestion_result("It's the early enduro model getting a bit sort after now", SoughtAfter::default(), "It's the early enduro model getting a bit sought after now", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's the early enduro model getting a bit sort after now",
+            SoughtAfter::default(),
+            "It's the early enduro model getting a bit sought after now",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_extremely_sort_after() {
-        assert_suggestion_result("3 extremely sort after Pokémon trading cards.", SoughtAfter::default(), "3 extremely sought after Pokémon trading cards.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "3 extremely sort after Pokémon trading cards.",
+            SoughtAfter::default(),
+            "3 extremely sought after Pokémon trading cards.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_fairly_sort_after() {
-        assert_suggestion_result("The ability for editors to add tables to pages is a fairly sort after piece of functionality", SoughtAfter::default(), "The ability for editors to add tables to pages is a fairly sought after piece of functionality", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The ability for editors to add tables to pages is a fairly sort after piece of functionality",
+            SoughtAfter::default(),
+            "The ability for editors to add tables to pages is a fairly sought after piece of functionality",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_highly_sort_after() {
-        assert_suggestion_result("Wrestlemania 2K adds three highly sort after features", SoughtAfter::default(), "Wrestlemania 2K adds three highly sought after features", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Wrestlemania 2K adds three highly sort after features",
+            SoughtAfter::default(),
+            "Wrestlemania 2K adds three highly sought after features",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_hugely_sort_after() {
-        assert_suggestion_result("Currently the hugely sort after and most highly prized variety is the electric neon blue Paraiba Tourmaline.", SoughtAfter::default(), "Currently the hugely sought after and most highly prized variety is the electric neon blue Paraiba Tourmaline.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Currently the hugely sort after and most highly prized variety is the electric neon blue Paraiba Tourmaline.",
+            SoughtAfter::default(),
+            "Currently the hugely sought after and most highly prized variety is the electric neon blue Paraiba Tourmaline.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_incredibly_sort_after() {
-        assert_suggestion_result("This is no surprise as it's been an incredibly sort after and top choice amongst outdoorists from all walks of life.", SoughtAfter::default(), "This is no surprise as it's been an incredibly sought after and top choice amongst outdoorists from all walks of life.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is no surprise as it's been an incredibly sort after and top choice amongst outdoorists from all walks of life.",
+            SoughtAfter::default(),
+            "This is no surprise as it's been an incredibly sought after and top choice amongst outdoorists from all walks of life.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "'Is' is a bit more subtle to handle correctly"]
     fn fix_is_sort_after() {
-        assert_suggestion_result("White bait is sort after by many fisherman because they  are a delicacy.", SoughtAfter::default(), "White bait is sought after by many fisherman because they  are a delicacy.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "White bait is sort after by many fisherman because they  are a delicacy.",
+            SoughtAfter::default(),
+            "White bait is sought after by many fisherman because they  are a delicacy.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -136,7 +186,12 @@ mod tests {
 
     #[test]
     fn fix_kinda_sort_after() {
-        assert_suggestion_result("If so is the US bond still kinda sort after as it's tied to USD (that's how I took OPs post).", SoughtAfter::default(), "If so is the US bond still kinda sought after as it's tied to USD (that's how I took OPs post).", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If so is the US bond still kinda sort after as it's tied to USD (that's how I took OPs post).",
+            SoughtAfter::default(),
+            "If so is the US bond still kinda sought after as it's tied to USD (that's how I took OPs post).",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -150,17 +205,32 @@ mod tests {
 
     #[test]
     fn fix_most_sort_after() {
-        assert_suggestion_result("This has got to be one of the most sort after solutions.", SoughtAfter::default(), "This has got to be one of the most sought after solutions.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This has got to be one of the most sort after solutions.",
+            SoughtAfter::default(),
+            "This has got to be one of the most sought after solutions.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_mostly_sort_after() {
-        assert_suggestion_result("What color and size is mostly sort after In ladies footwear", SoughtAfter::default(), "What color and size is mostly sought after In ladies footwear", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "What color and size is mostly sort after In ladies footwear",
+            SoughtAfter::default(),
+            "What color and size is mostly sought after In ladies footwear",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_much_sort_after() {
-        assert_suggestion_result("Sending audio files is a much sort after feature in chat apps.", SoughtAfter::default(), "Sending audio files is a much sought after feature in chat apps.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Sending audio files is a much sort after feature in chat apps.",
+            SoughtAfter::default(),
+            "Sending audio files is a much sought after feature in chat apps.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -175,23 +245,43 @@ mod tests {
     // This part is occasionally sort after and if they were easily available I reckon you'd sell a few easily enough.
     #[test]
     fn fix_occasionally_sort_after() {
-        assert_suggestion_result("This part is occasionally sort after and if they were easily available I reckon you'd sell a few easily enough.", SoughtAfter::default(), "This part is occasionally sought after and if they were easily available I reckon you'd sell a few easily enough.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This part is occasionally sort after and if they were easily available I reckon you'd sell a few easily enough.",
+            SoughtAfter::default(),
+            "This part is occasionally sought after and if they were easily available I reckon you'd sell a few easily enough.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_of_sort_after() {
-        assert_suggestion_result("A couple of sort after casserole pots .", SoughtAfter::default(), "A couple of sought after casserole pots .", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "A couple of sort after casserole pots .",
+            SoughtAfter::default(),
+            "A couple of sought after casserole pots .",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_often_sort_after() {
-        assert_suggestion_result("North American countries (ok, there are only two) often sort after the total amount of medals.", SoughtAfter::default(), "North American countries (ok, there are only two) often sought after the total amount of medals.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "North American countries (ok, there are only two) often sort after the total amount of medals.",
+            SoughtAfter::default(),
+            "North American countries (ok, there are only two) often sought after the total amount of medals.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "'Perhaps' is a bit more subtle to handle correctly"]
     fn fix_perhaps_sort_after() {
-        assert_suggestion_result("Perhaps sort after guitar teachers could do a similar teaching tour to a few major cities", SoughtAfter::default(), "Perhaps sought after guitar teachers could do a similar teaching tour to a few major cities", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Perhaps sort after guitar teachers could do a similar teaching tour to a few major cities",
+            SoughtAfter::default(),
+            "Perhaps sought after guitar teachers could do a similar teaching tour to a few major cities",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -205,52 +295,102 @@ mod tests {
 
     #[test]
     fn flag_pretty_sort_after() {
-        assert_suggestion_result("But just like jin and V, he is also pretty sort after", SoughtAfter::default(), "But just like jin and V, he is also pretty sought after", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "But just like jin and V, he is also pretty sort after",
+            SoughtAfter::default(),
+            "But just like jin and V, he is also pretty sought after",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_quiet_sort_after_sic() {
-        assert_suggestion_result("MBA in Christ (deemed university) is quiet sort after in South India", SoughtAfter::default(), "MBA in Christ (deemed university) is quiet sought after in South India", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "MBA in Christ (deemed university) is quiet sort after in South India",
+            SoughtAfter::default(),
+            "MBA in Christ (deemed university) is quiet sought after in South India",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // The university that i studied my MBBS from offers the course as well and it is quite sort after for the above said course.
     #[test]
     fn fix_quite_sort_after() {
-        assert_suggestion_result("The university that i studied my MBBS from offers the course as well and it is quite sort after for the above said course.", SoughtAfter::default(), "The university that i studied my MBBS from offers the course as well and it is quite sought after for the above said course.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The university that i studied my MBBS from offers the course as well and it is quite sort after for the above said course.",
+            SoughtAfter::default(),
+            "The university that i studied my MBBS from offers the course as well and it is quite sought after for the above said course.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_rather_sort_after() {
-        assert_suggestion_result("In a bid to satisfy an innate inquisitive hunger for a rather sort after phenomenon that only a few could precisely speak", SoughtAfter::default(), "In a bid to satisfy an innate inquisitive hunger for a rather sought after phenomenon that only a few could precisely speak", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "In a bid to satisfy an innate inquisitive hunger for a rather sort after phenomenon that only a few could precisely speak",
+            SoughtAfter::default(),
+            "In a bid to satisfy an innate inquisitive hunger for a rather sought after phenomenon that only a few could precisely speak",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_really_sort_after() {
-        assert_suggestion_result("Creators - especially women in their 30s, 40s, 50s and 60s are really sort after.", SoughtAfter::default(), "Creators - especially women in their 30s, 40s, 50s and 60s are really sought after.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Creators - especially women in their 30s, 40s, 50s and 60s are really sort after.",
+            SoughtAfter::default(),
+            "Creators - especially women in their 30s, 40s, 50s and 60s are really sought after.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_sometimes_sort_after() {
-        assert_suggestion_result("the N15 1.6L gearbox is sometimes sort after for the micra", SoughtAfter::default(), "the N15 1.6L gearbox is sometimes sought after for the micra", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "the N15 1.6L gearbox is sometimes sort after for the micra",
+            SoughtAfter::default(),
+            "the N15 1.6L gearbox is sometimes sought after for the micra",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_somewhat_sort_after() {
-        assert_suggestion_result("I know tri res boots used to be somewhat sort after, but not sure now!", SoughtAfter::default(), "I know tri res boots used to be somewhat sought after, but not sure now!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I know tri res boots used to be somewhat sort after, but not sure now!",
+            SoughtAfter::default(),
+            "I know tri res boots used to be somewhat sought after, but not sure now!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_strongly_sort_after() {
-        assert_suggestion_result("This eventually leads to the growth that is so strongly sort after.", SoughtAfter::default(), "This eventually leads to the growth that is so strongly sought after.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This eventually leads to the growth that is so strongly sort after.",
+            SoughtAfter::default(),
+            "This eventually leads to the growth that is so strongly sought after.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_vastly_sort_after() {
-        assert_suggestion_result("Hardie stuff no longer vastly sort after as it was years ago , hasn't been for decades.", SoughtAfter::default(), "Hardie stuff no longer vastly sought after as it was years ago , hasn't been for decades.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Hardie stuff no longer vastly sort after as it was years ago , hasn't been for decades.",
+            SoughtAfter::default(),
+            "Hardie stuff no longer vastly sought after as it was years ago , hasn't been for decades.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_very_sort_after() {
-        assert_suggestion_result("I could imagine, this functionality very sort after.", SoughtAfter::default(), "I could imagine, this functionality very sought after.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I could imagine, this functionality very sort after.",
+            SoughtAfter::default(),
+            "I could imagine, this functionality very sought after.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

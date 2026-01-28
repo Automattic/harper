@@ -10,7 +10,7 @@ merge_linters!(HopHope => ToHop, ToHope => "Handles common errors involving `hop
 #[cfg(test)]
 mod tests {
     use super::HopHope;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_hop_to_hope() {

@@ -1,5 +1,5 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{Token, TokenStringExt};
 
 fn matches_hyphen(token: &Token, _source: &[char]) -> bool {
@@ -111,41 +111,76 @@ impl ExprLinter for ViceVersa {
 #[cfg(test)]
 mod tests {
     use super::ViceVersa;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_hyphenated() {
-        assert_suggestion_result("We swapped the arguments vice-versa this time.", ViceVersa::default(), "We swapped the arguments vice versa this time.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We swapped the arguments vice-versa this time.",
+            ViceVersa::default(),
+            "We swapped the arguments vice versa this time.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_leading_capitalization() {
-        assert_suggestion_result("Vice-Versa, the movie, was interesting.", ViceVersa::default(), "Vice versa, the movie, was interesting.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Vice-Versa, the movie, was interesting.",
+            ViceVersa::default(),
+            "Vice versa, the movie, was interesting.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_all_caps() {
-        assert_suggestion_result("They agreed VICE-VERSA on the clause.", ViceVersa::default(), "They agreed VICE VERSA on the clause.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They agreed VICE-VERSA on the clause.",
+            ViceVersa::default(),
+            "They agreed VICE VERSA on the clause.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_extra_a() {
-        assert_suggestion_result("The logic works vice-a-versa as well.", ViceVersa::default(), "The logic works vice versa as well.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The logic works vice-a-versa as well.",
+            ViceVersa::default(),
+            "The logic works vice versa as well.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_vise_variant() {
-        assert_suggestion_result("The rule applies vise-versa too.", ViceVersa::default(), "The rule applies vice versa too.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The rule applies vise-versa too.",
+            ViceVersa::default(),
+            "The rule applies vice versa too.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_vise_extra_a_variant() {
-        assert_suggestion_result("The rule applies Vise-A-Versa too.", ViceVersa::default(), "The rule applies Vice versa too.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The rule applies Vise-A-Versa too.",
+            ViceVersa::default(),
+            "The rule applies Vice versa too.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_trailing_suffix() {
-        assert_suggestion_result("That was a vice-versa-like transformation.", ViceVersa::default(), "That was a vice versa-like transformation.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That was a vice-versa-like transformation.",
+            ViceVersa::default(),
+            "That was a vice versa-like transformation.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

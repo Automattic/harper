@@ -88,7 +88,7 @@ impl Linter for RepeatedWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::super::tests::assert_lint_count;
     use super::RepeatedWords;
@@ -119,27 +119,52 @@ mod tests {
 
     #[test]
     fn issue_333() {
-        assert_suggestion_result("This is is a test", RepeatedWords::default(), "This is a test", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is is a test",
+            RepeatedWords::default(),
+            "This is a test",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn double_a() {
-        assert_suggestion_result("This is a a test", RepeatedWords::default(), "This is a test", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is a a test",
+            RepeatedWords::default(),
+            "This is a test",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn double_and() {
-        assert_suggestion_result("And and this is also a test", RepeatedWords::default(), "And this is also a test", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "And and this is also a test",
+            RepeatedWords::default(),
+            "And this is also a test",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn on_on_github() {
-        assert_suggestion_result("Take a look at the project on on GitHub.", RepeatedWords::default(), "Take a look at the project on GitHub.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Take a look at the project on on GitHub.",
+            RepeatedWords::default(),
+            "Take a look at the project on GitHub.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn as_as() {
-        assert_suggestion_result("he is as as hard as nails", RepeatedWords::default(), "he is as hard as nails", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "he is as as hard as nails",
+            RepeatedWords::default(),
+            "he is as hard as nails",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

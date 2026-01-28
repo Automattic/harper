@@ -46,17 +46,27 @@ impl ExprLinter for SomewhatSomething {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::SomewhatSomething;
 
     #[test]
     fn issue_414() {
-        assert_suggestion_result("This may be somewhat of a surprise.", SomewhatSomething::default(), "This may be something of a surprise.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This may be somewhat of a surprise.",
+            SomewhatSomething::default(),
+            "This may be something of a surprise.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_these() {
-        assert_suggestion_result("These are somewhat of a cult data structure.", SomewhatSomething::default(), "These are something of a cult data structure.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "These are somewhat of a cult data structure.",
+            SomewhatSomething::default(),
+            "These are something of a cult data structure.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

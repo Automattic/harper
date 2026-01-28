@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, LongestMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -191,7 +191,7 @@ impl ExprLinter for Touristic {
 #[cfg(test)]
 mod tests {
     use super::Touristic;
-    use crate::linting::tests::assert_good_and_bad_suggestions;
+    use crate::linting::english::tests::assert_good_and_bad_suggestions;
 
     #[test]
     fn fixes_touristic_alone() {

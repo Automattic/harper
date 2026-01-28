@@ -38,12 +38,17 @@ impl Linter for NoFrenchSpaces {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::NoFrenchSpaces;
 
     #[test]
     fn fixes_basic() {
-        assert_suggestion_result("This is a short sentence.  This is another short sentence.", NoFrenchSpaces, "This is a short sentence. This is another short sentence.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is a short sentence.  This is another short sentence.",
+            NoFrenchSpaces,
+            "This is a short sentence. This is another short sentence.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

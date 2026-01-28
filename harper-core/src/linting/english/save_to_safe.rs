@@ -3,7 +3,7 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, Word},
 };
 
@@ -53,16 +53,26 @@ impl ExprLinter for SaveToSafe {
 #[cfg(test)]
 mod tests {
     use super::SaveToSafe;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_ignore() {
-        assert_suggestion_result("It is save to ignore trivial code.", SaveToSafe::default(), "It is safe to ignore trivial code.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It is save to ignore trivial code.",
+            SaveToSafe::default(),
+            "It is safe to ignore trivial code.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_travel() {
-        assert_suggestion_result("Is it save to travel abroad now?", SaveToSafe::default(), "Is it safe to travel abroad now?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Is it save to travel abroad now?",
+            SaveToSafe::default(),
+            "Is it safe to travel abroad now?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{UPOSSet, WordSet},
 };
 use harper_brill::UPOS;

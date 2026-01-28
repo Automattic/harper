@@ -3,7 +3,7 @@ use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     Token, TokenStringExt,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 /// Suggests removing `the` when followed by how/why/who/when/what,
@@ -90,16 +90,26 @@ impl ExprLinter for TheHowWhy {
 #[cfg(test)]
 mod tests {
     use super::TheHowWhy;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn basic_the_how() {
-        assert_suggestion_result("This is the how it all started.", TheHowWhy::default(), "This is how it all started.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is the how it all started.",
+            TheHowWhy::default(),
+            "This is how it all started.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn the_why() {
-        assert_suggestion_result("The important part is the why it matters.", TheHowWhy::default(), "The important part is why it matters.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The important part is the why it matters.",
+            TheHowWhy::default(),
+            "The important part is why it matters.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -122,17 +132,32 @@ mod tests {
 
     #[test]
     fn the_who() {
-        assert_suggestion_result("We must identify the who is responsible.", TheHowWhy::default(), "We must identify who is responsible.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We must identify the who is responsible.",
+            TheHowWhy::default(),
+            "We must identify who is responsible.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn the_when() {
-        assert_suggestion_result("He outlined the when the new phase will start.", TheHowWhy::default(), "He outlined when the new phase will start.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He outlined the when the new phase will start.",
+            TheHowWhy::default(),
+            "He outlined when the new phase will start.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn the_what() {
-        assert_suggestion_result("The presentation clarifies the what we intend to build.", TheHowWhy::default(), "The presentation clarifies what we intend to build.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The presentation clarifies the what we intend to build.",
+            TheHowWhy::default(),
+            "The presentation clarifies what we intend to build.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

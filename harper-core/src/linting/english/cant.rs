@@ -1,8 +1,8 @@
 use super::{ExprLinter, Suggestion};
 use crate::Lint;
 use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
-use crate::linting::LintKind;
-use crate::linting::expr_linter::find_the_only_token_matching;
+use crate::linting::english::LintKind;
+use crate::linting::english::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
 
 pub struct Cant {
@@ -62,27 +62,47 @@ impl ExprLinter for Cant {
 #[cfg(test)]
 mod tests {
     use super::Cant;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_pronoun_cant() {
-        assert_suggestion_result("I cant go to the store.", Cant::default(), "I can't go to the store.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I cant go to the store.",
+            Cant::default(),
+            "I can't go to the store.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_proper_noun_cant() {
-        assert_suggestion_result("Bob cant go to the store.", Cant::default(), "Bob can't go to the store.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Bob cant go to the store.",
+            Cant::default(),
+            "Bob can't go to the store.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_common_noun_cant() {
         // "dog" and "cat" are
-        assert_suggestion_result("A horse cant drink bottled water.", Cant::default(), "A horse can't drink bottled water.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "A horse cant drink bottled water.",
+            Cant::default(),
+            "A horse can't drink bottled water.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_cant_pronoun() {
-        assert_suggestion_result("Cant you go to the store?", Cant::default(), "Can't you go to the store?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cant you go to the store?",
+            Cant::default(),
+            "Can't you go to the store?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -102,7 +122,12 @@ mod tests {
     #[test]
     #[ignore = "'Convert' is also a noun, so a 'cant convert' could be a person who switched to speaking jargon"]
     fn corrects_cant_verb() {
-        assert_suggestion_result("Cant convert widget to input", Cant::default(), "Can't convert widget to input", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cant convert widget to input",
+            Cant::default(),
+            "Can't convert widget to input",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

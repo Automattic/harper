@@ -2,9 +2,9 @@ use crate::expr::Expr;
 use crate::expr::ExprExt;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, linting::Linter, patterns::WordSet};
+use crate::{Lrc, Token, TokenStringExt, linting::english::Linter, patterns::WordSet};
 
-use super::{super::Lint, LintKind, Suggestion};
+use super::{Lint, LintKind, Suggestion};
 
 pub struct OxfordComma {
     expr: Box<dyn Expr>,
@@ -55,7 +55,7 @@ impl OxfordComma {
 }
 
 impl Linter for OxfordComma {
-    fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::Lint> {
+    fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::english::Lint> {
         let mut lints = Vec::new();
         for sentence in document.iter_sentences() {
             let mut skip = 0;
@@ -96,7 +96,7 @@ impl Linter for OxfordComma {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::OxfordComma;
 
@@ -111,17 +111,32 @@ mod tests {
 
     #[test]
     fn people() {
-        assert_suggestion_result("Nancy, Steve and Carl are going to the coffee shop.", OxfordComma::default(), "Nancy, Steve, and Carl are going to the coffee shop.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Nancy, Steve and Carl are going to the coffee shop.",
+            OxfordComma::default(),
+            "Nancy, Steve, and Carl are going to the coffee shop.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn places() {
-        assert_suggestion_result("I've always wanted to visit Paris, Tokyo and Rome.", OxfordComma::default(), "I've always wanted to visit Paris, Tokyo, and Rome.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I've always wanted to visit Paris, Tokyo and Rome.",
+            OxfordComma::default(),
+            "I've always wanted to visit Paris, Tokyo, and Rome.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn foods() {
-        assert_suggestion_result("My favorite foods are pizza, sushi, tacos and burgers.", OxfordComma::default(), "My favorite foods are pizza, sushi, tacos, and burgers.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My favorite foods are pizza, sushi, tacos and burgers.",
+            OxfordComma::default(),
+            "My favorite foods are pizza, sushi, tacos, and burgers.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -144,17 +159,32 @@ mod tests {
 
     #[test]
     fn or_writing() {
-        assert_suggestion_result("Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.", OxfordComma::default(), "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Harper can be a lifesaver when writing technical documents, emails or other formal forms of communication.",
+            OxfordComma::default(),
+            "Harper can be a lifesaver when writing technical documents, emails, or other formal forms of communication.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn sports() {
-        assert_suggestion_result("They enjoy playing soccer, basketball or tennis.", OxfordComma::default(), "They enjoy playing soccer, basketball, or tennis.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They enjoy playing soccer, basketball or tennis.",
+            OxfordComma::default(),
+            "They enjoy playing soccer, basketball, or tennis.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn nor_vegetables() {
-        assert_suggestion_result("I like carrots, kale nor broccoli.", OxfordComma::default(), "I like carrots, kale, nor broccoli.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I like carrots, kale nor broccoli.",
+            OxfordComma::default(),
+            "I like carrots, kale, nor broccoli.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

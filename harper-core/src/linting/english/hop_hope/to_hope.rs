@@ -1,7 +1,7 @@
 use super::super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::linting::Suggestion;
+use crate::linting::english::Suggestion;
 use crate::patterns::WordSet;
 use crate::{Token, char_string::char_string};
 

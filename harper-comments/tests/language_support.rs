@@ -3,7 +3,7 @@ use std::path::Path;
 use harper_comments::CommentParser;
 use harper_core::languages::Language;
 use harper_core::languages::LanguageFamily;
-use harper_core::linting::{LintGroup, Linter};
+use harper_core::linting::english::{LintGroup, Linter};
 use harper_core::parsers::MarkdownOptions;
 use harper_core::spell::FstDictionary;
 use harper_core::{Document, EnglishDialect};

@@ -48,12 +48,17 @@ impl ExprLinter for Nobody {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::Nobody;
 
     #[test]
     fn both_valid_and_invalid() {
-        assert_suggestion_result("No body told me. I have a head but no body.", Nobody::default(), "Nobody told me. I have a head but no body.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "No body told me. I have a head but no body.",
+            Nobody::default(),
+            "Nobody told me. I have a head but no body.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

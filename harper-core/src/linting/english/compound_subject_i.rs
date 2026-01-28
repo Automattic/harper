@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenKind,
     expr::{AnchorStart, Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 const POSSESSIVE_DETERMINERS: &[&str] = &["my", "your", "her", "his", "their", "our"];
@@ -70,51 +70,96 @@ impl ExprLinter for CompoundSubjectI {
 #[cfg(test)]
 mod tests {
     use super::CompoundSubjectI;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_my_mother_and_me() {
-        assert_suggestion_result("My mother and me went to California.", CompoundSubjectI::default(), "My mother and I went to California.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My mother and me went to California.",
+            CompoundSubjectI::default(),
+            "My mother and I went to California.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_my_brother_and_me() {
-        assert_suggestion_result("My brother and me would often go to the cinema.", CompoundSubjectI::default(), "My brother and I would often go to the cinema.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My brother and me would often go to the cinema.",
+            CompoundSubjectI::default(),
+            "My brother and I would often go to the cinema.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_your_friend_and_me() {
-        assert_suggestion_result("Your friend and me are heading out.", CompoundSubjectI::default(), "Your friend and I are heading out.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Your friend and me are heading out.",
+            CompoundSubjectI::default(),
+            "Your friend and I are heading out.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_her_manager_and_me() {
-        assert_suggestion_result("Her manager and me have talked about it.", CompoundSubjectI::default(), "Her manager and I have talked about it.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Her manager and me have talked about it.",
+            CompoundSubjectI::default(),
+            "Her manager and I have talked about it.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_his_cat_and_me() {
-        assert_suggestion_result("His cat and me were inseparable.", CompoundSubjectI::default(), "His cat and I were inseparable.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "His cat and me were inseparable.",
+            CompoundSubjectI::default(),
+            "His cat and I were inseparable.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_their_kids_and_me() {
-        assert_suggestion_result("Their kids and me will play outside.", CompoundSubjectI::default(), "Their kids and I will play outside.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Their kids and me will play outside.",
+            CompoundSubjectI::default(),
+            "Their kids and I will play outside.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_our_neighbor_and_me() {
-        assert_suggestion_result("Our neighbor and me can help tomorrow.", CompoundSubjectI::default(), "Our neighbor and I can help tomorrow.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Our neighbor and me can help tomorrow.",
+            CompoundSubjectI::default(),
+            "Our neighbor and I can help tomorrow.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_quote_prefix() {
-        assert_suggestion_result("\"My mother and me went to California,\" she said.", CompoundSubjectI::default(), "\"My mother and I went to California,\" she said.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "\"My mother and me went to California,\" she said.",
+            CompoundSubjectI::default(),
+            "\"My mother and I went to California,\" she said.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_all_caps() {
-        assert_suggestion_result("MY BROTHER AND ME WILL HANDLE IT.", CompoundSubjectI::default(), "MY BROTHER AND I WILL HANDLE IT.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "MY BROTHER AND ME WILL HANDLE IT.",
+            CompoundSubjectI::default(),
+            "MY BROTHER AND I WILL HANDLE IT.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

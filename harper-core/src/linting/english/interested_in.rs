@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct InterestedIn {
@@ -57,11 +57,16 @@ impl ExprLinter for InterestedIn {
 #[cfg(test)]
 mod tests {
     use super::InterestedIn;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_about() {
-        assert_suggestion_result("It suggests some useful programs the user could be interested about - NyarchLinux/NyarchWizard.", InterestedIn::default(), "It suggests some useful programs the user could be interested in - NyarchLinux/NyarchWizard.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It suggests some useful programs the user could be interested about - NyarchLinux/NyarchWizard.",
+            InterestedIn::default(),
+            "It suggests some useful programs the user could be interested in - NyarchLinux/NyarchWizard.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -75,13 +80,23 @@ mod tests {
 
     #[test]
     fn fix_at() {
-        assert_suggestion_result("If someone is interested at the processed data, please email me.", InterestedIn::default(), "If someone is interested in the processed data, please email me.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If someone is interested at the processed data, please email me.",
+            InterestedIn::default(),
+            "If someone is interested in the processed data, please email me.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Requires more context because 'interested for now/for sure' are not errors"]
     fn fix_for() {
-        assert_suggestion_result("but the user is only interested for the examples in one of the modes", InterestedIn::default(), "but the user is only interested in the examples in one of the modes", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "but the user is only interested for the examples in one of the modes",
+            InterestedIn::default(),
+            "but the user is only interested in the examples in one of the modes",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -91,17 +106,32 @@ mod tests {
 
     #[test]
     fn fix_into() {
-        assert_suggestion_result("This is one of the first complex software I wrote, and it prefigures so much of the reasons why I was interested into working on designing HTML and CSS.", InterestedIn::default(), "This is one of the first complex software I wrote, and it prefigures so much of the reasons why I was interested in working on designing HTML and CSS.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is one of the first complex software I wrote, and it prefigures so much of the reasons why I was interested into working on designing HTML and CSS.",
+            InterestedIn::default(),
+            "This is one of the first complex software I wrote, and it prefigures so much of the reasons why I was interested in working on designing HTML and CSS.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_of() {
-        assert_suggestion_result("If you are interested of tinkering.", InterestedIn::default(), "If you are interested in tinkering.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If you are interested of tinkering.",
+            InterestedIn::default(),
+            "If you are interested in tinkering.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_on() {
-        assert_suggestion_result("The creator of Photopea, a great free alternative to Photoshop, is not interested on making an offline version, so I took it upon myself to make it.", InterestedIn::default(), "The creator of Photopea, a great free alternative to Photoshop, is not interested in making an offline version, so I took it upon myself to make it.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The creator of Photopea, a great free alternative to Photoshop, is not interested on making an offline version, so I took it upon myself to make it.",
+            InterestedIn::default(),
+            "The creator of Photopea, a great free alternative to Photoshop, is not interested in making an offline version, so I took it upon myself to make it.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -124,7 +154,12 @@ mod tests {
 
     #[test]
     fn fix_with() {
-        assert_suggestion_result("no_std support (is anybody interested with this?)", InterestedIn::default(), "no_std support (is anybody interested in this?)", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "no_std support (is anybody interested with this?)",
+            InterestedIn::default(),
+            "no_std support (is anybody interested in this?)",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

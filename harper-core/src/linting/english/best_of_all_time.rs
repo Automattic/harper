@@ -64,7 +64,7 @@ impl ExprLinter for BestOfAllTime {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::BestOfAllTime;
 
@@ -79,22 +79,42 @@ mod tests {
 
     #[test]
     fn fix_after_best() {
-        assert_suggestion_result("And also in the best IDE of all times Visual Studio", BestOfAllTime::default(), "And also in the best IDE of all time Visual Studio", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "And also in the best IDE of all times Visual Studio",
+            BestOfAllTime::default(),
+            "And also in the best IDE of all time Visual Studio",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_after_greatest() {
-        assert_suggestion_result("This app shows you why Sachin Tendulkar is the greatest cricket of all times, by using interactive stories.", BestOfAllTime::default(), "This app shows you why Sachin Tendulkar is the greatest cricket of all time, by using interactive stories.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This app shows you why Sachin Tendulkar is the greatest cricket of all times, by using interactive stories.",
+            BestOfAllTime::default(),
+            "This app shows you why Sachin Tendulkar is the greatest cricket of all time, by using interactive stories.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_after_biggest() {
-        assert_suggestion_result("THIS IS THE BIGGEST QUESTIONS OF ALL TIMES...", BestOfAllTime::default(), "THIS IS THE BIGGEST QUESTIONS OF ALL TIME...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "THIS IS THE BIGGEST QUESTIONS OF ALL TIMES...",
+            BestOfAllTime::default(),
+            "THIS IS THE BIGGEST QUESTIONS OF ALL TIME...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_after_most_influential() {
-        assert_suggestion_result("It is an open source project that aggregates multiple lists of \"the best/most influential games of all times\"", BestOfAllTime::default(), "It is an open source project that aggregates multiple lists of \"the best/most influential games of all time\"", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It is an open source project that aggregates multiple lists of \"the best/most influential games of all times\"",
+            BestOfAllTime::default(),
+            "It is an open source project that aggregates multiple lists of \"the best/most influential games of all time\"",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -117,11 +137,21 @@ mod tests {
 
     #[test]
     fn fix_after_favorite() {
-        assert_suggestion_result("Red Dead Redemption 2 is my nr 1 favorite game of all times", BestOfAllTime::default(), "Red Dead Redemption 2 is my nr 1 favorite game of all time", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Red Dead Redemption 2 is my nr 1 favorite game of all times",
+            BestOfAllTime::default(),
+            "Red Dead Redemption 2 is my nr 1 favorite game of all time",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_after_favourite() {
-        assert_suggestion_result("Just made this website to show you my favourite movies of all times.", BestOfAllTime::default(), "Just made this website to show you my favourite movies of all time.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Just made this website to show you my favourite movies of all times.",
+            BestOfAllTime::default(),
+            "Just made this website to show you my favourite movies of all time.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

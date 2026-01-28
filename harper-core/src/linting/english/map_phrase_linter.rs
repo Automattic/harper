@@ -3,7 +3,7 @@ use crate::expr::Expr;
 use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
 use crate::expr::SimilarToPhrase;
-use crate::linting::Suggestion;
+use crate::linting::english::Suggestion;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {

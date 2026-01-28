@@ -6,7 +6,7 @@ use crate::expr::SequenceExpr;
 use crate::patterns::{ModalVerb, UPOSSet, WordSet};
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct SafeToSave {
@@ -68,61 +68,116 @@ impl ExprLinter for SafeToSave {
 #[cfg(test)]
 mod tests {
     use super::SafeToSave;
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_could_safe() {
-        assert_suggestion_result("He could safe my life.", SafeToSave::default(), "He could save my life.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He could safe my life.",
+            SafeToSave::default(),
+            "He could save my life.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_should_safe() {
-        assert_suggestion_result("You should safe your work frequently.", SafeToSave::default(), "You should save your work frequently.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You should safe your work frequently.",
+            SafeToSave::default(),
+            "You should save your work frequently.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_will_safe() {
-        assert_suggestion_result("This will safe you time.", SafeToSave::default(), "This will save you time.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This will safe you time.",
+            SafeToSave::default(),
+            "This will save you time.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_would_safe() {
-        assert_suggestion_result("It would safe us money.", SafeToSave::default(), "It would save us money.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It would safe us money.",
+            SafeToSave::default(),
+            "It would save us money.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_can_safe() {
-        assert_suggestion_result("You can safe the document now.", SafeToSave::default(), "You can save the document now.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You can safe the document now.",
+            SafeToSave::default(),
+            "You can save the document now.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_might_safe() {
-        assert_suggestion_result("This might safe the company.", SafeToSave::default(), "This might save the company.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This might safe the company.",
+            SafeToSave::default(),
+            "This might save the company.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_must_safe() {
-        assert_suggestion_result("We must safe our resources.", SafeToSave::default(), "We must save our resources.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We must safe our resources.",
+            SafeToSave::default(),
+            "We must save our resources.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_may_safe() {
-        assert_suggestion_result("You may safe your progress here.", SafeToSave::default(), "You may save your progress here.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You may safe your progress here.",
+            SafeToSave::default(),
+            "You may save your progress here.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_adverb() {
-        assert_suggestion_result("You should definitely safe your changes.", SafeToSave::default(), "You should definitely save your changes.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You should definitely safe your changes.",
+            SafeToSave::default(),
+            "You should definitely save your changes.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_shall_safe() {
-        assert_suggestion_result("We shall safe the nation.", SafeToSave::default(), "We shall save the nation.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We shall safe the nation.",
+            SafeToSave::default(),
+            "We shall save the nation.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_couldnt_safe() {
-        assert_suggestion_result("I couldn't safe the file.", SafeToSave::default(), "I couldn't save the file.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I couldn't safe the file.",
+            SafeToSave::default(),
+            "I couldn't save the file.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -62,13 +62,18 @@ fn generate_lint_for_tokens(a: &Token, b: &Token, document: &Document) -> Option
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::CurrencyPlacement;
 
     #[test]
     fn eof() {
-        assert_suggestion_result("It was my last bill worth more than 4$.", CurrencyPlacement::default(), "It was my last bill worth more than $4.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It was my last bill worth more than 4$.",
+            CurrencyPlacement::default(),
+            "It was my last bill worth more than $4.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -78,32 +83,62 @@ mod tests {
 
     #[test]
     fn blog_title() {
-        assert_suggestion_result("The Best 25$ I Ever Spent", CurrencyPlacement::default(), "The Best $25 I Ever Spent", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Best 25$ I Ever Spent",
+            CurrencyPlacement::default(),
+            "The Best $25 I Ever Spent",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn blog_title_cents() {
-        assert_suggestion_result("The Best ¢25 I Ever Spent", CurrencyPlacement::default(), "The Best 25¢ I Ever Spent", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Best ¢25 I Ever Spent",
+            CurrencyPlacement::default(),
+            "The Best 25¢ I Ever Spent",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn blog_title_with_space() {
-        assert_suggestion_result("The Best 25   $ I Ever Spent", CurrencyPlacement::default(), "The Best $25 I Ever Spent", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Best 25   $ I Ever Spent",
+            CurrencyPlacement::default(),
+            "The Best $25 I Ever Spent",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn multiple_dollar() {
-        assert_suggestion_result("They were either 25$ 24$ or 23$.", CurrencyPlacement::default(), "They were either $25 $24 or $23.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They were either 25$ 24$ or 23$.",
+            CurrencyPlacement::default(),
+            "They were either $25 $24 or $23.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn multiple_pound() {
-        assert_suggestion_result("They were either 25£ 24£ or 23£.", CurrencyPlacement::default(), "They were either £25 £24 or £23.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They were either 25£ 24£ or 23£.",
+            CurrencyPlacement::default(),
+            "They were either £25 £24 or £23.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn suffix() {
-        assert_suggestion_result("It was my 20th$.", CurrencyPlacement::default(), "It was my $20th.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It was my 20th$.",
+            CurrencyPlacement::default(),
+            "It was my $20th.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

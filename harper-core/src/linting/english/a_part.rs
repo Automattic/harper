@@ -3,7 +3,7 @@ use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
 use crate::{
     Token, TokenStringExt,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct APart {
@@ -87,7 +87,7 @@ impl ExprLinter for APart {
 #[cfg(test)]
 mod tests {
     use super::APart;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
     fn allow_normal_use_of_a_part() {
@@ -125,57 +125,112 @@ mod tests {
 
     #[test]
     fn corrects_a_part_from_to_apart_from_format() {
-        assert_top3_suggestion_result("Is it correct that the output file seems to be the same of the input file a part from the format (input: jpg, output: png)?", APart::default(), "Is it correct that the output file seems to be the same of the input file apart from the format (input: jpg, output: png)?", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Is it correct that the output file seems to be the same of the input file a part from the format (input: jpg, output: png)?",
+            APart::default(),
+            "Is it correct that the output file seems to be the same of the input file apart from the format (input: jpg, output: png)?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_a_part_from_to_apart_from_english() {
-        assert_top3_suggestion_result("Do you know there are more languages out there a part from English right?", APart::default(), "Do you know there are more languages out there apart from English right?", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "Do you know there are more languages out there a part from English right?",
+            APart::default(),
+            "Do you know there are more languages out there apart from English right?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_a_part_from_to_a_part_of() {
-        assert_top3_suggestion_result("An easy tool to generate backdoor with msfvenom (a part from metasploit framework).", APart::default(), "An easy tool to generate backdoor with msfvenom (a part of metasploit framework).", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "An easy tool to generate backdoor with msfvenom (a part from metasploit framework).",
+            APart::default(),
+            "An easy tool to generate backdoor with msfvenom (a part of metasploit framework).",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_apart_of_to_apart_from_cflinuxfs() {
-        assert_top3_suggestion_result("Doesn't work with any stacks apart of cflinuxfs2 and cflinuxfs3", APart::default(), "Doesn't work with any stacks apart from cflinuxfs2 and cflinuxfs3", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "Doesn't work with any stacks apart of cflinuxfs2 and cflinuxfs3",
+            APart::default(),
+            "Doesn't work with any stacks apart from cflinuxfs2 and cflinuxfs3",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_apart_of_to_apart_from_using() {
-        assert_top3_suggestion_result("apart of using filter, i can't find it in the documentation", APart::default(), "apart from using filter, i can't find it in the documentation", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "apart of using filter, i can't find it in the documentation",
+            APart::default(),
+            "apart from using filter, i can't find it in the documentation",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_apart_of_to_a_part_of_openai() {
-        assert_top3_suggestion_result("export 'Usage' class as apart of openai.types", APart::default(), "export 'Usage' class as a part of openai.types", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "export 'Usage' class as apart of openai.types",
+            APart::default(),
+            "export 'Usage' class as a part of openai.types",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_apart_of_to_a_part_of_formly() {
-        assert_top3_suggestion_result("FormlyDatepickerTypeComponent is not listed as apart of the Formly Public API", APart::default(), "FormlyDatepickerTypeComponent is not listed as a part of the Formly Public API", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "FormlyDatepickerTypeComponent is not listed as apart of the Formly Public API",
+            APart::default(),
+            "FormlyDatepickerTypeComponent is not listed as a part of the Formly Public API",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_far_a_part() {
-        assert_top3_suggestion_result("That leaves you only the other hand on the keyboard and you don't want the keys to be that far a part.", APart::default(), "That leaves you only the other hand on the keyboard and you don't want the keys to be that far apart.", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "That leaves you only the other hand on the keyboard and you don't want the keys to be that far a part.",
+            APart::default(),
+            "That leaves you only the other hand on the keyboard and you don't want the keys to be that far apart.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_so_far_a_part_from_being_taken() {
-        assert_top3_suggestion_result("I can't see in the code what is done really with this session_timeout so far a part from being taken from the conf if defined there or setup ...", APart::default(), "I can't see in the code what is done really with this session_timeout so far apart from being taken from the conf if defined there or setup ...", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "I can't see in the code what is done really with this session_timeout so far a part from being taken from the conf if defined there or setup ...",
+            APart::default(),
+            "I can't see in the code what is done really with this session_timeout so far apart from being taken from the conf if defined there or setup ...",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_so_far_a_part_from_version_upgrade() {
-        assert_top3_suggestion_result("Any workaround so far a part from the version upgrade?", APart::default(), "Any workaround so far apart from the version upgrade?", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "Any workaround so far a part from the version upgrade?",
+            APart::default(),
+            "Any workaround so far apart from the version upgrade?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn corrects_fall_a_part() {
-        assert_top3_suggestion_result("When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall a part.", APart::default(), "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall apart.", crate::languages::LanguageFamily::English)
+        assert_top3_suggestion_result(
+            "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall a part.",
+            APart::default(),
+            "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall apart.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     // Sentences from GitHub I can't understand so can't suggest a fix

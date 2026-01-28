@@ -1,4 +1,4 @@
-use crate::linting::{LintKind, Suggestion};
+use crate::linting::english::{LintKind, Suggestion};
 use std::sync::Arc;
 
 use crate::expr::Expr;
@@ -109,123 +109,238 @@ impl ExprLinter for OrthographicConsistency {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::OrthographicConsistency;
 
     #[test]
     fn nasa_should_be_all_caps() {
-        assert_suggestion_result("Nasa is a governmental institution.", OrthographicConsistency::default(), "NASA is a governmental institution.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Nasa is a governmental institution.",
+            OrthographicConsistency::default(),
+            "NASA is a governmental institution.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ikea_should_be_all_caps() {
-        assert_suggestion_result("Ikea operates a vast retail network.", OrthographicConsistency::default(), "IKEA operates a vast retail network.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ikea operates a vast retail network.",
+            OrthographicConsistency::default(),
+            "IKEA operates a vast retail network.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lego_should_be_all_caps() {
-        assert_suggestion_result("Lego bricks encourage creativity.", OrthographicConsistency::default(), "LEGO bricks encourage creativity.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Lego bricks encourage creativity.",
+            OrthographicConsistency::default(),
+            "LEGO bricks encourage creativity.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn nato_should_be_all_caps() {
-        assert_suggestion_result("Nato is a military alliance.", OrthographicConsistency::default(), "NATO is a military alliance.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Nato is a military alliance.",
+            OrthographicConsistency::default(),
+            "NATO is a military alliance.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fbi_should_be_all_caps() {
-        assert_suggestion_result("Fbi investigates federal crimes.", OrthographicConsistency::default(), "FBI investigates federal crimes.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Fbi investigates federal crimes.",
+            OrthographicConsistency::default(),
+            "FBI investigates federal crimes.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn cia_should_be_all_caps() {
-        assert_suggestion_result("Cia gathers intelligence.", OrthographicConsistency::default(), "CIA gathers intelligence.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cia gathers intelligence.",
+            OrthographicConsistency::default(),
+            "CIA gathers intelligence.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hiv_should_be_all_caps() {
-        assert_suggestion_result("Hiv is a virus.", OrthographicConsistency::default(), "HIV is a virus.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Hiv is a virus.",
+            OrthographicConsistency::default(),
+            "HIV is a virus.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dna_should_be_all_caps() {
-        assert_suggestion_result("Dna carries genetic information.", OrthographicConsistency::default(), "DNA carries genetic information.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Dna carries genetic information.",
+            OrthographicConsistency::default(),
+            "DNA carries genetic information.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn rna_should_be_all_caps() {
-        assert_suggestion_result("Rna participates in protein synthesis.", OrthographicConsistency::default(), "RNA participates in protein synthesis.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Rna participates in protein synthesis.",
+            OrthographicConsistency::default(),
+            "RNA participates in protein synthesis.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn cpu_should_be_all_caps() {
-        assert_suggestion_result("Cpu executes instructions.", OrthographicConsistency::default(), "CPU executes instructions.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cpu executes instructions.",
+            OrthographicConsistency::default(),
+            "CPU executes instructions.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn gpu_should_be_all_caps() {
-        assert_suggestion_result("Gpu accelerates graphics.", OrthographicConsistency::default(), "GPU accelerates graphics.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Gpu accelerates graphics.",
+            OrthographicConsistency::default(),
+            "GPU accelerates graphics.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn html_should_be_all_caps() {
-        assert_suggestion_result("Html structures web documents.", OrthographicConsistency::default(), "HTML structures web documents.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Html structures web documents.",
+            OrthographicConsistency::default(),
+            "HTML structures web documents.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn url_should_be_all_caps() {
-        assert_suggestion_result("Url identifies a resource.", OrthographicConsistency::default(), "URL identifies a resource.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Url identifies a resource.",
+            OrthographicConsistency::default(),
+            "URL identifies a resource.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn faq_should_be_all_caps() {
-        assert_suggestion_result("Faq answers common questions.", OrthographicConsistency::default(), "FAQ answers common questions.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Faq answers common questions.",
+            OrthographicConsistency::default(),
+            "FAQ answers common questions.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn linkedin_should_use_canonical_case() {
-        assert_suggestion_result("I updated my linkedin profile yesterday.", OrthographicConsistency::default(), "I updated my LinkedIn profile yesterday.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I updated my linkedin profile yesterday.",
+            OrthographicConsistency::default(),
+            "I updated my LinkedIn profile yesterday.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn wordpress_should_use_canonical_case() {
-        assert_suggestion_result("She writes daily on her wordpress blog.", OrthographicConsistency::default(), "She writes daily on her WordPress blog.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She writes daily on her wordpress blog.",
+            OrthographicConsistency::default(),
+            "She writes daily on her WordPress blog.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn pdf_should_be_all_caps() {
-        assert_suggestion_result("Pdf preserves formatting.", OrthographicConsistency::default(), "PDF preserves formatting.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Pdf preserves formatting.",
+            OrthographicConsistency::default(),
+            "PDF preserves formatting.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ceo_should_be_all_caps() {
-        assert_suggestion_result("Our Ceo approved the budget.", OrthographicConsistency::default(), "Our CEO approved the budget.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Our Ceo approved the budget.",
+            OrthographicConsistency::default(),
+            "Our CEO approved the budget.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn cfo_should_be_all_caps() {
-        assert_suggestion_result("The Cfo presented the report.", OrthographicConsistency::default(), "The CFO presented the report.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Cfo presented the report.",
+            OrthographicConsistency::default(),
+            "The CFO presented the report.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hr_should_be_all_caps() {
-        assert_suggestion_result("The Hr team scheduled interviews.", OrthographicConsistency::default(), "The HR team scheduled interviews.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Hr team scheduled interviews.",
+            OrthographicConsistency::default(),
+            "The HR team scheduled interviews.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ai_should_be_all_caps() {
-        assert_suggestion_result("Ai enables new capabilities.", OrthographicConsistency::default(), "AI enables new capabilities.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ai enables new capabilities.",
+            OrthographicConsistency::default(),
+            "AI enables new capabilities.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ufo_should_be_all_caps() {
-        assert_suggestion_result("Ufo sightings provoke debate.", OrthographicConsistency::default(), "UFO sightings provoke debate.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ufo sightings provoke debate.",
+            OrthographicConsistency::default(),
+            "UFO sightings provoke debate.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn markdown_should_be_caps() {
-        assert_suggestion_result("I adore markdown.", OrthographicConsistency::default(), "I adore Markdown.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I adore markdown.",
+            OrthographicConsistency::default(),
+            "I adore Markdown.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

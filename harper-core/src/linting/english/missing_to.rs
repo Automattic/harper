@@ -5,7 +5,7 @@ use harper_brill::UPOS;
 use crate::{
     Token,
     expr::{Expr, ExprMap, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -431,56 +431,106 @@ impl ExprLinter for MissingTo {
 #[cfg(test)]
 mod tests {
     use super::MissingTo;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn inserts_to_after_meant() {
-        assert_suggestion_result("I meant call you last night.", MissingTo::default(), "I meant to call you last night.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I meant call you last night.",
+            MissingTo::default(),
+            "I meant to call you last night.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_wants() {
-        assert_suggestion_result("She wants finish early.", MissingTo::default(), "She wants to finish early.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She wants finish early.",
+            MissingTo::default(),
+            "She wants to finish early.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_need() {
-        assert_suggestion_result("We need talk about pricing.", MissingTo::default(), "We need to talk about pricing.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We need talk about pricing.",
+            MissingTo::default(),
+            "We need to talk about pricing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_agreed() {
-        assert_suggestion_result("They agreed meet at dawn.", MissingTo::default(), "They agreed to meet at dawn.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They agreed meet at dawn.",
+            MissingTo::default(),
+            "They agreed to meet at dawn.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_forgot() {
-        assert_suggestion_result("He forgot send the file.", MissingTo::default(), "He forgot to send the file.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He forgot send the file.",
+            MissingTo::default(),
+            "He forgot to send the file.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_trying() {
-        assert_suggestion_result("I'm trying get better at chess.", MissingTo::default(), "I'm trying to get better at chess.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm trying get better at chess.",
+            MissingTo::default(),
+            "I'm trying to get better at chess.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_refused() {
-        assert_suggestion_result("She refused answer the question.", MissingTo::default(), "She refused to answer the question.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She refused answer the question.",
+            MissingTo::default(),
+            "She refused to answer the question.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_ready() {
-        assert_suggestion_result("We're ready start the meeting.", MissingTo::default(), "We're ready to start the meeting.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We're ready start the meeting.",
+            MissingTo::default(),
+            "We're ready to start the meeting.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_eager() {
-        assert_suggestion_result("I'm eager see the results.", MissingTo::default(), "I'm eager to see the results.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm eager see the results.",
+            MissingTo::default(),
+            "I'm eager to see the results.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn inserts_to_after_inclined() {
-        assert_suggestion_result("I'm inclined believe you.", MissingTo::default(), "I'm inclined to believe you.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm inclined believe you.",
+            MissingTo::default(),
+            "I'm inclined to believe you.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

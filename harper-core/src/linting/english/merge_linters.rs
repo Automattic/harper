@@ -4,7 +4,7 @@ macro_rules! merge_linters {
 
         mod merge_rule_hidden {
             use paste::paste;
-            use crate::{Document, linting::{Lint, Linter}, remove_overlaps};
+            use crate::{Document, linting::english::{Lint, Linter}, remove_overlaps};
 
             $(
                 use super::$linter;

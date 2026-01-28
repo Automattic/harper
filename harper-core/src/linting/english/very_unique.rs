@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -67,7 +67,7 @@ impl ExprLinter for VeryUnique {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         VeryUnique,
         tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result},
     };
@@ -86,7 +86,12 @@ mod tests {
 
     #[test]
     fn fix_pretty_unique() {
-        assert_top3_suggestion_result("Numerous accounts with my exact full name/surname (which is pretty unique) has been created (most recently).", VeryUnique::default(), "Numerous accounts with my exact full name/surname (which is pretty rare) has been created (most recently).", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Numerous accounts with my exact full name/surname (which is pretty unique) has been created (most recently).",
+            VeryUnique::default(),
+            "Numerous accounts with my exact full name/surname (which is pretty rare) has been created (most recently).",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -103,7 +108,12 @@ mod tests {
 
     #[test]
     fn fix_somewhat_unique() {
-        assert_top3_suggestion_result("A new pack of somewhat unique upgrades for R.E.P.O.!", VeryUnique::default(), "A new pack of somewhat unusual upgrades for R.E.P.O.!", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "A new pack of somewhat unique upgrades for R.E.P.O.!",
+            VeryUnique::default(),
+            "A new pack of somewhat unusual upgrades for R.E.P.O.!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -120,6 +130,11 @@ mod tests {
 
     #[test]
     fn fix_rather_unique() {
-        assert_top3_suggestion_result("I regret using the Vue compiler because the resulting AST is rather unique.", VeryUnique::default(), "I regret using the Vue compiler because the resulting AST is rather unusual.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "I regret using the Vue compiler because the resulting AST is rather unique.",
+            VeryUnique::default(),
+            "I regret using the Vue compiler because the resulting AST is rather unusual.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

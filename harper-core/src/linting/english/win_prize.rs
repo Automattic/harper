@@ -2,7 +2,7 @@ use crate::expr::SequenceExpr;
 use crate::expr::{Expr, OwnedExprExt};
 use crate::{
     Lrc, Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -65,28 +65,48 @@ impl ExprLinter for WinPrize {
 #[cfg(test)]
 mod tests {
     use super::WinPrize;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
     #[test]
     fn fix_price_singular() {
-        assert_suggestion_result("Lena won a price in the coding marathon.", WinPrize::default(), "Lena won a prize in the coding marathon.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Lena won a price in the coding marathon.",
+            WinPrize::default(),
+            "Lena won a prize in the coding marathon.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_price_plural() {
-        assert_top3_suggestion_result("Our team won the prices announced yesterday.", WinPrize::default(), "Our team won the prizes announced yesterday.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Our team won the prices announced yesterday.",
+            WinPrize::default(),
+            "Our team won the prizes announced yesterday.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_prise_singular() {
-        assert_suggestion_result("He finally won the prise he'd dreamed of.", WinPrize::default(), "He finally won the prize he'd dreamed of.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He finally won the prise he'd dreamed of.",
+            WinPrize::default(),
+            "He finally won the prize he'd dreamed of.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_prise_plural() {
-        assert_suggestion_result("The inventors won several prises at the expo.", WinPrize::default(), "The inventors won several prizes at the expo.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The inventors won several prises at the expo.",
+            WinPrize::default(),
+            "The inventors won several prizes at the expo.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -100,6 +120,11 @@ mod tests {
 
     #[test]
     fn fix_no_det() {
-        assert_suggestion_result("I won prices!", WinPrize::default(), "I won prizes!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I won prices!",
+            WinPrize::default(),
+            "I won prizes!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

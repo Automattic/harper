@@ -150,12 +150,12 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::EnglishDialectFlags;
     use crate::languages::LanguageFamily;
-    use crate::linting::Linter;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::english::Linter;
+    use crate::linting::english::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         DialectFlags, EnglishDialect,
-        linting::tests::{
+        linting::english::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };
@@ -604,7 +604,7 @@ mod tests_portuguese {
     use super::SpellCheck;
     use crate::PortugueseDialect;
     use crate::languages::{Language, LanguageFamily};
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
     use crate::spell::FstDictionary;
 
     // Capitalization tests

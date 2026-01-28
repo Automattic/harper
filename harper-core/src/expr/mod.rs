@@ -3,7 +3,7 @@
 //! For example, if we want to look for the word "that" followed by an adjective, we could build an
 //! expression to do so.
 //!
-//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::ExprLinter)).
+//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::english::ExprLinter)).
 //! It iterates through a document, checking if each index matches the criteria.
 //!
 //! When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.

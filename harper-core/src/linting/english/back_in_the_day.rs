@@ -68,26 +68,46 @@ impl ExprLinter for BackInTheDay {
 #[cfg(test)]
 mod tests {
     use super::BackInTheDay;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn detects_gem_update_case() {
-        assert_suggestion_result("... has been resolved through a gem update back in the days", BackInTheDay::default(), "... has been resolved through a gem update back in the day", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "... has been resolved through a gem update back in the days",
+            BackInTheDay::default(),
+            "... has been resolved through a gem update back in the day",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_install_case() {
-        assert_suggestion_result("Back in the days we're used to install it directly from ...", BackInTheDay::default(), "Back in the day we're used to install it directly from ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Back in the days we're used to install it directly from ...",
+            BackInTheDay::default(),
+            "Back in the day we're used to install it directly from ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_composer_json_case() {
-        assert_suggestion_result("Back in the days there was only composer.json and ...", BackInTheDay::default(), "Back in the day there was only composer.json and ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Back in the days there was only composer.json and ...",
+            BackInTheDay::default(),
+            "Back in the day there was only composer.json and ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_version_release_case() {
-        assert_suggestion_result("... should have been released back in the days in a version 11", BackInTheDay::default(), "... should have been released back in the day in a version 11", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "... should have been released back in the days in a version 11",
+            BackInTheDay::default(),
+            "... should have been released back in the day in a version 11",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

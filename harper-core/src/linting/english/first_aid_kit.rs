@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -52,26 +52,46 @@ impl ExprLinter for FirstAidKit {
 #[cfg(test)]
 mod tests {
     use super::FirstAidKit;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_first_aid_kid() {
-        assert_suggestion_result("A first aid kid is a collection of medical supplies.", FirstAidKit::default(), "A first aid kit is a collection of medical supplies.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "A first aid kid is a collection of medical supplies.",
+            FirstAidKit::default(),
+            "A first aid kit is a collection of medical supplies.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_starter_kid() {
-        assert_suggestion_result("Check the starter kid before proceeding.", FirstAidKit::default(), "Check the starter kit before proceeding.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Check the starter kid before proceeding.",
+            FirstAidKit::default(),
+            "Check the starter kit before proceeding.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_travel_kid() {
-        assert_suggestion_result("Pack your travel kid for the trip.", FirstAidKit::default(), "Pack your travel kit for the trip.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Pack your travel kid for the trip.",
+            FirstAidKit::default(),
+            "Pack your travel kit for the trip.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_tool_kid() {
-        assert_suggestion_result("Don't forget the tool kid for assembly.", FirstAidKit::default(), "Don't forget the tool kit for assembly.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Don't forget the tool kid for assembly.",
+            FirstAidKit::default(),
+            "Don't forget the tool kit for assembly.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -3,7 +3,7 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -92,21 +92,36 @@ impl ExprLinter for ItWouldBe {
 #[cfg(test)]
 mod tests {
     use super::ItWouldBe;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flags_simple_shame() {
-        assert_suggestion_result("I think I would be a shame if this happened.", ItWouldBe::default(), "I think it would be a shame if this happened.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I think I would be a shame if this happened.",
+            ItWouldBe::default(),
+            "I think it would be a shame if this happened.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_believe_bummer() {
-        assert_suggestion_result("We believe I might not be a bummer after all.", ItWouldBe::default(), "We believe it might not be a bummer after all.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We believe I might not be a bummer after all.",
+            ItWouldBe::default(),
+            "We believe it might not be a bummer after all.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_doubt_good_idea() {
-        assert_suggestion_result("They doubt I will be a good idea for the team.", ItWouldBe::default(), "They doubt it will be a good idea for the team.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They doubt I will be a good idea for the team.",
+            ItWouldBe::default(),
+            "They doubt it will be a good idea for the team.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

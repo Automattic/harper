@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{NominalPhrase, WordSet},
 };
 
@@ -69,56 +69,101 @@ impl ExprLinter for TakeSerious {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::TakeSerious;
 
     #[test]
     fn take_it() {
-        assert_suggestion_result("I take it serious.", TakeSerious::default(), "I take it seriously.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I take it serious.",
+            TakeSerious::default(),
+            "I take it seriously.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "'This' and 'that', which can be determiners and pronouns, are not handled properly by `NominalPhrase`"]
     fn take_this() {
-        assert_suggestion_result("What's more important is, that it's impossible to actually take this serious when ...", TakeSerious::default(), "What's more important is, that it's impossible to actually take this seriously when ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "What's more important is, that it's impossible to actually take this serious when ...",
+            TakeSerious::default(),
+            "What's more important is, that it's impossible to actually take this seriously when ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn not_take_security() {
-        assert_suggestion_result("When you say someone does not take security serious you are being judgemental / destructive.", TakeSerious::default(), "When you say someone does not take security seriously you are being judgemental / destructive.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "When you say someone does not take security serious you are being judgemental / destructive.",
+            TakeSerious::default(),
+            "When you say someone does not take security seriously you are being judgemental / destructive.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn we_take_security() {
-        assert_suggestion_result("We take security serious.", TakeSerious::default(), "We take security seriously.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We take security serious.",
+            TakeSerious::default(),
+            "We take security seriously.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn take_me() {
-        assert_suggestion_result("Yeah , don't take me serious , i do this as a hobby - jusspatel.", TakeSerious::default(), "Yeah , don't take me seriously , i do this as a hobby - jusspatel.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Yeah , don't take me serious , i do this as a hobby - jusspatel.",
+            TakeSerious::default(),
+            "Yeah , don't take me seriously , i do this as a hobby - jusspatel.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Passive voice and adverbs are not yet supported"]
     fn taken_adv() {
-        assert_suggestion_result("This is not meant to be taken overly serious", TakeSerious::default(), "This is not meant to be taken overly seriously", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is not meant to be taken overly serious",
+            TakeSerious::default(),
+            "This is not meant to be taken overly seriously",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn takes_these_numbers() {
-        assert_suggestion_result("if a program actually takes these numbers serious the results could be catastrophic.", TakeSerious::default(), "if a program actually takes these numbers seriously the results could be catastrophic.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "if a program actually takes these numbers serious the results could be catastrophic.",
+            TakeSerious::default(),
+            "if a program actually takes these numbers seriously the results could be catastrophic.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "'No one' is not handled properly by `NominalPhrase`"]
     fn takes_bf() {
-        assert_suggestion_result("And obviously no one takes brainfuck serious as a language.", TakeSerious::default(), "And obviously no one takes brainfuck seriously as a language.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "And obviously no one takes brainfuck serious as a language.",
+            TakeSerious::default(),
+            "And obviously no one takes brainfuck seriously as a language.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Adverbs are not yet supported"]
     fn taken_very() {
-        assert_suggestion_result("Hmm flaky soldering iron is something that must be taken very serious.", TakeSerious::default(), "Hmm flaky soldering iron is something that must be taken very seriously.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Hmm flaky soldering iron is something that must be taken very serious.",
+            TakeSerious::default(),
+            "Hmm flaky soldering iron is something that must be taken very seriously.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

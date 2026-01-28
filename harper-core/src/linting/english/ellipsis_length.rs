@@ -44,7 +44,7 @@ impl Linter for EllipsisLength {
 #[cfg(test)]
 mod tests {
     use super::EllipsisLength;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn allows_correct_ellipsis() {
@@ -54,12 +54,22 @@ mod tests {
     #[test]
     fn corrects_long_ellipsis() {
         assert_lint_count(".....", EllipsisLength, 1);
-        assert_suggestion_result(".....", EllipsisLength, "...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            ".....",
+            EllipsisLength,
+            "...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_short_ellipsis() {
         assert_lint_count("..", EllipsisLength, 1);
-        assert_suggestion_result("..", EllipsisLength, "...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "..",
+            EllipsisLength,
+            "...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

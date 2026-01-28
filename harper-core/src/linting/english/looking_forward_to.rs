@@ -3,7 +3,7 @@ use hashbrown::HashSet;
 use crate::{
     Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct LookingForwardTo {
@@ -90,13 +90,18 @@ impl ExprLinter for LookingForwardTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::LookingForwardTo;
 
     #[test]
     fn not_lint_with_correct_verb() {
-        assert_suggestion_result("She was looking forward to see the grandchildren again.", LookingForwardTo::default(), "She was looking forward to seeing the grandchildren again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She was looking forward to see the grandchildren again.",
+            LookingForwardTo::default(),
+            "She was looking forward to seeing the grandchildren again.",
+            crate::languages::LanguageFamily::English,
+        );
         // assert_lint_count(
         //     "She was looking forward to seeing the grandchildren again.",
         //     LookingForwardTo::default(),
@@ -106,12 +111,22 @@ mod tests {
 
     #[test]
     fn lint_with_incorrect_verb() {
-        assert_suggestion_result("She was looking forward to see the grandchildren again.", LookingForwardTo::default(), "She was looking forward to seeing the grandchildren again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She was looking forward to see the grandchildren again.",
+            LookingForwardTo::default(),
+            "She was looking forward to seeing the grandchildren again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lint_with_incorrect_verb_ending_in_e() {
-        assert_suggestion_result("She was looking forward to make the grandchildren happy.", LookingForwardTo::default(), "She was looking forward to making the grandchildren happy.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She was looking forward to make the grandchildren happy.",
+            LookingForwardTo::default(),
+            "She was looking forward to making the grandchildren happy.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

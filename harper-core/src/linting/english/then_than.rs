@@ -1,6 +1,6 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr};
-use crate::linting::Suggestion;
+use crate::linting::english::Suggestion;
 use crate::patterns::{Invert, Word, WordSet};
 use crate::{CharStringExt, Token, TokenKind};
 
@@ -113,7 +113,7 @@ impl ExprLinter for ThenThan {
 #[cfg(test)]
 mod tests {
     use super::ThenThan;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn allows_back_then() {
@@ -122,37 +122,72 @@ mod tests {
 
     #[test]
     fn catches_shorter_then() {
-        assert_suggestion_result("One was shorter then the other.", ThenThan::default(), "One was shorter than the other.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "One was shorter then the other.",
+            ThenThan::default(),
+            "One was shorter than the other.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_better_then() {
-        assert_suggestion_result("One was better then the other.", ThenThan::default(), "One was better than the other.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "One was better then the other.",
+            ThenThan::default(),
+            "One was better than the other.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_longer_then() {
-        assert_suggestion_result("One was longer then the other.", ThenThan::default(), "One was longer than the other.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "One was longer then the other.",
+            ThenThan::default(),
+            "One was longer than the other.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_less_then() {
-        assert_suggestion_result("I eat less then you.", ThenThan::default(), "I eat less than you.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I eat less then you.",
+            ThenThan::default(),
+            "I eat less than you.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_more_then() {
-        assert_suggestion_result("I eat more then you.", ThenThan::default(), "I eat more than you.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I eat more then you.",
+            ThenThan::default(),
+            "I eat more than you.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn stronger_should_change() {
-        assert_suggestion_result("a chain is no stronger then its weakest link", ThenThan::default(), "a chain is no stronger than its weakest link", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "a chain is no stronger then its weakest link",
+            ThenThan::default(),
+            "a chain is no stronger than its weakest link",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn half_a_loaf_should_change() {
-        assert_suggestion_result("half a loaf is better then no bread", ThenThan::default(), "half a loaf is better than no bread", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "half a loaf is better then no bread",
+            ThenThan::default(),
+            "half a loaf is better than no bread",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -162,17 +197,32 @@ mod tests {
 
     #[test]
     fn crazier_than_rat_should_change() {
-        assert_suggestion_result("crazier then a shithouse rat", ThenThan::default(), "crazier than a shithouse rat", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "crazier then a shithouse rat",
+            ThenThan::default(),
+            "crazier than a shithouse rat",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn poke_in_eye_should_change() {
-        assert_suggestion_result("better then a poke in the eye with a sharp stick", ThenThan::default(), "better than a poke in the eye with a sharp stick", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "better then a poke in the eye with a sharp stick",
+            ThenThan::default(),
+            "better than a poke in the eye with a sharp stick",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn other_then_should_change() {
-        assert_suggestion_result("There was no one other then us at the campsite.", ThenThan::default(), "There was no one other than us at the campsite.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "There was no one other then us at the campsite.",
+            ThenThan::default(),
+            "There was no one other than us at the campsite.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -299,27 +349,52 @@ mod tests {
 
     #[test]
     fn more_talented_then_her_issue_720() {
-        assert_suggestion_result("He was more talented then her at writing code.", ThenThan::default(), "He was more talented than her at writing code.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He was more talented then her at writing code.",
+            ThenThan::default(),
+            "He was more talented than her at writing code.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn simpler_then_hers_issue_720() {
-        assert_suggestion_result("The design was simpler then hers in layout and color scheme.", ThenThan::default(), "The design was simpler than hers in layout and color scheme.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The design was simpler then hers in layout and color scheme.",
+            ThenThan::default(),
+            "The design was simpler than hers in layout and color scheme.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn earlier_then_him_issue_720() {
-        assert_suggestion_result("We arrived earlier then him at the event.", ThenThan::default(), "We arrived earlier than him at the event.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We arrived earlier then him at the event.",
+            ThenThan::default(),
+            "We arrived earlier than him at the event.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn more_robust_then_his_issue_720() {
-        assert_suggestion_result("This approach is more robust then his for handling edge cases.", ThenThan::default(), "This approach is more robust than his for handling edge cases.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This approach is more robust then his for handling edge cases.",
+            ThenThan::default(),
+            "This approach is more robust than his for handling edge cases.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_more_recently_then_last_week_issue_720() {
-        assert_suggestion_result("We submitted the patch more recently then last week, so they should have it already.", ThenThan::default(), "We submitted the patch more recently than last week, so they should have it already.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We submitted the patch more recently then last week, so they should have it already.",
+            ThenThan::default(),
+            "We submitted the patch more recently than last week, so they should have it already.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -351,31 +426,61 @@ mod tests {
 
     #[test]
     fn patch_worse_then() {
-        assert_suggestion_result("He was worse then her at writing code.", ThenThan::default(), "He was worse than her at writing code.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He was worse then her at writing code.",
+            ThenThan::default(),
+            "He was worse than her at writing code.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_rather_then() {
-        assert_suggestion_result("If copy-paste has to be prevented, I'd prefer it if paste rather then copy would be disabled", ThenThan::default(), "If copy-paste has to be prevented, I'd prefer it if paste rather than copy would be disabled", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If copy-paste has to be prevented, I'd prefer it if paste rather then copy would be disabled",
+            ThenThan::default(),
+            "If copy-paste has to be prevented, I'd prefer it if paste rather than copy would be disabled",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_easier_said_then_done() {
-        assert_suggestion_result("This is currently easier said then done because you cannot press Ctrl+A in the debug console", ThenThan::default(), "This is currently easier said than done because you cannot press Ctrl+A in the debug console", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is currently easier said then done because you cannot press Ctrl+A in the debug console",
+            ThenThan::default(),
+            "This is currently easier said than done because you cannot press Ctrl+A in the debug console",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_every_now_and_than() {
-        assert_suggestion_result("I was testing every now and than after an upgrade on the home assistant plugin.", ThenThan::default(), "I was testing every now and then after an upgrade on the home assistant plugin.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I was testing every now and than after an upgrade on the home assistant plugin.",
+            ThenThan::default(),
+            "I was testing every now and then after an upgrade on the home assistant plugin.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_until_than() {
-        assert_suggestion_result("For the case anyone else ever hits this and the problem is not solved until than, this is a working workaround for the problem", ThenThan::default(), "For the case anyone else ever hits this and the problem is not solved until then, this is a working workaround for the problem", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "For the case anyone else ever hits this and the problem is not solved until than, this is a working workaround for the problem",
+            ThenThan::default(),
+            "For the case anyone else ever hits this and the problem is not solved until then, this is a working workaround for the problem",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn patch_now_and_than() {
-        assert_suggestion_result("sounds good if golang-set becomes an issue between now and than…just let me know!", ThenThan::default(), "sounds good if golang-set becomes an issue between now and then…just let me know!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "sounds good if golang-set becomes an issue between now and than…just let me know!",
+            ThenThan::default(),
+            "sounds good if golang-set becomes an issue between now and then…just let me know!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

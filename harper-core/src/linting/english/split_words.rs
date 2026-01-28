@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use crate::Token;
 use crate::expr::Expr;
-use crate::linting::{LintKind, Suggestion};
+use crate::linting::english::{LintKind, Suggestion};
 use crate::spell::{FstDictionary, TrieDictionary};
 
 use super::{ExprLinter, Lint};
@@ -93,39 +93,69 @@ impl ExprLinter for SplitWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::SplitWords;
 
     #[test]
     fn issue_1905() {
-        assert_suggestion_result("I want to try this insteadof that.", SplitWords::default(), "I want to try this instead of that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I want to try this insteadof that.",
+            SplitWords::default(),
+            "I want to try this instead of that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     /// Same as above, but with the longer component word at the end.
     #[test]
     fn issue_1905_rev() {
-        assert_suggestion_result("I want to try thisinstead of that.", SplitWords::default(), "I want to try this instead of that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I want to try thisinstead of that.",
+            SplitWords::default(),
+            "I want to try this instead of that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn split_common() {
-        assert_suggestion_result("This is notnot a problem.", SplitWords::default(), "This is not not a problem.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is notnot a problem.",
+            SplitWords::default(),
+            "This is not not a problem.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn splits_multiple_compound_words() {
-        assert_suggestion_result("We stared intothe darkness and kindof panicked about sortof everything.", SplitWords::default(), "We stared into the darkness and kind of panicked about sort of everything.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We stared intothe darkness and kindof panicked about sortof everything.",
+            SplitWords::default(),
+            "We stared into the darkness and kind of panicked about sort of everything.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn splits_word_with_longer_prefix() {
-        assert_suggestion_result("The astronauts waited on the landingpad for hours.", SplitWords::default(), "The astronauts waited on the landing pad for hours.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The astronauts waited on the landingpad for hours.",
+            SplitWords::default(),
+            "The astronauts waited on the landing pad for hours.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn splits_before_punctuation() {
-        assert_suggestion_result("This was kindof, actually, hilarious.", SplitWords::default(), "This was kind of, actually, hilarious.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This was kindof, actually, hilarious.",
+            SplitWords::default(),
+            "This was kind of, actually, hilarious.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

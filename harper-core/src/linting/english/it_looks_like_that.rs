@@ -1,6 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 pub struct ItLooksLikeThat {
@@ -68,7 +68,7 @@ impl ExprLinter for ItLooksLikeThat {
 mod tests {
     mod that_noun {
         use super::super::ItLooksLikeThat;
-        use crate::linting::tests::assert_no_lints;
+        use crate::linting::english::tests::assert_no_lints;
 
         #[test]
         fn dont_flag_that_noun_is_also_verb_part_of_np() {
@@ -133,23 +133,33 @@ mod tests {
 
     mod that_det {
         use super::super::ItLooksLikeThat;
-        use crate::linting::tests::assert_suggestion_result;
+        use crate::linting::english::tests::assert_suggestion_result;
 
         #[test]
         fn fix_that_the() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result("it looks like that the original products should have NULL in the value column", ItLooksLikeThat::default(), "it looks like the original products should have NULL in the value column", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "it looks like that the original products should have NULL in the value column",
+                ItLooksLikeThat::default(),
+                "it looks like the original products should have NULL in the value column",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn fix_that_some() {
-            assert_suggestion_result("From first expresion it looks like that some tokkens or what was cached", ItLooksLikeThat::default(), "From first expresion it looks like some tokkens or what was cached", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "From first expresion it looks like that some tokkens or what was cached",
+                ItLooksLikeThat::default(),
+                "From first expresion it looks like some tokkens or what was cached",
+                crate::languages::LanguageFamily::English,
+            );
         }
     }
 
     mod that_verb {
         use super::super::ItLooksLikeThat;
-        use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+        use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
         #[test]
         fn dont_flag_that_verb_3p_sing_pres_is() {
@@ -173,7 +183,12 @@ mod tests {
         fn fix_that_it_verb_lemma() {
             // "that" is being wrongly used as a relative pronoun
             // But it's hard to check becuase 'renovate' is a verb but is being used as a noun
-            assert_suggestion_result("It looks like that Renovate decides to not reuse the branch when there are no changes in it", ItLooksLikeThat::default(), "It looks like Renovate decides to not reuse the branch when there are no changes in it", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "It looks like that Renovate decides to not reuse the branch when there are no changes in it",
+                ItLooksLikeThat::default(),
+                "It looks like Renovate decides to not reuse the branch when there are no changes in it",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
@@ -196,12 +211,22 @@ mod tests {
         fn fix_that_verb_ing_have() {
             // Verbs in -ing are also gerunds, which are nouns.
             // But at least in this case, "having", it doesn't work after "that".
-            assert_suggestion_result("It looks like that having <br> tags inside them breaks the rendering", ItLooksLikeThat::default(), "It looks like having <br> tags inside them breaks the rendering", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "It looks like that having <br> tags inside them breaks the rendering",
+                ItLooksLikeThat::default(),
+                "It looks like having <br> tags inside them breaks the rendering",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn fix_that_verb_ing_using() {
-            assert_suggestion_result("it looks like that using TensorFlow in conjunction with packages that use pybind11_abseil will fail", ItLooksLikeThat::default(), "it looks like using TensorFlow in conjunction with packages that use pybind11_abseil will fail", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "it looks like that using TensorFlow in conjunction with packages that use pybind11_abseil will fail",
+                ItLooksLikeThat::default(),
+                "it looks like using TensorFlow in conjunction with packages that use pybind11_abseil will fail",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
@@ -215,22 +240,37 @@ mod tests {
 
     mod pronoun {
         use super::super::ItLooksLikeThat;
-        use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+        use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
         #[test]
         fn fix_that_subj_obj_pronoun_it_was() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result("It looks like that it was not improved a lot.", ItLooksLikeThat::default(), "It looks like it was not improved a lot.", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "It looks like that it was not improved a lot.",
+                ItLooksLikeThat::default(),
+                "It looks like it was not improved a lot.",
+                crate::languages::LanguageFamily::English,
+            );
         }
         #[test]
         fn fix_that_subj_obj_pronoun_it_works() {
             // "that" is being wrongly used as a relative pronoun
-            assert_suggestion_result("Thx, it looks like that it works for Inpainting itself", ItLooksLikeThat::default(), "Thx, it looks like it works for Inpainting itself", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "Thx, it looks like that it works for Inpainting itself",
+                ItLooksLikeThat::default(),
+                "Thx, it looks like it works for Inpainting itself",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn fix_that_subj_obj_pronoun_you() {
-            assert_suggestion_result("It looks like that you can't use the files in combination.", ItLooksLikeThat::default(), "It looks like you can't use the files in combination.", crate::languages::LanguageFamily::English);
+            assert_suggestion_result(
+                "It looks like that you can't use the files in combination.",
+                ItLooksLikeThat::default(),
+                "It looks like you can't use the files in combination.",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
@@ -244,7 +284,7 @@ mod tests {
 
     mod conjunction {
         use super::super::ItLooksLikeThat;
-        use crate::linting::tests::assert_no_lints;
+        use crate::linting::english::tests::assert_no_lints;
 
         #[test]
         fn cant_flag_that_if() {

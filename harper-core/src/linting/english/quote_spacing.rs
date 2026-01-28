@@ -1,5 +1,5 @@
 use crate::expr::{ExprExt, SequenceExpr};
-use crate::linting::LintKind;
+use crate::linting::english::LintKind;
 use crate::{Document, TokenStringExt};
 
 use super::{Lint, Linter};
@@ -56,7 +56,7 @@ impl Linter for QuoteSpacing {
 #[cfg(test)]
 mod tests {
     use super::QuoteSpacing;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints};
+    use crate::linting::english::tests::{assert_lint_count, assert_no_lints};
 
     #[test]
     fn flags_missing_space_before_quote() {

@@ -4,11 +4,11 @@ use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{Lint, LintKind, Suggestion},
+    linting::english::{Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
-use crate::linting::ExprLinter;
+use crate::linting::english::ExprLinter;
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -95,7 +95,7 @@ impl ExprLinter for NoContractionWithVerb {
 #[cfg(test)]
 mod tests {
     use super::NoContractionWithVerb;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     // Correct unambiguous verb
 

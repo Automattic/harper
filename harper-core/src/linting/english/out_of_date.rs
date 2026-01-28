@@ -52,20 +52,35 @@ impl ExprLinter for OutOfDate {
 #[cfg(test)]
 mod tests {
     use super::OutOfDate;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_out_of_date() {
-        assert_suggestion_result("The software is out of date.", OutOfDate::default(), "The software is out-of-date.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The software is out of date.",
+            OutOfDate::default(),
+            "The software is out-of-date.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_out_of_date_with_variation() {
-        assert_suggestion_result("This information is out of-date.", OutOfDate::default(), "This information is out-of-date.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This information is out of-date.",
+            OutOfDate::default(),
+            "This information is out-of-date.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_correct_usage() {
-        assert_suggestion_result("The guidelines are out-of-date.", OutOfDate::default(), "The guidelines are out-of-date.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The guidelines are out-of-date.",
+            OutOfDate::default(),
+            "The guidelines are out-of-date.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

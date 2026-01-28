@@ -1,7 +1,7 @@
 use crate::{
     Token,
     expr::{All, AnchorEnd, Expr, FirstMatchOf, LongestMatchOf, ReflexivePronoun, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct Addicting {
@@ -62,7 +62,7 @@ impl ExprLinter for Addicting {
 #[cfg(test)]
 mod tests {
     use super::Addicting;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fix_addicting() {

@@ -123,23 +123,38 @@ impl ExprLinter for ModalOf {
 #[cfg(test)]
 mod tests {
     use super::ModalOf;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     // atomic unit tests
 
     #[test]
     fn test_lowercase() {
-        assert_suggestion_result("could of", ModalOf::default(), "could have", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "could of",
+            ModalOf::default(),
+            "could have",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_negative() {
-        assert_suggestion_result("mightn't of", ModalOf::default(), "mightn't have", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "mightn't of",
+            ModalOf::default(),
+            "mightn't have",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_uppercase_negative() {
-        assert_suggestion_result("Mustn't of", ModalOf::default(), "Mustn't have", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Mustn't of",
+            ModalOf::default(),
+            "Mustn't have",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -193,7 +208,12 @@ mod tests {
 
     #[test]
     fn catches_must_of() {
-        assert_suggestion_result("Ah I must of missed that part.", ModalOf::default(), "Ah I must have missed that part.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ah I must of missed that part.",
+            ModalOf::default(),
+            "Ah I must have missed that part.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -207,7 +227,12 @@ mod tests {
 
     #[test]
     fn catches_would_of() {
-        assert_suggestion_result("now this issue would of caused hundreds of thousands of extra lines", ModalOf::default(), "now this issue would have caused hundreds of thousands of extra lines", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "now this issue would of caused hundreds of thousands of extra lines",
+            ModalOf::default(),
+            "now this issue would have caused hundreds of thousands of extra lines",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

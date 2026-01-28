@@ -1,5 +1,5 @@
 use crate::expr::{Expr, FixedPhrase, SequenceExpr};
-use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::Word;
 use crate::{Lint, Token};
 
@@ -48,27 +48,47 @@ impl ExprLinter for MostOfTheTimes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::MostOfTheTimes;
 
     #[test]
     fn hangs_forever() {
-        assert_suggestion_result("restic backup hangs forever most of the times · Issue #2834", MostOfTheTimes::default(), "restic backup hangs forever most of the time · Issue #2834", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "restic backup hangs forever most of the times · Issue #2834",
+            MostOfTheTimes::default(),
+            "restic backup hangs forever most of the time · Issue #2834",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn options_are_ignored() {
-        assert_suggestion_result("but other options like device and options are ignored most of the times", MostOfTheTimes::default(), "but other options like device and options are ignored most of the time", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "but other options like device and options are ignored most of the times",
+            MostOfTheTimes::default(),
+            "but other options like device and options are ignored most of the time",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn parenthesized() {
-        assert_suggestion_result("prompted html code gets (most of the times) read by copilot but is not displayed.", MostOfTheTimes::default(), "prompted html code gets (most of the time) read by copilot but is not displayed.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "prompted html code gets (most of the times) read by copilot but is not displayed.",
+            MostOfTheTimes::default(),
+            "prompted html code gets (most of the time) read by copilot but is not displayed.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn i_cant_play() {
-        assert_suggestion_result("I cannot get the version 1.0 without c so I cant play a lot of the times with other people", MostOfTheTimes::default(), "I cannot get the version 1.0 without c so I cant play a lot of the time with other people", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I cannot get the version 1.0 without c so I cant play a lot of the times with other people",
+            MostOfTheTimes::default(),
+            "I cannot get the version 1.0 without c so I cant play a lot of the time with other people",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

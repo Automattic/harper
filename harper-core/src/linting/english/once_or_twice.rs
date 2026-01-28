@@ -51,13 +51,18 @@ impl ExprLinter for OnceOrTwice {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::OnceOrTwice;
 
     #[test]
     fn corrects_once_a_twice() {
-        assert_suggestion_result("He wants to do it once a twice a month.", OnceOrTwice::default(), "He wants to do it once or twice a month.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He wants to do it once a twice a month.",
+            OnceOrTwice::default(),
+            "He wants to do it once or twice a month.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -70,102 +75,202 @@ mod tests {
 
     #[test]
     fn corrects_once_a_twice_sentence_start() {
-        assert_suggestion_result("Once a twice, we gathered for coffee.", OnceOrTwice::default(), "Once or twice, we gathered for coffee.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Once a twice, we gathered for coffee.",
+            OnceOrTwice::default(),
+            "Once or twice, we gathered for coffee.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_uppercase() {
-        assert_suggestion_result("ONCE A TWICE WE MET.", OnceOrTwice::default(), "ONCE OR TWICE WE MET.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "ONCE A TWICE WE MET.",
+            OnceOrTwice::default(),
+            "ONCE OR TWICE WE MET.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_mixed_case() {
-        assert_suggestion_result("once a Twice sounds odd.", OnceOrTwice::default(), "once or Twice sounds odd.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "once a Twice sounds odd.",
+            OnceOrTwice::default(),
+            "once or Twice sounds odd.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_exclamation() {
-        assert_suggestion_result("Let's do it once a twice!", OnceOrTwice::default(), "Let's do it once or twice!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Let's do it once a twice!",
+            OnceOrTwice::default(),
+            "Let's do it once or twice!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_question_mark() {
-        assert_suggestion_result("You really tried once a twice?", OnceOrTwice::default(), "You really tried once or twice?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You really tried once a twice?",
+            OnceOrTwice::default(),
+            "You really tried once or twice?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_inside_quotes() {
-        assert_suggestion_result("He said, \"once a twice\" without thinking.", OnceOrTwice::default(), "He said, \"once or twice\" without thinking.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He said, \"once a twice\" without thinking.",
+            OnceOrTwice::default(),
+            "He said, \"once or twice\" without thinking.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_comma() {
-        assert_suggestion_result("We planned it once a twice, but never finished.", OnceOrTwice::default(), "We planned it once or twice, but never finished.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We planned it once a twice, but never finished.",
+            OnceOrTwice::default(),
+            "We planned it once or twice, but never finished.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_parentheses() {
-        assert_suggestion_result("Try it (just once a twice) before judging.", OnceOrTwice::default(), "Try it (just once or twice) before judging.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Try it (just once a twice) before judging.",
+            OnceOrTwice::default(),
+            "Try it (just once or twice) before judging.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_after_colon() {
-        assert_suggestion_result("My answer is simple: once a twice is too many.", OnceOrTwice::default(), "My answer is simple: once or twice is too many.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My answer is simple: once a twice is too many.",
+            OnceOrTwice::default(),
+            "My answer is simple: once or twice is too many.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_double_space() {
-        assert_suggestion_result("We tested once a twice  before launch.", OnceOrTwice::default(), "We tested once or twice  before launch.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We tested once a twice  before launch.",
+            OnceOrTwice::default(),
+            "We tested once or twice  before launch.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_before_semicolon() {
-        assert_suggestion_result("They tried once a twice; it still failed.", OnceOrTwice::default(), "They tried once or twice; it still failed.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They tried once a twice; it still failed.",
+            OnceOrTwice::default(),
+            "They tried once or twice; it still failed.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_newline_split() {
-        assert_suggestion_result("We met once a twice\nwhen the cafe was quiet.", OnceOrTwice::default(), "We met once or twice\nwhen the cafe was quiet.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We met once a twice\nwhen the cafe was quiet.",
+            OnceOrTwice::default(),
+            "We met once or twice\nwhen the cafe was quiet.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_tab() {
-        assert_suggestion_result("Schedule it once a twice\tfor testing.", OnceOrTwice::default(), "Schedule it once or twice\tfor testing.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Schedule it once a twice\tfor testing.",
+            OnceOrTwice::default(),
+            "Schedule it once or twice\tfor testing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_multiple_sentences() {
-        assert_suggestion_result("Do it once a twice. Then rest.", OnceOrTwice::default(), "Do it once or twice. Then rest.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Do it once a twice. Then rest.",
+            OnceOrTwice::default(),
+            "Do it once or twice. Then rest.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_before_period() {
-        assert_suggestion_result("He rehearsed once a twice.", OnceOrTwice::default(), "He rehearsed once or twice.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He rehearsed once a twice.",
+            OnceOrTwice::default(),
+            "He rehearsed once or twice.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_with_trailing_space() {
-        assert_suggestion_result("Practice once a twice .", OnceOrTwice::default(), "Practice once or twice .", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Practice once a twice .",
+            OnceOrTwice::default(),
+            "Practice once or twice .",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_before_dash() {
-        assert_suggestion_result("He called once a twice—no response.", OnceOrTwice::default(), "He called once or twice—no response.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He called once a twice—no response.",
+            OnceOrTwice::default(),
+            "He called once or twice—no response.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_around_em_dash() {
-        assert_suggestion_result("She visits once a twice—maybe thrice.", OnceOrTwice::default(), "She visits once or twice—maybe thrice.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She visits once a twice—maybe thrice.",
+            OnceOrTwice::default(),
+            "She visits once or twice—maybe thrice.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_before_quote() {
-        assert_suggestion_result("We heard once a twice, \"she's late.\"", OnceOrTwice::default(), "We heard once or twice, \"she's late.\"", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We heard once a twice, \"she's late.\"",
+            OnceOrTwice::default(),
+            "We heard once or twice, \"she's late.\"",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_once_a_twice_all_caps_sentence() {
-        assert_suggestion_result("DO IT ONCE A TWICE RIGHT NOW!", OnceOrTwice::default(), "DO IT ONCE OR TWICE RIGHT NOW!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "DO IT ONCE A TWICE RIGHT NOW!",
+            OnceOrTwice::default(),
+            "DO IT ONCE OR TWICE RIGHT NOW!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

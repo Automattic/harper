@@ -1,5 +1,5 @@
 use crate::expr::{Expr, FirstMatchOf, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind, TokenStringExt};
 
 pub struct QuiteQuiet {
@@ -111,36 +111,68 @@ impl ExprLinter for QuiteQuiet {
 #[cfg(test)]
 mod tests {
     use super::QuiteQuiet;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_lint_count, assert_no_lints, assert_suggestion_result,
+    };
 
     #[test]
     fn fix_quiet_adverb() {
-        assert_suggestion_result("Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quiet often.", QuiteQuiet::default(), "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quite often.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quiet often.",
+            QuiteQuiet::default(),
+            "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quite often.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_quiet_adjective() {
-        assert_suggestion_result("... has been already reported multiple times and I find it quiet dumb that it still exists", QuiteQuiet::default(), "... has been already reported multiple times and I find it quite dumb that it still exists", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "... has been already reported multiple times and I find it quiet dumb that it still exists",
+            QuiteQuiet::default(),
+            "... has been already reported multiple times and I find it quite dumb that it still exists",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_very_quite() {
-        assert_suggestion_result("It's very quite here at night.", QuiteQuiet::default(), "It's very quiet here at night.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's very quite here at night.",
+            QuiteQuiet::default(),
+            "It's very quiet here at night.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_doesnt_quiet() {
-        assert_suggestion_result("doesn't quiet", QuiteQuiet::default(), "doesn't quite", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "doesn't quiet",
+            QuiteQuiet::default(),
+            "doesn't quite",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_doesnt_quiet_typographical_apostrophe() {
-        assert_suggestion_result("doesn’t quiet", QuiteQuiet::default(), "doesn’t quite", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "doesn’t quiet",
+            QuiteQuiet::default(),
+            "doesn’t quite",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_doesnt_quiet_in_context() {
-        assert_suggestion_result("When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quiet run right, and doesn't really let me rev it.", QuiteQuiet::default(), "When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quite run right, and doesn't really let me rev it.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quiet run right, and doesn't really let me rev it.",
+            QuiteQuiet::default(),
+            "When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quite run right, and doesn't really let me rev it.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -159,17 +191,32 @@ mod tests {
 
     #[test]
     fn fix_cant_quiet() {
-        assert_suggestion_result("I can't quiet read it", QuiteQuiet::default(), "I can't quite read it", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I can't quiet read it",
+            QuiteQuiet::default(),
+            "I can't quite read it",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_wont_quiet() {
-        assert_suggestion_result("It won't quiet fit", QuiteQuiet::default(), "It won't quite fit", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It won't quiet fit",
+            QuiteQuiet::default(),
+            "It won't quite fit",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_couldnt_quiet() {
-        assert_suggestion_result("I couldn't quiet understand everything", QuiteQuiet::default(), "I couldn't quite understand everything", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I couldn't quiet understand everything",
+            QuiteQuiet::default(),
+            "I couldn't quite understand everything",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

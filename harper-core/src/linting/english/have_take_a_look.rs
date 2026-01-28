@@ -1,7 +1,7 @@
 use crate::{
     EnglishDialect, Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -94,7 +94,7 @@ impl ExprLinter for HaveTakeALook {
 mod tests {
     use crate::{
         EnglishDialect,
-        linting::{HaveTakeALook, tests::assert_suggestion_result},
+        linting::english::{HaveTakeALook, tests::assert_suggestion_result},
     };
 
     #[test]

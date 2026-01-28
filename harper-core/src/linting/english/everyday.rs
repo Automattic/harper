@@ -214,7 +214,7 @@ impl ExprLinter for Everyday {
 #[cfg(test)]
 mod tests {
     use super::Everyday;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
@@ -230,18 +230,33 @@ mod tests {
 
     #[test]
     fn correct_adjective_at_end_of_chunk() {
-        assert_suggestion_result("This is something I do everyday.", Everyday::default(), "This is something I do every day.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is something I do everyday.",
+            Everyday::default(),
+            "This is something I do every day.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_adverb_after_article_before_noun() {
-        assert_suggestion_result("It's nothing special, just an every day thing.", Everyday::default(), "It's nothing special, just an everyday thing.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's nothing special, just an every day thing.",
+            Everyday::default(),
+            "It's nothing special, just an everyday thing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Can't yet match end-of-chunk after it. Adjective before is legit for both adjective and adverb."]
     fn correct_adjective_without_following_noun() {
-        assert_suggestion_result("Some git commands used everyday", Everyday::default(), "Some git commands used every day", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Some git commands used everyday",
+            Everyday::default(),
+            "Some git commands used every day",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -269,7 +284,12 @@ mod tests {
 
     #[test]
     fn correct_everyday_at_end_of_sentence_after_past_verb() {
-        assert_suggestion_result("Trying to write about what I learned everyday.", Everyday::default(), "Trying to write about what I learned every day.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Trying to write about what I learned everyday.",
+            Everyday::default(),
+            "Trying to write about what I learned every day.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -303,7 +323,12 @@ mod tests {
     #[test]
     #[ignore = "replace_with_match_case_str converts to EveryDay instead of Everyday"]
     fn correct_every_day_after_article() {
-        assert_suggestion_result("The Every Day Calendar with Dark Mode", Everyday::default(), "The Everyday Calendar with Dark Mode", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Every Day Calendar with Dark Mode",
+            Everyday::default(),
+            "The Everyday Calendar with Dark Mode",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -362,72 +387,142 @@ mod tests {
 
     #[test]
     fn fix_everyday_and_every_day_used_wrongly() {
-        assert_top3_suggestion_result("Each and everyday you ought to strive to learn something that is not an every day thing.", Everyday::default(), "Each and every day you ought to strive to learn something that is not an everyday thing.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Each and everyday you ought to strive to learn something that is not an every day thing.",
+            Everyday::default(),
+            "Each and every day you ought to strive to learn something that is not an everyday thing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_why_does_everyday() {
-        assert_top3_suggestion_result("Why does everyday feel the same?", Everyday::default(), "Why does every day feel the same?", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Why does everyday feel the same?",
+            Everyday::default(),
+            "Why does every day feel the same?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_everyday_is_going_to() {
-        assert_top3_suggestion_result("... everyday is going to be a good day that's just the way it is!", Everyday::default(), "... every day is going to be a good day that's just the way it is!", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "... everyday is going to be a good day that's just the way it is!",
+            Everyday::default(),
+            "... every day is going to be a good day that's just the way it is!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_draw_everyday() {
-        assert_top3_suggestion_result("Do you actually improve if you draw everyday?", Everyday::default(), "Do you actually improve if you draw every day?", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Do you actually improve if you draw everyday?",
+            Everyday::default(),
+            "Do you actually improve if you draw every day?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_two_bad_out_of_three() {
-        assert_top3_suggestion_result("Yes you can jog everyday, not a personal best every day, but a steady pace run everyday.", Everyday::default(), "Yes you can jog every day, not a personal best every day, but a steady pace run every day.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Yes you can jog everyday, not a personal best every day, but a steady pace run everyday.",
+            Everyday::default(),
+            "Yes you can jog every day, not a personal best every day, but a steady pace run every day.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_every_day_routine() {
-        assert_top3_suggestion_result("Habit stacking - stacking the small skill with something that's already worked into my every day routine.", Everyday::default(), "Habit stacking - stacking the small skill with something that's already worked into my everyday routine.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Habit stacking - stacking the small skill with something that's already worked into my every day routine.",
+            Everyday::default(),
+            "Habit stacking - stacking the small skill with something that's already worked into my everyday routine.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_stackoverflow_every_day_things() {
-        assert_top3_suggestion_result("However, the message goes far beyond every day things.", Everyday::default(), "However, the message goes far beyond everyday things.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "However, the message goes far beyond every day things.",
+            Everyday::default(),
+            "However, the message goes far beyond everyday things.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_reddit_everyday_is_same() {
-        assert_top3_suggestion_result("Everyday is exactly the same", Everyday::default(), "Every day is exactly the same", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Everyday is exactly the same",
+            Everyday::default(),
+            "Every day is exactly the same",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "doesn't work yet because title case demands 'Every Day' but we get 'Every day'"]
     fn fix_medium_little_bit_everyday() {
-        assert_top3_suggestion_result("Does Learning A Little Bit Everyday Actually Work?", Everyday::default(), "Does Learning A Little Bit Every Day Actually Work?", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Does Learning A Little Bit Everyday Actually Work?",
+            Everyday::default(),
+            "Does Learning A Little Bit Every Day Actually Work?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_stackexchange_use_everyday() {
-        assert_top3_suggestion_result("We use this everyday without noticing, but we hate it when ...", Everyday::default(), "We use this every day without noticing, but we hate it when ...", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "We use this everyday without noticing, but we hate it when ...",
+            Everyday::default(),
+            "We use this every day without noticing, but we hate it when ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_github_what_i_learned_everyday() {
-        assert_top3_suggestion_result("Trying to write about what I learned everyday.", Everyday::default(), "Trying to write about what I learned every day.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Trying to write about what I learned everyday.",
+            Everyday::default(),
+            "Trying to write about what I learned every day.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_medium_one_bad_out_of_three() {
-        assert_top3_suggestion_result("Even inside a routine, everyday we adapt to changes and challenges ... We are not the same person every day, but every day we are ourselves…", Everyday::default(), "Even inside a routine, every day we adapt to changes and challenges ... We are not the same person every day, but every day we are ourselves…", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Even inside a routine, everyday we adapt to changes and challenges ... We are not the same person every day, but every day we are ourselves…",
+            Everyday::default(),
+            "Even inside a routine, every day we adapt to changes and challenges ... We are not the same person every day, but every day we are ourselves…",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_medium_doing_something_everyday() {
-        assert_top3_suggestion_result("There was nothing wrong with my braincells processing the concepts of doing something everyday and ...", Everyday::default(), "There was nothing wrong with my braincells processing the concepts of doing something every day and ...", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "There was nothing wrong with my braincells processing the concepts of doing something everyday and ...",
+            Everyday::default(),
+            "There was nothing wrong with my braincells processing the concepts of doing something every day and ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_medium_all_caps() {
-        assert_top3_suggestion_result("MEET SOMEONE NEW EVERYDAY.", Everyday::default(), "MEET SOMEONE NEW EVERY DAY.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "MEET SOMEONE NEW EVERYDAY.",
+            Everyday::default(),
+            "MEET SOMEONE NEW EVERY DAY.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

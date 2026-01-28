@@ -1,7 +1,7 @@
 mod general;
 
 use super::effect_affect::EffectAffect;
-use crate::linting::merge_linters::merge_linters;
+use crate::linting::english::merge_linters::merge_linters;
 use general::GeneralNounInsteadOfVerb;
 
 merge_linters! {

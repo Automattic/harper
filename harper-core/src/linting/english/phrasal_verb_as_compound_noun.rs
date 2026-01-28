@@ -294,7 +294,9 @@ fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
 #[cfg(test)]
 mod tests {
     use super::PhrasalVerbAsCompoundNoun;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_lint_count, assert_no_lints, assert_suggestion_result,
+    };
 
     #[test]
     fn flag_breakup_and_workout() {
@@ -307,7 +309,12 @@ mod tests {
 
     #[test]
     fn correct_breakup_and_workout() {
-        assert_suggestion_result("I will never breakup with Gym. We just seem to workout.", PhrasalVerbAsCompoundNoun::default(), "I will never break up with Gym. We just seem to work out.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I will never breakup with Gym. We just seem to workout.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I will never break up with Gym. We just seem to work out.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -322,12 +329,22 @@ mod tests {
 
     #[test]
     fn correct_after_i() {
-        assert_suggestion_result("I backup", PhrasalVerbAsCompoundNoun::default(), "I back up", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I backup",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I back up",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_after_we() {
-        assert_suggestion_result("we breakup", PhrasalVerbAsCompoundNoun::default(), "we break up", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "we breakup",
+            PhrasalVerbAsCompoundNoun::default(),
+            "we break up",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -343,12 +360,22 @@ mod tests {
 
     #[test]
     fn correct_after_you_lowercase() {
-        assert_suggestion_result("you checkout", PhrasalVerbAsCompoundNoun::default(), "you check out", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "you checkout",
+            PhrasalVerbAsCompoundNoun::default(),
+            "you check out",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_after_you_capitalized() {
-        assert_suggestion_result("You checkout", PhrasalVerbAsCompoundNoun::default(), "You check out", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You checkout",
+            PhrasalVerbAsCompoundNoun::default(),
+            "You check out",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -358,7 +385,12 @@ mod tests {
 
     #[test]
     fn correct_after_they_lowercase() {
-        assert_suggestion_result("they cleanup", PhrasalVerbAsCompoundNoun::default(), "they clean up", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "they cleanup",
+            PhrasalVerbAsCompoundNoun::default(),
+            "they clean up",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -546,7 +578,12 @@ mod tests {
 
     #[test]
     fn fix_backup_individual_apps() {
-        assert_suggestion_result("It requires root and allows you to backup individual apps and their data.", PhrasalVerbAsCompoundNoun::default(), "It requires root and allows you to back up individual apps and their data.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It requires root and allows you to backup individual apps and their data.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "It requires root and allows you to back up individual apps and their data.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -44,7 +44,7 @@ impl Linter for NumberSuffixCapitalization {
 #[cfg(test)]
 mod tests {
     use super::NumberSuffixCapitalization;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::english::tests::assert_lint_count;
 
     #[test]
     fn detects_uppercase_suffix() {

@@ -1,7 +1,7 @@
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -54,34 +54,59 @@ impl ExprLinter for CautionaryTale {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         CautionaryTale,
         tests::{assert_lint_count, assert_suggestion_result},
     };
 
     #[test]
     fn catches_cautionary_tail() {
-        assert_suggestion_result("It serves as a cautionary tail.", CautionaryTale::default(), "It serves as a cautionary tale.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It serves as a cautionary tail.",
+            CautionaryTale::default(),
+            "It serves as a cautionary tale.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_inspirational_tail() {
-        assert_suggestion_result("Her journey is an inspirational tail of perseverance.", CautionaryTale::default(), "Her journey is an inspirational tale of perseverance.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Her journey is an inspirational tail of perseverance.",
+            CautionaryTale::default(),
+            "Her journey is an inspirational tale of perseverance.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_capitalized_cautionary_tail() {
-        assert_suggestion_result("The article discusses a Cautionary Tail about privacy.", CautionaryTale::default(), "The article discusses a Cautionary Tale about privacy.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The article discusses a Cautionary Tail about privacy.",
+            CautionaryTale::default(),
+            "The article discusses a Cautionary Tale about privacy.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_uppercase_cautionary_tail() {
-        assert_suggestion_result("THE STORY IS A CAUTIONARY TAIL.", CautionaryTale::default(), "THE STORY IS A CAUTIONARY TALE.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "THE STORY IS A CAUTIONARY TAIL.",
+            CautionaryTale::default(),
+            "THE STORY IS A CAUTIONARY TALE.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_mixed_case() {
-        assert_suggestion_result("This serves as an inspirational Tail for all.", CautionaryTale::default(), "This serves as an inspirational Tale for all.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This serves as an inspirational Tail for all.",
+            CautionaryTale::default(),
+            "This serves as an inspirational Tale for all.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -118,7 +143,12 @@ mod tests {
 
     #[test]
     fn catches_in_longer_text() {
-        assert_suggestion_result("The movie presents a cautionary tail about the dangers of AI. It's really scary.", CautionaryTale::default(), "The movie presents a cautionary tale about the dangers of AI. It's really scary.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The movie presents a cautionary tail about the dangers of AI. It's really scary.",
+            CautionaryTale::default(),
+            "The movie presents a cautionary tale about the dangers of AI. It's really scary.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -141,6 +171,11 @@ mod tests {
 
     #[test]
     fn catches_at_start_of_sentence() {
-        assert_suggestion_result("Cautionary tail: don't trust strangers.", CautionaryTale::default(), "Cautionary tale: don't trust strangers.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cautionary tail: don't trust strangers.",
+            CautionaryTale::default(),
+            "Cautionary tale: don't trust strangers.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

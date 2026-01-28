@@ -55,7 +55,7 @@ impl ExprLinter for PossessiveYour {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
@@ -64,7 +64,12 @@ mod tests {
     #[test]
     #[should_panic] // currently fails because comments is a homographs (verb or noun)
     fn your_comments() {
-        assert_suggestion_result("You comments may end up in the documentation.", PossessiveYour::default(), "Your comments may end up in the documentation.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You comments may end up in the documentation.",
+            PossessiveYour::default(),
+            "Your comments may end up in the documentation.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -87,18 +92,33 @@ mod tests {
 
     #[test]
     fn test_top3_suggestion_your() {
-        assert_top3_suggestion_result("You combination of artist and teacher.", PossessiveYour::default(), "Your combination of artist and teacher.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "Your combination of artist and teacher.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_top3_suggestion_youre_a() {
-        assert_top3_suggestion_result("You combination of artist and teacher.", PossessiveYour::default(), "You're a combination of artist and teacher.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "You're a combination of artist and teacher.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore]
     fn test_top3_suggestion_multiple() {
-        assert_top3_suggestion_result("You knowledge. You imagination. You icosahedron", PossessiveYour::default(), "Your knowledge. Your imagination. You're an icosahedron", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "You knowledge. You imagination. You icosahedron",
+            PossessiveYour::default(),
+            "Your knowledge. Your imagination. You're an icosahedron",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

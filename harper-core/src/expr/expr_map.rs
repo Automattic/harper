@@ -12,7 +12,7 @@ use super::Expr;
 ///
 /// The [`ExprMap`] unifies these two lists into one.
 ///
-/// A great example of this is the [`PronounInfectionBe`](crate::linting::PronounInflectionBe)
+/// A great example of this is the [`PronounInfectionBe`](crate::linting::english::PronounInflectionBe)
 /// rule.
 /// It builds a list of incorrect `PRONOUN + BE` combinations, alongside their corrections.
 ///

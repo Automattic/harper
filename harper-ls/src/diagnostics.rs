@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use harper_core::linting::{Lint, Suggestion};
+use harper_core::linting::english::{Lint, Suggestion};
 use harper_core::{CharStringExt, Document};
 use harper_stats::RecordKind;
 use serde_json::Value;

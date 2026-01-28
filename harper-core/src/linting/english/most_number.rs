@@ -75,7 +75,7 @@ impl ExprLinter for MostNumber {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
@@ -83,18 +83,33 @@ mod tests {
 
     #[test]
     fn corrects_most_number() {
-        assert_suggestion_result("Find artists that have been on Spotify the most number of times.", MostNumber::default(), "Find artists that have been on Spotify the highest number of times.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Find artists that have been on Spotify the most number of times.",
+            MostNumber::default(),
+            "Find artists that have been on Spotify the highest number of times.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "replace_with_match_case currently produces 'GreatEst'"]
     fn corrects_most_amount_title_case() {
-        assert_top3_suggestion_result("Area of Container with the Most Amount of Water", MostNumber::default(), "Area of Container with the Greatest Amount of Water", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Area of Container with the Most Amount of Water",
+            MostNumber::default(),
+            "Area of Container with the Greatest Amount of Water",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_most_amount() {
-        assert_top3_suggestion_result("I just wanted to make sure it's good for the most amount of people, not just what I like.", MostNumber::default(), "I just wanted to make sure it's good for the greatest amount of people, not just what I like.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "I just wanted to make sure it's good for the most amount of people, not just what I like.",
+            MostNumber::default(),
+            "I just wanted to make sure it's good for the greatest amount of people, not just what I like.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -108,6 +123,11 @@ mod tests {
 
     #[test]
     fn corrects_most_amount_with_maximum() {
-        assert_top3_suggestion_result("If you want to support the most amount of different architectures ...", MostNumber::default(), "If you want to support the maximum amount of different architectures ...", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "If you want to support the most amount of different architectures ...",
+            MostNumber::default(),
+            "If you want to support the maximum amount of different architectures ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

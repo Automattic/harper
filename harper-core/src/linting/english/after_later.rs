@@ -1,6 +1,6 @@
 use crate::Token;
 use crate::expr::{DurationExpr, Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 pub struct AfterLater {
@@ -70,7 +70,7 @@ impl ExprLinter for AfterLater {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{AfterLater, tests::assert_top3_suggestion_result};
+    use crate::linting::english::{AfterLater, tests::assert_top3_suggestion_result};
 
     #[test]
     fn after_90_days_later() {

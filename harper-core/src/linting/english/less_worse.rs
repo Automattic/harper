@@ -101,7 +101,9 @@ impl ExprLinter for LessWorse {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_good_and_bad_suggestions, assert_top3_suggestion_result,
+    };
 
     use super::LessWorse;
 
@@ -134,7 +136,12 @@ mod tests {
 
     #[test]
     fn correct_less_worse() {
-        assert_top3_suggestion_result("Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less worse.", LessWorse::default(), "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less bad.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less worse.",
+            LessWorse::default(),
+            "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less bad.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

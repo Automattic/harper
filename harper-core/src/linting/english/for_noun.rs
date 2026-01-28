@@ -53,11 +53,16 @@ impl ExprLinter for ForNoun {
 #[cfg(test)]
 mod tests {
     use super::ForNoun;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_fro_basic_correction() {
-        assert_suggestion_result("I got a text fro Sarah.", ForNoun::default(), "I got a text for Sarah.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I got a text fro Sarah.",
+            ForNoun::default(),
+            "I got a text for Sarah.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -67,6 +72,11 @@ mod tests {
 
     #[test]
     fn corrects_fro_sure() {
-        assert_suggestion_result("He was away fro sure!", ForNoun::default(), "He was away for sure!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He was away fro sure!",
+            ForNoun::default(),
+            "He was away for sure!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

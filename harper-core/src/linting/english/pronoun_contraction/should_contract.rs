@@ -8,7 +8,7 @@ use crate::expr::SequenceExpr;
 use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
-use crate::linting::{ExprLinter, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -104,7 +104,7 @@ impl ExprLinter for ShouldContract {
 #[cfg(test)]
 mod tests {
     use super::ShouldContract;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn contracts_your_correctly() {

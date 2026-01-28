@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use itertools::Itertools;
 
 use crate::char_ext::CharExt;
-use crate::linting::{Lint, LintKind, Linter, Suggestion};
+use crate::linting::english::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, TokenStringExt};
 
 #[derive(Debug, Default)]
@@ -207,7 +207,7 @@ fn is_likely_acronym(word: &[char]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::AnA;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::english::tests::assert_lint_count;
 
     #[test]
     fn detects_html_as_vowel() {

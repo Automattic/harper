@@ -3,7 +3,7 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
     Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -59,26 +59,46 @@ impl ExprLinter for ElsePossessive {
 #[cfg(test)]
 mod tests {
     use super::ElsePossessive;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fixes_no_one_elses() {
-        assert_suggestion_result("It's no one elses problem.", ElsePossessive::default(), "It's no one else's problem.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's no one elses problem.",
+            ElsePossessive::default(),
+            "It's no one else's problem.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_someone_elses() {
-        assert_suggestion_result("It's someone elses problem.", ElsePossessive::default(), "It's someone else's problem.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's someone elses problem.",
+            ElsePossessive::default(),
+            "It's someone else's problem.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_anybody_elses() {
-        assert_suggestion_result("Was that anybody elses idea?", ElsePossessive::default(), "Was that anybody else's idea?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Was that anybody elses idea?",
+            ElsePossessive::default(),
+            "Was that anybody else's idea?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_everyone_elses() {
-        assert_suggestion_result("He echoed everyone elses concerns.", ElsePossessive::default(), "He echoed everyone else's concerns.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He echoed everyone elses concerns.",
+            ElsePossessive::default(),
+            "He echoed everyone else's concerns.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

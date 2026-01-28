@@ -49,11 +49,16 @@ impl ExprLinter for DespiteOf {
 #[cfg(test)]
 mod tests {
     use super::DespiteOf;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn catches_lowercase() {
-        assert_suggestion_result("The team performed well, despite of the difficulties they faced.", DespiteOf::default(), "The team performed well, despite the difficulties they faced.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The team performed well, despite of the difficulties they faced.",
+            DespiteOf::default(),
+            "The team performed well, despite the difficulties they faced.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

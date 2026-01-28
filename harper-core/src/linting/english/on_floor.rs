@@ -5,7 +5,7 @@ use crate::expr::SequenceExpr;
 use crate::patterns::WordSet;
 use crate::{
     Lrc, Token, TokenStringExt,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct OnFloor {
@@ -93,7 +93,7 @@ impl ExprLinter for OnFloor {
 #[cfg(test)]
 mod tests {
     use super::OnFloor;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn not_lint_with_correct_phrase() {
@@ -106,22 +106,42 @@ mod tests {
 
     #[test]
     fn lint_with_in() {
-        assert_suggestion_result("I'm living in the 3rd floor of a building.", OnFloor::default(), "I'm living on the 3rd floor of a building.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm living in the 3rd floor of a building.",
+            OnFloor::default(),
+            "I'm living on the 3rd floor of a building.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lint_with_at() {
-        assert_suggestion_result("I'm living at the second floor of a building.", OnFloor::default(), "I'm living on the second floor of a building.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm living at the second floor of a building.",
+            OnFloor::default(),
+            "I'm living on the second floor of a building.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn in_the_start_of_sentence() {
-        assert_suggestion_result("In the 3rd floor of a building.", OnFloor::default(), "On the 3rd floor of a building.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "In the 3rd floor of a building.",
+            OnFloor::default(),
+            "On the 3rd floor of a building.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn at_the_start_of_sentence() {
-        assert_suggestion_result("At the second floor of a building.", OnFloor::default(), "On the second floor of a building.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "At the second floor of a building.",
+            OnFloor::default(),
+            "On the second floor of a building.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

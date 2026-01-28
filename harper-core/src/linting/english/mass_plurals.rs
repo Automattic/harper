@@ -3,7 +3,7 @@ use hashbrown::HashSet;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     spell::Dictionary,
 };
 
@@ -149,7 +149,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        linting::english::tests::{assert_lint_count, assert_suggestion_result},
         spell::FstDictionary,
     };
 

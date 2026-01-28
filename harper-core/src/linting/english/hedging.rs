@@ -1,7 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::linting::{ExprLinter, Lint, LintKind};
+use crate::linting::english::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.
@@ -47,7 +47,7 @@ impl ExprLinter for Hedging {
 #[cfg(test)]
 mod tests {
     use super::Hedging;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::english::tests::assert_lint_count;
 
     #[test]
     fn detects_hedging_phrase() {

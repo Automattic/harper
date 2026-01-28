@@ -56,26 +56,46 @@ impl ExprLinter for HavePronoun {
 #[cfg(test)]
 mod tests {
     use super::HavePronoun;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_has_we() {
-        assert_suggestion_result("Has we finished the report?", HavePronoun::default(), "Have we finished the report?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Has we finished the report?",
+            HavePronoun::default(),
+            "Have we finished the report?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_has_you() {
-        assert_suggestion_result("Has you misunderstood?", HavePronoun::default(), "Have you misunderstood?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Has you misunderstood?",
+            HavePronoun::default(),
+            "Have you misunderstood?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_has_i() {
-        assert_suggestion_result("Has I misunderstood?", HavePronoun::default(), "Have I misunderstood?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Has I misunderstood?",
+            HavePronoun::default(),
+            "Have I misunderstood?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_has_they() {
-        assert_suggestion_result("Has they arrived yet?", HavePronoun::default(), "Have they arrived yet?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Has they arrived yet?",
+            HavePronoun::default(),
+            "Have they arrived yet?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

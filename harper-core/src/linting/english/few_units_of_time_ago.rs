@@ -3,7 +3,7 @@ use crate::expr::SequenceExpr;
 use crate::expr::TimeUnitExpr;
 use crate::{
     Lrc, Token,
-    linting::{ExprLinter, Lint, Suggestion},
+    linting::english::{ExprLinter, Lint, Suggestion},
 };
 
 pub struct FewUnitsOfTimeAgo {
@@ -69,7 +69,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 
@@ -78,7 +78,12 @@ mod tests {
     #[test]
     #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_few_minutes_ago() {
-        assert_suggestion_result("Few minutes ago", FewUnitsOfTimeAgo::default(), "A few minutes ago", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Few minutes ago",
+            FewUnitsOfTimeAgo::default(),
+            "A few minutes ago",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -88,7 +93,12 @@ mod tests {
 
     #[test]
     fn fix_done_few_minutes_ago() {
-        assert_top3_suggestion_result("Done few minutes ago", FewUnitsOfTimeAgo::default(), "Done a few minutes ago", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Done few minutes ago",
+            FewUnitsOfTimeAgo::default(),
+            "Done a few minutes ago",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -99,65 +109,125 @@ mod tests {
     #[test]
     #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_after_space() {
-        assert_suggestion_result(" Few minutes ago.", FewUnitsOfTimeAgo::default(), " A few minutes ago.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            " Few minutes ago.",
+            FewUnitsOfTimeAgo::default(),
+            " A few minutes ago.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_2nd_sentence() {
-        assert_suggestion_result("Hello World. Few minutes ago I bought your planet.", FewUnitsOfTimeAgo::default(), "Hello World. A few minutes ago I bought your planet.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Hello World. Few minutes ago I bought your planet.",
+            FewUnitsOfTimeAgo::default(),
+            "Hello World. A few minutes ago I bought your planet.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Real world examples from GitHub
 
     #[test]
     fn fix_days() {
-        assert_suggestion_result("My jupyter kernel always says restarting and never ever runs i ran into the problem few days ago before it was fine dont know what happened", FewUnitsOfTimeAgo::default(), "My jupyter kernel always says restarting and never ever runs i ran into the problem a few days ago before it was fine dont know what happened", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My jupyter kernel always says restarting and never ever runs i ran into the problem few days ago before it was fine dont know what happened",
+            FewUnitsOfTimeAgo::default(),
+            "My jupyter kernel always says restarting and never ever runs i ran into the problem a few days ago before it was fine dont know what happened",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_decades() {
-        assert_suggestion_result("This is very old piece of software I wrote few decades ago.", FewUnitsOfTimeAgo::default(), "This is very old piece of software I wrote a few decades ago.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is very old piece of software I wrote few decades ago.",
+            FewUnitsOfTimeAgo::default(),
+            "This is very old piece of software I wrote a few decades ago.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_hours() {
-        assert_suggestion_result("I just updated my index file few hours ago and there's this error.", FewUnitsOfTimeAgo::default(), "I just updated my index file a few hours ago and there's this error.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I just updated my index file few hours ago and there's this error.",
+            FewUnitsOfTimeAgo::default(),
+            "I just updated my index file a few hours ago and there's this error.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_minutes() {
-        assert_suggestion_result("mysql installed few minutes ago somehow , ubuntu bash thinks its not installed.", FewUnitsOfTimeAgo::default(), "mysql installed a few minutes ago somehow , ubuntu bash thinks its not installed.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "mysql installed few minutes ago somehow , ubuntu bash thinks its not installed.",
+            FewUnitsOfTimeAgo::default(),
+            "mysql installed a few minutes ago somehow , ubuntu bash thinks its not installed.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_months() {
-        assert_suggestion_result("Hello, I was working with D455 few months ago, and everything was working fine.", FewUnitsOfTimeAgo::default(), "Hello, I was working with D455 a few months ago, and everything was working fine.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Hello, I was working with D455 few months ago, and everything was working fine.",
+            FewUnitsOfTimeAgo::default(),
+            "Hello, I was working with D455 a few months ago, and everything was working fine.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_ms() {
-        assert_suggestion_result("So I not sure, by getting old signal (get from few ms ago), will it affected my result badly?", FewUnitsOfTimeAgo::default(), "So I not sure, by getting old signal (get from a few ms ago), will it affected my result badly?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "So I not sure, by getting old signal (get from few ms ago), will it affected my result badly?",
+            FewUnitsOfTimeAgo::default(),
+            "So I not sure, by getting old signal (get from a few ms ago), will it affected my result badly?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_seconds() {
-        assert_suggestion_result("I have submitted the same issue few seconds ago.", FewUnitsOfTimeAgo::default(), "I have submitted the same issue a few seconds ago.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I have submitted the same issue few seconds ago.",
+            FewUnitsOfTimeAgo::default(),
+            "I have submitted the same issue a few seconds ago.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_weekends() {
-        assert_suggestion_result("This challenge is a Python jail escape and lucky for me our team had just done one few weekends ago so I was fairly familiar with the tricks to break out.", FewUnitsOfTimeAgo::default(), "This challenge is a Python jail escape and lucky for me our team had just done one a few weekends ago so I was fairly familiar with the tricks to break out.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This challenge is a Python jail escape and lucky for me our team had just done one few weekends ago so I was fairly familiar with the tricks to break out.",
+            FewUnitsOfTimeAgo::default(),
+            "This challenge is a Python jail escape and lucky for me our team had just done one a few weekends ago so I was fairly familiar with the tricks to break out.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_weeks() {
-        assert_suggestion_result("Terraform cloud crashes on plan (same configuration worked few weeks ago)", FewUnitsOfTimeAgo::default(), "Terraform cloud crashes on plan (same configuration worked a few weeks ago)", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Terraform cloud crashes on plan (same configuration worked few weeks ago)",
+            FewUnitsOfTimeAgo::default(),
+            "Terraform cloud crashes on plan (same configuration worked a few weeks ago)",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_years() {
-        assert_suggestion_result("sandbox-exec was deprecated on MacOS few years ago", FewUnitsOfTimeAgo::default(), "sandbox-exec was deprecated on MacOS a few years ago", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "sandbox-exec was deprecated on MacOS few years ago",
+            FewUnitsOfTimeAgo::default(),
+            "sandbox-exec was deprecated on MacOS a few years ago",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Real world non-errors from GitHub
@@ -395,22 +465,42 @@ mod tests {
 
     #[test]
     fn fix_day() {
-        assert_suggestion_result("That worked few day ago with the same setting.", FewUnitsOfTimeAgo::default(), "That worked a few day ago with the same setting.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That worked few day ago with the same setting.",
+            FewUnitsOfTimeAgo::default(),
+            "That worked a few day ago with the same setting.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_decade() {
-        assert_suggestion_result("few decade ago, African Americans weren't allowed to swim in public", FewUnitsOfTimeAgo::default(), "a few decade ago, African Americans weren't allowed to swim in public", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "few decade ago, African Americans weren't allowed to swim in public",
+            FewUnitsOfTimeAgo::default(),
+            "a few decade ago, African Americans weren't allowed to swim in public",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_minute() {
-        assert_suggestion_result("All works fine, but few minute ago the device stop responding from web", FewUnitsOfTimeAgo::default(), "All works fine, but a few minute ago the device stop responding from web", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "All works fine, but few minute ago the device stop responding from web",
+            FewUnitsOfTimeAgo::default(),
+            "All works fine, but a few minute ago the device stop responding from web",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_weekend() {
-        assert_suggestion_result("I have done this few weekend ago.", FewUnitsOfTimeAgo::default(), "I have done this a few weekend ago.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I have done this few weekend ago.",
+            FewUnitsOfTimeAgo::default(),
+            "I have done this a few weekend ago.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

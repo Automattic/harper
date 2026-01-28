@@ -401,7 +401,7 @@ mod tests {
 
     use crate::{
         CharStringExt, EnglishDialect,
-        linting::{
+        linting::english::{
             SpellCheck,
             tests::{assert_suggestion_result, assert_top3_suggestion_result},
         },

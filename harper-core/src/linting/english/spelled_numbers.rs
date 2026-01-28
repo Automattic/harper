@@ -1,4 +1,4 @@
-use crate::linting::{LintKind, Linter, Suggestion};
+use crate::linting::english::{LintKind, Linter, Suggestion};
 use crate::{Document, Lint, Number, TokenStringExt};
 
 /// Linter that checks to make sure small integers (< 10) are spelled
@@ -101,7 +101,7 @@ fn spell_out_number(num: u64) -> Option<String> {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::{SpelledNumbers, spell_out_number};
 
@@ -125,12 +125,22 @@ mod tests {
 
     #[test]
     fn corrects_nine() {
-        assert_suggestion_result("There are 9 pigs.", SpelledNumbers, "There are nine pigs.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "There are 9 pigs.",
+            SpelledNumbers,
+            "There are nine pigs.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_correct_ten() {
-        assert_suggestion_result("There are 10 pigs.", SpelledNumbers, "There are 10 pigs.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "There are 10 pigs.",
+            SpelledNumbers,
+            "There are 10 pigs.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     /// Check that the algorithm won't stack overflow or return `None` for any numbers within the specified range.

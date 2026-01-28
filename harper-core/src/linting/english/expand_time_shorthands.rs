@@ -5,7 +5,7 @@ use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
-use crate::linting::Suggestion;
+use crate::linting::english::Suggestion;
 use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandTimeShorthands {
@@ -99,77 +99,147 @@ impl ExprLinter for ExpandTimeShorthands {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::ExpandTimeShorthands;
 
     #[test]
     fn detects_singular_hour() {
-        assert_suggestion_result("5 hr", ExpandTimeShorthands::new(), "5 hours", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "5 hr",
+            ExpandTimeShorthands::new(),
+            "5 hours",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_singular_minute() {
-        assert_suggestion_result("10 min", ExpandTimeShorthands::new(), "10 minutes", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "10 min",
+            ExpandTimeShorthands::new(),
+            "10 minutes",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_singular_second() {
-        assert_suggestion_result("30 sec", ExpandTimeShorthands::new(), "30 seconds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "30 sec",
+            ExpandTimeShorthands::new(),
+            "30 seconds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_plural_hours() {
-        assert_suggestion_result("5 hrs", ExpandTimeShorthands::new(), "5 hours", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "5 hrs",
+            ExpandTimeShorthands::new(),
+            "5 hours",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_plural_minutes() {
-        assert_suggestion_result("10 mins", ExpandTimeShorthands::new(), "10 minutes", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "10 mins",
+            ExpandTimeShorthands::new(),
+            "10 minutes",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_plural_seconds() {
-        assert_suggestion_result("30 secs", ExpandTimeShorthands::new(), "30 seconds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "30 secs",
+            ExpandTimeShorthands::new(),
+            "30 seconds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_millisecond() {
-        assert_suggestion_result("5 ms", ExpandTimeShorthands::new(), "5 milliseconds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "5 ms",
+            ExpandTimeShorthands::new(),
+            "5 milliseconds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_milliseconds() {
-        assert_suggestion_result("10 msecs", ExpandTimeShorthands::new(), "10 milliseconds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "10 msecs",
+            ExpandTimeShorthands::new(),
+            "10 milliseconds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_punctuation_hour() {
-        assert_suggestion_result("5 hr.", ExpandTimeShorthands::new(), "5 hours.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "5 hr.",
+            ExpandTimeShorthands::new(),
+            "5 hours.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_punctuation_minute() {
-        assert_suggestion_result("10 min,", ExpandTimeShorthands::new(), "10 minutes,", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "10 min,",
+            ExpandTimeShorthands::new(),
+            "10 minutes,",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_punctuation_second() {
-        assert_suggestion_result("30 sec!", ExpandTimeShorthands::new(), "30 seconds!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "30 sec!",
+            ExpandTimeShorthands::new(),
+            "30 seconds!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_adjacent_number_hour() {
-        assert_suggestion_result("5hr", ExpandTimeShorthands::new(), "5 hours", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "5hr",
+            ExpandTimeShorthands::new(),
+            "5 hours",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_adjacent_number_minute() {
-        assert_suggestion_result("10-min", ExpandTimeShorthands::new(), "10-minutes", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "10-min",
+            ExpandTimeShorthands::new(),
+            "10-minutes",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn handles_adjacent_number_second() {
-        assert_suggestion_result("30sec", ExpandTimeShorthands::new(), "30 seconds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "30sec",
+            ExpandTimeShorthands::new(),
+            "30 seconds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

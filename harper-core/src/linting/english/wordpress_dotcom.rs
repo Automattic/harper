@@ -37,17 +37,27 @@ impl Linter for WordPressDotcom {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::WordPressDotcom;
 
     #[test]
     fn simple() {
-        assert_suggestion_result("wordpress.com", WordPressDotcom, "WordPress.com", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "wordpress.com",
+            WordPressDotcom,
+            "WordPress.com",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn sentence() {
-        assert_suggestion_result("wordpress.com is a great hosting provider", WordPressDotcom, "WordPress.com is a great hosting provider", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "wordpress.com is a great hosting provider",
+            WordPressDotcom,
+            "WordPress.com is a great hosting provider",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

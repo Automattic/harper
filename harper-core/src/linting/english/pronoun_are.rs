@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 /// Corrects the shorthand `r` after plural first- and second-person pronouns.
@@ -90,7 +90,7 @@ impl ExprLinter for PronounAre {
 #[cfg(test)]
 mod tests {
     use super::PronounAre;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
     };
 

@@ -99,37 +99,64 @@ mod tests {
     use std::sync::Arc;
 
     use super::PossessiveNoun;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
-        PossessiveNoun::new(FstDictionary::curated(crate::languages::LanguageFamily::English))
+        PossessiveNoun::new(FstDictionary::curated(
+            crate::languages::LanguageFamily::English,
+        ))
     }
 
     /// Sourced from a Hacker News comment
     #[test]
     fn fixes_hn() {
-        assert_suggestion_result("Me and Jennifer went to have seen the ducks cousin.", test_linter(), "Me and Jennifer went to have seen the duck's cousin.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Me and Jennifer went to have seen the ducks cousin.",
+            test_linter(),
+            "Me and Jennifer went to have seen the duck's cousin.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_cats_tail() {
-        assert_suggestion_result("The cats tail is long.", test_linter(), "The cat's tail is long.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The cats tail is long.",
+            test_linter(),
+            "The cat's tail is long.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_children_toys() {
-        assert_suggestion_result("The children toys were scattered.", test_linter(), "The children's toys were scattered.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The children toys were scattered.",
+            test_linter(),
+            "The children's toys were scattered.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_teachers_lounge() {
-        assert_suggestion_result("Many schools have a teachers lounge.", test_linter(), "Many schools have a teacher's lounge.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Many schools have a teachers lounge.",
+            test_linter(),
+            "Many schools have a teacher's lounge.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_ducks_park() {
-        assert_suggestion_result("Kids played in the ducks park.", test_linter(), "Kids played in the duck's park.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Kids played in the ducks park.",
+            test_linter(),
+            "Kids played in the duck's park.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -144,37 +171,72 @@ mod tests {
 
     #[test]
     fn fixes_dogs_bone() {
-        assert_suggestion_result("The dogs bone is delicious.", test_linter(), "The dog's bone is delicious.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The dogs bone is delicious.",
+            test_linter(),
+            "The dog's bone is delicious.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_students_books() {
-        assert_suggestion_result("The students books are on the desk.", test_linter(), "The student's books are on the desk.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The students books are on the desk.",
+            test_linter(),
+            "The student's books are on the desk.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_farmers_field() {
-        assert_suggestion_result("The farmers field looked beautiful.", test_linter(), "The farmer's field looked beautiful.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The farmers field looked beautiful.",
+            test_linter(),
+            "The farmer's field looked beautiful.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_women_dress() {
-        assert_suggestion_result("The women dress was elegant.", test_linter(), "The women's dress was elegant.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The women dress was elegant.",
+            test_linter(),
+            "The women's dress was elegant.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_birds_song() {
-        assert_suggestion_result("We heard the birds song.", test_linter(), "We heard the bird's song.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We heard the birds song.",
+            test_linter(),
+            "We heard the bird's song.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_scientists_research() {
-        assert_suggestion_result("The scientists research was groundbreaking.", test_linter(), "The scientist's research was groundbreaking.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The scientists research was groundbreaking.",
+            test_linter(),
+            "The scientist's research was groundbreaking.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_artists_gallery() {
-        assert_suggestion_result("The artists gallery is open.", test_linter(), "The artist's gallery is open.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The artists gallery is open.",
+            test_linter(),
+            "The artist's gallery is open.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -189,12 +251,22 @@ mod tests {
 
     #[test]
     fn fixes_the_students_assignment() {
-        assert_suggestion_result("The students assignment was due yesterday.", test_linter(), "The student's assignment was due yesterday.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The students assignment was due yesterday.",
+            test_linter(),
+            "The student's assignment was due yesterday.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_birds_flight() {
-        assert_suggestion_result("The birds flight was graceful.", test_linter(), "The bird's flight was graceful.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The birds flight was graceful.",
+            test_linter(),
+            "The bird's flight was graceful.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -208,37 +280,72 @@ mod tests {
 
     #[test]
     fn fixes_the_farmers_crops() {
-        assert_suggestion_result("The farmers crops were bountiful this year.", test_linter(), "The farmer's crops were bountiful this year.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The farmers crops were bountiful this year.",
+            test_linter(),
+            "The farmer's crops were bountiful this year.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_artists_inspiration() {
-        assert_suggestion_result("The artists inspiration came from nature.", test_linter(), "The artist's inspiration came from nature.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The artists inspiration came from nature.",
+            test_linter(),
+            "The artist's inspiration came from nature.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_scientists_discovery() {
-        assert_suggestion_result("The scientists discovery revolutionized the field.", test_linter(), "The scientist's discovery revolutionized the field.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The scientists discovery revolutionized the field.",
+            test_linter(),
+            "The scientist's discovery revolutionized the field.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_writers_novel() {
-        assert_suggestion_result("The writers novel was a bestseller.", test_linter(), "The writer's novel was a bestseller.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The writers novel was a bestseller.",
+            test_linter(),
+            "The writer's novel was a bestseller.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_students_presentation() {
-        assert_suggestion_result("The students presentation was well-received.", test_linter(), "The student's presentation was well-received.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The students presentation was well-received.",
+            test_linter(),
+            "The student's presentation was well-received.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_teams_victory() {
-        assert_suggestion_result("The teams victory was celebrated by the fans.", test_linter(), "The team's victory was celebrated by the fans.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The teams victory was celebrated by the fans.",
+            test_linter(),
+            "The team's victory was celebrated by the fans.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_museums_collection() {
-        assert_suggestion_result("The museums collection included many artifacts.", test_linter(), "The museum's collection included many artifacts.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The museums collection included many artifacts.",
+            test_linter(),
+            "The museum's collection included many artifacts.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -253,32 +360,62 @@ mod tests {
 
     #[test]
     fn fixes_the_doctors_office() {
-        assert_suggestion_result("The doctors office is on Main Street.", test_linter(), "The doctor's office is on Main Street.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The doctors office is on Main Street.",
+            test_linter(),
+            "The doctor's office is on Main Street.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_neighbors_garden() {
-        assert_suggestion_result("The neighbors garden is beautiful.", test_linter(), "The neighbor's garden is beautiful.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The neighbors garden is beautiful.",
+            test_linter(),
+            "The neighbor's garden is beautiful.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_architects_design() {
-        assert_suggestion_result("The architects design was innovative.", test_linter(), "The architect's design was innovative.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The architects design was innovative.",
+            test_linter(),
+            "The architect's design was innovative.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_bakers_shop() {
-        assert_suggestion_result("The bakers shop is famous for its bread.", test_linter(), "The baker's shop is famous for its bread.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The bakers shop is famous for its bread.",
+            test_linter(),
+            "The baker's shop is famous for its bread.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_musics_performance() {
-        assert_suggestion_result("The musics performance was captivating.", test_linter(), "The music's performance was captivating.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The musics performance was captivating.",
+            test_linter(),
+            "The music's performance was captivating.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_the_flowers_scent() {
-        assert_suggestion_result("The flowers scent filled the room.", test_linter(), "The flower's scent filled the room.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The flowers scent filled the room.",
+            test_linter(),
+            "The flower's scent filled the room.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

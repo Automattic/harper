@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs

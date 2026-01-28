@@ -1,7 +1,7 @@
 use crate::expr::{Expr, SequenceExpr};
 use crate::{
     Token, TokenKind,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ItIs {
@@ -80,16 +80,26 @@ impl ExprLinter for ItIs {
 #[cfg(test)]
 mod tests {
     use super::ItIs;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flags_simple_case() {
-        assert_suggestion_result("Its amazing to see this.", ItIs::default(), "It's amazing to see this.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its amazing to see this.",
+            ItIs::default(),
+            "It's amazing to see this.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_with_preposition() {
-        assert_suggestion_result("Its critical for the project.", ItIs::default(), "It's critical for the project.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its critical for the project.",
+            ItIs::default(),
+            "It's critical for the project.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -119,47 +129,92 @@ mod tests {
 
     #[test]
     fn flags_search_filter_context() {
-        assert_suggestion_result("Its important to note that the search filter will currently only search the current page.", ItIs::default(), "It's important to note that the search filter will currently only search the current page.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its important to note that the search filter will currently only search the current page.",
+            ItIs::default(),
+            "It's important to note that the search filter will currently only search the current page.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_ens_restart_context() {
-        assert_suggestion_result("Today is the third day and I am still stuck on Register. Its important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.", ItIs::default(), "Today is the third day and I am still stuck on Register. It's important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Today is the third day and I am still stuck on Register. Its important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.",
+            ItIs::default(),
+            "Today is the third day and I am still stuck on Register. It's important to note that after hours of waiting, I tried to restart the process and clicked on register again but it gets stuck at TX pending.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_academics_support_context() {
-        assert_suggestion_result("To assist learners, because its critical for academics to support their ideas and arguments with sources of published research.", ItIs::default(), "To assist learners, because it's critical for academics to support their ideas and arguments with sources of published research.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "To assist learners, because its critical for academics to support their ideas and arguments with sources of published research.",
+            ItIs::default(),
+            "To assist learners, because it's critical for academics to support their ideas and arguments with sources of published research.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_parents_explain_context() {
-        assert_suggestion_result("I also think its critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.", ItIs::default(), "I also think it's critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I also think its critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.",
+            ItIs::default(),
+            "I also think it's critical for parents to explain their reason for saying no though I would advise against attempting to use logic in the face of either toddler or teenage rage.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_chapter_context() {
-        assert_suggestion_result("I think it's okay since its critical for the rest of the chapter in terms of tone and approach.", ItIs::default(), "I think it's okay since it's critical for the rest of the chapter in terms of tone and approach.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I think it's okay since its critical for the rest of the chapter in terms of tone and approach.",
+            ItIs::default(),
+            "I think it's okay since it's critical for the rest of the chapter in terms of tone and approach.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_microsoft_work_context() {
-        assert_suggestion_result("... Need help, its critical for my work, as i am a technical blog writer ...", ItIs::default(), "... Need help, it's critical for my work, as i am a technical blog writer ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "... Need help, its critical for my work, as i am a technical blog writer ...",
+            ItIs::default(),
+            "... Need help, it's critical for my work, as i am a technical blog writer ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_feminists_context() {
-        assert_suggestion_result("when it comes to the teaching of grammar and diverse linguistics practices. Its critical for feminists to think about the ways in which they frame language.", ItIs::default(), "when it comes to the teaching of grammar and diverse linguistics practices. It's critical for feminists to think about the ways in which they frame language.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "when it comes to the teaching of grammar and diverse linguistics practices. Its critical for feminists to think about the ways in which they frame language.",
+            ItIs::default(),
+            "when it comes to the teaching of grammar and diverse linguistics practices. It's critical for feminists to think about the ways in which they frame language.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_students_proofreading_context() {
-        assert_suggestion_result("its critical for students to develop a similarly sharp eye for misspellings and grammatical errors.", ItIs::default(), "it's critical for students to develop a similarly sharp eye for misspellings and grammatical errors.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "its critical for students to develop a similarly sharp eye for misspellings and grammatical errors.",
+            ItIs::default(),
+            "it's critical for students to develop a similarly sharp eye for misspellings and grammatical errors.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_americans_context() {
-        assert_suggestion_result("Its critical for Americans to realize that Fox has nothing to do with news.", ItIs::default(), "It's critical for Americans to realize that Fox has nothing to do with news.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its critical for Americans to realize that Fox has nothing to do with news.",
+            ItIs::default(),
+            "It's critical for Americans to realize that Fox has nothing to do with news.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Negative guard: correct possessive use
@@ -171,16 +226,31 @@ mod tests {
     // Imagined edge cases based on real usage:
     #[test]
     fn flags_crucial_api_context() {
-        assert_suggestion_result("Its crucial to understand the API before using it.", ItIs::default(), "It's crucial to understand the API before using it.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its crucial to understand the API before using it.",
+            ItIs::default(),
+            "It's crucial to understand the API before using it.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_essential_standards_context() {
-        assert_suggestion_result("Its essential to follow the coding standards in this project.", ItIs::default(), "It's essential to follow the coding standards in this project.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its essential to follow the coding standards in this project.",
+            ItIs::default(),
+            "It's essential to follow the coding standards in this project.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_vital_dependencies_context() {
-        assert_suggestion_result("Its vital to keep dependencies up to date.", ItIs::default(), "It's vital to keep dependencies up to date.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its vital to keep dependencies up to date.",
+            ItIs::default(),
+            "It's vital to keep dependencies up to date.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

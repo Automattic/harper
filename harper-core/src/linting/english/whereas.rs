@@ -49,12 +49,17 @@ impl ExprLinter for Whereas {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::Whereas;
 
     #[test]
     fn where_as() {
-        assert_suggestion_result("Dogs love playing fetch, where as cats are more independent creatures.", Whereas::default(), "Dogs love playing fetch, whereas cats are more independent creatures.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Dogs love playing fetch, where as cats are more independent creatures.",
+            Whereas::default(),
+            "Dogs love playing fetch, whereas cats are more independent creatures.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

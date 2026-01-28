@@ -1,6 +1,6 @@
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 
 pub struct FarBeIt {
@@ -62,19 +62,29 @@ impl ExprLinter for FarBeIt {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
+    use crate::linting::english::{
         FarBeIt,
         tests::{assert_no_lints, assert_suggestion_count, assert_suggestion_result},
     };
 
     #[test]
     fn far_be_it_for_me_capitalized() {
-        assert_suggestion_result("Far be it for me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.", FarBeIt::default(), "Far be it from me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Far be it for me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.",
+            FarBeIt::default(),
+            "Far be it from me to suggestion that additional cardinality be added to the already TOO MUCH CARDINALITY metric space.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn far_be_it_for_me_lowercase() {
-        assert_suggestion_result("Far be it for me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.", FarBeIt::default(), "Far be it from me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Far be it for me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.",
+            FarBeIt::default(),
+            "Far be it from me to tell people what to do so I'm not earnestly proposing to take away the ability to add literals to lazyframes.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -88,7 +98,12 @@ mod tests {
 
     #[test]
     fn far_be_it_for_the_software() {
-        assert_suggestion_result("Far be it for the software to give any indication of that fact.", FarBeIt::default(), "Far be it from the software to give any indication of that fact.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Far be it for the software to give any indication of that fact.",
+            FarBeIt::default(),
+            "Far be it from the software to give any indication of that fact.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

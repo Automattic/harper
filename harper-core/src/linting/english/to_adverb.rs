@@ -71,39 +71,70 @@ impl ExprLinter for ToAdverb {
 #[cfg(test)]
 mod tests {
     use super::ToAdverb;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_nth_suggestion_result, assert_suggestion_count,
         assert_suggestion_result,
     };
 
     #[test]
     fn corrects_to_never_to() {
-        assert_suggestion_result("Tom has decided to never to do that again.", ToAdverb::default(), "Tom has decided to never do that again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Tom has decided to never to do that again.",
+            ToAdverb::default(),
+            "Tom has decided to never do that again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn alternative_moves_adverb() {
-        assert_nth_suggestion_result("Tom has decided to never to do that again.", ToAdverb::default(), "Tom has decided never to do that again.", crate::languages::LanguageFamily::English, 1);
+        assert_nth_suggestion_result(
+            "Tom has decided to never to do that again.",
+            ToAdverb::default(),
+            "Tom has decided never to do that again.",
+            crate::languages::LanguageFamily::English,
+            1,
+        );
     }
 
     #[test]
     fn corrects_to_maybe_to() {
-        assert_suggestion_result("The next step is to maybe to take a language class.", ToAdverb::default(), "The next step is to maybe take a language class.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The next step is to maybe to take a language class.",
+            ToAdverb::default(),
+            "The next step is to maybe take a language class.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_to_not_to() {
-        assert_suggestion_result("He tells the monitor to not to collect anything.", ToAdverb::default(), "He tells the monitor to not collect anything.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He tells the monitor to not to collect anything.",
+            ToAdverb::default(),
+            "He tells the monitor to not collect anything.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_to_just_to() {
-        assert_suggestion_result("She told me to just to keep the peace.", ToAdverb::default(), "She told me to just keep the peace.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She told me to just to keep the peace.",
+            ToAdverb::default(),
+            "She told me to just keep the peace.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_to_really_to() {
-        assert_suggestion_result("They plan to really to push the release.", ToAdverb::default(), "They plan to really push the release.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They plan to really to push the release.",
+            ToAdverb::default(),
+            "They plan to really push the release.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -122,7 +153,12 @@ mod tests {
 
     #[test]
     fn corrects_to_quickly_to() {
-        assert_suggestion_result("They hoped to quickly to solve it.", ToAdverb::default(), "They hoped to quickly solve it.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They hoped to quickly to solve it.",
+            ToAdverb::default(),
+            "They hoped to quickly solve it.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -132,6 +168,11 @@ mod tests {
 
     #[test]
     fn handles_capitalized_to() {
-        assert_suggestion_result("To Always to succeed is the goal.", ToAdverb::default(), "To Always succeed is the goal.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "To Always to succeed is the goal.",
+            ToAdverb::default(),
+            "To Always succeed is the goal.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

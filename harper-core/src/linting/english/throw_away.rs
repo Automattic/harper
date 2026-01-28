@@ -1,7 +1,7 @@
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ThrowAway {
@@ -51,7 +51,7 @@ impl ExprLinter for ThrowAway {
 #[cfg(test)]
 mod tests {
     use super::ThrowAway;
-    use crate::linting::tests::{
+    use crate::linting::english::tests::{
         assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     };
 

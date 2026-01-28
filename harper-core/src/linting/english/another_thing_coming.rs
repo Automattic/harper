@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -48,26 +48,46 @@ impl ExprLinter for AnotherThingComing {
 #[cfg(test)]
 pub mod tests {
     use super::AnotherThingComing;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     #[test]
     fn fix_have_another_think_coming() {
-        assert_suggestion_result("If you think that, you have another think coming, English.", AnotherThingComing::default(), "If you think that, you have another thing coming, English.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If you think that, you have another think coming, English.",
+            AnotherThingComing::default(),
+            "If you think that, you have another thing coming, English.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_has_another_think_coming() {
-        assert_suggestion_result("If the wage earner thinks that he will obtain anything from either of the old parties he has another think coming.", AnotherThingComing::default(), "If the wage earner thinks that he will obtain anything from either of the old parties he has another thing coming.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If the wage earner thinks that he will obtain anything from either of the old parties he has another think coming.",
+            AnotherThingComing::default(),
+            "If the wage earner thinks that he will obtain anything from either of the old parties he has another thing coming.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "A lettercase bug results in 'another thiNG COMing.'"]
     fn fix_got_another_think_coming() {
-        assert_suggestion_result("The correct phrase is, “You've got another THINK coming.”", AnotherThingComing::default(), "The correct phrase is, “You've got another THING coming.”", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The correct phrase is, “You've got another THINK coming.”",
+            AnotherThingComing::default(),
+            "The correct phrase is, “You've got another THING coming.”",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_had_another_think_coming() {
-        assert_suggestion_result("Guess I had another think coming.", AnotherThingComing::default(), "Guess I had another thing coming.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Guess I had another think coming.",
+            AnotherThingComing::default(),
+            "Guess I had another thing coming.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

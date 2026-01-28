@@ -54,17 +54,27 @@ impl ExprLinter for Likewise {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::Likewise;
 
     #[test]
     fn wise_men() {
-        assert_suggestion_result("Like wise men, we waited.", Likewise::default(), "Like wise men, we waited.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Like wise men, we waited.",
+            Likewise::default(),
+            "Like wise men, we waited.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn like_wise() {
-        assert_suggestion_result("He acted, like wise, without hesitation.", Likewise::default(), "He acted, likewise, without hesitation.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He acted, like wise, without hesitation.",
+            Likewise::default(),
+            "He acted, likewise, without hesitation.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -2,7 +2,7 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
-use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
+use crate::{CharStringExt, TokenStringExt, linting::english::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 

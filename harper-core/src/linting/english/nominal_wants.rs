@@ -6,7 +6,7 @@ use crate::expr::SequenceExpr;
 use crate::{
     Token,
     dict_word_metadata::Person,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -112,27 +112,49 @@ impl ExprLinter for NominalWants {
 #[cfg(test)]
 mod tests {
     use super::NominalWants;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_lint_count, assert_no_lints, assert_suggestion_result,
+    };
 
     #[test]
     fn fixes_he_wonts() {
-        assert_suggestion_result("He wonts to join us.", NominalWants::default(), "He wants to join us.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He wonts to join us.",
+            NominalWants::default(),
+            "He wants to join us.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "This is not a grammar error if the previous word is `help`, `let`, or `make`."]
     fn fixes_it_wont() {
-        assert_suggestion_result("It wont to move forward.", NominalWants::default(), "It wants to move forward.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It wont to move forward.",
+            NominalWants::default(),
+            "It wants to move forward.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_she_wont() {
-        assert_suggestion_result("She wont to leave early.", NominalWants::default(), "She wants to leave early.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She wont to leave early.",
+            NominalWants::default(),
+            "She wants to leave early.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_i_wont() {
-        assert_suggestion_result("I wonts to leave early.", NominalWants::default(), "I want to leave early.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I wonts to leave early.",
+            NominalWants::default(),
+            "I want to leave early.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -142,7 +164,12 @@ mod tests {
 
     #[test]
     fn fixes_you_wants() {
-        assert_suggestion_result("What do you wants?", NominalWants::default(), "What do you want?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "What do you wants?",
+            NominalWants::default(),
+            "What do you want?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

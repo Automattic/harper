@@ -52,7 +52,9 @@ impl ExprLinter for DoubleModal {
 #[cfg(test)]
 mod tests {
     use super::DoubleModal;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_lint_count, assert_no_lints, assert_suggestion_result,
+    };
 
     #[test]
     fn detects_might_could() {
@@ -84,17 +86,32 @@ mod tests {
 
     #[test]
     fn suggests_removing_second_modal_keeps_first() {
-        assert_suggestion_result("They might could finish the project by Friday.", DoubleModal::default(), "They might finish the project by Friday.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They might could finish the project by Friday.",
+            DoubleModal::default(),
+            "They might finish the project by Friday.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn suggests_removing_second_modal_keeps_first_variant_order() {
-        assert_suggestion_result("You could might want to double-check that.", DoubleModal::default(), "You could want to double-check that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You could might want to double-check that.",
+            DoubleModal::default(),
+            "You could want to double-check that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn suggests_removing_second_modal_keeps_first_capitalised() {
-        assert_suggestion_result("We Must Should be consistent.", DoubleModal::default(), "We Must be consistent.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We Must Should be consistent.",
+            DoubleModal::default(),
+            "We Must be consistent.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

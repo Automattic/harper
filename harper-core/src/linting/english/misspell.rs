@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -73,27 +73,47 @@ impl ExprLinter for Misspell {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     use super::Misspell;
 
     #[test]
     fn base_form() {
-        assert_suggestion_result("They often miss spell names in the log.", Misspell::default(), "They often misspell names in the log.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They often miss spell names in the log.",
+            Misspell::default(),
+            "They often misspell names in the log.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn past_tense() {
-        assert_suggestion_result("She miss spelled the answer on the quiz.", Misspell::default(), "She misspelled the answer on the quiz.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She miss spelled the answer on the quiz.",
+            Misspell::default(),
+            "She misspelled the answer on the quiz.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn past_tense_hyphen() {
-        assert_suggestion_result("She miss-spelled the answer on the quiz.", Misspell::default(), "She misspelled the answer on the quiz.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She miss-spelled the answer on the quiz.",
+            Misspell::default(),
+            "She misspelled the answer on the quiz.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn gerund_form() {
-        assert_suggestion_result("His constant miss spelling frustrated the team.", Misspell::default(), "His constant misspelling frustrated the team.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "His constant miss spelling frustrated the team.",
+            Misspell::default(),
+            "His constant misspelling frustrated the team.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -173,9 +173,9 @@ use super::would_never_have::WouldNeverHave;
 use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, OxfordComma};
 use super::{ExprLinter, Lint};
 use crate::languages::Language;
-use crate::linting::dashes::Dashes;
-use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{
+use crate::linting::english::dashes::Dashes;
+use crate::linting::english::open_compounds::OpenCompounds;
+use crate::linting::english::{
     MassPlurals, NounVerbConfusion, closed_compounds, initialisms, phrase_corrections,
     phrase_set_corrections,
 };
@@ -786,9 +786,9 @@ mod tests {
 
     use super::LintGroup;
     use crate::languages::Language;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::english::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
-    use crate::{Document, EnglishDialect, linting::Linter};
+    use crate::{Document, EnglishDialect, linting::english::Linter};
 
     fn test_group() -> LintGroup {
         LintGroup::new_curated(

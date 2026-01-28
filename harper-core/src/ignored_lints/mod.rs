@@ -4,12 +4,12 @@ use hashbrown::HashSet;
 pub use lint_context::LintContext;
 use serde::{Deserialize, Serialize};
 
-use crate::{Document, linting::Lint};
+use crate::{Document, linting::english::Lint};
 
 /// A structure that keeps track of lints that have been ignored by users.
 ///
 /// To use this structure, apply [`Self::remove_ignored`] on the output of a
-/// [`Linter`](crate::linting::Linter).
+/// [`Linter`](crate::linting::english::Linter).
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct IgnoredLints {
     context_hashes: HashSet<u64>,
@@ -65,7 +65,7 @@ mod tests {
     use crate::spell::FstDictionary;
     use crate::{
         Document, EnglishDialect,
-        linting::{LintGroup, Linter},
+        linting::english::{LintGroup, Linter},
     };
 
     #[quickcheck]

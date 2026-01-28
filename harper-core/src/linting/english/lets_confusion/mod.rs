@@ -14,7 +14,7 @@ merge_linters!(LetsConfusion => LetUsRedundancy, NoContractionWithVerb => "It's 
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::LetsConfusion;
 

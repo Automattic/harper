@@ -1,6 +1,6 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::patterns::Word;
 
 pub struct ChangeTack {
@@ -61,7 +61,7 @@ impl ExprLinter for ChangeTack {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{ChangeTack, tests::assert_suggestion_result};
+    use crate::linting::english::{ChangeTack, tests::assert_suggestion_result};
 
     // Verbs: change tack
 

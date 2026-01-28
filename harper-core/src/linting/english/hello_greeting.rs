@@ -1,7 +1,7 @@
 use crate::{
     Token,
     expr::{AnchorStart, Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct HelloGreeting {
@@ -57,41 +57,76 @@ impl ExprLinter for HelloGreeting {
 #[cfg(test)]
 mod tests {
     use super::HelloGreeting;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_greeting() {
-        assert_suggestion_result("Halo John!", HelloGreeting::default(), "Hello John!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo John!",
+            HelloGreeting::default(),
+            "Hello John!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_comma() {
-        assert_suggestion_result("Halo, Jane.", HelloGreeting::default(), "Hello, Jane.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo, Jane.",
+            HelloGreeting::default(),
+            "Hello, Jane.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_with_world() {
-        assert_suggestion_result("Halo world!", HelloGreeting::default(), "Hello world!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo world!",
+            HelloGreeting::default(),
+            "Hello world!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_without_punctuation() {
-        assert_suggestion_result("Halo there friend.", HelloGreeting::default(), "Hello there friend.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo there friend.",
+            HelloGreeting::default(),
+            "Hello there friend.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_single_word_sentence() {
-        assert_suggestion_result("Halo!", HelloGreeting::default(), "Hello!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo!",
+            HelloGreeting::default(),
+            "Hello!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_question() {
-        assert_suggestion_result("Halo?", HelloGreeting::default(), "Hello?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Halo?",
+            HelloGreeting::default(),
+            "Hello?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_uppercase() {
-        assert_suggestion_result("HALO!", HelloGreeting::default(), "HELLO!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "HALO!",
+            HelloGreeting::default(),
+            "HELLO!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -114,6 +149,11 @@ mod tests {
 
     #[test]
     fn corrects_in_quotes() {
-        assert_suggestion_result("\"Halo John!\"", HelloGreeting::default(), "\"Hello John!\"", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "\"Halo John!\"",
+            HelloGreeting::default(),
+            "\"Hello John!\"",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

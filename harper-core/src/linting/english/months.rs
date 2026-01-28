@@ -1,7 +1,7 @@
 use crate::{
     Lrc, Token, TokenKind,
     expr::{Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };
 
@@ -125,50 +125,95 @@ impl ExprLinter for Months {
 #[cfg(test)]
 mod tests {
     use super::Months;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::english::tests::assert_suggestion_result;
 
     #[test]
     fn fix_in_august() {
-        assert_suggestion_result("I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in august.", Months::default(), "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in August.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in august.",
+            Months::default(),
+            "I worked for WebstaurantStore doing Quality Assurance Automation and am now transitioning to a new graduate developer role at BNY Mellon, starting in August.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_in_march() {
-        assert_suggestion_result("This game was originally written by me in march 2000.", Months::default(), "This game was originally written by me in March 2000.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This game was originally written by me in march 2000.",
+            Months::default(),
+            "This game was originally written by me in March 2000.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_in_may() {
-        assert_suggestion_result("typo in may 2024 updates", Months::default(), "typo in May 2024 updates", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "typo in may 2024 updates",
+            Months::default(),
+            "typo in May 2024 updates",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_last_august() {
-        assert_suggestion_result("since last august smart has been leading talks to open up japan", Months::default(), "since last August smart has been leading talks to open up japan", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "since last august smart has been leading talks to open up japan",
+            Months::default(),
+            "since last August smart has been leading talks to open up japan",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_last_may() {
-        assert_suggestion_result("I have a 2019 mini countryman that i purchased last may.", Months::default(), "I have a 2019 mini countryman that i purchased last May.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I have a 2019 mini countryman that i purchased last may.",
+            Months::default(),
+            "I have a 2019 mini countryman that i purchased last May.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_of_august() {
-        assert_suggestion_result("change abbreviation of august for Indonesian locale", Months::default(), "change abbreviation of August for Indonesian locale", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "change abbreviation of august for Indonesian locale",
+            Months::default(),
+            "change abbreviation of August for Indonesian locale",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_march_2019() {
-        assert_suggestion_result("How to disable drop cap today (late march 2019)", Months::default(), "How to disable drop cap today (late March 2019)", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "How to disable drop cap today (late march 2019)",
+            Months::default(),
+            "How to disable drop cap today (late March 2019)",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_may_2022() {
-        assert_suggestion_result("That will be ende from 30 may 2022.", Months::default(), "That will be ende from 30 May 2022.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That will be ende from 30 may 2022.",
+            Months::default(),
+            "That will be ende from 30 May 2022.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_days() {
-        assert_suggestion_result("Between march 15 and august 27.", Months::default(), "Between March 15 and August 27.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Between march 15 and august 27.",
+            Months::default(),
+            "Between March 15 and August 27.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

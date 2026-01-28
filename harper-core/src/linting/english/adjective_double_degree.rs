@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct AdjectiveDoubleDegree {
@@ -107,26 +107,48 @@ impl ExprLinter for AdjectiveDoubleDegree {
 #[cfg(test)]
 mod tests {
     use super::AdjectiveDoubleDegree;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
+    use crate::linting::english::tests::{
+        assert_good_and_bad_suggestions, assert_suggestion_result,
+    };
 
     #[test]
     fn fix_double_regular_superlative() {
-        assert_suggestion_result("The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.", AdjectiveDoubleDegree::default(), "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The most easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
+            AdjectiveDoubleDegree::default(),
+            "The easiest to use, self-service open BI reporting and BI dashboard and BI monitor screen platform.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_double_regular_comparative() {
-        assert_suggestion_result("how can make docx gennerate more faster?", AdjectiveDoubleDegree::default(), "how can make docx gennerate faster?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "how can make docx gennerate more faster?",
+            AdjectiveDoubleDegree::default(),
+            "how can make docx gennerate faster?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_double_irregular_comparative() {
-        assert_suggestion_result("Find alternative product name more better than age .", AdjectiveDoubleDegree::default(), "Find alternative product name better than age .", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Find alternative product name more better than age .",
+            AdjectiveDoubleDegree::default(),
+            "Find alternative product name better than age .",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_double_irregular_superlative() {
-        assert_suggestion_result("how can i get a most best quality file", AdjectiveDoubleDegree::default(), "how can i get a best quality file", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "how can i get a most best quality file",
+            AdjectiveDoubleDegree::default(),
+            "how can i get a best quality file",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

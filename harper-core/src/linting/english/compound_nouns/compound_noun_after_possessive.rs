@@ -3,7 +3,7 @@ use crate::expr::Expr;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
-use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
+use crate::{CharStringExt, Lrc, TokenStringExt, linting::english::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
 
@@ -94,7 +94,7 @@ impl ExprLinter for CompoundNounAfterPossessive {
 #[cfg(test)]
 mod tests {
     use super::CompoundNounAfterPossessive;
-    use crate::linting::tests::assert_lint_count;
+    use crate::linting::english::tests::assert_lint_count;
 
     #[test]
     fn lets_is_not_possessive() {
