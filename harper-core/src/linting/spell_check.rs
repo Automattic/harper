@@ -144,27 +144,7 @@ mod tests {
     };
     use crate::{DictWordMetadata, Document};
 
-    // Capitalization tests
-
-    #[test]
-    fn america_capitalized() {
-        assert_suggestion_result(
-            "The word america should be capitalized.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "The word America should be capitalized.",
-        );
-    }
-
     // Dialect tests
-
-    #[test]
-    fn harper_automattic_capitalized() {
-        assert_lint_count(
-            "So should harper and automattic.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            2,
-        );
-    }
 
     #[test]
     fn american_color_in_british_dialect() {

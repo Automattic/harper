@@ -144,7 +144,7 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::OrthographicConsistency;
 
@@ -154,6 +154,24 @@ mod tests {
             "Nasa is a governmental institution.",
             OrthographicConsistency::default(),
             "NASA is a governmental institution.",
+        );
+    }
+
+    #[test]
+    fn america_capitalized() {
+        assert_suggestion_result(
+            "The word america should be capitalized.",
+            OrthographicConsistency::default(),
+            "The word America should be capitalized.",
+        );
+    }
+
+    #[test]
+    fn harper_automattic_capitalized() {
+        assert_lint_count(
+            "So should harper and automattic.",
+            OrthographicConsistency::default(),
+            2,
         );
     }
 
