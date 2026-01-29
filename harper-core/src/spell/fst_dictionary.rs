@@ -1,9 +1,9 @@
 use super::MutableDictionary;
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
-use lazy_static::lazy_static;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
+use std::sync::LazyLock;
 use std::{cell::RefCell, sync::Arc};
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
@@ -27,9 +27,8 @@ pub struct FstDictionary {
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
-lazy_static! {
-    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
-}
+static DICT: LazyLock<Arc<FstDictionary>> =
+    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a

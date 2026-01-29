@@ -1,7 +1,6 @@
 mod offset_cursor;
 mod typst_translator;
 
-use offset_cursor::OffsetCursor;
 use typst_translator::TypstTranslator;
 
 use harper_core::{Token, parsers::Parser};
@@ -28,11 +27,7 @@ impl Parser for Typst {
         let mut buf = Vec::new();
         let exprs = typst_tree.exprs().collect_vec();
         let exprs = convert_parbreaks(&mut buf, &exprs);
-        exprs
-            .into_iter()
-            .filter_map(|ex| parse_helper.parse_expr(ex, OffsetCursor::new(&typst_document)))
-            .flatten()
-            .collect_vec()
+        parse_helper.parse_exprs(&exprs)
     }
 }
 
@@ -54,8 +49,8 @@ fn convert_parbreaks<'a>(buf: &'a mut Vec<SyntaxNode>, exprs: &'a [Expr]) -> Vec
 
     let should_parbreak = |e1, e2, e3| {
         matches!(e2, Expr::Space(_))
-            && (matches!(e1, Expr::Heading(_) | Expr::List(_))
-                || matches!(e3, Expr::Heading(_) | Expr::List(_)))
+            && (matches!(e1, Expr::Heading(_) | Expr::ListItem(_))
+                || matches!(e3, Expr::Heading(_) | Expr::ListItem(_)))
     };
 
     let mut res: Vec<Expr> = Vec::new();

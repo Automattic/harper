@@ -1,11 +1,11 @@
 use std::borrow::Cow;
+use std::sync::LazyLock;
 
 use crate::Lrc;
 use crate::Token;
 use crate::TokenKind;
 use hashbrown::HashSet;
 use itertools::Itertools;
-use lazy_static::lazy_static;
 
 use crate::Punctuation;
 use crate::spell::Dictionary;
@@ -137,17 +137,18 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
     match &tok.kind {
         TokenKind::Word(Some(metadata)) => {
             // Only specific conjunctions are not capitalized.
-            lazy_static! {
-                static ref SPECIAL_CONJUNCTIONS: HashSet<Vec<char>> =
-                    ["and", "but", "for", "or", "nor", "as"]
-                        .iter()
-                        .map(|v| v.chars().collect())
-                        .collect();
-                static ref SPECIAL_ARTICLES: HashSet<Vec<char>> = ["a", "an", "the"]
+            static SPECIAL_CONJUNCTIONS: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
+                ["and", "but", "for", "or", "nor", "as"]
                     .iter()
                     .map(|v| v.chars().collect())
-                    .collect();
-            }
+                    .collect()
+            });
+            static SPECIAL_ARTICLES: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
+                ["a", "an", "the"]
+                    .iter()
+                    .map(|v| v.chars().collect())
+                    .collect()
+            });
 
             let chars = tok.span.get_content(source);
             let chars_lower = chars.to_lower();

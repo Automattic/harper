@@ -1000,6 +1000,11 @@ mod tests {
     }
 
     #[test]
+    fn simple_contraction4() {
+        assert_condensed_contractions("doesn't", 1);
+    }
+
+    #[test]
     fn medium_contraction() {
         assert_condensed_contractions("isn't wasn't", 3);
     }

@@ -5,6 +5,7 @@ import {
 	getSlateEditor,
 	randomString,
 	replaceEditorContent,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'https://slatejs.org';
@@ -22,13 +23,22 @@ test('Can apply basic suggestion.', async ({ page }) => {
 
 	await page.waitForTimeout(3000);
 
-	expect(slate).toContainText('This is a test');
+	await expect(slate).toContainText('This is a test');
 
-	// Slate has be known to revert changes after typing some more.
-	await slate.press('End');
-	await slate.pressSequentially(" of Harper's grammar checking.");
-	expect(slate).toContainText("This is a test of Harper's grammar checking.");
+	// Verify editor state is preserved: arrow keys and backspace must work.
+	// Position cursor before 's' in 'test', then backspace to delete 'e'.
+	await page.press('body', 'End');
+	await page.press('body', 'ArrowLeft');
+	await page.press('body', 'ArrowLeft');
+	await page.press('body', 'Backspace');
+	await expect(slate).toContainText('This is a tst');
+
+	// Verify typing still works.
+	await slate.pressSequentially('e');
+	await expect(slate).toContainText('This is a test');
 });
+
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getSlateEditor);
 
 test('Can ignore suggestion.', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
@@ -46,6 +56,6 @@ test('Can ignore suggestion.', async ({ page }) => {
 	await expect(getHarperHighlights(page)).toHaveCount(0);
 
 	// Nothing should change.
-	expect(slate).toContainText(cacheSalt);
+	await expect(slate).toContainText(cacheSalt);
 	expect(await clickHarperHighlight(page)).toBe(false);
 });

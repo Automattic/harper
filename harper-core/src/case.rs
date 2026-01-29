@@ -2,7 +2,7 @@ use std::borrow::Borrow;
 
 use smallvec::SmallVec;
 
-use crate::CharString;
+use crate::{CharString, char_string::CHAR_STRING_INLINE_SIZE};
 
 /// Apply the casing of `template` to `target`.
 ///
@@ -76,6 +76,7 @@ impl TryFrom<char> for Case {
 // generalized to work with char iterators.
 pub trait CaseIterExt {
     fn get_casing(self) -> impl Iterator<Item = Case>;
+    fn get_casing_unfiltered(self) -> SmallVec<[Option<Case>; CHAR_STRING_INLINE_SIZE]>;
 }
 impl<I: IntoIterator<Item = T>, T: Borrow<char>> CaseIterExt for I {
     /// Get an iterator of [`Case`] from a collection of characters. Note that this will not
@@ -83,5 +84,14 @@ impl<I: IntoIterator<Item = T>, T: Borrow<char>> CaseIterExt for I {
     fn get_casing(self) -> impl Iterator<Item = Case> {
         self.into_iter()
             .filter_map(|char| (*char.borrow()).try_into().ok())
+    }
+
+    /// Get casing for the provided string. Unlike [`Self::get_casing`], the output will always
+    /// be the same length as the input string. If a character is neither uppercase nor lowercase,
+    /// its corresponding case will be `None`.
+    fn get_casing_unfiltered(self) -> SmallVec<[Option<Case>; CHAR_STRING_INLINE_SIZE]> {
+        self.into_iter()
+            .map(|c| Case::try_from(*c.borrow()).ok())
+            .collect()
     }
 }

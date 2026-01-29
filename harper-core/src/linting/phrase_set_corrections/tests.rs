@@ -1657,6 +1657,48 @@ fn dont_correct_so_much_nerve_wreck() {
     );
 }
 
+// NotOnly
+
+// -not only are-
+#[test]
+fn fix_no_only_are() {
+    assert_suggestion_result(
+        "No only are tests run on my pipeline but once successful, my app is deployed differently",
+        lint_group(),
+        "Not only are tests run on my pipeline but once successful, my app is deployed differently",
+    );
+}
+
+// -not only is-
+#[test]
+fn fix_no_only_is() {
+    assert_suggestion_result(
+        "No only is it simple, it's efficient!",
+        lint_group(),
+        "Not only is it simple, it's efficient!",
+    );
+}
+
+// -not only was-
+#[test]
+fn fix_no_only_was() {
+    assert_suggestion_result(
+        "No only was he happily creating shapes, but he was actively using distances and angles to do so.",
+        lint_group(),
+        "Not only was he happily creating shapes, but he was actively using distances and angles to do so.",
+    );
+}
+
+// -not only were-
+#[test]
+fn fix_no_only_were() {
+    assert_suggestion_result(
+        "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+        lint_group(),
+        "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+    );
+}
+
 // RaiseTheQuestion
 
 // -raise the question-

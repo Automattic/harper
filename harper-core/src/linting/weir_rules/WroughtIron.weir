@@ -7,4 +7,4 @@ let becomes "wrought iron"
 
 test "The gate was crafted from rod iron." "The gate was crafted from wrought iron."
 test "The artisan works in rot iron." "The artisan works in wrought iron."
-test "She specialized in wrought iron artwork." "She specialized in wrought iron artwork."
+allows "She specialized in wrought iron artwork."
