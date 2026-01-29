@@ -246,7 +246,7 @@ export async function testMultipleSuggestionsAndUndo(
 
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
-	expect(await highlights.count()).toBe(boxes.length);
+	await expect(highlights).toHaveCount(boxes.length);
 
 	for (let i = 0; i < (await highlights.count()); i++) {
 		const box = await highlights.nth(i).boundingBox();

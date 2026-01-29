@@ -1,0 +1,8 @@
+expr main (yea)
+
+let message "If you mean the informal word for `yes` and not the biblical or legalistic `yea`, the standard spelling is `yeah`."
+let description "Corrects `yea` to `yeah`."
+let kind "Spelling"
+let becomes "yeah"
+
+test "The very core basics are essentially the same because yea - it's just a web browser." "The very core basics are essentially the same because yeah - it's just a web browser."

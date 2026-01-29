@@ -177,6 +177,21 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                         end + 1,
                     ))
                 }
+                ['a', 'l', 'l', 'o', 'w', 's'] => {
+                    let case = parse_quoted_string(&tokens[cursor + 1..], source)?;
+                    cursor += 1 + case.next_idx;
+
+                    if cursor != end {
+                        return Err(Error::UnexpectedToken(
+                            tokens[cursor].span.get_content_string(source),
+                        ));
+                    }
+
+                    Ok(FoundNode::new(
+                        Some(AstStmtNode::create_allow_test(case.node)),
+                        end + 1,
+                    ))
+                }
                 ['t', 'e', 's', 't'] => {
                     let case = parse_quoted_string(&tokens[cursor + 1..], source)?;
                     cursor += 1 + case.next_idx;
@@ -371,6 +386,16 @@ mod tests {
     }
 
     #[test]
+    fn parses_allows() {
+        assert_eq!(
+            parse_str("allows \"this is the case\"", true)
+                .unwrap()
+                .stmts,
+            vec![AstStmtNode::create_allow_test("this is the case",)]
+        )
+    }
+
+    #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
             "let test \"to be this\"\nexpr main word\n# this is a comment",
@@ -460,10 +485,24 @@ mod tests {
         parse_str("let var+\"\"", false).unwrap();
     }
 
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_allows() {
+        parse_str("allows+\"\"", false).unwrap();
+    }
+
     #[quickcheck]
     fn catches_anything_after_test(a: String) {
         if !a.is_empty() && !a.starts_with('\n') {
             let code = format!("test \"\" \"\"{a}");
+            assert!(parse_str(code.as_str(), false).is_err())
+        }
+    }
+
+    #[quickcheck]
+    fn catches_anything_after_allows(a: String) {
+        if !a.is_empty() && !a.starts_with('\n') {
+            let code = format!("allows \"\" {a}");
             assert!(parse_str(code.as_str(), false).is_err())
         }
     }
