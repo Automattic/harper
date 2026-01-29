@@ -15,7 +15,7 @@ use futures::future::join;
 use harper_comments::CommentParser;
 use harper_core::languages::Language;
 use harper_core::languages::LanguageFamily;
-use harper_core::linting::english::{LintGroup, LintGroupConfig};
+use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };

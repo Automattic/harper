@@ -6,7 +6,7 @@ use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::languages::{Language as HarperLanguage, LanguageFamily};
-use harper_core::linting::english::{LintGroup, Linter as _};
+use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::{
@@ -436,7 +436,7 @@ pub fn to_title_case(text: String) -> String {
 #[derive(Debug, Serialize, Deserialize)]
 #[wasm_bindgen]
 pub struct Suggestion {
-    inner: harper_core::linting::english::Suggestion,
+    inner: harper_core::linting::Suggestion,
 }
 
 /// Tags the variant of suggestion.
@@ -453,7 +453,7 @@ pub enum SuggestionKind {
 
 #[wasm_bindgen]
 impl Suggestion {
-    pub(crate) fn new(inner: harper_core::linting::english::Suggestion) -> Self {
+    pub(crate) fn new(inner: harper_core::linting::Suggestion) -> Self {
         Self { inner }
     }
 
@@ -462,19 +462,17 @@ impl Suggestion {
     /// string.
     pub fn get_replacement_text(&self) -> String {
         match &self.inner {
-            harper_core::linting::english::Suggestion::Remove => "".to_string(),
-            harper_core::linting::english::Suggestion::ReplaceWith(chars) => chars.iter().collect(),
-            harper_core::linting::english::Suggestion::InsertAfter(chars) => chars.iter().collect(),
+            harper_core::linting::Suggestion::Remove => "".to_string(),
+            harper_core::linting::Suggestion::ReplaceWith(chars) => chars.iter().collect(),
+            harper_core::linting::Suggestion::InsertAfter(chars) => chars.iter().collect(),
         }
     }
 
     pub fn kind(&self) -> SuggestionKind {
         match &self.inner {
-            harper_core::linting::english::Suggestion::Remove => SuggestionKind::Remove,
-            harper_core::linting::english::Suggestion::ReplaceWith(_) => SuggestionKind::Replace,
-            harper_core::linting::english::Suggestion::InsertAfter(_) => {
-                SuggestionKind::InsertAfter
-            }
+            harper_core::linting::Suggestion::Remove => SuggestionKind::Remove,
+            harper_core::linting::Suggestion::ReplaceWith(_) => SuggestionKind::Replace,
+            harper_core::linting::Suggestion::InsertAfter(_) => SuggestionKind::InsertAfter,
         }
     }
 }

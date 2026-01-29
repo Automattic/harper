@@ -136,10 +136,8 @@ impl<'a> ExprLinter for UpdatePlaceNames<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::{
-        tests::{assert_lint_count, assert_suggestion_result},
-        update_place_names::UpdatePlaceNames,
-    };
+    use crate::linting::english::update_place_names::UpdatePlaceNames;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn update_single_word_name_alone() {

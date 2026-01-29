@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fmt::Display};
 
-use harper_core::linting::english::{LintGroupConfig, LintKind};
+use harper_core::linting::{LintGroupConfig, LintKind};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]

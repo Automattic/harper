@@ -17,7 +17,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{Args, Parser, Subcommand};
 use dirs::{config_dir, data_local_dir};
 use harper_comments::CommentParser;
-use harper_core::linting::english::{LintGroup, Linter};
+use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Markdown, MarkdownOptions, OrgMode, PlainEnglish, PlainPortuguese};
 use harper_core::{
     CharStringExt, DictWordMetadata, Document, EnglishDialect, Span, TokenKind, TokenStringExt,
@@ -490,6 +490,7 @@ fn main() -> anyhow::Result<()> {
                 let dict = MutableDictionary::from_rune_files(
                     &rune_words,
                     include_str!("../../harper-core/annotations.json"),
+                    global_options.language,
                 )?;
 
                 println!("New, from you:");

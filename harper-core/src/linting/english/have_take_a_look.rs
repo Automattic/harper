@@ -92,10 +92,8 @@ impl ExprLinter for HaveTakeALook {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        EnglishDialect,
-        linting::english::{HaveTakeALook, tests::assert_suggestion_result},
-    };
+    use crate::linting::tests::assert_suggestion_result;
+    use crate::{EnglishDialect, linting::english::HaveTakeALook};
 
     #[test]
     fn correct_taking_a_look() {

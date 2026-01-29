@@ -67,10 +67,8 @@ impl ExprLinter for VeryUnique {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::{
-        VeryUnique,
-        tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result},
-    };
+    use crate::linting::english::VeryUnique;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result};
 
     #[test]
     fn fix_very_unique() {

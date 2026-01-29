@@ -70,7 +70,8 @@ impl ExprLinter for AfterLater {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::{AfterLater, tests::assert_top3_suggestion_result};
+    use crate::linting::english::AfterLater;
+    use crate::linting::tests::assert_top3_suggestion_result;
 
     #[test]
     fn after_90_days_later() {

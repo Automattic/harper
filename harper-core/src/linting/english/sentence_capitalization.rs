@@ -119,8 +119,8 @@ fn is_full_sentence(toks: &[Token]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::tests::assert_lint_count;
     use super::SentenceCapitalization;
+    use crate::linting::tests::assert_lint_count;
     use crate::spell::FstDictionary;
 
     #[test]

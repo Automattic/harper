@@ -13,8 +13,12 @@ use super::expansion::{
 };
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
+use crate::languages::LanguageFamily;
 use crate::spell::WordId;
-use crate::{CharString, CharStringExt, DictWordMetadata, Span};
+use crate::{
+    CharString, CharStringExt, DialectFlagsEnum, DictWordMetadata, EnglishDialectFlags,
+    PortugueseDialectFlags, Span,
+};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
@@ -53,12 +57,26 @@ impl AttributeList {
     /// # Arguments
     /// * `word` - The word to expand, along with its attributes
     /// * `dest` - The WordMap to store the expanded words and their metadata
-    pub fn expand_annotated_word(&self, annotated_word: AnnotatedWord, word_map: &mut WordMap) {
+    pub fn expand_annotated_word(
+        &self,
+        annotated_word: AnnotatedWord,
+        word_map: &mut WordMap,
+        language: LanguageFamily,
+    ) {
         // Pre-allocate space in the destination map for better performance
         word_map.reserve(annotated_word.annotations.len() + 1);
 
         // Initialize base metadata that will be applied to all derived forms
-        let mut base_metadata = DictWordMetadata::default();
+        let dialect_flags = match language {
+            LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::default()),
+            LanguageFamily::Portuguese => {
+                DialectFlagsEnum::Portuguese(PortugueseDialectFlags::default())
+            }
+        };
+        let mut base_metadata = DictWordMetadata {
+            dialects: dialect_flags,
+            ..Default::default()
+        };
 
         // Store metadata that should only be applied if certain conditions are met
         let orth_flags = OrthFlags::from_letters(&annotated_word.letters);
@@ -160,6 +178,7 @@ impl AttributeList {
                             annotations: opposite_attributes.clone(),
                         },
                         word_map,
+                        language,
                     );
                     // Update the metadata of the expanded word
                     let target_metadata = word_map.get_metadata_mut_chars(&new_word).unwrap();
@@ -223,9 +242,10 @@ impl AttributeList {
         &self,
         words: impl IntoIterator<Item = AnnotatedWord>,
         dest: &mut WordMap,
+        language: LanguageFamily,
     ) {
         for word in words {
-            self.expand_annotated_word(word, dest);
+            self.expand_annotated_word(word, dest, language);
         }
     }
 

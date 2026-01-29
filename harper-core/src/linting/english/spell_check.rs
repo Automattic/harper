@@ -72,6 +72,8 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
+        println!("Inside lint, dialect is {}", self.dialect);
+
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
 

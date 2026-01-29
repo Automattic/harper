@@ -1,5 +1,5 @@
 use harper_core::{
-    linting::english::{Lint, LintGroupConfig, LintKind},
+    linting::{Lint, LintGroupConfig, LintKind},
     Document, FatStringToken,
 };
 use serde::{Deserialize, Serialize};

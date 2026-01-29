@@ -1,6 +1,6 @@
 use criterion::{Criterion, criterion_group, criterion_main};
 use harper_core::languages::{Language, LanguageFamily};
-use harper_core::linting::english::{LintGroup, Linter};
+use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
 use harper_core::{Document, EnglishDialect};
 use std::hint::black_box;

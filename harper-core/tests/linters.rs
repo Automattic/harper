@@ -14,7 +14,7 @@ use harper_core::languages::LanguageFamily;
 use harper_core::spell::FstDictionary;
 use harper_core::{
     Dialect, Document, EnglishDialect,
-    linting::english::{LintGroup, Linter},
+    linting::{LintGroup, Linter},
 };
 
 mod snapshot;

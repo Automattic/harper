@@ -24,7 +24,6 @@ impl<T: Dictionary> SpellCheck<T> {
         Self {
             dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
-            // language: Language::English(dialect),
             dialect: DialectsEnum::Portuguese(dialect),
         }
     }
@@ -71,6 +70,8 @@ impl<T: Dictionary> SpellCheck<T> {
 impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
+
+        println!("Inside lint, dialect is {}", self.dialect);
 
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
@@ -133,23 +134,34 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 mod tests_portuguese {
     use super::SpellCheck;
     use crate::PortugueseDialect;
-    use crate::languages::{Language, LanguageFamily};
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::languages::LanguageFamily;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     // Capitalization tests
 
     #[test]
     fn brasil_capitalized() {
-        let language = Language::Portuguese(PortugueseDialect::default());
         assert_suggestion_result(
             "The word brasil should be capitalized.",
             SpellCheck::new(
                 FstDictionary::curated_select_language(LanguageFamily::Portuguese),
-                language.into(),
+                PortugueseDialect::Brazilian,
             ),
             "The word Brasil should be capitalized.",
             LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn harper_automattic_capitalized() {
+        assert_lint_count(
+            "So should harper and automattic.",
+            SpellCheck::new(
+                FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+                PortugueseDialect::Brazilian,
+            ),
+            2,
         );
     }
 }

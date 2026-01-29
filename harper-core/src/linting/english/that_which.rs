@@ -64,8 +64,8 @@ impl ExprLinter for ThatWhich {
 
 #[cfg(test)]
 mod tests {
-    use super::super::tests::assert_lint_count;
     use super::ThatWhich;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn catches_lowercase() {

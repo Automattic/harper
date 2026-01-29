@@ -70,7 +70,6 @@ pub enum DialectFlagsEnum {
 }
 impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
     fn is_dialect_enabled(&self, dialect: DialectsEnum) -> bool {
-        println!("Comparing the dialects {} and ", dialect);
         match (self, dialect) {
             (
                 DialectFlagsEnum::English(english_dialect_flags),
@@ -82,7 +81,7 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             ) => portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect),
 
             (a, b) => panic!(
-                "Trying to get dialect from wrong dialect flags. Comparing dialects {:#?} and {}",
+                "Trying to get dialect from wrong dialect flags. Comparing dialects {:#?} and {:#?}",
                 a, b
             ),
         }

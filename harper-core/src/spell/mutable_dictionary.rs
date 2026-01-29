@@ -41,7 +41,7 @@ fn uncached_inner_new(language: LanguageFamily) -> Arc<MutableDictionary> {
             include_str!("../../annotations-portuguese.json"),
         ),
     };
-    MutableDictionary::from_rune_files(dict_path, annotations_path)
+    MutableDictionary::from_rune_files(dict_path, annotations_path, language)
         .map(Arc::new)
         .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
@@ -61,14 +61,18 @@ impl MutableDictionary {
         }
     }
 
-    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
+    pub fn from_rune_files(
+        word_list: &str,
+        attr_list: &str,
+        language: LanguageFamily,
+    ) -> Result<Self, rune::Error> {
         let word_list = parse_word_list(word_list)?;
         let attr_list = AttributeList::parse(attr_list)?;
 
         // There will be at _least_ this number of words
         let mut word_map = WordMap::default();
 
-        attr_list.expand_annotated_words(word_list, &mut word_map);
+        attr_list.expand_annotated_words(word_list, &mut word_map, language);
 
         Ok(Self { word_map })
     }
@@ -301,6 +305,7 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
+    use crate::languages::LanguageFamily;
     use crate::spell::{Dictionary, MutableDictionary};
     use crate::{DictWordMetadata, char_string::char_string};
 
@@ -450,9 +455,18 @@ mod tests {
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../annotations.json");
 
-        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
-        let spread =
-            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
+        let merged = MutableDictionary::from_rune_files(
+            "1\nblork/DGS",
+            curated_attr_list,
+            LanguageFamily::English,
+        )
+        .unwrap();
+        let spread = MutableDictionary::from_rune_files(
+            "2\nblork/DG\nblork/S",
+            curated_attr_list,
+            LanguageFamily::English,
+        )
+        .unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

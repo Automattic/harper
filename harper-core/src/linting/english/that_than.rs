@@ -58,10 +58,8 @@ impl ExprLinter for ThatThan {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::{
-        ThatThan,
-        tests::{assert_lint_count, assert_suggestion_result},
-    };
+    use crate::linting::english::ThatThan;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // adj-er that
 

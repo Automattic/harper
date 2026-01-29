@@ -61,7 +61,8 @@ impl ExprLinter for ChangeTack {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::{ChangeTack, tests::assert_suggestion_result};
+    use crate::linting::english::ChangeTack;
+    use crate::linting::tests::assert_suggestion_result;
 
     // Verbs: change tack
 

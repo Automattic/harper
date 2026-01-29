@@ -399,13 +399,8 @@ pub fn suggest_correct_spelling_str(
 mod tests {
     use itertools::Itertools;
 
-    use crate::{
-        CharStringExt, EnglishDialect,
-        linting::english::{
-            SpellCheck,
-            tests::{assert_suggestion_result, assert_top3_suggestion_result},
-        },
-    };
+    use crate::linting::tests::{assert_suggestion_result, assert_top3_suggestion_result};
+    use crate::{CharStringExt, EnglishDialect, linting::english::SpellCheck};
 
     use super::{FstDictionary, suggest_correct_spelling_str};
 
