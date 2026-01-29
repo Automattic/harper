@@ -53070,7 +53070,7 @@ Expedia/Og
 Exynos/OgJ          # Samsung SoC series.
 FAANG/NSg           # Facebook, Amazon, Apple, Netflix, Google
 FAT32/Ng            # file system
-FFI/Ng              # foreign function interface
+FFI/Ng              # foreign function interface - see also interop
 FFmpeg/Og
 FIBA/Ng             # international basketball federation
 FIDO/NOSg
@@ -53312,6 +53312,7 @@ QUIC/OgS
 Qin/OgS
 QoL/Nmg             # quality of life
 QoS/Nmg             # quality of service
+QuickLook/Og        # Apple product
 Quora/Og            # Q&A platform
 RAII                # resource acquisition is initialization
 RDBMS/NOSg          # relational database management system
@@ -53387,6 +53388,7 @@ Tencent/Og
 TensorFlow/Og
 TeX/Og              # Typesetting engine; must come after Tex!
 TeXes
+TextMate/Og         # text editor and syntax highlighting standard
 ThinkPad/OgS        # pc brand
 TikTok/Sg
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
@@ -53529,6 +53531,7 @@ iTerm2/Og           # macOS terminal emulator
 iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
+interop/NmgS        # interoperability - see also FFI
 invokable/J         # not in most dictionaries, used in computing
 jQuery/Og
 keybind/NgS         # key binding
@@ -53541,6 +53544,7 @@ memecoin/NgS
 mergesort
 microframework/NgS
 multicast/JVSdG
+nonmutating/J
 npm/Og              # node package manager
 nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
