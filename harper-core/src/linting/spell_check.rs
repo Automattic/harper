@@ -486,18 +486,11 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_pr() {
-        assert_no_lints(
-            "PR",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
+    fn dont_flag_certain_entries_with_multiple_case_variants_in_dict() {
+        let dict = FstDictionary::curated();
 
-    #[test]
-    fn dont_flag_mb() {
-        assert_no_lints(
-            "MB",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
+        assert_no_lints("PR", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("MB", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("OS", SpellCheck::new(&dict, Dialect::American)); // Issue #2585
     }
 }
