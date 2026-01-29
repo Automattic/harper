@@ -2773,6 +2773,7 @@ dependencies = [
  "harper-brill",
  "harper-thesaurus",
  "hashbrown 0.16.1",
+ "indexmap",
  "is-macro",
  "itertools 0.14.0",
  "lazy_static",

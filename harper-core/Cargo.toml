@@ -35,6 +35,7 @@ harper-brill = { path = "../harper-brill", version = "1.0.0" }
 harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional = true }
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
+indexmap = "2.12.1"
 
 [dev-dependencies]
 criterion = { version = "0.8.1", default-features = false }
