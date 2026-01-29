@@ -75,7 +75,7 @@ impl Linter for Spaces {
 #[cfg(test)]
 mod tests {
     use super::Spaces;
-    use crate::linting::english::tests::{assert_lint_count, assert_no_lints};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
     #[test]
     fn detects_space_before_period() {

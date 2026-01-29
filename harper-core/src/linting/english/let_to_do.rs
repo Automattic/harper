@@ -69,7 +69,7 @@ impl ExprLinter for LetToDo {
 #[cfg(test)]
 mod tests {
     use super::LetToDo;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     // let
 

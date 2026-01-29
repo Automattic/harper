@@ -74,9 +74,7 @@ impl ExprLinter for HowTo {
 #[cfg(test)]
 mod tests {
     use super::HowTo;
-    use crate::linting::english::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn flags_missing_to() {

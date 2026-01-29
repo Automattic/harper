@@ -129,7 +129,7 @@ fn is_progressive_verb_form(document: &Document, token: &crate::Token) -> bool {
 #[cfg(test)]
 mod tests {
     use super::ThrowRubbish;
-    use crate::linting::english::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     // Test correct patterns (should not trigger lint)
     #[test]

@@ -154,7 +154,7 @@ fn get_compound_idx(toks: &[Token], src: &[char], compound: &str) -> Option<usiz
 #[cfg(test)]
 mod tests {
     use super::OpenCompounds;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // In front
 

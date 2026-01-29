@@ -53,7 +53,7 @@ impl ExprLinter for ForNoun {
 #[cfg(test)]
 mod tests {
     use super::ForNoun;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_fro_basic_correction() {

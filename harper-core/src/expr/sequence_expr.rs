@@ -507,7 +507,7 @@ mod tests {
     use crate::{
         Document, TokenKind,
         expr::{ExprExt, SequenceExpr},
-        linting::english::tests::SpanVecExt,
+        linting::tests::SpanVecExt,
     };
 
     #[test]

@@ -214,7 +214,7 @@ impl ExprLinter for Everyday {
 #[cfg(test)]
 mod tests {
     use super::Everyday;
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 

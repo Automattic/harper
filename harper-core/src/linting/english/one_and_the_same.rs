@@ -69,7 +69,7 @@ impl ExprLinter for OneAndTheSame {
 #[cfg(test)]
 mod tests {
     use super::OneAndTheSame;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_after_are_atomic() {

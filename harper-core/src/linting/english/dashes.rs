@@ -64,7 +64,7 @@ impl ExprLinter for Dashes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_suggestion_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_suggestion_count, assert_suggestion_result};
 
     use super::Dashes;
     use super::{EM_DASH, EN_DASH};

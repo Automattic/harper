@@ -62,7 +62,7 @@ impl ExprLinter for DotInitialisms {
 #[cfg(test)]
 mod tests {
     use super::DotInitialisms;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn matches_eg() {

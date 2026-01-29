@@ -1,4 +1,4 @@
-use crate::linting::english::LintKind;
+use crate::linting::LintKind;
 
 use super::{LintGroup, MapPhraseSetLinter};
 

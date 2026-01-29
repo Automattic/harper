@@ -61,7 +61,7 @@ impl ExprLinter for HyphenateNumberDay {
 #[cfg(test)]
 mod tests {
     use super::HyphenateNumberDay;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_three_day_training() {

@@ -101,7 +101,7 @@ fn spell_out_number(num: u64) -> Option<String> {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     use super::{SpelledNumbers, spell_out_number};
 

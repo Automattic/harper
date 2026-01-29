@@ -88,7 +88,7 @@ impl Linter for RepeatedWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     use super::super::tests::assert_lint_count;
     use super::RepeatedWords;

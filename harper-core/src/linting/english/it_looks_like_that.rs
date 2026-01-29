@@ -68,7 +68,7 @@ impl ExprLinter for ItLooksLikeThat {
 mod tests {
     mod that_noun {
         use super::super::ItLooksLikeThat;
-        use crate::linting::english::tests::assert_no_lints;
+        use crate::linting::tests::assert_no_lints;
 
         #[test]
         fn dont_flag_that_noun_is_also_verb_part_of_np() {
@@ -133,7 +133,7 @@ mod tests {
 
     mod that_det {
         use super::super::ItLooksLikeThat;
-        use crate::linting::english::tests::assert_suggestion_result;
+        use crate::linting::tests::assert_suggestion_result;
 
         #[test]
         fn fix_that_the() {
@@ -159,7 +159,7 @@ mod tests {
 
     mod that_verb {
         use super::super::ItLooksLikeThat;
-        use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+        use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
         #[test]
         fn dont_flag_that_verb_3p_sing_pres_is() {
@@ -240,7 +240,7 @@ mod tests {
 
     mod pronoun {
         use super::super::ItLooksLikeThat;
-        use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+        use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
         #[test]
         fn fix_that_subj_obj_pronoun_it_was() {
@@ -284,7 +284,7 @@ mod tests {
 
     mod conjunction {
         use super::super::ItLooksLikeThat;
-        use crate::linting::english::tests::assert_no_lints;
+        use crate::linting::tests::assert_no_lints;
 
         #[test]
         fn cant_flag_that_if() {

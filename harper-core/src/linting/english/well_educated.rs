@@ -59,7 +59,7 @@ impl ExprLinter for WellEducated {
 #[cfg(test)]
 mod tests {
     use super::WellEducated;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_simple_sentence() {

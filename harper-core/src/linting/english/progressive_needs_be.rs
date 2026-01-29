@@ -92,7 +92,7 @@ impl ExprLinter for ProgressiveNeedsBe {
 #[cfg(test)]
 mod tests {
     use super::ProgressiveNeedsBe;
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_count, assert_suggestion_result,
     };
 

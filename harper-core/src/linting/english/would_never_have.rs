@@ -85,7 +85,7 @@ impl ExprLinter for WouldNeverHave {
 #[cfg(test)]
 mod tests {
     use super::WouldNeverHave;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn fix_could_have_never_been() {

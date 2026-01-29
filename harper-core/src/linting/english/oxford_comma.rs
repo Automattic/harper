@@ -2,7 +2,7 @@ use crate::expr::Expr;
 use crate::expr::ExprExt;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, linting::english::Linter, patterns::WordSet};
+use crate::{Lrc, Token, TokenStringExt, linting::Linter, patterns::WordSet};
 
 use super::{Lint, LintKind, Suggestion};
 
@@ -55,7 +55,7 @@ impl OxfordComma {
 }
 
 impl Linter for OxfordComma {
-    fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::english::Lint> {
+    fn lint(&mut self, document: &crate::Document) -> Vec<crate::linting::Lint> {
         let mut lints = Vec::new();
         for sentence in document.iter_sentences() {
             let mut skip = 0;
@@ -96,7 +96,7 @@ impl Linter for OxfordComma {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::OxfordComma;
 

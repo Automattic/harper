@@ -98,70 +98,135 @@ impl ExprLinter for AmountsFor {
 #[cfg(test)]
 mod tests {
     use super::AmountsFor;
-    use crate::linting::english::tests::assert_top3_suggestion_result;
+    use crate::linting::tests::assert_top3_suggestion_result;
 
     #[test]
     fn corrects_that_amounts_for_to_amounts_to_entire_value() {
-        assert_top3_suggestion_result("Skyler stated the car wash is worth close to $800k, that amounts for the entire value of the company", AmountsFor::default(), "Skyler stated the car wash is worth close to $800k, that amounts to the entire value of the company", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Skyler stated the car wash is worth close to $800k, that amounts for the entire value of the company",
+            AmountsFor::default(),
+            "Skyler stated the car wash is worth close to $800k, that amounts to the entire value of the company",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_that_amounts_for_to_amounts_to_percent() {
-        assert_top3_suggestion_result("Together, that amounts for 1157 calls or 60% of the failures.", AmountsFor::default(), "Together, that amounts to 1157 calls or 60% of the failures.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Together, that amounts for 1157 calls or 60% of the failures.",
+            AmountsFor::default(),
+            "Together, that amounts to 1157 calls or 60% of the failures.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_that_amounts_for_to_accounts_for_setting_up() {
-        assert_top3_suggestion_result("One solution to this would be to have separate controllers but the amount of code that amounts for setting up, processing and calling", AmountsFor::default(), "One solution to this would be to have separate controllers but the amount of code that accounts for setting up, processing and calling", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "One solution to this would be to have separate controllers but the amount of code that amounts for setting up, processing and calling",
+            AmountsFor::default(),
+            "One solution to this would be to have separate controllers but the amount of code that accounts for setting up, processing and calling",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_which_amounts_for_to_accounts_for_16k() {
-        assert_top3_suggestion_result("It has an offset of 0xC000 which amounts for the 16k.", AmountsFor::default(), "It has an offset of 0xC000 which accounts for the 16k.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "It has an offset of 0xC000 which amounts for the 16k.",
+            AmountsFor::default(),
+            "It has an offset of 0xC000 which accounts for the 16k.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_this_amounts_for_to_accounts_for_large_part() {
-        assert_top3_suggestion_result("I'm pretty sure that this amounts for a large part of the speed I gained when typing, in addition to touch-typing.", AmountsFor::default(), "I'm pretty sure that this accounts for a large part of the speed I gained when typing, in addition to touch-typing.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "I'm pretty sure that this amounts for a large part of the speed I gained when typing, in addition to touch-typing.",
+            AmountsFor::default(),
+            "I'm pretty sure that this accounts for a large part of the speed I gained when typing, in addition to touch-typing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_they_amount_for_to_amount_to_16kb() {
-        assert_top3_suggestion_result("it is obvious that the messages are being held \"somewhere\" until they amount for 16kB and then the whole lot come at once.", AmountsFor::default(), "it is obvious that the messages are being held \"somewhere\" until they amount to 16kB and then the whole lot come at once.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "it is obvious that the messages are being held \"somewhere\" until they amount for 16kB and then the whole lot come at once.",
+            AmountsFor::default(),
+            "it is obvious that the messages are being held \"somewhere\" until they amount to 16kB and then the whole lot come at once.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_which_amounts_for_to_amounts_to_10_minutes() {
-        assert_top3_suggestion_result("set a small TTL for your hostname (like 600 which amounts for 10 minutes).", AmountsFor::default(), "set a small TTL for your hostname (like 600 which amounts to 10 minutes).", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "set a small TTL for your hostname (like 600 which amounts for 10 minutes).",
+            AmountsFor::default(),
+            "set a small TTL for your hostname (like 600 which amounts to 10 minutes).",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_it_amounts_for_to_amounts_to_redefinition() {
-        assert_top3_suggestion_result("included for convenience to get a Lorentz invariant result (it amounts for a redefinition of ap).", AmountsFor::default(), "included for convenience to get a Lorentz invariant result (it amounts to a redefinition of ap).", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "included for convenience to get a Lorentz invariant result (it amounts for a redefinition of ap).",
+            AmountsFor::default(),
+            "included for convenience to get a Lorentz invariant result (it amounts to a redefinition of ap).",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_they_amount_for_to_amount_to_nothing() {
-        assert_top3_suggestion_result("Matter and antimatter are spread throughout the Universe, and in total, they amount for nothing", AmountsFor::default(), "Matter and antimatter are spread throughout the Universe, and in total, they amount to nothing", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Matter and antimatter are spread throughout the Universe, and in total, they amount for nothing",
+            AmountsFor::default(),
+            "Matter and antimatter are spread throughout the Universe, and in total, they amount to nothing",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn would_amount_for_to_amount_to_api_requests() {
-        assert_top3_suggestion_result("10% of 6,782,091 would amount for 678,209 API requests", AmountsFor::default(), "10% of 6,782,091 would amount to 678,209 API requests", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "10% of 6,782,091 would amount for 678,209 API requests",
+            AmountsFor::default(),
+            "10% of 6,782,091 would amount to 678,209 API requests",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn will_amount_for_to_amount_to_relationships() {
-        assert_top3_suggestion_result("Consider this statistic from Gartner, that artificial intelligence will amount for 85% of customer relationships by 2020.", AmountsFor::default(), "Consider this statistic from Gartner, that artificial intelligence will amount to 85% of customer relationships by 2020.", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "Consider this statistic from Gartner, that artificial intelligence will amount for 85% of customer relationships by 2020.",
+            AmountsFor::default(),
+            "Consider this statistic from Gartner, that artificial intelligence will amount to 85% of customer relationships by 2020.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn should_amount_for_to_amount_to_half_pack() {
-        assert_top3_suggestion_result("It doesn't seem realistic that this single elite should amount for half the pack", AmountsFor::default(), "It doesn't seem realistic that this single elite should amount to half the pack", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "It doesn't seem realistic that this single elite should amount for half the pack",
+            AmountsFor::default(),
+            "It doesn't seem realistic that this single elite should amount to half the pack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn can_amount_for_to_amount_to_draw_calls() {
-        assert_top3_suggestion_result("That can amount for a lot of draw calls and work for the engine to cull. ", AmountsFor::default(), "That can amount to a lot of draw calls and work for the engine to cull. ", crate::languages::LanguageFamily::English);
+        assert_top3_suggestion_result(
+            "That can amount for a lot of draw calls and work for the engine to cull. ",
+            AmountsFor::default(),
+            "That can amount to a lot of draw calls and work for the engine to cull. ",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

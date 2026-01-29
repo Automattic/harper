@@ -99,7 +99,7 @@ impl ExprLinter for RollerSkated {
 #[cfg(test)]
 mod tests {
     use super::RollerSkated;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_sentence() {

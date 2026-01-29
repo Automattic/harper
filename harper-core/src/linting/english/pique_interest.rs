@@ -75,7 +75,7 @@ impl ExprLinter for PiqueInterest {
 #[cfg(test)]
 mod tests {
     use super::PiqueInterest;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_peak_interest() {

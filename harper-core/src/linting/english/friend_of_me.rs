@@ -63,7 +63,7 @@ impl ExprLinter for FriendOfMe {
 #[cfg(test)]
 mod tests {
     use super::FriendOfMe;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_friend_of_me() {

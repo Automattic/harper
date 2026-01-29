@@ -125,7 +125,7 @@ impl ExprLinter for Months {
 #[cfg(test)]
 mod tests {
     use super::Months;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn fix_in_august() {

@@ -191,7 +191,7 @@ impl ExprLinter for Touristic {
 #[cfg(test)]
 mod tests {
     use super::Touristic;
-    use crate::linting::english::tests::assert_good_and_bad_suggestions;
+    use crate::linting::tests::assert_good_and_bad_suggestions;
 
     #[test]
     fn fixes_touristic_alone() {

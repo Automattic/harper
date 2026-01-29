@@ -1,7 +1,7 @@
 //! [`Pattern`]s are one of the more powerful ways to query text inside Harper, especially for beginners. They are a simplified abstraction over [`Expr`](crate::expr::Expr).
 //!
 //! Through the [`ExprLinter`](crate::linting::english::ExprLinter) trait, they make it much easier to
-//! build Harper [rules](crate::linting::english::Linter).
+//! build Harper [rules](crate::linting::Linter).
 //!
 //! See the page about [`SequenceExpr`](crate::expr::SequenceExpr) for a concrete example of their use.
 

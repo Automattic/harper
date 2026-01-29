@@ -1,7 +1,7 @@
 use crate::{
     Document,
     expr::{ExprExt, SequenceExpr},
-    linting::english::Linter,
+    linting::Linter,
 };
 
 use super::{Lint, LintKind, Suggestion};

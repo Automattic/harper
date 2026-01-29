@@ -93,7 +93,7 @@ impl ExprLinter for SplitWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::SplitWords;
 

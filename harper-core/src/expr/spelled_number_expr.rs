@@ -71,7 +71,7 @@ mod tests {
     use super::SpelledNumberExpr;
     use crate::Document;
     use crate::expr::ExprExt;
-    use crate::linting::english::tests::SpanVecExt;
+    use crate::linting::tests::SpanVecExt;
 
     #[test]
     fn matches_single_digit() {

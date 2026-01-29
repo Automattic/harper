@@ -1,5 +1,4 @@
-use super::Suggestion;
-use super::{Lint, LintKind, Linter};
+use super::{Lint, LintKind, Linter, Suggestion};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{
@@ -137,12 +136,12 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::EnglishDialectFlags;
     use crate::languages::LanguageFamily;
-    use crate::linting::english::Linter;
-    use crate::linting::english::tests::assert_no_lints;
+    use crate::linting::Linter;
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         DialectFlags, EnglishDialect,
-        linting::english::tests::{
+        linting::tests::{
             assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
         },
     };

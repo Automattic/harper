@@ -70,7 +70,7 @@ impl ExprLinter for CompoundSubjectI {
 #[cfg(test)]
 mod tests {
     use super::CompoundSubjectI;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_my_mother_and_me() {

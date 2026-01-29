@@ -99,46 +99,91 @@ mod tests {
 
     #[test]
     fn correct_taking_a_look() {
-        assert_suggestion_result("Consider taking a look at crossorigin attribute.", HaveTakeALook::new(EnglishDialect::British), "Consider having a look at crossorigin attribute.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Consider taking a look at crossorigin attribute.",
+            HaveTakeALook::new(EnglishDialect::British),
+            "Consider having a look at crossorigin attribute.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_take_a_look() {
-        assert_suggestion_result("Have time to help take a look at the jdk21 upgrade issue.", HaveTakeALook::new(EnglishDialect::Australian), "Have time to help have a look at the jdk21 upgrade issue.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Have time to help take a look at the jdk21 upgrade issue.",
+            HaveTakeALook::new(EnglishDialect::Australian),
+            "Have time to help have a look at the jdk21 upgrade issue.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_have_a_look() {
-        assert_suggestion_result("Have a look at this question crashing histoire using init-state and ref.", HaveTakeALook::new(EnglishDialect::American), "Take a look at this question crashing histoire using init-state and ref.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Have a look at this question crashing histoire using init-state and ref.",
+            HaveTakeALook::new(EnglishDialect::American),
+            "Take a look at this question crashing histoire using init-state and ref.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_taken_a_look() {
-        assert_suggestion_result("Have you taken a look at HQEMU?", HaveTakeALook::new(EnglishDialect::British), "Have you had a look at HQEMU?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Have you taken a look at HQEMU?",
+            HaveTakeALook::new(EnglishDialect::British),
+            "Have you had a look at HQEMU?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_had_a_look() {
-        assert_suggestion_result("I had a look at the podman.go and have some theories I could test.", HaveTakeALook::new(EnglishDialect::Canadian), "I took a look at the podman.go and have some theories I could test.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I had a look at the podman.go and have some theories I could test.",
+            HaveTakeALook::new(EnglishDialect::Canadian),
+            "I took a look at the podman.go and have some theories I could test.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_took_a_look() {
-        assert_suggestion_result("I though GitHub's “Dashboard” page might help with this, so I took a look.", HaveTakeALook::new(EnglishDialect::Australian), "I though GitHub's “Dashboard” page might help with this, so I had a look.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I though GitHub's “Dashboard” page might help with this, so I took a look.",
+            HaveTakeALook::new(EnglishDialect::Australian),
+            "I though GitHub's “Dashboard” page might help with this, so I had a look.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_takes_a_look() {
-        assert_suggestion_result("I'm closing this one, but it would be nice if someone takes a look at the notes in the original issue.", HaveTakeALook::new(EnglishDialect::British), "I'm closing this one, but it would be nice if someone has a look at the notes in the original issue.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I'm closing this one, but it would be nice if someone takes a look at the notes in the original issue.",
+            HaveTakeALook::new(EnglishDialect::British),
+            "I'm closing this one, but it would be nice if someone has a look at the notes in the original issue.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_having_a_look() {
-        assert_suggestion_result("It only appeared after I was having a look through the files.", HaveTakeALook::new(EnglishDialect::American), "It only appeared after I was taking a look through the files.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It only appeared after I was having a look through the files.",
+            HaveTakeALook::new(EnglishDialect::American),
+            "It only appeared after I was taking a look through the files.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_has_a_look() {
-        assert_suggestion_result("When Serializing messages the code in SchemaRegistrySerde has a look into the registry using the topic name.", HaveTakeALook::new(EnglishDialect::Canadian), "When Serializing messages the code in SchemaRegistrySerde takes a look into the registry using the topic name.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "When Serializing messages the code in SchemaRegistrySerde has a look into the registry using the topic name.",
+            HaveTakeALook::new(EnglishDialect::Canadian),
+            "When Serializing messages the code in SchemaRegistrySerde takes a look into the registry using the topic name.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

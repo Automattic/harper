@@ -294,9 +294,7 @@ fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
 #[cfg(test)]
 mod tests {
     use super::PhrasalVerbAsCompoundNoun;
-    use crate::linting::english::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn flag_breakup_and_workout() {

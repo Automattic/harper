@@ -2,7 +2,7 @@ use super::Suggestion;
 use super::expr_linter::ExprLinter;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::linting::english::LintKind;
+use crate::linting::LintKind;
 use crate::patterns::WordSet;
 use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
 
@@ -137,7 +137,7 @@ impl Default for MultipleSequentialPronouns {
 #[cfg(test)]
 mod tests {
     use super::MultipleSequentialPronouns;
-    use crate::linting::english::tests::assert_lint_count;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn can_detect_two_pronouns() {

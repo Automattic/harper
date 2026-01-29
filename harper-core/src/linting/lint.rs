@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Span, render_markdown::render_markdown};
 
-use super::{LintKind, Suggestion};
+use super::{lint_kind::LintKind, suggestion::Suggestion};
 
 /// An error found in text.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -75,7 +75,7 @@ impl ExprLinter for MostNumber {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 

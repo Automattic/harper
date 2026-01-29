@@ -75,7 +75,7 @@ impl ExprLinter for Oxymorons {
 #[cfg(test)]
 mod tests {
     use super::Oxymorons;
-    use crate::linting::english::tests::assert_lint_count;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn detects_amateur_expert() {

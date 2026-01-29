@@ -431,7 +431,7 @@ impl ExprLinter for MissingTo {
 #[cfg(test)]
 mod tests {
     use super::MissingTo;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn inserts_to_after_meant() {

@@ -49,7 +49,7 @@ impl ExprLinter for LeftRightHand {
 #[cfg(test)]
 mod tests {
     use super::LeftRightHand;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_left_hand_side() {

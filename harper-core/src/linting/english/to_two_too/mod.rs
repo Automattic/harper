@@ -36,18 +36,28 @@ merge_linters!(
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::ToTwoToo;
 
     #[test]
     fn fixes_to_ambitious() {
-        assert_suggestion_result("The project scope is to ambitious", ToTwoToo::default(), "The project scope is too ambitious", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The project scope is to ambitious",
+            ToTwoToo::default(),
+            "The project scope is too ambitious",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_end_of_sent() {
-        assert_suggestion_result("She wants ice cream, to.", ToTwoToo::default(), "She wants ice cream, too.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She wants ice cream, to.",
+            ToTwoToo::default(),
+            "She wants ice cream, too.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -94,27 +104,52 @@ mod tests {
 
     #[test]
     fn fixes_too_go() {
-        assert_suggestion_result("I want too go abroad.", ToTwoToo::default(), "I want to go abroad.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I want too go abroad.",
+            ToTwoToo::default(),
+            "I want to go abroad.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_too_him() {
-        assert_suggestion_result("Give it too him as a gift", ToTwoToo::default(), "Give it to him as a gift", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Give it too him as a gift",
+            ToTwoToo::default(),
+            "Give it to him as a gift",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_too_the() {
-        assert_suggestion_result("We're going too the conference.", ToTwoToo::default(), "We're going to the conference.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We're going too the conference.",
+            ToTwoToo::default(),
+            "We're going to the conference.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_too_a() {
-        assert_suggestion_result("We're going too a concert.", ToTwoToo::default(), "We're going to a concert.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We're going too a concert.",
+            ToTwoToo::default(),
+            "We're going to a concert.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_to_hard() {
-        assert_suggestion_result("It's not to hard, is it?", ToTwoToo::default(), "It's not too hard, is it?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's not to hard, is it?",
+            ToTwoToo::default(),
+            "It's not too hard, is it?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

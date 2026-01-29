@@ -47,9 +47,7 @@ impl ExprLinter for Didnt {
 #[cfg(test)]
 mod tests {
     use super::Didnt;
-    use crate::linting::english::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_i_dint() {

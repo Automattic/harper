@@ -68,7 +68,7 @@ impl ExprLinter for MissingPreposition {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_lint_count, assert_no_lints};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
     use super::MissingPreposition;
 

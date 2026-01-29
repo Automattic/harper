@@ -48,7 +48,6 @@ pub mod else_possessive;
 pub mod everyday;
 pub mod expand_memory_shorthands;
 pub mod expand_time_shorthands;
-pub mod expr_linter;
 pub mod far_be_it;
 pub mod feel_fell;
 pub mod few_units_of_time_ago;
@@ -82,9 +81,6 @@ pub mod less_worse;
 pub mod let_to_do;
 pub mod lets_confusion;
 pub mod likewise;
-pub mod lint;
-pub mod lint_group;
-pub mod lint_kind;
 pub mod long_sentences;
 pub mod looking_forward_to;
 pub mod map_phrase_linter;
@@ -157,7 +153,6 @@ pub mod spaces;
 pub mod spell_check;
 pub mod spelled_numbers;
 pub mod split_words;
-pub mod suggestion;
 pub mod take_serious;
 pub mod that_than;
 pub mod that_which;
@@ -229,7 +224,6 @@ pub use ellipsis_length::EllipsisLength;
 pub use everyday::Everyday;
 pub use expand_memory_shorthands::ExpandMemoryShorthands;
 pub use expand_time_shorthands::ExpandTimeShorthands;
-pub use expr_linter::ExprLinter;
 pub use far_be_it::FarBeIt;
 pub use feel_fell::FeelFell;
 pub use few_units_of_time_ago::FewUnitsOfTimeAgo;
@@ -258,9 +252,6 @@ pub use less_worse::LessWorse;
 pub use let_to_do::LetToDo;
 pub use lets_confusion::LetsConfusion;
 pub use likewise::Likewise;
-pub use lint::Lint;
-pub use lint_group::{LintGroup, LintGroupConfig};
-pub use lint_kind::LintKind;
 pub use long_sentences::LongSentences;
 pub use looking_forward_to::LookingForwardTo;
 pub use map_phrase_linter::MapPhraseLinter;
@@ -326,7 +317,6 @@ pub use spaces::Spaces;
 pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use split_words::SplitWords;
-pub use suggestion::Suggestion;
 pub use take_serious::TakeSerious;
 pub use that_than::ThatThan;
 pub use that_which::ThatWhich;
@@ -356,314 +346,4 @@ pub use win_prize::WinPrize;
 pub use wordpress_dotcom::WordPressDotcom;
 pub use would_never_have::WouldNeverHave;
 
-use crate::{Document, LSend, render_markdown};
-
-/// A __stateless__ rule that searches documents for grammatical errors.
-///
-/// Commonly implemented via [`ExprLinter`].
-///
-/// See also: [`LintGroup`].
-pub trait Linter: LSend {
-    /// Analyzes a document and produces zero or more [`Lint`]s.
-    /// We pass `self` mutably for caching purposes.
-    fn lint(&mut self, document: &Document) -> Vec<Lint>;
-    /// A user-facing description of what kinds of grammatical errors this rule looks for.
-    /// It is usually shown in settings menus.
-    fn description(&self) -> &str;
-}
-
-/// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.
-pub trait HtmlDescriptionLinter {
-    fn description_html(&self) -> String;
-}
-
-impl<L: ?Sized> HtmlDescriptionLinter for L
-where
-    L: Linter,
-{
-    fn description_html(&self) -> String {
-        let desc = self.description();
-        render_markdown(desc)
-    }
-}
-
-#[cfg(test)]
-pub mod tests {
-    use crate::{
-        Document, Span, Token,
-        languages::LanguageFamily,
-        parsers::{Parser, PlainEnglish, PlainPortuguese},
-    };
-    use hashbrown::HashSet;
-
-    /// Extension trait for converting spans of tokens back to their original text
-    pub trait SpanVecExt {
-        fn to_strings(&self, doc: &Document) -> Vec<String>;
-    }
-
-    impl SpanVecExt for Vec<Span<Token>> {
-        fn to_strings(&self, doc: &Document) -> Vec<String> {
-            self.iter()
-                .map(|sp| {
-                    doc.get_tokens()[sp.start..sp.end]
-                        .iter()
-                        .map(|tok| doc.get_span_content_str(&tok.span))
-                        .collect::<String>()
-                })
-                .collect()
-        }
-    }
-
-    use super::Linter;
-    use crate::spell::FstDictionary;
-
-    #[track_caller]
-    pub fn assert_no_lints(text: &str, linter: impl Linter) {
-        assert_lint_count(text, linter, 0);
-    }
-
-    #[track_caller]
-    pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
-        dbg!(&lints);
-        if lints.len() != count {
-            panic!(
-                "Expected \"{text}\" to create {count} lints, but it created {}.",
-                lints.len()
-            );
-        }
-    }
-
-    /// Assert the total number of suggestions produced by a [`Linter`], spread across all produced
-    /// [`Lint`]s.
-    #[track_caller]
-    pub fn assert_suggestion_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
-        assert_eq!(
-            lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
-            count
-        );
-    }
-
-    /// Runs a provided linter on text, applies the first suggestion from each lint
-    /// and asserts whether the result is equal to a given value.
-    #[track_caller]
-    pub fn assert_suggestion_result(
-        text: &str,
-        linter: impl Linter,
-        expected_result: &str,
-        language: LanguageFamily,
-    ) {
-        assert_nth_suggestion_result(text, linter, expected_result, language, 0);
-    }
-
-    /// Runs a provided linter on text, applies the nth suggestion from each lint
-    /// and asserts whether the result is equal to a given value.
-    ///
-    /// Note that `n` starts at zero.
-    #[track_caller]
-    pub fn assert_nth_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
-        expected_result: &str,
-        language: LanguageFamily,
-        n: usize,
-    ) {
-        let transformed_str = transform_nth_str(text, &mut linter, language, n);
-
-        if transformed_str.as_str() != expected_result {
-            panic!(
-                "Expected \"{transformed_str}\" to be \"{expected_result}\" after applying the computed suggestions."
-            );
-        }
-
-        // Applying the suggestions should fix all the lints.
-        assert_lint_count(&transformed_str, linter, 0);
-    }
-
-    #[track_caller]
-    pub fn assert_top3_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
-        expected_result: &str,
-        language: LanguageFamily,
-    ) {
-        let zeroth = transform_nth_str(text, &mut linter, language, 0);
-        let first = transform_nth_str(text, &mut linter, language, 1);
-        let second = transform_nth_str(text, &mut linter, language, 2);
-
-        match (
-            zeroth.as_str() == expected_result,
-            first.as_str() == expected_result,
-            second.as_str() == expected_result,
-        ) {
-            (true, false, false) => assert_lint_count(&zeroth, linter, 0),
-            (false, true, false) => assert_lint_count(&first, linter, 0),
-            (false, false, true) => assert_lint_count(&second, linter, 0),
-            (false, false, false) => panic!(
-                "None of the top 3 suggestions produced the expected result:\n\
-                Expected: \"{expected_result}\"\n\
-                Got:\n\
-                [0]: \"{zeroth}\"\n\
-                [1]: \"{first}\"\n\
-                [2]: \"{second}\""
-            ),
-            // I think it's not possible for more than one suggestion to be correct
-            _ => {}
-        }
-    }
-
-    /// Asserts that none of the suggestions from the linter match the given text.
-    #[track_caller]
-    pub fn assert_not_in_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
-        bad_suggestion: &str,
-    ) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
-
-        for (i, lint) in lints.iter().enumerate() {
-            for (j, suggestion) in lint.suggestions.iter().enumerate() {
-                let mut text_chars: Vec<char> = text.chars().collect();
-                suggestion.apply(lint.span, &mut text_chars);
-                let suggestion_text: String = text_chars.into_iter().collect();
-
-                if suggestion_text == bad_suggestion {
-                    panic!(
-                        "Found undesired suggestion at lint[{i}].suggestions[{j}]:\n\
-                        Expected to not find suggestion: \"{bad_suggestion}\"\n\
-                        But found: \"{suggestion_text}\""
-                    );
-                }
-            }
-        }
-    }
-
-    /// Asserts both that the given text matches the expected good suggestions and that none of the
-    /// suggestions are in the bad suggestions list.
-    #[track_caller]
-    pub fn assert_good_and_bad_suggestions(
-        text: &str,
-        mut linter: impl Linter,
-        good: &[&str],
-        bad: &[&str],
-    ) {
-        let test = Document::new_markdown_default_curated(text);
-        let lints = linter.lint(&test);
-
-        let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
-        let mut found_bad = Vec::new();
-        let mut found_good = Vec::new();
-
-        for (i, lint) in lints.into_iter().enumerate() {
-            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
-                let mut text_chars: Vec<char> = text.chars().collect();
-                suggestion.apply(lint.span, &mut text_chars);
-                let suggestion_text: String = text_chars.into_iter().collect();
-
-                // Check for bad suggestions
-                if bad.contains(&&*suggestion_text) {
-                    found_bad.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                }
-                // Check for good suggestions
-                else if good.contains(&&*suggestion_text) {
-                    found_good.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                    unseen_good.remove(suggestion_text.as_str());
-                }
-            }
-        }
-
-        // Print summary
-        if !found_bad.is_empty() || !unseen_good.is_empty() {
-            eprintln!("\n=== Test Summary ===");
-
-            // In the summary section, change these loops:
-            if !found_bad.is_empty() {
-                eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
-                for (i, j, text) in &found_bad {
-                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
-                }
-            }
-
-            // And for the good suggestions:
-            if !unseen_good.is_empty() {
-                eprintln!(
-                    "\n❌ Missing {} expected good suggestions:",
-                    unseen_good.len()
-                );
-                for text in &unseen_good {
-                    eprintln!("  - \"{text}\"");
-                }
-            }
-
-            eprintln!("\n✅ Found {} good suggestions", found_good.len());
-            eprintln!("==================\n");
-
-            if !found_bad.is_empty() || !unseen_good.is_empty() {
-                panic!("Test failed - see error output above");
-            }
-        } else {
-            eprintln!(
-                "\n✅ All {} good suggestions found, no bad suggestions\n",
-                found_good.len()
-            );
-        }
-    }
-
-    fn transform_nth_str(
-        text: &str,
-        linter: &mut impl Linter,
-        language: LanguageFamily,
-        n: usize,
-    ) -> String {
-        let mut text_chars: Vec<char> = text.chars().collect();
-
-        let mut iter_count = 0;
-
-        let parser: Box<dyn Parser> = match language {
-            LanguageFamily::English => Box::new(PlainEnglish),
-            LanguageFamily::Portuguese => Box::new(PlainPortuguese),
-        };
-
-        loop {
-            let test = Document::new_from_vec(
-                text_chars.clone().into(),
-                &parser,
-                &FstDictionary::curated(language),
-            );
-            let lints = linter.lint(&test);
-
-            if let Some(lint) = lints.first() {
-                if let Some(sug) = lint.suggestions.get(n) {
-                    sug.apply(lint.span, &mut text_chars);
-
-                    let transformed_str: String = text_chars.iter().collect();
-                    dbg!(transformed_str);
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-
-            iter_count += 1;
-
-            if iter_count == 100 {
-                break;
-            }
-        }
-
-        eprintln!("Corrected {iter_count} times.");
-
-        text_chars.iter().collect()
-    }
-}
+use super::{ExprLinter, Lint, LintGroup, LintKind, Linter, Suggestion, expr_linter};

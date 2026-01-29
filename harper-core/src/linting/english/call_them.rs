@@ -79,7 +79,7 @@ impl ExprLinter for CallThem {
 mod tests {
     #[allow(unused_imports)]
     use crate::Document;
-    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::CallThem;
 

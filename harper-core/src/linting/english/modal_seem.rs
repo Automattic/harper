@@ -108,7 +108,7 @@ impl ExprLinter for ModalSeem {
 #[cfg(test)]
 mod tests {
     use super::ModalSeem;
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
     };
 

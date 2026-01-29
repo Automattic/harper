@@ -131,7 +131,7 @@ impl ExprLinter for OpenTheLight {
 #[cfg(test)]
 mod tests {
     use super::OpenTheLight;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // made-up unit tests
 

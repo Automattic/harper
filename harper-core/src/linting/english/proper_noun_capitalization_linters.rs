@@ -139,7 +139,7 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 #[cfg(test)]
 mod tests {
     use super::lint_group;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     #[test]

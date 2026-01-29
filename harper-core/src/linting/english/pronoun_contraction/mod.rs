@@ -11,26 +11,46 @@ merge_linters! {PronounContraction => ShouldContract, AvoidContraction => "Choos
 #[cfg(test)]
 mod tests {
     use super::PronounContraction;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn issue_225() {
-        assert_suggestion_result("Your the man", PronounContraction::default(), "You're the man", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Your the man",
+            PronounContraction::default(),
+            "You're the man",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn were_team() {
-        assert_suggestion_result("Were the best team.", PronounContraction::default(), "We're the best team.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Were the best team.",
+            PronounContraction::default(),
+            "We're the best team.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_139() {
-        assert_suggestion_result("it would be great if you're PR was merged into tower-lsp", PronounContraction::default(), "it would be great if your PR was merged into tower-lsp", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "it would be great if you're PR was merged into tower-lsp",
+            PronounContraction::default(),
+            "it would be great if your PR was merged into tower-lsp",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn car() {
-        assert_suggestion_result("You're car is black.", PronounContraction::default(), "Your car is black.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You're car is black.",
+            PronounContraction::default(),
+            "Your car is black.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

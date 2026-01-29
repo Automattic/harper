@@ -4,7 +4,7 @@ use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
 use harper_core::{
-    DialectsEnum, EnglishDialect, linting::english::LintGroupConfig, parsers::MarkdownOptions,
+    DialectsEnum, EnglishDialect, linting::LintGroupConfig, parsers::MarkdownOptions,
 };
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};

@@ -48,7 +48,7 @@ pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
-use linting::english::Lint;
+use linting::Lint;
 pub use mask::{Mask, Masker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
@@ -155,7 +155,7 @@ mod tests {
     use crate::spell::FstDictionary;
     use crate::{
         Document, EnglishDialect,
-        linting::english::{LintGroup, Linter},
+        linting::{LintGroup, Linter},
         remove_overlaps,
     };
 

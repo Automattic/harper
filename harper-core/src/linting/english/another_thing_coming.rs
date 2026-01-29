@@ -48,7 +48,7 @@ impl ExprLinter for AnotherThingComing {
 #[cfg(test)]
 pub mod tests {
     use super::AnotherThingComing;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn fix_have_another_think_coming() {

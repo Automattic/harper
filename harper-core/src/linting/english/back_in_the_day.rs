@@ -68,7 +68,7 @@ impl ExprLinter for BackInTheDay {
 #[cfg(test)]
 mod tests {
     use super::BackInTheDay;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn detects_gem_update_case() {

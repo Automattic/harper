@@ -69,7 +69,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
     };
 

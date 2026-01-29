@@ -104,21 +104,36 @@ impl ExprLinter for ShouldContract {
 #[cfg(test)]
 mod tests {
     use super::ShouldContract;
-    use crate::linting::english::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn contracts_your_correctly() {
-        assert_suggestion_result("your the best", ShouldContract::default(), "you're the best", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "your the best",
+            ShouldContract::default(),
+            "you're the best",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn contracts_were_complex_correctly() {
-        assert_suggestion_result("were a good team", ShouldContract::default(), "we're a good team", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "were a good team",
+            ShouldContract::default(),
+            "we're a good team",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn case_insensitive_handling() {
-        assert_suggestion_result("Your the best", ShouldContract::default(), "You're the best", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Your the best",
+            ShouldContract::default(),
+            "You're the best",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

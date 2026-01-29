@@ -59,7 +59,7 @@ impl ExprLinter for ElsePossessive {
 #[cfg(test)]
 mod tests {
     use super::ElsePossessive;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fixes_no_one_elses() {

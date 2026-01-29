@@ -1,5 +1,9 @@
+use super::{Lint, LintKind, Linter, Suggestion};
+use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, DialectFlags, DialectsEnum, PortugueseDialect};
+use crate::{
+    CharString, CharStringExt, DialectFlags, DialectsEnum, PortugueseDialect, TokenStringExt,
+};
 use lru::LruCache;
 use smallvec::ToSmallVec;
 use std::num::NonZero;
@@ -64,12 +68,73 @@ impl<T: Dictionary> SpellCheck<T> {
     }
 }
 
+impl<T: Dictionary> Linter for SpellCheck<T> {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let mut lints = Vec::new();
+
+        for word in document.iter_words() {
+            let word_chars = document.get_span_content(&word.span);
+
+            if let Some(metadata) = word.kind.as_word().unwrap()
+                && metadata.dialects.is_dialect_enabled(self.dialect)
+                && (self.dictionary.contains_exact_word(word_chars)
+                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+            {
+                continue;
+            };
+
+            let mut possibilities = self.suggest_correct_spelling(word_chars);
+
+            // If the misspelled word is capitalized, capitalize the results too.
+            if let Some(mis_f) = word_chars.first()
+                && mis_f.is_uppercase()
+            {
+                for sug_f in possibilities.iter_mut().filter_map(|w| w.first_mut()) {
+                    *sug_f = sug_f.to_uppercase().next().unwrap();
+                }
+            }
+
+            let suggestions: Vec<_> = possibilities
+                .iter()
+                .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
+                .collect();
+
+            // If there's only one suggestion, save the user a step in the GUI
+            let message = if suggestions.len() == 1 {
+                format!(
+                    "Did you mean `{}`?",
+                    possibilities.first().unwrap().iter().collect::<String>()
+                )
+            } else {
+                format!(
+                    "Did you mean to spell `{}` this way?",
+                    document.get_span_content_str(&word.span)
+                )
+            };
+
+            lints.push(Lint {
+                span: word.span,
+                lint_kind: LintKind::Spelling,
+                suggestions,
+                message,
+                priority: 63,
+            })
+        }
+
+        lints
+    }
+
+    fn description(&self) -> &'static str {
+        "Looks and provides corrections for misspelled words."
+    }
+}
+
 #[cfg(test)]
 mod tests_portuguese {
     use super::SpellCheck;
     use crate::PortugueseDialect;
     use crate::languages::{Language, LanguageFamily};
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
     use crate::spell::FstDictionary;
 
     // Capitalization tests

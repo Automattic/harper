@@ -54,7 +54,7 @@ impl ExprLinter for SomeWithoutArticle {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
     };
 

@@ -112,9 +112,7 @@ impl ExprLinter for NominalWants {
 #[cfg(test)]
 mod tests {
     use super::NominalWants;
-    use crate::linting::english::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fixes_he_wonts() {

@@ -63,7 +63,7 @@ impl ExprLinter for HopeYoure {
 #[cfg(test)]
 mod tests {
     use super::HopeYoure;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_excited_here() {

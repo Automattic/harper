@@ -485,7 +485,7 @@ impl Suggestion {
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[wasm_bindgen]
 pub struct Lint {
-    inner: harper_core::linting::english::Lint,
+    inner: harper_core::linting::Lint,
     /// Indexed in a proverbial JS string
     span: Span,
     /// The problematic text that produced this lint.
@@ -496,7 +496,7 @@ pub struct Lint {
 #[wasm_bindgen]
 impl Lint {
     pub(crate) fn new(
-        inner: harper_core::linting::english::Lint,
+        inner: harper_core::linting::Lint,
         span: Span,
         problem_text: String,
         language: Language,

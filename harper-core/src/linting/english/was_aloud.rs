@@ -51,7 +51,7 @@ impl ExprLinter for WasAloud {
 #[cfg(test)]
 mod tests {
     use super::WasAloud;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn corrects_was_aloud() {

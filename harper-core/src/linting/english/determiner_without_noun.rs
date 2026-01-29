@@ -46,7 +46,7 @@ impl ExprLinter for DeterminerWithoutNoun {
 #[cfg(test)]
 mod tests {
     use super::DeterminerWithoutNoun;
-    use crate::linting::english::tests::assert_lint_count;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn flags_determiner_followed_by_conjunction() {

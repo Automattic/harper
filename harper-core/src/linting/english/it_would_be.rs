@@ -92,7 +92,7 @@ impl ExprLinter for ItWouldBe {
 #[cfg(test)]
 mod tests {
     use super::ItWouldBe;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flags_simple_shame() {

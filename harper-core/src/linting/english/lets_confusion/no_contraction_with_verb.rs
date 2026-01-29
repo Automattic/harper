@@ -95,13 +95,18 @@ impl ExprLinter for NoContractionWithVerb {
 #[cfg(test)]
 mod tests {
     use super::NoContractionWithVerb;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // Correct unambiguous verb
 
     #[test]
     fn fix_lets_inspect() {
-        assert_suggestion_result("In the end lets inspect with git-blame the results.", NoContractionWithVerb::default(), "In the end let's inspect with git-blame the results.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "In the end lets inspect with git-blame the results.",
+            NoContractionWithVerb::default(),
+            "In the end let's inspect with git-blame the results.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positives where verb is also a noun
@@ -173,14 +178,24 @@ mod tests {
 
     #[test]
     fn corrects_lets_make_this() {
-        assert_suggestion_result("Lets make this joke repo into one of the best.", NoContractionWithVerb::default(), "Let's make this joke repo into one of the best.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Lets make this joke repo into one of the best.",
+            NoContractionWithVerb::default(),
+            "Let's make this joke repo into one of the best.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Correct disambiguated verb by following pronoun
 
     #[test]
     fn corrects_lets_mock_them() {
-        assert_suggestion_result("Then lets mock them using Module._load based mocker.", NoContractionWithVerb::default(), "Then let's mock them using Module._load based mocker.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Then lets mock them using Module._load based mocker.",
+            NoContractionWithVerb::default(),
+            "Then let's mock them using Module._load based mocker.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positives / edge cases filed on GitHub

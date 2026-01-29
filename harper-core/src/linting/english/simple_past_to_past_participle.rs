@@ -172,7 +172,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 #[cfg(test)]
 mod tests {
     use super::SimplePastToPastParticiple;
-    use crate::linting::english::tests::{
+    use crate::linting::tests::{
         assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
     };
 

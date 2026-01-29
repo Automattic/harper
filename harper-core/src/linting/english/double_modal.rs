@@ -52,9 +52,7 @@ impl ExprLinter for DoubleModal {
 #[cfg(test)]
 mod tests {
     use super::DoubleModal;
-    use crate::linting::english::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn detects_might_could() {

@@ -94,7 +94,7 @@ impl ExprLinter for CompoundNounAfterPossessive {
 #[cfg(test)]
 mod tests {
     use super::CompoundNounAfterPossessive;
-    use crate::linting::english::tests::assert_lint_count;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn lets_is_not_possessive() {

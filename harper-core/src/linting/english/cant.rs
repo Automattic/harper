@@ -1,7 +1,7 @@
 use super::{ExprLinter, Suggestion};
 use crate::Lint;
 use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
-use crate::linting::english::LintKind;
+use crate::linting::LintKind;
 use crate::linting::english::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
 
@@ -62,7 +62,7 @@ impl ExprLinter for Cant {
 #[cfg(test)]
 mod tests {
     use super::Cant;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_pronoun_cant() {

@@ -46,7 +46,7 @@ impl Linter for CapitalizePersonalPronouns {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::CapitalizePersonalPronouns;
 

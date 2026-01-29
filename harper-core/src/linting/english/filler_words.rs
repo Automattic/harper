@@ -53,7 +53,7 @@ impl ExprLinter for FillerWords {
 #[cfg(test)]
 mod tests {
     use super::FillerWords;
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn remove_uh() {

@@ -559,7 +559,7 @@ impl ExprLinter for Regionalisms {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::english::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
     fn uk_to_us_food() {

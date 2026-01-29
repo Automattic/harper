@@ -149,7 +149,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::english::tests::{assert_lint_count, assert_suggestion_result},
+        linting::tests::{assert_lint_count, assert_suggestion_result},
         spell::FstDictionary,
     };
 
@@ -159,7 +159,9 @@ mod tests {
     fn flag_advicess() {
         assert_lint_count(
             "You gave me bad advices.",
-            MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)),
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             1,
         );
     }
@@ -168,7 +170,9 @@ mod tests {
     fn flag_source_codes_and_softwares() {
         assert_lint_count(
             "Do we have the source codes for these softwares?",
-            MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)),
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             2,
         );
     }
@@ -177,7 +181,9 @@ mod tests {
     fn flag_noun_ending_in_ies() {
         assert_lint_count(
             "Celibacies are better than sex.",
-            MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)),
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             1,
         );
     }
@@ -186,7 +192,9 @@ mod tests {
     fn flag_real_estates() {
         assert_lint_count(
             "Instead of giving any of her many luxury real estates or multi-million dollar fortune ...",
-            MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)),
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             1,
         );
     }
@@ -195,13 +203,22 @@ mod tests {
     fn flag_wear_and_tears() {
         assert_lint_count(
             "Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce",
-            MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)),
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             1,
         );
     }
 
     #[test]
     fn fix_wear_and_tears() {
-        assert_suggestion_result("Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce", MassPlurals::new(FstDictionary::curated(crate::languages::LanguageFamily::English)), "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Transit costs were high in terms of time, finances, and vehicle wear and tears, which posed significant obstacles to international commerce",
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

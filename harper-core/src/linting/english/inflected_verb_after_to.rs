@@ -131,7 +131,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
 #[cfg(test)]
 mod tests {
     use super::InflectedVerbAfterTo;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     #[test]

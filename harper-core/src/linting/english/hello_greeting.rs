@@ -57,7 +57,7 @@ impl ExprLinter for HelloGreeting {
 #[cfg(test)]
 mod tests {
     use super::HelloGreeting;
-    use crate::linting::english::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_greeting() {

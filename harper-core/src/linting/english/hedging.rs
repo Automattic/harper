@@ -47,7 +47,7 @@ impl ExprLinter for Hedging {
 #[cfg(test)]
 mod tests {
     use super::Hedging;
-    use crate::linting::english::tests::assert_lint_count;
+    use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn detects_hedging_phrase() {

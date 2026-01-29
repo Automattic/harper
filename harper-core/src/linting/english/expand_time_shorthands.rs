@@ -99,7 +99,7 @@ impl ExprLinter for ExpandTimeShorthands {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::tests::assert_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     use super::ExpandTimeShorthands;
 

@@ -67,90 +67,175 @@ mod tests {
 
     #[test]
     fn change_tact_atomic() {
-        assert_suggestion_result("change tact", ChangeTack::default(), "change tack", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "change tact",
+            ChangeTack::default(),
+            "change tack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changed_tacks_atomic() {
-        assert_suggestion_result("changed tacks", ChangeTack::default(), "changed tack", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "changed tacks",
+            ChangeTack::default(),
+            "changed tack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changes_tacts_atomic() {
-        assert_suggestion_result("changes tacts", ChangeTack::default(), "changes tack", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "changes tacts",
+            ChangeTack::default(),
+            "changes tack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changing_tact_atomic() {
-        assert_suggestion_result("changing tact", ChangeTack::default(), "changing tack", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "changing tact",
+            ChangeTack::default(),
+            "changing tack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Nouns: change of tack
 
     #[test]
     fn change_of_tacks_atomic() {
-        assert_suggestion_result("change of tacks", ChangeTack::default(), "change of tack", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "change of tacks",
+            ChangeTack::default(),
+            "change of tack",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn change_of_tact_real_world() {
-        assert_suggestion_result("Change of tact : come give your concerns - Death Knight", ChangeTack::default(), "Change of tack : come give your concerns - Death Knight", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Change of tact : come give your concerns - Death Knight",
+            ChangeTack::default(),
+            "Change of tack : come give your concerns - Death Knight",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn change_of_tacts_real_world() {
-        assert_suggestion_result("2013.08.15 - A Change of Tacts | Hero MUX Wiki | Fandom", ChangeTack::default(), "2013.08.15 - A Change of Tack | Hero MUX Wiki | Fandom", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "2013.08.15 - A Change of Tacts | Hero MUX Wiki | Fandom",
+            ChangeTack::default(),
+            "2013.08.15 - A Change of Tack | Hero MUX Wiki | Fandom",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changing_of_tacks_real_world() {
-        assert_suggestion_result("Duffy's changing of tacks hidden in her poetry collection ...", ChangeTack::default(), "Duffy's changing of tack hidden in her poetry collection ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Duffy's changing of tacks hidden in her poetry collection ...",
+            ChangeTack::default(),
+            "Duffy's changing of tack hidden in her poetry collection ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changes_of_tact_real_world() {
-        assert_suggestion_result("While the notes and the changes of tact started to ...", ChangeTack::default(), "While the notes and the changes of tack started to ...", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "While the notes and the changes of tact started to ...",
+            ChangeTack::default(),
+            "While the notes and the changes of tack started to ...",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // With possessive determiners
 
     #[test]
     fn changed_my_tact() {
-        assert_suggestion_result("I have changed my tact this year, and have two second dates in the next week.", ChangeTack::default(), "I have changed my tack this year, and have two second dates in the next week.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I have changed my tact this year, and have two second dates in the next week.",
+            ChangeTack::default(),
+            "I have changed my tack this year, and have two second dates in the next week.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changed_our_tact() {
-        assert_suggestion_result("That being said we have changed our tact slightly and gone for making all UI elements lazy.", ChangeTack::default(), "That being said we have changed our tack slightly and gone for making all UI elements lazy.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That being said we have changed our tact slightly and gone for making all UI elements lazy.",
+            ChangeTack::default(),
+            "That being said we have changed our tack slightly and gone for making all UI elements lazy.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn change_your_tact() {
-        assert_suggestion_result("If you've ever heard the phrase “you've got to change your tact”, this is probably where it comes from.", ChangeTack::default(), "If you've ever heard the phrase “you've got to change your tack”, this is probably where it comes from.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "If you've ever heard the phrase “you've got to change your tact”, this is probably where it comes from.",
+            ChangeTack::default(),
+            "If you've ever heard the phrase “you've got to change your tack”, this is probably where it comes from.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn change_his_tact() {
-        assert_suggestion_result("Why did Sephiroth change his tact with Cloud midway through the game?", ChangeTack::default(), "Why did Sephiroth change his tack with Cloud midway through the game?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Why did Sephiroth change his tact with Cloud midway through the game?",
+            ChangeTack::default(),
+            "Why did Sephiroth change his tack with Cloud midway through the game?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changed_her_tact() {
-        assert_suggestion_result("Only the last commitment ceremony I think she changed her tact and went on about George needing to be the real George.", ChangeTack::default(), "Only the last commitment ceremony I think she changed her tack and went on about George needing to be the real George.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Only the last commitment ceremony I think she changed her tact and went on about George needing to be the real George.",
+            ChangeTack::default(),
+            "Only the last commitment ceremony I think she changed her tack and went on about George needing to be the real George.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn change_its_tact() {
-        assert_suggestion_result("The show seems to change its tact depending on the episode.", ChangeTack::default(), "The show seems to change its tack depending on the episode.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The show seems to change its tact depending on the episode.",
+            ChangeTack::default(),
+            "The show seems to change its tack depending on the episode.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changing_its_tact_apostrophe() {
-        assert_suggestion_result("FYI, USL is changing it's tact internally about MLS II teams.", ChangeTack::default(), "FYI, USL is changing it's tack internally about MLS II teams.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "FYI, USL is changing it's tact internally about MLS II teams.",
+            ChangeTack::default(),
+            "FYI, USL is changing it's tack internally about MLS II teams.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn changes_their_tact() {
-        assert_suggestion_result("As we become inoculated to attention grifts, the grifter changes their tact.", ChangeTack::default(), "As we become inoculated to attention grifts, the grifter changes their tack.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "As we become inoculated to attention grifts, the grifter changes their tact.",
+            ChangeTack::default(),
+            "As we become inoculated to attention grifts, the grifter changes their tack.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

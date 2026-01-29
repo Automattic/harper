@@ -87,7 +87,7 @@ impl ExprLinter for APart {
 #[cfg(test)]
 mod tests {
     use super::APart;
-    use crate::linting::english::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
 
     #[test]
     fn allow_normal_use_of_a_part() {

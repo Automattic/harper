@@ -68,7 +68,7 @@ impl ExprLinter for SafeToSave {
 #[cfg(test)]
 mod tests {
     use super::SafeToSave;
-    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_could_safe() {

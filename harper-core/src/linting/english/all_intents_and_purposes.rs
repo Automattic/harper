@@ -95,7 +95,7 @@ impl ExprLinter for AllIntentsAndPurposes {
 #[cfg(test)]
 mod tests {
     use super::AllIntentsAndPurposes;
-    use crate::linting::english::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // Adjectives without "and"
 

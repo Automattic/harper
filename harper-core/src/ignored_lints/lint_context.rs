@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     Document, FatToken,
-    linting::english::{Lint, LintKind, Suggestion},
+    linting::{Lint, LintKind, Suggestion},
 };
 
 /// A location-agnostic structure that attempts to captures the context and content that a [`Lint`]

@@ -17,8 +17,9 @@ pub struct TrieDictionary<D: Dictionary> {
 }
 
 lazy_static! {
-    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> =
-        Arc::new(TrieDictionary::new(FstDictionary::curated(crate::languages::LanguageFamily::English)));
+    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> = Arc::new(TrieDictionary::new(
+        FstDictionary::curated(crate::languages::LanguageFamily::English)
+    ));
 }
 
 impl TrieDictionary<Arc<FstDictionary>> {
