@@ -13,7 +13,7 @@ use super::expansion::{
 };
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::spell::WordId;
+use crate::spell::{CanonicalWordId, WordIdPair};
 use crate::{CharString, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
@@ -149,17 +149,21 @@ impl AttributeList {
                         word_map,
                     );
                     // Update the metadata of the expanded word
-                    let target_metadata = word_map.get_metadata_mut_chars(&new_word).unwrap();
+                    let target_metadata = word_map
+                        .get_metadata_mut_canonical(CanonicalWordId::from_word_chars(new_word))
+                        .unwrap();
                     target_metadata.append(&metadata);
                     target_metadata.derived_from =
-                        Some(WordId::from_word_chars(&annotated_word.letters));
+                        Some(WordIdPair::from_word_chars(&annotated_word.letters));
                 }
             } else {
                 // Simple case: no cross-product expansion needed
                 for (key, mut value) in new_words.into_iter() {
-                    value.derived_from = Some(WordId::from_word_chars(&annotated_word.letters));
+                    value.derived_from = Some(WordIdPair::from_word_chars(&annotated_word.letters));
 
-                    if let Some(existing_metadata) = word_map.get_metadata_mut_chars(&key) {
+                    if let Some(existing_metadata) =
+                        word_map.get_metadata_mut_canonical(CanonicalWordId::from_word_chars(&key))
+                    {
                         // Merge with existing metadata
                         existing_metadata.append(&value);
                     } else {
@@ -177,7 +181,9 @@ impl AttributeList {
         let mut full_metadata = base_metadata;
 
         // Merge with any existing metadata for this word
-        if let Some(existing_metadata) = word_map.get_with_chars(&annotated_word.letters) {
+        if let Some(existing_metadata) =
+            word_map.get_canonical(CanonicalWordId::from_word_chars(&annotated_word.letters))
+        {
             full_metadata.append(&existing_metadata.metadata);
         }
 
@@ -197,7 +203,7 @@ impl AttributeList {
 
             // Apply the conditional metadata
             word_map
-                .get_metadata_mut_chars(&letters)
+                .get_metadata_mut_canonical(CanonicalWordId::from_word_chars(letters))
                 .unwrap()
                 .append(&metadata);
         }
@@ -300,14 +306,15 @@ mod tests {
     #[test]
     fn proper_noun_property_propagates_to_plurals() {
         let fst_dict = FstDictionary::curated();
-        if let Some(vw_plural) = fst_dict.get_word_metadata_str("Volkswagens") {
+        if let Some(vw_plural) = fst_dict.get_word_metadata_str_exact("Volkswagens") {
             assert!(vw_plural.is_proper_noun());
         }
     }
 
     #[test]
     fn proper_noun_propagates_to_possessives_2327() {
-        if let Some(vw_possessive) = FstDictionary::curated().get_word_metadata_str("Volkswagen's")
+        if let Some(vw_possessive) =
+            FstDictionary::curated().get_word_metadata_str_exact("Volkswagen's")
         {
             assert!(vw_possessive.is_possessive_noun());
         }

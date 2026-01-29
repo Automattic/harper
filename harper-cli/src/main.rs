@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
+use harper_core::spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -349,7 +349,7 @@ fn main() -> anyhow::Result<()> {
             ];
 
             for word in words {
-                let meta = curated_dictionary.get_word_metadata_str(&word);
+                let meta = curated_dictionary.get_word_metadata_str_exact(&word);
                 let (flags, emojis) = meta.as_ref().map_or_else(
                     || (String::new(), String::new()),
                     |md| {
@@ -845,7 +845,7 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in curated_dictionary.words_iter() {
-                if let Some(metadata) = curated_dictionary.get_word_metadata(word) {
+                if let Some(metadata) = curated_dictionary.get_word_metadata_exact(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -947,11 +947,16 @@ fn line_to_parts(line: &str) -> (String, String) {
 fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
-    let id = WordId::from_word_str(word);
+    let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.words_iter().filter(|e| {
+        dictionary
+            .get_word_metadata_exact(e)
+            .unwrap()
+            .derived_from
+            .map(|derived_from| derived_from.canonical())
+            == Some(id)
+    });
 
     println!(" - {word}");
 

@@ -1,8 +1,8 @@
-use blanket::blanket;
 use std::borrow::Cow;
 
+use blanket::blanket;
+
 use super::FuzzyMatchResult;
-use super::WordId;
 use crate::DictWordMetadata;
 
 /// An in-memory database that contains everything necessary to parse and analyze English text.
@@ -32,13 +32,29 @@ pub trait Dictionary: Send + Sync {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]>;
+
+    /// Get the correct canonical capitalizations for the given word.
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]>;
+
     /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>;
+    ///
+    /// Since the dictionary might contain words that differ only in capitalization, this may
+    /// return multiple entries.
+    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata>;
+
+    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata>;
+
     /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
     /// empty.
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>;
+    ///
+    /// Since the dictionary might contain words that differ only in capitalization, this may
+    /// return multiple entries.
+    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata>;
+
+    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;
@@ -46,12 +62,31 @@ pub trait Dictionary: Send + Sync {
     /// The number of words in the dictionary.
     fn word_count(&self) -> usize;
 
-    /// Returns the correct capitalization of the word with the given ID.
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]>;
-
     /// Look for words with a specific prefix
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>>;
 
     /// Look for words that share a prefix with the provided word
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>>;
+
+    /// Search for a word's metadata case-insensitively, then merge all the results into one
+    /// [`DictWordMetadata`].
+    fn get_word_metadata_combined(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        let found_words = self.get_word_metadata(word);
+
+        match found_words.len() {
+            0 => None,
+            1 => Some(Cow::Borrowed(found_words[0])),
+            _ => Some(Cow::Owned({
+                found_words
+                    .iter()
+                    .fold(found_words[0].to_owned(), |acc, word| acc.or(word))
+            })),
+        }
+    }
+
+    /// Search for a word's metadata case-insensitively, then merge all the results into one
+    /// [`DictWordMetadata`].
+    fn get_word_metadata_combined_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+        self.get_word_metadata_combined(&word.chars().collect::<Vec<_>>())
+    }
 }

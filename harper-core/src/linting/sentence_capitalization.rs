@@ -37,7 +37,7 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                 }
             }
 
-            for sentence in paragraph.iter_sentences() {
+            'sentence: for sentence in paragraph.iter_sentences() {
                 if !is_full_sentence(sentence) {
                     continue;
                 }
@@ -53,12 +53,12 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                         && first_char.is_alphabetic()
                         && !first_char.is_uppercase()
                     {
-                        if let Some(canonical_spelling) =
+                        for canonical_spelling in
                             self.dictionary.get_correct_capitalization_of(word_chars)
                         {
                             // Skip if it's a proper noun or contains uppercase letters before a separator
                             if first_word.kind.is_proper_noun() {
-                                continue;
+                                continue 'sentence;
                             }
 
                             // Check for uppercase letters in the rest of the word before any separators
@@ -68,7 +68,7 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                                 .take_while(|&c| !c.is_whitespace() && *c != '-' && *c != '\'')
                                 .any(|&c| c.is_uppercase())
                             {
-                                continue;
+                                continue 'sentence;
                             }
                         }
 

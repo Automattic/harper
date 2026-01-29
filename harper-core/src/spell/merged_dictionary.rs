@@ -5,7 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, WordId};
+use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
@@ -67,15 +67,6 @@ impl Default for MergedDictionary {
 }
 
 impl Dictionary for MergedDictionary {
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        for child in &self.children {
-            if let Some(word) = child.get_correct_capitalization_of(word) {
-                return Some(word);
-            }
-        }
-        None
-    }
-
     fn contains_word(&self, word: &[char]) -> bool {
         for child in &self.children {
             if child.contains_word(word) {
@@ -94,11 +85,20 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
         self.children
             .iter()
-            .filter_map(|d| d.get_word_metadata(word))
-            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
+            .flat_map(|d| d.get_word_metadata(word))
+            .collect()
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        for child in &self.children {
+            if let Some(dict_word_metadata) = child.get_word_metadata_exact(word) {
+                return Some(dict_word_metadata);
+            }
+        }
+        None
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -112,12 +112,17 @@ impl Dictionary for MergedDictionary {
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
         let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
+        self.contains_exact_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
+    }
+
+    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
+        let chars: CharString = word.chars().collect();
+        self.get_word_metadata_exact(&chars)
     }
 
     fn fuzzy_match(
@@ -152,14 +157,15 @@ impl Dictionary for MergedDictionary {
             .collect()
     }
 
-    fn word_count(&self) -> usize {
-        self.children.iter().map(|d| d.word_count()).sum()
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
         self.children
             .iter()
-            .find_map(|dict| dict.get_word_from_id(id))
+            .flat_map(|child| child.get_correct_capitalization_of(word))
+            .collect()
+    }
+
+    fn word_count(&self) -> usize {
+        self.children.iter().map(|d| d.word_count()).sum()
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

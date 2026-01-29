@@ -1,9 +1,9 @@
 use super::{
-    FstDictionary, WordId,
+    CanonicalWordId, FstDictionary,
     rune::{self, AttributeList, parse_word_list},
     word_map::{WordMap, WordMapEntry},
 };
-use crate::edit_distance::edit_distance_min_alloc;
+use crate::{edit_distance::edit_distance_min_alloc, spell::CaseFoldedWordId};
 use itertools::Itertools;
 use lazy_static::lazy_static;
 use std::borrow::Cow;
@@ -108,14 +108,22 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
         self.word_map
-            .get_with_chars(word)
-            .map(|v| Cow::Borrowed(&v.metadata))
+            .get_case_folded(CaseFoldedWordId::from_word_chars(word))
+            .map(|v| &v.metadata)
+            .collect()
+    }
+
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.word_map
+            .get_canonical(CanonicalWordId::from_word_chars(word))
+            .map(|word_map_entry| &word_map_entry.metadata)
     }
 
     fn contains_word(&self, word: &[char]) -> bool {
-        self.word_map.contains_chars(word)
+        self.word_map
+            .contains_case_folded(CaseFoldedWordId::from_word_chars(word))
     }
 
     fn contains_word_str(&self, word: &str) -> bool {
@@ -123,15 +131,14 @@ impl Dictionary for MutableDictionary {
         self.contains_word(&chars)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
         let chars: CharString = word.chars().collect();
         self.get_word_metadata(&chars)
     }
 
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.word_map
-            .get_with_chars(word)
-            .map(|v| v.canonical_spelling.as_slice())
+    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
+        let chars: CharString = word.chars().collect();
+        self.get_word_metadata_exact(&chars)
     }
 
     /// Suggest a correct spelling for a given misspelled word.
@@ -188,7 +195,7 @@ impl Dictionary for MutableDictionary {
             .map(|(word, edit_distance)| FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata: self.get_word_metadata(word).unwrap(),
+                metadata: Cow::Borrowed(self.get_word_metadata_exact(word).unwrap()),
             })
             .collect()
     }
@@ -201,6 +208,13 @@ impl Dictionary for MutableDictionary {
     ) -> Vec<FuzzyMatchResult<'_>> {
         let word: Vec<_> = word.chars().collect();
         self.fuzzy_match(&word, max_distance, max_results)
+    }
+
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
+        self.word_map
+            .get_case_folded(CaseFoldedWordId::from_word_chars(word))
+            .map(|word_map_entry| word_map_entry.canonical_spelling.as_slice())
+            .collect()
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
@@ -216,24 +230,13 @@ impl Dictionary for MutableDictionary {
     }
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
-        let normalized = word.normalized();
-
-        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref())
-            && found.canonical_spelling.as_ref() == normalized.as_ref()
-        {
-            return true;
-        }
-
-        false
+        self.word_map
+            .contains_canonical(CanonicalWordId::from_word_chars(word))
     }
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
         let word: CharString = word.chars().collect();
         self.contains_exact_word(word.as_ref())
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
@@ -306,15 +309,18 @@ mod tests {
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
-        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
+        assert!(
+            dict.get_word_metadata_str_exact("this")
+                .unwrap()
+                .is_determiner()
+        );
     }
 
     #[test]
     fn several_is_quantifier() {
         let dict = MutableDictionary::curated();
         assert!(
-            dict.get_word_metadata_str("several")
+            dict.get_word_metadata_str_exact("several")
                 .unwrap()
                 .is_quantifier()
         );
@@ -323,27 +329,41 @@ mod tests {
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
+        assert!(
+            dict.get_word_metadata_str_exact("few")
+                .unwrap()
+                .is_quantifier()
+        );
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
+        assert!(
+            dict.get_word_metadata_str_exact("fewer")
+                .unwrap()
+                .is_quantifier()
+        );
     }
 
     #[test]
     fn than_is_conjunction() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
-        assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
+        assert!(
+            dict.get_word_metadata_str_exact("than")
+                .unwrap()
+                .is_conjunction()
+        );
     }
 
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
-        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
+        assert!(
+            dict.get_word_metadata_str_exact("herself")
+                .unwrap()
+                .is_pronoun()
+        );
     }
 
     #[test]
@@ -355,7 +375,7 @@ mod tests {
     #[test]
     fn im_is_common() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_str("I'm").unwrap().common);
+        assert!(dict.get_word_metadata_str_exact("I'm").unwrap().common);
     }
 
     #[test]
@@ -375,9 +395,10 @@ mod tests {
     #[test]
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
+        let there_meta = dict.get_word_metadata_str_exact("there").unwrap();
 
-        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
-        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
+        assert!(!there_meta.is_nominal());
+        assert!(!there_meta.is_pronoun());
     }
 
     #[test]
@@ -403,7 +424,7 @@ mod tests {
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
-                .get_word_metadata_str("abandonment's")
+                .get_word_metadata_str_exact("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
         )
@@ -413,7 +434,7 @@ mod tests {
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
-        let has = dict.get_word_metadata_str("has");
+        let has = dict.get_word_metadata_str_exact("has");
         assert!(has.is_some());
 
         assert!(!has.unwrap().is_nominal())
@@ -423,7 +444,7 @@ mod tests {
     fn is_is_linking_verb() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_str("is");
+        let is = dict.get_word_metadata_str_exact("is");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_linking_verb());
@@ -447,14 +468,14 @@ mod tests {
     fn apart_is_not_noun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
+        assert!(!dict.get_word_metadata_str_exact("apart").unwrap().is_noun());
     }
 
     #[test]
     fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_str("be");
+        let is = dict.get_word_metadata_str_exact("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());

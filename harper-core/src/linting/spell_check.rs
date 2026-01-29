@@ -7,7 +7,7 @@ use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
+use crate::{CharString, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -47,10 +47,10 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
                         self.dictionary
-                            .get_word_metadata(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .get_word_metadata_combined(v)
+                            .is_some_and(|word_meta| {
+                                word_meta.dialects.is_dialect_enabled(self.dialect)
+                            })
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -75,8 +75,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
-                && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+                && self.dictionary.contains_word(word_chars)
             {
                 continue;
             };

@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 use crate::linting::{LintKind, Suggestion};
 use std::sync::Arc;
 
@@ -98,7 +100,11 @@ impl ExprLinter for OrthographicConsistency {
             .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
             .count()
             == 1
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && let Ok(canonical) = self
+                .dict
+                .get_correct_capitalization_of(chars)
+                .into_iter()
+                .exactly_one()
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -115,7 +121,11 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && let Ok(canonical) = self
+                .dict
+                .get_correct_capitalization_of(chars)
+                .into_iter()
+                .exactly_one()
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {

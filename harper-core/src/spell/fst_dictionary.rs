@@ -1,4 +1,4 @@
-use super::{MutableDictionary, WordId};
+use super::MutableDictionary;
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use lazy_static::lazy_static;
@@ -122,12 +122,20 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word_str(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
         self.mutable_dict.get_word_metadata(word)
     }
 
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_exact(word)
+    }
+
+    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
         self.mutable_dict.get_word_metadata_str(word)
+    }
+
+    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.mutable_dict.get_word_metadata_str_exact(word)
     }
 
     fn fuzzy_match(
@@ -198,6 +206,10 @@ impl Dictionary for FstDictionary {
         )
     }
 
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
+        self.mutable_dict.get_correct_capitalization_of(word)
+    }
+
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
         self.mutable_dict.words_iter()
     }
@@ -214,14 +226,6 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_exact_word_str(word)
     }
 
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.mutable_dict.get_correct_capitalization_of(word)
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.mutable_dict.get_word_from_id(id)
-    }
-
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         self.mutable_dict.find_words_with_prefix(prefix)
     }
@@ -236,7 +240,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::spell::{Dictionary, WordId};
+    use crate::spell::{CanonicalWordId, Dictionary};
 
     use super::FstDictionary;
 
@@ -296,7 +300,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str_exact("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -329,7 +333,7 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_metadata_str(contraction)
+                dict.get_word_metadata_str_exact(contraction)
                     .unwrap()
                     .derived_from
                     .is_none()
@@ -342,11 +346,12 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("llamas")
+            dict.get_word_metadata_str_exact("llamas")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("llama")
+                .unwrap()
+                .canonical(),
+            CanonicalWordId::from_word_str("llama")
         )
     }
 
@@ -355,11 +360,12 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("cats")
+            dict.get_word_metadata_str_exact("cats")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("cat")
+                .unwrap()
+                .canonical(),
+            CanonicalWordId::from_word_str("cat")
         );
     }
 
@@ -368,11 +374,12 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("unhappy")
+            dict.get_word_metadata_str_exact("unhappy")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("happy")
+                .unwrap()
+                .canonical(),
+            CanonicalWordId::from_word_str("happy")
         );
     }
 
@@ -381,11 +388,12 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert_eq!(
-            dict.get_word_metadata_str("quickly")
+            dict.get_word_metadata_str_exact("quickly")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("quick")
+                .unwrap()
+                .canonical(),
+            CanonicalWordId::from_word_str("quick")
         );
     }
 }
