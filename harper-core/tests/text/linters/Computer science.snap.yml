@@ -47,7 +47,7 @@ Message: |
 Suggest:
   - Replace with: “Reckoned”
   - Replace with: “Recover”
-  - Replace with: “Rickover”
+  - Replace with: “Reasoner”
 
 
 
@@ -568,8 +568,8 @@ Message: |
          |                    ^~~~~ Did you mean to spell `Péter` this way?
 Suggest:
   - Replace with: “Peter”
+  - Replace with: “Peter”
   - Replace with: “Pother”
-  - Replace with: “Paper”
 
 
 
@@ -608,7 +608,7 @@ Message: |
 Suggest:
   - Replace with: “Paras”
   - Replace with: “Parkas”
-  - Replace with: “Parana's”
+  - Replace with: “Pan's”
 
 
 
@@ -889,17 +889,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
-         |                ^~ Did you mean to spell `NP` this way?
-Suggest:
-  - Replace with: “Nap”
-  - Replace with: “Nip”
-  - Replace with: “No”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      262 | The famous P = NP? problem, one of the Millennium Prize Problems, is an open
@@ -1061,8 +1050,8 @@ Message: |
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
   - Replace with: “Hi”
+  - Replace with: “HI”
   - Replace with: “Chi”
-  - Replace with: “Sci”
 
 
 
@@ -1073,8 +1062,8 @@ Message: |
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
   - Replace with: “Hi”
+  - Replace with: “HI”
   - Replace with: “Chi”
-  - Replace with: “Sci”
 
 
 
@@ -1130,7 +1119,7 @@ Message: |
 Suggest:
   - Replace with: “RI”
   - Replace with: “Ra”
-  - Replace with: “Ru”
+  - Replace with: “Re”
 
 
 
@@ -1141,7 +1130,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PE”
+  - Replace with: “PA”
 
 
 
@@ -1331,9 +1320,9 @@ Message: |
      469 |     goto (which means it is more elementary than structured programming).
          |     ^~~~ Did you mean to spell `goto` this way?
 Suggest:
+  - Replace with: “goth”
   - Replace with: “goo”
   - Replace with: “got”
-  - Replace with: “goths”
 
 
 

@@ -19,17 +19,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-       7 | My favourite color is blu.
-         |                       ^~~ Did you mean to spell `blu` this way?
-Suggest:
-  - Replace with: “bl”
-  - Replace with: “blue”
-  - Replace with: “blur”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
        8 | I must defend my honour!
          |                  ^~~~~~ Did you mean to spell `honour` this way?
 Suggest:
