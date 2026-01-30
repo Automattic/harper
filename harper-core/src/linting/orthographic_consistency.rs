@@ -88,18 +88,14 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
-        let flags_to_check = [
-            OrthFlags::LOWER_CAMEL,
-            OrthFlags::UPPER_CAMEL,
-            OrthFlags::APOSTROPHE,
-            OrthFlags::HYPHENATED,
-        ];
+        let flags_to_check = OrthFlags::LOWER_CAMEL
+            | OrthFlags::UPPER_CAMEL
+            | OrthFlags::APOSTROPHE
+            | OrthFlags::HYPHENATED;
 
-        if flags_to_check
-            .into_iter()
-            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
-            .count()
-            == 1
+        // If any of the flags specified by flags_to_check differ between cur_flags and
+        // canonical_flags.
+        if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
             && let Ok(canonical) = self
                 .dict
                 .get_correct_capitalization_of(chars)
