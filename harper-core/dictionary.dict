@@ -52926,6 +52926,7 @@ zymurgy/Ng
 AAC/Ng              # audio format
 AArch64/Og          # see also ARM64
 ACM/Ng
+ADT/NgS             # abstract data type, algebraic data type
 AGI/Sg              # artificial general intelligence
 AMC/NOSg            # old car brand
 AOC/Og              # US politician Alexandria Ocasio-Cortez
