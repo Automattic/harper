@@ -154,7 +154,10 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    };
 
     use super::OrthographicConsistency;
 
@@ -429,6 +432,16 @@ mod tests {
         assert_no_lints(
             "The post’s problem was not in its complexity.",
             OrthographicConsistency::default(),
+        );
+    }
+
+    #[test]
+    fn no_improper_suggestion_for_macos() {
+        assert_good_and_bad_suggestions(
+            "MacOS",
+            OrthographicConsistency::default(),
+            &["macOS"],
+            &["MacOS"],
         );
     }
 }
