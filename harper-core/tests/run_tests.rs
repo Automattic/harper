@@ -79,7 +79,7 @@ create_test!(issue_159.md, 1, Dialect::American);
 create_test!(issue_358.md, 0, Dialect::American);
 create_test!(issue_195.md, 0, Dialect::American);
 create_test!(issue_118.md, 0, Dialect::American);
-create_test!(lots_of_latin.md, 1, Dialect::American);
+create_test!(lots_of_latin.md, 0, Dialect::American);
 create_test!(pr_504.md, 1, Dialect::American);
 create_test!(pr_452.md, 2, Dialect::American);
 create_test!(hex_basic_clean.md, 0, Dialect::American);
