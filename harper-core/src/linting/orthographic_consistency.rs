@@ -69,6 +69,11 @@ impl ExprLinter for OrthographicConsistency {
 
         let chars = word.span.get_content(source);
 
+        if self.dict.contains_exact_word(chars) {
+            // Exit if the dictionary contains the exact word.
+            return None;
+        }
+
         let cur_flags = OrthFlags::from_letters(chars);
 
         if metadata.is_allcaps()
