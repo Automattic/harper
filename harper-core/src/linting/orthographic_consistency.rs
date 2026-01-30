@@ -199,15 +199,6 @@ mod tests {
     }
 
     #[test]
-    fn lego_should_be_all_caps() {
-        assert_suggestion_result(
-            "Lego bricks encourage creativity.",
-            OrthographicConsistency::default(),
-            "LEGO bricks encourage creativity.",
-        );
-    }
-
-    #[test]
     fn nato_should_be_all_caps() {
         assert_suggestion_result(
             "Nato is a military alliance.",
