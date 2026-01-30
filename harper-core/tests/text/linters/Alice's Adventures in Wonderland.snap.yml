@@ -672,15 +672,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     320 | she began again: “Où est ma chatte?” which was the first sentence in her French
-         |                      ^~~ This word's canonical spelling is all-caps.
-Suggest:
-  - Replace with: “EST”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
