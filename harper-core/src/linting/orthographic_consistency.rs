@@ -444,4 +444,10 @@ mod tests {
         // Since both words are in the curated dictionary, neither should be linted.
         assert_no_lints("Pr PR", OrthographicConsistency::default());
     }
+
+    #[test]
+    fn dont_accept_undefined_case_variants() {
+        // "pr" isn't defined in the dictionary, so it should be linted.
+        assert_lint_count("pr", OrthographicConsistency::default(), 1);
+    }
 }
