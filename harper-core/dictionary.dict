@@ -53400,6 +53400,7 @@ ULA/NgS             # uncommitted logic array
 URI/NSg             # uniform resource identifier
 UUID/NgS            # universal unique identifier
 UX/Ng               # user experience
+UpCloud/Og          # cloud service provider
 VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
