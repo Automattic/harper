@@ -365,6 +365,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
             LintKind::Grammar
         ),
+        "PeeekBehindTheCurtain" => (
+            &[
+                ("peak behind the curtain", "peek behind the curtain"),
+                ("peaked behind the curtain", "peeked behind the curtain"),
+                ("peaking behind the curtain", "peeking behind the curtain"),
+                ("peaks behind the curtain", "peeks behind the curtain"),
+            ],
+            "The correct idiom is `peek behind the curtain`.",
+            "Corrects `peak behind the curtain` to `peek behind the curtain`.",
+            LintKind::Eggcorn
+        ),
         "Piggyback" => (
             &[
                 ("piggy bag", "piggyback"),
