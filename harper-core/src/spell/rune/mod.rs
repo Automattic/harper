@@ -78,7 +78,8 @@ mod tests {
 
     fn assert_expansion_results(test_word_list: &str, expected: Vec<&str>) {
         let words = parse_word_list(test_word_list).unwrap();
-        let attributes = AttributeList::parse(&TEST_AFFIX_JSON.to_string()).unwrap();
+        let attributes =
+            AttributeList::parse(&TEST_AFFIX_JSON.to_string(), LanguageFamily::English).unwrap();
 
         let mut expanded = WordMap::default();
 
@@ -124,7 +125,8 @@ mod tests {
     #[test]
     fn correctly_expands_test_files_with_comments() {
         let words = parse_word_list(TEST_WORD_LIST_WITH_COMMENTS).unwrap();
-        let attributes = AttributeList::parse(&TEST_AFFIX_JSON.to_string()).unwrap();
+        let attributes =
+            AttributeList::parse(&TEST_AFFIX_JSON.to_string(), LanguageFamily::English).unwrap();
 
         let mut expanded = WordMap::default();
 
@@ -202,6 +204,7 @@ mod tests {
                 "properties": {}
             })
             .to_string(),
+            LanguageFamily::English,
         )
         .unwrap();
 

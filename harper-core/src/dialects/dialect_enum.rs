@@ -74,14 +74,26 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             (
                 DialectFlagsEnum::English(english_dialect_flags),
                 DialectsEnum::English(english_dialect),
-            ) => english_dialect_flags.is_dialect_enabled(english_dialect),
+            ) => {
+                // panic!(
+                //     "comparing dialects {:#?} and {:#?}",
+                //     english_dialect_flags, english_dialect
+                // );
+                english_dialect_flags.is_dialect_enabled(english_dialect)
+            }
             (
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
-            ) => portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect),
+            ) => {
+                // panic!(
+                //     "comparing dialects {:#?} and {:#?}",
+                //     portuguese_dialect_flags, portuguese_dialect
+                // );
+                portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect)
+            }
 
             (a, b) => panic!(
-                "Trying to get dialect from wrong dialect flags. Comparing dialects {:#?} and {:#?}",
+                "Trying to get dialect from wrong dialect flags enum. Comparing dialects {:#?} and {:#?}",
                 a, b
             ),
         }
@@ -175,7 +187,7 @@ impl BitOr for DialectFlagsEnum {
             (DialectFlagsEnum::Portuguese(self_flags), DialectFlagsEnum::Portuguese(rhs_flags)) => {
                 DialectFlagsEnum::Portuguese(self_flags | rhs_flags)
             }
-            _ => panic!("Trying to BitOr dialect flags of incompatible types"),
+            _ => panic!("Trying to BitOr incompatible DialectFlagsEnums"),
         }
     }
 }

@@ -67,12 +67,13 @@ impl MutableDictionary {
         language: LanguageFamily,
     ) -> Result<Self, rune::Error> {
         let word_list = parse_word_list(word_list)?;
-        let attr_list = AttributeList::parse(attr_list)?;
+        let attr_list = AttributeList::parse(attr_list, language)?;
 
         // There will be at _least_ this number of words
         let mut word_map = WordMap::default();
 
         attr_list.expand_annotated_words(word_list, &mut word_map, language);
+        println!("Done expanding words");
 
         Ok(Self { word_map })
     }
