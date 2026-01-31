@@ -27,7 +27,7 @@
 >
 #
 > Labelled  .
-# VB/J/Comm .
+# VP/J/Comm .
 >
 #
 > Flavour       .
@@ -47,11 +47,11 @@
 >
 #
 > Quarrelled .
-# VB/Comm    .
+# VP/Comm    .
 >
 #
 > Quarrelling .
-# Nᴹ/VB/Comm  .
+# Nᴹ/Vg/Comm  .
 >
 #
 > Recognised .

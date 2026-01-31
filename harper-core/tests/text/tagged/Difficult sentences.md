@@ -467,7 +467,7 @@
 > Would you    like         that          to take   away or    eat in        ?
 # VXB   ISgPl+ NSg/VB/J/C/P NSg/I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/R/P .
 > He       ran     to the edge   of the swimming pool    and  dived in        .
-# NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/VB   NSg/VB+ VB/C VP/J  NPr/J/R/P .
+# NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/Vg   NSg/VB+ VB/C VP/J  NPr/J/R/P .
 > They flew      in        from London last      night    .
 # IPl+ NSg/VPt/J NPr/J/R/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
 > For   six  hours the tide    flows  in        , then      for   another six  hours it       flows  out          .
@@ -685,11 +685,11 @@
 > All          of the responsibility is  on  him  .
 # NSg/I/J/C/Dq P  D+  N🅪Sg+          VL3 J/P ISg+ .
 > I       put     a    bet       on  the winning  horse   .
-# ISg/#r+ NSg/VBP D/P+ NSg/VB/P+ J/P D+  NSg/VB/J NSg/VB+ .
+# ISg/#r+ NSg/VBP D/P+ NSg/VB/P+ J/P D+  NSg/Vg/J NSg/VB+ .
 > tug     on  the rope    ; push   hard     on  the door    .
 # NSg/VB+ J/P D+  NSg/VB+ . NSg/VB N🅪Sg/J/R J/P D+  NSg/VB+ .
 > I       stubbed my  toe     on  an  old   tree    stump  .
-# ISg/#r+ VB/J    D$+ NSg/VB+ J/P D/P NSg/J NSg/VB+ NSg/VB .
+# ISg/#r+ VP/J    D$+ NSg/VB+ J/P D/P NSg/J NSg/VB+ NSg/VB .
 > I       caught my  fingernail on  the door    handle .
 # ISg/#r+ VP/J   D$+ NSg+       J/P D+  NSg/VB+ NSg/VB .
 > The rope    snagged on  a   branch  .
@@ -731,7 +731,7 @@
 > He       travelled on  false     documents .
 # NPr/ISg+ VP/J/Comm J/P NSg/VB/J+ NPl/V3+   .
 > They planned an  attack   on  London .
-# IPl+ VB/J    D/P NSg/VB/J J/P NPr+   .
+# IPl+ VP/J    D/P NSg/VB/J J/P NPr+   .
 > The soldiers mutinied and  turned their guns    on  their officers .
 # D+  NPl/V3+  VP/J     VB/C VP/J   D$+   NPl/V3+ J/P D$+   NPl/V3+  .
 > Her     words   made a    lasting  impression on  my  mind    .

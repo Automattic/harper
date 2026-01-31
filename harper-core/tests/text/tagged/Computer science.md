@@ -49,7 +49,7 @@
 > machine learning aim    to synthesize goal    - orientated processes such  as
 # NSg/VB+ Nᴹ/Vg/J+ NSg/VB P  VB         NSg/VB+ . VP/J       NPl/V3    NSg/I R/C/P
 > problem - solving , decision - making  , environmental adaptation , planning and
-# NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J . NSg/J         NSg+       . NSg/VB   VB/C
+# NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J . NSg/J         NSg+       . NSg/Vg   VB/C
 > learning found  in        humans and  animals . Within  artificial intelligence , computer
 # Nᴹ/Vg/J+ NSg/VP NPr/J/R/P NPl/V3 VB/C NPl+    . NSg/J/P J+         N🅪Sg+        . NSg+
 > vision   aims   to understand and  process image   and  video    data  , while      natural
@@ -133,7 +133,7 @@
 > Essays  on  Automatics , and  designed , inspired by    Babbage , a   theoretical
 # NPl/V3+ J/P NPl        . VB/C VP/J     . VP/J     NSg/P NPr     . D/P J
 > electromechanical calculating machine which was to be      controlled by    a   read     - only
-# J                 Nᴹ/Vg/J     NSg/VB+ I/C+  VPt P  NSg/VXB VB/J       NSg/P D/P NSg/VBP+ . J/R/C
+# J                 Nᴹ/Vg/J     NSg/VB+ I/C+  VPt P  NSg/VXB VP/J       NSg/P D/P NSg/VBP+ . J/R/C
 > program . The paper      also introduced the idea of floating - point   arithmetic . In
 # NPr/VB+ . D+  N🅪Sg/VB/J+ R/C  VP/J       D   NSg  P  Nᴹ/Vg/J+ . NSg/VB+ Nᴹ/J       . NPr/J/R/P
 > 1920 , to celebrate the 100th anniversary of the invention of the arithmometer ,
@@ -499,7 +499,7 @@
 >
 #
 > According to Peter      Denning , the fundamental question underlying computer science
-# Nᴹ/Vg/J   P  NPr/VB/JC+ ?       . D+  NSg/J+      NSg/VB+  NSg/VB/J+  NSg+     N🅪Sg/VB+
+# Nᴹ/Vg/J   P  NPr/VB/JC+ ?       . D+  NSg/J+      NSg/VB+  NSg/Vg/J+  NSg+     N🅪Sg/VB+
 > is  , " What   can     be      automated ? " Theory of computation is  focused on  answering
 # VL3 . . NSg/I+ NPr/VXB NSg/VXB VP/J      . . N🅪Sg   P  NSg         VL3 VP/J    J/P Nᴹ/Vg/J
 > fundamental questions about what   can     be      computed and  what   amount of resources
