@@ -3103,7 +3103,7 @@
 > I       was alone and  it       was almost two . For   some      time       confused and  intriguing sounds
 # ISg/#r+ VPt J     VB/C NPr/ISg+ VPt R      NSg . R/C/P I/J/R/Dq+ N🅪Sg/VB/J+ VP/J     VB/C Nᴹ/Vg/J    NPl/V3
 > had issued from a   long     , many       - windowed room       which overhung the terrace . Eluding
-# VP  VP/J   P    D/P NPr/VB/J . NSg/I/J/Dq . VP/J     N🅪Sg/VB/J+ I/C+  VB/J     D   NSg/VB+ . Nᴹ/Vg/J
+# VP  VP/J   P    D/P NPr/VB/J . NSg/I/J/Dq . VP/J     N🅪Sg/VB/J+ I/C+  VP/J     D   NSg/VB+ . Nᴹ/Vg/J
 > Jordan’s undergraduate , who    was now       engaged in        an  obstetrical conversation with
 # NPr$     NSg/J         . NPr/I+ VPt NSg/J/R/C VP/J    NPr/J/R/P D/P J           N🅪Sg/VB+     P
 > two chorus  girls   , and  who    implored me       to join   him  , I       went    inside  .

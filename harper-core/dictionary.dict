@@ -3062,7 +3062,7 @@ ETA/ONV             # estimated time of arrival
 ETD/N
 EU/ON
 EULA/NgS            # end-user license agreement
-EUR/N
+EUR/Nmg             # currency symbol for Euros
 EUV/N               # extreme ultraviolet
 Eakins/Og
 Earhart/Og
@@ -8906,6 +8906,7 @@ SF/NOJ              # san francisco
 SGI/Og              # computer company
 SGML/Og             # mark-up language
 SIDS/NOg            # syndrome
+SIM                 # ~ card
 SJ/ON
 SJW/N
 SK/VNO
@@ -10345,15 +10346,15 @@ UNIX/Og
 UPC/N
 UPI/ONg
 UPS/NOgV
-URL/NS
+URL/NSg
 US/Og
-USA/ONg
+USA/Og
 USAF/O
 USAID/Og            # agency
 USB/ONSg
 USCG/O
 USCIS/O             # immigration agency
-USD/N
+USD/Nmg             # currency symbol for US dollars
 USDA/Og
 USIA/O
 USMC/O
@@ -20878,8 +20879,8 @@ deplorably/Ry
 deplore/VGdSB
 deploy/~VGdSNrL
 deployable/J
-deployment/~Ngr
-deployments/~N
+deployment/~N0gr
+deployments/~N9
 deponent/JNgS
 deportable/J
 deportation/~NgS
@@ -37138,7 +37139,7 @@ overhead/~JNgSP
 overhear/VSG
 overheard/~V
 overheat/VdGSN
-overhung/VJ
+overhung/VtTJ
 overhype/VSGd
 overindulge/VGdS
 overindulgence/Ng
