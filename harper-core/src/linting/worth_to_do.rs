@@ -96,7 +96,7 @@ where
     }
 
     fn description(&self) -> &str {
-        "worth to do"
+        "Corrects `worth to` + a verb to `worth` + the gerund of the verb."
     }
 }
 
