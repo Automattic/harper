@@ -30,6 +30,16 @@ impl CanonicalWordId {
         let chars: CharString = text.as_ref().chars().collect();
         Self::from_word_chars(chars)
     }
+
+    /// Reinterpret this ID as a [`CaseFoldedWordId`].
+    ///
+    /// Note that this is just a reinterpretation, it does not perform any conversion. This is
+    /// useful when the canonical word ID is the same as the case-folded word ID. This will only
+    /// happen if the canonical ID was generated with a word that was already lowercased and
+    /// normalized.
+    pub(crate) fn as_case_folded(self) -> CaseFoldedWordId {
+        CaseFoldedWordId { hash: self.hash }
+    }
 }
 
 /// An identifier for a particular word with case-folded casing.

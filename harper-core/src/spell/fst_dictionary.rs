@@ -335,7 +335,7 @@ mod tests {
                 dict.get_word_metadata_str_exact(contraction)
                     .unwrap()
                     .derived_from
-                    .is_none()
+                    .is_empty()
             )
         }
     }
@@ -344,13 +344,11 @@ mod tests {
     fn plural_llamas_derived_from_llama() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str_exact("llamas")
                 .unwrap()
                 .derived_from
-                .unwrap()
-                .canonical(),
-            CanonicalWordId::from_word_str("llama")
+                .contains(CanonicalWordId::from_word_str("llama"))
         )
     }
 
@@ -358,13 +356,11 @@ mod tests {
     fn plural_cats_derived_from_cat() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str_exact("cats")
                 .unwrap()
                 .derived_from
-                .unwrap()
-                .canonical(),
-            CanonicalWordId::from_word_str("cat")
+                .contains(CanonicalWordId::from_word_str("cat"))
         );
     }
 
@@ -372,13 +368,11 @@ mod tests {
     fn unhappy_derived_from_happy() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str_exact("unhappy")
                 .unwrap()
                 .derived_from
-                .unwrap()
-                .canonical(),
-            CanonicalWordId::from_word_str("happy")
+                .contains(CanonicalWordId::from_word_str("happy"))
         );
     }
 
@@ -386,13 +380,11 @@ mod tests {
     fn quickly_derived_from_quick() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str_exact("quickly")
                 .unwrap()
                 .derived_from
-                .unwrap()
-                .canonical(),
-            CanonicalWordId::from_word_str("quick")
+                .contains(CanonicalWordId::from_word_str("quick"))
         );
     }
 }

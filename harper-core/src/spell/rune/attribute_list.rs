@@ -13,7 +13,7 @@ use super::expansion::{
 };
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::spell::{CanonicalWordId, WordIdPair};
+use crate::spell::CanonicalWordId;
 use crate::{CharString, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
@@ -153,13 +153,16 @@ impl AttributeList {
                         .get_metadata_mut_canonical(CanonicalWordId::from_word_chars(new_word))
                         .unwrap();
                     target_metadata.append(&metadata);
-                    target_metadata.derived_from =
-                        Some(WordIdPair::from_word_chars(&annotated_word.letters));
+                    target_metadata
+                        .derived_from
+                        .insert(CanonicalWordId::from_word_chars(&annotated_word.letters));
                 }
             } else {
                 // Simple case: no cross-product expansion needed
                 for (key, mut value) in new_words.into_iter() {
-                    value.derived_from = Some(WordIdPair::from_word_chars(&annotated_word.letters));
+                    value
+                        .derived_from
+                        .insert(CanonicalWordId::from_word_chars(&annotated_word.letters));
 
                     if let Some(existing_metadata) =
                         word_map.get_metadata_mut_canonical(CanonicalWordId::from_word_chars(&key))

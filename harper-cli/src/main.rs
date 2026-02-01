@@ -963,8 +963,7 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
             .get_word_metadata_exact(e)
             .unwrap()
             .derived_from
-            .map(|derived_from| derived_from.canonical())
-            == Some(id)
+            .contains(id)
     });
 
     println!(" - {word}");
