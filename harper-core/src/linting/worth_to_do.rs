@@ -1,5 +1,5 @@
 use crate::{
-    Lint, TokenStringExt,
+    CharStringExt, Lint, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
@@ -47,6 +47,7 @@ where
         let tolemspan = tolemtoks.span()?;
         let lemspan = lemtok.span;
         let tolemchars = tolemspan.get_content(src);
+        let lemchars = lemspan.get_content(src);
         let lemstr = lemspan.get_content_string(src);
 
         let mut gerunds = Vec::new();
@@ -56,19 +57,22 @@ where
             gerunds.push(glom_ing);
         }
 
-        if lemstr.ends_with('e') {
+        if lemchars.ends_with_ignore_ascii_case_chars(&['e']) {
             let replace_e_with_ing = format!("{}ing", &lemstr[..lemstr.len() - 1]);
             if self.dict.contains_word_str(&replace_e_with_ing) {
                 gerunds.push(replace_e_with_ing);
             }
         }
 
-        if let Some(last_letter) = lemstr.chars().last() {
-            if !matches!(last_letter, 'a' | 'e' | 'i' | 'o' | 'u') {
-                let double_consonant = format!("{}{}ing", lemstr, last_letter);
-                if self.dict.contains_word_str(&double_consonant) {
-                    gerunds.push(double_consonant);
-                }
+        if let Some(last_letter) = lemstr.chars().last()
+            && !matches!(
+                last_letter.to_ascii_lowercase(),
+                'a' | 'e' | 'i' | 'o' | 'u'
+            )
+        {
+            let double_consonant = format!("{}{}ing", lemstr, last_letter);
+            if self.dict.contains_word_str(&double_consonant) {
+                gerunds.push(double_consonant);
             }
         }
 
@@ -287,6 +291,33 @@ mod tests {
             "I think It worth to use and worth to develop further",
             WorthToDo::new(FstDictionary::curated()),
             "I think It worth using and worth developing further",
+        );
+    }
+
+    #[test]
+    fn works_with_uppercase_glom() {
+        assert_suggestion_result(
+            " YES IT IS WORTH TO DO",
+            WorthToDo::new(FstDictionary::curated()),
+            " YES IT IS WORTH DOING",
+        );
+    }
+
+    #[test]
+    fn works_with_uppercase_final_e() {
+        assert_suggestion_result(
+            "THIS LINTER WAS WORTH TO MAKE",
+            WorthToDo::new(FstDictionary::curated()),
+            "THIS LINTER WAS WORTH MAKING",
+        );
+    }
+
+    #[test]
+    fn works_with_uppercase_double_consonant() {
+        assert_suggestion_result(
+            "SO YEAH IT WAS WORTH TO GET THIS DONE",
+            WorthToDo::new(FstDictionary::curated()),
+            "SO YEAH IT WAS WORTH GETTING THIS DONE",
         );
     }
 }
