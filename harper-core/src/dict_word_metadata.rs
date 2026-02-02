@@ -761,7 +761,34 @@ impl DictWordMetadata {
 
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
-        *self = self.or(other);
+        macro_rules! merge {
+            ($a:expr, $b:expr) => {
+                match ($a, $b) {
+                    (Some(a), Some(b)) => Some(a.or(&b)),
+                    (Some(a), None) => Some(a),
+                    (None, Some(b)) => Some(b),
+                    (None, None) => None,
+                }
+            };
+        }
+
+        self.noun = merge!(self.noun, other.noun);
+        self.pronoun = merge!(self.pronoun, other.pronoun);
+        self.verb = merge!(self.verb, other.verb);
+        self.adjective = merge!(self.adjective, other.adjective);
+        self.adverb = merge!(self.adverb, other.adverb);
+        self.conjunction = merge!(self.conjunction, other.conjunction);
+        self.determiner = merge!(self.determiner, other.determiner);
+        self.affix = merge!(self.affix, other.affix);
+        self.preposition |= other.preposition;
+        self.dialects |= other.dialects;
+        self.orth_info |= other.orth_info;
+        self.swear = self.swear.or(other.swear);
+        self.common |= other.common;
+        self.derived_from.extend(other.derived_from.iter());
+        self.pos_tag = self.pos_tag.or(other.pos_tag);
+        self.np_member = self.np_member.or(other.np_member);
+
         self
     }
 }

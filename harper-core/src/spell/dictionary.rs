@@ -77,9 +77,11 @@ pub trait Dictionary: Send + Sync {
             0 => None,
             1 => Some(Cow::Borrowed(found_words[0])),
             _ => Some(Cow::Owned({
-                found_words
-                    .iter()
-                    .fold(found_words[0].to_owned(), |acc, word| acc.or(word))
+                let mut first = found_words[0].to_owned();
+                found_words.iter().skip(1).for_each(|found_word| {
+                    first.append(found_word);
+                });
+                first
             })),
         }
     }
