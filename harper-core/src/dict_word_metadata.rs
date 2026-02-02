@@ -182,39 +182,9 @@ impl DictWordMetadata {
 
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
-        macro_rules! merge {
-            ($a:expr, $b:expr) => {
-                match ($a, $b) {
-                    (Some(a), Some(b)) => Some(a.or(&b)),
-                    (Some(a), None) => Some(a),
-                    (None, Some(b)) => Some(b),
-                    (None, None) => None,
-                }
-            };
-        }
-
-        Self {
-            noun: merge!(self.noun, other.noun),
-            pronoun: merge!(self.pronoun, other.pronoun),
-            verb: merge!(self.verb, other.verb),
-            adjective: merge!(self.adjective, other.adjective),
-            adverb: merge!(self.adverb, other.adverb),
-            conjunction: merge!(self.conjunction, other.conjunction),
-            determiner: merge!(self.determiner, other.determiner),
-            affix: merge!(self.affix, other.affix),
-            preposition: self.preposition || other.preposition,
-            dialects: self.dialects | other.dialects,
-            orth_info: self.orth_info | other.orth_info,
-            swear: self.swear.or(other.swear),
-            common: self.common || other.common,
-            derived_from: {
-                let mut cloned_derived_from = self.derived_from.clone();
-                cloned_derived_from.extend(other.derived_from.iter());
-                cloned_derived_from
-            },
-            pos_tag: self.pos_tag.or(other.pos_tag),
-            np_member: self.np_member.or(other.np_member),
-        }
+        let mut clone = self.clone();
+        clone.append(other);
+        clone
     }
 
     /// Given a UPOS tag, discard any metadata that would disagree with the given POS tag.
