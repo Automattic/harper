@@ -8144,7 +8144,7 @@ Plasticine/Ng
 Plataea/Og
 Plath/Og
 Plato/Og
-Platonic/JN
+Platonic/JNQ # add "platonically"
 Platonism/Ogm
 Platonist/Ng
 Platte/Og
@@ -12629,9 +12629,9 @@ anthropological/~JY
 anthropologist/~NSg
 anthropology/~Nmg
 anthropomorphic/~JQ
-anthropomorphise/V!_₹
+anthropomorphise/V!_₹d
 anthropomorphism/Nmg
-anthropomorphize/V
+anthropomorphize/Vd
 anthropomorphous/J
 anti/~JNSgP(
 antiabortion/J
@@ -19438,7 +19438,7 @@ counterculture/~NSg
 countered/~V
 counterespionage/Ng
 counterexample/NS
-counterfactual/JN
+counterfactual/JNS
 counterfeit/~J>NgSVGdZ
 counterfeiter/Ng
 counterfoil/NgS
@@ -22429,7 +22429,7 @@ dyno/NSg
 # dys               # prefixes that are not also words in their own right don't belong in the dictionary
 dysania/Nmg
 dysentery/~Nmg
-dysfunction/~Nmg
+dysfunction/~Nwg # Countable and uncountable
 dysfunctional/~J
 dyslectic/JNSg
 dyslexia/Nmg
@@ -22942,7 +22942,7 @@ emerald/~NwgSJV
 emerge/~VdGSNr
 emergence/~Nmgr
 emergency/~NwSg
-emergent/~JN
+emergent/~JNg
 emerita/JN9
 emeritus/~JN0
 emery/~NgV
@@ -23513,7 +23513,7 @@ escapology/N
 escargot/NgS
 escarole/NgS
 escarpment/~NgS
-eschatological/~J
+eschatological/~Jq
 eschatology/~Nmg
 eschew/VSdG
 escort/~NSgVdG
@@ -28510,7 +28510,7 @@ honorarium/NgS
 honorary/~JN
 honoree/NSg<
 honorer/NSg<
-honorific/~NgSJ
+honorific/~NgSJQ # Add "honorifically"
 honour/NwgSVdGEB!@_₹
 honourableness/Ng!@_₹
 honourably/RyE!@_₹
@@ -29897,7 +29897,7 @@ inheritance/~NgE
 inheritances/N
 inheritor/NSg
 inhibit/~VGSd
-inhibition/~NSg
+inhibition/~NSgE # Add preffix "dis-" for "disinhibition"
 inhibitor/~NSg
 inhibitory/~J
 inhomogeneous/J
@@ -30322,7 +30322,7 @@ interventionist/JNSg
 interview/~NgSVGd>Z
 interviewee/NgS
 interviewer/~Ng
-intervocalic/JQ     
+intervocalic/JQ
 interwar/~J
 interweave/VGS
 interwove/V
@@ -30525,7 +30525,7 @@ irreproachable/J
 irreproachably/Ry
 irresistible/~J
 irresistibly/Ry
-irresolute/JYpn
+irresolute/JYpnv # Add "resolutive"
 irresoluteness/Ng
 irresolution/Ng
 irrespective/~J
@@ -34031,7 +34031,7 @@ minoxidil/Ng
 minster/~NgS
 minstrel/~NSgV
 minstrelsy/Ng
-mint/~NgSVd>GJZ
+mint/~NgSVd>GJZU # Add prefix un- for "unmint", "unminted", etc.
 mintage/Ng
 minter/Ng
 minterm/NgS
@@ -34551,7 +34551,7 @@ moonshot/NgS
 moonstone/NgS
 moonstruck/J
 moonwalk/NgSV
-moor/~NgSVdGz
+moor/~NgSVdGzU # add "unmoor"
 moorhen/~NS
 mooring/VSNwg
 moorland/~NgS
@@ -38738,6 +38738,7 @@ piddly/J
 pidgin/~NgS
 pie/~NwSgV
 piebald/JNgS
+piebaldism/Ng # TODO: Check
 piece/~NSgVdG
 piecemeal/JVN
 piecework/Ng>Z
@@ -47662,9 +47663,9 @@ synaptic/~J
 sync/~NgSVdG
 synchronicity/N
 synchronisation/NgS!_₹
-synchronise/VGdS!_₹
+synchronise/VGdS!_₹eU # add "desynchronize" and "unsynchronize"
 synchronization/~NSg
-synchronize/VGdS
+synchronize/VGdSeU # add "desynchronize" and "unsynchronize"
 synchronous/~JY
 synchrony/N
 syncopate/VdSGn
@@ -48012,7 +48013,7 @@ taxiway/~NS
 taxman/~N9
 taxmen/N9
 taxon/~N0g
-taxonomic/~J
+taxonomic/~JQ # add "taxonomically"
 taxonomist/NgS
 taxonomy/~NwSg
 taxpayer/~NgS
@@ -54231,4 +54232,72 @@ licensor/NSg
 omnipredicativity/N0
 supervenience/Nmg   # From emergentist ontology
 volitive/NSgJ
-worldbuild/Vd>G     # !! This derives `worldbuilded` - is this intentional?
+worldbuild/V>G     # !! This derives `worldbuilded` - is this intentional? -- no 😅, corrected
+
+agnatic/J # Most often in the phrase "agnatic primogeniture"
+cognatic/J # As above; antonym
+comital/J # Adjective version of the noble rank "count/countess/earl"
+vicontiel/J # As above, for "viscount/viscountess" 
+vicomital/J # As above, alternative version
+viscomital/J # As above, alternative version
+lingua franca/N # TODO
+linguas francas/N # TODO
+linguae francae/N # TODO
+Kansai/Og 
+fae/Nmg # TODO -- alternative term in fantasy for "fairy"
+idiolect/N # TODO -- term in linguistics for the variety of language spoken by an individual as compared to their broader dialect and language
+sociolect/N # TODO -- as above, but for a variety associated with a social class
+luthier/N # TODO -- person who makes/repairs string instruments, mainly violins
+ASMR/NOg # TODO -- "Autonomous Sensory Meridian Response"
+rhotic/J # linguistics
+trimeter/N # TODO -- whatever the meter/metre split is
+trimetric/J 
+queenship/Ng # TODO -- check
+VTuber
+orthopraxy/N # TODO -- check 
+orthopractic/J
+cupbearer/N # TODO -- check
+resolutive
+exonym/NSg
+sortition/Nmg # Political science: a method of appointment to office by random draw
+monolatrous/J
+diahcronic/JQ # linguistics
+synchronic/JQ # linguistics
+praxis/N # TODO
+leathercraft/Nwg
+offeror/Ng # TODO -- check
+chorded/J # music: As refers to "chorded instruments"
+longsword/NSg
+shortsword/NSg
+micronutrient/NSg
+syncretism/Ng
+Indo-European/N # linguistics TODO
+Indo-Iranian # linguistics TODO
+Indo-Aryan # linguistics TODO
+Japonic/J # linguistics
+discretionarily/Ry
+hewn/J # participle of "hew"
+covenantal/JQ
+Iaido/NOg # martial art
+Kendo/NOg # martial art
+flitter/Vd # TODO
+polysynthesis/Ng # linguistics
+polysynthetic/J # linguistics
+Westphalian/J # political science and international relations
+archipelagic/J # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
+indefinitely/Ry
+polearm/N # TODO
+kalimba/N # TODO
+subvocalization/Ng # phonetics TODO
+synesthesia/Ng # TODO -- check also add "synaesthesia"
+menarche/Ng # medicine TODO
+proprioception/Ng # medicine TODO
+
+--- Split these to their own PR
+
+de jure
+de facto
+cassus belli/Nmg # TODO -- check
+a capella # TODO
+motu proprio
+vis-à-vis
