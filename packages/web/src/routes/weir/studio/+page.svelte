@@ -4,10 +4,10 @@ import type { ComponentType } from 'svelte';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
+import type { Toast } from '$lib/components/Toasts.svelte';
 import Toasts from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
 import WeirStudioWorkspace from '$lib/components/WeirStudioWorkspace.svelte';
-import type { Toast } from '$lib/types/toasts';
 
 type WeirpackTestFailure = {
 	expected: string;

@@ -1,6 +1,4 @@
-<script lang="ts">
-import { Card } from 'components';
-
+<script lang="ts" context="module">
 export type ToastTone = 'success' | 'error' | 'info';
 export type Toast = {
 	id: number;
@@ -8,6 +6,10 @@ export type Toast = {
 	body?: string;
 	tone: ToastTone;
 };
+</script>
+
+<script lang="ts">
+import { Card } from 'components';
 
 export let toasts: Toast[] = [];
 export let className: string | undefined = undefined;
