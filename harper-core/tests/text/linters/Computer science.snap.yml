@@ -573,16 +573,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-     161 | contentious issue, which is further muddied by disputes over what the term
-     162 | "software engineering" means, and how computer science is defined. David Parnas,
-         |                                   ^~~~ Insert `to` after `how` (e.g., `how to clone`).
-Suggest:
-  - Insert “to ”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      162 | "software engineering" means, and how computer science is defined. David Parnas,

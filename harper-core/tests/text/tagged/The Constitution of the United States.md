@@ -479,7 +479,7 @@
 >
 #
 > To define   and  punish Piracies and  Felonies committed on  the high       Seas , and
-# P  NSg/VB/J VB/C VB     ?        VB/C NPl      VB/J      J/P D   NSg/VB/J/R NPl+ . VB/C
+# P  NSg/VB/J VB/C VB     ?        VB/C NPl      VP/J      J/P D   NSg/VB/J/R NPl+ . VB/C
 > Offences against the Law     of Nations ;
 # NPl/Comm C/P     D   N🅪Sg/VB P  NPl+    .
 >
@@ -1149,7 +1149,7 @@
 > such  Trial     shall be      held in        the State    where   the said Crimes  shall have    been
 # NSg/I NSg/VB/J+ VXB   NSg/VXB VP   NPr/J/R/P D   N🅪Sg/VB+ NSg/R/C D   VP/J NPl/V3+ VXB   NSg/VXB NSg/VPp
 > committed ; but     when    not     committed within  any    State    , the Trial     shall be      at    such
-# VB/J      . NSg/C/P NSg/I/C NSg/R/C VB/J      NSg/J/P I/R/Dq N🅪Sg/VB+ . D   NSg/VB/J+ VXB   NSg/VXB NSg/P NSg/I
+# VP/J      . NSg/C/P NSg/I/C NSg/R/C VP/J      NSg/J/P I/R/Dq N🅪Sg/VB+ . D   NSg/VB/J+ VXB   NSg/VXB NSg/P NSg/I
 > Place   or    Places  as    the Congress may     by    Law      have    directed .
 # N🅪Sg/VB NPr/C NPl/V3+ R/C/P D   NPr/VB+  NPr/VXB NSg/P N🅪Sg/VB+ NSg/VXB VP/J     .
 >
@@ -1215,7 +1215,7 @@
 > public  trial     , by    an  impartial jury     of the state    and  district  wherein the crime
 # Nᴹ/VB/J NSg/VB/J+ . NSg/P D/P J         NSg/VB/J P  D   N🅪Sg/VB+ VB/C NSg/VB/J+ C       D   N🅪Sg/VB+
 > shall have    been    committed , which district  shall have    been    previously
-# VXB   NSg/VXB NSg/VPp VB/J      . I/C+  NSg/VB/J+ VXB   NSg/VXB NSg/VPp R
+# VXB   NSg/VXB NSg/VPp VP/J      . I/C+  NSg/VB/J+ VXB   NSg/VXB NSg/VPp R
 > ascertained by    law      , and  to be      informed of the nature   and  cause     of the
 # VP/J        NSg/P N🅪Sg/VB+ . VB/C P  NSg/VXB VP/J     P  D   N🅪Sg/VB+ VB/C N🅪Sg/VB/C P  D
 > accusation ; to be      confronted with the witnesses against him  ; to have    compulsory
@@ -1361,13 +1361,13 @@
 > The validity of the public  debt of the United States    ,
 # D   NSg      P  D   Nᴹ/VB/J N🅪Sg P  D+  VP/J   NPrPl/V3+ .
 > authorized by    law      , including debts incurred for   payment of pensions and
-# VP/J       NSg/P N🅪Sg/VB+ . Nᴹ/Vg/J   NPl+  VB       R/C/P N🅪Sg    P  NPl/V3   VB/C
+# VP/J       NSg/P N🅪Sg/VB+ . Nᴹ/Vg/J   NPl+  VP       R/C/P N🅪Sg    P  NPl/V3   VB/C
 > bounties for   services in        suppressing insurrection or    rebellion , shall not     be
 # NPl/V3   R/C/P NPl/V3+  NPr/J/R/P Nᴹ/Vg/J     N🅪Sg         NPr/C N🅪Sg+     . VXB   NSg/R/C NSg/VXB
 > questioned . But     neither the United States    nor   any     State    shall assume or    pay      any
 # VP/J       . NSg/C/P I/C     D   VP/J   NPrPl/V3+ NSg/C I/R/Dq+ N🅪Sg/VB+ VXB   VB     NPr/C NSg/VB/J I/R/Dq
 > debt or    obligation incurred in        aid     of insurrection or    rebellion against the
-# N🅪Sg NPr/C N🅪Sg+      VB       NPr/J/R/P N🅪Sg/VB P  N🅪Sg         NPr/C N🅪Sg+     C/P     D
+# N🅪Sg NPr/C N🅪Sg+      VP       NPr/J/R/P N🅪Sg/VB P  N🅪Sg         NPr/C N🅪Sg+     C/P     D
 > United States    , or    any    claim   for   the loss     or    emancipation of any    slave   ; but     all
 # VP/J   NPrPl/V3+ . NPr/C I/R/Dq NSg/VB+ R/C/P D   N🅪Sg/VB+ NPr/C NSg          P  I/R/Dq NSg/VB+ . NSg/C/P NSg/I/J/C/Dq
 > such  debts , obligations and  claims  shall be      held illegal and  void      .
