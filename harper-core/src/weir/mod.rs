@@ -35,8 +35,8 @@ enum ReplacementStrategy {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TestResult {
-    expected: String,
-    got: String,
+    pub expected: String,
+    pub got: String,
 }
 
 pub struct WeirLinter {

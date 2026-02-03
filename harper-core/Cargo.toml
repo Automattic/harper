@@ -35,6 +35,7 @@ harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional =
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
 phf = { version = "0.13.1", features = ["macros"] }
+zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
 criterion = { version = "0.8.1", default-features = false }
