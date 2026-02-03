@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use std::collections::HashMap;
 use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
@@ -9,6 +10,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
+use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
@@ -101,6 +103,12 @@ pub struct Linter {
     ignored_lints: IgnoredLints,
     dialect: Dialect,
     stats: Stats,
+}
+
+#[derive(Serialize)]
+struct WeirpackTestFailure {
+    expected: String,
+    got: String,
 }
 
 #[wasm_bindgen]
@@ -437,6 +445,39 @@ impl Linter {
         self.stats.records.append(&mut new_stats.records);
 
         Ok(())
+    }
+
+    /// Load a Weirpack from raw bytes, merging its rules into the current linter.
+    /// Returns test failures if any are found, and does not import in that case.
+    pub fn import_weirpack(&mut self, bytes: Vec<u8>) -> Result<JsValue, String> {
+        let pack = Weirpack::from_bytes(&bytes).map_err(|err| err.to_string())?;
+        let failures = pack.run_tests().map_err(|err| err.to_string())?;
+
+        if !failures.is_empty() {
+            let mapped: HashMap<String, Vec<WeirpackTestFailure>> = failures
+                .into_iter()
+                .map(|(rule, results)| {
+                    let failures = results
+                        .into_iter()
+                        .map(|result| WeirpackTestFailure {
+                            expected: result.expected,
+                            got: result.got,
+                        })
+                        .collect();
+                    (rule, failures)
+                })
+                .collect();
+
+            let serializer = Serializer::json_compatible();
+            let value = mapped
+                .serialize(&serializer)
+                .map_err(|err| err.to_string())?;
+            return Ok(value);
+        }
+
+        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(&mut group);
+        Ok(JsValue::UNDEFINED)
     }
 }
 
