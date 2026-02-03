@@ -269,6 +269,7 @@ These configs are under the `markdown` key:
 
 | Language            |          Language ID          | Comments Only |
 | :------------------ | :---------------------------: | ------------: |
+| AsciiDoc            |          `asciidoc`           |               |
 | C                   |              `c`              |            ✅ |
 | Clojure             |           `clojure`           |            ✅ |
 | CMake               |            `cmake`            |            ✅ |
