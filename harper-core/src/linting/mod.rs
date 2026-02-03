@@ -106,6 +106,7 @@ mod lint;
 mod lint_group;
 mod lint_kind;
 mod long_sentences;
+mod look_down_ones_nose;
 mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
