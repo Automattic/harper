@@ -90,6 +90,7 @@ impl TokenKind {
         is_subject_pronoun,
         is_object_pronoun,
         is_possessive_noun,
+        // Note: possessive pronouns are: mine, ours, yours, his, hers, its, theirs
         is_possessive_pronoun,
 
         // Verb methods
@@ -302,7 +303,7 @@ impl TokenKind {
         }
     }
 
-    pub(crate) fn is_sentence_terminator(&self) -> bool {
+    pub fn is_sentence_terminator(&self) -> bool {
         match self {
             TokenKind::Punctuation(punct) => [
                 Punctuation::Period,

@@ -16,6 +16,7 @@ use harper_core::{
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_stats::{Record, RecordKind, Stats};
+use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
@@ -54,6 +55,7 @@ make_serialize_fns_for!(Span);
 pub enum Language {
     Plain,
     Markdown,
+    Typst,
 }
 
 impl Language {
@@ -62,6 +64,7 @@ impl Language {
             Language::Plain => Box::new(PlainEnglish),
             // TODO: Have a way to configure the Markdown parser
             Language::Markdown => Box::new(Markdown::default()),
+            Language::Typst => Box::new(Typst),
         }
     }
 }

@@ -5,7 +5,6 @@ import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
 	createUnitResponse,
-	type GetActivationKeyRequest,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -112,6 +111,8 @@ async function enableDefaultDomains() {
 		'quilljs.com',
 		'www.wattpad.com',
 		'ckeditor.com',
+		'app.slack.com',
+		'openrouter.ai',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -406,7 +407,7 @@ async function getIgnoredLints(): Promise<string> {
 }
 
 async function getDialect(): Promise<Dialect> {
-	const resp = await chrome.storage.local.get({ dialect: undefined });
+	const resp = await chrome.storage.local.get('dialect');
 
 	// If user hasn't set a dialect, try to detect from browser language
 	if (resp.dialect === undefined) {

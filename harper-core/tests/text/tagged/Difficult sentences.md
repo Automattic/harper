@@ -360,8 +360,8 @@
 # K    NSg/VPp Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
 # D$+  NPl+     NPr/VB/JC P    NSg/I/VB+ .
-> He       knows  right    from wrong      .
-# NPr/ISg+ NPl/V3 NPr/VB/J P    NSg/VB/J/R .
+> He       knows right    from wrong      .
+# NPr/ISg+ V3    NPr/VB/J P    NSg/VB/J/R .
 >
 #
 >              In
@@ -426,8 +426,8 @@
 # NPr+ VL3 NPr/J/R/P D/P NSg  .
 > My  fruit    trees   are in        bud        .
 # D$+ N🅪Sg/VB+ NPl/V3+ VB  NPr/J/R/P NPr🅪Sg/VB+ .
-> The company  is  in        profit      .
-# D+  N🅪Sg/VB+ VL3 NPr/J/R/P N🅪Sg/VBP/J+ .
+> The company is  in        profit      .
+# D+  N🅪Sg+   VL3 NPr/J/R/P N🅪Sg/VBP/J+ .
 > You've got a   friend    in        me       .
 # K      VP  D/P NPr/VB/J+ NPr/J/R/P NPr/ISg+ .
 > He's met his     match   in        her     .
@@ -443,7 +443,7 @@
 > Beethoven's " Symphony No       . 5 " in        C          minor    is  among his     most         popular .
 # NPr$        . NSg+     NSg/Dq/P . # . NPr/J/R/P NPr/VB/#r+ NSg/VB/J VL3 P     ISg/D$+ NSg/I/J/R/Dq NSg/J   .
 > His     speech   was in        French      , but     was simultaneously translated into eight  languages .
-# ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl/V3+   .
+# ISg/D$+ N🅪Sg/VB+ VPt NPr/J/R/P NPr🅪Sg/VB/J . NSg/C/P VPt R              VP/J       P    NSg/J+ NPl+      .
 > When    you    write  in        cursive , it's illegible .
 # NSg/I/C ISgPl+ NSg/VB NPr/J/R/P NSg/J   . +    J         .
 > Military letters should be      formal in        tone       , but     not     stilted .
@@ -467,7 +467,7 @@
 > Would you    like         that          to take   away or    eat in        ?
 # VXB   ISgPl+ NSg/VB/J/C/P NSg/I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/R/P .
 > He       ran     to the edge   of the swimming pool    and  dived in        .
-# NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/VB   NSg/VB+ VB/C VP/J  NPr/J/R/P .
+# NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/Vg   NSg/VB+ VB/C VP/J  NPr/J/R/P .
 > They flew      in        from London last      night    .
 # IPl+ NSg/VPt/J NPr/J/R/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
 > For   six  hours the tide    flows  in        , then      for   another six  hours it       flows  out          .
@@ -482,8 +482,8 @@
 # HeadingStart NSg/VB+
 >
 #
-> His     parents got him  an  in        with the company  .
-# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg/VB+ .
+> His     parents got him  an  in        with the company .
+# ISg/D$+ NPl/V3+ VP  ISg+ D/P NPr/J/R/P P    D+  N🅪Sg+   .
 >
 #
 >              Adjective
@@ -685,11 +685,11 @@
 > All          of the responsibility is  on  him  .
 # NSg/I/J/C/Dq P  D+  N🅪Sg+          VL3 J/P ISg+ .
 > I       put     a    bet       on  the winning  horse   .
-# ISg/#r+ NSg/VBP D/P+ NSg/VB/P+ J/P D+  NSg/VB/J NSg/VB+ .
+# ISg/#r+ NSg/VBP D/P+ NSg/VB/P+ J/P D+  NSg/Vg/J NSg/VB+ .
 > tug     on  the rope    ; push   hard     on  the door    .
 # NSg/VB+ J/P D+  NSg/VB+ . NSg/VB N🅪Sg/J/R J/P D+  NSg/VB+ .
 > I       stubbed my  toe     on  an  old   tree    stump  .
-# ISg/#r+ VB/J    D$+ NSg/VB+ J/P D/P NSg/J NSg/VB+ NSg/VB .
+# ISg/#r+ VP/J    D$+ NSg/VB+ J/P D/P NSg/J NSg/VB+ NSg/VB .
 > I       caught my  fingernail on  the door    handle .
 # ISg/#r+ VP/J   D$+ NSg+       J/P D+  NSg/VB+ NSg/VB .
 > The rope    snagged on  a   branch  .
@@ -731,7 +731,7 @@
 > He       travelled on  false     documents .
 # NPr/ISg+ VP/J/Comm J/P NSg/VB/J+ NPl/V3+   .
 > They planned an  attack   on  London .
-# IPl+ VB/J    D/P NSg/VB/J J/P NPr+   .
+# IPl+ VP/J    D/P NSg/VB/J J/P NPr+   .
 > The soldiers mutinied and  turned their guns    on  their officers .
 # D+  NPl/V3+  VP/J     VB/C VP/J   D$+   NPl/V3+ J/P D$+   NPl/V3+  .
 > Her     words   made a    lasting  impression on  my  mind    .

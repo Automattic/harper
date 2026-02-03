@@ -26,11 +26,23 @@ export function getProseMirrorEditor(page: Page): Locator {
 	return page.locator('.ProseMirror');
 }
 
-/** Replace the content of a text editor. */
+/** Locate the Draft.js editor on the page (targets #rich-example on draftjs.org). */
+export function getDraftEditor(page: Page): Locator {
+	return page.locator('#rich-example .public-DraftEditor-content');
+}
+
+/** Replace the content of a text editor. Handles newlines by pressing Enter. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
-	await editorEl.pressSequentially(text);
+
+	const lines = text.split('\n');
+	for (let i = 0; i < lines.length; i++) {
+		await editorEl.pressSequentially(lines[i]);
+		if (i < lines.length - 1) {
+			await editorEl.press('Enter');
+		}
+	}
 }
 
 /** Locate the Harper highlights on a page. */
@@ -83,6 +95,9 @@ export function getTextarea(page: Page): Locator {
 
 /** A string or function that resolves to a test page. */
 export type TestPageUrlProvider = string | ((page: Page) => Promise<string>);
+
+/** A function that returns an editor locator. */
+export type EditorLocatorProvider = (page: Page) => Locator;
 
 async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<string> {
 	if (typeof prov === 'string') {
@@ -166,17 +181,151 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 	});
 }
 
+/** Get highlight bounding boxes sorted by visual position (top to bottom, left to right). */
+async function getSortedHighlightBoxes(page: Page) {
+	const highlights = getHarperHighlights(page);
+	const count = await highlights.count();
+	const boxes: NonNullable<Awaited<ReturnType<Locator['boundingBox']>>>[] = [];
+
+	for (let i = 0; i < count; i++) {
+		const box = await highlights.nth(i).boundingBox();
+		if (box) {
+			boxes.push(box);
+		}
+	}
+
+	boxes.sort((a, b) => (Math.abs(a.y - b.y) > 5 ? a.y - b.y : a.x - b.x));
+
+	return boxes;
+}
+
+/** Test applying a basic suggestion in a rich text editor and verify editor state is preserved. */
+export async function testBasicSuggestionRichText(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Can apply basic suggestion.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+		await replaceEditorContent(editor, 'This is an test');
+
+		await page.waitForTimeout(3000);
+
+		await clickHarperHighlight(page);
+		await page.getByTitle('Replace with "a"').click();
+
+		await page.waitForTimeout(3000);
+
+		await expect(editor).toContainText('This is a test');
+
+		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'ArrowRight');
+		await page.press('body', 'Backspace');
+		await expect(editor).toContainText('This is a tst');
+
+		// Verify typing still works.
+		await editor.pressSequentially('e');
+		await expect(editor).toContainText('This is a test');
+	});
+}
+
+/** Test ignoring a suggestion in a rich text editor. */
+export async function testCanIgnoreRichTextSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Can ignore suggestion.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+
+		const cacheSalt = randomString(5);
+		await replaceEditorContent(editor, cacheSalt);
+
+		await page.waitForTimeout(3000);
+
+		const opened = await clickHarperHighlight(page);
+		expect(opened).toBe(true);
+		await page.getByTitle('Ignore this lint').click();
+
+		await expect(getHarperHighlights(page)).toHaveCount(0);
+
+		// Nothing should change.
+		await expect(editor).toContainText(cacheSalt);
+		expect(await clickHarperHighlight(page)).toBe(false);
+	});
+}
+
+/** Test multiline suggestion replacement and undo. */
+export async function testMultipleSuggestionsAndUndo(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (editor: Locator) => Promise<void>,
+) {
+	test('Multiple suggestions and undo.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(editor);
+		}
+		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
+
+		await page.waitForTimeout(3000);
+
+		const highlights = getHarperHighlights(page);
+		await expect(highlights).toHaveCount(3);
+
+		// Get highlights sorted by visual position and click on the middle one
+		const sortedBoxes = await getSortedHighlightBoxes(page);
+		expect(sortedBoxes.length).toBe(3);
+		const box = sortedBoxes[1];
+		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+
+		// Move cursor away to test whether it handles race condition
+		await editor.press('End');
+
+		await page.getByTitle('Replace with "test"').click();
+		await page.waitForTimeout(500);
+
+		// Verify only second "tset" was corrected
+		await expect(editor).toContainText('first tset');
+		await expect(editor).toContainText('second test');
+		await expect(editor).toContainText('third tset');
+
+		// Undo
+		await editor.press('Control+z');
+		await page.waitForTimeout(300);
+		await expect(editor).toContainText('The second tset');
+	});
+}
+
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
-	expect(await highlights.count()).toBe(boxes.length);
+	await expect(highlights).toHaveCount(boxes.length);
 
 	for (let i = 0; i < (await highlights.count()); i++) {
 		const box = await highlights.nth(i).boundingBox();
+		expect(box).not.toBeNull();
 
 		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
 		console.log(`Got: ${JSON.stringify(box)}`);
 
-		assertBoxesClose(box, boxes[i]);
+		assertBoxesClose(box!, boxes[i]);
 	}
 }
 

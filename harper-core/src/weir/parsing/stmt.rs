@@ -1,6 +1,11 @@
+use std::num::NonZeroUsize;
+use std::sync::{Arc, LazyLock, RwLock};
+
+use lru::LruCache;
+
 use super::ast::AstVariable;
 use super::inc_by_spaces;
-use crate::{CharString, CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
+use crate::{CharStringExt, Punctuation, Token, TokenKind, TokenStringExt};
 
 use super::expr::parse_seq;
 use super::{
@@ -8,17 +13,48 @@ use super::{
     locate_matching_brace, optimize, parse_collection,
 };
 
-pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Ast, Error> {
-    let chars: CharString = weir_code.chars().collect();
-    let tokens = lex(&chars);
+/// Parse the provided string using caching to speed up repeated requests.
+///
+/// Will return the cached AST if the provided code has previously been cached. Otherwise, it will
+/// parse the code and cache the resulting AST.
+pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error> {
+    // The parameters that might influence the generated AST.
+    // This is used as the key for the cache hashmap.
+    type ParseStrParams = (Arc<String>, bool);
 
-    let mut stmts = parse_stmt_list(&tokens, &chars)?;
+    static PARSE_CACHE: LazyLock<
+        RwLock<LruCache<ParseStrParams, Arc<Ast>, hashbrown::DefaultHashBuilder>>,
+    > = LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
 
-    if use_optimizer {
-        while optimize(&mut stmts) {}
-    }
+    let weir_code = Arc::new(weir_code.to_owned());
 
-    Ok(Ast { stmts })
+    Ok(
+        if let Some(cached) = PARSE_CACHE
+            .read()
+            .unwrap()
+            .peek(&(weir_code.clone(), use_optimizer))
+        {
+            cached.clone()
+        } else {
+            let chars: Vec<char> = weir_code.chars().collect();
+            let tokens = lex(&chars);
+
+            let mut stmts = parse_stmt_list(&tokens, &chars)?;
+
+            if use_optimizer {
+                while optimize(&mut stmts) {}
+            }
+
+            let ast = Arc::new(Ast { stmts });
+
+            PARSE_CACHE
+                .write()
+                .unwrap()
+                .put((weir_code, use_optimizer), ast.clone());
+
+            ast
+        },
+    )
 }
 
 fn parse_stmt_list(tokens: &[Token], source: &[char]) -> Result<Vec<AstStmtNode>, Error> {
@@ -61,7 +97,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                 .span()
                 .unwrap()
                 .get_content_string(source);
-            Ok(FoundNode::new(Some(AstStmtNode::Comment(comment)), end + 2))
+            Ok(FoundNode::new(Some(AstStmtNode::Comment(comment)), end + 1))
         }
         TokenKind::Word(_) => {
             let word_literal = key_token.span.get_content(source);
@@ -138,6 +174,21 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                                 source,
                             )?),
                         )),
+                        end + 1,
+                    ))
+                }
+                ['a', 'l', 'l', 'o', 'w', 's'] => {
+                    let case = parse_quoted_string(&tokens[cursor + 1..], source)?;
+                    cursor += 1 + case.next_idx;
+
+                    if cursor != end {
+                        return Err(Error::UnexpectedToken(
+                            tokens[cursor].span.get_content_string(source),
+                        ));
+                    }
+
+                    Ok(FoundNode::new(
+                        Some(AstStmtNode::create_allow_test(case.node)),
                         end + 1,
                     ))
                 }
@@ -335,6 +386,16 @@ mod tests {
     }
 
     #[test]
+    fn parses_allows() {
+        assert_eq!(
+            parse_str("allows \"this is the case\"", true)
+                .unwrap()
+                .stmts,
+            vec![AstStmtNode::create_allow_test("this is the case",)]
+        )
+    }
+
+    #[test]
     fn parses_comment_expr_var_together() {
         let ast = parse_str(
             "let test \"to be this\"\nexpr main word\n# this is a comment",
@@ -351,6 +412,36 @@ mod tests {
                 ),
                 AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word"))),
                 AstStmtNode::Comment("# this is a comment".to_string())
+            ]
+        );
+
+        assert_eq!(
+            ast.get_variable_value("test"),
+            Some(&AstVariable::create_string("to be this"))
+        );
+        assert_eq!(
+            ast.get_expr("main"),
+            Some(&AstExprNode::Word(char_string!("word")))
+        );
+    }
+
+    #[test]
+    fn parses_comment_in_middle() {
+        let ast = parse_str(
+            "let test \"to be this\"\n# this is a comment\nexpr main word",
+            true,
+        )
+        .unwrap();
+
+        assert_eq!(
+            ast.stmts,
+            vec![
+                AstStmtNode::create_declare_variable(
+                    "test",
+                    AstVariable::create_string("to be this")
+                ),
+                AstStmtNode::Comment("# this is a comment".to_string()),
+                AstStmtNode::create_set_expr("main", AstExprNode::Word(char_string!("word")))
             ]
         );
 
@@ -394,10 +485,24 @@ mod tests {
         parse_str("let var+\"\"", false).unwrap();
     }
 
+    #[test]
+    #[should_panic]
+    fn catches_non_whitespace_after_allows() {
+        parse_str("allows+\"\"", false).unwrap();
+    }
+
     #[quickcheck]
     fn catches_anything_after_test(a: String) {
         if !a.is_empty() && !a.starts_with('\n') {
             let code = format!("test \"\" \"\"{a}");
+            assert!(parse_str(code.as_str(), false).is_err())
+        }
+    }
+
+    #[quickcheck]
+    fn catches_anything_after_allows(a: String) {
+        if !a.is_empty() && !a.starts_with('\n') {
+            let code = format!("allows \"\" {a}");
             assert!(parse_str(code.as_str(), false).is_err())
         }
     }

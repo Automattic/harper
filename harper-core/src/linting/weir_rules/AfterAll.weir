@@ -1,0 +1,8 @@
+expr main (afterall)
+
+let message "Did you mean `after all`?"
+let description "Corrects `afterall` to `after all`."
+let kind "BoundaryError"
+let becomes "after all"
+
+test "I hope it will pop up afterall but that remains to be seen." "I hope it will pop up after all but that remains to be seen."

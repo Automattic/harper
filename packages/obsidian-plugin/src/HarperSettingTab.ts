@@ -11,7 +11,6 @@ import { linesToString, stringToLines } from './textUtils';
 const LintSettingId = 'HarperLintSettings';
 
 export class HarperSettingTab extends PluginSettingTab {
-	private state: State;
 	private settings: Settings;
 	private descriptionsHTML: Record<string, string>;
 	private defaultLintConfig: Record<string, boolean>;
@@ -19,20 +18,19 @@ export class HarperSettingTab extends PluginSettingTab {
 	private plugin: HarperPlugin;
 	private toggleAllButton?: ButtonComponent;
 
-	constructor(app: App, plugin: HarperPlugin, state: State) {
+	private get state() {
+		return this.plugin.state;
+	}
+
+	constructor(app: App, plugin: HarperPlugin) {
 		super(app, plugin);
-		this.state = state;
 		this.plugin = plugin;
+	}
 
-		// Poll every so often
-		const update = () => {
-			this.updateDescriptions();
-			this.updateSettings();
-			this.updateDefaults();
-			setTimeout(update, 1000);
-		};
-
-		update();
+	update() {
+		this.updateDescriptions();
+		this.updateSettings();
+		this.updateDefaults();
 	}
 
 	updateSettings() {
@@ -55,7 +53,12 @@ export class HarperSettingTab extends PluginSettingTab {
 		});
 	}
 
-	display() {
+	display(update = true) {
+		if (update) {
+			this.update();
+			this.display(false);
+		}
+
 		const { containerEl } = this;
 		containerEl.empty();
 
@@ -247,7 +250,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			if (
 				searchQuery !== '' &&
 				!(
-					descriptionHTML.toLowerCase().contains(queryLower) ||
+					descriptionHTML?.toLowerCase().contains(queryLower) ||
 					setting.toLowerCase().contains(queryLower)
 				)
 			) {

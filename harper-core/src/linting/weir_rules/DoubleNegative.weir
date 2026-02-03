@@ -1,0 +1,26 @@
+expr main <([(didn't), (did not), (did n't)] [need, have, want, make, take, get] no), no>
+
+let message "With `didn't/did not`, using `no` creates a double negative; replace `no` with `any` to keep a single negation."
+let description "Replaces the determiner `no` with `any` when it follows the auxiliary `didn't/did not` plus a main verb (e.g., have, need, want, make, take, get) so the clause contains only one negation."
+let kind "Grammar"
+let becomes "any"
+
+test "I didn't have no idea what to say." "I didn't have any idea what to say."
+test "She didn't want no trouble last night." "She didn't want any trouble last night."
+test "He did not make no progress this week." "He did not make any progress this week."
+test "We didn't take no for an answer." "We didn't take any for an answer."
+test "They didn't get no signal from the device." "They didn't get any signal from the device."
+test "You didn't need no permission to do that." "You didn't need any permission to do that."
+test "I didn't have no choice after the meeting." "I didn't have any choice after the meeting."
+test "I didn't want no part of it." "I didn't want any part of it."
+test "The driver didn't take no excuses." "The driver didn't take any excuses."
+test "I didn't have no time for that." "I didn't have any time for that."
+test "I DIDN'T HAVE NO IDEA WHEN THIS WOULD END." "I DIDN'T HAVE ANY IDEA WHEN THIS WOULD END."
+test "She did not make no progress yet." "She did not make any progress yet."
+
+# Should not change when there's no double negative `no`
+allows "I didn't have any idea what to do."
+allows "I didn't say no to the invitation."
+allows "She doesn't have any idea why the alarm rang."
+allows "I did not see any sign of trouble."
+allows "No friends came over."
