@@ -110,37 +110,3 @@ impl WordIdPair {
         self.case_folded
     }
 }
-
-/// Represents either a canonical or case-folded word ID.
-#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
-pub enum EitherWordId {
-    Canonical(CanonicalWordId),
-    CaseFolded(CaseFoldedWordId),
-}
-impl EitherWordId {
-    /// Create a canonical Word ID from a character slice.
-    pub fn from_chars_canonical(chars: impl AsRef<[char]>) -> Self {
-        Self::Canonical(CanonicalWordId::from_word_chars(chars))
-    }
-
-    /// Create a canonical word ID from a string.
-    /// Requires allocation, so use sparingly.
-    pub fn from_str_canonical(text: impl AsRef<str>) -> Self {
-        Self::Canonical(CanonicalWordId::from_word_str(text))
-    }
-
-    /// Create a case-folded Word ID from a character slice.
-    ///
-    /// This will case-fold and normalize the input before calculating the word ID.
-    pub fn from_chars_case_folded(chars: impl AsRef<[char]>) -> Self {
-        Self::CaseFolded(CaseFoldedWordId::from_word_chars(chars))
-    }
-
-    /// Create a case-folded word ID from a string.
-    /// Requires allocation, so use sparingly.
-    ///
-    /// This will case-fold and normalize the input before calculating the word ID.
-    pub fn from_str_case_folded(text: impl AsRef<str>) -> Self {
-        Self::CaseFolded(CaseFoldedWordId::from_word_str(text))
-    }
-}
