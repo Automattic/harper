@@ -1,16 +1,16 @@
 <script lang="ts">
 import { Button, Card } from 'components';
-import type { AceEditor } from 'svelte-ace';
+import type { ComponentType } from 'svelte';
 import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 import PlayIcon from '$lib/components/icons/PlayIcon.svelte';
-import WeirStudioFileExplorer, {} from '$lib/components/WeirStudioFileExplorer.svelte';
+import WeirStudioFileExplorer from '$lib/components/WeirStudioFileExplorer.svelte';
 
 export let drawerOpen = true;
 export let files: Map<string, string> = new Map();
 export let activeFile: string | null = null;
 export let editorReady = false;
-export let AceEditorComponent: typeof AceEditor | null = null;
+export let AceEditorComponent: ComponentType | null = null;
 export let editorOptions: Record<string, unknown>;
 export let linterReady = false;
 export let runningTests = false;
@@ -75,7 +75,7 @@ export let getEditorMode: (name: string) => string;
 						lang={getEditorMode(activeFile ?? '')}
 						theme="chrome"
 						options={editorOptions}
-						on:input={(event) => onUpdateContent(event.detail)}
+						on:input={(event: CustomEvent<string>) => onUpdateContent(event.detail)}
 					/>
 				{/key}
 			{:else}

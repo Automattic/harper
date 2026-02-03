@@ -8,7 +8,7 @@ import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 import ChevronRightIcon from './icons/ChevronRightIcon.svelte';
 
 /** Whether to render the file explorer as a closed drawer or an open one. */
-let drawerOpen = true;
+export let drawerOpen = true;
 export let files: Map<string, string> = new Map();
 /** The filename of the currently selected file. */
 export let activeFile: string | null = null;
@@ -20,10 +20,9 @@ export let onCreateFile: () => void;
 export let onSelectFile: (id: string) => void;
 export let onDeleteFile: (file: string) => void;
 export let onRenameFile: (from: string, to: string) => void;
-
-function onToggleDrawer() {
+export let onToggleDrawer: () => void = () => {
 	drawerOpen = !drawerOpen;
-}
+};
 
 function startRename(file: string) {
 	renamingFile = file;
@@ -103,11 +102,12 @@ function commitRename(from: string) {
 									className="w-full text-xs"
 									autofocus
 									bind:value={renameValue}
-									on:keydown={(event: KeyboardEvent) => {
-										if (event.key === 'Enter') {
+									on:keydown={(event: CustomEvent<KeyboardEvent>) => {
+										const keyboardEvent = event.detail;
+										if (keyboardEvent.key === 'Enter') {
 											commitRename(file);
 										}
-										if (event.key === 'Escape') {
+										if (keyboardEvent.key === 'Escape') {
 											renamingFile = null;
 										}
 									}}

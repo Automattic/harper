@@ -1,11 +1,13 @@
 <script lang="ts">
 import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
+import type { ComponentType } from 'svelte';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import Isolate from '$lib/components/Isolate.svelte';
-import Toasts, { type Toast } from '$lib/components/Toasts.svelte';
+import Toasts from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
 import WeirStudioWorkspace from '$lib/components/WeirStudioWorkspace.svelte';
+import type { Toast } from '$lib/types/toasts';
 
 type WeirpackTestFailure = {
 	expected: string;
@@ -48,7 +50,7 @@ let toasts: Toast[] = [];
 let runningTests = false;
 let linterReady = false;
 let linter: import('harper.js').LocalLinter | null = null;
-let AceEditorComponent: typeof import('svelte-ace').AceEditor | null = null;
+let AceEditorComponent: ComponentType | null = null;
 let editorReady = false;
 let packLoaded = false;
 let fileInputEl: HTMLInputElement | null = null;
@@ -347,7 +349,7 @@ function downloadWeirpack() {
 	const manifest = parseManifest() ?? defaultManifest;
 	const baseName = String(manifest.name ?? 'weirpack').trim() || 'weirpack';
 	const safeName = baseName.replace(/[^a-zA-Z0-9_-]/g, '-');
-	const blob = new Blob([bytes], { type: 'application/zip' });
+	const blob = new Blob([bytes.slice().buffer], { type: 'application/zip' });
 	const url = URL.createObjectURL(blob);
 	const link = document.createElement('a');
 	link.href = url;
@@ -390,7 +392,7 @@ onMount(async () => {
 	await newLinter.setup();
 	linter = newLinter;
 	linterReady = true;
-	AceEditorComponent = AceEditor;
+	AceEditorComponent = AceEditor as unknown as ComponentType;
 	editorReady = true;
 });
 
