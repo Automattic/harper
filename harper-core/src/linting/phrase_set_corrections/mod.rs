@@ -365,7 +365,7 @@ pub fn lint_group() -> LintGroup {
             "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
             LintKind::Grammar
         ),
-        "PeeekBehindTheCurtain" => (
+        "PeekBehindTheCurtain" => (
             &[
                 ("peak behind the curtain", "peek behind the curtain"),
                 ("peaked behind the curtain", "peeked behind the curtain"),
