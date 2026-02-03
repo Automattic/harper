@@ -19,8 +19,8 @@ test "I DIDN'T HAVE NO IDEA WHEN THIS WOULD END." "I DIDN'T HAVE ANY IDEA WHEN T
 test "She did not make no progress yet." "She did not make any progress yet."
 
 # Should not change when there's no double negative `no`
-test "I didn't have any idea what to do." "I didn't have any idea what to do."
-test "I didn't say no to the invitation." "I didn't say no to the invitation."
-test "She doesn't have any idea why the alarm rang." "She doesn't have any idea why the alarm rang."
-test "I did not see any sign of trouble." "I did not see any sign of trouble."
-test "No friends came over." "No friends came over."
+allows "I didn't have any idea what to do."
+allows "I didn't say no to the invitation."
+allows "She doesn't have any idea why the alarm rang."
+allows "I did not see any sign of trouble."
+allows "No friends came over."
