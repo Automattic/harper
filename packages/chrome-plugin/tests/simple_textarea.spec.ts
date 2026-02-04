@@ -5,16 +5,18 @@ import {
 	clickHarperHighlight,
 	getTextarea,
 	replaceEditorContent,
-	testBasicSuggestionTextarea,
-	testCanBlockRuleTextareaSuggestion,
-	testCanIgnoreTextareaSuggestion,
+	testBasicSuggestion,
+	testCanBlockRuleSuggestion,
+	testCanIgnoreSuggestion,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/simple_textarea.html';
 
-testBasicSuggestionTextarea(TEST_PAGE_URL);
-testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
-testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
+testBasicSuggestion(TEST_PAGE_URL, getTextarea);
+testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea);
+testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea);
 
 test('Wraps correctly', async ({ page }, testInfo) => {
 	await page.goto(TEST_PAGE_URL);
@@ -29,10 +31,8 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 
 	if (testInfo.project.name == 'chromium') {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 233.90625, y: 44, width: 48, height: 19 },
-			{ x: 281.90625, y: 44, width: 8, height: 19 },
-			{ x: 10, y: 61, width: 8, height: 19 },
-			{ x: 241.90625, y: 27, width: 24, height: 19 },
+			{ x: 233.90625, y: 46, width: 63.984375, height: 20 },
+			{ x: 177.921875, y: 28, width: 24.015625, height: 20 },
 		]);
 	} else {
 		await assertHarperHighlightBoxes(page, [
