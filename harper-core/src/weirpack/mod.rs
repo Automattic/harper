@@ -1,3 +1,5 @@
+//! See [our main documentation](https://writewithharper.com/docs/weir#Weirpacks) on Weir and the Weirpack format.
+
 use std::io::{Read, Write};
 use std::path::Path;
 
