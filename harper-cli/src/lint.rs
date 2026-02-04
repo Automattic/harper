@@ -4,6 +4,7 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 use std::{fs, process};
 
+use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
 use rayon::prelude::*;
@@ -12,6 +13,7 @@ use harper_core::{
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
+    weirpack::Weirpack,
     {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
@@ -34,6 +36,26 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     Ok(dict)
 }
 
+fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
+    let mut packs = Vec::new();
+    for input in inputs {
+        let Some(file) = input.try_as_file_ref() else {
+            anyhow::bail!(
+                "Weirpack inputs must be files, got {}",
+                input.get_identifier()
+            );
+        };
+
+        let path = file.path();
+        let bytes = fs::read(path)
+            .with_context(|| format!("Failed to read weirpack {}", path.display()))?;
+        let pack = Weirpack::from_bytes(&bytes)
+            .with_context(|| format!("Failed to load weirpack {}", path.display()))?;
+        packs.push(pack);
+    }
+    Ok(packs)
+}
+
 /// Path version of harper-ls/src/dictionary_io@file_dict_name
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
@@ -54,6 +76,7 @@ pub struct LintOptions {
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
+    pub weirpack_inputs: Vec<SingleInput>,
 }
 enum ReportStyle {
     FullAriadneLintReport,
@@ -96,6 +119,7 @@ pub fn lint(
         ref mut ignore,
         ref mut only,
         dialect,
+        ref weirpack_inputs,
         ..
     } = lint_options;
 
@@ -104,9 +128,16 @@ pub fn lint(
         inputs.push(SingleInput::from(StdinInput).into());
     }
 
+    let weirpacks = load_weirpacks(weirpack_inputs)?;
+
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
-    let config = LintGroupConfig::new_curated();
+    let mut config = LintGroupConfig::new_curated();
+    for pack in &weirpacks {
+        for rule in pack.rules.keys() {
+            config.set_rule_enabled(rule, true);
+        }
+    }
 
     if let Some(only) = only {
         only.retain(|rule| {
@@ -196,6 +227,7 @@ pub fn lint(
                 // Passed from the user for the `lint` subcommand
                 &report_mode,
                 &lint_options,
+                &weirpacks,
                 &file_dict_path,
                 // Are we linting multiple inputs inside a directory?
                 batch_mode,
@@ -215,6 +247,7 @@ pub fn lint(
     };
 
     for lint_results in per_input_results {
+        let lint_results = lint_results?;
         // Update the global stats
         for (kind, count) in lint_results.0 {
             *all_lint_kinds.entry(kind).or_insert(0) += count;
@@ -253,6 +286,7 @@ struct FullInputInfo<'a> {
     source: Cow<'a, str>,
 }
 
+#[allow(clippy::too_many_arguments)]
 fn lint_one_input(
     // Common properties of harper-cli
     markdown_options: MarkdownOptions,
@@ -260,23 +294,25 @@ fn lint_one_input(
     report_mode: &ReportStyle,
     // Options passed from the user specific to the `lint` subcommand
     lint_options: &LintOptions,
+    weirpacks: &[Weirpack],
     file_dict_path: &Path,
     // Are we linting multiple inputs?
     batch_mode: bool,
     // For the current input
     current: InputInfo,
-) -> (
+) -> anyhow::Result<(
     LintKindCount,
     LintRuleCount,
     LintKindRulePairCount,
     SpelloCount,
-) {
+)> {
     let LintOptions {
         count: _,
         ignore,
         only,
         keep_overlapping_lints,
         dialect,
+        weirpack_inputs: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -306,6 +342,11 @@ fn lint_one_input(
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+
+                for pack in weirpacks {
+                    let mut pack_group = pack.to_lint_group()?;
+                    lint_group.merge_from(&mut pack_group);
+                }
 
                 // Turn specified rules on or off
                 configure_lint_group(&mut lint_group, only, ignore);
@@ -347,7 +388,7 @@ fn lint_one_input(
         }
     }
 
-    (lint_kinds, lint_rules, lint_kind_rule_pairs, spellos)
+    Ok((lint_kinds, lint_rules, lint_kind_rule_pairs, spellos))
 }
 
 fn configure_lint_group(

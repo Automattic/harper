@@ -72,6 +72,9 @@ enum Args {
         /// Path to the directory for file-local dictionaries.
         #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string())]
         file_dict_path: PathBuf,
+        /// Path to a Weirpack file to load. May be supplied multiple times.
+        #[arg(long, value_name = "WEIRPACK")]
+        weirpacks: Vec<SingleInput>,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -215,6 +218,7 @@ fn main() -> anyhow::Result<()> {
             user_dict_path,
             // TODO workspace_dict_path?
             file_dict_path,
+            weirpacks,
         } => {
             lint(
                 markdown_options,
@@ -226,6 +230,7 @@ fn main() -> anyhow::Result<()> {
                     only,
                     keep_overlapping_lints,
                     dialect,
+                    weirpack_inputs: weirpacks,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
