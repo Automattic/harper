@@ -7,7 +7,9 @@ export type WeirpackArchive = {
 
 const manifestFilename = 'manifest.json';
 
-/** Convert a Weirpack file system into a real Weirpack binary by compressing and serializing them into a byte array. */
+/** Convert a Weirpack file system into a real Weirpack binary by compressing and serializing them into a byte array. 
+  *
+  * For clarity on what a Weirpack is, read [the Weir documentation.](https://writewithharper.com/docs/weir#Weirpacks) */
 export function packWeirpackFiles(files: Map<string, string>): Uint8Array {
 	if (!files.has(manifestFilename)) {
 		throw new Error('Weirpack is missing manifest.json');
@@ -21,6 +23,7 @@ export function packWeirpackFiles(files: Map<string, string>): Uint8Array {
 	return zipSync(entries, { level: 6 });
 }
 
+/** Decompress and deserialize a Weirpack from a byte array. */
 export function unpackWeirpackBytes(bytes: Uint8Array): WeirpackArchive {
 	const archive = unzipSync(bytes);
 	const manifestBytes = archive[manifestFilename];
