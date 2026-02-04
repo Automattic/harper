@@ -1,5 +1,6 @@
 use crate::{
-    CharStringExt, Lint, TokenStringExt,
+    CharStringExt, Lint, Token, TokenStringExt,
+    char_ext::CharExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
@@ -41,7 +42,7 @@ where
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[crate::Token], src: &[char]) -> Option<super::Lint> {
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let tolemtoks = &toks[toks.len() - 3..];
         let lemtok = toks.last()?;
         let tolemspan = tolemtoks.span()?;
@@ -65,10 +66,7 @@ where
         }
 
         if let Some(last_letter) = lemstr.chars().last()
-            && !matches!(
-                last_letter.to_ascii_lowercase(),
-                'a' | 'e' | 'i' | 'o' | 'u'
-            )
+            && !last_letter.is_vowel()
         {
             let double_consonant = format!("{}{}ing", lemstr, last_letter);
             if self.dict.contains_word_str(&double_consonant) {
