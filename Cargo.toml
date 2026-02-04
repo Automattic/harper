@@ -10,6 +10,8 @@ opt-level = 3
 
 [profile.release]
 opt-level = 3
+panic = "abort"
+lto = "fat"
 # Stripping binaries triggers a bug in `wasm-opt`.
 # Disable it for now.
 # strip = true
