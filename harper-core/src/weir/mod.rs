@@ -7,6 +7,7 @@ mod optimize;
 mod parsing;
 
 use std::str::FromStr;
+use std::sync::Arc;
 
 pub use error::Error;
 use is_macro::Is;
@@ -34,8 +35,8 @@ enum ReplacementStrategy {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TestResult {
-    expected: String,
-    got: String,
+    pub expected: String,
+    pub got: String,
 }
 
 pub struct WeirLinter {
@@ -45,7 +46,7 @@ pub struct WeirLinter {
     strategy: ReplacementStrategy,
     replacements: Vec<String>,
     lint_kind: LintKind,
-    ast: Ast,
+    ast: Arc<Ast>,
 }
 
 impl WeirLinter {
@@ -189,6 +190,14 @@ impl WeirLinter {
             .collect();
 
         for (text, expected) in tests {
+            if text == expected && lint_count(&text, self) != 0 {
+                results.push(TestResult {
+                    expected: text.to_string(),
+                    got: text.to_string(),
+                });
+                continue;
+            }
+
             let zeroth = transform_nth_str(&text, self, 0);
             let first = transform_nth_str(&text, self, 1);
             let second = transform_nth_str(&text, self, 2);
@@ -293,11 +302,13 @@ pub mod tests {
             test "He RIGHT CLICKED the file." "He RIGHT-CLICKED the file."
             test "Left click the checkbox." "Left-click the checkbox."
             test "Middle click to open in a new tab." "Middle-click to open in a new tab."
+
+            allows "This test contains the correct version of right-click and therefore shouldn't error."
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
         assert_passes_all(&mut linter);
-        assert_eq!(8, linter.count_tests());
+        assert_eq!(9, linter.count_tests());
     }
 
     #[test]
@@ -314,12 +325,14 @@ pub mod tests {
             test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."
             test "The pricing page mentions G Suit for legacy plans." "The pricing page mentions Google Workspace for legacy plans."
             test "New customers sign up for Google Workspace." "New customers sign up for Google Workspace."
+
+            allows "This test contains the correct version of Google Workspace and therefore shouldn't error."
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
 
         assert_passes_all(&mut linter);
-        assert_eq!(4, linter.count_tests());
+        assert_eq!(5, linter.count_tests());
     }
 
     #[test]
@@ -353,12 +366,32 @@ pub mod tests {
             let strategy "Exact"
 
             test "This--and--that" "This-and-that"
+
+            allows "this-and-that"
             "#;
 
         let mut linter = WeirLinter::new(source).unwrap();
 
         assert_passes_all(&mut linter);
-        assert_eq!(1, linter.count_tests());
+        assert_eq!(2, linter.count_tests());
+    }
+
+    #[test]
+    fn fails_on_ignore_test() {
+        let source = r#"
+            expr main test
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes "-"
+            let strategy "Exact"
+
+            allows "test"
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_eq!(linter.run_tests().len(), 1)
     }
 
     #[test]

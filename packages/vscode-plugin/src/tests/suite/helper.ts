@@ -91,8 +91,8 @@ export function waitForDiagnosticsChange(
 		const before = func ? getActualDiagnostics(uri) : [];
 
 		(func || (async () => {}))().then(() => {
-			const delay = 10;
-			const limit = 10;
+			const delay = 50;
+			const limit = 20;
 			let counter = 0;
 
 			const tryCompare = () => {

@@ -11,6 +11,8 @@ pub struct PluralWrongWordOfPhrase {
 // If a noun needs other than an -s suffix to be pluralized, include it as the 2nd array element.
 const PATTERNS: &[(&[&str], &str, &[&str])] = &[
     (&["body", "bodies"], "in", &["white"]),
+    (&["flash", "flashes"], "in the", &["pan"]),
+    (&["flash", "flashes"], "in-the", &["pan"]),
     (&["line"], "of", &["code"]),
     (&["part"], "of", &["speech", "speeches"]),
     (&["point"], "of", &["view"]),
@@ -33,7 +35,7 @@ impl Default for PluralWrongWordOfPhrase {
 
         let mut mistakes = vec![];
 
-        for &(main_noun, prep, last_noun) in PATTERNS {
+        for &(main_noun, mid, last_noun) in PATTERNS {
             let main_pl = if main_noun.len() == 2 {
                 main_noun[1].to_string()
             } else {
@@ -51,7 +53,7 @@ impl Default for PluralWrongWordOfPhrase {
                     Box::new(word_string(main_pl)),
                 ])
                 .t_ws_h()
-                .t_aco(prep)
+                .then_fixed_phrase(mid)
                 .t_ws_h()
                 .then(word_string(last_pl)),
             ) as Box<dyn Expr>);
@@ -82,7 +84,7 @@ impl ExprLinter for PluralWrongWordOfPhrase {
             last_noun_span.get_content(src),
         );
 
-        let (main_noun, prep, last_noun) = PATTERNS.iter().find(|(main, _, last)| {
+        let (main_noun, mid, last_noun) = PATTERNS.iter().find(|(main, _, last)| {
             main_noun_chars.starts_with_ignore_ascii_case_str(main[0])
                 && last_noun_chars.starts_with_ignore_ascii_case_str(last[0])
         })?;
@@ -97,7 +99,7 @@ impl ExprLinter for PluralWrongWordOfPhrase {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
             suggestions: vec![Suggestion::replace_with_match_case(
-                format!("{} {} {}", main_noun_pl, prep, last_noun[0])
+                format!("{} {} {}", main_noun_pl, mid, last_noun[0])
                     .chars()
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
@@ -230,6 +232,35 @@ mod tests {
             "I'm not sure, but just having seen a lot of body in whites, I know normally they try to spot weld it.",
             PluralWrongWordOfPhrase::default(),
             "I'm not sure, but just having seen a lot of bodies in white, I know normally they try to spot weld it.",
+        );
+    }
+
+    // FlashesInThePan
+
+    #[test]
+    fn correct_flash_in_the_pans() {
+        assert_suggestion_result(
+            "I wish they do more flash in the pans, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.",
+            PluralWrongWordOfPhrase::default(),
+            "I wish they do more flashes in the pan, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.",
+        );
+    }
+
+    #[test]
+    fn correct_flash_in_the_pans_hyphenated() {
+        assert_suggestion_result(
+            "what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here",
+            PluralWrongWordOfPhrase::default(),
+            "what makes 'Super Hexagon' rise above other nostalgic flashes in the pan is that there is a game to be learned here",
+        );
+    }
+
+    #[test]
+    fn correct_flashes_in_the_pans() {
+        assert_suggestion_result(
+            "Who are some of the biggest flashes in the pans in wrestling history?",
+            PluralWrongWordOfPhrase::default(),
+            "Who are some of the biggest flashes in the pan in wrestling history?",
         );
     }
 }

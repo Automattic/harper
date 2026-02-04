@@ -56,12 +56,10 @@ impl Ast {
     /// Iterate through all the tests in the tree, starting with the one first declared in the
     /// tree.
     pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
-        self.stmts.iter().filter_map(|stmt| {
-            if let AstStmtNode::Test { expect, to_be } = stmt {
-                Some((expect.as_str(), to_be.as_str()))
-            } else {
-                None
-            }
+        self.stmts.iter().filter_map(|stmt| match stmt {
+            AstStmtNode::Test { expect, to_be } => Some((expect.as_str(), to_be.as_str())),
+            AstStmtNode::Allows { value } => Some((value.as_str(), value.as_str())),
+            _ => None,
         })
     }
 }
@@ -151,6 +149,7 @@ pub enum AstStmtNode {
     SetExpr { name: String, value: AstExprNode },
     Comment(String),
     Test { expect: String, to_be: String },
+    Allows { value: String },
 }
 
 impl AstStmtNode {
@@ -172,6 +171,12 @@ impl AstStmtNode {
         Self::Test {
             expect: expect.to_string(),
             to_be: to_be.to_string(),
+        }
+    }
+
+    pub fn create_allow_test(value: impl ToString) -> Self {
+        Self::Allows {
+            value: value.to_string(),
         }
     }
 }

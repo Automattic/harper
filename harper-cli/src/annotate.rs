@@ -96,8 +96,7 @@ impl AnnotationType {
     ) -> Report<'input_id, (&'input_id str, Range<usize>)> {
         Report::build(
             ReportKind::Custom(report_title, Color::Blue),
-            input_identifier,
-            0,
+            (input_identifier, 0..0),
         )
         .with_labels(Annotation::iter_labels_from_document(
             *self,

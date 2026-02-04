@@ -33,7 +33,7 @@
 		"marked": "^16.4.1",
 		"p-lazy": "^5.0.0",
 		"p-memoize": "^7.1.1",
-		"playwright": "^1.49.1",
+		"playwright": "^1.58.0",
 		"type-fest": "^4.37.0",
 		"typescript": "catalog:",
 		"vite": "^6.1.0",
@@ -46,5 +46,8 @@
 	"sideEffects": false,
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"fflate": "^0.8.2"
+	}
 }
