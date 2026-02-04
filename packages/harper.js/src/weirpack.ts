@@ -1,16 +1,14 @@
 import { strFromU8, strToU8, unzipSync, zipSync } from 'fflate';
 
-export type WeirpackManifest = Record<string, unknown>;
-export type WeirpackFileMap = Map<string, string>;
-
 export type WeirpackArchive = {
-	manifest: WeirpackManifest;
-	files: WeirpackFileMap;
+	manifest: Record<string, unknown>;
+	files: Map<string, string>;
 };
 
 const manifestFilename = 'manifest.json';
 
-export function packWeirpackFiles(files: WeirpackFileMap): Uint8Array {
+/** Convert a Weirpack file system into a real Weirpack binary by compressing and serializing them into a byte array. */
+export function packWeirpackFiles(files: Map<string, string>): Uint8Array {
 	if (!files.has(manifestFilename)) {
 		throw new Error('Weirpack is missing manifest.json');
 	}
@@ -31,8 +29,8 @@ export function unpackWeirpackBytes(bytes: Uint8Array): WeirpackArchive {
 	}
 
 	const manifestText = strFromU8(manifestBytes);
-	const manifest = JSON.parse(manifestText) as WeirpackManifest;
-	const files: WeirpackFileMap = new Map();
+	const manifest = JSON.parse(manifestText);
+	const files = new Map();
 	files.set(manifestFilename, manifestText);
 
 	const fileNames = Object.keys(archive);
