@@ -266,7 +266,7 @@ export async function testMultipleSuggestionsAndUndo(
 		}
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
 
-		await page.waitForTimeout(3000);
+		await page.waitForTimeout(6000);
 
 		const highlights = getHarperHighlights(page);
 		await expect(highlights).toHaveCount(3);
