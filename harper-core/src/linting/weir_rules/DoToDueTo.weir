@@ -17,8 +17,8 @@ test "The app crashed do to memory leaks." "The app crashed due to memory leaks.
 test "Tickets sold quickly do to a viral post." "Tickets sold quickly due to a viral post."
 test "It failed do to data loss." "It failed due to data loss."
 
-test "What did you do to the file?" "What did you do to the file?"
-test "Please do to the file what you did to the other one." "Please do to the file what you did to the other one."
-test "Don't do to others what you wouldn't want done to you." "Don't do to others what you wouldn't want done to you."
-test "We need to do to this spreadsheet what we did last week." "We need to do to this spreadsheet what we did last week."
-test "She asked what the update would do to her settings." "She asked what the update would do to her settings."
+allows "What did you do to the file?"
+allows "Please do to the file what you did to the other one."
+allows "Don't do to others what you wouldn't want done to you."
+allows "We need to do to this spreadsheet what we did last week."
+allows "She asked what the update would do to her settings."

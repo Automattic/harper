@@ -107,15 +107,43 @@ async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<s
 	}
 }
 
-export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvider) {
+/** Exact-match assertion: `toHaveValue` for form elements, `toHaveText` for contenteditable. */
+async function assertEditorText(editor: Locator, text: string) {
+	if (await isFormElement(editor)) {
+		await expect(editor).toHaveValue(text);
+	} else {
+		await expect(editor).toHaveText(text);
+	}
+}
+
+/** Substring assertion: `inputValue` for form elements, `toContainText` for contenteditable. */
+async function assertEditorContains(editor: Locator, text: string) {
+	if (await isFormElement(editor)) {
+		const value = await editor.inputValue();
+		expect(value).toContain(text);
+	} else {
+		await expect(editor).toContainText(text);
+	}
+}
+
+async function isFormElement(editor: Locator): Promise<boolean> {
+	return editor.evaluate((el) => el.tagName === 'TEXTAREA' || el.tagName === 'INPUT');
+}
+
+/** Test applying a basic suggestion and verify cursor position after replacement. */
+export async function testBasicSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can apply basic suggestion.', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		await page.waitForTimeout(2000);
-		await page.reload();
-
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 		await replaceEditorContent(editor, 'This is an test');
 
 		await page.waitForTimeout(6000);
@@ -125,20 +153,35 @@ export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvid
 
 		await page.waitForTimeout(3000);
 
-		expect(editor).toHaveValue('This is a test');
-		await assertLocatorIsFocused(page, editor);
+		await assertEditorText(editor, 'This is a test');
+
+		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('Backspace');
+		await assertEditorText(editor, 'This is a tst');
+
+		// Verify typing still works.
+		await editor.pressSequentially('e');
+		await assertEditorText(editor, 'This is a test');
 	});
 }
 
-export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
+/** Test ignoring a suggestion. */
+export async function testCanIgnoreSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can ignore suggestion.', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		await page.waitForTimeout(2000);
-		await page.reload();
-
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 
 		const cacheSalt = randomString(5);
 		await replaceEditorContent(editor, cacheSalt);
@@ -154,18 +197,26 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlPr
 		await expect(getHarperHighlights(page)).toHaveCount(0);
 
 		// Nothing should change.
-		expect(editor).toHaveValue(cacheSalt);
+		await assertEditorText(editor, cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
 	});
 }
 
-export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
+/** Test disabling a lint rule via the block button. */
+export async function testCanBlockRuleSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can hide with rule block button', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 		await replaceEditorContent(editor, 'This is an test.');
 
 		await page.waitForTimeout(6000);
@@ -203,7 +254,7 @@ async function getSortedHighlightBoxes(page: Page) {
 export async function testMultipleSuggestionsAndUndo(
 	testPageUrl: TestPageUrlProvider,
 	getEditor: EditorLocatorProvider,
-	setup?: (editor: Locator) => Promise<void>,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
 	test('Multiple suggestions and undo.', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
@@ -211,11 +262,11 @@ export async function testMultipleSuggestionsAndUndo(
 
 		const editor = getEditor(page);
 		if (setup) {
-			await setup(editor);
+			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
 
-		await page.waitForTimeout(3000);
+		await page.waitForTimeout(6000);
 
 		const highlights = getHarperHighlights(page);
 		await expect(highlights).toHaveCount(3);
@@ -233,14 +284,14 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.waitForTimeout(500);
 
 		// Verify only second "tset" was corrected
-		await expect(editor).toContainText('first tset');
-		await expect(editor).toContainText('second test');
-		await expect(editor).toContainText('third tset');
+		await assertEditorContains(editor, 'first tset');
+		await assertEditorContains(editor, 'second test');
+		await assertEditorContains(editor, 'third tset');
 
 		// Undo
 		await editor.press('Control+z');
 		await page.waitForTimeout(300);
-		await expect(editor).toContainText('The second tset');
+		await assertEditorContains(editor, 'The second tset');
 	});
 }
 

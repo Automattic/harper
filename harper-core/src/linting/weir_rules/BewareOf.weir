@@ -20,8 +20,8 @@ test "Beware among the wild animals outside the park." "Beware of the wild anima
 test "Beware between the gaps in the scaffolding." "Beware of the gaps in the scaffolding."
 test "BEWARE WITH THE LOUD CRASHING." "BEWARE OF THE LOUD CRASHING."
 
-test "Beware of the dog that guards the porch." "Beware of the dog that guards the porch."
-test "Beware the gap between the platforms." "Beware the gap between the platforms."
-test "Beware every time you go near the cliff." "Beware every time you go near the cliff."
-test "Some people say beware: the path narrows." "Some people say beware: the path narrows."
-test "Beware of tall waves on this beach." "Beware of tall waves on this beach."
+allows "Beware of the dog that guards the porch."
+allows "Beware the gap between the platforms."
+allows "Beware every time you go near the cliff."
+allows "Some people say beware: the path narrows."
+allows "Beware of tall waves on this beach."

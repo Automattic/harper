@@ -1,0 +1,8 @@
+expr main (like no tomorrow)
+
+let message "The correct phrase is `like there's no tomorrow`."
+let description "Corrects `like no tomorrow` to `like there's no tomorrow`."
+let kind "Usage"
+let becomes "like there's no tomorrow"
+
+test "Also, AI is getting pushed like no tomorrow, on so many levels im personally seeing it's honestly staggering." "Also, AI is getting pushed like there's no tomorrow, on so many levels im personally seeing it's honestly staggering."
