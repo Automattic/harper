@@ -6,12 +6,12 @@ mod error;
 mod optimize;
 mod parsing;
 
-use std::collections::{HashSet, VecDeque};
+use std::collections::VecDeque;
 use std::str::FromStr;
 use std::sync::Arc;
 
 pub use error::Error;
-use hashbrown::HashMap;
+use hashbrown::{HashMap, HashSet};
 use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
@@ -20,7 +20,7 @@ use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
-use crate::{CharString, Document, Lrc, Token, TokenStringExt};
+use crate::{Document, Lrc, Token, TokenStringExt};
 
 use self::ast::{Ast, AstVariable};
 
@@ -180,10 +180,10 @@ impl WeirLinter {
 
                 if let Some(lint) = lints.first() {
                     for i in 0..3 {
-                        if let Some(next) = apply_nth_suggestion(&current, lint, i) {
-                            if seen.insert(next.clone()) {
-                                queue.push_back((next, depth + 1));
-                            }
+                        if let Some(next) = apply_nth_suggestion(&current, lint, i)
+                            && seen.insert(next.clone())
+                        {
+                            queue.push_back((next, depth + 1));
                         }
                     }
                 }
