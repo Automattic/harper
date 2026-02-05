@@ -1,15 +1,17 @@
 expr techNoun [bug, case, change, comment, feature, fix, log, note, problem, reason, report, repro, reproduction, request, response, scenario, screenshot, solution, step, summary, test, ticket, answer, example, explanation, idea, issue, update]
-expr nounHead [NOUN, PROPN, @techNoun]
-expr bareNounPhrase [@nounHead, (ADJ @nounHead), (ADJ ADJ @nounHead), (ADV ADJ @nounHead), (ADV ADJ ADJ @nounHead), (NOUN NOUN), (ADJ NOUN NOUN), (ADV ADJ NOUN NOUN)]
+expr requestNounHead @techNoun
+expr requestBareNounPhrase [@requestNounHead, (ADJ @requestNounHead), (ADJ ADJ @requestNounHead), (ADV ADJ @requestNounHead), (ADV ADJ ADJ @requestNounHead), (@requestNounHead @requestNounHead), (ADJ @requestNounHead @requestNounHead), (ADV ADJ @requestNounHead @requestNounHead)]
+expr narrativeNoun [portrait, nest, glass, hand, coin, toy, victor]
+expr narrativeBareNounPhrase [@narrativeNoun, (ADJ @narrativeNoun)]
 
-expr requestMissingDet <([get, provide, give, send, share, attach, include, add, need, want, have, see, find, use, show, submit, create, report, file, reproduce] @bareNounPhrase), ( )>
-expr verbObjectMissingDet <(VERB @bareNounPhrase), ( )>
-expr adpObjectMissingDet <(ADP @bareNounPhrase), ( )>
+expr requestMissingDet <([get, provide, give, send, share, attach, include, add, need, want, see, submit, create, report, file, reproduce] @requestBareNounPhrase), ( )>
+expr narrativeVerbObjectMissingDet <([painted, built, dropped, raised, found, hid, cheered] @narrativeBareNounPhrase), ( )>
+expr narrativePrepObjectMissingDet <([in, on] [studio, tree, floor]), ( )>
 
-expr main [@requestMissingDet, @verbObjectMissingDet, @adpObjectMissingDet]
+expr main [@requestMissingDet, @narrativeVerbObjectMissingDet, @narrativePrepObjectMissingDet]
 
 let message "Add a determiner before this noun phrase."
-let description "Detects likely missing determiners (a/an/the/your/etc.) in common request phrases and inserts `a` as a placeholder. Adjust the determiner as needed."
+let description "Detects likely missing determiners in common request phrases and offers to insert one where necessary."
 let kind "Grammar"
 let becomes [" the ", " a ", " an "]
 
@@ -39,10 +41,11 @@ test "Please give minimal reproduction." "Please give a minimal reproduction."
 test "Can you add brief comment?" "Can you add a brief comment?"
 test "We want new feature." "We want a new feature."
 test "They need clear solution." "They need a clear solution."
-test "Please provide an example of this." "Please provide an example of this."
-test "Please provide the example." "Please provide the example."
-test "Please provide your example." "Please provide your example."
-test "Please provide another example." "Please provide another example."
+
+allows "Please provide an example of this."
+allows "Please provide the example."
+allows "Please provide your example."
+allows "Please provide another example."
 test "We want detailed explanation." "We want a detailed explanation."
 test "We need quick answer." "We need a quick answer."
 test "Please send clear update." "Please send a clear update."
@@ -50,11 +53,21 @@ test "Please provide brief summary." "Please provide a brief summary."
 
 test "The artist painted portrait in studio." "The artist painted a portrait in the studio."
 test "The bird built nest in tree." "The bird built a nest in the tree."
-test "The child dropped glass on floor." "The child dropped a glass on the floor."
+test "The child dropped glass on floor." "The child dropped the glass on the floor."
 test "The student raised hand quietly." "The student raised a hand quietly."
 test "The child found coin outside." "The child found a coin outside."
-test "The runner stretched muscles beforehand." "The runner stretched their muscles beforehand."
-test "The painter wiped hands clean." "The painter wiped their hands clean."
-test "The dog wagged tail eagerly." "The dog wagged its tail eagerly."
-test "The child hid toy nearby." "The child hid the toy nearby."
+test "The child hid toy nearby." "The child hid a toy nearby."
 test "The crowd cheered victor loudly." "The crowd cheered the victor loudly."
+
+allows "Let's do this for good measure."
+allows "This is a test to make sure we don't split up paragraphs on newlines."
+allows "This URL is used by the console to properly generate URLs when using the Artisan command line tool."
+allows "The timezone is set to \"UTC\" by default as it is suitable for most use cases."
+allows "This option can be set to any locale for which you plan to have translation strings."
+allows "Use it to show ownership."
+allows "This rule attempts to find common errors with redundancy and contractions that may lead to confusion for readers."
+allows "ACF is a powerful tool that allows you to add custom fields to your content, providing greater flexibility in how you manage and display information."
+allows "Historical records, colonial archives (however problematic their provenance), and oral histories from surviving communities, even if fragmented and distorted, provide crucial data points."
+allows "Traditional cartography relies on observable features – mountains, rivers, coastlines – to create representations of space."
+allows "My grandfather built timepieces to mark the passage of moments."
+allows "I made a note to encourage Eleanor to share more stories with him; reminiscing often proved beneficial for patients struggling with respiratory distress."
