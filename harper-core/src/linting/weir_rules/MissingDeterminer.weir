@@ -1,0 +1,60 @@
+expr techNoun [bug, case, change, comment, feature, fix, log, note, problem, reason, report, repro, reproduction, request, response, scenario, screenshot, solution, step, summary, test, ticket, answer, example, explanation, idea, issue, update]
+expr nounHead [NOUN, PROPN, @techNoun]
+expr bareNounPhrase [@nounHead, (ADJ @nounHead), (ADJ ADJ @nounHead), (ADV ADJ @nounHead), (ADV ADJ ADJ @nounHead), (NOUN NOUN), (ADJ NOUN NOUN), (ADV ADJ NOUN NOUN)]
+
+expr requestMissingDet <([get, provide, give, send, share, attach, include, add, need, want, have, see, find, use, show, submit, create, report, file, reproduce] @bareNounPhrase), ( )>
+expr verbObjectMissingDet <(VERB @bareNounPhrase), ( )>
+expr adpObjectMissingDet <(ADP @bareNounPhrase), ( )>
+
+expr main [@requestMissingDet, @verbObjectMissingDet, @adpObjectMissingDet]
+
+let message "Add a determiner before this noun phrase."
+let description "Detects likely missing determiners (a/an/the/your/etc.) in common request phrases and inserts `a` as a placeholder. Adjust the determiner as needed."
+let kind "Grammar"
+let becomes [" the ", " a ", " an "]
+
+test "would it be possible to get reproducible example of this?" "would it be possible to get a reproducible example of this?"
+test "Would it be possible to get reproducible bug report?" "Would it be possible to get a reproducible bug report?"
+test "Please provide detailed reproduction of this issue." "Please provide a detailed reproduction of this issue."
+test "Can you send minimal test case?" "Can you send a minimal test case?"
+test "We need quick response." "We need a quick response."
+test "I can attach short log." "I can attach a short log."
+test "Please share minimal repro." "Please share a minimal repro."
+test "Could you submit small change?" "Could you submit a small change?"
+test "Please provide reproducible example, thanks." "Please provide a reproducible example, thanks."
+test "We should create clear summary." "We should create a clear summary."
+test "Please provide the report." "Please provide the report."
+test "Please provide your report." "Please provide your report."
+test "Please provide another report." "Please provide another report."
+test "Please provide more detailed report." "Please provide a more detailed report."
+test "We can file short ticket." "We can file a short ticket."
+test "Could you reproduce minimal scenario?" "Could you reproduce a minimal scenario?"
+test "Please send clear explanation." "Please send a clear explanation."
+test "We need simple fix." "We need a simple fix."
+test "I want quick update." "I want a quick update."
+test "Could you share detailed response?" "Could you share a detailed response?"
+test "Please attach short screenshot." "Please attach a short screenshot."
+test "We should include short note." "We should include a short note."
+test "Please give minimal reproduction." "Please give a minimal reproduction."
+test "Can you add brief comment?" "Can you add a brief comment?"
+test "We want new feature." "We want a new feature."
+test "They need clear solution." "They need a clear solution."
+test "Please provide an example of this." "Please provide an example of this."
+test "Please provide the example." "Please provide the example."
+test "Please provide your example." "Please provide your example."
+test "Please provide another example." "Please provide another example."
+test "We want detailed explanation." "We want a detailed explanation."
+test "We need quick answer." "We need a quick answer."
+test "Please send clear update." "Please send a clear update."
+test "Please provide brief summary." "Please provide a brief summary."
+
+test "The artist painted portrait in studio." "The artist painted a portrait in the studio."
+test "The bird built nest in tree." "The bird built a nest in the tree."
+test "The child dropped glass on floor." "The child dropped a glass on the floor."
+test "The student raised hand quietly." "The student raised a hand quietly."
+test "The child found coin outside." "The child found a coin outside."
+test "The runner stretched muscles beforehand." "The runner stretched their muscles beforehand."
+test "The painter wiped hands clean." "The painter wiped their hands clean."
+test "The dog wagged tail eagerly." "The dog wagged its tail eagerly."
+test "The child hid toy nearby." "The child hid the toy nearby."
+test "The crowd cheered victor loudly." "The crowd cheered the victor loudly."

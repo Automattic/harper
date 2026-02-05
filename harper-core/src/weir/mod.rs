@@ -6,6 +6,7 @@ mod error;
 mod optimize;
 mod parsing;
 
+use std::collections::{HashSet, VecDeque};
 use std::str::FromStr;
 use std::sync::Arc;
 
@@ -143,6 +144,58 @@ impl WeirLinter {
 
     /// Runs the tests defined in the source code, returning any failing results.
     pub fn run_tests(&mut self) -> Vec<TestResult> {
+        fn apply_nth_suggestion(
+            text: &str,
+            lint: &Lint,
+            n: usize,
+        ) -> Option<String> {
+            let suggestion = lint.suggestions.get(n)?;
+            let mut text_chars: Vec<char> = text.chars().collect();
+            suggestion.apply(lint.span, &mut text_chars);
+            Some(text_chars.iter().collect())
+        }
+
+        fn transform_top3_to_expected(
+            text: &str,
+            expected: &str,
+            linter: &mut impl Linter,
+        ) -> Option<String> {
+            let mut queue: VecDeque<(String, usize)> = VecDeque::new();
+            let mut seen: HashSet<String> = HashSet::new();
+
+            queue.push_back((text.to_string(), 0));
+            seen.insert(text.to_string());
+
+            while let Some((current, depth)) = queue.pop_front() {
+                if current == expected {
+                    return Some(current);
+                }
+
+                if depth >= 100 {
+                    continue;
+                }
+
+                let doc = Document::new_from_vec(
+                    current.chars().collect::<Vec<_>>().into(),
+                    &Markdown::default(),
+                    &FstDictionary::curated(),
+                );
+                let lints = linter.lint(&doc);
+
+                if let Some(lint) = lints.first() {
+                    for i in 0..3 {
+                        if let Some(next) = apply_nth_suggestion(&current, lint, i) {
+                            if seen.insert(next.clone()) {
+                                queue.push_back((next, depth + 1));
+                            }
+                        }
+                    }
+                }
+            }
+
+            None
+        }
+
         fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
             let mut text_chars: Vec<char> = text.chars().collect();
             let mut iter_count = 0;
@@ -192,19 +245,7 @@ impl WeirLinter {
             .collect();
 
         for (text, expected) in tests {
-            let zeroth = transform_nth_str(&text, self, 0);
-            let first = transform_nth_str(&text, self, 1);
-            let second = transform_nth_str(&text, self, 2);
-
-            let matched = if zeroth == expected {
-                Some(zeroth.clone())
-            } else if first == expected {
-                Some(first.clone())
-            } else if second == expected {
-                Some(second.clone())
-            } else {
-                None
-            };
+            let matched = transform_top3_to_expected(&text, &expected, self);
 
             match matched {
                 Some(result) => {
@@ -219,7 +260,7 @@ impl WeirLinter {
                 }
                 None => results.push(TestResult {
                     expected: expected.to_string(),
-                    got: zeroth,
+                    got: transform_nth_str(&text, self, 0),
                 }),
             }
         }
