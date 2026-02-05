@@ -985,15 +985,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
