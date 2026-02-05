@@ -53007,7 +53007,6 @@ CSON/Ng             # CoffeeScript Object Notation (JSON like format)
 CTE/NS
 CTF/NSg             # capture the flag
 CVE/NSg             # Common Vulnerabilities and Exposures
-Captcha/OgS
 ChatGPT/Og          # OpenAI product
 ClickHouse/Og
 CloudFront/Og       # CDN service
