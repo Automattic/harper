@@ -13,18 +13,11 @@ pub struct FewUnitsOfTimeAgo {
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
-        let units = TimeUnitExpr;
-
-        let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
-
         let expr = Lrc::new(
             SequenceExpr::default()
-                .then(start)
                 .t_aco("few")
                 .then_whitespace()
-                .then(units)
-                .then_whitespace()
-                .t_aco("ago"),
+                .then(TimeUnitExpr),
         );
 
         Self {
@@ -40,32 +33,93 @@ impl ExprLinter for FewUnitsOfTimeAgo {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let mut span = None;
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        let (before, after) = ctx?;
 
-        for tok in toks.iter().take(3) {
-            if tok.span.get_content_string(src).eq_ignore_ascii_case("few") {
-                span = Some(tok.span);
-                break;
-            }
+        let few_tok = toks
+            .iter()
+            .find(|tok| tok.span.get_content_string(src).eq_ignore_ascii_case("few"))?;
+
+        let mut before_words = before.iter().rev().filter(|tok| tok.kind.is_word());
+        let prev_word_tok = before_words.next();
+        let prev_prev_word_tok = before_words.next();
+
+        let prev_word =
+            prev_word_tok.map(|tok| tok.span.get_content_string(src).to_ascii_lowercase());
+        let prev_prev_is_preposition =
+            prev_prev_word_tok.is_some_and(|tok| tok.kind.is_preposition());
+
+        let next_word = after
+            .iter()
+            .find(|tok| tok.kind.is_word())
+            .map(|tok| tok.span.get_content_string(src).to_ascii_lowercase());
+
+        // If `few` is already part of an article/determiner phrase, don't lint.
+        // Demonstratives/possessives are handled conservatively to avoid false positives like
+        // "in those few minutes after ...".
+        if matches!(prev_word.as_deref(), Some("a" | "an" | "the")) {
+            return None;
         }
 
-        span?;
+        if matches!(
+            prev_word.as_deref(),
+            Some(
+                "this"
+                    | "that"
+                    | "these"
+                    | "those"
+                    | "my"
+                    | "our"
+                    | "your"
+                    | "his"
+                    | "her"
+                    | "their"
+            )
+        ) && (prev_prev_word_tok.is_none() || prev_prev_is_preposition)
+        {
+            return None;
+        }
+
+        // If `few` is explicitly being used in the negative/insufficient sense (e.g. `too few`),
+        // inserting an article would be incorrect.
+        if matches!(
+            prev_word.as_deref(),
+            Some("too" | "very" | "so" | "quite" | "how")
+        ) {
+            return None;
+        }
+
+        let should_lint = matches!(
+            next_word.as_deref(),
+            Some("ago" | "after" | "before" | "later")
+        ) || matches!(
+            prev_word.as_deref(),
+            Some("after" | "before" | "in" | "within" | "for" | "since")
+        );
+
+        if !should_lint {
+            return None;
+        }
 
         Some(Lint {
-            span: span.unwrap(),
+            span: few_tok.span,
             message: "In this construction you need to use `a few` instead of just `few`."
                 .to_string(),
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "a few",
-                span.unwrap().get_content(src),
+                few_tok.span.get_content(src),
             )],
             ..Default::default()
         })
     }
 
     fn description(&self) -> &'static str {
-        "Corrects some expressions using `few` where `a few` is correct."
+        "Corrects some expressions using `few` where `a few` is correct (time-related constructions)."
     }
 }
 
@@ -79,7 +133,6 @@ mod tests {
     // Basic unit tests
 
     #[test]
-    #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_few_minutes_ago() {
         assert_suggestion_result(
             "Few minutes ago",
@@ -108,7 +161,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_after_space() {
         assert_suggestion_result(
             " Few minutes ago.",
@@ -118,12 +170,56 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "Needs ^ zero-width anchor that matches the start of a chunk"]
     fn fix_2nd_sentence() {
         assert_suggestion_result(
             "Hello World. Few minutes ago I bought your planet.",
             FewUnitsOfTimeAgo::default(),
             "Hello World. A few minutes ago I bought your planet.",
+        );
+    }
+
+    #[test]
+    fn fix_after_few_minutes() {
+        assert_suggestion_result(
+            "After few minutes all kube-system pods begin crashing.",
+            FewUnitsOfTimeAgo::default(),
+            "After a few minutes all kube-system pods begin crashing.",
+        );
+    }
+
+    #[test]
+    fn fix_few_minutes_after() {
+        assert_suggestion_result(
+            "Few minutes after I posted this I found the fix.",
+            FewUnitsOfTimeAgo::default(),
+            "A few minutes after I posted this I found the fix.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_the_few_minutes_after() {
+        assert_lint_count(
+            "During the few minutes after the restart, logs are noisy.",
+            FewUnitsOfTimeAgo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_too_few_minutes_ago() {
+        assert_lint_count(
+            "It was too few minutes ago to have any data.",
+            FewUnitsOfTimeAgo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_past_few_days() {
+        assert_lint_count(
+            "Over the past few days, the service has been stable.",
+            FewUnitsOfTimeAgo::default(),
+            0,
         );
     }
 
