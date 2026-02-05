@@ -223,7 +223,9 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
@@ -678,6 +680,9 @@ impl LintGroup {
 
         out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
         out.config.set_rule_enabled("MoreAdjective", true);
+
+        out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
+        out.config.set_rule_enabled("WorthToDo", true);
 
         out
     }

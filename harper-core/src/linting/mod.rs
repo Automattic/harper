@@ -233,6 +233,7 @@ mod widely_accepted;
 mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
+mod worth_to_do;
 mod would_never_have;
 
 pub use expr_linter::{Chunk, ExprLinter};
