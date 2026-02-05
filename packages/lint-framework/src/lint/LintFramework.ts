@@ -9,6 +9,9 @@ import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
+type SpellCheckingMode = 'default' | 'space' | 'stop';
+
+let renderTimer: ReturnType<typeof setTimeout> | null = null;
 type Modifier = 'Ctrl' | 'Shift' | 'Alt';
 
 type Hotkey = {
@@ -46,6 +49,7 @@ export default class LintFramework {
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
+		getSpellCheckingMode?: () => Promise<SpellCheckingMode>;
 		getHotkey?: () => Promise<Hotkey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
@@ -62,6 +66,7 @@ export default class LintFramework {
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
+			getSpellCheckingMode?: () => Promise<SpellCheckingMode>;
 			getHotkey?: () => Promise<Hotkey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
@@ -112,8 +117,8 @@ export default class LintFramework {
 	}
 
 	async update() {
+		this.determineSpellCheckingMode();
 		this.requestRender();
-		this.requestLintUpdate();
 	}
 
 	async requestLintUpdate() {
@@ -149,7 +154,6 @@ export default class LintFramework {
 
 		this.lastLints = lintResults.filter((r) => r.target != null) as any;
 		this.lintRequested = false;
-		this.requestRender();
 	}
 
 	/**
@@ -185,6 +189,8 @@ export default class LintFramework {
 						const suggestions = previousBox.lint.suggestions;
 						if (suggestions.length > 0) {
 							previousBox.applySuggestion(suggestions[0]);
+							this.requestLintUpdate();
+							this.requestRender();
 						} else {
 							previousBox.ignoreLint?.();
 						}
@@ -255,6 +261,39 @@ export default class LintFramework {
 		this.lintHotkey();
 		for (const event of PAGE_EVENTS) {
 			window.addEventListener(event, this.updateEventCallback);
+		}
+		window.addEventListener('suggestionApplied', () => {
+			this.requestLintUpdate();
+			this.requestRender();
+		});
+	}
+
+	private async determineSpellCheckingMode() {
+		const spellCheckingMode = await this.actions.getSpellCheckingMode?.();
+		switch (spellCheckingMode) {
+			case 'space':
+				window.addEventListener('keyup', (event: KeyboardEvent) => {
+					const key = event.code;
+					const expectedKey = 'Space';
+					if (key === expectedKey) {
+						this.requestLintUpdate();
+					}
+				});
+				break;
+			case 'stop':
+				window.addEventListener(
+					'input',
+					() => {
+						if (renderTimer) clearTimeout(renderTimer);
+						renderTimer = setTimeout(() => {
+							this.requestLintUpdate();
+						}, 2000);
+					},
+					{ once: true },
+				);
+				break;
+			case 'default':
+				this.requestLintUpdate();
 		}
 	}
 
