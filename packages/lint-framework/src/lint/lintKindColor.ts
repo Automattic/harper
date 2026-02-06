@@ -1,28 +1,18 @@
 import { getContrastingTextColor } from './utils';
 
-// First, define the color map as a constant
-const LINT_KIND_COLORS = {
-	Agreement: '#228B22', // Forest green
-	BoundaryError: '#8B4513', // Saddle brown
-	Capitalization: '#540D6E', // Deep purple
-	Eggcorn: '#FF8C00', // Dark orange
-	Enhancement: '#0EAD69', // Green
-	Formatting: '#7D3C98', // Amethyst purple
-	Grammar: '#9B59B6', // Medium purple
-	Malapropism: '#C71585', // Medium violet red
-	Miscellaneous: '#3BCEAC', // Turquoise
-	Nonstandard: '#008B8B', // Dark cyan
-	Punctuation: '#D4850F', // Dark orange
-	Readability: '#2E8B57', // Sea green
-	Redundancy: '#4682B4', // Steel blue
-	Regionalism: '#C061CB', // Vibrant purple
-	Repetition: '#00A67C', // Green-cyan
-	Spelling: '#EE4266', // Pink-red
-	Style: '#FFD23F', // Yellow
-	Typo: '#FF6B35', // Vibrant orange-red
-	Usage: '#1E90FF', // Dodger blue
-	WordChoice: '#228B22', // Forest green
-} as const;
+// Color map will be populated from the WASM API at runtime
+let LINT_KIND_COLORS: Record<string, string> = {};
+
+/**
+ * Initialize the lint kind colors from the WASM API.
+ * This should be called once at startup when harper.js is available.
+ */
+export async function initializeLintKindColors(): Promise<void> {
+    // Access the wasm module directly
+    const wasm = await import('harper-wasm');
+    const colorJson = wasm.get_lint_kind_colors();
+    LINT_KIND_COLORS = JSON.parse(colorJson);
+}
 
 // Export the type for the lint kind keys
 export type LintKind = keyof typeof LINT_KIND_COLORS;
@@ -32,14 +22,14 @@ export const LINT_KINDS = Object.keys(LINT_KIND_COLORS) as LintKind[];
 
 // The main function that uses the map
 export function lintKindColor(lintKindKey: string): string {
-	const color = LINT_KIND_COLORS[lintKindKey as LintKind];
+	const color = LINT_KIND_COLORS[lintKindKey];
 	if (!color) {
-		throw new Error(`Unexpected lint kind: ${lintKindKey}`);
+		throw new Error(`Unexpected lint kind: ${lintKindKey}. Colors not initialized. Call initializeLintKindColors() first.`);
 	}
 	return color;
 }
 
 export function lintKindTextColor(lintKindKeyOrColor: string): 'black' | 'white' {
-	const color = LINT_KIND_COLORS[lintKindKeyOrColor as LintKind] ?? lintKindKeyOrColor;
+	const color = LINT_KIND_COLORS[lintKindKeyOrColor] ?? lintKindKeyOrColor;
 	return getContrastingTextColor(color);
 }

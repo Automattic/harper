@@ -1,3 +1,6 @@
 * text=auto eol=lf
 quill_simple.html linguist-generated
 github_textarea.html linguist-generated
+
+# Use bd merge for beads JSONL files
+.beads/issues.jsonl merge=beads

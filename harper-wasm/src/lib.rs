@@ -7,7 +7,7 @@ use std::sync::Arc;
 
 use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
-use harper_core::linting::{LintGroup, Linter as _};
+use harper_core::linting::{LintGroup, Linter as _, lint_kind_colors};
 use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
@@ -484,6 +484,20 @@ impl Linter {
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
     harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
+}
+
+/// Get a JSON map of LintKind to hex color codes.
+/// Format: { "Agreement": "#228B22", "BoundaryError": "#8B4513", ... }
+#[wasm_bindgen]
+pub fn get_lint_kind_colors() -> String {
+    use std::collections::BTreeMap;
+
+    let map: BTreeMap<String, String> = lint_kind_colors()
+        .iter()
+        .map(|color| (color.kind.to_string_key(), color.hex.to_string()))
+        .collect();
+
+    serde_json::to_string(&map).unwrap()
 }
 
 /// A suggestion to fix a Lint.

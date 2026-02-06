@@ -10,7 +10,7 @@ use hashbrown::HashMap;
 use rayon::prelude::*;
 
 use harper_core::{
-    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    linting::{Lint, LintGroup, LintGroupConfig, LintKind, rgb_for_lint_kind},
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
@@ -515,7 +515,7 @@ fn single_input_report(
 
             for (rule_name, lints) in named_lints {
                 for lint in lints {
-                    let (r, g, b) = rgb_for_lint_kind(Some(&lint.lint_kind));
+                    let (r, g, b) = get_rgb_for_lint_kind(Some(&lint.lint_kind));
                     report_builder = report_builder.with_label(
                         Label::new((&input_identifier, lint.span.into()))
                             .with_message(format!(
@@ -547,7 +547,7 @@ fn single_input_report(
         let lk_vec: Vec<(Option<String>, String)> = lint_kinds_vec
             .into_iter()
             .map(|(lk, c)| {
-                let (r, g, b) = rgb_for_lint_kind(Some(lk));
+                let (r, g, b) = get_rgb_for_lint_kind(Some(lk));
                 (
                     Some(format!("\x1b[38;2;{r};{g};{b}m")),
                     format!("[{lk}: {c}]"),
@@ -622,7 +622,7 @@ fn final_report(
         let lint_kind_counts: Vec<(Option<String>, String)> = all_files_lint_kind_counts_vec
             .into_iter()
             .map(|(lint_kind, c)| {
-                let (r, g, b) = rgb_for_lint_kind(Some(&lint_kind));
+                let (r, g, b) = get_rgb_for_lint_kind(Some(&lint_kind));
                 (
                     Some(format!("\x1b[38;2;{r};{g};{b}m")),
                     format!("[{lint_kind}: {c}]"),
@@ -663,7 +663,7 @@ fn final_report(
     let formatted_lint_kind_rule_pairs: Vec<(Option<String>, String)> = lint_kind_rule_pairs
         .into_iter()
         .map(|ele| {
-            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0.0));
+            let (r, g, b) = get_rgb_for_lint_kind(Some(&ele.0.0));
             let ansi_prefix = format!("\x1b[38;2;{r};{g};{b}m");
             (
                 Some(ansi_prefix),
@@ -727,43 +727,8 @@ fn final_report(
     }
 }
 
-// Note: This must be kept synchronized with:
-// packages/lint-framework/src/lint/lintKindColor.ts
-// packages/web/src/lib/lintKindColor.ts
-// This can be removed when issue #1991 is resolved.
-fn lint_kind_to_rgb() -> &'static [(LintKind, (u8, u8, u8))] {
-    &[
-        (LintKind::Agreement, (0x22, 0x8B, 0x22)),
-        (LintKind::BoundaryError, (0x8B, 0x45, 0x13)),
-        (LintKind::Capitalization, (0x54, 0x0D, 0x6E)),
-        (LintKind::Eggcorn, (0xFF, 0x8C, 0x00)),
-        (LintKind::Enhancement, (0x0E, 0xAD, 0x69)),
-        (LintKind::Formatting, (0x7D, 0x3C, 0x98)),
-        (LintKind::Grammar, (0x9B, 0x59, 0xB6)),
-        (LintKind::Malapropism, (0xC7, 0x15, 0x85)),
-        (LintKind::Miscellaneous, (0x3B, 0xCE, 0xAC)),
-        (LintKind::Nonstandard, (0x00, 0x8B, 0x8B)),
-        (LintKind::Punctuation, (0xD4, 0x85, 0x0F)),
-        (LintKind::Readability, (0x2E, 0x8B, 0x57)),
-        (LintKind::Redundancy, (0x46, 0x82, 0xB4)),
-        (LintKind::Regionalism, (0xC0, 0x61, 0xCB)),
-        (LintKind::Repetition, (0x00, 0xA6, 0x7C)),
-        (LintKind::Spelling, (0xEE, 0x42, 0x66)),
-        (LintKind::Style, (0xFF, 0xD2, 0x3F)),
-        (LintKind::Typo, (0xFF, 0x6B, 0x35)),
-        (LintKind::Usage, (0x1E, 0x90, 0xFF)),
-        (LintKind::WordChoice, (0x22, 0x8B, 0x22)),
-    ]
-}
-
-fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
-    olk.and_then(|lk| {
-        lint_kind_to_rgb()
-            .iter()
-            .find(|(k, _)| k == lk)
-            .map(|(_, color)| *color)
-    })
-    .unwrap_or((0, 0, 0))
+fn get_rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
+    olk.map(|lk| rgb_for_lint_kind(*lk)).unwrap_or((0, 0, 0))
 }
 
 fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>) {
