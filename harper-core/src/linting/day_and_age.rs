@@ -1,8 +1,7 @@
 use crate::{
-    CharStringExt, Lint, Token, TokenStringExt,
-    expr::{Expr, OwnedExprExt, SequenceExpr},
+    CharStringExt, Lint, Span, Token, TokenStringExt,
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::WordSet,
 };
 
 pub struct DayAndAge {
@@ -14,29 +13,13 @@ impl Default for DayAndAge {
         Self {
             expr: Box::new(
                 SequenceExpr::default()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_preposition()),
-                        Box::new(WordSet::new(&["it", "is"])),
-                    ])
-                    .t_ws()
                     .then_word_set(&["this", "these"])
                     .t_ws()
                     .then_word_set(&["day", "days"])
                     .t_ws()
                     .then_word_set(&["and", "in", "an", "on"])
                     .t_ws()
-                    .then_word_set(&["age", "ages"])
-                    .and_not(
-                        SequenceExpr::word_set(&["in", "for"])
-                            .t_any()
-                            .t_aco("this")
-                            .t_any()
-                            .t_aco("day")
-                            .t_any()
-                            .t_aco("and")
-                            .t_any()
-                            .t_aco("age"),
-                    ),
+                    .then_word_set(&["age", "ages"]),
             ),
         }
     }
@@ -55,16 +38,30 @@ impl ExprLinter for DayAndAge {
 
     fn match_to_lint_with_context(
         &self,
-        all_toks: &[Token],
+        main_toks: &[Token],
         src: &[char],
-        _ctx: Option<(&[Token], &[Token])>,
+        ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let toks = all_toks.iter().step_by(2).collect::<Vec<_>>();
+        let before = ctx?.0;
+        let prep_span = if let (Some(penult), Some(last)) = (before.get_rel(-2), before.get_rel(-1))
+            && last.kind.is_whitespace()
+            && (penult.kind.is_preposition()
+                || penult
+                    .span
+                    .get_content(src)
+                    .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['i', 't']]))
+        {
+            Some(penult.span)
+        } else {
+            None
+        };
+        let prep_chars = prep_span.map(|span| span.get_content(src));
+        let main_span = main_toks.span()?;
+        let toks = main_toks.iter().step_by(2).collect::<Vec<_>>();
         let spans = toks.iter().map(|t| t.span).collect::<Vec<_>>();
         let chars = spans.iter().map(|s| s.get_content(src)).collect::<Vec<_>>();
 
         let good: &[&[char]] = &[
-            &['i', 'n'],
             &['t', 'h', 'i', 's'],
             &['d', 'a', 'y'],
             &['a', 'n', 'd'],
@@ -77,20 +74,46 @@ impl ExprLinter for DayAndAge {
             .map(|(actual, &good)| !actual.eq_ignore_ascii_case_chars(good))
             .collect();
 
-        if bads.iter().any(|&b| b) {
-            return Some(Lint {
-                span: all_toks.span()?,
-                lint_kind: LintKind::Usage,
-                suggestions: vec![Suggestion::replace_with_match_case_str(
-                    "in this day and age",
-                    all_toks.span()?.get_content(src),
-                )],
-                message: "The correct idiom is `in this day and age`".to_string(),
-                ..Default::default()
-            });
-        }
+        let good_main = !bads.iter().any(|&b| b);
 
-        None
+        let (span, replacement): (Span<char>, &str) = if prep_chars
+            .is_some_and(|p| p.eq_ignore_ascii_case_chars(&['s', 'i', 'n', 'c', 'e']))
+        {
+            // "since" is a preposition but it's also a conjunction, so keep it but add "in" after it
+            (main_span, "in this day and age")
+        } else {
+            match (prep_chars, good_main) {
+                // We have a preposition and the idiom is correct
+                (Some(prep_chars), true) => {
+                    // If the preposition is "in" or "for" there's nothing to fix
+                    if prep_chars.eq_any_ignore_ascii_case_chars(&[&['i', 'n'], &['f', 'o', 'r']]) {
+                        return None;
+                    }
+                    // Otherwise replace the preposition
+                    (prep_span.unwrap(), "in")
+                }
+                // We have a preposition but the idiom is wrong
+                (Some(_), false) => (
+                    Span::new(prep_span.unwrap().start, main_span.end),
+                    "in this day and age",
+                ),
+                // We only need to insert "in" but since we have common Suggestion logic we'll replace the whole thing
+                (None, true) => (main_span, "in this day and age"),
+                // The preposition is missing and the idiom is wrong, replace the whole thing
+                (None, false) => (main_span, "in this day and age"),
+            }
+        };
+
+        Some(Lint {
+            span,
+            lint_kind: LintKind::Usage,
+            suggestions: vec![Suggestion::replace_with_match_case(
+                replacement.chars().collect(),
+                span.get_content(src),
+            )],
+            message: "The correct idiom is `in this day and age`.".to_string(),
+            ..Default::default()
+        })
     }
 }
 
@@ -236,10 +259,7 @@ mod tests {
         );
     }
 
-    // Unhandled edge cases
-
     #[test]
-    #[ignore = "We don't yet handle missing preposition"]
     fn no_prep_this_day_in_age() {
         assert_suggestion_result(
             "if that is how gpu programming is still done this day in age then id have a very hard time seeing valhalla ever run on a gpu",
@@ -249,7 +269,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "We don't yet handle missing preposition"]
     fn no_prep_these_days_and_ages() {
         assert_suggestion_result(
             "Btw I think you should write React the React Hooks way these days and ages, where you'll never see this keyword` again",
@@ -259,8 +278,7 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "'Since' is a preposition but should be followed by 'in' rather than replaced"]
-    fn is_since_a_preposition_or_not() {
+    fn since_is_a_preposition_but_also_a_conjunction() {
         assert_suggestion_result(
             "and since these days and age storage is usually not a problem, I usually play it safe and just don't bother",
             DayAndAge::default(),
