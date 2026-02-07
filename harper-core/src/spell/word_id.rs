@@ -1,3 +1,8 @@
+//! Identifiers for a words.
+//!
+//! These are meant for situations where you need to refer to a word (or a collection of words),
+//! without storing all of accompanying data (like spelling or metadata).
+
 use std::hash::BuildHasher;
 
 use foldhash::fast::FixedState;
@@ -5,18 +10,51 @@ use serde::{Deserialize, Serialize};
 
 use crate::{CharString, CharStringExt};
 
-/// An identifier for a particular word.
-///
-/// It works by hashing the word it represents, normalized to lowercase.
-/// It is meant for situations where you need to refer to a word (or a collection of words),
-/// without storing all of accompanying data (like spelling or metadata).
+/// An identifier for a particular word with canonical casing.
 #[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
-pub struct WordId {
+pub struct CanonicalWordId {
     hash: u64,
 }
 
-impl WordId {
+impl CanonicalWordId {
     /// Create a Word ID from a character slice.
+    pub fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
+        let hash = FixedState::default().hash_one(chars.as_ref());
+
+        Self { hash }
+    }
+
+    /// Create a word ID from a string.
+    /// Requires allocation, so use sparingly.
+    pub fn from_word_str(text: impl AsRef<str>) -> Self {
+        let chars: CharString = text.as_ref().chars().collect();
+        Self::from_word_chars(chars)
+    }
+
+    /// Reinterpret this ID as a [`CaseFoldedWordId`].
+    ///
+    /// Note that this is just a reinterpretation, it does not perform any conversion. This is
+    /// useful when the canonical word ID is the same as the case-folded word ID. This will only
+    /// happen if the canonical ID was generated with a word that was already lowercased and
+    /// normalized.
+    pub(crate) fn as_case_folded(self) -> CaseFoldedWordId {
+        CaseFoldedWordId { hash: self.hash }
+    }
+}
+
+/// An identifier for a particular word with case-folded casing.
+///
+/// This does not usually point to a specific word, but rather a group of words that are identical
+/// when lowercased.
+#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
+pub struct CaseFoldedWordId {
+    hash: u64,
+}
+
+impl CaseFoldedWordId {
+    /// Create a Word ID from a character slice.
+    ///
+    /// This will case-fold and normalize the input before calculating the word ID.
     pub fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
         let normalized = chars.as_ref().normalized();
         let lower = normalized.to_lower();
@@ -27,8 +65,48 @@ impl WordId {
 
     /// Create a word ID from a string.
     /// Requires allocation, so use sparingly.
+    ///
+    /// This will case-fold and normalize the input before calculating the word ID.
     pub fn from_word_str(text: impl AsRef<str>) -> Self {
         let chars: CharString = text.as_ref().chars().collect();
         Self::from_word_chars(chars)
+    }
+}
+
+/// A pair containing both [`CanonicalWordId`] and [`CaseFoldedWordId`] for a given word.
+#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
+pub struct WordIdPair {
+    canonical: CanonicalWordId,
+    case_folded: CaseFoldedWordId,
+}
+
+impl WordIdPair {
+    /// Create a Word ID pair from a character slice.
+    ///
+    /// Calculates both the canonical and case-folded word ID for the provided word.
+    pub fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
+        Self {
+            canonical: CanonicalWordId::from_word_chars(&chars),
+            case_folded: CaseFoldedWordId::from_word_chars(&chars),
+        }
+    }
+
+    /// Create a word ID pair from a string.
+    /// Requires allocation, so use sparingly.
+    ///
+    /// Calculates both the canonical and case-folded word ID for the provided word.
+    pub fn from_word_str(text: impl AsRef<str>) -> Self {
+        let chars: CharString = text.as_ref().chars().collect();
+        Self::from_word_chars(chars)
+    }
+
+    /// The canonical ID of the word.
+    pub fn canonical(&self) -> CanonicalWordId {
+        self.canonical
+    }
+
+    /// The case-folded ID of the word.
+    pub fn case_folded(&self) -> CaseFoldedWordId {
+        self.case_folded
     }
 }

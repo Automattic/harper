@@ -57,14 +57,14 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            let cand_meta = self.dict.get_word_metadata(&candidate).unwrap();
+            let cand_meta = self.dict.get_word_metadata_exact(&candidate).unwrap();
             if !cand_meta.common {
                 continue;
             }
 
             // The potential word that completes the compound
             let remainder = &chars[candidate.len()..];
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder)
+            if let Some(rem_meta) = self.dict.get_word_metadata_exact(remainder)
                 && rem_meta.common
             {
                 let candidate_chars = candidate.as_ref();
