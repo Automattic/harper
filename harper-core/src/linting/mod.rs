@@ -42,6 +42,7 @@ mod correct_number_suffix;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
+mod damages;
 mod dashes;
 mod despite_it_is;
 mod despite_of;
@@ -276,7 +277,6 @@ where
     }
 }
 
-#[cfg(test)]
 pub mod tests {
     use crate::parsers::Markdown;
     use crate::{Document, Span, Token};
@@ -312,7 +312,7 @@ pub mod tests {
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_markdown_default_curated(text);
         let lints = linter.lint(&test);
-        dbg!(&lints);
+        // dbg!(&lints);
         if lints.len() != count {
             panic!(
                 "Expected \"{text}\" to create {count} lints, but it created {}.",
@@ -503,13 +503,13 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now
-        if let Some(lint) = lints.first() {
-            if lint.message != expected_message {
-                panic!(
-                    "Expected lint message \"{expected_message}\", but got \"{}\"",
-                    lint.message
-                );
-            }
+        if let Some(lint) = lints.first()
+            && lint.message != expected_message
+        {
+            panic!(
+                "Expected lint message \"{expected_message}\", but got \"{}\"",
+                lint.message
+            );
         }
     }
 
@@ -530,8 +530,8 @@ pub mod tests {
                 if let Some(sug) = lint.suggestions.get(n) {
                     sug.apply(lint.span, &mut text_chars);
 
-                    let transformed_str: String = text_chars.iter().collect();
-                    dbg!(transformed_str);
+                    // let transformed_str: String = text_chars.iter().collect();
+                    // dbg!(transformed_str);
                 } else {
                     break;
                 }
