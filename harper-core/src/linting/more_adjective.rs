@@ -1,11 +1,12 @@
 use itertools::Itertools;
 
-use crate::expr::{Expr, SequenceExpr};
-use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
-use crate::spell::Dictionary;
-use crate::{CharStringExt, Lint, Token, TokenStringExt};
-
-const VOWELS: [char; 5] = ['a', 'e', 'i', 'o', 'u'];
+use crate::{
+    char_ext::CharExt,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    spell::Dictionary,
+    {CharStringExt, Lint, Token, TokenStringExt},
+};
 
 pub struct MoreAdjective<D> {
     expr: Box<dyn Expr>,
@@ -88,8 +89,9 @@ where
             return None;
         }
 
+        // "foreigner" is a noun, not an adjective "more foreign"
         // "humaner" = "more humane", not "more human"
-        if adj_str == "human" {
+        if adj_str == "foreign" || adj_str == "human" {
             return None;
         }
 
@@ -121,7 +123,7 @@ where
         // Double consonant: big -> bigger/biggest
         let penult = adj_chars[adj_chars.len() - 2];
         let last = adj_chars[adj_chars.len() - 1];
-        if VOWELS.contains(&penult) && !VOWELS.contains(&last) {
+        if penult.is_vowel() && !last.is_vowel() {
             self.add_valid_candidate(&mut candidates, format!("{}{}{}", adj_str, last, ending));
         }
 
@@ -296,6 +298,14 @@ mod tests {
     fn dont_flag_more_ground() {
         assert_no_lints(
             "This E2E security scan covers more ground",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_foreign() {
+        assert_no_lints(
+            "There are more foreign visitors this year.",
             MoreAdjective::new(FstDictionary::curated()),
         );
     }
