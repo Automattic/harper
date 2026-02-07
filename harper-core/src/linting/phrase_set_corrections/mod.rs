@@ -61,6 +61,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "AllOfTheSudden" => (
+            &[
+                ("all of the sudden", "all of a sudden"),
+            ],
+            "The idiom is `all of a sudden`.",
+            "Corrects the idiom `all of the sudden` to `all of a sudden`.",
+            LintKind::Usage
+        ),
         "ChampAtTheBit" => (
             &[
                 ("chomp at the bit", "champ at the bit"),
@@ -231,6 +239,14 @@ pub fn lint_group() -> LintGroup {
             "The correct idiom is `foam at the mouth`.",
             "Corrects the idiom `foam out the mouth` to the standard `foam at the mouth`.",
             LintKind::Nonstandard
+        ),
+        "ForAllIntensivePurposes" => (
+            &[
+                ("for all intensive purposes", "for all intents and purposes"),
+            ],
+            "The idiom is `for all intents and purposes`.",
+            "Corrects the eggcorn `for all intensive purposes` to `for all intents and purposes`.",
+            LintKind::Eggcorn
         ),
         "FootTheBill" => (
             &[
