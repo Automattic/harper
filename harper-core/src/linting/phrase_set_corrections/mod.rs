@@ -290,6 +290,16 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
+        "LayoutVerb" => (
+            &[
+                ("layouted", "laid out"),
+                ("layouting", "laying out"),
+                // Note "layout" and "layouts" are valid as nouns
+            ],
+            "`layouted` and `layouting` are non-standard verb forms. Use `laid out` and `laying out` instead.",
+            "Flags nonstandard verb forms of `layout` (like `layouted` and `layouting`) and suggests the standard English verb forms (`laid out` and `laying out`).",
+            LintKind::Usage
+        ),
 
         // General litotes (double negatives) → direct positive suggestions
         "LitotesDirectPositive" => (
