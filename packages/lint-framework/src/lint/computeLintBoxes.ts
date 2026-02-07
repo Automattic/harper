@@ -89,8 +89,8 @@ function replaceValue(
 	span?: { start: number; end: number },
 	replacementText?: string,
 ) {
-	if (isFormEl(el)) {
-		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, value);
+	if (isFormEl(el) && span && replacementText !== undefined) {
+		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, span, replacementText);
 	} else if (getLexicalRoot(el) != null && span && replacementText !== undefined) {
 		replaceLexicalValue(el, span, replacementText);
 	} else if (getDraftRoot(el) != null && span && replacementText !== undefined) {
@@ -102,16 +102,20 @@ function replaceValue(
 	) {
 		replaceRichTextEditorValue(el, span, replacementText);
 	} else {
-		replaceGenericContentEditable(el, value);
+		replaceGenericContentEditable(el, value, span, replacementText);
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function replaceFormElementValue(el: HTMLTextAreaElement | HTMLInputElement, value: string) {
-	el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
-	el.value = value;
-	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
+function replaceFormElementValue(
+	el: HTMLTextAreaElement | HTMLInputElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	el.focus();
+	el.setSelectionRange(span.start, span.end);
+	document.execCommand('insertText', false, replacementText);
 }
 
 function replaceLexicalValue(
@@ -245,8 +249,23 @@ function replaceTextInRange(doc: Document, sel: Selection, range: Range, replace
 	}
 }
 
-function replaceGenericContentEditable(el: HTMLElement, value: string) {
+function replaceGenericContentEditable(
+	el: HTMLElement,
+	value: string,
+	span?: { start: number; end: number },
+	replacementText?: string,
+) {
+	if (span && replacementText !== undefined) {
+		const setup = selectSpanInEditor(el, span);
+		if (setup) {
+			const { doc, sel, range } = setup;
+			replaceTextInRange(doc, sel, range, replacementText);
+			el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
+			return;
+		}
+	}
+
+	// Fallback: replace entire content
 	el.textContent = value;
-	el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, data: value }));
 	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 }
