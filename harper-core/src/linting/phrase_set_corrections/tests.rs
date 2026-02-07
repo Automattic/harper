@@ -1005,6 +1005,44 @@ fn correct_passer_bys_hyphen() {
     );
 }
 
+// PeekBehindTheCurtain
+
+#[test]
+fn fix_peak() {
+    assert_suggestion_result(
+        "Offer a peak behind the curtain of what I look for when baselining a software installation.",
+        lint_group(),
+        "Offer a peek behind the curtain of what I look for when baselining a software installation.",
+    );
+}
+
+#[test]
+fn fix_peaked() {
+    assert_suggestion_result(
+        "I peaked behind the curtain of the new Autodraw tool and noticed some expected similarities to what I saw in Quickdraw.",
+        lint_group(),
+        "I peeked behind the curtain of the new Autodraw tool and noticed some expected similarities to what I saw in Quickdraw.",
+    );
+}
+
+#[test]
+fn fix_peaking() {
+    assert_suggestion_result(
+        "I can see how peaking behind the curtain got me to where I am today.",
+        lint_group(),
+        "I can see how peeking behind the curtain got me to where I am today.",
+    );
+}
+
+#[test]
+fn fix_peaks() {
+    assert_suggestion_result(
+        "The Daily Vlog Series that peaks behind the curtain of an Entrepreneur's day to day life in 2016 building a business.",
+        lint_group(),
+        "The Daily Vlog Series that peeks behind the curtain of an Entrepreneur's day to day life in 2016 building a business.",
+    );
+}
+
 // Piggyback
 // -none-
 
@@ -1654,6 +1692,48 @@ fn dont_correct_so_much_nerve_wreck() {
     assert_no_lints(
         "So much nerve wreck for such a simple game ...",
         lint_group(),
+    );
+}
+
+// NotOnly
+
+// -not only are-
+#[test]
+fn fix_no_only_are() {
+    assert_suggestion_result(
+        "No only are tests run on my pipeline but once successful, my app is deployed differently",
+        lint_group(),
+        "Not only are tests run on my pipeline but once successful, my app is deployed differently",
+    );
+}
+
+// -not only is-
+#[test]
+fn fix_no_only_is() {
+    assert_suggestion_result(
+        "No only is it simple, it's efficient!",
+        lint_group(),
+        "Not only is it simple, it's efficient!",
+    );
+}
+
+// -not only was-
+#[test]
+fn fix_no_only_was() {
+    assert_suggestion_result(
+        "No only was he happily creating shapes, but he was actively using distances and angles to do so.",
+        lint_group(),
+        "Not only was he happily creating shapes, but he was actively using distances and angles to do so.",
+    );
+}
+
+// -not only were-
+#[test]
+fn fix_no_only_were() {
+    assert_suggestion_result(
+        "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+        lint_group(),
+        "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
     );
 }
 

@@ -19,7 +19,7 @@ where
 {
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
-        let looks_plural = SequenceExpr::default().then(|tok: &Token, src: &[char]| {
+        let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
             tok.span
                 .get_content(src)
                 .ends_with_ignore_ascii_case_chars(&['s'])

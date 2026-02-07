@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![allow(dead_code)]
 
-pub mod case;
+mod case;
 mod char_ext;
 mod char_string;
 mod currency;
@@ -33,6 +33,7 @@ mod token_kind;
 mod token_string_ext;
 mod vec_ext;
 pub mod weir;
+pub mod weirpack;
 
 use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};

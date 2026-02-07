@@ -1,7 +1,7 @@
 {
 	"name": "chrome-plugin",
 	"displayName": "chrome-plugin",
-	"version": "1.4.1",
+	"version": "1.6.0",
 	"author": "no one",
 	"description": "The private grammar checker for 21st Century English",
 	"type": "module",
@@ -26,7 +26,7 @@
 	},
 	"devDependencies": {
 		"@crxjs/vite-plugin": "^2.0.0-beta.26",
-		"@playwright/test": "^1.57.0",
+		"@playwright/test": "^1.58.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/chrome": "^0.0.246",
 		"@types/lodash-es": "^4.17.12",

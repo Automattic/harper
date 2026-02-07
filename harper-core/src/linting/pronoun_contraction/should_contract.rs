@@ -34,7 +34,7 @@ impl Default for ShouldContract {
                 .then_adjective(),
         );
 
-        let start = SequenceExpr::default().then(AnchorStart).then(cap.clone());
+        let start = SequenceExpr::with(AnchorStart).then(cap.clone());
         let mid = SequenceExpr::default()
             .then_unless(WordSet::new(&["what"]))
             .t_ws()

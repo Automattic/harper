@@ -50,6 +50,7 @@ use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
 use super::damages::Damages;
+use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
@@ -76,6 +77,7 @@ use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::go_so_far_as_to::GoSoFarAsTo;
+use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::have_pronoun::HavePronoun;
@@ -102,6 +104,7 @@ use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
+use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
 use super::merge_words::MergeWords;
@@ -125,8 +128,10 @@ use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
+use super::nor_modal_pronoun::NorModalPronoun;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
 use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
@@ -149,6 +154,7 @@ use super::pronoun_are::PronounAre;
 use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
+use super::pronoun_verb_agreement::PronounVerbAgreement;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
@@ -198,21 +204,28 @@ use super::to_adverb::ToAdverb;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
+use super::try_ones_hand_at::TryOnesHandAt;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
+use super::vicious_loop::ViciousCircle;
+use super::vicious_loop::ViciousCircleOrCycle;
+use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::well_educated::WellEducated;
 use super::whereas::Whereas;
+use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
@@ -442,6 +455,7 @@ impl LintGroup {
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
+        insert_expr_rule!(DespiteItIs, true);
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
         insert_struct_rule!(DiscourseMarkers, true);
@@ -466,6 +480,7 @@ impl LintGroup {
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
         insert_expr_rule!(GoSoFarAsTo, true);
+        insert_expr_rule!(GoToWar, true);
         insert_expr_rule!(GoodAt, true);
         insert_expr_rule!(Handful, true);
         insert_expr_rule!(HavePronoun, true);
@@ -489,6 +504,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LookDownOnesNose, true);
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
@@ -510,8 +526,10 @@ impl LintGroup {
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
+        insert_expr_rule!(NorModalPronoun, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_expr_rule!(ObsessPreposition, true);
         insert_expr_rule!(OfCourse, true);
         insert_expr_rule!(OldestInTheBook, true);
         insert_expr_rule!(OnFloor, true);
@@ -577,15 +595,20 @@ impl LintGroup {
         insert_expr_rule!(ToAdverb, true);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
+        insert_expr_rule!(TryOnesHandAt, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);
         insert_expr_rule!(ViceVersa, true);
+        insert_expr_rule!(ViciousCircle, true);
+        insert_expr_rule!(ViciousCircleOrCycle, false);
+        insert_expr_rule!(ViciousCycle, false);
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
         insert_expr_rule!(Whereas, true);
+        insert_expr_rule!(WhomSubjectOfVerb, true);
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule!(WinPrize, true);
         insert_expr_rule!(WishCould, true);
@@ -636,6 +659,12 @@ impl LintGroup {
         out.add("Damages", Damages::default());
         out.config.set_rule_enabled("Damages", true);
 
+        out.add(
+            "PronounVerbAgreement",
+            PronounVerbAgreement::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("PronounVerbAgreement", true);
+
         out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
         out.config.set_rule_enabled("TransposedSpace", true);
 
@@ -650,6 +679,9 @@ impl LintGroup {
 
         out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
         out.config.set_rule_enabled("MoreAdjective", true);
+
+        out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
+        out.config.set_rule_enabled("WorthToDo", true);
 
         out
     }

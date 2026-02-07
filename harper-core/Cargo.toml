@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "1.4.1"
+version = "1.6.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -13,14 +13,13 @@ fst = "0.4.7"
 hashbrown = { version = "0.16.1", features = ["serde"] }
 is-macro = "0.3.6"
 itertools = "0.14.0"
-lazy_static = "1.5.0"
 ordered-float = { version = "5.1.0", features = ["serde"] }
 paste = "1.0.14"
 pulldown-cmark = "0.13.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 smallvec = { version = "1.15.1", features = ["serde"] }
-thiserror = "2.0.17"
+thiserror = "2.0.18"
 unicode-blocks = "0.1.9"
 unicode-script = "0.5.8"
 unicode-width = "0.2.2"
@@ -35,6 +34,7 @@ harper-brill = { path = "../harper-brill", version = "1.0.0" }
 harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional = true }
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
+zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
 criterion = { version = "0.8.1", default-features = false }

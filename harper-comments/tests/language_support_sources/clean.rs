@@ -11,14 +11,14 @@ impl TestStruct {
     /// It has another [link](https://example.com) embedded inside
     fn test_function() {}
 
-    /// This is some gibberish to try to trigger a lint for sentences that continue for too long
+    /// This is some gibberish to try to trigger a lint for the sentences that continue for too long
     ///
-    /// This is some gibberish to try to trigger a lint for sentences that continue for too long
+    /// This is some gibberish to try to trigger a lint for the sentences that continue for too long
     ///
-    /// This is some gibberish to try to trigger a lint for sentences that continue for too long
+    /// This is some gibberish to try to trigger a lint for the sentences that continue for too long
     /// 
-    /// This is some gibberish to try to trigger a lint for sentences that continue for too long
+    /// This is some gibberish to try to trigger a lint for the sentences that continue for too long
     ///
-    /// This is some gibberish to try to trigger a lint for sentences that continue for too long
+    /// This is some gibberish to try to trigger a lint for the sentences that continue for too long
 }
 

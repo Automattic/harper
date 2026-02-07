@@ -27,7 +27,7 @@ impl Linter for CorrectNumberSuffix {
                     span: suffix_span,
                     lint_kind: LintKind::Miscellaneous,
                     message: "This number needs a different suffix to sound right.".to_string(),
-                    suggestions: vec![Suggestion::ReplaceWith(correct_suffix.to_chars())],
+                    suggestions: vec![Suggestion::ReplaceWith(correct_suffix.to_chars().to_vec())],
                     ..Default::default()
                 })
             }

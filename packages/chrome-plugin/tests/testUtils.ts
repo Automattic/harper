@@ -26,11 +26,23 @@ export function getProseMirrorEditor(page: Page): Locator {
 	return page.locator('.ProseMirror');
 }
 
-/** Replace the content of a text editor. */
+/** Locate the Draft.js editor on the page (targets #rich-example on draftjs.org). */
+export function getDraftEditor(page: Page): Locator {
+	return page.locator('#rich-example .public-DraftEditor-content');
+}
+
+/** Replace the content of a text editor. Handles newlines by pressing Enter. */
 export async function replaceEditorContent(editorEl: Locator, text: string) {
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
-	await editorEl.pressSequentially(text);
+
+	const lines = text.split('\n');
+	for (let i = 0; i < lines.length; i++) {
+		await editorEl.pressSequentially(lines[i]);
+		if (i < lines.length - 1) {
+			await editorEl.press('Enter');
+		}
+	}
 }
 
 /** Locate the Harper highlights on a page. */
@@ -84,6 +96,9 @@ export function getTextarea(page: Page): Locator {
 /** A string or function that resolves to a test page. */
 export type TestPageUrlProvider = string | ((page: Page) => Promise<string>);
 
+/** A function that returns an editor locator. */
+export type EditorLocatorProvider = (page: Page) => Locator;
+
 async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<string> {
 	if (typeof prov === 'string') {
 		return prov;
@@ -92,15 +107,43 @@ async function resolveTestPage(prov: TestPageUrlProvider, page: Page): Promise<s
 	}
 }
 
-export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvider) {
+/** Exact-match assertion: `toHaveValue` for form elements, `toHaveText` for contenteditable. */
+async function assertEditorText(editor: Locator, text: string) {
+	if (await isFormElement(editor)) {
+		await expect(editor).toHaveValue(text);
+	} else {
+		await expect(editor).toHaveText(text);
+	}
+}
+
+/** Substring assertion: `inputValue` for form elements, `toContainText` for contenteditable. */
+async function assertEditorContains(editor: Locator, text: string) {
+	if (await isFormElement(editor)) {
+		const value = await editor.inputValue();
+		expect(value).toContain(text);
+	} else {
+		await expect(editor).toContainText(text);
+	}
+}
+
+async function isFormElement(editor: Locator): Promise<boolean> {
+	return editor.evaluate((el) => el.tagName === 'TEXTAREA' || el.tagName === 'INPUT');
+}
+
+/** Test applying a basic suggestion and verify cursor position after replacement. */
+export async function testBasicSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can apply basic suggestion.', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		await page.waitForTimeout(2000);
-		await page.reload();
-
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 		await replaceEditorContent(editor, 'This is an test');
 
 		await page.waitForTimeout(6000);
@@ -110,20 +153,35 @@ export async function testBasicSuggestionTextarea(testPageUrl: TestPageUrlProvid
 
 		await page.waitForTimeout(3000);
 
-		expect(editor).toHaveValue('This is a test');
-		await assertLocatorIsFocused(page, editor);
+		await assertEditorText(editor, 'This is a test');
+
+		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('ArrowRight');
+		await page.keyboard.press('Backspace');
+		await assertEditorText(editor, 'This is a tst');
+
+		// Verify typing still works.
+		await editor.pressSequentially('e');
+		await assertEditorText(editor, 'This is a test');
 	});
 }
 
-export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
+/** Test ignoring a suggestion. */
+export async function testCanIgnoreSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can ignore suggestion.', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		await page.waitForTimeout(2000);
-		await page.reload();
-
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 
 		const cacheSalt = randomString(5);
 		await replaceEditorContent(editor, cacheSalt);
@@ -139,18 +197,26 @@ export async function testCanIgnoreTextareaSuggestion(testPageUrl: TestPageUrlPr
 		await expect(getHarperHighlights(page)).toHaveCount(0);
 
 		// Nothing should change.
-		expect(editor).toHaveValue(cacheSalt);
+		await assertEditorText(editor, cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
 	});
 }
 
-export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUrlProvider) {
+/** Test disabling a lint rule via the block button. */
+export async function testCanBlockRuleSuggestion(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
 	test('Can hide with rule block button', async ({ page }) => {
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		const editor = getTextarea(page);
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
 		await replaceEditorContent(editor, 'This is an test.');
 
 		await page.waitForTimeout(6000);
@@ -166,17 +232,81 @@ export async function testCanBlockRuleTextareaSuggestion(testPageUrl: TestPageUr
 	});
 }
 
+/** Get highlight bounding boxes sorted by visual position (top to bottom, left to right). */
+async function getSortedHighlightBoxes(page: Page) {
+	const highlights = getHarperHighlights(page);
+	const count = await highlights.count();
+	const boxes: NonNullable<Awaited<ReturnType<Locator['boundingBox']>>>[] = [];
+
+	for (let i = 0; i < count; i++) {
+		const box = await highlights.nth(i).boundingBox();
+		if (box) {
+			boxes.push(box);
+		}
+	}
+
+	boxes.sort((a, b) => (Math.abs(a.y - b.y) > 5 ? a.y - b.y : a.x - b.x));
+
+	return boxes;
+}
+
+/** Test multiline suggestion replacement and undo. */
+export async function testMultipleSuggestionsAndUndo(
+	testPageUrl: TestPageUrlProvider,
+	getEditor: EditorLocatorProvider,
+	setup?: (page: Page, editor: Locator) => Promise<void>,
+) {
+	test('Multiple suggestions and undo.', async ({ page }) => {
+		const url = await resolveTestPage(testPageUrl, page);
+		await page.goto(url);
+
+		const editor = getEditor(page);
+		if (setup) {
+			await setup(page, editor);
+		}
+		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
+
+		await page.waitForTimeout(6000);
+
+		const highlights = getHarperHighlights(page);
+		await expect(highlights).toHaveCount(3);
+
+		// Get highlights sorted by visual position and click on the middle one
+		const sortedBoxes = await getSortedHighlightBoxes(page);
+		expect(sortedBoxes.length).toBe(3);
+		const box = sortedBoxes[1];
+		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+
+		// Move cursor away to test whether it handles race condition
+		await editor.press('End');
+
+		await page.getByTitle('Replace with "test"').click();
+		await page.waitForTimeout(500);
+
+		// Verify only second "tset" was corrected
+		await assertEditorContains(editor, 'first tset');
+		await assertEditorContains(editor, 'second test');
+		await assertEditorContains(editor, 'third tset');
+
+		// Undo
+		await editor.press('Control+z');
+		await page.waitForTimeout(300);
+		await assertEditorContains(editor, 'The second tset');
+	});
+}
+
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
-	expect(await highlights.count()).toBe(boxes.length);
+	await expect(highlights).toHaveCount(boxes.length);
 
 	for (let i = 0; i < (await highlights.count()); i++) {
 		const box = await highlights.nth(i).boundingBox();
+		expect(box).not.toBeNull();
 
 		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
 		console.log(`Got: ${JSON.stringify(box)}`);
 
-		assertBoxesClose(box, boxes[i]);
+		assertBoxesClose(box!, boxes[i]);
 	}
 }
 

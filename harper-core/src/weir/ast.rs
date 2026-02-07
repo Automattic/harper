@@ -1,10 +1,13 @@
 use harper_brill::UPOS;
+use hashbrown::HashMap;
 use is_macro::Is;
 use itertools::Itertools;
 
 use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
-use crate::{CharString, Punctuation, Token};
+use crate::{CharString, CharStringExt, Lrc, Punctuation, Token};
+
+use super::Error;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Ast {
@@ -56,9 +59,19 @@ impl Ast {
     /// Iterate through all the tests in the tree, starting with the one first declared in the
     /// tree.
     pub fn iter_tests(&self) -> impl Iterator<Item = (&str, &str)> {
+        self.stmts.iter().filter_map(|stmt| match stmt {
+            AstStmtNode::Test { expect, to_be } => Some((expect.as_str(), to_be.as_str())),
+            AstStmtNode::Allows { value } => Some((value.as_str(), value.as_str())),
+            _ => None,
+        })
+    }
+
+    /// Iterate through all the expressions in the tree, starting with the one first declared in the
+    /// tree.
+    pub fn iter_exprs(&self) -> impl Iterator<Item = (&str, &AstExprNode)> {
         self.stmts.iter().filter_map(|stmt| {
-            if let AstStmtNode::Test { expect, to_be } = stmt {
-                Some((expect.as_str(), to_be.as_str()))
+            if let AstStmtNode::SetExpr { name, value } = stmt {
+                Some((name.as_str(), value))
             } else {
                 None
             }
@@ -80,53 +93,66 @@ pub enum AstExprNode {
     Seq(Vec<AstExprNode>),
     Arr(Vec<AstExprNode>),
     Filter(Vec<AstExprNode>),
+    ExprRef(CharString),
     Anything,
 }
 
 impl AstExprNode {
     /// Create an actual expression that fulfills the pattern matching contract defined by this tree.
-    pub fn to_expr(&self) -> Box<dyn Expr> {
+    ///
+    /// Requires a map of all expressions currently in the context.
+    pub fn to_expr(
+        &self,
+        ctx_exprs: &HashMap<String, Lrc<Box<dyn Expr>>>,
+    ) -> Result<Box<dyn Expr>, Error> {
         match self {
-            AstExprNode::Anything => Box::new(AnyPattern),
-            AstExprNode::Progressive => {
-                Box::new(|tok: &Token, _: &[char]| tok.kind.is_verb_progressive_form())
-            }
-            AstExprNode::UPOSSet(upos) => Box::new(UPOSSet::new(upos)),
-            AstExprNode::Whitespace => Box::new(WhitespacePattern),
-            AstExprNode::Word(word) => Box::new(Word::from_chars(word)),
-            AstExprNode::DerivativeOf(word) => Box::new(DerivedFrom::new_from_chars(word)),
-            AstExprNode::Not(ast_node) => Box::new(UnlessStep::new(
-                ast_node.to_expr(),
+            AstExprNode::Anything => Ok(Box::new(AnyPattern)),
+            AstExprNode::Progressive => Ok(Box::new(|tok: &Token, _: &[char]| {
+                tok.kind.is_verb_progressive_form()
+            })),
+            AstExprNode::UPOSSet(upos) => Ok(Box::new(UPOSSet::new(upos))),
+            AstExprNode::Whitespace => Ok(Box::new(WhitespacePattern)),
+            AstExprNode::Word(word) => Ok(Box::new(Word::from_chars(word))),
+            AstExprNode::DerivativeOf(word) => Ok(Box::new(DerivedFrom::new_from_chars(word))),
+            AstExprNode::Not(ast_node) => Ok(Box::new(UnlessStep::new(
+                ast_node.to_expr(ctx_exprs)?,
                 |_tok: &Token, _: &[char]| true,
-            )),
+            )) as Box<dyn Expr>),
             AstExprNode::Seq(children) => {
                 let mut expr = SequenceExpr::default();
 
                 for node in children {
-                    expr = expr.then_boxed(node.to_expr());
+                    expr = expr.then_boxed(node.to_expr(ctx_exprs)?);
                 }
 
-                Box::new(expr)
+                Ok(Box::new(expr))
             }
             AstExprNode::Arr(children) => {
                 let mut expr = FirstMatchOf::default();
 
                 for node in children {
-                    expr.add_boxed(node.to_expr());
+                    expr.add_boxed(node.to_expr(ctx_exprs)?);
                 }
 
-                Box::new(expr)
+                Ok(Box::new(expr))
             }
-            AstExprNode::Filter(children) => {
-                Box::new(Filter::new(children.iter().map(|n| n.to_expr()).collect()))
-            }
+            AstExprNode::Filter(children) => Ok(Box::new(Filter::new(
+                children
+                    .iter()
+                    .map(|n| n.to_expr(ctx_exprs))
+                    .process_results(|iter| iter.collect())?,
+            ))),
             AstExprNode::Punctuation(punct) => {
                 let punct = *punct;
 
-                Box::new(move |tok: &Token, _: &[char]| {
+                Ok(Box::new(move |tok: &Token, _: &[char]| {
                     tok.kind.as_punctuation().is_some_and(|p| *p == punct)
-                })
+                }))
             }
+            AstExprNode::ExprRef(name) => ctx_exprs
+                .get(&name.to_string())
+                .map(|e| Box::new(e.clone()) as Box<dyn Expr>)
+                .ok_or_else(|| Error::UnableToResolveExpr(name.to_string())),
         }
     }
 }
@@ -151,6 +177,7 @@ pub enum AstStmtNode {
     SetExpr { name: String, value: AstExprNode },
     Comment(String),
     Test { expect: String, to_be: String },
+    Allows { value: String },
 }
 
 impl AstStmtNode {
@@ -172,6 +199,12 @@ impl AstStmtNode {
         Self::Test {
             expect: expect.to_string(),
             to_be: to_be.to_string(),
+        }
+    }
+
+    pub fn create_allow_test(value: impl ToString) -> Self {
+        Self::Allows {
+            value: value.to_string(),
         }
     }
 }

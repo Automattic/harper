@@ -12,10 +12,6 @@ use super::Expr;
 ///
 /// The [`ExprMap`] unifies these two lists into one.
 ///
-/// A great example of this is the [`PronounInfectionBe`](crate::linting::PronounInflectionBe)
-/// rule.
-/// It builds a list of incorrect `PRONOUN + BE` combinations, alongside their corrections.
-///
 /// When used as a [`Expr`] in and of itself, it simply iterates through
 /// all contained expressions, returning the first match found.
 /// You should not assume this search is deterministic.

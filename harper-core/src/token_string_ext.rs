@@ -125,6 +125,49 @@ pub trait TokenStringExt: private::Sealed {
         slice.get(idx)
     }
 
+    /// Get a slice of tokens using relative indices.
+    ///
+    /// # Examples
+    /// ```
+    /// # use harper_core::{Token, TokenStringExt, parsers::{Parser, PlainEnglish}};
+    /// # fn main() {
+    /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
+    /// let tokens = PlainEnglish.parse(&source);
+    /// assert_eq!(tokens.get_rel_slice(0, 2).unwrap().span().unwrap().get_content_string(&source), "The cat");
+    /// assert_eq!(tokens.get_rel_slice(-3, -1).unwrap().span().unwrap().get_content_string(&source), " mat.");
+    /// # }
+    /// ```
+    fn get_rel_slice(&self, rel_start: isize, inclusive_end: isize) -> Option<&[Token]>
+    where
+        Self: AsRef<[Token]>,
+    {
+        let slice = self.as_ref();
+        let len = slice.len() as isize;
+
+        // Convert relative indices to absolute indices
+        let start_idx = if rel_start >= 0 {
+            rel_start
+        } else {
+            len + rel_start
+        } as usize;
+
+        let end_idx_plus_one = if inclusive_end >= 0 {
+            inclusive_end + 1 // +1 to make end exclusive
+        } else {
+            len + inclusive_end + 1
+        } as usize;
+
+        // Check bounds
+        if start_idx >= slice.len()
+            || end_idx_plus_one > slice.len()
+            || start_idx >= end_idx_plus_one
+        {
+            return None;
+        }
+
+        Some(&slice[start_idx..end_idx_plus_one])
+    }
+
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
 
@@ -144,8 +187,8 @@ pub trait TokenStringExt: private::Sealed {
 
     /// Get an iterator over token slices that represent headings.
     ///
-    /// A heading begins with a [`TokenKind::HeadingStart`] token and ends with
-    /// the next [`TokenKind::ParagraphBreak`].
+    /// A heading begins with a [`TokenKind::HeadingStart`](crate::TokenKind::HeadingStart) token and ends with
+    /// the next [`TokenKind::ParagraphBreak`](crate::TokenKind::ParagraphBreak).
     fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
 
     /// Get an iterator over token slices that represent the individual
