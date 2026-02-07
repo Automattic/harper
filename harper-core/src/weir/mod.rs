@@ -6,10 +6,12 @@ mod error;
 mod optimize;
 mod parsing;
 
+use std::collections::VecDeque;
 use std::str::FromStr;
 use std::sync::Arc;
 
 pub use error::Error;
+use hashbrown::{HashMap, HashSet};
 use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
@@ -18,13 +20,13 @@ use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
-use crate::{Document, Token, TokenStringExt};
+use crate::{Document, Lrc, Token, TokenStringExt};
 
 use self::ast::{Ast, AstVariable};
 
 pub(crate) fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;
-    Ok(ast.to_expr())
+    ast.to_expr(&HashMap::new())
 }
 
 #[derive(Debug, Is, EnumString, AsRefStr)]
@@ -40,7 +42,7 @@ pub struct TestResult {
 }
 
 pub struct WeirLinter {
-    expr: Box<dyn Expr>,
+    expr: Lrc<Box<dyn Expr>>,
     description: String,
     message: String,
     strategy: ReplacementStrategy,
@@ -60,10 +62,11 @@ impl WeirLinter {
         let replacement_name = "becomes";
         let replacement_strat_name = "strategy";
 
-        let expr = ast
-            .get_expr(main_expr_name)
-            .ok_or(Error::ExpectedVariableUndefined)?
-            .to_expr();
+        let resolved = resolve_exprs(&ast)?;
+
+        let expr = resolved
+            .get(main_expr_name)
+            .ok_or(Error::ExpectedVariableUndefined)?;
 
         let description = ast
             .get_variable_value(description_name)
@@ -124,7 +127,7 @@ impl WeirLinter {
         let linter = WeirLinter {
             strategy: replacement_strat,
             ast,
-            expr,
+            expr: expr.clone(),
             lint_kind,
             description,
             message,
@@ -141,6 +144,54 @@ impl WeirLinter {
 
     /// Runs the tests defined in the source code, returning any failing results.
     pub fn run_tests(&mut self) -> Vec<TestResult> {
+        fn apply_nth_suggestion(text: &str, lint: &Lint, n: usize) -> Option<String> {
+            let suggestion = lint.suggestions.get(n)?;
+            let mut text_chars: Vec<char> = text.chars().collect();
+            suggestion.apply(lint.span, &mut text_chars);
+            Some(text_chars.iter().collect())
+        }
+
+        fn transform_top3_to_expected(
+            text: &str,
+            expected: &str,
+            linter: &mut impl Linter,
+        ) -> Option<String> {
+            let mut queue: VecDeque<(String, usize)> = VecDeque::new();
+            let mut seen: HashSet<String> = HashSet::new();
+
+            queue.push_back((text.to_string(), 0));
+            seen.insert(text.to_string());
+
+            while let Some((current, depth)) = queue.pop_front() {
+                if current == expected {
+                    return Some(current);
+                }
+
+                if depth >= 100 {
+                    continue;
+                }
+
+                let doc = Document::new_from_vec(
+                    current.chars().collect::<Vec<_>>().into(),
+                    &Markdown::default(),
+                    &FstDictionary::curated(),
+                );
+                let lints = linter.lint(&doc);
+
+                if let Some(lint) = lints.first() {
+                    for i in 0..3 {
+                        if let Some(next) = apply_nth_suggestion(&current, lint, i)
+                            && seen.insert(next.clone())
+                        {
+                            queue.push_back((next, depth + 1));
+                        }
+                    }
+                }
+            }
+
+            None
+        }
+
         fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
             let mut text_chars: Vec<char> = text.chars().collect();
             let mut iter_count = 0;
@@ -190,27 +241,7 @@ impl WeirLinter {
             .collect();
 
         for (text, expected) in tests {
-            if text == expected && lint_count(&text, self) != 0 {
-                results.push(TestResult {
-                    expected: text.to_string(),
-                    got: text.to_string(),
-                });
-                continue;
-            }
-
-            let zeroth = transform_nth_str(&text, self, 0);
-            let first = transform_nth_str(&text, self, 1);
-            let second = transform_nth_str(&text, self, 2);
-
-            let matched = if zeroth == expected {
-                Some(zeroth.clone())
-            } else if first == expected {
-                Some(first.clone())
-            } else if second == expected {
-                Some(second.clone())
-            } else {
-                None
-            };
+            let matched = transform_top3_to_expected(&text, &expected, self);
 
             match matched {
                 Some(result) => {
@@ -225,7 +256,7 @@ impl WeirLinter {
                 }
                 None => results.push(TestResult {
                     expected: expected.to_string(),
-                    got: zeroth,
+                    got: transform_nth_str(&text, self, 0),
                 }),
             }
         }
@@ -270,6 +301,17 @@ impl ExprLinter for WeirLinter {
     fn description(&self) -> &str {
         &self.description
     }
+}
+
+fn resolve_exprs(ast: &Ast) -> Result<HashMap<String, Lrc<Box<dyn Expr>>>, Error> {
+    let mut resolved_exprs = HashMap::new();
+
+    for (name, val) in ast.iter_exprs() {
+        let expr = val.to_expr(&resolved_exprs)?;
+        resolved_exprs.insert(name.to_owned(), Lrc::new(expr));
+    }
+
+    Ok(resolved_exprs)
 }
 
 #[cfg(test)]
@@ -333,6 +375,51 @@ pub mod tests {
 
         assert_passes_all(&mut linter);
         assert_eq!(5, linter.count_tests());
+    }
+
+    #[test]
+    fn g_suite_with_refs() {
+        let source = r#"
+            expr a (G [Suite, Suit])
+            expr b (Google Apps For Work)
+            expr incorrect [@a, @b]
+
+            expr main @incorrect
+            let message "Use the updated brand."
+            let description "`G Suite` or `Google Apps for Work` is now called `Google Workspace`"
+            let kind "Miscellaneous"
+            let becomes "Google Workspace"
+            let strategy "Exact"
+
+            test "We migrated from G Suite last year." "We migrated from Google Workspace last year."
+            test "This account is still labeled as Google Apps for Work." "This account is still labeled as Google Workspace."
+            test "The pricing page mentions G Suit for legacy plans." "The pricing page mentions Google Workspace for legacy plans."
+            test "New customers sign up for Google Workspace." "New customers sign up for Google Workspace."
+            "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+        assert_eq!(4, linter.count_tests());
+    }
+
+    #[test]
+    fn fails_on_unresolved_expr() {
+        let source = r#"
+            expr main @missing
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes ""
+            let strategy "Exact"
+        "#;
+
+        let res = WeirLinter::new(source);
+
+        assert_eq!(
+            res.err().unwrap(),
+            Error::UnableToResolveExpr("missing".to_string())
+        )
     }
 
     #[test]
