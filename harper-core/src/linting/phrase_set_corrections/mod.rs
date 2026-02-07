@@ -365,6 +365,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
             LintKind::Grammar
         ),
+        "PeekBehindTheCurtain" => (
+            &[
+                ("peak behind the curtain", "peek behind the curtain"),
+                ("peaked behind the curtain", "peeked behind the curtain"),
+                ("peaking behind the curtain", "peeking behind the curtain"),
+                ("peaks behind the curtain", "peeks behind the curtain"),
+            ],
+            "The correct idiom is `peek behind the curtain`.",
+            "Corrects `peak behind the curtain` to `peek behind the curtain`.",
+            LintKind::Eggcorn
+        ),
         "Piggyback" => (
             &[
                 ("piggy bag", "piggyback"),
@@ -532,6 +543,17 @@ pub fn lint_group() -> LintGroup {
             "Use `nervous wreck` when referring to a person who is extremely anxious or upset. `Nerve wreck` is non-standard but sometimes used for events or situations.",
             "Suggests using `nervous wreck` when referring to a person's emotional state.",
             LintKind::Eggcorn
+        ),
+        "NotOnly" => (
+            &[
+                (&["no only are"], &["not only are"]),
+                (&["no only is"], &["not only is"]),
+                (&["no only was"], &["not only was"]),
+                (&["no only were"], &["not only were"]),
+            ],
+            "Use `not only` instead of `no only` in this expression.",
+            "Corrects `no only` to `not only` before forms of `to be`.",
+            LintKind::Grammar
         ),
         "RiseTheQuestion" => (
             &[

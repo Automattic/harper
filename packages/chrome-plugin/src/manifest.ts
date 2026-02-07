@@ -50,7 +50,7 @@ export default defineManifest({
 	browser_specific_settings: {
 		gecko: {
 			id: 'harper@writewithharper.com',
-			strict_min_version: '135.0',
+			strict_min_version: '146.0',
 		},
 	},
 	background: {
