@@ -199,7 +199,7 @@ impl Parser for Markdown {
                 }
                 pulldown_cmark::Event::Start(pulldown_cmark::Tag::List(v)) => {
                     tokens.push(Token {
-                        span: Span::new_with_len(span_start, 0),
+                        span: Span::empty(span_start),
                         kind: TokenKind::Newline(2),
                     });
                     stack.push(pulldown_cmark::Tag::List(v));
@@ -207,7 +207,7 @@ impl Parser for Markdown {
                 pulldown_cmark::Event::Start(tag) => {
                     if matches!(tag, pulldown_cmark::Tag::Heading { .. }) {
                         tokens.push(Token {
-                            span: Span::new_with_len(span_start, 0),
+                            span: Span::empty(span_start),
                             kind: TokenKind::HeadingStart,
                         });
                     }
@@ -225,7 +225,7 @@ impl Parser for Markdown {
                         // position of the previous token's last character. This ensures the
                         // paragraph break is placed at the end of the content, not its beginning.
                         // For more info, see: https://github.com/Automattic/harper/pull/1239.
-                        span: Span::new_with_len(tokens.last().map_or(0, |last| last.span.end), 0),
+                        span: Span::empty(tokens.last().map_or(0, |last| last.span.end)),
                         kind: TokenKind::ParagraphBreak,
                     });
                     stack.pop();

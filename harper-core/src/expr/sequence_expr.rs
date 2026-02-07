@@ -53,7 +53,7 @@ impl Expr for SequenceExpr {
     ///
     /// If any step returns `None`, the entire expression does as well.
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        let mut window = Span::new_with_len(cursor, 0);
+        let mut window = Span::empty(cursor);
 
         for cur_expr in &self.exprs {
             let out = cur_expr.run(cursor, tokens, source)?;

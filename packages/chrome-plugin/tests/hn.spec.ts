@@ -4,9 +4,10 @@ import {
 	assertHarperHighlightBoxes,
 	getTextarea,
 	replaceEditorContent,
-	testBasicSuggestionTextarea,
-	testCanBlockRuleTextareaSuggestion,
-	testCanIgnoreTextareaSuggestion,
+	testBasicSuggestion,
+	testCanBlockRuleSuggestion,
+	testCanIgnoreSuggestion,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 /** Must be computed. */
@@ -19,9 +20,10 @@ async function getTestPageUrl(page: Page) {
 	return page.url();
 }
 
-testBasicSuggestionTextarea(getTestPageUrl);
-testCanIgnoreTextareaSuggestion(getTestPageUrl);
-testCanBlockRuleTextareaSuggestion(getTestPageUrl);
+testBasicSuggestion(getTestPageUrl, getTextarea);
+testCanIgnoreSuggestion(getTestPageUrl, getTextarea);
+testCanBlockRuleSuggestion(getTestPageUrl, getTextarea);
+testMultipleSuggestionsAndUndo(getTestPageUrl, getTextarea);
 
 test('Hacker News wraps correctly', async ({ page }) => {
 	await page.goto(await getTestPageUrl(page));
