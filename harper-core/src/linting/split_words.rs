@@ -145,12 +145,9 @@ impl ExprLinter for SplitWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        LintGroup,
-        tests::{
-            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
-            assert_top3_suggestion_result,
-        },
+    use crate::linting::tests::{
+        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        assert_top3_suggestion_result,
     };
 
     use super::SplitWords;
