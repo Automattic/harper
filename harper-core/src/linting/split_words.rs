@@ -1,13 +1,11 @@
-use crate::spell::Dictionary;
 use std::sync::Arc;
 
-use crate::Token;
-use crate::expr::Expr;
-use crate::linting::{LintKind, Suggestion};
-use crate::spell::{FstDictionary, TrieDictionary};
+use hashbrown::HashSet;
 
-use super::{ExprLinter, Lint};
-use crate::linting::expr_linter::Chunk;
+use crate::expr::Expr;
+use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
+use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
+use crate::{Lint, Token};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
@@ -49,45 +47,96 @@ impl ExprLinter for SplitWords {
         }
 
         let chars = &word.span.get_content(source);
-        // The word that starts the compound
+
+        // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);
+        let len = chars.len();
+        let mut valid_positions: HashSet<usize> = HashSet::new();
 
         for candidate in candidates {
-            if candidate.len() >= chars.len() {
+            if candidate.len() >= len {
+                continue;
+            }
+            valid_positions.insert(candidate.len());
+        }
+
+        // Generate middle-outward position order based on heuristic from PR #885:
+        // Missing spaces are more likely near the middle of a word
+        let mid = len / 2;
+        let mut positions: Vec<usize> = Vec::new();
+        positions.push(mid);
+
+        for offset in 1..len {
+            if mid >= offset {
+                positions.push(mid - offset);
+            }
+            if mid + offset < len {
+                positions.push(mid + offset);
+            }
+        }
+
+        let mut suggestions = Vec::new();
+        let mut message: Option<String> = None;
+
+        // Check positions in middle-outward order
+        for split_pos in positions {
+            if split_pos == 0 || split_pos >= len || !valid_positions.contains(&split_pos) {
                 continue;
             }
 
-            let cand_meta = self.dict.get_word_metadata(&candidate).unwrap();
-            if !cand_meta.common {
+            let candidate = &chars[..split_pos];
+            let remainder = &chars[split_pos..];
+
+            // Both parts must be valid common words
+            if let Some(cand_meta) = self.dict.get_word_metadata(candidate) {
+                if !cand_meta.common {
+                    continue;
+                }
+            } else {
                 continue;
             }
 
-            // The potential word that completes the compound
-            let remainder = &chars[candidate.len()..];
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder)
-                && rem_meta.common
-            {
-                let candidate_chars = candidate.as_ref();
-                let mut suggestion = Vec::new();
-
-                suggestion.extend(candidate_chars.iter());
-                suggestion.push(' ');
-                suggestion.extend(remainder.iter());
-
-                let original_word: String = chars.iter().collect();
-                let candidate_word: String = candidate_chars.iter().collect();
-                let remainder_word: String = remainder.iter().collect();
-
-                return Some(Lint {
-                    span: word.span,
-                    lint_kind: LintKind::Typo,
-                    suggestions: vec![Suggestion::ReplaceWith(suggestion)],
-                    message: format!(
-                        "`{original_word}` should probably be written as `{candidate_word} {remainder_word}`."
-                    ),
-                    priority: 31,
-                });
+            if let Some(rem_meta) = self.dict.get_word_metadata(remainder) {
+                if !rem_meta.common {
+                    continue;
+                }
+            } else {
+                continue;
             }
+
+            // Valid split found
+            let mut suggestion = Vec::new();
+            suggestion.extend(candidate.iter());
+            suggestion.push(' ');
+            suggestion.extend(remainder.iter());
+
+            suggestions.push(Suggestion::ReplaceWith(suggestion));
+            if suggestions.len() == 1 {
+                message = Some(format!(
+                    "`{}` should probably be written as `{} {}`.",
+                    chars.iter().collect::<String>(),
+                    candidate.iter().collect::<String>(),
+                    remainder.iter().collect::<String>()
+                ));
+            }
+        }
+
+        if !suggestions.is_empty() {
+            let original_word: String = chars.iter().collect();
+
+            if suggestions.len() != 1 {
+                message = Some(format!(
+                    "`{original_word}` has a missing space between words."
+                ));
+            }
+
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Typo,
+                suggestions,
+                message: message?,
+                priority: 31,
+            });
         }
 
         None
@@ -96,7 +145,13 @@ impl ExprLinter for SplitWords {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::{
+        LintGroup,
+        tests::{
+            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+            assert_top3_suggestion_result,
+        },
+    };
 
     use super::SplitWords;
 
@@ -163,5 +218,24 @@ mod tests {
     #[test]
     fn ignores_prefix_without_valid_remainder() {
         assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default());
+    }
+
+    #[test]
+    fn test_atall_to_at_all() {
+        assert_suggestion_result(
+            "don't seem to support symbolic links atall.",
+            SplitWords::default(),
+            "don't seem to support symbolic links at all.",
+        );
+    }
+
+    #[test]
+    fn test_atall_to_a_tall() {
+        assert_top3_suggestion_result("atall", SplitWords::default(), "a tall");
+    }
+
+    #[test]
+    fn atall_should_split_to_a_tall_and_at_all() {
+        assert_good_and_bad_suggestions("atall", SplitWords::default(), &["a tall", "at all"], &[]);
     }
 }
