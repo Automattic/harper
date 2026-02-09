@@ -68,7 +68,6 @@ where
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.rows
             .iter()
-            .filter_map(|row| row.key.run(cursor, tokens, source))
-            .next()
+            .find_map(|row| row.key.run(cursor, tokens, source))
     }
 }
