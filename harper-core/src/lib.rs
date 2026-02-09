@@ -78,6 +78,7 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
     }
 
     let mut remove_indices = VecDeque::new();
+    lints.sort_by_key(|l| l.priority);
     lints.sort_by_key(|l| (l.span.start, !0 - l.span.end));
 
     let mut cur = 0;
@@ -106,6 +107,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
     struct IndexedSpan {
         rule_idx: usize,
         lint_idx: usize,
+        priority: u8,
         start: usize,
         end: usize,
     }
@@ -119,6 +121,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
     for (rule_idx, (_, lints)) in lint_map.iter().enumerate() {
         for (lint_idx, lint) in lints.iter().enumerate() {
             spans.push(IndexedSpan {
+                priority: lint.priority,
                 rule_idx,
                 lint_idx,
                 start: lint.span.start,
@@ -127,6 +130,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
         }
     }
 
+    spans.sort_by_key(|span| span.priority);
     spans.sort_by_key(|span| (span.start, usize::MAX - span.end));
 
     let mut cur = 0;
@@ -154,6 +158,8 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
+    use quickcheck_macros::quickcheck;
+
     use crate::spell::FstDictionary;
     use crate::{
         Dialect, Document,
