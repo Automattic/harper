@@ -24,7 +24,7 @@ export type LintConfig = Record<string, boolean | null>;
 export interface LintOptions {
 	/** The markup language that is being passed. Defaults to `markdown`. */
 	language?: 'plaintext' | 'markdown' | 'typst';
-  regex_mask?: string;
+	regex_mask?: string;
 
 	/** Force the entirety of the document to be composed of headings. An undefined value is assumed to be false.*/
 	forceAllHeadings?: boolean;

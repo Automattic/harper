@@ -14,6 +14,7 @@ export type Settings = {
 	delay?: number;
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
+	regexMask?: string;
 };
 
 const DEFAULT_DELAY = -1;

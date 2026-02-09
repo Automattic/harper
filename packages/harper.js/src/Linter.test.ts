@@ -527,22 +527,41 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
-  test(`${linterName} can exclude things with Regex.`, async () => {
-    const linter = new Linter({binary})
+	test(`${linterName} can exclude things with Regex in organized lint function.`, async () => {
+		const linter = new Linter({ binary });
 
-    const regex = "errorz";
-    const source = "This text contains errorz."
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
 
-    // Without regex, Harper should detect the error.
-    let lints = await linter.lint(source);
-    expect(lints).toHaveLength(1);
+		// Without regex, Harper should detect the error.
+		let lints = await linter.organizedLints(source);
+		let flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(1);
 
-    // With regex, Harper should not detect the error.
-    lints = await linter.lint(source, { regex_mask: regex });
-    expect(lints).toHaveLength(0);
+		// With regex, Harper should not detect the error.
+		lints = await linter.organizedLints(source, { regex_mask: regex });
+		flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(0);
 
-    await linter.dispose();
-  })
+		await linter.dispose();
+	});
+
+	test(`${linterName} can exclude things with Regex in normal lint function.`, async () => {
+		const linter = new Linter({ binary });
+
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
+
+		// Without regex, Harper should detect the error.
+		let lints = await linter.lint(source);
+		expect(lints).toHaveLength(1);
+
+		// With regex, Harper should not detect the error.
+		lints = await linter.lint(source, { regex_mask: regex });
+		expect(lints).toHaveLength(0);
+
+		await linter.dispose();
+	});
 }
 
 // Disabled because it significantly slows down CI
