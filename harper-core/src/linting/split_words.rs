@@ -164,4 +164,13 @@ mod tests {
     fn ignores_prefix_without_valid_remainder() {
         assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default());
     }
+
+    #[test]
+    fn test_atall_to_at_all() {
+        assert_suggestion_result(
+            "don't seem to support symbolic links atall.",
+            SplitWords::default(),
+            "don't seem to support symbolic links at all.",
+        );
+    }
 }

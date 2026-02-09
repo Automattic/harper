@@ -16,6 +16,7 @@ impl Default for OpenCompounds {
             "a few",
             "a lot",
             "as well",
+            "at all",
             "at least",
             "each other",
             "in case",
@@ -297,6 +298,17 @@ mod tests {
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
             OpenCompounds::default(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    // At all
+
+    #[test]
+    fn correct_atall() {
+        assert_suggestion_result(
+            "claude code with vs code extension not working atall",
+            OpenCompounds::default(),
+            "claude code with vs code extension not working at all",
         );
     }
 
