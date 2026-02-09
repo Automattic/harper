@@ -271,11 +271,21 @@ impl Linter {
         text: String,
         language: Language,
         all_headings: bool,
+        regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
         let mut parser = language.create_parser();
+
+        if let Some(regex) = regex_mask {
+            let masker_maybe = RegexMasker::new(regex.as_str(), true);
+            if let Some(masker) = masker_maybe {
+                parser = Box::new(Mask::new(masker, parser));
+            } else {
+                return vec![];
+            }
+        }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));

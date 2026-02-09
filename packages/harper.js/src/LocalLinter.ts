@@ -62,7 +62,12 @@ export default class LocalLinter implements Linter {
 	async organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
 		const inner = await this.inner;
 		const language = options?.language === 'plaintext' ? Language.Plain : Language.Markdown;
-		const lintGroups = inner.organized_lints(text, language, options?.forceAllHeadings ?? false);
+		const lintGroups = inner.organized_lints(
+			text,
+			language,
+			options?.forceAllHeadings ?? false,
+			options?.regex_mask,
+		);
 
 		const output: Record<string, Lint[]> = {};
 
