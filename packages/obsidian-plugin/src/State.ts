@@ -30,6 +30,7 @@ export default class State {
 	private ignoredGlobs?: string[];
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
+	private regexMask?: string;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -101,6 +102,7 @@ export default class State {
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
+		this.regexMask = settings.regexMask;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -132,9 +134,7 @@ export default class State {
 				}
 
 				const text = view.state.doc.sliceString(-1);
-				const chars = Array.from(text);
-
-				const lints = await this.harper.organizedLints(text);
+				const lints = await this.harper.organizedLints(text, { regex_mask: this.regexMask });
 
 				return Object.entries(lints).flatMap(([linterName, lints]) =>
 					lints.map((lint) => {
@@ -252,6 +252,7 @@ export default class State {
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
+			regexMask: this.regexMask,
 		};
 	}
 
