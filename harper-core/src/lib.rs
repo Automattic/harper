@@ -158,8 +158,14 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
+    use std::hash::DefaultHasher;
+    use std::hash::{Hash, Hasher};
+
+    use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
+    use crate::linting::Lint;
+    use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
         Dialect, Document,
@@ -180,5 +186,32 @@ mod tests {
         dbg!(&lints);
 
         assert_eq!(lints.len(), 3);
+    }
+
+    #[quickcheck]
+    fn overlap_removals_have_equivalent_behavior(s: String) {
+        let doc = Document::new_plain_english_curated(&s);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        let mut lint_map = linter.organized_lints(&doc);
+        let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
+
+        remove_overlaps_map(&mut lint_map);
+        remove_overlaps(&mut lint_flat);
+
+        let post_removal_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
+
+        fn hash_lint(lint: &Lint) -> u64 {
+            let mut hasher = DefaultHasher::new();
+            lint.hash(&mut hasher);
+            hasher.finish()
+        }
+
+        // We want to ignore ordering, so let us hash these first and sort them.
+        let lint_flat_hashes: Vec<_> = lint_flat.iter().map(hash_lint).sorted().collect();
+        let post_removal_flat_hashes: Vec<_> =
+            post_removal_flat.iter().map(hash_lint).sorted().collect();
+
+        assert_eq!(post_removal_flat_hashes, lint_flat_hashes);
     }
 }
