@@ -526,6 +526,23 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	});
+
+  test(`${linterName} can exclude things with Regex.`, async () => {
+    const linter = new Linter({binary})
+
+    const regex = "errorz";
+    const source = "This text contains errorz."
+
+    // Without regex, Harper should detect the error.
+    let lints = await linter.lint(source);
+    expect(lints).toHaveLength(1);
+
+    // With regex, Harper should not detect the error.
+    lints = await linter.lint(source, { regex_mask: regex });
+    expect(lints).toHaveLength(0);
+
+    await linter.dispose();
+  })
 }
 
 // Disabled because it significantly slows down CI

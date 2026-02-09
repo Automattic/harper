@@ -49,7 +49,7 @@ export default class LocalLinter implements Linter {
 				language = Language.Typst;
 		}
 
-		const lints = inner.lint(text, language, options?.forceAllHeadings ?? false);
+		const lints = inner.lint(text, language, options?.forceAllHeadings ?? false, options?.regex_mask);
 
 		return lints;
 	}
