@@ -54,15 +54,10 @@ where
 
     /// Look up the corresponding value for the given map.
     pub fn lookup(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<&T> {
-        for row in &self.rows {
-            let len = row.key.run(cursor, tokens, source);
-
-            if len.is_some() {
-                return Some(&row.element);
-            }
-        }
-
-        None
+        self.rows
+            .iter()
+            .find(|row| row.key.run(cursor, tokens, source).is_some())
+            .map(|row| &row.element)
     }
 }
 
