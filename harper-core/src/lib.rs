@@ -52,7 +52,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
 use linting::Lint;
-pub use mask::{Mask, Masker};
+pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
