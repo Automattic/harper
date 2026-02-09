@@ -741,7 +741,7 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false);
+        let lints = linter.lint(text, Language::Plain, false, None);
         assert!(lints.is_empty());
     }
 
@@ -761,6 +761,7 @@ mod tests {
                     "This is a grammatically correct sentence.".to_string(),
                     Language::Plain,
                     false,
+                    None,
                 );
 
                 assert!(results.is_empty())

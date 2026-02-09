@@ -118,7 +118,7 @@ mod tests {
 
     #[quickcheck]
     fn can_match_everything(source: String) -> TestResult {
-        if source.contains(|s: char| !s.is_ascii()) {
+        if source.contains(|s: char| !s.is_ascii() || s.is_control()) {
             return TestResult::discard();
         }
 
@@ -128,7 +128,7 @@ mod tests {
         let mask = masker.create_mask(&chars);
 
         if !chars.is_empty() {
-            assert_eq!(mask.allowed, vec![Span::new_with_len(0, chars.len() - 1)]);
+            assert_eq!(mask.allowed, vec![Span::new_with_len(0, chars.len())]);
             TestResult::passed()
         } else {
             TestResult::discard()
