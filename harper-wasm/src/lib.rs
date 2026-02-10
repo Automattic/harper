@@ -22,7 +22,7 @@ use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-/// Setup the WebAssembly module's logging.
+/// Set up the WebAssembly module's logging.
 #[wasm_bindgen(start)]
 pub fn setup() {
     console_error_panic_hook::set_once();

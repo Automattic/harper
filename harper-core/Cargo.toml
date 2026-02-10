@@ -38,7 +38,7 @@ zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
 regex = "1.12.3"
 
 [dev-dependencies]
-criterion = { version = "0.8.1", default-features = false }
+criterion = { version = "0.8.2", default-features = false }
 rand = "0.8.5"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.1.0"

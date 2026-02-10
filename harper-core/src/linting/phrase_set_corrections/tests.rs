@@ -199,49 +199,6 @@ fn corrects_dose_not() {
     );
 }
 
-// LitotesDirectPositive
-
-#[test]
-fn litotes_not_uncommon_atomic() {
-    assert_suggestion_result("not uncommon", lint_group(), "common");
-}
-
-#[test]
-fn litotes_not_uncommon_sentence() {
-    assert_suggestion_result(
-        "It is not uncommon to see outages during storms.",
-        lint_group(),
-        "It is common to see outages during storms.",
-    );
-}
-
-#[test]
-fn litotes_not_unlikely() {
-    assert_suggestion_result(
-        "This outcome is not unlikely given the data.",
-        lint_group(),
-        "This outcome is likely given the data.",
-    );
-}
-
-#[test]
-fn litotes_not_insignificant() {
-    assert_suggestion_result(
-        "That is not insignificant progress.",
-        lint_group(),
-        "That is significant progress.",
-    );
-}
-
-#[test]
-fn litotes_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
 // RedundantSuperlatives
 
 #[test]
@@ -879,6 +836,69 @@ fn corrects_investment_into() {
         "A $10,000 investment into the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
         lint_group(),
         "A $10,000 investment in the fund made on February 28, 1997 would have grown to a value of $42,650 at the end of the 20-year period.",
+    );
+}
+
+// LayoutVerb
+
+#[test]
+fn corrects_layouted() {
+    assert_suggestion_result(
+        "only the views that neeed it will be measured and layouted when the superview changes",
+        lint_group(),
+        "only the views that neeed it will be measured and laid out when the superview changes",
+    );
+}
+
+#[test]
+fn corrects_layouting() {
+    assert_suggestion_result(
+        "An R package for layouting tables, using the S4 method",
+        lint_group(),
+        "An R package for laying out tables, using the S4 method",
+    );
+}
+
+// LitotesDirectPositive
+
+#[test]
+fn litotes_not_uncommon_atomic() {
+    assert_suggestion_result("not uncommon", lint_group(), "common");
+}
+
+#[test]
+fn litotes_not_uncommon_sentence() {
+    assert_suggestion_result(
+        "It is not uncommon to see outages during storms.",
+        lint_group(),
+        "It is common to see outages during storms.",
+    );
+}
+
+#[test]
+fn litotes_not_unlikely() {
+    assert_suggestion_result(
+        "This outcome is not unlikely given the data.",
+        lint_group(),
+        "This outcome is likely given the data.",
+    );
+}
+
+#[test]
+fn litotes_not_insignificant() {
+    assert_suggestion_result(
+        "That is not insignificant progress.",
+        lint_group(),
+        "That is significant progress.",
+    );
+}
+
+#[test]
+fn litotes_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
     );
 }
 
