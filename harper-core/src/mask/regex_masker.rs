@@ -1,6 +1,6 @@
 use regex::Regex;
 
-use crate::Span;
+use crate::{Span, offsets::build_byte_to_char_map};
 
 use super::{Mask, Masker};
 
@@ -28,14 +28,7 @@ impl RegexMasker {
 impl Masker for RegexMasker {
     fn create_mask(&self, source: &[char]) -> Mask {
         let source_s: String = source.iter().collect();
-        let mut byte_to_char = vec![0; source_s.len() + 1];
-
-        let mut char_idx = 0;
-        for (byte_idx, c) in source_s.char_indices() {
-            byte_to_char[byte_idx] = char_idx;
-            char_idx += 1;
-            byte_to_char[byte_idx + c.len_utf8()] = char_idx;
-        }
+        let byte_to_char = build_byte_to_char_map(&source_s);
 
         let mut mask = Mask::new_blank();
 

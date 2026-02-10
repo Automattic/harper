@@ -19,6 +19,7 @@ mod lexing;
 pub mod linting;
 mod mask;
 mod number;
+mod offsets;
 pub mod parsers;
 pub mod patterns;
 mod punctuation;
