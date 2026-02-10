@@ -4,6 +4,7 @@ use crate::Span;
 
 use super::{Mask, Masker};
 
+/// Allows one to mask the sections of a document that match a regular expression (or vice versa).
 pub struct RegexMasker {
     regex: Regex,
     exclude_matches: bool,
@@ -12,6 +13,10 @@ pub struct RegexMasker {
 impl RegexMasker {
     /// Parses and compiles the provided Regex expression. Returns None if an invalid expression
     /// was provided.
+    ///
+    /// If `exclude_matches` is marked `true`, then the areas selected by the regular expression
+    /// will be _removed_ from Harper's view. If it is `false`, those areas will be the only ones
+    /// _included_.
     pub fn new(regex: &str, exclude_matches: bool) -> Option<Self> {
         Some(Self {
             regex: Regex::new(regex).ok()?,
