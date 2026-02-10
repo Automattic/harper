@@ -38,3 +38,7 @@ macro_rules! create_test {
 create_test!(clean.tex, 0);
 create_test!(simple.tex, 1);
 create_test!(heading.tex, 1);
+create_test!(title.tex, 1);
+create_test!(city.tex, 0);
+create_test!(many_tags.tex, 6);
+create_test!(many_more_tags.tex, 11);

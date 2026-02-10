@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 use harper_core::{Mask, Span};
 
 #[derive(Debug, Default)]
@@ -9,6 +11,7 @@ impl harper_core::Masker for Masker {
         let mut mask = Mask::new_blank();
 
         let mut cur_mask_start = 0;
+        let mut actions = VecDeque::new();
 
         loop {
             if cursor >= source.len() {
@@ -16,31 +19,30 @@ impl harper_core::Masker for Masker {
             }
 
             let c = source[cursor];
-            let mut action = CursorAction::Inc;
 
             if matches!(c, '%') {
-                action = CursorAction::PushMaskAndIncBy(1)
-            };
-
-            if let Some(s) = command_at_cursor(cursor, source) {
-                action = CursorAction::PushMaskAndIncBy(s)
+                actions.push_back(CursorAction::PushMaskAndIncBy(1));
+            } else if !command_at_cursor(cursor, source, &mut actions)
+                && let Some(s) = math_mode_at_cursor(cursor, source)
+            {
+                actions.push_back(CursorAction::PushMaskAndIncBy(s));
+            } else {
+                actions.push_back(CursorAction::IncBy(1));
             }
 
-            if let Some(s) = math_mode_at_cursor(cursor, source) {
-                action = CursorAction::PushMaskAndIncBy(s)
-            }
+            while let Some(action) = actions.pop_front() {
+                match action {
+                    CursorAction::IncBy(n) => cursor = (cursor + n).min(source.len()),
+                    CursorAction::PushMaskAndIncBy(mut n) => {
+                        if cur_mask_start != cursor {
+                            mask.push_allowed(Span::new(cur_mask_start, cursor));
+                        }
 
-            match action {
-                CursorAction::Inc => cursor += 1,
-                CursorAction::PushMaskAndIncBy(mut n) => {
-                    if cur_mask_start != cursor {
-                        mask.push_allowed(Span::new(cur_mask_start, cursor));
+                        n = (cursor + n).min(source.len());
+
+                        cursor = n;
+                        cur_mask_start = n;
                     }
-
-                    n = (cursor + n).min(source.len());
-
-                    cursor = n;
-                    cur_mask_start = n;
                 }
             }
         }
@@ -55,7 +57,7 @@ impl harper_core::Masker for Masker {
 
 /// Check whether there is a math mode block at the current cursor. If so, this function will return the
 /// index of the next non-math-block index.
-fn math_mode_at_cursor(mut cursor: usize, source: &[char]) -> Option<usize> {
+fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     if *source.get(cursor)? != '$' {
         return None;
     }
@@ -71,22 +73,30 @@ fn math_mode_at_cursor(mut cursor: usize, source: &[char]) -> Option<usize> {
     )
 }
 
-/// Check whether there is a command at the current cursor. If so, this function will return the
-/// index of the next non-command index.
-fn command_at_cursor(mut cursor: usize, source: &[char]) -> Option<usize> {
+/// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
+/// Returns whether the action queue was modified.
+fn command_at_cursor(
+    mut cursor: usize,
+    source: &[char],
+    actions: &mut VecDeque<CursorAction>,
+) -> bool {
     let orig_cursor = cursor;
 
-    if *source.get(cursor)? != '\\' {
-        return None;
+    if source.get(cursor) != Some(&'\\') {
+        return false;
     }
 
+    cursor += 1;
+
     // The name of the command
-    cursor += source
+    let name_len = source
         .iter()
         .skip(cursor + 1)
         .take_while(|t| t.is_alphabetic())
-        .count()
-        + 1;
+        .count();
+    let name = &source[cursor..cursor + 1 + name_len];
+
+    cursor += name_len + 1;
 
     // The optional square braces
     if source.get(cursor) == Some(&'[') {
@@ -98,35 +108,57 @@ fn command_at_cursor(mut cursor: usize, source: &[char]) -> Option<usize> {
             + 1;
     }
 
-    dbg!(source.get(cursor));
+    let content_commands = [
+        "section",
+        "title",
+        "subsection",
+        "subsubsection",
+        "textbf",
+        "textit",
+        "emph",
+        "author",
+        "part",
+        "chapter",
+        "caption",
+    ];
+    let is_content_command = content_commands
+        .iter()
+        .any(|c| name.iter().copied().eq(c.chars()));
 
     // The optional curly braces
     if source.get(cursor) == Some(&'{') {
-        Some(
-            source
-                .iter()
-                .skip(cursor)
-                .take_while(|t| **t != '}')
-                .count()
-                + cursor
-                + 1
-                - orig_cursor,
-        )
+        let brace_len = source
+            .iter()
+            .skip(cursor)
+            .take_while(|t| **t != '}')
+            .count();
+
+        if is_content_command {
+            actions.push_back(CursorAction::PushMaskAndIncBy(cursor - orig_cursor));
+            actions.push_back(CursorAction::IncBy(brace_len));
+            actions.push_back(CursorAction::PushMaskAndIncBy(1));
+            true
+        } else {
+            actions.push_back(CursorAction::PushMaskAndIncBy(
+                brace_len + cursor + 1 - orig_cursor,
+            ));
+            true
+        }
     } else {
-        Some(cursor - orig_cursor)
+        actions.push_back(CursorAction::PushMaskAndIncBy(cursor - orig_cursor));
+        true
     }
 }
 
+#[derive(Debug)]
 enum CursorAction {
-    Inc,
+    IncBy(usize),
     PushMaskAndIncBy(usize),
 }
 
 #[cfg(test)]
 mod tests {
     use harper_core::Masker as _;
-
-    use crate::masker::command_at_cursor;
 
     use super::Masker;
 
@@ -160,40 +192,5 @@ mod tests {
         let mask = Masker::default().create_mask(&source);
 
         assert_eq!(mask.iter_allowed(&source).count(), 2)
-    }
-
-    #[test]
-    fn detects_latex_as_command() {
-        assert_eq!(
-            command_at_cursor(0, &"\\LaTeX".chars().collect::<Vec<_>>()),
-            Some(6)
-        )
-    }
-
-    #[test]
-    fn detects_latex_with_braces_as_command() {
-        assert_eq!(
-            command_at_cursor(0, &"\\LaTeX{}".chars().collect::<Vec<_>>()),
-            Some(8)
-        )
-    }
-
-    #[test]
-    fn detects_usepackage_as_command() {
-        assert_eq!(
-            command_at_cursor(0, &"\\usepackage{amsmath}".chars().collect::<Vec<_>>()),
-            Some(20)
-        )
-    }
-
-    #[test]
-    fn detect_usepackage_with_square_braces_as_command() {
-        assert_eq!(
-            command_at_cursor(
-                0,
-                &"\\usepackage[utf8]{inputenc}".chars().collect::<Vec<_>>()
-            ),
-            Some(27)
-        )
     }
 }
