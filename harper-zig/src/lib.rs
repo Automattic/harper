@@ -10,7 +10,7 @@ pub struct ZigParser {
 
 impl ZigParser {
     fn node_condition(n: &Node) -> bool {
-        matches!(n.kind(), "comment" | "string_literal" | "char_literal")
+        matches!(n.kind(), "comment")
     }
 
     pub fn new() -> Self {
