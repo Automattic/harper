@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.6.0",
+	"version": "1.7.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -820,7 +820,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects the eggcorn `day in age` to `day and age`, which properly means the current era or time period."
+					"description": "Fixes wrong variants of the idiom `in this day and age`."
 				},
 				"harper.linters.DayOneNames": {
 					"scope": "resource",
@@ -1139,6 +1139,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity."
+				},
+				"harper.linters.ExpandThrough": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the informal spelling `thru` to the standard word `through`."
 				},
 				"harper.linters.ExpandTimeShorthands": {
 					"scope": "resource",
@@ -1854,6 +1860,12 @@
 					"default": true,
 					"description": "Warns when `laugh` takes `of` before a person or pronoun and nudges writers toward the conventional `at`."
 				},
+				"harper.linters.LayoutVerb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags nonstandard verb forms of `layout` (like `layouted` and `layouting`) and suggests the standard English verb forms (`laid out` and `laying out`)."
+				},
 				"harper.linters.LeaveToFor": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2015,6 +2027,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `middleware`."
+				},
+				"harper.linters.MissingDeterminer": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects likely missing determiners in common request phrases and offers to insert one where necessary."
 				},
 				"harper.linters.MissingPreposition": {
 					"scope": "resource",
@@ -2207,6 +2225,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Stops users from accidentally inserting French spaces."
+				},
+				"harper.linters.NoLonger": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `not longer` when it should be `no longer`."
 				},
 				"harper.linters.NoMatchFor": {
 					"scope": "resource",
@@ -3527,6 +3551,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+				},
+				"harper.linters.WorthToDo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `worth to` + a verb to `worth` + the gerund of the verb."
 				},
 				"harper.linters.WouldNeverHave": {
 					"scope": "resource",
