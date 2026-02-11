@@ -738,10 +738,6 @@ impl DictWordMetadata {
 
     /// Same thing as [`Self::or`], except in-place rather than a clone.
     pub fn append(&mut self, other: &Self) -> &mut Self {
-        println!(
-            "base_metadata {:#?}\nproperty_metadata {:#?}",
-            self.dialects, other.dialects
-        );
         *self = self.or(other);
         self
     }

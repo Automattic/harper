@@ -71,8 +71,6 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
-        println!("Inside lint, dialect is {}", self.dialect);
-
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
 
@@ -143,12 +141,12 @@ mod tests_portuguese {
     #[test]
     fn brasil_capitalized() {
         assert_suggestion_result(
-            "The word brasil should be capitalized.",
+            "A palavra brasil deveria ser capitalizada.",
             SpellCheck::new(
                 FstDictionary::curated_select_language(LanguageFamily::Portuguese),
                 PortugueseDialect::Brazilian,
             ),
-            "The word Brasil should be capitalized.",
+            "A palavra Brasil deveria ser capitalizada",
             LanguageFamily::Portuguese,
         );
     }
@@ -156,7 +154,7 @@ mod tests_portuguese {
     #[test]
     fn harper_automattic_capitalized() {
         assert_lint_count(
-            "So should harper and automattic.",
+            "Tal qual harper e automattic.",
             SpellCheck::new(
                 FstDictionary::curated_select_language(LanguageFamily::Portuguese),
                 PortugueseDialect::Brazilian,

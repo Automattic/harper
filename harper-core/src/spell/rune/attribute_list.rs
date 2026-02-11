@@ -47,7 +47,8 @@ impl AttributeList {
                 DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
             }
         };
-        let result = human_readable
+
+        human_readable
             .map_err(Error::from)
             .map(|mut parsed| {
                 for property in parsed.properties.values_mut() {
@@ -56,15 +57,16 @@ impl AttributeList {
                 for expansion in parsed.affixes.values_mut() {
                     for metadata_expansion in expansion.target.as_mut_slice() {
                         metadata_expansion.metadata.dialects = dialect;
+                        if let Some(base) = metadata_expansion.if_base.as_mut() {
+                            base.dialects = dialect;
+                        }
                     }
                     expansion.base_metadata.dialects = dialect;
                 }
 
                 parsed
             })
-            .and_then(|parsed| parsed.into_normal());
-        println!("Done with parse");
-        result
+            .and_then(|parsed| parsed.into_normal())
     }
 
     /// Expand an [`AnnotatedWord`] into a list of full words, including itself.
@@ -145,12 +147,12 @@ impl AttributeList {
                     // Get or create metadata for this new word form
                     let metadata = new_words.entry(replaced.clone()).or_default();
                     metadata.dialects = dialect_flags;
-                    println!("Metadata dialect is {:#?}", metadata.dialects);
 
                     // Process each target for this replacement
                     for target in &expansion.target {
                         if let Some(condition) = &target.if_base {
                             // Store conditional metadata to be applied later
+                            println!("Target metadata is {:#?}", target.metadata.dialects);
                             conditional_expansion_metadata.push((
                                 replaced.clone(),
                                 target.metadata.clone(),
