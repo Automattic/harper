@@ -25,7 +25,6 @@ serde_json = "1.0.149"
 strum = "0.27.2"
 strum_macros = "0.27.2"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
-harper-zig = { version = "1.0.0", path = "../harper-zig" }
 enum_dispatch = "0.3.13"
 
 [features]

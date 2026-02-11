@@ -15,7 +15,6 @@ use harper_core::{
 use harper_ink::InkParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
-use harper_zig::ZigParser;
 
 use super::InputTrait;
 
@@ -147,7 +146,6 @@ impl SingleInputTrait for FileInput {
             Some("typ") => Box::new(harper_typst::Typst),
             Some("py") | Some("pyi") => Box::new(PythonParser::default()),
             Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
-            Some("zig") => Box::new(ZigParser::default()),
             Some("txt") => Box::new(PlainEnglish),
             _ => {
                 if let Some(comment_parser) =

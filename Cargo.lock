@@ -2716,7 +2716,6 @@ dependencies = [
  "harper-python",
  "harper-stats",
  "harper-typst",
- "harper-zig",
  "hashbrown 0.16.1",
  "rayon",
  "serde",
@@ -2757,6 +2756,7 @@ dependencies = [
  "tree-sitter-swift",
  "tree-sitter-toml-ng",
  "tree-sitter-typescript",
+ "tree-sitter-zig",
 ]
 
 [[package]]
@@ -2861,7 +2861,6 @@ dependencies = [
  "harper-python",
  "harper-stats",
  "harper-typst",
- "harper-zig",
  "itertools 0.14.0",
  "open",
  "resolve-path",
@@ -2971,17 +2970,6 @@ dependencies = [
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "harper-zig"
-version = "1.6.0"
-dependencies = [
- "harper-core",
- "harper-tree-sitter",
- "paste",
- "tree-sitter",
- "tree-sitter-zig",
 ]
 
 [[package]]
