@@ -21,6 +21,8 @@ import {
 	type GetLintDescriptionsResponse,
 	type GetReviewedRequest,
 	type GetReviewedResponse,
+	type GetSpellCheckingModeRequest,
+	type GetSpellCheckingModeResponse,
 	type GetUserDictionaryResponse,
 	type Hotkey,
 	type IgnoreLintRequest,
@@ -38,7 +40,9 @@ import {
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
 	type SetReviewedRequest,
+	type SetSpellCheckingModeRequest,
 	type SetUserDictionaryRequest,
+	SpellCheckingMode,
 	type UnitResponse,
 } from '../protocol';
 import { detectBrowserDialect } from './detectDialect';
@@ -158,6 +162,10 @@ function handleRequest(message: Request): Promise<Response> {
 			return handleGetUserDictionary();
 		case 'setUserDictionary':
 			return handleSetUserDictionary(message);
+		case 'getSpellCheckingMode':
+			return handleGetSpellCheckingMode();
+		case 'setSpellCheckingMode':
+			return handleSetSpellCheckingMode(message);
 		case 'getActivationKey':
 			return handleGetActivationKey();
 		case 'setActivationKey':
@@ -306,6 +314,20 @@ async function handleSetActivationKey(req: SetActivationKeyRequest): Promise<Uni
 	return createUnitResponse();
 }
 
+async function handleGetSpellCheckingMode(): Promise<GetSpellCheckingModeResponse> {
+	const spellCheckingMode = await getSpellCheckingMode();
+
+	return { kind: 'getSpellCheckingMode', spellCheckingMode };
+}
+
+async function handleSetSpellCheckingMode(req: SetSpellCheckingModeRequest): Promise<UnitResponse> {
+	if (!Object.values(SpellCheckingMode).includes(req.spellCheckingMode)) {
+		throw new Error(`Invalid spell checking mode: ${req.spellCheckingMode}`);
+	}
+	await setSpellCheckingMode(req.spellCheckingMode);
+
+	return createUnitResponse();
+}
 async function handleGetHotkey(): Promise<GetHotkeyResponse> {
 	const hotkey = await getHotkey();
 
@@ -429,6 +451,15 @@ async function getHotkey(): Promise<Hotkey> {
 
 async function setActivationKey(key: ActivationKey) {
 	await chrome.storage.local.set({ activationKey: key });
+}
+
+async function getSpellCheckingMode(): Promise<SpellCheckingMode> {
+	const resp = await chrome.storage.local.get({ spellCheckingMode: SpellCheckingMode.Default });
+	return resp.spellCheckingMode;
+}
+
+async function setSpellCheckingMode(spellCheckingMode: SpellCheckingMode) {
+	await chrome.storage.local.set({ spellCheckingMode: spellCheckingMode });
 }
 
 async function setHotkey(hotkey: Hotkey) {
