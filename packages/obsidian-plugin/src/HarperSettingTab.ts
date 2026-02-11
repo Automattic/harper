@@ -101,6 +101,18 @@ export class HarperSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
+			.setName('Mask')
+			.setDesc(
+				"Hide certain text from Harper's pedantic gaze with a regular expression. Follows the standard Rust syntax.",
+			)
+			.addTextArea((ta) =>
+				ta.setValue(this.settings.regexMask ?? '').onChange(async (value) => {
+					this.settings.regexMask = value;
+					await this.state.initializeFromSettings(this.settings);
+				}),
+			);
+
+		new Setting(containerEl)
 			.setName('Personal Dictionary')
 			.setDesc(
 				'Make edits to your personal dictionary. Add names, places, or terms you use often. Each line should contain its own word.',
