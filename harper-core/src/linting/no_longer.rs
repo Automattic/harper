@@ -43,7 +43,7 @@ impl ExprLinter for NoLonger {
     }
 
     fn description(&self) -> &str {
-        "Corrects `not longer` when it's a typo for `no longer`."
+        "Corrects `not longer` when it should be `no longer`."
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
