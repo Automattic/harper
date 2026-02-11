@@ -124,6 +124,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_longer::NoLonger;
 use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
@@ -523,6 +524,7 @@ impl LintGroup {
         insert_expr_rule!(NailOnTheHead, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
+        insert_expr_rule!(NoLonger, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
