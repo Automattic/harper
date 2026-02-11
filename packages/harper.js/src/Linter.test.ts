@@ -526,6 +526,71 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	});
+
+	test(`${linterName} can exclude things with Regex in organized lint function.`, async () => {
+		const linter = new Linter({ binary });
+
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
+
+		// Without regex, Harper should detect the error.
+		let lints = await linter.organizedLints(source);
+		let flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(1);
+
+		// With regex, Harper should not detect the error.
+		lints = await linter.organizedLints(source, { regex_mask: regex });
+		flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} returns correct suggestion for 'ned' with organizedLints.`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = "I don't ned it.";
+		const lints = await linter.organizedLints(source);
+		const flattened = Object.values(lints).flat();
+
+		expect(flattened).toHaveLength(1);
+
+		const suggestions = flattened[0].suggestions().map((s) => s.get_replacement_text());
+
+		expect(suggestions).toContain('need');
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can exclude things with Regex in normal lint function.`, async () => {
+		const linter = new Linter({ binary });
+
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
+
+		// Without regex, Harper should detect the error.
+		let lints = await linter.lint(source);
+		expect(lints).toHaveLength(1);
+
+		// With regex, Harper should not detect the error.
+		lints = await linter.lint(source, { regex_mask: regex });
+		expect(lints).toHaveLength(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} returns correct suggestion for 'ned'.`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = "I don't ned it.";
+		const lints = await linter.lint(source);
+
+		expect(lints).toHaveLength(1);
+		const suggestions = lints[0].suggestions().map((s) => s.get_replacement_text());
+		expect(suggestions).toContain('need');
+
+		await linter.dispose();
+	});
 }
 
 // Disabled because it significantly slows down CI

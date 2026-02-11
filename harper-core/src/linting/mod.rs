@@ -43,6 +43,7 @@ mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
 mod dashes;
+mod day_and_age;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
@@ -232,6 +233,7 @@ mod widely_accepted;
 mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
+mod worth_to_do;
 mod would_never_have;
 
 pub use expr_linter::{Chunk, ExprLinter};

@@ -69,6 +69,10 @@ create_test!(ignore_comments.rs, 1);
 create_test!(ignore_comments.c, 1);
 create_test!(ignore_comments.sol, 1);
 
+// Zig tests - covering //, ///, and //! comments
+create_test!(clean.zig, 0);
+create_test!(dirty.zig, 5);
+
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);
 create_test!(issue_229.js, 0);

@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.5.1",
+	"version": "1.6.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -228,6 +228,12 @@
 					"default": true,
 					"description": "Corrects the missing article in `after while`, forming `after a while`."
 				},
+				"harper.linters.AfterAll": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `afterall` to `after all`."
+				},
 				"harper.linters.AfterLater": {
 					"scope": "resource",
 					"type": "boolean",
@@ -414,11 +420,17 @@
 					"default": true,
 					"description": "Corrects `aslong as` to `as long as`."
 				},
-				"harper.linters.AsOfLate": {
+				"harper.linters.AsOfCurrently": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `as of lately` to `as of late`."
+					"description": "Corrects `as of currently` to `currently` or `as of now`."
+				},
+				"harper.linters.AsOfLately": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as of lately` to `lately` or `as of late`."
 				},
 				"harper.linters.AsOpposedTo": {
 					"scope": "resource",
@@ -786,6 +798,12 @@
 					"default": true,
 					"description": "The location of currency symbols varies by country. The rule looks for and corrects improper positioning."
 				},
+				"harper.linters.Cybersec": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the informal abbreviation `cybersec` to `cybersecurity`."
+				},
 				"harper.linters.DampSquib": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1110,6 +1128,12 @@
 					"default": true,
 					"description": "Expands the abbreviation `ptr` to the full word `pointer` for clarity."
 				},
+				"harper.linters.ExpandPrevious": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `prev` to the full word `previous` for clarity."
+				},
 				"harper.linters.ExpandStandardInputAndOutput": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1343,6 +1367,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags 'go so far to' when it should be 'go so far as to' to express going beyond expectations"
+				},
+				"harper.linters.GoToWar": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces `go at war` with `go to war`."
 				},
 				"harper.linters.GoingTo": {
 					"scope": "resource",
@@ -1872,6 +1902,12 @@
 					"default": true,
 					"description": "Corrects `like a plague` to `like the plague`."
 				},
+				"harper.linters.LikeTheresNoTomorrow": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `like no tomorrow` to `like there's no tomorrow`."
+				},
 				"harper.linters.Likewise": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1895,6 +1931,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "This rule looks for run-on sentences, which can make your work harder to grok."
+				},
+				"harper.linters.LookDownOnesNose": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `look one's nose down` to `look down one's nose`"
 				},
 				"harper.linters.LookingForwardTo": {
 					"scope": "resource",
@@ -2196,11 +2238,23 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `nonetheless`."
 				},
+				"harper.linters.NorModalPronoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the order of the pronoun and modal verb after `nor`."
+				},
 				"harper.linters.NotIn": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Replaces `no in` with `not in`."
+				},
+				"harper.linters.NotOnly": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `no only` to `not only` before forms of `to be`."
 				},
 				"harper.linters.NotTo": {
 					"scope": "resource",
@@ -2435,6 +2489,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the eggcorn `pedal to the medal` to the standard idiom `pedal to the metal`, meaning to accelerate at full speed."
+				},
+				"harper.linters.PeekBehindTheCurtain": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `peak behind the curtain` to `peek behind the curtain`."
 				},
 				"harper.linters.PerSe": {
 					"scope": "resource",
@@ -3222,6 +3282,12 @@
 					"default": true,
 					"description": "Normalizes phrasing around `true to <possessive>` so it follows the conventional `true to one's word`."
 				},
+				"harper.linters.TryOnesHandAt": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `try one's hands at` to `try one's hand at`."
+				},
 				"harper.linters.TumblrNames": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3479,6 +3545,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+				},
+				"harper.linters.YeaToYeah": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `yea` to `yeah`."
+				},
+				"harper.linters.YehToYeah": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `yeh` to `yeah`."
 				}
 			}
 		}

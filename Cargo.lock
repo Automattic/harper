@@ -124,9 +124,9 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.100"
+version = "1.0.101"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
+checksum = "5f0e0fee31ef5ed1ba1316088939cea399010ed7731dba877ed44aeb407a75ea"
 
 [[package]]
 name = "arbitrary"
@@ -844,9 +844,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.56"
+version = "4.5.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a75ca66430e33a14957acc24c5077b503e7d374151b2b4b3a10c83b4ceb4be0e"
+checksum = "6899ea499e3fb9305a65d5ebf6e3d2248c5fab291f300ad0a704fbe142eae31a"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -854,9 +854,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.56"
+version = "4.5.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "793207c7fa6300a0608d1080b858e5fdbe713cdc1c8db9fb17777d8a13e63df0"
+checksum = "7b12c8b680195a62a8364d16b8447b01b6c2c8f9aaf68bee653be34d4245e238"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1017,9 +1017,9 @@ dependencies = [
 
 [[package]]
 name = "criterion"
-version = "0.8.1"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4d883447757bb0ee46f233e9dc22eb84d93a9508c9b868687b274fc431d886bf"
+checksum = "950046b2aa2492f9a536f5f4f9a3de7b9e2476e575e05bd6c333371add4d98f3"
 dependencies = [
  "alloca",
  "anes",
@@ -1040,9 +1040,9 @@ dependencies = [
 
 [[package]]
 name = "criterion-plot"
-version = "0.8.1"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed943f81ea2faa8dcecbbfa50164acf95d555afec96a27871663b300e387b2e4"
+checksum = "d8d80a2f4f5b554395e47b5d8305bc3d27813bacb73493eb1001e8f76dae29ea"
 dependencies = [
  "cast",
  "itertools 0.13.0",
@@ -1633,9 +1633,9 @@ checksum = "2a2330da5de22e8a3cb63252ce2abb30116bf5265e89c0e01bc17015ce30a476"
 
 [[package]]
 name = "deranged"
-version = "0.4.0"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c9e6a11ca8224451684bc0d7d5a7adbf8f2fd6887261a1cfc3c0432f9d4068e"
+checksum = "ececcb659e7ba858fb4f10388c250a7252eb0a27373f1a72b8748afdd248e587"
 dependencies = [
  "powerfmt",
 ]
@@ -2681,7 +2681,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2692,7 +2692,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2726,7 +2726,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2756,11 +2756,12 @@ dependencies = [
  "tree-sitter-swift",
  "tree-sitter-toml-ng",
  "tree-sitter-typescript",
+ "tree-sitter-zig",
 ]
 
 [[package]]
 name = "harper-core"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "ammonia",
  "bitflags 2.10.0",
@@ -2784,6 +2785,7 @@ dependencies = [
  "quickcheck_macros",
  "rand 0.8.5",
  "rayon",
+ "regex",
  "serde",
  "serde_json",
  "smallvec",
@@ -2799,7 +2801,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2810,7 +2812,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2821,7 +2823,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2832,7 +2834,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2843,7 +2845,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2873,7 +2875,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2891,7 +2893,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2902,7 +2904,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2913,7 +2915,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2924,7 +2926,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2943,7 +2945,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "1.5.1"
+version = "1.6.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2965,7 +2967,7 @@ dependencies = [
  "serde",
  "serde-wasm-bindgen",
  "serde_json",
- "sysinfo 0.38.0",
+ "sysinfo 0.38.1",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -3855,9 +3857,9 @@ dependencies = [
 
 [[package]]
 name = "num-conv"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "51d515d32fb182ee37cda2ccdcb92950d6a3c2893aa280e540671c2cd0f3b1d9"
+checksum = "cf97ec579c3c42f953ef76dbf8d55ac91fb219dde70e49aa4a6b7d74e9919050"
 
 [[package]]
 name = "num-integer"
@@ -3943,18 +3945,18 @@ dependencies = [
 
 [[package]]
 name = "objc2-core-foundation"
-version = "0.3.2"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
+checksum = "1c10c2894a6fed806ade6027bcd50662746363a9589d3ec9d9bef30a4e4bc166"
 dependencies = [
  "bitflags 2.10.0",
 ]
 
 [[package]]
 name = "objc2-io-kit"
-version = "0.3.2"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "33fafba39597d6dc1fb709123dfa8289d39406734be322956a69f0931c73bb15"
+checksum = "71c1c64d6120e51cd86033f67176b1cb66780c2efe34dec55176f77befd93c0a"
 dependencies = [
  "libc",
  "objc2-core-foundation",
@@ -4553,9 +4555,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.12.2"
+version = "1.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "843bc0191f75f3e22651ae5f1e72939ab2f72a4bc30fa80a066bd66edefc24d4"
+checksum = "e10754a14b9137dd7b1e3e5b0493cc9171fdd105e0ab477f51b72e7f3ac0e276"
 dependencies = [
  "aho-corasick",
  "memchr",
@@ -5232,9 +5234,9 @@ dependencies = [
 
 [[package]]
 name = "sysinfo"
-version = "0.38.0"
+version = "0.38.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe840c5b1afe259a5657392a4dbb74473a14c8db999c3ec2f4ae812e028a94da"
+checksum = "5792d209c2eac902426c0c4a166c9f72147db453af548cf9bf3242644c4d4fe3"
 dependencies = [
  "libc",
  "memchr",
@@ -5365,30 +5367,30 @@ dependencies = [
 
 [[package]]
 name = "time"
-version = "0.3.41"
+version = "0.3.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a7619e19bc266e0f9c5e6686659d394bc57973859340060a69221e57dbc0c40"
+checksum = "743bd48c283afc0388f9b8827b976905fb217ad9e647fae3a379a9283c4def2c"
 dependencies = [
  "deranged",
  "itoa",
  "num-conv",
  "powerfmt",
- "serde",
+ "serde_core",
  "time-core",
  "time-macros",
 ]
 
 [[package]]
 name = "time-core"
-version = "0.1.4"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9e9a38711f559d9e3ce1cdb06dd7c5b8ea546bc90052da6d06bb76da74bb07c"
+checksum = "7694e1cfe791f8d31026952abf09c69ca6f6fa4e1a1229e18988f06a04a12dca"
 
 [[package]]
 name = "time-macros"
-version = "0.2.22"
+version = "0.2.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3526739392ec93fd8b359c8e98514cb3e8e021beb4e5f597b00a0221f8ed8a49"
+checksum = "2e70e4c5a0e0a8a4823ad65dfe1a6930e4f4d756dcd9dd7939022b5e8c501215"
 dependencies = [
  "num-conv",
  "time-core",
@@ -6068,6 +6070,16 @@ name = "tree-sitter-typescript"
 version = "0.23.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c5f76ed8d947a75cc446d5fccd8b602ebf0cde64ccf2ffa434d873d7a575eff"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-zig"
+version = "1.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab11fc124851b0db4dd5e55983bbd9631192e93238389dcd44521715e5d53e28"
 dependencies = [
  "cc",
  "tree-sitter-language",

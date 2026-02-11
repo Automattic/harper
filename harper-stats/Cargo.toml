@@ -1,6 +1,6 @@
 [package]
 name = "harper-stats"
-version = "1.5.1"
+version = "1.6.0"
 edition = "2021"
 description = "The language checker for developers."
 license = "Apache-2.0"

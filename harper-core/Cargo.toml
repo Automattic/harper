@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "1.5.1"
+version = "1.6.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -35,9 +35,10 @@ harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional =
 bitflags = { version = "2.10.0", features = ["serde"] }
 trie-rs = "0.4.2"
 zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
+regex = "1.12.3"
 
 [dev-dependencies]
-criterion = { version = "0.8.1", default-features = false }
+criterion = { version = "0.8.2", default-features = false }
 rand = "0.8.5"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.1.0"

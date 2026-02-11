@@ -49,6 +49,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
 use super::didnt::Didnt;
@@ -222,7 +223,9 @@ use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
@@ -452,6 +455,7 @@ impl LintGroup {
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
+        insert_expr_rule!(DayAndAge, true);
         insert_expr_rule!(DespiteItIs, true);
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
@@ -671,6 +675,9 @@ impl LintGroup {
 
         out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
         out.config.set_rule_enabled("MoreAdjective", true);
+
+        out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
+        out.config.set_rule_enabled("WorthToDo", true);
 
         out
     }
