@@ -131,6 +131,7 @@ mod multiple_sequential_pronouns;
 mod nail_on_the_head;
 mod need_to_noun;
 mod no_french_spaces;
+mod no_longer;
 mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
