@@ -24,6 +24,7 @@ build-wasm:
   fi
 
 # Build `harper.js` with all size optimizations available.
+alias build-harper-js := build-harperjs
 build-harperjs: build-wasm 
   #!/usr/bin/env bash
   set -eo pipefail
@@ -47,6 +48,7 @@ build-lint-framework: build-harperjs
   pnpm install
   pnpm build
 
+alias test-harper-js := test-harperjs
 test-harperjs: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
@@ -69,6 +71,7 @@ test-obsidian: build-obsidian
   pnpm playwright install
   pnpm test
 
+alias dev-wordpress := dev-wp
 dev-wp: build-harperjs
   #!/usr/bin/env bash
 
@@ -234,6 +237,7 @@ test-vscode:
 
 # Build and package the Visual Studio Code extension.
 # If `target` is passed, it is assumed that `harper-ls` has been compiled beforehand and is in `packages/vscode-plugin/bin`. This is used in CI.
+alias package-vscode-extension := package-vscode
 package-vscode target="":
   #!/usr/bin/env bash
   set -eo pipefail
@@ -296,7 +300,7 @@ update-vscode-linters:
   just format
 
 # Run Rust formatting and linting.
-check-rust: auditdictionary
+check-rust: audit-dictionary
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -339,10 +343,18 @@ install:
 dogfood:
   #!/usr/bin/env bash
   cargo build --release
-  for file in `fd -e rs`
-  do
-    echo Linting $file
-    ./target/release/harper-cli lint $file
+  
+  if command -v fd &> /dev/null; then
+    # Use fd if available (faster and more user-friendly)
+    fd_cmd() { fd -e rs; }
+  else
+    # Fall back to find if fd is not installed
+    fd_cmd() { find . -name "*.rs" -type f; }
+  fi
+
+  fd_cmd | while read -r file; do
+    echo "Linting $file"
+    ./target/release/harper-cli lint "$file"
   done
 
 test-rust:
@@ -397,8 +409,7 @@ addnoun noun:
   echo "{{noun}}/$flags" >> "$DICT_FILE"
 
 # Search Harper's curated dictionary for a specific word
-alias search-dict-for := searchdictfor
-searchdictfor word:
+search-dict-for word:
   #!/usr/bin/env bash
   if command -v rg > /dev/null; then
     cargo run --bin harper-cli -- words | rg {{word}}
@@ -407,8 +418,7 @@ searchdictfor word:
   fi
 
 # Find words in the user's `harper-ls/dictionary.txt` for words already in the curated dictionary.
-alias user-dict-overlap := userdictoverlap
-userdictoverlap:
+user-dict-overlap:
   #!/usr/bin/env bash
   USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
 
@@ -417,22 +427,18 @@ userdictoverlap:
   done < $USER_DICT_FILE
 
 # Get the metadata associated with one or more words in Harper's dictionary as JSON.
-alias get-metadata := getmetadata
-getmetadata *words:
+get-metadata *words:
   cargo run --bin harper-cli -- metadata {{words}}
 
-alias get-metadata-brief := getmetadata-brief
-getmetadata-brief *words:
+get-metadata-brief *words:
   cargo run --bin harper-cli -- metadata --brief {{words}}
 
 # Get all the forms of a word using the affixes.
-alias get-forms := getforms
-getforms word:
+get-forms word:
   cargo run --bin harper-cli -- forms {{word}}
 
 # Get a random sample of words from Harper's dictionary and list all forms of each.
-alias sample-forms := sampleforms
-sampleforms count:
+sample-forms count:
   #!/usr/bin/env bash
   set -eo pipefail
   DICT_FILE=./harper-core/dictionary.dict 
@@ -502,8 +508,7 @@ fuzz:
       fi
   done
 
-alias register-linter := registerlinter
-registerlinter module name:
+register-linter module name:
   #!/usr/bin/env bash
 
   D="{{justfile_directory()}}/harper-core/src/linting"
@@ -514,11 +519,11 @@ registerlinter module name:
   just format
 
 # Print annotations and their descriptions from annotations.json
-alias printaffixes := printannotations
-alias getannotations := printannotations
-alias listannotations := printannotations
-alias showannotations := printannotations
-printannotations:
+alias print-affixes := print-annotations
+alias get-annotations := print-annotations
+alias list-annotations := print-annotations
+alias show-annotations := print-annotations
+print-annotations:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allEntries = {
@@ -665,15 +670,13 @@ newest-dict-changes *numCommits:
   });
 
 # Print the input string or file with nominal phrases highlighted. These are generated using Harper's chunker.
-alias get-nps := getnps
-alias get-nominal-phrases := getnps
-alias get-noun-phrases := getnps
-getnps text:
+alias get-nominal-phrases := get-nps
+alias get-noun-phrases := get-nps
+get-nps text:
   cargo run --bin harper-cli -- nominal-phrases "{{text}}"
 
 # Suggest annotations for a potential new property annotation
-alias suggest-annotation := suggestannotation
-suggestannotation input:
+suggest-annotation input:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allEntries = {
@@ -715,18 +718,15 @@ suggestannotation input:
   }
 
 # Audit the curated dictionary for any issues.
-alias audit-dictionary := auditdictionary
-alias auditdict := auditdictionary
-alias audit-dict := auditdictionary
-auditdictionary DIR="harper-core":
+alias audit-dict := audit-dictionary
+audit-dictionary DIR="harper-core":
   cargo run --bin harper-cli -- audit-dictionary {{DIR}}
 
-alias run-snapshots := runsnapshots
-alias test-snapshots := runsnapshots
-alias test-pos-tagger := runsnapshots
-alias test-pos-tags := runsnapshots
-alias test-pos-tagging := runsnapshots
-runsnapshots:
+alias test-snapshots := run-snapshots
+alias test-pos-tagger := run-snapshots
+alias test-pos-tags := run-snapshots
+alias test-pos-tagging := run-snapshots
+run-snapshots:
   #!/usr/bin/env bash
   set -eo pipefail
 
