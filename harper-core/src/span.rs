@@ -15,7 +15,7 @@ use crate::Token;
 /// behavior or panics.
 ///
 /// Although specific to `harper.js`, [this page may clear up any questions you have](https://writewithharper.com/docs/harperjs/spans).
-#[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct Span<T> {
     /// The start index of the span.
     pub start: usize,

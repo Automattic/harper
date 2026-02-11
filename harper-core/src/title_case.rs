@@ -162,7 +162,6 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
             }
 
             !is_short_preposition
-                && !metadata.is_non_possessive_determiner()
                 && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
                 && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
         }
@@ -523,6 +522,18 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "Alice’s Adventures in Wonderland",
+        );
+    }
+
+    #[test]
+    fn doesnt_lowercase_this_in_github_template_title() {
+        assert_eq!(
+            make_title_case_str(
+                "# How Has This Been Tested?",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "# How Has This Been Tested?",
         );
     }
 }
