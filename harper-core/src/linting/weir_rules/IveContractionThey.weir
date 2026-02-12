@@ -1,0 +1,23 @@
+expr pronoun [They, they]
+expr main <(@pronoun ve)>
+
+let message "Blend `ve` into `they` with an apostrophe so it reads `they've`."
+let description "Flags stray `ve` tokens after `they`/`THEY` that should be the contraction."
+let kind "Grammar"
+let becomes "They've"
+let strategy "MatchCase"
+
+# True positives
+test "They ve already decided on the launch window." "They've already decided on the launch window."
+test "they ve already decided on the launch window." "they've already decided on the launch window."
+test "They ve got our back through the rollout." "They've got our back through the rollout."
+test "they ve already outlined the timeline." "they've already outlined the timeline."
+
+# Guardrails / false positives
+allows "It ve been a long week for the crew."
+
+# False negatives (punctuation blocks the match)
+allows "They, ve scoped that task elsewhere."
+
+# True negatives
+allows "They have scoped that task elsewhere."

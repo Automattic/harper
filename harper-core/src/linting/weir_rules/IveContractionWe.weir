@@ -1,0 +1,23 @@
+expr pronoun [We, we]
+expr main <(@pronoun ve)>
+
+let message "Fuse `ve` to `we` with an apostrophe to form `we've`."
+let description "Detects loose `ve` tokens after `we`/`WE` so the contraction is styled correctly."
+let kind "Grammar"
+let becomes "We've"
+let strategy "MatchCase"
+
+# True positives
+test "We ve shipped the fix already." "We've shipped the fix already."
+test "we ve scheduled another call today." "we've scheduled another call today."
+test "We ve got several solid options now." "We've got several solid options now."
+test "we ve started prepping the release notes." "we've started prepping the release notes."
+
+# Guardrails / false positives
+allows "They ve been considering the same fix."
+
+# False negatives (punctuation interrupts the match)
+allows "We, ve already filed the ticket."
+
+# True negatives
+allows "We have already filed the ticket."

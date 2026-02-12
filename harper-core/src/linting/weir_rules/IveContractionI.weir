@@ -1,0 +1,25 @@
+expr pronoun [I, i]
+expr main <(@pronoun ve)>
+
+let message "Glue `ve` to `I` with an apostrophe to form `I've`."
+let description "Flags standalone `ve` tokens after `I` so the contraction is written correctly."
+let kind "Grammar"
+let becomes "I've"
+let strategy "MatchCase"
+
+# True positives
+test "I ve been on this call for hours." "I've been on this call for hours."
+test "I ve reviewed the logs twice today." "I've reviewed the logs twice today."
+test "i ve started drafting the summary." "i've started drafting the summary."
+test "i ve still got a question about the rollout." "i've still got a question about the rollout."
+
+# Guardrails / false positives
+allows "I value the work the team delivered."
+allows "I ventured into the new project last quarter."
+
+# False negatives (punctuation currently blocks the match)
+allows "I, ve read that note already."
+allows "I - ve logged the issue."
+
+# True negatives
+allows "I have been attending every stand-up."

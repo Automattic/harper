@@ -1,0 +1,26 @@
+expr main similar like
+
+let message "Prefer 'similar to' instead of 'similar like'."
+let description "The adjective 'similar' pairs with the preposition 'to', so never follow it with 'like'."
+let kind "Usage"
+let becomes "similar to"
+let strategy "MatchCase"
+
+# True positives
+test "similar like" "similar to"
+test "Similar like" "Similar to"
+test "SIMILAR LIKE" "SIMILAR TO"
+test "My idea is similar like yours." "My idea is similar to yours."
+test "We noticed similar like behavior in each release." "We noticed similar to behavior in each release."
+test "Tell me if this sample feels similar like the old version." "Tell me if this sample feels similar to the old version."
+test "The proof seemed similar like every previous argument." "The proof seemed similar to every previous argument."
+test "A similar like token often flags the wrong preposition." "A similar to token often flags the wrong preposition."
+
+# True negatives / guardrails
+test "The two items are similar too." "The two items are similar too."
+test "She is similar in taste." "She is similar in taste."
+test "similar to" "similar to"
+test "This word similarlike is unusual." "This word similarlike is unusual."
+test "His similar likeness is uncanny." "His similar likeness is uncanny."
+test "I enjoy similar lighting at dusk." "I enjoy similar lighting at dusk."
+test "She mentioned similar limitations yesterday." "She mentioned similar limitations yesterday."

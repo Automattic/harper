@@ -1,0 +1,20 @@
+expr main <(THEY ve)>
+
+let message "Glue `ve` to uppercase `THEY` so the contraction reads `THEY'VE`."
+let description "Keeps `THEY` in all caps when it contracts with `ve`."
+let kind "Grammar"
+let becomes "THEY'VE"
+let strategy "Exact"
+
+# True positives
+test "THEY ve already decided on the launch window." "THEY'VE already decided on the launch window."
+test "THEY ve confirmed the final availability." "THEY'VE confirmed the final availability."
+
+# Guardrails
+allows "THEYVE already confirmed the final availability."
+
+# False negatives
+allows "THEY, ve already scheduled the deployment."
+
+# True negatives
+allows "THEY have already scheduled the deployment."

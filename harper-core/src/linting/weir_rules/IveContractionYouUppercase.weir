@@ -1,0 +1,20 @@
+expr main <(YOU ve)>
+
+let message "Fuse `ve` to uppercase `YOU` so the contraction reads `YOU'VE`."
+let description "Ensures the all-caps pronoun `YOU` still uses the standard contraction with an apostrophe."
+let kind "Grammar"
+let becomes "YOU'VE"
+let strategy "Exact"
+
+# True positives
+test "YOU ve seen the latest log, right?" "YOU'VE seen the latest log, right?"
+test "YOU ve already replied to the thread." "YOU'VE already replied to the thread."
+
+# Guardrails / false positives
+allows "YOUVE already submitted the form."
+
+# False negatives (punctuation separates the words)
+allows "YOU, ve reviewed that report."
+
+# True negatives
+allows "YOU have already replied to the thread."
