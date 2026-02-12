@@ -1,4 +1,5 @@
-expr main <(goggle [ads, analytics, calendar, chrome, classroom, docs, drive, forms, hangouts, mail, maps, news, photos, search, sheets, slides, translate, workspace]), goggle>
+expr googleMispellings [goggle, googol]
+expr main <(@googleMispellings [ads, analytics, calendar, chrome, classroom, docs, drive, forms, hangouts, mail, maps, news, photos, search, sheets, slides, translate, workspace]), @googleMispellings>
 
 let message "You probably meant to spell the company name `Google`."
 let description "Replaces the misspelling `goggle` when it is paired with a well-known Google service."
@@ -16,6 +17,7 @@ test "His goggle search history is a little wild." "His Google search history is
 test "Goggle workspace just announced a redesign." "Google workspace just announced a redesign."
 test "goggle mail and goggle calendar both flagged the alert." "Google mail and Google calendar both flagged the alert."
 test "Send the screenshot to goggle photos support." "Send the screenshot to Google photos support."
+test "Send the screenshot to googol photos support." "Send the screenshot to Google photos support."
 
 test "She wore a goggle when swimming." "She wore a goggle when swimming."
 test "The archaeologist examined the ancient goggle carefully." "The archaeologist examined the ancient goggle carefully."
@@ -23,3 +25,4 @@ test "This goggle strap needs tightening." "This goggle strap needs tightening."
 test "Goggle is a brand of swimwear." "Goggle is a brand of swimwear."
 test "Let's goggle the data and see what pops up." "Let's goggle the data and see what pops up."
 test "Goggles help keep sand out of the eyes." "Goggles help keep sand out of the eyes."
+
