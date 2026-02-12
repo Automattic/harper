@@ -1,3 +1,2 @@
-pub const fn = 42;
 // Errorz
-pub const i32 = true;
+const x = 1;
