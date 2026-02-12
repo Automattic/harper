@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.13'
+}
+
+tasks.register('printConfig') {
+    doLast {
+        // This commment appears in a Gradle task body with interpolation-like syntax.
+        def mode = project.findProperty('mode') ?: 'dev'
+        println "mode=${mode}"
+    }
+}
