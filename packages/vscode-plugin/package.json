@@ -65,7 +65,8 @@
 		"onLanguage:toml",
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
-		"onLanguage:typst"
+		"onLanguage:typst",
+		"onLanguage:zig"
 	],
 	"main": "./build/extension.js",
 	"contributes": {
