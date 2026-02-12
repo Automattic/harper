@@ -53553,6 +53553,7 @@ ACM/Ng
 ADT/NgS             # abstract data type, algebraic data type
 AGI/Sg              # artificial general intelligence
 AMC/NOSg            # old car brand
+#ANN/Ng             # artificial neural network !! TODO causes "Ann" to be flagged by `SpellCheck
 AOC/Og              # US politician Alexandria Ocasio-Cortez
 APFS/Og             # Apple file system
 ARM64/Og            # see also AArch64
@@ -53584,8 +53585,10 @@ B&B/Ng
 B2B/J               # business-to-business
 BCD/Ng              # binary coded decimal
 BCPL/Ng             # old programming language
+BERT/Og             # Bidirectional Encoder Representations from Transformers
 BLM/Ng
 BOM/NSg             # Byte Order Mark
+BPE/NgS             # Byte Pair Encoding
 BRICS/              # intergovernmental organization
 BSON/Ng             # binary JSON
 BSP/NSg             # data structure
@@ -53678,6 +53681,7 @@ ECMA/Og             # European Computer Manufacturers Association
 EEA/O               # European Economic Area
 EFI/Og              # Extensible Firmware Interface
 EGR/                # exhaust gas recirculation
+ELIZA/Og
 EMR/NOSg
 EOF/NgS             # end of file
 EPUB/NOSg           # e-book format
@@ -53714,6 +53718,7 @@ Forgejo/Og          # programming forge / git host
 Frankl/Sg
 FreeBSD/Og          # operating system
 FreeType/ONg        # typography library
+GAN/NgS             # generative adversarial network
 GLFW/Og
 GPG/Og              # GNU Privacy Guard
 GPIO/Ng             # general purpose input/output
@@ -53810,6 +53815,7 @@ LOC/9               # source lines of code
 LRU                 # least recently used
 LSB/NOgS            # least significant bit/byte; Linux Standard Base
 LSP/NgS             # language server protocol
+LSTM/NgS            # long short-term memory
 LTE/NOJ             # long-term evolution
 LTS/NSg
 LUT/NgS             # lookup table
@@ -53944,6 +53950,8 @@ REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
 RISC/Ng             # cpu architecture
 RJ45/Ng             # ethernet connector
+RL/Nmg              # reinforcement learning
+RNN/NgS             # recurrent neural network
 RPC/ONSg            # remote procedure call
 RPG/NgS             # role-playing game
 RTX/NSg
@@ -53952,12 +53960,14 @@ React Native/Og     # framework
 ReactJS/Og
 Red Hat/Og
 Reddit/Og
+ReLU/NwgS           # rectifier linear unit
 Rivian/Sg           # ev company
 Roumania/Og         # pre-WWII spelling
 RustConf/Og         # conference
 SCM/Ng              # source code management
 SDK/NSg             # software development kit
 SDL/Og              # Simple DirectMedia Layer
+SGD/Nmg             # stochastic gradient descent
 SHA/ONg             # Secure Hash Algorithm
 SIMD/NSg            # single instruction, multiple data
 SLA/NSg
@@ -54098,6 +54108,8 @@ autoconfig/Ng
 autoconfiguration/Ng
 autoconfigure/VSdG
 autodifferentiation/Nmg
+autoencoder/NgS
+autoregression/Nmg
 autoprefixer/NgS
 autosave/VSdGNg
 awk/Og              # *nix tool
@@ -54121,6 +54133,7 @@ dedup/Ng            # not well covered by dictionaries. wiktionary has only sing
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
 diarization/NmgS    # used in voice recognition
 docstring/NSg
+doomerism/Nmg
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
 ext2/Ng             # file system
@@ -54129,6 +54142,7 @@ ext4/Ng             # file system
 failable/J
 failover/NwgS
 falsy/J
+feedforward/NmJ
 filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
 freemium/J
@@ -54156,6 +54170,7 @@ iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
 interop/NmgS        # interoperability - see also FFI
+interpretability/Nmg
 invokable/J         # not in most dictionaries, used in computing
 jQuery/Og
 keybind/NgS         # key binding
