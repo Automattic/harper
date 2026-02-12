@@ -1,0 +1,35 @@
+expr connector [kind, sort]
+expr wrongprep [if, off]
+expr guard ![PRON, INTJ, PART, CCONJ, SCONJ, ADP, PUNCT, this, that, these, those, there, here]
+
+expr main <((@connector @wrongprep) @guard), (@wrongprep)>
+
+let message "Use `of` after `kind` or `sort` when you mean the softening filler instead of the typo."
+let description "Flags `kind if` or `sort off` that stand before qualifiers so the filler `of` stays intact."
+let kind "Typo"
+let becomes "of"
+
+# True positives
+
+test "I'm kind if tired today." "I'm kind of tired today."
+test "Sort off the new theme looked strange." "Sort of the new theme looked strange."
+test "This is kind if a stretch for sure." "This is kind of a stretch for sure."
+test "We saw sort off the same glitch twice." "We saw sort of the same glitch twice."
+test "Kind off serious bugs remain." "Kind of serious bugs remain."
+test "Sort off a few people ignored the warning." "Sort of a few people ignored the warning."
+test "KIND IF IMPORTANT signals lit up the board." "KIND OF IMPORTANT signals lit up the board."
+test "kind off perfectly tuned feedback arrived." "kind of perfectly tuned feedback arrived."
+test "Sort off a steady trend emerges soon." "Sort of a steady trend emerges soon."
+
+# True negatives / false positives
+
+test "Be kind if you can." "Be kind if you can."
+test "Sort if that path seems safe." "Sort if that path seems safe."
+test "Kind if there is time, I'll help." "Kind if there is time, I'll help."
+test "Sort if this plan feels solid." "Sort if this plan feels solid."
+
+# Known false negatives
+
+test "Kind if, at first, the logs were quiet." "Kind if, at first, the logs were quiet."
+test "Sort off, despite the caveats, the data feels solid." "Sort off, despite the caveats, the data feels solid."
+test "kind if whatever, I trust the fix." "kind if whatever, I trust the fix."
