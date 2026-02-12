@@ -24,6 +24,7 @@ describe('Languages >', () => {
 		// { type: 'TOML', file: 'toml.toml', row: 1, column: 2 },
 		// { type: 'Typst', file: 'typst.typ', row: 2, column: 1 },
 		// { type: 'Solidity', file: 'solidity.sol', row: 3, column: 4 },
+		// { type: 'Zig', file: 'zig.zig', row: 0, column: 2 },
 
 		{ type: 'C', file: 'c.c', row: 2, column: 3 },
 		{ type: 'C++', file: 'cpp.cpp', row: 3, column: 5 },
@@ -48,7 +49,6 @@ describe('Languages >', () => {
 		{ type: 'Swift', file: 'swift.swift', row: 9, column: 26 },
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
-		{ type: 'Zig', file: 'zig.zig', row: 0, column: 2 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
 			const uri = getUri('languages', testCase.file);
