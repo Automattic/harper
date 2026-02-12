@@ -117,7 +117,21 @@ function scan() {
 			}
 
 			element.setAttribute('data-language', 'typst');
-			fw.addTarget(element);
+			const lineElements = element.querySelectorAll<HTMLElement>('.cm-line');
+
+			if (lineElements.length === 0) {
+				fw.addTarget(element);
+				return;
+			}
+
+			lineElements.forEach((lineElement) => {
+				if (!isVisible(lineElement)) {
+					return;
+				}
+
+				lineElement.setAttribute('data-language', 'typst');
+				fw.addTarget(lineElement);
+			});
 		});
 
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
