@@ -97,7 +97,34 @@ function scan() {
 		}
 	});
 
+	document
+		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
+		.forEach((element) => {
+			const isTypstPlayground =
+				window.location.hostname === 'typst.app' && window.location.pathname.startsWith('/play');
+			const explicitlyTypst = element.getAttribute('data-language') === 'typst';
+
+			if (!isTypstPlayground && !explicitlyTypst) {
+				return;
+			}
+
+			if (element.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+				return;
+			}
+
+			if (!isVisible(element)) {
+				return;
+			}
+
+			element.setAttribute('data-language', 'typst');
+			fw.addTarget(element);
+		});
+
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.classList.contains('cm-content') && element.closest('.cm-editor') != null) {
+			return;
+		}
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
