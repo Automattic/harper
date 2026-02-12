@@ -626,16 +626,6 @@ Message: |
 
 
 
-Lint:    Style (31 priority)
-Message: |
-     514 | “I’ll show you how I’ve gotten to feel about—things. Well, she was less than an
-     515 | hour old and Tom was God knows where. I woke up out of the ether with an utterly
-         |     ^ Hyphenate the descriptor that follows a measurement before a noun.
-Suggest:
-  - Replace with: “-”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
@@ -3575,16 +3565,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2294 | said tut-tut-tut-tut, in a disapproving way.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
-
-
-
-Lint:    Style (31 priority)
-Message: |
-    2298 | popular of all the young girls in Louisville. She dressed in white, and had a
-    2299 | little white roadster, and all day long the telephone rang in her house and
-         |                                   ^ Hyphenate the descriptor that follows a measurement before a noun.
-Suggest:
-  - Replace with: “-”
 
 
 

@@ -3827,15 +3827,6 @@ Message: |
 
 
 
-Lint:    Style (31 priority)
-Message: |
-    2800 | All persons more than a mile high to leave the court.”
-         |                             ^ Hyphenate the descriptor that follows a measurement before a noun.
-Suggest:
-  - Replace with: “-”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2870 | > “They told me you had been to her, And mentioned me to him: She gave me a good
