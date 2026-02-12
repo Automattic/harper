@@ -3772,6 +3772,16 @@ Message: |
 
 
 
+Lint:    Grammar (31 priority)
+Message: |
+    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
+         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
+    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
+Suggest:
+  - Replace with: “them”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2747 | “Here!” cried Alice, quite forgetting in the flurry of the moment how large she
@@ -3814,6 +3824,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2773 | gazing up into the roof of the court.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
+
+
+
+Lint:    Style (31 priority)
+Message: |
+    2800 | All persons more than a mile high to leave the court.”
+         |                             ^ Hyphenate the descriptor that follows a measurement before a noun.
+Suggest:
+  - Replace with: “-”
 
 
 

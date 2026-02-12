@@ -626,6 +626,16 @@ Message: |
 
 
 
+Lint:    Style (31 priority)
+Message: |
+     514 | “I’ll show you how I’ve gotten to feel about—things. Well, she was less than an
+     515 | hour old and Tom was God knows where. I woke up out of the ether with an utterly
+         |     ^ Hyphenate the descriptor that follows a measurement before a noun.
+Suggest:
+  - Replace with: “-”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      529 | the whole evening had been a trick of some sort to exact a contributary emotion
@@ -3568,6 +3578,16 @@ Message: |
 
 
 
+Lint:    Style (31 priority)
+Message: |
+    2298 | popular of all the young girls in Louisville. She dressed in white, and had a
+    2299 | little white roadster, and all day long the telephone rang in her house and
+         |                                   ^ Hyphenate the descriptor that follows a measurement before a noun.
+Suggest:
+  - Replace with: “-”
+
+
+
 Lint:    Repetition (63 priority)
 Message: |
     2314 | girl wants to be looked at sometime, and because it seemed romantic to me I have
@@ -4835,17 +4855,6 @@ Suggest:
   - Replace with: “incommunicable”
   - Replace with: “communicable”
   - Replace with: “noncommunicable”
-
-
-
-Lint:    Punctuation (54 priority)
-Message: |
-    3495 | It was when curiosity about Gatsby was at its highest that the lights in his
-         |                                           ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-    3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
-Suggest:
-  - Replace with: “it's”
-  - Replace with: “it has”
 
 
 
