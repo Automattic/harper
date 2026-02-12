@@ -40,6 +40,7 @@
 		"onLanguage:dart",
 		"onLanguage:git-commit",
 		"onLanguage:go",
+		"onLanguage:groovy",
 		"onLanguage:haskell",
 		"onLanguage:html",
 		"onLanguage:ink",
