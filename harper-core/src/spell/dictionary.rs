@@ -12,12 +12,16 @@ use crate::DictWordMetadata;
 pub trait Dictionary: Send + Sync {
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool;
+
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word_str(&self, word: &str) -> bool;
+
     /// Check if the dictionary contains the exact capitalization of a given word.
     fn contains_exact_word(&self, word: &[char]) -> bool;
+
     /// Check if the dictionary contains the exact capitalization of a given word.
     fn contains_exact_word_str(&self, word: &str) -> bool;
+
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match(
         &'_ self,
@@ -25,6 +29,7 @@ pub trait Dictionary: Send + Sync {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
+
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match_str(
         &'_ self,
