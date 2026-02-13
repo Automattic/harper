@@ -398,7 +398,7 @@ impl Backend {
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
-            "tex" | "plaintex" => Some(Box::new(TeX::default())),
+            "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
             _ => None,
         };
 
