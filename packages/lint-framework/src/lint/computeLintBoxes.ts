@@ -16,6 +16,8 @@ import {
 	type UnpackedSuggestion,
 } from './unpackLint';
 
+let googleDocsRectRequestCounter = 0;
+
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
@@ -103,33 +105,78 @@ function computeGoogleDocsLintBoxes(
 ): IgnorableLintBox[] {
 	try {
 		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		const mainWorldBridge = document.getElementById('harper-google-docs-main-world-bridge');
 
 		if (!editor) {
 			return [];
 		}
 
-		const editorRect = editor.getBoundingClientRect();
-		if (editorRect.width <= 0 || editorRect.height <= 0) {
-			return [];
+		let rects: { x: number; y: number; width: number; height: number }[] = [];
+
+		if (mainWorldBridge) {
+			const requestId = `rect-${googleDocsRectRequestCounter++}`;
+			const attrName = `data-harper-rects-${requestId}`;
+			document.dispatchEvent(
+				new CustomEvent('harper:gdocs:get-rects', {
+					detail: {
+						requestId,
+						start: lint.span.start,
+						end: lint.span.end,
+					},
+				}),
+			);
+
+			const raw = mainWorldBridge.getAttribute(attrName);
+			mainWorldBridge.removeAttribute(attrName);
+
+			if (raw) {
+				try {
+					const parsed = JSON.parse(raw);
+					if (Array.isArray(parsed)) {
+						rects = parsed.filter(
+							(rect) =>
+								typeof rect?.x === 'number' &&
+								typeof rect?.y === 'number' &&
+								typeof rect?.width === 'number' &&
+								typeof rect?.height === 'number',
+						);
+					}
+				} catch {
+					// Ignore malformed bridge payloads.
+				}
+			}
 		}
 
-		return [
-			{
-				x: editorRect.left + 12,
-				y: editorRect.top + 12,
-				width: Math.max(24, Math.min(60, editorRect.width - 24)),
-				height: 18,
-				lint,
-				source: editor,
-				rule,
-				applySuggestion: (sug: UnpackedSuggestion) => {
-					const current = bridge.textContent ?? '';
-					const replacement = suggestionToReplacementText(sug, lint.span, current);
-					replaceGoogleDocsValue(lint.span, replacement);
+		if (rects.length === 0) {
+			const editorRect = editor.getBoundingClientRect();
+			if (editorRect.width <= 0 || editorRect.height <= 0) {
+				return [];
+			}
+			rects = [
+				{
+					x: editorRect.left + 12,
+					y: editorRect.top + 12,
+					width: Math.max(24, Math.min(60, editorRect.width - 24)),
+					height: 18,
 				},
-				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+			];
+		}
+
+		return rects.map((rect) => ({
+			x: rect.x,
+			y: rect.y,
+			width: rect.width,
+			height: rect.height,
+			lint,
+			source: editor,
+			rule,
+			applySuggestion: (sug: UnpackedSuggestion) => {
+				const current = bridge.textContent ?? '';
+				const replacement = suggestionToReplacementText(sug, lint.span, current);
+				replaceGoogleDocsValue(lint.span, replacement);
 			},
-		];
+			ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+		}));
 	} catch {
 		return [];
 	}

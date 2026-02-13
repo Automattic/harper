@@ -16,11 +16,64 @@
 			if (typeof getAnnotatedText !== 'function') return;
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.getText !== 'function') return;
+			window.__harperGoogleDocsAnnotatedText = annotated;
 			bridge.textContent = annotated.getText();
 		} catch {
 			// Ignore intermittent Docs internal errors.
 		}
 	};
+
+	const getCaretRect = (annotated, position) => {
+		annotated.setSelection(position, position);
+		const caret = document.querySelector('.kix-cursor-caret');
+		if (!caret) return null;
+		const rect = caret.getBoundingClientRect();
+		if (!rect || rect.width <= 0 || rect.height <= 0) return null;
+		return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+	};
+
+	document.addEventListener('harper:gdocs:get-rects', (event) => {
+		try {
+			const detail = event.detail || {};
+			const requestId = String(detail.requestId || '');
+			if (!requestId) return;
+			const start = Number(detail.start);
+			const end = Number(detail.end);
+			const annotated = window.__harperGoogleDocsAnnotatedText;
+			if (!annotated || typeof annotated.setSelection !== 'function') return;
+
+			const previousSelection = annotated.getSelection?.()?.[0] || null;
+			const spanStart = Math.max(0, Math.min(start, end));
+			const spanEnd = Math.max(spanStart, end);
+			const startRect = getCaretRect(annotated, spanStart);
+			const endRect = getCaretRect(annotated, spanEnd);
+
+			const rects = [];
+			if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
+				rects.push({
+					x: Math.min(startRect.x, endRect.x),
+					y: startRect.y,
+					width: Math.max(4, Math.abs(endRect.x - startRect.x)),
+					height: startRect.height,
+				});
+			} else if (startRect) {
+				rects.push({
+					x: startRect.x,
+					y: startRect.y,
+					width: 8,
+					height: startRect.height,
+				});
+			}
+
+			if (previousSelection) {
+				annotated.setSelection(previousSelection.start, previousSelection.end + 1);
+			}
+
+			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
+		} catch {
+			// No-op.
+		}
+	});
 
 	document.addEventListener('harper:gdocs:replace', async (event) => {
 		try {

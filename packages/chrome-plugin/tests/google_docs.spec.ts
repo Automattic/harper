@@ -81,5 +81,38 @@ test('Google Docs: Harper can write a suggestion back into the document', async 
 			const text = await getGoogleDocText(page);
 			return text ?? '';
 		})
-		.toContain(corrected);
+			.toContain(corrected);
+});
+
+test('Google Docs: highlight appears near linted text', async ({ page }) => {
+	const token = `harper-gdocs-position-${Date.now()}`;
+	const input = `This is an test ${token}`;
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const caretRect = await page.evaluate(async (token) => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const text = annotated.getText() as string;
+		const start = text.indexOf(`an test ${token}`);
+		if (start < 0) return null;
+		annotated.setSelection(start, start);
+		const caret = document.querySelector('.kix-cursor-caret');
+		const rect = caret?.getBoundingClientRect();
+		if (!rect) return null;
+		return { x: rect.x, y: rect.y };
+	}, token);
+	expect(caretRect).not.toBeNull();
+
+	const highlightBox = await page.locator('#harper-highlight').first().boundingBox();
+	expect(highlightBox).not.toBeNull();
+	expect(Math.abs((highlightBox?.x ?? 0) - (caretRect?.x ?? 0))).toBeLessThan(120);
+	expect(Math.abs((highlightBox?.y ?? 0) - (caretRect?.y ?? 0))).toBeLessThan(60);
 });
