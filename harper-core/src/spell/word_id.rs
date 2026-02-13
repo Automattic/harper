@@ -1,4 +1,4 @@
-//! Identifiers for a words.
+//! Identifiers for words.
 //!
 //! These are meant for situations where you need to refer to a word (or a collection of words),
 //! without storing all of accompanying data (like spelling or metadata).
