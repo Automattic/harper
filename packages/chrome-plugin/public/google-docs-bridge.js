@@ -23,6 +23,40 @@
 		}
 	};
 
+	const getScrollState = () => {
+		const state = [];
+		state.push({ type: 'window', x: window.scrollX, y: window.scrollY });
+
+		const keep = new Set(
+			Array.from(
+				document.querySelectorAll('.kix-appview-editor, .kix-appview-editor-container, #docs-editor'),
+			),
+		);
+
+		for (const el of document.querySelectorAll('*')) {
+			const node = el;
+			if (!(node instanceof HTMLElement)) continue;
+			if (node.scrollTop !== 0 || node.scrollLeft !== 0 || keep.has(node)) {
+				state.push({ type: 'element', el: node, top: node.scrollTop, left: node.scrollLeft });
+			}
+		}
+
+		return state;
+	};
+
+	const restoreScrollState = (state) => {
+		for (const entry of state) {
+			if (entry.type === 'window') {
+				window.scrollTo(entry.x, entry.y);
+				continue;
+			}
+
+			if (!entry.el || !entry.el.isConnected) continue;
+			entry.el.scrollTop = entry.top;
+			entry.el.scrollLeft = entry.left;
+		}
+	};
+
 	const getCaretRect = (annotated, position) => {
 		annotated.setSelection(position, position);
 		const caret = document.querySelector('.kix-cursor-caret');
@@ -41,6 +75,7 @@
 			const end = Number(detail.end);
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
+			const scrollState = getScrollState();
 
 			const previousSelection = annotated.getSelection?.()?.[0] || null;
 			const spanStart = Math.max(0, Math.min(start, end));
@@ -74,6 +109,9 @@
 					annotated.setSelection(prevStart, prevEnd + 1);
 				}
 			}
+
+			restoreScrollState(scrollState);
+			setTimeout(() => restoreScrollState(scrollState), 0);
 
 			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {

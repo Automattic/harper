@@ -32,6 +32,13 @@ async function replaceDocumentContent(page: Page, line: string) {
 	await page.keyboard.type(line);
 }
 
+async function getGoogleDocsEditorScrollTop(page: Page) {
+	return page.evaluate(() => {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		return editor?.scrollTop ?? 0;
+	});
+}
+
 test('Google Docs: Harper can read lintable text', async ({ page }) => {
 	const token = `harper-gdocs-read-${Date.now()}`;
 	const input = `This is an test ${token}`;
@@ -163,4 +170,31 @@ test('Google Docs: selection does not grow over time', async ({ page }) => {
 
 	expect(after.start).toBe(before.start);
 	expect(after.end).toBe(before.end);
+});
+
+test('Google Docs: scrolling does not snap back upward', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-scroll-${Date.now()}`;
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	const longText = [`This is an test ${token}`]
+		.concat(Array.from({ length: 80 }, (_, i) => `line ${i} ${token}`))
+		.join('\n');
+	await replaceDocumentContent(page, longText);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const initial = await getGoogleDocsEditorScrollTop(page);
+	for (let i = 0; i < 12; i++) {
+		await page.keyboard.press('PageDown');
+	}
+	await page.waitForTimeout(500);
+	const scrolled = await getGoogleDocsEditorScrollTop(page);
+	expect(scrolled).toBeGreaterThan(initial + 150);
+
+	await page.waitForTimeout(2500);
+	const afterWait = await getGoogleDocsEditorScrollTop(page);
+	expect(afterWait).toBeGreaterThan(scrolled - 30);
 });
