@@ -33,6 +33,7 @@ describe('Languages >', () => {
 		{ type: 'Dart', file: 'dart.dart', row: 1, column: 29 },
 		{ type: 'Git Commit', file: 'git-commit', row: 0, column: 0 },
 		{ type: 'Go', file: 'go.go', row: 4, column: 4 },
+		{ type: 'Groovy', file: 'groovy.groovy', row: 0, column: 3 },
 		{ type: 'HTML', file: 'html.html', row: 8, column: 6 },
 		{ type: 'Java', file: 'java.java', row: 2, column: 17 },
 		{ type: 'JavaScript', file: 'javascript.js', row: 1, column: 3 },
