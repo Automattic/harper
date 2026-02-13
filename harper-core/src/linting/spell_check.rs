@@ -7,7 +7,7 @@ use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, Dialect, TokenStringExt};
+use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -66,15 +66,6 @@ impl<T: Dictionary> SpellCheck<T> {
     }
 }
 
-/// `SpellCheck` will typically ignore words that exist in the dictionary, regardless of casing.
-/// However, these (case-sensitive) exceptions will be linted anyway.
-/// As an example, we want `SpellCheck` to suggest "need" for "ned", even though "Ned" exists in the
-/// curated dictionary.
-///
-/// This is a somewhat hacky workaround. When a more general solution can be found, this should be
-/// removed.
-static CASING_EXCEPTIONS: &[&[char]] = &[&['n', 'e', 'd']];
-
 impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
@@ -84,8 +75,13 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
-                && (self.dictionary.contains_word(word_chars)
-                    && !CASING_EXCEPTIONS.contains(&word_chars))
+                && (self.dictionary.contains_exact_word(word_chars)
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().as_ref())
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().to_lower().as_ref()))
             {
                 continue;
             };

@@ -32,6 +32,18 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+       8 | In corpus linguistics, part-of-speech tagging (POS tagging or PoS tagging or
+         |                                                               ^~~ Did you mean to spell `PoS` this way?
+       9 | POST), also called grammatical tagging is the process of marking up a word in a
+Suggest:
+  - Replace with: “Pod”
+  - Replace with: “Poi”
+  - Replace with: “Pol”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:

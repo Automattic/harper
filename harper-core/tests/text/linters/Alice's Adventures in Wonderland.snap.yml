@@ -3162,6 +3162,17 @@ Suggest:
 
 
 
+Lint:    Spelling (63 priority)
+Message: |
+    2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
+         |                                                            ^~ Did you mean to spell `Hm` this way?
+Suggest:
+  - Replace with: “Ha”
+  - Replace with: “Ham”
+  - Replace with: “He”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     2483 | > “Beautiful Soup, so rich and green, Waiting in a hot tureen! Who for such
@@ -3203,6 +3214,17 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                             ^~~ Did you mean to spell `oop` this way?
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                       ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
@@ -3234,6 +3256,17 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                   ^~~ Did you mean to spell `oop` this way?
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
          |                                                                        ^~~ Did you mean to spell `Soo` this way?
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
@@ -3250,6 +3283,18 @@ Message: |
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
   - Replace with: “OOP”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2485 | > evening, beautiful Soup! Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop
+         |                                                                            ^~~ Did you mean to spell `oop` this way?
+    2486 | > of the e—e—evening, Beautiful, beautiful Soup!
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
 
 
 
@@ -3307,6 +3352,17 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                    ^~~ Did you mean to spell `oop` this way?
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                              ^~~~~~~ Did you mean to spell `ootiful` this way?
 Suggest:
   - Replace with: “dutiful”
@@ -3338,6 +3394,17 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                          ^~~ Did you mean to spell `oop` this way?
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
          |                                                               ^~~ Did you mean to spell `Soo` this way?
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
@@ -3354,6 +3421,18 @@ Message: |
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
   - Replace with: “OOP”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
+         |                                                                   ^~~ Did you mean to spell `oop` this way?
+    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
 
 
 
@@ -3436,6 +3515,17 @@ Message: |
          |        ^~~ This word's canonical spelling is all-caps.
 Suggest:
   - Replace with: “OOP”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    2503 | > “Soo—oop of the e—e—evening, Beautiful, beautiful Soup!”
+         |        ^~~ Did you mean to spell `oop` this way?
+Suggest:
+  - Replace with: “oops”
+  - Replace with: “op”
+  - Replace with: “opp”
 
 
 
