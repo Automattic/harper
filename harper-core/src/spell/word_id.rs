@@ -3,75 +3,15 @@
 //! These are meant for situations where you need to refer to a word (or a collection of words),
 //! without storing all of accompanying data (like spelling or metadata).
 
-use std::hash::BuildHasher;
-
-use foldhash::fast::FixedState;
 use serde::{Deserialize, Serialize};
 
-use crate::{CharString, CharStringExt};
+use crate::CharString;
 
-/// An identifier for a particular word with canonical casing.
-#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
-pub struct CanonicalWordId {
-    hash: u64,
-}
+pub use canonical_word_id::CanonicalWordId;
+pub use case_folded_word_id::CaseFoldedWordId;
 
-impl CanonicalWordId {
-    /// Create a Word ID from a character slice.
-    pub fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
-        let hash = FixedState::default().hash_one(chars.as_ref());
-
-        Self { hash }
-    }
-
-    /// Create a word ID from a string.
-    /// Requires allocation, so use sparingly.
-    pub fn from_word_str(text: impl AsRef<str>) -> Self {
-        let chars: CharString = text.as_ref().chars().collect();
-        Self::from_word_chars(chars)
-    }
-
-    /// Reinterpret this ID as a [`CaseFoldedWordId`].
-    ///
-    /// Note that this is just a reinterpretation, it does not perform any conversion. This is
-    /// useful when the canonical word ID is the same as the case-folded word ID. This will only
-    /// happen if the canonical ID was generated with a word that was already lowercased and
-    /// normalized.
-    pub(crate) fn as_case_folded(self) -> CaseFoldedWordId {
-        CaseFoldedWordId { hash: self.hash }
-    }
-}
-
-/// An identifier for a particular word with case-folded casing.
-///
-/// This does not usually point to a specific word, but rather a group of words that are identical
-/// when lowercased.
-#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
-pub struct CaseFoldedWordId {
-    hash: u64,
-}
-
-impl CaseFoldedWordId {
-    /// Create a Word ID from a character slice.
-    ///
-    /// This will case-fold and normalize the input before calculating the word ID.
-    pub fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
-        let normalized = chars.as_ref().normalized();
-        let lower = normalized.to_lower();
-        let hash = FixedState::default().hash_one(lower);
-
-        Self { hash }
-    }
-
-    /// Create a word ID from a string.
-    /// Requires allocation, so use sparingly.
-    ///
-    /// This will case-fold and normalize the input before calculating the word ID.
-    pub fn from_word_str(text: impl AsRef<str>) -> Self {
-        let chars: CharString = text.as_ref().chars().collect();
-        Self::from_word_chars(chars)
-    }
-}
+mod canonical_word_id;
+mod case_folded_word_id;
 
 /// A pair containing both [`CanonicalWordId`] and [`CaseFoldedWordId`] for a given word.
 #[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
