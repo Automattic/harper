@@ -2863,6 +2863,7 @@ dependencies = [
  "harper-literate-haskell",
  "harper-python",
  "harper-stats",
+ "harper-tex",
  "harper-typst",
  "itertools 0.14.0",
  "open",
@@ -2913,6 +2914,14 @@ dependencies = [
  "serde",
  "serde_json",
  "uuid",
+]
+
+[[package]]
+name = "harper-tex"
+version = "1.6.0"
+dependencies = [
+ "harper-core",
+ "paste",
 ]
 
 [[package]]

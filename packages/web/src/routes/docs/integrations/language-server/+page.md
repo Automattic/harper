@@ -308,6 +308,7 @@ These configs are under the `markdown` key:
 | TypeScript React    |       `typescriptreact`       |            ✅ |
 | Typst               |            `typst`            |               |
 | Zig                 |             `zig`             |            ✅ |
+| LaTeX/TeX           | `latex`/`tex`/`plaintex`      |               |
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).

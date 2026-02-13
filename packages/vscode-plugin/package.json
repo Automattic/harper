@@ -63,6 +63,8 @@
 		"onLanguage:shellscript",
 		"onLanguage:solidity",
 		"onLanguage:swift",
+		"onLanguage:tex",
+		"onLanguage:latex",
 		"onLanguage:toml",
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
