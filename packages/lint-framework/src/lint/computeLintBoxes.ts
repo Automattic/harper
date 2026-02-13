@@ -1,4 +1,4 @@
-import type { Span } from 'harper.js';
+import { type Span, SuggestionKind } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import {
@@ -9,7 +9,12 @@ import {
 	isFormEl,
 } from './editorUtils';
 import TextFieldRange from './TextFieldRange';
-import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
+import {
+	applySuggestion,
+	type UnpackedLint,
+	type UnpackedSpan,
+	type UnpackedSuggestion,
+} from './unpackLint';
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -70,8 +75,7 @@ export default function computeLintBoxes(
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value
 						: (el.textContent ?? '');
-					const newValue = applySuggestion(current, lint.span, sug);
-					replaceValue(el, newValue, lint.span, sug.replacement_text);
+					replaceValue(el, lint.span, suggestionToReplacementText(sug, lint.span, current));
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -83,26 +87,37 @@ export default function computeLintBoxes(
 	}
 }
 
+/** Transform an arbitrary suggestion to the equivalent replacement text. */
+function suggestionToReplacementText(
+	sug: UnpackedSuggestion,
+	span: UnpackedSpan,
+	source: string,
+): string {
+	switch (sug.kind) {
+		case SuggestionKind.Replace:
+			return sug.replacement_text;
+		case SuggestionKind.Remove:
+			return '';
+		case SuggestionKind.InsertAfter:
+			return source.slice(span.start, span.end) + sug.replacement_text;
+	}
+}
+
 function replaceValue(
 	el: HTMLElement,
-	value: string,
-	span?: { start: number; end: number },
-	replacementText?: string,
+	span: { start: number; end: number },
+	replacementText: string,
 ) {
-	if (isFormEl(el) && span && replacementText !== undefined) {
+	if (isFormEl(el)) {
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, span, replacementText);
-	} else if (getLexicalRoot(el) != null && span && replacementText !== undefined) {
+	} else if (getLexicalRoot(el) != null) {
 		replaceLexicalValue(el, span, replacementText);
-	} else if (getDraftRoot(el) != null && span && replacementText !== undefined) {
+	} else if (getDraftRoot(el) != null) {
 		replaceDraftValue(el, span, replacementText);
-	} else if (
-		(getSlateRoot(el) != null || getCkEditorRoot(el) != null) &&
-		span &&
-		replacementText !== undefined
-	) {
+	} else if (getSlateRoot(el) != null || getCkEditorRoot(el) != null) {
 		replaceRichTextEditorValue(el, span, replacementText);
 	} else {
-		replaceGenericContentEditable(el, value, span, replacementText);
+		replaceGenericContentEditable(el, span, replacementText);
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -251,9 +266,8 @@ function replaceTextInRange(doc: Document, sel: Selection, range: Range, replace
 
 function replaceGenericContentEditable(
 	el: HTMLElement,
-	value: string,
-	span?: { start: number; end: number },
-	replacementText?: string,
+	span: { start: number; end: number },
+	replacementText: string,
 ) {
 	if (span && replacementText !== undefined) {
 		const setup = selectSpanInEditor(el, span);
@@ -266,6 +280,9 @@ function replaceGenericContentEditable(
 	}
 
 	// Fallback: replace entire content
-	el.textContent = value;
+	el.textContent = applySuggestion(el.textContent, span, {
+		kind: SuggestionKind.Replace,
+		replacement_text: replacementText,
+	});
 	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 }

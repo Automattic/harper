@@ -48,6 +48,7 @@ impl CommentParser {
             "toml" => tree_sitter_toml_ng::LANGUAGE,
             "typescript" => tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
             "typescriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
+            "zig" => tree_sitter_zig::LANGUAGE,
             _ => return None,
         };
 
@@ -107,6 +108,7 @@ impl CommentParser {
             "toml" => "toml",
             "ts" => "typescript",
             "tsx" => "typescriptreact",
+            "zig" => "zig",
             _ => return None,
         })
     }
