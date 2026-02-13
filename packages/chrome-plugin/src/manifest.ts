@@ -70,7 +70,7 @@ export default defineManifest({
 	web_accessible_resources: [
 		{
 			matches: ['<all_urls>'],
-			resources: ['wasm/harper_wasm_bg.wasm'],
+			resources: ['wasm/harper_wasm_bg.wasm', 'google-docs-bridge.js'],
 		},
 	],
 	icons: {

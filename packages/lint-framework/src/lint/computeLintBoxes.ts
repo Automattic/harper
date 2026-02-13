@@ -22,6 +22,10 @@ export default function computeLintBoxes(
 	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
+	if (isGoogleDocsBridgeTarget(el)) {
+		return computeGoogleDocsLintBoxes(el, lint, rule, opts);
+	}
+
 	try {
 		let range: Range | TextFieldRange | null = null;
 
@@ -87,6 +91,50 @@ export default function computeLintBoxes(
 	}
 }
 
+function isGoogleDocsBridgeTarget(el: HTMLElement): boolean {
+	return el.getAttribute('data-harper-google-docs-target') === 'true';
+}
+
+function computeGoogleDocsLintBoxes(
+	bridge: HTMLElement,
+	lint: UnpackedLint,
+	rule: string,
+	opts: { ignoreLint?: (hash: string) => Promise<void> },
+): IgnorableLintBox[] {
+	try {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+
+		if (!editor) {
+			return [];
+		}
+
+		const editorRect = editor.getBoundingClientRect();
+		if (editorRect.width <= 0 || editorRect.height <= 0) {
+			return [];
+		}
+
+		return [
+			{
+				x: editorRect.left + 12,
+				y: editorRect.top + 12,
+				width: Math.max(24, Math.min(60, editorRect.width - 24)),
+				height: 18,
+				lint,
+				source: editor,
+				rule,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					const current = bridge.textContent ?? '';
+					const replacement = suggestionToReplacementText(sug, lint.span, current);
+					replaceGoogleDocsValue(lint.span, replacement);
+				},
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+			},
+		];
+	} catch {
+		return [];
+	}
+}
+
 /** Transform an arbitrary suggestion to the equivalent replacement text. */
 function suggestionToReplacementText(
 	sug: UnpackedSuggestion,
@@ -121,6 +169,22 @@ function replaceValue(
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function replaceGoogleDocsValue(span: { start: number; end: number }, replacementText: string) {
+	try {
+		document.dispatchEvent(
+			new CustomEvent('harper:gdocs:replace', {
+				detail: {
+					start: span.start,
+					end: span.end,
+					replacementText,
+				},
+			}),
+		);
+	} catch {
+		// Ignore failures and leave the editor unchanged.
+	}
 }
 
 function replaceFormElementValue(

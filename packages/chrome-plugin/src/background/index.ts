@@ -75,6 +75,7 @@ async function enableDefaultDomains() {
 		'textarea.online',
 		'webmail.porkbun.com',
 		'mail.google.com',
+		'docs.google.com',
 		'trix-editor.org',
 		'github.com',
 		'messages.google.com',
