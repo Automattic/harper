@@ -1,5 +1,7 @@
 (() => {
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
+	let lastEditorScrollAt = 0;
+	let disableSelectionMeasurements = false;
 
 	let bridge = document.getElementById(BRIDGE_ID);
 	if (!bridge) {
@@ -75,43 +77,53 @@
 			const end = Number(detail.end);
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
+			if (disableSelectionMeasurements || Date.now() - lastEditorScrollAt < 1000) {
+				bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify([]));
+				return;
+			}
 			const scrollState = getScrollState();
-
-			const previousSelection = annotated.getSelection?.()?.[0] || null;
-			const spanStart = Math.max(0, Math.min(start, end));
-			const spanEnd = Math.max(spanStart, end);
-			const startRect = getCaretRect(annotated, spanStart);
-			const endRect = getCaretRect(annotated, spanEnd);
-
+			const currentSelection = annotated.getSelection?.()?.[0] || null;
+			const previousSelection =
+				currentSelection &&
+				Number.isFinite(Number(currentSelection.start)) &&
+				Number.isFinite(Number(currentSelection.end))
+					? {
+							start: Number(currentSelection.start),
+							end: Number(currentSelection.end),
+						}
+					: null;
 			const rects = [];
-			if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
-				rects.push({
-					x: Math.min(startRect.x, endRect.x),
-					y: startRect.y,
-					width: Math.max(4, Math.abs(endRect.x - startRect.x)),
-					height: startRect.height,
-				});
-			} else if (startRect) {
-				rects.push({
-					x: startRect.x,
-					y: startRect.y,
-					width: 8,
-					height: startRect.height,
-				});
-			}
+			try {
+				const spanStart = Math.max(0, Math.min(start, end));
+				const spanEnd = Math.max(spanStart, end);
+				const startRect = getCaretRect(annotated, spanStart);
+				const endRect = getCaretRect(annotated, spanEnd);
 
-			if (previousSelection) {
-				const prevStart = Number(previousSelection.start);
-				const prevEnd = Number(previousSelection.end);
-				if (prevStart === prevEnd) {
-					annotated.setSelection(prevStart, prevStart);
-				} else {
-					annotated.setSelection(prevStart, prevEnd + 1);
+				if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
+					rects.push({
+						x: Math.min(startRect.x, endRect.x),
+						y: startRect.y,
+						width: Math.max(4, Math.abs(endRect.x - startRect.x)),
+						height: startRect.height,
+					});
+				} else if (startRect) {
+					rects.push({
+						x: startRect.x,
+						y: startRect.y,
+						width: 8,
+						height: startRect.height,
+					});
 				}
+			} finally {
+				if (previousSelection) {
+					try {
+						annotated.setSelection(previousSelection.start, previousSelection.end);
+					} catch {
+						// Ignore selection restore failures.
+					}
+				}
+				restoreScrollState(scrollState);
 			}
-
-			restoreScrollState(scrollState);
-			setTimeout(() => restoreScrollState(scrollState), 0);
 
 			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
@@ -146,6 +158,48 @@
 			// No-op.
 		}
 	});
+
+	document.addEventListener(
+		'scroll',
+		(event) => {
+			const target = event.target;
+			if (
+				target instanceof HTMLElement &&
+				(target.classList.contains('kix-appview-editor') ||
+					target.closest('.kix-appview-editor') != null ||
+					target.id === 'docs-editor')
+			) {
+				lastEditorScrollAt = Date.now();
+				disableSelectionMeasurements = true;
+			}
+		},
+		true,
+	);
+
+	document.addEventListener(
+		'wheel',
+		() => {
+			lastEditorScrollAt = Date.now();
+			disableSelectionMeasurements = true;
+		},
+		{ capture: true, passive: true },
+	);
+
+	document.addEventListener(
+		'keydown',
+		(event) => {
+			if (
+				event.key === 'PageDown' ||
+				event.key === 'PageUp' ||
+				event.key === 'Home' ||
+				event.key === 'End'
+			) {
+				lastEditorScrollAt = Date.now();
+				disableSelectionMeasurements = true;
+			}
+		},
+		true,
+	);
 
 	syncText();
 	setInterval(syncText, 300);

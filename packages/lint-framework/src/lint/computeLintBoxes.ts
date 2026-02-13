@@ -17,6 +17,10 @@ import {
 } from './unpackLint';
 
 let googleDocsRectRequestCounter = 0;
+const googleDocsRectCache = new Map<
+	string,
+	{ rects: { x: number; y: number; width: number; height: number }[]; scrollTop: number }
+>();
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -110,10 +114,21 @@ function computeGoogleDocsLintBoxes(
 		if (!editor) {
 			return [];
 		}
+		const cacheKey = `${lint.span.start}:${lint.span.end}`;
+		const currentScrollTop = editor.scrollTop;
 
 		let rects: { x: number; y: number; width: number; height: number }[] = [];
 
-		if (mainWorldBridge) {
+		const cached = googleDocsRectCache.get(cacheKey);
+		if (cached) {
+			const dy = cached.scrollTop - currentScrollTop;
+			rects = cached.rects.map((rect) => ({
+				x: rect.x,
+				y: rect.y + dy,
+				width: rect.width,
+				height: rect.height,
+			}));
+		} else if (mainWorldBridge) {
 			const requestId = `rect-${googleDocsRectRequestCounter++}`;
 			const attrName = `data-harper-rects-${requestId}`;
 			document.dispatchEvent(
@@ -140,6 +155,12 @@ function computeGoogleDocsLintBoxes(
 								typeof rect?.width === 'number' &&
 								typeof rect?.height === 'number',
 						);
+						if (rects.length > 0) {
+							googleDocsRectCache.set(cacheKey, {
+								rects: rects.map((rect) => ({ ...rect })),
+								scrollTop: currentScrollTop,
+							});
+						}
 					}
 				} catch {
 					// Ignore malformed bridge payloads.

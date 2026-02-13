@@ -37,6 +37,7 @@ const fw = new LintFramework(
 const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
 const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 let googleDocsSyncInFlight = false;
+let googleDocsBridgeAttached = false;
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
@@ -211,7 +212,10 @@ async function syncGoogleDocsBridge() {
 		if (bridge.textContent !== text) {
 			bridge.textContent = text;
 		}
-		fw.addTarget(bridge);
+		if (!googleDocsBridgeAttached) {
+			await fw.addTarget(bridge);
+			googleDocsBridgeAttached = true;
+		}
 	} catch (err) {
 		console.error('Failed to sync Google Docs bridge text', err);
 	} finally {
