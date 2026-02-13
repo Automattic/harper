@@ -66,7 +66,13 @@
 			}
 
 			if (previousSelection) {
-				annotated.setSelection(previousSelection.start, previousSelection.end + 1);
+				const prevStart = Number(previousSelection.start);
+				const prevEnd = Number(previousSelection.end);
+				if (prevStart === prevEnd) {
+					annotated.setSelection(prevStart, prevStart);
+				} else {
+					annotated.setSelection(prevStart, prevEnd + 1);
+				}
 			}
 
 			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));

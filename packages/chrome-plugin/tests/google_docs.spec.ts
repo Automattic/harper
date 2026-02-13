@@ -116,3 +116,51 @@ test('Google Docs: highlight appears near linted text', async ({ page }) => {
 	expect(Math.abs((highlightBox?.x ?? 0) - (caretRect?.x ?? 0))).toBeLessThan(120);
 	expect(Math.abs((highlightBox?.y ?? 0) - (caretRect?.y ?? 0))).toBeLessThan(60);
 });
+
+test('Google Docs: highlight host mounts on document body', async ({ page }) => {
+	const token = `harper-gdocs-host-${Date.now()}`;
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, `This is an test ${token}`);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const mountedOnBody = await page.evaluate(() => {
+		const host = document.querySelector('#harper-highlight-host');
+		return host?.parentElement === document.body;
+	});
+	expect(mountedOnBody).toBe(true);
+});
+
+test('Google Docs: selection does not grow over time', async ({ page }) => {
+	const token = `harper-gdocs-selection-${Date.now()}`;
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, `This is an test ${token}`);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const before = await page.evaluate(async (token) => {
+		const annotated = await (window as any)._docs_annotate_getAnnotatedText();
+		const text = annotated.getText() as string;
+		const start = text.indexOf(`an test ${token}`);
+		annotated.setSelection(start, start);
+		const sel = annotated.getSelection()[0];
+		return { start: sel.start, end: sel.end };
+	}, token);
+
+	await page.waitForTimeout(2500);
+
+	const after = await page.evaluate(async () => {
+		const annotated = await (window as any)._docs_annotate_getAnnotatedText();
+		const sel = annotated.getSelection()[0];
+		return { start: sel.start, end: sel.end };
+	});
+
+	expect(after.start).toBe(before.start);
+	expect(after.end).toBe(before.end);
+});

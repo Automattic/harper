@@ -196,6 +196,13 @@ export default class Highlights {
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
 	private computeRenderTarget(el: SourceElement): HTMLElement {
+		if (
+			el instanceof HTMLElement &&
+			(el.classList.contains('kix-appview-editor') || el.closest('.kix-appview-editor') != null)
+		) {
+			return document.body;
+		}
+
 		if (el.parentElement?.classList.contains('ProseMirror')) {
 			return el.parentElement.parentElement!;
 		}
