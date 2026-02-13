@@ -112,8 +112,23 @@ export default class Highlights {
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
+			const isGoogleDocsSource =
+				source instanceof HTMLElement &&
+				(source.classList.contains('kix-appview-editor') || source.closest('.kix-appview-editor'));
 
-			if (cpa != null) {
+			if (isGoogleDocsSource) {
+				const hostStyle = host.style;
+				hostStyle.position = 'fixed';
+				hostStyle.top = '0px';
+				hostStyle.left = '0px';
+				hostStyle.inset = '0';
+				hostStyle.pointerEvents = 'none';
+				hostStyle.width = '0px';
+				hostStyle.height = '0px';
+				hostStyle.contain = 'none';
+				hostStyle.transform = 'none';
+				hostStyle.zIndex = '2147483647';
+			} else if (cpa != null) {
 				const hostStyle = host.style;
 
 				hostStyle.position = 'absolute';
