@@ -279,6 +279,7 @@ These configs are under the `markdown` key:
 | Dart                |            `dart`             |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
 | Go                  |             `go`              |            ✅ |
+| Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |
 | HTML                |            `html`             |               |
 | Ink                 |             `ink`             |               |
