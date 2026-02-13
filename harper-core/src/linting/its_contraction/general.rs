@@ -72,6 +72,12 @@ impl General {
             return None;
         }
 
+        // Past-participle modifiers can be tagged as verbs even in possessive noun phrases:
+        // "its abetted parameter", "its associated parameter", etc.
+        if self.is_possessive_participle_noun_phrase(toks, source) {
+            return None;
+        }
+
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Punctuation,
@@ -83,5 +89,30 @@ impl General {
                 .to_owned(),
             priority: 54,
         })
+    }
+
+    fn is_possessive_participle_noun_phrase(&self, toks: &[Token], source: &[char]) -> bool {
+        let Some(modifier) = toks.get(2) else {
+            return false;
+        };
+        let Some(gap) = toks.get(3) else {
+            return false;
+        };
+        let Some(head) = toks.get(4) else {
+            return false;
+        };
+
+        if !modifier.kind.is_verb_past_participle_form() || !gap.kind.is_whitespace() {
+            return false;
+        }
+
+        if !(head.kind.is_noun() || head.kind.is_proper_noun()) {
+            return false;
+        }
+
+        let modifier_text = modifier.span.get_content_string(source);
+        !["had", "been", "got"]
+            .iter()
+            .any(|word| modifier_text.eq_ignore_ascii_case(word))
     }
 }

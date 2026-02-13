@@ -283,4 +283,20 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn issue_2547() {
+        assert_no_lints(
+            "using the foo feature and its associated parameter",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_past_participle_noun_phrase() {
+        assert_no_lints(
+            "using the foo feature and its abetted parameter",
+            ItsContraction::default(),
+        );
+    }
 }
