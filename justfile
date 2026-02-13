@@ -307,7 +307,14 @@ check-rust: audit-dictionary
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
-  cargo hack check --each-feature
+  if cargo --list | grep -q '^ *hack$'; then
+    cargo hack check --each-feature
+  elif [[ "${DISABLE_CARGO_HACK:-0}" -eq 1 ]]; then
+    echo "ℹ️  cargo-hack disabled via DISABLE_CARGO_HACK=1"
+  else
+    echo "\n❌ cargo-hack not found. Install with 'cargo install cargo-hack' or set DISABLE_CARGO_HACK=1 to skip.\n" >&2
+    exit 1
+  fi
 
 # Perform format and type checking.
 check: check-rust check-js build-web
