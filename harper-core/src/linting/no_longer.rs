@@ -154,11 +154,29 @@ mod tests {
     }
 
     #[test]
+    fn fix_able_adjective() {
+        assert_suggestion_result(
+            "After the migration, we were not longer able to sign in.",
+            NoLonger::default(),
+            "After the migration, we were no longer able to sign in.",
+        );
+    }
+
+    #[test]
     fn fix_possible_adjective() {
         assert_suggestion_result(
             "That workaround is not longer possible after the upgrade.",
             NoLonger::default(),
             "That workaround is no longer possible after the upgrade.",
+        );
+    }
+
+    #[test]
+    fn fix_responsive_adjective() {
+        assert_suggestion_result(
+            "The service is not longer responsive under heavy load.",
+            NoLonger::default(),
+            "The service is no longer responsive under heavy load.",
         );
     }
 }
