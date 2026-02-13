@@ -299,4 +299,30 @@ mod tests {
             ItsContraction::default(),
         );
     }
+
+    #[test]
+    fn corrects_predicative_called() {
+        assert_suggestion_result(
+            "Its called recursion.",
+            ItsContraction::default(),
+            "It's called recursion.",
+        );
+    }
+
+    #[test]
+    fn corrects_predicative_named() {
+        assert_suggestion_result(
+            "Its named Manhattan.",
+            ItsContraction::default(),
+            "It's named Manhattan.",
+        );
+    }
+
+    #[test]
+    fn allows_possessive_generated_code() {
+        assert_no_lints(
+            "The compiler emits its generated code.",
+            ItsContraction::default(),
+        );
+    }
 }

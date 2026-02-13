@@ -66,8 +66,11 @@ impl General {
         let offender = toks.first()?;
         let offender_chars = offender.span.get_content(source);
 
-        if toks.get(2)?.kind.is_upos(UPOS::VERB)
+        let modifier = toks.get(2)?;
+
+        if modifier.kind.is_upos(UPOS::VERB)
             && NominalPhrase.matches(&toks[2..], source).is_some()
+            && !Self::is_likely_predicative_participle(modifier, source)
         {
             return None;
         }
@@ -110,9 +113,22 @@ impl General {
             return false;
         }
 
+        if Self::is_likely_predicative_participle(modifier, source) {
+            return false;
+        }
+
         let modifier_text = modifier.span.get_content_string(source);
+
         !["had", "been", "got"]
             .iter()
             .any(|word| modifier_text.eq_ignore_ascii_case(word))
+    }
+
+    fn is_likely_predicative_participle(tok: &Token, source: &[char]) -> bool {
+        let text = tok.span.get_content_string(source);
+
+        ["called", "named", "known", "termed", "titled"]
+            .iter()
+            .any(|word| text.eq_ignore_ascii_case(word))
     }
 }
