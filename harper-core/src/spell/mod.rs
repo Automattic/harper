@@ -10,7 +10,9 @@ pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;
-pub use self::word_id::{CanonicalWordId, CaseFoldedWordId, WordIdPair};
+pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
+
+pub(crate) use self::word_id::WordIdPair;
 
 mod dictionary;
 mod fst_dictionary;
