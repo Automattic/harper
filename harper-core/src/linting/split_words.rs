@@ -88,7 +88,7 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            if let Some(cand_meta) = self.dict.get_word_metadata(candidate) {
+            if let Some(cand_meta) = self.dict.get_word_metadata_exact(candidate) {
                 if !cand_meta.common {
                     continue;
                 }
@@ -96,7 +96,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder) {
+            if let Some(rem_meta) = self.dict.get_word_metadata_exact(remainder) {
                 if !rem_meta.common {
                     continue;
                 }

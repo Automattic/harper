@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 use crate::linting::{LintKind, Suggestion};
 use std::sync::Arc;
 
@@ -67,6 +69,11 @@ impl ExprLinter for OrthographicConsistency {
 
         let chars = word.span.get_content(source);
 
+        if self.dict.contains_exact_word(chars) {
+            // Exit if the dictionary contains the exact word.
+            return None;
+        }
+
         let cur_flags = OrthFlags::from_letters(chars);
 
         if metadata.is_allcaps()
@@ -86,19 +93,19 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
-        let flags_to_check = [
-            OrthFlags::LOWER_CAMEL,
-            OrthFlags::UPPER_CAMEL,
-            OrthFlags::APOSTROPHE,
-            OrthFlags::HYPHENATED,
-        ];
+        let flags_to_check = OrthFlags::LOWER_CAMEL
+            | OrthFlags::UPPER_CAMEL
+            | OrthFlags::APOSTROPHE
+            | OrthFlags::HYPHENATED;
 
-        if flags_to_check
-            .into_iter()
-            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
-            .count()
-            == 1
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+        // If any of the flags specified by flags_to_check differ between cur_flags and
+        // canonical_flags.
+        if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
+            && let Ok(canonical) = self
+                .dict
+                .get_correct_capitalization_of(chars)
+                .into_iter()
+                .exactly_one()
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -115,7 +122,11 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && let Ok(canonical) = self
+                .dict
+                .get_correct_capitalization_of(chars)
+                .into_iter()
+                .exactly_one()
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -144,7 +155,10 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    };
 
     use super::OrthographicConsistency;
 
@@ -158,20 +172,29 @@ mod tests {
     }
 
     #[test]
+    fn america_capitalized() {
+        assert_suggestion_result(
+            "The word america should be capitalized.",
+            OrthographicConsistency::default(),
+            "The word America should be capitalized.",
+        );
+    }
+
+    #[test]
+    fn harper_automattic_capitalized() {
+        assert_lint_count(
+            "So should harper and automattic.",
+            OrthographicConsistency::default(),
+            2,
+        );
+    }
+
+    #[test]
     fn ikea_should_be_all_caps() {
         assert_suggestion_result(
             "Ikea operates a vast retail network.",
             OrthographicConsistency::default(),
             "IKEA operates a vast retail network.",
-        );
-    }
-
-    #[test]
-    fn lego_should_be_all_caps() {
-        assert_suggestion_result(
-            "Lego bricks encourage creativity.",
-            OrthographicConsistency::default(),
-            "LEGO bricks encourage creativity.",
         );
     }
 
@@ -402,5 +425,29 @@ mod tests {
             "The post’s problem was not in its complexity.",
             OrthographicConsistency::default(),
         );
+    }
+
+    #[test]
+    fn no_improper_suggestion_for_macos() {
+        assert_good_and_bad_suggestions(
+            "MacOS",
+            OrthographicConsistency::default(),
+            &["macOS"],
+            &["MacOS"],
+        );
+    }
+
+    #[test]
+    fn accept_case_variants() {
+        // At the time of writing this test, "Pr" (despite being a word in the curated dictionary)
+        // would be linted for the supposed reason of the canonical spelling being "PR".
+        // Since both words are in the curated dictionary, neither should be linted.
+        assert_no_lints("Pr PR", OrthographicConsistency::default());
+    }
+
+    #[test]
+    fn dont_accept_undefined_case_variants() {
+        // "pr" isn't defined in the dictionary, so it should be linted.
+        assert_lint_count("pr", OrthographicConsistency::default(), 1);
     }
 }

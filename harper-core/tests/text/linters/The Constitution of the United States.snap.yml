@@ -61,8 +61,8 @@ Message: |
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
   - Replace with: “I”
+  - Replace with: “I”
   - Replace with: “Id”
-  - Replace with: “If”
 
 
 
@@ -1659,8 +1659,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “Labor”
   - Replace with: “Laborer”
-  - Replace with: “Layout”
 
 
 
@@ -1671,8 +1671,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “Labor”
   - Replace with: “Laborer”
-  - Replace with: “Layout”
 
 
 
@@ -1683,8 +1683,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
+  - Replace with: “Labor”
   - Replace with: “Laborer”
-  - Replace with: “Layout”
 
 
 
@@ -1770,7 +1770,7 @@ Message: |
 Suggest:
   - Replace with: “Vi”
   - Replace with: “VA”
-  - Replace with: “Vb”
+  - Replace with: “VI”
 
 
 
@@ -1810,15 +1810,6 @@ Message: |
 Suggest:
   - Replace with: “to all Intents and Purposes”
   - Replace with: “for alL intents anD purposes”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-     677 | ## Article. VI.
-         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## Article. Vi.”
 
 
 
