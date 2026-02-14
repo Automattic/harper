@@ -1,0 +1,30 @@
+expr main (to backout)
+
+let message "Separate `backout` into the verb `back out` after `to`."
+let description "Treats `to backout` as a mistyped infinitive and prefers the two-word verb."
+let kind "Usage"
+let becomes "to back out"
+
+# True positives
+test "There's still time to backout of the deal." "There's still time to back out of the deal."
+test "Make sure to backout that commit before merging." "Make sure to back out that commit before merging."
+test "I told them to BACKOUT once the bug surfaced." "I told them to BACK OUT once the bug surfaced."
+test "Please remember to backout the change if it breaks tests." "Please remember to back out the change if it breaks tests."
+test "To backout, you can cancel the pipeline." "To back out, you can cancel the pipeline."
+test "We still might need to backout this feature." "We still might need to back out this feature."
+test "If we have to TO BACKOUT now, we should warn everyone." "If we have to TO BACK OUT now, we should warn everyone."
+test "We might need to backout; let us know." "We might need to back out; let us know."
+
+# False negative coverage (punctuation and casing should still trigger).
+test "to backout?" "to back out?"
+test "to backout!" "to back out!"
+
+# True negatives (these contexts should stay untouched).
+test "We plan to back out after the meeting." "We plan to back out after the meeting."
+test "The backout plan came with the release." "The backout plan came with the release."
+test "Backout is spelled as a noun in this paragraph." "Backout is spelled as a noun in this paragraph."
+test "to back out" "to back out"
+
+# False positives (near misses that should not change).
+test "This doc mentions to backouts and other options." "This doc mentions to backouts and other options."
+test "They call it the backout-ary clause." "They call it the backout-ary clause."

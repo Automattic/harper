@@ -1,0 +1,31 @@
+expr main (strike a cord)
+
+let message "Use the idiom with `chord` when describing a feeling or reaction."
+let description "The phrase about resonating with someone is spelled with a chord, not a cord, so fix the typo and keep the idiom intact."
+let kind "Typo"
+let becomes "strike a chord"
+let strategy "MatchCase"
+
+# True positives
+test "A heartfelt verse might strike a cord in every reader." "A heartfelt verse might strike a chord in every reader."
+test "He tried to strike a cord during the keynote." "He tried to strike a chord during the keynote."
+test "This rally plan is designed to strike a cord with voters." "This rally plan is designed to strike a chord with voters."
+test "Will this line strike a cord, or will it fall flat?" "Will this line strike a chord, or will it fall flat?"
+test "Our new video is meant to strike a cord across cultures." "Our new video is meant to strike a chord across cultures."
+test "When they strike a cord, the crowd remembers the old anthem." "When they strike a chord, the crowd remembers the old anthem."
+test "Strike a cord with humor and you win the room." "Strike a chord with humor and you win the room."
+test "STRIKE A CORD BEFORE THE DROP." "STRIKE A CHORD BEFORE THE DROP."
+test "It might strike a cord, then fade." "It might strike a chord, then fade."
+test "Strike a cord - just not the one you are thinking of." "Strike a chord - just not the one you are thinking of."
+
+# False negatives (these contexts should also resolve to the idiom)
+test "We plan to strike a cord; the sentiment should spread." "We plan to strike a chord; the sentiment should spread."
+test "The song will strike a cord? We'll see." "The song will strike a chord? We'll see."
+test "Do not wait until the chorus to strike a cord." "Do not wait until the chorus to strike a chord."
+test "I hope we strike a cord tomorrow." "I hope we strike a chord tomorrow."
+test "As soon as they strike a cord, the thread goes viral." "As soon as they strike a chord, the thread goes viral."
+
+# False positives / true negatives
+allows "I want to strike a chord tonight."
+allows "He plugged the cord into the amp before playing."
+allows "The guitar teacher told him to strike the chord on beat."

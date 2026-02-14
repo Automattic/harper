@@ -1,0 +1,31 @@
+expr main (eagle eyed)
+
+let message "Hyphenate `eagle eyed` when it acts as a single adjective before a noun."
+let description "Treats the phrase as a compound modifier and replaces the space with a hyphen so it reads like one idea."
+let kind "Punctuation"
+let becomes "eagle-eyed"
+let strategy "MatchCase"
+
+# True positives
+# Ensure the hyphen appears before a noun when `eagle eyed` describes it.
+test "The eagle eyed analyst noticed the bug." "The eagle-eyed analyst noticed the bug."
+test "Our eagle eyed intern flagged the missing reference." "Our eagle-eyed intern flagged the missing reference."
+test "An eagle eyed reviewer spotted the mismatch." "An eagle-eyed reviewer spotted the mismatch."
+test "Eagle eyed mentors guide the new hires." "Eagle-eyed mentors guide the new hires."
+test "That eagle eyed editor catches grammar slips." "That eagle-eyed editor catches grammar slips."
+test "I rely on eagle eyed assistants for QA." "I rely on eagle-eyed assistants for QA."
+test "Her eagle eyed focus kept the doc clean." "Her eagle-eyed focus kept the doc clean."
+test "Late-night eagle eyed editors keep releases stable." "Late-night eagle-eyed editors keep releases stable."
+test "Eagle eyed scientists double-check the data." "Eagle-eyed scientists double-check the data."
+test "The eagle eyed security team audits every deploy." "The eagle-eyed security team audits every deploy."
+test "Our eagle eyed partner shared the warning." "Our eagle-eyed partner shared the warning."
+test "He admired their eagle eyed vigilance." "He admired their eagle-eyed vigilance."
+
+# False negatives (capitalization should not stop the correction)
+test "Eagle Eyed reviewers always respond quickly." "Eagle-Eyed reviewers always respond quickly."
+test "EAGLE EYED surveyors noticed the shift." "EAGLE-EYED surveyors noticed the shift."
+test "An Eagle Eyed champion kept tabs on the data." "An Eagle-Eyed champion kept tabs on the data."
+
+# True negatives / false positives
+allows "Eagle-eyed editors already finished the article."
+allows "The eagle eyedness they display is a point of pride."

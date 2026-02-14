@@ -1,0 +1,30 @@
+expr imitateVerbs [imitate, imitates, imitated, imitating]
+
+expr main <([(@imitateVerbs * from *), (@imitateVerbs * from * *), (@imitateVerbs * from * * *), (@imitateVerbs * * from *), (@imitateVerbs * * from * *), (@imitateVerbs * * from * * *), (@imitateVerbs * * * from *), (@imitateVerbs * * * from * *), (@imitateVerbs * * * from * * *), (@imitateVerbs * * * * from *), (@imitateVerbs * * * * from * *), (@imitateVerbs * * * * from * * *)]), (from)>
+
+let message "Use `of` with `imitate` when naming the source you copy."
+let description "After `imitate ...`, idiomatic phrasing points to the inspiration with `of` instead of `from`."
+let kind "Usage"
+let becomes "of"
+
+# True positives
+test "They imitate the rhythm from their mentor." "They imitate the rhythm of their mentor."
+test "She imitates every gesture from her teacher." "She imitates every gesture of her teacher."
+test "We imitated the cadence from the recording." "We imitated the cadence of the recording."
+test "He imitates the haircut from the cover model." "He imitates the haircut of the cover model."
+test "They are imitating the protocol from their architects." "They are imitating the protocol of their architects."
+test "The troupe imitates every flourish from the original cast." "The troupe imitates every flourish of the original cast."
+test "Our design imitates the polish from Picasso's gouache." "Our design imitates the polish of Picasso's gouache."
+test "The coach imitates the pace from the champion." "The coach imitates the pace of the champion."
+test "I imitated the approach from the guide." "I imitated the approach of the guide."
+test "We imitate the vibe from our favorite show." "We imitate the vibe of our favorite show."
+test "She imitates that electric rhythm from the rehearsal tape." "She imitates that electric rhythm of the rehearsal tape."
+test "They imitate him from the clip to get the cadence right." "They imitate him of the clip to get the cadence right."
+
+# Guardrails / False positives
+allows "They imitate from memory."
+allows "He imitates from scratch."
+allows "The mimic imitates from afar."
+allows "Imitate from this formula only when you intend to copy exact numbers."
+allows "Our dancer imitates from the safety of the balcony."
+allows "She imitates from the stage instead of the audience."

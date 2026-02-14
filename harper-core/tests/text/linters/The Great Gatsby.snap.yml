@@ -4839,17 +4839,6 @@ Suggest:
 
 
 
-Lint:    Punctuation (54 priority)
-Message: |
-    3495 | It was when curiosity about Gatsby was at its highest that the lights in his
-         |                                           ^~~ Use `it's` (short for `it has` or `it is`) here, not the possessive `its`.
-    3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
-Suggest:
-  - Replace with: “it's”
-  - Replace with: “it has”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3496 | house failed to go on one Saturday night—and, as obscurely as it had begun, his
