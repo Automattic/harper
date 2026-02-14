@@ -4,7 +4,20 @@ use super::{FoundToken, hostname::lex_hostname};
 use crate::TokenKind;
 
 pub fn lex_url(source: &[char]) -> Option<FoundToken> {
-    let sep = source.iter().position(|c| *c == ':')?;
+    let sep = {
+        let mut iter = source.iter().enumerate();
+        loop {
+            match iter.next() {
+                // Must begin with an alphabetic character.
+                // Assuming it has to be ASCII at the moment; not sure if non-ASCII alphabetic
+                // characters are allowed in a scheme name.
+                Some((0, c)) if !c.is_ascii_alphabetic() => return None,
+                Some((_, ' ')) | None => return None,
+                Some((i, ':')) => break i,
+                _ => {}
+            }
+        }
+    };
 
     if !validate_scheme(&source[0..sep]) {
         return None;
