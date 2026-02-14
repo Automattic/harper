@@ -3065,7 +3065,7 @@ EST/ONg
 ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
-EU/ON
+EU/ONg
 EULA/NgS            # end-user license agreement
 EUR/Nmg             # currency symbol for Euros
 EUV/N               # extreme ultraviolet
@@ -10374,9 +10374,9 @@ UPC/N
 UPI/ONg
 UPS/NOgV
 URL/NSg
-US/Og
-USA/Og
-USAF/O
+US/ONg
+USA/ONg
+USAF/ONg
 USAID/Og            # agency
 USB/ONSg
 USCG/O
