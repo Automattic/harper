@@ -7,21 +7,16 @@ pub fn lex_url(source: &[char]) -> Option<FoundToken> {
     let sep = {
         let mut iter = source.iter().enumerate();
         loop {
-            match iter.next() {
+            match iter.next()? {
                 // Must begin with an alphabetic character.
-                // Assuming it has to be ASCII at the moment; not sure if non-ASCII alphabetic
-                // characters are allowed in a scheme name.
-                Some((0, c)) if !c.is_ascii_alphabetic() => return None,
-                Some((_, ' ')) | None => return None,
-                Some((i, ':')) => break i,
+                (0, c) if !c.is_ascii_alphabetic() => return None,
+                // This check must happen before the `valid_scheme_char` check.
+                (i, ':') => break i,
+                (_, c) if !valid_scheme_char(*c) => return None,
                 _ => {}
             }
         }
     };
-
-    if !validate_scheme(&source[0..sep]) {
-        return None;
-    }
 
     let url_end = lex_ip_schemepart(&source[sep + 1..])?;
 
@@ -29,11 +24,6 @@ pub fn lex_url(source: &[char]) -> Option<FoundToken> {
         next_index: url_end + sep + 1,
         token: TokenKind::Url,
     })
-}
-
-/// Checks whether a given char string is a valid "scheme" part of a URI.
-fn validate_scheme(source: &[char]) -> bool {
-    source.iter().all(|c: &char| valid_scheme_char(*c))
 }
 
 fn lex_ip_schemepart(source: &[char]) -> Option<usize> {
