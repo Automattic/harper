@@ -21,6 +21,7 @@ impl Default for NoLonger {
                             TokenKind::is_verb_third_person_singular_present_form,
                             TokenKind::is_verb_past_participle_form,
                             TokenKind::is_verb_progressive_form,
+                            TokenKind::is_adjective,
                         ][..],
                     ))
                     .and_not(
@@ -140,6 +141,42 @@ mod tests {
             "I get this error and the fasta file is not longer written",
             NoLonger::default(),
             "I get this error and the fasta file is no longer written",
+        );
+    }
+
+    #[test]
+    fn fix_available_adjective() {
+        assert_suggestion_result(
+            "This option is not longer available in the settings menu.",
+            NoLonger::default(),
+            "This option is no longer available in the settings menu.",
+        );
+    }
+
+    #[test]
+    fn fix_able_adjective() {
+        assert_suggestion_result(
+            "After the migration, we were not longer able to sign in.",
+            NoLonger::default(),
+            "After the migration, we were no longer able to sign in.",
+        );
+    }
+
+    #[test]
+    fn fix_possible_adjective() {
+        assert_suggestion_result(
+            "That workaround is not longer possible after the upgrade.",
+            NoLonger::default(),
+            "That workaround is no longer possible after the upgrade.",
+        );
+    }
+
+    #[test]
+    fn fix_responsive_adjective() {
+        assert_suggestion_result(
+            "The service is not longer responsive under heavy load.",
+            NoLonger::default(),
+            "The service is no longer responsive under heavy load.",
         );
     }
 }
