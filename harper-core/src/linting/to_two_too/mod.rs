@@ -408,6 +408,14 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_asking_to_simply_in_scare_quotes() {
+        assert_no_lints(
+            "He was asking to simply \"show up\" for the meeting.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
     fn no_lint_llm_as_judge_to_automatically_score() {
         assert_no_lints(
             "We used an LLM-as-judge to automatically score agent trajectories.",
