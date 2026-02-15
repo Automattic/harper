@@ -27,6 +27,7 @@ strum = "0.27.2"
 strum_macros = "0.27.2"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
 enum_dispatch = "0.3.13"
+yansi = "1.0.1"
 
 [features]
 default = []
