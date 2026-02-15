@@ -1,44 +1,54 @@
+use std::sync::LazyLock;
+
 use super::{Pattern, WordSet};
 
 pub struct ModalVerb {
-    inner: WordSet,
-    include_common_errors: bool,
+    inner: &'static WordSet,
 }
 
 impl Default for ModalVerb {
     fn default() -> Self {
-        let (words, include_common_errors) = Self::init(false);
-        Self {
-            inner: words,
-            include_common_errors,
-        }
+        let words = Self::init(false);
+        Self { inner: words }
     }
 }
 
 impl ModalVerb {
-    fn init(include_common_errors: bool) -> (WordSet, bool) {
-        let modals = [
+    fn init(include_common_errors: bool) -> &'static WordSet {
+        const MODALS: [&str; 14] = [
             "can", "can't", "could", "may", "might", "must", "shall", "shan't", "should", "will",
             "won't", "would", "ought", "dare",
         ];
 
-        let mut words = WordSet::new(&modals);
-        modals.iter().for_each(|word| {
-            words.add(&format!("{word}n't"));
-            if include_common_errors {
-                words.add(&format!("{word}nt"));
-            }
+        static CACHED_WITHOUT_COMMON_ERRORS: LazyLock<WordSet> = LazyLock::new(|| {
+            let mut words = WordSet::new(&MODALS);
+            MODALS.iter().for_each(|word| {
+                words.add(&format!("{word}n't"));
+            });
+            words.add("cannot");
+            words
         });
-        words.add("cannot");
-        (words, include_common_errors)
+
+        static CACHED_WITH_COMMON_ERRORS: LazyLock<WordSet> = LazyLock::new(|| {
+            let mut words = WordSet::new(&MODALS);
+            MODALS.iter().for_each(|word| {
+                words.add(&format!("{word}n't"));
+                words.add(&format!("{word}nt"));
+            });
+            words.add("cannot");
+            words
+        });
+
+        if include_common_errors {
+            &CACHED_WITH_COMMON_ERRORS
+        } else {
+            &CACHED_WITHOUT_COMMON_ERRORS
+        }
     }
 
     pub fn with_common_errors() -> Self {
-        let (words, _) = Self::init(true);
-        Self {
-            inner: words,
-            include_common_errors: true,
-        }
+        let words = Self::init(true);
+        Self { inner: words }
     }
 }
 
