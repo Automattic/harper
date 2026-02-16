@@ -29,7 +29,7 @@ tracing = { version = "0.1.44", default-features = false, features = ["std"] }
 tracing-subscriber = { version = "0.3.22", default-features = false, features = ["fmt", "std"] }
 resolve-path = "0.1.0"
 open = "5.3.3"
-futures = "0.3.31"
+futures = "0.3.32"
 serde = { version = "1.0.228", features = ["derive"] }
 globset = "0.4.18"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
