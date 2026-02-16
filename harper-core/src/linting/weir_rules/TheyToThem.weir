@@ -1,0 +1,34 @@
+expr main <([to, with, for, about, against, between, among, around, toward, towards, through, beyond, behind, across, near, inside, outside, call, contact, invite, remind, ask, see, watch, help, trust, send, support, follow, visit, tell, thank, mention, show] they), they>
+
+let message "Use `them` when the pronoun follows a preposition or transitive verb."
+let description "Converts `they` to `them` whenever the pronoun serves as an object after common prepositions or actions that take direct objects."
+let kind "Grammar"
+let becomes "them"
+let strategy "MatchCase"
+
+# True positives
+
+test "Talk to they about the plan." "Talk to them about the plan."
+test "I will ask they for consent." "I will ask them for consent."
+test "Send they the invitation." "Send them the invitation."
+test "Call they when you arrive." "Call them when you arrive."
+test "Contact they via email." "Contact them via email."
+test "Thank they for their help." "Thank them for their help."
+test "I remind they as soon as possible." "I remind them as soon as possible."
+test "Discuss with they the new requirements." "Discuss with them the new requirements."
+test "We fought against they for fairness." "We fought against them for fairness."
+test "Between they and us, the message is clear." "Between them and us, the message is clear."
+test "Tell they the good news." "Tell them the good news."
+test "CALL THEY TODAY." "CALL THEM TODAY."
+test "Support they during the transition." "Support them during the transition."
+test "Show they how the tool works." "Show them how the tool works."
+
+test "Mention they in your update." "Mention them in your update."
+
+# True negatives
+
+test "They went to the store." "They went to the store."
+test "I know they will arrive soon." "I know they will arrive soon."
+test "Because they are busy, we rescheduled." "Because they are busy, we rescheduled."
+test "They told us they would stay." "They told us they would stay."
+test "They announced the event yesterday." "They announced the event yesterday."
