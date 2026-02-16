@@ -32,7 +32,7 @@ strum = "0.27.2"
 ammonia = "4.1.2"
 harper-brill = { path = "../harper-brill", version = "1.0.0" }
 harper-thesaurus = { path = "../harper-thesaurus", version = "1.4.1", optional = true }
-bitflags = { version = "2.10.0", features = ["serde"] }
+bitflags = { version = "2.11.0", features = ["serde"] }
 trie-rs = "0.4.2"
 phf = { version = "0.13.1", features = ["macros"] }
 zip = { version = "2.2.0", default-features = false, features = ["deflate"] }
