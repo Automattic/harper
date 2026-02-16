@@ -38,6 +38,8 @@ const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
 const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 let googleDocsSyncInFlight = false;
 let googleDocsBridgeAttached = false;
+let googleDocsEventsBound = false;
+let googleDocsSyncScheduled = false;
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
@@ -196,6 +198,29 @@ function ensureGoogleDocsMainWorldBridge() {
 	script.onload = () => script.remove();
 }
 
+function scheduleGoogleDocsBridgeSync() {
+	if (googleDocsSyncScheduled) {
+		return;
+	}
+
+	googleDocsSyncScheduled = true;
+	setTimeout(async () => {
+		googleDocsSyncScheduled = false;
+		await syncGoogleDocsBridge();
+		await fw.update();
+	}, 0);
+}
+
+function bindGoogleDocsBridgeEvents() {
+	if (googleDocsEventsBound || !isGoogleDocsPage()) {
+		return;
+	}
+
+	googleDocsEventsBound = true;
+	document.addEventListener('harper:gdocs:text-updated', scheduleGoogleDocsBridgeSync);
+	document.addEventListener('harper:gdocs:layout-changed', scheduleGoogleDocsBridgeSync);
+}
+
 async function syncGoogleDocsBridge() {
 	if (!isGoogleDocsPage() || googleDocsSyncInFlight) {
 		return;
@@ -205,6 +230,7 @@ async function syncGoogleDocsBridge() {
 
 	try {
 		ensureGoogleDocsMainWorldBridge();
+		bindGoogleDocsBridgeEvents();
 
 		const bridge = getGoogleDocsBridge();
 		const mainWorldBridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);

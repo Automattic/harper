@@ -1,10 +1,14 @@
 (() => {
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const USER_SCROLL_COOLDOWN_MS = 60000;
+	const SYNC_INTERVAL_MS = 100;
 	let lastUserScrollAt = 0;
 	let hasUserScrolled = false;
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
+	let initialEditorScrollTop = null;
+	let layoutEpoch = 0;
+	let layoutBumpPending = false;
 
 	let bridge = document.getElementById(BRIDGE_ID);
 	if (!bridge) {
@@ -15,11 +19,31 @@
 		document.documentElement.appendChild(bridge);
 	}
 
+	const emitEvent = (name, detail) => {
+		try {
+			document.dispatchEvent(new CustomEvent(name, { detail }));
+		} catch {
+			// Ignore event emission failures.
+		}
+	};
+
+	const bumpLayoutEpoch = (reason) => {
+		if (layoutBumpPending) return;
+		layoutBumpPending = true;
+		requestAnimationFrame(() => {
+			layoutBumpPending = false;
+			layoutEpoch += 1;
+			bridge.setAttribute('data-harper-layout-epoch', String(layoutEpoch));
+			emitEvent('harper:gdocs:layout-changed', { layoutEpoch, reason });
+		});
+	};
+
 	const syncText = async () => {
 		try {
 			const editor = document.querySelector('.kix-appview-editor');
 			if (editor instanceof HTMLElement && lastKnownEditorScrollTop < 0) {
 				lastKnownEditorScrollTop = editor.scrollTop;
+				initialEditorScrollTop = editor.scrollTop;
 			}
 
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
@@ -27,7 +51,11 @@
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.getText !== 'function') return;
 			window.__harperGoogleDocsAnnotatedText = annotated;
-			bridge.textContent = annotated.getText();
+			const nextText = annotated.getText();
+			if (bridge.textContent !== nextText) {
+				bridge.textContent = nextText;
+				emitEvent('harper:gdocs:text-updated', { length: nextText.length });
+			}
 		} catch {
 			// Ignore intermittent Docs internal errors.
 		}
@@ -87,6 +115,14 @@
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
 			const editor = document.querySelector('.kix-appview-editor');
 			if (editor instanceof HTMLElement) {
+				if (initialEditorScrollTop == null) {
+					initialEditorScrollTop = editor.scrollTop;
+				}
+				if (!hasUserScrolled && editor.scrollTop !== initialEditorScrollTop) {
+					lastKnownEditorScrollTop = editor.scrollTop;
+					lastUserScrollAt = Date.now();
+					hasUserScrolled = true;
+				}
 				if (lastKnownEditorScrollTop >= 0 && editor.scrollTop !== lastKnownEditorScrollTop) {
 					lastKnownEditorScrollTop = editor.scrollTop;
 					lastUserScrollAt = Date.now();
@@ -189,18 +225,20 @@
 		'scroll',
 		() => {
 			const editor = document.querySelector('.kix-appview-editor');
-			if (editor instanceof HTMLElement) {
+				if (editor instanceof HTMLElement) {
 				if (lastKnownEditorScrollTop < 0) {
 					lastKnownEditorScrollTop = editor.scrollTop;
+					initialEditorScrollTop = editor.scrollTop;
 				} else if (editor.scrollTop !== lastKnownEditorScrollTop) {
 					lastKnownEditorScrollTop = editor.scrollTop;
 					lastUserScrollAt = Date.now();
-					hasUserScrolled = true;
+						hasUserScrolled = true;
+						bumpLayoutEpoch('scroll');
+					}
 				}
-			}
-		},
-		true,
-	);
+			},
+			true,
+		);
 
 	document.addEventListener(
 		'wheel',
@@ -235,6 +273,33 @@
 		true,
 	);
 
+	window.addEventListener('resize', () => bumpLayoutEpoch('resize'));
+
+	const observeLayout = () => {
+		const editor = document.querySelector('.kix-appview-editor');
+		if (!(editor instanceof HTMLElement)) {
+			setTimeout(observeLayout, 250);
+			return;
+		}
+
+		bumpLayoutEpoch('init');
+		const observer = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				if (mutation.type === 'childList' || mutation.type === 'attributes') {
+					bumpLayoutEpoch('mutation');
+					break;
+				}
+			}
+		});
+		observer.observe(editor, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['style', 'class'],
+		});
+	};
+
+	observeLayout();
 	syncText();
-	setInterval(syncText, 300);
+	setInterval(syncText, SYNC_INTERVAL_MS);
 })();

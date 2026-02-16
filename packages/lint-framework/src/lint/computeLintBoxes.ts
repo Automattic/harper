@@ -19,8 +19,13 @@ import {
 let googleDocsRectRequestCounter = 0;
 const googleDocsRectCache = new Map<
 	string,
-	{ rects: { x: number; y: number; width: number; height: number }[]; scrollTop: number }
+	{
+		rects: { x: number; y: number; width: number; height: number }[];
+		scrollTop: number;
+		layoutEpoch: number;
+	}
 >();
+let lastGoogleDocsLayoutEpoch = -1;
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -110,9 +115,21 @@ function computeGoogleDocsLintBoxes(
 	try {
 		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
 		const mainWorldBridge = document.getElementById('harper-google-docs-main-world-bridge');
+		const currentLayoutEpoch = Number(mainWorldBridge?.getAttribute('data-harper-layout-epoch') ?? '0');
 
 		if (!editor) {
 			return [];
+		}
+
+		if (
+			Number.isFinite(currentLayoutEpoch) &&
+			currentLayoutEpoch !== lastGoogleDocsLayoutEpoch &&
+			lastGoogleDocsLayoutEpoch >= 0
+		) {
+			googleDocsRectCache.clear();
+		}
+		if (Number.isFinite(currentLayoutEpoch)) {
+			lastGoogleDocsLayoutEpoch = currentLayoutEpoch;
 		}
 		const cacheKey = `${lint.span.start}:${lint.span.end}`;
 		const currentScrollTop = editor.scrollTop;
@@ -120,7 +137,7 @@ function computeGoogleDocsLintBoxes(
 		let rects: { x: number; y: number; width: number; height: number }[] = [];
 
 		const cached = googleDocsRectCache.get(cacheKey);
-		if (cached) {
+		if (cached && cached.layoutEpoch === currentLayoutEpoch) {
 			const dy = cached.scrollTop - currentScrollTop;
 			rects = cached.rects.map((rect) => ({
 				x: rect.x,
@@ -159,6 +176,7 @@ function computeGoogleDocsLintBoxes(
 							googleDocsRectCache.set(cacheKey, {
 								rects: rects.map((rect) => ({ ...rect })),
 								scrollTop: currentScrollTop,
+								layoutEpoch: currentLayoutEpoch,
 							});
 						}
 					}
