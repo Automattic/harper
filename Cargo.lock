@@ -2977,7 +2977,7 @@ dependencies = [
  "serde",
  "serde-wasm-bindgen",
  "serde_json",
- "sysinfo 0.38.1",
+ "sysinfo 0.38.2",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -5244,9 +5244,9 @@ dependencies = [
 
 [[package]]
 name = "sysinfo"
-version = "0.38.1"
+version = "0.38.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5792d209c2eac902426c0c4a166c9f72147db453af548cf9bf3242644c4d4fe3"
+checksum = "1efc19935b4b66baa6f654ac7924c192f55b175c00a7ab72410fc24284dacda8"
 dependencies = [
  "libc",
  "memchr",
