@@ -40,6 +40,7 @@
 		"onLanguage:dart",
 		"onLanguage:git-commit",
 		"onLanguage:go",
+		"onLanguage:groovy",
 		"onLanguage:haskell",
 		"onLanguage:html",
 		"onLanguage:ink",
@@ -62,10 +63,13 @@
 		"onLanguage:shellscript",
 		"onLanguage:solidity",
 		"onLanguage:swift",
+		"onLanguage:tex",
+		"onLanguage:latex",
 		"onLanguage:toml",
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
-		"onLanguage:typst"
+		"onLanguage:typst",
+		"onLanguage:zig"
 	],
 	"main": "./build/extension.js",
 	"contributes": {

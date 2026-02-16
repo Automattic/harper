@@ -89,9 +89,8 @@ where
             return None;
         }
 
-        // "foreigner" is a noun, not an adjective "more foreign"
         // "humaner" = "more humane", not "more human"
-        if adj_str == "foreign" || adj_str == "human" {
+        if adj_str == "human" {
             return None;
         }
 
