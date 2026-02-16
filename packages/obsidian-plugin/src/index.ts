@@ -1,5 +1,5 @@
-import { Dialect } from 'harper.js';
 import type { EditorView } from '@codemirror/view';
+import { Dialect } from 'harper.js';
 import {
 	type App,
 	editorInfoField,
@@ -12,7 +12,6 @@ import {
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
 import { HarperSettingTab } from './HarperSettingTab';
-import State from './State';
 import {
 	addWordToDictionaryFromVisibleTooltip,
 	applySuggestionFromVisibleTooltip,
@@ -25,6 +24,7 @@ import {
 	ignoreVisibleTooltipDiagnostic,
 	navigateDiagnostic,
 } from './lint';
+import State from './State';
 
 export default class HarperPlugin extends Plugin {
 	state: State;

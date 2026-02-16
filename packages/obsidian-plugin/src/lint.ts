@@ -779,10 +779,7 @@ function collectDiagnostics(diagnostics: DecorationSet): SelectedDiagnostic[] {
 
 function selectedIndexOf(all: readonly SelectedDiagnostic[], selected: SelectedDiagnostic) {
 	return all.findIndex(
-		(d) =>
-			d.from === selected.from &&
-			d.to === selected.to &&
-			d.diagnostic === selected.diagnostic,
+		(d) => d.from === selected.from && d.to === selected.to && d.diagnostic === selected.diagnostic,
 	);
 }
 
