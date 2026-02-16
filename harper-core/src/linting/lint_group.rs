@@ -98,6 +98,7 @@ use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
+use super::lead_rise_to::LeadRiseTo;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -501,6 +502,7 @@ impl LintGroup {
         insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(LeadRiseTo, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
