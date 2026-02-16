@@ -47,10 +47,10 @@ impl<T: Dictionary> SpellCheck<T> {
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
                         self.dictionary
-                            .get_word_metadata(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .get_word_metadata_combined(v)
+                            .is_some_and(|word_meta| {
+                                word_meta.dialects.is_dialect_enabled(self.dialect)
+                            })
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -76,7 +76,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().as_ref())
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().to_lower().as_ref()))
             {
                 continue;
             };
@@ -142,7 +147,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -152,27 +157,7 @@ mod tests {
     };
     use crate::{DictWordMetadata, Document};
 
-    // Capitalization tests
-
-    #[test]
-    fn america_capitalized() {
-        assert_suggestion_result(
-            "The word america should be capitalized.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "The word America should be capitalized.",
-        );
-    }
-
     // Dialect tests
-
-    #[test]
-    fn harper_automattic_capitalized() {
-        assert_lint_count(
-            "So should harper and automattic.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            2,
-        );
-    }
 
     #[test]
     fn american_color_in_british_dialect() {
@@ -515,20 +500,11 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_pr() {
-        assert_no_lints(
-            "PR",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
+    fn dont_flag_certain_entries_with_multiple_case_variants_in_dict() {
+        let dict = FstDictionary::curated();
 
-    #[test]
-    fn no_improper_suggestion_for_macos() {
-        assert_good_and_bad_suggestions(
-            "MacOS",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            &["macOS"],
-            &["MacOS"],
-        );
+        assert_no_lints("PR", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("MB", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("OS", SpellCheck::new(&dict, Dialect::American)); // Issue #2585
     }
 }

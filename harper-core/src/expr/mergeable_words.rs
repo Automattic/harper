@@ -49,13 +49,13 @@ impl MergeableWords {
         let mut compound = a_chars.clone();
         compound.push(' ');
         compound.extend_from_slice(&b_chars);
-        let meta_open = self.dict.get_word_metadata(&compound);
+        let meta_open = self.dict.get_word_metadata(&compound).first().copied();
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
-        let meta_closed = self.dict.get_word_metadata(&compound);
+        let meta_closed = self.dict.get_word_metadata(&compound).first().copied();
 
-        if (self.predicate)(meta_closed.as_deref(), meta_open.as_deref()) {
+        if (self.predicate)(meta_closed, meta_open) {
             return Some(compound);
         }
 

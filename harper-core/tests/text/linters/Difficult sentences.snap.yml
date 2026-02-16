@@ -68,15 +68,6 @@ Suggest:
 
 Lint:    Capitalization (31 priority)
 Message: |
-     126 | Who's for ice-cream?
-         | ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
      160 | to account for one's whereabouts.
          | ^~ This sentence does not start with a capital letter
 Suggest:

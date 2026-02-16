@@ -1,6 +1,6 @@
-use super::SingleTokenPattern;
 use smallvec::SmallVec;
 
+use super::SingleTokenPattern;
 use crate::{CharString, Token, char_ext::CharExt};
 
 /// A [`super::Pattern`] that matches against any of a set of provided words.
