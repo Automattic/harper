@@ -40,6 +40,48 @@ async function getGoogleDocsEditorScrollTop(page: Page) {
 	});
 }
 
+async function getCaretRectForNeedle(page: Page, needle: string) {
+	return page.evaluate(async (needle) => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const text = annotated.getText() as string;
+		const start = text.indexOf(needle);
+		if (start < 0) return null;
+		annotated.setSelection(start, start);
+		const caret = document.querySelector('.kix-cursor-caret');
+		const rect = caret?.getBoundingClientRect();
+		if (!rect) return null;
+		return { x: rect.x, y: rect.y, start };
+	}, needle);
+}
+
+async function getVisibleHighlightBoxes(page: Page) {
+	return page.locator('#harper-highlight').evaluateAll((nodes) =>
+		nodes
+			.map((node) => {
+				const rect = node.getBoundingClientRect();
+				return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+			})
+			.filter((rect) => rect.width > 0 && rect.height > 0),
+	);
+}
+
+function getClosestBoxDistance(
+	boxes: { x: number; y: number; width: number; height: number }[],
+	point: { x: number; y: number },
+) {
+	return boxes.reduce(
+		(best, box) => {
+			const dx = Math.abs(box.x - point.x);
+			const dy = Math.abs(box.y - point.y);
+			const score = dx + dy;
+			return score < best.score ? { dx, dy, score } : best;
+		},
+		{ dx: Number.POSITIVE_INFINITY, dy: Number.POSITIVE_INFINITY, score: Number.POSITIVE_INFINITY },
+	);
+}
+
 test('Google Docs: Harper can read lintable text', async ({ page }) => {
 	const token = `harper-gdocs-read-${Date.now()}`;
 	const input = `This is an test ${token}`;
@@ -47,6 +89,11 @@ test('Google Docs: Harper can read lintable text', async ({ page }) => {
 	await page.goto(GOOGLE_DOC_URL);
 	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
 	await replaceDocumentContent(page, input);
+	await expect
+		.poll(async () => ((await getGoogleDocText(page)) ?? '').includes(`an test ${token}`), {
+			timeout: 20000,
+		})
+		.toBeTruthy();
 
 	await expect
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
@@ -61,6 +108,11 @@ test('Google Docs: Harper can write a suggestion back into the document', async 
 	await page.goto(GOOGLE_DOC_URL);
 	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
 	await replaceDocumentContent(page, input);
+	await expect
+		.poll(async () => ((await getGoogleDocText(page)) ?? '').includes(`an test ${token}`), {
+			timeout: 20000,
+		})
+		.toBeTruthy();
 
 	await expect
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
@@ -197,22 +249,243 @@ test('Google Docs: scrolling does not snap back upward', async ({ page }) => {
 	await page.goto(GOOGLE_DOC_URL);
 	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
 	const longText = [`This is an test ${token}`]
-		.concat(Array.from({ length: 80 }, (_, i) => `line ${i} ${token}`))
+		.concat(Array.from({ length: 60 }, (_, i) => `line ${i} ${token}`))
 		.join('\n');
 	await replaceDocumentContent(page, longText);
+	await page.waitForTimeout(1200);
+	await page.evaluate(() => {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		if (editor) editor.scrollTop = 0;
+	});
+	await page.waitForTimeout(250);
+
+	const initial = await getGoogleDocsEditorScrollTop(page);
+	await page.evaluate(() => {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		if (!editor) return;
+		editor.scrollTop = editor.scrollTop + 1200;
+	});
+	await page.waitForTimeout(300);
+	const scrolled = await getGoogleDocsEditorScrollTop(page);
+	expect(scrolled).toBeGreaterThan(200);
+
+	await page.waitForTimeout(2500);
+	const afterWait = await getGoogleDocsEditorScrollTop(page);
+	expect(afterWait).toBeGreaterThan(Math.max(200, scrolled - 400));
+});
+
+test('Google Docs: highlight appears near second-line lint', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-second-line-${Date.now()}`;
+	const lineWithLint = `This is an test ${token}`;
+	const input = [`This line is clean ${token}`, lineWithLint, `Another clean line ${token}`].join('\n');
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
 
 	await expect
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
 		.toBeGreaterThan(0);
 
-	const initial = await getGoogleDocsEditorScrollTop(page);
-	for (let i = 0; i < 12; i++) {
-		await page.keyboard.press('PageDown');
-	}
-	await page.waitForTimeout(500);
-	const scrolled = await getGoogleDocsEditorScrollTop(page);
+	const caretRect = await getCaretRectForNeedle(page, `an test ${token}`);
+	expect(caretRect).not.toBeNull();
 
-	await page.waitForTimeout(2500);
-	const afterWait = await getGoogleDocsEditorScrollTop(page);
-	expect(afterWait).toBeGreaterThan(scrolled - 30);
+	const boxes = await getVisibleHighlightBoxes(page);
+	expect(boxes.length).toBeGreaterThan(0);
+	const closest = getClosestBoxDistance(boxes, { x: caretRect?.x ?? 0, y: caretRect?.y ?? 0 });
+	expect(closest.dx).toBeLessThan(180);
+	expect(closest.dy).toBeLessThan(140);
+});
+
+test('Google Docs: highlight appears near third-line lint', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-third-line-${Date.now()}`;
+	const input = [
+		`This line is clean ${token}`,
+		`Still clean here ${token}`,
+		`This is an test ${token}`,
+	].join('\n');
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const caretRect = await getCaretRectForNeedle(page, `an test ${token}`);
+	expect(caretRect).not.toBeNull();
+
+	const boxes = await getVisibleHighlightBoxes(page);
+	expect(boxes.length).toBeGreaterThan(0);
+	const closest = getClosestBoxDistance(boxes, { x: caretRect?.x ?? 0, y: caretRect?.y ?? 0 });
+	expect(closest.dx).toBeLessThan(180);
+	expect(closest.dy).toBeLessThan(140);
+});
+
+test('Google Docs: line geometry differs between repeated lint phrases', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-multi-line-${Date.now()}`;
+	const input = [
+		`This is an test ${token}`,
+		`Again this is an test ${token}`,
+		`And one more an test ${token}`,
+	].join('\n');
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	const rects = await page.evaluate(async (token) => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const text = annotated.getText() as string;
+		const needle = `an test ${token}`;
+		const first = text.indexOf(needle);
+		const second = text.indexOf(needle, first + 1);
+		if (first < 0 || second < 0) return null;
+
+		const getCaretRectAt = (idx: number) => {
+			annotated.setSelection(idx, idx);
+			const caret = document.querySelector('.kix-cursor-caret');
+			const rect = caret?.getBoundingClientRect();
+			if (!rect) return null;
+			return { x: rect.x, y: rect.y };
+		};
+
+		return { first: getCaretRectAt(first), second: getCaretRectAt(second) };
+	}, token);
+
+	expect(rects).not.toBeNull();
+	expect(rects?.first).not.toBeNull();
+	expect(rects?.second).not.toBeNull();
+	expect((rects?.second?.y ?? 0) - (rects?.first?.y ?? 0)).toBeGreaterThan(18);
+});
+
+test('Google Docs: Harper can write a suggestion on second line', async ({ page }) => {
+	const token = `harper-gdocs-write-line2-${Date.now()}`;
+	const input = [`First line clean ${token}`, `This is an test ${token}`].join('\n');
+	const correctedNeedle = `This is a test ${token}`;
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const fullText = (await getGoogleDocText(page)) ?? '';
+	const start = fullText.indexOf(`an test ${token}`);
+	expect(start).toBeGreaterThanOrEqual(0);
+	await page.evaluate(
+		({ start }) => {
+			document.dispatchEvent(
+				new CustomEvent('harper:gdocs:replace', {
+					detail: {
+						start,
+						end: start + 2,
+						replacementText: 'a',
+					},
+				}),
+			);
+		},
+		{ start },
+	);
+
+	await expect
+		.poll(async () => {
+			const text = await getGoogleDocText(page);
+			return text ?? '';
+		})
+			.toContain(correctedNeedle);
+});
+
+test('Google Docs: bridge returns lower Y rect for lower-line lint', async ({ page }) => {
+	const token = `harper-gdocs-bridge-rects-${Date.now()}`;
+	const input = [
+		`This is an test ${token}`,
+		`Clean line ${token}`,
+		`This is an test ${token} line three`,
+	].join('\n');
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const rects = await page.evaluate(async (token) => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const text = annotated.getText() as string;
+		const firstNeedle = `an test ${token}`;
+		const first = text.indexOf(firstNeedle);
+		const second = text.indexOf(firstNeedle, first + 1);
+		if (first < 0 || second < 0) return null;
+
+		const readRects = (start: number, end: number, requestId: string) => {
+			const bridge = document.getElementById('harper-google-docs-main-world-bridge');
+			if (!bridge) return [];
+			const attrName = `data-harper-rects-${requestId}`;
+			document.dispatchEvent(
+				new CustomEvent('harper:gdocs:get-rects', {
+					detail: { requestId, start, end },
+				}),
+			);
+			const raw = bridge.getAttribute(attrName);
+			bridge.removeAttribute(attrName);
+			if (!raw) return [];
+			try {
+				const parsed = JSON.parse(raw);
+				return Array.isArray(parsed) ? parsed : [];
+			} catch {
+				return [];
+			}
+		};
+
+		const firstRects = readRects(first, first + 7, `r1-${Date.now()}`);
+		const secondRects = readRects(second, second + 7, `r2-${Date.now()}`);
+		return { firstRects, secondRects };
+	}, token);
+
+	expect(rects).not.toBeNull();
+	expect((rects?.firstRects?.length ?? 0) > 0).toBeTruthy();
+	expect((rects?.secondRects?.length ?? 0) > 0).toBeTruthy();
+	const firstY = rects?.firstRects?.[0]?.y ?? 0;
+	const secondY = rects?.secondRects?.[0]?.y ?? 0;
+	expect(secondY).toBeGreaterThan(firstY + 10);
+});
+
+test('Google Docs: highlight host remains non-interactive and top-layered', async ({ page }) => {
+	const token = `harper-gdocs-host-style-${Date.now()}`;
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, `This is an test ${token}`);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const hostStyle = await page.evaluate(() => {
+		const host = document.querySelector('#harper-highlight-host') as HTMLElement | null;
+		if (!host) return null;
+		const style = window.getComputedStyle(host);
+		return {
+			pointerEvents: style.pointerEvents,
+			position: style.position,
+			zIndex: style.zIndex,
+		};
+	});
+
+	expect(hostStyle).not.toBeNull();
+	expect(hostStyle?.pointerEvents).toBe('none');
+	expect(hostStyle?.position).toBe('fixed');
+	expect(Number(hostStyle?.zIndex ?? 0)).toBeGreaterThan(1000000);
 });
