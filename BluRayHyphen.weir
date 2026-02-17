@@ -1,0 +1,32 @@
+expr main (blu ray)
+
+let message "Use the hyphenated spelling for this media format."
+let description "Joins the two-word spelling of the optical disc format into the standard compound form."
+let kind "Punctuation"
+let becomes "blu-ray"
+let strategy "MatchCase"
+
+# True positives
+
+test "I ordered a Blu ray player." "I ordered a Blu-ray player."
+test "This movie ships on blu ray." "This movie ships on blu-ray."
+test "Do you still buy BLU RAY discs?" "Do you still buy BLU-RAY discs?"
+test "A Blu ray drive is installed." "A Blu-ray drive is installed."
+test "They found cheap blu ray movies." "They found cheap blu-ray movies."
+test "BLU RAY" "BLU-RAY"
+
+# False positives / true negatives
+
+test "I ordered a Blu-ray player." "I ordered a Blu-ray player."
+test "The ray looked blue in that photo." "The ray looked blue in that photo."
+test "We watched a DVD last night." "We watched a DVD last night."
+test "The Blu rays are on the shelf." "The Blu rays are on the shelf."
+test "A blur ay effect appeared in the lens." "A blur ay effect appeared in the lens."
+test "The brand name is Blue Ray Labs." "The brand name is Blue Ray Labs."
+
+# False negatives and edge behavior checks
+
+test "blu ray" "blu-ray"
+test "Blu ray, DVD, and VHS." "Blu-ray, DVD, and VHS."
+test "I keep one blu ray." "I keep one blu-ray."
+test "Many people said BLU ray still works." "Many people said BLU-ray still works."
