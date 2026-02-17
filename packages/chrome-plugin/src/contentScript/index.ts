@@ -100,8 +100,7 @@ function scan() {
 	document
 		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
 		.forEach((element) => {
-			const isTypstPlayground =
-				window.location.hostname === 'typst.app' && window.location.pathname.startsWith('/play');
+			const isTypstPlayground = window.location.hostname === 'typst.app';
 			const explicitlyTypst = element.getAttribute('data-language') === 'typst';
 
 			if (!isTypstPlayground && !explicitlyTypst) {
