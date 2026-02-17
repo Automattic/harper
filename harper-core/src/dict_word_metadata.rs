@@ -1821,6 +1821,40 @@ pub mod tests {
         }
     }
 
+    mod nominal {
+        use crate::dict_word_metadata::tests::md;
+
+        #[test]
+        fn my_is_possessive_nominal() {
+            assert!(md("my").is_possessive_nominal());
+        }
+
+        #[test]
+        fn mine_is_not_possessive_nominal() {
+            assert!(!md("mine").is_possessive_nominal());
+        }
+
+        #[test]
+        fn freds_is_possessive_nominal() {
+            assert!(md("Fred's").is_possessive_nominal());
+        }
+
+        #[test]
+        fn fred_is_not_possessive_nominal() {
+            assert!(!md("Fred").is_possessive_nominal());
+        }
+
+        #[test]
+        fn dogs_is_possessive_nominal() {
+            assert!(md("dog's").is_possessive_nominal());
+        }
+
+        #[test]
+        fn microsofts_is_possessive_nominal() {
+            assert!(md("Microsoft's").is_possessive_nominal());
+        }
+    }
+
     mod adjective {
         use crate::{Degree, dict_word_metadata::tests::md};
 
