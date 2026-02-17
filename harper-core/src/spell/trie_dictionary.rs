@@ -39,16 +39,8 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.contains_word(word)
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.inner.contains_word_str(word)
-    }
-
     fn contains_exact_word(&self, word: &[char]) -> bool {
         self.inner.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.inner.contains_exact_word_str(word)
     }
 
     fn fuzzy_match(
@@ -58,15 +50,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.inner.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.inner.fuzzy_match_str(word, max_distance, max_results)
     }
 
     fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
@@ -79,14 +62,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
 
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.inner.get_word_metadata_exact(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
-        self.inner.get_word_metadata_str(word)
-    }
-
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
-        self.inner.get_word_metadata_str_exact(word)
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {

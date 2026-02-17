@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::{CharString, DictWordMetadata};
+use crate::DictWordMetadata;
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -105,26 +105,6 @@ impl Dictionary for MergedDictionary {
         Box::new(self.children.iter().flat_map(|c| c.words_iter()))
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_exact_word(&chars)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
-    }
-
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata_exact(&chars)
-    }
-
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -134,22 +114,6 @@ impl Dictionary for MergedDictionary {
         self.children
             .iter()
             .flat_map(|d| d.fuzzy_match(word, max_distance, max_results))
-            .sorted_by_key(|r| r.word)
-            .dedup_by(|a, b| a.word == b.word)
-            .sorted_by_key(|r| r.edit_distance)
-            .take(max_results)
-            .collect()
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.children
-            .iter()
-            .flat_map(|d| d.fuzzy_match_str(word, max_distance, max_results))
             .sorted_by_key(|r| r.word)
             .dedup_by(|a, b| a.word == b.word)
             .sorted_by_key(|r| r.edit_distance)

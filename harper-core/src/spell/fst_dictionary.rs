@@ -117,24 +117,12 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word(word)
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_word_str(word)
-    }
-
     fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
         self.mutable_dict.get_word_metadata(word)
     }
 
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
         self.mutable_dict.get_word_metadata_exact(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata_str(word)
-    }
-
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata_str_exact(word)
     }
 
     fn fuzzy_match(
@@ -192,19 +180,6 @@ impl Dictionary for FstDictionary {
         merged
     }
 
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.fuzzy_match(
-            word.chars().collect::<Vec<_>>().as_slice(),
-            max_distance,
-            max_results,
-        )
-    }
-
     fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
         self.mutable_dict.get_correct_capitalization_of(word)
     }
@@ -219,10 +194,6 @@ impl Dictionary for FstDictionary {
 
     fn contains_exact_word(&self, word: &[char]) -> bool {
         self.mutable_dict.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_exact_word_str(word)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

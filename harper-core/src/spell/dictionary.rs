@@ -13,27 +13,13 @@ pub trait Dictionary: Send + Sync {
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool;
 
-    /// Check if the dictionary contains any capitalization of a given word.
-    fn contains_word_str(&self, word: &str) -> bool;
-
     /// Check if the dictionary contains the exact capitalization of a given word.
     fn contains_exact_word(&self, word: &[char]) -> bool;
-
-    /// Check if the dictionary contains the exact capitalization of a given word.
-    fn contains_exact_word_str(&self, word: &str) -> bool;
 
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match(
         &'_ self,
         word: &[char],
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>>;
-
-    /// Gets best fuzzy match from dictionary
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>>;
@@ -49,17 +35,6 @@ pub trait Dictionary: Send + Sync {
 
     /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
     fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata>;
-
-    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
-    /// If the word isn't in the dictionary, the resulting metadata will be
-    /// empty.
-    ///
-    /// Since the dictionary might contain words that differ only in capitalization, this may
-    /// return multiple entries.
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata>;
-
-    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;
@@ -91,9 +66,55 @@ pub trait Dictionary: Send + Sync {
         }
     }
 
+    // STRING FUNCTION VARIANTS START
+
+    /// Check if the dictionary contains any capitalization of a given word.
+    fn contains_word_str(&self, word: &str) -> bool {
+        self.contains_word(str_to_chars(word).as_ref())
+    }
+
+    /// Check if the dictionary contains the exact capitalization of a given word.
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        self.contains_exact_word(str_to_chars(word).as_ref())
+    }
+
+    /// Gets best fuzzy match from dictionary
+    fn fuzzy_match_str(
+        &'_ self,
+        word: &str,
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.fuzzy_match(str_to_chars(word).as_ref(), max_distance, max_results)
+    }
+
+    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
+    /// If the word isn't in the dictionary, the resulting metadata will be
+    /// empty.
+    ///
+    /// Since the dictionary might contain words that differ only in capitalization, this may
+    /// return multiple entries.
+    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
+        self.get_word_metadata(str_to_chars(word).as_ref())
+    }
+
+    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.get_word_metadata_exact(str_to_chars(word).as_ref())
+    }
+
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
     fn get_word_metadata_combined_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.get_word_metadata_combined(&word.chars().collect::<Vec<_>>())
+        self.get_word_metadata_combined(str_to_chars(word).as_ref())
     }
+
+    // STRING FUNCTION VARIANTS END
+}
+
+/// The default conversion function for converting a str to a sequence of characters.
+///
+/// For use by default implementations of the "str variants" of dictionary functions.
+fn str_to_chars(word: &str) -> impl AsRef<[char]> {
+    word.chars().collect::<Vec<_>>()
 }

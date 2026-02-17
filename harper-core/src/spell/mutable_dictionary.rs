@@ -8,7 +8,7 @@ use itertools::Itertools;
 use std::sync::Arc;
 use std::{borrow::Cow, sync::LazyLock};
 
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use crate::{CharStringExt, DictWordMetadata};
 
 use super::FuzzyMatchResult;
 use super::dictionary::Dictionary;
@@ -123,21 +123,6 @@ impl Dictionary for MutableDictionary {
             .contains_case_folded(CaseFoldedWordId::from_word_chars(word))
     }
 
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
-    }
-
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata_exact(&chars)
-    }
-
     /// Suggest a correct spelling for a given misspelled word.
     /// `Self::word` is assumed to be quite small (n < 100).
     /// `max_distance` relates to an optimization that allows the search
@@ -197,16 +182,6 @@ impl Dictionary for MutableDictionary {
             .collect()
     }
 
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        let word: Vec<_> = word.chars().collect();
-        self.fuzzy_match(&word, max_distance, max_results)
-    }
-
     fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
         self.word_map
             .get_case_folded(CaseFoldedWordId::from_word_chars(word))
@@ -229,11 +204,6 @@ impl Dictionary for MutableDictionary {
     fn contains_exact_word(&self, word: &[char]) -> bool {
         self.word_map
             .contains_canonical(CanonicalWordId::from_word_chars(word))
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        let word: CharString = word.chars().collect();
-        self.contains_exact_word(word.as_ref())
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
