@@ -77,9 +77,9 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 
         // "thec" "at" -> "the cat"
         if self.dict.contains_word(w1_start) && self.dict.contains_word(&w1_last_plus_w2) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(&w1_last_plus_w2);
+            let maybe_canon_w2 = self.dict.get_correct_capitalizations_of(&w1_last_plus_w2);
 
-            if let Some(canon_w1) = self.dict.get_correct_capitalization_of(w1_start).first() {
+            if let Some(canon_w1) = self.dict.get_correct_capitalizations_of(w1_start).first() {
                 if let Some(canon_w2) = maybe_canon_w2.first() {
                     keep_unique(&mut values, canon_w1, canon_w2);
                 } else {
@@ -94,10 +94,10 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 
         // "th" "ecat" -> "the cat"
         if self.dict.contains_word(&w1_plus_w2_first) && self.dict.contains_word(w2_end) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(w2_end);
+            let maybe_canon_w2 = self.dict.get_correct_capitalizations_of(w2_end);
             if let Some(canon_w1) = self
                 .dict
-                .get_correct_capitalization_of(&w1_plus_w2_first)
+                .get_correct_capitalizations_of(&w1_plus_w2_first)
                 .first()
             {
                 if let Some(canon_w2) = maybe_canon_w2.first() {

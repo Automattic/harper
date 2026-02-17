@@ -52,8 +52,8 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.fuzzy_match(word, max_distance, max_results)
     }
 
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
-        self.inner.get_correct_capitalization_of(word)
+    fn get_correct_capitalizations_of(&self, word: &[char]) -> Vec<&'_ [char]> {
+        self.inner.get_correct_capitalizations_of(word)
     }
 
     fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {

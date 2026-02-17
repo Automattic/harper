@@ -76,7 +76,7 @@ pub fn try_make_title_case(
             let orig_text = word.span.get_content(source);
 
             if let Ok(correct_caps) = dict
-                .get_correct_capitalization_of(orig_text)
+                .get_correct_capitalizations_of(orig_text)
                 .iter()
                 .exactly_one()
             {

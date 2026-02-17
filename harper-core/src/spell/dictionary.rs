@@ -25,7 +25,7 @@ pub trait Dictionary: Send + Sync {
     ) -> Vec<FuzzyMatchResult<'_>>;
 
     /// Get the correct canonical capitalizations for the given word.
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]>;
+    fn get_correct_capitalizations_of(&self, word: &[char]) -> Vec<&'_ [char]>;
 
     /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
     ///

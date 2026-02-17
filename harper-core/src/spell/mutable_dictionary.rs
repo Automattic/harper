@@ -180,7 +180,7 @@ impl Dictionary for MutableDictionary {
             .collect()
     }
 
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Vec<&'_ [char]> {
+    fn get_correct_capitalizations_of(&self, word: &[char]) -> Vec<&'_ [char]> {
         self.word_map
             .get_case_folded(CaseFoldedWordId::from_word_chars(word))
             .map(|word_map_entry| word_map_entry.canonical_spelling.as_slice())

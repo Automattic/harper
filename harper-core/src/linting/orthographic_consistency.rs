@@ -103,7 +103,7 @@ impl ExprLinter for OrthographicConsistency {
         if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
             && let Ok(canonical) = self
                 .dict
-                .get_correct_capitalization_of(chars)
+                .get_correct_capitalizations_of(chars)
                 .into_iter()
                 .exactly_one()
             && alphabetic_differs(canonical, chars)
@@ -124,7 +124,7 @@ impl ExprLinter for OrthographicConsistency {
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Ok(canonical) = self
                 .dict
-                .get_correct_capitalization_of(chars)
+                .get_correct_capitalizations_of(chars)
                 .into_iter()
                 .exactly_one()
             && alphabetic_differs(canonical, chars)

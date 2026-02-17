@@ -54,7 +54,7 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                         && !first_char.is_uppercase()
                     {
                         for canonical_spelling in
-                            self.dictionary.get_correct_capitalization_of(word_chars)
+                            self.dictionary.get_correct_capitalizations_of(word_chars)
                         {
                             // Skip if it's a proper noun or contains uppercase letters before a separator
                             if first_word.kind.is_proper_noun() {
