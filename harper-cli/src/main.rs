@@ -365,7 +365,9 @@ fn main() -> anyhow::Result<()> {
             ];
 
             for word in words {
-                let meta = curated_dictionary.get_word_metadata_str_exact(&word);
+                let meta = curated_dictionary
+                    .get_word_exact_str(&word)
+                    .map(|word| &word.metadata);
                 let (flags, emojis) = meta.as_ref().map_or_else(
                     || (String::new(), String::new()),
                     |md| {
@@ -861,7 +863,10 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in curated_dictionary.words_iter() {
-                if let Some(metadata) = curated_dictionary.get_word_metadata_exact(word) {
+                if let Some(metadata) = curated_dictionary
+                    .get_word_exact(word)
+                    .map(|word| &word.metadata)
+                {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -980,8 +985,9 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
 
     let children = dictionary.words_iter().filter(|e| {
         dictionary
-            .get_word_metadata_exact(e)
+            .get_word_exact(e)
             .unwrap()
+            .metadata
             .derived_from
             .contains(id)
     });

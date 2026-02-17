@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use blanket::blanket;
 
 use super::FuzzyMatchResult;
-use crate::DictWordMetadata;
+use crate::{DictWordMetadata, spell::word_map::WordMapEntry};
 
 /// An in-memory database that contains everything necessary to parse and analyze English text.
 ///
@@ -31,10 +31,10 @@ pub trait Dictionary: Send + Sync {
     ///
     /// Since the dictionary might contain words that differ only in capitalization, this may
     /// return multiple entries.
-    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata>;
+    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry>;
 
     /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata>;
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry>;
 
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_>;
@@ -51,15 +51,15 @@ pub trait Dictionary: Send + Sync {
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
     fn get_word_metadata_combined(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        let found_words = self.get_word_metadata(word);
+        let found_words = self.get_word(word);
 
         match found_words.len() {
             0 => None,
-            1 => Some(Cow::Borrowed(found_words[0])),
+            1 => Some(Cow::Borrowed(&found_words[0].metadata)),
             _ => Some(Cow::Owned({
-                let mut first = found_words[0].to_owned();
+                let mut first = found_words[0].to_owned().metadata;
                 found_words.iter().skip(1).for_each(|found_word| {
-                    first.append(found_word);
+                    first.append(&found_word.metadata);
                 });
                 first
             })),
@@ -94,13 +94,13 @@ pub trait Dictionary: Send + Sync {
     ///
     /// Since the dictionary might contain words that differ only in capitalization, this may
     /// return multiple entries.
-    fn get_word_metadata_str(&self, word: &str) -> Vec<&DictWordMetadata> {
-        self.get_word_metadata(str_to_chars(word).as_ref())
+    fn get_word_str(&self, word: &str) -> Vec<&WordMapEntry> {
+        self.get_word(str_to_chars(word).as_ref())
     }
 
     /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
-    fn get_word_metadata_str_exact(&self, word: &str) -> Option<&DictWordMetadata> {
-        self.get_word_metadata_exact(str_to_chars(word).as_ref())
+    fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
+        self.get_word_exact(str_to_chars(word).as_ref())
     }
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one

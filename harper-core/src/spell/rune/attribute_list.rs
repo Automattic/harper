@@ -309,17 +309,15 @@ mod tests {
     #[test]
     fn proper_noun_property_propagates_to_plurals() {
         let fst_dict = FstDictionary::curated();
-        if let Some(vw_plural) = fst_dict.get_word_metadata_str_exact("Volkswagens") {
-            assert!(vw_plural.is_proper_noun());
+        if let Some(vw_plural) = fst_dict.get_word_exact_str("Volkswagens") {
+            assert!(vw_plural.metadata.is_proper_noun());
         }
     }
 
     #[test]
     fn proper_noun_propagates_to_possessives_2327() {
-        if let Some(vw_possessive) =
-            FstDictionary::curated().get_word_metadata_str_exact("Volkswagen's")
-        {
-            assert!(vw_possessive.is_possessive_noun());
+        if let Some(vw_possessive) = FstDictionary::curated().get_word_exact_str("Volkswagen's") {
+            assert!(vw_possessive.metadata.is_possessive_noun());
         }
     }
 }

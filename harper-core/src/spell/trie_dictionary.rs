@@ -4,7 +4,7 @@ use std::sync::{Arc, LazyLock};
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::DictWordMetadata;
+use crate::spell::word_map::WordMapEntry;
 
 use super::{Dictionary, FstDictionary, FuzzyMatchResult};
 
@@ -56,12 +56,12 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.get_correct_capitalization_of(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
-        self.inner.get_word_metadata(word)
+    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
+        self.inner.get_word(word)
     }
 
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.inner.get_word_metadata_exact(word)
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.inner.get_word_exact(word)
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {

@@ -739,7 +739,7 @@ mod tests {
         let mut linter = Linter::new(Dialect::American);
 
         linter.import_words(vec![text.clone()]);
-        dbg!(linter.dictionary.get_word_metadata_str(&text));
+        dbg!(linter.dictionary.get_word_str(&text));
 
         let lints = linter.lint(text, Language::Plain, false, None);
         assert!(lints.is_empty());

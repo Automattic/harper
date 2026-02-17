@@ -29,7 +29,10 @@ where
     }
 
     fn add_valid_candidate(&self, candidates: &mut Vec<String>, candidate: String) -> bool {
-        if let Some(metadata) = self.dict.get_word_metadata_str_exact(&candidate)
+        if let Some(metadata) = self
+            .dict
+            .get_word_exact_str(&candidate)
+            .map(|w| &w.metadata)
             && (metadata.is_comparative_adjective() || metadata.is_superlative_adjective())
         {
             candidates.push(candidate);

@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::DictWordMetadata;
+use crate::spell::word_map::WordMapEntry;
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -85,16 +85,16 @@ impl Dictionary for MergedDictionary {
         false
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
+    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
         self.children
             .iter()
-            .flat_map(|d| d.get_word_metadata(word))
+            .flat_map(|d| d.get_word(word))
             .collect()
     }
 
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
         for child in &self.children {
-            if let Some(dict_word_metadata) = child.get_word_metadata_exact(word) {
+            if let Some(dict_word_metadata) = child.get_word_exact(word) {
                 return Some(dict_word_metadata);
             }
         }

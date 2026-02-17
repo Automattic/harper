@@ -6,6 +6,7 @@ use std::borrow::Cow;
 use std::sync::LazyLock;
 use std::{cell::RefCell, sync::Arc};
 
+use crate::spell::word_map::WordMapEntry;
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 use super::Dictionary;
@@ -117,12 +118,12 @@ impl Dictionary for FstDictionary {
         self.mutable_dict.contains_word(word)
     }
 
-    fn get_word_metadata(&self, word: &[char]) -> Vec<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata(word)
+    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
+        self.mutable_dict.get_word(word)
     }
 
-    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
-        self.mutable_dict.get_word_metadata_exact(word)
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.mutable_dict.get_word_exact(word)
     }
 
     fn fuzzy_match(
@@ -270,7 +271,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str_exact("on").unwrap().is_nominal());
+        assert!(!dict.get_word_exact_str("on").unwrap().metadata.is_nominal());
     }
 
     #[test]
@@ -303,8 +304,9 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_metadata_str_exact(contraction)
+                dict.get_word_exact_str(contraction)
                     .unwrap()
+                    .metadata
                     .derived_from
                     .is_empty()
             )
@@ -316,8 +318,9 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str_exact("llamas")
+            dict.get_word_exact_str("llamas")
                 .unwrap()
+                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("llama"))
         )
@@ -328,8 +331,9 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str_exact("cats")
+            dict.get_word_exact_str("cats")
                 .unwrap()
+                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("cat"))
         );
@@ -340,8 +344,9 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str_exact("unhappy")
+            dict.get_word_exact_str("unhappy")
                 .unwrap()
+                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("happy"))
         );
@@ -352,8 +357,9 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_metadata_str_exact("quickly")
+            dict.get_word_exact_str("quickly")
                 .unwrap()
+                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("quick"))
         );
