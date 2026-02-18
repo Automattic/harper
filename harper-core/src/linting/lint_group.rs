@@ -52,6 +52,7 @@ use super::currency_placement::CurrencyPlacement;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
@@ -460,6 +461,7 @@ impl LintGroup {
         insert_expr_rule!(DayAndAge, true);
         insert_expr_rule!(DespiteItIs, true);
         insert_expr_rule!(DespiteOf, true);
+        insert_expr_rule!(DidPast, true);
         insert_expr_rule!(Didnt, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(DotInitialisms, true);
