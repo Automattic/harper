@@ -461,7 +461,6 @@ impl LintGroup {
         insert_expr_rule!(DayAndAge, true);
         insert_expr_rule!(DespiteItIs, true);
         insert_expr_rule!(DespiteOf, true);
-        insert_expr_rule!(DidPast, true);
         insert_expr_rule!(Didnt, true);
         insert_struct_rule!(DiscourseMarkers, true);
         insert_expr_rule!(DotInitialisms, true);
@@ -684,6 +683,9 @@ impl LintGroup {
 
         out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
         out.config.set_rule_enabled("WorthToDo", true);
+
+        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.config.set_rule_enabled("DidPast", true);
 
         out
     }
