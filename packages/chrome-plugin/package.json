@@ -1,7 +1,7 @@
 {
 	"name": "chrome-plugin",
 	"displayName": "chrome-plugin",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"author": "no one",
 	"description": "The private grammar checker for 21st Century English",
 	"type": "module",
