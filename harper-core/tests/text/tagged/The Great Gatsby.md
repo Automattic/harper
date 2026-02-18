@@ -89,7 +89,7 @@
 > all          right    at    the end     ; it       is  what   preyed on  Gatsby , what   foul     dust   floated in        the
 # NSg/I/J/C/Dq NPr/VB/J NSg/P D   NSg/VB+ . NPr/ISg+ VL3 NSg/I+ VP/J   J/P NPr    . NSg/I+ NSg/VB/J Nᴹ/VB+ VP/J    NPr/J/R/P D
 > wake   of his     dreams  that          temporarily closed out          my  interest in        the abortive
-# NPr/VB P  ISg/D$+ NPl/V3+ NSg/I/C/Ddem+ R           VP/J   NSg/VB/J/R/P D$+ N🅪Sg/VB+ NPr/J/R/P D   NSg/VB/J
+# NPr/VB P  ISg/D$+ NPl/V3+ NSg/I/C/Ddem+ R           VP/J   NSg/VB/J/R/P D$+ N🅪Sg/VB+ NPr/J/R/P D   NSg/J
 > sorrows and  short      - winded elations of men  .
 # NPl/V3+ VB/C NPr/VB/J/P . VP/J   NPl      P  NPl+ .
 >
@@ -5355,7 +5355,7 @@
 > “ We've met before , ” muttered Gatsby . His     eyes    glanced momentarily at    me       , and  his
 # . K     VP  C/P    . . VP/J     NPr    . ISg/D$+ NPl/V3+ VP/J    R           NSg/P NPr/ISg+ . VB/C ISg/D$+
 > lips    parted with an  abortive attempt at    a   laugh   . Luckily the clock   took this
-# NPl/V3+ VP/J   P    D/P NSg/VB/J NSg/VB+ NSg/P D/P NSg/VB+ . R       D+  NSg/VB+ VPt  I/Ddem+
+# NPl/V3+ VP/J   P    D/P NSg/J    NSg/VB+ NSg/P D/P NSg/VB+ . R       D+  NSg/VB+ VPt  I/Ddem+
 > moment to tilt   dangerously at    the pressure of his     head      , whereupon he       turned and
 # NSg+   P  NSg/VB R           NSg/P D   N🅪Sg/VB  P  ISg/D$+ NPr/VB/J+ . C         NPr/ISg+ VP/J   VB/C
 > caught it       with trembling fingers , and  set       it       back     in        place    . Then      he       sat      down        ,

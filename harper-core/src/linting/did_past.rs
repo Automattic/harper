@@ -1,5 +1,6 @@
 use crate::{
-    CharStringExt, Lint, Token, TokenKind,
+    CharStringExt, Lint, Token,
+    char_ext::CharExt,
     expr::{Expr, SequenceExpr},
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
@@ -21,13 +22,24 @@ where
                 SequenceExpr::word_set(&["did", "didn't", "didnt"])
                     .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
                     .t_ws()
-                    // Save effort when the lemma and the simple past form are the same
-                    .then_kind_is_but_is_not(
-                        TokenKind::is_verb_simple_past_form,
-                        TokenKind::is_verb_lemma,
-                    ),
+                    // Note that 'simple past forms' may apply only to irregular verbs
+                    // Note and that 'past forms' applies to regular verbs where preterite and participle share a form
+                    .then_kind_where(|k| {
+                        (k.is_verb_simple_past_form() || k.is_verb_past_form())
+                            && !k.is_verb_lemma()
+                    }),
             ),
             dict,
+        }
+    }
+
+    fn keep_suggestion_if_lemma(&self, suggs: &mut Vec<Vec<char>>, candidate: &[char]) {
+        if self
+            .dict
+            .get_word_metadata(candidate)
+            .is_some_and(|md| md.is_verb_lemma())
+        {
+            suggs.push(candidate.to_vec());
         }
     }
 }
@@ -51,32 +63,48 @@ where
         let vchars = vspan.get_content(src);
         let vstr = vspan.get_content_string(src);
 
-        let mut suggestions = vec![];
+        let mut suggs = vec![];
 
-        // Chop -ed off regular verbs
+        // Chop -d/-ed off regular verbs
 
-        if vchars.ends_with_ignore_ascii_case_str("ed") {
-            // TODO: check if the result is a base form verb in the dictionary
-            suggestions.push(Suggestion::replace_with_match_case(
-                vchars[..vchars.len() - 2].to_vec(),
-                vchars,
-            ));
+        if vchars.ends_with_ignore_ascii_case_chars(&['d']) {
+            let without_d = &vchars[..vchars.len() - 1];
+
+            if without_d.ends_with_ignore_ascii_case_chars(&['e']) {
+                let without_ed = &without_d[..without_d.len() - 1];
+
+                self.keep_suggestion_if_lemma(&mut suggs, without_ed);
+
+                // If the stem without -ed now ends in -i, try changing that to -y to find the lemma
+                if without_ed.ends_with_ignore_ascii_case_chars(&['i']) {
+                    let mut with_final_y = without_ed[..without_ed.len() - 1].to_vec();
+                    with_final_y.push('y');
+                    self.keep_suggestion_if_lemma(&mut suggs, &with_final_y);
+                }
+
+                // If the stem without -ed ends in a doubled consonant, try with just a single one
+                if without_ed.last().is_some_and(|c| !c.is_vowel()) {
+                    let without_doubled_consonant = without_ed[..without_ed.len() - 1].to_vec();
+                    self.keep_suggestion_if_lemma(&mut suggs, &without_doubled_consonant);
+                }
+            }
+            self.keep_suggestion_if_lemma(&mut suggs, without_d);
         }
 
         // Look up irregular verbs
 
         if let Some(lemma) = IrregularVerbs::curated().get_lemma_for_preterite(&vstr) {
-            suggestions.push(Suggestion::replace_with_match_case(
-                lemma.chars().collect(),
-                vchars,
-            ));
+            suggs.push(lemma.chars().collect());
         }
 
-        if !suggestions.is_empty() {
+        if !suggs.is_empty() {
             Some(Lint {
                 span: vspan,
                 lint_kind: LintKind::Redundancy,
-                suggestions,
+                suggestions: suggs
+                    .into_iter()
+                    .map(|s| Suggestion::replace_with_match_case(s, vchars))
+                    .collect(),
                 message: "Use the base form of the verb with \"did\".".to_string(),
                 ..Default::default()
             })
@@ -94,7 +122,53 @@ mod tests {
         spell::FstDictionary,
     };
 
-    // Test basic 'true positive' cases
+    // Test basic 'true positive' regular verb cases
+
+    // Regular verb where past is lemma+ed
+
+    #[test]
+    fn ed_did_forked() {
+        assert_suggestion_result(
+            "Did they forked the repo?",
+            DidPast::new(FstDictionary::curated()),
+            "Did they fork the repo?",
+        );
+    }
+
+    // Regular verb where past is lemma+d
+
+    #[test]
+    fn d_did_used() {
+        assert_suggestion_result(
+            "It didn't used a macro.",
+            DidPast::new(FstDictionary::curated()),
+            "It didn't use a macro.",
+        );
+    }
+
+    // Regular verb where past is lemma -y +ied
+
+    #[test]
+    fn y_did_fried() {
+        assert_suggestion_result(
+            "I hope that didn't fried any chips!",
+            DidPast::new(FstDictionary::curated()),
+            "I hope that didn't fry any chips!",
+        );
+    }
+
+    // Regular verb where past doubled the final consonant
+
+    #[test]
+    fn doubed_consonant_logged() {
+        assert_suggestion_result(
+            "There was a segfault but it did logged the error.",
+            DidPast::new(FstDictionary::curated()),
+            "There was a segfault but it did log the error.",
+        );
+    }
+
+    // Test basic 'true positive' irregular verb cases
 
     #[test]
     fn did_past() {
@@ -146,7 +220,7 @@ mod tests {
         );
     }
 
-    // Test basic 'true negative' cases
+    // Test basic 'true negative' cases - verb is valid as both lemma and simple past
 
     #[test]
     fn ignore_lemma_same_as_past_tense() {
@@ -196,7 +270,7 @@ mod tests {
         assert_suggestion_result(
             "since our CI was broken this did needed to be done",
             DidPast::new(FstDictionary::curated()),
-            "since our CI was broken this did needed to be done",
+            "since our CI was broken this did need to be done",
         );
     }
 
