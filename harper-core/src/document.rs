@@ -692,21 +692,19 @@ impl Document {
         self.tokens.remove_indices(to_remove);
     }
 
-    const COMMON_TOP_LEVEL_DOMAINS: &[&str] = &[
-        "ai", "app", "blog", "co", "com", "dev", "edu", "gov", "info", "io", "me", "mil", "net",
-        "org", "shop", "tech", "uk", "us", "xyz",
-    ];
-
     /// Condenses common top-level domains (for example: `.blog`, `.com`) down to single tokens.
     fn condense_common_top_level_domains(&mut self) {
+        const COMMON_TOP_LEVEL_DOMAINS: &[&str] = &[
+            "ai", "app", "blog", "co", "com", "dev", "edu", "gov", "info", "io", "me", "mil",
+            "net", "org", "shop", "tech", "uk", "us", "xyz",
+        ];
+
         if self.tokens.len() < 2 {
             return;
         }
 
         let mut to_remove = VecDeque::new();
-        let mut cursor = 1;
-
-        loop {
+        for cursor in 1..self.tokens.len() {
             // left context, dot, tld, right context
             let l = self.get_token_offset(cursor, -2);
             let d = &self.tokens[cursor - 1];
@@ -723,7 +721,7 @@ impl Document {
                 && tld
                     .span
                     .get_content(&self.source)
-                    .eq_any_ignore_ascii_case_str(Self::COMMON_TOP_LEVEL_DOMAINS)
+                    .eq_any_ignore_ascii_case_str(COMMON_TOP_LEVEL_DOMAINS)
                 && ((l.is_none_or(|t| t.kind.is_whitespace())
                     && r.is_none_or(|t| t.kind.is_whitespace()))
                     || (l.is_some_and(|t| t.kind.is_open_round())
@@ -733,12 +731,6 @@ impl Document {
                 self.tokens[cursor - 1].kind = TokenKind::Unlintable;
                 self.tokens[cursor - 1].span.end = self.tokens[cursor].span.end;
                 to_remove.push_back(cursor);
-            }
-
-            cursor += 1;
-
-            if cursor >= self.tokens.len() {
-                break;
             }
         }
 
