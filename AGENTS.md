@@ -113,6 +113,8 @@ When asked to write a new rule, keep these guidelines in mind:
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.
 
+ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- lint <TEXT>` to make sure the new rule isn't already covered by Harper.
+
 ## Workflow for Writing Weir Rules
 
 1. Draft the core expression
