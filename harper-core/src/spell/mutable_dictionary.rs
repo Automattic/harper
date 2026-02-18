@@ -5,7 +5,6 @@ use super::{
 };
 use crate::{edit_distance::edit_distance_min_alloc, spell::CaseFoldedWordId};
 use itertools::Itertools;
-use std::sync::Arc;
 use std::{borrow::Cow, sync::LazyLock};
 
 use crate::{CharStringExt, DictWordMetadata};
@@ -26,19 +25,6 @@ pub struct MutableDictionary {
     /// All English words
     word_map: WordMap,
 }
-
-/// The uncached function that is used to produce the original copy of the
-/// curated dictionary.
-fn uncached_inner_new() -> Arc<MutableDictionary> {
-    MutableDictionary::from_rune_files(
-        include_str!("../../dictionary.dict"),
-        include_str!("../../annotations.json"),
-    )
-    .map(Arc::new)
-    .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
-}
-
-static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new);
 
 impl MutableDictionary {
     pub fn new() -> Self {
@@ -62,8 +48,16 @@ impl MutableDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated() -> &'static Self {
+        static DICT: LazyLock<MutableDictionary> = LazyLock::new(|| {
+            MutableDictionary::from_rune_files(
+                include_str!("../../dictionary.dict"),
+                include_str!("../../annotations.json"),
+            )
+            .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
+        });
+
+        &DICT
     }
 
     /// Appends words to the dictionary.
