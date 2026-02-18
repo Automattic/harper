@@ -181,10 +181,6 @@ impl Dictionary for FstDictionary {
         merged
     }
 
-    fn get_correct_capitalizations_of(&self, word: &[char]) -> Vec<&'_ [char]> {
-        self.mutable_dict.get_correct_capitalizations_of(word)
-    }
-
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
         self.mutable_dict.words_iter()
     }

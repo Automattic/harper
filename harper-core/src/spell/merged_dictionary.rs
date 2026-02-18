@@ -121,13 +121,6 @@ impl Dictionary for MergedDictionary {
             .collect()
     }
 
-    fn get_correct_capitalizations_of(&self, word: &[char]) -> Vec<&'_ [char]> {
-        self.children
-            .iter()
-            .flat_map(|child| child.get_correct_capitalizations_of(word))
-            .collect()
-    }
-
     fn word_count(&self) -> usize {
         self.children.iter().map(|d| d.word_count()).sum()
     }
