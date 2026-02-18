@@ -610,8 +610,11 @@ impl DictWordMetadata {
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as (a) possessive.
+    /// NOTE: `possessive pronoun`s are not qualifiers, but words like `mine`, `yours`, etc.
+    /// The terminology of `possessive noun`, `possessive pronoun` and `possessive determiner` only
+    /// tends to reinforce this confusion.
     pub fn is_possessive_nominal(&self) -> bool {
-        self.is_possessive_noun() || self.is_possessive_pronoun()
+        self.is_possessive_noun() || self.is_possessive_determiner()
     }
 
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) singular.
@@ -622,11 +625,6 @@ impl DictWordMetadata {
     /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) plural.
     pub fn is_non_plural_nominal(&self) -> bool {
         self.is_non_plural_noun() || self.is_non_plural_pronoun()
-    }
-
-    /// Checks if the word is definitely a nominal and more specifically is labeled as __not__ (a) possessive.
-    pub fn is_non_possessive_nominal(&self) -> bool {
-        self.is_non_possessive_noun() || self.is_non_possessive_pronoun()
     }
 
     // Adjective metadata queries
@@ -1820,6 +1818,40 @@ pub mod tests {
         fn nonstandard_pronouns() {
             assert!(md("themself").pronoun.is_some());
             assert!(md("y'all'").pronoun.is_some());
+        }
+    }
+
+    mod nominal {
+        use crate::dict_word_metadata::tests::md;
+
+        #[test]
+        fn my_is_possessive_nominal() {
+            assert!(md("my").is_possessive_nominal());
+        }
+
+        #[test]
+        fn mine_is_not_possessive_nominal() {
+            assert!(!md("mine").is_possessive_nominal());
+        }
+
+        #[test]
+        fn freds_is_possessive_nominal() {
+            assert!(md("Fred's").is_possessive_nominal());
+        }
+
+        #[test]
+        fn fred_is_not_possessive_nominal() {
+            assert!(!md("Fred").is_possessive_nominal());
+        }
+
+        #[test]
+        fn dogs_is_possessive_nominal() {
+            assert!(md("dog's").is_possessive_nominal());
+        }
+
+        #[test]
+        fn microsofts_is_possessive_nominal() {
+            assert!(md("Microsoft's").is_possessive_nominal());
         }
     }
 
