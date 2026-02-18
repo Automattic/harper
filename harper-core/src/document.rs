@@ -694,9 +694,15 @@ impl Document {
 
     /// Condenses common top-level domains (for example: `.blog`, `.com`) down to single tokens.
     fn condense_common_top_level_domains(&mut self) {
-        const COMMON_TOP_LEVEL_DOMAINS: &[&str] = &[
+        const COMMON_TOP_LEVEL_DOMAINS: &[&str; 106] = &[
             "ai", "app", "blog", "co", "com", "dev", "edu", "gov", "info", "io", "me", "mil",
-            "net", "org", "shop", "tech", "uk", "us", "xyz",
+            "net", "org", "shop", "tech", "uk", "us", "xyz", "jp", "de", "fr", "br", "it", "ru",
+            "es", "pl", "ca", "au", "cn", "in", "nl", "eu", "ch", "id", "at", "kr", "cz", "mx",
+            "be", "tv", "se", "tr", "tw", "al", "ua", "ir", "vn", "cl", "sk", "ly", "cc", "to",
+            "no", "fi", "pt", "dk", "ar", "hu", "tk", "gr", "il", "news", "ro", "my", "biz", "ie",
+            "za", "nz", "sg", "ee", "th", "pe", "bg", "hk", "rs", "lt", "link", "ph", "club", "si",
+            "site", "mobi", "by", "cat", "wiki", "la", "ga", "xxx", "cf", "hr", "ng", "jobs",
+            "online", "kz", "ug", "gq", "ae", "is", "lv", "pro", "fm", "tips", "ms", "sa", "int",
         ];
 
         if self.tokens.len() < 2 {
