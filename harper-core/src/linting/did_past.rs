@@ -30,7 +30,7 @@ impl ExprLinter for DidPast {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
-        "Did past"
+        "Corrects past forms of verbs to their base form, when used together with \"did\"."
     }
 
     fn expr(&self) -> &dyn Expr {
@@ -62,12 +62,12 @@ impl ExprLinter for DidPast {
             ));
         }
 
-        if suggestions.len() > 0 {
+        if !suggestions.is_empty() {
             Some(Lint {
                 span: vspan,
                 lint_kind: LintKind::Redundancy,
                 suggestions,
-                message: "Did past".to_string(),
+                message: "Use the base form of the verb with \"did\".".to_string(),
                 ..Default::default()
             })
         } else {
