@@ -11289,7 +11289,7 @@ aborning/J
 abort/~NSVGdv
 abortion/~NgS
 abortionist/NgS
-abortive/~JYNV
+abortive/~JYN
 abound/~VdSG
 about/~PJ
 above/~PJNg
@@ -13554,7 +13554,7 @@ auteur/NgS
 auth/NV
 authentic/~JiU
 authentically/Ry
-authenticate/VGdSJXn
+authenticate/VGdSJXnr
 authenticated/VtTU
 authentication/~Nmg
 authenticator/Sg
@@ -19264,6 +19264,8 @@ cooktop/NSg
 cookware/Nmg
 cool/~JY^>pNgSVdGZ
 coolant/~NwSg
+cooldown/NSg
+cool down/V/
 cooler/~NgSJ
 coolie/NSg
 coolish/J
@@ -31944,7 +31946,7 @@ lax/~NJ^>Yp
 laxative/JNgS
 laxity/Nmg
 laxness/Nmg
-lay/~VtGSNgJrie
+lay/~VbtGSNgJrie    # "lay" is lemma with past "laid". Also simple past of "lie"
 lay out/V/
 layabout/NS
 layaway/NgV
@@ -41944,7 +41946,7 @@ reconstructible/J
 recontest/VSdG
 recorded/~VJU
 recorder/~NgS
-recording/~V6SNg
+recording/~V6NwgS
 recordkeeping/Ng
 recoup/VdG
 recourse/~NgV
@@ -42551,6 +42553,7 @@ resounding/JYNV
 resourceful/JYp
 resourcefulness/Nmg
 resp/JNV
+respawn/VGdSNg
 respect/~NmSgVGdEv
 respectability/Nmg
 respectable/~JN
@@ -54123,7 +54126,7 @@ backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
 bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
-blogpost/NgS
+blogpost/NgS        # !! blog post is many times more popular; both appear in some dictionaries
 chroot/NgS
 clickstream/NgS
 concat/VSdG
