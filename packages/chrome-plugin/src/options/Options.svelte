@@ -356,7 +356,7 @@ async function removeWeirpack(id: string) {
     <Card class="space-y-4">
       <h2 class="pb-1 text-xs uppercase tracking-wider">Weirpacks</h2>
 
-      <div class="space-y-2">
+      <div class="space-y-2 flex flex-row w-full justify-between">
         <p class="text-xs text-gray-600 dark:text-gray-400">
           Upload one or more <code>.weirpack</code> files to add custom rule packs.
         </p>
@@ -366,7 +366,7 @@ async function removeWeirpack(id: string) {
           multiple
           disabled={weirpackBusy}
           onchange={handleWeirpackUpload}
-          class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-white disabled:opacity-50"
+          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white disabled:opacity-50"
         />
       </div>
 
