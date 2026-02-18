@@ -147,6 +147,7 @@ impl Document {
         self.condense_number_suffixes();
         self.condense_ellipsis();
         self.condense_latin();
+        self.condense_common_top_level_domains();
         self.condense_filename_extensions();
         self.condense_tldr();
         self.condense_ampersand_pairs();
@@ -685,6 +686,51 @@ impl Document {
 
             if cursor >= self.tokens.len() {
                 break;
+            }
+        }
+
+        self.tokens.remove_indices(to_remove);
+    }
+
+    /// Condenses common top-level domains (for example: `.blog`, `.com`) down to single tokens.
+    fn condense_common_top_level_domains(&mut self) {
+        const COMMON_TOP_LEVEL_DOMAINS: &[&str] = &[
+            "ai", "app", "blog", "co", "com", "dev", "edu", "gov", "info", "io", "me", "mil",
+            "net", "org", "shop", "tech", "uk", "us", "xyz",
+        ];
+
+        if self.tokens.len() < 2 {
+            return;
+        }
+
+        let mut to_remove = VecDeque::new();
+        for cursor in 1..self.tokens.len() {
+            // left context, dot, tld, right context
+            let l = self.get_token_offset(cursor, -2);
+            let d = &self.tokens[cursor - 1];
+            let tld = &self.tokens[cursor];
+            let r = self.get_token_offset(cursor, 1);
+
+            let is_tld_chunk = d.kind.is_period()
+                && tld.kind.is_word()
+                && tld
+                    .span
+                    .get_content(&self.source)
+                    .iter()
+                    .all(|c| c.is_ascii_alphabetic())
+                && tld
+                    .span
+                    .get_content(&self.source)
+                    .eq_any_ignore_ascii_case_str(COMMON_TOP_LEVEL_DOMAINS)
+                && ((l.is_none_or(|t| t.kind.is_whitespace())
+                    && r.is_none_or(|t| t.kind.is_whitespace()))
+                    || (l.is_some_and(|t| t.kind.is_open_round())
+                        && r.is_some_and(|t| t.kind.is_close_round())));
+
+            if is_tld_chunk {
+                self.tokens[cursor - 1].kind = TokenKind::Unlintable;
+                self.tokens[cursor - 1].span.end = self.tokens[cursor].span.end;
+                to_remove.push_back(cursor);
             }
         }
 
@@ -1250,6 +1296,32 @@ mod tests {
             .collect_vec();
         assert!(tldrs.len() == 1);
         assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
+    }
+
+    #[test]
+    fn condense_common_top_level_domains() {
+        let doc = Document::new_plain_english_curated(".blog and .com and .NET");
+        assert!(doc.tokens.len() == 9);
+        assert!(doc.tokens[0].kind.is_unlintable());
+        assert!(doc.tokens[4].kind.is_unlintable());
+        assert!(doc.tokens[8].kind.is_unlintable());
+    }
+
+    #[test]
+    fn condense_common_top_level_domains_in_parens() {
+        let doc = Document::new_plain_english_curated("(.blog)");
+        assert!(doc.tokens.len() == 3);
+        assert!(doc.tokens[0].kind.is_open_round());
+        assert!(doc.tokens[1].kind.is_unlintable());
+        assert!(doc.tokens[2].kind.is_close_round());
+    }
+
+    #[test]
+    fn doesnt_condense_unknown_top_level_domains() {
+        let doc = Document::new_plain_english_curated(".harper");
+        assert!(doc.tokens.len() == 2);
+        assert!(doc.tokens[0].kind.is_punctuation());
+        assert!(doc.tokens[1].kind.is_word());
     }
 
     #[test]
