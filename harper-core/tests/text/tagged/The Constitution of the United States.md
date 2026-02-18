@@ -388,8 +388,8 @@
 # HeadingStart NSg/VB+ . # .
 >
 #
-> The Congress shall have    Power      To lay       and  collect  Taxes   , Duties ,
-# D+  NPr/VB+  VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VPt/J VB/C NSg/VB/J NPl/V3+ . NPl+   .
+> The Congress shall have    Power      To lay        and  collect  Taxes   , Duties ,
+# D+  NPr/VB+  VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VBPt/J VB/C NSg/VB/J NPl/V3+ . NPl+   .
 > Imposts and  Excises , to pay      the Debts and  provide for   the common   Defence    and
 # NPl     VB/C NPl/V3  . P  NSg/VB/J D   NPl+  VB/C VB      R/C/P D   NSg/VB/J N🅪Sg/Comm+ VB/C
 > general  Welfare of the United States    ; but     all          Duties , Imposts and  Excises shall
@@ -612,8 +612,8 @@
 # NSg/Dq/P NSg        . NPr/C NSg/VB/J VB/J   . N🅪Sg/VB+ VXB   NSg/VXB VP/J . C      NPr/J/R/P NSg/VB+    P  D
 > Census  or    Enumeration herein before directed to be      taken . Congress shall have
 # NSg/VB+ NPr/C N🅪Sg        R      C/P    VP/J     P  NSg/VXB VPp/J . NPr/VB+  VXB   NSg/VXB
-> power      to lay       and  collect  taxes   on  incomes , from whatever source   derived ,
-# N🅪Sg/VB/J+ P  NSg/VPt/J VB/C NSg/VB/J NPl/V3+ J/P NPl/V3+ . P    NSg/I/J+ N🅪Sg/VB+ VP/J    .
+> power      to lay        and  collect  taxes   on  incomes , from whatever source   derived ,
+# N🅪Sg/VB/J+ P  NSg/VBPt/J VB/C NSg/VB/J NPl/V3+ J/P NPl/V3+ . P    NSg/I/J+ N🅪Sg/VB+ VP/J    .
 > without apportionment among the several States    , and  without regard  to any
 # C/P     NSg           P     D   J/Dq    NPrPl/V3+ . VB/C C/P     NSg/VB+ P  I/R/Dq
 > census  or    enumeration .
@@ -678,8 +678,8 @@
 # P  NPl/V3+   . NPr/C NPr/VB I/R/Dq NSg/VB+ P  NSg      .
 >
 #
-> No        State    shall , without the Consent of the Congress , lay       any    Imposts or    Duties
-# NSg/Dq/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VP P  D+  NPr/VB+  . NSg/VPt/J I/R/Dq NPl     NPr/C NPl+
+> No        State    shall , without the Consent of the Congress , lay        any    Imposts or    Duties
+# NSg/Dq/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VP P  D+  NPr/VB+  . NSg/VBPt/J I/R/Dq NPl     NPr/C NPl+
 > on  Imports or    Exports , except what   may     be      absolutely necessary for   executing
 # J/P NPl/V3  NPr/C NPl/V3+ . VB/C/P NSg/I+ NPr/VXB NSg/VXB R          NSg/J     R/C/P Nᴹ/Vg/J
 > it's inspection Laws    : and  the net       Produce of all          Duties and  Imposts , laid by
@@ -692,14 +692,14 @@
 # P  D   NPr/VB+  .
 >
 #
-> No        State    shall , without the Consent of Congress , lay       any    Duty of Tonnage , keep
-# NSg/Dq/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VP P  NPr/VB+  . NSg/VPt/J I/R/Dq N🅪Sg P  NSg+    . NSg/VB
+> No        State    shall , without the Consent of Congress , lay        any    Duty of Tonnage , keep
+# NSg/Dq/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VP P  NPr/VB+  . NSg/VBPt/J I/R/Dq N🅪Sg P  NSg+    . NSg/VB
 > Troops  , or    Ships  of War      in        time      of Peace      , enter  into any    Agreement or    Compact
 # NPl/V3+ . NPr/C NPl/V3 P  N🅪Sg/VB+ NPr/J/R/P N🅪Sg/VB/J P  NPr🅪Sg/VB+ . NSg/VB P    I/R/Dq N🅪Sg+     NPr/C NSg/VB/J
 > with another State    , or    with a    foreign Power      , or    engage in        War      , unless actually
 # P    I/D+    N🅪Sg/VB+ . NPr/C P    D/P+ NSg/J+  N🅪Sg/VB/J+ . NPr/C VB     NPr/J/R/P N🅪Sg/VB+ . C      R
-> invaded , or    in        such  imminent Danger      as    will    not     admit of delay      .
-# VP/J    . NPr/C NPr/J/R/P NSg/I J        N🅪Sg/VB/JC+ R/C/P NPr/VXB NSg/R/C VB    P  NSg/VPt/J+ .
+> invaded , or    in        such  imminent Danger      as    will    not     admit of delay       .
+# VP/J    . NPr/C NPr/J/R/P NSg/I J        N🅪Sg/VB/JC+ R/C/P NPr/VXB NSg/R/C VB    P  NSg/VBPt/J+ .
 >
 #
 >              Article . II .
