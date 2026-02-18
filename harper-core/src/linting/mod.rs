@@ -47,6 +47,7 @@ mod day_and_age;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
+mod did_past;
 mod didnt;
 mod discourse_markers;
 mod disjoint_prefixes;
