@@ -1,0 +1,8 @@
+expr main (ctrl)
+
+let message "Use `control` instead of informal `ctrl`"
+let description "Expands the informal abbreviation `ctrl` to the full word `control` for clarity."
+let kind "Style"
+let becomes "control"
+
+test "Ctrl+click" "Control+click"
