@@ -1,9 +1,10 @@
 use crate::{
     CharStringExt, Lint, Token,
     char_ext::CharExt,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, FixedPhrase, SequenceExpr},
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::WordSet,
     spell::Dictionary,
 };
 
@@ -19,15 +20,17 @@ where
     pub fn new(dict: D) -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::word_set(&["did", "didn't", "didnt"])
-                    .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
-                    .t_ws()
-                    // Note that 'simple past forms' may apply only to irregular verbs
-                    // Note and that 'past forms' applies to regular verbs where preterite and participle share a form
-                    .then_kind_where(|k| {
-                        (k.is_verb_simple_past_form() || k.is_verb_past_form())
-                            && !k.is_verb_lemma()
-                    }),
+                SequenceExpr::longest_of(vec![
+                    Box::new(WordSet::new(&["did", "didn't", "didnt"])),
+                    Box::new(FixedPhrase::from_phrase("did not")),
+                ])
+                .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
+                .t_ws()
+                // Note that 'simple past forms' may apply only to irregular verbs
+                // Note and that 'past forms' applies to regular verbs where preterite and participle share a form
+                .then_kind_where(|k| {
+                    (k.is_verb_simple_past_form() || k.is_verb_past_form()) && !k.is_verb_lemma()
+                }),
             ),
             dict,
         }
@@ -289,6 +292,15 @@ mod tests {
             "I did wanted catch all errors in my previous example.",
             DidPast::new(FstDictionary::curated()),
             "I did want catch all errors in my previous example.",
+        );
+    }
+
+    #[test]
+    fn fix_did_not_changed() {
+        assert_suggestion_result(
+            "freeing space and reboot frequently did not changed anything",
+            DidPast::new(FstDictionary::curated()),
+            "freeing space and reboot frequently did not change anything",
         );
     }
 
