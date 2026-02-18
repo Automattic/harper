@@ -15,7 +15,9 @@ import {
 	EditorView,
 	hoverTooltip,
 	logException,
+	showTooltip,
 	type Tooltip,
+	tooltips,
 	ViewPlugin,
 	type ViewUpdate,
 	WidgetType,
@@ -62,6 +64,8 @@ export interface Action {
 	name: string;
 	/// The value to pass the title property of the button.
 	title: string;
+	/// Optional kind marker for keyboard command routing.
+	kind?: 'suggestion' | 'dictionary';
 	/// The function to call when the user activates this action. Is
 	/// given the diagnostic's _current_ position, which may have
 	/// changed since the creation of the diagnostic, due to editing.
@@ -108,6 +112,7 @@ class LintState {
 	constructor(
 		readonly diagnostics: DecorationSet,
 		readonly selected: SelectedDiagnostic | null,
+		readonly commandTooltip: SelectedDiagnostic | null,
 	) {}
 
 	static init(diagnostics: readonly Diagnostic[], state: EditorState) {
@@ -133,7 +138,7 @@ class LintState {
 			}),
 			true,
 		);
-		return new LintState(ranges, findDiagnostic(ranges));
+		return new LintState(ranges, null, null);
 	}
 }
 
@@ -151,9 +156,17 @@ function findDiagnostic(
 	return found;
 }
 
+interface HarperTooltipMeta {
+	harperLint?: true;
+	harperSource?: 'hover' | 'keyboard';
+	harperDiagnostics?: readonly Diagnostic[];
+	harperDiagnostic?: Diagnostic;
+}
+
 function hideTooltip(tr: Transaction, tooltip: Tooltip) {
 	const from = tooltip.pos;
 	const to = tooltip.end || from;
+	if (tr.effects.some((e) => e.is(setCommandTooltipEffect))) return true;
 	const result = tr.state.facet(lintConfig).hideOn(tr, from, to);
 	if (result != null) return result;
 	const line = tr.startState.doc.lineAt(tooltip.pos);
@@ -185,30 +198,26 @@ export function setDiagnostics(
 /// be useful when writing an extension that needs to track these.
 export const setDiagnosticsEffect = StateEffect.define<readonly Diagnostic[]>();
 
-const movePanelSelection = StateEffect.define<SelectedDiagnostic>();
+const movePanelSelection = StateEffect.define<SelectedDiagnostic | null>();
+const setCommandTooltipEffect = StateEffect.define<SelectedDiagnostic | null>();
 
 const lintState = StateField.define<LintState>({
 	create() {
-		return new LintState(Decoration.none, null);
+		return new LintState(Decoration.none, null, null);
 	},
 	update(value, tr) {
 		if (tr.docChanged && value.diagnostics.size) {
 			const mapped = value.diagnostics.map(tr.changes);
-			let selected: SelectedDiagnostic | null = null;
-			if (value.selected) {
-				const selPos = tr.changes.mapPos(value.selected.from, 1);
-				selected =
-					findDiagnostic(mapped, value.selected.diagnostic, selPos) ||
-					findDiagnostic(mapped, null, selPos);
-			}
-			value = new LintState(mapped, selected);
+			value = new LintState(mapped, null, null);
 		}
 
 		for (const effect of tr.effects) {
 			if (effect.is(setDiagnosticsEffect)) {
 				value = LintState.init(effect.value, tr.state);
 			} else if (effect.is(movePanelSelection)) {
-				value = new LintState(value.diagnostics, effect.value);
+				value = new LintState(value.diagnostics, effect.value, value.commandTooltip);
+			} else if (effect.is(setCommandTooltipEffect)) {
+				value = new LintState(value.diagnostics, value.selected, effect.value);
 			}
 		}
 
@@ -217,10 +226,30 @@ const lintState = StateField.define<LintState>({
 	provide: (f) => [EditorView.decorations.from(f, (s) => s.diagnostics)],
 });
 
-const activeMark = Decoration.mark({ class: 'cm-lintRange cm-lintRange-active' });
+function createLintTooltip(
+	state: EditorState,
+	diagnostics: readonly Diagnostic[],
+	from: number,
+	to: number,
+	source: 'hover' | 'keyboard',
+): Tooltip {
+	return {
+		pos: from,
+		end: to,
+		above: state.doc.lineAt(from).to < to,
+		strictSide: false,
+		create(view) {
+			return { dom: diagnosticsTooltip(view, diagnostics) };
+		},
+		harperLint: true,
+		harperSource: source,
+		harperDiagnostics: diagnostics,
+		harperDiagnostic: diagnostics[0],
+	} as Tooltip & HarperTooltipMeta;
+}
 
 function lintTooltip(view: EditorView, pos: number, side: -1 | 1) {
-	const { diagnostics } = view.state.field(lintState);
+	const { diagnostics, commandTooltip } = view.state.field(lintState);
 	let found: Diagnostic[] = [];
 	let stackStart = 2e8;
 	let stackEnd = 0;
@@ -239,16 +268,19 @@ function lintTooltip(view: EditorView, pos: number, side: -1 | 1) {
 	const diagnosticFilter = view.state.facet(lintConfig).tooltipFilter;
 	if (diagnosticFilter) found = diagnosticFilter(found, view.state);
 
+	if (commandTooltip) {
+		const hoveringAnotherDiagnostic = found.some((d) => d !== commandTooltip.diagnostic);
+		if (hoveringAnotherDiagnostic) {
+			view.dispatch({
+				effects: [setCommandTooltipEffect.of(null), movePanelSelection.of(null)],
+			});
+		}
+		return null;
+	}
+
 	if (!found.length) return null;
 
-	return {
-		pos: stackStart,
-		end: stackEnd,
-		above: view.state.doc.lineAt(stackStart).to < stackEnd,
-		create() {
-			return { dom: diagnosticsTooltip(view, found) };
-		},
-	};
+	return createLintTooltip(view.state, found, stackStart, stackEnd, 'hover');
 }
 
 function diagnosticsTooltip(view: EditorView, diagnostics: readonly Diagnostic[]) {
@@ -659,13 +691,64 @@ const baseTheme = EditorView.baseTheme({
 	},
 });
 
+const commandTooltipField = StateField.define<readonly Tooltip[]>({
+	create(state) {
+		const { commandTooltip } = state.field(lintState);
+		return commandTooltip
+			? [
+					createLintTooltip(
+						state,
+						[commandTooltip.diagnostic],
+						commandTooltip.from,
+						commandTooltip.to,
+						'keyboard',
+					),
+				]
+			: [];
+	},
+	update(_tooltips, tr) {
+		const { commandTooltip } = tr.state.field(lintState);
+		return commandTooltip
+			? [
+					createLintTooltip(
+						tr.state,
+						[commandTooltip.diagnostic],
+						commandTooltip.from,
+						commandTooltip.to,
+						'keyboard',
+					),
+				]
+			: [];
+	},
+	provide: (f) => showTooltip.computeN([f], (state) => state.field(f)),
+});
+
 const lintExtensions = [
+	tooltips({
+		position: 'absolute',
+		tooltipSpace: (view) => {
+			const rect = view.dom.getBoundingClientRect();
+			return {
+				top: rect.top,
+				left: rect.left,
+				bottom: rect.bottom,
+				right: rect.right,
+			};
+		},
+	}),
 	lintState,
-	EditorView.decorations.compute([lintState], (state) => {
-		const { selected, panel } = state.field(lintState);
-		return !selected || !panel || selected.from == selected.to
-			? Decoration.none
-			: Decoration.set([activeMark.range(selected.from, selected.to)]);
+	commandTooltipField,
+	EditorView.domEventHandlers({
+		mousedown(event, view) {
+			const { commandTooltip, selected } = view.state.field(lintState);
+			if (!commandTooltip && !selected) return false;
+			const target = event.target as HTMLElement | null;
+			if (target?.closest('.cm-tooltip')) return false;
+			view.dispatch({
+				effects: [setCommandTooltipEffect.of(null), movePanelSelection.of(null)],
+			});
+			return false;
+		},
 	}),
 	hoverTooltip(lintTooltip, { hideOn: hideTooltip }),
 	baseTheme,
@@ -684,4 +767,181 @@ export function forEachDiagnostic(
 	if (lState?.diagnostics.size)
 		for (let iter = RangeSet.iter([lState.diagnostics]); iter.value; iter.next())
 			f(iter.value.spec.diagnostic, iter.from, iter.to);
+}
+
+function collectDiagnostics(diagnostics: DecorationSet): SelectedDiagnostic[] {
+	const all: SelectedDiagnostic[] = [];
+	diagnostics.between(0, 1e9, (from, to, { spec }) => {
+		all.push(new SelectedDiagnostic(from, to, spec.diagnostic));
+	});
+	return all;
+}
+
+function selectedIndexOf(all: readonly SelectedDiagnostic[], selected: SelectedDiagnostic) {
+	return all.findIndex(
+		(d) => d.from === selected.from && d.to === selected.to && d.diagnostic === selected.diagnostic,
+	);
+}
+
+function getDiagnosticForTooltipRange(
+	diagnostics: DecorationSet,
+	from: number,
+	to: number,
+): SelectedDiagnostic | null {
+	let found: SelectedDiagnostic | null = null;
+	diagnostics.between(from, to, (dFrom, dTo, { spec }) => {
+		if (dFrom <= to && dTo >= from) {
+			found = new SelectedDiagnostic(dFrom, dTo, spec.diagnostic);
+			return false;
+		}
+	});
+	return found;
+}
+
+function getActiveTooltipMatch(view: EditorView): SelectedDiagnostic | null {
+	const lState = view.state.field(lintState, false);
+	if (!lState) return null;
+	if (lState.commandTooltip) {
+		return lState.commandTooltip;
+	}
+
+	const active = view.state.facet(showTooltip) as (Tooltip & HarperTooltipMeta)[];
+	for (const tooltip of active) {
+		const from = tooltip.pos;
+		const to = tooltip.end ?? from;
+		const matched = getDiagnosticForTooltipRange(lState.diagnostics, from, to);
+		if (matched) return matched;
+	}
+	return null;
+}
+
+function getMappedDiagnostic(view: EditorView, diagnostic: Diagnostic): SelectedDiagnostic | null {
+	const lState = view.state.field(lintState, false);
+	if (!lState) return null;
+	return findDiagnostic(lState.diagnostics, diagnostic);
+}
+
+function getSuggestionActions(diagnostic: Diagnostic): readonly Action[] {
+	return (diagnostic.actions ?? []).filter((action) => action.kind !== 'dictionary');
+}
+
+function getDictionaryAction(diagnostic: Diagnostic): Action | null {
+	for (const action of diagnostic.actions ?? []) {
+		if (action.kind === 'dictionary') return action;
+	}
+	return null;
+}
+
+function clearKeyboardFocus(view: EditorView): boolean {
+	const lState = view.state.field(lintState, false);
+	if (!lState || (!lState.commandTooltip && !lState.selected)) return false;
+	view.dispatch({
+		selection: { anchor: view.state.selection.main.to },
+		effects: [movePanelSelection.of(null), setCommandTooltipEffect.of(null)],
+	});
+	return true;
+}
+
+function hideVisibleLintTooltip(view: EditorView) {
+	view.dispatch({
+		effects: [setCommandTooltipEffect.of(null)],
+	});
+}
+
+export function canNavigateDiagnostics(view: EditorView): boolean {
+	const lState = view.state.field(lintState, false);
+	return Boolean(lState?.diagnostics.size);
+}
+
+export function navigateDiagnostic(view: EditorView, direction: 'next' | 'previous'): boolean {
+	const lState = view.state.field(lintState, false);
+	if (!lState?.diagnostics.size) return false;
+	const all = collectDiagnostics(lState.diagnostics);
+	if (!all.length) return false;
+
+	let target: SelectedDiagnostic | null = null;
+	if (lState.selected) {
+		const index = selectedIndexOf(all, lState.selected);
+		if (index >= 0) {
+			target =
+				direction === 'next'
+					? all[(index + 1) % all.length]
+					: all[(index - 1 + all.length) % all.length];
+		}
+	}
+
+	if (!target) {
+		const cursor = view.state.selection.main.head;
+		if (direction === 'next') {
+			target = all.find((d) => d.from > cursor) ?? all[0];
+		} else {
+			target = [...all].reverse().find((d) => d.to < cursor) ?? all[all.length - 1];
+		}
+	}
+
+	view.dispatch({
+		selection: { anchor: target.from, head: target.to },
+		effects: [movePanelSelection.of(target), setCommandTooltipEffect.of(target)],
+	});
+	return true;
+}
+
+export function canApplySuggestionFromVisibleTooltip(view: EditorView, index: number): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched) return false;
+	return getSuggestionActions(matched.diagnostic).length >= index;
+}
+
+export function applySuggestionFromVisibleTooltip(view: EditorView, index: number): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched) return false;
+	const action = getSuggestionActions(matched.diagnostic)[index - 1];
+	if (!action) return false;
+	const mapped = getMappedDiagnostic(view, matched.diagnostic) ?? matched;
+	action.apply(view, mapped.from, mapped.to);
+	hideVisibleLintTooltip(view);
+	clearKeyboardFocus(view);
+	return true;
+}
+
+export function canAddWordToDictionaryFromVisibleTooltip(view: EditorView): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched) return false;
+	return Boolean(getDictionaryAction(matched.diagnostic));
+}
+
+export function addWordToDictionaryFromVisibleTooltip(view: EditorView): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched) return false;
+	const action = getDictionaryAction(matched.diagnostic);
+	if (!action) return false;
+	const mapped = getMappedDiagnostic(view, matched.diagnostic) ?? matched;
+	action.apply(view, mapped.from, mapped.to);
+	hideVisibleLintTooltip(view);
+	clearKeyboardFocus(view);
+	return true;
+}
+
+export function canIgnoreVisibleTooltipDiagnostic(view: EditorView): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched) return false;
+	return typeof matched.diagnostic.ignore === 'function';
+}
+
+export function ignoreVisibleTooltipDiagnostic(view: EditorView): boolean {
+	const matched = getActiveTooltipMatch(view);
+	if (!matched || typeof matched.diagnostic.ignore !== 'function') return false;
+	void matched.diagnostic.ignore();
+	hideVisibleLintTooltip(view);
+	clearKeyboardFocus(view);
+	return true;
+}
+
+export function canDismissFocusedLintTooltip(view: EditorView): boolean {
+	const lState = view.state.field(lintState, false);
+	return Boolean(lState?.commandTooltip || lState?.selected);
+}
+
+export function dismissFocusedLintTooltip(view: EditorView): boolean {
+	return clearKeyboardFocus(view);
 }
