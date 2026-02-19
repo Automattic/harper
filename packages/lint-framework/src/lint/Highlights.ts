@@ -120,10 +120,9 @@ export default class Highlights {
 			if (isGoogleDocsSource) {
 				const hostStyle = host.style;
 
-				hostStyle.position = 'fixed';
+				hostStyle.position = 'absolute';
 				hostStyle.top = '0px';
 				hostStyle.left = '0px';
-				hostStyle.inset = '0';
 				hostStyle.pointerEvents = 'none';
 				hostStyle.width = '0px';
 				hostStyle.height = '0px';
@@ -147,10 +146,9 @@ export default class Highlights {
 			}
 
 			const offset = isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y };
+			const boxPosition: 'absolute' | 'fixed' = isGoogleDocsSource ? 'absolute' : 'fixed';
 
-			renderBox.render(
-				this.renderTree(boxes, offset),
-			);
+			renderBox.render(this.renderTree(boxes, offset, boxPosition));
 			updated.add(source);
 		}
 
@@ -173,20 +171,25 @@ export default class Highlights {
 		}
 	}
 
-	private renderTree(boxes: LintBox[], offset: { x: number; y: number } | null): VNode {
+	private renderTree(
+		boxes: LintBox[],
+		offset: { x: number; y: number } | null,
+		boxPosition: 'absolute' | 'fixed',
+	): VNode {
 		const elements = [];
 		const offsetX = offset?.x ?? 0;
 		const offsetY = offset?.y ?? 0;
 
 		for (const box of boxes) {
+			const x = box.x - offsetX;
+			const y = box.y - offsetY;
 			const boxEl = h(
 				'div',
 				{
 					style: {
-						position: 'fixed',
-						left: '0px',
-						top: '0px',
-						transform: `translate(${box.x - offsetX}px, ${box.y - offsetY}px)`,
+						position: boxPosition,
+						left: `${x}px`,
+						top: `${y}px`,
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
@@ -211,7 +214,7 @@ export default class Highlights {
 			el instanceof HTMLElement &&
 			(el.classList.contains('kix-appview-editor') || el.closest('.kix-appview-editor') != null)
 		) {
-			return document.body;
+			return el;
 		}
 
 		if (el.parentElement?.classList.contains('ProseMirror')) {

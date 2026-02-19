@@ -160,6 +160,7 @@ function computeGoogleDocsLintBoxes(
 
 		const cacheKey = `${lint.span.start}:${lint.span.end}`;
 		const scrollTop = editor.scrollTop;
+		const scrollLeft = editor.scrollLeft;
 		let rects: GoogleDocsRect[] = [];
 
 		const cached = googleDocsRectCache.get(cacheKey);
@@ -212,24 +213,44 @@ function computeGoogleDocsLintBoxes(
 			return [];
 		}
 
-		return rects.map((rect) => ({
-			x: rect.x,
-			y: rect.y,
-			width: rect.width,
-			height: rect.height,
-			lint,
-			source: editor,
-			rule,
-			applySuggestion: (sug: UnpackedSuggestion) => {
-				const current = target.textContent ?? '';
-				const replacementText = suggestionToReplacementText(sug, lint.span, current);
-				replaceGoogleDocsValue(lint.span, replacementText);
-			},
-			ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
-		}));
+		const editorRect = editor.getBoundingClientRect();
+
+		return rects.map((rect) => {
+			const localRect = toGoogleDocsEditorLocalRect(rect, editorRect, scrollLeft, scrollTop);
+
+			return {
+				x: localRect.x,
+				y: localRect.y,
+				width: localRect.width,
+				height: localRect.height,
+				lint,
+				source: editor,
+				rule,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					const current = target.textContent ?? '';
+					const replacementText = suggestionToReplacementText(sug, lint.span, current);
+					replaceGoogleDocsValue(lint.span, replacementText);
+				},
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+			};
+		});
 	} catch {
 		return [];
 	}
+}
+
+function toGoogleDocsEditorLocalRect(
+	rect: GoogleDocsRect,
+	editorRect: DOMRect,
+	scrollLeft: number,
+	scrollTop: number,
+): GoogleDocsRect {
+	return {
+		x: rect.x - editorRect.x + scrollLeft,
+		y: rect.y - editorRect.y + scrollTop,
+		width: rect.width,
+		height: rect.height,
+	};
 }
 
 function projectGoogleDocsRects(

@@ -37,7 +37,9 @@ const fw = new LintFramework(
 const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
 const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 const GOOGLE_DOCS_LAYOUT_EPOCH_ATTR = 'data-harper-layout-epoch';
+const GOOGLE_DOCS_LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
 const GOOGLE_DOCS_TEXT_UPDATED_EVENT = 'harper:gdocs:text-updated';
+const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
 
 let googleDocsSyncInFlight = false;
 let googleDocsSyncPending = false;
@@ -235,10 +237,13 @@ function startGoogleDocsFrameRefreshLoop() {
 
 		const bridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
 		const layoutEpoch = bridge?.getAttribute(GOOGLE_DOCS_LAYOUT_EPOCH_ATTR) ?? '';
+		const layoutReason = bridge?.getAttribute(GOOGLE_DOCS_LAYOUT_REASON_ATTR) ?? '';
 
 		if (layoutEpoch !== googleDocsLastLayoutEpoch) {
 			googleDocsLastLayoutEpoch = layoutEpoch;
-			fw.refreshLayout();
+			if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(layoutReason)) {
+				fw.refreshLayout();
+			}
 		}
 
 		requestAnimationFrame(tick);
