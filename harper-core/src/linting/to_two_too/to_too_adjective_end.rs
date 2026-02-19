@@ -53,7 +53,10 @@ impl ExprLinter for ToTooAdjectiveEnd {
         while idx < tokens.len() && tokens[idx].kind.is_whitespace() {
             idx += 1;
         }
-        if idx >= tokens.len() || !tokens[idx].kind.is_adjective() {
+        if idx >= tokens.len()
+            || !tokens[idx].kind.is_adjective()
+            || !tokens[idx].kind.is_positive_adjective()
+        {
             return None;
         }
         let prev_non_ws = tokens[..to_index].iter().rfind(|t| !t.kind.is_whitespace());
