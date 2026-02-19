@@ -1,0 +1,29 @@
+expr main <(tomorrows [NOUN, PROPN, (ADJ NOUN), (ADJ PROPN), (ADJ ADJ NOUN), (NUM NOUN)]), tomorrows>
+
+let message "Use the possessive form when this time word modifies a following noun phrase."
+let description "Flags `tomorrows` in attributive contexts and suggests the possessive form instead."
+let kind "Grammar"
+let becomes "tomorrow's"
+let strategy "MatchCase"
+
+# true positives
+
+test "Tomorrows meeting starts at noon." "Tomorrow's meeting starts at noon."
+test "tomorrows agenda is already packed." "tomorrow's agenda is already packed."
+test "We need tomorrows report before lunch." "We need tomorrow's report before lunch."
+test "I reviewed tomorrows final draft." "I reviewed tomorrow's final draft."
+test "TOMORROWS launch is delayed." "TOMORROW'S launch is delayed."
+test "Did you read tomorrows policy update?" "Did you read tomorrow's policy update?"
+test "Please confirm tomorrows weekly session." "Please confirm tomorrow's weekly session."
+test "They posted tomorrows product roadmap." "They posted tomorrow's product roadmap."
+
+# false positives / true negatives
+
+test "Many tomorrows will come and go." "Many tomorrows will come and go."
+test "The novel imagines several tomorrows in parallel." "The novel imagines several tomorrows in parallel."
+test "We talked about tomorrows." "We talked about tomorrows."
+test "No tomorrows remain for that timeline." "No tomorrows remain for that timeline."
+test "Tomorrow's meeting starts at noon." "Tomorrow's meeting starts at noon."
+test "I will finish this tomorrow morning." "I will finish this tomorrow morning."
+test "Tomorrow we ship the update." "Tomorrow we ship the update."
+test "These tomorrows are uncertain." "These tomorrows are uncertain."

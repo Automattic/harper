@@ -1,0 +1,41 @@
+expr booster [very, really, quite, fairly, rather, pretty, extremely]
+expr article [a, an]
+expr blockedAdj [legal, criminal, financial, policy, personnel, security, administrative, regulatory, disciplinary, constitutional, civil, private, public, diplomatic, technical, medical, tax]
+expr plainCase <((in @article !@blockedAdj matter), (matter))>
+expr boostedCase <((in @article @booster !@blockedAdj matter), (matter))>
+expr main [@plainCase, @boostedCase]
+
+let message "In this wording, `manner` is usually the intended noun."
+let description "Swaps `matter` to `manner` after `in a/an` plus a descriptive adjective, while skipping common topic-domain usages."
+let kind "Grammar"
+let becomes "manner"
+let strategy "MatchCase"
+
+# True positives
+
+test "Please answer in a respectful matter." "Please answer in a respectful manner."
+test "He spoke in a calm matter during the meeting." "He spoke in a calm manner during the meeting."
+test "She handled it in an efficient matter." "She handled it in an efficient manner."
+test "Try to react in a professional matter." "Try to react in a professional manner."
+test "They negotiated in a patient matter." "They negotiated in a patient manner."
+test "We should respond in a clear matter." "We should respond in a clear manner."
+test "She presented it in a very thoughtful matter." "She presented it in a very thoughtful manner."
+test "Please discuss this in a really careful matter." "Please discuss this in a really careful manner."
+test "IN A CALM MATTER, EXPLAIN THE ISSUE." "IN A CALM MANNER, EXPLAIN THE ISSUE."
+
+# False positives / true negatives
+
+allows "The case is now in a legal matter docket."
+allows "They consulted counsel in a financial matter."
+allows "The agency intervened in a regulatory matter."
+allows "This belongs in a private matter file."
+allows "He spoke in a calm manner during the meeting."
+allows "Please answer respectfully."
+
+# False negatives / boundary behavior
+
+allows "Please answer in a matter of minutes."
+allows "The report was in an order that looked odd."
+allows "They worked in a super calm matter."
+allows "Try to respond in a, calm matter."
+allows "We discussed this in careful matter."
