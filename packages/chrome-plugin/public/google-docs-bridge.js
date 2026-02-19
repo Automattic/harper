@@ -132,14 +132,29 @@
 		const state = [];
 		state.push({ type: 'window', x: window.scrollX, y: window.scrollY });
 
-		const keep = new Set(
-			Array.from(document.querySelectorAll(`${EDITOR_SELECTOR}, ${EDITOR_CONTAINER_SELECTOR}, ${DOCS_EDITOR_SELECTOR}`)),
-		);
+		const candidates = new Set();
+		const addCandidate = (node) => {
+			if (node instanceof HTMLElement) {
+				candidates.add(node);
+			}
+		};
+		const addElementAndAncestors = (node) => {
+			if (!(node instanceof HTMLElement)) return;
+			addCandidate(node);
+			let parent = node.parentElement;
+			while (parent) {
+				addCandidate(parent);
+				parent = parent.parentElement;
+			}
+		};
 
-		for (const el of document.querySelectorAll('*')) {
-			const node = el;
-			if (!(node instanceof HTMLElement)) continue;
-			if (node.scrollTop !== 0 || node.scrollLeft !== 0 || keep.has(node)) {
+		addElementAndAncestors(document.querySelector(EDITOR_SELECTOR));
+		addElementAndAncestors(document.querySelector(EDITOR_CONTAINER_SELECTOR));
+		addElementAndAncestors(document.querySelector(DOCS_EDITOR_SELECTOR));
+		addElementAndAncestors(document.activeElement);
+
+		for (const node of candidates) {
+			if (node.scrollTop !== 0 || node.scrollLeft !== 0 || node.matches(EDITOR_SELECTOR)) {
 				state.push({ type: 'element', el: node, top: node.scrollTop, left: node.scrollLeft });
 			}
 		}
