@@ -17,13 +17,11 @@ impl Default for TheMy {
         let the = Word::new("the");
         let any_possessive = WordSet::new(&["my", "your", "his", "her", "its", "our", "their"]);
 
-        let the_poss = SequenceExpr::default()
-            .then(the.clone())
+        let the_poss = SequenceExpr::with(the.clone())
             .then_whitespace()
             .then(any_possessive.clone());
 
-        let poss_the = SequenceExpr::default()
-            .then(any_possessive)
+        let poss_the = SequenceExpr::with(any_possessive)
             .then_whitespace()
             .then(the);
 

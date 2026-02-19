@@ -19,8 +19,7 @@ impl Default for ModalOf {
         // "The code I had of this used to work fine ..."
 
         let modal_of = Lrc::new(
-            SequenceExpr::default()
-                .then(ModalVerb::default())
+            SequenceExpr::with(ModalVerb::default())
                 .then_whitespace()
                 .t_aco("of"),
         );
@@ -28,36 +27,28 @@ impl Default for ModalOf {
         // "will of" is a false positive if "will" is a noun
         // "The will of the many"
         let noun_will_of_naive = Lrc::new(
-            SequenceExpr::default()
-                .then_word_set(&["the", "a"])
+            SequenceExpr::word_set(&["the", "a"])
                 .then_whitespace()
                 .t_aco("will")
                 .then_whitespace()
                 .t_aco("of"),
         );
 
-        let ws_course = Lrc::new(SequenceExpr::default().then_whitespace().t_aco("course"));
+        let ws_course = Lrc::new(SequenceExpr::whitespace().t_aco("course"));
 
-        let modal_of_course = Lrc::new(
-            SequenceExpr::default()
-                .then(modal_of.clone())
-                .then(ws_course.clone()),
-        );
+        let modal_of_course =
+            Lrc::new(SequenceExpr::with(modal_of.clone()).then(ws_course.clone()));
 
         let anyword_might_of = Lrc::new(
-            SequenceExpr::default()
-                .then_any_word()
+            SequenceExpr::any_word()
                 .then_whitespace()
                 .t_aco("might")
                 .then_whitespace()
                 .t_aco("of"),
         );
 
-        let anyword_might_of_course = Lrc::new(
-            SequenceExpr::default()
-                .then(anyword_might_of.clone())
-                .then(ws_course.clone()),
-        );
+        let anyword_might_of_course =
+            Lrc::new(SequenceExpr::with(anyword_might_of.clone()).then(ws_course.clone()));
 
         Self {
             expr: Box::new(LongestMatchOf::new(vec![

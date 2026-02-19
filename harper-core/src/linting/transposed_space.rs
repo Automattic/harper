@@ -24,7 +24,7 @@ impl<D: Dictionary + 'static> TransposedSpace<D> {
         Self {
             expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(SequenceExpr::default().then_oov().t_ws().then_any_word()),
-                Box::new(SequenceExpr::default().then_any_word().t_ws().then_oov()),
+                Box::new(SequenceExpr::any_word().t_ws().then_oov()),
                 Box::new(SequenceExpr::default().then_oov().t_ws().then_oov()),
             ])),
             dict,

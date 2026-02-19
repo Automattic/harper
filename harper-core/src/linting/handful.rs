@@ -10,8 +10,7 @@ pub struct Handful {
 
 impl Default for Handful {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_any_capitalization_of("hand")
+        let expr = SequenceExpr::any_capitalization_of("hand")
             .then_one_or_more(SpaceOrHyphen)
             .then_any_capitalization_of("full")
             .then_one_or_more(SpaceOrHyphen)

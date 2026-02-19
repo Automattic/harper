@@ -14,8 +14,7 @@ pub struct ToTooChunkStartComma {
 
 impl Default for ToTooChunkStartComma {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .t_aco("to")
             .then_optional(WhitespacePattern)
             .then_comma();
