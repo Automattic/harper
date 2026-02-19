@@ -33,6 +33,12 @@ async function replaceDocumentContent(page: Page, line: string) {
 	await page.keyboard.type(line);
 }
 
+async function openGoogleDoc(page: Page) {
+	await page.goto('about:blank');
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+}
+
 async function getGoogleDocsEditorScrollTop(page: Page) {
 	return page.evaluate(() => {
 		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
@@ -67,6 +73,20 @@ async function getVisibleHighlightBoxes(page: Page) {
 	);
 }
 
+async function getClosestHighlightToNeedle(page: Page, needle: string) {
+	const caretRect = await getCaretRectForNeedle(page, needle);
+	if (!caretRect) {
+		return null;
+	}
+
+	const boxes = await getVisibleHighlightBoxes(page);
+	if (boxes.length === 0) {
+		return null;
+	}
+
+	return getClosestBoxDistance(boxes, { x: caretRect.x, y: caretRect.y });
+}
+
 function getClosestBoxDistance(
 	boxes: { x: number; y: number; width: number; height: number }[],
 	point: { x: number; y: number },
@@ -86,8 +106,7 @@ test('Google Docs: Harper can read lintable text', async ({ page }) => {
 	const token = `harper-gdocs-read-${Date.now()}`;
 	const input = `This is an test ${token}`;
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 	await expect
 		.poll(async () => ((await getGoogleDocText(page)) ?? '').includes(`an test ${token}`), {
@@ -117,8 +136,7 @@ test('Google Docs: Harper can write a suggestion back into the document', async 
 	const input = `This is an test ${token}`;
 	const corrected = `This is a test ${token}`;
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 	await expect
 		.poll(async () => ((await getGoogleDocText(page)) ?? '').includes(`an test ${token}`), {
@@ -160,8 +178,7 @@ test('Google Docs: highlight appears near linted text', async ({ page }) => {
 	const token = `harper-gdocs-position-${Date.now()}`;
 	const input = `This is an test ${token}`;
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
@@ -209,8 +226,7 @@ test('Google Docs: highlight appears near linted text', async ({ page }) => {
 
 test('Google Docs: highlight host mounts on document body', async ({ page }) => {
 	const token = `harper-gdocs-host-${Date.now()}`;
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, `This is an test ${token}`);
 
 	await expect
@@ -226,8 +242,7 @@ test('Google Docs: highlight host mounts on document body', async ({ page }) => 
 
 test('Google Docs: selection does not grow over time', async ({ page }) => {
 	const token = `harper-gdocs-selection-${Date.now()}`;
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, `This is an test ${token}`);
 
 	await expect
@@ -258,8 +273,7 @@ test('Google Docs: selection does not grow over time', async ({ page }) => {
 test('Google Docs: scrolling does not snap back upward', async ({ page }) => {
 	test.setTimeout(90000);
 	const token = `harper-gdocs-scroll-${Date.now()}`;
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	const longText = [`This is an test ${token}`]
 		.concat(Array.from({ length: 60 }, (_, i) => `line ${i} ${token}`))
 		.join('\n');
@@ -292,22 +306,30 @@ test('Google Docs: highlight appears near second-line lint', async ({ page }) =>
 	const lineWithLint = `This is an test ${token}`;
 	const input = [`This line is clean ${token}`, lineWithLint, `Another clean line ${token}`].join('\n');
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
 		.toBeGreaterThan(0);
-
-	const caretRect = await getCaretRectForNeedle(page, `an test ${token}`);
-	expect(caretRect).not.toBeNull();
-
-	const boxes = await getVisibleHighlightBoxes(page);
-	expect(boxes.length).toBeGreaterThan(0);
-	const closest = getClosestBoxDistance(boxes, { x: caretRect?.x ?? 0, y: caretRect?.y ?? 0 });
-	expect(closest.dx).toBeLessThan(180);
-	expect(closest.dy).toBeLessThanOrEqual(140);
+	await expect
+		.poll(
+			async () => {
+				const closest = await getClosestHighlightToNeedle(page, `an test ${token}`);
+				return closest?.dx ?? Number.POSITIVE_INFINITY;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThan(180);
+	await expect
+		.poll(
+			async () => {
+				const closest = await getClosestHighlightToNeedle(page, `an test ${token}`);
+				return closest?.dy ?? Number.POSITIVE_INFINITY;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThanOrEqual(140);
 });
 
 test('Google Docs: highlight appears near third-line lint', async ({ page }) => {
@@ -319,22 +341,30 @@ test('Google Docs: highlight appears near third-line lint', async ({ page }) => 
 		`This is an test ${token}`,
 	].join('\n');
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
 		.toBeGreaterThan(0);
-
-	const caretRect = await getCaretRectForNeedle(page, `an test ${token}`);
-	expect(caretRect).not.toBeNull();
-
-	const boxes = await getVisibleHighlightBoxes(page);
-	expect(boxes.length).toBeGreaterThan(0);
-	const closest = getClosestBoxDistance(boxes, { x: caretRect?.x ?? 0, y: caretRect?.y ?? 0 });
-	expect(closest.dx).toBeLessThan(180);
-	expect(closest.dy).toBeLessThanOrEqual(140);
+	await expect
+		.poll(
+			async () => {
+				const closest = await getClosestHighlightToNeedle(page, `an test ${token}`);
+				return closest?.dx ?? Number.POSITIVE_INFINITY;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThan(180);
+	await expect
+		.poll(
+			async () => {
+				const closest = await getClosestHighlightToNeedle(page, `an test ${token}`);
+				return closest?.dy ?? Number.POSITIVE_INFINITY;
+			},
+			{ timeout: 15000 },
+		)
+		.toBeLessThanOrEqual(140);
 });
 
 test('Google Docs: highlight stays near text for at least 15 seconds', async ({ page }) => {
@@ -346,8 +376,7 @@ test('Google Docs: highlight stays near text for at least 15 seconds', async ({ 
 		`Another clean line ${token}`,
 	].join('\n');
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
@@ -388,8 +417,7 @@ test('Google Docs: line geometry differs between repeated lint phrases', async (
 		`And one more an test ${token}`,
 	].join('\n');
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	const rects = await page.evaluate(async (token) => {
@@ -424,8 +452,7 @@ test('Google Docs: Harper can write a suggestion on second line', async ({ page 
 	const input = [`First line clean ${token}`, `This is an test ${token}`].join('\n');
 	const correctedNeedle = `This is a test ${token}`;
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
@@ -466,8 +493,7 @@ test('Google Docs: bridge returns lower Y rect for lower-line lint', async ({ pa
 		`This is an test ${token} line three`,
 	].join('\n');
 
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
 
 	await expect
@@ -519,8 +545,7 @@ test('Google Docs: bridge returns lower Y rect for lower-line lint', async ({ pa
 
 test('Google Docs: highlight host remains non-interactive and top-layered', async ({ page }) => {
 	const token = `harper-gdocs-host-style-${Date.now()}`;
-	await page.goto(GOOGLE_DOC_URL);
-	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await openGoogleDoc(page);
 	await replaceDocumentContent(page, `This is an test ${token}`);
 
 	await expect

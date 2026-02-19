@@ -1,13 +1,8 @@
 (() => {
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-	const USER_SCROLL_COOLDOWN_MS = 60000;
-	const USER_INTENT_WINDOW_MS = 1200;
 	const SYNC_INTERVAL_MS = 100;
-	let lastUserScrollAt = 0;
-	let hasUserScrolled = false;
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
-	let lastUserIntentAt = 0;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
@@ -37,10 +32,6 @@
 			bridge.setAttribute('data-harper-layout-epoch', String(layoutEpoch));
 			emitEvent('harper:gdocs:layout-changed', { layoutEpoch, reason });
 		});
-	};
-
-	const noteUserIntent = () => {
-		lastUserIntentAt = Date.now();
 	};
 
 	const syncText = async () => {
@@ -99,13 +90,47 @@
 		}
 	};
 
+	const didScrollStateChange = (state) => {
+		for (const entry of state) {
+			if (entry.type === 'window') {
+				if (window.scrollX !== entry.x || window.scrollY !== entry.y) {
+					return true;
+				}
+				continue;
+			}
+
+			if (!entry.el || !entry.el.isConnected) continue;
+			if (entry.el.scrollTop !== entry.top || entry.el.scrollLeft !== entry.left) {
+				return true;
+			}
+		}
+
+		return false;
+	};
+
 	const getCaretRect = (annotated, position) => {
 		annotated.setSelection(position, position);
-		const caret = document.querySelector('.kix-cursor-caret');
-		if (!caret) return null;
-		const rect = caret.getBoundingClientRect();
-		if (!rect || rect.width <= 0 || rect.height <= 0) return null;
-		return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+		const carets = Array.from(document.querySelectorAll('.kix-cursor-caret'))
+			.map((caret) => {
+				const rect = caret.getBoundingClientRect();
+				const style = window.getComputedStyle(caret);
+				if (
+					!rect ||
+					rect.width <= 0 ||
+					rect.height <= 0 ||
+					style.display === 'none' ||
+					style.visibility === 'hidden' ||
+					style.opacity === '0'
+				) {
+					return null;
+				}
+				return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+			})
+			.filter((rect) => rect != null);
+		if (carets.length === 0) return null;
+		const inPage = carets.filter((rect) => rect.x > 100);
+		const pool = inPage.length > 0 ? inPage : carets;
+		return pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
 	};
 
 	document.addEventListener('harper:gdocs:get-rects', (event) => {
@@ -117,11 +142,6 @@
 			const end = Number(detail.end);
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
-
-			if (hasUserScrolled || Date.now() - lastUserScrollAt < USER_SCROLL_COOLDOWN_MS) {
-				bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify([]));
-				return;
-			}
 
 			const scrollState = getScrollState();
 			const currentSelection = annotated.getSelection?.()?.[0] || null;
@@ -167,7 +187,7 @@
 						// Ignore selection restore failures.
 					}
 				}
-				if (!hasUserScrolled) {
+				if (!didScrollStateChange(scrollState)) {
 					restoreScrollState(scrollState);
 				}
 			}
@@ -223,9 +243,7 @@
 
 			lastKnownEditorScrollTop = editor.scrollTop;
 
-			if (!isComputingRects && Date.now() - lastUserIntentAt < USER_INTENT_WINDOW_MS) {
-				lastUserScrollAt = Date.now();
-				hasUserScrolled = true;
+			if (!isComputingRects) {
 				bumpLayoutEpoch('scroll');
 			}
 		},
@@ -242,9 +260,7 @@
 					target.closest('.kix-appview-editor') != null ||
 					target.id === 'docs-editor')
 			) {
-				noteUserIntent();
-				lastUserScrollAt = Date.now();
-				hasUserScrolled = true;
+				bumpLayoutEpoch('wheel');
 			}
 		},
 		{ capture: true, passive: true },
@@ -259,25 +275,7 @@
 				event.key === 'Home' ||
 				event.key === 'End'
 			) {
-				noteUserIntent();
-				lastUserScrollAt = Date.now();
-				hasUserScrolled = true;
-			}
-		},
-		true,
-	);
-
-	document.addEventListener(
-		'pointerdown',
-		(event) => {
-			const target = event.target;
-			if (
-				target instanceof HTMLElement &&
-				(target.classList.contains('kix-appview-editor') ||
-					target.closest('.kix-appview-editor') != null ||
-					target.id === 'docs-editor')
-			) {
-				noteUserIntent();
+				bumpLayoutEpoch('key-scroll');
 			}
 		},
 		true,

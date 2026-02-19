@@ -37,6 +37,7 @@ const fw = new LintFramework(
 const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
 const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 let googleDocsSyncInFlight = false;
+let googleDocsSyncPending = false;
 let googleDocsBridgeAttached = false;
 let googleDocsEventsBound = false;
 let googleDocsSyncScheduled = false;
@@ -61,6 +62,9 @@ keepAliveCallback();
 
 function scan() {
 	void syncGoogleDocsBridge();
+	if (isGoogleDocsPage()) {
+		return;
+	}
 
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
 		if (
@@ -222,7 +226,11 @@ function bindGoogleDocsBridgeEvents() {
 }
 
 async function syncGoogleDocsBridge() {
-	if (!isGoogleDocsPage() || googleDocsSyncInFlight) {
+	if (!isGoogleDocsPage()) {
+		return;
+	}
+	if (googleDocsSyncInFlight) {
+		googleDocsSyncPending = true;
 		return;
 	}
 
@@ -246,6 +254,10 @@ async function syncGoogleDocsBridge() {
 		console.error('Failed to sync Google Docs bridge text', err);
 	} finally {
 		googleDocsSyncInFlight = false;
+		if (googleDocsSyncPending) {
+			googleDocsSyncPending = false;
+			void syncGoogleDocsBridge();
+		}
 	}
 }
 

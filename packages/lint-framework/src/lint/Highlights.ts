@@ -144,16 +144,16 @@ export default class Highlights {
 				host.removeAttribute('style');
 			}
 
+			const renderOffset =
+				isGoogleDocsSource || cpa == null
+					? null
+					: {
+							x: cpa.x,
+							y: cpa.y,
+						};
+
 			renderBox.render(
-				this.renderTree(
-					boxes,
-					cpa
-						? {
-								x: cpa.x,
-								y: cpa.y,
-							}
-						: null,
-				),
+				this.renderTree(boxes, renderOffset),
 			);
 			updated.add(source);
 		}
