@@ -145,7 +145,7 @@ impl Linter {
     fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
-        lint_dict.add_dictionary(FstDictionary::curated());
+        lint_dict.add_dictionary(Arc::new(FstDictionary::curated()));
         lint_dict.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(lint_dict)

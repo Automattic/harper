@@ -1,12 +1,10 @@
-use std::sync::Arc;
-
 use super::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharStringExt, Document, Span, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
-    dict: Arc<FstDictionary>,
+    dict: &'static FstDictionary,
 }
 
 enum Confidence {

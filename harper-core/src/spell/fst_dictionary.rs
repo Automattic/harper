@@ -28,9 +28,6 @@ pub struct FstDictionary {
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
-static DICT: LazyLock<Arc<FstDictionary>> =
-    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
-
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a
     // collection of builders and the associated edit distance here.
@@ -51,8 +48,11 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated() -> &'static FstDictionary {
+        static DICT: LazyLock<FstDictionary> =
+            LazyLock::new(|| FstDictionary::from(MutableDictionary::curated().clone()));
+
+        &DICT
     }
 
     /// Construct a new [`FstDictionary`] using a wordlist as a source.

@@ -161,6 +161,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 mod tests {
     use std::hash::DefaultHasher;
     use std::hash::{Hash, Hasher};
+    use std::sync::Arc;
 
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
@@ -178,7 +179,8 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter =
+            LintGroup::new_curated(Arc::new(FstDictionary::curated()), Dialect::American);
 
         let mut lints = linter.lint(&doc);
 
@@ -192,7 +194,8 @@ mod tests {
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter =
+            LintGroup::new_curated(Arc::new(FstDictionary::curated()), Dialect::American);
 
         let mut lint_map = linter.organized_lints(&doc);
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();

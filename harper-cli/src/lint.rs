@@ -107,7 +107,7 @@ impl InputInfo<'_> {
 
 pub fn lint(
     markdown_options: MarkdownOptions,
-    curated_dictionary: Arc<dyn Dictionary>,
+    curated_dictionary: &'static dyn Dictionary,
     mut inputs: Vec<AnyInput>,
     mut lint_options: LintOptions,
     user_dict_path: PathBuf,

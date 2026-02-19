@@ -46,7 +46,7 @@ mod tests {
 
         let document = Document::new(
             text,
-            &IsolateEnglish::new(Box::new(PlainEnglish), dict.clone()),
+            &IsolateEnglish::new(Box::new(PlainEnglish), dict),
             &dict,
         );
 
@@ -61,7 +61,7 @@ mod tests {
 
         let document = Document::new(
             source,
-            &IsolateEnglish::new(Box::new(PlainEnglish), dict.clone()),
+            &IsolateEnglish::new(Box::new(PlainEnglish), dict),
             &dict,
         );
 

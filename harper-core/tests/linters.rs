@@ -9,6 +9,8 @@
 //! Note: This test will fail if the snapshot files are not up to date. This
 //! ensures that CI will fail if linters change their behavior.
 
+use std::sync::Arc;
+
 use harper_core::spell::FstDictionary;
 use harper_core::{
     Dialect, Document,
@@ -192,10 +194,10 @@ fn print_error(lines: &Lines, start: usize, end: usize, message: &str) -> String
 fn test_most_lints() {
     snapshot::snapshot_all_text_files("linters", ".snap.yml", |source, dialect_override| {
         let dict = FstDictionary::curated();
-        let document = Document::new_markdown_default(source, &dict);
+        let document = Document::new_markdown_default(source, dict);
 
         let mut linter = LintGroup::new_curated(
-            dict,
+            Arc::new(dict),
             dialect_override.unwrap_or_else(|| {
                 Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American)
             }),

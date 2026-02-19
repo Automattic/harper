@@ -202,7 +202,7 @@ impl Backend {
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
-        dict.add_dictionary(FstDictionary::curated());
+        dict.add_dictionary(Arc::new(FstDictionary::curated()));
         let user_dict = self.load_user_dictionary().await;
         dict.add_dictionary(Arc::new(user_dict));
         let ws_dict = self.load_workspace_dictionary().await;

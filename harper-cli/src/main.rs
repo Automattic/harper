@@ -6,7 +6,7 @@ use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -468,7 +468,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(Arc::new(curated_dictionary), Dialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();

@@ -123,49 +123,49 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 
 #[cfg(test)]
 mod tests {
+    use std::sync::Arc;
+
     use super::lint_group;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     #[test]
     fn americas_lowercase() {
+        let curated_fst = Arc::new(FstDictionary::curated());
+
         assert_suggestion_result(
             "south america",
-            lint_group(FstDictionary::curated()),
+            lint_group(curated_fst.clone()),
             "South America",
         );
-        assert_suggestion_result(
-            "north america",
-            lint_group(FstDictionary::curated()),
-            "North America",
-        );
+        assert_suggestion_result("north america", lint_group(curated_fst), "North America");
     }
 
     #[test]
     fn americas_uppercase() {
+        let curated_fst = Arc::new(FstDictionary::curated());
+
         assert_suggestion_result(
             "SOUTH AMERICA",
-            lint_group(FstDictionary::curated()),
+            lint_group(curated_fst.clone()),
             "South America",
         );
-        assert_suggestion_result(
-            "NORTH AMERICA",
-            lint_group(FstDictionary::curated()),
-            "North America",
-        );
+        assert_suggestion_result("NORTH AMERICA", lint_group(curated_fst), "North America");
     }
 
     #[test]
     fn americas_allow_correct() {
-        assert_lint_count("South America", lint_group(FstDictionary::curated()), 0);
-        assert_lint_count("North America", lint_group(FstDictionary::curated()), 0);
+        let curated_fst = Arc::new(FstDictionary::curated());
+
+        assert_lint_count("South America", lint_group(curated_fst.clone()), 0);
+        assert_lint_count("North America", lint_group(curated_fst), 0);
     }
 
     #[test]
     fn issue_798() {
         assert_suggestion_result(
             "The United states is a big country.",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "The United States is a big country.",
         );
     }
@@ -174,7 +174,7 @@ mod tests {
     fn united_nations_uppercase() {
         assert_suggestion_result(
             "UNITED NATIONS",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "United Nations",
         );
     }
@@ -183,26 +183,34 @@ mod tests {
     fn united_arab_emirates_lowercase() {
         assert_suggestion_result(
             "UNITED ARAB EMIRATES",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "United Arab Emirates",
         );
     }
 
     #[test]
     fn united_nations_allow_correct() {
-        assert_lint_count("United Nations", lint_group(FstDictionary::curated()), 0);
+        assert_lint_count(
+            "United Nations",
+            lint_group(Arc::new(FstDictionary::curated())),
+            0,
+        );
     }
 
     #[test]
     fn meta_allow_correct() {
-        assert_lint_count("Meta Quest", lint_group(FstDictionary::curated()), 0);
+        assert_lint_count(
+            "Meta Quest",
+            lint_group(Arc::new(FstDictionary::curated())),
+            0,
+        );
     }
 
     #[test]
     fn microsoft_lowercase() {
         assert_suggestion_result(
             "microsoft visual studio",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "Microsoft Visual Studio",
         );
     }
@@ -211,44 +219,44 @@ mod tests {
     fn microsoft_first_word_is_correct() {
         assert_suggestion_result(
             "Microsoft visual studio",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "Microsoft Visual Studio",
         );
     }
 
     #[test]
     fn test_atlantic_ocean_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("atlantic ocean", lint_group(dictionary), "Atlantic Ocean");
     }
 
     #[test]
     fn test_pacific_ocean_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("pacific ocean", lint_group(dictionary), "Pacific Ocean");
     }
 
     #[test]
     fn test_indian_ocean_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("indian ocean", lint_group(dictionary), "Indian Ocean");
     }
 
     #[test]
     fn test_southern_ocean_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("southern ocean", lint_group(dictionary), "Southern Ocean");
     }
 
     #[test]
     fn test_arctic_ocean_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("arctic ocean", lint_group(dictionary), "Arctic Ocean");
     }
 
     #[test]
     fn test_mediterranean_sea_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result(
             "mediterranean sea",
             lint_group(dictionary),
@@ -258,43 +266,43 @@ mod tests {
 
     #[test]
     fn test_caribbean_sea_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("caribbean sea", lint_group(dictionary), "Caribbean Sea");
     }
 
     #[test]
     fn test_south_china_sea_lowercase() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_suggestion_result("south china sea", lint_group(dictionary), "South China Sea");
     }
 
     #[test]
     fn test_atlantic_ocean_correct() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_lint_count("Atlantic Ocean", lint_group(dictionary), 0);
     }
 
     #[test]
     fn test_pacific_ocean_correct() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_lint_count("Pacific Ocean", lint_group(dictionary), 0);
     }
 
     #[test]
     fn test_indian_ocean_correct() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_lint_count("Indian Ocean", lint_group(dictionary), 0);
     }
 
     #[test]
     fn test_mediterranean_sea_correct() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_lint_count("Mediterranean Sea", lint_group(dictionary), 0);
     }
 
     #[test]
     fn test_south_china_sea_correct() {
-        let dictionary = FstDictionary::curated();
+        let dictionary = Arc::new(FstDictionary::curated());
         assert_lint_count("South China Sea", lint_group(dictionary), 0);
     }
 
@@ -302,7 +310,7 @@ mod tests {
     fn day_one_in_sentence() {
         assert_suggestion_result(
             "I love day one. It is the best journaling app.",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "I love Day One. It is the best journaling app.",
         );
     }
@@ -311,7 +319,7 @@ mod tests {
     fn gilded_age_in_sentence() {
         assert_suggestion_result(
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
-            lint_group(FstDictionary::curated()),
+            lint_group(Arc::new(FstDictionary::curated())),
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
         );
     }

@@ -8,7 +8,7 @@ use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
 pub struct SplitWords {
-    dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
+    dict: Arc<TrieDictionary<&'static FstDictionary>>,
     expr: Box<dyn Expr>,
 }
 

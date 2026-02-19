@@ -15,10 +15,10 @@ pub struct TrieDictionary<D: Dictionary> {
     inner: D,
 }
 
-pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> =
+pub static DICT: LazyLock<Arc<TrieDictionary<&'static FstDictionary>>> =
     LazyLock::new(|| Arc::new(TrieDictionary::new(FstDictionary::curated())));
 
-impl TrieDictionary<Arc<FstDictionary>> {
+impl TrieDictionary<&'static FstDictionary> {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     pub fn curated() -> Arc<Self> {

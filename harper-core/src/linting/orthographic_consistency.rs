@@ -1,7 +1,6 @@
 use itertools::Itertools;
 
 use crate::linting::{LintKind, Suggestion};
-use std::sync::Arc;
 
 use crate::expr::Expr;
 use crate::spell::{Dictionary, FstDictionary};
@@ -11,7 +10,7 @@ use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OrthographicConsistency {
-    dict: Arc<FstDictionary>,
+    dict: &'static FstDictionary,
     expr: Box<dyn Expr>,
 }
 

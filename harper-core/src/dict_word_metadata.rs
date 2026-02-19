@@ -1192,16 +1192,13 @@ impl Default for DialectFlags {
 #[cfg(test)]
 pub mod tests {
     use std::borrow::Cow;
-    use std::sync::{Arc, LazyLock};
 
     use crate::DictWordMetadata;
     use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> Cow<'_, DictWordMetadata> {
-        static CURATED_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(FstDictionary::curated);
-
-        CURATED_DICT
+        FstDictionary::curated()
             .get_word_metadata_combined_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
     }

@@ -1,4 +1,5 @@
 use std::path::Path;
+use std::sync::Arc;
 
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
@@ -23,7 +24,7 @@ macro_rules! create_test {
                  );
 
                  let parser = CommentParser::new_from_filename(Path::new(filename), MarkdownOptions::default()).unwrap();
-                 let dict = FstDictionary::curated();
+                 let dict = Arc::new(FstDictionary::curated());
                  let document = Document::new(&source, &parser, &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

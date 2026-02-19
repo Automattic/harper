@@ -37,10 +37,7 @@ impl MergedDictionary {
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
-        if Arc::ptr_eq(
-            dictionary,
-            &(FstDictionary::curated() as Arc<dyn Dictionary>),
-        ) {
+        if std::ptr::eq(Arc::as_ptr(dictionary), FstDictionary::curated()) {
             return 1;
         }
 

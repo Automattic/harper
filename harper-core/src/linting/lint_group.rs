@@ -946,12 +946,13 @@ mod tests {
     ///    in the context of another linter's description.
     #[test]
     fn lint_descriptions_are_clean() {
-        let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let curated_fst_dict = Arc::new(FstDictionary::curated());
+
+        let lints_to_check = LintGroup::new_curated(curated_fst_dict.clone(), Dialect::American);
 
         let enforcer_config = LintGroupConfig::new_curated();
-        let mut lints_to_enforce =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
-                .with_lint_config(enforcer_config);
+        let mut lints_to_enforce = LintGroup::new_curated(curated_fst_dict, Dialect::American)
+            .with_lint_config(enforcer_config);
 
         let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()

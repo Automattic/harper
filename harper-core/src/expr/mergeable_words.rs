@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
 use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharString, DictWordMetadata, Span, Token};
@@ -13,7 +11,7 @@ type PredicateFn =
 /// that the two words aren't already a valid entry in the dictionary (like "straight away").
 pub struct MergeableWords {
     inner: SequenceExpr,
-    dict: Arc<FstDictionary>,
+    dict: &'static FstDictionary,
     predicate: Box<PredicateFn>,
 }
 

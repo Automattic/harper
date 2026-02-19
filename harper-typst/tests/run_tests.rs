@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
 use harper_core::{Dialect, Document};
@@ -17,7 +19,7 @@ macro_rules! create_test {
                     )
                  );
 
-                 let dict = FstDictionary::curated();
+                 let dict = Arc::new(FstDictionary::curated());
                  let document = Document::new(&source, &Typst, &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

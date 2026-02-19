@@ -142,6 +142,8 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
+    use std::sync::Arc;
+
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
@@ -421,8 +423,8 @@ mod tests {
 
         // Create a merged dictionary, using curated first.
         let mut merged_dict = MergedDictionary::new();
-        merged_dict.add_dictionary(FstDictionary::curated());
-        merged_dict.add_dictionary(std::sync::Arc::from(user_dict));
+        merged_dict.add_dictionary(Arc::new(FstDictionary::curated()));
+        merged_dict.add_dictionary(Arc::from(user_dict));
         assert!(merged_dict.contains_word_str("Calibre"));
 
         // No dialect issues should be found if the word from another dialect is in our user dictionary.
