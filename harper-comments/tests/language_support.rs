@@ -48,6 +48,7 @@ create_test!(clean.lua, 0);
 create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);
 create_test!(clean.sol, 0);
+create_test!(clean.ps1, 0);
 create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);
@@ -72,6 +73,7 @@ create_test!(basic.clj, 12);
 create_test!(ignore_comments.rs, 1);
 create_test!(ignore_comments.c, 1);
 create_test!(ignore_comments.sol, 1);
+create_test!(ignore_comments.ps1, 1);
 
 // Zig tests - covering //, ///, and //! comments
 create_test!(clean.zig, 0);
