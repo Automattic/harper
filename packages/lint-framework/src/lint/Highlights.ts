@@ -112,8 +112,25 @@ export default class Highlights {
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
+			const isGoogleDocsSource =
+				source instanceof HTMLElement &&
+				(source.classList.contains('kix-appview-editor') ||
+					source.closest('.kix-appview-editor') != null);
 
-			if (cpa != null) {
+			if (isGoogleDocsSource) {
+				const hostStyle = host.style;
+
+				hostStyle.position = 'fixed';
+				hostStyle.top = '0px';
+				hostStyle.left = '0px';
+				hostStyle.inset = '0';
+				hostStyle.pointerEvents = 'none';
+				hostStyle.width = '0px';
+				hostStyle.height = '0px';
+				hostStyle.contain = 'none';
+				hostStyle.transform = 'none';
+				hostStyle.zIndex = '2147483647';
+			} else if (cpa != null) {
 				const hostStyle = host.style;
 
 				hostStyle.position = 'absolute';
@@ -129,16 +146,10 @@ export default class Highlights {
 				host.removeAttribute('style');
 			}
 
+			const offset = isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y };
+
 			renderBox.render(
-				this.renderTree(
-					boxes,
-					cpa
-						? {
-								x: cpa.x,
-								y: cpa.y,
-							}
-						: null,
-				),
+				this.renderTree(boxes, offset),
 			);
 			updated.add(source);
 		}
@@ -196,6 +207,13 @@ export default class Highlights {
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
 	private computeRenderTarget(el: SourceElement): HTMLElement {
+		if (
+			el instanceof HTMLElement &&
+			(el.classList.contains('kix-appview-editor') || el.closest('.kix-appview-editor') != null)
+		) {
+			return document.body;
+		}
+
 		if (el.parentElement?.classList.contains('ProseMirror')) {
 			return el.parentElement.parentElement!;
 		}
