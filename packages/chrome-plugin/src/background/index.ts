@@ -1,8 +1,8 @@
 import {
 	BinaryModule,
-	LocalLinter,
 	type Dialect,
 	type LintConfig,
+	LocalLinter,
 	unpackWeirpackBytes,
 } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
@@ -10,6 +10,7 @@ import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
 	type AddToUserDictionaryRequest,
+	type AddWeirpackRequest,
 	createUnitResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
@@ -28,16 +29,15 @@ import {
 	type GetReviewedRequest,
 	type GetReviewedResponse,
 	type GetUserDictionaryResponse,
+	type GetWeirpacksResponse,
 	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
 	type LintResponse,
-	type GetWeirpacksResponse,
-	type AddWeirpackRequest,
-	type RemoveWeirpackRequest,
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
+	type RemoveWeirpackRequest,
 	type Request,
 	type Response,
 	type SetActivationKeyRequest,
