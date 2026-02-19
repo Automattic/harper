@@ -41,6 +41,8 @@ let googleDocsSyncPending = false;
 let googleDocsBridgeAttached = false;
 let googleDocsEventsBound = false;
 let googleDocsSyncScheduled = false;
+let googleDocsFrameRefreshStarted = false;
+let googleDocsLastLayoutEpoch = '';
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
@@ -215,6 +217,32 @@ function scheduleGoogleDocsBridgeSync() {
 	}, 0);
 }
 
+function startGoogleDocsFrameRefreshLoop() {
+	if (googleDocsFrameRefreshStarted) {
+		return;
+	}
+
+	googleDocsFrameRefreshStarted = true;
+	const tick = () => {
+		if (!isGoogleDocsPage()) {
+			googleDocsFrameRefreshStarted = false;
+			googleDocsLastLayoutEpoch = '';
+			return;
+		}
+
+		const bridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
+		const layoutEpoch = bridge?.getAttribute('data-harper-layout-epoch') ?? '';
+		if (layoutEpoch !== googleDocsLastLayoutEpoch) {
+			googleDocsLastLayoutEpoch = layoutEpoch;
+			fw.refreshLayout();
+		}
+
+		requestAnimationFrame(tick);
+	};
+
+	requestAnimationFrame(tick);
+}
+
 function bindGoogleDocsBridgeEvents() {
 	if (googleDocsEventsBound || !isGoogleDocsPage()) {
 		return;
@@ -222,7 +250,7 @@ function bindGoogleDocsBridgeEvents() {
 
 	googleDocsEventsBound = true;
 	document.addEventListener('harper:gdocs:text-updated', scheduleGoogleDocsBridgeSync);
-	document.addEventListener('harper:gdocs:layout-changed', () => fw.refreshLayout());
+	startGoogleDocsFrameRefreshLoop();
 }
 
 async function syncGoogleDocsBridge() {

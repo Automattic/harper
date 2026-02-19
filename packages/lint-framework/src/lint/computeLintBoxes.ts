@@ -21,11 +21,13 @@ const googleDocsRectCache = new Map<
 	string,
 	{
 		rects: { x: number; y: number; width: number; height: number }[];
+		scrollTop: number;
 		layoutEpoch: number;
 	}
 >();
 let lastGoogleDocsLayoutEpoch = -1;
 let lastGoogleDocsBridgeText = '';
+const SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -116,6 +118,9 @@ function computeGoogleDocsLintBoxes(
 		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
 		const mainWorldBridge = document.getElementById('harper-google-docs-main-world-bridge');
 		const currentLayoutEpoch = Number(mainWorldBridge?.getAttribute('data-harper-layout-epoch') ?? '0');
+		const currentLayoutReason = String(
+			mainWorldBridge?.getAttribute('data-harper-layout-reason') ?? '',
+		);
 		const currentBridgeText = bridge.textContent ?? '';
 
 		if (!editor) {
@@ -130,7 +135,9 @@ function computeGoogleDocsLintBoxes(
 			currentLayoutEpoch !== lastGoogleDocsLayoutEpoch &&
 			lastGoogleDocsLayoutEpoch >= 0
 		) {
-			googleDocsRectCache.clear();
+			if (!SCROLL_LAYOUT_REASONS.has(currentLayoutReason)) {
+				googleDocsRectCache.clear();
+			}
 		}
 		if (Number.isFinite(currentLayoutEpoch)) {
 			lastGoogleDocsLayoutEpoch = currentLayoutEpoch;
@@ -141,11 +148,26 @@ function computeGoogleDocsLintBoxes(
 			lastGoogleDocsBridgeText = currentBridgeText;
 		}
 		const cacheKey = `${lint.span.start}:${lint.span.end}`;
+		const currentScrollTop = editor.scrollTop;
 		let rects: { x: number; y: number; width: number; height: number }[] = [];
 
 		const cached = googleDocsRectCache.get(cacheKey);
 		if (cached && cached.layoutEpoch === currentLayoutEpoch) {
 			rects = cached.rects.map((rect) => ({ ...rect }));
+		} else if (
+			cached &&
+			SCROLL_LAYOUT_REASONS.has(currentLayoutReason) &&
+			Number.isFinite(cached.scrollTop)
+		) {
+			const deltaY = currentScrollTop - cached.scrollTop;
+			rects = cached.rects.map((rect) => ({ ...rect, y: rect.y - deltaY }));
+			if (rects.length > 0) {
+				googleDocsRectCache.set(cacheKey, {
+					rects: rects.map((rect) => ({ ...rect })),
+					scrollTop: currentScrollTop,
+					layoutEpoch: currentLayoutEpoch,
+				});
+			}
 		} else if (mainWorldBridge) {
 			const requestId = `rect-${googleDocsRectRequestCounter++}`;
 			const attrName = `data-harper-rects-${requestId}`;
@@ -176,6 +198,7 @@ function computeGoogleDocsLintBoxes(
 							if (rects.length > 0) {
 								googleDocsRectCache.set(cacheKey, {
 									rects: rects.map((rect) => ({ ...rect })),
+									scrollTop: currentScrollTop,
 									layoutEpoch: currentLayoutEpoch,
 								});
 							}

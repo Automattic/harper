@@ -105,7 +105,9 @@
 		queueMicrotask(() => {
 			layoutBumpPending = false;
 			layoutEpoch += 1;
-			ensureBridge().setAttribute('data-harper-layout-epoch', String(layoutEpoch));
+			const bridgeNode = ensureBridge();
+			bridgeNode.setAttribute('data-harper-layout-epoch', String(layoutEpoch));
+			bridgeNode.setAttribute('data-harper-layout-reason', String(reason));
 			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
 		});
 	};
