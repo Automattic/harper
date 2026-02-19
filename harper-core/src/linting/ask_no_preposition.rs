@@ -19,8 +19,7 @@ impl Default for AskNoPreposition {
 
         let objs = WordSet::new(&["me", "you", "him", "her", "it", "us", "them", "one"]);
 
-        let pattern = SequenceExpr::default()
-            .then(verbs)
+        let pattern = SequenceExpr::with(verbs)
             .then_whitespace()
             .t_aco("to")
             .then_whitespace()

@@ -40,8 +40,7 @@ impl Default for ProperNoun {
         let lookahead_word = SequenceExpr::default().t_ws().then_any_word();
 
         map.insert(
-            SequenceExpr::default()
-                .then(opinion_verbs)
+            SequenceExpr::with(opinion_verbs)
                 .t_ws()
                 .t_aco("its")
                 .t_ws()

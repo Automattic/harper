@@ -273,8 +273,7 @@ mod tests {
         assert!(converted.is_empty());
 
         // Span from `Expr`.
-        let token_span = SequenceExpr::default()
-            .then_any_word()
+        let token_span = SequenceExpr::any_word()
             .t_ws()
             .then_any_word()
             .iter_matches_in_doc(&doc)

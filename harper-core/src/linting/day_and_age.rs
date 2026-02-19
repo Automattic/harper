@@ -12,8 +12,7 @@ impl Default for DayAndAge {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then_word_set(&["this", "these"])
+                SequenceExpr::word_set(&["this", "these"])
                     .t_ws()
                     .then_word_set(&["day", "days"])
                     .t_ws()

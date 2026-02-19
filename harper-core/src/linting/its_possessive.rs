@@ -9,7 +9,6 @@ use crate::expr::ExprMap;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
-use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
@@ -27,8 +26,7 @@ impl Default for ItsPossessive {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ]));
 
-        let mid_sentence = SequenceExpr::default()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
+        let mid_sentence = SequenceExpr::with(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
             .t_ws()
             .t_aco("it's")
             .then_optional(adj_term)
@@ -41,8 +39,7 @@ impl Default for ItsPossessive {
 
         map.insert(mid_sentence, 2);
 
-        let start_of_sentence = SequenceExpr::default()
-            .then(AnchorStart)
+        let start_of_sentence = SequenceExpr::with(AnchorStart)
             .t_aco("it's")
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
@@ -60,9 +57,7 @@ impl Default for ItsPossessive {
 
         map.insert(start_of_sentence, 0);
 
-        let special = SequenceExpr::aco("it's")
-            .t_ws()
-            .then(WordSet::new(&["various"]));
+        let special = SequenceExpr::aco("it's").t_ws().t_aco("various");
 
         map.insert(special, 0);
 

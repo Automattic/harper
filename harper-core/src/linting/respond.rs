@@ -4,7 +4,6 @@ use crate::Token;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::patterns::Word;
 
 pub struct Respond {
     expr: Box<dyn Expr>,
@@ -37,7 +36,7 @@ impl Default for Respond {
                 .t_ws()
                 .then(helper_verb)
                 .t_ws()
-                .then(Word::new("response")),
+                .t_aco("response"),
             4,
         );
 
@@ -49,7 +48,7 @@ impl Default for Respond {
                 .t_ws()
                 .then_adverb()
                 .t_ws()
-                .then(Word::new("response")),
+                .t_aco("response"),
             6,
         );
 
