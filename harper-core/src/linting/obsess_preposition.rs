@@ -86,7 +86,7 @@ impl ExprLinter for ObsessPreposition {
             .collect();
 
         let message = if ok_prep_vec.len() == 1 {
-            "Use 'over' instead of 'with'".to_string()
+            format!("Use 'over' instead of '{}'.", String::from_iter(prep_chars))
         } else {
             "For `excessively preoccupied with` use `obsessed with`. For `paid close attention to details` use `obsessed over`".to_string()
         };
@@ -104,7 +104,9 @@ impl ExprLinter for ObsessPreposition {
 #[cfg(test)]
 mod tests {
     use super::ObsessPreposition;
-    use crate::linting::tests::{assert_suggestion_result, assert_top3_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_message, assert_suggestion_result, assert_top3_suggestion_result,
+    };
 
     #[test]
     fn fix_obsess_on() {
@@ -157,6 +159,15 @@ mod tests {
             "Secondly, if you get obsessed on any idea, then delve in it and don't worry about anything others until you get there.",
             ObsessPreposition::default(),
             "Secondly, if you get obsessed with any idea, then delve in it and don't worry about anything others until you get there.",
+        );
+    }
+
+    #[test]
+    fn fix_obsess_about_2743() {
+        assert_lint_message(
+            "but don't obsess about it",
+            ObsessPreposition::default(),
+            "Use 'over' instead of 'about'.",
         );
     }
 }
