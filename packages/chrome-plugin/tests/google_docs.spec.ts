@@ -337,6 +337,48 @@ test('Google Docs: highlight appears near third-line lint', async ({ page }) => 
 	expect(closest.dy).toBeLessThanOrEqual(140);
 });
 
+test('Google Docs: highlight stays near text for at least 15 seconds', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-stability-${Date.now()}`;
+	const input = [
+		`Clean line ${token}`,
+		`This is an test ${token}`,
+		`Another clean line ${token}`,
+	].join('\n');
+
+	await page.goto(GOOGLE_DOC_URL);
+	await page.locator('.kix-appview-editor').waitFor({ state: 'visible' });
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
+		.toBeGreaterThan(0);
+
+	const initialCaret = await getCaretRectForNeedle(page, `an test ${token}`);
+	expect(initialCaret).not.toBeNull();
+	const initialBoxes = await getVisibleHighlightBoxes(page);
+	expect(initialBoxes.length).toBeGreaterThan(0);
+	const initialClosest = getClosestBoxDistance(initialBoxes, {
+		x: initialCaret?.x ?? 0,
+		y: initialCaret?.y ?? 0,
+	});
+	expect(initialClosest.dx).toBeLessThan(180);
+	expect(initialClosest.dy).toBeLessThanOrEqual(140);
+
+	await page.waitForTimeout(16000);
+
+	const laterCaret = await getCaretRectForNeedle(page, `an test ${token}`);
+	expect(laterCaret).not.toBeNull();
+	const laterBoxes = await getVisibleHighlightBoxes(page);
+	expect(laterBoxes.length).toBeGreaterThan(0);
+	const laterClosest = getClosestBoxDistance(laterBoxes, {
+		x: laterCaret?.x ?? 0,
+		y: laterCaret?.y ?? 0,
+	});
+	expect(laterClosest.dx).toBeLessThan(180);
+	expect(laterClosest.dy).toBeLessThanOrEqual(140);
+});
+
 test('Google Docs: line geometry differs between repeated lint phrases', async ({ page }) => {
 	test.setTimeout(90000);
 	const token = `harper-gdocs-multi-line-${Date.now()}`;

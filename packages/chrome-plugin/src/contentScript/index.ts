@@ -218,7 +218,7 @@ function bindGoogleDocsBridgeEvents() {
 
 	googleDocsEventsBound = true;
 	document.addEventListener('harper:gdocs:text-updated', scheduleGoogleDocsBridgeSync);
-	document.addEventListener('harper:gdocs:layout-changed', scheduleGoogleDocsBridgeSync);
+	document.addEventListener('harper:gdocs:layout-changed', () => fw.refreshLayout());
 }
 
 async function syncGoogleDocsBridge() {

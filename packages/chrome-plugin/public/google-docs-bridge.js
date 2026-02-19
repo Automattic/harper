@@ -1,12 +1,13 @@
 (() => {
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const USER_SCROLL_COOLDOWN_MS = 60000;
+	const USER_INTENT_WINDOW_MS = 1200;
 	const SYNC_INTERVAL_MS = 100;
 	let lastUserScrollAt = 0;
 	let hasUserScrolled = false;
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
-	let initialEditorScrollTop = null;
+	let lastUserIntentAt = 0;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
@@ -30,7 +31,7 @@
 	const bumpLayoutEpoch = (reason) => {
 		if (layoutBumpPending) return;
 		layoutBumpPending = true;
-		requestAnimationFrame(() => {
+		queueMicrotask(() => {
 			layoutBumpPending = false;
 			layoutEpoch += 1;
 			bridge.setAttribute('data-harper-layout-epoch', String(layoutEpoch));
@@ -38,12 +39,15 @@
 		});
 	};
 
+	const noteUserIntent = () => {
+		lastUserIntentAt = Date.now();
+	};
+
 	const syncText = async () => {
 		try {
 			const editor = document.querySelector('.kix-appview-editor');
 			if (editor instanceof HTMLElement && lastKnownEditorScrollTop < 0) {
 				lastKnownEditorScrollTop = editor.scrollTop;
-				initialEditorScrollTop = editor.scrollTop;
 			}
 
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
@@ -113,32 +117,12 @@
 			const end = Number(detail.end);
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
-			const editor = document.querySelector('.kix-appview-editor');
-			if (editor instanceof HTMLElement) {
-				if (initialEditorScrollTop == null) {
-					initialEditorScrollTop = editor.scrollTop;
-				}
-				if (!hasUserScrolled && editor.scrollTop !== initialEditorScrollTop) {
-					lastKnownEditorScrollTop = editor.scrollTop;
-					lastUserScrollAt = Date.now();
-					hasUserScrolled = true;
-				}
-				if (lastKnownEditorScrollTop >= 0 && editor.scrollTop !== lastKnownEditorScrollTop) {
-					lastKnownEditorScrollTop = editor.scrollTop;
-					lastUserScrollAt = Date.now();
-					hasUserScrolled = true;
-				} else if (lastKnownEditorScrollTop < 0) {
-					lastKnownEditorScrollTop = editor.scrollTop;
-				}
-			}
-			if (hasUserScrolled) {
+
+			if (hasUserScrolled || Date.now() - lastUserScrollAt < USER_SCROLL_COOLDOWN_MS) {
 				bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify([]));
 				return;
 			}
-			if (Date.now() - lastUserScrollAt < USER_SCROLL_COOLDOWN_MS) {
-				bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify([]));
-				return;
-			}
+
 			const scrollState = getScrollState();
 			const currentSelection = annotated.getSelection?.()?.[0] || null;
 			const previousSelection =
@@ -150,6 +134,7 @@
 							end: Number(currentSelection.end),
 						}
 					: null;
+
 			const rects = [];
 			isComputingRects = true;
 			try {
@@ -173,19 +158,19 @@
 						height: startRect.height,
 					});
 				}
-				} finally {
-					isComputingRects = false;
-					if (previousSelection) {
-						try {
-							annotated.setSelection(previousSelection.start, previousSelection.end);
-						} catch {
-							// Ignore selection restore failures.
-						}
-					}
-					if (!hasUserScrolled) {
-						restoreScrollState(scrollState);
+			} finally {
+				isComputingRects = false;
+				if (previousSelection) {
+					try {
+						annotated.setSelection(previousSelection.start, previousSelection.end);
+					} catch {
+						// Ignore selection restore failures.
 					}
 				}
+				if (!hasUserScrolled) {
+					restoreScrollState(scrollState);
+				}
+			}
 
 			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
@@ -225,20 +210,27 @@
 		'scroll',
 		() => {
 			const editor = document.querySelector('.kix-appview-editor');
-				if (editor instanceof HTMLElement) {
-				if (lastKnownEditorScrollTop < 0) {
-					lastKnownEditorScrollTop = editor.scrollTop;
-					initialEditorScrollTop = editor.scrollTop;
-				} else if (editor.scrollTop !== lastKnownEditorScrollTop) {
-					lastKnownEditorScrollTop = editor.scrollTop;
-					lastUserScrollAt = Date.now();
-						hasUserScrolled = true;
-						bumpLayoutEpoch('scroll');
-					}
-				}
-			},
-			true,
-		);
+			if (!(editor instanceof HTMLElement)) return;
+
+			if (lastKnownEditorScrollTop < 0) {
+				lastKnownEditorScrollTop = editor.scrollTop;
+				return;
+			}
+
+			if (editor.scrollTop === lastKnownEditorScrollTop) {
+				return;
+			}
+
+			lastKnownEditorScrollTop = editor.scrollTop;
+
+			if (!isComputingRects && Date.now() - lastUserIntentAt < USER_INTENT_WINDOW_MS) {
+				lastUserScrollAt = Date.now();
+				hasUserScrolled = true;
+				bumpLayoutEpoch('scroll');
+			}
+		},
+		true,
+	);
 
 	document.addEventListener(
 		'wheel',
@@ -250,6 +242,7 @@
 					target.closest('.kix-appview-editor') != null ||
 					target.id === 'docs-editor')
 			) {
+				noteUserIntent();
 				lastUserScrollAt = Date.now();
 				hasUserScrolled = true;
 			}
@@ -266,8 +259,25 @@
 				event.key === 'Home' ||
 				event.key === 'End'
 			) {
+				noteUserIntent();
 				lastUserScrollAt = Date.now();
 				hasUserScrolled = true;
+			}
+		},
+		true,
+	);
+
+	document.addEventListener(
+		'pointerdown',
+		(event) => {
+			const target = event.target;
+			if (
+				target instanceof HTMLElement &&
+				(target.classList.contains('kix-appview-editor') ||
+					target.closest('.kix-appview-editor') != null ||
+					target.id === 'docs-editor')
+			) {
+				noteUserIntent();
 			}
 		},
 		true,

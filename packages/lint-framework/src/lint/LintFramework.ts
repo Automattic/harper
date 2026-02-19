@@ -116,6 +116,11 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
+	/** Re-render highlights from cached lint results without requesting new lint data. */
+	public refreshLayout() {
+		this.requestRender();
+	}
+
 	async requestLintUpdate() {
 		if (this.lintRequested) {
 			return;
