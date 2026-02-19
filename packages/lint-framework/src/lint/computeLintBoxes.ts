@@ -21,7 +21,6 @@ const googleDocsRectCache = new Map<
 	string,
 	{
 		rects: { x: number; y: number; width: number; height: number }[];
-		scrollTop: number;
 		layoutEpoch: number;
 	}
 >();
@@ -142,15 +141,10 @@ function computeGoogleDocsLintBoxes(
 			lastGoogleDocsBridgeText = currentBridgeText;
 		}
 		const cacheKey = `${lint.span.start}:${lint.span.end}`;
-		const currentScrollTop = editor.scrollTop;
 		let rects: { x: number; y: number; width: number; height: number }[] = [];
 
 		const cached = googleDocsRectCache.get(cacheKey);
-		if (
-			cached &&
-			cached.layoutEpoch === currentLayoutEpoch &&
-			Math.abs(cached.scrollTop - currentScrollTop) < 0.5
-		) {
+		if (cached && cached.layoutEpoch === currentLayoutEpoch) {
 			rects = cached.rects.map((rect) => ({ ...rect }));
 		} else if (mainWorldBridge) {
 			const requestId = `rect-${googleDocsRectRequestCounter++}`;
@@ -179,14 +173,13 @@ function computeGoogleDocsLintBoxes(
 								typeof rect?.width === 'number' &&
 								typeof rect?.height === 'number',
 						);
-						if (rects.length > 0) {
+							if (rects.length > 0) {
 								googleDocsRectCache.set(cacheKey, {
 									rects: rects.map((rect) => ({ ...rect })),
-									scrollTop: currentScrollTop,
 									layoutEpoch: currentLayoutEpoch,
 								});
+							}
 						}
-					}
 				} catch {
 					// Ignore malformed bridge payloads.
 				}

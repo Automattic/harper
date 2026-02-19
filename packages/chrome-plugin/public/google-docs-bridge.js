@@ -64,6 +64,7 @@
 
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
+	let lastUserScrollAt = 0;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
@@ -92,6 +93,10 @@
 		} catch {
 			// Ignore event emission failures.
 		}
+	};
+
+	const markUserScrollIntent = () => {
+		lastUserScrollAt = Date.now();
 	};
 
 	const bumpLayoutEpoch = (reason) => {
@@ -263,19 +268,20 @@
 						height: startRect.height,
 					});
 				}
-			} finally {
-				isComputingRects = false;
-				if (previousSelection) {
+				} finally {
+					isComputingRects = false;
+					if (previousSelection) {
 					try {
 						annotated.setSelection(previousSelection.start, previousSelection.end);
 					} catch {
-						// Ignore selection restore failures.
+							// Ignore selection restore failures.
+						}
+					}
+					const userIsActivelyScrolling = Date.now() - lastUserScrollAt < 150;
+					if (!userIsActivelyScrolling && !didScrollStateChange(scrollState)) {
+						restoreScrollState(scrollState);
 					}
 				}
-				if (!didScrollStateChange(scrollState)) {
-					restoreScrollState(scrollState);
-				}
-			}
 
 			ensureBridge().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
@@ -314,6 +320,7 @@
 	document.addEventListener(
 		'scroll',
 		() => {
+			markUserScrollIntent();
 			const editor = document.querySelector(EDITOR_SELECTOR);
 			if (!(editor instanceof HTMLElement)) return;
 
@@ -338,6 +345,7 @@
 	document.addEventListener(
 		'wheel',
 		(event) => {
+			markUserScrollIntent();
 			const target = event.target;
 			if (
 				target instanceof HTMLElement &&
@@ -360,6 +368,7 @@
 				event.key === 'Home' ||
 				event.key === 'End'
 			) {
+				markUserScrollIntent();
 				bumpLayoutEpoch('key-scroll');
 			}
 		},
