@@ -15,13 +15,12 @@ describe('Languages >', () => {
 		// Uncomment when #265 is fixed.
 		// { type: 'JavaScript JSX', file: 'javascriptreact.jsx', row: 1, column: 36 },
 
-		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, PowerShell, Solidity, TOML, and Typst files out of
+		// VS Code doesn't support CMake, Haskell, Literate Haskell, Nix, Solidity, TOML, and Typst files out of
 		// the box. Uncomment when you figure out how to support them during testing.
 		// { type: 'CMake', file: 'CMakeLists.txt', row: 2, column: 30 },
 		// { type: 'Haskell', file: 'haskell.hs', row: 1, column: 3 },
 		// { type: 'Literate Haskell', file: 'literate-haskell.lhs', row: 5, column: 0 },
 		// { type: 'Nix', file: 'nix.nix', row: 1, column: 2 },
-		// { type: 'PowerShell', file: 'powershell.ps1', row: 0, column: 2 },
 		// { type: 'TOML', file: 'toml.toml', row: 1, column: 2 },
 		// { type: 'Typst', file: 'typst.typ', row: 2, column: 1 },
 		// { type: 'Solidity', file: 'solidity.sol', row: 3, column: 4 },
@@ -42,6 +41,7 @@ describe('Languages >', () => {
 		{ type: 'PHP', file: 'php.php', row: 2, column: 31 },
 		{ type: 'Plaintext without extension', file: 'plaintext', row: 0, column: 0 },
 		{ type: 'Plaintext with extension', file: 'plaintext.txt', row: 4, column: 0 },
+		{ type: 'PowerShell', file: 'powershell.ps1', row: 0, column: 2 },
 		{ type: 'Python', file: 'python.py', row: 1, column: 2 },
 		{ type: 'Ruby', file: 'ruby.rb', row: 3, column: 16 },
 		{ type: 'Rust', file: 'rust.rs', row: 0, column: 4 },
