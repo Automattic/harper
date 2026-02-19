@@ -200,8 +200,7 @@ impl Default for MissingTo {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let pattern = SequenceExpr::default()
-            .then(Self::controller_words())
+        let pattern = SequenceExpr::with(Self::controller_words())
             .t_ws()
             .then_kind_where(|kind| kind.is_verb_lemma());
 

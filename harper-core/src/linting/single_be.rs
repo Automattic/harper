@@ -70,8 +70,7 @@ impl Default for SingleBe {
             ])
         }
 
-        let expr = SequenceExpr::default()
-            .then(be_like_expr())
+        let expr = SequenceExpr::with(be_like_expr())
             .t_ws()
             .then(be_like_expr());
 

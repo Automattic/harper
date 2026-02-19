@@ -133,6 +133,15 @@ impl SequenceExpr {
         Self::default().then_any_of(exprs)
     }
 
+    /// Match the longest of multiple expressions.
+    pub fn longest_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+        Self::default().then_longest_of(exprs)
+    }
+
+    pub fn whitespace() -> Self {
+        Self::default().then_whitespace()
+    }
+
     /// Will be accepted unless the condition matches.
     pub fn unless(condition: impl Expr + 'static) -> Self {
         Self::default().then_unless(condition)
@@ -214,20 +223,23 @@ impl SequenceExpr {
         self.then_whitespace_or_hyphen()
     }
 
+    /// Match against zero or more occurrences of the given expression. Like `*` in regex.
+    pub fn then_zero_or_more(self, expr: impl Expr + 'static) -> Self {
+        self.then(Repeating::new(Box::new(expr), 0))
+    }
+
+    /// Match against one or more occurrences of the given expression. Like `+` in regex.
     pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {
         self.then(Repeating::new(Box::new(expr), 1))
     }
 
-    pub fn then_one_or_more_spaced(self, expr: impl Expr + 'static) -> Self {
+    /// Match against zero or more whitespace-separated occurrences of the given expression.
+    pub fn then_zero_or_more_spaced(self, expr: impl Expr + 'static) -> Self {
         let expr = Lrc::new(expr);
-        self.then(
-            SequenceExpr::default()
-                .then(expr.clone())
-                .then(Repeating::new(
-                    Box::new(SequenceExpr::default().t_ws().then(expr)),
-                    0,
-                )),
-        )
+        self.then(SequenceExpr::with(expr.clone()).then(Repeating::new(
+            Box::new(SequenceExpr::default().t_ws().then(expr)),
+            0,
+        )))
     }
 
     /// Create a new condition that will step one token forward if met.

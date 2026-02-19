@@ -53,9 +53,7 @@ impl Default for RollerSkated {
         );
 
         map.insert(
-            SequenceExpr::default()
-                .then(AnchorStart)
-                .then_seq(Self::roller_pair()),
+            SequenceExpr::with(AnchorStart).then_seq(Self::roller_pair()),
             0,
         );
 

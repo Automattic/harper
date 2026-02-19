@@ -52,6 +52,7 @@ use super::currency_placement::CurrencyPlacement;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
@@ -682,6 +683,9 @@ impl LintGroup {
 
         out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
         out.config.set_rule_enabled("WorthToDo", true);
+
+        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.config.set_rule_enabled("DidPast", true);
 
         out
     }

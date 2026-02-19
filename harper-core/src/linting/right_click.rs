@@ -18,8 +18,7 @@ impl Default for RightClick {
         let mut map = ExprMap::default();
 
         map.insert(
-            SequenceExpr::default()
-                .then_word_set(&["right", "left", "middle"])
+            SequenceExpr::word_set(&["right", "left", "middle"])
                 .t_ws()
                 .then(DerivedFrom::new_from_str("click")),
             0,

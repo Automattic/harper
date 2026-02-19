@@ -18,18 +18,17 @@ impl Default for ChangeTack {
         Self {
             expr: Box::new(FirstMatchOf::new(vec![
                 Box::new(
-                    SequenceExpr::default()
-                        .then_longest_of(vec![
-                            Box::new(SequenceExpr::word_set(verb_forms).then_optional(
-                                SequenceExpr::default().t_ws().then_any_of(vec![
-                                    Box::new(SequenceExpr::default().then_possessive_determiner()),
-                                    Box::new(Word::new("it's")),
-                                ]),
-                            )),
-                            Box::new(SequenceExpr::word_set(noun_forms).t_ws().t_aco("of")),
-                        ])
-                        .t_ws()
-                        .then_word_set(eggcorns),
+                    SequenceExpr::longest_of(vec![
+                        Box::new(SequenceExpr::word_set(verb_forms).then_optional(
+                            SequenceExpr::default().t_ws().then_any_of(vec![
+                                Box::new(SequenceExpr::default().then_possessive_determiner()),
+                                Box::new(Word::new("it's")),
+                            ]),
+                        )),
+                        Box::new(SequenceExpr::word_set(noun_forms).t_ws().t_aco("of")),
+                    ])
+                    .t_ws()
+                    .then_word_set(eggcorns),
                 ),
                 Box::new(SequenceExpr::aco("different").t_ws().t_aco("tact")),
             ])),

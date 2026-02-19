@@ -3,7 +3,6 @@ use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 pub struct VeryUnique {
@@ -14,12 +13,11 @@ impl Default for VeryUnique {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&[
-                        "fairly", "pretty", "rather", "quite", "somewhat", "very",
-                    ]))
-                    .t_ws()
-                    .t_aco("unique"),
+                SequenceExpr::word_set(&[
+                    "fairly", "pretty", "rather", "quite", "somewhat", "very",
+                ])
+                .t_ws()
+                .t_aco("unique"),
             ),
         }
     }
