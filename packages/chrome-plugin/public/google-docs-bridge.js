@@ -1,19 +1,90 @@
+/*
+ * Google Docs main-world bridge.
+ *
+ * Why this file exists:
+ * - The extension content script runs in an isolated world, while Google Docs keeps its editor
+ *   internals (for example `_docs_annotate_getAnnotatedText`) in the page's main world.
+ * - We need access to those Docs internals to:
+ *   1) read the canonical document text,
+ *   2) compute approximate on-screen rects for lint spans, and
+ *   3) perform replacements in a way Docs accepts.
+ * - To bridge that isolation boundary, this script is injected into the main world and
+ *   communicates with the content script through:
+ *   - a hidden DOM node (`#harper-google-docs-main-world-bridge`) used as a shared state surface,
+ *   - custom DOM events for commands and notifications.
+ *
+ * High-level flow:
+ * 1) Text sync:
+ *    - Polls Docs (`_docs_annotate_getAnnotatedText`) at a short interval.
+ *    - Writes the current plain text into the hidden bridge node's `textContent`.
+ *    - Emits `harper:gdocs:text-updated` when text changes so the content script can re-lint.
+ *
+ * 2) Layout invalidation:
+ *    - Monitors scroll/wheel/key-scroll/resize/editor mutations.
+ *    - Bumps a monotonically increasing `layoutEpoch` and mirrors it on the bridge node
+ *      (`data-harper-layout-epoch`).
+ *    - Emits `harper:gdocs:layout-changed` so highlight positioning can be refreshed.
+ *    - Uses microtask coalescing to avoid flooding updates when many layout signals occur together.
+ *
+ * 3) Rect requests:
+ *    - Listens for `harper:gdocs:get-rects` with `{ requestId, start, end }`.
+ *    - Temporarily moves Docs selection to span boundaries and inspects visible caret rects
+ *      (`.kix-cursor-caret`) as a practical proxy for span geometry.
+ *    - Restores prior selection and scroll state to minimize user-visible side effects.
+ *    - Returns computed rects via `data-harper-rects-${requestId}` on the bridge node.
+ *
+ * 4) Replacements:
+ *    - Listens for `harper:gdocs:replace` with `{ start, end, replacementText }`.
+ *    - Selects the span in Docs internals and dispatches a synthetic paste event into Docs'
+ *      text input target iframe.
+ *    - Triggers a deferred text sync so the content script sees the post-edit text.
+ *
+ * Reliability constraints and design choices:
+ * - Google Docs can throw intermittent internal errors while the editor is updating. Most bridge
+ *   operations are guarded with `try/catch` and fail soft so the extension keeps running.
+ * - DOM/state writes are intentionally minimal (only write when changed) to reduce churn.
+ * - The bridge node is kept hidden and inert (`aria-hidden`, `display:none`) and is only used for
+ *   cross-world signaling/state handoff.
+ * - This file is plain JS and intentionally self-contained because it is injected directly into the
+ *   page, outside the extension module graph.
+ */
+
 (() => {
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const SYNC_INTERVAL_MS = 100;
+	const EDITOR_SELECTOR = '.kix-appview-editor';
+	const EDITOR_CONTAINER_SELECTOR = '.kix-appview-editor-container';
+	const DOCS_EDITOR_SELECTOR = '#docs-editor';
+	const CARET_SELECTOR = '.kix-cursor-caret';
+	const TEXT_EVENT_IFRAME_SELECTOR = '.docs-texteventtarget-iframe';
+	const EVENT_TEXT_UPDATED = 'harper:gdocs:text-updated';
+	const EVENT_LAYOUT_CHANGED = 'harper:gdocs:layout-changed';
+	const EVENT_GET_RECTS = 'harper:gdocs:get-rects';
+	const EVENT_REPLACE = 'harper:gdocs:replace';
+
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
 	let bridge = document.getElementById(BRIDGE_ID);
-	if (!bridge) {
-		bridge = document.createElement('div');
-		bridge.id = BRIDGE_ID;
-		bridge.setAttribute('aria-hidden', 'true');
-		bridge.style.display = 'none';
-		document.documentElement.appendChild(bridge);
+
+	function ensureBridge() {
+		if (bridge) {
+			return bridge;
+		}
+
+		const nextBridge = document.createElement('div');
+		nextBridge.id = BRIDGE_ID;
+		nextBridge.setAttribute('aria-hidden', 'true');
+		nextBridge.style.display = 'none';
+		document.documentElement.appendChild(nextBridge);
+		bridge = nextBridge;
+
+		return nextBridge;
 	}
+
+	ensureBridge();
 
 	const emitEvent = (name, detail) => {
 		try {
@@ -29,14 +100,14 @@
 		queueMicrotask(() => {
 			layoutBumpPending = false;
 			layoutEpoch += 1;
-			bridge.setAttribute('data-harper-layout-epoch', String(layoutEpoch));
-			emitEvent('harper:gdocs:layout-changed', { layoutEpoch, reason });
+			ensureBridge().setAttribute('data-harper-layout-epoch', String(layoutEpoch));
+			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
 		});
 	};
 
 	const syncText = async () => {
 		try {
-			const editor = document.querySelector('.kix-appview-editor');
+			const editor = document.querySelector(EDITOR_SELECTOR);
 			if (editor instanceof HTMLElement && lastKnownEditorScrollTop < 0) {
 				lastKnownEditorScrollTop = editor.scrollTop;
 			}
@@ -47,9 +118,10 @@
 			if (!annotated || typeof annotated.getText !== 'function') return;
 			window.__harperGoogleDocsAnnotatedText = annotated;
 			const nextText = annotated.getText();
-			if (bridge.textContent !== nextText) {
-				bridge.textContent = nextText;
-				emitEvent('harper:gdocs:text-updated', { length: nextText.length });
+			const bridgeNode = ensureBridge();
+			if (bridgeNode.textContent !== nextText) {
+				bridgeNode.textContent = nextText;
+				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
 			}
 		} catch {
 			// Ignore intermittent Docs internal errors.
@@ -61,9 +133,7 @@
 		state.push({ type: 'window', x: window.scrollX, y: window.scrollY });
 
 		const keep = new Set(
-			Array.from(
-				document.querySelectorAll('.kix-appview-editor, .kix-appview-editor-container, #docs-editor'),
-			),
+			Array.from(document.querySelectorAll(`${EDITOR_SELECTOR}, ${EDITOR_CONTAINER_SELECTOR}, ${DOCS_EDITOR_SELECTOR}`)),
 		);
 
 		for (const el of document.querySelectorAll('*')) {
@@ -110,7 +180,7 @@
 
 	const getCaretRect = (annotated, position) => {
 		annotated.setSelection(position, position);
-		const carets = Array.from(document.querySelectorAll('.kix-cursor-caret'))
+		const carets = Array.from(document.querySelectorAll(CARET_SELECTOR))
 			.map((caret) => {
 				const rect = caret.getBoundingClientRect();
 				const style = window.getComputedStyle(caret);
@@ -133,7 +203,7 @@
 		return pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
 	};
 
-	document.addEventListener('harper:gdocs:get-rects', (event) => {
+	document.addEventListener(EVENT_GET_RECTS, (event) => {
 		try {
 			const detail = event.detail || {};
 			const requestId = String(detail.requestId || '');
@@ -192,13 +262,13 @@
 				}
 			}
 
-			bridge.setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
+			ensureBridge().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
 			// No-op.
 		}
 	});
 
-	document.addEventListener('harper:gdocs:replace', async (event) => {
+	document.addEventListener(EVENT_REPLACE, async (event) => {
 		try {
 			const detail = event.detail || {};
 			const start = Number(detail.start);
@@ -209,7 +279,7 @@
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
 			annotated.setSelection(start, end);
-			const iframe = document.querySelector('.docs-texteventtarget-iframe');
+			const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
 			const target = iframe?.contentDocument?.activeElement;
 			if (!target) return;
 			const dt = new DataTransfer();
@@ -229,7 +299,7 @@
 	document.addEventListener(
 		'scroll',
 		() => {
-			const editor = document.querySelector('.kix-appview-editor');
+			const editor = document.querySelector(EDITOR_SELECTOR);
 			if (!(editor instanceof HTMLElement)) return;
 
 			if (lastKnownEditorScrollTop < 0) {
@@ -257,7 +327,7 @@
 			if (
 				target instanceof HTMLElement &&
 				(target.classList.contains('kix-appview-editor') ||
-					target.closest('.kix-appview-editor') != null ||
+					target.closest(EDITOR_SELECTOR) != null ||
 					target.id === 'docs-editor')
 			) {
 				bumpLayoutEpoch('wheel');
@@ -284,7 +354,7 @@
 	window.addEventListener('resize', () => bumpLayoutEpoch('resize'));
 
 	const observeLayout = () => {
-		const editor = document.querySelector('.kix-appview-editor');
+		const editor = document.querySelector(EDITOR_SELECTOR);
 		if (!(editor instanceof HTMLElement)) {
 			setTimeout(observeLayout, 250);
 			return;
