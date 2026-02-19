@@ -161,7 +161,7 @@ impl ExprLinter for SingleBe {
         Some(Lint {
             span: Span::new(whitespace_start, second_be_end),
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::ReplaceWith(vec![])],
+            suggestions: vec![Suggestion::Remove],
             message: "Drop the repeated verb form so only one instance of `be` remains.".to_owned(),
             priority: 31,
         })
