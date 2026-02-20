@@ -8,18 +8,6 @@
 	 */
 
 	/**
-	 * @typedef {{ type: 'window', x: number, y: number }} WindowScrollEntry
-	 */
-
-	/**
-	 * @typedef {{ type: 'element', el: HTMLElement, top: number, left: number }} ElementScrollEntry
-	 */
-
-	/**
-	 * @typedef {WindowScrollEntry | ElementScrollEntry} ScrollStateEntry
-	 */
-
-	/**
 	 * @typedef {{
 	 *   getText: () => string,
 	 *   setSelection: (start: number, end: number) => void,
@@ -29,7 +17,6 @@
 
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const SYNC_INTERVAL_MS = 100;
-	const USER_SCROLL_INTENT_WINDOW_MS = 150;
 	const EDITOR_SELECTOR = '.kix-appview-editor';
 	const EDITOR_CONTAINER_SELECTOR = '.kix-appview-editor-container';
 	const DOCS_EDITOR_SELECTOR = '#docs-editor';
@@ -43,19 +30,13 @@
 	const EVENT_REPLACE = 'harper:gdocs:replace';
 
 	let isComputingRects = false;
-	let lastKnownEditorScrollTop = -1;
-	let lastUserScrollAt = 0;
-	let userInteractionEpoch = 0;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
 	/** @type {HTMLElement | null} */
 	let bridge = document.getElementById(BRIDGE_ID);
 
-	/** Makes sure the bridge exists, creating it if it doesn't.
-	 * Returns said bridge.
-	 *
-	 * @returns {HTMLElement} */
+	/** @returns {HTMLElement} */
 	function ensureBridgeExists() {
 		if (bridge) {
 			return bridge;
@@ -73,35 +54,15 @@
 
 	ensureBridgeExists();
 
-	/** Dispatch an event to communicate with the user script.
-	 *
-	 * @param {string} name
+	/** @param {string} name
 	 * @param {Record<string, unknown>} detail
 	 * @returns {void}
 	 */
 	const emitEvent = (name, detail) => {
 		try {
 			document.dispatchEvent(new CustomEvent(name, { detail }));
-		} catch {
-			// Ignore event emission failures.
-		}
+		} catch {}
 	};
-
-	const markUserScrollIntent = () => {
-		lastUserScrollAt = Date.now();
-		userInteractionEpoch += 1;
-	};
-
-	/** @returns {boolean} */
-	const isUserActivelyScrolling = () =>
-		Date.now() - lastUserScrollAt < USER_SCROLL_INTENT_WINDOW_MS;
-
-	/** @param {KeyboardEvent} event */
-	const isScrollLayoutKey = (event) =>
-		event.key === 'PageDown' ||
-		event.key === 'PageUp' ||
-		event.key === 'Home' ||
-		event.key === 'End';
 
 	/**
 	 * @param {string} reason
@@ -123,11 +84,6 @@
 	/** @returns {Promise<void>} */
 	const syncText = async () => {
 		try {
-			const editor = document.querySelector(EDITOR_SELECTOR);
-			if (editor instanceof HTMLElement && lastKnownEditorScrollTop < 0) {
-				lastKnownEditorScrollTop = editor.scrollTop;
-			}
-
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
 			if (typeof getAnnotatedText !== 'function') return;
 			/** @type {AnnotatedText | null | undefined} */
@@ -140,86 +96,7 @@
 				bridgeNode.textContent = nextText;
 				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
 			}
-		} catch {
-			// Ignore intermittent Docs internal errors.
-		}
-	};
-
-	/** @returns {ScrollStateEntry[]} */
-	const getScrollState = () => {
-		/** @type {ScrollStateEntry[]} */
-		const state = [];
-		state.push({ type: 'window', x: window.scrollX, y: window.scrollY });
-
-		const candidates = new Set();
-		/** @param {Element | null} node */
-		const addCandidate = (node) => {
-			if (node instanceof HTMLElement) {
-				candidates.add(node);
-			}
-		};
-		/** @param {Element | null} node */
-		const addElementAndAncestors = (node) => {
-			if (!(node instanceof HTMLElement)) return;
-			addCandidate(node);
-			let parent = node.parentElement;
-			while (parent) {
-				addCandidate(parent);
-				parent = parent.parentElement;
-			}
-		};
-
-		addElementAndAncestors(document.querySelector(EDITOR_SELECTOR));
-		addElementAndAncestors(document.querySelector(EDITOR_CONTAINER_SELECTOR));
-		addElementAndAncestors(document.querySelector(DOCS_EDITOR_SELECTOR));
-		addElementAndAncestors(document.activeElement);
-
-		for (const node of candidates) {
-			if (node.scrollTop !== 0 || node.scrollLeft !== 0 || node.matches(EDITOR_SELECTOR)) {
-				state.push({ type: 'element', el: node, top: node.scrollTop, left: node.scrollLeft });
-			}
-		}
-
-		return state;
-	};
-
-	/**
-	 * @param {ScrollStateEntry[]} state
-	 * @returns {void}
-	 */
-	const restoreScrollState = (state) => {
-		for (const entry of state) {
-			if (entry.type === 'window') {
-				window.scrollTo(entry.x, entry.y);
-				continue;
-			}
-
-			if (!entry.el || !entry.el.isConnected) continue;
-			entry.el.scrollTop = entry.top;
-			entry.el.scrollLeft = entry.left;
-		}
-	};
-
-	/**
-	 * @param {ScrollStateEntry[]} state
-	 * @returns {boolean}
-	 */
-	const didScrollStateChange = (state) => {
-		for (const entry of state) {
-			if (entry.type === 'window') {
-				if (window.scrollX !== entry.x || window.scrollY !== entry.y) {
-					return true;
-				}
-				continue;
-			}
-
-			if (!entry.el || !entry.el.isConnected) continue;
-			if (entry.el.scrollTop !== entry.top || entry.el.scrollLeft !== entry.left) {
-				return true;
-			}
-		}
-
-		return false;
+		} catch {}
 	};
 
 	/**
@@ -297,9 +174,7 @@
 		if (!selection) return;
 		try {
 			annotated.setSelection(selection.start, selection.end);
-		} catch {
-			// Ignore selection restore failures.
-		}
+		} catch {}
 	};
 
 	/** @param {Event} event */
@@ -314,9 +189,7 @@
 			/** @type {AnnotatedText | undefined} */
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
-			const interactionEpochAtStart = userInteractionEpoch;
 
-			const scrollState = getScrollState();
 			const currentSelection = annotated.getSelection?.()?.[0];
 			const previousSelection = getSelectionEndpoints(currentSelection);
 
@@ -347,22 +220,10 @@
 			} finally {
 				isComputingRects = false;
 				restoreSelection(annotated, previousSelection);
-
-				// Restore viewport only if bridge operations changed it and the user
-				// has not interacted while we were computing.
-				if (
-					didScrollStateChange(scrollState) &&
-					!isUserActivelyScrolling() &&
-					interactionEpochAtStart === userInteractionEpoch
-				) {
-					restoreScrollState(scrollState);
-				}
 			}
 
 			ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
-		} catch {
-			// No-op.
-		}
+		} catch {}
 	});
 
 	/** @param {Event} event */
@@ -391,65 +252,8 @@
 			});
 			target.dispatchEvent(pasteEvent);
 			setTimeout(syncText, 0);
-		} catch {
-			// No-op.
-		}
+		} catch {}
 	});
-
-	document.addEventListener(
-		'scroll',
-		() => {
-			markUserScrollIntent();
-			const editor = document.querySelector(EDITOR_SELECTOR);
-			if (!(editor instanceof HTMLElement)) return;
-
-			if (lastKnownEditorScrollTop < 0) {
-				lastKnownEditorScrollTop = editor.scrollTop;
-				return;
-			}
-
-			if (editor.scrollTop === lastKnownEditorScrollTop) {
-				return;
-			}
-
-			lastKnownEditorScrollTop = editor.scrollTop;
-
-			if (!isComputingRects) {
-				bumpLayoutEpoch('scroll');
-			}
-		},
-		true,
-	);
-
-	document.addEventListener(
-		'wheel',
-		/** @param {WheelEvent} event */
-		(event) => {
-			markUserScrollIntent();
-			const target = event.target;
-			if (
-				target instanceof HTMLElement &&
-				(target.classList.contains('kix-appview-editor') ||
-					target.closest(EDITOR_SELECTOR) != null ||
-					target.id === 'docs-editor')
-			) {
-				bumpLayoutEpoch('wheel');
-			}
-		},
-		{ capture: true, passive: true },
-	);
-
-	document.addEventListener(
-		'keydown',
-		/** @param {KeyboardEvent} event */
-		(event) => {
-			if (isScrollLayoutKey(event)) {
-				markUserScrollIntent();
-				bumpLayoutEpoch('key-scroll');
-			}
-		},
-		true,
-	);
 
 	window.addEventListener('resize', () => bumpLayoutEpoch('resize'));
 
