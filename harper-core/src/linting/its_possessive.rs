@@ -47,18 +47,16 @@ impl Default for ItsPossessive {
                     tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
                 }),
             )
-            .then_unless(
-                SequenceExpr::default().t_ws().then(UPOSSet::new(&[
-                    UPOS::VERB,
-                    UPOS::PART,
-                    UPOS::ADP,
-                    UPOS::NOUN,
-                    UPOS::PRON,
-                    UPOS::SCONJ,
-                    UPOS::CCONJ,
-                    UPOS::ADV,
-                ])),
-            );
+            .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
+                UPOS::VERB,
+                UPOS::PART,
+                UPOS::ADP,
+                UPOS::NOUN,
+                UPOS::PRON,
+                UPOS::SCONJ,
+                UPOS::CCONJ,
+                UPOS::ADV,
+            ])));
 
         map.insert(start_of_sentence_noun, 0);
 
@@ -90,18 +88,16 @@ impl Default for ItsPossessive {
                     tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
                 }),
             )
-            .then_unless(
-                SequenceExpr::default().t_ws().then(UPOSSet::new(&[
-                    UPOS::VERB,
-                    UPOS::PART,
-                    UPOS::ADP,
-                    UPOS::NOUN,
-                    UPOS::PRON,
-                    UPOS::SCONJ,
-                    UPOS::CCONJ,
-                    UPOS::ADV,
-                ])),
-            );
+            .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
+                UPOS::VERB,
+                UPOS::PART,
+                UPOS::ADP,
+                UPOS::NOUN,
+                UPOS::PRON,
+                UPOS::SCONJ,
+                UPOS::CCONJ,
+                UPOS::ADV,
+            ])));
 
         map.insert(start_of_chunk_after_conjunction, 2);
 
