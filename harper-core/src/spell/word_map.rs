@@ -1,3 +1,5 @@
+use std::sync::LazyLock;
+
 use hashbrown::{DefaultHashBuilder, HashMap};
 use indexmap::IndexMap;
 
@@ -5,9 +7,15 @@ use crate::{
     CharString, DictWordMetadata,
     spell::{
         WordIdPair,
+        dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
+        rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
     },
 };
+
+/// A word map containing entries from the curated dictionary.
+pub(crate) static CURATED: LazyLock<WordMap> =
+    LazyLock::new(|| WordMap::from_rune_files(CURATED_DICT_STR, ANNOTATIONS_STR).unwrap());
 
 /// The underlying data structure for the `MutableDictionary`.
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
@@ -108,6 +116,17 @@ impl WordMap {
             canonical: IndexMap::with_capacity_and_hasher(capacity, DefaultHashBuilder::default()),
             case_folded: HashMap::new(),
         }
+    }
+
+    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
+        let word_list = parse_word_list(word_list)?;
+        let attr_list = AttributeList::parse(attr_list)?;
+
+        let mut word_map = WordMap::default();
+
+        attr_list.expand_annotated_words(word_list, &mut word_map);
+
+        Ok(word_map)
     }
 
     /// Get a [`WordMapEntry`] by its canonical ID.

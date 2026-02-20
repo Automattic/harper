@@ -1,9 +1,8 @@
 use super::{
-    CanonicalWordId, FstDictionary,
-    rune::{self, AttributeList, parse_word_list},
-    word_map::{WordMap, WordMapEntry},
+    CanonicalWordId, CaseFoldedWordId, FstDictionary, rune,
+    word_map::{self, WordMap, WordMapEntry},
 };
-use crate::{edit_distance::edit_distance_min_alloc, spell::CaseFoldedWordId};
+use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
 use std::{borrow::Cow, sync::LazyLock};
 
@@ -34,27 +33,17 @@ impl MutableDictionary {
     }
 
     pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
-        let word_list = parse_word_list(word_list)?;
-        let attr_list = AttributeList::parse(attr_list)?;
-
-        // There will be at _least_ this number of words
-        let mut word_map = WordMap::default();
-
-        attr_list.expand_annotated_words(word_list, &mut word_map);
-
-        Ok(Self { word_map })
+        Ok(Self {
+            word_map: WordMap::from_rune_files(word_list, attr_list)?,
+        })
     }
 
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
     pub fn curated() -> &'static Self {
-        static DICT: LazyLock<MutableDictionary> = LazyLock::new(|| {
-            MutableDictionary::from_rune_files(
-                include_str!("../../dictionary.dict"),
-                include_str!("../../annotations.json"),
-            )
-            .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
+        static DICT: LazyLock<MutableDictionary> = LazyLock::new(|| MutableDictionary {
+            word_map: word_map::CURATED.clone(),
         });
 
         &DICT
