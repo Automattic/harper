@@ -226,7 +226,6 @@
 		} catch {}
 	});
 
-	/** @param {Event} event */
 	document.addEventListener(EVENT_REPLACE, async (event) => {
 		try {
 			/** @type {{ start?: number, end?: number, replacementText?: string }} */
