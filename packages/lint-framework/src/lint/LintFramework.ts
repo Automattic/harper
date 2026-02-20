@@ -140,8 +140,10 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
+				const language = getTargetLanguage(target);
 				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
 					forceAllHeadings: isHeading(target),
+					language,
 				});
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
@@ -314,4 +316,18 @@ function getScrollableAncestors(element: Node): Element[] {
 	}
 
 	return scrollables;
+}
+
+function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
+	if (!(target instanceof Element)) return undefined;
+
+	const language = target.getAttribute('data-language');
+	switch (language) {
+		case 'plaintext':
+		case 'markdown':
+		case 'typst':
+			return language;
+		default:
+			return undefined;
+	}
 }
