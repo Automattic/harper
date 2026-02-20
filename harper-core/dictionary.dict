@@ -8166,7 +8166,7 @@ Plasticine/Ng
 Plataea/Og
 Plath/Og
 Plato/Og
-Platonic/JN
+Platonic/JNQ
 Platonism/Ogm
 Platonist/Ng
 Platte/Og
@@ -12675,9 +12675,9 @@ anthropological/~JY
 anthropologist/~NSg
 anthropology/~Nmg
 anthropomorphic/~JQ
-anthropomorphise/V!_₹
+anthropomorphise/V!_₹d
 anthropomorphism/Nmg
-anthropomorphize/V
+anthropomorphize/Vd
 anthropomorphous/J
 anti/~JNSgP(
 anti-Semite/NgS
@@ -19560,7 +19560,7 @@ counterculture/~NSg
 countered/~V
 counterespionage/Ng
 counterexample/NS
-counterfactual/JN
+counterfactual/JNS
 counterfeit/~J>NgSVGdZ
 counterfeiter/Ng
 counterfoil/NgS
@@ -22586,7 +22586,7 @@ dyno/NSg
 # dys               # prefixes that are not also words in their own right don't belong in the dictionary
 dysania/Nmg
 dysentery/~Nmg
-dysfunction/~Nmg
+dysfunction/~Nwg
 dysfunctional/~J
 dyslectic/JNSg
 dyslexia/Nmg
@@ -23105,7 +23105,7 @@ emerald/~NwgSJV
 emerge/~VdGSNr
 emergence/~Nmgr
 emergency/~NwSg
-emergent/~JN
+emergent/~JNg
 emerita/JN9
 emeritus/~JN0
 emery/~NgV
@@ -23500,7 +23500,8 @@ eosinophilic/J
 epaulet/NSg
 epaulette/NgS!@_₹
 epee/NgS
-epenthesis/Nm       # TODO: not count noun
+epentheses/N9
+epenthesis/N0w
 epenthetic/JQ
 ephedrine/Ng
 ephemera/Ng
@@ -23679,7 +23680,7 @@ escapology/N
 escargot/NgS
 escarole/NgS
 escarpment/~NgS
-eschatological/~J
+eschatological/~JQ
 eschatology/~Nmg
 eschew/VSdG
 escort/~NSgVdG
@@ -23866,7 +23867,7 @@ evict/VSdG
 eviction/~NwgS
 evidence/~NmgSVGd
 evident/~JY
-evidential/NSg      # used in linguistics as a count noun; e.g. "a system of evidentials"
+evidential/Nwg      # used in linguistics as a count noun; e.g. "a system of evidentials"
 evil/~J>Y^pNmgS
 evildoer/NSg
 evildoing/Nmg
@@ -26738,7 +26739,7 @@ gite/NS
 give/~VG>SNZz
 giveaway/NgSJ
 giveback/NgS
-given/~VTSPNgJp # "Givenness" is a technical word in the branch of philosophy called Phenomenology, so I'm adding it here
+given/~VTSPNgJp # "Givenness" is a technical word in the branch of philosophy called Phenomenology
 giver/~Ng
 gizmo/NSg
 gizzard/NgS
@@ -28779,7 +28780,7 @@ honorarium/NgS
 honorary/~JN
 honoree/NSg<
 honorer/NSg<
-honorific/~NgSJ
+honorific/~NgSJQ
 honour/NwgSVdGEB!@_₹
 honourableness/Ng!@_₹
 honourably/RyE!@_₹
@@ -30175,7 +30176,7 @@ inheritance/~NgE
 inheritances/N
 inheritor/NSg
 inhibit/~VGSd
-inhibition/~NSg
+inhibition/~NSwgE
 inhibitor/~NSg
 inhibitory/~J
 inhomogeneous/J
@@ -30805,7 +30806,7 @@ irreproachable/J
 irreproachably/Ry
 irresistible/~J
 irresistibly/Ry
-irresolute/JYpn
+irresolute/JYpnv
 irresoluteness/Ng
 irresolution/Ng
 irrespective/~J
@@ -34902,7 +34903,7 @@ moonshot/NgS
 moonstone/NgS
 moonstruck/J
 moonwalk/NgSV
-moor/~NgSVdGz
+moor/~NgSVdGzU # add "unmoor"
 moorhen/~NS
 mooring/VSNwg
 moorland/~NgS
@@ -48192,9 +48193,9 @@ synaptic/~J
 sync/~NgSVdG
 synchronicity/N
 synchronisation/NgS!_₹
-synchronise/VGdS!_₹
+synchronise/VGdS!_₹eU
 synchronization/~NSg
-synchronize/VGdS
+synchronize/VGdSeU
 synchronous/~JY
 synchrony/N
 syncopate/VdSGn
@@ -48549,7 +48550,7 @@ taxiway/~NS
 taxman/~N9
 taxmen/N9
 taxon/~N0g
-taxonomic/~J
+taxonomic/~JQ
 taxonomist/NgS
 taxonomy/~NwSg
 taxpayer/~NgS
@@ -54257,11 +54258,81 @@ z-buffer/NgS
 # Word added using the `just addnoun` command will be added here
 
 Compline/NO         # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
-LFG/NOg             # Lexical Functional Grammar
-WordCamp/Og
 exocentric/JQ
+LFG/NOg             # Lexical Functional Grammar
 licensor/NSg
 omnipredicativity/N0
 supervenience/Nmg   # From emergentist ontology
 volitive/NSgJ
-worldbuild/Vd>G     # !! This derives `worldbuilded` - is this intentional?
+WordCamp/Og
+worldbuild/V>G     # !! This derives `worldbuilded` - is this intentional? -- no 😅, corrected
+
+Afroasiatic/NmgJ # linguistics
+agnatic/J # Most often in the phrase "agnatic primogeniture"
+archipelagic/J # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
+ASMR/Nmg # "Autonomous Sensory Meridian Response"
+chorded/J # music: As refers to "chorded instruments"
+cognatic/J # As with "agnatic"
+comital/J # Adjective version of the noble rank "count/countess/earl"
+covenantal/JQ
+cupbearer/NSg
+diahcronic/JQ # linguistics
+discretionarily/Ry
+exonym/NSg
+fae/Nmg # fantasy alternative for "fey"
+hewn/JT # past participle of "hew"
+Hmong-Mien/NmgJ # linguistics
+iaido/Nmg # martial art
+idiolect/NSg # linguistics
+indefinitely/Ry
+Indo-Aryan/NmgJ # linguistics
+Indo-European/NmgJ # linguistics
+Indo-Iranian/NmgJ # linguistics
+Japonic/NmgJ # linguistics
+kalimba/NSg
+Kansai/NOg
+Kartvelian/NmgJ # linguistics
+kendo/Nmg # martial art
+Kra-Dai/NmgJ # linguistics
+leathercraft/Nwg
+lingua franca/NSg
+linguae francae/N9g
+linguæ francæ/N9g
+longsword/NSg
+luthier/NSg
+menarche/Nmg # medicine
+micronutrient/NSg
+monolatrous/J
+monolatry/Nmg
+Nilotic/NmgJ # linguistics
+offeror/NSg
+orthopractic/J
+orthopraxy/Nwg
+piebaldism/Nmg # medicine
+polearm/NSg
+polysyntheses/N9 # linguistics
+polysynthesis/Nw0g # linguistics
+polysynthetic/J # linguistics
+praxis/Nmg
+proprioception/Nmg # medicine
+queenship/Nwg
+resolutive/J
+rhotic/NSgJ # linguistics
+shortsword/NSg
+Sino-Tibetan/NmgJ # linguistics
+sociolect/NSg
+sortition/Nmg # Political science: a method of appointment to office by random draw
+subvocalization/Nwg # phonetics
+synaesthesia/Nmg
+synchronic/JQ # linguistics
+syncretism/Nmg
+synesthesia/Nmg
+synæsthesia/Nmg
+trimeter/NgS # poetry
+trimetre/NgS!@_₹ # poetry
+trimetric/J
+unminted/J
+vicomital/J # Adjective version of "viscount/viscountess"
+vicontiel/J #  As above, alternative version
+viscomital/J # As above, alternative version
+Westphalian/J # political science and international relations

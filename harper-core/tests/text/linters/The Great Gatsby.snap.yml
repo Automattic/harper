@@ -3452,27 +3452,30 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     2188 | “He’s an Oggsford man.”
-         |          ^~~~~~~~ Did you mean `Oxford`?
+         |          ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
-         |             ^~~~~~~~ Did you mean `Oxford`?
+         |             ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
 Lint:    Spelling (63 priority)
 Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
-         |                                                   ^~~~~~~~ Did you mean `Oxford`?
+         |                                                   ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
@@ -4501,17 +4504,6 @@ Message: |
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
   - Replace with: “jail or”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3093 | It might have lasted indefinitely except for the fact that Ella Kaye came on
-         |                      ^~~~~~~~~~~~ Did you mean to spell `indefinitely` this way?
-Suggest:
-  - Replace with: “indefinite”
-  - Replace with: “infinitely”
-  - Replace with: “definitely”
 
 
 
@@ -7508,9 +7500,10 @@ Lint:    Spelling (63 priority)
 Message: |
     5519 | was a fine-appearing, gentlemanly young man, and when he told me he was an
     5520 | Oggsford I knew I could use him good. I got him to join up in the American
-         | ^~~~~~~~ Did you mean `Oxford`?
+         | ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
