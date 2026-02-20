@@ -341,7 +341,7 @@ fn lint_one_input(
             Err(err) => eprintln!("{}", err),
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                let mut lint_group = LintGroup::new_curated(Arc::new(merged_dictionary), *dialect);
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;

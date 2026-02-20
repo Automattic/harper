@@ -96,7 +96,7 @@ struct RuleEntry {
 
 /// For the time being, this panics on invalid JSON.
 /// Do not use with user provided JSON.
-fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+fn lint_group_from_json(json: &str, dictionary: Arc<dyn Dictionary + 'static>) -> LintGroup {
     let mut group = LintGroup::empty();
 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
@@ -117,7 +117,7 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
     group
 }
 
-pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+pub fn lint_group(dictionary: Arc<dyn Dictionary + 'static>) -> LintGroup {
     lint_group_from_json(include_str!("../../proper_noun_rules.json"), dictionary)
 }
 

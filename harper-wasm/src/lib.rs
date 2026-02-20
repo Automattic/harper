@@ -643,7 +643,7 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
 
     serde_json::to_string(&config).unwrap()
 }
@@ -651,7 +651,7 @@ pub fn get_default_lint_config_as_json() -> String {
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

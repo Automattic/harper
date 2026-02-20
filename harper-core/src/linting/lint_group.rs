@@ -267,7 +267,7 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+    let group = LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American);
     group.config
 }
 
@@ -383,7 +383,7 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
+    pub fn new_curated(dictionary: Arc<dyn Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
         /// Add a `Linter` to the group, setting it to be enabled by default.
