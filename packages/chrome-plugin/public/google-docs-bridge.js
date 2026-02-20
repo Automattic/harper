@@ -68,6 +68,7 @@
 	let isComputingRects = false;
 	let lastKnownEditorScrollTop = -1;
 	let lastUserScrollAt = 0;
+	let userInteractionEpoch = 0;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
@@ -100,6 +101,7 @@
 
 	const markUserScrollIntent = () => {
 		lastUserScrollAt = Date.now();
+		userInteractionEpoch += 1;
 	};
 
 	const isUserActivelyScrolling = () => Date.now() - lastUserScrollAt < USER_SCROLL_INTENT_WINDOW_MS;
@@ -236,6 +238,42 @@
 		return pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
 	};
 
+	const asFiniteNumber = (value) => {
+		const num = Number(value);
+		return Number.isFinite(num) ? num : null;
+	};
+
+	const getSelectionEndpoints = (selection) => {
+		if (!selection || typeof selection !== 'object') {
+			return null;
+		}
+
+		const candidates = [
+			['anchor', 'focus'],
+			['base', 'extent'],
+			['start', 'end'],
+		];
+
+		for (const [a, b] of candidates) {
+			const start = asFiniteNumber(selection[a]);
+			const end = asFiniteNumber(selection[b]);
+			if (start != null && end != null) {
+				return { start, end };
+			}
+		}
+
+		return null;
+	};
+
+	const restoreSelection = (annotated, selection) => {
+		if (!selection) return;
+		try {
+			annotated.setSelection(selection.start, selection.end);
+		} catch {
+			// Ignore selection restore failures.
+		}
+	};
+
 	document.addEventListener(EVENT_GET_RECTS, (event) => {
 		try {
 			const detail = event.detail || {};
@@ -245,18 +283,11 @@
 			const end = Number(detail.end);
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
+			const interactionEpochAtStart = userInteractionEpoch;
 
 			const scrollState = getScrollState();
-			const currentSelection = annotated.getSelection?.()?.[0] || null;
-			const previousSelection =
-				currentSelection &&
-				Number.isFinite(Number(currentSelection.start)) &&
-				Number.isFinite(Number(currentSelection.end))
-					? {
-							start: Number(currentSelection.start),
-							end: Number(currentSelection.end),
-						}
-					: null;
+			const currentSelection = annotated.getSelection?.()?.[0];
+			const previousSelection = getSelectionEndpoints(currentSelection);
 
 			const rects = [];
 			isComputingRects = true;
@@ -283,14 +314,15 @@
 				}
 				} finally {
 					isComputingRects = false;
-					if (previousSelection) {
-						try {
-							annotated.setSelection(previousSelection.start, previousSelection.end);
-						} catch {
-							// Ignore selection restore failures.
-						}
-					}
-					if (!isUserActivelyScrolling() && !didScrollStateChange(scrollState)) {
+					restoreSelection(annotated, previousSelection);
+
+					// Restore viewport only if bridge operations changed it and the user
+					// has not interacted while we were computing.
+					if (
+						didScrollStateChange(scrollState) &&
+						!isUserActivelyScrolling() &&
+						interactionEpochAtStart === userInteractionEpoch
+					) {
 						restoreScrollState(scrollState);
 					}
 				}

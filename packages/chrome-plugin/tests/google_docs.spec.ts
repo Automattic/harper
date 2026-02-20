@@ -46,6 +46,55 @@ async function getGoogleDocsEditorScrollTop(page: Page) {
 	});
 }
 
+async function getGoogleDocSelection(page: Page) {
+	return page.evaluate(async () => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const sel = annotated?.getSelection?.()?.[0];
+		if (!sel) return null;
+
+		const asNum = (v: unknown) => {
+			const n = Number(v);
+			return Number.isFinite(n) ? n : null;
+		};
+
+		return {
+			start: asNum(sel.start),
+			end: asNum(sel.end),
+			anchor: asNum(sel.anchor),
+			focus: asNum(sel.focus),
+			base: asNum(sel.base),
+			extent: asNum(sel.extent),
+		};
+	});
+}
+
+async function setGoogleDocSelection(page: Page, start: number, end: number) {
+	await page.evaluate(
+		async ({ start, end }) => {
+			const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+			if (typeof getAnnotatedText !== 'function') return;
+			const annotated = await getAnnotatedText();
+			annotated?.setSelection?.(start, end);
+		},
+		{ start, end },
+	);
+}
+
+async function getNeedleRange(page: Page, needle: string) {
+	return page.evaluate(async (needle) => {
+		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') return null;
+		const annotated = await getAnnotatedText();
+		const text = annotated?.getText?.() as string;
+		if (!text) return null;
+		const start = text.indexOf(needle);
+		if (start < 0) return null;
+		return { start, end: start + needle.length };
+	}, needle);
+}
+
 async function getCaretRectForNeedle(page: Page, needle: string) {
 	return page.evaluate(async (needle) => {
 		const getAnnotatedText = (window as any)._docs_annotate_getAnnotatedText;
@@ -224,7 +273,7 @@ test('Google Docs: highlight appears near linted text', async ({ page }) => {
 	expect(closest.dy).toBeLessThan(90);
 });
 
-test('Google Docs: highlight host mounts on document body', async ({ page }) => {
+test('Google Docs: highlight host mounts on editor container', async ({ page }) => {
 	const token = `harper-gdocs-host-${Date.now()}`;
 	await openGoogleDoc(page);
 	await replaceDocumentContent(page, `This is an test ${token}`);
@@ -233,11 +282,12 @@ test('Google Docs: highlight host mounts on document body', async ({ page }) => 
 		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 15000 })
 		.toBeGreaterThan(0);
 
-	const mountedOnBody = await page.evaluate(() => {
+	const mountedOnEditor = await page.evaluate(() => {
 		const host = document.querySelector('#harper-highlight-host');
-		return host?.parentElement === document.body;
+		const editor = document.querySelector('.kix-appview-editor');
+		return host?.parentElement === editor;
 	});
-	expect(mountedOnBody).toBe(true);
+	expect(mountedOnEditor).toBe(true);
 });
 
 test('Google Docs: selection does not grow over time', async ({ page }) => {
@@ -298,6 +348,121 @@ test('Google Docs: scrolling does not snap back upward', async ({ page }) => {
 	await page.waitForTimeout(2500);
 	const afterWait = await getGoogleDocsEditorScrollTop(page);
 	expect(afterWait).toBeGreaterThan(80);
+});
+
+test('Google Docs: scrolling does not reset after several seconds', async ({ page }) => {
+	test.setTimeout(120000);
+	const token = `harper-gdocs-scroll-late-${Date.now()}`;
+	await openGoogleDoc(page);
+	const longText = [`This is an test ${token}`]
+		.concat(Array.from({ length: 120 }, (_, i) => `long line ${i} ${token}`))
+		.join('\n');
+	await replaceDocumentContent(page, longText);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 20000 })
+		.toBeGreaterThan(0);
+
+	await page.evaluate(() => {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		if (editor) editor.scrollTop = 0;
+	});
+	await page.waitForTimeout(500);
+
+	await page.evaluate(() => {
+		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
+		if (!editor) return;
+		editor.scrollTop = editor.scrollTop + 2200;
+	});
+	await page.waitForTimeout(600);
+
+	const scrolled = await getGoogleDocsEditorScrollTop(page);
+	expect(scrolled).toBeGreaterThan(500);
+
+	// Allow enough time for delayed snap-back regressions to manifest.
+	await page.waitForTimeout(9000);
+
+	const afterDelay = await getGoogleDocsEditorScrollTop(page);
+	expect(afterDelay).toBeGreaterThan(400);
+});
+
+test('Google Docs: left-to-right selection persists until user interaction', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-sel-ltr-${Date.now()}`;
+	const needle = `an test ${token}`;
+	await openGoogleDoc(page);
+	await replaceDocumentContent(
+		page,
+		[`Clean line ${token}`, `This is ${needle}`, `Another line ${token}`].join('\n'),
+	);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 20000 })
+		.toBeGreaterThan(0);
+
+	const range = await getNeedleRange(page, needle);
+	expect(range).not.toBeNull();
+	await setGoogleDocSelection(page, range!.start, range!.end);
+
+	const before = await getGoogleDocSelection(page);
+	expect(before).not.toBeNull();
+	expect(before?.start).not.toBeNull();
+	expect(before?.end).not.toBeNull();
+
+	await page.waitForTimeout(5000);
+
+	const afterWait = await getGoogleDocSelection(page);
+	expect(afterWait).toEqual(before);
+
+	// User interaction should be the next event that changes selection.
+	await page.locator('.kix-appview-editor').click();
+	await page.keyboard.press('ArrowRight');
+
+	await expect
+		.poll(async () => {
+			const now = await getGoogleDocSelection(page);
+			return now?.start !== before?.start || now?.end !== before?.end;
+		})
+		.toBeTruthy();
+});
+
+test('Google Docs: right-to-left selection persists until user interaction', async ({ page }) => {
+	test.setTimeout(90000);
+	const token = `harper-gdocs-sel-rtl-${Date.now()}`;
+	const needle = `an test ${token}`;
+	await openGoogleDoc(page);
+	await replaceDocumentContent(
+		page,
+		[`Start ${token}`, `This is ${needle}`, `Tail ${token}`].join('\n'),
+	);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 20000 })
+		.toBeGreaterThan(0);
+
+	const range = await getNeedleRange(page, needle);
+	expect(range).not.toBeNull();
+	await setGoogleDocSelection(page, range!.end, range!.start);
+
+	const before = await getGoogleDocSelection(page);
+	expect(before).not.toBeNull();
+	expect(before?.start).not.toBeNull();
+	expect(before?.end).not.toBeNull();
+
+	await page.waitForTimeout(5000);
+
+	const afterWait = await getGoogleDocSelection(page);
+	expect(afterWait).toEqual(before);
+
+	await page.locator('.kix-appview-editor').click();
+	await page.keyboard.press('ArrowLeft');
+
+	await expect
+		.poll(async () => {
+			const now = await getGoogleDocSelection(page);
+			return now?.start !== before?.start || now?.end !== before?.end;
+		})
+		.toBeTruthy();
 });
 
 test('Google Docs: highlight appears near second-line lint', async ({ page }) => {
@@ -565,6 +730,6 @@ test('Google Docs: highlight host remains non-interactive and top-layered', asyn
 
 	expect(hostStyle).not.toBeNull();
 	expect(hostStyle?.pointerEvents).toBe('none');
-	expect(hostStyle?.position).toBe('fixed');
+	expect(hostStyle?.position).toBe('absolute');
 	expect(Number(hostStyle?.zIndex ?? 0)).toBeGreaterThan(1000000);
 });

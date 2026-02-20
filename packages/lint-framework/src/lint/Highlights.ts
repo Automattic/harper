@@ -183,13 +183,25 @@ export default class Highlights {
 		for (const box of boxes) {
 			const x = box.x - offsetX;
 			const y = box.y - offsetY;
+			const positionStyle =
+				boxPosition === 'fixed'
+					? {
+							position: 'fixed',
+							left: '0px',
+							top: '0px',
+							transform: `translate(${x}px, ${y}px)`,
+						}
+					: {
+							position: 'absolute',
+							left: `${x}px`,
+							top: `${y}px`,
+						};
+
 			const boxEl = h(
 				'div',
 				{
 					style: {
-						position: boxPosition,
-						left: `${x}px`,
-						top: `${y}px`,
+						...positionStyle,
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
