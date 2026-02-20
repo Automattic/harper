@@ -53,9 +53,9 @@
 	let bridge = document.getElementById(BRIDGE_ID);
 
 	/** Makes sure the bridge exists, creating it if it doesn't.
-    * Returns said bridge.
-    *
-    * @returns {HTMLElement} */
+	 * Returns said bridge.
+	 *
+	 * @returns {HTMLElement} */
 	function ensureBridgeExists() {
 		if (bridge) {
 			return bridge;
@@ -74,7 +74,7 @@
 	ensureBridgeExists();
 
 	/** Dispatch an event to communicate with the user script.
-    *
+	 *
 	 * @param {string} name
 	 * @param {Record<string, unknown>} detail
 	 * @returns {void}
@@ -93,7 +93,8 @@
 	};
 
 	/** @returns {boolean} */
-	const isUserActivelyScrolling = () => Date.now() - lastUserScrollAt < USER_SCROLL_INTENT_WINDOW_MS;
+	const isUserActivelyScrolling = () =>
+		Date.now() - lastUserScrollAt < USER_SCROLL_INTENT_WINDOW_MS;
 
 	/** @param {KeyboardEvent} event */
 	const isScrollLayoutKey = (event) =>
@@ -305,7 +306,7 @@
 	document.addEventListener(EVENT_GET_RECTS, (event) => {
 		try {
 			/** @type {{ requestId?: string, start?: number, end?: number }} */
-			const detail = (/** @type {CustomEvent} */ (event)).detail || {};
+			const detail = /** @type {CustomEvent} */ (event).detail || {};
 			const requestId = String(detail.requestId || '');
 			if (!requestId) return;
 			const start = Number(detail.start);
@@ -343,20 +344,20 @@
 						height: startRect.height,
 					});
 				}
-				} finally {
-					isComputingRects = false;
-					restoreSelection(annotated, previousSelection);
+			} finally {
+				isComputingRects = false;
+				restoreSelection(annotated, previousSelection);
 
-					// Restore viewport only if bridge operations changed it and the user
-					// has not interacted while we were computing.
-					if (
-						didScrollStateChange(scrollState) &&
-						!isUserActivelyScrolling() &&
-						interactionEpochAtStart === userInteractionEpoch
-					) {
-						restoreScrollState(scrollState);
-					}
+				// Restore viewport only if bridge operations changed it and the user
+				// has not interacted while we were computing.
+				if (
+					didScrollStateChange(scrollState) &&
+					!isUserActivelyScrolling() &&
+					interactionEpochAtStart === userInteractionEpoch
+				) {
+					restoreScrollState(scrollState);
 				}
+			}
 
 			ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
@@ -368,7 +369,7 @@
 	document.addEventListener(EVENT_REPLACE, async (event) => {
 		try {
 			/** @type {{ start?: number, end?: number, replacementText?: string }} */
-			const detail = (/** @type {CustomEvent} */ (event)).detail || {};
+			const detail = /** @type {CustomEvent} */ (event).detail || {};
 			const start = Number(detail.start);
 			const end = Number(detail.end);
 			const replacementText = String(detail.replacementText ?? '');

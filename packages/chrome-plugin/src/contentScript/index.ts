@@ -172,7 +172,10 @@ function scan() {
 }
 
 function isGoogleDocsPage(): boolean {
-	return window.location.hostname === 'docs.google.com' && window.location.pathname.startsWith('/document/');
+	return (
+		window.location.hostname === 'docs.google.com' &&
+		window.location.pathname.startsWith('/document/')
+	);
 }
 
 function getGoogleDocsBridge(): HTMLElement {

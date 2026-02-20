@@ -145,7 +145,12 @@ export default class Highlights {
 				host.removeAttribute('style');
 			}
 
-			const offset = isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y };
+			const gdocsRenderOffset =
+				isGoogleDocsSource && source instanceof HTMLElement
+					? this.getGoogleDocsRenderOffset(source)
+					: null;
+			const offset =
+				gdocsRenderOffset ?? (isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y });
 			const boxPosition: 'absolute' | 'fixed' = isGoogleDocsSource ? 'absolute' : 'fixed';
 
 			renderBox.render(this.renderTree(boxes, offset, boxPosition));
@@ -257,6 +262,15 @@ export default class Highlights {
 		}
 
 		return el.parentElement!;
+	}
+
+	private getGoogleDocsRenderOffset(source: HTMLElement): { x: number; y: number } {
+		const editorRect = source.getBoundingClientRect();
+
+		return {
+			x: editorRect.x - source.scrollLeft,
+			y: editorRect.y - source.scrollTop,
+		};
 	}
 }
 

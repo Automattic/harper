@@ -220,7 +220,7 @@ test('Google Docs: Harper can write a suggestion back into the document', async 
 			const text = await getGoogleDocText(page);
 			return text ?? '';
 		})
-			.toContain(corrected);
+		.toContain(corrected);
 });
 
 test('Google Docs: highlight appears near linted text', async ({ page }) => {
@@ -469,7 +469,9 @@ test('Google Docs: highlight appears near second-line lint', async ({ page }) =>
 	test.setTimeout(90000);
 	const token = `harper-gdocs-second-line-${Date.now()}`;
 	const lineWithLint = `This is an test ${token}`;
-	const input = [`This line is clean ${token}`, lineWithLint, `Another clean line ${token}`].join('\n');
+	const input = [`This line is clean ${token}`, lineWithLint, `Another clean line ${token}`].join(
+		'\n',
+	);
 
 	await openGoogleDoc(page);
 	await replaceDocumentContent(page, input);
@@ -647,7 +649,7 @@ test('Google Docs: Harper can write a suggestion on second line', async ({ page 
 			const text = await getGoogleDocText(page);
 			return text ?? '';
 		})
-			.toContain(correctedNeedle);
+		.toContain(correctedNeedle);
 });
 
 test('Google Docs: bridge returns lower Y rect for lower-line lint', async ({ page }) => {

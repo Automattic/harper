@@ -132,7 +132,9 @@ function computeGoogleDocsLintBoxes(
 		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
 		const mainWorldBridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
 		const layoutEpoch = Number(mainWorldBridge?.getAttribute(GOOGLE_DOCS_LAYOUT_EPOCH_ATTR) ?? '0');
-		const layoutReason = String(mainWorldBridge?.getAttribute(GOOGLE_DOCS_LAYOUT_REASON_ATTR) ?? '');
+		const layoutReason = String(
+			mainWorldBridge?.getAttribute(GOOGLE_DOCS_LAYOUT_REASON_ATTR) ?? '',
+		);
 		const source = target.textContent ?? '';
 
 		if (!editor) {
@@ -143,7 +145,11 @@ function computeGoogleDocsLintBoxes(
 			return [];
 		}
 
-		if (Number.isFinite(layoutEpoch) && layoutEpoch !== lastGoogleDocsLayoutEpoch && lastGoogleDocsLayoutEpoch >= 0) {
+		if (
+			Number.isFinite(layoutEpoch) &&
+			layoutEpoch !== lastGoogleDocsLayoutEpoch &&
+			lastGoogleDocsLayoutEpoch >= 0
+		) {
 			if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(layoutReason)) {
 				googleDocsRectCache.clear();
 			}
@@ -160,7 +166,6 @@ function computeGoogleDocsLintBoxes(
 
 		const cacheKey = `${lint.span.start}:${lint.span.end}`;
 		const scrollTop = editor.scrollTop;
-		const scrollLeft = editor.scrollLeft;
 		let rects: GoogleDocsRect[] = [];
 
 		const cached = googleDocsRectCache.get(cacheKey);
@@ -213,16 +218,12 @@ function computeGoogleDocsLintBoxes(
 			return [];
 		}
 
-		const editorRect = editor.getBoundingClientRect();
-
 		return rects.map((rect) => {
-			const localRect = toGoogleDocsEditorLocalRect(rect, editorRect, scrollLeft, scrollTop);
-
 			return {
-				x: localRect.x,
-				y: localRect.y,
-				width: localRect.width,
-				height: localRect.height,
+				x: rect.x,
+				y: rect.y,
+				width: rect.width,
+				height: rect.height,
 				lint,
 				source: editor,
 				rule,
@@ -237,20 +238,6 @@ function computeGoogleDocsLintBoxes(
 	} catch {
 		return [];
 	}
-}
-
-function toGoogleDocsEditorLocalRect(
-	rect: GoogleDocsRect,
-	editorRect: DOMRect,
-	scrollLeft: number,
-	scrollTop: number,
-): GoogleDocsRect {
-	return {
-		x: rect.x - editorRect.x + scrollLeft,
-		y: rect.y - editorRect.y + scrollTop,
-		width: rect.width,
-		height: rect.height,
-	};
 }
 
 function projectGoogleDocsRects(

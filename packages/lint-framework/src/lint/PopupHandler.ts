@@ -6,6 +6,7 @@ import type { UnpackedLint } from './unpackLint';
 type ActivationKey = 'off' | 'shift' | 'control';
 
 import hintsData from '../assets/hints.json';
+import { leafNodes } from './domUtils';
 import RenderBox from './RenderBox';
 import SuggestionBox from './SuggestionBox';
 
@@ -164,8 +165,19 @@ export default class PopupHandler {
 
 		this.currentLintBoxes = boxes;
 		this.currentLintBoxes.forEach((b) => {
+			console.log(b.source);
 			b.source.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
+
+			leafNodes(b.source).forEach((n) => {
+				n.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
+			});
 		});
+    
+ const elements = document.querySelectorAll('.kix-page-paginated');
+
+ for (const el of elements) {
+ 			el.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
+ }
 
 		this.render();
 	}
