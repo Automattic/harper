@@ -133,11 +133,11 @@ impl Linter {
     /// Update the dictionary inside [`Self::lint_group`] to include [`Self::user_dictionary`].
     /// This clears any linter caches, so use it sparingly.
     fn synchronize_lint_dict(&mut self) {
-        let mut lint_config = self.lint_group.config.clone();
+        let lint_config = self.lint_group.config.clone();
         self.dictionary = Self::construct_merged_dict(self.user_dictionary.clone());
         self.lint_group =
             LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
-        self.lint_group.config.merge_from(&mut lint_config);
+        self.lint_group.config.merge_from(lint_config);
     }
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
@@ -502,8 +502,8 @@ impl Linter {
             return Ok(value);
         }
 
-        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
-        self.lint_group.merge_from(&mut group);
+        let group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(group);
         Ok(JsValue::UNDEFINED)
     }
 }

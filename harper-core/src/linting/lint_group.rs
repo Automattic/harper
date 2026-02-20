@@ -306,26 +306,23 @@ impl LintGroupConfig {
     }
 
     /// Merge the contents of another [`LintGroupConfig`] into this one.
-    /// The other config will be left empty after this operation.
     ///
     /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.iter() {
+    pub fn merge_from(&mut self, other: LintGroupConfig) {
+        for (key, val) in other.inner {
             if val.is_none() {
                 continue;
             }
 
-            self.inner.insert(key.to_string(), *val);
+            self.inner.insert(key.to_string(), val);
         }
-
-        other.clear();
     }
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
         let mut temp = Self::new_curated();
         mem::swap(self, &mut temp);
-        self.merge_from(&mut temp);
+        self.merge_from(temp);
     }
 
     pub fn new_curated() -> Self {
@@ -409,13 +406,13 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(&mut weir_rules::lint_group());
-        out.merge_from(&mut phrase_set_corrections::lint_group());
-        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
+        out.merge_from(weir_rules::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group(
             dictionary.clone(),
         ));
-        out.merge_from(&mut closed_compounds::lint_group());
-        out.merge_from(&mut initialisms::lint_group());
+        out.merge_from(closed_compounds::lint_group());
+        out.merge_from(initialisms::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -741,15 +738,12 @@ impl LintGroup {
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
-    pub fn merge_from(&mut self, other: &mut LintGroup) {
-        self.config.merge_from(&mut other.config);
+    pub fn merge_from(&mut self, other: LintGroup) {
+        self.config.merge_from(other.config);
 
-        let other_linters = std::mem::take(&mut other.linters);
-        self.linters.extend(other_linters);
+        self.linters.extend(other.linters);
 
-        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
-        self.chunk_expr_linters.extend(other_expr_linters);
+        self.chunk_expr_linters.extend(other.chunk_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {

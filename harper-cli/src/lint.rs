@@ -344,8 +344,8 @@ fn lint_one_input(
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 for pack in weirpacks {
-                    let mut pack_group = pack.to_lint_group()?;
-                    lint_group.merge_from(&mut pack_group);
+                    let pack_group = pack.to_lint_group()?;
+                    lint_group.merge_from(pack_group);
                 }
 
                 // Turn specified rules on or off
