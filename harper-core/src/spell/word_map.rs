@@ -26,10 +26,12 @@ pub struct WordMapEntry {
 }
 
 impl WordMap {
+    /// Does the word map contain a word with the given [`CanonicalWordId`]?
     pub fn contains_canonical(&self, id: CanonicalWordId) -> bool {
         self.get_canonical(id).is_some()
     }
 
+    /// Does the word map contain any words with the given [`CaseFoldedWordId`]?
     pub fn contains_case_folded(&self, id: CaseFoldedWordId) -> bool {
         !self.get_canonical_indices_from_case_folded(id).is_empty()
     }
@@ -39,6 +41,7 @@ impl WordMap {
         self.canonical.get(&id)
     }
 
+    /// Get the entries corresponding to the provided [`CaseFoldedWordId`].
     pub fn get_case_folded(
         &self,
         id: CaseFoldedWordId,
@@ -56,6 +59,10 @@ impl WordMap {
         self.canonical.get_mut(&id).map(|v| &mut v.metadata)
     }
 
+    /// Insert an entry into the word map.
+    ///
+    /// This will merge the new metadata with the existing if an entry with an identical
+    /// [`CanonicalWordId`] is already contained in the word map.
     pub fn insert(&mut self, entry: WordMapEntry) {
         let word_ids = WordIdPair::from_word_chars(&entry.canonical_spelling);
 
@@ -91,6 +98,7 @@ impl WordMap {
         self.canonical.values()
     }
 
+    /// The number of words in the word map.
     pub fn len(&self) -> usize {
         self.canonical.len()
     }
