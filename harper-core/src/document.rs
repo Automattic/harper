@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
+use std::sync::LazyLock;
 
 use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use itertools::Itertools;
@@ -501,26 +502,6 @@ impl Document {
         self.tokens.remove_indices(remove_these);
     }
 
-    thread_local! {
-        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
-    }
-
-    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
-        Lrc::new(FirstMatchOf::new(vec![
-            Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["etc", "vs"]))
-                    .then_period(),
-            ),
-            Box::new(
-                SequenceExpr::aco("et")
-                    .then_whitespace()
-                    .t_aco("al")
-                    .then_period(),
-            ),
-        ]))
-    }
-
     /// Assumes that the first matched token is the canonical one to be condensed into.
     /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
     fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
@@ -541,7 +522,7 @@ impl Document {
     }
 
     fn condense_latin(&mut self) {
-        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
+        self.condense_expr(&*LATIN_EXPR, |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -897,22 +878,33 @@ impl Document {
         );
     }
 
-    fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
-        let period = SequenceExpr::default().then_period();
-        Lrc::new(Repeating::new(Box::new(period), 2))
-    }
-
-    thread_local! {
-        static ELLIPSIS_EXPR: Lrc<Repeating> = Document::uncached_ellipsis_pattern();
-    }
-
     fn condense_ellipsis(&mut self) {
-        let expr = Self::ELLIPSIS_EXPR.with(|v| v.clone());
-        self.condense_expr(&expr, |tok| {
+        self.condense_expr(&*ELLIPSIS_EXPR, |tok| {
             tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
         });
     }
 }
+
+static LATIN_EXPR: LazyLock<FirstMatchOf> = LazyLock::new(|| {
+    FirstMatchOf::new(vec![
+        Box::new(
+            SequenceExpr::default()
+                .then(WordSet::new(&["etc", "vs"]))
+                .then_period(),
+        ),
+        Box::new(
+            SequenceExpr::aco("et")
+                .then_whitespace()
+                .t_aco("al")
+                .then_period(),
+        ),
+    ])
+});
+
+static ELLIPSIS_EXPR: LazyLock<Repeating> = LazyLock::new(|| {
+    let period = SequenceExpr::default().then_period();
+    Repeating::new(Box::new(period), 2)
+});
 
 /// Creates functions necessary to implement [`TokenStringExt]` on a document.
 macro_rules! create_fns_on_doc {

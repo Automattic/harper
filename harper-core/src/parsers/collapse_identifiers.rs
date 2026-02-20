@@ -1,12 +1,12 @@
 use std::collections::VecDeque;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 use itertools::Itertools;
 
 use super::Parser;
 use crate::expr::{ExprExt, SequenceExpr};
 use crate::spell::Dictionary;
-use crate::{Lrc, Span, Token, TokenKind, VecExt};
+use crate::{Span, Token, TokenKind, VecExt};
 
 /// A parser that wraps any other parser to collapse token strings that match
 /// the pattern `word_word` or `word-word`.
@@ -17,20 +17,17 @@ pub struct CollapseIdentifiers {
 
 impl CollapseIdentifiers {
     pub fn new(inner: Box<dyn Parser>, dict: Arc<dyn Dictionary>) -> Self {
-        Self {
-            inner,
-            dict: dict.clone(),
-        }
+        Self { inner, dict }
     }
 }
 
-thread_local! {
-    static WORD_OR_NUMBER: Lrc<SequenceExpr> = Lrc::new(SequenceExpr::default()
-                .then_any_word()
-                .then_one_or_more(SequenceExpr::default()
-        .then_case_separator()
-        .then_any_word()));
-}
+static WORD_OR_NUMBER: LazyLock<SequenceExpr> = LazyLock::new(|| {
+    SequenceExpr::default().then_any_word().then_one_or_more(
+        SequenceExpr::default()
+            .then_case_separator()
+            .then_any_word(),
+    )
+});
 
 impl Parser for CollapseIdentifiers {
     fn parse(&self, source: &[char]) -> Vec<Token> {
@@ -39,7 +36,6 @@ impl Parser for CollapseIdentifiers {
         let mut to_remove = VecDeque::default();
 
         for tok_span in WORD_OR_NUMBER
-            .with(|v| v.clone())
             .iter_matches(&tokens, source)
             .collect::<Vec<_>>()
         {
@@ -74,7 +70,6 @@ mod tests {
 
         assert_eq!(
             WORD_OR_NUMBER
-                .with(|v| v.clone())
                 .iter_matches(&PlainEnglish.parse(&source), &source)
                 .count(),
             1

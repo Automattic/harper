@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use hashbrown::HashSet;
 
 use crate::expr::Expr;
@@ -8,7 +6,7 @@ use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
 pub struct SplitWords {
-    dict: Arc<TrieDictionary<&'static FstDictionary>>,
+    dict: &'static TrieDictionary<&'static FstDictionary>,
     expr: Box<dyn Expr>,
 }
 

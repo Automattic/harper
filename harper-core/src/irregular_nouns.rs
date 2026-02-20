@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::sync::{Arc, LazyLock};
+use std::sync::LazyLock;
 
 type Noun = (String, String);
 
@@ -10,13 +10,12 @@ pub struct IrregularNouns {
 
 /// The uncached function that is used to produce the original copy of the
 /// irregular noun table.
-fn uncached_inner_new() -> Arc<IrregularNouns> {
+fn uncached_inner_new() -> IrregularNouns {
     IrregularNouns::from_json_file(include_str!("../irregular_nouns.json"))
-        .map(Arc::new)
         .unwrap_or_else(|e| panic!("Failed to load irregular noun table: {}", e))
 }
 
-static NOUNS: LazyLock<Arc<IrregularNouns>> = LazyLock::new(uncached_inner_new);
+static NOUNS: LazyLock<IrregularNouns> = LazyLock::new(uncached_inner_new);
 
 impl IrregularNouns {
     pub fn new() -> Self {
@@ -47,8 +46,8 @@ impl IrregularNouns {
         Ok(Self { nouns })
     }
 
-    pub fn curated() -> Arc<Self> {
-        (*NOUNS).clone()
+    pub fn curated() -> &'static Self {
+        &NOUNS
     }
 
     pub fn get_plural_for_singular(&self, singular: &str) -> Option<&str> {
