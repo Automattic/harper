@@ -132,7 +132,7 @@ fn lint_to_diagnostic(
         range,
         severity: Some(severity.to_lsp()),
         code_description: None,
-        source: Some("Harper".to_owned()),
+        source: Some(format!("Harper ({})", origin_tag)),
         code: Some(NumberOrString::String(origin_tag.to_string())),
         message: lint.message.clone(),
         related_information: None,
