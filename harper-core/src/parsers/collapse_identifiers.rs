@@ -16,10 +16,10 @@ pub struct CollapseIdentifiers {
 }
 
 impl CollapseIdentifiers {
-    pub fn new(inner: Box<dyn Parser>, dict: Box<Arc<dyn Dictionary>>) -> Self {
+    pub fn new(inner: Box<dyn Parser>, dict: Arc<dyn Dictionary>) -> Self {
         Self {
             inner,
-            dict: *dict.clone(),
+            dict: dict.clone(),
         }
     }
 }
@@ -86,8 +86,7 @@ mod tests {
         let dict = Arc::new(FstDictionary::curated());
         let source = "This is a test.";
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(dict)).parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), dict).parse_str(source);
         assert_eq!(tokens.len(), 8);
     }
 
@@ -96,9 +95,8 @@ mod tests {
         let source = "This is a separated_identifier, wow!";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
         assert_eq!(tokens.len(), 13);
 
         let mut dict = MutableDictionary::new();
@@ -108,9 +106,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
         assert_eq!(tokens.len(), 11);
     }
 
@@ -119,9 +116,8 @@ mod tests {
         let source = "This is a separated-identifier, wow!";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
 
         assert_eq!(tokens.len(), 13);
 
@@ -132,9 +128,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
 
         assert_eq!(tokens.len(), 11);
     }
@@ -144,9 +139,8 @@ mod tests {
         let source = "This is a separated_identifier_token, wow!";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
@@ -156,9 +150,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
         assert_eq!(tokens.len(), 11);
     }
 
@@ -167,9 +160,8 @@ mod tests {
         let source = "This is a separated_identifier, wow! separated_identifier";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
         assert_eq!(tokens.len(), 17);
 
         let mut dict = MutableDictionary::new();
@@ -179,9 +171,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
         assert_eq!(tokens.len(), 13);
     }
 
@@ -190,9 +181,8 @@ mod tests {
         let source = "This is a separated_identifier_token, wow!";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
@@ -203,9 +193,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
         assert_eq!(tokens.len(), 15);
     }
 
@@ -214,9 +203,8 @@ mod tests {
         let source = "This is a separated_identifier_token, wow!";
         let curated_dictionary = Arc::new(FstDictionary::curated());
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(curated_dictionary.clone()))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), curated_dictionary.clone())
+            .parse_str(source);
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
@@ -227,9 +215,8 @@ mod tests {
         merged_dict.add_dictionary(curated_dictionary);
         merged_dict.add_dictionary(Arc::new(dict));
 
-        let tokens =
-            CollapseIdentifiers::new(Box::new(PlainEnglish), Box::new(Arc::new(merged_dict)))
-                .parse_str(source);
+        let tokens = CollapseIdentifiers::new(Box::new(PlainEnglish), Arc::new(merged_dict))
+            .parse_str(source);
         assert_eq!(tokens.len(), 11);
     }
 }

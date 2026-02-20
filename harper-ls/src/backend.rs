@@ -334,7 +334,7 @@ impl Backend {
 
             Ok(Box::new(CollapseIdentifiers::new(
                 Box::new(parser),
-                Box::new(doc_state.dict.clone()),
+                doc_state.dict.clone(),
             )))
         }
 
