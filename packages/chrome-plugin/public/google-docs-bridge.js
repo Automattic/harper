@@ -1,55 +1,32 @@
-/*
- * Google Docs main-world bridge.
- *
- * Why this file exists:
- * - The extension content script runs in an isolated world, while Google Docs keeps its editor
- *   internals (for example `_docs_annotate_getAnnotatedText`) in the page's main world.
- * - We need access to those Docs internals to:
- *   1) read the canonical document text,
- *   2) compute approximate on-screen rects for lint spans, and
- *   3) perform replacements in a way Docs accepts.
- * - To bridge that isolation boundary, this script is injected into the main world and
- *   communicates with the content script through:
- *   - a hidden DOM node (`#harper-google-docs-main-world-bridge`) used as a shared state surface,
- *   - custom DOM events for commands and notifications.
- *
- * High-level flow:
- * 1) Text sync:
- *    - Polls Docs (`_docs_annotate_getAnnotatedText`) at a short interval.
- *    - Writes the current plain text into the hidden bridge node's `textContent`.
- *    - Emits `harper:gdocs:text-updated` when text changes so the content script can re-lint.
- *
- * 2) Layout invalidation:
- *    - Monitors scroll/wheel/key-scroll/resize/editor mutations.
- *    - Bumps a monotonically increasing `layoutEpoch` and mirrors it on the bridge node
- *      (`data-harper-layout-epoch`).
- *    - Emits `harper:gdocs:layout-changed` so highlight positioning can be refreshed.
- *    - Uses microtask coalescing to avoid flooding updates when many layout signals occur together.
- *
- * 3) Rect requests:
- *    - Listens for `harper:gdocs:get-rects` with `{ requestId, start, end }`.
- *    - Temporarily moves Docs selection to span boundaries and inspects visible caret rects
- *      (`.kix-cursor-caret`) as a practical proxy for span geometry.
- *    - Restores prior selection and scroll state to minimize user-visible side effects.
- *    - Returns computed rects via `data-harper-rects-${requestId}` on the bridge node.
- *
- * 4) Replacements:
- *    - Listens for `harper:gdocs:replace` with `{ start, end, replacementText }`.
- *    - Selects the span in Docs internals and dispatches a synthetic paste event into Docs'
- *      text input target iframe.
- *    - Triggers a deferred text sync so the content script sees the post-edit text.
- *
- * Reliability constraints and design choices:
- * - Google Docs can throw intermittent internal errors while the editor is updating. Most bridge
- *   operations are guarded with `try/catch` and fail soft so the extension keeps running.
- * - DOM/state writes are intentionally minimal (only write when changed) to reduce churn.
- * - The bridge node is kept hidden and inert (`aria-hidden`, `display:none`) and is only used for
- *   cross-world signaling/state handoff.
- * - This file is plain JS and intentionally self-contained because it is injected directly into the
- *   page, outside the extension module graph.
- */
-
 (() => {
+	/**
+	 * @typedef {{ x: number, y: number, width: number, height: number }} Rect
+	 */
+
+	/**
+	 * @typedef {{ start: number, end: number }} SelectionEndpoints
+	 */
+
+	/**
+	 * @typedef {{ type: 'window', x: number, y: number }} WindowScrollEntry
+	 */
+
+	/**
+	 * @typedef {{ type: 'element', el: HTMLElement, top: number, left: number }} ElementScrollEntry
+	 */
+
+	/**
+	 * @typedef {WindowScrollEntry | ElementScrollEntry} ScrollStateEntry
+	 */
+
+	/**
+	 * @typedef {{
+	 *   getText: () => string,
+	 *   setSelection: (start: number, end: number) => void,
+	 *   getSelection?: () => Array<Record<string, unknown>>
+	 * }} AnnotatedText
+	 */
+
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const SYNC_INTERVAL_MS = 100;
 	const USER_SCROLL_INTENT_WINDOW_MS = 150;
@@ -72,9 +49,14 @@
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
 
+	/** @type {HTMLElement | null} */
 	let bridge = document.getElementById(BRIDGE_ID);
 
-	function ensureBridge() {
+	/** Makes sure the bridge exists, creating it if it doesn't.
+    * Returns said bridge.
+    *
+    * @returns {HTMLElement} */
+	function ensureBridgeExists() {
 		if (bridge) {
 			return bridge;
 		}
@@ -89,8 +71,14 @@
 		return nextBridge;
 	}
 
-	ensureBridge();
+	ensureBridgeExists();
 
+	/** Dispatch an event to communicate with the user script.
+    *
+	 * @param {string} name
+	 * @param {Record<string, unknown>} detail
+	 * @returns {void}
+	 */
 	const emitEvent = (name, detail) => {
 		try {
 			document.dispatchEvent(new CustomEvent(name, { detail }));
@@ -104,27 +92,34 @@
 		userInteractionEpoch += 1;
 	};
 
+	/** @returns {boolean} */
 	const isUserActivelyScrolling = () => Date.now() - lastUserScrollAt < USER_SCROLL_INTENT_WINDOW_MS;
 
+	/** @param {KeyboardEvent} event */
 	const isScrollLayoutKey = (event) =>
 		event.key === 'PageDown' ||
 		event.key === 'PageUp' ||
 		event.key === 'Home' ||
 		event.key === 'End';
 
+	/**
+	 * @param {string} reason
+	 * @returns {void}
+	 */
 	const bumpLayoutEpoch = (reason) => {
 		if (layoutBumpPending) return;
 		layoutBumpPending = true;
 		queueMicrotask(() => {
 			layoutBumpPending = false;
 			layoutEpoch += 1;
-			const bridgeNode = ensureBridge();
+			const bridgeNode = ensureBridgeExists();
 			bridgeNode.setAttribute(LAYOUT_EPOCH_ATTR, String(layoutEpoch));
 			bridgeNode.setAttribute(LAYOUT_REASON_ATTR, String(reason));
 			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
 		});
 	};
 
+	/** @returns {Promise<void>} */
 	const syncText = async () => {
 		try {
 			const editor = document.querySelector(EDITOR_SELECTOR);
@@ -134,11 +129,12 @@
 
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
 			if (typeof getAnnotatedText !== 'function') return;
+			/** @type {AnnotatedText | null | undefined} */
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.getText !== 'function') return;
 			window.__harperGoogleDocsAnnotatedText = annotated;
 			const nextText = annotated.getText();
-			const bridgeNode = ensureBridge();
+			const bridgeNode = ensureBridgeExists();
 			if (bridgeNode.textContent !== nextText) {
 				bridgeNode.textContent = nextText;
 				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
@@ -148,16 +144,20 @@
 		}
 	};
 
+	/** @returns {ScrollStateEntry[]} */
 	const getScrollState = () => {
+		/** @type {ScrollStateEntry[]} */
 		const state = [];
 		state.push({ type: 'window', x: window.scrollX, y: window.scrollY });
 
 		const candidates = new Set();
+		/** @param {Element | null} node */
 		const addCandidate = (node) => {
 			if (node instanceof HTMLElement) {
 				candidates.add(node);
 			}
 		};
+		/** @param {Element | null} node */
 		const addElementAndAncestors = (node) => {
 			if (!(node instanceof HTMLElement)) return;
 			addCandidate(node);
@@ -182,6 +182,10 @@
 		return state;
 	};
 
+	/**
+	 * @param {ScrollStateEntry[]} state
+	 * @returns {void}
+	 */
 	const restoreScrollState = (state) => {
 		for (const entry of state) {
 			if (entry.type === 'window') {
@@ -195,6 +199,10 @@
 		}
 	};
 
+	/**
+	 * @param {ScrollStateEntry[]} state
+	 * @returns {boolean}
+	 */
 	const didScrollStateChange = (state) => {
 		for (const entry of state) {
 			if (entry.type === 'window') {
@@ -213,8 +221,14 @@
 		return false;
 	};
 
+	/**
+	 * @param {AnnotatedText} annotated
+	 * @param {number} position
+	 * @returns {Rect | null}
+	 */
 	const getCaretRect = (annotated, position) => {
 		annotated.setSelection(position, position);
+		/** @type {Rect[]} */
 		const carets = Array.from(document.querySelectorAll(CARET_SELECTOR))
 			.map((caret) => {
 				const rect = caret.getBoundingClientRect();
@@ -238,11 +252,19 @@
 		return pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
 	};
 
+	/**
+	 * @param {unknown} value
+	 * @returns {number | null}
+	 */
 	const asFiniteNumber = (value) => {
 		const num = Number(value);
 		return Number.isFinite(num) ? num : null;
 	};
 
+	/**
+	 * @param {unknown} selection
+	 * @returns {SelectionEndpoints | null}
+	 */
 	const getSelectionEndpoints = (selection) => {
 		if (!selection || typeof selection !== 'object') {
 			return null;
@@ -265,6 +287,11 @@
 		return null;
 	};
 
+	/**
+	 * @param {AnnotatedText} annotated
+	 * @param {SelectionEndpoints | null} selection
+	 * @returns {void}
+	 */
 	const restoreSelection = (annotated, selection) => {
 		if (!selection) return;
 		try {
@@ -274,13 +301,16 @@
 		}
 	};
 
+	/** @param {Event} event */
 	document.addEventListener(EVENT_GET_RECTS, (event) => {
 		try {
-			const detail = event.detail || {};
+			/** @type {{ requestId?: string, start?: number, end?: number }} */
+			const detail = (/** @type {CustomEvent} */ (event)).detail || {};
 			const requestId = String(detail.requestId || '');
 			if (!requestId) return;
 			const start = Number(detail.start);
 			const end = Number(detail.end);
+			/** @type {AnnotatedText | undefined} */
 			const annotated = window.__harperGoogleDocsAnnotatedText;
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
 			const interactionEpochAtStart = userInteractionEpoch;
@@ -289,6 +319,7 @@
 			const currentSelection = annotated.getSelection?.()?.[0];
 			const previousSelection = getSelectionEndpoints(currentSelection);
 
+			/** @type {Rect[]} */
 			const rects = [];
 			isComputingRects = true;
 			try {
@@ -327,20 +358,23 @@
 					}
 				}
 
-			ensureBridge().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
+			ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
 		} catch {
 			// No-op.
 		}
 	});
 
+	/** @param {Event} event */
 	document.addEventListener(EVENT_REPLACE, async (event) => {
 		try {
-			const detail = event.detail || {};
+			/** @type {{ start?: number, end?: number, replacementText?: string }} */
+			const detail = (/** @type {CustomEvent} */ (event)).detail || {};
 			const start = Number(detail.start);
 			const end = Number(detail.end);
 			const replacementText = String(detail.replacementText ?? '');
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
 			if (typeof getAnnotatedText !== 'function') return;
+			/** @type {AnnotatedText | null | undefined} */
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
 			annotated.setSelection(start, end);
@@ -388,6 +422,7 @@
 
 	document.addEventListener(
 		'wheel',
+		/** @param {WheelEvent} event */
 		(event) => {
 			markUserScrollIntent();
 			const target = event.target;
@@ -405,6 +440,7 @@
 
 	document.addEventListener(
 		'keydown',
+		/** @param {KeyboardEvent} event */
 		(event) => {
 			if (isScrollLayoutKey(event)) {
 				markUserScrollIntent();
