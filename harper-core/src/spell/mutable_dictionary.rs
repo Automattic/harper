@@ -1,6 +1,6 @@
 use super::{
     FstDictionary, rune,
-    word_map::{self, WordMap, WordMapEntry},
+    word_map::{WordMap, WordMapEntry},
 };
 use std::{borrow::Cow, sync::LazyLock};
 
@@ -41,7 +41,7 @@ impl MutableDictionary {
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
     pub fn curated() -> &'static Self {
         static DICT: LazyLock<MutableDictionary> = LazyLock::new(|| MutableDictionary {
-            word_map: word_map::CURATED.clone(),
+            word_map: WordMap::curated().clone(),
         });
 
         &DICT

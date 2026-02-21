@@ -15,10 +15,6 @@ use crate::{
     },
 };
 
-/// A word map containing entries from the curated dictionary.
-pub(crate) static CURATED: LazyLock<WordMap> =
-    LazyLock::new(|| WordMap::from_rune_files(CURATED_DICT_STR, ANNOTATIONS_STR).unwrap());
-
 /// The underlying data structure for the `MutableDictionary`.
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct WordMap {
@@ -36,6 +32,14 @@ pub struct WordMapEntry {
 }
 
 impl WordMap {
+    pub fn curated() -> &'static WordMap {
+        /// A word map containing entries from the curated dictionary.
+        static CURATED: LazyLock<WordMap> =
+            LazyLock::new(|| WordMap::from_rune_files(CURATED_DICT_STR, ANNOTATIONS_STR).unwrap());
+
+        &CURATED
+    }
+
     /// Does the word map contain a word with the given [`CanonicalWordId`]?
     pub fn contains_canonical(&self, id: CanonicalWordId) -> bool {
         self.get_canonical(id).is_some()
