@@ -282,4 +282,20 @@ impl Dictionary for WordMap {
 
         found
     }
+
+    fn get_word_metadata_combined(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+        let mut found_words = self.get_case_folded_chars(word);
+
+        match found_words.len() {
+            0 => None,
+            1 => Some(Cow::Borrowed(&found_words.next().unwrap().metadata)),
+            _ => Some(Cow::Owned({
+                let mut first = found_words.next().unwrap().metadata.to_owned();
+                found_words.for_each(|found_word| {
+                    first.append(&found_word.metadata);
+                });
+                first
+            })),
+        }
+    }
 }
