@@ -57,7 +57,7 @@ impl PhrasalVerbAsCompoundNoun {
         document: &Document,
         i: usize,
         token: &crate::Token,
-    ) -> Result<(String, Confidence), Why> {
+    ) -> Result<(Vec<char>, Confidence), Why> {
         // It would be handy if there could be a dict flag for nouns which are compounds of phrasal verbs.
         // Instead, let's use a few heuristics.
 
@@ -118,11 +118,7 @@ impl PhrasalVerbAsCompoundNoun {
 
         let verb_part = &nountok_charsl[..nountok_charsl.len() - found_particle_len];
         let particle_part = &nountok_charsl[nountok_charsl.len() - found_particle_len..];
-        let phrasal_verb: String = verb_part
-            .iter()
-            .chain(std::iter::once(&' '))
-            .chain(particle_part.iter())
-            .collect();
+        let phrasal_verb = [verb_part, &[' '], particle_part].concat();
 
         // Check if both things are verbs.
         // So far we only have a small number of phrasal verbs in the dictionary.
@@ -131,7 +127,7 @@ impl PhrasalVerbAsCompoundNoun {
                 .get_word_metadata(verb_part)
                 .is_some_and(|md| md.verb.is_some()),
             self.dict
-                .get_word_metadata_str(&phrasal_verb)
+                .get_word_metadata(&phrasal_verb)
                 .is_some_and(|md| md.verb.is_some()),
         );
 
@@ -285,7 +281,7 @@ impl Linter for PhrasalVerbAsCompoundNoun {
                 lints.push(Lint {
                     span: Span::new(token.span.start, token.span.end),
                     lint_kind: LintKind::WordChoice,
-                    suggestions: vec![Suggestion::ReplaceWith(phrasal_verb.chars().collect())],
+                    suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
                     message: message.to_string(),
                     priority: 63,
                 });
