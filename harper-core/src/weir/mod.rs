@@ -22,7 +22,7 @@ use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
 
-use self::ast::{Ast, AstVariable};
+use ast::{Ast, AstVariable};
 
 pub(crate) fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;

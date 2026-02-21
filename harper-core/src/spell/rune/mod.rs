@@ -8,7 +8,7 @@ pub mod word_list;
 pub use attribute_list::AttributeList;
 pub use error::Error;
 
-pub use self::word_list::parse_word_list;
+pub use word_list::parse_word_list;
 
 #[cfg(test)]
 mod tests {

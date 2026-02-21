@@ -5,14 +5,14 @@ use itertools::Itertools;
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
-pub use self::dictionary::Dictionary;
-pub use self::fst_dictionary::FstDictionary;
-pub use self::merged_dictionary::MergedDictionary;
-pub use self::mutable_dictionary::MutableDictionary;
-pub use self::trie_dictionary::TrieDictionary;
-pub use self::word_id::{CanonicalWordId, CaseFoldedWordId};
+pub use dictionary::Dictionary;
+pub use fst_dictionary::FstDictionary;
+pub use merged_dictionary::MergedDictionary;
+pub use mutable_dictionary::MutableDictionary;
+pub use trie_dictionary::TrieDictionary;
+pub use word_id::{CanonicalWordId, CaseFoldedWordId};
 
-pub(crate) use self::word_id::WordIdPair;
+pub(crate) use word_id::WordIdPair;
 
 mod dictionary;
 mod fst_dictionary;

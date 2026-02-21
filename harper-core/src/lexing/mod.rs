@@ -6,10 +6,10 @@ use hostname::lex_hostname_token;
 use ordered_float::OrderedFloat;
 use url::lex_url;
 
-use self::email_address::lex_email_address;
 use crate::char_ext::CharExt;
 use crate::punctuation::{Punctuation, Quote};
 use crate::{Number, Span, Token, TokenKind};
+use email_address::lex_email_address;
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct FoundToken {
