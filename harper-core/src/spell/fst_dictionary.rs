@@ -6,11 +6,9 @@ use std::borrow::Cow;
 use std::cell::RefCell;
 use std::sync::LazyLock;
 
-use crate::spell::word_map::WordMapEntry;
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
-use super::Dictionary;
-use super::FuzzyMatchResult;
+use super::{Dictionary, FuzzyMatchResult, WordMap, WordMapEntry};
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
@@ -114,6 +112,10 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 }
 
 impl Dictionary for FstDictionary {
+    fn get_word_map(&self) -> &WordMap {
+        &self.mutable_dict.get_word_map()
+    }
+
     fn contains_word(&self, word: &[char]) -> bool {
         self.mutable_dict.contains_word(word)
     }

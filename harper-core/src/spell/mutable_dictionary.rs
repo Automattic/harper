@@ -86,6 +86,10 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
+    fn get_word_map(&self) -> &WordMap {
+        &self.word_map
+    }
+
     fn contains_word(&self, word: &[char]) -> bool {
         self.word_map.contains_word(word)
     }

@@ -3,7 +3,10 @@ use std::borrow::Cow;
 use blanket::blanket;
 
 use super::FuzzyMatchResult;
-use crate::{DictWordMetadata, spell::word_map::WordMapEntry};
+use crate::{
+    DictWordMetadata,
+    spell::{WordMap, WordMapEntry},
+};
 
 pub(crate) static CURATED_DICT_STR: &str = include_str!("../../dictionary.dict");
 pub(crate) static ANNOTATIONS_STR: &str = include_str!("../../annotations.json");
@@ -13,6 +16,9 @@ pub(crate) static ANNOTATIONS_STR: &str = include_str!("../../annotations.json")
 /// See also: [`super::FstDictionary`] and [`super::MutableDictionary`].
 #[blanket(derive(Arc, Ref))]
 pub trait Dictionary: Send + Sync {
+    /// Get the underlying [`WordMap`] used by the dictionary.
+    fn get_word_map(&self) -> &WordMap;
+
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool;
 

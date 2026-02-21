@@ -7,15 +7,16 @@ use itertools::Itertools;
 
 use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::spell::word_map::WordMapEntry;
+use crate::spell::{WordMap, WordMapEntry};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
 ///
 /// In cases where more than one dictionary contains a word, data in the first
 /// dictionary inserted will be returned.
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct MergedDictionary {
+    merged_word_map: WordMap,
     children: Vec<Arc<dyn Dictionary>>,
     hasher_builder: FixedState,
     child_hashes: Vec<u64>,
@@ -23,15 +24,12 @@ pub struct MergedDictionary {
 
 impl MergedDictionary {
     pub fn new() -> Self {
-        Self {
-            children: Vec::new(),
-            hasher_builder: FixedState::default(),
-            child_hashes: Vec::new(),
-        }
+        Default::default()
     }
 
     pub fn add_dictionary(&mut self, dictionary: Arc<dyn Dictionary>) {
         self.child_hashes.push(self.hash_dictionary(&dictionary));
+        self.merged_word_map.extend(dictionary.get_word_map());
         self.children.push(dictionary);
     }
 
@@ -57,13 +55,11 @@ impl PartialEq for MergedDictionary {
     }
 }
 
-impl Default for MergedDictionary {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl Dictionary for MergedDictionary {
+    fn get_word_map(&self) -> &WordMap {
+        &self.merged_word_map
+    }
+
     fn contains_word(&self, word: &[char]) -> bool {
         for child in &self.children {
             if child.contains_word(word) {

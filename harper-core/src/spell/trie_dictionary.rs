@@ -6,7 +6,7 @@ use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
 use crate::spell::word_map::WordMapEntry;
 
-use super::{Dictionary, FstDictionary, FuzzyMatchResult};
+use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -35,6 +35,10 @@ impl<D: Dictionary> TrieDictionary<D> {
 }
 
 impl<D: Dictionary> Dictionary for TrieDictionary<D> {
+    fn get_word_map(&self) -> &WordMap {
+        self.inner.get_word_map()
+    }
+
     fn contains_word(&self, word: &[char]) -> bool {
         self.inner.contains_word(word)
     }

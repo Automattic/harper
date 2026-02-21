@@ -150,6 +150,12 @@ impl WordMap {
         Ok(word_map)
     }
 
+    pub fn extend(&mut self, other: &WordMap) {
+        for wme in other.iter() {
+            self.insert(wme.to_owned());
+        }
+    }
+
     /// Get a [`WordMapEntry`] by its canonical ID.
     fn get_by_canonical_index(&self, index: usize) -> Option<&WordMapEntry> {
         self.canonical
@@ -175,6 +181,10 @@ impl IntoIterator for WordMap {
 }
 
 impl Dictionary for WordMap {
+    fn get_word_map(&self) -> &WordMap {
+        self
+    }
+
     fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
         self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
             .collect()
