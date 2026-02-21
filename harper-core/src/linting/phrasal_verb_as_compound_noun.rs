@@ -1,10 +1,10 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{Dictionary, WordMap};
 use crate::{CharStringExt, Document, Span, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
-    dict: &'static FstDictionary,
+    dict: &'static WordMap,
 }
 
 enum Confidence {
@@ -15,7 +15,7 @@ enum Confidence {
 impl PhrasalVerbAsCompoundNoun {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
         }
     }
 }
@@ -23,7 +23,7 @@ impl PhrasalVerbAsCompoundNoun {
 impl Default for PhrasalVerbAsCompoundNoun {
     fn default() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
         }
     }
 }

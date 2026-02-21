@@ -3,21 +3,21 @@ use itertools::Itertools;
 use crate::linting::{LintKind, Suggestion};
 
 use crate::expr::Expr;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{CanonicalWordId, CaseFoldedWordId, WordMap};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OrthographicConsistency {
-    dict: &'static FstDictionary,
+    dict: &'static WordMap,
     expr: Box<dyn Expr>,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
             expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
         }
     }
@@ -68,7 +68,13 @@ impl ExprLinter for OrthographicConsistency {
 
         let chars = word.span.get_content(source);
 
-        if self.dict.contains_exact_word(chars) {
+        // Cache the ID so we don't have to recalculate it.
+        let id = CaseFoldedWordId::from_word_chars(chars);
+
+        if self
+            .dict
+            .contains_canonical(CanonicalWordId::from_word_chars(chars))
+        {
             // Exit if the dictionary contains the exact word.
             return None;
         }
@@ -102,9 +108,9 @@ impl ExprLinter for OrthographicConsistency {
         if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
             && let Ok(canonical) = self
                 .dict
-                .get_correct_capitalizations_of(chars)
-                .into_iter()
+                .get_case_folded(id)
                 .exactly_one()
+                .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -123,9 +129,9 @@ impl ExprLinter for OrthographicConsistency {
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Ok(canonical) = self
                 .dict
-                .get_correct_capitalizations_of(chars)
-                .into_iter()
+                .get_case_folded(id)
                 .exactly_one()
+                .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
