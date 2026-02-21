@@ -2,7 +2,7 @@ use crate::{
     CharStringExt, Lint, Token, TokenKind,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    spell::Dictionary,
+    spell::{CommonDictFuncs, Dictionary},
 };
 
 static NON_MODAL_AUX: &[&str] = &[

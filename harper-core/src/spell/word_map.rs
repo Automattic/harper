@@ -8,7 +8,7 @@ use crate::{
     CharString, CharStringExt, DictWordMetadata,
     edit_distance::edit_distance_min_alloc,
     spell::{
-        Dictionary, FuzzyMatchResult, WordIdPair,
+        CommonDictFuncs, Dictionary, FuzzyMatchResult, WordIdPair,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -72,7 +72,7 @@ impl WordMap {
     pub fn get_case_folded_chars(
         &self,
         word: &[char],
-    ) -> impl ExactSizeIterator<Item = &WordMapEntry> {
+    ) -> impl ExactSizeIterator<Item = &WordMapEntry> + use<'_> {
         self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
     }
 
@@ -119,7 +119,7 @@ impl WordMap {
     }
 
     /// Iterate through the canonical spellings of the words in the map.
-    pub fn iter(&self) -> impl Iterator<Item = &WordMapEntry> {
+    pub fn iter(&self) -> impl ExactSizeIterator<Item = &WordMapEntry> {
         self.canonical.values()
     }
 
@@ -185,19 +185,6 @@ impl Dictionary for WordMap {
         self
     }
 
-    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
-        self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
-            .collect()
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.get_canonical(CanonicalWordId::from_word_chars(word))
-    }
-
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.contains_case_folded(CaseFoldedWordId::from_word_chars(word))
-    }
-
     /// Suggest a correct spelling for a given misspelled word.
     /// `Self::word` is assumed to be quite small (n < 100).
     /// `max_distance` relates to an optimization that allows the search
@@ -257,18 +244,6 @@ impl Dictionary for WordMap {
             .collect()
     }
 
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(self.iter().map(|v| v.canonical_spelling.as_slice()))
-    }
-
-    fn word_count(&self) -> usize {
-        self.len()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.contains_canonical(CanonicalWordId::from_word_chars(word))
-    }
-
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         let mut found = Vec::new();
 
@@ -295,21 +270,5 @@ impl Dictionary for WordMap {
         }
 
         found
-    }
-
-    fn get_word_metadata_combined(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        let mut found_words = self.get_case_folded_chars(word);
-
-        match found_words.len() {
-            0 => None,
-            1 => Some(Cow::Borrowed(&found_words.next().unwrap().metadata)),
-            _ => Some(Cow::Owned({
-                let mut first = found_words.next().unwrap().metadata.to_owned();
-                found_words.for_each(|found_word| {
-                    first.append(&found_word.metadata);
-                });
-                first
-            })),
-        }
     }
 }

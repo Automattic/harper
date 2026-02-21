@@ -1,6 +1,6 @@
 //! This module implements rudimentary, dictionary-based English language detection.
 
-use crate::spell::Dictionary;
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{Document, Token, TokenKind};
 
 /// Check if the contents of the document are likely intended to represent

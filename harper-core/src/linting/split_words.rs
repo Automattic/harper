@@ -2,7 +2,7 @@ use hashbrown::HashSet;
 
 use crate::expr::Expr;
 use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
+use crate::spell::{CommonDictFuncs, Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
 pub struct SplitWords {

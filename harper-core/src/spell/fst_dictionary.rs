@@ -8,7 +8,7 @@ use std::sync::LazyLock;
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
-use super::{Dictionary, FuzzyMatchResult, WordMap, WordMapEntry};
+use super::{Dictionary, FuzzyMatchResult, WordMap};
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
@@ -116,18 +116,6 @@ impl Dictionary for FstDictionary {
         &self.mutable_dict.get_word_map()
     }
 
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_word(word)
-    }
-
-    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
-        self.mutable_dict.get_word(word)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.mutable_dict.get_word_exact(word)
-    }
-
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -181,18 +169,6 @@ impl Dictionary for FstDictionary {
         merged
     }
 
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.mutable_dict.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.mutable_dict.word_count()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_exact_word(word)
-    }
-
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         self.mutable_dict.find_words_with_prefix(prefix)
     }
@@ -207,7 +183,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::spell::{CanonicalWordId, Dictionary};
+    use crate::spell::{CanonicalWordId, CommonDictFuncs, Dictionary};
 
     use super::FstDictionary;
 

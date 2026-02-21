@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::spell::{WordMap, WordMapEntry};
+use crate::spell::{CommonDictFuncs, WordMap};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
@@ -60,44 +60,6 @@ impl Dictionary for MergedDictionary {
         &self.merged_word_map
     }
 
-    fn contains_word(&self, word: &[char]) -> bool {
-        for child in &self.children {
-            if child.contains_word(word) {
-                return true;
-            }
-        }
-        false
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        for child in &self.children {
-            if child.contains_exact_word(word) {
-                return true;
-            }
-        }
-        false
-    }
-
-    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
-        self.children
-            .iter()
-            .flat_map(|d| d.get_word(word))
-            .collect()
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        for child in &self.children {
-            if let Some(dict_word_metadata) = child.get_word_exact(word) {
-                return Some(dict_word_metadata);
-            }
-        }
-        None
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(self.children.iter().flat_map(|c| c.words_iter()))
-    }
-
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -112,10 +74,6 @@ impl Dictionary for MergedDictionary {
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
-    }
-
-    fn word_count(&self) -> usize {
-        self.children.iter().map(|d| d.word_count()).sum()
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

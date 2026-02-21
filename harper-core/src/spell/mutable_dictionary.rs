@@ -90,14 +90,6 @@ impl Dictionary for MutableDictionary {
         &self.word_map
     }
 
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.word_map.contains_word(word)
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.word_map.contains_exact_word(word)
-    }
-
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -105,22 +97,6 @@ impl Dictionary for MutableDictionary {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.word_map.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
-        self.word_map.get_word(word)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.word_map.get_word_exact(word)
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.word_map.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.word_map.word_count()
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
@@ -151,7 +127,7 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::spell::{Dictionary, MutableDictionary};
+    use crate::spell::{CommonDictFuncs, Dictionary, MutableDictionary};
     use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]

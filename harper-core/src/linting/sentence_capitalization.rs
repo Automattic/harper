@@ -1,7 +1,7 @@
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::Dictionary;
+use crate::spell::{Dictionary, CommonDictFuncs};
 use crate::{Token, TokenKind, TokenStringExt};
 
 pub struct SentenceCapitalization<T>

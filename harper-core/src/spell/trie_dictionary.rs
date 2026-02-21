@@ -4,7 +4,7 @@ use std::sync::LazyLock;
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::spell::word_map::WordMapEntry;
+use crate::spell::CommonDictFuncs;
 
 use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
 
@@ -39,14 +39,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.get_word_map()
     }
 
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.inner.contains_word(word)
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.inner.contains_exact_word(word)
-    }
-
     fn fuzzy_match(
         &'_ self,
         word: &[char],
@@ -54,22 +46,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.inner.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
-        self.inner.get_word(word)
-    }
-
-    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
-        self.inner.get_word_exact(word)
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.inner.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.inner.word_count()
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

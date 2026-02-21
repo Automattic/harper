@@ -5,7 +5,7 @@ use itertools::Itertools;
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
-pub use dictionary::Dictionary;
+pub use dictionary::{CommonDictFuncs, Dictionary};
 pub use fst_dictionary::FstDictionary;
 pub use merged_dictionary::MergedDictionary;
 pub use mutable_dictionary::MutableDictionary;

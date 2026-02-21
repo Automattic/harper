@@ -5,7 +5,7 @@ use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    spell::Dictionary,
+    spell::{Dictionary, CommonDictFuncs},
 };
 
 pub struct MassPlurals<D> {

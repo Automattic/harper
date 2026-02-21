@@ -6,7 +6,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{Dictionary, suggest_correct_spelling};
+use crate::spell::{Dictionary, CommonDictFuncs, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>

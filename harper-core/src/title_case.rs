@@ -8,7 +8,7 @@ use hashbrown::HashSet;
 use itertools::Itertools;
 
 use crate::Punctuation;
-use crate::spell::Dictionary;
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
@@ -75,11 +75,7 @@ pub fn try_make_title_case(
             // Replace it with the dictionary entry verbatim.
             let orig_text = word.span.get_content(source);
 
-            if let Ok(correct_caps) = dict
-                .get_correct_capitalizations_of(orig_text)
-                .iter()
-                .exactly_one()
-            {
+            if let Ok(correct_caps) = dict.get_correct_capitalizations_of(orig_text).exactly_one() {
                 // It should match the dictionary verbatim
                 for (i, c) in correct_caps.iter().enumerate() {
                     if c.is_alphabetic() {

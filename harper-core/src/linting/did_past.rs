@@ -5,7 +5,7 @@ use crate::{
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::WordSet,
-    spell::Dictionary,
+    spell::{CommonDictFuncs, Dictionary},
 };
 
 pub struct DidPast<D> {

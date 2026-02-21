@@ -4,7 +4,7 @@ use crate::{
 };
 
 #[cfg(feature = "thesaurus")]
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{CommonDictFuncs, FstDictionary};
 
 /// Gets synonyms for a provided word.
 ///
