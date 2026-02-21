@@ -65,6 +65,17 @@ impl WordMap {
             .map(|canonical_index| self.get_by_canonical_index(*canonical_index).unwrap())
     }
 
+    /// Convenience wrapper for [`Self::get_case_folded`].
+    ///
+    /// This recalculates the word ID every time. If you're going to be querying the same word
+    /// multiple times, consider storing the word ID and using [`Self::get_case_folded`] instead.
+    pub fn get_case_folded_chars(
+        &self,
+        word: &[char],
+    ) -> impl ExactSizeIterator<Item = &WordMapEntry> {
+        self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
+    }
+
     /// Borrow a word's metadata mutably
     pub fn get_metadata_mut_canonical(
         &mut self,

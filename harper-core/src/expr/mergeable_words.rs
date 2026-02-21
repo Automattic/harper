@@ -1,5 +1,5 @@
 use super::{Expr, SequenceExpr, SpaceOrHyphen};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::WordMap;
 use crate::{CharString, DictWordMetadata, Span, Token};
 
 type PredicateFn =
@@ -11,7 +11,7 @@ type PredicateFn =
 /// that the two words aren't already a valid entry in the dictionary (like "straight away").
 pub struct MergeableWords {
     inner: SequenceExpr,
-    dict: &'static FstDictionary,
+    dict: &'static WordMap,
     predicate: Box<PredicateFn>,
 }
 
@@ -27,7 +27,7 @@ impl MergeableWords {
                 .then_any_word()
                 .then(SpaceOrHyphen)
                 .then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
             predicate: Box::new(predicate),
         }
     }
@@ -49,16 +49,16 @@ impl MergeableWords {
         compound.extend_from_slice(&b_chars);
         let meta_open = self
             .dict
-            .get_word(&compound)
-            .first()
+            .get_case_folded_chars(&compound)
+            .next()
             .map(|wme| &wme.metadata);
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
         let meta_closed = self
             .dict
-            .get_word(&compound)
-            .first()
+            .get_case_folded_chars(&compound)
+            .next()
             .map(|wme| &wme.metadata);
 
         if (self.predicate)(meta_closed, meta_open) {

@@ -11,6 +11,7 @@ pub use merged_dictionary::MergedDictionary;
 pub use mutable_dictionary::MutableDictionary;
 pub use trie_dictionary::TrieDictionary;
 pub use word_id::{CanonicalWordId, CaseFoldedWordId};
+pub use word_map::WordMap;
 
 pub(crate) use word_id::WordIdPair;
 
