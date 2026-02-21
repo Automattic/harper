@@ -20,7 +20,7 @@ pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
     mutable_dict: MutableDictionary,
     /// Used for fuzzy-finding the index of words or metadata
-    word_map: FstMap<Vec<u8>>,
+    fst_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
     words: Vec<(CharString, DictWordMetadata)>,
 }
@@ -73,11 +73,11 @@ impl FstDictionary {
         mutable_dict.extend_words(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
-        let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
+        let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
             mutable_dict,
-            word_map,
+            fst_map,
             words,
         }
     }
@@ -138,11 +138,9 @@ impl Dictionary for FstDictionary {
         // Actual FST search
         let dfa = build_dfa(max_distance, &misspelled_word_string);
         let dfa_lowercase = build_dfa(max_distance, &misspelled_word_string.to_lowercase());
-        let mut word_indexes_stream = self.word_map.search_with_state(&dfa).into_stream();
-        let mut word_indexes_lowercase_stream = self
-            .word_map
-            .search_with_state(&dfa_lowercase)
-            .into_stream();
+        let mut word_indexes_stream = self.fst_map.search_with_state(&dfa).into_stream();
+        let mut word_indexes_lowercase_stream =
+            self.fst_map.search_with_state(&dfa_lowercase).into_stream();
 
         let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
         let lower_dists = stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
@@ -243,7 +241,7 @@ mod tests {
             dbg!(&misspelled_lower);
 
             assert!(!misspelled_word.is_empty());
-            assert!(dict.word_map.contains_key(misspelled_word));
+            assert!(dict.fst_map.contains_key(misspelled_word));
         }
     }
 
@@ -258,8 +256,8 @@ mod tests {
 
         assert!(dict.contains_word(&misspelled_normalized));
         assert!(
-            dict.word_map.contains_key(misspelled_lower)
-                || dict.word_map.contains_key(misspelled_word)
+            dict.fst_map.contains_key(misspelled_lower)
+                || dict.fst_map.contains_key(misspelled_word)
         );
     }
 
