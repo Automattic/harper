@@ -146,10 +146,9 @@ impl WordMap {
 
 impl IntoIterator for WordMap {
     type Item = WordMapEntry;
+    type IntoIter = indexmap::map::IntoValues<CanonicalWordId, WordMapEntry>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.canonical.into_values()
     }
-
-    type IntoIter = indexmap::map::IntoValues<CanonicalWordId, WordMapEntry>;
 }
