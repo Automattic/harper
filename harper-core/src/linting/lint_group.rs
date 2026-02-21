@@ -408,9 +408,7 @@ impl LintGroup {
 
         out.merge_from(weir_rules::lint_group());
         out.merge_from(phrase_set_corrections::lint_group());
-        out.merge_from(proper_noun_capitalization_linters::lint_group(
-            dictionary.clone(),
-        ));
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
 
