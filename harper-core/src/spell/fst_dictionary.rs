@@ -3,8 +3,8 @@ use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
+use std::cell::RefCell;
 use std::sync::LazyLock;
-use std::{cell::RefCell, sync::Arc};
 
 use crate::spell::word_map::WordMapEntry;
 use crate::{CharString, CharStringExt, DictWordMetadata};
@@ -18,7 +18,7 @@ use super::FuzzyMatchResult;
 /// [`MutableDictionary`].
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    mutable_dict: Arc<MutableDictionary>,
+    mutable_dict: MutableDictionary,
     /// Used for fuzzy-finding the index of words or metadata
     word_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
@@ -76,7 +76,7 @@ impl FstDictionary {
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
-            mutable_dict: Arc::new(mutable_dict),
+            mutable_dict,
             word_map,
             words,
         }
