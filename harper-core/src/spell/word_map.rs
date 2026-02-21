@@ -1,12 +1,14 @@
-use std::sync::LazyLock;
+use std::{borrow::Cow, sync::LazyLock};
 
 use hashbrown::{DefaultHashBuilder, HashMap};
 use indexmap::IndexMap;
+use itertools::Itertools;
 
 use crate::{
-    CharString, DictWordMetadata,
+    CharString, CharStringExt, DictWordMetadata,
+    edit_distance::edit_distance_min_alloc,
     spell::{
-        WordIdPair,
+        Dictionary, FuzzyMatchResult, WordIdPair,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -150,5 +152,119 @@ impl IntoIterator for WordMap {
 
     fn into_iter(self) -> Self::IntoIter {
         self.canonical.into_values()
+    }
+}
+
+impl Dictionary for WordMap {
+    fn get_word(&self, word: &[char]) -> Vec<&WordMapEntry> {
+        self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
+            .collect()
+    }
+
+    fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
+        self.get_canonical(CanonicalWordId::from_word_chars(word))
+    }
+
+    fn contains_word(&self, word: &[char]) -> bool {
+        self.contains_case_folded(CaseFoldedWordId::from_word_chars(word))
+    }
+
+    /// Suggest a correct spelling for a given misspelled word.
+    /// `Self::word` is assumed to be quite small (n < 100).
+    /// `max_distance` relates to an optimization that allows the search
+    /// algorithm to prune large portions of the search.
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        let misspelled_charslice = word.normalized();
+        let misspelled_charslice_lower = misspelled_charslice.to_lower();
+
+        let shortest_word_len = if misspelled_charslice.len() <= max_distance as usize {
+            1
+        } else {
+            misspelled_charslice.len() - max_distance as usize
+        };
+        let longest_word_len = misspelled_charslice.len() + max_distance as usize;
+
+        // Get candidate words
+        let words_to_search = self
+            .words_iter()
+            .filter(|word| (shortest_word_len..=longest_word_len).contains(&word.len()));
+
+        // Pre-allocated vectors for the edit-distance calculation
+        // 53 is the length of the longest word.
+        let mut buf_a = Vec::with_capacity(53);
+        let mut buf_b = Vec::with_capacity(53);
+
+        // Sort by edit-distance
+        words_to_search
+            .filter_map(|word| {
+                let dist =
+                    edit_distance_min_alloc(&misspelled_charslice, word, &mut buf_a, &mut buf_b);
+                let lowercase_dist = edit_distance_min_alloc(
+                    &misspelled_charslice_lower,
+                    word,
+                    &mut buf_a,
+                    &mut buf_b,
+                );
+
+                let smaller_dist = dist.min(lowercase_dist);
+                if smaller_dist <= max_distance {
+                    Some((word, smaller_dist))
+                } else {
+                    None
+                }
+            })
+            .sorted_unstable_by_key(|a| a.1)
+            .take(max_results)
+            .map(|(word, edit_distance)| FuzzyMatchResult {
+                word,
+                edit_distance,
+                metadata: Cow::Borrowed(&self.get_word_exact(word).unwrap().metadata),
+            })
+            .collect()
+    }
+
+    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
+        Box::new(self.iter().map(|v| v.canonical_spelling.as_slice()))
+    }
+
+    fn word_count(&self) -> usize {
+        self.len()
+    }
+
+    fn contains_exact_word(&self, word: &[char]) -> bool {
+        self.contains_canonical(CanonicalWordId::from_word_chars(word))
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for word in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..prefix.len())
+                && item_prefix == prefix
+            {
+                found.push(Cow::Borrowed(word));
+            }
+        }
+
+        found
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        let mut found = Vec::new();
+
+        for item in self.words_iter() {
+            if let Some(item_prefix) = word.get(0..item.len())
+                && item_prefix == item
+            {
+                found.push(Cow::Borrowed(item));
+            }
+        }
+
+        found
     }
 }
