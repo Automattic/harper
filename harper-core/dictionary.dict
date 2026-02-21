@@ -3065,7 +3065,7 @@ EST/ONg
 ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
-EU/ON
+EU/Og
 EULA/NgS            # end-user license agreement
 EUR/Nmg             # currency symbol for Euros
 EUV/N               # extreme ultraviolet
@@ -10376,7 +10376,7 @@ UPS/NOgV
 URL/NSg
 US/Og
 USA/Og
-USAF/O
+USAF/Og
 USAID/Og            # agency
 USB/ONSg
 USCG/O
@@ -26498,7 +26498,7 @@ generalissimo/NgS
 generalist/NgS
 generality/~NSg
 generalization/~NgS
-generalize/~VGdS
+generalize/~VGdSB
 generalizer/NgS
 generalship/Ng
 generate/~VGSdervn
@@ -26732,6 +26732,7 @@ giro/~NSV
 girt/NgSVdGJ
 girth/NwgSV
 girths/N
+GIS/N # Geographic Information System
 gist/NgSV
 git/~NOSV
 gite/NS
