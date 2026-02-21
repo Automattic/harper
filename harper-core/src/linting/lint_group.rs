@@ -225,7 +225,7 @@ use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
-use super::wordpress_dotcom::WordPressDotcom;
+use super::word_press_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 
