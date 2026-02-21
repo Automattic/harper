@@ -128,6 +128,10 @@ impl WordMap {
         self.canonical.len()
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
     pub fn with_capacity(capacity: usize) -> Self {
         Self {
             canonical: IndexMap::with_capacity_and_hasher(capacity, DefaultHashBuilder::default()),
