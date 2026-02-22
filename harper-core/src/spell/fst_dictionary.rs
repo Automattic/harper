@@ -1,22 +1,21 @@
-use super::MutableDictionary;
-use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
-use hashbrown::HashMap;
-use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::sync::LazyLock;
 
-use crate::{CharStringExt, spell::WordMapEntry};
+use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
+use hashbrown::HashMap;
+use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, WordMap};
+use super::{Dictionary, FuzzyMatchResult, WordMap, WordMapEntry};
+use crate::CharStringExt;
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
 /// For dictionaries with changing contents, such as user and file dictionaries, prefer
-/// [`MutableDictionary`].
+/// [`WordMap`].
 pub struct FstDictionary {
-    /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    mutable_dict: MutableDictionary,
+    /// Underlying [`super::WordMap`] used for everything except fuzzy finding
+    word_map: WordMap,
     /// Used for fuzzy-finding the index of words or metadata
     fst_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
@@ -39,7 +38,7 @@ thread_local! {
 
 impl PartialEq for FstDictionary {
     fn eq(&self, other: &Self) -> bool {
-        self.mutable_dict == other.mutable_dict
+        self.word_map == other.word_map
     }
 }
 
@@ -48,7 +47,7 @@ impl FstDictionary {
     /// in the Harper binary.
     pub fn curated() -> &'static FstDictionary {
         static DICT: LazyLock<FstDictionary> =
-            LazyLock::new(|| MutableDictionary::curated().clone().to_fst());
+            LazyLock::new(|| WordMap::curated().clone().to_fst());
 
         &DICT
     }
@@ -67,14 +66,14 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut mutable_dict = MutableDictionary::new();
-        mutable_dict.extend(words.iter().cloned());
+        let mut word_map = WordMap::new();
+        word_map.extend(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
         let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
-            mutable_dict,
+            word_map,
             fst_map,
             words,
         }
@@ -113,7 +112,7 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 
 impl Dictionary for FstDictionary {
     fn get_word_map(&self) -> &WordMap {
-        self.mutable_dict.get_word_map()
+        self.word_map.get_word_map()
     }
 
     fn fuzzy_match(
@@ -170,11 +169,11 @@ impl Dictionary for FstDictionary {
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_prefix(prefix)
+        self.word_map.find_words_with_prefix(prefix)
     }
 
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_common_prefix(word)
+        self.word_map.find_words_with_common_prefix(word)
     }
 }
 
@@ -208,7 +207,7 @@ mod tests {
     }
 
     #[test]
-    fn fst_map_contains_all_in_mutable_dict() {
+    fn fst_map_contains_all_in_curated_dict() {
         let dict = FstDictionary::curated();
 
         for word in dict.words_iter() {
