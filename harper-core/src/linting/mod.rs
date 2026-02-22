@@ -305,7 +305,7 @@ pub mod tests {
     }
 
     use super::Linter;
-    use crate::spell::{FstDictionary, WordMap};
+    use crate::spell::WordMap;
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {
