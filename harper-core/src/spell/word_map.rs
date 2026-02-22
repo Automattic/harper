@@ -8,7 +8,7 @@ use crate::{
     CharString, CharStringExt, DictWordMetadata,
     edit_distance::edit_distance_min_alloc,
     spell::{
-        CommonDictFuncs, Dictionary, FuzzyMatchResult, WordIdPair,
+        CommonDictFuncs, Dictionary, FstDictionary, FuzzyMatchResult, WordIdPair,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -159,6 +159,15 @@ impl WordMap {
         for wme in other.iter() {
             self.insert(wme.to_owned());
         }
+    }
+
+    pub fn to_fst(self) -> FstDictionary {
+        let words = self
+            .into_iter()
+            .map(|entry| (entry.canonical_spelling, entry.metadata))
+            .collect();
+
+        FstDictionary::new(words)
     }
 
     /// Get a [`WordMapEntry`] by its canonical ID.

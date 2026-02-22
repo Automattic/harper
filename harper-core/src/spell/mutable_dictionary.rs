@@ -1,4 +1,4 @@
-use super::{FstDictionary, word_map::WordMap};
+use super::word_map::WordMap;
 
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
@@ -9,17 +9,6 @@ use super::{FstDictionary, word_map::WordMap};
 /// To combine the contents of multiple dictionaries, regardless of type, use
 /// [`super::MergedDictionary`].
 pub type MutableDictionary = WordMap;
-
-impl From<MutableDictionary> for FstDictionary {
-    fn from(dict: MutableDictionary) -> Self {
-        let words = dict
-            .into_iter()
-            .map(|entry| (entry.canonical_spelling, entry.metadata))
-            .collect();
-
-        FstDictionary::new(words)
-    }
-}
 
 #[cfg(test)]
 mod tests {

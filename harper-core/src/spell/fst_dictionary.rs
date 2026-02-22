@@ -48,7 +48,7 @@ impl FstDictionary {
     /// in the Harper binary.
     pub fn curated() -> &'static FstDictionary {
         static DICT: LazyLock<FstDictionary> =
-            LazyLock::new(|| FstDictionary::from(MutableDictionary::curated().clone()));
+            LazyLock::new(|| MutableDictionary::curated().clone().to_fst());
 
         &DICT
     }
