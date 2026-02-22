@@ -6,7 +6,7 @@ use std::borrow::Cow;
 use std::cell::RefCell;
 use std::sync::LazyLock;
 
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use crate::{CharStringExt, spell::WordMapEntry};
 
 use super::{Dictionary, FuzzyMatchResult, WordMap};
 
@@ -20,7 +20,7 @@ pub struct FstDictionary {
     /// Used for fuzzy-finding the index of words or metadata
     fst_map: FstMap<Vec<u8>>,
     /// Used for fuzzy-finding the index of words or metadata
-    words: Vec<(CharString, DictWordMetadata)>,
+    words: Vec<WordMapEntry>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
@@ -55,20 +55,20 @@ impl FstDictionary {
 
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
-        words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
-        words.dedup_by(|(a, _), (b, _)| a == b);
+    pub fn new(mut words: Vec<WordMapEntry>) -> Self {
+        words.sort_unstable_by(|a, b| a.canonical_spelling.cmp(&b.canonical_spelling));
+        words.dedup_by(|a, b| a.canonical_spelling == b.canonical_spelling);
 
         let mut builder = fst::MapBuilder::memory();
-        for (index, (word, _)) in words.iter().enumerate() {
-            let word = word.iter().collect::<String>();
+        for (index, wme) in words.iter().enumerate() {
+            let word = wme.canonical_spelling.to_string();
             builder
                 .insert(word, index as u64)
                 .expect("Insertion not in lexicographical order!");
         }
 
         let mut mutable_dict = MutableDictionary::new();
-        mutable_dict.extend_words(words.iter().cloned());
+        mutable_dict.extend(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
         let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
@@ -149,11 +149,11 @@ impl Dictionary for FstDictionary {
         }
 
         for (index, edit_distance) in best_distances {
-            let (word, metadata) = &self.words[index as usize];
+            let wme = &self.words[index as usize];
             merged.push(FuzzyMatchResult {
-                word,
+                word: &wme.canonical_spelling,
                 edit_distance,
-                metadata: Cow::Borrowed(metadata),
+                metadata: Cow::Borrowed(&wme.metadata),
             });
         }
 
@@ -264,7 +264,12 @@ mod tests {
     fn curated_contains_no_duplicates() {
         let dict = FstDictionary::curated();
 
-        assert!(dict.words.iter().map(|(word, _)| word).all_unique());
+        assert!(
+            dict.words
+                .iter()
+                .map(|wme| &wme.canonical_spelling)
+                .all_unique()
+        );
     }
 
     #[test]

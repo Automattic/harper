@@ -10,11 +10,12 @@ use hashbrown::HashMap;
 use rayon::prelude::*;
 
 use harper_core::{
+    CharString, Dialect, Document, Token, TokenKind,
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
     parsers::MarkdownOptions,
-    spell::{Dictionary, MergedDictionary, MutableDictionary},
+    remove_overlaps_map,
+    spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -28,9 +29,9 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
+    dict.extend(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+            .map(|l| WordMapEntry::new(l.chars().collect::<CharString>())),
     );
 
     Ok(dict)

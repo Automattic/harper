@@ -33,6 +33,7 @@ futures = "0.3.32"
 serde = { version = "1.0.228", features = ["derive"] }
 globset = "0.4.18"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
+smallvec = { version = "1.15.1" }
 
 [features]
 default = []

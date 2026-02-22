@@ -1,8 +1,10 @@
 use std::collections::HashSet;
 
-use harper_core::spell::MutableDictionary;
-use harper_core::{DictWordMetadata, Mask, Masker, Span};
+use smallvec::ToSmallVec;
 use tree_sitter::{Language, Node, Tree, TreeCursor};
+
+use harper_core::spell::{MutableDictionary, WordMapEntry};
+use harper_core::{DictWordMetadata, Mask, Masker, Span};
 
 /// A Harper [`Masker`] that wraps a given tree-sitter language and a condition,
 /// allowing you to selectively parse only specific tree-sitter nodes.
@@ -50,11 +52,13 @@ impl TreeSitterMasker {
 
         let idents: Vec<_> = idents
             .into_iter()
-            .map(|ident| (ident, DictWordMetadata::default()))
+            .map(|ident| {
+                WordMapEntry::new(ident.to_smallvec()).with_md(DictWordMetadata::default())
+            })
             .collect();
 
         let mut dictionary = MutableDictionary::new();
-        dictionary.extend_words(idents);
+        dictionary.extend(idents);
 
         Some(dictionary)
     }

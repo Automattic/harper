@@ -9,7 +9,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
-use harper_core::spell::{CommonDictFuncs, Dictionary};
+use harper_core::spell::{CommonDictFuncs, Dictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
@@ -404,15 +404,11 @@ impl Linter {
     pub fn import_words(&mut self, additional_words: Vec<String>) {
         let init_len = self.user_dictionary.word_count();
 
-        self.user_dictionary
-            .extend_words(additional_words.iter().map(|word| {
-                (
-                    word.chars().collect::<CharString>(),
-                    DictWordMetadata {
-                        dialects: DialectFlags::from_dialect(self.dialect.into()),
-                        ..Default::default()
-                    },
-                )
+        self.user_dictionary.extend(additional_words.iter().map(|word| {
+                WordMapEntry::new(word.chars().collect::<CharString>()).with_md(DictWordMetadata {
+                    dialects: DialectFlags::from_dialect(self.dialect.into()),
+                    ..Default::default()
+                })
             }));
 
         // Only synchronize if we added words that were not there before.

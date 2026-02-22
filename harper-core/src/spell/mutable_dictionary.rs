@@ -17,8 +17,8 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::spell::{CommonDictFuncs, Dictionary, MutableDictionary};
-    use crate::{DictWordMetadata, char_string::char_string};
+    use crate::char_string::char_string;
+    use crate::spell::{CommonDictFuncs, Dictionary, MutableDictionary, WordMapEntry};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -221,10 +221,10 @@ mod tests {
     #[test]
     fn gets_prefixes_as_expected() {
         let mut dict = MutableDictionary::new();
-        dict.append_word_str("predict", DictWordMetadata::default());
-        dict.append_word_str("prelude", DictWordMetadata::default());
-        dict.append_word_str("preview", DictWordMetadata::default());
-        dict.append_word_str("dwight", DictWordMetadata::default());
+        dict.insert(WordMapEntry::new_str("predict"));
+        dict.insert(WordMapEntry::new_str("prelude"));
+        dict.insert(WordMapEntry::new_str("preview"));
+        dict.insert(WordMapEntry::new_str("dwight"));
 
         let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
 
@@ -237,9 +237,9 @@ mod tests {
     #[test]
     fn gets_common_prefixes_as_expected() {
         let mut dict = MutableDictionary::new();
-        dict.append_word_str("pre", DictWordMetadata::default());
-        dict.append_word_str("prep", DictWordMetadata::default());
-        dict.append_word_str("dwight", DictWordMetadata::default());
+        dict.insert(WordMapEntry::new_str("pre"));
+        dict.insert(WordMapEntry::new_str("prep"));
+        dict.insert(WordMapEntry::new_str("dwight"));
 
         let with_prefix =
             dict.find_words_with_common_prefix(char_string!("preposition").as_slice());

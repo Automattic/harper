@@ -1,11 +1,13 @@
-use harper_core::DialectFlags;
-use itertools::Itertools;
 use std::path::Path;
 
-use harper_core::spell::{CommonDictFuncs, MutableDictionary, WordMap};
-use harper_core::{Dialect, DictWordMetadata};
+use itertools::Itertools;
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
+
+use harper_core::{
+    CharString, Dialect, DialectFlags, DictWordMetadata,
+    spell::{CommonDictFuncs, MutableDictionary, WordMap, WordMapEntry},
+};
 
 /// Save the contents of a dictionary to a file.
 /// Ensures that the path to the destination exists.
@@ -58,14 +60,11 @@ async fn dict_from_word_list(
     r.read_to_string(&mut str).await?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(str.lines().map(|l| {
-        (
-            l.chars().collect::<Vec<char>>(),
-            DictWordMetadata {
-                dialects: DialectFlags::from_dialect(dialect),
-                ..Default::default()
-            },
-        )
+    dict.extend(str.lines().map(|l| {
+        WordMapEntry::new(l.chars().collect::<CharString>()).with_md(DictWordMetadata {
+            dialects: DialectFlags::from_dialect(dialect),
+            ..Default::default()
+        })
     }));
 
     Ok(dict)
@@ -105,9 +104,8 @@ mod tests {
     /// Creates an unsorted `MutableDictionary` for testing.
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
-        test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS
-                .map(|w| (w.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+        test_unsorted_dict.extend(
+            TEST_UNSORTED_WORDS.map(|w| WordMapEntry::new(w.chars().collect::<CharString>())),
         );
         test_unsorted_dict
     }

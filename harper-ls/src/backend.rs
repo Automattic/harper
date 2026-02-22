@@ -18,8 +18,10 @@ use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
-use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMap};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::spell::{
+    Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMap, WordMapEntry,
+};
+use harper_core::{Dialect, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -29,6 +31,7 @@ use harper_stats::{Record, Stats};
 use harper_tex::TeX;
 use harper_typst::Typst;
 use serde_json::{Value, json};
+use smallvec::ToSmallVec;
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
 use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
@@ -689,7 +692,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.append_word(word, DictWordMetadata::default());
+                dict.insert(WordMapEntry::new(word.to_smallvec()));
                 self.save_user_dictionary(dict.get_word_map())
                     .await
                     .map_err(|err| error!("{err}"))
@@ -710,7 +713,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.append_word(word, DictWordMetadata::default());
+                dict.insert(WordMapEntry::new(word.to_smallvec()));
                 self.save_workspace_dictionary(dict.get_word_map())
                     .await
                     .map_err(|err| error!("{err}"))
@@ -740,7 +743,7 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.append_word(word, DictWordMetadata::default());
+                dict.insert(WordMapEntry::new(word.to_smallvec()));
 
                 self.save_file_dictionary(&file_uri, dict.get_word_map())
                     .await

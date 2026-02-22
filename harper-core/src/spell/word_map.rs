@@ -90,6 +90,8 @@ impl WordMap {
     ///
     /// This will merge the new metadata with the existing if an entry with an identical
     /// [`CanonicalWordId`] is already contained in the word map.
+    ///
+    /// If you are appending many words, consider using [`Self::extend`] instead.
     pub fn insert(&mut self, entry: WordMapEntry) {
         let word_ids = WordIdPair::from_word_chars(&entry.canonical_spelling);
 
@@ -153,10 +155,7 @@ impl WordMap {
     }
 
     pub fn to_fst(self) -> FstDictionary {
-        let words = self
-            .into_iter()
-            .map(|entry| (entry.canonical_spelling, entry.metadata))
-            .collect();
+        let words = self.into_iter().collect();
 
         FstDictionary::new(words)
     }
@@ -173,41 +172,6 @@ impl WordMap {
         self.case_folded
             .get(&id)
             .map_or(&[], |canonical_indices| canonical_indices)
-    }
-}
-
-// TEMPORARY
-// Functions from `MutableDictionary`.
-impl WordMap {
-    /// Appends words to the dictionary.
-    /// It is significantly faster to append many words with one call than many
-    /// distinct calls to this function.
-    pub fn extend_words(
-        &mut self,
-        words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
-    ) {
-        for (chars, metadata) in words.into_iter() {
-            self.insert(WordMapEntry {
-                metadata,
-                canonical_spelling: chars.as_ref().into(),
-            })
-        }
-    }
-
-    /// Append a single word to the dictionary.
-    ///
-    /// If you are appending many words, consider using [`Self::extend_words`]
-    /// instead.
-    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: DictWordMetadata) {
-        self.extend_words(std::iter::once((word.as_ref(), metadata)))
-    }
-
-    /// Append a single string to the dictionary.
-    ///
-    /// If you are appending many words, consider using [`Self::extend_words`]
-    /// instead.
-    pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
-        self.append_word(word.chars().collect::<Vec<_>>(), metadata)
     }
 }
 

@@ -65,19 +65,18 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
 mod tests {
     use std::borrow::Cow;
 
-    use crate::DictWordMetadata;
     use crate::char_string::char_string;
-    use crate::spell::MutableDictionary;
     use crate::spell::dictionary::Dictionary;
     use crate::spell::trie_dictionary::TrieDictionary;
+    use crate::spell::{MutableDictionary, WordMapEntry};
 
     #[test]
     fn gets_prefixes_as_expected() {
         let mut inner = MutableDictionary::new();
-        inner.append_word_str("predict", DictWordMetadata::default());
-        inner.append_word_str("prelude", DictWordMetadata::default());
-        inner.append_word_str("preview", DictWordMetadata::default());
-        inner.append_word_str("dwight", DictWordMetadata::default());
+        inner.insert(WordMapEntry::new_str("predict"));
+        inner.insert(WordMapEntry::new_str("prelude"));
+        inner.insert(WordMapEntry::new_str("preview"));
+        inner.insert(WordMapEntry::new_str("dwight"));
 
         let dict = TrieDictionary::new(inner);
 
@@ -92,9 +91,9 @@ mod tests {
     #[test]
     fn gets_common_prefixes_as_expected() {
         let mut inner = MutableDictionary::new();
-        inner.append_word_str("pre", DictWordMetadata::default());
-        inner.append_word_str("prep", DictWordMetadata::default());
-        inner.append_word_str("dwight", DictWordMetadata::default());
+        inner.insert(WordMapEntry::new_str("pre"));
+        inner.insert(WordMapEntry::new_str("prep"));
+        inner.insert(WordMapEntry::new_str("dwight"));
 
         let dict = TrieDictionary::new(inner);
 
