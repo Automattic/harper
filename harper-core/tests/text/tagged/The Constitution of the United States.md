@@ -1250,8 +1250,8 @@
 # HeadingStart NSg/VB+ . # .
 >
 #
-> Full     Faith and  Credit  shall be      given       in        each State    to the
-# NSg/VB/J NPrᴹ  VB/C NSg/VB+ VXB   NSg/VXB NSg/VPp/J/P NPr/J/R/P Dq   N🅪Sg/VB+ P  D
+> Full     Faith  and  Credit  shall be      given       in        each State    to the
+# NSg/VB/J NPr🅪Sg VB/C NSg/VB+ VXB   NSg/VXB NSg/VPp/J/P NPr/J/R/P Dq   N🅪Sg/VB+ P  D
 > public  Acts     , Records , and  judicial Proceedings of every other     State    . And  the
 # Nᴹ/VB/J NPrPl/V3 . NPl/V3+ . VB/C NSg/J    NPl         P  Dq+   NSg/VB/J+ N🅪Sg/VB+ . VB/C D+
 > Congress may     by    general  Laws    prescribe the Manner in        which such  Acts      , Records
