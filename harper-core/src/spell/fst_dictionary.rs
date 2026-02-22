@@ -4,9 +4,10 @@ use std::sync::LazyLock;
 
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
+use itertools::Itertools;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, WordMap, WordMapEntry};
+use super::{Dictionary, FuzzyMatchResult, WordMap};
 use crate::CharStringExt;
 
 /// An immutable dictionary allowing for very fast spellchecking.
@@ -50,11 +51,12 @@ impl FstDictionary {
         &DICT
     }
 
-    /// Construct a new [`FstDictionary`] using a wordlist as a source.
+    /// Construct a new [`FstDictionary`] using a word map as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<WordMapEntry>) -> Self {
+    pub fn new(word_map: WordMap) -> Self {
+        let mut words = word_map.into_iter().collect_vec();
+
         words.sort_unstable_by(|a, b| a.canonical_spelling.cmp(&b.canonical_spelling));
-        words.dedup_by(|a, b| a.canonical_spelling == b.canonical_spelling);
 
         let mut builder = fst::MapBuilder::memory();
         for (index, wme) in words.iter().enumerate() {

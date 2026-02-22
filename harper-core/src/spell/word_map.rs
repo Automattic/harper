@@ -157,9 +157,7 @@ impl WordMap {
     }
 
     pub fn to_fst(self) -> FstDictionary {
-        let words = self.into_iter().collect();
-
-        FstDictionary::new(words)
+        FstDictionary::new(self)
     }
 
     /// Get a [`WordMapEntry`] by its canonical ID.
