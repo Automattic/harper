@@ -1,13 +1,4 @@
-use super::{
-    FstDictionary, rune,
-    word_map::{WordMap, WordMapEntry},
-};
-use std::{borrow::Cow, sync::LazyLock};
-
-use crate::DictWordMetadata;
-
-use super::FuzzyMatchResult;
-use super::dictionary::Dictionary;
+use super::{FstDictionary, word_map::WordMap};
 
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
@@ -17,101 +8,11 @@ use super::dictionary::Dictionary;
 ///
 /// To combine the contents of multiple dictionaries, regardless of type, use
 /// [`super::MergedDictionary`].
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct MutableDictionary {
-    /// All English words
-    word_map: WordMap,
-}
-
-impl MutableDictionary {
-    pub fn new() -> Self {
-        Self {
-            word_map: WordMap::default(),
-        }
-    }
-
-    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
-        Ok(Self {
-            word_map: WordMap::from_rune_files(word_list, attr_list)?,
-        })
-    }
-
-    /// Create a dictionary from the curated dictionary included
-    /// in the Harper binary.
-    /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated() -> &'static Self {
-        static DICT: LazyLock<MutableDictionary> = LazyLock::new(|| MutableDictionary {
-            word_map: WordMap::curated().clone(),
-        });
-
-        &DICT
-    }
-
-    /// Appends words to the dictionary.
-    /// It is significantly faster to append many words with one call than many
-    /// distinct calls to this function.
-    pub fn extend_words(
-        &mut self,
-        words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
-    ) {
-        for (chars, metadata) in words.into_iter() {
-            self.word_map.insert(WordMapEntry {
-                metadata,
-                canonical_spelling: chars.as_ref().into(),
-            })
-        }
-    }
-
-    /// Append a single word to the dictionary.
-    ///
-    /// If you are appending many words, consider using [`Self::extend_words`]
-    /// instead.
-    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: DictWordMetadata) {
-        self.extend_words(std::iter::once((word.as_ref(), metadata)))
-    }
-
-    /// Append a single string to the dictionary.
-    ///
-    /// If you are appending many words, consider using [`Self::extend_words`]
-    /// instead.
-    pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
-        self.append_word(word.chars().collect::<Vec<_>>(), metadata)
-    }
-}
-
-impl Default for MutableDictionary {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl Dictionary for MutableDictionary {
-    fn get_word_map(&self) -> &WordMap {
-        &self.word_map
-    }
-
-    fn fuzzy_match(
-        &'_ self,
-        word: &[char],
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.word_map.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_prefix(prefix)
-    }
-
-    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_common_prefix(word)
-    }
-}
+pub type MutableDictionary = WordMap;
 
 impl From<MutableDictionary> for FstDictionary {
     fn from(dict: MutableDictionary) -> Self {
         let words = dict
-            .word_map
             .into_iter()
             .map(|entry| (entry.canonical_spelling, entry.metadata))
             .collect();
@@ -306,8 +207,8 @@ mod tests {
             MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
 
         assert_eq!(
-            merged.word_map.into_iter().collect::<HashSet<_>>(),
-            spread.word_map.into_iter().collect::<HashSet<_>>()
+            merged.into_iter().collect::<HashSet<_>>(),
+            spread.into_iter().collect::<HashSet<_>>()
         );
     }
 
