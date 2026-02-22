@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use harper_asciidoc::AsciidocParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::spell::FstDictionary;
+use harper_core::spell::WordMap;
 use harper_core::{Dialect, Document};
 
 /// Creates a unit test checking Asciidoc source code parsing.
@@ -20,7 +20,7 @@ macro_rules! create_test {
                  );
 
                  let parser = AsciidocParser::default();
-                 let dict = Arc::new(FstDictionary::curated());
+                 let dict = Arc::new(WordMap::curated());
                  let document = Document::new(&source, &parser, &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

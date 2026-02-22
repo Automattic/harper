@@ -389,7 +389,7 @@ impl LintGroup {
         /// Add a `Linter` to the group, setting it to be enabled by default.
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), $rule::default());
+                out.add(stringify!($rule), Box::new($rule::default()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -400,7 +400,7 @@ impl LintGroup {
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(stringify!($rule), $rule::default());
+                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::default()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -616,70 +616,85 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
 
-        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
 
         out.add(
             "InflectedVerbAfterTo",
-            InflectedVerbAfterTo::new(dictionary.clone()),
+            Box::new(InflectedVerbAfterTo::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
-        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.add("InOnTheCards", Box::new(InOnTheCards::new(dialect)));
         out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
             "SentenceCapitalization",
-            SentenceCapitalization::new(dictionary.clone()),
+            Box::new(SentenceCapitalization::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
-        out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
+        out.add(
+            "PossessiveNoun",
+            Box::new(PossessiveNoun::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("PossessiveNoun", false);
 
-        out.add("Regionalisms", Regionalisms::new(dialect));
+        out.add("Regionalisms", Box::new(Regionalisms::new(dialect)));
         out.config.set_rule_enabled("Regionalisms", true);
 
-        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.add("HaveTakeALook", Box::new(HaveTakeALook::new(dialect)));
         out.config.set_rule_enabled("HaveTakeALook", true);
 
-        out.add("MassNouns", MassNouns::new(dictionary.clone()));
+        out.add("MassNouns", Box::new(MassNouns::new(dictionary.clone())));
         out.config.set_rule_enabled("MassNouns", true);
 
-        out.add("UseTitleCase", UseTitleCase::new(dictionary.clone()));
+        out.add(
+            "UseTitleCase",
+            Box::new(UseTitleCase::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("UseTitleCase", true);
 
         out.add_chunk_expr_linter(
             "DisjointPrefixes",
-            DisjointPrefixes::new(dictionary.clone()),
+            Box::new(DisjointPrefixes::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
 
         out.add(
             "PronounVerbAgreement",
-            PronounVerbAgreement::new(dictionary.clone()),
+            Box::new(PronounVerbAgreement::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("PronounVerbAgreement", true);
 
-        out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
+        out.add_chunk_expr_linter(
+            "TransposedSpace",
+            Box::new(TransposedSpace::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("TransposedSpace", true);
 
         out.add_chunk_expr_linter(
             "OneOfTheSingular",
-            OneOfTheSingular::new(dictionary.clone()),
+            Box::new(OneOfTheSingular::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("OneOfTheSingular", true);
 
-        out.add("AnA", AnA::new(dialect));
+        out.add("AnA", Box::new(AnA::new(dialect)));
         out.config.set_rule_enabled("AnA", true);
 
-        out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
+        out.add(
+            "MoreAdjective",
+            Box::new(MoreAdjective::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("MoreAdjective", true);
 
-        out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
+        out.add("WorthToDo", Box::new(WorthToDo::new(dictionary.clone())));
         out.config.set_rule_enabled("WorthToDo", true);
 
-        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.add_chunk_expr_linter("DidPast", Box::new(DidPast::new(dictionary.clone())));
         out.config.set_rule_enabled("DidPast", true);
 
         out
@@ -687,7 +702,7 @@ impl LintGroup {
 
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
-        dictionary: Arc<impl Dictionary + 'static>,
+        dictionary: Arc<dyn Dictionary + 'static>,
         dialect: Dialect,
     ) -> Self {
         let mut group = Self::new_curated(dictionary, dialect);
@@ -705,12 +720,11 @@ impl LintGroup {
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+    pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter + 'static>) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+            self.linters.insert(name.as_ref().to_string(), linter);
             true
         }
     }
@@ -724,13 +738,13 @@ impl LintGroup {
         &mut self,
         name: impl AsRef<str>,
         // linter: impl ExprLinter + 'static,
-        linter: impl ExprLinter<Unit = Chunk> + 'static,
+        linter: Box<dyn ExprLinter<Unit = Chunk> + 'static>,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
             self.chunk_expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+                .insert(name.as_ref().to_string(), linter as _);
             true
         }
     }

@@ -25,7 +25,7 @@ impl<D: Dictionary> Parser for IsolateEnglish<D> {
         let mut english_tokens: Vec<Token> = Vec::with_capacity(tokens.len());
 
         for chunk in tokens.iter_chunks() {
-            if chunk.len() < 4 || is_likely_english(chunk, source, &self.dict) {
+            if chunk.len() < 4 || is_likely_english(chunk, source, self.dict.get_word_map()) {
                 english_tokens.extend_from_slice(chunk);
             }
         }
@@ -37,7 +37,7 @@ impl<D: Dictionary> Parser for IsolateEnglish<D> {
 #[cfg(test)]
 mod tests {
     use super::IsolateEnglish;
-    use crate::spell::FstDictionary;
+    use crate::spell::{Dictionary, FstDictionary};
     use crate::{Document, TokenStringExt, parsers::PlainEnglish};
 
     /// Assert that the provided text contains _no_ chunks of valid English
@@ -47,7 +47,7 @@ mod tests {
         let document = Document::new(
             text,
             &IsolateEnglish::new(Box::new(PlainEnglish), dict),
-            &dict,
+            dict.get_word_map(),
         );
 
         assert_eq!(document.iter_words().count(), 0);
@@ -62,7 +62,7 @@ mod tests {
         let document = Document::new(
             source,
             &IsolateEnglish::new(Box::new(PlainEnglish), dict),
-            &dict,
+            &dict.get_word_map(),
         );
 
         assert_eq!(document.to_string(), target);

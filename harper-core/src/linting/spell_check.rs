@@ -6,7 +6,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{Dictionary, CommonDictFuncs, suggest_correct_spelling};
+use crate::spell::{CommonDictFuncs, Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
@@ -432,7 +432,7 @@ mod tests {
             SpellCheck::new(merged_dict.clone(), user_dialect)
                 .lint(&Document::new_markdown_default(
                     "I like to use the software Calibre.",
-                    &merged_dict
+                    merged_dict.get_word_map()
                 ))
                 .len(),
             0,
@@ -443,7 +443,7 @@ mod tests {
             SpellCheck::new(merged_dict.clone(), user_dialect)
                 .lint(&Document::new_markdown_default(
                     "I like to use the spelling colour.",
-                    &merged_dict
+                    merged_dict.get_word_map()
                 ))
                 .len(),
             1

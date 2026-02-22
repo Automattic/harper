@@ -4,7 +4,7 @@ use std::sync::Arc;
 use criterion::{Criterion, criterion_group, criterion_main};
 
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::spell::FstDictionary;
+use harper_core::spell::{Dictionary, FstDictionary};
 use harper_core::{Dialect, Document};
 
 static ESSAY: &str = include_str!("./essay.md");
@@ -30,7 +30,8 @@ fn lint_essay_uncached(c: &mut Criterion) {
         b.iter(|| {
             let dictionary = Arc::new(FstDictionary::curated());
             let mut lint_set = LintGroup::new_curated(dictionary.clone(), Dialect::American);
-            let document = Document::new_markdown_default(black_box(ESSAY), &dictionary);
+            let document =
+                Document::new_markdown_default(black_box(ESSAY), dictionary.get_word_map());
             lint_set.lint(&document)
         })
     });

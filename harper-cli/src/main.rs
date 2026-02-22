@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 use harper_core::spell::{
-    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary,
+    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary, WordMap,
 };
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -447,7 +447,7 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                print_word_derivations(dict_word, dict_annot, WordMap::curated());
             };
 
             if !annot.is_empty() {
@@ -458,7 +458,7 @@ fn main() -> anyhow::Result<()> {
                 )?;
 
                 println!("New, from you:");
-                print_word_derivations(&word, &annot, &dict);
+                print_word_derivations(&word, &annot, dict.get_word_map());
             }
 
             Ok(())
@@ -980,7 +980,7 @@ fn line_to_parts(line: &str) -> (String, String) {
     }
 }
 
-fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
+fn print_word_derivations(word: &str, annot: &str, dictionary: &WordMap) {
     println!("{word}/{annot}");
 
     let id = CanonicalWordId::from_word_str(word);

@@ -18,7 +18,7 @@ use harper_core::linting::{LintGroup, LintGroupConfig};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
-use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMap};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
@@ -134,7 +134,7 @@ impl Backend {
         Ok(config.file_dict_path.join(fileify_path(uri)?))
     }
 
-    async fn save_file_dictionary(&self, uri: &Uri, dict: impl Dictionary) -> Result<()> {
+    async fn save_file_dictionary(&self, uri: &Uri, dict: &WordMap) -> Result<()> {
         save_dict(
             self.get_file_dict_path(uri)
                 .await
@@ -154,7 +154,7 @@ impl Backend {
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: &WordMap) -> Result<()> {
         let config = self.config.read().await;
 
         save_dict(&config.user_dict_path, dict)
@@ -173,7 +173,7 @@ impl Backend {
         .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_workspace_dictionary(&self, dict: &WordMap) -> Result<()> {
         let config = self.config.read().await;
         save_dict(&config.workspace_dict_path, dict)
             .await
@@ -413,7 +413,8 @@ impl Backend {
 
                 // Don't lint on documents larger than the configured maximum length.
                 if text.len() <= max_file_length {
-                    doc_state.document = Document::new(text, &parser, &doc_state.dict);
+                    doc_state.document =
+                        Document::new(text, &parser, doc_state.dict.get_word_map());
                 } else {
                     // Ensures that existing lints are cleared when we stop linting the file.
                     // Otherwise, prior lints will remain, and they will quickly fall out of sync
@@ -689,7 +690,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_user_dictionary().await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict)
+                self.save_user_dictionary(dict.get_word_map())
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -710,7 +711,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_workspace_dictionary().await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict)
+                self.save_workspace_dictionary(dict.get_word_map())
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -741,7 +742,7 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, DictWordMetadata::default());
 
-                self.save_file_dictionary(&file_uri, dict)
+                self.save_file_dictionary(&file_uri, dict.get_word_map())
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();

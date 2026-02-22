@@ -11,7 +11,7 @@ use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
-use crate::spell::{CommonDictFuncs, Dictionary, FstDictionary};
+use crate::spell::{CommonDictFuncs, WordMap};
 use crate::vec_ext::VecExt;
 use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
@@ -25,7 +25,7 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new("", &PlainEnglish, WordMap::curated())
     }
 }
 
@@ -54,7 +54,7 @@ impl Document {
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
+    pub fn new(text: &str, parser: &impl Parser, dictionary: &WordMap) -> Self {
         let source: Vec<_> = text.chars().collect();
 
         Self::new_from_vec(Lrc::new(source), parser, dictionary)
@@ -65,7 +65,7 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Vec<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_vec(Lrc::new(source), parser, WordMap::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -73,7 +73,7 @@ impl Document {
     pub fn new_from_vec(
         source: Lrc<Vec<char>>,
         parser: &impl Parser,
-        dictionary: &impl Dictionary,
+        dictionary: &WordMap,
     ) -> Self {
         let tokens = parser.parse(&source);
 
@@ -86,7 +86,7 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(text, &PlainEnglish, WordMap::curated())
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
@@ -104,18 +104,14 @@ impl Document {
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and a provided dictionary.
-    pub fn new_plain_english(text: &str, dictionary: &impl Dictionary) -> Self {
+    pub fn new_plain_english(text: &str, dictionary: &WordMap) -> Self {
         Self::new(text, &PlainEnglish, dictionary)
     }
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
     /// and curated dictionary.
     pub fn new_markdown_curated(text: &str, markdown_options: MarkdownOptions) -> Self {
-        Self::new(
-            text,
-            &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
-        )
+        Self::new(text, &Markdown::new(markdown_options), WordMap::curated())
     }
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
@@ -129,14 +125,14 @@ impl Document {
     pub fn new_markdown(
         text: &str,
         markdown_options: MarkdownOptions,
-        dictionary: &impl Dictionary,
+        dictionary: &WordMap,
     ) -> Self {
         Self::new(text, &Markdown::new(markdown_options), dictionary)
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and the curated dictionary with the default Markdown configuration.
-    pub fn new_markdown_default(text: &str, dictionary: &impl Dictionary) -> Self {
+    pub fn new_markdown_default(text: &str, dictionary: &WordMap) -> Self {
         Self::new_markdown(text, MarkdownOptions::default(), dictionary)
     }
 
@@ -159,7 +155,7 @@ impl Document {
     /// Re-parse important language constructs.
     ///
     /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    fn parse(&mut self, dictionary: &WordMap) {
         self.apply_fixups();
 
         let chunker = burn_chunker();

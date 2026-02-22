@@ -65,7 +65,7 @@ impl Weirpack {
 
         for (name, rule) in &self.rules {
             let linter = WeirLinter::new(rule)?;
-            group.add_chunk_expr_linter(name, linter);
+            group.add_chunk_expr_linter(name, Box::new(linter));
             group.config.set_rule_enabled(name, true);
         }
 

@@ -8,7 +8,7 @@ macro_rules! generate_boilerplate {
 
                 {
                     $(
-                        group.add_chunk_expr_linter(stringify!($name), WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap());
+                        group.add_chunk_expr_linter(stringify!($name), Box::new(WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap()));
                     )+
                 }
 
