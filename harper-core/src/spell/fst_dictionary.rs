@@ -18,8 +18,6 @@ pub struct FstDictionary {
     word_map: WordMap,
     /// Used for fuzzy-finding the index of words or metadata
     fst_map: FstMap<Vec<u8>>,
-    /// Used for fuzzy-finding the index of words or metadata
-    words: Vec<WordMapEntry>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
@@ -66,17 +64,12 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut word_map = WordMap::new();
-        word_map.extend(words.iter().cloned());
+        let word_map = WordMap::from_iter(words);
 
         let fst_bytes = builder.into_inner().unwrap();
         let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
-        FstDictionary {
-            word_map,
-            fst_map,
-            words,
-        }
+        FstDictionary { word_map, fst_map }
     }
 }
 
@@ -148,7 +141,7 @@ impl Dictionary for FstDictionary {
         }
 
         for (index, edit_distance) in best_distances {
-            let wme = &self.words[index as usize];
+            let wme = &self.word_map[index as usize];
             merged.push(FuzzyMatchResult {
                 word: &wme.canonical_spelling,
                 edit_distance,
@@ -264,7 +257,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.words
+            dict.word_map
                 .iter()
                 .map(|wme| &wme.canonical_spelling)
                 .all_unique()
