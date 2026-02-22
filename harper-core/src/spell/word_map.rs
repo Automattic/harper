@@ -155,12 +155,6 @@ impl WordMap {
         Ok(word_map)
     }
 
-    pub fn extend(&mut self, other: &WordMap) {
-        for wme in other.iter() {
-            self.insert(wme.to_owned());
-        }
-    }
-
     pub fn to_fst(self) -> FstDictionary {
         let words = self
             .into_iter()
@@ -217,6 +211,14 @@ impl WordMap {
     /// instead.
     pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
         self.append_word(word.chars().collect::<Vec<_>>(), metadata)
+    }
+}
+
+impl Extend<WordMapEntry> for WordMap {
+    fn extend<T: IntoIterator<Item = WordMapEntry>>(&mut self, iter: T) {
+        for wme in iter {
+            self.insert(wme);
+        }
     }
 }
 
