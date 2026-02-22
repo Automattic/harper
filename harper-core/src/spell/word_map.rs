@@ -5,7 +5,7 @@ use indexmap::IndexMap;
 use itertools::Itertools;
 
 use crate::{
-    CharString, CharStringExt, DictWordMetadata,
+    CharStringExt, DictWordMetadata,
     edit_distance::edit_distance_min_alloc,
     spell::{
         CommonDictFuncs, Dictionary, FstDictionary, FuzzyMatchResult, WordIdPair,
@@ -15,6 +15,9 @@ use crate::{
     },
 };
 
+pub mod word_map_entry;
+pub use word_map_entry::WordMapEntry;
+
 /// The underlying data structure for the `MutableDictionary`.
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct WordMap {
@@ -23,12 +26,6 @@ pub struct WordMap {
     /// A map containing indices into `canonical` for a specific `CaseFoldedWordId`. This is used for
     /// case-folded lookups in the word map.
     case_folded: HashMap<CaseFoldedWordId, Vec<usize>>,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash)]
-pub struct WordMapEntry {
-    pub metadata: DictWordMetadata,
-    pub canonical_spelling: CharString,
 }
 
 impl WordMap {
