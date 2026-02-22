@@ -1,4 +1,4 @@
-use std::{borrow::Cow, sync::LazyLock};
+use std::{borrow::Cow, ops::Index, sync::LazyLock};
 
 use hashbrown::{DefaultHashBuilder, HashMap};
 use indexmap::IndexMap;
@@ -18,11 +18,13 @@ use crate::{
 pub mod word_map_entry;
 pub use word_map_entry::WordMapEntry;
 
+type CanonicalStorage = IndexMap<CanonicalWordId, WordMapEntry, DefaultHashBuilder>;
+
 /// The underlying data structure for the `MutableDictionary`.
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct WordMap {
     /// Underlying container for the entries in the word map.
-    canonical: IndexMap<CanonicalWordId, WordMapEntry, DefaultHashBuilder>,
+    canonical: CanonicalStorage,
     /// A map containing indices into `canonical` for a specific `CaseFoldedWordId`. This is used for
     /// case-folded lookups in the word map.
     case_folded: HashMap<CaseFoldedWordId, Vec<usize>>,
@@ -183,12 +185,28 @@ impl Extend<WordMapEntry> for WordMap {
     }
 }
 
+impl Index<usize> for WordMap {
+    type Output = <CanonicalStorage as Index<usize>>::Output;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.canonical[index]
+    }
+}
+
 impl IntoIterator for WordMap {
     type Item = WordMapEntry;
     type IntoIter = indexmap::map::IntoValues<CanonicalWordId, WordMapEntry>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.canonical.into_values()
+    }
+}
+
+impl FromIterator<WordMapEntry> for WordMap {
+    fn from_iter<T: IntoIterator<Item = WordMapEntry>>(iter: T) -> Self {
+        let mut out = Self::new();
+        out.extend(iter);
+        out
     }
 }
 
