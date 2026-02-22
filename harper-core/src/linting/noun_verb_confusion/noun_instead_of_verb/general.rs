@@ -43,18 +43,15 @@ impl Default for GeneralNounInsteadOfVerb {
         ));
 
         let basic_pattern = Lrc::new(
-            SequenceExpr::default()
-                .then(pre_context)
+            SequenceExpr::with(pre_context)
                 .then_whitespace()
                 .then(nouns.clone()),
         );
 
-        let pattern_followed_by_punctuation = SequenceExpr::default()
-            .then(basic_pattern.clone())
-            .then_punctuation();
+        let pattern_followed_by_punctuation =
+            SequenceExpr::with(basic_pattern.clone()).then_punctuation();
 
-        let pattern_followed_by_word = SequenceExpr::default()
-            .then(basic_pattern.clone())
+        let pattern_followed_by_word = SequenceExpr::with(basic_pattern.clone())
             .then_whitespace()
             .then_any_word();
 

@@ -1,0 +1,32 @@
+expr main <([(sneak peak)]), peak>
+
+let message "Use `peek` for the preview phrase."
+let description "Corrects the common phrase-level confusion where `peak` is used instead of `peek` after `sneak`."
+let kind "WordChoice"
+let becomes "peek"
+let strategy "MatchCase"
+
+# True positives
+
+test "Here is a sneak peak at the update." "Here is a sneak peek at the update."
+test "We got a sneak peak before launch." "We got a sneak peek before launch."
+test "Can I get a sneak peak?" "Can I get a sneak peek?"
+test "The trailer gives a sneak peak into episode two." "The trailer gives a sneak peek into episode two."
+test "They posted a sneak peak yesterday." "They posted a sneak peek yesterday."
+test "Sneak peak footage just dropped." "Sneak peek footage just dropped."
+test "SNEAK PEAK INSIDE." "SNEAK PEEK INSIDE."
+test "A quick sneak peak: new icons and themes." "A quick sneak peek: new icons and themes."
+
+# False negatives (positive variants that should still be caught)
+
+test "I want a sneak peak, not the full demo." "I want a sneak peek, not the full demo."
+test "Another sneak peak came from QA." "Another sneak peek came from QA."
+test "This blog has a sneak peak of the redesign." "This blog has a sneak peek of the redesign."
+
+# False positives / true negatives
+
+test "Here is a sneak peek at the update." "Here is a sneak peek at the update."
+test "The hikers reached the peak at sunrise." "The hikers reached the peak at sunrise."
+test "He took a peek at the draft." "He took a peek at the draft."
+test "A sneaky peak can be seen from that ridge." "A sneaky peak can be seen from that ridge."
+test "The phrase 'sneak-peak' was used in the title." "The phrase 'sneak-peak' was used in the title."

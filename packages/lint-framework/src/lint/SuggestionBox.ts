@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 import { type IconDefinition, icon } from '@fortawesome/fontawesome-svg-core';
 import { faBan, faGear } from '@fortawesome/free-solid-svg-icons';
+import { SuggestionKind } from 'harper.js';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/bookDownSvg';
@@ -201,7 +202,8 @@ function suggestions(
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
-		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
+		const label =
+			s.replacement_text !== '' ? s.replacement_text : String(suggestionKindToLabel(s.kind));
 		const desc = `Replace with "${label}"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
 		return button(
@@ -212,6 +214,17 @@ function suggestions(
 			props,
 		);
 	});
+}
+
+function suggestionKindToLabel(s: SuggestionKind): string {
+	switch (s) {
+		case SuggestionKind.Replace:
+			return 'Replace';
+		case SuggestionKind.Remove:
+			return 'Remove';
+		case SuggestionKind.InsertAfter:
+			return 'Insert After';
+	}
 }
 
 function reportProblemButton(reportError?: () => Promise<void>): any {

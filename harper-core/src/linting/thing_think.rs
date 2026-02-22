@@ -29,13 +29,12 @@ impl Default for ThingThink {
             Box::new(indefinite_pronouns),
         ]);
 
-        let verb_to = SequenceExpr::default()
-            .then(WordSet::new(&[
-                "have", "had", "has", "having", "need", "needed", "needs", "needing", "want",
-                "wanted", "wants", "wanting", "try", "tried", "tries", "trying",
-            ]))
-            .t_ws()
-            .t_aco("to");
+        let verb_to = SequenceExpr::word_set(&[
+            "have", "had", "has", "having", "need", "needed", "needs", "needing", "want", "wanted",
+            "wants", "wanting", "try", "tried", "tries", "trying",
+        ])
+        .t_ws()
+        .t_aco("to");
 
         let modal = WordSet::new(&[
             "can",
@@ -66,10 +65,7 @@ impl Default for ThingThink {
             Box::new(adverb_of_frequency),
         ]);
 
-        let pattern = SequenceExpr::default()
-            .then(pre_context)
-            .t_ws()
-            .t_aco("thing");
+        let pattern = SequenceExpr::with(pre_context).t_ws().t_aco("thing");
 
         Self {
             expr: Box::new(pattern),

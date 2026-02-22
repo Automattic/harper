@@ -13,8 +13,7 @@ impl Default for ModalBeAdjective {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then(ModalVerb::default())
+                SequenceExpr::with(ModalVerb::default())
                     .t_ws()
                     .then_kind_is_but_isnt_any_of_except(
                         TokenKind::is_adjective,
