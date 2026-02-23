@@ -107,7 +107,7 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 
 impl Dictionary for FstDictionary {
     fn get_word_map(&self) -> &WordMap {
-        self.word_map.get_word_map()
+        &self.word_map
     }
 
     fn fuzzy_match(
