@@ -60,6 +60,13 @@ export default defineManifest({
 	},
 	content_scripts: [
 		{
+			matches: ['https://docs.google.com/document/*'],
+			all_frames: false,
+			js: ['src/contentScript/googleDocsBootstrap.js'],
+			run_at: 'document_start',
+			world: 'MAIN',
+		},
+		{
 			matches: ['<all_urls>'],
 			all_frames: true,
 			match_about_blank: true,

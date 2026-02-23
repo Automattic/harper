@@ -17,31 +17,6 @@ import {
 } from './unpackLint';
 
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
-const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-const GOOGLE_DOCS_RECTS_ATTR_PREFIX = 'data-harper-rects-';
-const GOOGLE_DOCS_LAYOUT_EPOCH_ATTR = 'data-harper-layout-epoch';
-const GOOGLE_DOCS_LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
-const GOOGLE_DOCS_GET_RECTS_EVENT = 'harper:gdocs:get-rects';
-
-const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
-
-type GoogleDocsRect = {
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-};
-
-type GoogleDocsRectCacheEntry = {
-	rects: GoogleDocsRect[];
-	scrollTop: number;
-	layoutEpoch: number;
-};
-
-const googleDocsRectCache = new Map<string, GoogleDocsRectCacheEntry>();
-let googleDocsRectRequestCounter = 0;
-let lastGoogleDocsLayoutEpoch = -1;
-let lastGoogleDocsSource = '';
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -130,11 +105,6 @@ function computeGoogleDocsLintBoxes(
 ): IgnorableLintBox[] {
 	try {
 		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
-		const mainWorldBridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
-		const layoutEpoch = Number(mainWorldBridge?.getAttribute(GOOGLE_DOCS_LAYOUT_EPOCH_ATTR) ?? '0');
-		const layoutReason = String(
-			mainWorldBridge?.getAttribute(GOOGLE_DOCS_LAYOUT_REASON_ATTR) ?? '',
-		);
 		const source = target.textContent ?? '';
 
 		if (!editor) {
@@ -145,85 +115,27 @@ function computeGoogleDocsLintBoxes(
 			return [];
 		}
 
-		if (
-			Number.isFinite(layoutEpoch) &&
-			layoutEpoch !== lastGoogleDocsLayoutEpoch &&
-			lastGoogleDocsLayoutEpoch >= 0
-		) {
-			if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(layoutReason)) {
-				googleDocsRectCache.clear();
-			}
-		}
-
-		if (Number.isFinite(layoutEpoch)) {
-			lastGoogleDocsLayoutEpoch = layoutEpoch;
-		}
-
-		if (source !== lastGoogleDocsSource) {
-			googleDocsRectCache.clear();
-			lastGoogleDocsSource = source;
-		}
-
-		const cacheKey = `${lint.span.start}:${lint.span.end}`;
-		const scrollTop = editor.scrollTop;
-		let rects: GoogleDocsRect[] = [];
-
-		const cached = googleDocsRectCache.get(cacheKey);
-		if (cached && cached.layoutEpoch === layoutEpoch) {
-			rects = cached.rects.map((rect) => ({ ...rect }));
-		} else if (
-			cached &&
-			GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(layoutReason) &&
-			Number.isFinite(cached.scrollTop)
-		) {
-			rects = projectGoogleDocsRects(cached.rects, cached.scrollTop, scrollTop);
-			if (rects.length > 0) {
-				googleDocsRectCache.set(cacheKey, {
-					rects: rects.map((rect) => ({ ...rect })),
-					scrollTop,
-					layoutEpoch,
-				});
-			}
-		} else if (mainWorldBridge) {
-			const rawRects = requestGoogleDocsRects(mainWorldBridge, lint.span.start, lint.span.end);
-
-			if (rawRects) {
-				try {
-					const parsed = JSON.parse(rawRects);
-
-					if (Array.isArray(parsed)) {
-						rects = parsed.filter(
-							(rect): rect is GoogleDocsRect =>
-								typeof rect?.x === 'number' &&
-								typeof rect?.y === 'number' &&
-								typeof rect?.width === 'number' &&
-								typeof rect?.height === 'number',
-						);
-
-						if (rects.length > 0) {
-							googleDocsRectCache.set(cacheKey, {
-								rects: rects.map((rect) => ({ ...rect })),
-								scrollTop,
-								layoutEpoch,
-							});
-						}
-					}
-				} catch {
-					// Invalid payloads are ignored.
-				}
-			}
-		}
-
-		if (rects.length === 0) {
+		const range = getRangeForTextSpan(target, lint.span as Span);
+		if (!range) {
 			return [];
 		}
 
-		return rects.map((rect) => {
-			return {
-				x: rect.x,
-				y: rect.y,
-				width: rect.width,
-				height: rect.height,
+		const targetRects = Array.from(range.getClientRects ? range.getClientRects() : []);
+		const elBox = domRectToBox(range.getBoundingClientRect());
+		(range as any).detach?.();
+
+		const boxes: IgnorableLintBox[] = [];
+		for (const targetRect of targetRects as DOMRect[]) {
+			if (!isBottomEdgeInBox(targetRect, elBox)) {
+				continue;
+			}
+
+			const shrunkBox = shrinkBoxToFit(targetRect, elBox);
+			boxes.push({
+				x: shrunkBox.x,
+				y: shrunkBox.y,
+				width: shrunkBox.width,
+				height: shrunkBox.height,
 				lint,
 				source: editor,
 				rule,
@@ -233,48 +145,13 @@ function computeGoogleDocsLintBoxes(
 					replaceGoogleDocsValue(lint.span, replacementText);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
-			};
-		});
+			});
+		}
+
+		return boxes;
 	} catch {
 		return [];
 	}
-}
-
-function projectGoogleDocsRects(
-	rects: GoogleDocsRect[],
-	fromScrollTop: number,
-	toScrollTop: number,
-): GoogleDocsRect[] {
-	const deltaY = toScrollTop - fromScrollTop;
-
-	return rects.map((rect) => ({
-		...rect,
-		y: rect.y - deltaY,
-	}));
-}
-
-function requestGoogleDocsRects(
-	mainWorldBridge: HTMLElement,
-	start: number,
-	end: number,
-): string | null {
-	const requestId = `rect-${googleDocsRectRequestCounter++}`;
-	const responseAttr = `${GOOGLE_DOCS_RECTS_ATTR_PREFIX}${requestId}`;
-
-	document.dispatchEvent(
-		new CustomEvent(GOOGLE_DOCS_GET_RECTS_EVENT, {
-			detail: {
-				requestId,
-				start,
-				end,
-			},
-		}),
-	);
-
-	const raw = mainWorldBridge.getAttribute(responseAttr);
-	mainWorldBridge.removeAttribute(responseAttr);
-
-	return raw;
 }
 
 /** Transform an arbitrary suggestion to the equivalent replacement text. */

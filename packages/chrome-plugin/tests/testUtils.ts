@@ -73,7 +73,7 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 	// Wait briefly for at least one highlight to appear.
 	// If none appear within a reasonable time, return false.
 	try {
-		await highlights.first().waitFor({ state: 'visible', timeout: 5000 });
+		await highlights.first().waitFor({ state: 'visible', timeout: 12000 });
 	} catch {
 		return false;
 	}
@@ -137,6 +137,7 @@ export async function testBasicSuggestion(
 	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
 	test('Can apply basic suggestion.', async ({ page }) => {
+		test.slow();
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
@@ -146,9 +147,8 @@ export async function testBasicSuggestion(
 		}
 		await replaceEditorContent(editor, 'This is an test');
 
-		await page.waitForTimeout(6000);
-
-		await clickHarperHighlight(page);
+		const opened = await clickHarperHighlight(page);
+		expect(opened).toBe(true);
 		await page.getByTitle('Replace with "a"').click();
 
 		await page.waitForTimeout(3000);
@@ -175,6 +175,7 @@ export async function testCanIgnoreSuggestion(
 	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
 	test('Can ignore suggestion.', async ({ page }) => {
+		test.slow();
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
@@ -185,8 +186,6 @@ export async function testCanIgnoreSuggestion(
 
 		const cacheSalt = randomString(5);
 		await replaceEditorContent(editor, cacheSalt);
-
-		await page.waitForTimeout(6000);
 
 		// Open the popup for the first highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
@@ -210,6 +209,7 @@ export async function testCanBlockRuleSuggestion(
 	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
 	test('Can hide with rule block button', async ({ page }) => {
+		test.slow();
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
@@ -219,9 +219,8 @@ export async function testCanBlockRuleSuggestion(
 		}
 		await replaceEditorContent(editor, 'This is an test.');
 
-		await page.waitForTimeout(6000);
-
-		await clickHarperHighlight(page);
+		const opened = await clickHarperHighlight(page);
+		expect(opened).toBe(true);
 
 		await page.getByTitle('Disable the AnA rule').click();
 

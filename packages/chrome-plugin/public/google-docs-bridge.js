@@ -24,6 +24,8 @@
 	const TEXT_EVENT_IFRAME_SELECTOR = '.docs-texteventtarget-iframe';
 	const LAYOUT_EPOCH_ATTR = 'data-harper-layout-epoch';
 	const LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
+	const SELECTION_START_ATTR = 'data-harper-selection-start';
+	const SELECTION_END_ATTR = 'data-harper-selection-end';
 	const EVENT_TEXT_UPDATED = 'harper:gdocs:text-updated';
 	const EVENT_LAYOUT_CHANGED = 'harper:gdocs:layout-changed';
 	const EVENT_GET_RECTS = 'harper:gdocs:get-rects';
@@ -32,6 +34,9 @@
 	let isComputingRects = false;
 	let layoutEpoch = 0;
 	let layoutBumpPending = false;
+	let lastCaretChoice = null;
+	const CARET_DIRECTION_THRESHOLD = 20;
+	const CARET_CHOICE_STALE_MS = 1500;
 
 	/** @type {HTMLElement | null} */
 	let bridge = document.getElementById(BRIDGE_ID);
@@ -90,6 +95,18 @@
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.getText !== 'function') return;
 			window.__harperGoogleDocsAnnotatedText = annotated;
+			try {
+				const selection = annotated.getSelection?.()?.[0];
+				const endpoints = getSelectionEndpoints(selection);
+				const bridgeNode = ensureBridgeExists();
+				if (endpoints) {
+					bridgeNode.setAttribute(SELECTION_START_ATTR, String(endpoints.start));
+					bridgeNode.setAttribute(SELECTION_END_ATTR, String(endpoints.end));
+				} else {
+					bridgeNode.removeAttribute(SELECTION_START_ATTR);
+					bridgeNode.removeAttribute(SELECTION_END_ATTR);
+				}
+			} catch {}
 			const nextText = annotated.getText();
 			const bridgeNode = ensureBridgeExists();
 			if (bridgeNode.textContent !== nextText) {
@@ -106,18 +123,27 @@
 	 */
 	const getCaretRect = (annotated, position) => {
 		annotated.setSelection(position, position);
+		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
+		const epsilon = 0.5;
 		/** @type {Rect[]} */
 		const carets = Array.from(document.querySelectorAll(CARET_SELECTOR))
 			.map((caret) => {
 				const rect = caret.getBoundingClientRect();
 				const style = window.getComputedStyle(caret);
+				const isFullyOnScreen =
+					rect.left >= -epsilon &&
+					rect.top >= -epsilon &&
+					rect.right <= viewportWidth + epsilon &&
+					rect.bottom <= viewportHeight + epsilon;
 				if (
 					!rect ||
 					rect.width <= 0 ||
 					rect.height <= 0 ||
 					style.display === 'none' ||
 					style.visibility === 'hidden' ||
-					style.opacity === '0'
+					style.opacity === '0' ||
+					!isFullyOnScreen
 				) {
 					return null;
 				}
@@ -127,7 +153,48 @@
 		if (carets.length === 0) return null;
 		const inPage = carets.filter((rect) => rect.x > 100);
 		const pool = inPage.length > 0 ? inPage : carets;
-		return pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
+		const now = Date.now();
+		if (!lastCaretChoice || now - lastCaretChoice.at > CARET_CHOICE_STALE_MS) {
+			const seed = pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
+			lastCaretChoice = { rect: seed, position, at: now };
+			return seed;
+		}
+
+		const deltaPos = position - lastCaretChoice.position;
+		let chosen = null;
+
+		if (deltaPos > CARET_DIRECTION_THRESHOLD) {
+			const downward = pool.filter((rect) => rect.y >= lastCaretChoice.rect.y - 2);
+			if (downward.length > 0) {
+				chosen = downward.reduce((best, rect) => {
+					if (rect.y > best.y + 1) return rect;
+					if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
+					return best;
+				}, downward[0]);
+			}
+		} else if (deltaPos < -CARET_DIRECTION_THRESHOLD) {
+			const upward = pool.filter((rect) => rect.y <= lastCaretChoice.rect.y + 2);
+			if (upward.length > 0) {
+				chosen = upward.reduce((best, rect) => {
+					if (rect.y < best.y - 1) return rect;
+					if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
+					return best;
+				}, upward[0]);
+			}
+		}
+
+		if (!chosen) {
+			chosen = pool.reduce((best, rect) => {
+				const bestScore =
+					Math.abs(best.y - lastCaretChoice.rect.y) * 4 + Math.abs(best.x - lastCaretChoice.rect.x);
+				const rectScore =
+					Math.abs(rect.y - lastCaretChoice.rect.y) * 4 + Math.abs(rect.x - lastCaretChoice.rect.x);
+				return rectScore < bestScore ? rect : best;
+			}, pool[0]);
+		}
+
+		lastCaretChoice = { rect: chosen, position, at: now };
+		return chosen;
 	};
 
 	/**
@@ -177,6 +244,113 @@
 		} catch {}
 	};
 
+	/**
+	 * @param {number} start
+	 * @param {number} end
+	 * @param {SelectionEndpoints | null} selection
+	 * @returns {boolean}
+	 */
+	const isSpanNearSelection = (start, end, selection) => {
+		if (!selection) return false;
+		const spanStart = Math.max(0, Math.min(start, end));
+		const spanEnd = Math.max(spanStart, Math.max(start, end));
+		const selStart = Math.min(selection.start, selection.end);
+		const selEnd = Math.max(selection.start, selection.end);
+		const maxDistance = 2000;
+
+		if (spanStart <= selEnd && spanEnd >= selStart) {
+			return true;
+		}
+		if (spanEnd < selStart) {
+			return selStart - spanEnd <= maxDistance;
+		}
+		return spanStart - selEnd <= maxDistance;
+	};
+
+	/**
+	 * @typedef {{
+	 *   node: Window | Element,
+	 *   left: number,
+	 *   top: number
+	 * }} ScrollSnapshot
+	 */
+
+	/**
+	 * @returns {ScrollSnapshot[]}
+	 */
+	const snapshotScroll = () => {
+		/** @type {ScrollSnapshot[]} */
+		const snapshots = [{ node: window, left: window.scrollX, top: window.scrollY }];
+		const selectors = [EDITOR_SELECTOR, EDITOR_CONTAINER_SELECTOR, DOCS_EDITOR_SELECTOR];
+		for (const selector of selectors) {
+			const node = document.querySelector(selector);
+			if (!(node instanceof Element)) continue;
+			if (snapshots.some((entry) => entry.node === node)) continue;
+			snapshots.push({ node, left: node.scrollLeft, top: node.scrollTop });
+		}
+		return snapshots;
+	};
+
+	/**
+	 * @param {ScrollSnapshot[]} snapshots
+	 * @returns {void}
+	 */
+	const restoreScroll = (snapshots) => {
+		for (const snap of snapshots) {
+			if (snap.node === window) {
+				if (window.scrollX !== snap.left || window.scrollY !== snap.top) {
+					window.scrollTo(snap.left, snap.top);
+				}
+				continue;
+			}
+			if (!(snap.node instanceof Element)) continue;
+			if (snap.node.scrollLeft !== snap.left) {
+				snap.node.scrollLeft = snap.left;
+			}
+			if (snap.node.scrollTop !== snap.top) {
+				snap.node.scrollTop = snap.top;
+			}
+		}
+	};
+
+	/**
+	 * @template T
+	 * @param {() => T} fn
+	 * @returns {T}
+	 */
+	const withSuppressedScrolling = (fn) => {
+		/** @type {Array<() => void>} */
+		const restorers = [];
+		const noop = () => {};
+		const tryOverride = (obj, key) => {
+			if (!obj) return;
+			const original = obj[key];
+			if (typeof original !== 'function') return;
+			try {
+				obj[key] = noop;
+				restorers.push(() => {
+					try {
+						obj[key] = original;
+					} catch {}
+				});
+			} catch {}
+		};
+
+		tryOverride(window, 'scrollTo');
+		tryOverride(window, 'scrollBy');
+		tryOverride(Element.prototype, 'scrollIntoView');
+		tryOverride(Element.prototype, 'scrollTo');
+		tryOverride(Element.prototype, 'scrollBy');
+
+		try {
+			return fn();
+		} finally {
+			for (let i = restorers.length - 1; i >= 0; i -= 1) {
+				restorers[i]();
+			}
+		}
+	};
+
 	/** @param {Event} event */
 	document.addEventListener(EVENT_GET_RECTS, (event) => {
 		try {
@@ -192,15 +366,24 @@
 
 			const currentSelection = annotated.getSelection?.()?.[0];
 			const previousSelection = getSelectionEndpoints(currentSelection);
+			if (!isSpanNearSelection(start, end, previousSelection)) {
+				ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, '[]');
+				return;
+			}
 
 			/** @type {Rect[]} */
 			const rects = [];
 			isComputingRects = true;
+			const scrollSnapshot = snapshotScroll();
 			try {
 				const spanStart = Math.max(0, Math.min(start, end));
 				const spanEnd = Math.max(spanStart, end);
-				const startRect = getCaretRect(annotated, spanStart);
-				const endRect = getCaretRect(annotated, spanEnd);
+				const { startRect, endRect } = withSuppressedScrolling(() => {
+					return {
+						startRect: getCaretRect(annotated, spanStart),
+						endRect: getCaretRect(annotated, spanEnd),
+					};
+				});
 
 				if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
 					rects.push({
@@ -220,6 +403,8 @@
 			} finally {
 				isComputingRects = false;
 				restoreSelection(annotated, previousSelection);
+				restoreScroll(scrollSnapshot);
+				requestAnimationFrame(() => restoreScroll(scrollSnapshot));
 			}
 
 			ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
