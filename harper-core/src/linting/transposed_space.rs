@@ -2,7 +2,7 @@ use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{Dictionary, CommonDictFuncs},
+    spell::{CommonDictFuncs, Dictionary},
 };
 
 pub struct TransposedSpace<D: Dictionary + 'static> {

@@ -404,7 +404,8 @@ impl Linter {
     pub fn import_words(&mut self, additional_words: Vec<String>) {
         let init_len = self.user_dictionary.word_count();
 
-        self.user_dictionary.extend(additional_words.iter().map(|word| {
+        self.user_dictionary
+            .extend(additional_words.iter().map(|word| {
                 WordMapEntry::new(word.chars().collect::<CharString>()).with_md(DictWordMetadata {
                     dialects: DialectFlags::from_dialect(self.dialect.into()),
                     ..Default::default()
