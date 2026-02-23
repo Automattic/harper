@@ -1,9 +1,8 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
-    expr::{Expr, FixedPhrase, SequenceExpr},
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 /// Both `another thing coming` and `another think coming` are correct, but `another think coming` is the original.
@@ -15,9 +14,8 @@ impl Default for AnotherThinkComing {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["had", "has", "have", "got"]))
-                    .then(FixedPhrase::from_phrase(" another thing coming")),
+                SequenceExpr::word_set(&["had", "has", "have", "got"])
+                    .then_fixed_phrase(" another thing coming"),
             ),
         }
     }

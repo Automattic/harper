@@ -12,8 +12,7 @@ impl Default for ItLooksLikeThat {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then_fixed_phrase("it looks like that")
+                SequenceExpr::fixed_phrase("it looks like that")
                     .then_whitespace()
                     .then_kind_where(|kind| {
                         // Heuristics on the word after "that" which show "that" was used

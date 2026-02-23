@@ -1,0 +1,34 @@
+expr main <([((am exited [about, for, to, that])), ((are exited [about, for, to, that])), ((is exited [about, for, to, that])), ((was exited [about, for, to, that])), ((were exited [about, for, to, that])), ((be exited [about, for, to, that])), ((been exited [about, for, to, that])), ((being exited [about, for, to, that])), ((am ADV exited [about, for, to, that])), ((are ADV exited [about, for, to, that])), ((is ADV exited [about, for, to, that])), ((was ADV exited [about, for, to, that])), ((were ADV exited [about, for, to, that])), ((be ADV exited [about, for, to, that])), ((been ADV exited [about, for, to, that])), ((being ADV exited [about, for, to, that])), ((am [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((are [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((is [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((was [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((were [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((be [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((been [really, very, so, super, quite, extremely] exited [about, for, to, that])), ((being [really, very, so, super, quite, extremely] exited [about, for, to, that]))]), exited>
+
+let message "This word choice looks off for this meaning."
+let description "Changes `exited` to `excited` when the sentence indicates enthusiasm or anticipation."
+let kind "Typo"
+let becomes "excited"
+let strategy "MatchCase"
+
+# True positives
+
+test "She is exited about the launch." "She is excited about the launch."
+test "I am exited for the trip." "I am excited for the trip."
+test "They were exited to join." "They were excited to join."
+test "We are really exited about this update." "We are really excited about this update."
+test "He was very exited for the game." "He was very excited for the game."
+test "It is so exited to start." "It is so excited to start."
+test "YOU ARE EXITED ABOUT THIS." "YOU ARE EXCITED ABOUT THIS."
+test "I am exited that we shipped." "I am excited that we shipped."
+
+# False positives / true negatives
+
+test "The process exited with code 1." "The process exited with code 1."
+test "She exited the editor without saving." "She exited the editor without saving."
+test "The container is in exited state." "The container is in exited state."
+test "He is excited about the launch." "He is excited about the launch."
+test "They were excited to join." "They were excited to join."
+test "The user exited, then rejoined." "The user exited, then rejoined."
+
+# False negatives / boundary behavior
+
+test "I feel exited about this." "I feel exited about this."
+test "Everyone seemed exited to help." "Everyone seemed exited to help."
+test "She sounded exited for the interview." "She sounded exited for the interview."
+test "I got exited about this." "I got exited about this."

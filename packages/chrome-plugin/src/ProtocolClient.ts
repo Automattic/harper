@@ -1,7 +1,7 @@
 import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey, Hotkey } from './protocol';
+import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -161,5 +161,19 @@ export default class ProtocolClient {
 		formData: Record<string, string>,
 	): Promise<boolean> {
 		return (await chrome.runtime.sendMessage({ kind: 'postFormData', url, formData })).success;
+	}
+
+	public static async getWeirpacks(): Promise<WeirpackMeta[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getWeirpacks' })).weirpacks;
+	}
+
+	public static async addWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'addWeirpack', filename, bytes: Array.from(bytes) });
+	}
+
+	public static async removeWeirpack(id: string): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'removeWeirpack', id });
 	}
 }

@@ -31428,7 +31428,7 @@ kidskin/Ng
 kielbasa/NgS
 kielbasi/N
 kike/NSV
-kill/~Vd>GSNgzZ
+kill/~Vd>GSNgzZB
 killdeer/NSg
 killer/~NgJ
 killing/~JNgV6
@@ -51762,6 +51762,7 @@ vicuña/NgS
 vicuna/NgS
 videlicet/
 video/~NwSgVGd
+video game/NgS
 videocassette/NSg
 videoconferencing/VNmg
 videodisc/NgS
@@ -53690,6 +53691,8 @@ EMR/NOSg
 EOF/NgS             # end of file
 EPUB/NOSg           # e-book format
 ESLint/Og           # JavaScript linter
+ESP32/Og            # microcontroller family
+ESP8266/Og          # microcontroller family
 EV/NSg              # electric vehicle
 EXIF                # metadata
 ElasticSearch/Sg
@@ -53759,6 +53762,7 @@ HDR/J               # high dynamic range
 HEIC/ONSg           # High Efficiency Image Container
 HEIF/ONSg           # High Efficiency Image Format
 HEVC/ONSg           # High Efficiency Video Coding
+HMAC/Ng             # Hash-based Message Authentication Code
 HQL/N
 HTML5
 Hasan/OgS           # surname, given name
@@ -53844,6 +53848,7 @@ MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
 MMX/Ng              # multimedia extension
 MPC/ONg
+MQTT/Og             # messaging protocol
 MRU                 # most recently used
 MSB/NgS             # most significant bit/byte
 MSE/NgS             # mean squared error
@@ -54015,6 +54020,7 @@ TL;DR               # internet slang
 TLS/Og              # Transport Layer Security
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/Ng             # configuration file format
+TOTP/Ng             # time-based one-time password
 TSMC/Og             # Taiwanese Semiconductor Manufacturing Company
 TSR/NgS             # terminate and stay resident
 TTS/Ng              # text-to-speech
@@ -54046,6 +54052,7 @@ ULA/NgS             # uncommitted logic array
 URI/NSg             # uniform resource identifier
 UUID/NgS            # universal unique identifier
 UX/Ng               # user experience
+UpCloud/Og          # cloud service provider
 VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
@@ -54101,6 +54108,7 @@ YubiKey/Sg
 ZFS/Ng              # file system
 Zettelkasten/Ng
 Zig/Og              # programming language
+Zigbee/Og           # wireless protocol
 Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9

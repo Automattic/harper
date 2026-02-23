@@ -22,13 +22,13 @@ const PATTERNS: &[(&[&str], &str, &[&str])] = &[
 impl Default for PluralWrongWordOfPhrase {
     fn default() -> Self {
         let word_str = |w| {
-            SequenceExpr::default().then(move |t: &Token, s: &[char]| {
+            SequenceExpr::with(move |t: &Token, s: &[char]| {
                 t.kind.is_word() && t.span.get_content(s).eq_ignore_ascii_case_str(w)
             })
         };
 
         let word_string = |w: String| {
-            SequenceExpr::default().then(move |t: &Token, s: &[char]| {
+            SequenceExpr::with(move |t: &Token, s: &[char]| {
                 t.kind.is_word() && t.span.get_content(s).eq_ignore_ascii_case_str(&w)
             })
         };

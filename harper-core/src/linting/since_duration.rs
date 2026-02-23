@@ -27,8 +27,7 @@ impl Default for SinceDuration {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then_any_capitalization_of("since")
+                SequenceExpr::any_capitalization_of("since")
                     .then_whitespace()
                     .then(DurationExpr)
                     .then_optional(

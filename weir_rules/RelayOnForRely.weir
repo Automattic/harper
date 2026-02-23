@@ -1,0 +1,34 @@
+expr main [(relay on)]
+
+let message "Use `rely on` when you mean depend on something."
+let description "Corrects the frequent typo where `relay` is used in place of `rely` in the phrase `relay on`."
+let kind "Grammar"
+let becomes "rely on"
+let strategy "MatchCase"
+
+# True positives
+
+test "They relay on shared docs to coordinate releases." "They rely on shared docs to coordinate releases."
+test "I relay on this checklist every Friday." "I rely on this checklist every Friday."
+test "We relay on each other during incidents." "We rely on each other during incidents."
+test "You relay on cached responses too much." "You rely on cached responses too much."
+test "Many users relay on search snippets." "Many users rely on search snippets."
+test "Please relay on us while this stabilizes." "Please rely on us while this stabilizes."
+test "RELAY ON ME if the deployment fails." "RELY ON ME if the deployment fails."
+test "Startups often relay on investor timing." "Startups often rely on investor timing."
+
+# Potential false negatives (currently out of scope)
+
+allows "They relayed on old procedures for years."
+allows "She relays on luck far too often."
+allows "The team is relaying on stale metrics."
+
+# False positives / true negatives
+
+allows "They rely on shared docs to coordinate releases."
+allows "I relay status updates every morning."
+allows "We relayed the interview on public radio."
+allows "A relay switch on the board is overheating."
+allows "Please relay this note to the next person."
+allows "Rely on tested rollbacks for safer releases."
+allows "The relay unit on shelf three is new."

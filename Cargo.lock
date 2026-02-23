@@ -2723,6 +2723,7 @@ dependencies = [
  "serde_json",
  "strum",
  "strum_macros",
+ "yansi",
 ]
 
 [[package]]
@@ -2751,6 +2752,7 @@ dependencies = [
  "tree-sitter-lua",
  "tree-sitter-nix",
  "tree-sitter-php",
+ "tree-sitter-powershell",
  "tree-sitter-ruby",
  "tree-sitter-rust",
  "tree-sitter-scala",
@@ -6021,6 +6023,16 @@ name = "tree-sitter-php"
 version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0d8c17c3ab69052c5eeaa7ff5cd972dd1bc25d1b97ee779fec391ad3b5df5592"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-powershell"
+version = "0.25.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "415ec6251d133d26b4f62c60721149fe36c315334f47812450187d6ea59cffdf"
 dependencies = [
  "cc",
  "tree-sitter-language",

@@ -55,6 +55,7 @@
 		"onLanguage:nix",
 		"onLanguage:org",
 		"onLanguage:php",
+		"onLanguage:powershell",
 		"onLanguage:plaintext",
 		"onLanguage:python",
 		"onLanguage:ruby",

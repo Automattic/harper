@@ -1,0 +1,38 @@
+expr subjects [i, you, we, they, he, she, it]
+expr baseVerbs [be, have, do, go, get, make, take, see, say, know, think, find, use, work, help, start, stop, leave, feel, need, want]
+expr main <([(@subjects cold @baseVerbs), (@subjects cold ADV @baseVerbs), (@subjects cold not @baseVerbs), (@subjects cold never @baseVerbs), (@subjects cold ADV not @baseVerbs)]), cold>
+
+let message "This looks like a modal typo."
+let description "Rewrites `cold` to `could` when it appears in common subject-plus-verb modal contexts."
+let kind "Typo"
+let becomes "could"
+let strategy "MatchCase"
+
+# True positives
+
+test "I cold go now." "I could go now."
+test "You cold make dinner tonight." "You could make dinner tonight."
+test "We cold take the train." "We could take the train."
+test "They cold see the issue." "They could see the issue."
+test "He cold feel the difference." "He could feel the difference."
+test "She cold help us later." "She could help us later."
+test "It cold work this time." "It could work this time."
+test "I cold not find the setting." "I could not find the setting."
+test "We cold never know the reason." "We could never know the reason."
+test "They cold really use a break." "They could really use a break."
+test "I COLD GO IF NEEDED." "I COULD GO IF NEEDED."
+
+# False positives / true negatives
+
+allows "It was cold outside all day."
+allows "A cold drink helped a lot."
+allows "He caught a cold last week."
+allows "The soup went cold quickly."
+allows "I enjoy cold brew coffee."
+allows "She gave me a cold stare."
+
+# False negatives (accepted limits)
+
+allows "I cold call prospects each morning."
+allows "You cold text me later."
+allows "They cold build a prototype fast."
