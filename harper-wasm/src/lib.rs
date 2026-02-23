@@ -274,8 +274,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -316,7 +315,7 @@ impl Linter {
                     .into_iter()
                     .map(|l| {
                         let problem_text = l.span.get_content_string(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
 
                         Lint::new(l, span, problem_text, language)
                     })
@@ -335,8 +334,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<Lint> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -370,7 +368,7 @@ impl Linter {
             .into_iter()
             .map(|l| {
                 let problem_text = l.span.get_content_string(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                let span = Into::<Span>::into(l.span).to_js_indices(&source);
                 Lint::new(l, span, problem_text, language)
             })
             .collect()

@@ -17,7 +17,7 @@ use crate::{OrdinalSuffix, Span};
 /// A document containing some amount of lexed and parsed English text.
 #[derive(Debug, Clone)]
 pub struct Document {
-    source: Lrc<Vec<char>>,
+    source: Lrc<[char]>,
     tokens: Vec<Token>,
 }
 
@@ -53,26 +53,22 @@ impl Document {
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
     pub fn new(text: &str, parser: &impl Parser, dictionary: &WordMap) -> Self {
-        let source: Vec<_> = text.chars().collect();
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, dictionary)
+        Self::new_from_vec(source, parser, dictionary)
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and the included curated dictionary.
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
-        let source: Vec<_> = text.chars().collect();
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, WordMap::curated())
+        Self::new_from_vec(source, parser, WordMap::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new_from_vec(
-        source: Lrc<Vec<char>>,
-        parser: &impl Parser,
-        dictionary: &WordMap,
-    ) -> Self {
+    pub fn new_from_vec(source: Lrc<[char]>, parser: &impl Parser, dictionary: &WordMap) -> Self {
         let tokens = parser.parse(&source);
 
         let mut document = Self { source, tokens };
@@ -93,7 +89,7 @@ impl Document {
     /// This avoids running potentially expensive metadata generation code, so this is more
     /// efficient if you don't need that information.
     pub(crate) fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
-        let source = Lrc::new(text.chars().collect_vec());
+        let source: Lrc<_> = text.chars().collect();
         let tokens = parser.parse(&source);
         let mut document = Self { source, tokens };
         document.apply_fixups();

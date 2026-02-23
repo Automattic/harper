@@ -13,20 +13,20 @@ use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
 pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &WordMap) -> String {
-    let source: Vec<char> = source.chars().collect();
+    let source: Lrc<_> = source.chars().collect();
 
-    make_title_case_chars(Lrc::new(source), parser, dict).to_string()
+    make_title_case_chars(source, parser, dict).to_string()
 }
 
 // Make a given string [title case](https://en.wikipedia.org/wiki/Title_case) following the Chicago Manual of Style.
 pub fn make_title_case_chars(
-    source: Lrc<Vec<char>>,
+    source: Lrc<[char]>,
     parser: &impl Parser,
     dict: &WordMap,
 ) -> Vec<char> {
     let document = Document::new_from_vec(source.clone(), parser, dict.get_word_map());
 
-    make_title_case(document.get_tokens(), source.as_slice(), dict)
+    make_title_case(document.get_tokens(), &source, dict)
 }
 
 pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> Option<Vec<char>> {
