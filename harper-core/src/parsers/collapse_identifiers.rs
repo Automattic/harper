@@ -1,5 +1,5 @@
 use std::collections::VecDeque;
-use std::sync::{Arc, LazyLock};
+use std::sync::Arc;
 
 use itertools::Itertools;
 
@@ -21,13 +21,15 @@ impl CollapseIdentifiers {
     }
 }
 
-static WORD_OR_NUMBER: LazyLock<SequenceExpr> = LazyLock::new(|| {
-    SequenceExpr::any_word().then_one_or_more(
-        SequenceExpr::default()
-            .then_case_separator()
-            .then_any_word(),
-    )
-});
+thread_local! {
+    static WORD_OR_NUMBER: SequenceExpr = {
+        SequenceExpr::any_word().then_one_or_more(
+            SequenceExpr::default()
+                .then_case_separator()
+                .then_any_word(),
+        )
+    };
+}
 
 impl Parser for CollapseIdentifiers {
     fn parse(&self, source: &[char]) -> Vec<Token> {
@@ -35,19 +37,21 @@ impl Parser for CollapseIdentifiers {
 
         let mut to_remove = VecDeque::default();
 
-        for tok_span in WORD_OR_NUMBER
-            .iter_matches(&tokens, source)
-            .collect::<Vec<_>>()
-        {
-            let start_tok = &tokens[tok_span.start];
-            let end_tok = &tokens[tok_span.end - 1];
-            let char_span = Span::new(start_tok.span.start, end_tok.span.end);
+        WORD_OR_NUMBER.with(|word_or_number| {
+            for tok_span in word_or_number
+                .iter_matches(&tokens, source)
+                .collect::<Vec<_>>()
+            {
+                let start_tok = &tokens[tok_span.start];
+                let end_tok = &tokens[tok_span.end - 1];
+                let char_span = Span::new(start_tok.span.start, end_tok.span.end);
 
-            if self.dict.contains_word(char_span.get_content(source)) {
-                tokens[tok_span.start] = Token::new(char_span, TokenKind::blank_word());
-                to_remove.extend(tok_span.start + 1..tok_span.end);
+                if self.dict.contains_word(char_span.get_content(source)) {
+                    tokens[tok_span.start] = Token::new(char_span, TokenKind::blank_word());
+                    to_remove.extend(tok_span.start + 1..tok_span.end);
+                }
             }
-        }
+        });
 
         tokens.remove_indices(to_remove.into_iter().sorted().unique().collect());
 
@@ -66,9 +70,11 @@ mod tests {
         let source: Vec<_> = "kebab-case".chars().collect();
 
         assert_eq!(
-            WORD_OR_NUMBER
-                .iter_matches(&PlainEnglish.parse(&source), &source)
-                .count(),
+            WORD_OR_NUMBER.with(|word_or_number| {
+                word_or_number
+                    .iter_matches(&PlainEnglish.parse(&source), &source)
+                    .count()
+            }),
             1
         );
     }

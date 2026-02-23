@@ -1,7 +1,6 @@
 use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
-use std::sync::LazyLock;
 
 use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use itertools::Itertools;
@@ -517,7 +516,7 @@ impl Document {
     }
 
     fn condense_latin(&mut self) {
-        self.condense_expr(&*LATIN_EXPR, |_| {})
+        LATIN_EXPR.with(|expr| self.condense_expr(expr, |_| {}));
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -874,28 +873,34 @@ impl Document {
     }
 
     fn condense_ellipsis(&mut self) {
-        self.condense_expr(&*ELLIPSIS_EXPR, |tok| {
-            tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
+        ELLIPSIS_EXPR.with(|expr| {
+            self.condense_expr(expr, |tok| {
+                tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
+            })
         });
     }
 }
 
-static LATIN_EXPR: LazyLock<FirstMatchOf> = LazyLock::new(|| {
-    FirstMatchOf::new(vec![
-        Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
-        Box::new(
-            SequenceExpr::aco("et")
-                .then_whitespace()
-                .t_aco("al")
-                .then_period(),
-        ),
-    ])
-});
+thread_local! {
+    static LATIN_EXPR: FirstMatchOf = {
+        FirstMatchOf::new(vec![
+            Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
+            Box::new(
+                SequenceExpr::aco("et")
+                    .then_whitespace()
+                    .t_aco("al")
+                    .then_period(),
+            ),
+        ])
+    };
+}
 
-static ELLIPSIS_EXPR: LazyLock<Repeating> = LazyLock::new(|| {
-    let period = SequenceExpr::default().then_period();
-    Repeating::new(Box::new(period), 2)
-});
+thread_local! {
+    static ELLIPSIS_EXPR:Repeating = {
+        let period = SequenceExpr::default().then_period();
+        Repeating::new(Box::new(period), 2)
+    };
+}
 
 /// Creates functions necessary to implement [`TokenStringExt]` on a document.
 macro_rules! create_fns_on_doc {
