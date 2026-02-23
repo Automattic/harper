@@ -247,13 +247,10 @@ impl Linter {
     }
 
     pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
-        let source: Vec<_> = source_text.chars().collect();
+        let source: Lrc<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        let document =
+            Document::new_from_vec(source, &lint.language.create_parser(), &self.dictionary);
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
     }
@@ -284,8 +281,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -325,7 +321,7 @@ impl Linter {
                     .into_iter()
                     .map(|l| {
                         let problem_text = l.get_str(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
 
                         Lint::new(l, span, problem_text, language)
                     })
@@ -344,8 +340,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<Lint> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -378,7 +373,7 @@ impl Linter {
             .into_iter()
             .map(|l| {
                 let problem_text = l.get_str(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                let span = Into::<Span>::into(l.span).to_js_indices(&source);
                 Lint::new(l, span, problem_text, language)
             })
             .collect()
