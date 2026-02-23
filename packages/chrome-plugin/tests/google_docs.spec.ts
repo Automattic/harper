@@ -27,6 +27,28 @@ async function getGoogleDocText(page: Page) {
 	});
 }
 
+function normalizeGoogleDocText(text: string): string {
+	return text.replace(/\u0003/g, '').replace(/\r\n/g, '\n').trimEnd();
+}
+
+async function replaceGoogleDocRange(
+	page: Page,
+	start: number,
+	end: number,
+	replacementText: string,
+): Promise<void> {
+	await page.evaluate(
+		({ start, end, replacementText }) => {
+			document.dispatchEvent(
+				new CustomEvent('harper:gdocs:replace', {
+					detail: { start, end, replacementText },
+				}),
+			);
+		},
+		{ start, end, replacementText },
+	);
+}
+
 async function replaceDocumentContent(page: Page, line: string) {
 	await page.locator('.kix-appview-editor').click();
 	await page.keyboard.press('ControlOrMeta+A');
@@ -650,6 +672,83 @@ test('Google Docs: Harper can write a suggestion on second line', async ({ page 
 			return text ?? '';
 		})
 		.toContain(correctedNeedle);
+});
+
+test('Google Docs: applies expected suggestions across paragraph breaks', async ({ page }) => {
+	test.setTimeout(120000);
+
+	const input = `The Importance of Learning From Mistakes
+
+Everyone makes mistake’s in there life, but not everyone understand how important they really are. When a person fails at something, they often feel embarrased or disapointed, and they might try to avoid thinking about it again. However, mistakes is actually one of the most powerful ways to learn, because they show us what doesnt work and force us too try different approches.
+For example, a student who studies for a test but still gets a bad grade might think they are just not smart enough. But in reality, the problem could of been there study methods, or maybe they didnt focus on the right material. If they reflect on what went wrong, they can improve next time and do better. Without that failure, they wouldnt of had the motivation too change anything.
+Another reason mistakes are valuable is because they build resilience. When people never experience difficulty, they become fragile and unprepared for real challenges. Struggling teaches patience, persistance, and problem solving skill’s that success alone can not provide. In fact, many famous inventors failed hundreds of time’s before they created something useful, which proves that failure is often part of success rather then the opposite.
+In conclusion, mistakes should not be feared but embrased. They are essential for growth, learning, and developing strength of character. Instead of feeling ashamed, people should see errors as opportunity’s to become better, wiser, and more capable in the future.`;
+
+	const applyCharEdit = async (
+		needle: string,
+		offsetStart: number,
+		offsetEnd: number,
+		replacement: string,
+		expectedSnippet: string,
+	) => {
+		await expect
+			.poll(async () => {
+				const text = (await getGoogleDocText(page)) ?? '';
+				return text.indexOf(needle);
+			})
+			.toBeGreaterThanOrEqual(0);
+
+		const currentText = (await getGoogleDocText(page)) ?? '';
+		const needleStart = currentText.indexOf(needle);
+		expect(needleStart).toBeGreaterThanOrEqual(0);
+		await replaceGoogleDocRange(
+			page,
+			needleStart + offsetStart,
+			needleStart + offsetEnd,
+			replacement,
+		);
+
+		await expect
+			.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {
+				timeout: 20000,
+			})
+			.toContain(expectedSnippet);
+	};
+
+	await openGoogleDoc(page);
+	await replaceDocumentContent(page, input);
+
+	await expect
+		.poll(async () => page.locator('#harper-highlight').count(), { timeout: 20000 })
+		.toBeGreaterThan(0);
+	const highlightsBefore = await page.locator('#harper-highlight').count();
+	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain('The Importance of Learning From Mistakes');
+	const headingLine = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '').split('\n')[0] ?? '';
+	expect(headingLine).toBe('The Importance of Learning From Mistakes');
+	expect(headingLine.endsWith('.')).toBe(false);
+
+	const textBefore = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '');
+	const paragraphCountBefore = textBefore.split('\n').length;
+
+	// "too try" -> "to try" (delete one extra "o")
+	await applyCharEdit('too try', 2, 3, '', 'force us to try');
+	// "then" -> "than" (replace "e" with "a")
+	await applyCharEdit('rather then the opposite', 9, 10, 'a', 'rather than the opposite');
+	// "embrased" -> "embraced" (replace "s" with "c")
+	await applyCharEdit('embrased', 5, 6, 'c', 'but embraced. They are essential');
+
+	const finalText = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '');
+	expect(finalText.split('\n').length).toBe(paragraphCountBefore);
+	expect(finalText).toContain('force us to try');
+	expect(finalText).toContain('rather than the opposite');
+	expect(finalText).toContain('but embraced. They are essential');
+
+	const highlightsAfter = await page.locator('#harper-highlight').count();
+	expect(highlightsAfter).toBeLessThanOrEqual(highlightsBefore);
 });
 
 test('Google Docs: bridge returns lower Y rect for lower-line lint', async ({ page }) => {
