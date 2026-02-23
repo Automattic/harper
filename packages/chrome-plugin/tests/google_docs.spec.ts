@@ -27,6 +27,13 @@ async function getGoogleDocText(page: Page) {
 	});
 }
 
+async function getGoogleDocsTargetText(page: Page) {
+	return page.evaluate(() => {
+		const target = document.getElementById('harper-google-docs-target');
+		return target?.textContent ?? null;
+	});
+}
+
 function normalizeGoogleDocText(text: string): string {
 	return text.replace(/\u0003/g, '').replace(/\r\n/g, '\n').trimEnd();
 }
@@ -202,6 +209,30 @@ test('Google Docs: Harper can read lintable text', async ({ page }) => {
 		.toBeTruthy();
 });
 
+test('Google Docs: bridge target preserves paragraph breaks and source parity', async ({ page }) => {
+	const token = `harper-gdocs-linebreak-${Date.now()}`;
+	const firstLine = `Firstlineword${token}`;
+	const secondLine = `This is an test ${token}`;
+
+	await openGoogleDoc(page);
+	await replaceDocumentContent(page, `${firstLine}\n${secondLine}`);
+
+	await expect
+		.poll(
+			async () =>
+				normalizeGoogleDocText((await getGoogleDocText(page)) ?? '') ===
+				normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''),
+			{ timeout: 20000 },
+		)
+		.toBeTruthy();
+
+	const canonical = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '');
+	const target = normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? '');
+	expect(canonical).toContain(`\n${secondLine}`);
+	expect(target).toContain(`\n${secondLine}`);
+	expect(target).not.toContain(`${firstLine}${secondLine}`);
+});
+
 test('Google Docs: Harper can write a suggestion back into the document', async ({ page }) => {
 	const token = `harper-gdocs-write-${Date.now()}`;
 	const input = `This is an test ${token}`;
@@ -243,6 +274,39 @@ test('Google Docs: Harper can write a suggestion back into the document', async 
 			return text ?? '';
 		})
 		.toContain(corrected);
+});
+
+test('Google Docs: replace offsets derived from bridge text stay aligned across paragraphs', async ({
+	page,
+}) => {
+	const token = `harper-gdocs-replace-alignment-${Date.now()}`;
+	const firstLine = `PrefixLine${token}`;
+	const secondLine = `This is an test ${token}`;
+	const expected = `${firstLine}\nThis is a test ${token}`;
+
+	await openGoogleDoc(page);
+	await replaceDocumentContent(page, `${firstLine}\n${secondLine}`);
+
+	await expect
+		.poll(
+			async () =>
+				normalizeGoogleDocText((await getGoogleDocText(page)) ?? '') ===
+				normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''),
+			{ timeout: 20000 },
+		)
+		.toBeTruthy();
+
+	const targetText = (await getGoogleDocsTargetText(page)) ?? '';
+	const targetStart = targetText.indexOf(`an test ${token}`);
+	expect(targetStart).toBeGreaterThanOrEqual(0);
+
+	await replaceGoogleDocRange(page, targetStart, targetStart + 2, 'a');
+
+	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain(expected);
 });
 
 test('Google Docs: highlight appears near linted text', async ({ page }) => {
