@@ -22,7 +22,7 @@ impl CollapseIdentifiers {
 }
 
 static WORD_OR_NUMBER: LazyLock<SequenceExpr> = LazyLock::new(|| {
-    SequenceExpr::default().then_any_word().then_one_or_more(
+    SequenceExpr::any_word().then_one_or_more(
         SequenceExpr::default()
             .then_case_separator()
             .then_any_word(),

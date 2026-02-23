@@ -12,15 +12,14 @@ pub struct Confident {
 
 impl Default for Confident {
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then(
-                SequenceExpr::from(|tok: &Token, _source: &[char]| {
-                    tok.kind.is_verb() || tok.kind.is_determiner()
-                })
-                .or(Word::new("very")),
-            )
-            .then_whitespace()
-            .t_aco("confidant");
+        let pattern = SequenceExpr::with(
+            SequenceExpr::from(|tok: &Token, _source: &[char]| {
+                tok.kind.is_verb() || tok.kind.is_determiner()
+            })
+            .or(Word::new("very")),
+        )
+        .then_whitespace()
+        .t_aco("confidant");
 
         Self {
             expr: Box::new(pattern),

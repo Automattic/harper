@@ -9,7 +9,6 @@ use paste::paste;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
-use crate::patterns::WordSet;
 use crate::punctuation::Punctuation;
 use crate::spell::{CommonDictFuncs, WordMap};
 use crate::vec_ext::VecExt;
@@ -883,11 +882,7 @@ impl Document {
 
 static LATIN_EXPR: LazyLock<FirstMatchOf> = LazyLock::new(|| {
     FirstMatchOf::new(vec![
-        Box::new(
-            SequenceExpr::default()
-                .then(WordSet::new(&["etc", "vs"]))
-                .then_period(),
-        ),
+        Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
         Box::new(
             SequenceExpr::aco("et")
                 .then_whitespace()

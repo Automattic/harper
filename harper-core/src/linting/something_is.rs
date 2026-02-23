@@ -13,8 +13,7 @@ impl Default for SomethingIs {
     fn default() -> Self {
         let forms = WordSet::new(&["somethings", "anythings", "everythings", "nothings"]);
 
-        let expr = SequenceExpr::default()
-            .then(forms)
+        let expr = SequenceExpr::with(forms)
             .t_ws()
             .then_optional(SequenceExpr::default().then_one_or_more_adverbs().t_ws())
             .then_kind_any(&[TokenKind::is_verb_progressive_form]);

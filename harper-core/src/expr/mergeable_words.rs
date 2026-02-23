@@ -1,4 +1,4 @@
-use super::{Expr, SequenceExpr, SpaceOrHyphen};
+use super::{Expr, SequenceExpr};
 use crate::spell::WordMap;
 use crate::{CharString, DictWordMetadata, Span, Token};
 
@@ -23,10 +23,7 @@ impl MergeableWords {
         + 'static,
     ) -> Self {
         Self {
-            inner: SequenceExpr::default()
-                .then_any_word()
-                .then(SpaceOrHyphen)
-                .then_any_word(),
+            inner: SequenceExpr::any_word().t_ws_h().then_any_word(),
             dict: WordMap::curated(),
             predicate: Box::new(predicate),
         }

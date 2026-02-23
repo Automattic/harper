@@ -1,5 +1,5 @@
 use crate::Token;
-use crate::expr::{Expr, Repeating, SequenceExpr};
+use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Sentence};
 
 pub struct BestOfAllTime {
@@ -19,29 +19,22 @@ impl Default for BestOfAllTime {
         let fave_or_top = SequenceExpr::word_set(&["favorite", "favourite", "top"]);
 
         // We can't use the noun phrase Expr because it allows determiners before the nouns and "best the thing" wouldn't be right
-        let expr = SequenceExpr::default()
-            .then_any_of(vec![
-                Box::new(inflection_superlative),
-                Box::new(most_superlative),
-                Box::new(fave_or_top),
-            ])
-            // There is no non-greedy `Repeating` in Harper, so we have to do match non-noun-oov tokens
-            // rather than matching arbitrary tokens.
-            // We include OOV because novel words not in the dictionary tend to be nouns.
-            .then(Repeating::new(
-                Box::new(|tok: &Token, _: &[char]| !tok.kind.is_noun() && !tok.kind.is_oov()),
-                0,
-            ))
-            .then_kind_where(|kind| kind.is_noun() || kind.is_oov())
-            .then(Repeating::new(
-                Box::new(
-                    SequenceExpr::default()
-                        .t_ws()
-                        .then_kind_where(|kind| kind.is_noun() || kind.is_oov()),
-                ),
-                0,
-            ))
-            .then_fixed_phrase(" of all times");
+        let expr = SequenceExpr::any_of(vec![
+            Box::new(inflection_superlative),
+            Box::new(most_superlative),
+            Box::new(fave_or_top),
+        ])
+        // There is no non-greedy `Repeating` in Harper, so we have to do match non-noun-oov tokens
+        // rather than matching arbitrary tokens.
+        // We include OOV because novel words not in the dictionary tend to be nouns.
+        .then_zero_or_more(|tok: &Token, _: &[char]| !tok.kind.is_noun() && !tok.kind.is_oov())
+        .then_kind_where(|kind| kind.is_noun() || kind.is_oov())
+        .then_zero_or_more(
+            SequenceExpr::default()
+                .t_ws()
+                .then_kind_where(|kind| kind.is_noun() || kind.is_oov()),
+        )
+        .then_fixed_phrase(" of all times");
 
         Self {
             expr: Box::new(expr),

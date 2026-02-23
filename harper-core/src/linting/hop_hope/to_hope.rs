@@ -3,7 +3,6 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
-use crate::patterns::WordSet;
 use crate::{Token, char_string::char_string};
 
 pub struct ToHope {
@@ -15,7 +14,7 @@ impl Default for ToHope {
         let pattern = SequenceExpr::default()
             .then_nominal()
             .then_whitespace()
-            .then(WordSet::new(&["hop", "hopped"]))
+            .then_word_set(&["hop", "hopped"])
             .then_whitespace()
             .then_nominal();
 

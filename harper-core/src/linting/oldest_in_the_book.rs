@@ -21,7 +21,7 @@ impl Default for OldestInTheBook {
         };
 
         // Zero or more adjectives
-        let adjseq = Repeating::new(Box::new(SequenceExpr::default().then(adj).t_ws()), 0);
+        let adjseq = Repeating::new(Box::new(SequenceExpr::with(adj).t_ws()), 0);
 
         let noun = |t: &Token, s: &[char]| {
             let k = &t.kind;
@@ -33,14 +33,12 @@ impl Default for OldestInTheBook {
         };
 
         // One or more nouns
-        let nounseq = SequenceExpr::default()
-            .then(noun)
-            .then_optional(Repeating::new(
-                Box::new(SequenceExpr::default().t_ws().then(noun)),
-                1,
-            ));
+        let nounseq = SequenceExpr::with(noun).then_optional(Repeating::new(
+            Box::new(SequenceExpr::default().t_ws().then(noun)),
+            1,
+        ));
 
-        let noun_phrase = SequenceExpr::default().then_optional(adjseq).then(nounseq);
+        let noun_phrase = SequenceExpr::optional(adjseq).then(nounseq);
 
         Self {
             expr: Box::new(
