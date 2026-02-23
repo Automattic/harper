@@ -17,17 +17,6 @@ import {
 } from './unpackLint';
 
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
-const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-const GOOGLE_DOCS_RECTS_ATTR_PREFIX = 'data-harper-rects-';
-
-type GoogleDocsRect = {
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-};
-
-let googleDocsRectRequestCounter = 0;
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -116,25 +105,37 @@ function computeGoogleDocsLintBoxes(
 ): IgnorableLintBox[] {
 	try {
 		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
-		const mainBridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
 		const source = target.textContent ?? '';
 
-		if (!editor || !mainBridge) {
+		if (!editor) {
 			return [];
 		}
 
 		if (lint.source !== source) {
 			return [];
 		}
-		const targetRects = requestGoogleDocsRects(mainBridge, lint.span.start, lint.span.end);
+
+		const range = getRangeForTextSpan(target, lint.span as Span);
+		if (!range) {
+			return [];
+		}
+
+		const targetRects = Array.from(range.getClientRects ? range.getClientRects() : []);
+		const elBox = domRectToBox(range.getBoundingClientRect());
+		(range as any).detach?.();
 
 		const boxes: IgnorableLintBox[] = [];
-		for (const targetRect of targetRects) {
+		for (const targetRect of targetRects as DOMRect[]) {
+			if (!isBottomEdgeInBox(targetRect, elBox)) {
+				continue;
+			}
+
+			const shrunkBox = shrinkBoxToFit(targetRect, elBox);
 			boxes.push({
-				x: targetRect.x,
-				y: targetRect.y,
-				width: targetRect.width,
-				height: targetRect.height,
+				x: shrunkBox.x,
+				y: shrunkBox.y,
+				width: shrunkBox.width,
+				height: shrunkBox.height,
 				lint,
 				source: editor,
 				rule,
@@ -147,51 +148,6 @@ function computeGoogleDocsLintBoxes(
 		}
 
 		return boxes;
-	} catch {
-		return [];
-	}
-}
-
-function requestGoogleDocsRects(bridge: Element, start: number, end: number): GoogleDocsRect[] {
-	try {
-		const requestId = `${Date.now()}-${googleDocsRectRequestCounter++}`;
-		const attrName = `${GOOGLE_DOCS_RECTS_ATTR_PREFIX}${requestId}`;
-		document.dispatchEvent(
-			new CustomEvent('harper:gdocs:get-rects', {
-				detail: { requestId, start, end },
-			}),
-		);
-
-		const rawRects = bridge.getAttribute(attrName);
-		bridge.removeAttribute(attrName);
-		if (!rawRects) {
-			return [];
-		}
-
-		const parsed = JSON.parse(rawRects);
-		if (!Array.isArray(parsed)) {
-			return [];
-		}
-
-		return parsed.filter((rect): rect is GoogleDocsRect => {
-			if (!rect || typeof rect !== 'object') {
-				return false;
-			}
-
-			const x = Number((rect as any).x);
-			const y = Number((rect as any).y);
-			const width = Number((rect as any).width);
-			const height = Number((rect as any).height);
-
-			return (
-				Number.isFinite(x) &&
-				Number.isFinite(y) &&
-				Number.isFinite(width) &&
-				Number.isFinite(height) &&
-				width > 0 &&
-				height > 0
-			);
-		});
 	} catch {
 		return [];
 	}

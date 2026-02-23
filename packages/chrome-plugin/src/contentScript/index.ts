@@ -305,9 +305,12 @@ function rebuildGoogleDocsClone(editor: HTMLElement, clone: HTMLElement): { chan
 	const rectNodes = editor.querySelectorAll<SVGRectElement>(GOOGLE_DOCS_SVG_RECT_SELECTOR);
 	const editorRect = editor.getBoundingClientRect();
 	const scrollTop = editor.scrollTop;
+	const scrollLeft = editor.scrollLeft;
+	const fragment = document.createDocumentFragment();
 	const parts: string[] = [];
 	let nextHash = 5381;
 	let lastTop: number | null = null;
+	let segmentCount = 0;
 
 	for (const rectNode of Array.from(rectNodes)) {
 		const areaLabel = rectNode.getAttribute('aria-label');
@@ -320,28 +323,50 @@ function rebuildGoogleDocsClone(editor: HTMLElement, clone: HTMLElement): { chan
 		if (!Number.isFinite(rect.top) || rect.width <= 0 || rect.height <= 0) continue;
 
 		const top = rect.top - editorRect.top + scrollTop;
+		const left = rect.left - editorRect.left + scrollLeft;
 		if (!Number.isFinite(top)) continue;
+		if (!Number.isFinite(left)) continue;
 
 		if (lastTop != null && Math.abs(top - lastTop) >= GOOGLE_DOCS_LINE_BREAK_THRESHOLD_PX) {
 			if (parts.length > 0 && !parts[parts.length - 1].endsWith('\n')) {
 				parts.push('\n');
+				fragment.appendChild(document.createTextNode('\n'));
 			}
 		}
+
+		const span = document.createElement('span');
+		span.textContent = normalizedLabel;
+		span.style.position = 'absolute';
+		span.style.whiteSpace = 'pre';
+		span.style.overflow = 'hidden';
+		span.style.left = `${left}px`;
+		span.style.top = `${top}px`;
+		span.style.width = `${Math.max(rect.width, 1)}px`;
+		span.style.height = `${Math.max(rect.height, 1)}px`;
+		span.style.lineHeight = `${Math.max(rect.height, 1)}px`;
+		const fontCss = rectNode.getAttribute('data-font-css');
+		if (fontCss) {
+			span.style.font = fontCss;
+		}
+		fragment.appendChild(span);
+
 		parts.push(normalizedLabel);
 		lastTop = top;
+		segmentCount += 1;
 
 		nextHash = addHashToken(nextHash, normalizedLabel);
-		nextHash = addHashToken(nextHash, `${Math.round(top)}:${Math.round(rect.left)}:${Math.round(rect.width)}`);
+		nextHash = addHashToken(nextHash, `${Math.round(top)}:${Math.round(left)}:${Math.round(rect.width)}`);
 	}
 
 	const nextText = parts.join('');
-	nextHash = addHashToken(nextHash, `${nextText.length}:${Math.round(scrollTop)}`);
+	nextHash = addHashToken(nextHash, `${nextText.length}:${segmentCount}:${Math.round(scrollTop)}`);
 	const nextSignature = String(nextHash);
 	if (nextSignature === googleDocsCloneSignature && clone.textContent === nextText) {
 		return { changed: false };
 	}
 
-	clone.textContent = nextText;
+	clone.replaceChildren(fragment);
+	clone.setAttribute('data-harper-gdocs-segments', String(segmentCount));
 	googleDocsCloneSignature = nextSignature;
 	return { changed: true };
 }
