@@ -21,7 +21,7 @@ macro_rules! create_test {
 
                  let dict = Arc::new(WordMap::curated());
                  let document = Document::new(&source, &InkParser::default(),
-                      &WordMap::curated()
+                      WordMap::curated()
                       );
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

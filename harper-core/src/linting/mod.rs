@@ -526,7 +526,7 @@ pub mod tests {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &Markdown::default(),
-                &WordMap::curated(),
+                WordMap::curated(),
             );
             let lints = linter.lint(&test);
 

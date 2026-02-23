@@ -173,7 +173,7 @@ mod tests {
     #[test]
     fn normal() {
         assert_eq!(
-            make_title_case_str("this is a test", &PlainEnglish, &WordMap::curated()),
+            make_title_case_str("this is a test", &PlainEnglish, WordMap::curated()),
             "This Is a Test"
         )
     }
@@ -184,7 +184,7 @@ mod tests {
             make_title_case_str(
                 "the first and last words should be capitalized, even if it is \"the\"",
                 &PlainEnglish,
-                &WordMap::curated()
+                WordMap::curated()
             ),
             "The First and Last Words Should Be Capitalized, Even If It Is \"The\""
         )
