@@ -458,10 +458,19 @@
 								const beforeTail = beforeContext ? beforeContext.slice(-16) : '';
 								const afterHead = afterContext ? afterContext.slice(0, 16) : '';
 								let score = 0;
-								if (beforeTail && currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail) {
+								if (
+									beforeTail &&
+									currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail
+								) {
 									score += 2;
 								}
-								if (afterHead && currentText.slice(indexEnd, Math.min(currentText.length, indexEnd + afterHead.length)) === afterHead) {
+								if (
+									afterHead &&
+									currentText.slice(
+										indexEnd,
+										Math.min(currentText.length, indexEnd + afterHead.length),
+									) === afterHead
+								) {
 									score += 2;
 								}
 								score -= Math.abs(index - normalizeStart) / 1000;

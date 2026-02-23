@@ -166,7 +166,7 @@ export default class PopupHandler {
 		this.currentLintBoxes.forEach((b) => {
 			b.source.addEventListener('pointerdown', this.pointerDownCallback as EventListener);
 		});
-    
+
 		this.render();
 	}
 }

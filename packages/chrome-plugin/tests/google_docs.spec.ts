@@ -35,7 +35,7 @@ async function getGoogleDocsTargetText(page: Page) {
 }
 
 function normalizeGoogleDocText(text: string): string {
-	return text.replace(/\u0003/g, '').replace(/\r\n/g, '\n').trimEnd();
+	return text.replace('\u0003', '').replace(/\r\n/g, '\n').trimEnd();
 }
 
 async function replaceGoogleDocRange(
@@ -224,7 +224,9 @@ test('Google Docs: Harper can read lintable text', async ({ page }) => {
 		.toBeTruthy();
 });
 
-test('Google Docs: bridge target preserves paragraph breaks and source parity', async ({ page }) => {
+test('Google Docs: bridge target preserves paragraph breaks and source parity', async ({
+	page,
+}) => {
 	const token = `harper-gdocs-linebreak-${Date.now()}`;
 	const firstLine = `Firstlineword${token}`;
 	const secondLine = `This is an test ${token}`;
@@ -818,7 +820,8 @@ In conclusion, mistakes should not be feared but embrased. They are essential fo
 			timeout: 20000,
 		})
 		.toContain('The Importance of Learning From Mistakes');
-	const headingLine = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '').split('\n')[0] ?? '';
+	const headingLine =
+		normalizeGoogleDocText((await getGoogleDocText(page)) ?? '').split('\n')[0] ?? '';
 	expect(headingLine).toBe('The Importance of Learning From Mistakes');
 	expect(headingLine.endsWith('.')).toBe(false);
 

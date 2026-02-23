@@ -12,9 +12,6 @@ import ProtocolClient from '../ProtocolClient';
 if (isWordPress()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
-if (isGoogleDocsPage()) {
-	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
-}
 
 const fw = new LintFramework(
 	(text, domain, options) => ProtocolClient.lint(text, domain, options),
@@ -284,8 +281,8 @@ function normalizeGoogleDocsLabel(label: string): string {
 		const isLast = i === tokens.length - 1;
 		const lastChar = token.charAt(token.length - 1);
 		const nextFirstChar = tokens[i + 1]?.charAt(0) ?? '';
-		const keepTightTrailing = /[\(\["'“\-_`]/.test(lastChar);
-		const keepTightLeadingNext = /[\)\]"'”\-_`]/.test(nextFirstChar);
+		const keepTightTrailing = /[(["'“\-_`]/.test(lastChar);
+		const keepTightLeadingNext = /[)\]"'”\-_`]/.test(nextFirstChar);
 
 		tokens[i] = !isLast && !keepTightTrailing && !keepTightLeadingNext ? `${token} ` : token;
 	}
@@ -355,7 +352,10 @@ function rebuildGoogleDocsClone(editor: HTMLElement, clone: HTMLElement): { chan
 		segmentCount += 1;
 
 		nextHash = addHashToken(nextHash, normalizedLabel);
-		nextHash = addHashToken(nextHash, `${Math.round(top)}:${Math.round(left)}:${Math.round(rect.width)}`);
+		nextHash = addHashToken(
+			nextHash,
+			`${Math.round(top)}:${Math.round(left)}:${Math.round(rect.width)}`,
+		);
 	}
 
 	const nextText = parts.join('');
