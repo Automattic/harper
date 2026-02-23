@@ -413,16 +413,76 @@
 
 	document.addEventListener(EVENT_REPLACE, async (event) => {
 		try {
-			/** @type {{ start?: number, end?: number, replacementText?: string }} */
+			/** @type {{ start?: number, end?: number, replacementText?: string, expectedText?: string, beforeContext?: string, afterContext?: string }} */
 			const detail = /** @type {CustomEvent} */ (event).detail || {};
-			const start = Number(detail.start);
-			const end = Number(detail.end);
+			let start = Number(detail.start);
+			let end = Number(detail.end);
 			const replacementText = String(detail.replacementText ?? '');
+			const expectedText = String(detail.expectedText ?? '');
+			const beforeContext = String(detail.beforeContext ?? '');
+			const afterContext = String(detail.afterContext ?? '');
 			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
 			if (typeof getAnnotatedText !== 'function') return;
 			/** @type {AnnotatedText | null | undefined} */
 			const annotated = await getAnnotatedText();
 			if (!annotated || typeof annotated.setSelection !== 'function') return;
+
+			if (expectedText) {
+				const currentText = annotated.getText?.();
+				if (typeof currentText === 'string') {
+					const spanLength = Math.max(0, end - start);
+					const normalizeStart = Math.max(0, Math.min(start, currentText.length));
+					const normalizeEnd = Math.max(normalizeStart, Math.min(end, currentText.length));
+					const direct = currentText.slice(normalizeStart, normalizeEnd);
+					if (direct !== expectedText) {
+						const resolveByOffsetWindow = () => {
+							for (let delta = -12; delta <= 12; delta += 1) {
+								const candidateStart = normalizeStart + delta;
+								if (candidateStart < 0) continue;
+								const candidateEnd = candidateStart + spanLength;
+								if (candidateEnd > currentText.length) continue;
+								if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
+									return { start: candidateStart, end: candidateEnd };
+								}
+							}
+							return null;
+						};
+
+						const resolveByContext = () => {
+							const hits = [];
+							let cursor = 0;
+							while (cursor <= currentText.length) {
+								const index = currentText.indexOf(expectedText, cursor);
+								if (index < 0) break;
+								const indexEnd = index + expectedText.length;
+								const beforeTail = beforeContext ? beforeContext.slice(-16) : '';
+								const afterHead = afterContext ? afterContext.slice(0, 16) : '';
+								let score = 0;
+								if (beforeTail && currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail) {
+									score += 2;
+								}
+								if (afterHead && currentText.slice(indexEnd, Math.min(currentText.length, indexEnd + afterHead.length)) === afterHead) {
+									score += 2;
+								}
+								score -= Math.abs(index - normalizeStart) / 1000;
+								hits.push({ start: index, end: indexEnd, score });
+								cursor = index + 1;
+							}
+
+							if (hits.length === 0) return null;
+							hits.sort((a, b) => b.score - a.score);
+							return { start: hits[0].start, end: hits[0].end };
+						};
+
+						const resolved = resolveByOffsetWindow() ?? resolveByContext();
+						if (resolved) {
+							start = resolved.start;
+							end = resolved.end;
+						}
+					}
+				}
+			}
+
 			annotated.setSelection(start, end);
 			const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
 			const target = iframe?.contentDocument?.activeElement;

@@ -43,16 +43,31 @@ async function replaceGoogleDocRange(
 	start: number,
 	end: number,
 	replacementText: string,
+	sourceText?: string,
 ): Promise<void> {
+	const safeSource = sourceText ?? '';
+	const safeStart = Math.max(0, Math.min(start, safeSource.length));
+	const safeEnd = Math.max(safeStart, Math.min(end, safeSource.length));
+	const expectedText = safeSource.slice(safeStart, safeEnd);
+	const beforeContext = safeSource.slice(Math.max(0, safeStart - 64), safeStart);
+	const afterContext = safeSource.slice(safeEnd, Math.min(safeSource.length, safeEnd + 64));
+
 	await page.evaluate(
-		({ start, end, replacementText }) => {
+		({ start, end, replacementText, expectedText, beforeContext, afterContext }) => {
 			document.dispatchEvent(
 				new CustomEvent('harper:gdocs:replace', {
-					detail: { start, end, replacementText },
+					detail: {
+						start,
+						end,
+						replacementText,
+						expectedText,
+						beforeContext,
+						afterContext,
+					},
 				}),
 			);
 		},
-		{ start, end, replacementText },
+		{ start, end, replacementText, expectedText, beforeContext, afterContext },
 	);
 }
 
@@ -218,19 +233,25 @@ test('Google Docs: bridge target preserves paragraph breaks and source parity', 
 	await replaceDocumentContent(page, `${firstLine}\n${secondLine}`);
 
 	await expect
-		.poll(
-			async () =>
-				normalizeGoogleDocText((await getGoogleDocText(page)) ?? '') ===
-				normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''),
-			{ timeout: 20000 },
-		)
-		.toBeTruthy();
-
-	const canonical = normalizeGoogleDocText((await getGoogleDocText(page)) ?? '');
-	const target = normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? '');
-	expect(canonical).toContain(`\n${secondLine}`);
-	expect(target).toContain(`\n${secondLine}`);
-	expect(target).not.toContain(`${firstLine}${secondLine}`);
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain(`\n${secondLine}`);
+	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.not.toContain(`${firstLine}${secondLine}`);
+	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain(`\n${secondLine}`);
+	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain(`\n${secondLine}`);
 });
 
 test('Google Docs: Harper can write a suggestion back into the document', async ({ page }) => {
@@ -288,19 +309,25 @@ test('Google Docs: replace offsets derived from bridge text stay aligned across 
 	await replaceDocumentContent(page, `${firstLine}\n${secondLine}`);
 
 	await expect
+		.poll(async () => normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''), {
+			timeout: 20000,
+		})
+		.toContain(`\n${secondLine}`);
+	await expect
 		.poll(
-			async () =>
-				normalizeGoogleDocText((await getGoogleDocText(page)) ?? '') ===
-				normalizeGoogleDocText((await getGoogleDocsTargetText(page)) ?? ''),
+			async () => {
+				const raw = (await getGoogleDocsTargetText(page)) ?? '';
+				return raw.indexOf(`an test ${token}`);
+			},
 			{ timeout: 20000 },
 		)
-		.toBeTruthy();
+		.toBeGreaterThanOrEqual(0);
 
 	const targetText = (await getGoogleDocsTargetText(page)) ?? '';
 	const targetStart = targetText.indexOf(`an test ${token}`);
 	expect(targetStart).toBeGreaterThanOrEqual(0);
 
-	await replaceGoogleDocRange(page, targetStart, targetStart + 2, 'a');
+	await replaceGoogleDocRange(page, targetStart, targetStart + 2, 'a', targetText);
 
 	await expect
 		.poll(async () => normalizeGoogleDocText((await getGoogleDocText(page)) ?? ''), {

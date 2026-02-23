@@ -109,7 +109,7 @@ function isGoogleDocsTarget(el: HTMLElement): boolean {
 }
 
 function computeGoogleDocsLintBoxes(
-	_target: HTMLElement,
+	target: HTMLElement,
 	lint: UnpackedLint,
 	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
@@ -117,7 +117,7 @@ function computeGoogleDocsLintBoxes(
 	try {
 		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
 		const mainBridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
-		const source = mainBridge?.textContent ?? '';
+		const source = target.textContent ?? '';
 
 		if (!editor || !mainBridge) {
 			return [];
@@ -140,7 +140,7 @@ function computeGoogleDocsLintBoxes(
 				rule,
 				applySuggestion: (sug: UnpackedSuggestion) => {
 					const replacementText = suggestionToReplacementText(sug, lint.span, source);
-					replaceGoogleDocsValue(lint.span, replacementText);
+					replaceGoogleDocsValue(lint.span, replacementText, source);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -233,14 +233,28 @@ function replaceValue(
 	el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function replaceGoogleDocsValue(span: { start: number; end: number }, replacementText: string) {
+function replaceGoogleDocsValue(
+	span: { start: number; end: number },
+	replacementText: string,
+	source: string,
+) {
 	try {
+		const safeStart = Math.max(0, Math.min(span.start, source.length));
+		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
+		const expectedText = source.slice(safeStart, safeEnd);
+		const contextRadius = 64;
+		const beforeContext = source.slice(Math.max(0, safeStart - contextRadius), safeStart);
+		const afterContext = source.slice(safeEnd, Math.min(source.length, safeEnd + contextRadius));
+
 		document.dispatchEvent(
 			new CustomEvent('harper:gdocs:replace', {
 				detail: {
 					start: span.start,
 					end: span.end,
 					replacementText,
+					expectedText,
+					beforeContext,
+					afterContext,
 				},
 			}),
 		);
