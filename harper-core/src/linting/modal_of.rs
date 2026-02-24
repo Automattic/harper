@@ -330,10 +330,7 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_in_may_of_next_year_2786() {
-        assert_no_lints(
-            "In May of next year a new version will be released.",
-            ModalOf::default(),
-        );
+    fn dont_flag_in_may_of_last_year_bug_2786() {
+        assert_no_lints("This happened in May of last year.", ModalOf::default());
     }
 }
