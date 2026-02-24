@@ -1,9 +1,9 @@
 mod over_theyre_to_there;
 mod typographic_theyre_to_their;
 
+use crate::Token;
 use crate::char_ext::CharExt;
 use crate::char_string::CharStringExt;
-use crate::Token;
 
 use super::merge_linters::merge_linters;
 use over_theyre_to_there::OverTheyreToThere;
@@ -64,7 +64,9 @@ fn token_is_likely_their_possession(token: &Token, source: &[char]) -> bool {
             | ['h', 'o', 'u', 's', 'e']
             | ['c', 'o', 'a', 't', 's']
             | ['p', 'r', 'o', 'b', 'l', 'e', 'm', 's']
-            | ['u', 'n', 'd', 'e', 'r', 's', 't', 'a', 'n', 'd', 'i', 'n', 'g']
+            | [
+                'u', 'n', 'd', 'e', 'r', 's', 't', 'a', 'n', 'd', 'i', 'n', 'g'
+            ]
             | ['n', 'e', 'w']
     )
 }

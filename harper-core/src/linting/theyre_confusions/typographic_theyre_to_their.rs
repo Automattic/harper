@@ -1,10 +1,10 @@
+use super::{token_is_likely_their_possession, token_is_typographic_theyre};
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::SequenceExpr,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
-use super::{token_is_likely_their_possession, token_is_typographic_theyre};
 
 pub struct TypographicTheyreToTheir {
     expr: Box<dyn crate::expr::Expr>,
