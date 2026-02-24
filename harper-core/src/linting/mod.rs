@@ -51,6 +51,7 @@ mod did_past;
 mod didnt;
 mod discourse_markers;
 mod disjoint_prefixes;
+mod do_mistake;
 mod dot_initialisms;
 mod double_click;
 mod double_modal;
@@ -277,6 +278,49 @@ where
     fn description_html(&self) -> String {
         let desc = self.description();
         render_markdown(desc)
+    }
+}
+
+pub mod debug {
+    use crate::Token;
+
+    /// Formats a lint match with surrounding context for debug output.
+    ///
+    /// The function takes the same `matched_tokens` and `source`, and `context` parameters
+    /// passed to `[match_to_lint_with_context]`.
+    ///
+    /// # Arguments
+    /// * `log` - `matched_tokens`
+    /// * `ctx` - `context`, or `None` if calling from `[match_to_lint]`
+    /// * `src` - `source` from `[match_to_lint]` / `[match_to_lint_with_context]`
+    ///
+    /// # Returns
+    /// A string with ANSI escape codes where:
+    /// - Context tokens are dimmed before and after the matched tokens in normal weight.
+    /// - Markup and formatting text hidden in whitespace tokens is filtered out.
+    pub fn format_lint_match(
+        log: &[Token],
+        ctx: Option<(&[Token], &[Token])>,
+        src: &[char],
+    ) -> String {
+        let fmt = |tokens: &[Token]| {
+            tokens
+                .iter()
+                .filter(|t| !t.kind.is_unlintable())
+                .map(|t| t.span.get_content_string(src))
+                .collect::<String>()
+        };
+
+        if let Some((pro, epi)) = ctx {
+            format!(
+                "\x1b[2m{}\x1b[0m{}\x1b[2m{}\x1b[0m",
+                fmt(pro),
+                fmt(log),
+                fmt(epi)
+            )
+        } else {
+            fmt(log)
+        }
     }
 }
 

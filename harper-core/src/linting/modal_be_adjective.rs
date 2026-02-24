@@ -1,7 +1,10 @@
 use crate::{
     CharStringExt, Lint, Token, TokenKind,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, Suggestion,
+        expr_linter::{Chunk, followed_by_word},
+    },
     patterns::ModalVerb,
 };
 
@@ -47,35 +50,21 @@ impl ExprLinter for ModalBeAdjective {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if let Some((_, after)) = ctx
-            && after.len() >= 2
-            && after[0].kind.is_whitespace()
-        {
-            // If the 'after' context is whitespace followed by a noun, there is no error
-            // (Not including these marginal nouns: "at", "by", "if")
-            if after[1].kind.is_noun()
-                && !after[1]
+        if followed_by_word(ctx, |nw| {
+            (nw.kind.is_noun()
+                && !nw
                     .span
                     .get_content(src)
-                    .eq_any_ignore_ascii_case_str(&["at", "by", "if"])
-            {
-                return None;
-            }
-
-            // If the adjective plus the next word is "kind of"
-            if toks
-                .last()
-                .unwrap()
-                .span
-                .get_content_string(src)
-                .eq_ignore_ascii_case("kind")
-                && after[1]
+                    .eq_any_ignore_ascii_case_str(&["at", "by", "if"]))
+                || (toks
+                    .last()
+                    .unwrap()
                     .span
                     .get_content(src)
-                    .eq_ignore_ascii_case_str("of")
-            {
-                return None;
-            }
+                    .eq_ignore_ascii_case_str("kind")
+                    && nw.span.get_content(src).eq_ignore_ascii_case_str("of"))
+        }) {
+            return None;
         }
 
         Some(Lint {

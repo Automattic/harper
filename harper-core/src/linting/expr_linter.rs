@@ -132,6 +132,39 @@ pub fn run_on_chunk<'a>(
         })
 }
 
+/// Check for sentence continuation after a matched span.
+///
+/// Validates that the "after" context starts with whitespace followed by a word token,
+/// allowing flexible inspection of that word's properties (POS tags, etc.) via the predicate.
+/// The predicate can be used to confirm matches, suppress false positives, or apply conditional logic.
+///
+/// Returns `false` if context is `None`, missing tokens, or the structure is malformed.
+pub fn followed_by_word(
+    context: Option<(&[Token], &[Token])>,
+    predicate: impl Fn(&Token) -> bool,
+) -> bool {
+    if let Some((_, after)) = context
+        && let [ws, word, ..] = after
+        && ws.kind.is_whitespace()
+    {
+        return predicate(word);
+    }
+    false
+}
+
+pub fn preceded_by_word(
+    context: Option<(&[Token], &[Token])>,
+    predicate: impl Fn(&Token) -> bool,
+) -> bool {
+    if let Some((before, _)) = context
+        && let [.., word, ws] = before
+        && ws.kind.is_whitespace()
+    {
+        return predicate(word);
+    }
+    false
+}
+
 #[cfg(test)]
 mod tests_context {
     use crate::expr::{Expr, FixedPhrase};

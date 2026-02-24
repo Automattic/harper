@@ -6,7 +6,10 @@ use crate::{
     CharStringExt, Token, TokenStringExt,
     dict_word_metadata::Person,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_word},
+    },
     patterns::WordSet,
 };
 
@@ -53,12 +56,7 @@ impl ExprLinter for DespiteItIs {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let next_is_ing = ctx.is_some_and(|(_, then)| {
-            then.first().is_some_and(|t| t.kind.is_whitespace())
-                && then
-                    .get(1)
-                    .is_some_and(|t| t.kind.is_verb_progressive_form())
-        });
+        let next_is_ing = followed_by_word(ctx, |nw| nw.kind.is_verb_progressive_form());
 
         let subj = toks.get(2)?;
         let be = toks.get(4)?;
