@@ -20,8 +20,7 @@ pub struct ModalSeem {
 
 impl ModalSeem {
     fn base_sequence() -> SequenceExpr {
-        SequenceExpr::default()
-            .then(ModalVerb::default())
+        SequenceExpr::with(ModalVerb::default())
             .t_ws()
             .t_aco("seen")
     }

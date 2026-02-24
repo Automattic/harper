@@ -26,7 +26,10 @@ export type Request =
 	| GetReviewedRequest
 	| SetReviewedRequest
 	| OpenReportErrorRequest
-	| PostFormDataRequest;
+	| PostFormDataRequest
+	| GetWeirpacksRequest
+	| AddWeirpackRequest
+	| RemoveWeirpackRequest;
 
 export type Response =
 	| LintResponse
@@ -42,7 +45,8 @@ export type Response =
 	| GetActivationKeyResponse
 	| GetInstalledOnResponse
 	| GetReviewedResponse
-	| PostFormDataResponse;
+	| PostFormDataResponse
+	| GetWeirpacksResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -251,4 +255,32 @@ export type PostFormDataRequest = {
 	kind: 'postFormData';
 	url: string;
 	formData: Record<string, string>;
+};
+
+export type WeirpackMeta = {
+	id: string;
+	name: string;
+	filename: string;
+	version: string | null;
+	installedAt: string;
+};
+
+export type GetWeirpacksRequest = {
+	kind: 'getWeirpacks';
+};
+
+export type GetWeirpacksResponse = {
+	kind: 'getWeirpacks';
+	weirpacks: WeirpackMeta[];
+};
+
+export type AddWeirpackRequest = {
+	kind: 'addWeirpack';
+	filename: string;
+	bytes: number[];
+};
+
+export type RemoveWeirpackRequest = {
+	kind: 'removeWeirpack';
+	id: string;
 };

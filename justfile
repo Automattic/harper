@@ -1,4 +1,5 @@
 # Format entire project
+alias fmt := format
 format:
   cargo fmt  
   pnpm format
@@ -23,6 +24,7 @@ build-wasm:
   fi
 
 # Build `harper.js` with all size optimizations available.
+alias build-harper-js := build-harperjs
 build-harperjs: build-wasm 
   #!/usr/bin/env bash
   set -eo pipefail
@@ -46,6 +48,7 @@ build-lint-framework: build-harperjs
   pnpm install
   pnpm build
 
+alias test-harper-js := test-harperjs
 test-harperjs: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
@@ -68,6 +71,7 @@ test-obsidian: build-obsidian
   pnpm playwright install
   pnpm test
 
+alias dev-wordpress := dev-wp
 dev-wp: build-harperjs
   #!/usr/bin/env bash
 
@@ -79,6 +83,7 @@ dev-wp: build-harperjs
   pnpm start 
 
 # Build the WordPress plugin
+alias build-wordpress := build-wp
 build-wp: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
@@ -119,6 +124,8 @@ build-obsidian: build-harperjs
   zip harper-obsidian-plugin.zip manifest.json main.js
 
 # Build the Chrome extension.
+alias build-chrome := build-chrome-plugin
+alias build-chrome-extension := build-chrome-plugin
 build-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
@@ -129,6 +136,8 @@ build-chrome-plugin: build-harperjs build-lint-framework build-components
   pnpm zip-for-chrome
 
 # Start a development server for the Chrome extension.
+alias dev-chrome := dev-chrome-plugin
+alias dev-chrome-extension := dev-chrome-plugin
 dev-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
@@ -139,6 +148,8 @@ dev-chrome-plugin: build-harperjs build-lint-framework build-components
   pnpm dev
 
 # Build the Firefox extension.
+alias build-firefox := build-firefox-plugin
+alias build-firefox-extension := build-firefox-plugin
 build-firefox-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
@@ -148,6 +159,8 @@ build-firefox-plugin: build-harperjs build-lint-framework build-components
   pnpm install 
   pnpm zip-for-firefox
 
+alias test-chrome := test-chrome-plugin
+alias test-chrome-extension := test-chrome-plugin
 test-chrome-plugin: build-chrome-plugin
   #!/usr/bin/env bash
   set -eo pipefail
@@ -163,6 +176,9 @@ test-chrome-plugin: build-chrome-plugin
     pnpm test --project chromium
   fi
 
+
+alias test-firefox := test-firefox-plugin
+alias test-firefox-extension := test-firefox-plugin
 test-firefox-plugin: build-firefox-plugin
   #!/usr/bin/env bash
   set -eo pipefail
@@ -177,8 +193,8 @@ test-firefox-plugin: build-firefox-plugin
     pnpm test --project firefox 
   fi
 
-
 # Run VSCode plugin unit and integration tests.
+alias test-vscode-extension := test-vscode
 test-vscode:
   #!/usr/bin/env bash
   set -eo pipefail
@@ -221,6 +237,7 @@ test-vscode:
 
 # Build and package the Visual Studio Code extension.
 # If `target` is passed, it is assumed that `harper-ls` has been compiled beforehand and is in `packages/vscode-plugin/bin`. This is used in CI.
+alias package-vscode-extension := package-vscode
 package-vscode target="":
   #!/usr/bin/env bash
   set -eo pipefail
@@ -283,7 +300,7 @@ update-vscode-linters:
   just format
 
 # Run Rust formatting and linting.
-check-rust: auditdictionary
+check-rust: audit-dictionary
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -326,10 +343,18 @@ install:
 dogfood:
   #!/usr/bin/env bash
   cargo build --release
-  for file in `fd -e rs`
-  do
-    echo Linting $file
-    ./target/release/harper-cli lint $file
+  
+  if command -v fd &> /dev/null; then
+    # Use fd if available (faster and more user-friendly)
+    fd_cmd() { fd -e rs; }
+  else
+    # Fall back to find if fd is not installed
+    fd_cmd() { find . -name "*.rs" -type f; }
+  fi
+
+  fd_cmd | while read -r file; do
+    echo "Linting $file"
+    ./target/release/harper-cli lint "$file"
   done
 
 test-rust:
@@ -354,6 +379,7 @@ spans file:
   cargo run --bin harper-cli -- spans {{file}}
 
 # Add a noun to Harper's curated dictionary.
+alias add-noun := addnoun
 addnoun noun:
   #!/usr/bin/env bash
   DICT_FILE=./harper-core/dictionary.dict 
@@ -383,7 +409,7 @@ addnoun noun:
   echo "{{noun}}/$flags" >> "$DICT_FILE"
 
 # Search Harper's curated dictionary for a specific word
-searchdictfor word:
+search-dict-for word:
   #!/usr/bin/env bash
   if command -v rg > /dev/null; then
     cargo run --bin harper-cli -- words | rg {{word}}
@@ -392,7 +418,7 @@ searchdictfor word:
   fi
 
 # Find words in the user's `harper-ls/dictionary.txt` for words already in the curated dictionary.
-userdictoverlap:
+user-dict-overlap:
   #!/usr/bin/env bash
   USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
 
@@ -401,15 +427,18 @@ userdictoverlap:
   done < $USER_DICT_FILE
 
 # Get the metadata associated with one or more words in Harper's dictionary as JSON.
-getmetadata *words:
+get-metadata *words:
   cargo run --bin harper-cli -- metadata {{words}}
-getmetadata-brief *words:
+
+get-metadata-brief *words:
   cargo run --bin harper-cli -- metadata --brief {{words}}
+
 # Get all the forms of a word using the affixes.
-getforms word:
+get-forms word:
   cargo run --bin harper-cli -- forms {{word}}
+
 # Get a random sample of words from Harper's dictionary and list all forms of each.
-sampleforms count:
+sample-forms count:
   #!/usr/bin/env bash
   set -eo pipefail
   DICT_FILE=./harper-core/dictionary.dict 
@@ -479,7 +508,7 @@ fuzz:
       fi
   done
 
-registerlinter module name:
+register-linter module name:
   #!/usr/bin/env bash
 
   D="{{justfile_directory()}}/harper-core/src/linting"
@@ -490,12 +519,11 @@ registerlinter module name:
   just format
 
 # Print annotations and their descriptions from annotations.json
-alias printaffixes := printannotations
-alias getannotations := printannotations
-alias listannotations := printannotations
-alias showannotations := printannotations
-
-printannotations:
+alias print-affixes := print-annotations
+alias get-annotations := print-annotations
+alias list-annotations := print-annotations
+alias show-annotations := print-annotations
+print-annotations:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allEntries = {
@@ -642,11 +670,13 @@ newest-dict-changes *numCommits:
   });
 
 # Print the input string or file with nominal phrases highlighted. These are generated using Harper's chunker.
-getnps text:
+alias get-nominal-phrases := get-nps
+alias get-noun-phrases := get-nps
+get-nps text:
   cargo run --bin harper-cli -- nominal-phrases "{{text}}"
 
 # Suggest annotations for a potential new property annotation
-suggestannotation input:
+suggest-annotation input:
   #! /usr/bin/env node
   const affixesData = require('{{justfile_directory()}}/harper-core/annotations.json');
   const allEntries = {
@@ -688,12 +718,15 @@ suggestannotation input:
   }
 
 # Audit the curated dictionary for any issues.
-alias auditdict := auditdictionary
-
-auditdictionary DIR="harper-core":
+alias audit-dict := audit-dictionary
+audit-dictionary DIR="harper-core":
   cargo run --bin harper-cli -- audit-dictionary {{DIR}}
 
-runsnapshots:
+alias test-snapshots := run-snapshots
+alias test-pos-tagger := run-snapshots
+alias test-pos-tags := run-snapshots
+alias test-pos-tagging := run-snapshots
+run-snapshots:
   #!/usr/bin/env bash
   set -eo pipefail
 

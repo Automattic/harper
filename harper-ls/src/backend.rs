@@ -26,6 +26,7 @@ use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
+use harper_tex::TeX;
 use harper_typst::Typst;
 use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
@@ -397,6 +398,7 @@ impl Backend {
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
+            "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
             _ => None,
         };
 

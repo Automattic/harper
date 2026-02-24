@@ -24,11 +24,11 @@ impl Default for WayTooAdjective {
             .t_any()
             .t_any()
             .t_any()
-            .then(WordSet::new(&["surface", "return", "aqua"]));
+            .then_word_set(&["surface", "return", "aqua"]);
 
         let expr = All::new(vec![
             Box::new(base),
-            Box::new(SequenceExpr::default().then_unless(exceptions)),
+            Box::new(SequenceExpr::unless(exceptions)),
         ]);
 
         Self {

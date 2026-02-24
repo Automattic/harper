@@ -50,8 +50,10 @@ use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
 use super::damages::Damages;
+use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
@@ -98,6 +100,7 @@ use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
+use super::lead_rise_to::LeadRiseTo;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -124,6 +127,7 @@ use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_longer::NoLonger;
 use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
@@ -455,6 +459,7 @@ impl LintGroup {
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
+        insert_expr_rule!(DayAndAge, true);
         insert_expr_rule!(DespiteItIs, true);
         insert_expr_rule!(DespiteOf, true);
         insert_expr_rule!(Didnt, true);
@@ -498,6 +503,7 @@ impl LintGroup {
         insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(LeadRiseTo, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -522,6 +528,7 @@ impl LintGroup {
         insert_expr_rule!(NailOnTheHead, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
+        insert_expr_rule!(NoLonger, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
@@ -682,6 +689,9 @@ impl LintGroup {
 
         out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
         out.config.set_rule_enabled("WorthToDo", true);
+
+        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.config.set_rule_enabled("DidPast", true);
 
         out
     }

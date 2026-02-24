@@ -14,8 +14,7 @@ pub struct FirstAidKit {
 impl Default for FirstAidKit {
     fn default() -> Self {
         let supply_words = WordSet::new(&["aid", "starter", "travel", "tool"]);
-        let pattern = SequenceExpr::default()
-            .then(supply_words)
+        let pattern = SequenceExpr::with(supply_words)
             .then_whitespace()
             .then_any_capitalization_of("kid");
         Self {

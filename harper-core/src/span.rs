@@ -15,7 +15,7 @@ use crate::Token;
 /// behavior or panics.
 ///
 /// Although specific to `harper.js`, [this page may clear up any questions you have](https://writewithharper.com/docs/harperjs/spans).
-#[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct Span<T> {
     /// The start index of the span.
     pub start: usize,
@@ -273,8 +273,7 @@ mod tests {
         assert!(converted.is_empty());
 
         // Span from `Expr`.
-        let token_span = SequenceExpr::default()
-            .then_any_word()
+        let token_span = SequenceExpr::any_word()
             .t_ws()
             .then_any_word()
             .iter_matches_in_doc(&doc)

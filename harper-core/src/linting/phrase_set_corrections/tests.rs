@@ -199,49 +199,6 @@ fn corrects_dose_not() {
     );
 }
 
-// LitotesDirectPositive
-
-#[test]
-fn litotes_not_uncommon_atomic() {
-    assert_suggestion_result("not uncommon", lint_group(), "common");
-}
-
-#[test]
-fn litotes_not_uncommon_sentence() {
-    assert_suggestion_result(
-        "It is not uncommon to see outages during storms.",
-        lint_group(),
-        "It is common to see outages during storms.",
-    );
-}
-
-#[test]
-fn litotes_not_unlikely() {
-    assert_suggestion_result(
-        "This outcome is not unlikely given the data.",
-        lint_group(),
-        "This outcome is likely given the data.",
-    );
-}
-
-#[test]
-fn litotes_not_insignificant() {
-    assert_suggestion_result(
-        "That is not insignificant progress.",
-        lint_group(),
-        "That is significant progress.",
-    );
-}
-
-#[test]
-fn litotes_more_preferable() {
-    assert_suggestion_result(
-        "Is it more preferable to use process.env.variable or env.parsed.variable?",
-        lint_group(),
-        "Is it preferable to use process.env.variable or env.parsed.variable?",
-    );
-}
-
 // RedundantSuperlatives
 
 #[test]
@@ -882,6 +839,69 @@ fn corrects_investment_into() {
     );
 }
 
+// LayoutVerb
+
+#[test]
+fn corrects_layouted() {
+    assert_suggestion_result(
+        "only the views that neeed it will be measured and layouted when the superview changes",
+        lint_group(),
+        "only the views that neeed it will be measured and laid out when the superview changes",
+    );
+}
+
+#[test]
+fn corrects_layouting() {
+    assert_suggestion_result(
+        "An R package for layouting tables, using the S4 method",
+        lint_group(),
+        "An R package for laying out tables, using the S4 method",
+    );
+}
+
+// LitotesDirectPositive
+
+#[test]
+fn litotes_not_uncommon_atomic() {
+    assert_suggestion_result("not uncommon", lint_group(), "common");
+}
+
+#[test]
+fn litotes_not_uncommon_sentence() {
+    assert_suggestion_result(
+        "It is not uncommon to see outages during storms.",
+        lint_group(),
+        "It is common to see outages during storms.",
+    );
+}
+
+#[test]
+fn litotes_not_unlikely() {
+    assert_suggestion_result(
+        "This outcome is not unlikely given the data.",
+        lint_group(),
+        "This outcome is likely given the data.",
+    );
+}
+
+#[test]
+fn litotes_not_insignificant() {
+    assert_suggestion_result(
+        "That is not insignificant progress.",
+        lint_group(),
+        "That is significant progress.",
+    );
+}
+
+#[test]
+fn litotes_more_preferable() {
+    assert_suggestion_result(
+        "Is it more preferable to use process.env.variable or env.parsed.variable?",
+        lint_group(),
+        "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
 // MakeDoWith
 
 #[test]
@@ -1113,6 +1133,80 @@ fn fix_wrecks_havoc() {
         "Small POC using rust with ptrace that wrecks havoc on msync",
         lint_group(),
         "Small POC using rust with ptrace that wreaks havoc on msync",
+    );
+}
+
+// WroteToRote
+
+#[test]
+fn fix_by_wrote() {
+    assert_suggestion_result(
+        "Until one repeats and learns a fact by wrote it is the picture that sustains us.",
+        lint_group(),
+        "Until one repeats and learns a fact by rote it is the picture that sustains us.",
+    );
+}
+
+#[test]
+fn fix_by_wrote_hyphen() {
+    assert_suggestion_result(
+        "This specification may then be translated into a recursive-decent parser almost by-wrote.",
+        lint_group(),
+        "This specification may then be translated into a recursive-decent parser almost by-rote.",
+    );
+}
+
+#[test]
+fn fix_wrote_learning() {
+    assert_suggestion_result(
+        "I found that what turned me off math class was that teachers encouraged wrote learning instead of understanding.",
+        lint_group(),
+        "I found that what turned me off math class was that teachers encouraged rote learning instead of understanding.",
+    );
+}
+
+#[test]
+fn fix_wrote_memorisation() {
+    assert_suggestion_result(
+        "Not much of a wrote memorisation kind of guy, so I preferred to commit them to memory by framing them in the context of a paragraph.",
+        lint_group(),
+        "Not much of a rote memorisation kind of guy, so I preferred to commit them to memory by framing them in the context of a paragraph.",
+    );
+}
+
+#[test]
+fn fix_wrote_memorisation_hyphen() {
+    assert_suggestion_result(
+        "I find it helps me retain information much better and for longer compared to when I just blindly did wrote-memorisation.",
+        lint_group(),
+        "I find it helps me retain information much better and for longer compared to when I just blindly did rote-memorisation.",
+    );
+}
+
+#[test]
+fn fix_wrote_memorization() {
+    assert_suggestion_result(
+        "Outside websites are also no-go, exacerbating the need for wrote memorization.",
+        lint_group(),
+        "Outside websites are also no-go, exacerbating the need for rote memorization.",
+    );
+}
+
+#[test]
+fn fix_wrote_memorization_hyphen() {
+    assert_suggestion_result(
+        "The voicings was the biggest game-changer for me, coming from a wrote-memorization type classical piano background.",
+        lint_group(),
+        "The voicings was the biggest game-changer for me, coming from a rote-memorization type classical piano background.",
+    );
+}
+
+#[test]
+fn fix_wrote_memorizing() {
+    assert_suggestion_result(
+        "I have never been good at wrote memorizing abbreviations, initialisms, or acronyms.",
+        lint_group(),
+        "I have never been good at rote memorizing abbreviations, initialisms, or acronyms.",
     );
 }
 

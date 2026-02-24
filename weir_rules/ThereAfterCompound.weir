@@ -1,0 +1,33 @@
+expr continuation [VERB, AUX, ADV]
+expr context (there after @continuation)
+expr main <@context, (there after)>
+
+let message "This two-word form is likely intended as the single adverb."
+let description "Normalizes split `there after` to the closed form in adverbial contexts."
+let kind "Grammar"
+let becomes "thereafter"
+let strategy "MatchCase"
+
+# True positives
+test "There after came a second wave of reports." "Thereafter came a second wave of reports."
+test "there after came another outage." "thereafter came another outage."
+test "There after arrived a second alert." "Thereafter arrived a second alert."
+test "THERE AFTER CAME THE RETRY LOOP." "THEREAFTER CAME THE RETRY LOOP."
+test "There after appeared a warning banner." "Thereafter appeared a warning banner."
+test "there after often we verify backups." "thereafter often we verify backups."
+test "there after can we close the incident." "thereafter can we close the incident."
+test "There after is not ideal, but there after was written." "Thereafter is not ideal, but thereafter was written."
+test "There after had we seen similar errors." "Thereafter had we seen similar errors."
+test "there after will we archive logs." "thereafter will we archive logs."
+
+# False positives / true negatives
+allows "We met there after dinner."
+allows "I left my bag there after class."
+allows "Please stand there after the bell rings."
+allows "They drove there after lunch."
+allows "She sat there after work every day."
+allows "there afterparty tickets sold out quickly."
+
+# False negatives (accepted limits)
+allows "There after lunch we reviewed logs."
+allows "I was there after that incident."

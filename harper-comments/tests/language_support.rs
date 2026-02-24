@@ -48,6 +48,7 @@ create_test!(clean.lua, 0);
 create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);
 create_test!(clean.sol, 0);
+create_test!(clean.ps1, 0);
 create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);
@@ -61,6 +62,10 @@ create_test!(ignore_shebang_3.sh, 0);
 create_test!(ignore_shebang_4.sh, 1);
 create_test!(common.mill, 1);
 create_test!(basic_kotlin.kt, 0);
+create_test!(basic_groovy.groovy, 1);
+create_test!(complex_groovy_block_comments.groovy, 1);
+create_test!(complex_gradle_build.gradle, 1);
+create_test!(complex_groovy_strings_regex.groovy, 1);
 create_test!(issue_1097.lua, 0);
 create_test!(basic.clj, 12);
 
@@ -68,6 +73,11 @@ create_test!(basic.clj, 12);
 create_test!(ignore_comments.rs, 1);
 create_test!(ignore_comments.c, 1);
 create_test!(ignore_comments.sol, 1);
+create_test!(ignore_comments.ps1, 1);
+
+// Zig tests - covering //, ///, and //! comments
+create_test!(clean.zig, 0);
+create_test!(dirty.zig, 5);
 
 // These are to make sure nothing crashes.
 create_test!(empty.js, 0);

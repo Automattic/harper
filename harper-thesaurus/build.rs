@@ -17,6 +17,12 @@ fn main() {
     let reader = BufReader::new(in_file);
     let writer = BufWriter::new(out_file);
 
-    zstd::stream::copy_encode(reader, writer, zstd::zstd_safe::max_c_level())
+    // Use a lesser compression level to speed up debug builds.
+    let compression_level = match env::var("OPT_LEVEL").unwrap().as_str() {
+        "3" | "2" | "s" | "z" => zstd::zstd_safe::max_c_level(), // 3.84 MiB
+        _ => 4,                                                  // 7.02 MiB
+    };
+
+    zstd::stream::copy_encode(reader, writer, compression_level)
         .expect("Able to write compressed thesaurus");
 }

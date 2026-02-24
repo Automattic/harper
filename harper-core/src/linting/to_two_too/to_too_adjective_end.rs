@@ -14,18 +14,18 @@ pub struct ToTooAdjectiveEnd {
 
 impl Default for ToTooAdjectiveEnd {
     fn default() -> Self {
-        let expr = SequenceExpr::optional(
-            SequenceExpr::default()
-                .then_any_word()
-                .then(WhitespacePattern),
-        )
-        .t_aco("to")
-        .t_ws()
-        .then_kind_is_but_is_not_except(TokenKind::is_adjective, TokenKind::is_verb, &["standard"])
-        .then_optional(WhitespacePattern)
-        .then_optional(SequenceExpr::default().then_any_word())
-        .then_optional(WhitespacePattern)
-        .then_optional(SequenceExpr::default().then_punctuation());
+        let expr = SequenceExpr::optional(SequenceExpr::any_word().t_ws())
+            .t_aco("to")
+            .t_ws()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_adjective,
+                TokenKind::is_verb,
+                &["standard"],
+            )
+            .then_optional(WhitespacePattern)
+            .then_optional(SequenceExpr::any_word())
+            .then_optional(WhitespacePattern)
+            .then_optional(SequenceExpr::default().then_punctuation());
 
         Self {
             expr: Box::new(expr),
@@ -53,7 +53,10 @@ impl ExprLinter for ToTooAdjectiveEnd {
         while idx < tokens.len() && tokens[idx].kind.is_whitespace() {
             idx += 1;
         }
-        if idx >= tokens.len() || !tokens[idx].kind.is_adjective() {
+        if idx >= tokens.len()
+            || !tokens[idx].kind.is_adjective()
+            || !tokens[idx].kind.is_positive_adjective()
+        {
             return None;
         }
         let prev_non_ws = tokens[..to_index].iter().rfind(|t| !t.kind.is_whitespace());

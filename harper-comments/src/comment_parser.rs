@@ -30,6 +30,7 @@ impl CommentParser {
             "csharp" => tree_sitter_c_sharp::LANGUAGE,
             "dart" => harper_tree_sitter_dart::LANGUAGE,
             "go" => tree_sitter_go::LANGUAGE,
+            "groovy" => tree_sitter_groovy::LANGUAGE,
             "haskell" => tree_sitter_haskell::LANGUAGE,
             "daml" => tree_sitter_haskell::LANGUAGE,
             "java" => tree_sitter_java::LANGUAGE,
@@ -39,6 +40,7 @@ impl CommentParser {
             "lua" => tree_sitter_lua::LANGUAGE,
             "nix" => tree_sitter_nix::LANGUAGE,
             "php" => tree_sitter_php::LANGUAGE_PHP,
+            "powershell" => tree_sitter_powershell::LANGUAGE,
             "ruby" => tree_sitter_ruby::LANGUAGE,
             "rust" => tree_sitter_rust::LANGUAGE,
             "scala" => tree_sitter_scala::LANGUAGE,
@@ -48,6 +50,7 @@ impl CommentParser {
             "toml" => tree_sitter_toml_ng::LANGUAGE,
             "typescript" => tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
             "typescriptreact" => tree_sitter_typescript::LANGUAGE_TSX,
+            "zig" => tree_sitter_zig::LANGUAGE,
             _ => return None,
         };
 
@@ -89,6 +92,7 @@ impl CommentParser {
             "cs" => "csharp",
             "dart" => "dart",
             "go" => "go",
+            "groovy" | "gradle" => "groovy",
             "hs" => "haskell",
             "daml" => "daml",
             "java" => "java",
@@ -98,6 +102,7 @@ impl CommentParser {
             "lua" => "lua",
             "nix" => "nix",
             "php" => "php",
+            "ps1" | "psd1" | "psm1" => "powershell",
             "rb" => "ruby",
             "rs" => "rust",
             "sbt" | "sc" | "scala" | "mill" => "scala",
@@ -107,6 +112,7 @@ impl CommentParser {
             "toml" => "toml",
             "ts" => "typescript",
             "tsx" => "typescriptreact",
+            "zig" => "zig",
             _ => return None,
         })
     }

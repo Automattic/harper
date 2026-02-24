@@ -19,6 +19,7 @@ mod lexing;
 pub mod linting;
 mod mask;
 mod number;
+mod offsets;
 pub mod parsers;
 pub mod patterns;
 mod punctuation;
@@ -52,7 +53,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
 use linting::Lint;
-pub use mask::{Mask, Masker};
+pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use span::Span;
@@ -78,6 +79,7 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
     }
 
     let mut remove_indices = VecDeque::new();
+    lints.sort_by_key(|l| l.priority);
     lints.sort_by_key(|l| (l.span.start, !0 - l.span.end));
 
     let mut cur = 0;
@@ -106,6 +108,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
     struct IndexedSpan {
         rule_idx: usize,
         lint_idx: usize,
+        priority: u8,
         start: usize,
         end: usize,
     }
@@ -119,6 +122,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
     for (rule_idx, (_, lints)) in lint_map.iter().enumerate() {
         for (lint_idx, lint) in lints.iter().enumerate() {
             spans.push(IndexedSpan {
+                priority: lint.priority,
                 rule_idx,
                 lint_idx,
                 start: lint.span.start,
@@ -127,6 +131,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
         }
     }
 
+    spans.sort_by_key(|span| span.priority);
     spans.sort_by_key(|span| (span.start, usize::MAX - span.end));
 
     let mut cur = 0;
@@ -154,6 +159,14 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
+    use std::hash::DefaultHasher;
+    use std::hash::{Hash, Hasher};
+
+    use itertools::Itertools;
+    use quickcheck_macros::quickcheck;
+
+    use crate::linting::Lint;
+    use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
         Dialect, Document,
@@ -174,5 +187,32 @@ mod tests {
         dbg!(&lints);
 
         assert_eq!(lints.len(), 3);
+    }
+
+    #[quickcheck]
+    fn overlap_removals_have_equivalent_behavior(s: String) {
+        let doc = Document::new_plain_english_curated(&s);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+
+        let mut lint_map = linter.organized_lints(&doc);
+        let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
+
+        remove_overlaps_map(&mut lint_map);
+        remove_overlaps(&mut lint_flat);
+
+        let post_removal_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
+
+        fn hash_lint(lint: &Lint) -> u64 {
+            let mut hasher = DefaultHasher::new();
+            lint.hash(&mut hasher);
+            hasher.finish()
+        }
+
+        // We want to ignore ordering, so let us hash these first and sort them.
+        let lint_flat_hashes: Vec<_> = lint_flat.iter().map(hash_lint).sorted().collect();
+        let post_removal_flat_hashes: Vec<_> =
+            post_removal_flat.iter().map(hash_lint).sorted().collect();
+
+        assert_eq!(post_removal_flat_hashes, lint_flat_hashes);
     }
 }

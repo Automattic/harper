@@ -985,15 +985,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
@@ -3778,6 +3769,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Grammar (31 priority)
+Message: |
+    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
+         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
+    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
+Suggest:
+  - Replace with: “them”
 
 
 
