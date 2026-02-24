@@ -9,7 +9,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
-use harper_core::spell::{CommonDictFuncs, Dictionary, WordMapEntry};
+use harper_core::spell::{CommonDictFuncs, Dictionary, FstDictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
@@ -146,7 +146,7 @@ impl Linter {
     fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
-        lint_dict.add_dictionary(Arc::new(WordMap::curated()));
+        lint_dict.add_dictionary(Arc::new(FstDictionary::curated()));
         lint_dict.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(lint_dict)
