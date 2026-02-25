@@ -3065,7 +3065,7 @@ EST/ONg
 ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
-EU/ON
+EU/Og
 EULA/NgS            # end-user license agreement
 EUR/Nmg             # currency symbol for Euros
 EUV/N               # extreme ultraviolet
@@ -10376,7 +10376,7 @@ UPS/NOgV
 URL/NSg
 US/Og
 USA/Og
-USAF/O
+USAF/Og
 USAID/Og            # agency
 USB/ONSg
 USCG/O
@@ -26501,7 +26501,7 @@ generalissimo/NgS
 generalist/NgS
 generality/~NSg
 generalization/~NgS
-generalize/~VGdS
+generalize/~VGdSB
 generalizer/NgS
 generalship/Ng
 generate/~VGSdervn
@@ -26735,6 +26735,7 @@ giro/~NSV
 girt/NgSVdGJ
 girth/NwgSV
 girths/N
+GIS/N # Geographic Information System
 gist/NgSV
 git/~NOSV
 gite/NS
@@ -29960,7 +29961,7 @@ indignance/Ng
 indignant/JY
 indignation/~Ng
 indigo/~NgJ
-indirect/~JYNV
+indirect/~JYNV      # noun senses: 1) type of const in finace; 2) type of radiator
 indiscipline/N
 indiscreet/JY
 indiscretion/NS
@@ -33901,7 +33902,7 @@ menstruation/Ng
 mensurable/J
 mensuration/Ng
 menswear/Nmg
-mental/~JYN
+mental/~JY          # removed slang/Indian/rare noun senses
 mentalist/JNSg
 mentality/~NSg
 menthol/Ng
