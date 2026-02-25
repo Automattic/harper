@@ -18,9 +18,20 @@ use crate::{
 pub mod word_map_entry;
 pub use word_map_entry::WordMapEntry;
 
+/// Type used to store the canonical entries in the word map.
+///
+/// This currently uses an [`IndexMap`], so a word can be indexed either by its canonical word ID
+/// (which is the same across all word maps), or directly via a `usize` index (specific to this
+/// word map only).
+///
+/// The latter property is used to allow [`WordMap::case_folded`] to indirectly reference entries
+/// in [`WordMap::canonical`].
 type CanonicalStorage = IndexMap<CanonicalWordId, WordMapEntry, DefaultHashBuilder>;
 
-/// The underlying data structure for the `MutableDictionary`.
+/// The most basic dictionary. Stores a list of words and their metadata, while allowing for
+/// efficient case-folded lookups.
+///
+/// This is the underlying data structure for all other dictionaries (at the time of writing).
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct WordMap {
     /// Underlying container for the entries in the word map.
@@ -36,6 +47,7 @@ impl WordMap {
         Default::default()
     }
 
+    /// A word map containing entries from the curated dictionary.
     pub fn curated() -> &'static WordMap {
         /// A word map containing entries from the curated dictionary.
         static CURATED: LazyLock<WordMap> =
@@ -156,6 +168,7 @@ impl WordMap {
         Ok(word_map)
     }
 
+    /// Create an [`FstDictionary`] from this word map.
     pub fn to_fst(self) -> FstDictionary {
         FstDictionary::new(self)
     }
