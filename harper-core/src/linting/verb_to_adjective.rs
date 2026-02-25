@@ -16,8 +16,7 @@ pub struct VerbToAdjective {
 
 impl Default for VerbToAdjective {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(WordSet::new(&["the", "a", "an"]))
+        let expr = SequenceExpr::word_set(&["the", "a", "an"])
             .t_ws()
             .then_kind_where(|kind| {
                 (kind.is_verb()

@@ -19,8 +19,7 @@ impl Default for AWhile {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let a = SequenceExpr::default()
-            .then(UPOSSet::new(&[UPOS::VERB]))
+        let a = SequenceExpr::with(UPOSSet::new(&[UPOS::VERB]))
             .t_ws()
             .t_aco("a")
             .t_ws()
@@ -34,8 +33,7 @@ impl Default for AWhile {
             ),
         );
 
-        let b = SequenceExpr::default()
-            .then_unless(UPOSSet::new(&[UPOS::VERB]))
+        let b = SequenceExpr::unless(UPOSSet::new(&[UPOS::VERB]))
             .t_ws()
             .t_aco("awhile");
 

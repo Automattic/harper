@@ -1,6 +1,6 @@
 [package]
 name = "harper-ls"
-version = "1.7.0"
+version = "1.8.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -20,16 +20,16 @@ harper-python = { path = "../harper-python", version = "1.0.0" }
 harper-asciidoc = { path = "../harper-asciidoc", version = "1.0.0" }
 tower-lsp-server = "0.22.1"
 tokio = { version = "1.49.0", default-features = false, features = ["fs", "io-std", "io-util", "macros", "net", "rt-multi-thread", "sync"] }
-clap = { version = "4.5.57", default-features = false, features = ["derive", "std"] }
+clap = { version = "4.5.60", default-features = false, features = ["derive", "std"] }
 dirs = "6.0.0"
-anyhow = "1.0.101"
+anyhow = "1.0.102"
 serde_json = "1.0.149"
 itertools = "0.14.0"
 tracing = { version = "0.1.44", default-features = false, features = ["std"] }
 tracing-subscriber = { version = "0.3.22", default-features = false, features = ["fmt", "std"] }
 resolve-path = "0.1.0"
 open = "5.3.3"
-futures = "0.3.31"
+futures = "0.3.32"
 serde = { version = "1.0.228", features = ["derive"] }
 globset = "0.4.18"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }

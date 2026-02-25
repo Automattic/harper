@@ -19,8 +19,7 @@ impl Default for EffectToAffect {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let context = SequenceExpr::default()
-            .then(matches_preceding_context)
+        let context = SequenceExpr::with(matches_preceding_context)
             .t_ws()
             .then(|tok: &Token, source: &[char]| is_effect_word(tok, source))
             .t_ws()

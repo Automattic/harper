@@ -408,6 +408,14 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_asking_to_simply_in_scare_quotes() {
+        assert_no_lints(
+            "He was asking to simply \"show up\" for the meeting.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
     fn no_lint_llm_as_judge_to_automatically_score() {
         assert_no_lints(
             "We used an LLM-as-judge to automatically score agent trajectories.",
@@ -439,5 +447,20 @@ mod tests {
     #[test]
     fn no_lint_prone_to_melancholy() {
         assert_no_lints("He wasn’t a man prone to melancholy.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_superlative_range() {
+        assert_no_lints("Sort speeds from slowest to fastest.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_comparative_range() {
+        assert_no_lints("We rank tasks from harder to easier.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn still_lints_positive_adjective_end() {
+        assert_lint_count("The room felt to cold.", ToTwoToo::default(), 1);
     }
 }

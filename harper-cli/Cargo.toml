@@ -6,9 +6,9 @@ publish = false
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-anyhow = "1.0.101"
+anyhow = "1.0.102"
 ariadne = "0.6.0"
-clap = { version = "4.5.57", features = ["derive", "std", "string"], default-features = false }
+clap = { version = "4.5.60", features = ["derive", "std", "string"], default-features = false }
 harper-stats = { path = "../harper-stats", version = "1.0.0" }
 dirs = "6.0.0"
 harper-literate-haskell = { path = "../harper-literate-haskell", version = "1.0.0" }
@@ -17,15 +17,17 @@ harper-asciidoc = { path = "../harper-asciidoc", version = "1.0.0" }
 harper-core = { path = "../harper-core", version = "1.0.0" }
 harper-pos-utils = { path = "../harper-pos-utils", version = "1.0.0", features = [] }
 harper-comments = { path = "../harper-comments", version = "1.0.0" }
+harper-tex = { path = "../harper-tex", version = "1.0.0" }
 harper-typst = { path = "../harper-typst", version = "1.0.0" }
 hashbrown = "0.16.1"
 rayon = "1.11.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
-strum = "0.27.2"
+strum = "0.28.0"
 strum_macros = "0.27.2"
 harper-ink = { version = "1.0.0", path = "../harper-ink" }
 enum_dispatch = "0.3.13"
+yansi = "1.0.1"
 
 [features]
 default = []

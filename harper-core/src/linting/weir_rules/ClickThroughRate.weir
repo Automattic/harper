@@ -1,0 +1,31 @@
+expr metricHeads [click, view]
+expr metricNouns [rate, rates, conversion, conversions, optimization, optimizations]
+expr main <((@metricHeads through) @metricNouns), (@metricHeads through)>
+
+let message "Keep the metric modifier bonded so the compound explicitly names the analytics signal."
+let description "Hyphenates the verb+preposition pair when it directly precedes rate-style nouns, mirroring how these terms are commonly styled in analytics writing."
+let kind "Punctuation"
+let becomes ["click-through", "view-through"]
+let strategy "MatchCase"
+
+# True positives
+# These sequences should become hyphenated because they describe a compound metric modifier.
+test "The click through rate improved." "The click-through rate improved."
+test "Our click through rates are trending up." "Our click-through rates are trending up."
+test "We monitor the click through conversion for each campaign." "We monitor the click-through conversion for each campaign."
+test "Click through conversions kept climbing overnight." "Click-through conversions kept climbing overnight."
+test "A sudden click through optimization push arrived." "A sudden click-through optimization push arrived."
+test "The latest click through rate dashboard arrived." "The latest click-through rate dashboard arrived."
+test "click through conversions stay on the board." "click-through conversions stay on the board."
+test "CLICK THROUGH RATES stay on the board." "CLICK-THROUGH RATES stay on the board."
+test "After the launch, the click through conversion number improved." "After the launch, the click-through conversion number improved."
+test "The view through optimization performed well." "The view-through optimization performed well."
+
+# False positives / true negatives
+# Keep the rule from firing when the modifier simply describes a navigation action or lacks a metric noun.
+test "Click through the next tab when ready." "Click through the next tab when ready."
+test "We click through every data point before shipping." "We click through every data point before shipping."
+test "Please click through the menu options slowly." "Please click through the menu options slowly."
+test "If you click through this screen, let me know." "If you click through this screen, let me know."
+test "She needs to view through the samples before approving." "She needs to view through the samples before approving."
+test "Click through, at your leisure, to see the preview." "Click through, at your leisure, to see the preview."

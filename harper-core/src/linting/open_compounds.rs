@@ -43,9 +43,7 @@ impl Default for OpenCompounds {
 
         let with_prev = SequenceExpr::anything().then(compound.clone());
 
-        let with_next = SequenceExpr::default()
-            .then(compound.clone())
-            .then_anything();
+        let with_next = SequenceExpr::with(compound.clone()).then_anything();
 
         let with_prev_and_next = SequenceExpr::anything()
             .then(compound.clone())

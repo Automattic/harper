@@ -25,6 +25,8 @@ pub fn lint_group() -> LintGroup {
         "Anyhow"          => ("any how", "anyhow"),
         "Anywhere"        => ("any where", "anywhere"),
         "Backplane"       => ("back plane", "backplane"),
+        "Bypass"          => ("by pass", "bypass"),
+        "Deadlift"        => ("dead lift", "deadlift"),
         "Desktop"         => ("desk top", "desktop"),
         "Devops"          => ("dev ops", "devops"),
         "Everybody"       => ("every body", "everybody"),
@@ -37,6 +39,8 @@ pub fn lint_group() -> LintGroup {
         "Instead"         => ("in stead", "instead"),
         "Intact"          => ("in tact", "intact"),
         "Itself"          => ("it self", "itself"),
+        "Keystroke"       => ("key stoke", "keystroke"),
+        "Keystrokes"      => ("key stokes", "keystrokes"),
         "Laptop"          => ("lap top", "laptop"),
         "Middleware"      => ("middle ware", "middleware"),
         "Misunderstand"   => ("miss understand", "misunderstand"),
@@ -59,10 +63,13 @@ pub fn lint_group() -> LintGroup {
         "Postpone"        => ("post pone", "postpone"),
         "Proofread"       => ("proof read", "proofread"),
         "Regardless"      => ("regard less", "regardless"),
+        "Shortcoming"     => ("short coming", "shortcoming"),
+        "Shortcomings"    => ("short comings", "shortcomings"),
         "Somebody"        => ("some body", "somebody"),
         "Somehow"         => ("some how", "somehow"),
         "Someone"         => ("some one", "someone"),
         "Somewhere"       => ("some where", "somewhere"),
+        "There"           => ("the re", "there"),
         "Therefore"       => ("there fore", "therefore"),
         "Thereupon"       => ("there upon", "thereupon"),
         "Underclock"      => ("under clock", "underclock"),
@@ -70,6 +77,7 @@ pub fn lint_group() -> LintGroup {
         "Upward"          => ("up ward", "upward"),
         "Whereupon"       => ("where upon", "whereupon"),
         "Widespread"      => ("wide spread", "widespread"),
+        "Without"         => ("with out", "without"),
         "Worldwide"       => ("world wide", "worldwide"),
     });
 
@@ -221,6 +229,62 @@ mod tests {
     fn over_night() {
         let test_sentence = "They set off on their journey over night.";
         let expected = "They set off on their journey overnight.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn by_pass() {
+        let test_sentence = "Please by pass this check for now.";
+        let expected = "Please bypass this check for now.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn dead_lift() {
+        let test_sentence = "I can dead lift 200 kg.";
+        let expected = "I can deadlift 200 kg.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn key_stoke() {
+        let test_sentence = "Use this key stoke to open search.";
+        let expected = "Use this keystroke to open search.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn key_stokes() {
+        let test_sentence = "These key stokes are hard to memorize.";
+        let expected = "These keystrokes are hard to memorize.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn with_out() {
+        let test_sentence = "We left with out a map.";
+        let expected = "We left without a map.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn the_re() {
+        let test_sentence = "The re are too many popups on this page.";
+        let expected = "There are too many popups on this page.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn short_coming() {
+        let test_sentence = "That bug is a short coming in the current release.";
+        let expected = "That bug is a shortcoming in the current release.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn short_comings() {
+        let test_sentence = "We listed three short comings in the postmortem.";
+        let expected = "We listed three shortcomings in the postmortem.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 }
