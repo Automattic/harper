@@ -1,0 +1,33 @@
+expr main <([(now way [to, of, for, finished, workflows]), (of now way), (in now way)]), now>
+
+let message "Did you mean `no way`?"
+let description "Corrects `now way` to `no way` in high-confidence contexts while avoiding comparative contexts like `now way too`."
+let kind "Typo"
+let becomes "no"
+let strategy "MatchCase"
+
+# True positives
+test "However, there is now way to open this console." "However, there is no way to open this console."
+test "it's in now way finished or usable (which, quite honestly, is a shame....)." "it's in no way finished or usable (which, quite honestly, is a shame....)."
+test "There is now way of retrieving info about a directive at startup." "There is no way of retrieving info about a directive at startup."
+test "I know of now way, especially programmatically, to get the latest version of Cursor available." "I know of no way, especially programmatically, to get the latest version of Cursor available."
+test "there is now way to enable 24bit colors in windows powershell / pwsh" "there is no way to enable 24bit colors in windows powershell / pwsh"
+test "Basically, in now way, shape, or form should use lib be part of the solution here." "Basically, in no way, shape, or form should use lib be part of the solution here."
+test "As of now there is now way to document the concurrent statements in doxygen." "As of now there is no way to document the concurrent statements in doxygen."
+test "But there seems now way for the extension to do that." "But there seems no way for the extension to do that."
+test "No we tried to make it work using the current props, but there was just now way to do it using options and value" "No we tried to make it work using the current props, but there was just no way to do it using options and value"
+test "There is currently now way workflows can store custom variables/values in a deterministic and persistent way." "There is currently no way workflows can store custom variables/values in a deterministic and persistent way."
+test "You found now way to use atuin for its syncing features, but use fzf for fuzzy searching the atuin history then?" "You found no way to use atuin for its syncing features, but use fzf for fuzzy searching the atuin history then?"
+
+# Guardrails / false positives
+allows "Sorry, but it's now way beyond my OpenGL knowledge."
+allows "Popups are now way too intrusive, they block the rest of the screen and make it unresponsive"
+allows "not a good practice since SB 4 has now way more starters for testing"
+allows "in the middle of rewriting a big update for a game im now way past schedule for"
+allows "the thumbnail and previews created are now way too light and unusable"
+allows "There are now way less vague and more specific cases of export behaviour I don't understand or I think are just wrong."
+allows "ready to be read after the (now way shorter) expiration"
+allows "but I think the references are now way more consistent in Conan"
+
+# Ambiguous intent
+allows "It was quite helpful with longer prompts that tend to be now way less precise due to the lack of todo tool and loss of context mid response."
