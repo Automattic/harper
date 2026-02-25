@@ -18,6 +18,30 @@ import {
 
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 
+type GoogleDocsReplacePayload = {
+	start: number;
+	end: number;
+	replacementText: string;
+	expectedText: string;
+	beforeContext: string;
+	afterContext: string;
+};
+
+type GoogleDocsBridgeClientLike = {
+	replaceText: (
+		start: number,
+		end: number,
+		replacementText: string,
+		expectedText?: string,
+		beforeContext?: string,
+		afterContext?: string,
+	) => Promise<unknown> | unknown;
+};
+
+type WindowWithGoogleDocsBridgeClient = Window & {
+	__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClientLike;
+};
+
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
@@ -202,22 +226,34 @@ function replaceGoogleDocsValue(
 		const beforeContext = source.slice(Math.max(0, safeStart - contextRadius), safeStart);
 		const afterContext = source.slice(safeEnd, Math.min(source.length, safeEnd + contextRadius));
 
-		document.dispatchEvent(
-			new CustomEvent('harper:gdocs:replace', {
-				detail: {
-					start: span.start,
-					end: span.end,
-					replacementText,
-					expectedText,
-					beforeContext,
-					afterContext,
-				},
-			}),
-		);
-	} catch {
-		// Ignore bridge dispatch failures.
+			const payload: GoogleDocsReplacePayload = {
+				start: span.start,
+				end: span.end,
+				replacementText,
+				expectedText,
+				beforeContext,
+				afterContext,
+			};
+			// This looks awkward because lint-framework cannot import chrome-plugin code directly.
+			// The content script puts the bridge client on window so this shared package can call it.
+			const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
+				.__harperGoogleDocsBridgeClient;
+			if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
+				void Promise.resolve(
+					bridgeClient.replaceText(
+						payload.start,
+						payload.end,
+						payload.replacementText,
+						payload.expectedText,
+						payload.beforeContext,
+						payload.afterContext,
+					),
+				);
+			}
+		} catch {
+			// Ignore bridge dispatch failures.
+		}
 	}
-}
 
 function replaceFormElementValue(
 	el: HTMLTextAreaElement | HTMLInputElement,

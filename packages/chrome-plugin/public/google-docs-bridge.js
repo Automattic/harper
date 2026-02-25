@@ -1,3 +1,5 @@
+import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-handler.js';
+
 (() => {
 	/**
 	 * @typedef {{ x: number, y: number, width: number, height: number }} Rect
@@ -15,6 +17,7 @@
 	 * }} AnnotatedText
 	 */
 
+	const PROTOCOL_VERSION = 'harper-gdocs-bridge/v1';
 	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
 	const SYNC_INTERVAL_MS = 100;
 	const EDITOR_SELECTOR = '.kix-appview-editor';
@@ -26,6 +29,7 @@
 	const LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
 	const SELECTION_START_ATTR = 'data-harper-selection-start';
 	const SELECTION_END_ATTR = 'data-harper-selection-end';
+	const EVENT_NOTIFICATION = 'harper:gdocs:notification';
 	const EVENT_TEXT_UPDATED = 'harper:gdocs:text-updated';
 	const EVENT_LAYOUT_CHANGED = 'harper:gdocs:layout-changed';
 	const EVENT_GET_RECTS = 'harper:gdocs:get-rects';
@@ -70,6 +74,24 @@
 	};
 
 	/**
+	 * @param {'textUpdated' | 'layoutChanged'} name
+	 * @param {Record<string, unknown>} detail
+	 * @returns {void}
+	 */
+	const emitNotification = (name, detail) => {
+		try {
+			document.dispatchEvent(
+				new CustomEvent(EVENT_NOTIFICATION, {
+					detail: {
+						protocol: PROTOCOL_VERSION,
+						notification: { kind: name, ...detail },
+					},
+				}),
+			);
+		} catch {}
+	};
+
+	/**
 	 * @param {string} reason
 	 * @returns {void}
 	 */
@@ -83,6 +105,7 @@
 			bridgeNode.setAttribute(LAYOUT_EPOCH_ATTR, String(layoutEpoch));
 			bridgeNode.setAttribute(LAYOUT_REASON_ATTR, String(reason));
 			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
+				emitNotification('layoutChanged', { layoutEpoch, reason });
 		});
 	};
 
@@ -112,6 +135,7 @@
 			if (bridgeNode.textContent !== nextText) {
 				bridgeNode.textContent = nextText;
 				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
+					emitNotification('textUpdated', { length: nextText.length });
 			}
 		} catch {}
 	};
@@ -351,160 +375,194 @@
 		}
 	};
 
-	/** @param {Event} event */
-	document.addEventListener(EVENT_GET_RECTS, (event) => {
+	/**
+	 * @param {{ start?: number, end?: number }} request
+	 * @returns {Promise<{ kind: 'getRects', rects: Rect[] }>}
+	 */
+	const handleGetRectsRequest = async (request) => {
+		const start = Number(request.start);
+		const end = Number(request.end);
+		/** @type {AnnotatedText | undefined} */
+		const annotated = window.__harperGoogleDocsAnnotatedText;
+		if (!annotated || typeof annotated.setSelection !== 'function') {
+			return { kind: 'getRects', rects: [] };
+		}
+
+		const currentSelection = annotated.getSelection?.()?.[0];
+		const previousSelection = getSelectionEndpoints(currentSelection);
+		if (!isSpanNearSelection(start, end, previousSelection)) {
+			return { kind: 'getRects', rects: [] };
+		}
+
+		/** @type {Rect[]} */
+		const rects = [];
+		isComputingRects = true;
+		const scrollSnapshot = snapshotScroll();
 		try {
-			/** @type {{ requestId?: string, start?: number, end?: number }} */
-			const detail = /** @type {CustomEvent} */ (event).detail || {};
-			const requestId = String(detail.requestId || '');
-			if (!requestId) return;
-			const start = Number(detail.start);
-			const end = Number(detail.end);
-			/** @type {AnnotatedText | undefined} */
-			const annotated = window.__harperGoogleDocsAnnotatedText;
-			if (!annotated || typeof annotated.setSelection !== 'function') return;
+			const spanStart = Math.max(0, Math.min(start, end));
+			const spanEnd = Math.max(spanStart, end);
+			const { startRect, endRect } = withSuppressedScrolling(() => {
+				return {
+					startRect: getCaretRect(annotated, spanStart),
+					endRect: getCaretRect(annotated, spanEnd),
+				};
+			});
 
-			const currentSelection = annotated.getSelection?.()?.[0];
-			const previousSelection = getSelectionEndpoints(currentSelection);
-			if (!isSpanNearSelection(start, end, previousSelection)) {
-				ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, '[]');
-				return;
-			}
-
-			/** @type {Rect[]} */
-			const rects = [];
-			isComputingRects = true;
-			const scrollSnapshot = snapshotScroll();
-			try {
-				const spanStart = Math.max(0, Math.min(start, end));
-				const spanEnd = Math.max(spanStart, end);
-				const { startRect, endRect } = withSuppressedScrolling(() => {
-					return {
-						startRect: getCaretRect(annotated, spanStart),
-						endRect: getCaretRect(annotated, spanEnd),
-					};
+			if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
+				rects.push({
+					x: Math.min(startRect.x, endRect.x),
+					y: startRect.y,
+					width: Math.max(4, Math.abs(endRect.x - startRect.x)),
+					height: startRect.height,
 				});
-
-				if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
-					rects.push({
-						x: Math.min(startRect.x, endRect.x),
-						y: startRect.y,
-						width: Math.max(4, Math.abs(endRect.x - startRect.x)),
-						height: startRect.height,
-					});
-				} else if (startRect) {
-					rects.push({
-						x: startRect.x,
-						y: startRect.y,
-						width: 8,
-						height: startRect.height,
-					});
-				}
-			} finally {
-				isComputingRects = false;
-				restoreSelection(annotated, previousSelection);
-				restoreScroll(scrollSnapshot);
-				requestAnimationFrame(() => restoreScroll(scrollSnapshot));
+			} else if (startRect) {
+				rects.push({
+					x: startRect.x,
+					y: startRect.y,
+					width: 8,
+					height: startRect.height,
+				});
 			}
+		} finally {
+			isComputingRects = false;
+			restoreSelection(annotated, previousSelection);
+			restoreScroll(scrollSnapshot);
+			requestAnimationFrame(() => restoreScroll(scrollSnapshot));
+		}
 
-			ensureBridgeExists().setAttribute(`data-harper-rects-${requestId}`, JSON.stringify(rects));
-		} catch {}
-	});
+		return { kind: 'getRects', rects };
+	};
 
-	document.addEventListener(EVENT_REPLACE, async (event) => {
-		try {
-			/** @type {{ start?: number, end?: number, replacementText?: string, expectedText?: string, beforeContext?: string, afterContext?: string }} */
-			const detail = /** @type {CustomEvent} */ (event).detail || {};
-			let start = Number(detail.start);
-			let end = Number(detail.end);
-			const replacementText = String(detail.replacementText ?? '');
-			const expectedText = String(detail.expectedText ?? '');
-			const beforeContext = String(detail.beforeContext ?? '');
-			const afterContext = String(detail.afterContext ?? '');
-			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
-			if (typeof getAnnotatedText !== 'function') return;
-			/** @type {AnnotatedText | null | undefined} */
-			const annotated = await getAnnotatedText();
-			if (!annotated || typeof annotated.setSelection !== 'function') return;
+	/**
+	 * @param {{ start?: number, end?: number, replacementText?: string, expectedText?: string, beforeContext?: string, afterContext?: string }} request
+	 * @returns {Promise<{ kind: 'replaceText', applied: boolean }>}
+	 */
+	const handleReplaceTextRequest = async (request) => {
+		let start = Number(request.start);
+		let end = Number(request.end);
+		const replacementText = String(request.replacementText ?? '');
+		const expectedText = String(request.expectedText ?? '');
+		const beforeContext = String(request.beforeContext ?? '');
+		const afterContext = String(request.afterContext ?? '');
+		const getAnnotatedText = window._docs_annotate_getAnnotatedText;
+		if (typeof getAnnotatedText !== 'function') {
+			return { kind: 'replaceText', applied: false };
+		}
+		/** @type {AnnotatedText | null | undefined} */
+		const annotated = await getAnnotatedText();
+		if (!annotated || typeof annotated.setSelection !== 'function') {
+			return { kind: 'replaceText', applied: false };
+		}
 
-			if (expectedText) {
-				const currentText = annotated.getText?.();
-				if (typeof currentText === 'string') {
-					const spanLength = Math.max(0, end - start);
-					const normalizeStart = Math.max(0, Math.min(start, currentText.length));
-					const normalizeEnd = Math.max(normalizeStart, Math.min(end, currentText.length));
-					const direct = currentText.slice(normalizeStart, normalizeEnd);
-					if (direct !== expectedText) {
-						const resolveByOffsetWindow = () => {
-							for (let delta = -12; delta <= 12; delta += 1) {
-								const candidateStart = normalizeStart + delta;
-								if (candidateStart < 0) continue;
-								const candidateEnd = candidateStart + spanLength;
-								if (candidateEnd > currentText.length) continue;
-								if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
-									return { start: candidateStart, end: candidateEnd };
-								}
+		if (expectedText) {
+			const currentText = annotated.getText?.();
+			if (typeof currentText === 'string') {
+				const spanLength = Math.max(0, end - start);
+				const normalizeStart = Math.max(0, Math.min(start, currentText.length));
+				const normalizeEnd = Math.max(normalizeStart, Math.min(end, currentText.length));
+				const direct = currentText.slice(normalizeStart, normalizeEnd);
+				if (direct !== expectedText) {
+					const resolveByOffsetWindow = () => {
+						for (let delta = -12; delta <= 12; delta += 1) {
+							const candidateStart = normalizeStart + delta;
+							if (candidateStart < 0) continue;
+							const candidateEnd = candidateStart + spanLength;
+							if (candidateEnd > currentText.length) continue;
+							if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
+								return { start: candidateStart, end: candidateEnd };
 							}
-							return null;
-						};
-
-						const resolveByContext = () => {
-							const hits = [];
-							let cursor = 0;
-							while (cursor <= currentText.length) {
-								const index = currentText.indexOf(expectedText, cursor);
-								if (index < 0) break;
-								const indexEnd = index + expectedText.length;
-								const beforeTail = beforeContext ? beforeContext.slice(-16) : '';
-								const afterHead = afterContext ? afterContext.slice(0, 16) : '';
-								let score = 0;
-								if (
-									beforeTail &&
-									currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail
-								) {
-									score += 2;
-								}
-								if (
-									afterHead &&
-									currentText.slice(
-										indexEnd,
-										Math.min(currentText.length, indexEnd + afterHead.length),
-									) === afterHead
-								) {
-									score += 2;
-								}
-								score -= Math.abs(index - normalizeStart) / 1000;
-								hits.push({ start: index, end: indexEnd, score });
-								cursor = index + 1;
-							}
-
-							if (hits.length === 0) return null;
-							hits.sort((a, b) => b.score - a.score);
-							return { start: hits[0].start, end: hits[0].end };
-						};
-
-						const resolved = resolveByOffsetWindow() ?? resolveByContext();
-						if (resolved) {
-							start = resolved.start;
-							end = resolved.end;
 						}
+						return null;
+					};
+
+					const resolveByContext = () => {
+						const hits = [];
+						let cursor = 0;
+						while (cursor <= currentText.length) {
+							const index = currentText.indexOf(expectedText, cursor);
+							if (index < 0) break;
+							const indexEnd = index + expectedText.length;
+							const beforeTail = beforeContext ? beforeContext.slice(-16) : '';
+							const afterHead = afterContext ? afterContext.slice(0, 16) : '';
+							let score = 0;
+							if (
+								beforeTail &&
+								currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail
+							) {
+								score += 2;
+							}
+							if (
+								afterHead &&
+								currentText.slice(
+									indexEnd,
+									Math.min(currentText.length, indexEnd + afterHead.length),
+								) === afterHead
+							) {
+								score += 2;
+							}
+							score -= Math.abs(index - normalizeStart) / 1000;
+							hits.push({ start: index, end: indexEnd, score });
+							cursor = index + 1;
+						}
+
+						if (hits.length === 0) return null;
+						hits.sort((a, b) => b.score - a.score);
+						return { start: hits[0].start, end: hits[0].end };
+					};
+
+					const resolved = resolveByOffsetWindow() ?? resolveByContext();
+					if (resolved) {
+						start = resolved.start;
+						end = resolved.end;
 					}
 				}
 			}
+		}
 
-			annotated.setSelection(start, end);
-			const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
-			const target = iframe?.contentDocument?.activeElement;
-			if (!target) return;
-			const dt = new DataTransfer();
-			dt.setData('text/plain', replacementText);
-			const pasteEvent = new ClipboardEvent('paste', {
-				clipboardData: dt,
-				cancelable: true,
-				bubbles: true,
+		annotated.setSelection(start, end);
+		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
+		const target = iframe?.contentDocument?.activeElement;
+		if (!target) {
+			return { kind: 'replaceText', applied: false };
+		}
+
+		const dt = new DataTransfer();
+		dt.setData('text/plain', replacementText);
+		const pasteEvent = new ClipboardEvent('paste', {
+			clipboardData: dt,
+			cancelable: true,
+			bubbles: true,
+		});
+		target.dispatchEvent(pasteEvent);
+		setTimeout(syncText, 0);
+		return { kind: 'replaceText', applied: true };
+	};
+
+	const requestHandler = new GoogleDocsBridgeRequestHandler({
+		onGetRectsRequest: handleGetRectsRequest,
+		onReplaceTextRequest: handleReplaceTextRequest,
+	});
+	requestHandler.start();
+
+	// Legacy compatibility bridge while callers migrate to request/response protocol.
+	document.addEventListener(EVENT_GET_RECTS, (event) => {
+		try {
+			const detail = /** @type {CustomEvent} */ (event).detail || {};
+			const requestId = String(detail.requestId || '');
+			if (!requestId) return;
+			void handleGetRectsRequest(detail).then((response) => {
+				ensureBridgeExists().setAttribute(
+					`data-harper-rects-${requestId}`,
+					JSON.stringify(response.rects),
+				);
 			});
-			target.dispatchEvent(pasteEvent);
-			setTimeout(syncText, 0);
+		} catch {}
+	});
+
+	document.addEventListener(EVENT_REPLACE, (event) => {
+		try {
+			const detail = /** @type {CustomEvent} */ (event).detail || {};
+			void handleReplaceTextRequest(detail);
 		} catch {}
 	});
 

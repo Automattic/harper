@@ -1,13 +1,17 @@
 import type { LintFramework } from 'lint-framework';
+import GoogleDocsBridgeClient from './GoogleDocsBridgeClient';
+
+declare global {
+	interface Window {
+		__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClient;
+	}
+}
 
 const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
 const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-const GOOGLE_DOCS_LAYOUT_EPOCH_ATTR = 'data-harper-layout-epoch';
-const GOOGLE_DOCS_LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
 const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 const GOOGLE_DOCS_SVG_RECT_SELECTOR = 'rect[aria-label]';
-const GOOGLE_DOCS_TEXT_UPDATED_EVENT = 'harper:gdocs:text-updated';
 const GOOGLE_DOCS_LINE_BREAK_THRESHOLD_PX = 6;
 
 type LayoutRefreshFramework = LintFramework & {
@@ -25,10 +29,9 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 	let googleDocsSyncInFlight = false;
 	let googleDocsSyncPending = false;
 	let googleDocsBridgeAttached = false;
-	let googleDocsFrameRefreshStarted = false;
 	let googleDocsEventsBound = false;
-	let googleDocsLastLayoutEpoch = '';
 	let googleDocsCloneSignature = '';
+	let googleDocsBridgeClient: GoogleDocsBridgeClient | null = null;
 
 	function getGoogleDocsBridge(editor: HTMLElement): HTMLElement {
 		let bridge = document.getElementById(GOOGLE_DOCS_BRIDGE_ID);
@@ -64,40 +67,10 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		}
 
 		const script = document.createElement('script');
+		script.type = 'module';
 		script.src = chrome.runtime.getURL('google-docs-bridge.js');
 		(document.head || document.documentElement).appendChild(script);
 		script.onload = () => script.remove();
-	}
-
-	function startGoogleDocsFrameRefreshLoop() {
-		if (googleDocsFrameRefreshStarted) {
-			return;
-		}
-
-		googleDocsFrameRefreshStarted = true;
-
-		const tick = () => {
-			if (!isGoogleDocsPage()) {
-				googleDocsFrameRefreshStarted = false;
-				googleDocsLastLayoutEpoch = '';
-				return;
-			}
-
-			const bridge = document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID);
-			const layoutEpoch = bridge?.getAttribute(GOOGLE_DOCS_LAYOUT_EPOCH_ATTR) ?? '';
-			const layoutReason = bridge?.getAttribute(GOOGLE_DOCS_LAYOUT_REASON_ATTR) ?? '';
-
-			if (layoutEpoch !== googleDocsLastLayoutEpoch) {
-				googleDocsLastLayoutEpoch = layoutEpoch;
-				if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(layoutReason)) {
-					(fw as LayoutRefreshFramework).refreshLayout?.();
-				}
-			}
-
-			requestAnimationFrame(tick);
-		};
-
-		requestAnimationFrame(tick);
 	}
 
 	function bindGoogleDocsBridgeEvents(syncGoogleDocsBridge: () => Promise<void>) {
@@ -106,9 +79,15 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		}
 
 		googleDocsEventsBound = true;
-		startGoogleDocsFrameRefreshLoop();
-		document.addEventListener(GOOGLE_DOCS_TEXT_UPDATED_EVENT, () => {
+		googleDocsBridgeClient = new GoogleDocsBridgeClient(document);
+		window.__harperGoogleDocsBridgeClient = googleDocsBridgeClient;
+		googleDocsBridgeClient.onTextUpdated(() => {
 			void syncGoogleDocsBridge();
+		});
+		googleDocsBridgeClient.onLayoutChanged((reason) => {
+			if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(String(reason))) {
+				(fw as LayoutRefreshFramework).refreshLayout?.();
+			}
 		});
 	}
 
@@ -225,6 +204,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 	async function syncGoogleDocsBridge() {
 		if (!isGoogleDocsPage()) {
+			if (googleDocsBridgeClient) {
+				googleDocsBridgeClient.dispose();
+				googleDocsBridgeClient = null;
+			}
+			delete window.__harperGoogleDocsBridgeClient;
+			googleDocsEventsBound = false;
 			return;
 		}
 
