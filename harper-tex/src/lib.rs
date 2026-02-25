@@ -1,6 +1,6 @@
 mod masker;
 
-use harper_core::Token;
+use harper_core::{Punctuation, Span, Token, TokenKind};
 use harper_core::parsers::{Mask, Parser, PlainEnglish};
 
 use self::masker::Masker;
@@ -24,8 +24,37 @@ impl Default for TeX {
 
 impl Parser for TeX {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        self.inner.parse(source)
+        let tokens = self.inner.parse(source);
+        collapse_triple_hyphens(tokens)
     }
+}
+
+fn collapse_triple_hyphens(tokens: Vec<Token>) -> Vec<Token> {
+    let mut out = Vec::with_capacity(tokens.len());
+    let mut i = 0;
+
+    while i < tokens.len() {
+        let is_triple_hyphen = i + 2 < tokens.len()
+            && matches!(tokens[i].kind, TokenKind::Punctuation(Punctuation::Hyphen))
+            && matches!(tokens[i + 1].kind, TokenKind::Punctuation(Punctuation::Hyphen))
+            && matches!(tokens[i + 2].kind, TokenKind::Punctuation(Punctuation::Hyphen))
+            && tokens[i].span.end == tokens[i + 1].span.start
+            && tokens[i + 1].span.end == tokens[i + 2].span.start;
+
+        if is_triple_hyphen {
+            out.push(Token::new(
+                Span::new(tokens[i].span.start, tokens[i + 2].span.end),
+                TokenKind::Punctuation(Punctuation::EmDash),
+            ));
+            i += 3;
+            continue;
+        }
+
+        out.push(tokens[i].clone());
+        i += 1;
+    }
+
+    out
 }
 
 #[cfg(test)]
@@ -63,6 +92,23 @@ mod tests {
             vec![
                 TokenKind::Punctuation(harper_core::Punctuation::Bang),
                 TokenKind::Punctuation(harper_core::Punctuation::Bang)
+            ]
+        )
+    }
+
+    #[test]
+    fn parses_triple_hyphen_as_em_dash() {
+        let source = "A---B";
+
+        let toks = TeX::default().parse_str(source);
+        let tok_kinds: Vec<_> = toks.into_iter().map(|t| t.kind).collect();
+
+        assert_eq!(
+            tok_kinds,
+            vec![
+                TokenKind::Word(None),
+                TokenKind::Punctuation(harper_core::Punctuation::EmDash),
+                TokenKind::Word(None),
             ]
         )
     }
