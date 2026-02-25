@@ -25,6 +25,14 @@ export function isGoogleDocsPage(): boolean {
 	);
 }
 
+/**
+ * Creates a serialized sync function that keeps Harper's hidden lint target in step with
+ * Google Docs' rendered text layer.
+ *
+ * Why: Google Docs does not expose a stable, contenteditable DOM surface we can lint directly.
+ * We instead mirror its visual text rects into our own hidden bridge node, then point
+ * `LintFramework` at that node.
+ */
 export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<void> {
 	let googleDocsSyncInFlight = false;
 	let googleDocsSyncPending = false;
@@ -33,6 +41,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 	let googleDocsCloneSignature = '';
 	let googleDocsBridgeClient: GoogleDocsBridgeClient | null = null;
 
+	/**
+	 * Ensures the hidden bridge element exists under the live editor container.
+	 *
+	 * Why: attaching to the editor keeps coordinate systems aligned so lint overlays map
+	 * correctly to what the user sees.
+	 */
 	function getGoogleDocsBridge(editor: HTMLElement): HTMLElement {
 		let bridge = document.getElementById(GOOGLE_DOCS_BRIDGE_ID);
 
@@ -61,6 +75,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return bridge;
 	}
 
+	/**
+	 * Injects the page-world bridge script once.
+	 *
+	 * Why: content scripts run in an isolated world and cannot directly access some
+	 * Google Docs internals. The injected main-world bridge can, then communicates via DOM events.
+	 */
 	function ensureGoogleDocsMainWorldBridge() {
 		if (document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID)) {
 			return;
@@ -73,6 +93,13 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		script.onload = () => script.remove();
 	}
 
+	/**
+	 * Wires bridge events into framework refresh paths.
+	 *
+	 * Why: we react to push-style updates from Docs instead of polling heavily.
+	 * Layout refreshes intentionally ignore pure scroll reasons to avoid expensive
+	 * recalculations on high-frequency movement.
+	 */
 	function bindGoogleDocsBridgeEvents(syncGoogleDocsBridge: () => Promise<void>) {
 		if (!isGoogleDocsPage() || googleDocsEventsBound) {
 			return;
@@ -91,6 +118,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		});
 	}
 
+	/**
+	 * Normalizes Google Docs aria-label text into a whitespace shape closer to user-visible text.
+	 *
+	 * Why: Docs tokenization can collapse or split spaces around punctuation in ways that
+	 * produce false positives/offset drift for lint spans.
+	 */
 	function normalizeGoogleDocsLabel(label: string): string {
 		const tokens = label.split(' ');
 
@@ -118,6 +151,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return tokens.join('');
 	}
 
+	/**
+	 * Adds a token to a small rolling hash (djb2 variant).
+	 *
+	 * Why: fast change detection lets us skip expensive DOM replacement and framework updates
+	 * when reconstructed clone output is effectively unchanged.
+	 */
 	function addHashToken(hash: number, token: string): number {
 		let next = hash;
 		for (let i = 0; i < token.length; i += 1) {
@@ -126,6 +165,13 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return next;
 	}
 
+	/**
+	 * Rebuilds the hidden clone from Docs SVG text rects.
+	 *
+	 * How: each labeled rect becomes an absolutely-positioned span in the bridge.
+	 * Why: this preserves enough geometry for highlight placement while giving Harper a
+	 * stable text surface. The signature short-circuits no-op updates.
+	 */
 	function rebuildGoogleDocsClone(editor: HTMLElement, clone: HTMLElement): { changed: boolean } {
 		const rectNodes = editor.querySelectorAll<SVGRectElement>(GOOGLE_DOCS_SVG_RECT_SELECTOR);
 		const editorRect = editor.getBoundingClientRect();
@@ -202,6 +248,12 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return { changed: true };
 	}
 
+	/**
+	 * Performs one sync pass, with in-flight serialization and a pending replay.
+	 *
+	 * Why: Docs can fire bursts of changes; serialization prevents overlapping `fw.update()`
+	 * work and ensures we process at least one follow-up pass after a busy interval.
+	 */
 	async function syncGoogleDocsBridge() {
 		if (!isGoogleDocsPage()) {
 			if (googleDocsBridgeClient) {
