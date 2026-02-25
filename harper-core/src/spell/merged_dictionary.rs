@@ -29,8 +29,15 @@ impl MergedDictionary {
 
     pub fn add_dictionary(&mut self, dictionary: Arc<dyn Dictionary>) {
         self.child_hashes.push(self.hash_dictionary(&dictionary));
-        self.merged_word_map
-            .extend(dictionary.get_word_map().clone());
+
+        if self.merged_word_map.is_empty() {
+            // Fast path.
+            self.merged_word_map.clone_from(dictionary.get_word_map());
+        } else {
+            self.merged_word_map
+                .extend(dictionary.get_word_map().clone());
+        }
+
         self.children.push(dictionary);
     }
 
