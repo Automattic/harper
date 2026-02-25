@@ -72,7 +72,12 @@ export class GoogleDocsBridgeRequestHandler {
 				return;
 			}
 
-			this.sendErrorResponse(requestMessage.requestId, request.kind, 'unsupported_request', 'Unsupported request kind');
+			this.sendErrorResponse(
+				requestMessage.requestId,
+				request.kind,
+				'unsupported_request',
+				'Unsupported request kind',
+			);
 		} catch (err) {
 			this.sendErrorResponse(
 				requestMessage.requestId,

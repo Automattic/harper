@@ -105,7 +105,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 			bridgeNode.setAttribute(LAYOUT_EPOCH_ATTR, String(layoutEpoch));
 			bridgeNode.setAttribute(LAYOUT_REASON_ATTR, String(reason));
 			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
-				emitNotification('layoutChanged', { layoutEpoch, reason });
+			emitNotification('layoutChanged', { layoutEpoch, reason });
 		});
 	};
 
@@ -135,7 +135,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 			if (bridgeNode.textContent !== nextText) {
 				bridgeNode.textContent = nextText;
 				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
-					emitNotification('textUpdated', { length: nextText.length });
+				emitNotification('textUpdated', { length: nextText.length });
 			}
 		} catch {}
 	};

@@ -3,11 +3,11 @@
 import type {
 	GoogleDocsGetRectsResponse,
 	GoogleDocsNotificationMessage,
+	GoogleDocsRect,
 	GoogleDocsRequest,
 	GoogleDocsRequestMessage,
 	GoogleDocsResponse,
 	GoogleDocsResponseMessage,
-	GoogleDocsRect,
 } from '../../public/google-docs-protocol.js';
 
 type PendingRequest = {
@@ -30,7 +30,9 @@ export default class GoogleDocsBridgeClient {
 	private readonly onNotificationBound: EventListener;
 
 	private readonly textUpdatedListeners = new Set<(length: number) => void>();
-	private readonly layoutChangedListeners = new Set<(reason: string, layoutEpoch: number) => void>();
+	private readonly layoutChangedListeners = new Set<
+		(reason: string, layoutEpoch: number) => void
+	>();
 
 	public constructor(documentRef: Document = document, timeoutMs = 2000) {
 		this.documentRef = documentRef;
@@ -56,7 +58,11 @@ export default class GoogleDocsBridgeClient {
 
 	/** Get on-screen rects for a text span in the Google Doc. */
 	public async getRects(start: number, end: number): Promise<GoogleDocsRect[]> {
-		const response = (await this.request({ kind: 'getRects', start, end })) as GoogleDocsGetRectsResponse;
+		const response = (await this.request({
+			kind: 'getRects',
+			start,
+			end,
+		})) as GoogleDocsGetRectsResponse;
 		return response.rects;
 	}
 
