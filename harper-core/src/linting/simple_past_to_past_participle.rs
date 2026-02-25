@@ -18,40 +18,38 @@ impl Default for SimplePastToPastParticiple {
             expr: Box::new(All::new(vec![
                 // positive: the general case
                 Box::new(
-                    SequenceExpr::default()
-                        .then_any_of(vec![
-                            // for perfect tenses
-                            Box::new(WordSet::new(&["have", "had", "has", "having"])),
-                            // for passive voice
-                            Box::new(InflectionOfBe::default()),
-                            // pronoun + have contractions
-                            Box::new(WordSet::new(&[
-                                "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
-                                "she's", "she'd", "it's", "it'd", "they've", "they'd",
-                            ])),
-                            // pronoun + have contractions missing apostrophes
-                            Box::new(WordSet::new(&[
-                                "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
-                                "shed", "its", "itd", "theyve", "theyd",
-                            ])),
-                        ])
-                        .t_ws()
-                        .then_verb_simple_past_form(),
+                    SequenceExpr::any_of(vec![
+                        // for perfect tenses
+                        Box::new(WordSet::new(&["have", "had", "has", "having"])),
+                        // for passive voice
+                        Box::new(InflectionOfBe::default()),
+                        // pronoun + have contractions
+                        Box::new(WordSet::new(&[
+                            "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
+                            "she's", "she'd", "it's", "it'd", "they've", "they'd",
+                        ])),
+                        // pronoun + have contractions missing apostrophes
+                        Box::new(WordSet::new(&[
+                            "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
+                            "shed", "its", "itd", "theyve", "theyd",
+                        ])),
+                    ])
+                    .t_ws()
+                    .then_verb_simple_past_form(),
                 ),
                 // negative: exceptions
-                Box::new(SequenceExpr::default().then_unless(FirstMatchOf::new(vec![
-                        Box::new(
-                            SequenceExpr::default()
-                                .then(InflectionOfBe::default())
-                                .t_any()
-                                .t_aco("woke"),
-                        ),
-                        Box::new(
-                            SequenceExpr::aco("id")
-                                .t_any()
-                                .then_word_set(&["came", "did", "went"]),
-                        ),
-                    ]))),
+                Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
+                    Box::new(
+                        SequenceExpr::with(InflectionOfBe::default())
+                            .t_any()
+                            .t_aco("woke"),
+                    ),
+                    Box::new(
+                        SequenceExpr::aco("id")
+                            .t_any()
+                            .then_word_set(&["came", "did", "went"]),
+                    ),
+                ]))),
             ])),
         }
     }

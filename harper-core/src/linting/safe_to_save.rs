@@ -16,8 +16,7 @@ pub struct SafeToSave {
 
 impl Default for SafeToSave {
     fn default() -> Self {
-        let with_adv = SequenceExpr::default()
-            .then(ModalVerb::default())
+        let with_adv = SequenceExpr::with(ModalVerb::default())
             .then_whitespace()
             .then(UPOSSet::new(&[UPOS::ADV]))
             .then_whitespace()
@@ -25,8 +24,7 @@ impl Default for SafeToSave {
             .then_whitespace()
             .then_unless(WordSet::new(&["to"]));
 
-        let without_adv = SequenceExpr::default()
-            .then(ModalVerb::default())
+        let without_adv = SequenceExpr::with(ModalVerb::default())
             .then_whitespace()
             .t_aco("safe")
             .then_whitespace()

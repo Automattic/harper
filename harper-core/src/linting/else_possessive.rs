@@ -25,8 +25,7 @@ impl Default for ElsePossessive {
         ])
         .or(SequenceExpr::aco("no").then_whitespace().t_aco("one"));
 
-        let pattern = SequenceExpr::default()
-            .then(pronouns)
+        let pattern = SequenceExpr::with(pronouns)
             .then_whitespace()
             .t_aco("elses");
 

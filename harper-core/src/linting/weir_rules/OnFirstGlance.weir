@@ -1,0 +1,31 @@
+expr main <([(on first glance), (on a first glance), (on the first glance)]), ([on])>
+
+let message "Use `at first glance` instead of `on first glance` when describing an immediate impression."
+let description "The standard idiom starts with `at` for quick appraisals, so swap the preposition to keep the phrase idiomatic."
+let kind "Usage"
+let becomes "at"
+let strategy "MatchCase"
+
+# True positives
+
+test "On first glance it seems like a good plan." "At first glance it seems like a good plan."
+test "On first glance, the homepage felt fast." "At first glance, the homepage felt fast."
+test "On a first glance the credential list looked complete." "At a first glance the credential list looked complete."
+test "On the first glance I took at the draft, the tone felt steady." "At the first glance I took at the draft, the tone felt steady."
+test "ON FIRST GLANCE the tab looked empty." "AT FIRST GLANCE the tab looked empty."
+test "On first glance we thought the fix had landed." "At first glance we thought the fix had landed."
+
+# False negatives (should also trigger)
+
+test "On first glance? the fix seemed ready." "At first glance? the fix seemed ready."
+test "On a first glance when scanning the changelog, there were no errors." "At a first glance when scanning the changelog, there were no errors."
+test "On the first glance at the dashboard nothing seemed off." "At the first glance at the dashboard nothing seemed off."
+test "On first glance--before the audit--the facade looked clean." "At first glance--before the audit--the facade looked clean."
+
+# Guardrails / false positives / true negatives
+
+test "At first glance the patch was a keeper." "At first glance the patch was a keeper."
+test "My first glance at the console logs offered little insight." "My first glance at the console logs offered little insight."
+test "First glance data points still need verification." "First glance data points still need verification."
+test "The timeline on the first slide looked accurate." "The timeline on the first slide looked accurate."
+test "He always writes `on first` as part of a headline." "He always writes `on first` as part of a headline."

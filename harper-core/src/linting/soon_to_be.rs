@@ -49,7 +49,7 @@ impl Default for SoonToBe {
         };
 
         let trailing_phrase = || {
-            SequenceExpr::default().then_any_of(vec![
+            SequenceExpr::any_of(vec![
                 Box::new(hyphenated_number_modifier()),
                 Box::new(hyphenated_compound()),
                 Box::new(nominal_tail()),

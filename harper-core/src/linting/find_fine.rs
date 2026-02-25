@@ -12,8 +12,7 @@ pub struct FindFine {
 
 impl Default for FindFine {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(InflectionOfBe::default())
+        let expr = SequenceExpr::with(InflectionOfBe::default())
             .t_ws()
             .t_aco("find");
 

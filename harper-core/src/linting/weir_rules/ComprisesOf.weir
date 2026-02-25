@@ -1,0 +1,26 @@
+expr main (comprises of)
+
+let message "Avoid `comprises of`; let `comprises` stand on its own or choose `consists of`."
+let description "`Comprises` already contains the notion of `of`, so following it with another `of` is redundant."
+let kind "Usage"
+let becomes ["comprises", "is comprised of"]
+
+test "The playlist comprises of twelve tracks." "The playlist comprises twelve tracks."
+test "Our team comprises of specialists with diverse expertise." "Our team comprises specialists with diverse expertise."
+test "The committee comprises of members from each department." "The committee comprises members from each department."
+test "The community comprises of volunteers and donors." "The community comprises volunteers and donors."
+test "The project comprises of multiple modules." "The project comprises multiple modules."
+test "The project comprises of multiple modules." "The project is comprised of multiple modules."
+test "His speech comprises of anecdotes." "His speech comprises anecdotes."
+test "This portfolio comprises of leading companies." "This portfolio comprises leading companies."
+test "Comprises of rare objects, the exhibit feels curated." "Comprises rare objects, the exhibit feels curated."
+test "COMPRISES OF outdated references, the memo loses credibility." "COMPRISES outdated references, the memo loses credibility."
+
+test "The team comprises consultants from all regions." "The team comprises consultants from all regions."
+test "Her summary comprises a list of skills." "Her summary comprises a list of skills."
+test "The board comprises directors of multiple backgrounds." "The board comprises directors of multiple backgrounds."
+test "It comprises a mix of fans and critics." "It comprises a mix of fans and critics."
+test "I know what comprises the committee." "I know what comprises the committee."
+test "A phrase like comprises-of should stay untouched." "A phrase like comprises-of should stay untouched."
+test "Comprising the look of the thing, the design stands out." "Comprising the look of the thing, the design stands out."
+test "The comprise of energy issues is complex." "The comprise of energy issues is complex."

@@ -14,15 +14,13 @@ impl Default for Likewise {
         let mut expr = All::default();
 
         expr.add(SequenceExpr::aco("like").then_whitespace().t_aco("wise"));
-        expr.add(
-            SequenceExpr::default().then_unless(
-                SequenceExpr::anything()
-                    .then_whitespace()
-                    .then_anything()
-                    .then_whitespace()
-                    .then_noun(),
-            ),
-        );
+        expr.add(SequenceExpr::unless(
+            SequenceExpr::anything()
+                .then_whitespace()
+                .then_anything()
+                .then_whitespace()
+                .then_noun(),
+        ));
 
         Self {
             expr: Box::new(expr),

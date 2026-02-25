@@ -18,8 +18,7 @@ impl Default for FreePredicate {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let no_modifier = SequenceExpr::default()
-            .then(linking_like)
+        let no_modifier = SequenceExpr::with(linking_like)
             .t_ws()
             .then(matches_fee)
             .then_optional(WhitespacePattern)
@@ -27,8 +26,7 @@ impl Default for FreePredicate {
 
         map.insert(no_modifier, 2);
 
-        let with_adverb = SequenceExpr::default()
-            .then(linking_like)
+        let with_adverb = SequenceExpr::with(linking_like)
             .t_ws()
             .then_adverb()
             .t_ws()

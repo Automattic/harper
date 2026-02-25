@@ -20,9 +20,9 @@ impl Default for General {
 
         let exceptions = SequenceExpr::anything()
             .then_anything()
-            .then(WordSet::new(&["own", "intended"]));
+            .then_word_set(&["own", "intended"]);
 
-        let inverted = SequenceExpr::default().then_unless(exceptions);
+        let inverted = SequenceExpr::unless(exceptions);
 
         let expr = All::new(vec![Box::new(positive), Box::new(inverted)]).or_longest(
             SequenceExpr::aco("its")
@@ -66,9 +66,18 @@ impl General {
         let offender = toks.first()?;
         let offender_chars = offender.span.get_content(source);
 
-        if toks.get(2)?.kind.is_upos(UPOS::VERB)
+        let modifier = toks.get(2)?;
+
+        if modifier.kind.is_upos(UPOS::VERB)
             && NominalPhrase.matches(&toks[2..], source).is_some()
+            && !Self::is_likely_predicative_participle(modifier, source)
         {
+            return None;
+        }
+
+        // Past-participle modifiers can be tagged as verbs even in possessive noun phrases:
+        // "its abetted parameter", "its associated parameter", etc.
+        if self.is_possessive_participle_noun_phrase(toks, source) {
             return None;
         }
 
@@ -83,5 +92,43 @@ impl General {
                 .to_owned(),
             priority: 54,
         })
+    }
+
+    fn is_possessive_participle_noun_phrase(&self, toks: &[Token], source: &[char]) -> bool {
+        let Some(modifier) = toks.get(2) else {
+            return false;
+        };
+        let Some(gap) = toks.get(3) else {
+            return false;
+        };
+        let Some(head) = toks.get(4) else {
+            return false;
+        };
+
+        if !modifier.kind.is_verb_past_participle_form() || !gap.kind.is_whitespace() {
+            return false;
+        }
+
+        if !(head.kind.is_noun() || head.kind.is_proper_noun()) {
+            return false;
+        }
+
+        if Self::is_likely_predicative_participle(modifier, source) {
+            return false;
+        }
+
+        let modifier_text = modifier.span.get_content_string(source);
+
+        !["had", "been", "got"]
+            .iter()
+            .any(|word| modifier_text.eq_ignore_ascii_case(word))
+    }
+
+    fn is_likely_predicative_participle(tok: &Token, source: &[char]) -> bool {
+        let text = tok.span.get_content_string(source);
+
+        ["called", "named", "known", "termed", "titled"]
+            .iter()
+            .any(|word| text.eq_ignore_ascii_case(word))
     }
 }

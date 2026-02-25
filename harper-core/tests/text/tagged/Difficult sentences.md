@@ -578,8 +578,8 @@
 # +    NSg/R/C NSg/I/C/Ddem NSg/J P  D/P+ NSg/VB/J+ .
 > I’ve not     taken her     out          of a   goodly long     while      .
 # K    NSg/R/C VPp/J ISg/D$+ NSg/VB/J/R/P P  D/P J/R    NPr/VB/J NSg/VB/C/P .
-> After a   delay     of three hours , the plane     finally took off        .
-# P     D/P NSg/VPt/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
+> After a   delay      of three hours , the plane     finally took off        .
+# P     D/P NSg/VBPt/J P  NSg+  NPl+  . D+  NSg/VB/J+ R       VPt  NSg/VB/J/P .
 >
 #
 >              On

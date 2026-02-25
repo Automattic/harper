@@ -23,4 +23,4 @@ getrandom = { version = "0.3.4", default-features = false, features = ["wasm_js"
 harper-stats = { path = "../harper-stats", version = "1.0.0", features = ["js"] }
 
 [dev-dependencies]
-sysinfo = { version = "0.38.1", default-features = false, features = [ "system" ] }
+sysinfo = { version = "0.38.2", default-features = false, features = [ "system" ] }
