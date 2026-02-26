@@ -4,7 +4,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::{All, Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::patterns::{UPOSSet, WordSet};
-use crate::spell::Dictionary;
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{Token, TokenKind};
 
 pub struct PossessiveNoun<D> {

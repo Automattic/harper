@@ -151,7 +151,8 @@ mod tests {
     use crate::linting::Linter;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{
-        Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
+        CommonDictFuncs, Dictionary, FstDictionary, MergedDictionary, MutableDictionary,
+        WordMapEntry,
     };
     use crate::{
         Dialect,

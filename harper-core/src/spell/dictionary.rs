@@ -33,17 +33,6 @@ pub trait Dictionary: Send + Sync {
     /// Look for words that share a prefix with the provided word
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>>;
 
-    // STRING FUNCTION VARIANTS START
-    /// Check if the dictionary contains any capitalization of a given word.
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.contains_word(str_to_chars(word).as_ref())
-    }
-
-    /// Check if the dictionary contains the exact capitalization of a given word.
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.contains_exact_word(str_to_chars(word).as_ref())
-    }
-
     /// Gets best fuzzy match from dictionary
     fn fuzzy_match_str(
         &'_ self,
@@ -53,7 +42,6 @@ pub trait Dictionary: Send + Sync {
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.fuzzy_match(str_to_chars(word).as_ref(), max_distance, max_results)
     }
-    // STRING FUNCTION VARIANTS END
 }
 
 /// The default conversion function for converting a str to a sequence of characters.
@@ -151,6 +139,16 @@ pub trait CommonDictFuncs: Dictionary {
     /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
     fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
         self.get_word_exact(str_to_chars(word).as_ref())
+    }
+
+    /// Check if the dictionary contains any capitalization of a given word.
+    fn contains_word_str(&self, word: &str) -> bool {
+        self.contains_word(str_to_chars(word).as_ref())
+    }
+
+    /// Check if the dictionary contains the exact capitalization of a given word.
+    fn contains_exact_word_str(&self, word: &str) -> bool {
+        self.contains_exact_word(str_to_chars(word).as_ref())
     }
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one
