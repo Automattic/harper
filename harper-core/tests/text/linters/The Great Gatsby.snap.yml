@@ -3459,6 +3459,7 @@ Message: |
 Suggest:
   - Replace with: “Oxford”
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
@@ -3469,6 +3470,7 @@ Message: |
 Suggest:
   - Replace with: “Oxford”
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
@@ -3479,6 +3481,7 @@ Message: |
 Suggest:
   - Replace with: “Oxford”
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 
@@ -4489,17 +4492,6 @@ Message: |
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
   - Replace with: “jail or”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3093 | It might have lasted indefinitely except for the fact that Ella Kaye came on
-         |                      ^~~~~~~~~~~~ Did you mean to spell `indefinitely` this way?
-Suggest:
-  - Replace with: “indefinite”
-  - Replace with: “infinitely”
-  - Replace with: “definitely”
 
 
 
@@ -7502,6 +7494,7 @@ Message: |
 Suggest:
   - Replace with: “Oxford”
   - Replace with: “Oxford”
+  - Replace with: “Longsword”
 
 
 

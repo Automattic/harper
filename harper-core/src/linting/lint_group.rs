@@ -49,6 +49,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::damages::Damages;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
@@ -664,6 +665,11 @@ impl LintGroup {
             Box::new(DisjointPrefixes::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add("Damages", Box::new(Damages::default()));
+        out.config.set_rule_enabled("Damages", true);
 
         out.add(
             "PronounVerbAgreement",

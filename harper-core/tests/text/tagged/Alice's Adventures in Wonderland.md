@@ -1523,7 +1523,7 @@
 > out          to the puppy   ; whereupon the puppy   jumped into the air      off        all          its     feet at
 # NSg/VB/J/R/P P  D+  NSg/VB+ . C         D+  NSg/VB+ VP/J   P    D   N🅪Sg/VB+ NSg/VB/J/P NSg/I/J/C/Dq ISg/D$+ NPl+ NSg/P
 > once  , with a   yelp   of delight    , and  rushed at    the stick     , and  made believe to worry
-# NSg/C . P    D/P NSg/VB P  N🅪Sg/VB/J+ . VB/C VP/J   NSg/P D   NSg/VB/J+ . VB/C VP   VB      P  NSg/VB
+# NSg/C . P    D/P NSg/VB P  N🅪Sg/VB/J+ . VB/C VP/J   NSg/P D   NSg/VB/J+ . VB/C VP   VB      P  N🅪Sg/VB
 > it       ; then      Alice dodged behind  a   great thistle , to keep   herself from being       run
 # NPr/ISg+ . NSg/J/R/C NPr+  VP/J   NSg/J/P D/P NSg/J NSg     . P  NSg/VB ISg+    P    N🅪Sg/Vg/J/C NSg/VBPp
 > over    ; and  the moment she  appeared on  the other    side      , the puppy   made another rush
@@ -4436,8 +4436,8 @@
 #
 > “ I       never went    to him  , ” the Mock      Turtle  said with a   sigh   : “ he       taught Laughing and
 # . ISg/#r+ R     NSg/VPt P  ISg+ . . D+  NSg/VB/J+ NSg/VB+ VP/J P    D/P NSg/VB . . NPr/ISg+ VP     Nᴹ/Vg/J  VB/C
-> Grief   , they used to say    . ”
-# NSg/VB+ . IPl+ VP/J P  NSg/VB . .
+> Grief  , they used to say    . ”
+# Nᴹ/VB+ . IPl+ VP/J P  NSg/VB . .
 >
 #
 > “ So          he       did  , so          he       did  , ” said the Gryphon , sighing in        his     turn   ; and  both
