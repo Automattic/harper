@@ -16,7 +16,26 @@ pub struct MissingTo {
 }
 
 impl MissingTo {
-    fn controller_words() -> WordSet {
+    fn strict_controller_words() -> WordSet {
+        WordSet::new(&[
+            "eager",
+            "fail",
+            "failed",
+            "failing",
+            "fails",
+            "incline",
+            "inclined",
+            "inclines",
+            "inclining",
+            "manage",
+            "managed",
+            "manages",
+            "managing",
+            "ready",
+        ])
+    }
+
+    fn permissive_controller_words() -> WordSet {
         WordSet::new(&[
             "aim",
             "aimed",
@@ -55,10 +74,6 @@ impl MissingTo {
             "expected",
             "expecting",
             "expects",
-            "fail",
-            "failed",
-            "failing",
-            "fails",
             "forget",
             "forgot",
             "forgotten",
@@ -68,10 +83,6 @@ impl MissingTo {
             "hoped",
             "hopes",
             "hoping",
-            "incline",
-            "inclined",
-            "inclines",
-            "inclining",
             "intend",
             "intended",
             "intending",
@@ -85,10 +96,6 @@ impl MissingTo {
             "longed",
             "longing",
             "longs",
-            "manage",
-            "managed",
-            "manages",
-            "managing",
             "mean",
             "means",
             "meant",
@@ -104,7 +111,6 @@ impl MissingTo {
             "prepared",
             "prepares",
             "preparing",
-            "ready",
             "refuse",
             "refused",
             "refuses",
@@ -200,11 +206,15 @@ impl Default for MissingTo {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let pattern = SequenceExpr::with(Self::controller_words())
+        let strict_pattern = SequenceExpr::with(Self::strict_controller_words())
+            .t_ws()
+            .then_kind_where(|kind| kind.is_upos(UPOS::VERB));
+        map.insert(strict_pattern, 0);
+
+        let permissive_pattern = SequenceExpr::with(Self::permissive_controller_words())
             .t_ws()
             .then_kind_where(|kind| kind.is_verb_lemma());
-
-        map.insert(pattern, 0);
+        map.insert(permissive_pattern, 0);
 
         let map = Arc::new(map);
 
@@ -623,5 +633,20 @@ mod tests {
             MissingTo::default(),
             0,
         );
+    }
+
+    #[test]
+    fn no_lint_failed_edit_attempts() {
+        assert_lint_count("failed edit attempts", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_ready_work() {
+        assert_lint_count("ready work", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_bad_at_managing_side_effects() {
+        assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0);
     }
 }
