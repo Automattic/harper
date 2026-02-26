@@ -1023,6 +1023,15 @@
 					"is_phrasal": true
 				}
 			}
+		},
+		"☁": {
+			"#": "abstract noun property",
+			"//": "mnemonic: cloud = intangible",
+			"metadata": {
+				"noun": {
+					"is_abstract": true
+				}
+			}
 		}
 	}
 }
