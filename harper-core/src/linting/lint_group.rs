@@ -17,6 +17,7 @@ use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
+use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
@@ -427,6 +428,7 @@ impl LintGroup {
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_expr_rule!(AfterLater, true);
+        insert_expr_rule!(AllHellBreakLoose, true);
         insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_expr_rule!(AllowTo, true);
         insert_expr_rule!(AmInTheMorning, true);
