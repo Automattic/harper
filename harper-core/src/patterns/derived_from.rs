@@ -30,7 +30,7 @@ impl Pattern for DerivedFrom {
         let chars = tok.span.get_content(source);
 
         let is_exact_match = CanonicalWordId::from_word_chars(chars) == self.word_id
-            || CaseFoldedWordId::from_word_chars(chars) == self.word_id.as_case_folded();
+            || CaseFoldedWordId::from_word_chars(chars).0 == self.word_id.as_case_folded();
 
         if is_exact_match
             || tok

@@ -25,9 +25,12 @@ impl WordIdPair {
     ///
     /// Calculates both the canonical and case-folded word ID for the provided word.
     pub(crate) fn from_word_chars(chars: impl AsRef<[char]>) -> Self {
+        let (case_folded, maybe_canonical) = CaseFoldedWordId::from_word_chars(chars.as_ref());
+
         Self {
-            canonical: CanonicalWordId::from_word_chars(&chars),
-            case_folded: CaseFoldedWordId::from_word_chars(&chars),
+            // Trying to avoid hashing again if possible.
+            canonical: maybe_canonical.unwrap_or_else(|| CanonicalWordId::from_word_chars(chars)),
+            case_folded,
         }
     }
 

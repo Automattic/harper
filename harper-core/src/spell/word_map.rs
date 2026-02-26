@@ -8,7 +8,7 @@ use crate::{
     CharStringExt, DictWordMetadata,
     edit_distance::edit_distance_min_alloc,
     spell::{
-        CommonDictFuncs, Dictionary, FstDictionary, FuzzyMatchResult, WordIdPair,
+        CommonDictFuncs, Dictionary, FstDictionary, FuzzyMatchResult,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -89,7 +89,7 @@ impl WordMap {
         &self,
         word: &[char],
     ) -> impl ExactSizeIterator<Item = &WordMapEntry> + use<'_> {
-        self.get_case_folded(CaseFoldedWordId::from_word_chars(word))
+        self.get_case_folded(CaseFoldedWordId::from_word_chars(word).0)
     }
 
     /// Borrow a word's metadata mutably
@@ -107,15 +107,15 @@ impl WordMap {
     ///
     /// If you are appending many words, consider using [`Self::extend`] instead.
     pub fn insert(&mut self, entry: WordMapEntry) {
-        let word_ids = WordIdPair::from_word_chars(&entry.canonical_spelling);
+        let (canonical_id, case_folded_id) =
+            (entry.word_ids.canonical(), entry.word_ids.case_folded());
 
-        if let Some(existing_entry) = self.canonical.get_mut(&word_ids.canonical()) {
+        if let Some(existing_entry) = self.canonical.get_mut(&canonical_id) {
             // An existing word with the same canonical ID exists; update its entry.
             existing_entry.metadata.append(&entry.metadata);
         } else {
             // An existing word with the same canonical ID does NOT exist; insert it.
-            let (canonical_idx, _) = self.canonical.insert_full(word_ids.canonical(), entry);
-            let case_folded_id = word_ids.case_folded();
+            let (canonical_idx, _) = self.canonical.insert_full(canonical_id, entry);
             if let Some(existing_case_folded_entry) = self.case_folded.get_mut(&case_folded_id) {
                 // `case_folded` already has a canonical ID list for this word; append to it, if
                 // the same entry does not already exist.

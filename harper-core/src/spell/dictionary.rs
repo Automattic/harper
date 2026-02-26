@@ -104,7 +104,7 @@ pub trait CommonDictFuncs: Dictionary {
     /// Check if the dictionary contains any capitalization of a given word.
     fn contains_word(&self, word: &[char]) -> bool {
         self.get_word_map()
-            .contains_case_folded(CaseFoldedWordId::from_word_chars(word))
+            .contains_case_folded(CaseFoldedWordId::from_word_chars(word).0)
     }
 
     /// Check if the dictionary contains the exact capitalization of a given word.

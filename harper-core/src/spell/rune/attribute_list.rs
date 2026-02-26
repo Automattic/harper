@@ -64,6 +64,8 @@ impl AttributeList {
         let orth_flags = OrthFlags::from_letters(&annotated_word.letters);
         base_metadata.orth_info = orth_flags;
 
+        let annotated_word_id = CanonicalWordId::from_word_chars(&annotated_word.letters);
+
         let mut conditional_expansion_metadata = Vec::new();
 
         // First pass: Process all properties to build the base metadata
@@ -153,16 +155,12 @@ impl AttributeList {
                         .get_metadata_mut_canonical(CanonicalWordId::from_word_chars(new_word))
                         .unwrap();
                     target_metadata.append(&metadata);
-                    target_metadata
-                        .derived_from
-                        .insert(CanonicalWordId::from_word_chars(&annotated_word.letters));
+                    target_metadata.derived_from.insert(annotated_word_id);
                 }
             } else {
                 // Simple case: no cross-product expansion needed
                 for (key, mut value) in new_words.into_iter() {
-                    value
-                        .derived_from
-                        .insert(CanonicalWordId::from_word_chars(&annotated_word.letters));
+                    value.derived_from.insert(annotated_word_id);
 
                     if let Some(existing_metadata) =
                         word_map.get_metadata_mut_canonical(CanonicalWordId::from_word_chars(&key))
@@ -171,10 +169,7 @@ impl AttributeList {
                         existing_metadata.append(&value);
                     } else {
                         // Add new entry
-                        word_map.insert(WordMapEntry {
-                            canonical_spelling: key,
-                            metadata: value,
-                        });
+                        word_map.insert(WordMapEntry::new(key).with_md(value));
                     }
                 }
             }
@@ -184,17 +179,12 @@ impl AttributeList {
         let mut full_metadata = base_metadata;
 
         // Merge with any existing metadata for this word
-        if let Some(existing_metadata) =
-            word_map.get_canonical(CanonicalWordId::from_word_chars(&annotated_word.letters))
-        {
-            full_metadata.append(&existing_metadata.metadata);
+        if let Some(existing_entry) = word_map.get_canonical(annotated_word_id) {
+            full_metadata.append(&existing_entry.metadata);
         }
 
         // Store the final metadata for the base word
-        word_map.insert(WordMapEntry {
-            metadata: full_metadata.clone(),
-            canonical_spelling: annotated_word.letters,
-        });
+        word_map.insert(WordMapEntry::new(annotated_word.letters).with_md(full_metadata.clone()));
 
         // Process any conditional expansions
         for (letters, metadata, condition) in conditional_expansion_metadata {

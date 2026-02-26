@@ -3,7 +3,7 @@ use itertools::Itertools;
 use crate::linting::{LintKind, Suggestion};
 
 use crate::expr::Expr;
-use crate::spell::{CanonicalWordId, CaseFoldedWordId, WordMap};
+use crate::spell::{WordIdPair, WordMap};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
@@ -69,12 +69,9 @@ impl ExprLinter for OrthographicConsistency {
         let chars = word.span.get_content(source);
 
         // Cache the ID so we don't have to recalculate it.
-        let id = CaseFoldedWordId::from_word_chars(chars);
+        let word_ids = WordIdPair::from_word_chars(chars);
 
-        if self
-            .dict
-            .contains_canonical(CanonicalWordId::from_word_chars(chars))
-        {
+        if self.dict.contains_canonical(word_ids.canonical()) {
             // Exit if the dictionary contains the exact word.
             return None;
         }
@@ -108,7 +105,7 @@ impl ExprLinter for OrthographicConsistency {
         if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
             && let Ok(canonical) = self
                 .dict
-                .get_case_folded(id)
+                .get_case_folded(word_ids.case_folded())
                 .exactly_one()
                 .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
@@ -129,7 +126,7 @@ impl ExprLinter for OrthographicConsistency {
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Ok(canonical) = self
                 .dict
-                .get_case_folded(id)
+                .get_case_folded(word_ids.case_folded())
                 .exactly_one()
                 .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
