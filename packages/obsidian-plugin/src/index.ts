@@ -208,7 +208,6 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-dismiss-focused-tooltip',
 			name: 'Dismiss focused suggestion tooltip',
-			hotkeys: [{ modifiers: [], key: 'Escape' }],
 			checkCallback: (checking) => {
 				const editorView = this.getActiveEditorView();
 				if (!editorView) return false;
