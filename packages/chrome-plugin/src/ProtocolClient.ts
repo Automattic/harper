@@ -18,6 +18,7 @@ export default class ProtocolClient {
 		domain: string,
 		options?: LintOptions,
 	): Promise<UnpackedLintGroups> {
+		console.log(text, domain, options);
 		const key = this.cacheKey(text, domain, options);
 		let p = this.lintCache.get(key);
 		if (!p) {
