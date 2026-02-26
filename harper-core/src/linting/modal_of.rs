@@ -34,6 +34,16 @@ impl Default for ModalOf {
                 .t_aco("of"),
         );
 
+        // "can of" is a false positive if "can" is a noun (a container)
+        // "I drank a can of Red Bull"
+        let noun_can_of_naive = Lrc::new(
+            SequenceExpr::word_set(&["the", "a"])
+                .then_whitespace()
+                .t_aco("can")
+                .then_whitespace()
+                .t_aco("of"),
+        );
+
         let ws_course = Lrc::new(SequenceExpr::whitespace().t_aco("course"));
 
         let modal_of_course =
@@ -56,6 +66,7 @@ impl Default for ModalOf {
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
                 Box::new(noun_will_of_naive),
+                Box::new(noun_can_of_naive),
                 Box::new(modal_of),
             ])),
         }
@@ -314,6 +325,16 @@ mod tests {
     #[test]
     fn doesnt_catch_noun_will_of_edgecase() {
         assert_lint_count("he sent us a will of his", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_a_can_of() {
+        assert_lint_count("I drank a can of Red Bull.", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_the_can_of() {
+        assert_lint_count("the can of soda", ModalOf::default(), 0);
     }
 
     #[test]
