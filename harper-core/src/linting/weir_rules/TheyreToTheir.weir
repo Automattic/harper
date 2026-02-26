@@ -1,4 +1,4 @@
-expr main [<(they're [NOUN, (NOUN NOUN), (ADJ NOUN), (ADV ADJ NOUN), (VERB NOUN), (ADV VERB NOUN), (ADV ADV VERB NOUN), (ADJ PUNCT ADJ NOUN), (mittens), (sketches), (past), (needs), (pawn), (ability), (return), (potential to), (understanding), (new)]), they're>]
+expr main <(they're [backpacks, patience, dog, proposal, laughter, ladder, apartment, mittens, answer, sketches, server, backup, evidence, garden, maps, team, past, needs, pawn, ability, return, hearing, house, coats, problems, (connected notes), (own data infrastructure), (ancestral lands), (most recently accessed projects), (potential to), (understanding), (new), (relatively low density)]), they're>
 
 let message "Did you mean `their`?"
 let description "Corrects `they're` when the intended meaning is `their`."
@@ -30,7 +30,13 @@ allows "They're ready to start whenever you are."
 allows "They're not answering any messages."
 allows "They're going to be a problem if we don't hurry."
 allows "They're probably wondering where we went."
+allows "No, they're not."
+allows "They're done with blacking, I believe."
+allows "I don't know what they're like."
+allows "They're all over crumbs."
 test "They're backpacks were stacked neatly by the door." "Their backpacks were stacked neatly by the door."
+test "What are they're problems?" "What are their problems?"
+test "I think they're house is the blue one." "I think their house is the blue one."
 test "I admired they're patience during the long, glitchy delay." "I admired their patience during the long, glitchy delay."
 test "They're dog sprinted across the yard like a furry comet." "Their dog sprinted across the yard like a furry comet."
 test "The committee revised they're proposal after the budget changed." "The committee revised their proposal after the budget changed."
@@ -58,3 +64,4 @@ test "For instance, a musician who has lost they're hearing might collaborate wi
 test "They're relatively low density facilitates handling and transportation." "Their relatively low density facilitates handling and transportation."
 test "The growing interest in mycelium-based construction materials stems from they're potential to offer a sustainable alternative to conventional building materials." "The growing interest in mycelium-based construction materials stems from their potential to offer a sustainable alternative to conventional building materials."
 test "Similarly, the individual experiencing sensory loss must actively reconstruct they're understanding of the world, mapping the contours of they're new, altered reality." "Similarly, the individual experiencing sensory loss must actively reconstruct their understanding of the world, mapping the contours of their new, altered reality."
+test "Can you hand me they're coats?" "Can you hand me their coats?"

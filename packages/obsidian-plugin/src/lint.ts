@@ -805,8 +805,12 @@ function getActiveTooltipMatch(view: EditorView): SelectedDiagnostic | null {
 		return lState.commandTooltip;
 	}
 
-	const active = view.state.facet(showTooltip) as (Tooltip & HarperTooltipMeta)[];
+	const active = view.state.facet(showTooltip) as
+		| readonly ((Tooltip & HarperTooltipMeta) | null)[]
+		| null;
+	if (!active) return null;
 	for (const tooltip of active) {
+		if (!tooltip || tooltip.harperLint !== true) continue;
 		const from = tooltip.pos;
 		const to = tooltip.end ?? from;
 		const matched = getDiagnosticForTooltipRange(lState.diagnostics, from, to);

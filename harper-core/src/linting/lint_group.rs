@@ -199,6 +199,7 @@ use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
+use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
@@ -599,6 +600,7 @@ impl LintGroup {
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_expr_rule!(TryOnesHandAt, true);
+        insert_struct_rule!(TheyreConfusions, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_expr_rule!(VerbToAdjective, true);
