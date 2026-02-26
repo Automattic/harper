@@ -1,0 +1,30 @@
+expr main (double check)
+
+let message "Use the hyphenated form in this compound."
+let description "Normalizes the common two-word form `double check` to `double-check`."
+let kind "Punctuation"
+let becomes "double-check"
+let strategy "MatchCase"
+
+# True positives
+
+test "Please double check the report before sending." "Please double-check the report before sending."
+test "I always double check numbers in production." "I always double-check numbers in production."
+test "Can you double check this again?" "Can you double-check this again?"
+test "We should double check with legal." "We should double-check with legal."
+test "You need to double check every file." "You need to double-check every file."
+test "DOUBLE CHECK THE FINAL TOTAL." "DOUBLE-CHECK THE FINAL TOTAL."
+test "double check this quickly." "double-check this quickly."
+test "If unsure, double check." "If unsure, double-check."
+
+# True negatives / false positives
+
+test "Please double-click the button." "Please double-click the button."
+test "Please double click the button." "Please double click the button."
+test "They double checked the config after deploy." "They double checked the config after deploy."
+test "We are double checking every migration." "We are double checking every migration."
+test "She double checks each invoice manually." "She double checks each invoice manually."
+test "A careful check is still needed." "A careful check is still needed."
+test "The team did one more review." "The team did one more review."
+test "double-check the report before sending." "double-check the report before sending."
+test "Double-checking takes discipline." "Double-checking takes discipline."

@@ -6,10 +6,11 @@ import {
 	leafNodes,
 	type UnpackedLint,
 } from 'lint-framework';
+import isSubstack from '../isSubstack';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 
-if (isWordPress()) {
+if (isWordPress() || isSubstack()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
 

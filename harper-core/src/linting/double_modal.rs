@@ -13,8 +13,7 @@ pub struct DoubleModal {
 
 impl Default for DoubleModal {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(ModalVerb::default())
+        let expr = SequenceExpr::with(ModalVerb::default())
             .t_ws()
             .then(ModalVerb::default());
 

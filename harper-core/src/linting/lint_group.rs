@@ -49,9 +49,11 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::damages::Damages;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
@@ -98,6 +100,7 @@ use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
+use super::lead_rise_to::LeadRiseTo;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -500,6 +503,7 @@ impl LintGroup {
         insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(LeadRiseTo, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -657,6 +661,11 @@ impl LintGroup {
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
 
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add("Damages", Damages::default());
+        out.config.set_rule_enabled("Damages", true);
+
         out.add(
             "PronounVerbAgreement",
             PronounVerbAgreement::new(dictionary.clone()),
@@ -680,6 +689,9 @@ impl LintGroup {
 
         out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
         out.config.set_rule_enabled("WorthToDo", true);
+
+        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.config.set_rule_enabled("DidPast", true);
 
         out
     }

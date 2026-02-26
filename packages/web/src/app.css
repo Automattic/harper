@@ -185,3 +185,7 @@ th[align="right"] {
 .skew-hover-left {
 	@apply transition-all hover:-rotate-3 hover:scale-105;
 }
+
+.last-update {
+	display: none;
+}

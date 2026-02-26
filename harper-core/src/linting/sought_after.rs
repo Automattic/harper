@@ -1,4 +1,4 @@
-use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
+use crate::expr::{Expr, SequenceExpr};
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -26,7 +26,7 @@ impl Default for SoughtAfter {
         ])
         .t_ws()
         .t_aco("sort")
-        .then(SpaceOrHyphen)
+        .t_ws_h()
         .t_aco("after");
 
         Self {

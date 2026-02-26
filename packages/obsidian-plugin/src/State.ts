@@ -142,34 +142,46 @@ export default class State {
 
 						const actions = lint.suggestions().map((sug) => {
 							return {
+								kind: 'suggestion' as const,
 								name:
 									sug.kind() == SuggestionKind.Replace
 										? sug.get_replacement_text()
 										: suggestionToLabel(sug),
 								title: suggestionToLabel(sug),
-								apply: (view) => {
+								apply: (view, from, to) => {
 									if (sug.kind() === SuggestionKind.Remove) {
 										view.dispatch({
 											changes: {
-												from: span.start,
-												to: span.end,
+												from,
+												to,
 												insert: '',
+											},
+											selection: {
+												anchor: from,
 											},
 										});
 									} else if (sug.kind() === SuggestionKind.Replace) {
+										const replacement = sug.get_replacement_text();
 										view.dispatch({
 											changes: {
-												from: span.start,
-												to: span.end,
-												insert: sug.get_replacement_text(),
+												from,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: from + replacement.length,
 											},
 										});
 									} else if (sug.kind() === SuggestionKind.InsertAfter) {
+										const replacement = sug.get_replacement_text();
 										view.dispatch({
 											changes: {
-												from: span.end,
-												to: span.end,
-												insert: sug.get_replacement_text(),
+												from: to,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: to + replacement.length,
 											},
 										});
 									}
@@ -181,9 +193,15 @@ export default class State {
 							const word = lint.get_problem_text();
 
 							actions.push({
+								kind: 'dictionary',
 								name: '📖',
 								title: `Add “${word}” to your dictionary`,
-								apply: (_view) => {
+								apply: (view, _from, to) => {
+									view.dispatch({
+										selection: {
+											anchor: to,
+										},
+									});
 									this.harper.importWords([word]);
 									this.reinitialize();
 								},

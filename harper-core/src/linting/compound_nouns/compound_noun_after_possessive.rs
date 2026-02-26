@@ -2,7 +2,6 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
-use crate::patterns::AnyPattern;
 use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
@@ -38,12 +37,7 @@ impl Default for CompoundNounAfterPossessive {
         let mut pattern = All::default();
 
         pattern.add(context_pattern);
-        pattern.add(
-            SequenceExpr::default()
-                .then(AnyPattern)
-                .then(AnyPattern)
-                .then(split_pattern.clone()),
-        );
+        pattern.add(SequenceExpr::anything().t_any().then(split_pattern.clone()));
 
         Self {
             expr: Box::new(pattern),

@@ -10,8 +10,7 @@ pub struct Bought {
 
 impl Default for Bought {
     fn default() -> Self {
-        let subject = SequenceExpr::default()
-            .then(Self::is_subject_pronoun_like)
+        let subject = SequenceExpr::with(Self::is_subject_pronoun_like)
             .t_ws()
             .then_optional(SequenceExpr::default().then_adverb().t_ws())
             .then_optional(SequenceExpr::default().then_auxiliary_verb().t_ws())

@@ -3065,7 +3065,7 @@ EST/ONg
 ET/N
 ETA/ONV             # estimated time of arrival
 ETD/N
-EU/ON
+EU/Og
 EULA/NgS            # end-user license agreement
 EUR/Nmg             # currency symbol for Euros
 EUV/N               # extreme ultraviolet
@@ -8166,7 +8166,7 @@ Plasticine/Ng
 Plataea/Og
 Plath/Og
 Plato/Og
-Platonic/JN
+Platonic/JNQ
 Platonism/Ogm
 Platonist/Ng
 Platte/Og
@@ -9290,7 +9290,7 @@ Sevres/g
 Seward/Og
 Sextans/Og
 Sexton/Og
-Seychelles/Og
+Seychelles/O9g
 Seyfert/Og
 Seymour/Og
 Sgt/N
@@ -10376,7 +10376,7 @@ UPS/NOgV
 URL/NSg
 US/Og
 USA/Og
-USAF/O
+USAF/Og
 USAID/Og            # agency
 USB/ONSg
 USCG/O
@@ -11289,7 +11289,7 @@ aborning/J
 abort/~NSVGdv
 abortion/~NgS
 abortionist/NgS
-abortive/~JYNV
+abortive/~JYN
 abound/~VdSG
 about/~PJ
 above/~PJNg
@@ -12523,7 +12523,7 @@ angelfish/N09gS     # singular and plural, also has a plural in -s
 angelic/~J
 angelica/~Ng
 angelical/JY
-anger/~NmgSVGd
+anger/~Nm☁gSVGd
 angina/~Nmg
 angiomyolipoma/NSg
 angioplasty/NSg
@@ -12675,9 +12675,9 @@ anthropological/~JY
 anthropologist/~NSg
 anthropology/~Nmg
 anthropomorphic/~JQ
-anthropomorphise/V!_₹
+anthropomorphise/V!_₹d
 anthropomorphism/Nmg
-anthropomorphize/V
+anthropomorphize/Vd
 anthropomorphous/J
 anti/~JNSgP(
 anti-Semite/NgS
@@ -13554,7 +13554,7 @@ auteur/NgS
 auth/NV
 authentic/~JiU
 authentically/Ry
-authenticate/VGdSJXn
+authenticate/VGdSJXnr
 authenticated/VtTU
 authentication/~Nmg
 authenticator/Sg
@@ -13695,7 +13695,7 @@ aware/~JpVU
 awareness/~NmgU
 awash/J
 away/~JV
-awe/~NmSgVdG
+awe/~Nm☁SgVdG
 aweigh/J
 awesome/~JYpN
 awesomeness/Nmg
@@ -14654,7 +14654,7 @@ bf/~N
 bhaji/N
 bi/~J>NSg(Z
 biannual/JYN
-bias/~NgSVGdJ
+bias/~NgS☁VGdJ
 biased/~JVtTU
 biathlon/~NSg
 bib/NSgV
@@ -17166,7 +17166,7 @@ chanter/Ng
 chanteuse/NgS
 chantey/NSg
 chanticleer/NgSV
-chaos/~Nmg
+chaos/~Nm☁g
 chaotic/~JNQ
 chap/~NSgV
 chaparral/~NSg
@@ -19264,6 +19264,8 @@ cooktop/NSg
 cookware/Nmg
 cool/~JY^>pNgSVdGZ
 coolant/~NwSg
+cooldown/NSg
+cool down/V/
 cooler/~NgSJ
 coolie/NSg
 coolish/J
@@ -19558,7 +19560,7 @@ counterculture/~NSg
 countered/~V
 counterespionage/Ng
 counterexample/NS
-counterfactual/JN
+counterfactual/JNS
 counterfeit/~J>NgSVGdZ
 counterfeiter/Ng
 counterfoil/NgS
@@ -19886,7 +19888,7 @@ cricket/~NwgSV>GZ
 cricketer/~Ng
 crier/Ng
 crikey/
-crime/~NwSgV
+crime/~Nw☁SgV
 criminal/~JYNgS
 criminalisation/Nmg!_₹
 criminalise/VGdSe!_₹
@@ -20554,6 +20556,9 @@ deafen/VbGd
 deafening/JYV6N
 deafness/~Ng
 deal/~NSgVG>JzZ
+dealbreaker/NgS     // Cambridge, Collins, Longman (MW also)
+deal-breaker/NgS    // Merriam-Webster, Oxford Learners
+deal breaker/NgS    // OED (MW, Longman also)
 dealer/~Ng
 dealership/~NSg
 dealing/~NgV
@@ -20568,7 +20573,7 @@ dearness/Ng
 dearth/N0gV
 dearths/N9
 deary/NSg
-death/~NwgS
+death/~Nw☁gS
 death knell/NgS
 deathbed/~NSg
 deathblow/NgS
@@ -22584,7 +22589,7 @@ dyno/NSg
 # dys               # prefixes that are not also words in their own right don't belong in the dictionary
 dysania/Nmg
 dysentery/~Nmg
-dysfunction/~Nmg
+dysfunction/~Nwg
 dysfunctional/~J
 dyslectic/JNSg
 dyslexia/Nmg
@@ -23103,7 +23108,7 @@ emerald/~NwgSJV
 emerge/~VdGSNr
 emergence/~Nmgr
 emergency/~NwSg
-emergent/~JN
+emergent/~JNg
 emerita/JN9
 emeritus/~JN0
 emery/~NgV
@@ -23487,7 +23492,7 @@ environs/~NgV
 envisage/VGdS
 envision/VdGS
 envoy/~NSg
-envy/~NSgVdG
+envy/~Nm☁SgVdG
 envying/VNY
 enzymatic/~J
 enzyme/~NSg
@@ -23498,7 +23503,8 @@ eosinophilic/J
 epaulet/NSg
 epaulette/NgS!@_₹
 epee/NgS
-epenthesis/Nm       # TODO: not count noun
+epentheses/N9
+epenthesis/N0w
 epenthetic/JQ
 ephedrine/Ng
 ephemera/Ng
@@ -23677,7 +23683,7 @@ escapology/N
 escargot/NgS
 escarole/NgS
 escarpment/~NgS
-eschatological/~J
+eschatological/~JQ
 eschatology/~Nmg
 eschew/VSdG
 escort/~NSgVdG
@@ -23864,7 +23870,7 @@ evict/VSdG
 eviction/~NwgS
 evidence/~NmgSVGd
 evident/~JY
-evidential/NSg      # used in linguistics as a count noun; e.g. "a system of evidentials"
+evidential/Nwg      # used in linguistics as a count noun; e.g. "a system of evidentials"
 evil/~J>Y^pNmgS
 evildoer/NSg
 evildoing/Nmg
@@ -24398,7 +24404,7 @@ fairness/~NmgU
 fairway/NSg
 fairy/~NSgJ
 fairyland/NSgJ
-faith/~N0mg
+faith/~N0w☁g
 faithful/~JYpN0U
 faithful's
 faithfulness/~NmgU
@@ -26496,7 +26502,7 @@ generalissimo/NgS
 generalist/NgS
 generality/~NSg
 generalization/~NgS
-generalize/~VGdS
+generalize/~VGdSB
 generalizer/NgS
 generalship/Ng
 generate/~VGSdervn
@@ -26730,13 +26736,14 @@ giro/~NSV
 girt/NgSVdGJ
 girth/NwgSV
 girths/N
+GIS/N # Geographic Information System
 gist/NgSV
 git/~NOSV
 gite/NS
 give/~VG>SNZz
 giveaway/NgSJ
 giveback/NgS
-given/~VTSPNgJp # "Givenness" is a technical word in the branch of philosophy called Phenomenology, so I'm adding it here
+given/~VTSPNgJp # "Givenness" is a technical word in the branch of philosophy called Phenomenology
 giver/~Ng
 gizmo/NSg
 gizzard/NgS
@@ -27092,7 +27099,7 @@ grabbed/~VtT
 grabber/NgS
 grabbing/~V6N
 grabby/J^>N
-grace/~NwSgVdGE
+grace/~Nw☁SgVdGE
 graceful/~JYpE
 gracefulness/NgE
 graceless/JYp
@@ -27293,7 +27300,7 @@ griddle/NSgV
 griddlecake/NSg
 gridiron/~NSgV
 gridlock/~NwSgVd
-grief/~NSgV
+grief/~Nm☁SgV
 grievance/NgS
 grieve/~VGd>SNZ
 griever/Ng
@@ -28010,7 +28017,7 @@ hatemonger/NgS
 hater/Ng
 hath/V
 hatpin/NS
-hatred/~NmSg
+hatred/~Nm☁Sg
 hatstand/NSJ
 hatted/JVtT
 hatter/NSgV
@@ -28769,7 +28776,7 @@ honeysuckle/NSg
 honk/Vd>GSNgZ
 honker/Ng
 honky/~NSg
-honor/~NwSgVGdEB<
+honor/~Nw☁SgVGdEB<
 honorableness/Ng<
 honorably/RyE<
 honorarily/Ry
@@ -28777,7 +28784,7 @@ honorarium/NgS
 honorary/~JN
 honoree/NSg<
 honorer/NSg<
-honorific/~NgSJ
+honorific/~NgSJQ
 honour/NwgSVdGEB!@_₹
 honourableness/Ng!@_₹
 honourably/RyE!@_₹
@@ -29082,7 +29089,7 @@ hummock/NSg
 hummocky/J
 hummus/~Ng
 humongous/J
-humor/~NSgVdG<
+humor/~Nw☁SgVdG<
 humoresque/N
 humorist/~NgS<
 humorless/JYp<
@@ -29090,7 +29097,7 @@ humorlessly/Ry<
 humorlessness/Ng<
 humorous/~JYp
 humorousness/Ng
-humour/NSgVGd!@_₹
+humour/Nw☁SgVGd!@_₹
 humourist/NSg!@_₹
 humourless/JYp!@_₹
 humourlessly/Ry!@_₹
@@ -29955,7 +29962,7 @@ indignance/Ng
 indignant/JY
 indignation/~Ng
 indigo/~NgJ
-indirect/~JYNV
+indirect/~JYNV      # noun senses: 1) type of const in finace; 2) type of radiator
 indiscipline/N
 indiscreet/JY
 indiscretion/NS
@@ -30173,7 +30180,7 @@ inheritance/~NgE
 inheritances/N
 inheritor/NSg
 inhibit/~VGSd
-inhibition/~NSg
+inhibition/~NSwgE
 inhibitor/~NSg
 inhibitory/~J
 inhomogeneous/J
@@ -30803,7 +30810,7 @@ irreproachable/J
 irreproachably/Ry
 irresistible/~J
 irresistibly/Ry
-irresolute/JYpn
+irresolute/JYpnv
 irresoluteness/Ng
 irresolution/Ng
 irrespective/~J
@@ -31173,7 +31180,7 @@ jovial/JY
 joviality/Ng
 jowl/NgSV
 jowly/J^>
-joy/~NwSgVGd
+joy/~Nw☁SgVGd
 joyful/~JYp
 joyfuller/Jc
 joyfullest/Ju
@@ -31425,7 +31432,7 @@ kidskin/Ng
 kielbasa/NgS
 kielbasi/N
 kike/NSV
-kill/~Vd>GSNgzZ
+kill/~Vd>GSNgzZB
 killdeer/NSg
 killer/~NgJ
 killing/~JNgV6
@@ -31921,7 +31928,7 @@ lave/VSNJ
 lavender/~NmSgJV
 lavish/~J^Y>pVGdSN
 lavishness/Ng
-law/~NwSgV
+law/~Nw☁SgV
 lawbreaker/NSg
 lawbreaking/JNg
 lawful/~JYpNU
@@ -31942,7 +31949,7 @@ lax/~NJ^>Yp
 laxative/JNgS
 laxity/Nmg
 laxness/Nmg
-lay/~VtGSNgJrie
+lay/~VbtGSNgJrie    # "lay" is lemma with past "laid". Also simple past of "lie"
 lay out/V/
 layabout/NS
 layaway/NgV
@@ -32977,7 +32984,7 @@ luxuriate/VdSGn
 luxuriation/Ng
 luxurious/~JYp
 luxuriousness/Ng
-luxury/~NwSgJ
+luxury/~Nw☁SgJ
 lvi
 lvii
 lxi
@@ -33062,7 +33069,7 @@ madding/JV
 made/~VtTrU           # removed `N`, noun is dialectal
 made up/V
 made-up/J
-mademoiselle/NgSV
+mademoiselle/N0gSV
 madhouse/~NSg
 madman/~N0g
 madmen/N9
@@ -33896,7 +33903,7 @@ menstruation/Ng
 mensurable/J
 mensuration/Ng
 menswear/Nmg
-mental/~JYN
+mental/~JY          # removed slang/Indian/rare noun senses
 mentalist/JNSg
 mentality/~NSg
 menthol/Ng
@@ -33928,7 +33935,7 @@ mercilessness/Ng
 mercurial/NJY
 mercuric/J
 mercury/~Ng
-mercy/~NSgV
+mercy/~Nw☁SgV
 mere/~JY^NgSV
 meretricious/JYp
 meretriciousness/Ng
@@ -33960,8 +33967,8 @@ mesa/~NgS
 mescal/NgS
 mescalin/N
 mescaline/Ng
-mesdames/N
-mesdemoiselles/N
+mesdames/N9
+mesdemoiselles/N9
 mesh/~NgSVdG
 mesmeric/J
 mesmerise/VGd>SZ!_₹
@@ -34900,7 +34907,7 @@ moonshot/NgS
 moonstone/NgS
 moonstruck/J
 moonwalk/NgSV
-moor/~NgSVdGz
+moor/~NgSVdGzU # add "unmoor"
 moorhen/~NS
 mooring/VSNwg
 moorland/~NgS
@@ -38293,7 +38300,7 @@ pathology/~NgS
 pathos/~Nmg
 paths/~N9V
 pathway/~NgS
-patience/~Nmg
+patience/~Nm☁g
 patient/~J^NgSi
 patienter/Jc
 patiently/Ry
@@ -38388,7 +38395,7 @@ payware/Nmg
 pct/~N
 pd/~
 pea/~NSg
-peace/~NwSgV
+peace/~Nw☁SgV
 peaceable/J
 peaceably/Ry
 peaceful/~JYpN
@@ -40051,7 +40058,7 @@ poverty/~Nmg
 pow/~N
 powder/~NwSgVGd
 powdery/J
-power/~NwgSVdGJ
+power/~Nw☁gSVdGJ
 power line/NgS
 power-up/NgS
 powerboat/NgS
@@ -40252,8 +40259,8 @@ preinstalled/VtT
 prejudge/VGdS
 prejudgement/NgS!_₹
 prejudgment/NSg
-prejudice/~NgSVGdJ
-prejudiced/~VJU
+prejudice/~NgS☁VGdJ
+prejudiced/~VtTJU
 prejudicial/J
 prekindergarten/JNSg
 prelacy/Ng
@@ -40447,7 +40454,7 @@ pricker/NgS
 prickle/NgSVGd
 prickliness/Nmg
 prickly/J>^pN
-pride/~NmgSVGd
+pride/~Nm☁gSVGd
 prideful/JY
 prier/Ng
 priest/~NSgVY
@@ -41939,7 +41946,7 @@ reconstructible/J
 recontest/VSdG
 recorded/~VJU
 recorder/~NgS
-recording/~V6SNg
+recording/~V6NwgS
 recordkeeping/Ng
 recoup/VdG
 recourse/~NgV
@@ -42020,6 +42027,7 @@ redolent/J
 redoubt/NSgVB
 redoubtably/Ry
 redound/VdGSN
+redox/Nmg           # reduction and oxidation reaction
 redraw/VGSN
 redshifted/J
 redskin/NSg
@@ -42134,7 +42142,8 @@ regeneracy/Ng
 regenerate/~VJNv
 regex/NgS
 regexp/NSg
-reggae/~Ng
+reggae/~Nmg
+reggaeton/Nmg
 regicidal/J
 regicide/~NwgS
 regime/~NSg
@@ -42546,6 +42555,7 @@ resounding/JYNV
 resourceful/JYp
 resourcefulness/Nmg
 resp/JNV
+respawn/VGdSNg
 respect/~NmSgVGdEv
 respectability/Nmg
 respectable/~JN
@@ -43248,9 +43258,9 @@ rummage/VdGSNg
 rummer/NJc
 rummest/Ju
 rummy/NgJ
-rumor/~NwSgVdG<
+rumor/~Nw☁SgVdG<
 rumormonger/NSgV<
-rumour/NwSgVdG!@_₹
+rumour/Nw☁SgVdG!@_₹
 rumourmonger/NSgV!@_₹
 rump/~NgSVY
 rumple/VdGSNg
@@ -44828,7 +44838,7 @@ shiver/VdGNg
 shivery/J
 shoal/~JNgSVGd
 shoat/NgS
-shock/~NwgSJ>GdZ
+shock/~NwgS☁J>GdZ
 shocker/~Ng
 shocking/~JYV6N
 shockproof/JV
@@ -45327,7 +45337,7 @@ skiffle/N
 skiing/~V6Ng
 skilful/JYp!@_₹
 skilfulness/Nmg!@_₹
-skill/~NwSJVde
+skill/~Nw☁SJVde
 skill's
 skilled/~JV6U
 skillet/~NSgV
@@ -45460,7 +45470,7 @@ sledge/~NSgVdG
 sledgehammer/NSgVGdJ
 sleek/JY^>pVdGSN
 sleekness/Ng
-sleep/~V>GSNwgZ
+sleep/~V>GSNw☁gZ
 sleeper/~NgV
 sleepily/Ry
 sleepiness/Ng
@@ -46083,7 +46093,7 @@ sorority/~NSg
 sorrel/~NwSgJ
 sorrily/Ry
 sorriness/Ng
-sorrow/~NwSgVdG
+sorrow/~Nw☁SgVdG
 sorrowful/JYp
 sorrowfulness/Nmg
 sorry/~J^>pNV
@@ -46296,7 +46306,7 @@ speechify/VdSG
 speechless/JYp
 speechlessness/Ng
 speechwriter/NS
-speed/~NwSgV>GZ
+speed/~Nw☁SgV>GZ
 speedboat/NSgV
 speeder/Ng
 speedily/~Ry
@@ -47732,7 +47742,7 @@ sundry/JNSI
 sunfish/N09gSV      # singular and plural, also has a plural in -s
 sunflower/~NgS
 sung/~VTU
-sunglasses/~Ng
+sunglasses/~N9g
 sunhat/NS
 sunk/~Vn
 sunken/JT
@@ -47932,7 +47942,7 @@ surplice/NgS
 surplus/~NgSJV
 surplussed/VtT
 surplussing/V6
-surprise/~NSgVdGz
+surprise/~NSg☁VdGz
 surprising/~VJYNU
 surreal/~JN
 surrealism/~Ng
@@ -48189,9 +48199,9 @@ synaptic/~J
 sync/~NgSVdG
 synchronicity/N
 synchronisation/NgS!_₹
-synchronise/VGdS!_₹
+synchronise/VGdS!_₹eU
 synchronization/~NSg
-synchronize/VGdS
+synchronize/VGdSeU
 synchronous/~JY
 synchrony/N
 syncopate/VdSGn
@@ -48546,7 +48556,7 @@ taxiway/~NS
 taxman/~N9
 taxmen/N9
 taxon/~N0g
-taxonomic/~J
+taxonomic/~JQ
 taxonomist/NgS
 taxonomy/~NwSg
 taxpayer/~NgS
@@ -49862,6 +49872,7 @@ transgression/~NSg
 transgressive/~NSg
 transgressor/NSg
 transhumanism/Nmg
+transhumanist/NgS
 transience/Ng
 transiency/Ng
 transient/~JYNSg
@@ -50247,7 +50258,7 @@ trundle/NgSVGd>Z
 trundler/Ng
 trunk/~NSgVG
 truss/~NgSVGd
-trust/~NwSgVGdJE
+trust/~Nw☁SgVGdJE
 trustee/~NgSV
 trusteeship/NwSg
 trustful/JYE
@@ -50256,7 +50267,7 @@ trusting/~VJY
 trustworthiness/Ng
 trustworthy/~J^>p
 trusty/J^>NSg
-truth/~N0wgV>Z
+truth/~N0w☁gV>Z
 truther/NgS
 truthful/~JYpU
 truthfulness/NmgU
@@ -51758,6 +51769,7 @@ vicuña/NgS
 vicuna/NgS
 videlicet/
 video/~NwSgVGd
+video game/NgS
 videocassette/NSg
 videoconferencing/VNmg
 videodisc/NgS
@@ -52929,7 +52941,7 @@ wist/V
 wisteria/NSg
 wistful/JYp
 wistfulness/Nmg
-wit/~NSgVP
+wit/~Nw☁SgVP
 witch/~NgSVdG
 witchcraft/~Nmg
 witchery/Nmg
@@ -53145,7 +53157,7 @@ worried/~JYVtT
 worrier/Ng
 worriment/Ng
 worrisome/J
-worry/~VGd>SNgZz
+worry/~VGd>SNw☁gZz
 worrying/~JYV6N
 worrywart/NSg
 worse/~JcNgV
@@ -53686,6 +53698,8 @@ EMR/NOSg
 EOF/NgS             # end of file
 EPUB/NOSg           # e-book format
 ESLint/Og           # JavaScript linter
+ESP32/Og            # microcontroller family
+ESP8266/Og          # microcontroller family
 EV/NSg              # electric vehicle
 EXIF                # metadata
 ElasticSearch/Sg
@@ -53755,6 +53769,7 @@ HDR/J               # high dynamic range
 HEIC/ONSg           # High Efficiency Image Container
 HEIF/ONSg           # High Efficiency Image Format
 HEVC/ONSg           # High Efficiency Video Coding
+HMAC/Ng             # Hash-based Message Authentication Code
 HQL/N
 HTML5
 Hasan/OgS           # surname, given name
@@ -53840,6 +53855,7 @@ MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
 MMX/Ng              # multimedia extension
 MPC/ONg
+MQTT/Og             # messaging protocol
 MRU                 # most recently used
 MSB/NgS             # most significant bit/byte
 MSE/NgS             # mean squared error
@@ -54011,6 +54027,7 @@ TL;DR               # internet slang
 TLS/Og              # Transport Layer Security
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/Ng             # configuration file format
+TOTP/Ng             # time-based one-time password
 TSMC/Og             # Taiwanese Semiconductor Manufacturing Company
 TSR/NgS             # terminate and stay resident
 TTS/Ng              # text-to-speech
@@ -54042,6 +54059,7 @@ ULA/NgS             # uncommitted logic array
 URI/NSg             # uniform resource identifier
 UUID/NgS            # universal unique identifier
 UX/Ng               # user experience
+UpCloud/Og          # cloud service provider
 VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
@@ -54097,10 +54115,12 @@ YubiKey/Sg
 ZFS/Ng              # file system
 Zettelkasten/Ng
 Zig/Og              # programming language
+Zigbee/Og           # wireless protocol
 Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9
 a8c/Sg
+ambitransitive/J    # verb which is both transitive and intransitive
 antimalware/Nmg
 arXiv/Og            # research archive
 archytas/Sg         # !! please check and comment !! we also have Archytas
@@ -54118,7 +54138,7 @@ backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
 bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
-blogpost/NgS
+blogpost/NgS        # !! blog post is many times more popular; both appear in some dictionaries
 chroot/NgS
 clickstream/NgS
 concat/VSdG
@@ -54247,11 +54267,81 @@ z-buffer/NgS
 # Word added using the `just addnoun` command will be added here
 
 Compline/NO         # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
-LFG/NOg             # Lexical Functional Grammar
-WordCamp/Og
 exocentric/JQ
+LFG/NOg             # Lexical Functional Grammar
 licensor/NSg
 omnipredicativity/N0
 supervenience/Nmg   # From emergentist ontology
 volitive/NSgJ
-worldbuild/Vd>G     # !! This derives `worldbuilded` - is this intentional?
+WordCamp/Og
+worldbuild/V>G     # !! This derives `worldbuilded` - is this intentional? -- no 😅, corrected
+
+Afroasiatic/NmgJ # linguistics
+agnatic/J # Most often in the phrase "agnatic primogeniture"
+archipelagic/J # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
+ASMR/Nmg # "Autonomous Sensory Meridian Response"
+chorded/J # music: As refers to "chorded instruments"
+cognatic/J # As with "agnatic"
+comital/J # Adjective version of the noble rank "count/countess/earl"
+covenantal/JQ
+cupbearer/NSg
+diahcronic/JQ # linguistics
+discretionarily/Ry
+exonym/NSg
+fae/Nmg # fantasy alternative for "fey"
+hewn/JT # past participle of "hew"
+Hmong-Mien/NmgJ # linguistics
+iaido/Nmg # martial art
+idiolect/NSg # linguistics
+indefinitely/Ry
+Indo-Aryan/NmgJ # linguistics
+Indo-European/NmgJ # linguistics
+Indo-Iranian/NmgJ # linguistics
+Japonic/NmgJ # linguistics
+kalimba/NSg
+Kansai/NOg
+Kartvelian/NmgJ # linguistics
+kendo/Nmg # martial art
+Kra-Dai/NmgJ # linguistics
+leathercraft/Nwg
+lingua franca/NSg
+linguae francae/N9g
+linguæ francæ/N9g
+longsword/NSg
+luthier/NSg
+menarche/Nmg # medicine
+micronutrient/NSg
+monolatrous/J
+monolatry/Nmg
+Nilotic/NmgJ # linguistics
+offeror/NSg
+orthopractic/J
+orthopraxy/Nwg
+piebaldism/Nmg # medicine
+polearm/NSg
+polysyntheses/N9 # linguistics
+polysynthesis/Nw0g # linguistics
+polysynthetic/J # linguistics
+praxis/Nmg
+proprioception/Nmg # medicine
+queenship/Nwg
+resolutive/J
+rhotic/NSgJ # linguistics
+shortsword/NSg
+Sino-Tibetan/NmgJ # linguistics
+sociolect/NSg
+sortition/Nmg # Political science: a method of appointment to office by random draw
+subvocalization/Nwg # phonetics
+synaesthesia/Nmg
+synchronic/JQ # linguistics
+syncretism/Nmg
+synesthesia/Nmg
+synæsthesia/Nmg
+trimeter/NgS # poetry
+trimetre/NgS!@_₹ # poetry
+trimetric/J
+unminted/J
+vicomital/J # Adjective version of "viscount/viscountess"
+vicontiel/J #  As above, alternative version
+viscomital/J # As above, alternative version
+Westphalian/J # political science and international relations

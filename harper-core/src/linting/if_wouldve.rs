@@ -19,8 +19,7 @@ impl Default for IfWouldve {
                     .t_ws()
                     .then_any_of(vec![
                         Box::new(
-                            SequenceExpr::default()
-                                .then_word_set(&["would", "had"])
+                            SequenceExpr::word_set(&["would", "had"])
                                 .t_ws()
                                 .then_word_set(&["have", "of"]),
                         ),

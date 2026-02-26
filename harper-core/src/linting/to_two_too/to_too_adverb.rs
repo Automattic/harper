@@ -6,7 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::Sentence;
 
 pub struct ToTooAdverb {
     expr: Box<dyn Expr>,
@@ -35,7 +35,7 @@ impl Default for ToTooAdverb {
 }
 
 impl ExprLinter for ToTooAdverb {
-    type Unit = Chunk;
+    type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()

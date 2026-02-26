@@ -41,6 +41,7 @@ describe('Languages >', () => {
 		{ type: 'PHP', file: 'php.php', row: 2, column: 31 },
 		{ type: 'Plaintext without extension', file: 'plaintext', row: 0, column: 0 },
 		{ type: 'Plaintext with extension', file: 'plaintext.txt', row: 4, column: 0 },
+		{ type: 'PowerShell', file: 'powershell.ps1', row: 0, column: 2 },
 		{ type: 'Python', file: 'python.py', row: 1, column: 2 },
 		{ type: 'Ruby', file: 'ruby.rb', row: 3, column: 16 },
 		{ type: 'Rust', file: 'rust.rs', row: 0, column: 4 },
@@ -50,6 +51,7 @@ describe('Languages >', () => {
 		{ type: 'Swift', file: 'swift.swift', row: 9, column: 26 },
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
+		{ type: 'LaTeX', file: 'latex.tex', row: 4, column: 0 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
 			const uri = getUri('languages', testCase.file);

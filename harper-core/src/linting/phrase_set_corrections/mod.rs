@@ -428,6 +428,21 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `wreak havoc`?",
             "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
             LintKind::Eggcorn
+        ),
+        "WroteToRote" => (
+            &[
+                ("by wrote", "by rote"),
+                ("by-wrote", "by-rote"),
+                ("wrote learning", "rote learning"),
+                ("wrote memorisation", "rote memorisation"),
+                ("wrote-memorisation", "rote-memorisation"),
+                ("wrote memorization", "rote memorization"),
+                ("wrote-memorization", "rote-memorization"),
+                ("wrote memorizing", "rote memorizing"),
+            ],
+            "Did you mean `rote` (mechanical memorization) instead of `wrote`?",
+            "Corrects `by wrote` to `by rote`.",
+            LintKind::Eggcorn
         )
     });
 

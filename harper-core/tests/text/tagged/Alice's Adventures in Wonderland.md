@@ -1464,8 +1464,8 @@
 #
 > Alice noticed with some     surprise that         the pebbles were    all          turning into little
 # NPr+  VP/J    P    I/J/R/Dq NSg/VB+  NSg/I/C/Ddem D+  NPl/V3+ NSg/VPt NSg/I/J/C/Dq Nᴹ/Vg/J P    NPr/I/J/Dq+
-> cakes   as    they lay       on  the floor   , and  a    bright    idea came      into her     head      . “ If    I       eat
-# NPl/V3+ R/C/P IPl+ NSg/VPt/J J/P D+  NSg/VB+ . VB/C D/P+ NPr/VB/J+ NSg+ NSg/VPt/P P    ISg/D$+ NPr/VB/J+ . . NSg/C ISg/#r+ VB
+> cakes   as    they lay        on  the floor   , and  a    bright    idea came      into her     head      . “ If    I       eat
+# NPl/V3+ R/C/P IPl+ NSg/VBPt/J J/P D+  NSg/VB+ . VB/C D/P+ NPr/VB/J+ NSg+ NSg/VPt/P P    ISg/D$+ NPr/VB/J+ . . NSg/C ISg/#r+ VB
 > one     of these   cakes   , ” she  thought , “ it’s sure to make   some     change   in        my  size     ; and
 # NSg/I/J P  I/Ddem+ NPl/V3+ . . ISg+ N🅪Sg/VP . . K    J    P  NSg/VB I/J/R/Dq N🅪Sg/VB+ NPr/J/R/P D$+ N🅪Sg/VB+ . VB/C
 > as    it       can’t possibly make   me       larger , it       must    make   me       smaller , I       suppose . ”
@@ -1523,7 +1523,7 @@
 > out          to the puppy   ; whereupon the puppy   jumped into the air      off        all          its     feet at
 # NSg/VB/J/R/P P  D+  NSg/VB+ . C         D+  NSg/VB+ VP/J   P    D   N🅪Sg/VB+ NSg/VB/J/P NSg/I/J/C/Dq ISg/D$+ NPl+ NSg/P
 > once  , with a   yelp   of delight    , and  rushed at    the stick     , and  made believe to worry
-# NSg/C . P    D/P NSg/VB P  N🅪Sg/VB/J+ . VB/C VP/J   NSg/P D   NSg/VB/J+ . VB/C VP   VB      P  NSg/VB
+# NSg/C . P    D/P NSg/VB P  N🅪Sg/VB/J+ . VB/C VP/J   NSg/P D   NSg/VB/J+ . VB/C VP   VB      P  N🅪Sg/VB
 > it       ; then      Alice dodged behind  a   great thistle , to keep   herself from being       run
 # NPr/ISg+ . NSg/J/R/C NPr+  VP/J   NSg/J/P D/P NSg/J NSg     . P  NSg/VB ISg+    P    N🅪Sg/Vg/J/C NSg/VBPp
 > over    ; and  the moment she  appeared on  the other    side      , the puppy   made another rush
@@ -1933,7 +1933,7 @@
 > be      found  : all          she  could   see    , when    she  looked down        , was an  immense length  of
 # NSg/VXB NSg/VP . NSg/I/J/C/Dq ISg+ NSg/VXB NSg/VB . NSg/I/C ISg+ VP/J   N🅪Sg/VB/J/P . VPt D/P NSg/J   N🅪Sg/VB P
 > neck    , which seemed to rise   like         a    stalk   out          of a   sea of green        leaves  that          lay
-# NSg/VB+ . I/C+  VP/J   P  NSg/VB NSg/VB/J/C/P D/P+ NSg/VB+ NSg/VB/J/R/P P  D/P NSg P  NPr🅪Sg/VB/J+ NPl/V3+ NSg/I/C/Ddem+ NSg/VPt/J
+# NSg/VB+ . I/C+  VP/J   P  NSg/VB NSg/VB/J/C/P D/P+ NSg/VB+ NSg/VB/J/R/P P  D/P NSg P  NPr🅪Sg/VB/J+ NPl/V3+ NSg/I/C/Ddem+ NSg/VBPt/J
 > far      below her     .
 # NSg/VB/J P     ISg/D$+ .
 >
@@ -3354,8 +3354,8 @@
 # . ISg/#r+ VXB      NSg/VB NPr/ISg+ . . VP/J NSg  . NPr/J/R/P D/P NSg/J N🅪Sg/I/VB+ . . NSg   VP     D$+ NSg/VB+ . .
 >
 #
-> On  which Seven looked up         and  said , “ That’s right    , Five ! Always lay       the blame    on
-# J/P I/C+  NSg   VP/J   NSg/VB/J/P VB/C VP/J . . NSg$   NPr/VB/J . NSg  . R      NSg/VPt/J D   NSg/VB/J J/P
+> On  which Seven looked up         and  said , “ That’s right    , Five ! Always lay        the blame    on
+# J/P I/C+  NSg   VP/J   NSg/VB/J/P VB/C VP/J . . NSg$   NPr/VB/J . NSg  . R      NSg/VBPt/J D   NSg/VB/J J/P
 > others  ! ”
 # NPl/V3+ . .
 >
@@ -4130,8 +4130,8 @@
 # D+  NSg/VB/J+ NPl/V3+ VP  VPp/J N🅪Sg/VB   P  D   NPr$    N🅪Sg+   . VB/C NSg/VPt Nᴹ/Vg/J NPr/J/R/P
 > the shade    : however , the moment they saw     her     , they hurried back     to the game      , the
 # D   N🅪Sg/VB+ . C       . D   NSg+   IPl+ NSg/VPt ISg/D$+ . IPl+ VP/J    NSg/VB/J P  D   NSg/VB/J+ . D
-> Queen     merely remarking that         a   moment’s delay      would cost       them     their lives .
-# NPr/VB/J+ R      Nᴹ/Vg/J   NSg/I/C/Ddem D/P NSg$     NSg/VPt/J+ VXB   N🅪Sg/VBP/J NSg/IPl+ D$+   V3+   .
+> Queen     merely remarking that         a   moment’s delay       would cost       them     their lives .
+# NPr/VB/J+ R      Nᴹ/Vg/J   NSg/I/C/Ddem D/P NSg$     NSg/VBPt/J+ VXB   N🅪Sg/VBP/J NSg/IPl+ D$+   V3+   .
 >
 #
 > All           the time       they were    playing the Queen     never left     off        quarrelling with the
@@ -4436,8 +4436,8 @@
 #
 > “ I       never went    to him  , ” the Mock      Turtle  said with a   sigh   : “ he       taught Laughing and
 # . ISg/#r+ R     NSg/VPt P  ISg+ . . D+  NSg/VB/J+ NSg/VB+ VP/J P    D/P NSg/VB . . NPr/ISg+ VP     Nᴹ/Vg/J  VB/C
-> Grief   , they used to say    . ”
-# NSg/VB+ . IPl+ VP/J P  NSg/VB . .
+> Grief  , they used to say    . ”
+# Nᴹ/VB+ . IPl+ VP/J P  NSg/VB . .
 >
 #
 > “ So          he       did  , so          he       did  , ” said the Gryphon , sighing in        his     turn   ; and  both
@@ -5498,8 +5498,8 @@
 # VP  VB/J  NPr/J/R/P D   NSg/VB/J NSg/I/Dq NPl/V3+ . VB/C ISg+ VP/J   NSg/VB/J/P NPr/J/R/P NSg/I D/P NSg/VB+ NSg/I/C/Ddem+ ISg+
 > tipped over    the jury      - box    with the edge   of her     skirt  , upsetting all          the jurymen
 # VP     NSg/J/P D   NSg/VB/J+ . NSg/VB P    D   NSg/VB P  ISg/D$+ NSg/VB . NSg/Vg/J  NSg/I/J/C/Dq D   NPl
-> on  to the heads  of the crowd   below , and  there they lay       sprawling about ,
-# J/P P  D   NPl/V3 P  D   NSg/VB+ P     . VB/C R+    IPl+ NSg/VPt/J Nᴹ/Vg/J   J/P   .
+> on  to the heads  of the crowd   below , and  there they lay        sprawling about ,
+# J/P P  D   NPl/V3 P  D   NSg/VB+ P     . VB/C R+    IPl+ NSg/VBPt/J Nᴹ/Vg/J   J/P   .
 > reminding her     very much         of a   globe  of goldfish she  had accidentally upset    the
 # Nᴹ/Vg/J   ISg/D$+ J/R  NSg/I/J/R/Dq P  D/P NSg/VB P  NSgPl    ISg+ VP  R            NSg/VB/J D
 > week   before .
