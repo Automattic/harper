@@ -506,7 +506,7 @@ impl Document {
 
     fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
         Lrc::new(FirstMatchOf::new(vec![
-            Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
+            Box::new(SequenceExpr::word_set(&["esp", "etc", "vs"]).then_period()),
             Box::new(
                 SequenceExpr::aco("et")
                     .then_whitespace()

@@ -240,6 +240,15 @@ mod tests {
     }
 
     #[test]
+    fn doesnt_flag_after_esp() {
+        assert_lint_count(
+            "I'll go, esp. if it's a free event.",
+            SentenceCapitalization::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
     fn allow_lower_camel_case_non_proper_nouns() {
         // A very few words are not considered proper nouns but still start with a lowercase letter that shouldn't be uppercased at the start of a sentence.
         assert_lint_count(
