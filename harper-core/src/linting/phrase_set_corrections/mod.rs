@@ -439,8 +439,9 @@ pub fn lint_group() -> LintGroup {
                 ("everybody seams", "everybody seems"),
                 ("everyone seams", "everyone seems")
             ],
-            "",
-            "",LintKind::Spelling
+            "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
+            "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
+            LintKind::Spelling
         ),
         "WreakHavoc" => (
             &[
