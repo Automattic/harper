@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.8.0",
+	"version": "1.9.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -256,6 +256,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects this expression to the standard `albeit`."
+				},
+				"harper.linters.AllHellBreakLoose": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects forms of `all hell breaks out` to `all hell breaks loose`."
 				},
 				"harper.linters.AllIntentsAndPurposes": {
 					"scope": "resource",
@@ -677,6 +683,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.Bypass": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `bypass`."
+				},
 				"harper.linters.CanBeSeen": {
 					"scope": "resource",
 					"type": "boolean",
@@ -851,6 +863,12 @@
 					"default": true,
 					"description": "Expands the informal abbreviation `cybersec` to `cybersecurity`."
 				},
+				"harper.linters.Damages": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for plural `damages` not in the context of a court case."
+				},
 				"harper.linters.DampSquib": {
 					"scope": "resource",
 					"type": "boolean",
@@ -874,6 +892,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of Day One and Day One Premium as brand names."
+				},
+				"harper.linters.Deadlift": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `deadlift`."
 				},
 				"harper.linters.DefiniteArticle": {
 					"scope": "resource",
@@ -1012,6 +1036,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Replaces the determiner `no` with `any` when it follows the auxiliary `didn't/did not` plus a main verb (e.g., have, need, want, make, take, get) so the clause contains only one negation."
+				},
+				"harper.linters.DueDiligence": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `do diligence` to `due diligence`."
 				},
 				"harper.linters.DuringAges": {
 					"scope": "resource",
@@ -1373,11 +1403,23 @@
 					"default": true,
 					"description": "Corrects the missing article in `for while`, forming `for a while`."
 				},
+				"harper.linters.ForArgumentsSake": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `for argument sake` to `for argument's sake`."
+				},
 				"harper.linters.ForNoun": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the archaic or mistaken `fro` to `for` when followed by a noun."
+				},
+				"harper.linters.ForTheMostPart": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `for most part` to `for the most part`."
 				},
 				"harper.linters.ForWhatItsWorth": {
 					"scope": "resource",
@@ -1679,6 +1721,12 @@
 					"default": true,
 					"description": "After `imitate ...`, idiomatic phrasing points to the inspiration with `of` instead of `from`."
 				},
+				"harper.linters.InAHurry": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in hurry` to `in a hurry`."
+				},
 				"harper.linters.InAWhile": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1738,12 +1786,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects either `in the cards` or `on the cards` to the other, depending on the dialect."
-				},
-				"harper.linters.InOneFellSwoop": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
 				},
 				"harper.linters.InRealLife": {
 					"scope": "resource",
@@ -1888,6 +1930,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+				},
+				"harper.linters.Keystroke": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `keystroke`."
+				},
+				"harper.linters.Keystrokes": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `keystrokes`."
 				},
 				"harper.linters.KindOf": {
 					"scope": "resource",
@@ -2429,6 +2483,12 @@
 					"default": true,
 					"description": "Handles common confusions between related nouns and verbs (e.g., 'advice/advise', 'breath/breathe')"
 				},
+				"harper.linters.NowWay": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `now way` to `no way` in high-confidence contexts while avoiding comparative contexts like `now way too`."
+				},
 				"harper.linters.Nowhere": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2531,6 +2591,12 @@
 					"default": true,
 					"description": "This linter flags instances of the nonstandard phrase `one in the same`. The correct, more accepted form is `one and the same`"
 				},
+				"harper.linters.OneFellSwoop": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `one foul swoop` to `one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
+				},
 				"harper.linters.OneHanded": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2578,6 +2644,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures that the phrase `out of date` is written with a hyphen as `out-of-date` when used as a compound adjective."
+				},
+				"harper.linters.OutOfSync": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `out of sink` to `out of sync` or `out of synch`."
 				},
 				"harper.linters.Overall": {
 					"scope": "resource",
@@ -2969,6 +3041,12 @@
 					"default": true,
 					"description": "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures."
 				},
+				"harper.linters.SeamToSeem": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`."
+				},
 				"harper.linters.SemicolonApostrophe": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2992,6 +3070,18 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects nonstandard variants of 'shoot oneself in the foot'."
+				},
+				"harper.linters.Shortcoming": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `shortcoming`."
+				},
+				"harper.linters.Shortcomings": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `shortcomings`."
 				},
 				"harper.linters.ShutdownVerb": {
 					"scope": "resource",
@@ -3173,6 +3263,12 @@
 					"default": true,
 					"description": "Fixes sentences that start with `me and X` by putting the proper noun first and using `I`."
 				},
+				"harper.linters.SubjunctiveWasToWere": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`."
+				},
 				"harper.linters.SufficeItToSay": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3287,6 +3383,12 @@
 					"default": true,
 					"description": "Corrects mixing up `then` and `than`."
 				},
+				"harper.linters.There": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `there`."
+				},
 				"harper.linters.ThereToTheir": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3322,6 +3424,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Converts `they` to `them` whenever the pronoun serves as an object after common prepositions or actions that take direct objects."
+				},
+				"harper.linters.TheyreConfusions": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects apostrophe and locative edge cases that are awkward to model with standard contraction checks."
 				},
 				"harper.linters.TheyreToTheir": {
 					"scope": "resource",
@@ -3707,6 +3815,12 @@
 					"default": true,
 					"description": "Checks for `can` being used after `wish` when it should be `could`."
 				},
+				"harper.linters.Without": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `without`."
+				},
 				"harper.linters.WithoutOut": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3754,6 +3868,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction."
+				},
+				"harper.linters.WroteToRote": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `by wrote` to `by rote`."
 				},
 				"harper.linters.WroughtIron": {
 					"scope": "resource",
