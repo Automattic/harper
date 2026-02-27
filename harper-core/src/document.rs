@@ -145,7 +145,8 @@ impl Document {
         self.condense_dotted_initialisms();
         self.condense_number_suffixes();
         self.condense_ellipsis();
-        self.condense_latin();
+        self.condense_dotted_latin();
+        self.condense_loan_phrases();
         self.condense_common_top_level_domains();
         self.condense_filename_extensions();
         self.condense_tldr();
@@ -500,11 +501,13 @@ impl Document {
         self.tokens.remove_indices(remove_these);
     }
 
+    // Dotted Latin expressions such as etc. vs. et al.
+
     thread_local! {
-        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
+        static DOTTED_LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_dotted_latin_expr();
     }
 
-    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
+    fn uncached_dotted_latin_expr() -> Lrc<FirstMatchOf> {
         Lrc::new(FirstMatchOf::new(vec![
             Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
             Box::new(
@@ -516,27 +519,73 @@ impl Document {
         ]))
     }
 
-    /// Assumes that the first matched token is the canonical one to be condensed into.
-    /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
-    fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
-    where
-        F: Fn(&mut Token),
-    {
-        let matches = expr.iter_matches_in_doc(self).collect::<Vec<_>>();
-
-        let mut remove_indices = VecDeque::with_capacity(matches.len());
-
-        for m in matches {
-            remove_indices.extend(m.start + 1..m.end);
-            self.tokens[m.start].span = self.tokens[m.into_iter()].span().unwrap();
-            edit(&mut self.tokens[m.start]);
-        }
-
-        self.tokens.remove_indices(remove_indices);
+    fn condense_dotted_latin(&mut self) {
+        self.condense_expr(&Self::DOTTED_LATIN_EXPR.with(|v| v.clone()), |_| {})
     }
 
-    fn condense_latin(&mut self) {
-        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
+    // Loan phrases such as en masse
+
+    thread_local! {
+        static LOAN_PHRASES_EXPR: Lrc<FirstMatchOf> = Document::uncached_loan_phrases_expr();
+    }
+
+    fn uncached_loan_phrases_expr() -> Lrc<FirstMatchOf> {
+        Lrc::new(FirstMatchOf::new(
+            [
+                "ad nauseam",
+                "alma mater",
+                // "avant-garde",
+                "bona fide",
+                "contra proferentem",
+                // "cul-de-sac",
+                "de facto",
+                "de jure",
+                "de minimis",
+                "déjà vu",
+                "deja vu",
+                "en masse",
+                "gung ho",
+                "habeas corpus",
+                "in personam",
+                "in situ",
+                "inter alia",
+                "ipso facto",
+                "kung fu",
+                "mutatis mutandis",
+                "pari passu",
+                "Pax Americana",
+                "per annum",
+                "per capita",
+                "per definitionem",
+                "per diem",
+                "per se",
+                "prima facie",
+                "pro rata",
+                "quid pro quo",
+                "sui generis",
+                "tai chi",
+                // "vis-à-vis",
+            ]
+            .iter()
+            .filter(|phrase| phrase.split_whitespace().count() != 0)
+            .map(|phrase| {
+                let words: Vec<&str> = phrase.split_whitespace().collect();
+                let mut seq = SequenceExpr::default();
+                if !words.is_empty() {
+                    seq = seq.t_aco(words[0]);
+                    for word in &words[1..] {
+                        seq = seq.then_whitespace().t_aco(word);
+                    }
+                }
+
+                Box::new(seq) as Box<dyn Expr>
+            })
+            .collect(),
+        ))
+    }
+
+    fn condense_loan_phrases(&mut self) {
+        self.condense_expr(&Self::LOAN_PHRASES_EXPR.with(|v| v.clone()), |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -892,6 +941,8 @@ impl Document {
         );
     }
 
+    // Ellipsis: ...
+
     fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
         let period = SequenceExpr::default().then_period();
         Lrc::new(Repeating::new(Box::new(period), 2))
@@ -906,6 +957,48 @@ impl Document {
         self.condense_expr(&expr, |tok| {
             tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
         });
+    }
+
+    // Contractions
+
+    fn uncached_contraction_expr() -> Lrc<SequenceExpr> {
+        Lrc::new(
+            SequenceExpr::default()
+                .then_any_word()
+                .then_apostrophe()
+                .then_any_word(),
+        )
+    }
+
+    thread_local! {
+        static CONTRACTION_EXPR: Lrc<SequenceExpr> = Document::uncached_contraction_expr();
+    }
+
+    /// Searches for contractions and condenses them down into single
+    /// tokens.
+    fn condense_contractions(&mut self) {
+        let expr = Self::CONTRACTION_EXPR.with(|v| v.clone());
+
+        self.condense_expr(&expr, |_| {})
+    }
+
+    /// Assumes that the first matched token is the canonical one to be condensed into.
+    /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
+    fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
+    where
+        F: Fn(&mut Token),
+    {
+        let matches = expr.iter_matches_in_doc(self).collect::<Vec<_>>();
+
+        let mut remove_indices = VecDeque::with_capacity(matches.len());
+
+        for m in matches {
+            remove_indices.extend(m.start + 1..m.end);
+            self.tokens[m.start].span = self.tokens[m.into_iter()].span().unwrap();
+            edit(&mut self.tokens[m.start]);
+        }
+
+        self.tokens.remove_indices(remove_indices);
     }
 }
 
@@ -1371,6 +1464,22 @@ mod tests {
         let doc = Document::new_plain_english_curated("R&A or Q&D");
         assert!(doc.tokens.len() == 9);
         assert!(doc.tokens[1].kind.is_ampersand() || doc.tokens[7].kind.is_ampersand());
+    }
+
+    #[test]
+    fn condense_loan_phrases() {
+        let doc = Document::new_plain_english_curated(
+            "the 5 indictment case can be reinstated if he feels Adams is not complying with whatever the alleged details are in the largely speculated quid pro quo arrangement of deporting certain immigrants en masse",
+        );
+        let (mut quid_pro_quo, mut en_masse) = (false, false);
+        for tok in &doc.tokens {
+            match tok.span.get_content_string(&doc.source).as_str() {
+                "quid pro quo" => quid_pro_quo = true,
+                "en masse" => en_masse = true,
+                _ => {}
+            }
+        }
+        assert!(quid_pro_quo && en_masse);
     }
 
     #[test]

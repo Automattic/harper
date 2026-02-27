@@ -739,14 +739,13 @@ Message: |
 
 
 
-Lint:    Spelling (63 priority)
+Lint:    Capitalization (31 priority)
 Message: |
      271 | The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when
-         |                              ^~~~~~ Did you mean to spell `Habeas` this way?
+         |                              ^~~~~~~~~~~~~ The canonical dictionary spelling is `habeas corpus`.
+     272 | in Cases of Rebellion or Invasion the public Safety may require it.
 Suggest:
-  - Replace with: “Haber's”
-  - Replace with: “Hale's”
-  - Replace with: “Hebe's”
+  - Replace with: “habeas corpus”
 
 
 

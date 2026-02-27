@@ -599,7 +599,7 @@
 >
 #
 > The Privilege of the Writ   of Habeas Corpus shall not     be      suspended , unless when
-# D   NSg/VB    P  D   NSg/VB P  ?      NSg+   VXB   NSg/R/C NSg/VXB VP/J      . C      NSg/I/C
+# D   NSg/VB    P  D   NSg/VB P  NSg           VXB   NSg/R/C NSg/VXB VP/J      . C      NSg/I/C
 > in        Cases  of Rebellion or    Invasion the public  Safety   may     require it       .
 # NPr/J/R/P NPl/V3 P  N🅪Sg+     NPr/C NSg      D   Nᴹ/VB/J N🅪Sg/VB+ NPr/VXB NSg/VB  NPr/ISg+ .
 >
