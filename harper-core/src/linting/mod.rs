@@ -27,6 +27,7 @@ mod best_of_all_time;
 mod boring_words;
 mod bought;
 mod brand_brandish;
+mod by_accident;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
