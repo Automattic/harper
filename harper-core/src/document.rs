@@ -145,7 +145,7 @@ impl Document {
         self.condense_dotted_initialisms();
         self.condense_number_suffixes();
         self.condense_ellipsis();
-        self.condense_latin();
+        self.condense_abbreviations();
         self.condense_common_top_level_domains();
         self.condense_filename_extensions();
         self.condense_tldr();
@@ -501,10 +501,10 @@ impl Document {
     }
 
     thread_local! {
-        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
+        static ABBREVIATION_EXPR: Lrc<FirstMatchOf> = Document::uncached_abbreviation_expr();
     }
 
-    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
+    fn uncached_abbreviation_expr() -> Lrc<FirstMatchOf> {
         Lrc::new(FirstMatchOf::new(vec![
             Box::new(SequenceExpr::word_set(&["esp", "etc", "vs"]).then_period()),
             Box::new(
@@ -535,8 +535,8 @@ impl Document {
         self.tokens.remove_indices(remove_indices);
     }
 
-    fn condense_latin(&mut self) {
-        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
+    fn condense_abbreviations(&mut self) {
+        self.condense_expr(&Self::ABBREVIATION_EXPR.with(|v| v.clone()), |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
