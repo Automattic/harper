@@ -2,7 +2,7 @@ import type { LintOptions } from 'harper.js';
 import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
-import { getCaretPosition } from './editorUtils';
+import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
@@ -131,18 +131,53 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const text =
+				let text = null;
+
+				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
+				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
+
+				if (isCM) {
+					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
+					const lines = Array.from(lineElements).map((el) => el.textContent);
+					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
+				} else {
 					target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
 						? target.value
 						: target.textContent;
+				}
+
+				const newLineIndices = [];
+				let i = 0;
+				for (const c of text ?? '') {
+					if (c == '\n') {
+						newLineIndices.push(i);
+					}
+					i++;
+				}
 
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
+				const language = getTargetLanguage(target);
+				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
 					forceAllHeadings: isHeading(target),
+					language,
 				});
+
+				/// We're about to modify a reference, so let's work on a copy.
+				lintsBySource = window.structuredClone(lintsBySource);
+
+				for (const lints of Object.values(lintsBySource)) {
+					for (const lint of lints) {
+						const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+						const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+
+						lint.span.start -= offset_start;
+						lint.span.end -= offset_end;
+					}
+				}
+
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
@@ -314,4 +349,18 @@ function getScrollableAncestors(element: Node): Element[] {
 	}
 
 	return scrollables;
+}
+
+function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
+	if (!(target instanceof Element)) return undefined;
+
+	const language = target.getAttribute('data-language');
+	switch (language) {
+		case 'plaintext':
+		case 'markdown':
+		case 'typst':
+			return language;
+		default:
+			return undefined;
+	}
 }

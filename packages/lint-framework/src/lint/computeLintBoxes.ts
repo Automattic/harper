@@ -3,6 +3,7 @@ import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit 
 import { getRangeForTextSpan } from './domUtils';
 import {
 	getCkEditorRoot,
+	getCMRoot,
 	getDraftRoot,
 	getLexicalRoot,
 	getSlateRoot,
@@ -114,6 +115,8 @@ function replaceValue(
 		replaceLexicalValue(el, span, replacementText);
 	} else if (getDraftRoot(el) != null) {
 		replaceDraftValue(el, span, replacementText);
+	} else if (getCMRoot(el) != null) {
+		replaceCodeMirrorValue(el, span, replacementText);
 	} else if (getSlateRoot(el) != null || getCkEditorRoot(el) != null) {
 		replaceRichTextEditorValue(el, span, replacementText);
 	} else {
@@ -225,6 +228,45 @@ function replaceRichTextEditorValue(
 	if (!beforeEvt.defaultPrevented) {
 		replaceTextInRange(doc, sel, range, replacementText);
 		el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: false }));
+	}
+}
+
+function replaceCodeMirrorValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const setup = selectSpanInEditor(el, span);
+	if (!setup) return;
+
+	const { doc, sel, range } = setup;
+
+	const evInit: InputEventInit = {
+		bubbles: true,
+		cancelable: true,
+		inputType: 'insertReplacementText',
+		data: replacementText,
+	};
+
+	if ('StaticRange' in self) {
+		evInit.targetRanges = [new StaticRange(range)];
+	}
+
+	const beforeEvt = new InputEvent('beforeinput', evInit);
+	el.dispatchEvent(beforeEvt);
+
+	// CodeMirror-style editors can handle replacement during beforeinput.
+	// If not handled, fall back to direct DOM replacement.
+	if (!beforeEvt.defaultPrevented) {
+		replaceTextInRange(doc, sel, range, replacementText);
+		el.dispatchEvent(
+			new InputEvent('input', {
+				bubbles: true,
+				cancelable: false,
+				inputType: 'insertReplacementText',
+				data: replacementText,
+			}),
+		);
 	}
 }
 
