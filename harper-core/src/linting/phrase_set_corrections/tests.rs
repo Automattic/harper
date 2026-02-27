@@ -270,7 +270,6 @@ fn dont_flag_what_dose_it_takes() {
 
 // -dose it- verb false positives
 
-// And then I have to re-add the salts back to it to dose it back up to drinkable.
 #[test]
 #[ignore = "would be a false positive in a naive implementation"]
 fn dont_flag_to_dose_it() {
@@ -281,7 +280,6 @@ fn dont_flag_to_dose_it() {
     );
 }
 
-// So my conclusion is: don't dose it too high or it actually is dangerous and not pleasant at all
 #[test]
 #[ignore = "would be a false positive in a naive implementation"]
 fn dont_flag_dont_dose_it_too_high() {
@@ -764,6 +762,7 @@ fn correct_honed_in_on() {
 // InDetail
 
 // -in details-
+#[test]
 fn in_detail_atomic() {
     assert_suggestion_result("in details", lint_group(), "in detail");
 }
@@ -1095,6 +1094,290 @@ fn fix_escape_goats() {
         "People might be using Americans as escape goats for this, but these mishearings are becoming as common as a bowl in a china shop!",
         lint_group(),
         "People might be using Americans as scapegoats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+    );
+}
+
+// SubjunctiveWasToWere
+
+// -if only there was-
+#[test]
+fn if_only_there_was() {
+    assert_suggestion_result(
+        "if only there was an endpoint do to so",
+        lint_group(),
+        "if only there were an endpoint do to so",
+    );
+}
+
+// -if only I-
+#[test]
+fn if_only_i_was() {
+    assert_suggestion_result(
+        "Oh If only I was that clever !!",
+        lint_group(),
+        "Oh If only I were that clever !!",
+    );
+}
+
+// -if only he-
+#[test]
+fn if_only_he_was() {
+    assert_suggestion_result(
+        "If only he was kind enough to attempt to contact me in private first",
+        lint_group(),
+        "If only he were kind enough to attempt to contact me in private first",
+    );
+}
+
+// -if only she-
+#[test]
+fn if_only_she_was() {
+    assert_suggestion_result(
+        "If only she was right.",
+        lint_group(),
+        "If only she were right.",
+    );
+}
+
+// -it-
+#[test]
+fn if_only_it_was() {
+    assert_suggestion_result(
+        "if only it was accessible via USB connection - hint hint",
+        lint_group(),
+        "if only it were accessible via USB connection - hint hint",
+    );
+}
+
+// -I wish there was-
+#[test]
+fn i_wish_there_was() {
+    assert_suggestion_result(
+        "I wish there was a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+        lint_group(),
+        "I wish there were a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+    );
+}
+
+// -I wish I was-
+#[test]
+fn i_wish_i_was() {
+    assert_suggestion_result(
+        "I wish I was as smart as I think I am.",
+        lint_group(),
+        "I wish I were as smart as I think I am.",
+    );
+}
+
+// -I wish he was-
+#[test]
+fn i_wish_he_was() {
+    assert_suggestion_result(
+        "However I wish he was that smart about ARM chips present in the current mobile devices.",
+        lint_group(),
+        "However I wish he were that smart about ARM chips present in the current mobile devices.",
+    );
+}
+
+// -I wish she was-
+#[test]
+fn i_wish_she_was() {
+    assert_suggestion_result(
+        "I wish she was more accepting of her own interests.",
+        lint_group(),
+        "I wish she were more accepting of her own interests.",
+    );
+}
+
+// -I wish it was-
+#[test]
+fn i_wish_it_was() {
+    assert_suggestion_result(
+        "but I wish it was more friendly to existing ecosystems",
+        lint_group(),
+        "but I wish it were more friendly to existing ecosystems",
+    );
+}
+
+// SeamToSeem
+
+//-seam to be-
+#[test]
+fn fix_seam_to_be() {
+    assert_suggestion_result(
+        "amdvlk is deprecated but my system still uses it as default and I can't seam to be able to change it.",
+        lint_group(),
+        "amdvlk is deprecated but my system still uses it as default and I can't seem to be able to change it.",
+    );
+}
+
+//-seams to be-
+fn fix_seams_to_be() {
+    assert_suggestion_result(
+        "Problem: Docker image is seriously broken and everything seams to be related to trivial things like creating directory or dumping key",
+        lint_group(),
+        "Problem: Docker image is seriously broken and everything seems to be related to trivial things like creating directory or dumping key",
+    );
+}
+
+//-I seam-
+#[test]
+fn fix_i_seam() {
+    assert_suggestion_result(
+        "so now whatever i seam to try it doesnt work",
+        lint_group(),
+        "so now whatever i seem to try it doesnt work",
+    );
+}
+
+//-we seam-
+#[test]
+fn fix_we_seam() {
+    assert_suggestion_result(
+        "using a 4G network we seam to get ICE messages mixing Ipv6 and Ipv4",
+        lint_group(),
+        "using a 4G network we seem to get ICE messages mixing Ipv6 and Ipv4",
+    );
+}
+
+//-we-all-seam-
+#[test]
+fn fix_we_all_seam() {
+    assert_suggestion_result(
+        "if it is your own nation then we all seam to get the update",
+        lint_group(),
+        "if it is your own nation then we all seem to get the update",
+    );
+}
+
+//-we-both-seam-
+#[test]
+// because we both seam to have enough for frivolous things
+fn fix_we_both_seam() {
+    assert_suggestion_result(
+        "because we both seam to have enough for frivolous things",
+        lint_group(),
+        "because we both seem to have enough for frivolous things",
+    );
+}
+
+//-you seam-
+#[test]
+fn fix_you_seam() {
+    assert_suggestion_result(
+        "Assigning you, since you seam to have already made the fix.",
+        lint_group(),
+        "Assigning you, since you seem to have already made the fix.",
+    );
+}
+
+//-you-all-seam
+#[test]
+fn fix_you_all_seam() {
+    assert_suggestion_result(
+        "That's a good advice which you all seam to agree upon.",
+        lint_group(),
+        "That's a good advice which you all seem to agree upon.",
+    );
+}
+
+//-you-both-seam
+#[test]
+fn fix_you_both_seam() {
+    assert_suggestion_result(
+        "since you both seam to like the game",
+        lint_group(),
+        "since you both seem to like the game",
+    );
+}
+
+//-he seams-
+#[test]
+fn fix_he_seams() {
+    assert_suggestion_result(
+        "tagging @PedroTroller as he seams to still be active on this project.",
+        lint_group(),
+        "tagging @PedroTroller as he seems to still be active on this project.",
+    );
+}
+
+//-she seams-
+#[test]
+fn fix_she_seams() {
+    assert_suggestion_result(
+        "Here is the exact timestamp where she seams to talk about exactly this -> video.",
+        lint_group(),
+        "Here is the exact timestamp where she seems to talk about exactly this -> video.",
+    );
+}
+
+//-it seams-
+#[test]
+fn fix_it_seams() {
+    assert_suggestion_result(
+        "It seams i cannot use $tries and $timeout properties on my queued listener class?",
+        lint_group(),
+        "It seems i cannot use $tries and $timeout properties on my queued listener class?",
+    );
+}
+
+//-they seam-
+#[test]
+fn fix_they_seam() {
+    assert_suggestion_result(
+        "Lets start with the \"not\" and \"and\" gates because they seam the easiest.",
+        lint_group(),
+        "Lets start with the \"not\" and \"and\" gates because they seem the easiest.",
+    );
+}
+
+//-they all seam-
+#[test]
+fn fix_they_all_seam() {
+    assert_suggestion_result(
+        "I have tried the sum, product, max and min functions and they all seam to work.",
+        lint_group(),
+        "I have tried the sum, product, max and min functions and they all seem to work.",
+    );
+}
+
+//-they-both-seam-
+#[test]
+fn fix_they_both_seam() {
+    assert_suggestion_result(
+        "It's probably cause they both seam to combine martial arts with animal instincts",
+        lint_group(),
+        "It's probably cause they both seem to combine martial arts with animal instincts",
+    );
+}
+
+//-everything seams-
+#[test]
+fn fix_everything_seams() {
+    assert_suggestion_result(
+        "Note that if you try to slider the slider first to the right and then to the left, everything seams alright.",
+        lint_group(),
+        "Note that if you try to slider the slider first to the right and then to the left, everything seems alright.",
+    );
+}
+
+//-everybody seams-
+#[test]
+fn fix_everybody_seams() {
+    assert_suggestion_result(
+        "I'm currently a little disappointed because everybody seams to care only about the Rails framework",
+        lint_group(),
+        "I'm currently a little disappointed because everybody seems to care only about the Rails framework",
+    );
+}
+
+//-everyone seams-
+#[test]
+fn fix_everyone_seams() {
+    assert_suggestion_result(
+        "everyone seams to use the editor now a days plus there is a tun of extensions available",
+        lint_group(),
+        "everyone seems to use the editor now a days plus there is a tun of extensions available",
     );
 }
 
