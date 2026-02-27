@@ -9,6 +9,7 @@ import {
 import isSubstack from '../isSubstack';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
+import { createGoogleDocsBridgeSync, isGoogleDocsPage } from './googleDocs';
 
 if (isWordPress() || isSubstack()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
@@ -35,6 +36,8 @@ const fw = new LintFramework(
 	},
 );
 
+const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
+
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
 	const normalizedEnd = Math.max(normalizedStart, Math.min(end, source.length));
@@ -46,6 +49,7 @@ function padWithContext(source: string, start: number, end: number, contextLengt
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com', {});
+	void syncGoogleDocsBridge();
 
 	setTimeout(keepAliveCallback, 400);
 };
@@ -53,6 +57,12 @@ const keepAliveCallback = () => {
 keepAliveCallback();
 
 function scan() {
+	void syncGoogleDocsBridge();
+
+	if (isGoogleDocsPage()) {
+		return;
+	}
+
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
 		if (
 			!isVisible(element) ||
@@ -151,6 +161,9 @@ function scan() {
 }
 
 scan();
-new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+new MutationObserver(scan).observe(document.body, {
+	childList: true,
+	subtree: true,
+});
 
 setTimeout(scan, 1000);

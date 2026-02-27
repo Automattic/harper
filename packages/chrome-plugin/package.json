@@ -25,7 +25,7 @@
 		"test": "playwright test --headed --reporter=dot"
 	},
 	"devDependencies": {
-		"@crxjs/vite-plugin": "^2.0.0-beta.26",
+		"@crxjs/vite-plugin": "^2.3.0",
 		"@playwright/test": "^1.58.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/chrome": "^0.0.246",

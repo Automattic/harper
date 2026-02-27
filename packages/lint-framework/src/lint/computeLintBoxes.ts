@@ -16,12 +16,42 @@ import {
 	type UnpackedSuggestion,
 } from './unpackLint';
 
+const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
+
+type GoogleDocsReplacePayload = {
+	start: number;
+	end: number;
+	replacementText: string;
+	expectedText: string;
+	beforeContext: string;
+	afterContext: string;
+};
+
+type GoogleDocsBridgeClientLike = {
+	replaceText: (
+		start: number,
+		end: number,
+		replacementText: string,
+		expectedText?: string,
+		beforeContext?: string,
+		afterContext?: string,
+	) => Promise<unknown> | unknown;
+};
+
+type WindowWithGoogleDocsBridgeClient = Window & {
+	__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClientLike;
+};
+
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
 	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
+	if (isGoogleDocsTarget(el)) {
+		return computeGoogleDocsLintBoxes(el, lint, rule, opts);
+	}
+
 	try {
 		let range: Range | TextFieldRange | null = null;
 
@@ -87,6 +117,66 @@ export default function computeLintBoxes(
 	}
 }
 
+function isGoogleDocsTarget(el: HTMLElement): boolean {
+	return el.getAttribute('data-harper-google-docs-target') === 'true';
+}
+
+function computeGoogleDocsLintBoxes(
+	target: HTMLElement,
+	lint: UnpackedLint,
+	rule: string,
+	opts: { ignoreLint?: (hash: string) => Promise<void> },
+): IgnorableLintBox[] {
+	try {
+		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
+		const source = target.textContent ?? '';
+
+		if (!editor) {
+			return [];
+		}
+
+		if (lint.source !== source) {
+			return [];
+		}
+
+		const range = getRangeForTextSpan(target, lint.span as Span);
+		if (!range) {
+			return [];
+		}
+
+		const targetRects = Array.from(range.getClientRects ? range.getClientRects() : []);
+		const elBox = domRectToBox(range.getBoundingClientRect());
+		(range as any).detach?.();
+
+		const boxes: IgnorableLintBox[] = [];
+		for (const targetRect of targetRects as DOMRect[]) {
+			if (!isBottomEdgeInBox(targetRect, elBox)) {
+				continue;
+			}
+
+			const shrunkBox = shrinkBoxToFit(targetRect, elBox);
+			boxes.push({
+				x: shrunkBox.x,
+				y: shrunkBox.y,
+				width: shrunkBox.width,
+				height: shrunkBox.height,
+				lint,
+				source: editor,
+				rule,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					const replacementText = suggestionToReplacementText(sug, lint.span, source);
+					replaceGoogleDocsValue(lint.span, replacementText, source);
+				},
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+			});
+		}
+
+		return boxes;
+	} catch {
+		return [];
+	}
+}
+
 /** Transform an arbitrary suggestion to the equivalent replacement text. */
 function suggestionToReplacementText(
 	sug: UnpackedSuggestion,
@@ -121,6 +211,48 @@ function replaceValue(
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function replaceGoogleDocsValue(
+	span: { start: number; end: number },
+	replacementText: string,
+	source: string,
+) {
+	try {
+		const safeStart = Math.max(0, Math.min(span.start, source.length));
+		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
+		const expectedText = source.slice(safeStart, safeEnd);
+		const contextRadius = 64;
+		const beforeContext = source.slice(Math.max(0, safeStart - contextRadius), safeStart);
+		const afterContext = source.slice(safeEnd, Math.min(source.length, safeEnd + contextRadius));
+
+		const payload: GoogleDocsReplacePayload = {
+			start: span.start,
+			end: span.end,
+			replacementText,
+			expectedText,
+			beforeContext,
+			afterContext,
+		};
+		// This looks awkward because lint-framework cannot import chrome-plugin code directly.
+		// The content script puts the bridge client on window so this shared package can call it.
+		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
+			.__harperGoogleDocsBridgeClient;
+		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
+			void Promise.resolve(
+				bridgeClient.replaceText(
+					payload.start,
+					payload.end,
+					payload.replacementText,
+					payload.expectedText,
+					payload.beforeContext,
+					payload.afterContext,
+				),
+			);
+		}
+	} catch {
+		// Ignore bridge dispatch failures.
+	}
 }
 
 function replaceFormElementValue(
