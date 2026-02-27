@@ -761,58 +761,6 @@ fn correct_honed_in_on() {
     );
 }
 
-// IfOnlySubjunctive
-
-// -if only there was-
-#[test]
-fn if_only_there_was() {
-    assert_suggestion_result(
-        "if only there was an endpoint do to so",
-        lint_group(),
-        "if only there were an endpoint do to so",
-    );
-}
-
-// -I-
-#[test]
-fn if_only_i_was() {
-    assert_suggestion_result(
-        "Oh If only I was that clever !!",
-        lint_group(),
-        "Oh If only I were that clever !!",
-    );
-}
-
-// -he-
-#[test]
-fn if_only_he_was() {
-    assert_suggestion_result(
-        "If only he was kind enough to attempt to contact me in private first",
-        lint_group(),
-        "If only he were kind enough to attempt to contact me in private first",
-    );
-}
-
-// -she-
-#[test]
-fn if_only_she_was() {
-    assert_suggestion_result(
-        "If only she was right.",
-        lint_group(),
-        "If only she were right.",
-    );
-}
-
-// -it-
-#[test]
-fn if_only_it_was() {
-    assert_suggestion_result(
-        "if only it was accessible via USB connection - hint hint",
-        lint_group(),
-        "if only it were accessible via USB connection - hint hint",
-    );
-}
-
 // InDetail
 
 // -in details-
@@ -1148,6 +1096,108 @@ fn fix_escape_goats() {
         "People might be using Americans as escape goats for this, but these mishearings are becoming as common as a bowl in a china shop!",
         lint_group(),
         "People might be using Americans as scapegoats for this, but these mishearings are becoming as common as a bowl in a china shop!",
+    );
+}
+
+// SubjunctiveWasToWere
+
+// -if only there was-
+#[test]
+fn if_only_there_was() {
+    assert_suggestion_result(
+        "if only there was an endpoint do to so",
+        lint_group(),
+        "if only there were an endpoint do to so",
+    );
+}
+
+// -if only I-
+#[test]
+fn if_only_i_was() {
+    assert_suggestion_result(
+        "Oh If only I was that clever !!",
+        lint_group(),
+        "Oh If only I were that clever !!",
+    );
+}
+
+// -if only he-
+#[test]
+fn if_only_he_was() {
+    assert_suggestion_result(
+        "If only he was kind enough to attempt to contact me in private first",
+        lint_group(),
+        "If only he were kind enough to attempt to contact me in private first",
+    );
+}
+
+// -if only she-
+#[test]
+fn if_only_she_was() {
+    assert_suggestion_result(
+        "If only she was right.",
+        lint_group(),
+        "If only she were right.",
+    );
+}
+
+// -it-
+#[test]
+fn if_only_it_was() {
+    assert_suggestion_result(
+        "if only it was accessible via USB connection - hint hint",
+        lint_group(),
+        "if only it were accessible via USB connection - hint hint",
+    );
+}
+
+// -I wish there was-
+#[test]
+fn i_wish_there_was() {
+    assert_suggestion_result(
+        "I wish there was a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+        lint_group(),
+        "I wish there were a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+    );
+}
+
+// -I wish I was-
+#[test]
+fn i_wish_i_was() {
+    assert_suggestion_result(
+        "I wish I was as smart as I think I am.",
+        lint_group(),
+        "I wish I were as smart as I think I am.",
+    );
+}
+
+// -I wish he was-
+#[test]
+fn i_wish_he_was() {
+    assert_suggestion_result(
+        "However I wish he was that smart about ARM chips present in the current mobile devices.",
+        lint_group(),
+        "However I wish he were that smart about ARM chips present in the current mobile devices.",
+    );
+}
+
+// -I wish she was-
+#[test]
+fn i_wish_she_was() {
+    assert_suggestion_result(
+        "I wish she was more accepting of her own interests.",
+        lint_group(),
+        "I wish she were more accepting of her own interests.",
+    );
+}
+
+// -I wish it was-
+#[test]
+fn i_wish_it_was() {
+    assert_suggestion_result(
+        "but I wish it was more friendly to existing ecosystems",
+        lint_group(),
+        "but I wish it were more friendly to existing ecosystems",
     );
 }
 
