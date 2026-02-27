@@ -266,6 +266,18 @@ pub fn lint_group() -> LintGroup {
             "Corrects `hone in on` to `home in on`.",
             LintKind::Eggcorn
         ),
+        "IfOnlySubjunctive" => (
+            &[
+                ("if only there was", "if only there were"),
+                ("if only i was", "if only i were"),
+                ("if only he was", "if only he were"),
+                ("if only she was", "if only she were"),
+                ("if only it was", "if only it were")
+            ],
+            "Use the subjunctive mood with `if only`. The correct form is `were`, not `was`.",
+            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only`.",
+            LintKind::Grammar
+        ),
         "InDetail" => (
             &[
                 ("in details", "in detail"),
