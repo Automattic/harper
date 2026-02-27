@@ -435,6 +435,31 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "SeamToSeem" => (
+            &[
+                ("seam to be", "seem to be"),
+                ("seams to be", "seems to be"),
+                ("i seam", "i seem"),
+                ("we seam", "we seem"),
+                ("we all seam", "we all seem"),
+                ("we both seam", "we both seem"),
+                ("you seam", "you seem"),
+                ("you all seam", "you all seem"),
+                ("you both seam", "you both seem"),
+                ("he seams", "he seems"),
+                ("she seams", "she seems"),
+                ("it seams", "it seems"),
+                ("they seam", "they seem"),
+                ("they all seam", "they all seem"),
+                ("they both seam", "they both seem"),
+                ("everything seams", "everything seems"),
+                ("everybody seams", "everybody seems"),
+                ("everyone seams", "everyone seems")
+            ],
+            "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
+            "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
+            LintKind::Spelling
+        ),
         "WreakHavoc" => (
             &[
                 ("wreck havoc", "wreak havoc"),
