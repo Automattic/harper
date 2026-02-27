@@ -54,7 +54,7 @@ fn str_to_chars(word: &str) -> impl AsRef<[char]> {
 // This trait doesn't need to be dyn-compatible, as such, it can use things like generics.
 /// Contains functions which have a common implementation across all dictionaries.
 pub trait CommonDictFuncs: Dictionary {
-    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
+    /// Get the associated [`WordMapEntry`] for any capitalization of a given word.
     ///
     /// Since the dictionary might contain words that differ only in capitalization, this may
     /// return multiple entries.
@@ -65,7 +65,7 @@ pub trait CommonDictFuncs: Dictionary {
         self.get_word_map().get_case_folded_chars(word)
     }
 
-    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    /// Get the associated [`WordMapEntry`] for this specific capitalization of the given word.
     fn get_word_exact(&self, word: &[char]) -> Option<&WordMapEntry> {
         self.get_word_map()
             .get_canonical(CanonicalWordId::from_word_chars(word))
@@ -123,7 +123,7 @@ pub trait CommonDictFuncs: Dictionary {
     }
 
     // STRING FUNCTION VARIANTS START
-    /// Get the associated [`DictWordMetadata`] for any capitalization of a given word.
+    /// Get the associated [`WordMapEntry`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
     /// empty.
     ///
@@ -136,7 +136,7 @@ pub trait CommonDictFuncs: Dictionary {
         self.get_word(str_to_chars(word).as_ref())
     }
 
-    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    /// Get the associated [`WordMapEntry`] for this specific capitalization of the given word.
     fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
         self.get_word_exact(str_to_chars(word).as_ref())
     }
