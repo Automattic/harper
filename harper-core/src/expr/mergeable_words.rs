@@ -1,7 +1,5 @@
-use std::sync::Arc;
-
 use super::{Expr, SequenceExpr};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::WordMap;
 use crate::{CharString, DictWordMetadata, Span, Token};
 
 type PredicateFn =
@@ -13,7 +11,7 @@ type PredicateFn =
 /// that the two words aren't already a valid entry in the dictionary (like "straight away").
 pub struct MergeableWords {
     inner: SequenceExpr,
-    dict: Arc<FstDictionary>,
+    dict: &'static WordMap,
     predicate: Box<PredicateFn>,
 }
 
@@ -26,7 +24,7 @@ impl MergeableWords {
     ) -> Self {
         Self {
             inner: SequenceExpr::any_word().t_ws_h().then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
             predicate: Box::new(predicate),
         }
     }
@@ -46,13 +44,21 @@ impl MergeableWords {
         let mut compound = a_chars.clone();
         compound.push(' ');
         compound.extend_from_slice(&b_chars);
-        let meta_open = self.dict.get_word_metadata(&compound);
+        let meta_open = self
+            .dict
+            .get_case_folded_chars(&compound)
+            .next()
+            .map(|wme| &wme.metadata);
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
-        let meta_closed = self.dict.get_word_metadata(&compound);
+        let meta_closed = self
+            .dict
+            .get_case_folded_chars(&compound)
+            .next()
+            .map(|wme| &wme.metadata);
 
-        if (self.predicate)(meta_closed.as_deref(), meta_open.as_deref()) {
+        if (self.predicate)(meta_closed, meta_open) {
             return Some(compound);
         }
 

@@ -59,9 +59,9 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `Brill's` this way?
       19 | first and most widely used English POS-taggers, employs rule-based algorithms.
 Suggest:
+  - Replace with: “Bill's”
   - Replace with: “Brillo's”
   - Replace with: “Bill's”
-  - Replace with: “Drill's”
 
 
 
@@ -128,18 +128,6 @@ Suggest:
   - Replace with: “NES”
   - Replace with: “Nos”
   - Replace with: “Nuns”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-      49 | tags. For example, NN for singular common nouns, NNS for plural common nouns, NP
-         |                                                                               ^~ Did you mean to spell `NP` this way?
-      50 | for singular proper nouns (see the POS tags used in the Brown Corpus). Other
-Suggest:
-  - Replace with: “Nap”
-  - Replace with: “Nip”
-  - Replace with: “No”
 
 
 
@@ -612,8 +600,8 @@ Message: |
      202 | known as the forward-backward algorithm). Hidden Markov model and visible Markov
 Suggest:
   - Replace with: “Welsh”
+  - Replace with: “Welsh”
   - Replace with: “Wench”
-  - Replace with: “Watch”
 
 
 
@@ -635,7 +623,7 @@ Message: |
 Suggest:
   - Replace with: “Sim”
   - Replace with: “Sum”
-  - Replace with: “SCM”
+  - Replace with: “SAM”
 
 
 

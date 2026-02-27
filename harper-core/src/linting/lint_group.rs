@@ -229,7 +229,7 @@ use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
-use super::wordpress_dotcom::WordPressDotcom;
+use super::word_press_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 
@@ -240,7 +240,7 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Dialect, Document, TokenStringExt};
+use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -271,7 +271,7 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+    let group = LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American);
     group.config
 }
 
@@ -310,26 +310,23 @@ impl LintGroupConfig {
     }
 
     /// Merge the contents of another [`LintGroupConfig`] into this one.
-    /// The other config will be left empty after this operation.
     ///
     /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.iter() {
+    pub fn merge_from(&mut self, other: LintGroupConfig) {
+        for (key, val) in other.inner {
             if val.is_none() {
                 continue;
             }
 
-            self.inner.insert(key.to_string(), *val);
+            self.inner.insert(key.to_string(), val);
         }
-
-        other.clear();
     }
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
         let mut temp = Self::new_curated();
         mem::swap(self, &mut temp);
-        self.merge_from(&mut temp);
+        self.merge_from(temp);
     }
 
     pub fn new_curated() -> Self {
@@ -367,7 +364,8 @@ pub struct LintGroup {
     ///
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
+    #[expect(clippy::complexity)]
+    chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
 }
 
@@ -390,13 +388,13 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
+    pub fn new_curated(dictionary: Arc<dyn Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
         /// Add a `Linter` to the group, setting it to be enabled by default.
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), $rule::default());
+                out.add(stringify!($rule), Box::new($rule::default()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -407,19 +405,17 @@ impl LintGroup {
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(stringify!($rule), $rule::default());
+                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::default()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
         }
 
-        out.merge_from(&mut weir_rules::lint_group());
-        out.merge_from(&mut phrase_set_corrections::lint_group());
-        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
-            dictionary.clone(),
-        ));
-        out.merge_from(&mut closed_compounds::lint_group());
-        out.merge_from(&mut initialisms::lint_group());
+        out.merge_from(weir_rules::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
+        out.merge_from(closed_compounds::lint_group());
+        out.merge_from(initialisms::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -628,75 +624,90 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
 
-        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
         out.config.set_rule_enabled("SpellCheck", true);
 
         out.add(
             "InflectedVerbAfterTo",
-            InflectedVerbAfterTo::new(dictionary.clone()),
+            Box::new(InflectedVerbAfterTo::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
-        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.add("InOnTheCards", Box::new(InOnTheCards::new(dialect)));
         out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
             "SentenceCapitalization",
-            SentenceCapitalization::new(dictionary.clone()),
+            Box::new(SentenceCapitalization::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("SentenceCapitalization", true);
 
-        out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
+        out.add(
+            "PossessiveNoun",
+            Box::new(PossessiveNoun::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("PossessiveNoun", false);
 
-        out.add("Regionalisms", Regionalisms::new(dialect));
+        out.add("Regionalisms", Box::new(Regionalisms::new(dialect)));
         out.config.set_rule_enabled("Regionalisms", true);
 
-        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.add("HaveTakeALook", Box::new(HaveTakeALook::new(dialect)));
         out.config.set_rule_enabled("HaveTakeALook", true);
 
-        out.add("MassNouns", MassNouns::new(dictionary.clone()));
+        out.add("MassNouns", Box::new(MassNouns::new(dictionary.clone())));
         out.config.set_rule_enabled("MassNouns", true);
 
-        out.add("UseTitleCase", UseTitleCase::new(dictionary.clone()));
+        out.add(
+            "UseTitleCase",
+            Box::new(UseTitleCase::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("UseTitleCase", true);
 
         out.add_chunk_expr_linter(
             "DisjointPrefixes",
-            DisjointPrefixes::new(dictionary.clone()),
+            Box::new(DisjointPrefixes::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
 
         // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
         //  `add_sentence_expr_linter`
-        out.add("Damages", Damages::default());
+        out.add("Damages", Box::new(Damages::default()));
         out.config.set_rule_enabled("Damages", true);
 
         out.add(
             "PronounVerbAgreement",
-            PronounVerbAgreement::new(dictionary.clone()),
+            Box::new(PronounVerbAgreement::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("PronounVerbAgreement", true);
 
-        out.add_chunk_expr_linter("TransposedSpace", TransposedSpace::new(dictionary.clone()));
+        out.add_chunk_expr_linter(
+            "TransposedSpace",
+            Box::new(TransposedSpace::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("TransposedSpace", true);
 
         out.add_chunk_expr_linter(
             "OneOfTheSingular",
-            OneOfTheSingular::new(dictionary.clone()),
+            Box::new(OneOfTheSingular::new(dictionary.clone())),
         );
         out.config.set_rule_enabled("OneOfTheSingular", true);
 
-        out.add("AnA", AnA::new(dialect));
+        out.add("AnA", Box::new(AnA::new(dialect)));
         out.config.set_rule_enabled("AnA", true);
 
-        out.add("MoreAdjective", MoreAdjective::new(dictionary.clone()));
+        out.add(
+            "MoreAdjective",
+            Box::new(MoreAdjective::new(dictionary.clone())),
+        );
         out.config.set_rule_enabled("MoreAdjective", true);
 
-        out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
+        out.add("WorthToDo", Box::new(WorthToDo::new(dictionary.clone())));
         out.config.set_rule_enabled("WorthToDo", true);
 
-        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.add_chunk_expr_linter("DidPast", Box::new(DidPast::new(dictionary.clone())));
         out.config.set_rule_enabled("DidPast", true);
 
         out
@@ -704,7 +715,7 @@ impl LintGroup {
 
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
-        dictionary: Arc<impl Dictionary + 'static>,
+        dictionary: Arc<dyn Dictionary + 'static>,
         dialect: Dialect,
     ) -> Self {
         let mut group = Self::new_curated(dictionary, dialect);
@@ -722,12 +733,11 @@ impl LintGroup {
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+    pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter + 'static>) -> bool {
         if self.contains_key(&name) {
             false
         } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
+            self.linters.insert(name.as_ref().to_string(), linter);
             true
         }
     }
@@ -741,27 +751,24 @@ impl LintGroup {
         &mut self,
         name: impl AsRef<str>,
         // linter: impl ExprLinter + 'static,
-        linter: impl ExprLinter<Unit = Chunk> + 'static,
+        linter: Box<dyn ExprLinter<Unit = Chunk> + 'static>,
     ) -> bool {
         if self.contains_key(&name) {
             false
         } else {
             self.chunk_expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+                .insert(name.as_ref().to_string(), linter as _);
             true
         }
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
-    pub fn merge_from(&mut self, other: &mut LintGroup) {
-        self.config.merge_from(&mut other.config);
+    pub fn merge_from(&mut self, other: LintGroup) {
+        self.config.merge_from(other.config);
 
-        let other_linters = std::mem::take(&mut other.linters);
-        self.linters.extend(other_linters);
+        self.linters.extend(other.linters);
 
-        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
-        self.chunk_expr_linters.extend(other_expr_linters);
+        self.chunk_expr_linters.extend(other.chunk_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
@@ -816,7 +823,7 @@ impl LintGroup {
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.insert(key.clone(), linter.lint(document));
+                results.insert(key.to_owned(), linter.lint(document));
             }
         }
 
@@ -828,9 +835,10 @@ impl LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let cache_key = (chunk_chars.into(), config_hash);
+            let char_hash = self.hasher_builder.hash_one(chunk_chars);
+            let cache_key = (char_hash, config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
+            let chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
                 let mut pattern_lints = BTreeMap::new();
@@ -847,19 +855,21 @@ impl LintGroup {
                     }
                 }
 
+                let pattern_lints = Lrc::new(pattern_lints);
+
                 self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
-            // Bring the spans back into document-space
-            for value in chunk_results.values_mut() {
-                for lint in value {
-                    lint.span.push_by(chunk_span.start);
-                }
-            }
-
-            for (key, mut vec) in chunk_results {
-                results.entry(key).or_default().append(&mut vec);
+            for (key, vec) in chunk_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(chunk_span.start);
+                        lint
+                    }));
             }
         }
 
@@ -958,12 +968,13 @@ mod tests {
     ///    in the context of another linter's description.
     #[test]
     fn lint_descriptions_are_clean() {
-        let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let curated_fst_dict = Arc::new(FstDictionary::curated());
+
+        let lints_to_check = LintGroup::new_curated(curated_fst_dict.clone(), Dialect::American);
 
         let enforcer_config = LintGroupConfig::new_curated();
-        let mut lints_to_enforce =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
-                .with_lint_config(enforcer_config);
+        let mut lints_to_enforce = LintGroup::new_curated(curated_fst_dict, Dialect::American)
+            .with_lint_config(enforcer_config);
 
         let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()

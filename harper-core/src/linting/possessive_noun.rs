@@ -4,7 +4,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::expr::{All, Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::patterns::{UPOSSet, WordSet};
-use crate::spell::Dictionary;
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{Token, TokenKind};
 
 pub struct PossessiveNoun<D> {
@@ -93,13 +93,11 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Arc;
-
     use super::PossessiveNoun;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
-    fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
+    fn test_linter() -> PossessiveNoun<&'static FstDictionary> {
         PossessiveNoun::new(FstDictionary::curated())
     }
 

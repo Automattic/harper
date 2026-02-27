@@ -5,17 +5,18 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, WordId};
+use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::{CharString, DictWordMetadata};
+use crate::spell::{CommonDictFuncs, WordMap};
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.
 ///
 /// In cases where more than one dictionary contains a word, data in the first
 /// dictionary inserted will be returned.
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct MergedDictionary {
+    merged_word_map: WordMap,
     children: Vec<Arc<dyn Dictionary>>,
     hasher_builder: FixedState,
     child_hashes: Vec<u64>,
@@ -23,24 +24,26 @@ pub struct MergedDictionary {
 
 impl MergedDictionary {
     pub fn new() -> Self {
-        Self {
-            children: Vec::new(),
-            hasher_builder: FixedState::default(),
-            child_hashes: Vec::new(),
-        }
+        Default::default()
     }
 
     pub fn add_dictionary(&mut self, dictionary: Arc<dyn Dictionary>) {
         self.child_hashes.push(self.hash_dictionary(&dictionary));
+
+        if self.merged_word_map.is_empty() {
+            // Fast path.
+            self.merged_word_map.clone_from(dictionary.get_word_map());
+        } else {
+            self.merged_word_map
+                .extend(dictionary.get_word_map().clone());
+        }
+
         self.children.push(dictionary);
     }
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
-        if Arc::ptr_eq(
-            dictionary,
-            &(FstDictionary::curated() as Arc<dyn Dictionary>),
-        ) {
+        if std::ptr::eq(Arc::as_ptr(dictionary), FstDictionary::curated()) {
             return 1;
         }
 
@@ -60,64 +63,9 @@ impl PartialEq for MergedDictionary {
     }
 }
 
-impl Default for MergedDictionary {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl Dictionary for MergedDictionary {
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        for child in &self.children {
-            if let Some(word) = child.get_correct_capitalization_of(word) {
-                return Some(word);
-            }
-        }
-        None
-    }
-
-    fn contains_word(&self, word: &[char]) -> bool {
-        for child in &self.children {
-            if child.contains_word(word) {
-                return true;
-            }
-        }
-        false
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        for child in &self.children {
-            if child.contains_exact_word(word) {
-                return true;
-            }
-        }
-        false
-    }
-
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.children
-            .iter()
-            .filter_map(|d| d.get_word_metadata(word))
-            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(self.children.iter().flat_map(|c| c.words_iter()))
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
+    fn get_word_map(&self) -> &WordMap {
+        &self.merged_word_map
     }
 
     fn fuzzy_match(
@@ -134,32 +82,6 @@ impl Dictionary for MergedDictionary {
             .sorted_by_key(|r| r.edit_distance)
             .take(max_results)
             .collect()
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.children
-            .iter()
-            .flat_map(|d| d.fuzzy_match_str(word, max_distance, max_results))
-            .sorted_by_key(|r| r.word)
-            .dedup_by(|a, b| a.word == b.word)
-            .sorted_by_key(|r| r.edit_distance)
-            .take(max_results)
-            .collect()
-    }
-
-    fn word_count(&self) -> usize {
-        self.children.iter().map(|d| d.word_count()).sum()
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.children
-            .iter()
-            .find_map(|dict| dict.get_word_from_id(id))
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

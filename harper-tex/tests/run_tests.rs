@@ -1,5 +1,7 @@
+use std::sync::Arc;
+
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::spell::FstDictionary;
+use harper_core::spell::WordMap;
 use harper_core::{Dialect, Document};
 use harper_tex::TeX;
 
@@ -17,7 +19,7 @@ macro_rules! create_test {
                     )
                  );
 
-                 let dict = FstDictionary::curated();
+                 let dict = Arc::new(WordMap::curated());
                  let document = Document::new(&source, &TeX::default(), &dict);
 
                  let mut linter = LintGroup::new_curated(dict, Dialect::American);

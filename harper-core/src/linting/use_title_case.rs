@@ -22,7 +22,7 @@ impl<D: Dictionary + 'static> Linter for UseTitleCase<D> {
             };
 
             if let Some(title_case) =
-                try_make_title_case(heading, document.get_source(), &self.dict)
+                try_make_title_case(heading, document.get_source(), self.dict.get_word_map())
             {
                 lints.push(Lint {
                     span,

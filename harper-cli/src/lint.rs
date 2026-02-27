@@ -10,11 +10,12 @@ use hashbrown::HashMap;
 use rayon::prelude::*;
 
 use harper_core::{
+    CharString, Dialect, Document, Token, TokenKind,
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
     parsers::MarkdownOptions,
-    spell::{Dictionary, MergedDictionary, MutableDictionary},
+    remove_overlaps_map,
+    spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -28,9 +29,9 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
+    dict.extend(
         str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+            .map(|l| WordMapEntry::new(l.chars().collect::<CharString>())),
     );
 
     Ok(dict)
@@ -111,7 +112,7 @@ impl InputInfo<'_> {
 
 pub fn lint(
     markdown_options: MarkdownOptions,
-    curated_dictionary: Arc<dyn Dictionary>,
+    curated_dictionary: &'static dyn Dictionary,
     mut inputs: Vec<AnyInput>,
     mut lint_options: LintOptions,
     user_dict_path: PathBuf,
@@ -348,11 +349,11 @@ fn lint_one_input(
             Err(err) => eprintln!("{}", err),
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                let mut lint_group = LintGroup::new_curated(Arc::new(merged_dictionary), *dialect);
 
                 for pack in weirpacks {
-                    let mut pack_group = pack.to_lint_group()?;
-                    lint_group.merge_from(&mut pack_group);
+                    let pack_group = pack.to_lint_group()?;
+                    lint_group.merge_from(pack_group);
                 }
 
                 // Turn specified rules on or off

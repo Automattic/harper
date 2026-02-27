@@ -1,12 +1,12 @@
 use std::borrow::Cow;
-use std::sync::{Arc, LazyLock};
+use std::sync::LazyLock;
 
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::DictWordMetadata;
+use crate::spell::CommonDictFuncs;
 
-use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordId};
+use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -15,14 +15,14 @@ pub struct TrieDictionary<D: Dictionary> {
     inner: D,
 }
 
-pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> =
-    LazyLock::new(|| Arc::new(TrieDictionary::new(FstDictionary::curated())));
+pub static DICT: LazyLock<TrieDictionary<&'static FstDictionary>> =
+    LazyLock::new(|| TrieDictionary::new(FstDictionary::curated()));
 
-impl TrieDictionary<Arc<FstDictionary>> {
+impl TrieDictionary<&'static FstDictionary> {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> Arc<Self> {
-        (*DICT).clone()
+    pub fn curated() -> &'static Self {
+        &DICT
     }
 }
 
@@ -35,20 +35,8 @@ impl<D: Dictionary> TrieDictionary<D> {
 }
 
 impl<D: Dictionary> Dictionary for TrieDictionary<D> {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.inner.contains_word(word)
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.inner.contains_word_str(word)
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.inner.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.inner.contains_exact_word_str(word)
+    fn get_word_map(&self) -> &WordMap {
+        self.inner.get_word_map()
     }
 
     fn fuzzy_match(
@@ -58,39 +46,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.inner.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.inner.fuzzy_match_str(word, max_distance, max_results)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.inner.get_correct_capitalization_of(word)
-    }
-
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata_str(word)
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.inner.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.inner.word_count()
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.inner.get_word_from_id(id)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
@@ -110,19 +65,18 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
 mod tests {
     use std::borrow::Cow;
 
-    use crate::DictWordMetadata;
     use crate::char_string::char_string;
-    use crate::spell::MutableDictionary;
     use crate::spell::dictionary::Dictionary;
     use crate::spell::trie_dictionary::TrieDictionary;
+    use crate::spell::{MutableDictionary, WordMapEntry};
 
     #[test]
     fn gets_prefixes_as_expected() {
         let mut inner = MutableDictionary::new();
-        inner.append_word_str("predict", DictWordMetadata::default());
-        inner.append_word_str("prelude", DictWordMetadata::default());
-        inner.append_word_str("preview", DictWordMetadata::default());
-        inner.append_word_str("dwight", DictWordMetadata::default());
+        inner.insert(WordMapEntry::new_str("predict"));
+        inner.insert(WordMapEntry::new_str("prelude"));
+        inner.insert(WordMapEntry::new_str("preview"));
+        inner.insert(WordMapEntry::new_str("dwight"));
 
         let dict = TrieDictionary::new(inner);
 
@@ -137,9 +91,9 @@ mod tests {
     #[test]
     fn gets_common_prefixes_as_expected() {
         let mut inner = MutableDictionary::new();
-        inner.append_word_str("pre", DictWordMetadata::default());
-        inner.append_word_str("prep", DictWordMetadata::default());
-        inner.append_word_str("dwight", DictWordMetadata::default());
+        inner.insert(WordMapEntry::new_str("pre"));
+        inner.insert(WordMapEntry::new_str("prep"));
+        inner.insert(WordMapEntry::new_str("dwight"));
 
         let dict = TrieDictionary::new(inner);
 

@@ -5,7 +5,7 @@ use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    spell::Dictionary,
+    spell::{CommonDictFuncs, Dictionary},
 };
 
 pub struct MassPlurals<D> {
@@ -43,13 +43,13 @@ where
 
     fn is_mass_noun_in_dictionary(&self, chars: &[char]) -> bool {
         self.dict
-            .get_word_metadata(chars)
+            .get_word_metadata_combined(chars)
             .is_some_and(|wmd| wmd.is_mass_noun_only())
     }
 
     fn is_mass_noun_in_dictionary_str(&self, s: &str) -> bool {
         self.dict
-            .get_word_metadata_str(s)
+            .get_word_metadata_combined_str(s)
             .is_some_and(|wmd| wmd.is_mass_noun_only())
     }
 }

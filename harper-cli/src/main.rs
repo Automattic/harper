@@ -1,12 +1,14 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
+use harper_core::spell::{
+    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary, WordMap,
+};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -382,7 +384,7 @@ fn main() -> anyhow::Result<()> {
             ];
 
             for word in words {
-                let meta = curated_dictionary.get_word_metadata_str(&word);
+                let meta = curated_dictionary.get_word_metadata_exact_str(&word);
                 let (flags, emojis) = meta.as_ref().map_or_else(
                     || (String::new(), String::new()),
                     |md| {
@@ -460,7 +462,7 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
+                print_word_derivations(dict_word, dict_annot, WordMap::curated());
             };
 
             if !annot.is_empty() {
@@ -471,7 +473,7 @@ fn main() -> anyhow::Result<()> {
                 )?;
 
                 println!("New, from you:");
-                print_word_derivations(&word, &annot, &dict);
+                print_word_derivations(&word, &annot, dict.get_word_map());
             }
 
             Ok(())
@@ -483,7 +485,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(Arc::new(curated_dictionary), Dialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -878,7 +880,7 @@ fn main() -> anyhow::Result<()> {
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
             for word in curated_dictionary.words_iter() {
-                if let Some(metadata) = curated_dictionary.get_word_metadata(word) {
+                if let Some(metadata) = curated_dictionary.get_word_metadata_exact(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -994,14 +996,17 @@ fn line_to_parts(line: &str) -> (String, String) {
     }
 }
 
-fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
+fn print_word_derivations(word: &str, annot: &str, dictionary: &WordMap) {
     println!("{word}/{annot}");
 
-    let id = WordId::from_word_str(word);
+    let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.iter().filter_map(|wme| {
+        wme.metadata
+            .derived_from
+            .contains(id)
+            .then_some(&wme.canonical_spelling)
+    });
 
     println!(" - {word}");
 

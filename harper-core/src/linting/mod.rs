@@ -239,7 +239,7 @@ mod whom_subject_of_verb;
 mod widely_accepted;
 mod win_prize;
 mod wish_could;
-mod wordpress_dotcom;
+mod word_press_dotcom;
 mod worth_to_do;
 mod would_never_have;
 
@@ -308,7 +308,7 @@ pub mod tests {
     }
 
     use super::Linter;
-    use crate::spell::FstDictionary;
+    use crate::spell::WordMap;
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {
@@ -529,7 +529,7 @@ pub mod tests {
             let test = Document::new_from_vec(
                 text_chars.clone().into(),
                 &Markdown::default(),
-                &FstDictionary::curated(),
+                WordMap::curated(),
             );
             let lints = linter.lint(&test);
 

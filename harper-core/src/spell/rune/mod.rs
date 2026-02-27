@@ -8,7 +8,7 @@ pub mod word_list;
 pub use attribute_list::AttributeList;
 pub use error::Error;
 
-pub use self::word_list::parse_word_list;
+pub use word_list::parse_word_list;
 
 #[cfg(test)]
 mod tests {
@@ -19,6 +19,7 @@ mod tests {
     use super::super::word_map::WordMap;
     use super::word_list::parse_word_list;
     use crate::CharStringExt;
+    use crate::spell::CanonicalWordId;
     use crate::spell::rune::AttributeList;
 
     pub const TEST_WORD_LIST: &str = "4\nhello\ntry/B\nwork/AB\nblank/";
@@ -208,10 +209,14 @@ mod tests {
 
         attributes.expand_annotated_words(words, &mut expanded);
 
-        let giant_data = expanded.get_with_str("giant").unwrap();
+        let giant_data = expanded
+            .get_canonical(CanonicalWordId::from_word_str("giant"))
+            .unwrap();
         assert!(giant_data.metadata.is_noun());
 
-        let giants_data = expanded.get_with_str("giants").unwrap();
+        let giants_data = expanded
+            .get_canonical(CanonicalWordId::from_word_str("giants"))
+            .unwrap();
         assert!(giants_data.metadata.is_plural_noun());
     }
 }

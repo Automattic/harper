@@ -1,15 +1,17 @@
-use harper_core::DialectFlags;
-use itertools::Itertools;
 use std::path::Path;
 
-use harper_core::spell::{Dictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata};
+use itertools::Itertools;
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
+use harper_core::{
+    CharString, Dialect, DialectFlags, DictWordMetadata,
+    spell::{CommonDictFuncs, MutableDictionary, WordMap, WordMapEntry},
+};
+
 /// Save the contents of a dictionary to a file.
 /// Ensures that the path to the destination exists.
-pub async fn save_dict(path: impl AsRef<Path>, dict: impl Dictionary) -> Result<()> {
+pub async fn save_dict(path: impl AsRef<Path>, dict: &WordMap) -> Result<()> {
     if let Some(parent) = path.as_ref().parent() {
         fs::create_dir_all(parent).await?;
     }
@@ -24,7 +26,7 @@ pub async fn save_dict(path: impl AsRef<Path>, dict: impl Dictionary) -> Result<
 }
 
 /// Write a dictionary somewhere.
-async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) -> Result<()> {
+async fn write_word_list(dict: &WordMap, mut w: impl AsyncWrite + Unpin) -> Result<()> {
     let mut cur_str = String::new();
 
     for word in dict.words_iter().sorted() {
@@ -58,14 +60,11 @@ async fn dict_from_word_list(
     r.read_to_string(&mut str).await?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(str.lines().map(|l| {
-        (
-            l.chars().collect::<Vec<char>>(),
-            DictWordMetadata {
-                dialects: DialectFlags::from_dialect(dialect),
-                ..Default::default()
-            },
-        )
+    dict.extend(str.lines().map(|l| {
+        WordMapEntry::new(l.chars().collect::<CharString>()).with_md(DictWordMetadata {
+            dialects: DialectFlags::from_dialect(dialect),
+            ..Default::default()
+        })
     }));
 
     Ok(dict)
@@ -74,7 +73,7 @@ async fn dict_from_word_list(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::spell::MutableDictionary;
+    use harper_core::spell::{Dictionary, MutableDictionary};
     use std::io::Cursor;
 
     const TEST_UNSORTED_WORDS: [&str; 10] = [
@@ -105,9 +104,8 @@ mod tests {
     /// Creates an unsorted `MutableDictionary` for testing.
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
-        test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS
-                .map(|w| (w.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+        test_unsorted_dict.extend(
+            TEST_UNSORTED_WORDS.map(|w| WordMapEntry::new(w.chars().collect::<CharString>())),
         );
         test_unsorted_dict
     }
@@ -116,7 +114,7 @@ mod tests {
     async fn writes_sorted_word_list() {
         let test_unsorted_dict = get_test_unsorted_dict();
         let mut test_writer = Cursor::new(Vec::new());
-        write_word_list(test_unsorted_dict, &mut test_writer)
+        write_word_list(test_unsorted_dict.get_word_map(), &mut test_writer)
             .await
             .expect("writing to Vec<u8> should not fail. (Unless OOM?)");
         assert_eq!(

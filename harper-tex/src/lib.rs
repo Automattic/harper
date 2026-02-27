@@ -3,7 +3,7 @@ mod masker;
 use harper_core::parsers::{Mask, Parser, PlainEnglish};
 use harper_core::{Punctuation, Span, Token, TokenKind};
 
-use self::masker::Masker;
+use masker::Masker;
 
 /// A parser for Harper that wraps the native `PlainEnglish` parser, allowing one use Harper on
 /// documents written in TeX, LaTeX, or any other TeX derivative.

@@ -41,7 +41,10 @@ pub(crate) trait SingleInputTrait: InputTrait {
         dictionary: &dyn Dictionary,
     ) -> anyhow::Result<(Document, Cow<'_, str>)> {
         let text = self.get_content()?;
-        Ok((Document::new(&text, &parser, &dictionary), text))
+        Ok((
+            Document::new(&text, &parser, dictionary.get_word_map()),
+            text,
+        ))
     }
 
     /// The parser that should be used to parse this input.

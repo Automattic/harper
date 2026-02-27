@@ -2790,6 +2790,7 @@ dependencies = [
  "harper-brill",
  "harper-thesaurus",
  "hashbrown 0.16.1",
+ "indexmap",
  "is-macro",
  "itertools 0.14.0",
  "levenshtein_automata",
@@ -2885,6 +2886,7 @@ dependencies = [
  "resolve-path",
  "serde",
  "serde_json",
+ "smallvec",
  "tokio",
  "tower-lsp-server",
  "tracing",
@@ -2955,6 +2957,7 @@ name = "harper-tree-sitter"
 version = "1.9.0"
 dependencies = [
  "harper-core",
+ "smallvec",
  "tree-sitter",
 ]
 

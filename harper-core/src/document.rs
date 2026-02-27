@@ -9,7 +9,7 @@ use paste::paste;
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::punctuation::Punctuation;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{CommonDictFuncs, WordMap};
 use crate::vec_ext::VecExt;
 use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
@@ -17,13 +17,13 @@ use crate::{OrdinalSuffix, Span};
 /// A document containing some amount of lexed and parsed English text.
 #[derive(Debug, Clone)]
 pub struct Document {
-    source: Lrc<Vec<char>>,
+    source: Lrc<[char]>,
     tokens: Vec<Token>,
 }
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new("", &PlainEnglish, WordMap::curated())
     }
 }
 
@@ -52,27 +52,23 @@ impl Document {
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
-        let source: Vec<_> = text.chars().collect();
+    pub fn new(text: &str, parser: &impl Parser, dictionary: &WordMap) -> Self {
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, dictionary)
+        Self::new_from_vec(source, parser, dictionary)
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and the included curated dictionary.
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
-        let source: Vec<_> = text.chars().collect();
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_vec(source, parser, WordMap::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new_from_vec(
-        source: Lrc<Vec<char>>,
-        parser: &impl Parser,
-        dictionary: &impl Dictionary,
-    ) -> Self {
+    pub fn new_from_vec(source: Lrc<[char]>, parser: &impl Parser, dictionary: &WordMap) -> Self {
         let tokens = parser.parse(&source);
 
         let mut document = Self { source, tokens };
@@ -84,7 +80,7 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(text, &PlainEnglish, WordMap::curated())
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
@@ -93,7 +89,7 @@ impl Document {
     /// This avoids running potentially expensive metadata generation code, so this is more
     /// efficient if you don't need that information.
     pub(crate) fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
-        let source = Lrc::new(text.chars().collect_vec());
+        let source: Lrc<_> = text.chars().collect();
         let tokens = parser.parse(&source);
         let mut document = Self { source, tokens };
         document.apply_fixups();
@@ -102,18 +98,14 @@ impl Document {
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and a provided dictionary.
-    pub fn new_plain_english(text: &str, dictionary: &impl Dictionary) -> Self {
+    pub fn new_plain_english(text: &str, dictionary: &WordMap) -> Self {
         Self::new(text, &PlainEnglish, dictionary)
     }
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
     /// and curated dictionary.
     pub fn new_markdown_curated(text: &str, markdown_options: MarkdownOptions) -> Self {
-        Self::new(
-            text,
-            &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
-        )
+        Self::new(text, &Markdown::new(markdown_options), WordMap::curated())
     }
 
     /// Parse text to produce a document using the built-in [`Markdown`] parser
@@ -127,14 +119,14 @@ impl Document {
     pub fn new_markdown(
         text: &str,
         markdown_options: MarkdownOptions,
-        dictionary: &impl Dictionary,
+        dictionary: &WordMap,
     ) -> Self {
         Self::new(text, &Markdown::new(markdown_options), dictionary)
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and the curated dictionary with the default Markdown configuration.
-    pub fn new_markdown_default(text: &str, dictionary: &impl Dictionary) -> Self {
+    pub fn new_markdown_default(text: &str, dictionary: &WordMap) -> Self {
         Self::new_markdown(text, MarkdownOptions::default(), dictionary)
     }
 
@@ -157,7 +149,7 @@ impl Document {
     /// Re-parse important language constructs.
     ///
     /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    fn parse(&mut self, dictionary: &WordMap) {
         self.apply_fixups();
 
         let chunker = burn_chunker();
@@ -180,7 +172,7 @@ impl Document {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = token.span.get_content(&self.source);
                     let mut found_meta = dictionary
-                        .get_word_metadata(word_source)
+                        .get_word_metadata_combined(word_source)
                         .map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {
@@ -500,22 +492,6 @@ impl Document {
         self.tokens.remove_indices(remove_these);
     }
 
-    thread_local! {
-        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
-    }
-
-    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
-        Lrc::new(FirstMatchOf::new(vec![
-            Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
-            Box::new(
-                SequenceExpr::aco("et")
-                    .then_whitespace()
-                    .t_aco("al")
-                    .then_period(),
-            ),
-        ]))
-    }
-
     /// Assumes that the first matched token is the canonical one to be condensed into.
     /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
     fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
@@ -536,7 +512,7 @@ impl Document {
     }
 
     fn condense_latin(&mut self) {
-        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
+        LATIN_EXPR.with(|expr| self.condense_expr(expr, |_| {}));
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -892,21 +868,34 @@ impl Document {
         );
     }
 
-    fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
-        let period = SequenceExpr::default().then_period();
-        Lrc::new(Repeating::new(Box::new(period), 2))
-    }
-
-    thread_local! {
-        static ELLIPSIS_EXPR: Lrc<Repeating> = Document::uncached_ellipsis_pattern();
-    }
-
     fn condense_ellipsis(&mut self) {
-        let expr = Self::ELLIPSIS_EXPR.with(|v| v.clone());
-        self.condense_expr(&expr, |tok| {
-            tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
+        ELLIPSIS_EXPR.with(|expr| {
+            self.condense_expr(expr, |tok| {
+                tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
+            })
         });
     }
+}
+
+thread_local! {
+    static LATIN_EXPR: FirstMatchOf = {
+        FirstMatchOf::new(vec![
+            Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
+            Box::new(
+                SequenceExpr::aco("et")
+                    .then_whitespace()
+                    .t_aco("al")
+                    .then_period(),
+            ),
+        ])
+    };
+}
+
+thread_local! {
+    static ELLIPSIS_EXPR:Repeating = {
+        let period = SequenceExpr::default().then_period();
+        Repeating::new(Box::new(period), 2)
+    };
 }
 
 /// Creates functions necessary to implement [`TokenStringExt]` on a document.

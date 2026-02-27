@@ -9,10 +9,11 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
+use harper_core::spell::{CommonDictFuncs, Dictionary, FstDictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
-    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
+    spell::{MergedDictionary, MutableDictionary, WordMap},
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
@@ -133,11 +134,11 @@ impl Linter {
     /// Update the dictionary inside [`Self::lint_group`] to include [`Self::user_dictionary`].
     /// This clears any linter caches, so use it sparingly.
     fn synchronize_lint_dict(&mut self) {
-        let mut lint_config = self.lint_group.config.clone();
+        let lint_config = self.lint_group.config.clone();
         self.dictionary = Self::construct_merged_dict(self.user_dictionary.clone());
         self.lint_group =
             LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
-        self.lint_group.config.merge_from(&mut lint_config);
+        self.lint_group.config.merge_from(lint_config);
     }
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
@@ -145,7 +146,7 @@ impl Linter {
     fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
-        lint_dict.add_dictionary(FstDictionary::curated());
+        lint_dict.add_dictionary(Arc::new(FstDictionary::curated()));
         lint_dict.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(lint_dict)
@@ -153,8 +154,8 @@ impl Linter {
 
     /// Helper method to quickly check if a plain string is likely intended to be English
     pub fn is_likely_english(&self, text: String) -> bool {
-        let document = Document::new_plain_english(&text, &self.dictionary);
-        is_doc_likely_english(&document, &self.dictionary)
+        let document = Document::new_plain_english(&text, self.dictionary.get_word_map());
+        is_doc_likely_english(&document, self.dictionary.get_word_map())
     }
 
     /// Helper method to remove non-English text from a plain English document.
@@ -162,7 +163,7 @@ impl Linter {
         let document = Document::new(
             &text,
             &IsolateEnglish::new(Box::new(PlainEnglish), self.dictionary.clone()),
-            &self.dictionary,
+            self.dictionary.get_word_map(),
         );
 
         document.to_string()
@@ -241,7 +242,7 @@ impl Linter {
         let document = Document::new_from_vec(
             source.into(),
             &lint.language.create_parser(),
-            &self.dictionary,
+            self.dictionary.get_word_map(),
         );
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
@@ -259,7 +260,7 @@ impl Linter {
         let document = Document::new_from_vec(
             source.into(),
             &lint.language.create_parser(),
-            &self.dictionary,
+            self.dictionary.get_word_map(),
         );
 
         let ctx = LintContext::from_lint(&lint.inner, &document);
@@ -273,8 +274,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -291,7 +291,8 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document =
+            Document::new_from_vec(source.clone(), &parser, self.dictionary.get_word_map());
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -314,7 +315,7 @@ impl Linter {
                     .into_iter()
                     .map(|l| {
                         let problem_text = l.span.get_content_string(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
 
                         Lint::new(l, span, problem_text, language)
                     })
@@ -333,8 +334,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<Lint> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -351,7 +351,8 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document =
+            Document::new_from_vec(source.clone(), &parser, self.dictionary.get_word_map());
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -367,7 +368,7 @@ impl Linter {
             .into_iter()
             .map(|l| {
                 let problem_text = l.span.get_content_string(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                let span = Into::<Span>::into(l.span).to_js_indices(&source);
                 Lint::new(l, span, problem_text, language)
             })
             .collect()
@@ -402,14 +403,11 @@ impl Linter {
         let init_len = self.user_dictionary.word_count();
 
         self.user_dictionary
-            .extend_words(additional_words.iter().map(|word| {
-                (
-                    word.chars().collect::<CharString>(),
-                    DictWordMetadata {
-                        dialects: DialectFlags::from_dialect(self.dialect.into()),
-                        ..Default::default()
-                    },
-                )
+            .extend(additional_words.iter().map(|word| {
+                WordMapEntry::new(word.chars().collect::<CharString>()).with_md(DictWordMetadata {
+                    dialects: DialectFlags::from_dialect(self.dialect.into()),
+                    ..Default::default()
+                })
             }));
 
         // Only synchronize if we added words that were not there before.
@@ -445,7 +443,7 @@ impl Linter {
         let doc = Document::new_from_vec(
             source.clone().into(),
             &lint.language.create_parser(),
-            &self.dictionary,
+            self.dictionary.get_word_map(),
         );
 
         self.stats
@@ -502,15 +500,15 @@ impl Linter {
             return Ok(value);
         }
 
-        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
-        self.lint_group.merge_from(&mut group);
+        let group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(group);
         Ok(JsValue::UNDEFINED)
     }
 }
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
+    harper_core::make_title_case_str(&text, &PlainEnglish, WordMap::curated())
 }
 
 /// A suggestion to fix a Lint.
@@ -643,7 +641,7 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
 
     serde_json::to_string(&config).unwrap()
 }
@@ -651,7 +649,7 @@ pub fn get_default_lint_config_as_json() -> String {
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();
@@ -716,6 +714,7 @@ pub struct OrganizedGroup {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use harper_core::spell::CommonDictFuncs;
     use sysinfo::{Pid, ProcessRefreshKind, ProcessesToUpdate, System};
 
     /// Get memory usage for the process with the given PID, in bytes.
@@ -739,7 +738,7 @@ mod tests {
         let mut linter = Linter::new(Dialect::American);
 
         linter.import_words(vec![text.clone()]);
-        dbg!(linter.dictionary.get_word_metadata_str(&text));
+        dbg!(linter.dictionary.get_word_str(&text).collect::<Vec<_>>());
 
         let lints = linter.lint(text, Language::Plain, false, None);
         assert!(lints.is_empty());

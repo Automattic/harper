@@ -5,7 +5,7 @@ use crate::{
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::WordSet,
-    spell::Dictionary,
+    spell::{CommonDictFuncs, Dictionary},
 };
 
 pub struct DidPast<D> {
@@ -39,7 +39,7 @@ where
     fn keep_suggestion_if_lemma(&self, suggs: &mut Vec<Vec<char>>, candidate: &[char]) {
         if self
             .dict
-            .get_word_metadata(candidate)
+            .get_word_metadata_combined(candidate)
             .is_some_and(|md| md.is_verb_lemma())
         {
             suggs.push(candidate.to_vec());

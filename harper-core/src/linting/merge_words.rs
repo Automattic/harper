@@ -1,19 +1,17 @@
-use std::sync::Arc;
-
 use itertools::Itertools;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{CommonDictFuncs, WordMap};
 use crate::{CharString, Document, Span};
 
 pub struct MergeWords {
-    dict: Arc<FstDictionary>,
+    dict: &'static WordMap,
 }
 
 impl MergeWords {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: WordMap::curated(),
         }
     }
 }

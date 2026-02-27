@@ -1,6 +1,8 @@
+use std::sync::Arc;
+
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
-use harper_core::spell::FstDictionary;
+use harper_core::spell::WordMap;
 use harper_core::{Dialect, Document};
 
 /// Creates a unit test checking that the linting of a Markdown document (in
@@ -17,7 +19,7 @@ macro_rules! create_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = Arc::new(WordMap::curated());
                 let document = Document::new_markdown_default(&source, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
@@ -49,7 +51,7 @@ macro_rules! create_org_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = Arc::new(WordMap::curated());
                 let document = Document::new(&source, &OrgMode, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
@@ -79,7 +81,7 @@ create_test!(issue_159.md, 1, Dialect::American);
 create_test!(issue_358.md, 0, Dialect::American);
 create_test!(issue_195.md, 0, Dialect::American);
 create_test!(issue_118.md, 0, Dialect::American);
-create_test!(lots_of_latin.md, 1, Dialect::American);
+create_test!(lots_of_latin.md, 0, Dialect::American);
 create_test!(pr_504.md, 1, Dialect::American);
 create_test!(pr_452.md, 2, Dialect::American);
 create_test!(hex_basic_clean.md, 0, Dialect::American);

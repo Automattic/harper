@@ -1,14 +1,12 @@
-use std::sync::Arc;
-
 use hashbrown::HashSet;
 
 use crate::expr::Expr;
 use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
+use crate::spell::{CommonDictFuncs, Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
 pub struct SplitWords {
-    dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
+    dict: &'static TrieDictionary<&'static FstDictionary>,
     expr: Box<dyn Expr>,
 }
 
@@ -88,7 +86,7 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            if let Some(cand_meta) = self.dict.get_word_metadata(candidate) {
+            if let Some(cand_meta) = self.dict.get_word_metadata_exact(candidate) {
                 if !cand_meta.common {
                     continue;
                 }
@@ -96,7 +94,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder) {
+            if let Some(rem_meta) = self.dict.get_word_metadata_exact(remainder) {
                 if !rem_meta.common {
                     continue;
                 }
