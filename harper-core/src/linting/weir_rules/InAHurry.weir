@@ -1,0 +1,9 @@
+expr main (in hurry)
+
+let message "The correct idiom is `in a hurry`."
+let description "Corrects `in hurry` to `in a hurry`."
+let kind "Usage"
+let becomes "in a hurry"
+
+test "helpful when JSON is huge and developer is in hurry" "helpful when JSON is huge and developer is in a hurry"
+test "eLab report making service for people in hurry." "eLab report making service for people in a hurry."
