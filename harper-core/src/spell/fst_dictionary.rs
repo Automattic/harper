@@ -237,7 +237,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_exact_str("on").unwrap().metadata.is_nominal());
+        assert!(!dict.get_word_metadata_exact_str("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -275,9 +275,8 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_exact_str(contraction)
+                dict.get_word_metadata_exact_str(contraction)
                     .unwrap()
-                    .metadata
                     .derived_from
                     .is_empty()
             )
@@ -289,9 +288,8 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_exact_str("llamas")
+            dict.get_word_metadata_exact_str("llamas")
                 .unwrap()
-                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("llama"))
         )
@@ -302,9 +300,8 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_exact_str("cats")
+            dict.get_word_metadata_exact_str("cats")
                 .unwrap()
-                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("cat"))
         );
@@ -315,9 +312,8 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_exact_str("unhappy")
+            dict.get_word_metadata_exact_str("unhappy")
                 .unwrap()
-                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("happy"))
         );
@@ -328,9 +324,8 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.get_word_exact_str("quickly")
+            dict.get_word_metadata_exact_str("quickly")
                 .unwrap()
-                .metadata
                 .derived_from
                 .contains(CanonicalWordId::from_word_str("quick"))
         );

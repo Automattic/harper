@@ -71,6 +71,14 @@ pub trait CommonDictFuncs: Dictionary {
             .get_canonical(CanonicalWordId::from_word_chars(word))
     }
 
+    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    ///
+    /// This is a convenience function. If you need more information about a word, consider using
+    /// [`Self::get_word_exact`].
+    fn get_word_metadata_exact(&self, word: &[char]) -> Option<&DictWordMetadata> {
+        self.get_word_exact(word).map(|wme| &wme.metadata)
+    }
+
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
     fn get_word_metadata_combined(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
@@ -139,6 +147,14 @@ pub trait CommonDictFuncs: Dictionary {
     /// Get the associated [`WordMapEntry`] for this specific capitalization of the given word.
     fn get_word_exact_str(&self, word: &str) -> Option<&WordMapEntry> {
         self.get_word_exact(str_to_chars(word).as_ref())
+    }
+
+    /// Get the associated [`DictWordMetadata`] for this specific capitalization of the given word.
+    ///
+    /// This is a convenience function. If you need more information about a word, consider using
+    /// [`Self::get_word_exact_str`].
+    fn get_word_metadata_exact_str(&self, word: &str) -> Option<&DictWordMetadata> {
+        self.get_word_metadata_exact(str_to_chars(word).as_ref())
     }
 
     /// Check if the dictionary contains any capitalization of a given word.

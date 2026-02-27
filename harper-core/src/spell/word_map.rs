@@ -292,7 +292,7 @@ impl Dictionary for WordMap {
             .map(|(word, edit_distance)| FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata: Cow::Borrowed(&self.get_word_exact(word).unwrap().metadata),
+                metadata: Cow::Borrowed(&self.get_word_metadata_exact(word).unwrap()),
             })
             .collect()
     }
