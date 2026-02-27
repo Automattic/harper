@@ -210,6 +210,7 @@ mod the_proper_noun_possessive;
 mod then_than;
 mod theres;
 mod theses_these;
+mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
