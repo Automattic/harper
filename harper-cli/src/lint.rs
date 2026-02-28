@@ -268,6 +268,8 @@ pub fn lint(
         }
     }
 
+    let has_lints = !all_lint_kinds.is_empty();
+
     final_report(
         dialect,
         true,
@@ -278,7 +280,11 @@ pub fn lint(
         lint_options.color,
     );
 
-    process::exit(1);
+    if has_lints {
+        process::exit(1);
+    }
+
+    Ok(())
 }
 
 type LintKindCount = HashMap<LintKind, usize>;
