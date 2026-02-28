@@ -304,6 +304,12 @@ impl ExprLinter for MissingTo {
             return None;
         }
 
+        if previous_word.is_some_and(|word| word.ends_with("ly"))
+            && (controller_text.ends_with('d') || controller_text.ends_with("en"))
+        {
+            return None;
+        }
+
         if controller_text.starts_with("hope") && previous_word == Some("of") {
             return None;
         }
