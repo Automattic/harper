@@ -71,6 +71,7 @@ use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
+use super::fed_up_with::FedUpWith;
 use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
@@ -637,7 +638,7 @@ impl LintGroup {
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
-        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.add_chunk_expr_linter("InOnTheCards", InOnTheCards::new(dialect));
         out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
@@ -649,10 +650,10 @@ impl LintGroup {
         out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
         out.config.set_rule_enabled("PossessiveNoun", false);
 
-        out.add("Regionalisms", Regionalisms::new(dialect));
+        out.add_chunk_expr_linter("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);
 
-        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.add_chunk_expr_linter("HaveTakeALook", HaveTakeALook::new(dialect));
         out.config.set_rule_enabled("HaveTakeALook", true);
 
         out.add("MassNouns", MassNouns::new(dictionary.clone()));
@@ -698,6 +699,9 @@ impl LintGroup {
 
         out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
         out.config.set_rule_enabled("DidPast", true);
+
+        out.add_chunk_expr_linter("FedUpWith", FedUpWith::new(dialect));
+        out.config.set_rule_enabled("FedUpWith", true);
 
         out
     }

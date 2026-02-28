@@ -66,6 +66,7 @@ mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
 mod fascinated_by;
+mod fed_up_with;
 mod feel_fell;
 mod few_units_of_time_ago;
 mod filler_words;
