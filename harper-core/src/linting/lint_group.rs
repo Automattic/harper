@@ -197,6 +197,7 @@ use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
+use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
 use super::theres::Theres;
@@ -595,6 +596,7 @@ impl LintGroup {
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
         insert_expr_rule!(TheMy, true);
+        insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(Theres, true);
