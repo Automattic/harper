@@ -304,6 +304,12 @@ impl ExprLinter for MissingTo {
             return None;
         }
 
+        if previous_word.is_some_and(|word| word.ends_with("ly"))
+            && (controller_text.ends_with('d') || controller_text.ends_with("en"))
+        {
+            return None;
+        }
+
         if controller_text.starts_with("hope") && previous_word == Some("of") {
             return None;
         }
@@ -536,6 +542,15 @@ mod tests {
     }
 
     #[test]
+    fn inserts_to_after_resolved() {
+        assert_suggestion_result(
+            "She resolved solve the case.",
+            MissingTo::default(),
+            "She resolved to solve the case.",
+        );
+    }
+
+    #[test]
     fn no_lint_when_to_present() {
         assert_lint_count("She wants to finish early.", MissingTo::default(), 0);
     }
@@ -648,5 +663,99 @@ mod tests {
     #[test]
     fn no_lint_bad_at_managing_side_effects() {
         assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_conflict() {
+        assert_lint_count("a fully resolved conflict", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_configuration() {
+        assert_lint_count("A resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_configuration() {
+        assert_lint_count("A fully resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_set_of_configuration() {
+        assert_lint_count("A resolved set of configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_set_of_configuration() {
+        assert_lint_count(
+            "A fully resolved set of configuration",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_system_produced_a_fully_resolved_set_of_dependencies() {
+        assert_lint_count(
+            "System produced a fully resolved set of dependencies",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_resolved_list_of_parameters() {
+        assert_lint_count("A resolved list of parameters", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_list_of_parameters() {
+        assert_lint_count(
+            "A fully resolved list of parameters",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_prepared_stranger() {
+        assert_lint_count("A prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_stranger() {
+        assert_lint_count("A fully prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_prepared_group_of_strangers() {
+        assert_lint_count("A prepared group of strangers", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_group_of_strangers() {
+        assert_lint_count(
+            "A fully prepared group of strangers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_nicely_arranged_set_of_flowers() {
+        assert_lint_count(
+            "A nicely arranged bunch of flowers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_recently_forgotten_list_of_names() {
+        assert_lint_count(
+            "A recently forgotten list of names",
+            MissingTo::default(),
+            0,
+        );
     }
 }
