@@ -239,10 +239,6 @@ impl ExprLinter for MissingTo {
 
         let controller_text = controller.span.get_content_string(source).to_lowercase();
 
-        dbg!(controller_text.as_str());
-        dbg!(controller.kind.is_upos(UPOS::ADJ));
-        dbg!(controller.kind.is_upos(UPOS::VERB));
-
         let is_adjective_controller =
             matches!(controller_text.as_str(), "eager" | "inclined" | "ready");
 
@@ -341,9 +337,6 @@ impl ExprLinter for MissingTo {
         let next_is_noun = next_token.kind.is_upos(UPOS::NOUN)
             || next_token.kind.is_upos(UPOS::PROPN)
             || next_token.kind.is_upos(UPOS::ADJ);
-
-        dbg!(&next_is_verb);
-        dbg!(&next_is_noun);
 
         if next_token.kind.is_np_member()
             && !next_is_verb
