@@ -683,6 +683,58 @@ fn correct_flips_the_bill() {
     );
 }
 
+// GetUsedTo
+
+//-get used of-
+#[test]
+fn corrects_get_used_of() {
+    assert_suggestion_result(
+        "I am following the examples in the documentation in order to get used of comets.",
+        lint_group(),
+        "I am following the examples in the documentation in order to get used to comets.",
+    );
+}
+
+//-gets used of-
+#[test]
+fn corrects_gets_used_of() {
+    assert_suggestion_result(
+        "its like she gets used of her food and becomes spoiled",
+        lint_group(),
+        "its like she gets used to her food and becomes spoiled",
+    );
+}
+
+//-getting used of-
+#[test]
+fn corrects_getting_used_of() {
+    assert_suggestion_result(
+        "Here you can find a guide to getting used of the most important methods of magum.",
+        lint_group(),
+        "Here you can find a guide to getting used to the most important methods of magum.",
+    );
+}
+
+//-got used of-
+#[test]
+fn corrects_got_used_of() {
+    assert_suggestion_result(
+        "we users actually got used of such delays",
+        lint_group(),
+        "we users actually got used to such delays",
+    );
+}
+
+//-gotten used of-
+#[test]
+fn corrects_gotten_used_of() {
+    assert_suggestion_result(
+        "The tutorial has indeed been of help, and I've gotten used of using Hull.",
+        lint_group(),
+        "The tutorial has indeed been of help, and I've gotten used to using Hull.",
+    );
+}
+
 // HavePassed
 
 #[test]

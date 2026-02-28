@@ -243,6 +243,18 @@ pub fn lint_group() -> LintGroup {
             "Corrects `flip the bill` to `foot the bill`.",
             LintKind::Nonstandard
         ),
+        "GetUsedTo" => (
+            &[
+                ("get used of", "get used to"),
+                ("gets used of", "gets used to"),
+                ("getting used of", "getting used to"),
+                ("got used of", "got used to"),
+                ("gotten used of", "gotten used to"),
+            ],
+            "Use `used to` instead of `used of`.",
+            "Corrects `used of` to `used to`.",
+            LintKind::Usage
+        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
