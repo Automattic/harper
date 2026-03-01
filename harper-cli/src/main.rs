@@ -7,7 +7,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::PathBuf;
 // use std::sync::Arc;
-use std::{fs, process};
+use std::fs;
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
@@ -812,7 +812,7 @@ fn main() -> anyhow::Result<()> {
                 if unused_flag_total > 0 {
                     eprintln!("  - {} unused flags found", unused_flag_total);
                 }
-                std::process::exit(1);
+                anyhow::bail!("Audit found issues in dictionary");
             }
 
             Ok(())
@@ -966,7 +966,7 @@ fn main() -> anyhow::Result<()> {
                 Ok(())
             } else {
                 eprintln!("{:?}", failing_tests);
-                process::exit(1);
+                anyhow::bail!("Some tests failed");
             }
         }
     }
