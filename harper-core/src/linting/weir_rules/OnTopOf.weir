@@ -1,8 +1,9 @@
-expr main (ontop of)
+expr main [(ontop of), (in top of)]
 
 let message "Did you mean `on top of`?"
-let description "Corrects `ontop of` to `on top of`."
-let kind "BoundaryError"
+let description "Corrects `ontop of` and `in top of` to `on top of`."
+let kind "Usage"
 let becomes "on top of"
 
 test "Initcpio hooks for overlayfs ontop of root." "Initcpio hooks for overlayfs on top of root."
+test "This project is a proof of concept to enable all the awesome features of BrowserSync in top of a Play Framework server." "This project is a proof of concept to enable all the awesome features of BrowserSync on top of a Play Framework server."
