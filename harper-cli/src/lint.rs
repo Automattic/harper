@@ -8,6 +8,7 @@ use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
 use rayon::prelude::*;
+use serde::Serialize;
 
 use harper_core::{
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
@@ -70,6 +71,18 @@ fn file_dict_name(path: &Path) -> PathBuf {
     rewritten.into()
 }
 
+/// Output format for lint results.
+#[derive(Debug, Clone, Copy, clap::ValueEnum, Default, PartialEq)]
+pub enum OutputFormat {
+    /// Rich output with source context (Ariadne reports).
+    #[default]
+    Default,
+    /// Structured JSON output.
+    Json,
+    /// One line per lint, no source context.
+    Compact,
+}
+
 pub struct LintOptions {
     pub count: bool,
     pub ignore: Option<Vec<String>>,
@@ -78,10 +91,51 @@ pub struct LintOptions {
     pub dialect: Dialect,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
+    pub format: OutputFormat,
 }
+
 enum ReportStyle {
-    FullAriadneLintReport,
-    BriefCountsOnlyLintReport,
+    FullAriadne,
+    BriefCountsOnly,
+    Json,
+    Compact,
+}
+
+#[derive(Serialize)]
+struct JsonFileResult {
+    file: String,
+    lint_count: usize,
+    lints: Vec<JsonLint>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    error: Option<String>,
+}
+
+#[derive(Serialize)]
+struct JsonLint {
+    rule: String,
+    kind: String,
+    span: JsonSpan,
+    line: usize,
+    column: usize,
+    message: String,
+    priority: u8,
+    suggestions: Vec<String>,
+    matched_text: String,
+}
+
+/// Span offsets in characters (not bytes).
+#[derive(Serialize)]
+struct JsonSpan {
+    char_start: usize,
+    char_end: usize,
+}
+
+/// Convert a character index into a 1-based (line, column) pair.
+fn char_index_to_line_col(source: &[char], index: usize) -> (usize, usize) {
+    let before = &source[..index.min(source.len())];
+    let line = before.iter().filter(|&&c| c == '\n').count() + 1;
+    let col = before.iter().rev().take_while(|&&c| c != '\n').count() + 1;
+    (line, col)
 }
 
 struct InputInfo<'a> {
@@ -97,14 +151,26 @@ struct InputJob {
 }
 
 impl InputInfo<'_> {
-    fn format_path(&self) -> String {
+    /// Path without ANSI escapes, for machine-readable output.
+    fn plain_path(&self) -> String {
         let child = self.input.get_identifier();
         if self.parent_input_id.is_empty() {
             child.into_owned()
-        } else if self.color {
-            format!("\x1b[33m{}/\x1b[0m{}", self.parent_input_id, child)
         } else {
             format!("{}/{}", self.parent_input_id, child)
+        }
+    }
+
+    fn format_path(&self) -> String {
+        if self.color {
+            let child = self.input.get_identifier();
+            if self.parent_input_id.is_empty() {
+                child.into_owned()
+            } else {
+                format!("\x1b[33m{}/\x1b[0m{}", self.parent_input_id, child)
+            }
+        } else {
+            self.plain_path()
         }
     }
 }
@@ -174,7 +240,7 @@ pub fn lint(
         }
         Err(_) => "There is no",
     };
-    println!(
+    eprintln!(
         "Note: {user_dict_msg} user dictionary at {}",
         user_dict_path.display()
     );
@@ -185,10 +251,12 @@ pub fn lint(
     let mut all_lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
     let mut all_spellos: HashMap<String, usize> = HashMap::new();
 
-    // Convert the 'count' flag into a ReportStyle enum
-    let report_mode = match count {
-        true => ReportStyle::BriefCountsOnlyLintReport,
-        false => ReportStyle::FullAriadneLintReport,
+    // Derive the report style from --format and --count
+    let report_mode = match (lint_options.format, count) {
+        (OutputFormat::Json, _) => ReportStyle::Json,
+        (OutputFormat::Compact, _) => ReportStyle::Compact,
+        (OutputFormat::Default, true) => ReportStyle::BriefCountsOnly,
+        (OutputFormat::Default, false) => ReportStyle::FullAriadne,
     };
 
     let mut input_jobs = Vec::new();
@@ -251,40 +319,56 @@ pub fn lint(
         }
     };
 
+    let mut json_results: Vec<JsonFileResult> = Vec::new();
+
     for lint_results in per_input_results {
         let lint_results = lint_results?;
         // Update the global stats
-        for (kind, count) in lint_results.0 {
+        for (kind, count) in lint_results.lint_kinds {
             *all_lint_kinds.entry(kind).or_insert(0) += count;
         }
-        for (rule, count) in lint_results.1 {
+        for (rule, count) in lint_results.lint_rules {
             *all_rules.entry(rule).or_insert(0) += count;
         }
-        for ((kind, rule), count) in lint_results.2 {
+        for ((kind, rule), count) in lint_results.lint_kind_rule_pairs {
             *all_lint_kind_rule_pairs.entry((kind, rule)).or_insert(0) += count;
         }
-        for (word, count) in lint_results.3 {
+        for (word, count) in lint_results.spellos {
             *all_spellos.entry(word).or_insert(0) += count;
+        }
+        if let Some(json) = lint_results.json {
+            json_results.push(json);
         }
     }
 
-    final_report(
-        dialect,
-        true,
-        all_lint_kinds,
-        all_rules,
-        all_lint_kind_rule_pairs,
-        all_spellos,
-        lint_options.color,
-    );
+    match report_mode {
+        ReportStyle::Json => {
+            println!("{}", serde_json::to_string_pretty(&json_results)?);
+        }
+        ReportStyle::Compact => {}
+        _ => {
+            final_report(
+                dialect,
+                true,
+                all_lint_kinds,
+                all_rules,
+                all_lint_kind_rule_pairs,
+                all_spellos,
+                lint_options.color,
+            );
+        }
+    }
 
     process::exit(1);
 }
 
-type LintKindCount = HashMap<LintKind, usize>;
-type LintRuleCount = HashMap<String, usize>;
-type LintKindRulePairCount = HashMap<(LintKind, String), usize>;
-type SpelloCount = HashMap<String, usize>;
+struct LintOneResult {
+    lint_kinds: HashMap<LintKind, usize>,
+    lint_rules: HashMap<String, usize>,
+    lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
+    spellos: HashMap<String, usize>,
+    json: Option<JsonFileResult>,
+}
 
 struct FullInputInfo<'a> {
     input: InputInfo<'a>,
@@ -306,12 +390,7 @@ fn lint_one_input(
     batch_mode: bool,
     // For the current input
     current: InputInfo,
-) -> anyhow::Result<(
-    LintKindCount,
-    LintRuleCount,
-    LintKindRulePairCount,
-    SpelloCount,
-)> {
+) -> anyhow::Result<LintOneResult> {
     let LintOptions {
         count: _,
         ignore,
@@ -320,12 +399,14 @@ fn lint_one_input(
         dialect,
         weirpack_inputs: _,
         color: _,
+        format: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
     let mut lint_rules: HashMap<String, usize> = HashMap::new();
     let mut lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
     let mut spellos: HashMap<String, usize> = HashMap::new();
+    let mut json: Option<JsonFileResult> = None;
 
     if let Some(single_input) = current.input.try_as_single_ref() {
         // Create a new merged dictionary for this input.
@@ -336,7 +417,7 @@ fn lint_one_input(
             let dict_path = file_dict_path.join(file_dict_name(file.path()));
             if let Ok(file_dictionary) = load_dict(&dict_path) {
                 merged_dictionary.add_dictionary(Arc::new(file_dictionary));
-                println!(
+                eprintln!(
                     "{}: Note: Using per-file dictionary: {}",
                     current.format_path(),
                     dict_path.display()
@@ -345,7 +426,17 @@ fn lint_one_input(
         }
 
         match single_input.load(markdown_options, &merged_dictionary) {
-            Err(err) => eprintln!("{}", err),
+            Err(err) => {
+                eprintln!("{}", err);
+                if matches!(report_mode, ReportStyle::Json) {
+                    json = Some(JsonFileResult {
+                        file: current.plain_path(),
+                        lint_count: 0,
+                        lints: vec![],
+                        error: Some(err.to_string()),
+                    });
+                }
+            }
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
@@ -373,6 +464,44 @@ fn lint_one_input(
                 lint_kind_rule_pairs = collect_lint_kind_rule_pairs(&named_lints);
                 spellos = collect_spellos(&named_lints, doc.get_source());
 
+                // Build JSON result if in JSON mode
+                if matches!(report_mode, ReportStyle::Json) {
+                    let file = current.plain_path();
+                    let source_chars = doc.get_source();
+                    let mut lints = Vec::new();
+
+                    for (rule_name, rule_lints) in &named_lints {
+                        for lint in rule_lints {
+                            let (line, column) =
+                                char_index_to_line_col(source_chars, lint.span.start);
+                            let matched_text = lint.span.get_content_string(source_chars);
+                            let suggestions: Vec<String> =
+                                lint.suggestions.iter().map(|s| format!("{s}")).collect();
+                            lints.push(JsonLint {
+                                rule: rule_name.clone(),
+                                kind: lint.lint_kind.to_string(),
+                                span: JsonSpan {
+                                    char_start: lint.span.start,
+                                    char_end: lint.span.end,
+                                },
+                                line,
+                                column,
+                                message: lint.message.clone(),
+                                priority: lint.priority,
+                                suggestions,
+                                matched_text,
+                            });
+                        }
+                    }
+
+                    json = Some(JsonFileResult {
+                        file,
+                        lint_count: lint_count_after,
+                        lints,
+                        error: None,
+                    });
+                }
+
                 single_input_report(
                     &FullInputInfo {
                         input: InputInfo {
@@ -396,7 +525,13 @@ fn lint_one_input(
         }
     }
 
-    Ok((lint_kinds, lint_rules, lint_kind_rule_pairs, spellos))
+    Ok(LintOneResult {
+        lint_kinds,
+        lint_rules,
+        lint_kind_rule_pairs,
+        spellos,
+        json,
+    })
 }
 
 fn configure_lint_group(
@@ -481,19 +616,42 @@ fn single_input_report(
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
     report_mode: &ReportStyle,
 ) {
+    // JSON mode: all output is handled by the caller after collecting results
+    if matches!(report_mode, ReportStyle::Json) {
+        return;
+    }
+
     let FullInputInfo { input, doc, source } = input_info;
     let (lint_count_before, lint_count_after) = lint_count;
+
+    // Compact mode: one line per lint, GCC/grep-style
+    if matches!(report_mode, ReportStyle::Compact) {
+        let source_chars = doc.get_source();
+        for (rule_name, lints) in named_lints {
+            for lint in lints {
+                let (line, col) = char_index_to_line_col(source_chars, lint.span.start);
+                println!(
+                    "{}:{}:{}: {}::{}: {}",
+                    input.plain_path(),
+                    line,
+                    col,
+                    lint.lint_kind,
+                    rule_name,
+                    lint.message
+                );
+            }
+        }
+        return;
+    }
+
     // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
     const MAX_LINE_LEN: usize = 150;
 
     let mut report_mode = report_mode;
     let longest = find_longest_doc_line(doc.get_tokens());
 
-    if batch_mode
-        && longest > MAX_LINE_LEN
-        && matches!(report_mode, ReportStyle::FullAriadneLintReport)
-    {
-        report_mode = &ReportStyle::BriefCountsOnlyLintReport;
+    if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
+        report_mode = &ReportStyle::BriefCountsOnly;
         println!(
             "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
             input.format_path()
@@ -513,7 +671,7 @@ fn single_input_report(
     );
 
     // If we are in Ariadne mode, print the report
-    if matches!(report_mode, ReportStyle::FullAriadneLintReport) {
+    if matches!(report_mode, ReportStyle::FullAriadne) {
         let primary_color = Color::Magenta;
 
         let input_identifier = input.input.get_identifier();
