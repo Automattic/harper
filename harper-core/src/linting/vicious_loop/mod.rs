@@ -199,9 +199,7 @@ impl_expr_linter!(
 #[cfg(test)]
 mod tests {
     use super::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // Prefer "circle" -  Made up, simple examples
 
@@ -243,7 +241,7 @@ mod tests {
 
     #[test]
     fn fix_singular_and_plural_nouns() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The file Vicious Cycle Dataset.ods contains 33 vicious cycles from 13 open source systems studied in our paper.",
             ViciousCircle::default(),
             "The file Vicious Circle Dataset.ods contains 33 vicious circles from 13 open source systems studied in our paper.",

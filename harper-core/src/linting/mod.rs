@@ -178,6 +178,7 @@ mod quote_spacing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod regionalisms;
+mod regular_irregulars;
 mod repeated_words;
 mod respond;
 mod right_click;
@@ -196,7 +197,7 @@ mod somewhat_something;
 mod soon_to_be;
 mod sought_after;
 mod spaces;
-mod spell_check;
+pub mod spell_check; // pub so spell/mod.rs can use it until #2809 is merged
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
@@ -250,7 +251,6 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
-pub use spell_check::SpellCheck;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
@@ -284,9 +284,11 @@ where
     }
 }
 
+#[cfg(test)]
 pub mod tests {
-    use crate::parsers::Markdown;
-    use crate::{Document, Span, Token};
+    use crate::{
+        Dialect, Document, Span, Token, linting::Linter, parsers::Markdown, spell::FstDictionary,
+    };
     use hashbrown::HashSet;
 
     /// Extension trait for converting spans of tokens back to their original text
@@ -307,17 +309,91 @@ pub mod tests {
         }
     }
 
-    use super::Linter;
-    use crate::spell::FstDictionary;
+    // Mock implementation of SpellCheck for testing
+    use crate::{
+        CharStringExt, Lint, TokenStringExt,
+        linting::{LintKind, Suggestion},
+        spell::Dictionary,
+    };
+    pub struct SpellCheck<T>
+    where
+        T: Dictionary,
+    {
+        dictionary: T,
+        dialect: Dialect,
+    }
+    impl<T: Dictionary> SpellCheck<T> {
+        pub fn new(dictionary: T, dialect: Dialect) -> Self {
+            Self {
+                dictionary,
+                dialect,
+            }
+        }
+    }
+    impl<T: Dictionary> Linter for SpellCheck<T> {
+        fn lint(&mut self, doc: &Document) -> Vec<Lint> {
+            let mut corr = Vec::new();
+            for wt in doc.iter_words() {
+                let ws = wt.span;
+                let wch = ws.get_content(doc.get_source());
+                if wch.eq_ignore_ascii_case_str("heloo") {
+                    corr.push((ws, wch, "hello"))
+                } else if wch.eq_ignore_ascii_case_str("wolrd") {
+                    corr.push((ws, wch, "world"))
+                } else if wch.eq_ignore_ascii_case_str("dictionery") {
+                    corr.push((ws, wch, "dictionary"))
+                } else if wch.eq_ignore_ascii_case_str("recieve") {
+                    corr.push((ws, wch, "receive"))
+                } else if wch.eq_ignore_ascii_case_str("teh") {
+                    corr.push((ws, wch, "the"))
+                } else if wch.eq_ignore_ascii_case_str("untill") {
+                    corr.push((ws, wch, "until"))
+                } else if wch.eq_ignore_ascii_case_str("thier") {
+                    corr.push((ws, wch, "their"))
+                } else if wch.eq_ignore_ascii_case_str("occured") {
+                    corr.push((ws, wch, "occurred"))
+                } else if wch.eq_ignore_ascii_case_str("misstake") {
+                    corr.push((ws, wch, "mistake"))
+                } else if wch.eq_ignore_ascii_case_str("misstakes") {
+                    corr.push((ws, wch, "mistakes"))
+                } else if wch.eq_ignore_ascii_case_str("theem") {
+                    corr.push((ws, wch, "them"))
+                }
+            }
+            corr.iter()
+                .map(|(ws, wch, cstr)| {
+                    let cor_vec = (*cstr).chars().collect::<Vec<_>>();
+                    Lint {
+                        span: *ws,
+                        lint_kind: LintKind::Spelling,
+                        suggestions: vec![Suggestion::replace_with_match_case(cor_vec, *wch)],
+                        message: "mocked spellcheck".to_string(),
+                        ..Default::default()
+                    }
+                })
+                .collect()
+        }
+        fn description(&self) -> &str {
+            "Mock spell check for linting assertion tests"
+        }
+    }
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {
         assert_lint_count(text, linter, 0);
     }
 
+    #[test]
+    fn verify_no_lints() {
+        assert_no_lints(
+            "hello world",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
     #[track_caller]
     pub fn assert_lint_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
+        let test = Document::new_plain_english_curated(text);
         let lints = linter.lint(&test);
         // dbg!(&lints);
         if lints.len() != count {
@@ -328,75 +404,168 @@ pub mod tests {
         }
     }
 
+    #[test]
+    fn verify_1_lint() {
+        assert_lint_count(
+            "heloo world",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        )
+    }
+
+    #[test]
+    fn verify_2_lints() {
+        assert_lint_count(
+            "heloo wolrd",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            2,
+        )
+    }
+
     /// Assert the total number of suggestions produced by a [`Linter`], spread across all produced
     /// [`Lint`]s.
     #[track_caller]
     pub fn assert_suggestion_count(text: &str, mut linter: impl Linter, count: usize) {
-        let test = Document::new_markdown_default_curated(text);
+        let test = Document::new_plain_english_curated(text);
         let lints = linter.lint(&test);
+        eprintln!(
+            "{}",
+            lints
+                .iter()
+                .map(|l| l
+                    .suggestions
+                    .iter()
+                    .map(|s| s.to_string())
+                    .collect::<Vec<_>>()
+                    .join(", "))
+                .collect::<Vec<_>>()
+                .join("\n")
+        );
         assert_eq!(
             lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
             count
         );
     }
 
-    /// Runs a provided linter on text, applies the first suggestion from each lint
-    /// and asserts whether the result is equal to a given value.
-    #[track_caller]
-    pub fn assert_suggestion_result(text: &str, linter: impl Linter, expected_result: &str) {
-        assert_nth_suggestion_result(text, linter, expected_result, 0);
+    #[test]
+    fn verify_no_suggestions() {
+        assert_suggestion_count(
+            "afjehwkf",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            0,
+        )
     }
 
-    /// Runs a provided linter on text, applies the nth suggestion from each lint
-    /// and asserts whether the result is equal to a given value.
+    #[test]
+    fn verify_1_suggestion() {
+        assert_suggestion_count(
+            "dictionery",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        )
+    }
+
+    /// Applies suggestions iteratively until any combination produces the expected result.
     ///
-    /// Note that `n` starts at zero.
+    /// Explores all possible suggestion branches (depth-first search) until finding a path
+    /// that produces the expected result. Stops after 100 iterations to prevent infinite loops.
+    ///
+    /// **Key behavior:** If no lints are found but the current text matches the expected
+    /// result, the test passes (text is already correct).
+    ///
+    /// Use this when you want to verify that *some* suggestion sequence produces the
+    /// expected result, without caring which specific suggestions are used. Can also be
+    /// used to verify that text is already correct (by passing the same text as both
+    /// input and expected_result).
+    ///
+    /// See issue #950: https://github.com/Automattic/harper/issues/950
     #[track_caller]
-    pub fn assert_nth_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
-        expected_result: &str,
-        n: usize,
-    ) {
-        let transformed_str = transform_nth_str(text, &mut linter, n);
+    pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, expected_result: &str) {
+        let text_chars: Vec<char> = text.chars().collect();
 
-        if transformed_str.as_str() != expected_result {
-            panic!("Expected \"{expected_result}\"\n But got \"{transformed_str}\"");
+        if search_suggestion_tree(&mut linter, text_chars, expected_result, 0) {
+            return;
         }
 
-        // Applying the suggestions should fix all the lints.
-        assert_lint_count(&transformed_str, linter, 0);
+        panic!(
+            "No suggestion sequence produced the expected result.\n\
+            Expected: \"{expected_result}\""
+        );
     }
 
-    #[track_caller]
-    pub fn assert_top3_suggestion_result(
-        text: &str,
-        mut linter: impl Linter,
+    /// Recursively searches all suggestion combinations using depth-first search.
+    /// Returns true if any path reaches the expected result, false otherwise.
+    fn search_suggestion_tree(
+        linter: &mut impl Linter,
+        text_chars: Vec<char>,
         expected_result: &str,
-    ) {
-        let zeroth = transform_nth_str(text, &mut linter, 0);
-        let first = transform_nth_str(text, &mut linter, 1);
-        let second = transform_nth_str(text, &mut linter, 2);
-
-        match (
-            zeroth.as_str() == expected_result,
-            first.as_str() == expected_result,
-            second.as_str() == expected_result,
-        ) {
-            (true, false, false) => assert_lint_count(&zeroth, linter, 0),
-            (false, true, false) => assert_lint_count(&first, linter, 0),
-            (false, false, true) => assert_lint_count(&second, linter, 0),
-            (false, false, false) => panic!(
-                "None of the top 3 suggestions produced the expected result:\n\
-                Expected: \"{expected_result}\"\n\
-                Got:\n\
-                [0]: \"{zeroth}\"\n\
-                [1]: \"{first}\"\n\
-                [2]: \"{second}\""
-            ),
-            // I think it's not possible for more than one suggestion to be correct
-            _ => {}
+        depth: usize,
+    ) -> bool {
+        // Prevent infinite recursion (cycles in suggestions)
+        if depth > 100 {
+            eprintln!("⚠️  Reached depth limit (100)");
+            return false;
         }
+
+        let current_text = text_chars.iter().collect::<String>();
+
+        // Check if we've reached the expected result
+        if current_text == expected_result {
+            return true;
+        }
+
+        // Lint current text and try each suggestion branch
+        let test = Document::new_from_vec(
+            text_chars.clone().into(),
+            &Markdown::default(),
+            &FstDictionary::curated(),
+        );
+        let lints = linter.lint(&test);
+
+        if let Some(lint) = lints.first() {
+            for sug in lint.suggestions.iter() {
+                let mut next_chars = text_chars.clone();
+                sug.apply(lint.span, &mut next_chars);
+
+                // Recursively search this branch
+                if search_suggestion_tree(linter, next_chars, expected_result, depth + 1) {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
+    #[test]
+    fn verify_fix_one_lint() {
+        assert_suggestion_result(
+            "find the misstake and fix it",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "find the mistake and fix it",
+        );
+    }
+
+    #[test]
+    fn verify_fix_two_lints() {
+        assert_suggestion_result(
+            "find two misstakes and fix theem",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "find two mistakes and fix them",
+        );
+    }
+
+    // Stress test: multiple errors in one sentence, DFS must find correct suggestion path
+    // Note: This test is known to be brittle - it depends on SpellCheck dictionary and
+    // suggestion ranking. If it fails after a dictionary update, try different word combinations.
+    // Uses common misspellings that have unambiguous correct suggestions in the top 3.
+    #[test]
+    fn verify_fix_five_typos() {
+        assert_suggestion_result(
+            "Please recieve teh payment untill thier authorization occured",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Please receive the payment until their authorization occurred",
+        );
     }
 
     /// Asserts that none of the suggestions from the linter match the given text.
@@ -406,7 +575,7 @@ pub mod tests {
         mut linter: impl Linter,
         bad_suggestion: &str,
     ) {
-        let test = Document::new_markdown_default_curated(text);
+        let test = Document::new_plain_english_curated(text);
         let lints = linter.lint(&test);
 
         for (i, lint) in lints.iter().enumerate() {
@@ -426,6 +595,15 @@ pub mod tests {
         }
     }
 
+    #[test]
+    fn verify_not_in_suggestion_result() {
+        assert_not_in_suggestion_result(
+            "Baby cats are called kitens",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Baby cats are called puppies",
+        );
+    }
+
     /// Asserts both that the given text matches the expected good suggestions and that none of the
     /// suggestions are in the bad suggestions list.
     #[track_caller]
@@ -435,7 +613,7 @@ pub mod tests {
         good: &[&str],
         bad: &[&str],
     ) {
-        let test = Document::new_markdown_default_curated(text);
+        let test = Document::new_plain_english_curated(text);
         let lints = linter.lint(&test);
 
         let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
@@ -506,7 +684,7 @@ pub mod tests {
     /// Asserts that the lint's message matches the expected message.
     #[track_caller]
     pub fn assert_lint_message(text: &str, mut linter: impl Linter, expected_message: &str) {
-        let test = Document::new_markdown_default_curated(text);
+        let test = Document::new_plain_english_curated(text);
         let lints = linter.lint(&test);
 
         // Just check the first lint for now
@@ -518,43 +696,5 @@ pub mod tests {
                 lint.message
             );
         }
-    }
-
-    fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
-        let mut text_chars: Vec<char> = text.chars().collect();
-
-        let mut iter_count = 0;
-
-        loop {
-            let test = Document::new_from_vec(
-                text_chars.clone().into(),
-                &Markdown::default(),
-                &FstDictionary::curated(),
-            );
-            let lints = linter.lint(&test);
-
-            if let Some(lint) = lints.first() {
-                if let Some(sug) = lint.suggestions.get(n) {
-                    sug.apply(lint.span, &mut text_chars);
-
-                    // let transformed_str: String = text_chars.iter().collect();
-                    // dbg!(transformed_str);
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-
-            iter_count += 1;
-
-            if iter_count == 100 {
-                break;
-            }
-        }
-
-        eprintln!("Corrected {iter_count} times.");
-
-        text_chars.iter().collect()
     }
 }

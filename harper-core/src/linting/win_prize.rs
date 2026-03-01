@@ -62,9 +62,7 @@ impl ExprLinter for WinPrize {
 #[cfg(test)]
 mod tests {
     use super::WinPrize;
-    use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_price_singular() {
@@ -77,7 +75,7 @@ mod tests {
 
     #[test]
     fn fix_price_plural() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Our team won the prices announced yesterday.",
             WinPrize::default(),
             "Our team won the prizes announced yesterday.",

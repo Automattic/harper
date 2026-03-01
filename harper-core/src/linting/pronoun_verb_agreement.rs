@@ -246,9 +246,7 @@ where
 #[cfg(test)]
 mod lints {
     use super::PronounVerbAgreement;
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     // Expected to be fixed, but there are exceptions
@@ -291,7 +289,7 @@ mod lints {
 
     #[test]
     fn issue_233_2_reverse() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "She sit under the AC.",
             PronounVerbAgreement::new(FstDictionary::curated()),
             "She sits under the AC.",

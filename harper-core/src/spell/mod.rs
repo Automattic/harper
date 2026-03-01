@@ -401,10 +401,7 @@ mod tests {
 
     use crate::{
         CharStringExt, Dialect,
-        linting::{
-            SpellCheck,
-            tests::{assert_suggestion_result, assert_top3_suggestion_result},
-        },
+        linting::{spell_check::SpellCheck, tests::assert_suggestion_result},
     };
 
     use super::{FstDictionary, suggest_correct_spelling_str};
@@ -979,7 +976,7 @@ mod tests {
     // is_ei_ie_misspelling
     #[test]
     fn fix_cheif_and_recieved() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The cheif recieved a letter.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The chief received a letter.",
@@ -989,7 +986,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_titlecase() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The Cheif Recieved a Letter.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The Chief Received a Letter.",
@@ -999,7 +996,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_all_caps() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "THE CHEIF RECIEVED A LETTER.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "THE CHEIF RECEIVED A LETTER.",

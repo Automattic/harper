@@ -74,11 +74,11 @@ impl ExprLinter for AfterLater {
 #[cfg(test)]
 mod tests {
     use super::AfterLater;
-    use crate::linting::tests::assert_top3_suggestion_result;
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn after_90_days_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Try to rename your organization after 90 days later because of GitHub official documentation it said.",
             AfterLater::default(),
             "Try to rename your organization after 90 days because of GitHub official documentation it said.",
@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn after_about_30_minutes_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "It plays like 1 minute of the song and then stops, and after about 30 minutes later, the bot disconnects an throws DisTubeError",
             AfterLater::default(),
             "It plays like 1 minute of the song and then stops, and about 30 minutes later, the bot disconnects an throws DisTubeError",
@@ -96,7 +96,7 @@ mod tests {
 
     #[test]
     fn after_14_days_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "After 14 days later, the cache expired.",
             AfterLater::default(),
             "After 14 days, the cache expired.",
@@ -105,7 +105,7 @@ mod tests {
 
     #[test]
     fn after_exactly_5_minutes_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "After exactly 5 minutes later, they try again and the cluster is formed then.",
             AfterLater::default(),
             "Exactly 5 minutes later, they try again and the cluster is formed then.",
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn after_22_years_later_1() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Completed YR campaign for 2nd time after 22 years later.",
             AfterLater::default(),
             "Completed YR campaign for 2nd time after 22 years.",
@@ -123,7 +123,7 @@ mod tests {
 
     #[test]
     fn after_almost_2_years_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "This buyer contacted me after almost 2 years later.",
             AfterLater::default(),
             "This buyer contacted me almost 2 years later.",
@@ -132,7 +132,7 @@ mod tests {
 
     #[test]
     fn after_2_years_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Is Jedi Survivor better now after 2 years later?",
             AfterLater::default(),
             "Is Jedi Survivor better now after 2 years?",
@@ -141,7 +141,7 @@ mod tests {
 
     #[test]
     fn after_a_year_later() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Even after a year later, I don’t know how to get my self-love back.",
             AfterLater::default(),
             "Even a year later, I don’t know how to get my self-love back.",
@@ -150,7 +150,7 @@ mod tests {
 
     #[test]
     fn after_22_years_later_2() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "After 22 years later, my top 1 game was Zeroed",
             AfterLater::default(),
             "After 22 years, my top 1 game was Zeroed",

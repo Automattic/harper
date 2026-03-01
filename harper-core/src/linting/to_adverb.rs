@@ -75,8 +75,7 @@ impl ExprLinter for ToAdverb {
 mod tests {
     use super::ToAdverb;
     use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_count,
-        assert_suggestion_result,
+        assert_lint_count, assert_suggestion_count, assert_suggestion_result,
     };
 
     #[test]
@@ -90,11 +89,10 @@ mod tests {
 
     #[test]
     fn alternative_moves_adverb() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Tom has decided to never to do that again.",
             ToAdverb::default(),
             "Tom has decided never to do that again.",
-            1,
         );
     }
 

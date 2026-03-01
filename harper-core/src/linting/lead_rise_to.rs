@@ -73,7 +73,7 @@ impl ExprLinter for LeadRiseTo {
 #[cfg(test)]
 mod tests {
     use super::LeadRiseTo;
-    use crate::linting::tests::{assert_suggestion_result, assert_top3_suggestion_result};
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn fix_led_simple_past() {
@@ -86,7 +86,7 @@ mod tests {
 
     #[test]
     fn fix_led_past_participle() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "This had led rise to some issues, such as #2777 and some over Slack",
             LeadRiseTo::default(),
             "This had given rise to some issues, such as #2777 and some over Slack",
@@ -95,7 +95,7 @@ mod tests {
 
     #[test]
     fn fix_lead_spello_for_led() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "This lead rise to a fair number of complaints over image quality which were not down to RPT.",
             LeadRiseTo::default(),
             "This gave rise to a fair number of complaints over image quality which were not down to RPT.",

@@ -105,9 +105,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 #[cfg(test)]
 mod tests {
     use super::SimplePastToPastParticiple;
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // "Be" and "have"
 
@@ -122,7 +120,7 @@ mod tests {
 
     #[test]
     fn correct_had_went() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
             SimplePastToPastParticiple::default(),
             "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
@@ -203,7 +201,7 @@ mod tests {
 
     #[test]
     fn correct_had_began() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I had began learning Android App development since Aug 2021",
             SimplePastToPastParticiple::default(),
             "I had begun learning Android App development since Aug 2021",
@@ -221,7 +219,7 @@ mod tests {
 
     #[test]
     fn correct_have_saw() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I have saw that your paper has been accepted by JAIR",
             SimplePastToPastParticiple::default(),
             "I have seen that your paper has been accepted by JAIR",

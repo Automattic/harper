@@ -146,9 +146,7 @@ mod tests {
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
-        linting::tests::{
-            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-        },
+        linting::tests::{assert_lint_count, assert_suggestion_result},
     };
     use crate::{DictWordMetadata, Document};
 
@@ -323,7 +321,7 @@ mod tests {
     #[test]
     fn corrects_abandonedware_1131_1166() {
         // assert_suggestion_result(
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
@@ -476,13 +474,13 @@ mod tests {
 
     #[test]
     fn issue_2026() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "'Tere' is supposed to be 'There'",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "'There' is supposed to be 'There'",
         );
 
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "'fll' is supposed to be 'fill'",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "'fill' is supposed to be 'fill'",
@@ -490,7 +488,7 @@ mod tests {
     }
     #[test]
     fn issue_2261() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Generaly",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Generally",

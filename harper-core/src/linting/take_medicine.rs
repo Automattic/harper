@@ -116,9 +116,7 @@ impl ExprLinter for TakeMedicine {
 #[cfg(test)]
 mod tests {
     use super::TakeMedicine;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn swaps_ate_antibiotics() {
@@ -212,11 +210,10 @@ mod tests {
 
     #[test]
     fn offers_swallow_alternative() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "He ate the medication without water.",
             TakeMedicine::default(),
             "He swallowed the medication without water.",
-            1,
         );
     }
 

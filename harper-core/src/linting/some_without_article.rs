@@ -56,9 +56,7 @@ impl ExprLinter for SomeWithoutArticle {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::SomeWithoutArticle;
 
@@ -91,11 +89,10 @@ mod tests {
 
     #[test]
     fn second_suggestion_produces_the_same() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "We kept the some approach from last year.",
             SomeWithoutArticle::default(),
             "We kept the same approach from last year.",
-            1,
         );
     }
 

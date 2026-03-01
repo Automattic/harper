@@ -251,7 +251,7 @@ impl ExprLinter for AvoidCurses {
 #[cfg(test)]
 mod tests {
     use super::AvoidCurses;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn detects_shit() {
@@ -264,22 +264,22 @@ mod tests {
 
     #[test]
     fn fix_shit() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "crap")
+        assert_suggestion_result("shit", AvoidCurses::default(), "crap")
     }
 
     #[test]
     fn fix_shit_titlecase() {
-        assert_top3_suggestion_result("Shit", AvoidCurses::default(), "Crap")
+        assert_suggestion_result("Shit", AvoidCurses::default(), "Crap")
     }
 
     #[test]
     fn fix_shit_allcaps() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "CRAP")
+        assert_suggestion_result("SHIT", AvoidCurses::default(), "CRAP")
     }
 
     #[test]
     fn fix_f_word_to_all_asterisks() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "fuck those fucking fuckers",
             AvoidCurses::default(),
             "**** those ****ing ****ers",
@@ -288,11 +288,11 @@ mod tests {
 
     #[test]
     fn fix_shit_with_single_asterisk() {
-        assert_top3_suggestion_result("shit", AvoidCurses::default(), "sh*t")
+        assert_suggestion_result("shit", AvoidCurses::default(), "sh*t")
     }
 
     #[test]
     fn fix_shite_all_caps_with_single_asterisk() {
-        assert_top3_suggestion_result("SHIT", AvoidCurses::default(), "SH*T")
+        assert_suggestion_result("SHIT", AvoidCurses::default(), "SH*T")
     }
 }

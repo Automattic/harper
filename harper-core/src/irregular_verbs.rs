@@ -70,6 +70,13 @@ impl IrregularVerbs {
             .find(|(_, pt, _)| pt.eq_ignore_ascii_case(preterite))
             .map(|(lemma, _, _)| lemma.as_str())
     }
+
+    pub fn get_pasts_for_lemma(&self, lemma: &str) -> Option<(&str, &str)> {
+        self.verbs
+            .iter()
+            .find(|(l, _, _)| l.eq_ignore_ascii_case(lemma))
+            .map(|(_, pt, pp)| (pt.as_str(), pp.as_str()))
+    }
 }
 
 impl Default for IrregularVerbs {

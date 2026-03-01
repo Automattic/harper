@@ -93,9 +93,7 @@ impl ExprLinter for PronounAre {
 #[cfg(test)]
 mod tests {
     use super::PronounAre;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fixes_you_r() {
@@ -108,11 +106,10 @@ mod tests {
 
     #[test]
     fn offers_contraction_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "You r absolutely right.",
             PronounAre::default(),
             "You're absolutely right.",
-            1,
         );
     }
 

@@ -71,9 +71,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // Basic unit tests
 
@@ -94,7 +92,7 @@ mod tests {
 
     #[test]
     fn fix_done_few_minutes_ago() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Done few minutes ago",
             FewUnitsOfTimeAgo::default(),
             "Done a few minutes ago",

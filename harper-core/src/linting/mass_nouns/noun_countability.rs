@@ -202,11 +202,11 @@ impl ExprLinter for NounCountability {
 #[cfg(test)]
 mod tests {
     use super::NounCountability;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn corrects_a() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "If the unit turns out to be noisy, can I expect a firmware with phase ...",
             NounCountability::default(),
             "If the unit turns out to be noisy, can I expect some firmware with phase ...",
@@ -216,7 +216,7 @@ mod tests {
     #[test]
     #[ignore = "replace_with_match_case matches by index, not by lower vs title vs upper"]
     fn corrects_a_title_case() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Simple POC of a Ransomware.",
             NounCountability::default(),
             "Simple POC of a piece of Ransomware.",
@@ -225,7 +225,7 @@ mod tests {
 
     #[test]
     fn corrects_an() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The PlaySEM platform provides an infrastructure for playing and rendering sensory effects in multimedia applications.",
             NounCountability::default(),
             "The PlaySEM platform provides infrastructure for playing and rendering sensory effects in multimedia applications.",
@@ -235,7 +235,7 @@ mod tests {
     #[test]
     #[ignore = "replace_with_match_case matches by index, not by lower vs title vs upper"]
     fn corrects_an_title_case() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "An Infrastructure for Integrated EDA.",
             NounCountability::default(),
             "Infrastructure for Integrated EDA.",
@@ -244,7 +244,7 @@ mod tests {
 
     #[test]
     fn corrects_another() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Another ransomware made by me for fun.",
             NounCountability::default(),
             "Another piece of ransomware made by me for fun.",
@@ -253,7 +253,7 @@ mod tests {
 
     #[test]
     fn corrects_both() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Make a terminal show both information of your CPU and GPU!",
             NounCountability::default(),
             "Make a terminal show both pieces of information of your CPU and GPU!",
@@ -263,7 +263,7 @@ mod tests {
     #[test]
     // "piece of traffic" sounds very weird
     fn can_correct_each_with_traffic() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Beside each traffic there is also a pedestrian traffic light.",
             NounCountability::default(),
             "Beside each traffic there is also a pedestrian traffic light.",
@@ -272,7 +272,7 @@ mod tests {
 
     #[test]
     fn corrects_every() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Capacitor plugin to get access to every info about the device software and hardware.",
             NounCountability::default(),
             "Capacitor plugin to get access to every piece of info about the device software and hardware.",
@@ -281,7 +281,7 @@ mod tests {
 
     #[test]
     fn corrects_few() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Displays a few information to help you rotating through your spells.",
             NounCountability::default(),
             "Displays a few pieces of information to help you rotating through your spells.",
@@ -290,7 +290,7 @@ mod tests {
 
     #[test]
     fn corrects_many() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "It shows clearly how many information about objects you can get with old search ...",
             NounCountability::default(),
             "It shows clearly how much information about objects you can get with old search ...",
@@ -299,7 +299,7 @@ mod tests {
 
     #[test]
     fn corrects_one() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "For example, it only makes sense to compare global protein q-value filtering in one software with that in another.",
             NounCountability::default(),
             "For example, it only makes sense to compare global protein q-value filtering in one application with that in another.",
@@ -309,7 +309,7 @@ mod tests {
     #[test]
     #[ignore = "'in' = noun because conflated with 'IN' (Indiana)"]
     fn corrects_several() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The program takes in input a single XML file and outputs several info in different files.",
             NounCountability::default(),
             "The program takes in input a single XML file and outputs several pieces of info in different files.",
@@ -328,7 +328,7 @@ mod tests {
     #[test]
     #[ignore]
     fn dont_correct_first_do_correct_second() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "A advice description is required for each advice.",
             NounCountability::default(),
             "A advice description is required for each piece of advice.",
@@ -337,7 +337,7 @@ mod tests {
 
     #[test]
     fn corrects_an_advice() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Origin will not always provide the right method when an advice is applied to a bridged method.",
             NounCountability::default(),
             "Origin will not always provide the right method when an tip is applied to a bridged method.",
@@ -346,7 +346,7 @@ mod tests {
 
     #[test]
     fn corrects_one_advice() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Is it possible to use more than one advice on the same method?",
             NounCountability::default(),
             "Is it possible to use more than one tip on the same method?",
@@ -355,7 +355,7 @@ mod tests {
 
     #[test]
     fn corrects_every_advice() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Ideally every advice would have a unique identifier.",
             NounCountability::default(),
             "Ideally every tip would have a unique identifier.",
@@ -364,7 +364,7 @@ mod tests {
 
     #[test]
     fn corrects_a_advice() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Hello! I need a advice.",
             NounCountability::default(),
             "Hello! I need a tip.",
@@ -373,7 +373,7 @@ mod tests {
 
     #[test]
     fn corrects_a_software() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "HGroup-DIA, a software for analyzing multiple DIA data files.",
             NounCountability::default(),
             "HGroup-DIA, a software package for analyzing multiple DIA data files.",
@@ -382,7 +382,7 @@ mod tests {
 
     #[test]
     fn corrects_a_luggage() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "A luggage with a little engine, sensors (gps, ultrasounds, etc...) and bluetooth connection that will follow you everywhere.",
             NounCountability::default(),
             "A suitcase with a little engine, sensors (gps, ultrasounds, etc...) and bluetooth connection that will follow you everywhere.",
@@ -391,7 +391,7 @@ mod tests {
 
     #[test]
     fn corrects_multiple_advice() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Update Advice API doc for event and data params, multiple advice.",
             NounCountability::default(),
             "Update Advice API doc for event and data params, multiple suggestions.",
@@ -400,7 +400,7 @@ mod tests {
 
     #[test]
     fn corrects_every_software() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Rewrite every software known to man in Rust.",
             NounCountability::default(),
             "Rewrite every application known to man in Rust.",
@@ -409,7 +409,7 @@ mod tests {
 
     #[test]
     fn corrects_each_furniture() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "the position (x, y) and size (height, width, length) of each furniture",
             NounCountability::default(),
             "the position (x, y) and size (height, width, length) of each piece of furniture",
@@ -418,7 +418,7 @@ mod tests {
 
     #[test]
     fn corrects_one_clothing() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Each list element represents one clothing based on weather conditions.",
             NounCountability::default(),
             "Each list element represents one garment based on weather conditions.",
@@ -451,7 +451,7 @@ mod tests {
 
     #[test]
     fn corrects_fewer() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Why do my packages have fewer information?",
             NounCountability::default(),
             "Why do my packages have less information?",
@@ -478,7 +478,7 @@ mod tests {
 
     #[test]
     fn corrects_punctuation() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Not in this form because it currently works with one punctuation with one letter either side.",
             NounCountability::default(),
             "Not in this form because it currently works with one punctuation mark with one letter either side.",

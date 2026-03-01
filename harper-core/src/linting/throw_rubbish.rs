@@ -127,7 +127,7 @@ fn is_progressive_verb_form(document: &Document, token: &crate::Token) -> bool {
 #[cfg(test)]
 mod tests {
     use super::ThrowRubbish;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // Test correct patterns (should not trigger lint)
     #[test]
@@ -164,7 +164,7 @@ mod tests {
     // Test suggestions
     #[test]
     fn correct_thrown_some_trash() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I've thrown some trash",
             ThrowRubbish,
             "I've thrown some trash away",
@@ -173,7 +173,7 @@ mod tests {
 
     #[test]
     fn correct_throws_garbage() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "That guy just throws his garbage",
             ThrowRubbish,
             "That guy just throws out his garbage",
@@ -189,7 +189,7 @@ mod tests {
     // Sentences from GitHub
     #[test]
     fn correct_come_close_to_throw_trash() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Smart Dustbin is a trash bin that automatically opens when you come close to throw trash.",
             ThrowRubbish,
             "Smart Dustbin is a trash bin that automatically opens when you come close to throw away trash.",
@@ -198,7 +198,7 @@ mod tests {
 
     #[test]
     fn correct_thrown_rubbish() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Add a script that draws the bin behind thrown rubbish.",
             ThrowRubbish,
             "Add a script that draws the bin behind thrown away rubbish.",
@@ -208,7 +208,7 @@ mod tests {
     #[test]
     #[ignore = "`on` doesn't go with `throw` but with `daily basis`"]
     fn correct_encourage_people_to_throw_trash() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The app main goal is to encourage people to throw trash they can found on a daily basis.",
             ThrowRubbish,
             "The app main goal is to encourage people to throw away trash they can found on a daily basis.",
@@ -217,7 +217,7 @@ mod tests {
 
     #[test]
     fn correct_a_person_throwing_trash() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I think personally the icons look okay, aside from the clear prompt one, as it's currently accented on a person throwing trash.",
             ThrowRubbish,
             "I think personally the icons look okay, aside from the clear prompt one, as it's currently accented on a person throwing away trash.",
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn correct_responsibly_throw_trash() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Reward system for people responsibly throwing trash saving the environment.",
             ThrowRubbish,
             "Reward system for people responsibly throwing away trash saving the environment.",
@@ -268,7 +268,7 @@ mod tests {
 
     #[test]
     fn correct_threw_trash_properly() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "we want to know which student threw trash properly so that we can reward that student",
             ThrowRubbish,
             "we want to know which student threw away trash properly so that we can reward that student",
@@ -313,7 +313,7 @@ mod tests {
 
     #[test]
     fn correct_throwing_rubbish() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Admiring paintings, throwing rubbish, greeting.",
             ThrowRubbish,
             "Admiring paintings, throwing away rubbish, greeting.",

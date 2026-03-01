@@ -110,9 +110,7 @@ impl ExprLinter for ModalSeem {
 #[cfg(test)]
 mod tests {
     use super::ModalSeem;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_case() {
@@ -134,11 +132,10 @@ mod tests {
 
     #[test]
     fn offers_be_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "It may seen impossible to finish.",
             ModalSeem::default(),
             "It may be impossible to finish.",
-            1,
         );
     }
 

@@ -696,13 +696,11 @@ impl ExprLinter for Regionalisms {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn uk_to_us_food() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I can't eat aubergine or coriander, so I'll just have a bag of crisps.",
             Regionalisms::new(Dialect::American),
             "I can't eat eggplant or cilantro, so I'll just have a bag of chips.",
@@ -711,7 +709,7 @@ mod tests {
 
     #[test]
     fn au_to_us_phone() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I dropped my mobile phone in the esky and now it's covered in tomato sauce.",
             Regionalisms::new(Dialect::American),
             // Tomato sauce is valid in American English, it just means pasta sauce rather than ketchup.
@@ -721,7 +719,7 @@ mod tests {
 
     #[test]
     fn au_to_uk_cars() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Drive the station wagon onto the footpath and hand me that spanner.",
             Regionalisms::new(Dialect::British),
             "Drive the estate onto the pavement and hand me that spanner.",
@@ -730,7 +728,7 @@ mod tests {
 
     #[test]
     fn au_to_us_cars() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Drive the station wagon onto the footpath and hand me that spanner.",
             Regionalisms::new(Dialect::American),
             "Drive the station wagon onto the sidewalk and hand me that wrench.",
@@ -739,7 +737,7 @@ mod tests {
 
     #[test]
     fn us_to_au_baby() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Wash the pacifier under the faucet.",
             Regionalisms::new(Dialect::Australian),
             "Wash the dummy under the tap.",
@@ -748,7 +746,7 @@ mod tests {
 
     #[test]
     fn us_to_uk_fuel() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I needed more gasoline to drive the truck to the soccer match.",
             Regionalisms::new(Dialect::British),
             "I needed more petrol to drive the truck to the football match.",
@@ -757,7 +755,7 @@ mod tests {
 
     #[test]
     fn au_to_uk_light() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Can you sell me a light globe for this torch?",
             Regionalisms::new(Dialect::British),
             "Can you sell me a light bulb for this torch?",
@@ -766,7 +764,7 @@ mod tests {
 
     #[test]
     fn us_to_au_oops() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I spilled ketchup on my clean sweater.",
             Regionalisms::new(Dialect::Australian),
             "I spilled tomato sauce on my clean jumper.",
@@ -784,7 +782,7 @@ mod tests {
 
     #[test]
     fn uk_to_us_windscreen() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
             Regionalisms::new(Dialect::American),
             "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
@@ -793,7 +791,7 @@ mod tests {
 
     #[test]
     fn au_to_uk_blood_nose() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Oh no! I got a blood nose.",
             Regionalisms::new(Dialect::British),
             "Oh no! I got a nosebleed.",
@@ -802,7 +800,7 @@ mod tests {
 
     #[test]
     fn in_to_non_in_updation() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Add apps to queue for updation or installation and resize it.",
             Regionalisms::new(Dialect::American),
             "Add apps to queue for update or installation and resize it.",
