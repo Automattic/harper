@@ -1,0 +1,14 @@
+expr incorrectVerb [went, took]
+expr main <([NOUN, PRON] [have, has, was, were] @incorrectVerb), @incorrectVerb>
+
+let description "You probably meant to use a past participle instead of the a past tense"
+let message "Replace the incorret use past tense with a past participle after an auxiliary"
+let kind "Miscellaneous"
+let becomes ["gone", "taken"]
+
+test "I have went" "I have gone"
+test "he has went" "he has gone"
+test "he was took" "he was taken"
+test "we were took" "we were taken"
+test "I have took" "I have taken"
+
