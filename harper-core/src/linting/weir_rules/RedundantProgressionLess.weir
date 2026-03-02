@@ -1,0 +1,28 @@
+expr progressionAdverbs [increasingly, progressively, steadily]
+expr main <((@progressionAdverbs less [ADJ, ADV])), (@progressionAdverbs less)>
+
+let message "This phrasing is redundant; use a direct progressive comparative."
+let description "Phrases like `increasingly less frequent` are often tightened to `less and less frequent`."
+let kind "Redundancy"
+let becomes "less and less"
+
+# True positives
+test "The outages are increasingly less frequent after the migration." "The outages are less and less frequent after the migration."
+test "The warnings became progressively less noticeable over time." "The warnings became less and less noticeable over time."
+test "The logs are steadily less noisy in recent builds." "The logs are less and less noisy in recent builds."
+test "The latency is Increasingly Less Problematic after tuning." "The latency is Less and less Problematic after tuning."
+test "The regressions are INCREASINGLY LESS SEVERE with each patch." "The regressions are LESS AND LESS SEVERE with each patch."
+test "The incidents became increasingly less common after the fix." "The incidents became less and less common after the fix."
+test "Those alerts are progressively less frequent now." "Those alerts are less and less frequent now."
+test "Crashes are steadily less likely in this configuration." "Crashes are less and less likely in this configuration."
+test "Symptoms were steadily less intense over the week." "Symptoms were less and less intense over the week."
+test "The delays became progressively less painful for users." "The delays became less and less painful for users."
+test "The problem is increasingly less visible in staging." "The problem is less and less visible in staging."
+
+# Guardrails / false positives
+allows "The issue is increasingly less than a minor annoyance."
+allows "The issue is ever less prevalent in this subsystem."
+allows "The issue is much less prevalent in this subsystem."
+allows "The issue is significantly less prevalent in this subsystem."
+allows "The issue is increasingly rare in this subsystem."
+allows "The issue is increasingly less people reporting crashes."
