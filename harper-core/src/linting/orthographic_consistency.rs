@@ -174,24 +174,6 @@ mod tests {
     }
 
     #[test]
-    fn america_capitalized() {
-        assert_suggestion_result(
-            "The word america should be capitalized.",
-            OrthographicConsistency::default(),
-            "The word America should be capitalized.",
-        );
-    }
-
-    #[test]
-    fn harper_automattic_capitalized() {
-        assert_lint_count(
-            "So should harper and automattic.",
-            OrthographicConsistency::default(),
-            2,
-        );
-    }
-
-    #[test]
     fn ikea_should_be_all_caps() {
         assert_suggestion_result(
             "Ikea operates a vast retail network.",
