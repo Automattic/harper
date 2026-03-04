@@ -141,9 +141,10 @@ export default class LintFramework {
 					const lines = Array.from(lineElements).map((el) => el.textContent);
 					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
 				} else {
-					text = target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-						? target.value
-						: target.textContent;
+					text =
+						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+							? target.value
+							: target.textContent;
 				}
 
 				const newLineIndices = [];
