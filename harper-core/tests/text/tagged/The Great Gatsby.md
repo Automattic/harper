@@ -1502,8 +1502,8 @@
 #
 > We   waited for   her     down        the road    and  out          of sight    . It       was a   few      days before the
 # IPl+ VP/J   R/C/P ISg/D$+ N🅪Sg/VB/J/P D+  N🅪Sg/J+ VB/C NSg/VB/J/R/P P  N🅪Sg/VB+ . NPr/ISg+ VPt D/P NSg/I/Dq NPl  C/P    D
-> Fourth   of July , and  a   gray           , scrawny Italian child   was setting  torpedoes in        a   row
-# NPr/VB/J P  NPr+ . VB/C D/P NPr🅪Sg/VB/J/Am . J       N🅪Sg/J  NSg/VB+ VPt Nᴹ/Vg/J+ NPl/VB    NPr/J/R/P D/P NSg/VB+
+> Fourth   of July , and  a   gray           , scrawny Italian child   was setting    torpedoes in        a   row
+# NPr/VB/J P  NPr+ . VB/C D/P NPr🅪Sg/VB/J/Am . J       N🅪Sg/J  NSg/VB+ VPt N🅪Sg/Vg/J+ NPl/VB    NPr/J/R/P D/P NSg/VB+
 > along the railroad track   .
 # P     D   NSg/VB+  NSg/VB+ .
 >

@@ -60,6 +60,22 @@ impl Default for ItsPossessive {
 
         map.insert(start_of_sentence_noun, 0);
 
+        let start_of_sentence_noun_subject = SequenceExpr::with(AnchorStart)
+            .t_aco("it's")
+            .t_ws()
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                        || ((tok.kind.is_noun() || tok.kind.is_proper_noun())
+                            && !tok.kind.is_adjective()
+                            && !tok.kind.is_adverb())
+                }),
+            )
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX]));
+
+        map.insert(start_of_sentence_noun_subject, 0);
+
         let start_of_sentence_adjective = SequenceExpr::with(AnchorStart)
             .t_aco("it's")
             .t_ws()
@@ -199,6 +215,15 @@ mod tests {
             "It's benefits are numerous.",
             ItsPossessive::default(),
             "Its benefits are numerous.",
+        );
+    }
+
+    #[test]
+    fn fixes_its_ancestor() {
+        assert_suggestion_result(
+            "It's ancestor is still around.",
+            ItsPossessive::default(),
+            "Its ancestor is still around.",
         );
     }
 
@@ -395,6 +420,11 @@ mod tests {
     #[test]
     fn dont_flag_issue_1722_its_big_enough() {
         assert_no_lints("It's big enough.", ItsPossessive::default());
+    }
+
+    #[test]
+    fn allows_its_awesome() {
+        assert_no_lints("It's awesome.", ItsPossessive::default());
     }
 
     #[test]

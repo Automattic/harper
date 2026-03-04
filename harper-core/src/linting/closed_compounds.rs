@@ -26,6 +26,7 @@ pub fn lint_group() -> LintGroup {
         "Anywhere"        => ("any where", "anywhere"),
         "Backplane"       => ("back plane", "backplane"),
         "Bypass"          => ("by pass", "bypass"),
+        "Chalkboard"      => ("chalk board", "chalkboard"),
         "Deadlift"        => ("dead lift", "deadlift"),
         "Desktop"         => ("desk top", "desktop"),
         "Devops"          => ("dev ops", "devops"),
@@ -243,6 +244,13 @@ mod tests {
     fn dead_lift() {
         let test_sentence = "I can dead lift 200 kg.";
         let expected = "I can deadlift 200 kg.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn chalk_board() {
+        let test_sentence = "The teacher wrote the equation on the chalk board.";
+        let expected = "The teacher wrote the equation on the chalkboard.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 

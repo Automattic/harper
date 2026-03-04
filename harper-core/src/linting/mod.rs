@@ -66,6 +66,7 @@ mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
 mod fascinated_by;
+mod fed_up_with;
 mod feel_fell;
 mod few_units_of_time_ago;
 mod filler_words;
@@ -208,6 +209,7 @@ mod that_than;
 mod that_which;
 mod the_how_why;
 mod the_my;
+mod the_point_for;
 mod the_proper_noun_possessive;
 mod then_than;
 mod theres;
@@ -284,6 +286,50 @@ where
     }
 }
 
+pub mod debug {
+    use crate::Token;
+
+    /// Formats a lint match with surrounding context for debug output.
+    ///
+    /// The function takes the same `matched_tokens` and `source`, and `context` parameters
+    /// passed to `[match_to_lint_with_context]`.
+    ///
+    /// # Arguments
+    /// * `log` - `matched_tokens`
+    /// * `ctx` - `context`, or `None` if calling from `[match_to_lint]`
+    /// * `src` - `source` from `[match_to_lint]` / `[match_to_lint_with_context]`
+    ///
+    /// # Returns
+    /// A string with ANSI escape codes where:
+    /// - Context tokens are dimmed before and after the matched tokens in normal weight.
+    /// - Markup and formatting text hidden in whitespace tokens is filtered out.
+    pub fn format_lint_match(
+        log: &[Token],
+        ctx: Option<(&[Token], &[Token])>,
+        src: &[char],
+    ) -> String {
+        let fmt = |tokens: &[Token]| {
+            tokens
+                .iter()
+                .filter(|t| !t.kind.is_unlintable())
+                .map(|t| t.span.get_content_string(src))
+                .collect::<String>()
+        };
+
+        if let Some((pro, epi)) = ctx {
+            format!(
+                "\x1b[2m{}\x1b[0m{}\x1b[2m{}\x1b[0m",
+                fmt(pro),
+                fmt(log),
+                fmt(epi)
+            )
+        } else {
+            fmt(log)
+        }
+    }
+}
+
+#[cfg(test)]
 pub mod tests {
     use crate::parsers::Markdown;
     use crate::{Document, Span, Token};

@@ -1,4 +1,4 @@
-54300
+54400
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3038,6 +3038,7 @@ EC/NO
 ECG/Ng              # electrocardiogram, cf. EKG
 ECM/NgS
 ECMAScript/Og       # programming language, cf. JavaScript, TypeScript
+EDM/Nmg             # electronic dance music
 EDP/NOg
 EDT/ON
 EEC/ONg
@@ -5302,7 +5303,7 @@ K/                  # Potassium
 KB/NOg              # kilobyte, cf. Kb
 KC/ON
 KFC/Og              # company
-KGB/ONg
+KGB/Og              # Soviet intelligence agency
 KIA/NJ              # killed in action
 KKK/Og
 KO/NgV
@@ -5330,6 +5331,8 @@ Kali/Og
 Kaliningrad/Og
 Kalmyk/JNOg         # ethnicity
 Kama/Og
+Kama Sutra          # prefEtymonline, Longman, OED (also: Chambers)
+Kamasutra           # American Heritage, Chambers
 Kamchatka/Og
 Kamehameha/Og
 Kampala/Og
@@ -8920,6 +8923,7 @@ SATA/Ng             # computing standard
 SBA/NO
 SC/JNOg             # US state (South Carolina)
 SCSI/Og             # computing standard
+SCOTUS/Og           # Supreme Court Of The United States
 SD/ON               # US state (San Diego)
 SDI/NO              # strategic defense initiative
 SE/NOgJ
@@ -10989,6 +10993,7 @@ Wyo
 Wyoming/Og
 Wyomingite/JNSg
 X/ONgJ
+X-ray/NgSVdG
 XEmacs/g
 XL/NgJ
 XML/O
@@ -11668,7 +11673,7 @@ adjustment/~NgSr
 adjutant/~NSgJ
 adman/Ng
 admen/N
-admin/~NSV
+admin/~NwSgV
 administer/~VdGS
 administrate/VdSGXnv
 administration/~Ng
@@ -11853,7 +11858,7 @@ affliction/~NwSg
 affluence/Nmg
 affluent/~NJY
 afford/~VGdSB
-affordability/Nmg
+affordability/NmgU
 affordably/Ry
 affordance/NSg
 afforest/VGSdE
@@ -13993,6 +13998,7 @@ bandit/~NSgV
 banditry/Nmg
 bandleader/~NS
 bandmaster/NSg
+bandmate/NSg
 bandoleer/NSg
 bandsman/N0g
 bandsmen/N9
@@ -15776,6 +15782,7 @@ brittleness/Nmg
 bro/~NSgIH
 broach/NgSVdG
 broad/~J>Y^pNSgnX
+broad bean/NgS
 broadband/~NmgJ
 broadcast/~JNgSVGr
 broadcaster/~NgS
@@ -19495,7 +19502,7 @@ costume/~NgSVGd>Z
 costumer/Ng
 costumier/NS
 costumiers/N!@_₹
-cosy/J^>pNSgVU!_₹
+cosy/J^>pNSgVGdU!_₹
 cot/~NSg
 cotangent/NgS
 cote/~NgSV
@@ -19706,7 +19713,7 @@ cozen/VSdG
 cozenage/Ng
 cozily/Ry
 coziness/Ng
-cozy/J^>pNSgVU
+cozy/J^>pNSgVGdU
 cpd/~N
 cpl/~N
 cps/~N
@@ -24593,6 +24600,7 @@ fauna/~NwSg
 fauvism/Ng
 fauvist/JNSg
 faux/~J
+fava bean/NgS
 fave/JNSV
 favicon/~NSg
 favor/~NwSgVdGE<
@@ -27324,6 +27332,7 @@ grimy/J^>p
 grin/NgSV
 grind/~VG>SNgZz
 grinder/~NgS
+grindhouse/NwgS
 grindstone/NgS
 gringo/NgS
 grinned/VtT
@@ -28567,6 +28576,7 @@ hirsute/JpN
 hirsuteness/Ng
 his/~D5*
 hiss/~NgSVdG
+hissy/J>^
 hissy fit/NgS
 hist/~NV
 histamine/NgS
@@ -35797,6 +35807,7 @@ neurosurgical/J
 neurotic/~JNgS
 neurotically/Ry
 neuroticism/Nmg
+neurotoxin/NwgS
 neurotransmitter/~NSg
 neut/J
 neuter/~JNgSVdG
@@ -35824,6 +35835,7 @@ newcomer/~NSg
 newel/NSg
 newfangled/J
 newfound/~J
+newish/J
 newline/~NSg
 newlywed/NSgJ
 newness/Nmg
@@ -37793,9 +37805,10 @@ paddy/~NSgJ
 padlock/NgSVdG
 padre/~NSg
 paean/NSgV
-paediatric/JS!_₹
-paediatrician/NgS!_₹
-paedophile/NS!_₹
+paediatric/J!@_₹
+paediatrician/NgS!@_₹
+paediatrics/Nmg!@_₹
+paedophile/NS!@_₹
 paedophilia/Nm!@_₹
 paella/NwgS
 pagan/~JNSg
@@ -38464,9 +38477,9 @@ pedestrianisation/N!_₹
 pedestrianise/VGdS!_₹
 pedestrianization/N
 pedestrianize/VGdS
-pediatric/~JS
-pediatrician/NgS
-pediatrics/~Ng
+pediatric/~J<
+pediatrician/NgS<
+pediatrics/~Nmg<
 pedicab/NSg
 pedicure/NgSVGd
 pedicurist/NgS
@@ -38474,8 +38487,8 @@ pedigree/~NgSJVd
 pediment/~NgS
 pedlar/NgS!_₹
 pedometer/NgS
-pedophile/NS
-pedophilia/Nm
+pedophile/NS<
+pedophilia/Nm<
 peduncle/NgS
 pee/~NmSgVd>Z
 peeing/V6
@@ -40573,7 +40586,7 @@ proceedings/N9
 proceeds/~NgVh
 process/~NSVbGdr
 process's
-processable/J
+processable/JU
 processed/~JVtTU
 procession/~NVGd
 processional/JNgS
@@ -41881,7 +41894,7 @@ receive/~Vd>GSNZB
 receiver/~Ng
 receivership/~Ng
 recency/Nmg
-recent/~J>Y^pN
+recent/~JYpN        # removed comparative and superlative as marginal since only full OED includes it
 recentness/Ng
 receptacle/NSg
 reception/~NwgS
@@ -44536,7 +44549,7 @@ setsquare/S
 sett/NSVG>BzZ
 settee/NgS
 setter/NgV
-setting/~NgSV6J
+setting/~NwgSV6J
 settle/~VGdSNrU
 settle's
 settlement/~N0gr
@@ -46803,6 +46816,7 @@ starlit/J
 starred/~VtTJ
 starring/~V6NJ
 starry/~J^>
+starship/NSg
 starstruck/J
 start/~NSgVdGr
 start up/V/
@@ -47263,6 +47277,7 @@ string/~NgSVd>GZ
 stringency/Nmg
 stringent/~JY
 stringer/~NgS
+stringification/Nmg
 stringify/VdSG
 stringiness/Ng
 stringy/J^>p
@@ -48192,16 +48207,17 @@ symplectic/J
 symposium/~NgS
 symptom/~NgS
 symptomatic/~JNQ
-syn/~JNH
+syn/~JN
 synagogal/J
 synagogue/~NSg
 synapse/~NgSV
 synaptic/~J
-sync/~NgSVdG
+sync/~NmgSVdG
+synch/Nmg
 synchronicity/N
-synchronisation/NgS!_₹
+synchronisation/NmgS!_₹
 synchronise/VGdS!_₹eU
-synchronization/~NSg
+synchronization/~NmSg
 synchronize/VGdSeU
 synchronous/~JY
 synchrony/N
@@ -48230,13 +48246,15 @@ synovial/~J
 syntactic/~J
 syntactical/JY
 syntax/~Nmg
+synth/N0g
+synth-pop/Nmg
 syntheses/N9
 synthesis/~N0wg
 synthesise/V!_₹
 synthesize/~VGd>SZ
 synthesizer/~NgS
 synthetic/~JNSgQ
-synths/NV
+synths/N9V
 syphilis/~Nmg
 syphilitic/JNSg
 syringe/NSgVdG
@@ -49922,6 +49940,7 @@ transparency/~NwSg
 transparent/~JYU
 transphobia/Nmg
 transphobic/J
+transpilation/NwgS
 transpile/VSdG
 transpiler/NgS
 transpiration/Nmg
@@ -50701,6 +50720,7 @@ uncontrollably/Ry
 uncontroversial/~J
 uncool/J
 uncooperative/J
+uncopyrightable/J
 uncorrupted/J
 uncouth/JY
 uncredited/J
@@ -50800,8 +50820,9 @@ underpart/VSNg
 underpass/~NgS
 underpay/VGSL
 underpayment/NwSg
-underperform/VGdS>
+underperform/VGdS
 underperformance/Ng
+underperformer/NgS
 underpin/VS
 underpinned/VtT
 underpinning/V6SNg
@@ -53689,6 +53710,7 @@ Docker/Og
 Dockerfile/NgS
 Dreamcast/OgS       # game console
 DuckDuckGo/Og       # search engine
+Duolingo/Og         # language app
 EBITDA/N            # earnings before interest, taxes, depreciation, and amortization
 ECMA/Og             # European Computer Manufacturers Association
 EEA/O               # European Economic Area
@@ -53723,6 +53745,7 @@ FOSS/Og             # free and open-source software
 FOV/Ng              # field of view
 FPGA/NSg            # field-programmable gate array
 FPM/Sg
+FSB/Og              # Russian intelligence agency
 FSD/Ng              # full self-driving
 Famicom/NOSg        # game console
 Figma/Og
@@ -53743,6 +53766,7 @@ GPLv2/Og
 GPLv3/Og
 GPT/NSg             # generative pre-trained transformer
 GPU/NS              # graphics processing unit
+GRU/Og              # Russian intelligence agency
 GRUB/Og             # Grand Unified Bootloader
 GSM/OJ              # Global System for Mobile Communications
 GTK/O               # GIMP Toolkit
@@ -53852,6 +53876,7 @@ Logotherapy/Sg
 Longreads/Og
 Lua/Og              # programming language
 LuaTeX/Og           # TeX-based typesetting engine
+MAGA/ONwgS
 MCP/Ng              # model context protocol
 MMO/NgS             # massively multiplayer online
 MMX/Ng              # multimedia extension
@@ -53942,6 +53967,7 @@ Pandoc/Ng           # FIXME! elsewhere we have pandoc
 Parth/Sg
 Patreon/OgS
 Polldaddy/Og
+Polymarket/Og
 Postfix/Sg
 Postgres/Og
 PowerShell/Sg       # Microsoft product
@@ -53981,11 +54007,13 @@ ReLU/NwgS           # rectifier linear unit
 Rivian/Sg           # ev company
 Roumania/Og         # pre-WWII spelling
 RustConf/Og         # conference
+Ryzen/ONgS
 SCM/Ng              # source code management
 SDK/NSg             # software development kit
 SDL/Og              # Simple DirectMedia Layer
 SGD/Nmg             # stochastic gradient descent
 SHA/ONg             # Secure Hash Algorithm
+SIGINT/Nmg          # signals intelligence
 SIMD/NSg            # single instruction, multiple data
 SLA/NSg
 SLOC/9              # source lines of code
@@ -54028,6 +54056,7 @@ TL;DR               # internet slang
 TLS/Og              # Transport Layer Security
 TODO                # FIXME! elsewhere in Harper we refer to Todo and to-do
 TOML/Ng             # configuration file format
+TOS/N9              # Terms of Service - also spelled "ToS"
 TOTP/Ng             # time-based one-time password
 TSMC/Og             # Taiwanese Semiconductor Manufacturing Company
 TSR/NgS             # terminate and stay resident
@@ -54043,6 +54072,7 @@ TensorFlow/Og
 TextMate/Og         # text editor and syntax highlighting standard
 ThinkPad/OgS        # pc brand
 TikTok/Sg
+ToS/N9              # Terms of Service - also spelled "TOS"
 Todo                # FIXME! elsewhere in Harper we refer to TODO and to-do
 Topcoder/Og         # programming contest
 Toronado/OgS        # car brand
@@ -54155,6 +54185,7 @@ dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and 
 diarization/NmgS    # used in voice recognition
 docstring/NSg
 doomerism/Nmg
+doomscrolling/V6NJ
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
 ext2/Ng             # file system
@@ -54251,6 +54282,7 @@ tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
 unicast/JVSdG
+unlintable/J
 upsert/VdSGNg       # database operation: update or insert
 upsertion/NgS       # database operation: update or insert
 uptime/NwgS
