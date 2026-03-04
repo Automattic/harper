@@ -196,7 +196,7 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-ignore-focused-diagnostic',
 			name: 'Ignore focused diagnostic',
-			hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'i' }],
+			hotkeys: [],
 			checkCallback: (checking) => {
 				const editorView = this.getActiveEditorView();
 				if (!editorView) return false;
