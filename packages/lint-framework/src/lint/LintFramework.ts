@@ -141,7 +141,7 @@ export default class LintFramework {
 					const lines = Array.from(lineElements).map((el) => el.textContent);
 					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
 				} else {
-					target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+					text = target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
 						? target.value
 						: target.textContent;
 				}
@@ -165,16 +165,18 @@ export default class LintFramework {
 					language,
 				});
 
-				/// We're about to modify a reference, so let's work on a copy.
-				lintsBySource = window.structuredClone(lintsBySource);
+				if (isCM) {
+					// We're about to modify a reference, so let's work on a copy.
+					lintsBySource = window.structuredClone(lintsBySource);
 
-				for (const lints of Object.values(lintsBySource)) {
-					for (const lint of lints) {
-						const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-						const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+					for (const lints of Object.values(lintsBySource)) {
+						for (const lint of lints) {
+							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
 
-						lint.span.start -= offset_start;
-						lint.span.end -= offset_end;
+							lint.span.start -= offset_start;
+							lint.span.end -= offset_end;
+						}
 					}
 				}
 
