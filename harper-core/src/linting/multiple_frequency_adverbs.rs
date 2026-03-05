@@ -35,7 +35,7 @@ impl ExprLinter for MultipleFrequencyAdverbs {
     type Unit = Sentence;
 
     fn description(&self) -> &str {
-        "Looks for adjacent adverbs of frequencey, which will be either redundant or contradictory."
+        "Looks for adjacent adverbs of frequency, which will be either redundant or contradictory."
     }
 
     fn expr(&self) -> &dyn Expr {
@@ -71,13 +71,40 @@ mod tests {
     use crate::linting::tests::assert_lint_count;
 
     #[test]
-    fn without_comma() {
+    fn often_never_without_comma() {
         assert_lint_count("People have often never even heard of nutrinos, but yeah, about 100 billion solar nutrinos are passing through your thumbnail every second.
 ", MultipleFrequencyAdverbs::default(), 1);
     }
 
     #[test]
-    fn with_comma() {
+    fn often_never_with_comma() {
         assert_lint_count("often, never", MultipleFrequencyAdverbs::default(), 1);
+    }
+
+    #[test]
+    fn sometimes_never() {
+        assert_lint_count(
+            "Using @ directive in comments renders modal/portal that is sometimes never destroyed until app is closed.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn usually_always() {
+        assert_lint_count(
+            "Unfortunately, I can't switch to Pip with Mamba (to avoid conda), which I usually always do.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn sometimes_usually() {
+        assert_lint_count(
+            "I do my best to fix stuff when some issues pop up, but it sometimes usually doesn't work out.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+        );
     }
 }
