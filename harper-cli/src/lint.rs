@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use std::{fs, process};
+use std::fs;
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
@@ -281,7 +281,7 @@ pub fn lint(
     );
 
     if has_lints {
-        process::exit(1);
+        anyhow::bail!("Lints were found");
     }
 
     Ok(())
