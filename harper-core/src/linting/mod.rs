@@ -133,6 +133,7 @@ mod more_adjective;
 mod more_better;
 mod most_number;
 mod most_of_the_times;
+mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
 mod need_to_noun;

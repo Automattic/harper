@@ -126,6 +126,7 @@ use super::more_adjective::MoreAdjective;
 use super::more_better::MoreBetter;
 use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
+use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::need_to_noun::NeedToNoun;
@@ -704,6 +705,15 @@ impl LintGroup {
 
         out.add_chunk_expr_linter("FedUpWith", FedUpWith::new(dialect));
         out.config.set_rule_enabled("FedUpWith", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add(
+            "MultipleFrequencyAdverbs",
+            MultipleFrequencyAdverbs::default(),
+        );
+        out.config
+            .set_rule_enabled("MultipleFrequencyAdverbs", true);
 
         out
     }
