@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
@@ -11,8 +9,7 @@ use crate::{
 };
 
 pub struct MissingTo {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    map: ExprMap<usize>,
 }
 
 impl MissingTo {
@@ -216,12 +213,7 @@ impl Default for MissingTo {
             .then_kind_where(|kind| kind.is_verb_lemma());
         map.insert(permissive_pattern, 0);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { map }
     }
 }
 
@@ -229,7 +221,7 @@ impl ExprLinter for MissingTo {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.map
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
