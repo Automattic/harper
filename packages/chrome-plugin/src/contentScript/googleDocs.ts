@@ -13,6 +13,7 @@ const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scrol
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 const GOOGLE_DOCS_SVG_RECT_SELECTOR = 'rect[aria-label]';
 const GOOGLE_DOCS_LINE_BREAK_THRESHOLD_PX = 6;
+const GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX = 60;
 
 type LayoutRefreshFramework = LintFramework & {
 	refreshLayout?: () => void;
@@ -181,6 +182,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		const parts: string[] = [];
 		let nextHash = 5381;
 		let lastTop: number | null = null;
+		let lastRight: number | null = null;
 		let segmentCount = 0;
 
 		for (const rectNode of Array.from(rectNodes)) {
@@ -195,10 +197,23 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 			const top = rect.top - editorRect.top + scrollTop;
 			const left = rect.left - editorRect.left + scrollLeft;
+			const right = left + rect.width;
 			if (!Number.isFinite(top)) continue;
 			if (!Number.isFinite(left)) continue;
+			if (!Number.isFinite(right)) continue;
 
 			if (lastTop != null && Math.abs(top - lastTop) >= GOOGLE_DOCS_LINE_BREAK_THRESHOLD_PX) {
+				if (parts.length > 0 && !parts[parts.length - 1].endsWith('\n')) {
+					parts.push('\n');
+					fragment.appendChild(document.createTextNode('\n'));
+				}
+			}
+			if (
+				lastTop != null &&
+				lastRight != null &&
+				Math.abs(top - lastTop) < GOOGLE_DOCS_LINE_BREAK_THRESHOLD_PX &&
+				left - lastRight >= GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX
+			) {
 				if (parts.length > 0 && !parts[parts.length - 1].endsWith('\n')) {
 					parts.push('\n');
 					fragment.appendChild(document.createTextNode('\n'));
@@ -223,6 +238,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 
 			parts.push(normalizedLabel);
 			lastTop = top;
+			lastRight = right;
 			segmentCount += 1;
 
 			nextHash = addHashToken(nextHash, normalizedLabel);
