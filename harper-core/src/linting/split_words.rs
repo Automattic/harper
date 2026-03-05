@@ -237,11 +237,20 @@ mod tests {
     }
 
     #[test]
-    fn issue_2763() {
+    fn issue_2763_leaves() {
         assert_suggestion_result(
             "I love to eat cornleaves.",
             SplitWords::default(),
             "I love to eat corn leaves.",
+        );
+    }
+
+    #[test]
+    fn issue_2763_husks() {
+        assert_suggestion_result(
+            "I love to eat cornhusks.",
+            SplitWords::default(),
+            "I love to eat corn husks.",
         );
     }
 
