@@ -1,0 +1,35 @@
+expr main (was comprised of)
+
+let message "Many style guides treat this wording as nonstandard; consider a clearer construction."
+let description "Rewrites the fixed phrase `was comprised of` to a more widely accepted form."
+let kind "Style"
+let becomes "consisted of"
+let strategy "MatchCase"
+
+# True positives
+
+test "The proposal was comprised of faulty assumptions." "The proposal consisted of faulty assumptions."
+test "Our team was comprised of volunteers and staff." "Our team consisted of volunteers and staff."
+test "The panel was comprised of three judges." "The panel consisted of three judges."
+test "His schedule was comprised of back-to-back meetings." "His schedule consisted of back-to-back meetings."
+test "The box was comprised of recycled cardboard." "The box consisted of recycled cardboard."
+test "The fleet was comprised of electric vans." "The fleet consisted of electric vans."
+test "The package WAS COMPRISED OF spare parts." "The package CONSISTED OF spare parts."
+test "The report was comprised of six appendices." "The report consisted of six appendices."
+test "Their committee was comprised of alumni." "Their committee consisted of alumni."
+test "The meal was comprised of rice and beans." "The meal consisted of rice and beans."
+
+# False positives / true negatives
+
+allows "The proposal comprised faulty assumptions."
+allows "The proposal was composed of faulty assumptions."
+allows "The proposal consisted of faulty assumptions."
+allows "The word comprised appears in this sentence."
+allows "She said it was, comprised of errors, according to the draft."
+allows "They were comprised of different backgrounds."
+
+# False negatives (accepted limits)
+
+allows "The proposal is comprised of faulty assumptions."
+allows "The proposal was largely comprised of faulty assumptions."
+allows "The proposal had been comprised of faulty assumptions."

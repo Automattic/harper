@@ -41,6 +41,7 @@ describe('Languages >', () => {
 		{ type: 'PHP', file: 'php.php', row: 2, column: 31 },
 		{ type: 'Plaintext without extension', file: 'plaintext', row: 0, column: 0 },
 		{ type: 'Plaintext with extension', file: 'plaintext.txt', row: 4, column: 0 },
+		{ type: 'PowerShell', file: 'powershell.ps1', row: 0, column: 2 },
 		{ type: 'Python', file: 'python.py', row: 1, column: 2 },
 		{ type: 'Ruby', file: 'ruby.rb', row: 3, column: 16 },
 		{ type: 'Rust', file: 'rust.rs', row: 0, column: 4 },

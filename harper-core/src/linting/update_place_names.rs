@@ -29,7 +29,6 @@ impl<'a> Default for UpdatePlaceNames<'a> {
             ((1945, "Taiwan"), &["Formosa"]),
             ((1991, "Ulaanbaatar"), &["Ulan Bator"]),
             // Europe (and nearby)
-            ((2016, "Czechia"), &["Czech Republic"]),
             ((1945, "Gdańsk"), &["Danzig"]), // TODO: Can we recommend Gdansk as well?
             ((1992, "Podgorica"), &["Titograd"]),
             ((1936, "Tbilisi"), &["Tiflis"]),
@@ -247,6 +246,15 @@ mod tests {
             UpdatePlaceNames::default(),
             "Burkina Faso is in Africa.",
         )
+    }
+
+    #[test]
+    fn dont_flag_czech_republic() {
+        assert_lint_count(
+            "The Czech Republic is in Europe.",
+            UpdatePlaceNames::default(),
+            0,
+        );
     }
 
     // NOTE: Can't handle place names with obligatory or compulsory "The" perfectly.

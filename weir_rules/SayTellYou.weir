@@ -1,0 +1,30 @@
+expr guard ![AUX, VERB]
+expr main <((say you) @guard), (say)>
+
+let message "Use `tell` when your direct object is the person you are naming."
+let description "`say` wants a clause after it; when a person (`you`) appears as the object, swap in `tell`."
+let kind "Usage"
+let becomes "tell"
+let strategy "MatchCase"
+
+# True positives
+
+test "I want to say you the truth." "I want to tell you the truth."
+test "Can I say you something before we leave?" "Can I tell you something before we leave?"
+test "He promised to say you the rules at the meeting." "He promised to tell you the rules at the meeting."
+test "Say you the news once it lands." "Tell you the news once it lands."
+test "I'll say you the password later today." "I'll tell you the password later today."
+test "Say you, in private, anything you need." "Tell you, in private, anything you need."
+test "They plan to say you her schedule before noon." "They plan to tell you her schedule before noon."
+test "She started to say you the whole saga." "She started to tell you the whole saga."
+test "say you your concerns, and I'll listen." "tell you your concerns, and I'll listen."
+test "SAY YOU THIS IDEA NEEDS REVIEW." "TELL YOU THIS IDEA NEEDS REVIEW."
+
+# True negatives / false positives
+
+allows "Say you are wrong."
+allows "Say you will wait until tomorrow."
+allows "Say you have seen the problem."
+allows "Say you can help with this."
+allows "Say you like that idea."
+allows "Say you might be right."

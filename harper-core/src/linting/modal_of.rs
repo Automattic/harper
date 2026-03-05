@@ -1,11 +1,9 @@
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::patterns::ModalVerb;
-use crate::{Lrc, Token, TokenStringExt};
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::linting::expr_linter::Chunk;
+use crate::{
+    Lrc, Token, TokenStringExt,
+    expr::{Expr, FirstMatchOf, LongestMatchOf, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::{ModalVerb, Word},
+};
 
 pub struct ModalOf {
     expr: Box<dyn Expr>,
@@ -21,7 +19,11 @@ impl Default for ModalOf {
         let modal_of = Lrc::new(
             SequenceExpr::with(ModalVerb::default())
                 .then_whitespace()
-                .t_aco("of"),
+                .t_aco("of")
+                .and_not(FirstMatchOf::new(vec![
+                    Box::new(Word::new("can")),
+                    Box::new(Word::new_exact("May")),
+                ])),
         );
 
         // "will of" is a false positive if "will" is a noun
@@ -129,7 +131,7 @@ impl ExprLinter for ModalOf {
 #[cfg(test)]
 mod tests {
     use super::ModalOf;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     // atomic unit tests
 
@@ -319,5 +321,24 @@ mod tests {
     #[test]
     fn catch_modal_will_of() {
         assert_lint_count("that will of an impact", ModalOf::default(), 1);
+    }
+
+    #[test]
+    fn catch_may_of() {
+        assert_suggestion_result(
+            "I may of made a mistake",
+            ModalOf::default(),
+            "I may have made a mistake",
+        );
+    }
+
+    #[test]
+    fn dont_flag_in_may_of_last_year_bug_2786() {
+        assert_no_lints("This happened in May of last year.", ModalOf::default());
+    }
+
+    #[test]
+    fn dont_flag_can_of_red_bull_2807() {
+        assert_no_lints("I drank a can of Red Bull.", ModalOf::default());
     }
 }

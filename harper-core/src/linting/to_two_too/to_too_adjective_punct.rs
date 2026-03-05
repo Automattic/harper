@@ -53,7 +53,7 @@ impl ExprLinter for ToTooAdjectivePunct {
             return None;
         }
         let adjective = &tokens[idx];
-        if !adjective.kind.is_adjective() {
+        if !adjective.kind.is_adjective() || !adjective.kind.is_positive_adjective() {
             return None;
         }
         if adjective.kind.is_preposition() {

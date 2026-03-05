@@ -42,6 +42,16 @@ use lint::LintOptions;
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
 #[command(version, about)]
+struct Cli {
+    /// Disable colored output.
+    #[arg(long, global = true)]
+    no_color: bool,
+
+    #[command(subcommand)]
+    command: Args,
+}
+
+#[derive(clap::Subcommand)]
 enum Args {
     /// Lint provided documents.
     Lint {
@@ -203,11 +213,17 @@ enum Args {
 }
 
 fn main() -> anyhow::Result<()> {
-    let args = Args::parse();
+    let cli = Cli::parse();
+
+    let color = !cli.no_color && std::env::var("NO_COLOR").is_err();
+    if !color {
+        yansi::disable();
+    }
+
     let markdown_options = MarkdownOptions::default();
     let curated_dictionary = FstDictionary::curated();
 
-    match args {
+    match cli.command {
         Args::Lint {
             inputs,
             count,
@@ -233,6 +249,7 @@ fn main() -> anyhow::Result<()> {
                     keep_overlapping_lints,
                     dialect,
                     weirpack_inputs: weirpacks,
+                    color,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
@@ -915,7 +932,11 @@ fn main() -> anyhow::Result<()> {
                 let span = Span::new(start, end);
                 let txt = doc.get_span_content_str(&span);
 
-                print!("\x1b[33m{}\x1b[0m", txt);
+                if color {
+                    print!("\x1b[33m{}\x1b[0m", txt);
+                } else {
+                    print!("{}", txt);
+                }
 
                 last_end = end;
             }

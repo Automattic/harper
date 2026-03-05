@@ -16,7 +16,26 @@ pub struct MissingTo {
 }
 
 impl MissingTo {
-    fn controller_words() -> WordSet {
+    fn strict_controller_words() -> WordSet {
+        WordSet::new(&[
+            "eager",
+            "fail",
+            "failed",
+            "failing",
+            "fails",
+            "incline",
+            "inclined",
+            "inclines",
+            "inclining",
+            "manage",
+            "managed",
+            "manages",
+            "managing",
+            "ready",
+        ])
+    }
+
+    fn permissive_controller_words() -> WordSet {
         WordSet::new(&[
             "aim",
             "aimed",
@@ -55,10 +74,6 @@ impl MissingTo {
             "expected",
             "expecting",
             "expects",
-            "fail",
-            "failed",
-            "failing",
-            "fails",
             "forget",
             "forgot",
             "forgotten",
@@ -68,10 +83,6 @@ impl MissingTo {
             "hoped",
             "hopes",
             "hoping",
-            "incline",
-            "inclined",
-            "inclines",
-            "inclining",
             "intend",
             "intended",
             "intending",
@@ -85,10 +96,6 @@ impl MissingTo {
             "longed",
             "longing",
             "longs",
-            "manage",
-            "managed",
-            "manages",
-            "managing",
             "mean",
             "means",
             "meant",
@@ -104,7 +111,6 @@ impl MissingTo {
             "prepared",
             "prepares",
             "preparing",
-            "ready",
             "refuse",
             "refused",
             "refuses",
@@ -200,11 +206,15 @@ impl Default for MissingTo {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let pattern = SequenceExpr::with(Self::controller_words())
+        let strict_pattern = SequenceExpr::with(Self::strict_controller_words())
+            .t_ws()
+            .then_kind_where(|kind| kind.is_upos(UPOS::VERB));
+        map.insert(strict_pattern, 0);
+
+        let permissive_pattern = SequenceExpr::with(Self::permissive_controller_words())
             .t_ws()
             .then_kind_where(|kind| kind.is_verb_lemma());
-
-        map.insert(pattern, 0);
+        map.insert(permissive_pattern, 0);
 
         let map = Arc::new(map);
 
@@ -289,6 +299,12 @@ impl ExprLinter for MissingTo {
         }
 
         if previous_word == Some("of")
+            && (controller_text.ends_with('d') || controller_text.ends_with("en"))
+        {
+            return None;
+        }
+
+        if previous_word.is_some_and(|word| word.ends_with("ly"))
             && (controller_text.ends_with('d') || controller_text.ends_with("en"))
         {
             return None;
@@ -526,6 +542,15 @@ mod tests {
     }
 
     #[test]
+    fn inserts_to_after_resolved() {
+        assert_suggestion_result(
+            "She resolved solve the case.",
+            MissingTo::default(),
+            "She resolved to solve the case.",
+        );
+    }
+
+    #[test]
     fn no_lint_when_to_present() {
         assert_lint_count("She wants to finish early.", MissingTo::default(), 0);
     }
@@ -620,6 +645,115 @@ mod tests {
     fn no_lint_try_and_say() {
         assert_lint_count(
             "I'll try and say hello before I leave.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_failed_edit_attempts() {
+        assert_lint_count("failed edit attempts", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_ready_work() {
+        assert_lint_count("ready work", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_bad_at_managing_side_effects() {
+        assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_conflict() {
+        assert_lint_count("a fully resolved conflict", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_configuration() {
+        assert_lint_count("A resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_configuration() {
+        assert_lint_count("A fully resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_set_of_configuration() {
+        assert_lint_count("A resolved set of configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_set_of_configuration() {
+        assert_lint_count(
+            "A fully resolved set of configuration",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_system_produced_a_fully_resolved_set_of_dependencies() {
+        assert_lint_count(
+            "System produced a fully resolved set of dependencies",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_resolved_list_of_parameters() {
+        assert_lint_count("A resolved list of parameters", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_list_of_parameters() {
+        assert_lint_count(
+            "A fully resolved list of parameters",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_prepared_stranger() {
+        assert_lint_count("A prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_stranger() {
+        assert_lint_count("A fully prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_prepared_group_of_strangers() {
+        assert_lint_count("A prepared group of strangers", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_group_of_strangers() {
+        assert_lint_count(
+            "A fully prepared group of strangers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_nicely_arranged_set_of_flowers() {
+        assert_lint_count(
+            "A nicely arranged bunch of flowers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_recently_forgotten_list_of_names() {
+        assert_lint_count(
+            "A recently forgotten list of names",
             MissingTo::default(),
             0,
         );

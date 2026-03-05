@@ -295,6 +295,7 @@ These configs are under the `markdown` key:
 | Nix                 |             `nix`             |            ✅ |
 | Org Mode            |             `org`             |               |
 | PHP                 |             `php`             |            ✅ |
+| PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
