@@ -1,0 +1,27 @@
+expr colors [black, white]
+expr items [list, lists]
+
+expr main @colors @items
+
+let message "Treat color-based deny/allow lists as single words like `blacklist` or `whitelist`."
+let description "Normalize the two-word sequence `black list`/`white list` so it matches the established compound noun or verb."
+let kind "Usage"
+let becomes ["blacklist", "whitelist"]
+
+# True positives
+test "We need to black list that vendor." "We need to blacklist that vendor."
+test "I told the compliance team to white list our partners." "I told the compliance team to whitelist our partners."
+test "Black list suspicious spikes before the release." "Blacklist suspicious spikes before the release."
+test "White list the new IPs before the demo." "Whitelist the new IPs before the demo."
+test "Do not black list folks lightly." "Do not blacklist folks lightly."
+test "Please white list those domains." "Please whitelist those domains."
+test "The policy will black list multiple addresses." "The policy will blacklist multiple addresses."
+test "White list the staging nodes before testing." "Whitelist the staging nodes before testing."
+test "Black list any host that misbehaves." "Blacklist any host that misbehaves."
+test "White list their servers before the big push." "Whitelist their servers before the big push."
+
+# False positives / true negatives
+allows "The color black is on this list."
+allows "Please keep the list of white items up to date."
+allows "The existing blacklist already contains these values."
+allows "We've been using whitelist entries for weeks."

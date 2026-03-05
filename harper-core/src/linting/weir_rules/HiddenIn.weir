@@ -1,0 +1,8 @@
+expr main (hidden into)
+
+let message "Did you mean `hidden in`?"
+let description "Corrects `hidden into` to `hidden in`."
+let kind "Usage"
+let becomes "hidden in"
+
+test "The button is hidden into the exam settings menu or something like that." "The button is hidden in the exam settings menu or something like that."

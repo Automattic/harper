@@ -30,7 +30,7 @@ impl<P: Parser + 'static> Parser for OopsAllHeadings<P> {
                 && iter.peek().is_some_and(|t| !t.kind.is_heading_start())
             {
                 Some(Token {
-                    span: Span::new_with_len(tok.span.end, 0),
+                    span: Span::empty(tok.span.end),
                     kind: TokenKind::HeadingStart,
                 })
             } else {

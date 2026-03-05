@@ -32,8 +32,7 @@ impl PronounInflectionBe {
             .then_unless(NominalPhrase);
         map.insert(are, "is");
 
-        let are_at_start = SequenceExpr::default()
-            .then(AnchorStart)
+        let are_at_start = SequenceExpr::with(AnchorStart)
             .then_third_person_singular_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
@@ -67,8 +66,7 @@ impl PronounInflectionBe {
             .t_any();
         map.insert(is, "are");
 
-        let is_at_start = SequenceExpr::default()
-            .then(AnchorStart)
+        let is_at_start = SequenceExpr::with(AnchorStart)
             .then_third_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
@@ -96,8 +94,7 @@ impl PronounInflectionBe {
         map.insert(was, "were");
 
         // Special case for second and third-person
-        let was_third = SequenceExpr::default()
-            .then(AnchorStart)
+        let was_third = SequenceExpr::with(AnchorStart)
             .then_kind_either(
                 TokenKind::is_third_person_plural_pronoun,
                 TokenKind::is_second_person_pronoun,
@@ -109,8 +106,7 @@ impl PronounInflectionBe {
             .t_any();
         map.insert(was_third, "were");
 
-        let were = SequenceExpr::default()
-            .then(AnchorStart)
+        let were = SequenceExpr::with(AnchorStart)
             .then_kind_either(
                 TokenKind::is_first_person_singular_pronoun,
                 TokenKind::is_third_person_singular_pronoun,

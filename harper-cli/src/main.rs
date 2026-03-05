@@ -42,6 +42,16 @@ use lint::LintOptions;
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
 #[command(version, about)]
+struct Cli {
+    /// Disable colored output.
+    #[arg(long, global = true)]
+    no_color: bool,
+
+    #[command(subcommand)]
+    command: Args,
+}
+
+#[derive(clap::Subcommand)]
 enum Args {
     /// Lint provided documents.
     Lint {
@@ -63,9 +73,9 @@ enum Args {
         /// Overlapping lints are removed by default. This option disables that behavior.
         #[arg(short = 'o', long)]
         keep_overlapping_lints: bool,
-        /// Specify the dialect.
-        #[arg(short, long, default_value = Dialect::American.to_string())]
-        dialect: Dialect,
+        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
         /// Path to the user dictionary.
         #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string())]
         user_dict_path: PathBuf,
@@ -203,23 +213,31 @@ enum Args {
 }
 
 fn main() -> anyhow::Result<()> {
-    let args = Args::parse();
+    let cli = Cli::parse();
+
+    let color = !cli.no_color && std::env::var("NO_COLOR").is_err();
+    if !color {
+        yansi::disable();
+    }
+
     let markdown_options = MarkdownOptions::default();
     let curated_dictionary = FstDictionary::curated();
 
-    match args {
+    match cli.command {
         Args::Lint {
             inputs,
             count,
             ignore,
             only,
             keep_overlapping_lints,
-            dialect,
+            dialect: dialect_str,
             user_dict_path,
-            // TODO workspace_dict_path?
             file_dict_path,
             weirpacks,
         } => {
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+
             lint(
                 markdown_options,
                 curated_dictionary,
@@ -231,6 +249,7 @@ fn main() -> anyhow::Result<()> {
                     keep_overlapping_lints,
                     dialect,
                     weirpack_inputs: weirpacks,
+                    color,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
@@ -913,7 +932,11 @@ fn main() -> anyhow::Result<()> {
                 let span = Span::new(start, end);
                 let txt = doc.get_span_content_str(&span);
 
-                print!("\x1b[33m{}\x1b[0m", txt);
+                if color {
+                    print!("\x1b[33m{}\x1b[0m", txt);
+                } else {
+                    print!("{}", txt);
+                }
 
                 last_end = end;
             }
@@ -946,6 +969,19 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
+    }
+}
+
+/// Parse a dialect string into a Dialect enum value.
+/// Supports common synonyms, abbreviations, and codes.
+fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
+    match dialect.to_lowercase().as_str() {
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+        _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }
 

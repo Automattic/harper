@@ -1,7 +1,7 @@
 use std::{ops::Range, sync::Arc};
 
 use crate::expr::{Expr, ExprMap, SequenceExpr};
-use crate::patterns::{DerivedFrom, WordSet};
+use crate::patterns::DerivedFrom;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -16,15 +16,10 @@ impl Default for CallThem {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let post_exception = Arc::new(
-            SequenceExpr::default()
-                .t_ws()
-                .then(WordSet::new(&["if", "it"])),
-        );
+        let post_exception = Arc::new(SequenceExpr::default().t_ws().then_word_set(&["if", "it"]));
 
         map.insert(
-            SequenceExpr::default()
-                .then(DerivedFrom::new_from_str("call"))
+            SequenceExpr::with(DerivedFrom::new_from_str("call"))
                 .t_ws()
                 .then_pronoun()
                 .t_ws()
@@ -34,8 +29,7 @@ impl Default for CallThem {
         );
 
         map.insert(
-            SequenceExpr::default()
-                .then(DerivedFrom::new_from_str("call"))
+            SequenceExpr::with(DerivedFrom::new_from_str("call"))
                 .t_ws()
                 .t_aco("as")
                 .t_ws()

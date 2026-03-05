@@ -14,13 +14,13 @@ contract TestContract {
      */
     function testFunction2(uint256 p) external {}
 
-    // This is some gibberish to try to trigger a lint for sentences that continue for too long
+    // This is some gibberish to try to trigger a lint for the sentences that continue for too long
     //
-    // This is some gibberish to try to trigger a lint for sentences that continue for too long
+    // This is some gibberish to try to trigger a lint for the sentences that continue for too long
     //
-    // This is some gibberish to try to trigger a lint for sentences that continue for too long
+    // This is some gibberish to try to trigger a lint for the sentences that continue for too long
     //
-    // This is some gibberish to try to trigger a lint for sentences that continue for too long
+    // This is some gibberish to try to trigger a lint for the sentences that continue for too long
     //
-    // This is some gibberish to try to trigger a lint for sentences that continue for too long
+    // This is some gibberish to try to trigger a lint for the sentences that continue for too long
 }

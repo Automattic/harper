@@ -77,6 +77,7 @@ pub struct LintOptions {
     pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
     pub weirpack_inputs: Vec<SingleInput>,
+    pub color: bool,
 }
 enum ReportStyle {
     FullAriadneLintReport,
@@ -86,6 +87,7 @@ enum ReportStyle {
 struct InputInfo<'a> {
     parent_input_id: &'a str,
     input: &'a AnyInput,
+    color: bool,
 }
 
 struct InputJob {
@@ -99,8 +101,10 @@ impl InputInfo<'_> {
         let child = self.input.get_identifier();
         if self.parent_input_id.is_empty() {
             child.into_owned()
-        } else {
+        } else if self.color {
             format!("\x1b[33m{}/\x1b[0m{}", self.parent_input_id, child)
+        } else {
+            format!("{}/{}", self.parent_input_id, child)
         }
     }
 }
@@ -235,6 +239,7 @@ pub fn lint(
                 InputInfo {
                     parent_input_id: parent_input_id.as_str(),
                     input: &input,
+                    color: lint_options.color,
                 },
             )
         };
@@ -270,6 +275,7 @@ pub fn lint(
         all_rules,
         all_lint_kind_rule_pairs,
         all_spellos,
+        lint_options.color,
     );
 
     process::exit(1);
@@ -313,6 +319,7 @@ fn lint_one_input(
         keep_overlapping_lints,
         dialect,
         weirpack_inputs: _,
+        color: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -371,6 +378,7 @@ fn lint_one_input(
                         input: InputInfo {
                             parent_input_id: current.parent_input_id,
                             input: current.input,
+                            color: current.color,
                         },
                         doc,
                         source,
@@ -556,7 +564,7 @@ fn single_input_report(
             .collect();
 
         println!("lint kinds:");
-        print_formatted_items(lk_vec);
+        print_formatted_items(lk_vec, input.color);
     }
 
     if !lint_rules.is_empty() {
@@ -569,7 +577,7 @@ fn single_input_report(
             .collect();
 
         println!("rules:");
-        print_formatted_items(r_vec);
+        print_formatted_items(r_vec, input.color);
     }
 }
 
@@ -611,6 +619,7 @@ fn final_report(
     all_rules: HashMap<String, usize>,
     all_lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
     all_spellos: HashMap<String, usize>,
+    color: bool,
 ) {
     // The stats summary of all inputs that we only do when there are multiple inputs.
     if batch_mode {
@@ -632,7 +641,7 @@ fn final_report(
 
         if !lint_kind_counts.is_empty() {
             println!("All files lint kinds:");
-            print_formatted_items(lint_kind_counts);
+            print_formatted_items(lint_kind_counts, color);
         }
 
         let mut all_files_rule_name_counts_vec: Vec<_> = all_rules.into_iter().collect();
@@ -646,7 +655,7 @@ fn final_report(
 
         if !rule_name_counts.is_empty() {
             println!("All files rule names:");
-            print_formatted_items(rule_name_counts);
+            print_formatted_items(rule_name_counts, color);
         }
     }
 
@@ -674,7 +683,7 @@ fn final_report(
 
     if !formatted_lint_kind_rule_pairs.is_empty() {
         // Print them with line wrapping
-        print_formatted_items(formatted_lint_kind_rule_pairs);
+        print_formatted_items(formatted_lint_kind_rule_pairs, color);
     }
 
     if !all_spellos.is_empty() {
@@ -714,16 +723,19 @@ fn final_report(
                     1 => (90, 180, 90),  // Green
                     _ => (90, 150, 180), // Cyan
                 };
-                let color = format!("\x1b[38;2;{};{};{}m", r, g, b);
+                let ansi_color = format!("\x1b[38;2;{};{};{}m", r, g, b);
 
-                variants
-                    .into_iter()
-                    .map(move |(spelling, c)| (Some(color.clone()), format!("(“{spelling}”: {c})")))
+                variants.into_iter().map(move |(spelling, c)| {
+                    (
+                        Some(ansi_color.clone()),
+                        format!("(\u{201c}{spelling}\u{201d}: {c})"),
+                    )
+                })
             })
             .collect();
 
         println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
-        print_formatted_items(spelling_vec);
+        print_formatted_items(spelling_vec, color);
     }
 }
 
@@ -766,7 +778,7 @@ fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
     .unwrap_or((0, 0, 0))
 }
 
-fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>) {
+fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>, color: bool) {
     let mut first_on_line = true;
     let mut len_so_far = 0;
 
@@ -784,8 +796,12 @@ fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String
             before = " ";
         }
 
-        let (set, reset): (&str, &str) = if let Some(prefix) = ansi.as_ref() {
-            (prefix, "\x1b[0m")
+        let (set, reset): (&str, &str) = if color {
+            if let Some(prefix) = ansi.as_ref() {
+                (prefix.as_str(), "\x1b[0m")
+            } else {
+                ("", "")
+            }
         } else {
             ("", "")
         };

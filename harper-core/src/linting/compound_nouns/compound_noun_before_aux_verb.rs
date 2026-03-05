@@ -2,7 +2,6 @@ use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
 use crate::expr::SequenceExpr;
-use crate::patterns::AnyPattern;
 use crate::{CharStringExt, Lrc, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
@@ -18,8 +17,7 @@ pub struct CompoundNounBeforeAuxVerb {
 
 impl Default for CompoundNounBeforeAuxVerb {
     fn default() -> Self {
-        let context_pattern = SequenceExpr::default()
-            .then(is_content_word)
+        let context_pattern = SequenceExpr::with(is_content_word)
             .t_ws()
             .then(is_content_word)
             .then_auxiliary_verb();
@@ -30,12 +28,7 @@ impl Default for CompoundNounBeforeAuxVerb {
 
         let mut expr = All::default();
         expr.add(context_pattern);
-        expr.add(
-            SequenceExpr::default()
-                .then(split_pattern.clone())
-                .then(AnyPattern)
-                .then(AnyPattern),
-        );
+        expr.add(SequenceExpr::with(split_pattern.clone()).t_any().t_any());
 
         Self {
             expr: Box::new(expr),

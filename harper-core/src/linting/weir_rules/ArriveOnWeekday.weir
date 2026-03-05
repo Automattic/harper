@@ -1,0 +1,44 @@
+expr weekdays [Monday, Mon, Tuesday, Tue, Wednesday, Wed, Thursday, Thu, Thur, Thurs, Friday, Fri, Saturday, Sat, Sunday, Sun]
+expr arriveWeekdayGap <(arrive @weekdays), ( )>
+expr main @arriveWeekdayGap
+
+let message "Add 'on' after 'arrive' when it is immediately followed by a weekday."
+let description "Keeps schedules explicit by preferring the familiar `arrive on Friday` pattern instead of a bare weekday."
+let kind "Style"
+let becomes " on "
+
+# true positives
+
+# weekday spelled out
+test "I plan to arrive Monday afternoon." "I plan to arrive on Monday afternoon."
+
+# abbreviated day
+test "Please arrive Tue before noon." "Please arrive on Tue before noon."
+
+test "Make sure we arrive Thursday prepared." "Make sure we arrive on Thursday prepared."
+
+test "Arrive fri if you want to join." "Arrive on fri if you want to join."
+
+test "arrive SUN this time around." "arrive on SUN this time around."
+
+test "arrive Wed, I mean it." "arrive on Wed, I mean it."
+
+test "We should arrive Mon and start with the briefing." "We should arrive on Mon and start with the briefing."
+
+test "He asked if we could arrive Thurs for setup." "He asked if we could arrive on Thurs for setup."
+
+test "Arrive Tue, please." "Arrive on Tue, please."
+
+# true negatives and guardrails
+
+test "Please arrive on Monday." "Please arrive on Monday."
+
+test "We can arrive tomorrow." "We can arrive tomorrow."
+
+test "Arrive after Monday to avoid traffic." "Arrive after Monday to avoid traffic."
+
+test "Arrive Monday's crew already left." "Arrive Monday's crew already left."
+
+test "They plan to arrive in May." "They plan to arrive in May."
+
+test "Arrive before noon, so we can prep." "Arrive before noon, so we can prep."

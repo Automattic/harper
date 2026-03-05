@@ -1,0 +1,35 @@
+expr determiner [the, a, an, this, that, these, those, my, your, his, her, its, our, their]
+expr main <([(@determiner make up), (@determiner ADJ make up)]), (make up)>
+
+let message "Use the closed compound for this cosmetics noun form."
+let description "Finds determiner-led noun phrases where the split spelling appears and closes it."
+let kind "Style"
+let becomes "makeup"
+let strategy "MatchCase"
+
+# True positives
+
+test "Her make up looked great in photos." "Her makeup looked great in photos."
+test "My make up bag is on the desk." "My makeup bag is on the desk."
+test "The make up artist arrived early." "The makeup artist arrived early."
+test "A make up routine can be simple." "A makeup routine can be simple."
+test "Our everyday make up stays in this drawer." "Our everyday makeup stays in this drawer."
+test "His dramatic make up style changed." "His dramatic makeup style changed."
+test "That bridal make up trial helped." "That bridal makeup trial helped."
+test "The MAKE UP room is ready." "The MAKEUP room is ready."
+
+# False-positive checks / true negatives
+
+test "They will make up after the argument." "They will make up after the argument."
+test "Please make up your mind quickly." "Please make up your mind quickly."
+test "We can make up stories for the game." "We can make up stories for the game."
+test "I need to make up for lost time." "I need to make up for lost time."
+test "She asked them to make up before dinner." "She asked them to make up before dinner."
+test "The team tried to make up ground in Q4." "The team tried to make up ground in Q4."
+test "This makeup kit is already packed." "This makeup kit is already packed."
+test "Makeup tutorials are everywhere." "Makeup tutorials are everywhere."
+
+# Expected limits / false negatives currently out of scope
+
+test "Daily make up can feel heavy in summer." "Daily make up can feel heavy in summer."
+test "Make up is expensive these days." "Make up is expensive these days."

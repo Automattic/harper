@@ -1,6 +1,6 @@
 use crate::{
     CharStringExt, Dialect, Token,
-    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
 };
@@ -28,11 +28,10 @@ impl InOnTheCards {
             ])),
         ]);
 
-        let expr = SequenceExpr::default()
-            .then(pre_context)
+        let expr = SequenceExpr::with(pre_context)
             .t_ws()
             .t_aco(preposition)
-            .then(FixedPhrase::from_phrase(" the cards"));
+            .then_fixed_phrase(" the cards");
 
         Self {
             expr: Box::new(expr),

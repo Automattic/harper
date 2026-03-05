@@ -7,7 +7,7 @@ use crate::{Span, render_markdown::render_markdown};
 use super::{LintKind, Suggestion};
 
 /// An error found in text.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash)]
 pub struct Lint {
     /// The location in the source text the error lies.
     /// Important for automatic lint resolution through [`Self::suggestions`].

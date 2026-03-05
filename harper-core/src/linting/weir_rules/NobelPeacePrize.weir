@@ -1,0 +1,29 @@
+expr main [(noble [peace, piece] [price, prize, prise]), (nobel piece [price, prize, prise]), (nobel peace price), (nobel peace prise)]
+
+let message "Spell the name of the international peace award as Nobel Peace Prize."
+let description "Corrects the frequent typos that swap the Nobel/Peace/Prize spelling when people mention the prize."
+let kind "Typo"
+let becomes "Nobel Peace Prize"
+let strategy "Exact"
+# True positives
+test "He accepted the Noble Peace Price at the ceremony." "He accepted the Nobel Peace Prize at the ceremony."
+test "Our timeline mentions the Noble peace price until 1950." "Our timeline mentions the Nobel Peace Prize until 1950."
+test "noble peace price facts are easy to recap." "Nobel Peace Prize facts are easy to recap."
+test "Nobel piece price committees meet tonight." "Nobel Peace Prize committees meet tonight."
+test "nobel piece prize winners shared stories." "Nobel Peace Prize winners shared stories."
+test "Nobel piece prise ceremonies look ready." "Nobel Peace Prize ceremonies look ready."
+test "NOBLE PIECE PRICE stands out in the article." "Nobel Peace Prize stands out in the article."
+test "She referenced the noble piece price memo." "She referenced the Nobel Peace Prize memo."
+test "Noble Peace Prise references appear frequently." "Nobel Peace Prize references appear frequently."
+test "nobel peace prise news alerted the team." "Nobel Peace Prize news alerted the team."
+test "nobel piece price reports track the conference." "Nobel Peace Prize reports track the conference."
+test "The noble piece prise historian wrote a book." "The Nobel Peace Prize historian wrote a book."
+
+# True negatives / false positives
+test "The Nobel Peace Prize ceremony is broadcast worldwide." "The Nobel Peace Prize ceremony is broadcast worldwide."
+test "Nobel Prize for Peace winners remain inspiring." "Nobel Prize for Peace winners remain inspiring."
+test "Peace Prize winners celebrate after the award." "Peace Prize winners celebrate after the award."
+
+# Known false negatives
+test "The Nobel Peace Prices for the exhibition confuse some visitors." "The Nobel Peace Prices for the exhibition confuse some visitors."
+test "Stories mention the Noble Peace Prizes across years." "Stories mention the Noble Peace Prizes across years."

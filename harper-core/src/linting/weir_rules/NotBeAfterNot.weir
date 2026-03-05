@@ -1,0 +1,33 @@
+expr beforms [am, is, are, was, were, be, been, being, I'm, you're, we're, they're, he's, she's, it's]
+expr complements [ADJ, ADP, ADV, DET, NOUN, NUM, PRON, PROPN, VERB, VBN, VBG]
+
+expr main <(@beforms not be @complements), (not be)>
+
+let message "When a negative clause already uses `be`, drop the extra `be` that follows `not`."
+let description "Removes the redundant linking verb that sneaks in between `not` and the predicate after a conjugated `be`."
+let kind "Grammar"
+let becomes "not"
+
+# True positives
+test "I am not be happy today." "I am not happy today."
+test "They are not be ready for the call." "They are not ready for the call."
+test "We were not be asked anything." "We were not asked anything."
+test "She is not be aware of the change." "She is not aware of the change."
+test "I am not be a doctor yet." "I am not a doctor yet."
+test "I'm not be prepared for that kind of question." "I'm not prepared for that kind of question."
+test "He was not be allowed to speak last night." "He was not allowed to speak last night."
+test "If you are not be careful, the paint will drip." "If you are not careful, the paint will drip."
+test "The group was not be thinking about that possibility." "The group was not thinking about that possibility."
+test "I am not be in the mood today." "I am not in the mood today."
+test "They were not be sure yet." "They were not sure yet."
+test "He is not be already there." "He is not already there."
+test "You are not be of much help today." "You are not of much help today."
+test "The team were not be attending the show." "The team were not attending the show."
+test "I am not be comfortable sharing that yet." "I am not comfortable sharing that yet."
+
+# True negatives / false-positive guards
+allows "They will not be ready for the call."
+allows "I am not being difficult with you."
+allows "We are not the group who can finish this."
+allows "She was not a fan of the show."
+allows "I'm not sure if that will work."

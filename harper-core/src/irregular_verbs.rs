@@ -63,6 +63,13 @@ impl IrregularVerbs {
             .find(|(_, pt, _)| pt.eq_ignore_ascii_case(preterite))
             .map(|(_, _, pp)| pp.as_str())
     }
+
+    pub fn get_lemma_for_preterite(&self, preterite: &str) -> Option<&str> {
+        self.verbs
+            .iter()
+            .find(|(_, pt, _)| pt.eq_ignore_ascii_case(preterite))
+            .map(|(lemma, _, _)| lemma.as_str())
+    }
 }
 
 impl Default for IrregularVerbs {

@@ -4,7 +4,6 @@ use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{Word, WordSet},
 };
 
 pub struct WidelyAccepted {
@@ -14,9 +13,9 @@ pub struct WidelyAccepted {
 impl Default for WidelyAccepted {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(Word::new("wide"))
+            .t_aco("wide")
             .then_whitespace()
-            .then(WordSet::new(&["accepted", "acceptable", "used"]));
+            .then_word_set(&["accepted", "acceptable", "used"]);
 
         Self { expr }
     }

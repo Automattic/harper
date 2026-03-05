@@ -279,6 +279,7 @@ These configs are under the `markdown` key:
 | Dart                |            `dart`             |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
 | Go                  |             `go`              |            ✅ |
+| Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |
 | HTML                |            `html`             |               |
 | Ink                 |             `ink`             |               |
@@ -294,6 +295,7 @@ These configs are under the `markdown` key:
 | Nix                 |             `nix`             |            ✅ |
 | Org Mode            |             `org`             |               |
 | PHP                 |             `php`             |            ✅ |
+| PowerShell          |         `powershell`          |            ✅ |
 | Plain Text          |      `plaintext`/`text`       |               |
 | Python              |           `python`            |            ✅ |
 | Ruby                |            `ruby`             |            ✅ |
@@ -306,6 +308,8 @@ These configs are under the `markdown` key:
 | TypeScript          |         `typescript`          |            ✅ |
 | TypeScript React    |       `typescriptreact`       |            ✅ |
 | Typst               |            `typst`            |               |
+| Zig                 |             `zig`             |            ✅ |
+| LaTeX/TeX           | `latex`/`tex`/`plaintex`      |               |
 
 Want your language added?
 Let us know by [commenting on this issue](https://github.com/Automattic/harper/issues/79).

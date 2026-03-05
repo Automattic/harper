@@ -143,6 +143,7 @@ impl SingleInputTrait for FileInput {
                 MarkdownOptions::default(),
             )),
             Some("org") => Box::new(OrgMode),
+            Some("tex" | "latex" | "sty" | "cls" | "dtx") => Box::new(harper_tex::TeX::default()),
             Some("typ") => Box::new(harper_typst::Typst),
             Some("py") | Some("pyi") => Box::new(PythonParser::default()),
             Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),

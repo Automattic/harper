@@ -1,4 +1,4 @@
-expr main [<(their [is, are, was, were, isn't, aren't, wasn't, weren't, (will be), (can be), (could be), (should be), (would be), (may be), (might be), (must be), (has been), (have been)]), their>, <(their [on, after, beside, in, by, until, again, to, and, right]), their>, <(their,), their>, their's]
+expr main [<(their [is, are, was, were, isn't, aren't, wasn't, weren't, (will be), (can be), (could be), (should be), (would be), (may be), (might be), (must be), (has been), (have been)]), their>, <(their [on, after, beside, in, by, until, again, to, and, right, at]), their>, <((over their), their)>, <((over they're), they're)>, <(their,), their>, their's]
 
 let message "Did you mean `there`?"
 let description "Corrects `their` when the intended meaning is `there`."
@@ -59,3 +59,6 @@ test "Their is a quiet confidence in her voice." "There is a quiet confidence in
 test "The answer is right their in the first paragraph." "The answer is right there in the first paragraph."
 test "Their are deadlines, and then their are consequences." "There are deadlines, and then there are consequences."
 test "I can't believe you're still standing their, smiling." "I can't believe you're still standing there, smiling."
+test "I left my keys over their on the table." "I left my keys over there on the table."
+test "We should meet their at noon." "We should meet there at noon."
+test "Their is no reason to panic." "There is no reason to panic."

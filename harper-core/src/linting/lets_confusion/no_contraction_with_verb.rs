@@ -5,7 +5,6 @@ use crate::expr::SequenceExpr;
 use crate::{
     Token,
     linting::{Lint, LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 use crate::linting::ExprLinter;
@@ -23,9 +22,7 @@ pub struct NoContractionWithVerb {
 impl Default for NoContractionWithVerb {
     fn default() -> Self {
         // Only tests "let".
-        let let_ws = SequenceExpr::default()
-            .then(WordSet::new(&["lets", "let"]))
-            .then_whitespace();
+        let let_ws = SequenceExpr::word_set(&["lets", "let"]).then_whitespace();
 
         let non_ing_verb = SequenceExpr::default().then_kind_is_but_isnt_any_of(
             TokenKind::is_verb,

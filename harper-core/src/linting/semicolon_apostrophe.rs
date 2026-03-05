@@ -3,7 +3,6 @@ use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 const CONTRACTION_AND_POSSESSIVE_ENDINGS: [&str; 7] = ["d", "ll", "m", "re", "s", "t", "ve"];
@@ -16,10 +15,9 @@ impl Default for SemicolonApostrophe {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then_any_word()
+                SequenceExpr::any_word()
                     .then_semicolon()
-                    .then(WordSet::new(&CONTRACTION_AND_POSSESSIVE_ENDINGS)),
+                    .then_word_set(&CONTRACTION_AND_POSSESSIVE_ENDINGS),
             ),
         }
     }

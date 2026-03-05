@@ -1,0 +1,29 @@
+expr main <(its [anybody, anyone, anything, anywhere, everybody, everyone, everything, everywhere, somebody, someone, something, somewhere, nobody, nothing, nowhere]), (its)>
+
+let message "When `its` introduces an idea such as `anything`, `someone`, or `nowhere`, reach for the contraction `it's` instead."
+let description "The possessive `its` is often mistaken for `it's` when it is followed by vague pronouns (any-, every-, some-, or no- + body/one/thing/where)."
+let kind "Grammar"
+let becomes "it's"
+let strategy "MatchCase"
+
+# True positives
+test "Its anybody who volunteers should speak up." "It's anybody who volunteers should speak up."
+test "Its anyone you ping will be looped in automatically." "It's anyone you ping will be looped in automatically."
+test "Its everyone on the thread noticed the spike." "It's everyone on the thread noticed the spike."
+test "Its everything we collect ends up in the archive." "It's everything we collect ends up in the archive."
+test "Its somebody on call right now." "It's somebody on call right now."
+test "Its somewhere safe to stash the nightly dump." "It's somewhere safe to stash the nightly dump."
+test "Its nobody left who can approve this." "It's nobody left who can approve this."
+test "Its anywhere the monitors blink red." "It's anywhere the monitors blink red."
+test "Its anything worth keeping should be archived." "It's anything worth keeping should be archived."
+test "Its something that keeps restarting the job." "It's something that keeps restarting the job."
+
+# False negatives (current limitation: `its` + negative modifiers such as "not" or "never" are not covered yet)
+allows "Its not anybody to blame despite the outage."
+allows "Its never anywhere near the ideal timing we hoped for."
+
+# Guardrails / False positives
+test "Its tail twitches every time I call it." "Its tail twitches every time I call it."
+test "Its release pipeline is stable in production." "Its release pipeline is stable in production."
+test "The cluster updates its nodes nightly." "The cluster updates its nodes nightly."
+test "Its cover page mentions all contributors." "Its cover page mentions all contributors."

@@ -20,14 +20,9 @@ impl Default for RedundantAdditiveAdverbs {
             Box::new(as_well),
         ]));
 
-        let multiple_additive_adverbs = SequenceExpr::default()
-            .then(additive_adverb.clone())
-            .then_one_or_more(
-                SequenceExpr::default()
-                    .then_whitespace()
-                    .then(additive_adverb.clone()),
-            )
-            .then_optional(SequenceExpr::default().then_whitespace().t_aco("as"));
+        let multiple_additive_adverbs = SequenceExpr::with(additive_adverb.clone())
+            .then_one_or_more(SequenceExpr::whitespace().then(additive_adverb.clone()))
+            .then_optional(SequenceExpr::whitespace().t_aco("as"));
 
         Self {
             expr: Box::new(multiple_additive_adverbs),

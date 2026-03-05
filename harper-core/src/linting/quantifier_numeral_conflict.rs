@@ -22,16 +22,14 @@ impl Default for QuantifierNumeralConflict {
                             Box::new(SequenceExpr::default().then_cardinal_number()),
                         ]),
                 ),
-                Box::new(
-                    SequenceExpr::default().then_unless(SequenceExpr::any_of(vec![
-                        Box::new(WordSet::new(&["all", "any", "every", "no"])),
-                        Box::new(
-                            SequenceExpr::word_set(&["each", "some"])
-                                .t_ws()
-                                .t_aco("one"),
-                        ),
-                    ])),
-                ),
+                Box::new(SequenceExpr::unless(SequenceExpr::any_of(vec![
+                    Box::new(WordSet::new(&["all", "any", "every", "no"])),
+                    Box::new(
+                        SequenceExpr::word_set(&["each", "some"])
+                            .t_ws()
+                            .t_aco("one"),
+                    ),
+                ]))),
             ])),
         }
     }
