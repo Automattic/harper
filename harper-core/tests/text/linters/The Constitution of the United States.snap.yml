@@ -40,7 +40,7 @@ Message: |
 Suggest:
   - Replace with: “defense”
   - Replace with: “decency”
-  - Replace with: “deface”
+  - Replace with: “defect”
 
 
 
@@ -291,7 +291,7 @@ Message: |
          |                                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      104 | in the Absence of the Vice President, or when he shall exercise the Office of
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -372,7 +372,17 @@ Message: |
 Suggest:
   - Replace with: “causing”
   - Replace with: “chasing”
-  - Replace with: “casing”
+  - Replace with: “cousin”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     124 | thereof; but the Congress may at any time by Law make or alter such
+     125 | Regulations, except as to the Places of chusing Senators.
+         |                                         ^~~~~~~ `chusing` should probably be written as `ch using`.
+Suggest:
+  - Replace with: “ch using”
 
 
 
@@ -474,6 +484,16 @@ Suggest:
   - Replace with: “increased”
   - Replace with: “encased”
   - Replace with: “entreated”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     163 | which shall have been created, or the Emoluments whereof shall have been
+     164 | encreased during such time; and no Person holding any Office under the United
+         | ^~~~~~~~~ `encreased` should probably be written as `en creased`.
+Suggest:
+  - Replace with: “en creased”
 
 
 
@@ -613,7 +633,7 @@ Message: |
 Suggest:
   - Replace with: “Defense”
   - Replace with: “Decency”
-  - Replace with: “Deface”
+  - Replace with: “Defect”
 
 
 
@@ -655,7 +675,7 @@ Message: |
 Suggest:
   - Replace with: “Offenses”
   - Replace with: “Offense's”
-  - Replace with: “Offender”
+  - Replace with: “Offenders”
 
 
 
@@ -757,7 +777,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “faith”
+  - Replace with: “facts”
 
 
 
@@ -823,7 +843,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “faith”
+  - Replace with: “facts”
 
 
 
@@ -1029,7 +1049,17 @@ Message: |
 Suggest:
   - Replace with: “causing”
   - Replace with: “chasing”
-  - Replace with: “casing”
+  - Replace with: “cousin”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     383 | The Congress may determine the Time of chusing the Electors, and the Day on
+         |                                        ^~~~~~~ `chusing` should probably be written as `ch using`.
+     384 | which they shall give their Votes; which Day shall be the same throughout the
+Suggest:
+  - Replace with: “ch using”
 
 
 
@@ -1117,7 +1147,7 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      416 | the Speaker of the House of Representatives his written declaration that he is
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1156,7 +1186,7 @@ Message: |
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
          |                               ^~~~~~~ Did you mean to spell `tempore` this way?
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1199,7 +1229,7 @@ Message: |
          |                                                               ^~~~~~~ Did you mean to spell `tempore` this way?
      429 | Senate and the Speaker of the House of Representatives his written declaration
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1221,7 +1251,7 @@ Message: |
          |                                                ^~~~~~~ Did you mean to spell `tempore` this way?
      434 | Speaker of the House of Representatives their written declaration that the
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1289,6 +1319,16 @@ Suggest:
   - Replace with: “increased”
   - Replace with: “encased”
   - Replace with: “entreated”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     449 | Services, a Compensation, which shall neither be encreased nor diminished
+         |                                                  ^~~~~~~~~ `encreased` should probably be written as `en creased`.
+     450 | during the Period for which he shall have been elected, and he shall not
+Suggest:
+  - Replace with: “en creased”
 
 
 
@@ -1393,7 +1433,7 @@ Message: |
 Suggest:
   - Replace with: “Offenses”
   - Replace with: “Offense's”
-  - Replace with: “Offender”
+  - Replace with: “Offenders”
 
 
 
@@ -1659,8 +1699,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Laborer”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1671,8 +1711,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Laborer”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1683,8 +1723,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Laborer”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
