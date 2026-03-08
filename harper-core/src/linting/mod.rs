@@ -163,6 +163,7 @@ mod oxymorons;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod possessive_noun;
 mod possessive_your;

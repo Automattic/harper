@@ -154,6 +154,7 @@ use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
+use super::plural_decades::PluralDecades;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
@@ -714,6 +715,11 @@ impl LintGroup {
         );
         out.config
             .set_rule_enabled("MultipleFrequencyAdverbs", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add("PluralDecades", PluralDecades::default());
+        out.config.set_rule_enabled("PluralDecades", true);
 
         out
     }
