@@ -49,7 +49,7 @@ impl ExprLinter for PluralDecades {
             return None;
         }
 
-        let (before, _after): (Option<&[Token]>, Option<&[Token]>) = match ctx {
+        let (before, after): (Option<&[Token]>, Option<&[Token]>) = match ctx {
             Some((pw, nw)) => {
                 if pw.is_empty() {
                     if nw.is_empty() {
@@ -78,11 +78,19 @@ impl ExprLinter for PluralDecades {
         if before.is_some_and(|b| b.len() >= 2)
             && let [.., pw, psphy] = before.unwrap()
             && (psphy.kind.is_whitespace() || psphy.kind.is_hyphen())
-            && !pw.kind.is_hyphen()
             && pw
                 .span
                 .get_content(src)
                 .eq_any_ignore_ascii_case_str(&["early", "mid", "late"])
+        {
+            judgment = UsageJudgment::Mistake;
+        }
+
+        // 1970's style level / 2000's-style media library
+        if after.is_some_and(|a| a.len() >= 2)
+            && let [nsphy, nw, ..] = after.unwrap()
+            && (nsphy.kind.is_whitespace() || nsphy.kind.is_hyphen())
+            && nw.span.get_content(src).eq_ignore_ascii_case_str("style")
         {
             judgment = UsageJudgment::Mistake;
         }
@@ -241,7 +249,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_a_1970s_style_npsg() {
         assert_suggestion_result(
             "I tried to create some catwalk in a 1970's style level.",
@@ -426,7 +433,6 @@ mod lints {
     // 2000s (1 example)
 
     #[test]
-    #[ignore = "wip"]
     fn fix_2000s_style() {
         assert_suggestion_result(
             "2000's-style media library for vintage cellphones (Nokia, etc.)",
