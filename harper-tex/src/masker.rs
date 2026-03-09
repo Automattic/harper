@@ -55,7 +55,7 @@ impl harper_core::Masker for Masker {
     }
 }
 
-/// Check whether there is a math mode block at the current cursor. If so, this function will return the amount cursor need to be incremented by in order to escape the block.
+/// Check whether there is a math mode block at the current cursor. If so, this function will return the amount cursor needs to be incremented by in order to escape the block.
 fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     if *source.get(cursor)? != '$' {
         return None;
@@ -64,10 +64,10 @@ fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     Some(
         source
             .iter()
-            .skip(cursor)
+            .skip(cursor + 1)
             .take_while(|t| **t != '$')
             .count()
-            + 1,
+            + 2,
     )
 }
 
