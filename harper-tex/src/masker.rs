@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-use harper_core::{Mask, Span};
+use harper_core::{CharStringExt, Mask, Span};
 
 #[derive(Debug, Default)]
 pub struct Masker {}
@@ -22,11 +22,11 @@ impl harper_core::Masker for Masker {
 
             if matches!(c, '%') {
                 actions.push_back(CursorAction::PushMaskAndIncBy(1));
-            } else if !command_at_cursor(cursor, source, &mut actions)
-                && let Some(s) = math_mode_at_cursor(cursor, source)
-            {
+            } else if let Some(s) = math_mode_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
-            } else {
+            } else if let Some(s) = equation_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(s));
+            } else if !command_at_cursor(cursor, source, &mut actions) {
                 actions.push_back(CursorAction::IncBy(1));
             }
 
@@ -78,8 +78,6 @@ fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<Curs
         return false;
     };
 
-    dbg!();
-
     let content_commands = [
         "section",
         "title",
@@ -97,29 +95,53 @@ fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<Curs
         .iter()
         .any(|c| name.iter().copied().eq(c.chars()));
 
-    let diff = 1 + name.len() + square_content.map(|c| c.len() + 1).unwrap_or_default();
-
-    dbg!(name, square_content, curly_content);
+    let diff = 1 + name.len() + square_content.map(|c| c.len() + 2).unwrap_or_default();
 
     if let Some(curly_content) = curly_content {
-        dbg!();
         if is_content_command {
-            dbg!();
-            actions.push_back(CursorAction::PushMaskAndIncBy(diff));
+            actions.push_back(CursorAction::PushMaskAndIncBy(diff + 1));
             actions.push_back(CursorAction::IncBy(curly_content.len()));
             actions.push_back(CursorAction::PushMaskAndIncBy(1));
             true
         } else {
-            dbg!();
             actions.push_back(CursorAction::PushMaskAndIncBy(
                 curly_content.len() + diff + 1,
             ));
             true
         }
     } else {
-        dbg!();
         actions.push_back(CursorAction::PushMaskAndIncBy(diff));
         true
+    }
+}
+
+fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    let Some((name, square_content, curly_content)) = deconstruct_command(&source[cursor..]) else {
+        return None;
+    };
+
+    if name.eq_ignore_ascii_case_str("begin")
+        && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
+    {
+        let mut diff = 1
+            + name.len()
+            + curly_content.unwrap().len()
+            + square_content.map(|sc| sc.len()).unwrap_or_default();
+
+        loop {
+            if let Some((name, _, curly_content)) = deconstruct_command(&source[cursor + diff..])
+                && name.eq_ignore_ascii_case_str("end")
+                && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
+            {
+                break;
+            }
+
+            diff += 1;
+        }
+
+        Some(diff)
+    } else {
+        None
     }
 }
 
@@ -150,6 +172,8 @@ fn deconstruct_command(source: &[char]) -> Option<(&[char], Option<&[char]>, Opt
 
     // The optional square braces
     let square_content = if source.get(cursor) == Some(&'[') {
+        cursor += 1;
+
         let brace_len = source
             .iter()
             .skip(cursor)
@@ -166,6 +190,8 @@ fn deconstruct_command(source: &[char]) -> Option<(&[char], Option<&[char]>, Opt
 
     // The optional square braces
     let curly_content = if source.get(cursor) == Some(&'{') {
+        cursor += 1;
+
         let brace_len = source
             .iter()
             .skip(cursor)
@@ -191,7 +217,7 @@ enum CursorAction {
 mod tests {
     use harper_core::Masker as _;
 
-    use super::Masker;
+    use super::{Masker, deconstruct_command};
 
     #[test]
     fn ignores_many_comment_signs() {
@@ -223,5 +249,48 @@ mod tests {
         let mask = Masker::default().create_mask(&source);
 
         assert_eq!(mask.iter_allowed(&source).count(), 2)
+    }
+
+    #[test]
+    fn emits_all_command_components_correctly() {
+        let source: Vec<_> = r"\begin[some]{math}".chars().collect();
+        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+
+        assert_eq!(name.iter().collect::<String>(), "begin");
+        assert_eq!(square_content.unwrap().iter().collect::<String>(), "some");
+        assert_eq!(curly_content.unwrap().iter().collect::<String>(), "math");
+    }
+
+    #[test]
+    fn emits_command_curly_component_correctly() {
+        let source: Vec<_> = r"\begin{math}".chars().collect();
+        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+
+        assert_eq!(name.iter().collect::<String>(), "begin");
+        assert_eq!(square_content, None);
+        assert_eq!(curly_content.unwrap().iter().collect::<String>(), "math");
+    }
+
+    #[test]
+    fn emits_command_square_component_correctly() {
+        let source: Vec<_> = r"\begin[some]".chars().collect();
+        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+
+        assert_eq!(name.iter().collect::<String>(), "begin");
+        assert_eq!(square_content.unwrap().iter().collect::<String>(), "some");
+        assert_eq!(curly_content, None);
+    }
+
+    #[test]
+    fn emits_section_correctly() {
+        let source: Vec<_> = r"\section{Energy and Environment}".chars().collect();
+        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+
+        assert_eq!(name.iter().collect::<String>(), "section");
+        assert_eq!(square_content, None);
+        assert_eq!(
+            curly_content.unwrap().iter().collect::<String>(),
+            "Energy and Environment"
+        );
     }
 }
