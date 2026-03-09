@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Sentence},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Sentence},
 };
 
 pub struct PluralDecades {
@@ -36,7 +36,7 @@ impl ExprLinter for PluralDecades {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        eprintln!("📅 {}", format_lint_match(toks, ctx, src));
+        // eprintln!("📅 {}", crate::linting::debug::format_lint_match(toks, ctx, src));
         if toks.len() != 3 {
             return None;
         }
@@ -49,7 +49,7 @@ impl ExprLinter for PluralDecades {
             return None;
         }
 
-        let (before, after): (Option<&[Token]>, Option<&[Token]>) = match ctx {
+        let (before_context, after_context): (Option<&[Token]>, Option<&[Token]>) = match ctx {
             Some((pw, nw)) => {
                 if pw.is_empty() {
                     if nw.is_empty() {
@@ -77,48 +77,61 @@ impl ExprLinter for PluralDecades {
             word: &'a [char],
         }
 
-        let before_context = if before.is_some_and(|b| b.len() >= 2)
-            && let [.., pw, psphy] = before.unwrap()
-            && (psphy.kind.is_whitespace() || psphy.kind.is_hyphen())
+        let before = if before_context.is_some_and(|b| b.len() >= 2)
+            && let [.., pw, psep] = before_context.unwrap()
+            && (psep.kind.is_whitespace() || psep.kind.is_hyphen())
             && pw.kind.is_word()
         {
             Some(Context {
-                sep_is_hyphen: psphy.kind.is_hyphen(),
+                sep_is_hyphen: psep.kind.is_hyphen(),
                 word: pw.span.get_content(src),
             })
         } else {
             None
         };
 
-        let after_context = if after.is_some_and(|a| a.len() >= 2)
-            && let [nsphy, nw, ..] = after.unwrap()
-            && (nsphy.kind.is_whitespace() || nsphy.kind.is_hyphen())
+        let after = if after_context.is_some_and(|a| a.len() >= 2)
+            && let [nsep, nw, ..] = after_context.unwrap()
+            && (nsep.kind.is_whitespace() || nsep.kind.is_hyphen())
             && nw.kind.is_word()
         {
             Some(Context {
-                sep_is_hyphen: nsphy.kind.is_hyphen(),
+                sep_is_hyphen: nsep.kind.is_hyphen(),
                 word: nw.span.get_content(src),
             })
         } else {
             None
         };
 
-        let judgment = match (&before_context, &after_context) {
-            // Temporal words before the decade suggest the apostrophe is a mistake
-            (Some(before_ctx), _)
-                if before_ctx
+        let judgment = match (&before, &after) {
+            // Words before the decade which suggest the apostrophe is a mistake
+            (Some(before), _)
+                if before
                     .word
                     .eq_any_ignore_ascii_case_str(&["early", "mid", "late"]) =>
             {
                 UsageJudgment::IsMistake
             }
             // Hyphen before suggests username, not a mistake
-            (Some(before_ctx), _) if before_ctx.sep_is_hyphen => UsageJudgment::NotMistake,
+            (Some(before), _) if before.sep_is_hyphen => UsageJudgment::NotMistake,
             // "style" after the decade suggests the apostrophe is a mistake
-            (_, Some(after_ctx)) if after_ctx.word.eq_ignore_ascii_case_str("style") => {
+            (_, Some(after)) if after.word.eq_ignore_ascii_case_str("style") => {
                 UsageJudgment::IsMistake
             }
-            // Default case
+            (Some(before), _)
+                if !before.sep_is_hyphen && before.word.eq_ignore_ascii_case_str("the") =>
+            {
+                // Go back one more word and look for "in the" before the decade
+                if let [.., ppw, ppsep, _, _] = before_context.unwrap() {
+                    if ppsep.kind.is_whitespace() && ppw.kind.is_preposition() {
+                        UsageJudgment::IsMistake
+                    } else {
+                        UsageJudgment::Unsure
+                    }
+                } else {
+                    UsageJudgment::Unsure
+                }
+            }
             _ => UsageJudgment::Unsure,
         };
 
@@ -144,7 +157,6 @@ mod lints {
     // Made-up examples
 
     #[test]
-    #[ignore = "wip"]
     fn eighties() {
         assert_lint_count("in the 1980's", PluralDecades::default(), 1);
     }
@@ -242,7 +254,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1920s() {
         assert_suggestion_result(
             "Sir Josiah Stamp, president of the Bank of England and the second richest man in Britain in the 1920's, speaking at the University of Texas in 1927.",
@@ -263,7 +274,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1950s() {
         assert_suggestion_result(
             "Using the sandbox on the right, write and execute a query to return people born in the 1950's (1950 - 1959)",
@@ -303,7 +313,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_from_1950() {
         assert_suggestion_result(
             "Plot the top ten most common baby names for New South Wales by year from the 1950's",
@@ -414,7 +423,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1970s() {
         assert_suggestion_result(
             "may have begun, depending on when you start counting, in the 1970's.",
@@ -442,7 +450,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_of_the_1970s() {
         assert_suggestion_result(
             "I despise both as outdated, hard to use relics of the 1970's.",
@@ -452,7 +459,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_couples_in_the_1970s() {
         assert_suggestion_result(
             "This visualization tracks a sample of couples in the 1970's to show how long they transition through relationship stages.",
@@ -473,7 +479,6 @@ mod lints {
     // 1980s (13 examples)
 
     #[test]
-    #[ignore = "wip"]
     fn fix_from_the_1980s_like() {
         assert_suggestion_result(
             "Old Stern tables from the 1980's like Flight 2000, Catacomb, etc. are playing audio samples twice, it seems.",
@@ -493,7 +498,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_from_the_1980s_end() {
         assert_suggestion_result(
             "Former countries from the 1980's",
@@ -513,7 +517,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_of_the_1980s() {
         assert_suggestion_result(
             "The Pugputer is a little labor of love, made as a tribute to the early home computers of the 1980's.",
@@ -523,7 +526,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_of_the_1980s_npsg() {
         assert_suggestion_result(
             "FPGA implementation of the 1980's \"Music 5000\" wavetable synthesiser",
@@ -533,7 +535,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_based_off_of_the_1980s_npsg() {
         assert_suggestion_result(
             "Space Fortress is based off of the 1980's vector-based arcade game by Cinematronics called Star Castle.",
@@ -572,7 +573,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1980s_for() {
         assert_suggestion_result(
             "HMSL was originally released in the 1980's for Mac Plus and Amiga",
@@ -592,7 +592,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_since_the_1980s() {
         assert_suggestion_result(
             "Since the 1980's the most common way to interact with a computer is via the graphical user interface (GUI)",
@@ -644,7 +643,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1990s_comma() {
         assert_suggestion_result(
             "In the 1990's, Innovative Computer Solutions released multiple programs for the Newton MessagePad as shareware",
@@ -703,7 +701,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_1990s_classic_mario_hit() {
         assert_suggestion_result(
             "A remake of the 1990's classic mario hit.",
@@ -741,7 +738,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_2000s() {
         assert_suggestion_result(
             "Simulator engine for reproducing LCD games made by McDonald's in the 2000's.",
@@ -796,7 +792,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_back_in_the_2000s() {
         assert_suggestion_result(
             "A basic music player/organizer I created back in the 2000's - carderne/CAMO.",
@@ -844,7 +839,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_blog_posts_of_the_2010s() {
         assert_suggestion_result(
             "It's jumped off the esoteric analytics blog posts of the 2010's and on to your television screens and into your video games",
@@ -944,7 +938,6 @@ mod lints {
     // Multiple decades (11 examples)
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1990s_and_the_2000s() {
         assert_suggestion_result(
             "NTXShape, a converter I developed in the 1990's and maintained through the 2000's",
@@ -982,7 +975,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_in_the_1970s_and_early_1980s() {
         assert_suggestion_result(
             "We modeled the gas mileage of 398 cars built in the 1970's and early 1980's",
