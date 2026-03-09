@@ -219,7 +219,29 @@ mod lints {
         assert_no_lints("Add support for HP 1910's", PluralDecades::default());
     }
 
-    // 1950s (5 examples)
+    // 1920s (2 examples)
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_the_roaring_1920s() {
+        assert_suggestion_result(
+            "The \"Roaring 1920's\" wasn't just about the economy and technology.",
+            PluralDecades::default(),
+            "The \"Roaring 1920s\" wasn't just about the economy and technology.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_special_1920s_touch() {
+        assert_suggestion_result(
+            "It is beautiful and easily readable with that special 1920's touch.",
+            PluralDecades::default(),
+            "It is beautiful and easily readable with that special 1920s touch.",
+        );
+    }
+
+    // 1950s (6 examples)
 
     #[test]
     #[ignore = "Grammar would be correct but the computer is from 1951 so must be a mistake for 1950s"]
@@ -270,6 +292,16 @@ mod lints {
         );
     }
 
+    #[test]
+    #[ignore = "wip"]
+    fn fix_from_1950() {
+        assert_suggestion_result(
+            "Plot the top ten most common baby names for New South Wales by year from the 1950's",
+            PluralDecades::default(),
+            "Plot the top ten most common baby names for New South Wales by year from the 1950s",
+        );
+    }
+
     // 1960s (4 examples)
 
     #[test]
@@ -301,7 +333,6 @@ mod lints {
         );
     }
 
-    // Several "SP entrances" in 1960's Aperture have visible nodraw around entrance door
     #[test]
     #[ignore = "ambiguous, not sure what it means"]
     fn ignore_in_1960s_aperture() {
@@ -311,7 +342,7 @@ mod lints {
         );
     }
 
-    // 1970s (7 examples)
+    // 1970s (9 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -325,7 +356,7 @@ mod lints {
 
     #[test]
     #[ignore = "wip"]
-    fn fix_1970s_nppl() {
+    fn fix_vprog_1970s_nppl_dates() {
         assert_suggestion_result(
             "listsockets printing 1970's dates.",
             PluralDecades::default(),
@@ -372,7 +403,35 @@ mod lints {
         );
     }
 
-    // 1980s (12 examples)
+    #[test]
+    fn ignore_username_hyphen_1970s_gists() {
+        assert_no_lints(
+            "GitHub Gist: star and fork ricardo-reis-1970's gists by creating an account on GitHub.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_after_1970s_nppl_minicomputers() {
+        assert_suggestion_result(
+            "I'm also working on extending it as my CPU is modelled after 1970's minicomputers",
+            PluralDecades::default(),
+            "I'm also working on extending it as my CPU is modelled after 1970s minicomputers",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_of_the_1970s() {
+        assert_suggestion_result(
+            "I despise both as outdated, hard to use relics of the 1970's.",
+            PluralDecades::default(),
+            "I despise both as outdated, hard to use relics of the 1970s.",
+        );
+    }
+
+    // 1980s (13 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -493,6 +552,16 @@ mod lints {
         );
     }
 
+    #[test]
+    #[ignore = "wip"]
+    fn fix_since_the_1980s() {
+        assert_suggestion_result(
+            "Since the 1980's the most common way to interact with a computer is via the graphical user interface (GUI)",
+            PluralDecades::default(),
+            "Since the 1980s the most common way to interact with a computer is via the graphical user interface (GUI)",
+        );
+    }
+
     // 1990s (10 examples)
 
     #[test]
@@ -594,7 +663,7 @@ mod lints {
         );
     }
 
-    // 2000s (5 example)
+    // 2000s (7 example)
 
     #[test]
     fn fix_2000s_style() {
@@ -606,7 +675,6 @@ mod lints {
     }
 
     #[test]
-    // #[ignore = "Looks like a username, not a decade"]
     fn ignore_fork_username_hyphen_2000s_nppl() {
         assert_no_lints(
             "star and fork vishal-2000's gists by creating an account on GitHub.",
@@ -642,7 +710,25 @@ mod lints {
         );
     }
 
-    // 2010s (2 examples)
+    #[test]
+    fn fix_early_2000s_style_npsg() {
+        assert_suggestion_result(
+            "Early 2000's Style Personal Webpage.",
+            PluralDecades::default(),
+            "Early 2000s Style Personal Webpage.",
+        );
+    }
+
+    #[test]
+    fn fix_from_the_mid_2000s() {
+        assert_suggestion_result(
+            "Modeled after the now-defunct Geosense game from the mid 2000's",
+            PluralDecades::default(),
+            "Modeled after the now-defunct Geosense game from the mid 2000s",
+        );
+    }
+
+    // 2010s (3 examples)
 
     #[test]
     #[ignore = "Sinnemäki 2010 here refers to the author's publication from 2010"]
@@ -662,7 +748,16 @@ mod lints {
         );
     }
 
-    // 2020s (5 examples)
+    #[test]
+    fn fix_since_the_early_2010s() {
+        assert_suggestion_result(
+            "the degree of drop-off of CouchDB online community activity since the early-2010's NoSQL craze faded",
+            PluralDecades::default(),
+            "the degree of drop-off of CouchDB online community activity since the early-2010s NoSQL craze faded",
+        );
+    }
+
+    // 2020s (8 examples)
 
     #[test]
     #[ignore = "Ambiguous. Looks like awkward wording for `the IEEE CEC's 2020 Strategy Card Game AI Competition"]
@@ -709,7 +804,33 @@ mod lints {
         );
     }
 
-    // Multiple decades (6 examples)
+    #[test]
+    #[ignore = "DEF CON 2020's is probably an event name, not a decade"]
+    fn ignore_defcon_2020s_event() {
+        assert_no_lints(
+            "Reimplementation of DEF CON 2020's Pinboool Binary - pinboool.py.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_username_hyphen_2020s_avatar() {
+        assert_no_lints(
+            "View theredpill-2020's full-sized avatar.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "Ambiguous. Not sure what it means"]
+    fn ignore_ambiguous_2020s_scipy() {
+        assert_no_lints(
+            "No imread() in 2020's Scipy v1.5.x.",
+            PluralDecades::default(),
+        );
+    }
+
+    // Multiple decades (7 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -765,6 +886,15 @@ mod lints {
             "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970's / early 1980's.",
             PluralDecades::default(),
             "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970s / early 1980s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Unnatural English where 'on [decade]' should be 'in the [decade]'"]
+    fn ignore_on_80s_on_90s_on_2000s_on_2010s_on_2020s() {
+        assert_no_lints(
+            "Developer on 80's, software engineer on 90's, tech lead on 2000's, manager from 2010's on and CIO/CDO/CTO on 2020's",
+            PluralDecades::default(),
         );
     }
 }
