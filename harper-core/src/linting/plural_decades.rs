@@ -219,7 +219,7 @@ mod lints {
         assert_no_lints("Add support for HP 1910's", PluralDecades::default());
     }
 
-    // 1920s (2 examples)
+    // 1920s (3 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -241,7 +241,17 @@ mod lints {
         );
     }
 
-    // 1950s (6 examples)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_1920s() {
+        assert_suggestion_result(
+            "Sir Josiah Stamp, president of the Bank of England and the second richest man in Britain in the 1920's, speaking at the University of Texas in 1927.",
+            PluralDecades::default(),
+            "Sir Josiah Stamp, president of the Bank of England and the second richest man in Britain in the 1920s, speaking at the University of Texas in 1927.",
+        );
+    }
+
+    // 1950s (7 examples)
 
     #[test]
     #[ignore = "Grammar would be correct but the computer is from 1951 so must be a mistake for 1950s"]
@@ -299,6 +309,16 @@ mod lints {
             "Plot the top ten most common baby names for New South Wales by year from the 1950's",
             PluralDecades::default(),
             "Plot the top ten most common baby names for New South Wales by year from the 1950s",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_1950s_brick_built_house() {
+        assert_suggestion_result(
+            "We live in a 3 bedroom 1950's brick built house in the UK.",
+            PluralDecades::default(),
+            "We live in a 3 bedroom 1950s brick built house in the UK.",
         );
     }
 
@@ -663,7 +683,7 @@ mod lints {
         );
     }
 
-    // 2000s (7 example)
+    // 2000s (9 example)
 
     #[test]
     fn fix_2000s_style() {
@@ -728,7 +748,26 @@ mod lints {
         );
     }
 
-    // 2010s (3 examples)
+    #[test]
+    fn fix_for_the_early_2000s_games() {
+        assert_suggestion_result(
+            "GothicKit is a community-run organization hosting libraries and tools for the early 2000's games Gothic and Gothic II.",
+            PluralDecades::default(),
+            "GothicKit is a community-run organization hosting libraries and tools for the early 2000s games Gothic and Gothic II.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_back_in_the_2000s() {
+        assert_suggestion_result(
+            "A basic music player/organizer I created back in the 2000's - carderne/CAMO.",
+            PluralDecades::default(),
+            "A basic music player/organizer I created back in the 2000s - carderne/CAMO.",
+        );
+    }
+
+    // 2010s (4 examples)
 
     #[test]
     #[ignore = "Sinnemäki 2010 here refers to the author's publication from 2010"]
@@ -754,6 +793,16 @@ mod lints {
             "the degree of drop-off of CouchDB online community activity since the early-2010's NoSQL craze faded",
             PluralDecades::default(),
             "the degree of drop-off of CouchDB online community activity since the early-2010s NoSQL craze faded",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_blog_posts_of_the_2010s() {
+        assert_suggestion_result(
+            "It's jumped off the esoteric analytics blog posts of the 2010's and on to your television screens and into your video games",
+            PluralDecades::default(),
+            "It's jumped off the esoteric analytics blog posts of the 2010s and on to your television screens and into your video games",
         );
     }
 
@@ -830,7 +879,7 @@ mod lints {
         );
     }
 
-    // Multiple decades (7 examples)
+    // Multiple decades (9 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -895,6 +944,26 @@ mod lints {
         assert_no_lints(
             "Developer on 80's, software engineer on 90's, tech lead on 2000's, manager from 2010's on and CIO/CDO/CTO on 2020's",
             PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_80s_in_the_90s_2000s_2010s() {
+        assert_suggestion_result(
+            "UUCP BBS in the 80's Winternet / ABX Net Un Hacking in the 90's FOU 2000's CIS Inc. 2010's For Every Hacker there is an Equal and Opposite Hacker.",
+            PluralDecades::default(),
+            "UUCP BBS in the 80s Winternet / ABX Net Un Hacking in the 90s FOU 2000s CIS Inc. 2010s For Every Hacker there is an Equal and Opposite Hacker.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_1990s_and_2000s() {
+        assert_suggestion_result(
+            "Edelman and his colleagues in the 1990's and 2000's.",
+            PluralDecades::default(),
+            "Edelman and his colleagues in the 1990s and 2000s.",
         );
     }
 }
