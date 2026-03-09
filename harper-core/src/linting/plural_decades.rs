@@ -67,35 +67,62 @@ impl ExprLinter for PluralDecades {
         };
 
         enum UsageJudgment {
-            Legit,
-            Mistake,
+            NotMistake,
+            IsMistake,
             Unsure,
         }
 
-        let mut judgment = UsageJudgment::Unsure;
+        struct Context<'a> {
+            sep_is_hyphen: bool,
+            word: &'a [char],
+        }
 
-        // early-2000's / mid-1990's / late-1980's are mistakes we can fix
-        if before.is_some_and(|b| b.len() >= 2)
+        let before_context = if before.is_some_and(|b| b.len() >= 2)
             && let [.., pw, psphy] = before.unwrap()
             && (psphy.kind.is_whitespace() || psphy.kind.is_hyphen())
-            && pw
-                .span
-                .get_content(src)
-                .eq_any_ignore_ascii_case_str(&["early", "mid", "late"])
+            && pw.kind.is_word()
         {
-            judgment = UsageJudgment::Mistake;
-        }
+            Some(Context {
+                sep_is_hyphen: psphy.kind.is_hyphen(),
+                word: pw.span.get_content(src),
+            })
+        } else {
+            None
+        };
 
-        // 1970's style level / 2000's-style media library
-        if after.is_some_and(|a| a.len() >= 2)
+        let after_context = if after.is_some_and(|a| a.len() >= 2)
             && let [nsphy, nw, ..] = after.unwrap()
             && (nsphy.kind.is_whitespace() || nsphy.kind.is_hyphen())
-            && nw.span.get_content(src).eq_ignore_ascii_case_str("style")
+            && nw.kind.is_word()
         {
-            judgment = UsageJudgment::Mistake;
-        }
+            Some(Context {
+                sep_is_hyphen: nsphy.kind.is_hyphen(),
+                word: nw.span.get_content(src),
+            })
+        } else {
+            None
+        };
 
-        if !matches!(judgment, UsageJudgment::Mistake) {
+        let judgment = match (&before_context, &after_context) {
+            // Temporal words before the decade suggest the apostrophe is a mistake
+            (Some(before_ctx), _)
+                if before_ctx
+                    .word
+                    .eq_any_ignore_ascii_case_str(&["early", "mid", "late"]) =>
+            {
+                UsageJudgment::IsMistake
+            }
+            // Hyphen before suggests username, not a mistake
+            (Some(before_ctx), _) if before_ctx.sep_is_hyphen => UsageJudgment::NotMistake,
+            // "style" after the decade suggests the apostrophe is a mistake
+            (_, Some(after_ctx)) if after_ctx.word.eq_ignore_ascii_case_str("style") => {
+                UsageJudgment::IsMistake
+            }
+            // Default case
+            _ => UsageJudgment::Unsure,
+        };
+
+        if !matches!(judgment, UsageJudgment::IsMistake) {
             return None;
         }
 
@@ -162,7 +189,7 @@ mod lints {
 
     // Real-world examples using sentences found on GitHub
 
-    // 1900s (1 example)
+    // 1900s (2 examples)
 
     #[test]
     #[ignore = "Too ambiguous to lint?"]
@@ -174,7 +201,25 @@ mod lints {
         );
     }
 
-    // 1950s (3 examples)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_1900s_npsg() {
+        assert_suggestion_result(
+            "Children Aged 0-4 in 1900's Norway.",
+            PluralDecades::default(),
+            "Children Aged 0-4 in 1900s Norway.",
+        );
+    }
+
+    // 1910s (1 example)
+
+    #[test]
+    #[ignore = "Looks like a product name, not a decade"]
+    fn ignore_hp_1910s() {
+        assert_no_lints("Add support for HP 1910's", PluralDecades::default());
+    }
+
+    // 1950s (5 examples)
 
     #[test]
     #[ignore = "Grammar would be correct but the computer is from 1951 so must be a mistake for 1950s"]
@@ -205,7 +250,27 @@ mod lints {
         );
     }
 
-    // 1960s (2 examples)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_1950s_npsg() {
+        assert_suggestion_result(
+            "1950's elevator randomly gets stuck",
+            PluralDecades::default(),
+            "1950s elevator randomly gets stuck",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_from_1950s_npsg() {
+        assert_suggestion_result(
+            "documenting my family's camera business, from 1950's England, run by my father",
+            PluralDecades::default(),
+            "documenting my family's camera business, from 1950s England, run by my father",
+        );
+    }
+
+    // 1960s (4 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -226,7 +291,27 @@ mod lints {
         );
     }
 
-    // 1970s (5 examples)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_1960s_npsg() {
+        assert_suggestion_result(
+            "Punchbag game inspired by 1960's TV Show Batman!",
+            PluralDecades::default(),
+            "Punchbag game inspired by 1960s TV Show Batman!",
+        );
+    }
+
+    // Several "SP entrances" in 1960's Aperture have visible nodraw around entrance door
+    #[test]
+    #[ignore = "ambiguous, not sure what it means"]
+    fn ignore_in_1960s_aperture() {
+        assert_no_lints(
+            "Several \"SP entrances\" in 1960's Aperture have visible nodraw around entrance door",
+            PluralDecades::default(),
+        );
+    }
+
+    // 1970s (7 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -277,7 +362,17 @@ mod lints {
         );
     }
 
-    // 1980s (7 examples)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_1970s() {
+        assert_suggestion_result(
+            "may have begun, depending on when you start counting, in the 1970's.",
+            PluralDecades::default(),
+            "may have begun, depending on when you start counting, in the 1970s.",
+        );
+    }
+
+    // 1980s (12 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -349,7 +444,56 @@ mod lints {
         );
     }
 
-    // 1990s (8 examples)
+    #[test]
+    #[ignore = "Ambiguous - could be referring to the specific year 1980 or the decade 1980s"]
+    fn ignore_ambiguous_1980s() {
+        assert_no_lints(
+            "1980's Old aperture coop checkpoint uses the timer signage instead of checkmarks.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_1980s_nppl() {
+        assert_suggestion_result(
+            "A project resurrecting the classic 1980's Usborne Computer Guide books, for a new generation of programmers.",
+            PluralDecades::default(),
+            "A project resurrecting the classic 1980s Usborne Computer Guide books, for a new generation of programmers.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Missing determiner is out of the scope of the current version of this linter"]
+    fn fix_the_end_of_missing_determiner_1980s() {
+        assert_suggestion_result(
+            "System software for TIM011, a school computer from the end of 1980's made in former Yugoslavia",
+            PluralDecades::default(),
+            "System software for TIM011, a school computer from the end of the 1980s made in former Yugoslavia",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_1980s_for() {
+        assert_suggestion_result(
+            "HMSL was originally released in the 1980's for Mac Plus and Amiga",
+            PluralDecades::default(),
+            "HMSL was originally released in the 1980s for Mac Plus and Amiga",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_the_adj_1980s_npsg() {
+        assert_suggestion_result(
+            "Modern remake of Pole Position, the classic 1980's arcade racing game from Atari.",
+            PluralDecades::default(),
+            "Modern remake of Pole Position, the classic 1980s arcade racing game from Atari.",
+        );
+    }
+
+    // 1990s (10 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -430,7 +574,27 @@ mod lints {
         );
     }
 
-    // 2000s (1 example)
+    #[test]
+    #[ignore = "circa 1990s doesn't sound like natural English. changing to 'circa the 1990s' is out of scope for this linter"]
+    fn fix_circa_1990s() {
+        assert_suggestion_result(
+            "Inspired by Digimon \"Digivices\" tamagotchis circa 1990's.",
+            PluralDecades::default(),
+            "Inspired by Digimon \"Digivices\" tamagotchis circa the 1990s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_for_1990s_nppl() {
+        assert_suggestion_result(
+            "Daughter-board for reprogramming 1990's Toyota ECUs",
+            PluralDecades::default(),
+            "Daughter-board for reprogramming 1990s Toyota ECUs",
+        );
+    }
+
+    // 2000s (5 example)
 
     #[test]
     fn fix_2000s_style() {
@@ -441,7 +605,44 @@ mod lints {
         );
     }
 
-    // 2010s (1 example)
+    #[test]
+    // #[ignore = "Looks like a username, not a decade"]
+    fn ignore_fork_username_hyphen_2000s_nppl() {
+        assert_no_lints(
+            "star and fork vishal-2000's gists by creating an account on GitHub.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_2000s() {
+        assert_suggestion_result(
+            "Simulator engine for reproducing LCD games made by McDonald's in the 2000's.",
+            PluralDecades::default(),
+            "Simulator engine for reproducing LCD games made by McDonald's in the 2000s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Missing determiner is out of the scope of the current version of this linter"]
+    fn fix_in_the_early_2000s_missing_determiner() {
+        assert_suggestion_result(
+            "Silo was originally released in early 2000's using LLNL-home-grown license verbiage.",
+            PluralDecades::default(),
+            "Silo was originally released in the early 2000s using LLNL-home-grown license verbiage.",
+        );
+    }
+
+    #[test]
+    fn ignore_view_username_hyphen_2000s_npsg() {
+        assert_no_lints(
+            "View lxw-2000's full-sized avatar.",
+            PluralDecades::default(),
+        );
+    }
+
+    // 2010s (2 examples)
 
     #[test]
     #[ignore = "Sinnemäki 2010 here refers to the author's publication from 2010"]
@@ -452,7 +653,16 @@ mod lints {
         );
     }
 
-    // 2020s (3 examples)
+    #[test]
+    #[ignore = "Looks like a product name, not a decade"]
+    fn ignore_bazel_calls_vs_2010s_cl() {
+        assert_no_lints(
+            "Bazel calls VS 2010's cl with /DEBUG:FASTLINK",
+            PluralDecades::default(),
+        );
+    }
+
+    // 2020s (5 examples)
 
     #[test]
     #[ignore = "Ambiguous. Looks like awkward wording for `the IEEE CEC's 2020 Strategy Card Game AI Competition"]
@@ -481,7 +691,25 @@ mod lints {
         );
     }
 
-    // Multiple decades (4 examples)
+    #[test]
+    #[ignore = "eRum 2020 is probably an event name, not a decade"]
+    fn ignore_erum_2020s() {
+        assert_no_lints(
+            "A repository for purposes of eRum 2020's workshop \"Image processing and computer vision with R\", held on Saturday, June 20, 2020.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "Ambiguous. Not sure what it means"]
+    fn ignore_ambiguous_2020s_3() {
+        assert_no_lints(
+            "Crashing upon loading saved game in 2020's",
+            PluralDecades::default(),
+        );
+    }
+
+    // Multiple decades (6 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -518,6 +746,25 @@ mod lints {
             "Late 1970's/Early 1980's Text Adventure Game from the Mainframe era",
             PluralDecades::default(),
             "Late 1970s/Early 1980s Text Adventure Game from the Mainframe era",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_in_the_1970s_and_early_1980s() {
+        assert_suggestion_result(
+            "We modeled the gas mileage of 398 cars built in the 1970's and early 1980's",
+            PluralDecades::default(),
+            "We modeled the gas mileage of 398 cars built in the 1970s and early 1980s",
+        );
+    }
+
+    #[test]
+    fn fix_from_the_late_1970s_early_1980s() {
+        assert_suggestion_result(
+            "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970's / early 1980's.",
+            PluralDecades::default(),
+            "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970s / early 1980s.",
         );
     }
 }
