@@ -73,38 +73,12 @@ fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
 
 /// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
 /// Returns whether the action queue was modified.
-fn command_at_cursor(
-    mut cursor: usize,
-    source: &[char],
-    actions: &mut VecDeque<CursorAction>,
-) -> bool {
-    let orig_cursor = cursor;
-
-    if source.get(cursor) != Some(&'\\') {
+fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<CursorAction>) -> bool {
+    let Some((name, square_content, curly_content)) = deconstruct_command(&source[cursor..]) else {
         return false;
-    }
+    };
 
-    cursor += 1;
-
-    // The name of the command
-    let name_len = source
-        .iter()
-        .skip(cursor + 1)
-        .take_while(|t| t.is_alphabetic())
-        .count();
-    let name = &source[cursor..cursor + 1 + name_len];
-
-    cursor += name_len + 1;
-
-    // The optional square braces
-    if source.get(cursor) == Some(&'[') {
-        cursor += source
-            .iter()
-            .skip(cursor)
-            .take_while(|t| **t != ']')
-            .count()
-            + 1;
-    }
+    dbg!();
 
     let content_commands = [
         "section",
@@ -123,29 +97,88 @@ fn command_at_cursor(
         .iter()
         .any(|c| name.iter().copied().eq(c.chars()));
 
-    // The optional curly braces
-    if source.get(cursor) == Some(&'{') {
+    let diff = 1 + name.len() + square_content.map(|c| c.len() + 1).unwrap_or_default();
+
+    dbg!(name, square_content, curly_content);
+
+    if let Some(curly_content) = curly_content {
+        dbg!();
+        if is_content_command {
+            dbg!();
+            actions.push_back(CursorAction::PushMaskAndIncBy(diff));
+            actions.push_back(CursorAction::IncBy(curly_content.len()));
+            actions.push_back(CursorAction::PushMaskAndIncBy(1));
+            true
+        } else {
+            dbg!();
+            actions.push_back(CursorAction::PushMaskAndIncBy(
+                curly_content.len() + diff + 1,
+            ));
+            true
+        }
+    } else {
+        dbg!();
+        actions.push_back(CursorAction::PushMaskAndIncBy(diff));
+        true
+    }
+}
+
+/// Deconstruct a command into its constituent components.
+/// Assumes the command is at the beginning of the slice.
+/// Returns `None` if not command is present at the expected position.
+///
+/// The components, in order, are the command name itself, its square bracket argument, and its
+/// curly bracket argument.
+fn deconstruct_command(source: &[char]) -> Option<(&[char], Option<&[char]>, Option<&[char]>)> {
+    let mut cursor = 0;
+
+    if source.get(cursor) != Some(&'\\') {
+        return None;
+    }
+
+    cursor += 1;
+
+    // The name of the command
+    let name_len = source
+        .iter()
+        .skip(cursor + 1)
+        .take_while(|t| t.is_alphabetic())
+        .count();
+    let name = &source[cursor..cursor + 1 + name_len];
+
+    cursor += name_len + 1;
+
+    // The optional square braces
+    let square_content = if source.get(cursor) == Some(&'[') {
+        let brace_len = source
+            .iter()
+            .skip(cursor)
+            .take_while(|t| **t != ']')
+            .count();
+
+        let content = &source[cursor..cursor + brace_len];
+
+        cursor += brace_len + 1;
+        Some(content)
+    } else {
+        None
+    };
+
+    // The optional square braces
+    let curly_content = if source.get(cursor) == Some(&'{') {
         let brace_len = source
             .iter()
             .skip(cursor)
             .take_while(|t| **t != '}')
             .count();
 
-        if is_content_command {
-            actions.push_back(CursorAction::PushMaskAndIncBy(cursor - orig_cursor));
-            actions.push_back(CursorAction::IncBy(brace_len));
-            actions.push_back(CursorAction::PushMaskAndIncBy(1));
-            true
-        } else {
-            actions.push_back(CursorAction::PushMaskAndIncBy(
-                brace_len + cursor + 1 - orig_cursor,
-            ));
-            true
-        }
+        let content = &source[cursor..cursor + brace_len];
+        Some(content)
     } else {
-        actions.push_back(CursorAction::PushMaskAndIncBy(cursor - orig_cursor));
-        true
-    }
+        None
+    };
+
+    Some((name, square_content, curly_content))
 }
 
 #[derive(Debug)]
