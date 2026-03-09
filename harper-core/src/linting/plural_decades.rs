@@ -362,7 +362,7 @@ mod lints {
         );
     }
 
-    // 1970s (9 examples)
+    // 1970s (11 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -448,6 +448,25 @@ mod lints {
             "I despise both as outdated, hard to use relics of the 1970's.",
             PluralDecades::default(),
             "I despise both as outdated, hard to use relics of the 1970s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_couples_in_the_1970s() {
+        assert_suggestion_result(
+            "This visualization tracks a sample of couples in the 1970's to show how long they transition through relationship stages.",
+            PluralDecades::default(),
+            "This visualization tracks a sample of couples in the 1970s to show how long they transition through relationship stages.",
+        );
+    }
+
+    #[test]
+    fn fix_developed_in_early_1970s() {
+        assert_suggestion_result(
+            "GPS, originally developed in the early 1970's, is a unidirectional (broadcast only) system",
+            PluralDecades::default(),
+            "GPS, originally developed in the early 1970s, is a unidirectional (broadcast only) system",
         );
     }
 
@@ -582,7 +601,7 @@ mod lints {
         );
     }
 
-    // 1990s (10 examples)
+    // 1990s (12 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -683,7 +702,26 @@ mod lints {
         );
     }
 
-    // 2000s (9 example)
+    #[test]
+    #[ignore = "wip"]
+    fn fix_the_1990s_classic_mario_hit() {
+        assert_suggestion_result(
+            "A remake of the 1990's classic mario hit.",
+            PluralDecades::default(),
+            "A remake of the 1990s classic mario hit.",
+        );
+    }
+
+    #[test]
+    fn fix_developed_in_early_1990s() {
+        assert_suggestion_result(
+            "The code was originally developed in the early 1990's",
+            PluralDecades::default(),
+            "The code was originally developed in the early 1990s",
+        );
+    }
+
+    // 2000s (10 example)
 
     #[test]
     fn fix_2000s_style() {
@@ -767,6 +805,15 @@ mod lints {
         );
     }
 
+    #[test]
+    fn fix_mid_2000s() {
+        assert_suggestion_result(
+            "Things I wrote about RDF from the mid-2000's.",
+            PluralDecades::default(),
+            "Things I wrote about RDF from the mid-2000s.",
+        );
+    }
+
     // 2010s (4 examples)
 
     #[test]
@@ -806,7 +853,7 @@ mod lints {
         );
     }
 
-    // 2020s (8 examples)
+    // 2020s (10 examples)
 
     #[test]
     #[ignore = "Ambiguous. Looks like awkward wording for `the IEEE CEC's 2020 Strategy Card Game AI Competition"]
@@ -879,7 +926,22 @@ mod lints {
         );
     }
 
-    // Multiple decades (9 examples)
+    #[test]
+    #[ignore = "ambiguous"]
+    fn ignore_pull_into_2020s() {
+        assert_no_lints("Pull into the 2020's.", PluralDecades::default());
+    }
+
+    #[test]
+    #[ignore = "Odd. Looks like it should be `Blasas et al's 2020 \"FUT9-driven ...\"`"]
+    fn ignore_blasas_et_al_2020s() {
+        assert_no_lints(
+            "Scripts that were used to create figure 5 in Blasas et al. 2020's \"FUT9-driven programming of colon cancer cells towards a stem cell-like state\"",
+            PluralDecades::default(),
+        );
+    }
+
+    // Multiple decades (11 examples)
 
     #[test]
     #[ignore = "wip"]
@@ -964,6 +1026,26 @@ mod lints {
             "Edelman and his colleagues in the 1990's and 2000's.",
             PluralDecades::default(),
             "Edelman and his colleagues in the 1990s and 2000s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_1930s_ampersand_1940s() {
+        assert_suggestion_result(
+            "DJ and collector of quality tango music from the golden era (1930's & 1940's)",
+            PluralDecades::default(),
+            "DJ and collector of quality tango music from the golden era (1930s & 1940s)",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_80s_90s_2000s_2020s() {
+        assert_suggestion_result(
+            "Nerdy coder-kid on ZX81 and Oric 1 in the 80's, nerdy teen-tech writer on PC in 90's, nerdy engineer in the 2000's, 2020's MongoDB addict, Databricks fan now!",
+            PluralDecades::default(),
+            "Nerdy coder-kid on ZX81 and Oric 1 in the 80s, nerdy teen-tech writer on PC in 90s, nerdy engineer in the 2000s, 2020s MongoDB addict, Databricks fan now!",
         );
     }
 }
