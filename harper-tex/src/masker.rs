@@ -74,7 +74,12 @@ fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
 /// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
 /// Returns whether the action queue was modified.
 fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<CursorAction>) -> bool {
-    let Some((name, square_content, curly_content)) = deconstruct_command(&source[cursor..]) else {
+    let Some(CommandComponents {
+        name,
+        square_content,
+        curly_content,
+    }) = deconstruct_command(&source[cursor..])
+    else {
         return false;
     };
 
@@ -116,9 +121,11 @@ fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<Curs
 }
 
 fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
-    let Some((name, square_content, curly_content)) = deconstruct_command(&source[cursor..]) else {
-        return None;
-    };
+    let CommandComponents {
+        name,
+        square_content,
+        curly_content,
+    } = deconstruct_command(&source[cursor..])?;
 
     if name.eq_ignore_ascii_case_str("begin")
         && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
@@ -129,7 +136,11 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
             + square_content.map(|sc| sc.len()).unwrap_or_default();
 
         loop {
-            if let Some((name, _, curly_content)) = deconstruct_command(&source[cursor + diff..])
+            if let Some(CommandComponents {
+                name,
+                curly_content,
+                ..
+            }) = deconstruct_command(&source[cursor + diff..])
                 && name.eq_ignore_ascii_case_str("end")
                 && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
             {
@@ -145,13 +156,19 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     }
 }
 
+struct CommandComponents<'a> {
+    /// The command's name.
+    pub name: &'a [char],
+    /// The content of the command's square bracket arguments.
+    pub square_content: Option<&'a [char]>,
+    /// The content of the command's curly bracket arguments.
+    pub curly_content: Option<&'a [char]>,
+}
+
 /// Deconstruct a command into its constituent components.
 /// Assumes the command is at the beginning of the slice.
 /// Returns `None` if not command is present at the expected position.
-///
-/// The components, in order, are the command name itself, its square bracket argument, and its
-/// curly bracket argument.
-fn deconstruct_command(source: &[char]) -> Option<(&[char], Option<&[char]>, Option<&[char]>)> {
+fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> {
     let mut cursor = 0;
 
     if source.get(cursor) != Some(&'\\') {
@@ -204,7 +221,11 @@ fn deconstruct_command(source: &[char]) -> Option<(&[char], Option<&[char]>, Opt
         None
     };
 
-    Some((name, square_content, curly_content))
+    Some(CommandComponents {
+        name,
+        square_content,
+        curly_content,
+    })
 }
 
 #[derive(Debug)]
@@ -216,6 +237,8 @@ enum CursorAction {
 #[cfg(test)]
 mod tests {
     use harper_core::Masker as _;
+
+    use crate::masker::CommandComponents;
 
     use super::{Masker, deconstruct_command};
 
@@ -254,7 +277,11 @@ mod tests {
     #[test]
     fn emits_all_command_components_correctly() {
         let source: Vec<_> = r"\begin[some]{math}".chars().collect();
-        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+        let CommandComponents {
+            name,
+            square_content,
+            curly_content,
+        } = deconstruct_command(&source).unwrap();
 
         assert_eq!(name.iter().collect::<String>(), "begin");
         assert_eq!(square_content.unwrap().iter().collect::<String>(), "some");
@@ -264,7 +291,11 @@ mod tests {
     #[test]
     fn emits_command_curly_component_correctly() {
         let source: Vec<_> = r"\begin{math}".chars().collect();
-        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+        let CommandComponents {
+            name,
+            square_content,
+            curly_content,
+        } = deconstruct_command(&source).unwrap();
 
         assert_eq!(name.iter().collect::<String>(), "begin");
         assert_eq!(square_content, None);
@@ -274,7 +305,11 @@ mod tests {
     #[test]
     fn emits_command_square_component_correctly() {
         let source: Vec<_> = r"\begin[some]".chars().collect();
-        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+        let CommandComponents {
+            name,
+            square_content,
+            curly_content,
+        } = deconstruct_command(&source).unwrap();
 
         assert_eq!(name.iter().collect::<String>(), "begin");
         assert_eq!(square_content.unwrap().iter().collect::<String>(), "some");
@@ -284,7 +319,11 @@ mod tests {
     #[test]
     fn emits_section_correctly() {
         let source: Vec<_> = r"\section{Energy and Environment}".chars().collect();
-        let (name, square_content, curly_content) = deconstruct_command(&source).unwrap();
+        let CommandComponents {
+            name,
+            square_content,
+            curly_content,
+        } = deconstruct_command(&source).unwrap();
 
         assert_eq!(name.iter().collect::<String>(), "section");
         assert_eq!(square_content, None);
