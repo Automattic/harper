@@ -44,7 +44,7 @@ function openSettings() {
 }
 
 function openUpdateHelpPage() {
-	let url;
+	let url: string;
 
 	if (detectBrowserEngine() == 'chromium') {
 		url = 'https://writewithharper.com/docs/integrations/chrome-extension#Updating-the-Extension';
