@@ -41,8 +41,9 @@ impl Default for NeedToNoun {
         // Bare words after infinitive `to` are the hardest cases to disambiguate.
         // If the token is a noun/verb homograph, prefer not linting over inserting
         // `the` into a potentially valid verb phrase.
-        let b = SequenceExpr::default()
-            .then_kind_where(|kind| kind.is_nominal() && !kind.is_verb() && !kind.is_likely_homograph());
+        let b = SequenceExpr::default().then_kind_where(|kind| {
+            kind.is_nominal() && !kind.is_verb() && !kind.is_likely_homograph()
+        });
 
         let expr = SequenceExpr::with(DerivedFrom::new_from_str("need"))
             .t_ws()
@@ -301,10 +302,7 @@ mod tests {
 
     #[test]
     fn allows_need_to_silence() {
-        assert_no_lints(
-            "I need to silence to think clearly.",
-            NeedToNoun::default(),
-        );
+        assert_no_lints("I need to silence to think clearly.", NeedToNoun::default());
     }
 
     #[test]
