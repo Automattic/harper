@@ -120,7 +120,7 @@ function daysSince(date: Date): number {
     </section>
   </section>
   
-  {#if !isFirefox && installDate != null && daysSince(installDate) > 7 && hasBeenReviewed === false}
+  {#if !isFirefox && installDate != null && daysSince(installDate) > 14 && hasBeenReviewed === false}
     <section class="bg-primary flex flex-row justify-between p-4">
       <div class="font-bold">
         It looks like you're enjoying Harper.<br>

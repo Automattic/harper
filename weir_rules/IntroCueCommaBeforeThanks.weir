@@ -1,0 +1,33 @@
+expr main (no thanks)
+
+let message "Set off `no` with a comma in the response phrase `no, thanks`."
+let description "Normalizes the common refusal phrase by inserting the missing comma."
+let kind "Punctuation"
+let becomes "no, thanks"
+let strategy "MatchCase"
+
+# True positives
+test "No thanks I am fine." "No, thanks I am fine."
+test "No thanks we already solved it." "No, thanks we already solved it."
+test "No thanks this is enough detail." "No, thanks this is enough detail."
+test "No thanks that will not help." "No, thanks that will not help."
+test "No thanks there is no need." "No, thanks there is no need."
+test "No thanks here is my reason." "No, thanks here is my reason."
+test "No thanks maybe later tonight." "No, thanks maybe later tonight."
+test "no thanks i will pass." "no, thanks i will pass."
+test "NO THANKS I ALREADY ATE." "NO, THANKS I ALREADY ATE."
+test "No thanks they can take this one." "No, thanks they can take this one."
+test "No thanks." "No, thanks."
+test "No thanks!" "No, thanks!"
+test "No thanks?" "No, thanks?"
+test "No thanks for asking." "No, thanks for asking."
+
+# False positives / true negatives
+allows "No, thanks I am fine."
+allows "No, thanks."
+allows "No, thanks needed."
+allows "No, thanks for asking."
+allows "No thank you, I am good."
+allows "Yes thanks I am fine."
+allows "No-thanks messages are short."
+allows "Nothing to say, thanks."

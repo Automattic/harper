@@ -33,8 +33,7 @@ impl Default for ItWouldBe {
         ]);
 
         let branch = |has_not: bool, has_adj: bool| {
-            let mut p = SequenceExpr::default()
-                .then(head_verbs.clone())
+            let mut p = SequenceExpr::with(head_verbs.clone())
                 .then_whitespace()
                 .t_aco("i") // the mistaken pronoun
                 .then_whitespace()

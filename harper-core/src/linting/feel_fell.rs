@@ -11,8 +11,7 @@ pub struct FeelFell {
 
 impl Default for FeelFell {
     fn default() -> Self {
-        let with_word_before = SequenceExpr::default()
-            .then_word_set(&["didn't", "doesn't"])
+        let with_word_before = SequenceExpr::word_set(&["didn't", "doesn't"])
             .t_ws()
             .t_aco("fell");
 

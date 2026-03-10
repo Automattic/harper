@@ -1,0 +1,28 @@
+expr main (Mercedes Benz)
+
+let message "Hyphenate the two components of this classic Mercedes-Benz trademark."
+let description "Connect the separate words `Mercedes` and `Benz` whenever they appear together so the brand stays consistent with its official styling."
+let kind "Spelling"
+let becomes "Mercedes-Benz"
+let strategy "Exact"
+
+# True positives
+test "Mercedes Benz is iconic." "Mercedes-Benz is iconic."
+test "Have you seen Mercedes Benz commercials?" "Have you seen Mercedes-Benz commercials?"
+test "I booked a Mercedes Benz for the demo." "I booked a Mercedes-Benz for the demo."
+test "mercedes benz is fast." "Mercedes-Benz is fast."
+test "MERCEDES BENZ leads the standings." "Mercedes-Benz leads the standings."
+test "My neighbor bought a Mercedes Benz." "My neighbor bought a Mercedes-Benz."
+test "The Mercedes Benz, as a brand, makes waves." "The Mercedes-Benz, as a brand, makes waves."
+test "Mercedes Benz should never be split." "Mercedes-Benz should never be split."
+test "Mercedes Benz and BMW kept things exciting." "Mercedes-Benz and BMW kept things exciting."
+test "The factory's Mercedes Benz fleet grows." "The factory's Mercedes-Benz fleet grows."
+test "Mercedes Benz will celebrate 100 years next year." "Mercedes-Benz will celebrate 100 years next year."
+test "Testing shows Mercedes Benz is still relevant." "Testing shows Mercedes-Benz is still relevant."
+
+# False positives / true negatives
+allows "Mercedes-Benz is in the race."
+allows "I drove a Benz and a Mercedes the same day."
+
+# False negatives (current limitation: possessive suffix)
+allows "Mercedes Benz's heritage is storied."

@@ -14,8 +14,7 @@ impl Default for LetToDo {
     fn default() -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then_word_set(&["let", "lets", "let's"])
+                SequenceExpr::word_set(&["let", "lets", "let's"])
                     .t_ws()
                     .then_any_of(vec![
                         Box::new(SequenceExpr::default().then_object_pronoun()),

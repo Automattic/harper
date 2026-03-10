@@ -264,12 +264,24 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
     }
 
+    pub fn is_acute(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Acute))
+    }
+
     pub fn is_ampersand(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
     }
 
+    pub fn is_backslash(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Backslash))
+    }
+
     pub fn is_slash(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::ForwardSlash))
+    }
+
+    pub fn is_percent(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Percent))
     }
 
     // Miscellaneous is-methods

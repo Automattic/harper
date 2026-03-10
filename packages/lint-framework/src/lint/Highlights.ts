@@ -112,8 +112,24 @@ export default class Highlights {
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
+			const isGoogleDocsSource =
+				source instanceof HTMLElement &&
+				(source.classList.contains('kix-appview-editor') ||
+					source.closest('.kix-appview-editor') != null);
 
-			if (cpa != null) {
+			if (isGoogleDocsSource) {
+				const hostStyle = host.style;
+
+				hostStyle.position = 'absolute';
+				hostStyle.top = '0px';
+				hostStyle.left = '0px';
+				hostStyle.pointerEvents = 'none';
+				hostStyle.width = '0px';
+				hostStyle.height = '0px';
+				hostStyle.contain = 'none';
+				hostStyle.transform = 'none';
+				hostStyle.zIndex = '2147483647';
+			} else if (cpa != null) {
 				const hostStyle = host.style;
 
 				hostStyle.position = 'absolute';
@@ -129,17 +145,15 @@ export default class Highlights {
 				host.removeAttribute('style');
 			}
 
-			renderBox.render(
-				this.renderTree(
-					boxes,
-					cpa
-						? {
-								x: cpa.x,
-								y: cpa.y,
-							}
-						: null,
-				),
-			);
+			const gdocsRenderOffset =
+				isGoogleDocsSource && source instanceof HTMLElement
+					? this.getGoogleDocsRenderOffset(source)
+					: null;
+			const offset =
+				gdocsRenderOffset ?? (isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y });
+			const boxPosition: 'absolute' | 'fixed' = isGoogleDocsSource ? 'absolute' : 'fixed';
+
+			renderBox.render(this.renderTree(boxes, offset, boxPosition));
 			updated.add(source);
 		}
 
@@ -162,20 +176,37 @@ export default class Highlights {
 		}
 	}
 
-	private renderTree(boxes: LintBox[], offset: { x: number; y: number } | null): VNode {
+	private renderTree(
+		boxes: LintBox[],
+		offset: { x: number; y: number } | null,
+		boxPosition: 'absolute' | 'fixed',
+	): VNode {
 		const elements = [];
 		const offsetX = offset?.x ?? 0;
 		const offsetY = offset?.y ?? 0;
 
 		for (const box of boxes) {
+			const x = box.x - offsetX;
+			const y = box.y - offsetY;
+			const positionStyle =
+				boxPosition === 'fixed'
+					? {
+							position: 'fixed',
+							left: '0px',
+							top: '0px',
+							transform: `translate(${x}px, ${y}px)`,
+						}
+					: {
+							position: 'absolute',
+							left: `${x}px`,
+							top: `${y}px`,
+						};
+
 			const boxEl = h(
 				'div',
 				{
 					style: {
-						position: 'fixed',
-						left: '0px',
-						top: '0px',
-						transform: `translate(${box.x - offsetX}px, ${box.y - offsetY}px)`,
+						...positionStyle,
 						width: `${box.width}px`,
 						height: `${box.height}px`,
 						pointerEvents: 'none',
@@ -196,6 +227,13 @@ export default class Highlights {
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
 	private computeRenderTarget(el: SourceElement): HTMLElement {
+		if (
+			el instanceof HTMLElement &&
+			(el.classList.contains('kix-appview-editor') || el.closest('.kix-appview-editor') != null)
+		) {
+			return el;
+		}
+
 		if (el.parentElement?.classList.contains('ProseMirror')) {
 			return el.parentElement.parentElement!;
 		}
@@ -224,6 +262,15 @@ export default class Highlights {
 		}
 
 		return el.parentElement!;
+	}
+
+	private getGoogleDocsRenderOffset(source: HTMLElement): { x: number; y: number } {
+		const editorRect = source.getBoundingClientRect();
+
+		return {
+			x: editorRect.x - source.scrollLeft,
+			y: editorRect.y - source.scrollTop,
+		};
 	}
 }
 

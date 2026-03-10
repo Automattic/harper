@@ -363,3 +363,12 @@ Suggest:
 
 
 
+Lint:    Grammar (31 priority)
+Message: |
+     464 | With your kind of body size, you shouldn’t be eating pizza at all.
+         |      ^~~~ Use the contraction `you're` (you are) before predicate adjectives instead of the possessive `your` or its variants.
+Suggest:
+  - Replace with: “you're”
+
+
+

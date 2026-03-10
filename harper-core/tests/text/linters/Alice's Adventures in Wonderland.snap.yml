@@ -1536,16 +1536,6 @@ Message: |
 
 
 
-Lint:    Repetition (63 priority)
-Message: |
-     971 | to? And oh, my poor hands, how is it I can’t see you?” She was moving them about
-         |                                   ^~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “it”
-  - Replace with: “I”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      975 | As there seemed to be no chance of getting her hands up to her head, she tried
@@ -2626,16 +2616,6 @@ Message: |
          |      ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Then”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2177 | great relief. “Now at ours they had at the end of the bill, ‘French, music, and
-         |                       ^~~~~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “ours”
-  - Replace with: “they”
 
 
 
@@ -3769,6 +3749,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Grammar (31 priority)
+Message: |
+    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
+         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
+    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
+Suggest:
+  - Replace with: “them”
 
 
 

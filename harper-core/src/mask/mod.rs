@@ -1,3 +1,6 @@
+mod regex_masker;
+pub use regex_masker::RegexMasker;
+
 use itertools::Itertools;
 
 use crate::Span;

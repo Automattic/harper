@@ -1,0 +1,34 @@
+expr main <([(spinal [chord, chords]), (vocal [chord, chords]), (umbilical [chord, chords]), (electrical [chord, chords])]), ([chord, chords])>
+
+let message "Drop the `h` after these anatomical or wiring descriptors; the structure is a `cord`."
+let description "The words `spinal`, `vocal`, `umbilical`, and `electrical` are followed by `cord`, so replace accidental `chord`/`chords`."
+let kind "Typo"
+let becomes ["cord", "cords"]
+let strategy "MatchCase"
+
+# True positives
+
+test "The patient injured the spinal chord this week." "The patient injured the spinal cord this week."
+test "Musicians talked about the vocal chord vibrations." "Musicians talked about the vocal cord vibrations."
+test "Doctors monitor the umbilical chord after delivery." "Doctors monitor the umbilical cord after delivery."
+test "Electrical chord damage can start a fire." "Electrical cord damage can start a fire."
+test "We studied the spinal chords in anatomy class." "We studied the spinal cords in anatomy class."
+test "The singer's vocal chords were sore." "The singer's vocal cords were sore."
+test "Umbilical chords should remain intact until clamping." "Umbilical cords should remain intact until clamping."
+test "Electrical chords spark when overloaded." "Electrical cords spark when overloaded."
+test "Spinal chord repair takes steady hands." "Spinal cord repair takes steady hands."
+test "Vocal chord therapy helped the speaker." "Vocal cord therapy helped the speaker."
+test "Umbilical chord issues raised concern." "Umbilical cord issues raised concern."
+test "The crew replaced the electrical chords on stage." "The crew replaced the electrical cords on stage."
+test "Spinal chords often accompany nerve damage." "Spinal cords often accompany nerve damage."
+test "Vocal chords sustain the melody." "Vocal cords sustain the melody."
+test "Electrical chords run along the wall." "Electrical cords run along the wall."
+
+# False positives / true negatives
+
+allows "A guitar chord can sound beautiful."
+allows "The lamp cord is frayed but still works."
+allows "Spinal cord injuries require care."
+allows "Vocal cords vibrate when we sing."
+allows "Umbilical cord clamping is a delicate step."
+allows "Remember to unplug the electrical cord before repairs."

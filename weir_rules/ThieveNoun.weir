@@ -1,0 +1,30 @@
+expr determiners [the, a, an, this, that, my, your, his, her, their, our, its]
+expr nounContext [(@determiners thieve), (@determiners [ADJ] thieve)]
+expr main <(@nounContext), thieve>
+
+let message "Use `thief` for a single person who steals."
+let description "Fixes accidental `thieve` in noun phrases where singular `thief` is intended."
+let kind "Spelling"
+let becomes "thief"
+
+# true positives
+
+test "The thieve ran off before anyone noticed." "The thief ran off before anyone noticed."
+test "A thieve took my bike from the rack." "A thief took my bike from the rack."
+test "My thieve character has max stealth." "My thief character has max stealth."
+test "Their thieve escaped through the alley." "Their thief escaped through the alley."
+test "An elusive thieve slipped past security." "An elusive thief slipped past security."
+test "His notorious thieve was finally identified." "His notorious thief was finally identified."
+test "Our thieve was caught on camera." "Our thief was caught on camera."
+test "This thieve left muddy footprints." "This thief left muddy footprints."
+
+# false positives / true negatives
+
+test "The thief ran off before anyone noticed." "The thief ran off before anyone noticed."
+test "Thieves ran off before anyone noticed." "Thieves ran off before anyone noticed."
+test "They thieve from cargo ships at night." "They thieve from cargo ships at night."
+test "Do not thieve from your neighbors." "Do not thieve from your neighbors."
+test "The archive stores old legal briefs and pleas." "The archive stores old legal briefs and pleas."
+test "My brave thief character has max stealth." "My brave thief character has max stealth."
+test "Our very clever thief left no trace." "Our very clever thief left no trace."
+test "That very skilled thief cracked the safe." "That very skilled thief cracked the safe."

@@ -22,8 +22,7 @@ impl CriteriaPhenomena {
 
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then(singular_modifiers.clone())
+                SequenceExpr::with(singular_modifiers.clone())
                     .then_whitespace()
                     .then(plural_words.clone()),
             ),

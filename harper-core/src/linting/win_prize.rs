@@ -16,18 +16,12 @@ impl Default for WinPrize {
         let verbs = Lrc::new(WordSet::new(&["win", "wins", "won", "winning"]));
         let miss = Lrc::new(WordSet::new(&["price", "prices", "prise", "prises"]));
 
-        let pattern = SequenceExpr::default()
-            .then(verbs.clone())
+        let pattern = SequenceExpr::with(verbs.clone())
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
             .then(miss.clone())
-            .or_longest(
-                SequenceExpr::default()
-                    .then(verbs)
-                    .then_whitespace()
-                    .then(miss),
-            );
+            .or_longest(SequenceExpr::with(verbs).then_whitespace().then(miss));
 
         Self {
             expr: Box::new(pattern),

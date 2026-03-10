@@ -1,0 +1,32 @@
+expr main <(all ready ADJ), (all ready)>
+
+let message "Use `already` before adjectives instead of the two-word phrase."
+let description "Flags `all ready` when it precedes an adjective so the adverb `already` can take its place."
+let kind "Grammar"
+let becomes "already"
+
+# True positives
+test "The device is all ready available in Korea." "The device is already available in Korea."
+test "Everything is all ready clear before the deadline." "Everything is already clear before the deadline."
+test "The firmware is all ready stable on the new hardware." "The firmware is already stable on the new hardware."
+test "They were all ready aware of the security policy." "They were already aware of the security policy."
+test "Our team is all ready excited to release the patch." "Our team is already excited to release the patch."
+test "It is all ready possible to switch to the new plan." "It is already possible to switch to the new plan."
+test "The training is all ready complete for the next cohort." "The training is already complete for the next cohort."
+test "Her notes are all ready relevant to the presentation." "Her notes are already relevant to the presentation."
+test "The content is all ready public on the blog." "The content is already public on the blog."
+test "ALL READY AVAILABLE data arrived yesterday." "ALREADY AVAILABLE data arrived yesterday."
+test "The settings are all ready consistent across environments." "The settings are already consistent across environments."
+test "Our docs are all ready accurate for the release notes." "Our docs are already accurate for the release notes."
+
+# False negatives (these contexts still need the correction)
+test "All ready solid documentation should go live soon." "Already solid documentation should go live soon."
+test "The plan is all ready steady for roll out." "The plan is already steady for roll out."
+test "The board felt all ready confident in the direction." "The board felt already confident in the direction."
+
+# Guardrails / False positives (these should remain untouched)
+test "Are you all ready for the show?" "Are you all ready for the show?"
+test "We were all ready to leave as soon as the bell rang." "We were all ready to leave as soon as the bell rang."
+test "Your crew was all ready and waiting for the signal." "Your crew was all ready and waiting for the signal."
+test "You can keep all ready supplies in the closet." "You can keep all ready supplies in the closet."
+test "I saw that they were all ready when the curtains opened." "I saw that they were all ready when the curtains opened."

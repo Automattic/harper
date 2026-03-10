@@ -21,7 +21,8 @@ impl Default for ThisTypeOfThing {
                         ])
                         .t_ws(),
                     )
-                    .then(SequenceExpr::aco("of").t_ws())
+                    .t_aco("of")
+                    .t_ws()
                     .then_any_of(vec![
                         // "thing" is common in this construction and won't be part of a compound noun.
                         Box::new(WordSet::new(&["thing", "things"])),

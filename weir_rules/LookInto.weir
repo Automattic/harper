@@ -1,0 +1,35 @@
+expr lookVerbs [look, looks, looked, looking]
+expr whWords [what, who, whom, whose, when, where, why, how, which, whoever, whomever, whichever, whatever, whether, whenever]
+
+expr main <((@lookVerbs in to) @whWords), (in to)>
+
+let message "Keep `look into` together before question words so the verb stays idiomatic."
+let description "Merges the split preposition when a look-verb is followed by a clause that starts with a question word."
+let kind "Grammar"
+let becomes "into"
+let strategy "MatchCase"
+
+# True positives
+
+test "I look in to what happened last night." "I look into what happened last night."
+test "She looks in to who wrote the note." "She looks into who wrote the note."
+test "They looked in to where the alarm originated." "They looked into where the alarm originated."
+test "We are looking in to why the download fails." "We are looking into why the download fails."
+test "LOOK in to WHEN the site crashed." "LOOK into WHEN the site crashed."
+test "Looking in to whichever document you choose helps." "Looking into whichever document you choose helps."
+test "I looked in to how you fixed the bug." "I looked into how you fixed the bug."
+test "Look in to whoever can help with it." "Look into whoever can help with it."
+test "She looks in to whom the report belongs." "She looks into whom the report belongs."
+test "They are looking in to whether the patch helps." "They are looking into whether the patch helps."
+test "We look in to whose section needs focus." "We look into whose section needs focus."
+test "He looked in to whenever the team opens the log." "He looked into whenever the team opens the log."
+test "Looking in to whomever the judge permits is polite." "Looking into whomever the judge permits is polite."
+
+# False positives / true negatives
+
+allows "Look into the code to find the bug."
+allows "I looked into the notes before replying."
+allows "Please look in to the manual to see the steps."
+allows "He looks in to the dataset in order to compare."
+allows "Looking in to the folder to check if the file exists."
+allows "We look in the box to count the screws."

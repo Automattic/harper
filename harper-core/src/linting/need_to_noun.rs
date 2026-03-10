@@ -41,8 +41,7 @@ impl Default for NeedToNoun {
         let b =
             SequenceExpr::default().then_kind_where(|kind| kind.is_nominal() && !kind.is_verb());
 
-        let expr = SequenceExpr::default()
-            .then(DerivedFrom::new_from_str("need"))
+        let expr = SequenceExpr::with(DerivedFrom::new_from_str("need"))
             .t_ws()
             .t_aco("to")
             .t_ws()

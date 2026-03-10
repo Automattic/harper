@@ -17,6 +17,7 @@ use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
+use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
@@ -36,6 +37,7 @@ use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
+use super::by_accident::ByAccident;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
@@ -49,9 +51,11 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::damages::Damages;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
+use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
@@ -67,6 +71,7 @@ use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
+use super::fed_up_with::FedUpWith;
 use super::feel_fell::FeelFell;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
@@ -98,6 +103,7 @@ use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
+use super::lead_rise_to::LeadRiseTo;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -120,10 +126,12 @@ use super::more_adjective::MoreAdjective;
 use super::more_better::MoreBetter;
 use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
+use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_longer::NoLonger;
 use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
@@ -169,7 +177,6 @@ use super::right_click::RightClick;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
-use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
@@ -191,10 +198,12 @@ use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
+use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
+use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
@@ -225,6 +234,7 @@ use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+use super::wrong_apostrophe::WrongApostrophe;
 
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
@@ -423,6 +433,7 @@ impl LintGroup {
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
         insert_expr_rule!(AfterLater, true);
+        insert_expr_rule!(AllHellBreakLoose, true);
         insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_expr_rule!(AllowTo, true);
         insert_expr_rule!(AmInTheMorning, true);
@@ -441,6 +452,7 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
+        insert_expr_rule!(ByAccident, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(CautionaryTale, true);
@@ -499,6 +511,7 @@ impl LintGroup {
         insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(LeadRiseTo, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -523,6 +536,7 @@ impl LintGroup {
         insert_expr_rule!(NailOnTheHead, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
+        insert_expr_rule!(NoLonger, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
@@ -564,7 +578,6 @@ impl LintGroup {
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
-        insert_expr_rule!(SemicolonApostrophe, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
@@ -584,10 +597,12 @@ impl LintGroup {
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
         insert_expr_rule!(TheMy, true);
+        insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(Theres, true);
         insert_expr_rule!(ThesesThese, true);
+        insert_struct_rule!(TheyreConfusions, true);
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
@@ -615,6 +630,7 @@ impl LintGroup {
         insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule!(WouldNeverHave, true);
+        insert_expr_rule!(WrongApostrophe, true);
 
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -625,7 +641,7 @@ impl LintGroup {
         );
         out.config.set_rule_enabled("InflectedVerbAfterTo", true);
 
-        out.add("InOnTheCards", InOnTheCards::new(dialect));
+        out.add_chunk_expr_linter("InOnTheCards", InOnTheCards::new(dialect));
         out.config.set_rule_enabled("InOnTheCards", true);
 
         out.add(
@@ -637,10 +653,10 @@ impl LintGroup {
         out.add("PossessiveNoun", PossessiveNoun::new(dictionary.clone()));
         out.config.set_rule_enabled("PossessiveNoun", false);
 
-        out.add("Regionalisms", Regionalisms::new(dialect));
+        out.add_chunk_expr_linter("Regionalisms", Regionalisms::new(dialect));
         out.config.set_rule_enabled("Regionalisms", true);
 
-        out.add("HaveTakeALook", HaveTakeALook::new(dialect));
+        out.add_chunk_expr_linter("HaveTakeALook", HaveTakeALook::new(dialect));
         out.config.set_rule_enabled("HaveTakeALook", true);
 
         out.add("MassNouns", MassNouns::new(dictionary.clone()));
@@ -654,6 +670,11 @@ impl LintGroup {
             DisjointPrefixes::new(dictionary.clone()),
         );
         out.config.set_rule_enabled("DisjointPrefixes", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add("Damages", Damages::default());
+        out.config.set_rule_enabled("Damages", true);
 
         out.add(
             "PronounVerbAgreement",
@@ -678,6 +699,21 @@ impl LintGroup {
 
         out.add("WorthToDo", WorthToDo::new(dictionary.clone()));
         out.config.set_rule_enabled("WorthToDo", true);
+
+        out.add_chunk_expr_linter("DidPast", DidPast::new(dictionary.clone()));
+        out.config.set_rule_enabled("DidPast", true);
+
+        out.add_chunk_expr_linter("FedUpWith", FedUpWith::new(dialect));
+        out.config.set_rule_enabled("FedUpWith", true);
+
+        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
+        //  `add_sentence_expr_linter`
+        out.add(
+            "MultipleFrequencyAdverbs",
+            MultipleFrequencyAdverbs::default(),
+        );
+        out.config
+            .set_rule_enabled("MultipleFrequencyAdverbs", true);
 
         out
     }

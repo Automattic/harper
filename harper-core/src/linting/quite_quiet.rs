@@ -22,17 +22,16 @@ impl Default for QuiteQuiet {
                 &["here", "up"],
             );
 
-        let negative_contraction_quiet = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
-                    return false;
-                }
-                tok.span
-                    .get_content(src)
-                    .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
-            })
-            .t_ws()
-            .t_aco("quiet");
+        let negative_contraction_quiet = SequenceExpr::with(|tok: &Token, src: &[char]| {
+            if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
+                return false;
+            }
+            tok.span
+                .get_content(src)
+                .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
+        })
+        .t_ws()
+        .t_aco("quiet");
 
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(

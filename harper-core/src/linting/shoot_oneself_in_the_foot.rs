@@ -18,8 +18,7 @@ impl Default for ShootOneselfInTheFoot {
 
         let body_parts = WordSet::new(&["foot", "feet", "leg", "legs"]);
 
-        let pattern = SequenceExpr::default()
-            .then(verb_forms)
+        let pattern = SequenceExpr::with(verb_forms)
             .t_ws()
             .then(ReflexivePronoun::default())
             .t_ws()
