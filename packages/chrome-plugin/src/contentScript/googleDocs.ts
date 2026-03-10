@@ -142,11 +142,6 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 				continue;
 			}
 
-			if (token.length === 1 && !token.match(/[a-zA-Z]/)) {
-				tokens[i] = ` ${token} `;
-				continue;
-			}
-
 			const isLast = i === tokens.length - 1;
 			const lastChar = token.charAt(token.length - 1);
 			const nextFirstChar = tokens[i + 1]?.charAt(0) ?? '';
