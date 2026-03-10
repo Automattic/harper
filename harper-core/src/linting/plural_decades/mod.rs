@@ -1,13 +1,14 @@
+mod four_digits;
+mod two_digits;
+
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, expr_linter::Sentence},
 };
 
-mod four_digits;
-mod two_digits;
-
 use four_digits::match_to_lint_four_digits;
+use two_digits::match_to_lint_two_digits;
 
 pub struct PluralDecades {
     expr: SequenceExpr,
@@ -55,13 +56,44 @@ impl ExprLinter for PluralDecades {
             return None;
         }
 
-        // TODO delegate to four_digits.rs or two_digits.rs
+        let (decade_chars, s_chars) =
+            (toks[0].span.get_content(src), toks[2].span.get_content(src));
+
+        let (before_context, after_context): (Option<&[Token]>, Option<&[Token]>) = match ctx {
+            Some((pw, nw)) => {
+                if pw.is_empty() {
+                    if nw.is_empty() {
+                        (None, None)
+                    } else {
+                        (None, Some(nw))
+                    }
+                } else if nw.is_empty() {
+                    (Some(pw), None)
+                } else {
+                    (Some(pw), Some(nw))
+                }
+            }
+            None => (None, None),
+        };
 
         if decade_chars.len() == 4 {
-            match_to_lint_four_digits(toks, src, ctx)
+            match_to_lint_four_digits(
+                toks,
+                src,
+                decade_chars,
+                s_chars,
+                before_context,
+                after_context,
+            )
         } else {
-            // TODO delegate to two_digits.rs
-            None
+            match_to_lint_two_digits(
+                toks,
+                src,
+                decade_chars,
+                s_chars,
+                before_context,
+                after_context,
+            )
         }
     }
 }

@@ -6,27 +6,11 @@ use crate::{
 pub fn match_to_lint_four_digits(
     toks: &[Token],
     src: &[char],
-    ctx: Option<(&[Token], &[Token])>,
+    decade: &[char],
+    suffix: &[char],
+    pre: Option<&[Token]>,
+    post: Option<&[Token]>,
 ) -> Option<Lint> {
-    let (decade_chars, s_chars) = (toks[0].span.get_content(src), toks[2].span.get_content(src));
-
-    let (before_context, after_context): (Option<&[Token]>, Option<&[Token]>) = match ctx {
-        Some((pw, nw)) => {
-            if pw.is_empty() {
-                if nw.is_empty() {
-                    (None, None)
-                } else {
-                    (None, Some(nw))
-                }
-            } else if nw.is_empty() {
-                (Some(pw), None)
-            } else {
-                (Some(pw), Some(nw))
-            }
-        }
-        None => (None, None),
-    };
-
     enum UsageJudgment {
         NotMistake,
         IsMistake,
@@ -38,8 +22,8 @@ pub fn match_to_lint_four_digits(
         word: &'a [char],
     }
 
-    let before = if before_context.is_some_and(|b| b.len() >= 2)
-        && let [.., pw, psep] = before_context.unwrap()
+    let before = if pre.is_some_and(|b| b.len() >= 2)
+        && let [.., pw, psep] = pre.unwrap()
         && (psep.kind.is_whitespace() || psep.kind.is_hyphen())
         && pw.kind.is_word()
     {
@@ -51,8 +35,8 @@ pub fn match_to_lint_four_digits(
         None
     };
 
-    let after = if after_context.is_some_and(|a| a.len() >= 2)
-        && let [nsep, nw, ..] = after_context.unwrap()
+    let after = if post.is_some_and(|a| a.len() >= 2)
+        && let [nsep, nw, ..] = post.unwrap()
         && (nsep.kind.is_whitespace() || nsep.kind.is_hyphen())
         && nw.kind.is_word()
     {
@@ -83,12 +67,11 @@ pub fn match_to_lint_four_digits(
             if !before.sep_is_hyphen && before.word.eq_ignore_ascii_case_str("the") =>
         {
             // Go back one more word and look for "in the" before the decade
-            if let [.., ppw, ppsep, _, _] = before_context.unwrap() {
-                if ppsep.kind.is_whitespace() && ppw.kind.is_preposition() {
-                    UsageJudgment::IsMistake
-                } else {
-                    UsageJudgment::Unsure
-                }
+            if let [.., ppw, ppsep, _, _] = pre.unwrap()
+                && ppsep.kind.is_whitespace()
+                && ppw.kind.is_preposition()
+            {
+                UsageJudgment::IsMistake
             } else {
                 UsageJudgment::Unsure
             }
@@ -104,7 +87,7 @@ pub fn match_to_lint_four_digits(
         span: toks.span()?,
         lint_kind: LintKind::Usage,
         message: "Plural decades do not use an apostrophe before the `s`".to_string(),
-        suggestions: vec![Suggestion::ReplaceWith([decade_chars, s_chars].concat())],
+        suggestions: vec![Suggestion::ReplaceWith([decade, suffix].concat())],
         ..Default::default()
     })
 }
