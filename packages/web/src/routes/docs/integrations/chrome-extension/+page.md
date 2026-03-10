@@ -24,6 +24,6 @@ If it is delayed, you can initiate a manual update yourself by:
 1. Enabling Developer mode using the toggle in the top-right corner.
 1. Clicking the Update button that appears.
 
-Be advised: Google's review process is often faster than other integrations (for example, Obsidian).
+Be advised: Google's review process is often slower than other integrations (for example, Obsidian).
 This means that Chrome Extension updates are usually delayed by a few days compared to everything else.
 We appreciate your patience.
