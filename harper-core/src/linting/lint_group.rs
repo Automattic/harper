@@ -174,6 +174,7 @@ use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
 use super::right_click::RightClick;
+use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
@@ -575,6 +576,7 @@ impl LintGroup {
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
         insert_expr_rule!(RightClick, true);
+        insert_expr_rule!(RiseTheRanks, true);
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);

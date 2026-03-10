@@ -183,6 +183,7 @@ mod regionalisms;
 mod repeated_words;
 mod respond;
 mod right_click;
+mod rise_the_ranks;
 mod roller_skated;
 mod safe_to_save;
 mod save_to_safe;
