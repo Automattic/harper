@@ -624,6 +624,7 @@ impl SequenceExpr {
     gen_then_from_is!(hyphen);
     gen_then_from_is!(period);
     gen_then_from_is!(semicolon);
+    gen_then_from_is!(acute);
     gen_then_from_is!(quote);
     gen_then_from_is!(backslash);
     gen_then_from_is!(slash);
