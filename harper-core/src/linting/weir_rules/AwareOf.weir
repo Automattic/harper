@@ -1,0 +1,9 @@
+expr main (aware about)
+
+let message "Use 'aware of' instead of 'aware about'."
+let description "Corrects 'aware about' to the standard 'aware of'."
+let kind "Usage"
+let becomes "aware of"
+
+test "\"no-member\" checks is not aware about the scope" "\"no-member\" checks is not aware of the scope"
+test "OP-TEE core will still be aware about that id, but at least we will be able to change it in runtime." "OP-TEE core will still be aware of that id, but at least we will be able to change it in runtime."
