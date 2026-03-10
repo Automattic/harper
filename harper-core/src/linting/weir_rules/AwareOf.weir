@@ -1,7 +1,7 @@
 expr main (aware about)
 
-let message "Use 'aware of' instead of 'aware about'."
-let description "Corrects 'aware about' to the standard 'aware of'."
+let message "Use `aware of` instead of `aware about`."
+let description "Corrects `aware about` to the standard `aware of`."
 let kind "Usage"
 let becomes "aware of"
 
