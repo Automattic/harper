@@ -17,26 +17,27 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
-        "ByTheWay"           => ("btw", &["by the way"]),
-        "ForYourInformation" => ("fyi", &["for your information"]),
-        "AsSoonAsPossible"   => ("asap", &["as soon as possible"]),
-        "InMyOpinion"        => ("imo", &["in my opinion"]),
-        "InMyHumbleOpinion"  => ("imho", &["in my humble opinion", "in my honest opinion"]),
-        "OhMyGod"            => ("omg", &["oh my god"]),
-        "BeRightBack"        => ("brb", &["be right back"]),
-        "TalkToYouLater"     => ("ttyl", &["talk to you later"]),
-        "NeverMind"          => ("nvm", &["never mind"]),
-        "ToBeHonest"         => ("tbh", &["to be honest"]),
-        "AsFarAsIKnow"       => ("afaik", &["as far as I know"]),
-        "Really"             => ("rly", &["really"]),
-        "ExplainLikeImFive"  => ("eli5", &["explain like i'm five"]),
-        "ForWhatItsWorth"    => ("fwiw", &["for what it's worth"]),
-        "IDontKnow"          => ("idk", &["I don't know"]),
-        "IfIRecallCorrectly" => ("iirc", &["if I recall correctly"]),
-        "IfYouKnowYouKnow"   => ("iykyk", &["if you know, you know"]),
-        "InCaseYouMissedIt"  => ("icymi", &["in case you missed it"]),
-        "InRealLife"         => ("irl", &["in real life"]),
-        "PleaseTakeALook"    => ("ptal", &["please take a look"]),
+        "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
+        "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
+        "BeRightBack"            => ("brb", &["be right back"]),
+        "ByTheWay"               => ("btw", &["by the way"]),
+        "ExplainLikeImFive"      => ("eli5", &["explain like i'm five"]),
+        "ForWhatItsWorth"        => ("fwiw", &["for what it's worth"]),
+        "ForYourInformation"     => ("fyi", &["for your information"]),
+        "IDontKnow"              => ("idk", &["I don't know"]),
+        "IfIRecallCorrectly"     => ("iirc", &["if I recall correctly"]),
+        "IfIUnderstandCorrectly" => ("iiuc", &["if I understand correctly"]),
+        "IfYouKnowYouKnow"       => ("iykyk", &["if you know, you know"]),
+        "InCaseYouMissedIt"      => ("icymi", &["in case you missed it"]),
+        "InMyHumbleOpinion"      => ("imho", &["in my humble opinion", "in my honest opinion"]),
+        "InMyOpinion"            => ("imo", &["in my opinion"]),
+        "InRealLife"             => ("irl", &["in real life"]),
+        "NeverMind"              => ("nvm", &["never mind"]),
+        "OhMyGod"                => ("omg", &["oh my god"]),
+        "PleaseTakeALook"        => ("ptal", &["please take a look"]),
+        "Really"                 => ("rly", &["really"]),
+        "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
+        "ToBeHonest"             => ("tbh", &["to be honest"]),
     });
 
     group.set_all_rules_to(Some(true));
@@ -218,6 +219,15 @@ mod tests {
                 "In my honest opinion, this is a good idea.",
             ],
             &["In my horrible opinion, this is a good idea."],
+        );
+    }
+
+    #[test]
+    fn corrects_iiuc() {
+        assert_suggestion_result(
+            "iiuc build caching in hol4 works at the file level",
+            lint_group(),
+            "if i understand correctly build caching in hol4 works at the file level",
         );
     }
 }

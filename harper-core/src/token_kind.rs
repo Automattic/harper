@@ -264,6 +264,10 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
     }
 
+    pub fn is_acute(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Acute))
+    }
+
     pub fn is_ampersand(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
     }
