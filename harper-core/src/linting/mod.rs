@@ -187,7 +187,6 @@ mod rise_the_ranks;
 mod roller_skated;
 mod safe_to_save;
 mod save_to_safe;
-mod semicolon_apostrophe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
@@ -246,6 +245,7 @@ mod wish_could;
 mod wordpress_dotcom;
 mod worth_to_do;
 mod would_never_have;
+mod wrong_apostrophe;
 
 pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;
@@ -254,7 +254,6 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
-pub use spell_check::SpellCheck;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
