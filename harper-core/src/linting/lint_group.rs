@@ -137,6 +137,7 @@ use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
+use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::obsess_preposition::ObsessPreposition;
@@ -542,6 +543,7 @@ impl LintGroup {
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
         insert_expr_rule!(NorModalPronoun, true);
+        insert_expr_rule!(NotOnlyInversion, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_expr_rule!(ObsessPreposition, true);
