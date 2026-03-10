@@ -34,7 +34,10 @@ impl ExprLinter for VerbToAdjective {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let words: Vec<_> = matched_tokens.iter().filter(|tok| tok.kind.is_word()).collect();
+        let words: Vec<_> = matched_tokens
+            .iter()
+            .filter(|tok| tok.kind.is_word())
+            .collect();
         let [_, adverb, noun, _] = words.as_slice() else {
             return None;
         };
