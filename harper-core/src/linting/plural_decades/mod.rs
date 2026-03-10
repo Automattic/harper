@@ -45,7 +45,8 @@ impl ExprLinter for PluralDecades {
             (toks[0].span.get_content(src), toks[2].span.get_content(src));
 
         // TODO does not yet support two-digit decades like 80's
-        if decade_chars.len() != 4 || !decade_chars.ends_with(&['0']) {
+        // if decade_chars.len() != 4 || !decade_chars.ends_with(&['0']) {
+        if ![2, 4].contains(&decade_chars.len()) || !decade_chars.ends_with(&['0']) {
             return None;
         }
 
