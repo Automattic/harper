@@ -24,15 +24,26 @@ pub fn match_to_lint_two_digits(
         crate::linting::debug::format_lint_match(toks, ctx_for_debug, src)
     );
 
-    type ContextTokens<'a> = (Option<&'a Token>, Option<&'a Token>, Option<&'a Token>, Option<&'a Token>, Option<&'a Token>);
+    type ContextTokens<'a> = (
+        Option<&'a Token>,
+        Option<&'a Token>,
+        Option<&'a Token>,
+        Option<&'a Token>,
+        Option<&'a Token>,
+    );
 
-    let (mut preprepre, mut prepre, mut pre, mut next, mut nextnext): ContextTokens = (None, None, None, None, None);
-    if let Some(before) = before && !before.is_empty() {
+    let (mut preprepre, mut prepre, mut pre, mut next, mut nextnext): ContextTokens =
+        (None, None, None, None, None);
+    if let Some(before) = before
+        && !before.is_empty()
+    {
         pre = before.get_rel(-1);
         prepre = before.get_rel(-2);
         preprepre = before.get_rel(-3);
     }
-    if let Some(after) = after && !after.is_empty() {
+    if let Some(after) = after
+        && !after.is_empty()
+    {
         next = after.get_rel(0);
         if after.len() > 1 {
             nextnext = after.get_rel(1);
@@ -55,8 +66,10 @@ pub fn match_to_lint_two_digits(
             pp.span
                 .get_content(src)
                 .eq_any_ignore_ascii_case_str(&["early", "mid", "late"])
-        })) || (next.is_some_and(|n| n.kind.is_whitespace())
-        && nextnext.is_some_and(|nn| nn.span.get_content(src).eq_ignore_ascii_case_str("style")))
+        }))
+        || (next.is_some_and(|n| n.kind.is_whitespace())
+            && nextnext
+                .is_some_and(|nn| nn.span.get_content(src).eq_ignore_ascii_case_str("style")))
     {
         judgement = UsageJudgment::IsMistakeForDecade;
     }
