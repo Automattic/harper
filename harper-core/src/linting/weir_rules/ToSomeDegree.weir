@@ -1,0 +1,8 @@
+expr main (in some degree)
+
+let message "The correct preposition in this phrase is 'to', not 'in'."
+let description "Corrects `in some degree` to `to some degree`, meaning to a certain extent."
+let kind "Eggcorn"
+let becomes "to some degree"
+
+test "It would be prescriptive in some degree, but we could use MUST / MAY / SHOULD as like the current spec and IETF RFCs." "It would be prescriptive to some degree, but we could use MUST / MAY / SHOULD as like the current spec and IETF RFCs."
