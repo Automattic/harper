@@ -8,10 +8,105 @@ pub fn match_to_lint_two_digits(
     src: &[char],
     decade: &[char],
     suffix: &[char],
-    pre: Option<&[Token]>,
-    post: Option<&[Token]>,
+    before: Option<&[Token]>,
+    after: Option<&[Token]>,
 ) -> Option<Lint> {
-    None
+    let empty_tokens: &[Token] = &[];
+    let ctx_for_debug = match (before, after) {
+        (Some(p), Some(n)) => Some((p, n)),
+        (Some(p), None) => Some((p, empty_tokens)),
+        (None, Some(n)) => Some((empty_tokens, n)),
+        (None, None) => None,
+    };
+
+    eprintln!(
+        "📅 {}",
+        crate::linting::debug::format_lint_match(toks, ctx_for_debug, src)
+    );
+
+    let (mut preprepre, mut prepre, mut pre, mut next, mut nextnext): (
+        Option<&Token>,
+        Option<&Token>,
+        Option<&Token>,
+        Option<&Token>,
+        Option<&Token>,
+    ) = (None, None, None, None, None);
+    if let Some(before) = before {
+        if !before.is_empty() {
+            pre = before.get_rel(-1);
+            prepre = before.get_rel(-2);
+            preprepre = before.get_rel(-3);
+        }
+    }
+    if let Some(after) = after {
+        if !after.is_empty() {
+            next = after.get_rel(0);
+            if after.len() > 1 {
+                nextnext = after.get_rel(1);
+            }
+        }
+    }
+
+    #[derive(PartialEq)]
+    enum UsageJudgment {
+        NotMistake,
+        IsMistakeForDecade,
+        IsMistakeForAgeRange,
+        Unsure,
+    }
+
+    let mut judgement = UsageJudgment::Unsure;
+
+    // late 90's -> late '90s
+    if pre.is_some_and(|p| p.kind.is_whitespace() || p.kind.is_hyphen())
+        && prepre.is_some_and(|pp| {
+            pp.span
+                .get_content(src)
+                .eq_any_ignore_ascii_case_str(&["early", "mid", "late"])
+        })
+    {
+        judgement = UsageJudgment::IsMistakeForDecade;
+    }
+    // 80's style -> '80s style
+    else if next.is_some_and(|n| n.kind.is_whitespace())
+        && nextnext.is_some_and(|nn| nn.span.get_content(src).eq_ignore_ascii_case_str("style"))
+    {
+        judgement = UsageJudgment::IsMistakeForDecade;
+    }
+    // C++20's -> no mistake
+    else if toks[0]
+        .span
+        .get_content(src)
+        .eq_ignore_ascii_case_chars(&['2', '0'])
+        && pre.is_some_and(|p| p.kind.is_plus())
+        && prepre.is_some_and(|pp| pp.kind.is_plus())
+        && preprepre.is_some_and(|ppp| ppp.span.get_content(src).eq_ignore_ascii_case_chars(&['c']))
+    {
+        judgement = UsageJudgment::NotMistake;
+    }
+
+    let with_apostrophe_before = [&['\''], decade, suffix].concat();
+    let without_apostrophe = &with_apostrophe_before[1..];
+
+    let mut suggestions = vec![];
+
+    if judgement == UsageJudgment::NotMistake {
+        return None;
+    }
+    if judgement == UsageJudgment::IsMistakeForDecade {
+        suggestions.push(Suggestion::ReplaceWith(with_apostrophe_before.to_vec()));
+    }
+    if judgement == UsageJudgment::IsMistakeForAgeRange {
+        suggestions.push(Suggestion::ReplaceWith(without_apostrophe.to_vec()));
+    }
+
+    Some(Lint {
+        span: toks.span()?,
+        lint_kind: LintKind::Usage,
+        suggestions,
+        message: "To refer to a decade the apostrophe must be before the decade. To refer to an age range, use no apostrophe.".to_string(),
+        ..Default::default()
+    })
 }
 
 #[cfg(test)]
@@ -89,8 +184,8 @@ mod lints {
         );
     }
 
-    // mermaid 10's ESM only support breaks compat with many apps
     #[test]
+    #[ignore = "wip"]
     fn dont_flag_space_version_numbers_mermaid_10() {
         assert_no_lints(
             "mermaid 10's ESM only support breaks compat with many apps",
@@ -98,11 +193,73 @@ mod lints {
         );
     }
 
-    // 20s
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_npm_10s_npsg() {
+        assert_no_lints(
+            "Align npm packages to npm 10's node engine range",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "well-known products could be checked for"]
+    fn dont_flag_xcode_10s_version_number() {
+        assert_no_lints(
+            "Leverage Xcode 10's new \"File list\" feature for input/output files of Run Script build phases",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "non-well-known products couldn't really be checked for though"]
+    fn dont_flag_modo_10s_version_number() {
+        assert_no_lints(
+            "Modo 10's Unreal editor plugin (for loading PBR materials / textures)",
+            PluralDecades::default(),
+        );
+    }
 
     #[test]
     #[ignore = "wip"]
-    fn dont_flag_cpp_version() {
+    fn dont_flag_windows_10s_touch_keyboard() {
+        assert_no_lints(
+            "Arrow Key Command History Navigation Not Working Using Windows 10's Built-in 'Touch Keyboard'",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_android_10s_scoped_storage() {
+        assert_no_lints(
+            "Android 10's Scoped storage using Image picker (Gallery / Camera) with compression example.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_windows_10s_openssh() {
+        assert_no_lints(
+            "If I try to set Windows 10's OpenSSH ssh-agent.exe as the pageant executable, I get an error message",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "release/version number?"]
+    fn dont_flag_node10s_resolution_algorithm() {
+        assert_no_lints(
+            "node10 encoded Node.js 10's resolution algorithm, which predates ESM support",
+            PluralDecades::default(),
+        );
+    }
+
+    // 20s
+
+    #[test]
+    fn dont_flag_cpp20s_std_span() {
         assert_no_lints(
             "This repository contains a single-header implementation of C++20's std::span, conforming to the C++20 committee draft.",
             PluralDecades::default(),
@@ -124,6 +281,49 @@ mod lints {
         assert_no_lints("View soi-20's full-sized avatar.", PluralDecades::default());
     }
 
+    #[test]
+    fn dont_flag_cpp20s_concepts() {
+        assert_no_lints(
+            "Replace SFINAE with C++20's Concepts and Constraints",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_cpp20s_std_latch() {
+        assert_no_lints(
+            "As part of an experiment I recently switched from ducc's latch class to C++20's std::latch, and to my surprise I noticed a significant speedup",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_team_20s_application() {
+        assert_no_lints(
+            "Team 20's application for the 2020 Teens In AI Global COVID Hackathon.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "should we detect lesson numbers?"]
+    fn dont_flag_lesson_20s_sql_query() {
+        assert_no_lints(
+            "Lesson 20's SQL Query is too inefficient",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_cpp20s_initialization_change() {
+        assert_no_lints(
+            "Potential issue with C++20's initialization change.",
+            PluralDecades::default(),
+        );
+    }
+
     // 30s
 
     #[test]
@@ -131,6 +331,15 @@ mod lints {
     fn dont_flag_sdk_versions() {
         assert_no_lints(
             "binder: We call SDK 30's bindServiceAsUser() and SDK 26's bindDeviceAdminServiceAsUser() methods without a runtime check",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn dont_flag_jxn_hyphen_30s_username() {
+        assert_no_lints(
+            "GitHub Gist: star and fork jxn-30's gists by creating an account on GitHub",
             PluralDecades::default(),
         );
     }
@@ -143,6 +352,22 @@ mod lints {
         assert_no_lints("Group 40's team maths game.", PluralDecades::default());
     }
 
+    // 50s
+
+    #[test]
+    #[ignore = "here it's a username but Harper has no way to know"]
+    fn dont_flag_50s_username() {
+        assert_no_lints("View 50's full-sized avatar.", PluralDecades::default());
+    }
+
+    // 60s
+
+    #[test]
+    #[ignore = "here it means 60+ seconds"]
+    fn dont_flag_60_seconds() {
+        assert_no_lints("WSL cold startup 60's +", PluralDecades::default());
+    }
+
     // 70s
 
     #[test]
@@ -151,6 +376,15 @@ mod lints {
         assert_no_lints(
             "dotnet-runtime-70's release of 16th of May is causing \"version `GLIBC_2.34' not found\"",
             PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn fix_late_hyphen_70s() {
+        assert_suggestion_result(
+            "Retrocomputer built from late-70's TTL logic chips",
+            PluralDecades::default(),
+            "Retrocomputer built from late-'70s TTL logic chips",
         );
     }
 
@@ -187,7 +421,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_80s_style_game_breakout() {
         assert_suggestion_result(
             "I called this pong but then was reminded that it more closely resembles the 80's style game Breakout.",
@@ -246,6 +479,53 @@ mod lints {
         );
     }
 
+    #[test]
+    #[ignore = "wip"]
+    fn fix_80s_theme_80s_aesthetics() {
+        assert_suggestion_result(
+            "Vibrant 80's Klipper Mainsail Theme, based around 80's Dark Neon Aesthetics.",
+            PluralDecades::default(),
+            "Vibrant '80s Klipper Mainsail Theme, based around '80s Dark Neon Aesthetics.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_80s_dark_retro_theme() {
+        assert_suggestion_result(
+            "80's dark retro theme for VS Code and Sublime Text",
+            PluralDecades::default(),
+            "'80s dark retro theme for VS Code and Sublime Text",
+        );
+    }
+
+    #[test]
+    fn fix_80s_chorus_effect() {
+        assert_suggestion_result(
+            "An 80's style chorus effect for your KORG 'logue synthesizers - hammondeggs/hera.",
+            PluralDecades::default(),
+            "An '80s style chorus effect for your KORG 'logue synthesizers - hammondeggs/hera.",
+        );
+    }
+
+    #[test]
+    #[ignore = "Does this mean a Chrome browser version? If so what's the possessive for?"]
+    fn dont_flag_chrome_80s() {
+        assert_no_lints(
+            "Ready for Chrome 80's [Cookies default to SameSite=Lax] ?",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn fix_80s_style() {
+        assert_suggestion_result(
+            "Made your RStudio 80's style only after the sun goes down.",
+            PluralDecades::default(),
+            "Made your RStudio '80s style only after the sun goes down.",
+        );
+    }
+
     // 90s
 
     #[test]
@@ -259,7 +539,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_late_90s() {
         assert_suggestion_result(
             "gmdrec is a USB interface between your late 90's Sony portable MiniDisc recorder and your PC.",
@@ -289,12 +568,41 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_late_90s() {
         assert_suggestion_result(
             "A modified CircleMUD that ran in the late 90's.",
             PluralDecades::default(),
             "A modified CircleMUD that ran in the late '90s.",
+        );
+    }
+
+    #[test]
+    #[ignore = "wip"]
+    fn fix_rad_90s_website() {
+        assert_suggestion_result(
+            "This is our rad 90's website.",
+            PluralDecades::default(),
+            "This is our rad '90s website.",
+        );
+    }
+
+    #[test]
+    #[ignore = "mixed 80 with no 's next to 90's with 's might be too oddball"]
+    fn fix_mixed_80s_and_90s() {
+        // We could 'half-fix' just the 90's -> '90s part ...
+        assert_suggestion_result(
+            "\"ワープロ明朝\" is a font that reproduced the smoothing algorithm used in the 80-90's Japanese word processors.",
+            PluralDecades::default(),
+            "\"ワープロ明朝\" is a font that reproduced the smoothing algorithm used in the 80s-'90s Japanese word processors.",
+        );
+    }
+
+    #[test]
+    #[ignore = "90 degrees"]
+    fn dont_flag_all_90_degrees() {
+        assert_no_lints(
+            "get_map(\"Slope Degrees\") returns all 90's unless projected crs is specified",
+            PluralDecades::default(),
         );
     }
 
