@@ -95,10 +95,27 @@ impl Dictionary for MergedDictionary {
     }
 
     fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.children
+        let mut meta_iter = self
+            .children
             .iter()
-            .filter_map(|d| d.get_word_metadata(word))
-            .reduce(|acc, md| Cow::Owned(acc.or(&md)))
+            .filter_map(|d| d.get_word_metadata(word));
+
+        let first = meta_iter.next()?;
+
+        // Check if multiple entries were found for the word.
+        if let Some(second) = meta_iter.next() {
+            // If so, merge them.
+            let mut first = first.into_owned();
+            first.append(&second);
+            meta_iter.for_each(|additional_md| {
+                first.append(&additional_md);
+            });
+
+            Some(Cow::Owned(first))
+        } else {
+            // If not, return the sole found entry.
+            Some(first)
+        }
     }
 
     fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
