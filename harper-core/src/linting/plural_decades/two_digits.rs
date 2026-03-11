@@ -74,13 +74,18 @@ pub fn match_to_lint_two_digits(
         judgement = UsageJudgment::IsMistakeForDecade;
     }
     // C++20's -> no mistake
-    else if toks[0]
-        .span
-        .get_content(src)
-        .eq_ignore_ascii_case_chars(&['2', '0'])
+    else if (decade.eq_ignore_ascii_case_chars(&['2', '0'])
         && pre.is_some_and(|p| p.kind.is_plus())
         && prepre.is_some_and(|pp| pp.kind.is_plus())
-        && preprepre.is_some_and(|ppp| ppp.span.get_content(src).eq_ignore_ascii_case_chars(&['c']))
+        && preprepre
+            .is_some_and(|ppp| ppp.span.get_content(src).eq_ignore_ascii_case_chars(&['c'])))
+        || (pre.is_some_and(|p| p.kind.is_whitespace())
+            && prepre.is_some_and(|pp| {
+                pp.span
+                    .get_content(src)
+                    .eq_any_ignore_ascii_case_str(&["windows", "xcode"])
+            })
+            && decade.eq_ignore_ascii_case_chars(&['1', '0']))
     {
         judgement = UsageJudgment::NotMistake;
     }
@@ -167,7 +172,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn dont_flag_windows_10() {
         assert_no_lints(
             "How about Windows 10's taskbar progress bar?",
@@ -203,7 +207,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "well-known products could be checked for"]
     fn dont_flag_xcode_10s_version_number() {
         assert_no_lints(
             "Leverage Xcode 10's new \"File list\" feature for input/output files of Run Script build phases",
@@ -221,7 +224,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn dont_flag_windows_10s_touch_keyboard() {
         assert_no_lints(
             "Arrow Key Command History Navigation Not Working Using Windows 10's Built-in 'Touch Keyboard'",
@@ -239,7 +241,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn dont_flag_windows_10s_openssh() {
         assert_no_lints(
             "If I try to set Windows 10's OpenSSH ssh-agent.exe as the pageant executable, I get an error message",
@@ -252,6 +253,22 @@ mod lints {
     fn dont_flag_node10s_resolution_algorithm() {
         assert_no_lints(
             "node10 encoded Node.js 10's resolution algorithm, which predates ESM support",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_xcode_10s_new_build_system() {
+        assert_no_lints(
+            "Fixes the third party dependency issues introduced by Xcode 10's new build system.",
+            PluralDecades::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_windows_10s_controlled_folder_access() {
+        assert_no_lints(
+            "NVDA install fails when Windows 10's Controlled Folder Access is enabled",
             PluralDecades::default(),
         );
     }
