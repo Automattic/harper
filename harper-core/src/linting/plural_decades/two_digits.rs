@@ -24,26 +24,18 @@ pub fn match_to_lint_two_digits(
         crate::linting::debug::format_lint_match(toks, ctx_for_debug, src)
     );
 
-    let (mut preprepre, mut prepre, mut pre, mut next, mut nextnext): (
-        Option<&Token>,
-        Option<&Token>,
-        Option<&Token>,
-        Option<&Token>,
-        Option<&Token>,
-    ) = (None, None, None, None, None);
-    if let Some(before) = before {
-        if !before.is_empty() {
-            pre = before.get_rel(-1);
-            prepre = before.get_rel(-2);
-            preprepre = before.get_rel(-3);
-        }
+    type ContextTokens<'a> = (Option<&'a Token>, Option<&'a Token>, Option<&'a Token>, Option<&'a Token>, Option<&'a Token>);
+
+    let (mut preprepre, mut prepre, mut pre, mut next, mut nextnext): ContextTokens = (None, None, None, None, None);
+    if let Some(before) = before && !before.is_empty() {
+        pre = before.get_rel(-1);
+        prepre = before.get_rel(-2);
+        preprepre = before.get_rel(-3);
     }
-    if let Some(after) = after {
-        if !after.is_empty() {
-            next = after.get_rel(0);
-            if after.len() > 1 {
-                nextnext = after.get_rel(1);
-            }
+    if let Some(after) = after && !after.is_empty() {
+        next = after.get_rel(0);
+        if after.len() > 1 {
+            nextnext = after.get_rel(1);
         }
     }
 
@@ -57,19 +49,14 @@ pub fn match_to_lint_two_digits(
 
     let mut judgement = UsageJudgment::Unsure;
 
-    // late 90's -> late '90s
-    if pre.is_some_and(|p| p.kind.is_whitespace() || p.kind.is_hyphen())
+    // late 90's -> late '90s or 80's style -> '80s style
+    if (pre.is_some_and(|p| p.kind.is_whitespace() || p.kind.is_hyphen())
         && prepre.is_some_and(|pp| {
             pp.span
                 .get_content(src)
                 .eq_any_ignore_ascii_case_str(&["early", "mid", "late"])
-        })
-    {
-        judgement = UsageJudgment::IsMistakeForDecade;
-    }
-    // 80's style -> '80s style
-    else if next.is_some_and(|n| n.kind.is_whitespace())
-        && nextnext.is_some_and(|nn| nn.span.get_content(src).eq_ignore_ascii_case_str("style"))
+        })) || (next.is_some_and(|n| n.kind.is_whitespace())
+        && nextnext.is_some_and(|nn| nn.span.get_content(src).eq_ignore_ascii_case_str("style")))
     {
         judgement = UsageJudgment::IsMistakeForDecade;
     }
