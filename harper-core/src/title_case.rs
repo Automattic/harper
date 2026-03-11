@@ -37,7 +37,7 @@ pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> O
     let start_index = toks.first().unwrap().span.start;
     let relevant_text = toks.span().unwrap().get_content(source);
 
-    let mut word_likes = toks.iter_word_like_indices().enumerate().peekable();
+    let mut word_likes = toks.iter_word_like_indices().peekable();
 
     let mut output = None;
     let mut previous_word_index = 0;
@@ -62,8 +62,15 @@ pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> O
         }
     };
 
-    while let Some((index, word_idx)) = word_likes.next() {
+    let mut seen_alphabetic_word = false;
+
+    while let Some(word_idx) = word_likes.next() {
         let word = &toks[word_idx];
+        let is_alphabetic_word = word
+            .span
+            .get_content(source)
+            .iter()
+            .any(|c| c.is_alphabetic());
 
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
@@ -86,9 +93,10 @@ pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> O
             .iter()
             .any(|tok| matches!(tok.kind, TokenKind::Punctuation(Punctuation::Colon)));
 
+        let is_first_alphabetic_word = is_alphabetic_word && !seen_alphabetic_word;
         let should_capitalize = is_after_colon
             || should_capitalize_token(word, source)
-            || index == 0
+            || is_first_alphabetic_word
             || word_likes.peek().is_none();
 
         if should_capitalize {
@@ -104,6 +112,10 @@ pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> O
                     relevant_text[i - start_index].to_ascii_lowercase(),
                 );
             }
+        }
+
+        if is_alphabetic_word {
+            seen_alphabetic_word = true;
         }
 
         previous_word_index = word_idx
