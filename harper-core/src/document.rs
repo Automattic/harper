@@ -899,7 +899,7 @@ thread_local! {
 }
 
 thread_local! {
-    static ELLIPSIS_EXPR:Repeating = {
+    static ELLIPSIS_EXPR: Repeating = {
         let period = SequenceExpr::default().then_period();
         Repeating::new(Box::new(period), 2)
     };
