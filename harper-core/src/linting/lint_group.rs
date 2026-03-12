@@ -137,6 +137,7 @@ use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
+use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::obsess_preposition::ObsessPreposition;
@@ -154,6 +155,7 @@ use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
+use super::plural_decades::PluralDecades;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
 use super::possessive_your::PossessiveYour;
@@ -174,10 +176,10 @@ use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
 use super::right_click::RightClick;
+use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
-use super::semicolon_apostrophe::SemicolonApostrophe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
@@ -235,6 +237,7 @@ use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+use super::wrong_apostrophe::WrongApostrophe;
 
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
@@ -715,6 +718,7 @@ impl LintGroup {
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
         insert_expr_rule!(NorModalPronoun, true);
+        insert_expr_rule!(NotOnlyInversion, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
         insert_expr_rule!(ObsessPreposition, true);
@@ -752,10 +756,10 @@ impl LintGroup {
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
         insert_expr_rule!(RightClick, true);
+        insert_expr_rule!(RiseTheRanks, true);
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
-        insert_expr_rule!(SemicolonApostrophe, true);
         insert_struct_rule_with_dict!(SentenceCapitalization, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);
@@ -812,6 +816,7 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
+        insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
@@ -824,6 +829,10 @@ impl LintGroup {
         );
         out.config
             .set_rule_enabled("MultipleFrequencyAdverbs", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("PluralDecades", PluralDecades::default());
+        out.config.set_rule_enabled("PluralDecades", true);
 
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));

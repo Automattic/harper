@@ -86,6 +86,44 @@ fn correct_servers_side() {
     );
 }
 
+// CompulseToCompel
+
+#[test]
+fn correct_compulse() {
+    assert_suggestion_result(
+        "Play Store will soon compulse to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+        lint_group(),
+        "Play Store will soon compel to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+    );
+}
+
+#[test]
+fn correct_compulsed() {
+    assert_suggestion_result(
+        "Just alpha, but now i am compulsed to work 10.6 into the github actions and insane docker environment :)",
+        lint_group(),
+        "Just alpha, but now i am compelled to work 10.6 into the github actions and insane docker environment :)",
+    );
+}
+
+#[test]
+fn correct_compulses() {
+    assert_suggestion_result(
+        "Occasionally, a film comes along that compulses me to make a fan poster.",
+        lint_group(),
+        "Occasionally, a film comes along that compels me to make a fan poster.",
+    );
+}
+
+#[test]
+fn correct_compulsing() {
+    assert_suggestion_result(
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compulsing user to update.",
+        lint_group(),
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compelling user to update.",
+    );
+}
+
 // ConfirmThat
 
 #[test]
@@ -1120,6 +1158,125 @@ fn fix_peaks() {
 // RedundantSuperlatives
 // -none-
 
+// ResponsibilityFor
+
+#[test]
+fn fix_take() {
+    assert_suggestion_result(
+        "Is anyone wanting to step up and take responsibility of this library, or should I put it in EOL and redirect to another tool? ",
+        lint_group(),
+        "Is anyone wanting to step up and take responsibility for this library, or should I put it in EOL and redirect to another tool? ",
+    );
+}
+
+#[test]
+fn fix_taken() {
+    assert_suggestion_result(
+        "if it had only taken responsibility of the manifest/info additions and extensionsID it would have made our life easier",
+        lint_group(),
+        "if it had only taken responsibility for the manifest/info additions and extensionsID it would have made our life easier",
+    );
+}
+
+#[test]
+fn fix_takes() {
+    assert_suggestion_result(
+        "If I have a message that i want to encode, who takes responsibility of pointers?",
+        lint_group(),
+        "If I have a message that i want to encode, who takes responsibility for pointers?",
+    );
+}
+
+#[test]
+fn fix_taking() {
+    assert_suggestion_result(
+        "This issue is about taking responsibility of the feature area auto indentation and start solving the bugs in the feature area.",
+        lint_group(),
+        "This issue is about taking responsibility for the feature area auto indentation and start solving the bugs in the feature area.",
+    );
+}
+
+#[test]
+fn fix_took() {
+    assert_suggestion_result(
+        "If the driver took responsibility of the locking, it could let these HTTP calls happen in parallel",
+        lint_group(),
+        "If the driver took responsibility for the locking, it could let these HTTP calls happen in parallel",
+    );
+}
+
+#[test]
+fn fix_assume() {
+    assert_suggestion_result(
+        "it's a relatively big chunk of behavior to assume responsibility of",
+        lint_group(),
+        "it's a relatively big chunk of behavior to assume responsibility for",
+    );
+}
+
+#[test]
+fn fix_assumed() {
+    assert_suggestion_result(
+        "and assumed responsibility of project managing the transition of Barclays",
+        lint_group(),
+        "and assumed responsibility for project managing the transition of Barclays",
+    );
+}
+
+#[test]
+fn fix_assumes() {
+    assert_suggestion_result(
+        "It means that the core development team assumes responsibility of the module",
+        lint_group(),
+        "It means that the core development team assumes responsibility for the module",
+    );
+}
+
+#[test]
+fn fix_assuming() {
+    assert_suggestion_result(
+        "The point of extract is essentially that you're assuming responsibility of maintenance for that version of the formula.",
+        lint_group(),
+        "The point of extract is essentially that you're assuming responsibility for maintenance for that version of the formula.",
+    );
+}
+
+#[test]
+fn fix_claim() {
+    assert_suggestion_result(
+        "so it doesn't need to claim responsibility of the reappearing containers lifecycle",
+        lint_group(),
+        "so it doesn't need to claim responsibility for the reappearing containers lifecycle",
+    );
+}
+
+#[test]
+fn fix_claimed() {
+    assert_suggestion_result(
+        "a group called The Impact Team had claimed responsibility of the data breach",
+        lint_group(),
+        "a group called The Impact Team had claimed responsibility for the data breach",
+    );
+}
+
+#[test]
+fn fix_claiming() {
+    assert_suggestion_result(
+        "I feel that there should be some other way of claiming responsibility of the promise's continuation.",
+        lint_group(),
+        "I feel that there should be some other way of claiming responsibility for the promise's continuation.",
+    );
+}
+
+#[test]
+fn fix_claims() {
+    assert_suggestion_result(
+        "yet the Lord claims responsibility of those boundaries",
+        lint_group(),
+        "yet the Lord claims responsibility for those boundaries",
+    );
+}
+
 // ScapeGoat
 
 #[test]
@@ -1146,108 +1303,6 @@ fn fix_escape_goats() {
         "People might be using Americans as escape goats for this, but these mishearings are becoming as common as a bowl in a china shop!",
         lint_group(),
         "People might be using Americans as scapegoats for this, but these mishearings are becoming as common as a bowl in a china shop!",
-    );
-}
-
-// SubjunctiveWasToWere
-
-// -if only there was-
-#[test]
-fn if_only_there_was() {
-    assert_suggestion_result(
-        "if only there was an endpoint do to so",
-        lint_group(),
-        "if only there were an endpoint do to so",
-    );
-}
-
-// -if only I-
-#[test]
-fn if_only_i_was() {
-    assert_suggestion_result(
-        "Oh If only I was that clever !!",
-        lint_group(),
-        "Oh If only I were that clever !!",
-    );
-}
-
-// -if only he-
-#[test]
-fn if_only_he_was() {
-    assert_suggestion_result(
-        "If only he was kind enough to attempt to contact me in private first",
-        lint_group(),
-        "If only he were kind enough to attempt to contact me in private first",
-    );
-}
-
-// -if only she-
-#[test]
-fn if_only_she_was() {
-    assert_suggestion_result(
-        "If only she was right.",
-        lint_group(),
-        "If only she were right.",
-    );
-}
-
-// -it-
-#[test]
-fn if_only_it_was() {
-    assert_suggestion_result(
-        "if only it was accessible via USB connection - hint hint",
-        lint_group(),
-        "if only it were accessible via USB connection - hint hint",
-    );
-}
-
-// -I wish there was-
-#[test]
-fn i_wish_there_was() {
-    assert_suggestion_result(
-        "I wish there was a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
-        lint_group(),
-        "I wish there were a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
-    );
-}
-
-// -I wish I was-
-#[test]
-fn i_wish_i_was() {
-    assert_suggestion_result(
-        "I wish I was as smart as I think I am.",
-        lint_group(),
-        "I wish I were as smart as I think I am.",
-    );
-}
-
-// -I wish he was-
-#[test]
-fn i_wish_he_was() {
-    assert_suggestion_result(
-        "However I wish he was that smart about ARM chips present in the current mobile devices.",
-        lint_group(),
-        "However I wish he were that smart about ARM chips present in the current mobile devices.",
-    );
-}
-
-// -I wish she was-
-#[test]
-fn i_wish_she_was() {
-    assert_suggestion_result(
-        "I wish she was more accepting of her own interests.",
-        lint_group(),
-        "I wish she were more accepting of her own interests.",
-    );
-}
-
-// -I wish it was-
-#[test]
-fn i_wish_it_was() {
-    assert_suggestion_result(
-        "but I wish it was more friendly to existing ecosystems",
-        lint_group(),
-        "but I wish it were more friendly to existing ecosystems",
     );
 }
 
@@ -1430,6 +1485,108 @@ fn fix_everyone_seams() {
         "everyone seams to use the editor now a days plus there is a tun of extensions available",
         lint_group(),
         "everyone seems to use the editor now a days plus there is a tun of extensions available",
+    );
+}
+
+// SubjunctiveWasToWere
+
+// -if only there was-
+#[test]
+fn if_only_there_was() {
+    assert_suggestion_result(
+        "if only there was an endpoint do to so",
+        lint_group(),
+        "if only there were an endpoint do to so",
+    );
+}
+
+// -if only I-
+#[test]
+fn if_only_i_was() {
+    assert_suggestion_result(
+        "Oh If only I was that clever !!",
+        lint_group(),
+        "Oh If only I were that clever !!",
+    );
+}
+
+// -if only he-
+#[test]
+fn if_only_he_was() {
+    assert_suggestion_result(
+        "If only he was kind enough to attempt to contact me in private first",
+        lint_group(),
+        "If only he were kind enough to attempt to contact me in private first",
+    );
+}
+
+// -if only she-
+#[test]
+fn if_only_she_was() {
+    assert_suggestion_result(
+        "If only she was right.",
+        lint_group(),
+        "If only she were right.",
+    );
+}
+
+// -it-
+#[test]
+fn if_only_it_was() {
+    assert_suggestion_result(
+        "if only it was accessible via USB connection - hint hint",
+        lint_group(),
+        "if only it were accessible via USB connection - hint hint",
+    );
+}
+
+// -I wish there was-
+#[test]
+fn i_wish_there_was() {
+    assert_suggestion_result(
+        "I wish there was a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+        lint_group(),
+        "I wish there were a keyboard shortcut or something that was \"bring back the suggestion you just made in the last 3 seconds\".",
+    );
+}
+
+// -I wish I was-
+#[test]
+fn i_wish_i_was() {
+    assert_suggestion_result(
+        "I wish I was as smart as I think I am.",
+        lint_group(),
+        "I wish I were as smart as I think I am.",
+    );
+}
+
+// -I wish he was-
+#[test]
+fn i_wish_he_was() {
+    assert_suggestion_result(
+        "However I wish he was that smart about ARM chips present in the current mobile devices.",
+        lint_group(),
+        "However I wish he were that smart about ARM chips present in the current mobile devices.",
+    );
+}
+
+// -I wish she was-
+#[test]
+fn i_wish_she_was() {
+    assert_suggestion_result(
+        "I wish she was more accepting of her own interests.",
+        lint_group(),
+        "I wish she were more accepting of her own interests.",
+    );
+}
+
+// -I wish it was-
+#[test]
+fn i_wish_it_was() {
+    assert_suggestion_result(
+        "but I wish it was more friendly to existing ecosystems",
+        lint_group(),
+        "but I wish it were more friendly to existing ecosystems",
     );
 }
 

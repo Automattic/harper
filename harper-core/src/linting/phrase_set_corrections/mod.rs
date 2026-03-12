@@ -81,6 +81,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
         ),
+        "CompulseToCompel" => (
+            &[
+                ("compulse", "compel"),
+                ("compulsed", "compelled"),
+                ("compulses", "compels"),
+                ("compulsing", "compelling"),
+            ],
+            "Did you mean `compel` rather than the obsolete or archaic (and non-standard) `compulse`?",
+            "Suggests replacing the obsolete or archaic verb `compulse` with the standard `compel`.",
+            LintKind::Nonstandard
+        ),
         "ConfirmThat" => (
             &[
                 ("conform that", "confirm that"),
@@ -420,6 +431,26 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "ResponsibilityFor" => (
+            &[
+                ("take responsibility of", "take responsibility for"),
+                ("took responsibility of", "took responsibility for"),
+                ("taken responsibility of", "taken responsibility for"),
+                ("taking responsibility of", "taking responsibility for"),
+                ("takes responsibility of", "takes responsibility for"),
+                ("assume responsibility of", "assume responsibility for"),
+                ("assumed responsibility of", "assumed responsibility for"),
+                ("assuming responsibility of", "assuming responsibility for"),
+                ("assumes responsibility of", "assumes responsibility for"),
+                ("claim responsibility of", "claim responsibility for"),
+                ("claimed responsibility of", "claimed responsibility for"),
+                ("claiming responsibility of", "claiming responsibility for"),
+                ("claims responsibility of", "claims responsibility for"),
+            ],
+            "The correct preposition is `for`, not `of`.",
+            "Corrects `take/assume/claim responsibility of` to `take/assume/claim responsibility for`.",
+            LintKind::Usage
+        ),
         "ScapeGoat" => (
             &[
                 ("an escape goat", "a scapegoat"),
@@ -429,23 +460,6 @@ pub fn lint_group() -> LintGroup {
             "If you're referring someone is being blamed unfairly, write it as a single word: `scapegoat`.",
             "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures.",
             LintKind::Eggcorn
-        ),
-        "SubjunctiveWasToWere" => (
-            &[
-                ("if only there was", "if only there were"),
-                ("if only i was", "if only i were"),
-                ("if only he was", "if only he were"),
-                ("if only she was", "if only she were"),
-                ("if only it was", "if only it were"),
-                ("i wish there was", "i wish there were"),
-                ("i wish i was", "i wish i were"),
-                ("i wish he was", "i wish he were"),
-                ("i wish she was", "i wish she were"),
-                ("i wish it was", "i wish it were")
-            ],
-            "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
-            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
-            LintKind::Grammar
         ),
         "SeamToSeem" => (
             &[
@@ -471,6 +485,23 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
+        ),
+        "SubjunctiveWasToWere" => (
+            &[
+                ("if only there was", "if only there were"),
+                ("if only i was", "if only i were"),
+                ("if only he was", "if only he were"),
+                ("if only she was", "if only she were"),
+                ("if only it was", "if only it were"),
+                ("i wish there was", "i wish there were"),
+                ("i wish i was", "i wish i were"),
+                ("i wish he was", "i wish he were"),
+                ("i wish she was", "i wish she were"),
+                ("i wish it was", "i wish it were")
+            ],
+            "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
+            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
+            LintKind::Grammar
         ),
         "WreakHavoc" => (
             &[
