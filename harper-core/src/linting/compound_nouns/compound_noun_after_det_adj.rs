@@ -24,16 +24,14 @@ pub struct CompoundNounAfterDetAdj {
 //    that is not also an adjective
 impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
-        let context_expr = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_determiner()
-                    || (tok.kind.is_adjective()
-                        && *tok.span.get_content(src).to_lower() != ['g', 'o'])
-            })
-            .t_ws()
-            .then(is_content_word)
-            .t_ws()
-            .then(is_content_word.and_not(InflectionOfBe::default()));
+        let context_expr = SequenceExpr::with(|tok: &Token, src: &[char]| {
+            tok.kind.is_determiner()
+                || (tok.kind.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
+        })
+        .t_ws()
+        .then(is_content_word)
+        .t_ws()
+        .then(is_content_word.and_not(InflectionOfBe::default()));
 
         let split_expr = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
             predicate(meta_closed, meta_open)

@@ -41,3 +41,4 @@ create_test!(complex_document_with_spelling_mistakes.typ, 4);
 // create_test!(issue_399.typ, 3);
 create_test!(function_with_ignorable_args.typ, 9);
 create_test!(issue_1926.typ, 1);
+create_test!(contractions.typ, 0);

@@ -65,17 +65,15 @@ impl Default for Months {
 
         // An Expr that matches either a plain month
         // Or an ambiguous month after a disambiguating word
-        let month_expr = SequenceExpr::default().then(FirstMatchOf::new(vec![
+        let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
             Box::new(only_months),
             Box::new(
-                SequenceExpr::default()
-                    .then(before_month_sense_only)
+                SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()
                     .then(ambiguous_months.clone()),
             ),
             Box::new(
-                SequenceExpr::default()
-                    .then(ambiguous_months)
+                SequenceExpr::with(ambiguous_months)
                     .then_whitespace()
                     .then(year_or_day_of_month),
             ),

@@ -1,0 +1,9 @@
+expr main [(for argument sake), (for arguments sake)]
+
+let message "Use the possessive `argument's`."
+let description "Corrects `for argument sake` to `for argument's sake`."
+let kind "Usage"
+let becomes "for argument's sake"
+
+test "I'm sure it would be incorrect to do so, but for argument sake, if I change" "I'm sure it would be incorrect to do so, but for argument's sake, if I change"
+test "In my app, for arguments sake user hits button which sets search_term" "In my app, for argument's sake user hits button which sets search_term"

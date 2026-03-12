@@ -51,13 +51,12 @@ impl Expr for SpelledNumberExpr {
                 .collect::<Vec<&str>>(),
         );
 
-        let tens_units_compounds = SequenceExpr::default()
-            .then(WordSet::new(tens))
+        let tens_units_compounds = SequenceExpr::word_set(tens)
             .then_any_of(vec![
                 Box::new(|t: &Token, _s: &[char]| t.kind.is_hyphen()),
                 Box::new(WhitespacePattern),
             ])
-            .then(WordSet::new(units));
+            .then_word_set(units);
 
         let expr =
             LongestMatchOf::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);

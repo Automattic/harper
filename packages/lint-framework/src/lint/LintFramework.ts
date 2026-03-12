@@ -1,12 +1,20 @@
 import type { LintOptions } from 'harper.js';
-import type { IgnorableLintBox } from './Box';
+import { closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes';
 import { isHeading, isVisible } from './domUtils';
+import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
+
+type Modifier = 'Ctrl' | 'Shift' | 'Alt';
+
+type Hotkey = {
+	modifiers: Modifier[];
+	key: string;
+};
 
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
@@ -22,6 +30,7 @@ export default class LintFramework {
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
+	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
 
 	/** The function to be called to re-render the highlights. This is a variable because it is used to register/deregister event listeners. */
@@ -37,6 +46,7 @@ export default class LintFramework {
 	private actions: {
 		ignoreLint?: (hash: string) => Promise<void>;
 		getActivationKey?: () => Promise<ActivationKey>;
+		getHotkey?: () => Promise<Hotkey>;
 		openOptions?: () => Promise<void>;
 		addToUserDictionary?: (words: string[]) => Promise<void>;
 		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -52,6 +62,7 @@ export default class LintFramework {
 		actions: {
 			ignoreLint?: (hash: string) => Promise<void>;
 			getActivationKey?: () => Promise<ActivationKey>;
+			getHotkey?: () => Promise<Hotkey>;
 			openOptions?: () => Promise<void>;
 			addToUserDictionary?: (words: string[]) => Promise<void>;
 			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
@@ -120,18 +131,56 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const text =
-					target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-						? target.value
-						: target.textContent;
+				let text = null;
+
+				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
+				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
+
+				if (isCM) {
+					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
+					const lines = Array.from(lineElements).map((el) => el.textContent);
+					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
+				} else {
+					text =
+						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+							? target.value
+							: target.textContent;
+				}
+
+				const newLineIndices = [];
+				let i = 0;
+				for (const c of text ?? '') {
+					if (c == '\n') {
+						newLineIndices.push(i);
+					}
+					i++;
+				}
 
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
+				const language = getTargetLanguage(target);
+				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
 					forceAllHeadings: isHeading(target),
+					language,
 				});
+
+				if (isCM) {
+					// We're about to modify a reference, so let's work on a copy.
+					lintsBySource = window.structuredClone(lintsBySource);
+
+					for (const lints of Object.values(lintsBySource)) {
+						for (const lint of lints) {
+							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+
+							lint.span.start -= offset_start;
+							lint.span.end -= offset_end;
+						}
+					}
+				}
+
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
 		);
@@ -139,6 +188,49 @@ export default class LintFramework {
 		this.lastLints = lintResults.filter((r) => r.target != null) as any;
 		this.lintRequested = false;
 		this.requestRender();
+	}
+
+	/**
+	 * Hotkey to apply the suggestion of the most likely word
+	 */
+	public async lintHotkey() {
+		const hotkey = await this.actions.getHotkey?.();
+
+		document.addEventListener(
+			'keydown',
+			(event: KeyboardEvent) => {
+				if (!hotkey) return;
+
+				const key = event.key.toLowerCase();
+				const expectedKey = hotkey.key.toLowerCase();
+
+				const hasCtrl = event.ctrlKey === hotkey.modifiers.includes('Ctrl');
+				const hasAlt = event.altKey === hotkey.modifiers.includes('Alt');
+				const hasShift = event.shiftKey === hotkey.modifiers.includes('Shift');
+
+				const match = key === expectedKey && hasCtrl && hasAlt && hasShift;
+
+				if (match) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+
+					const caretPosition = getCaretPosition();
+
+					if (caretPosition != null) {
+						const closestIdx = closestBox(caretPosition, this.lastBoxes);
+
+						const previousBox = this.lastBoxes[closestIdx];
+						const suggestions = previousBox.lint.suggestions;
+						if (suggestions.length > 0) {
+							previousBox.applySuggestion(suggestions[0]);
+						} else {
+							previousBox.ignoreLint?.();
+						}
+					}
+				}
+			},
+			{ capture: true },
+		);
 	}
 
 	public async addTarget(target: Node) {
@@ -198,6 +290,7 @@ export default class LintFramework {
 	}
 
 	private attachWindowListeners() {
+		this.lintHotkey();
 		for (const event of PAGE_EVENTS) {
 			window.addEventListener(event, this.updateEventCallback);
 		}
@@ -227,6 +320,7 @@ export default class LintFramework {
 			this.popupHandler.updateLintBoxes(boxes);
 
 			this.renderRequested = false;
+			this.lastBoxes = boxes;
 		});
 	}
 }
@@ -258,4 +352,18 @@ function getScrollableAncestors(element: Node): Element[] {
 	}
 
 	return scrollables;
+}
+
+function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
+	if (!(target instanceof Element)) return undefined;
+
+	const language = target.getAttribute('data-language');
+	switch (language) {
+		case 'plaintext':
+		case 'markdown':
+		case 'typst':
+			return language;
+		default:
+			return undefined;
+	}
 }

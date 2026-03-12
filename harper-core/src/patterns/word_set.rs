@@ -1,7 +1,7 @@
 use super::SingleTokenPattern;
 use smallvec::SmallVec;
 
-use crate::{CharString, Token};
+use crate::{CharString, Token, char_ext::CharExt};
 
 /// A [`super::Pattern`] that matches against any of a set of provided words.
 /// For small sets of short words, it doesn't allocate.
@@ -56,19 +56,10 @@ impl SingleTokenPattern for WordSet {
                 continue;
             }
 
-            fn canonical(c: &char) -> char {
-                match c {
-                    '\u{2018}' | '\u{2019}' | '\u{02BC}' | '\u{FF07}' => '\'',
-                    '\u{201C}' | '\u{201D}' | '\u{FF02}' => '"',
-                    '\u{2013}' | '\u{2014}' | '\u{2212}' | '\u{FF0D}' => '-',
-                    _ => *c,
-                }
-            }
-
             let partial_match = tok_chars
                 .iter()
-                .map(canonical)
-                .zip(word.iter().map(canonical))
+                .map(CharExt::normalized)
+                .zip(word.iter().map(CharExt::normalized))
                 .all(|(a, b)| a.eq_ignore_ascii_case(&b));
 
             if partial_match {

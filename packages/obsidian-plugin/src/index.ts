@@ -1,22 +1,39 @@
+import type { EditorView } from '@codemirror/view';
 import { Dialect } from 'harper.js';
-import { type App, editorInfoField, Menu, Notice, Plugin, type PluginManifest } from 'obsidian';
+import {
+	type App,
+	editorInfoField,
+	MarkdownView,
+	Menu,
+	Notice,
+	Plugin,
+	type PluginManifest,
+} from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
 import { HarperSettingTab } from './HarperSettingTab';
+import {
+	addWordToDictionaryFromVisibleTooltip,
+	applySuggestionFromVisibleTooltip,
+	canAddWordToDictionaryFromVisibleTooltip,
+	canApplySuggestionFromVisibleTooltip,
+	canDismissFocusedLintTooltip,
+	canIgnoreVisibleTooltipDiagnostic,
+	canNavigateDiagnostics,
+	dismissFocusedLintTooltip,
+	ignoreVisibleTooltipDiagnostic,
+	navigateDiagnostic,
+} from './lint';
 import State from './State';
 
 export default class HarperPlugin extends Plugin {
-	private state: State;
+	state: State;
 	private dialectSpan: HTMLSpanElement | null = null;
 	private logo: HTMLSpanElement | null = null;
+	private settings: HarperSettingTab | null = null;
 
 	constructor(app: App, manifest: PluginManifest) {
 		super(app, manifest);
-		this.state = new State(
-			(n) => this.saveData(n),
-			() => this.app.workspace.updateOptions(),
-			editorInfoField,
-		);
 	}
 
 	async onload() {
@@ -25,16 +42,44 @@ export default class HarperPlugin extends Plugin {
 			return;
 		}
 
-		const data = await this.loadData();
-		await this.state.initializeFromSettings(data);
-		this.registerEditorExtension(this.state.getCMEditorExtensions());
-		this.setupCommands();
-		this.setupStatusBar();
-		if (!(data?.lintEnabled ?? true)) {
-			this.state.disableEditorLinter();
-		} else this.state.enableEditorLinter();
+		this.app.workspace.onLayoutReady(async () => {
+			this.state = new State(
+				(n) => this.saveData(n),
+				() => this.app.workspace.updateOptions(),
+				editorInfoField,
+			);
 
-		this.addSettingTab(new HarperSettingTab(this.app, this, this.state));
+			this.registerEditorExtension(this.state.getCMEditorExtensions());
+			await this.reloadSettingsFromDisk();
+			this.setupStatusBar();
+		});
+
+		this.settings = new HarperSettingTab(this.app, this);
+		this.addSettingTab(this.settings);
+
+		this.setupCommands();
+	}
+
+	async onExternalSettingsChange() {
+		await this.reloadSettingsFromDisk();
+	}
+
+	private async reloadSettingsFromDisk() {
+		const data = await this.loadData();
+		if (this.state == null) {
+			return;
+		}
+
+		await this.state.initializeFromSettings(data);
+
+		if (!(data?.lintEnabled ?? true)) {
+			this.state.disableEditorLinter(false);
+		} else {
+			this.state.enableEditorLinter(false);
+		}
+
+		this.settings?.update();
+		this.updateStatusBar(data?.dialect ?? Dialect.American);
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {
@@ -125,6 +170,85 @@ export default class HarperPlugin extends Plugin {
 				await this.doIgnoreAllFlow();
 			},
 		});
+
+		this.addCommand({
+			id: 'harper-jump-to-next-suggestion',
+			name: 'Jump to next suggestion',
+			checkCallback: (checking) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canNavigateDiagnostics(editorView);
+				return navigateDiagnostic(editorView, 'next');
+			},
+		});
+
+		this.addCommand({
+			id: 'harper-jump-to-previous-suggestion',
+			name: 'Jump to previous suggestion',
+			checkCallback: (checking) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canNavigateDiagnostics(editorView);
+				return navigateDiagnostic(editorView, 'previous');
+			},
+		});
+
+		this.addCommand(this.getApplySuggestionCommand(1));
+		this.addCommand(this.getApplySuggestionCommand(2));
+		this.addCommand(this.getApplySuggestionCommand(3));
+
+		this.addCommand({
+			id: 'harper-add-word-to-dictionary',
+			name: 'Add current word to dictionary',
+			checkCallback: (checking) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canAddWordToDictionaryFromVisibleTooltip(editorView);
+				return addWordToDictionaryFromVisibleTooltip(editorView);
+			},
+		});
+
+		this.addCommand({
+			id: 'harper-ignore-focused-diagnostic',
+			name: 'Ignore focused diagnostic',
+			hotkeys: [],
+			checkCallback: (checking) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canIgnoreVisibleTooltipDiagnostic(editorView);
+				return ignoreVisibleTooltipDiagnostic(editorView);
+			},
+		});
+
+		this.addCommand({
+			id: 'harper-dismiss-focused-tooltip',
+			name: 'Dismiss focused suggestion tooltip',
+			checkCallback: (checking) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canDismissFocusedLintTooltip(editorView);
+				return dismissFocusedLintTooltip(editorView);
+			},
+		});
+	}
+
+	private getApplySuggestionCommand(n: number) {
+		return {
+			id: `harper-apply-suggestion-${n}`,
+			name: `Apply suggestion #${n}`,
+			checkCallback: (checking: boolean) => {
+				const editorView = this.getActiveEditorView();
+				if (!editorView) return false;
+				if (checking) return canApplySuggestionFromVisibleTooltip(editorView, n);
+				return applySuggestionFromVisibleTooltip(editorView, n);
+			},
+		};
+	}
+
+	private getActiveEditorView(): EditorView | null {
+		const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+		if (!view) return null;
+		return (view.editor as any).cm as EditorView;
 	}
 
 	/** Trigger the flow for ignoring all files in a document, including a confirmation modal. */

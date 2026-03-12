@@ -14,7 +14,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::Parser;
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
-use harper_core::parsers::MarkdownOptions;
+use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
@@ -32,16 +32,26 @@ use input::{
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
 
-mod annotate_tokens;
-use annotate_tokens::{Annotation, AnnotationType};
+mod annotate;
+use annotate::AnnotationType;
 
 mod lint;
-use crate::lint::lint;
+use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
 #[command(version, about)]
+struct Cli {
+    /// Disable colored output.
+    #[arg(long, global = true)]
+    no_color: bool,
+
+    #[command(subcommand)]
+    command: Args,
+}
+
+#[derive(clap::Subcommand)]
 enum Args {
     /// Lint provided documents.
     Lint {
@@ -49,8 +59,8 @@ enum Args {
         /// standard input.
         inputs: Vec<AnyInput>,
         /// Whether to merely print out the number of errors encountered,
-        /// without further details.
-        #[arg(short, long)]
+        /// without further details. Only valid with the default output format.
+        #[arg(short, long, conflicts_with = "format")]
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
@@ -63,15 +73,21 @@ enum Args {
         /// Overlapping lints are removed by default. This option disables that behavior.
         #[arg(short = 'o', long)]
         keep_overlapping_lints: bool,
-        /// Specify the dialect.
-        #[arg(short, long, default_value = Dialect::American.to_string())]
-        dialect: Dialect,
+        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
         /// Path to the user dictionary.
         #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string())]
         user_dict_path: PathBuf,
         /// Path to the directory for file-local dictionaries.
         #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string())]
         file_dict_path: PathBuf,
+        /// Path to a Weirpack file to load. May be supplied multiple times.
+        #[arg(long, value_name = "WEIRPACK")]
+        weirpacks: Vec<SingleInput>,
+        /// Output format for lint results.
+        #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
+        format: OutputFormat,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -88,14 +104,17 @@ enum Args {
         #[arg(short, long)]
         include_newlines: bool,
     },
-    /// Parse a provided document and annotate its tokens.
-    AnnotateTokens {
+    /// Parse and annotate a provided document.
+    Annotate {
         /// The text or file you wish to parse. If not provided, it will be read from standard
         /// input.
         input: Option<SingleInput>,
-        /// How the tokens should be annotated.
+        /// How the document should be annotated.
         #[arg(short, long, value_enum, default_value_t = AnnotationType::Upos)]
         annotation_type: AnnotationType,
+        /// Attempt to detect and ignore non-English spans of text.
+        #[arg(short, long)]
+        isolate_english: bool,
     },
     /// Get the metadata associated with one or more words.
     Metadata {
@@ -197,22 +216,32 @@ enum Args {
 }
 
 fn main() -> anyhow::Result<()> {
-    let args = Args::parse();
+    let cli = Cli::parse();
+
+    let color = !cli.no_color && std::env::var("NO_COLOR").is_err();
+    if !color {
+        yansi::disable();
+    }
+
     let markdown_options = MarkdownOptions::default();
     let curated_dictionary = FstDictionary::curated();
 
-    match args {
+    match cli.command {
         Args::Lint {
             inputs,
             count,
             ignore,
             only,
             keep_overlapping_lints,
-            dialect,
+            dialect: dialect_str,
             user_dict_path,
-            // TODO workspace_dict_path?
             file_dict_path,
+            weirpacks,
+            format,
         } => {
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+
             lint(
                 markdown_options,
                 curated_dictionary,
@@ -223,6 +252,9 @@ fn main() -> anyhow::Result<()> {
                     only,
                     keep_overlapping_lints,
                     dialect,
+                    weirpack_inputs: weirpacks,
+                    color,
+                    format,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
@@ -260,8 +292,7 @@ fn main() -> anyhow::Result<()> {
 
             let mut report_builder = Report::build(
                 ReportKind::Custom("Spans", primary_color),
-                &input_identifier,
-                0,
+                (&input_identifier, 0..0),
             );
             let mut color = primary_color;
 
@@ -292,32 +323,39 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::AnnotateTokens {
+        Args::Annotate {
             input,
             annotation_type,
+            isolate_english,
         } => {
             // Try to read from standard input if `input` was not provided.
             let input = input.unwrap_or_read_from_stdin();
 
+            let parser = if isolate_english {
+                Box::new(IsolateEnglish::new(
+                    input.get_parser(markdown_options),
+                    &curated_dictionary,
+                ))
+            } else {
+                input.get_parser(markdown_options)
+            };
+
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &curated_dictionary)?;
+            let (doc, source) = input.load_with_parser(&parser, &curated_dictionary)?;
 
             let input_identifier = input.get_identifier();
 
-            let mut report_builder = Report::build(
-                ReportKind::Custom("AnnotateTokens", Color::Blue),
-                &*input_identifier,
-                0,
-            );
-
-            report_builder = report_builder.with_labels(Annotation::iter_labels_from_document(
-                annotation_type,
-                &doc,
-                &input_identifier,
-            ));
-
-            let report = report_builder.finish();
-            report.print((&*input_identifier, Source::from(source)))?;
+            annotation_type
+                .build_report(
+                    &doc,
+                    &input_identifier,
+                    &annotation_type.get_title_with_tags(if isolate_english {
+                        &["Isolate english"]
+                    } else {
+                        &[]
+                    }),
+                )
+                .print((&*input_identifier, Source::from(source)))?;
 
             Ok(())
         }
@@ -899,7 +937,11 @@ fn main() -> anyhow::Result<()> {
                 let span = Span::new(start, end);
                 let txt = doc.get_span_content_str(&span);
 
-                print!("\x1b[33m{}\x1b[0m", txt);
+                if color {
+                    print!("\x1b[33m{}\x1b[0m", txt);
+                } else {
+                    print!("{}", txt);
+                }
 
                 last_end = end;
             }
@@ -932,6 +974,19 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
+    }
+}
+
+/// Parse a dialect string into a Dialect enum value.
+/// Supports common synonyms, abbreviations, and codes.
+fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
+    match dialect.to_lowercase().as_str() {
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+        _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }
 

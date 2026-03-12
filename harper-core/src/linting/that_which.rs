@@ -17,8 +17,7 @@ impl Default for ThatWhich {
         let mut pattern = WordExprGroup::default();
 
         let matching_pattern = Lrc::new(
-            SequenceExpr::default()
-                .then_any_capitalization_of("that")
+            SequenceExpr::any_capitalization_of("that")
                 .then_whitespace()
                 .then_any_capitalization_of("that"),
         );

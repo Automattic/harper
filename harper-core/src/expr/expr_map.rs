@@ -12,10 +12,6 @@ use super::Expr;
 ///
 /// The [`ExprMap`] unifies these two lists into one.
 ///
-/// A great example of this is the [`PronounInfectionBe`](crate::linting::PronounInflectionBe)
-/// rule.
-/// It builds a list of incorrect `PRONOUN + BE` combinations, alongside their corrections.
-///
 /// When used as a [`Expr`] in and of itself, it simply iterates through
 /// all contained expressions, returning the first match found.
 /// You should not assume this search is deterministic.
@@ -58,15 +54,10 @@ where
 
     /// Look up the corresponding value for the given map.
     pub fn lookup(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<&T> {
-        for row in &self.rows {
-            let len = row.key.run(cursor, tokens, source);
-
-            if len.is_some() {
-                return Some(&row.element);
-            }
-        }
-
-        None
+        self.rows
+            .iter()
+            .find(|row| row.key.run(cursor, tokens, source).is_some())
+            .map(|row| &row.element)
     }
 }
 
@@ -77,7 +68,6 @@ where
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.rows
             .iter()
-            .filter_map(|row| row.key.run(cursor, tokens, source))
-            .next()
+            .find_map(|row| row.key.run(cursor, tokens, source))
     }
 }

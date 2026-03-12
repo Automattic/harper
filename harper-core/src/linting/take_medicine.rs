@@ -26,18 +26,16 @@ impl Default for TakeMedicine {
             .or(DerivedFrom::new_from_str("aspirin"))
             .or(DerivedFrom::new_from_str("paracetamol"));
 
-        let modifiers = SequenceExpr::default()
-            .then_any_of(vec![
-                Box::new(SequenceExpr::default().then_determiner()),
-                Box::new(SequenceExpr::default().then_possessive_determiner()),
-                Box::new(SequenceExpr::default().then_quantifier()),
-            ])
-            .t_ws();
+        let modifiers = SequenceExpr::any_of(vec![
+            Box::new(SequenceExpr::default().then_determiner()),
+            Box::new(SequenceExpr::default().then_possessive_determiner()),
+            Box::new(SequenceExpr::default().then_quantifier()),
+        ])
+        .t_ws();
 
         let adjectives = SequenceExpr::default().then_one_or_more_adjectives().t_ws();
 
-        let pattern = SequenceExpr::default()
-            .then(eat_verb)
+        let pattern = SequenceExpr::with(eat_verb)
             .t_ws()
             .then_optional(modifiers)
             .then_optional(adjectives)

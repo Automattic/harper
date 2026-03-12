@@ -19,7 +19,7 @@ pub trait CharExt: private::Sealed {
     ///
     /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
     fn is_vowel(&self) -> bool;
-    fn normalized(self) -> Self;
+    fn normalized(&self) -> Self;
 }
 
 impl CharExt for char {
@@ -34,10 +34,12 @@ impl CharExt for char {
             && self.script() == Script::Latin
     }
 
-    fn normalized(self) -> Self {
+    fn normalized(&self) -> Self {
         match self {
-            '’' | '‘' | 'ʼ' | '＇' => '\'',
-            _ => self,
+            '\u{2018}' | '\u{2019}' | '\u{02BC}' | '\u{FF07}' => '\'',
+            '\u{201C}' | '\u{201D}' | '\u{FF02}' => '"',
+            '\u{2013}' | '\u{2014}' | '\u{2212}' | '\u{FF0D}' => '-',
+            _ => *self,
         }
     }
 

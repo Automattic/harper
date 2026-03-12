@@ -1,6 +1,5 @@
-use lazy_static::lazy_static;
 use serde::Deserialize;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 type Verb = (String, String, String);
 
@@ -17,9 +16,7 @@ fn uncached_inner_new() -> Arc<IrregularVerbs> {
         .unwrap_or_else(|e| panic!("Failed to load irregular verb table: {}", e))
 }
 
-lazy_static! {
-    static ref VERBS: Arc<IrregularVerbs> = uncached_inner_new();
-}
+static VERBS: LazyLock<Arc<IrregularVerbs>> = LazyLock::new(uncached_inner_new);
 
 impl IrregularVerbs {
     pub fn new() -> Self {
@@ -65,6 +62,13 @@ impl IrregularVerbs {
             .iter()
             .find(|(_, pt, _)| pt.eq_ignore_ascii_case(preterite))
             .map(|(_, _, pp)| pp.as_str())
+    }
+
+    pub fn get_lemma_for_preterite(&self, preterite: &str) -> Option<&str> {
+        self.verbs
+            .iter()
+            .find(|(_, pt, _)| pt.eq_ignore_ascii_case(preterite))
+            .map(|(lemma, _, _)| lemma.as_str())
     }
 }
 

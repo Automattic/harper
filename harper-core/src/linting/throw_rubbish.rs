@@ -1,19 +1,17 @@
+use std::sync::LazyLock;
+
 use super::{Lint, LintKind, Linter};
 use crate::{Document, Span, TokenStringExt, linting::Suggestion};
 use hashbrown::HashSet;
-use lazy_static::lazy_static;
 
-lazy_static! {
-    static ref THROW: HashSet<&'static str> =
-        HashSet::from(["throw", "throws", "threw", "thrown", "throwing"]);
-}
+static THROW: LazyLock<HashSet<&'static str>> =
+    LazyLock::new(|| HashSet::from(["throw", "throws", "threw", "thrown", "throwing"]));
 
-lazy_static! {
-    static ref JUNK: HashSet<&'static str> = HashSet::from(["rubbish", "trash", "garbage", "junk"]);
-}
+static JUNK: LazyLock<HashSet<&'static str>> =
+    LazyLock::new(|| HashSet::from(["rubbish", "trash", "garbage", "junk"]));
 
-lazy_static! {
-    static ref ADV_PREP: HashSet<&'static str> = HashSet::from([
+static ADV_PREP: LazyLock<HashSet<&'static str>> = LazyLock::new(|| {
+    HashSet::from([
         // adverbs
         "away",
         "out",
@@ -23,9 +21,9 @@ lazy_static! {
         "in",
         "into",
         "at",
-        "on"
-    ]);
-}
+        "on",
+    ])
+});
 
 #[derive(Debug, Default)]
 pub struct ThrowRubbish;

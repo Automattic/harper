@@ -23,8 +23,7 @@ impl Default for VerbInsteadOfNoun {
         ));
         Self {
             expr: Box::new(
-                SequenceExpr::default()
-                    .then(UPOSSet::new(&[UPOS::ADJ, UPOS::ADP]))
+                SequenceExpr::with(UPOSSet::new(&[UPOS::ADJ, UPOS::ADP]))
                     .then_whitespace()
                     .then(verbs.clone()),
             ),

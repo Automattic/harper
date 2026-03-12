@@ -1,0 +1,8 @@
+expr main (better of with)
+
+let message "This phrase uses the word `off`."
+let description "Corrects `better of with` to `better off with`."
+let kind "Typo"
+let becomes "better off with"
+
+test "If you're wanting dynamic meta data, your might be better of with getServerSideProps ." "If you're wanting dynamic meta data, your might be better off with getServerSideProps ."

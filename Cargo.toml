@@ -1,12 +1,17 @@
 [workspace]
-members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "harper-asciidoc", "fuzz"]
+members = ["harper-cli", "harper-core", "harper-ls", "harper-comments", "harper-wasm", "harper-tree-sitter", "harper-html", "harper-literate-haskell", "harper-typst", "harper-stats", "harper-pos-utils", "harper-brill", "harper-ink", "harper-python", "harper-jjdescription", "harper-thesaurus", "harper-asciidoc", "fuzz", "harper-tex"]
 resolver = "2"
 
 [profile.test]
+opt-level = 1
+
+[profile.test.package."*"]
 opt-level = 3
 
 [profile.release]
 opt-level = 3
+panic = "abort"
+lto = "fat"
 # Stripping binaries triggers a bug in `wasm-opt`.
 # Disable it for now.
 # strip = true

@@ -13,8 +13,7 @@ pub struct CompoundSubjectI {
 
 impl Default for CompoundSubjectI {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .then_optional(
                 SequenceExpr::default()
                     .then_quote()

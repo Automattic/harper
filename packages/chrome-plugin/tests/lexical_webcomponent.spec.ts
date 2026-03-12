@@ -45,5 +45,14 @@ test.describe('Lexical webcomponent regression', () => {
 		const lexicalText = (await lexical.textContent()) ?? '';
 		const mirrorText = (await mirror.textContent()) ?? '';
 		expect(lexicalText.trim()).toBe(mirrorText.trim());
+
+		// Verify editor state is preserved: arrow keys and backspace must work.
+		await lexical.press('End');
+		await lexical.press('Backspace');
+		await expect(lexical).toContainText('This is a test. This is a test again');
+
+		// Verify typing still works.
+		await lexical.pressSequentially('.');
+		await expect(lexical).toContainText('This is a test. This is a test again.');
 	});
 });

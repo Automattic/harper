@@ -1,8 +1,9 @@
-use crate::Token;
-use crate::expr::{Expr, SequenceExpr};
-use crate::linting::expr_linter::Chunk;
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::patterns::Word;
+use crate::{
+    Token,
+    expr::{Expr, FirstMatchOf, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::Word,
+};
 
 pub struct ChangeTack {
     expr: Box<dyn Expr>,
@@ -15,9 +16,9 @@ impl Default for ChangeTack {
         let eggcorns = &["tact", "tacks", "tacts"];
 
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_longest_of(vec![
+            expr: Box::new(FirstMatchOf::new(vec![
+                Box::new(
+                    SequenceExpr::longest_of(vec![
                         Box::new(SequenceExpr::word_set(verb_forms).then_optional(
                             SequenceExpr::default().t_ws().then_any_of(vec![
                                 Box::new(SequenceExpr::default().then_possessive_determiner()),
@@ -28,7 +29,9 @@ impl Default for ChangeTack {
                     ])
                     .t_ws()
                     .then_word_set(eggcorns),
-            ),
+                ),
+                Box::new(SequenceExpr::aco("different").t_ws().t_aco("tact")),
+            ])),
         }
     }
 }
@@ -203,6 +206,15 @@ mod tests {
             "As we become inoculated to attention grifts, the grifter changes their tact.",
             ChangeTack::default(),
             "As we become inoculated to attention grifts, the grifter changes their tack.",
+        );
+    }
+
+    #[test]
+    fn different_tact() {
+        assert_suggestion_result(
+            "So, I recently took a different tact: I put all my models etc. in a single folder.",
+            ChangeTack::default(),
+            "So, I recently took a different tack: I put all my models etc. in a single folder.",
         );
     }
 }

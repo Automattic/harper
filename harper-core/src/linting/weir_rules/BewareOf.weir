@@ -1,0 +1,27 @@
+expr main [(beware with regard to), (beware about), (beware with), (beware regarding), (beware concerning), (beware against), (beware for), (beware in), (beware on), (beware at), (beware among), (beware between)]
+
+let message "Use `beware of` when naming the object you want readers to avoid."
+let description "The verb `beware` naturally pairs with `of` before the noun being warned about, so swap other prepositions for clarity."
+let kind "Usage"
+let becomes "beware of"
+let strategy "MatchCase"
+
+test "Beware about scams that arrive by email." "Beware of scams that arrive by email."
+test "beware with the loose wires behind the TV." "beware of the loose wires behind the TV."
+test "Beware with regard to the rusted railing." "Beware of the rusted railing."
+test "Beware regarding the crumbling guardrail." "Beware of the crumbling guardrail."
+test "Beware concerning the expired coupon." "Beware of the expired coupon."
+test "Beware against mixing cleaning chemicals." "Beware of mixing cleaning chemicals."
+test "Beware for the slippery tile near the pool." "Beware of the slippery tile near the pool."
+test "Beware in the area where the fog hides the cliffs." "Beware of the area where the fog hides the cliffs."
+test "Beware on the step that squeaks." "Beware of the step that squeaks."
+test "Beware at that crossing when traffic is heavy." "Beware of that crossing when traffic is heavy."
+test "Beware among the wild animals outside the park." "Beware of the wild animals outside the park."
+test "Beware between the gaps in the scaffolding." "Beware of the gaps in the scaffolding."
+test "BEWARE WITH THE LOUD CRASHING." "BEWARE OF THE LOUD CRASHING."
+
+allows "Beware of the dog that guards the porch."
+allows "Beware the gap between the platforms."
+allows "Beware every time you go near the cliff."
+allows "Some people say beware: the path narrows."
+allows "Beware of tall waves on this beach."

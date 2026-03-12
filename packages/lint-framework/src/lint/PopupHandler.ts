@@ -123,6 +123,7 @@ export default class PopupHandler {
 				this.popupLint = undefined;
 				this.updateHint();
 			});
+			this.renderBox.getShadowHost().style.setProperty('visibility', 'visible', 'important');
 			this.renderBox.getShadowHost().showPopover();
 		} else {
 			this.renderBox.getShadowHost().hidePopover();

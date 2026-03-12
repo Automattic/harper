@@ -11,8 +11,7 @@ pub struct HelloGreeting {
 
 impl Default for HelloGreeting {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .then_optional(SequenceExpr::default().t_ws())
             .then_optional(
                 SequenceExpr::default()

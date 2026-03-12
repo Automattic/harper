@@ -1,3 +1,3 @@
 |===
-| Cell 1 | Cell 2 with typo: errorr
+| Cell 1 | Cell 2, but with a typo: errorr
 |===

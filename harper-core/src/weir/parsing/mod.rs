@@ -7,8 +7,8 @@ use ast::{Ast, AstExprNode, AstStmtNode};
 pub use expr::parse_expr_str;
 pub use stmt::parse_str;
 
-use crate::lexing::{FoundToken, lex_weir_token};
-use crate::{Span, Token, TokenKind};
+use crate::lexing::{lex_weir_token, lex_with};
+use crate::{Token, TokenKind};
 
 use super::{
     ast,
@@ -17,25 +17,7 @@ use super::{
 
 /// Lex the entirety of a Weir document.
 fn lex(source: &[char]) -> Vec<Token> {
-    let mut cursor = 0;
-
-    let mut tokens = Vec::new();
-
-    loop {
-        if cursor >= source.len() {
-            return tokens;
-        }
-
-        if let Some(FoundToken { token, next_index }) = lex_weir_token(&source[cursor..]) {
-            tokens.push(Token {
-                span: Span::new(cursor, cursor + next_index),
-                kind: token,
-            });
-            cursor += next_index;
-        } else {
-            panic!()
-        }
-    }
+    lex_with(source, lex_weir_token)
 }
 
 #[derive(Debug)]

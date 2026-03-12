@@ -14,6 +14,7 @@ export type Settings = {
 	delay?: number;
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
+	regexMask?: string;
 };
 
 const DEFAULT_DELAY = -1;
@@ -29,6 +30,7 @@ export default class State {
 	private ignoredGlobs?: string[];
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
+	private regexMask?: string;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -100,6 +102,7 @@ export default class State {
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
+		this.regexMask = settings.regexMask;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -131,9 +134,7 @@ export default class State {
 				}
 
 				const text = view.state.doc.sliceString(-1);
-				const chars = Array.from(text);
-
-				const lints = await this.harper.organizedLints(text);
+				const lints = await this.harper.organizedLints(text, { regex_mask: this.regexMask });
 
 				return Object.entries(lints).flatMap(([linterName, lints]) =>
 					lints.map((lint) => {
@@ -141,34 +142,46 @@ export default class State {
 
 						const actions = lint.suggestions().map((sug) => {
 							return {
+								kind: 'suggestion' as const,
 								name:
 									sug.kind() == SuggestionKind.Replace
 										? sug.get_replacement_text()
 										: suggestionToLabel(sug),
 								title: suggestionToLabel(sug),
-								apply: (view) => {
+								apply: (view, from, to) => {
 									if (sug.kind() === SuggestionKind.Remove) {
 										view.dispatch({
 											changes: {
-												from: span.start,
-												to: span.end,
+												from,
+												to,
 												insert: '',
+											},
+											selection: {
+												anchor: from,
 											},
 										});
 									} else if (sug.kind() === SuggestionKind.Replace) {
+										const replacement = sug.get_replacement_text();
 										view.dispatch({
 											changes: {
-												from: span.start,
-												to: span.end,
-												insert: sug.get_replacement_text(),
+												from,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: from + replacement.length,
 											},
 										});
 									} else if (sug.kind() === SuggestionKind.InsertAfter) {
+										const replacement = sug.get_replacement_text();
 										view.dispatch({
 											changes: {
-												from: span.end,
-												to: span.end,
-												insert: sug.get_replacement_text(),
+												from: to,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: to + replacement.length,
 											},
 										});
 									}
@@ -180,9 +193,15 @@ export default class State {
 							const word = lint.get_problem_text();
 
 							actions.push({
+								kind: 'dictionary',
 								name: '📖',
 								title: `Add “${word}” to your dictionary`,
-								apply: (_view) => {
+								apply: (view, _from, to) => {
+									view.dispatch({
+										selection: {
+											anchor: to,
+										},
+									});
 									this.harper.importWords([word]);
 									this.reinitialize();
 								},
@@ -251,6 +270,7 @@ export default class State {
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
+			regexMask: this.regexMask,
 		};
 	}
 

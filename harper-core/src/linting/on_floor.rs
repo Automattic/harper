@@ -18,8 +18,7 @@ impl Default for OnFloor {
         let preposition = WordSet::new(&["in", "at"]);
 
         let on_the_floor = Lrc::new(
-            SequenceExpr::default()
-                .then(preposition)
+            SequenceExpr::with(preposition)
                 .t_ws()
                 .t_aco("the")
                 .t_ws()
@@ -29,23 +28,21 @@ impl Default for OnFloor {
         );
 
         let look_up_phrase = Lrc::new(
-            SequenceExpr::default()
-                .then(WordSet::new(&["look", "looking", "looks", "looked"]))
+            SequenceExpr::word_set(&["look", "looking", "looks", "looked"])
                 .t_ws()
                 .t_aco("up"),
         );
 
         let stop = Lrc::new(WordSet::new(&["stop", "stopping", "stops", "stopped"]));
         let exceptions = Lrc::new(LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(look_up_phrase.clone())),
-            Box::new(SequenceExpr::default().then(stop.clone())),
+            Box::new(SequenceExpr::with(look_up_phrase.clone())),
+            Box::new(SequenceExpr::with(stop.clone())),
         ]));
 
         let pattern = LongestMatchOf::new(vec![
             Box::new(on_the_floor.clone()),
             Box::new(
-                SequenceExpr::default()
-                    .then(exceptions.clone())
+                SequenceExpr::with(exceptions.clone())
                     .t_ws()
                     .then(on_the_floor.clone()),
             ),

@@ -50,7 +50,7 @@ export default defineManifest({
 	browser_specific_settings: {
 		gecko: {
 			id: 'harper@writewithharper.com',
-			strict_min_version: '135.0',
+			strict_min_version: '146.0',
 		},
 	},
 	background: {
@@ -59,6 +59,13 @@ export default defineManifest({
 		type: 'module',
 	},
 	content_scripts: [
+		{
+			matches: ['https://docs.google.com/document/*'],
+			all_frames: false,
+			js: ['src/contentScript/googleDocsBootstrap.js'],
+			run_at: 'document_start',
+			world: 'MAIN',
+		},
 		{
 			matches: ['<all_urls>'],
 			all_frames: true,
@@ -70,7 +77,12 @@ export default defineManifest({
 	web_accessible_resources: [
 		{
 			matches: ['<all_urls>'],
-			resources: ['wasm/harper_wasm_bg.wasm'],
+			resources: [
+				'wasm/harper_wasm_bg.wasm',
+				'google-docs-bridge.js',
+				'google-docs-protocol.js',
+				'google-docs-bridge-request-handler.js',
+			],
 		},
 	],
 	icons: {

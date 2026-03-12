@@ -1,25 +1,28 @@
 #![doc = include_str!("../README.md")]
 
+use std::collections::HashMap;
 use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
-use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
+use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
+use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
+use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
+use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-/// Setup the WebAssembly module's logging.
+/// Set up the WebAssembly module's logging.
 #[wasm_bindgen(start)]
 pub fn setup() {
     console_error_panic_hook::set_once();
@@ -52,6 +55,7 @@ make_serialize_fns_for!(Span);
 pub enum Language {
     Plain,
     Markdown,
+    Typst,
 }
 
 impl Language {
@@ -60,6 +64,7 @@ impl Language {
             Language::Plain => Box::new(PlainEnglish),
             // TODO: Have a way to configure the Markdown parser
             Language::Markdown => Box::new(Markdown::default()),
+            Language::Typst => Box::new(Typst),
         }
     }
 }
@@ -98,6 +103,12 @@ pub struct Linter {
     ignored_lints: IgnoredLints,
     dialect: Dialect,
     stats: Stats,
+}
+
+#[derive(Serialize)]
+struct WeirpackTestFailure {
+    expected: String,
+    got: String,
 }
 
 #[wasm_bindgen]
@@ -260,11 +271,21 @@ impl Linter {
         text: String,
         language: Language,
         all_headings: bool,
+        regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
         let mut parser = language.create_parser();
+
+        if let Some(regex) = regex_mask {
+            let masker_maybe = RegexMasker::new(regex.as_str(), true);
+            if let Some(masker) = masker_maybe {
+                parser = Box::new(Mask::new(masker, parser));
+            } else {
+                return vec![];
+            }
+        }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));
@@ -303,11 +324,28 @@ impl Linter {
     }
 
     /// Perform the configured linting on the provided text.
-    pub fn lint(&mut self, text: String, language: Language, all_headings: bool) -> Vec<Lint> {
+    ///
+    /// If the provided regex mask cannot be parsed, this method will return an empty array.
+    pub fn lint(
+        &mut self,
+        text: String,
+        language: Language,
+        all_headings: bool,
+        regex_mask: Option<String>,
+    ) -> Vec<Lint> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
         let mut parser = language.create_parser();
+
+        if let Some(regex) = regex_mask {
+            let masker_maybe = RegexMasker::new(regex.as_str(), true);
+            if let Some(masker) = masker_maybe {
+                parser = Box::new(Mask::new(masker, parser));
+            } else {
+                return vec![];
+            }
+        }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));
@@ -434,6 +472,39 @@ impl Linter {
         self.stats.records.append(&mut new_stats.records);
 
         Ok(())
+    }
+
+    /// Load a Weirpack from raw bytes, merging its rules into the current linter.
+    /// Returns test failures if any are found, and does not import in that case.
+    pub fn import_weirpack(&mut self, bytes: Vec<u8>) -> Result<JsValue, String> {
+        let pack = Weirpack::from_bytes(&bytes).map_err(|err| err.to_string())?;
+        let failures = pack.run_tests().map_err(|err| err.to_string())?;
+
+        if !failures.is_empty() {
+            let mapped: HashMap<String, Vec<WeirpackTestFailure>> = failures
+                .into_iter()
+                .map(|(rule, results)| {
+                    let failures = results
+                        .into_iter()
+                        .map(|result| WeirpackTestFailure {
+                            expected: result.expected,
+                            got: result.got,
+                        })
+                        .collect();
+                    (rule, failures)
+                })
+                .collect();
+
+            let serializer = Serializer::json_compatible();
+            let value = mapped
+                .serialize(&serializer)
+                .map_err(|err| err.to_string())?;
+            return Ok(value);
+        }
+
+        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(&mut group);
+        Ok(JsValue::UNDEFINED)
     }
 }
 
@@ -645,6 +716,20 @@ pub struct OrganizedGroup {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use sysinfo::{Pid, ProcessRefreshKind, ProcessesToUpdate, System};
+
+    /// Get memory usage for the process with the given PID, in bytes.
+    ///
+    /// This will fail if the requested process does not exist.
+    #[must_use]
+    fn get_mem_usage_of_process(sys: &mut System, pid: Pid) -> Option<u64> {
+        sys.refresh_processes_specifics(
+            ProcessesToUpdate::Some(&[pid]),
+            false,
+            ProcessRefreshKind::nothing().with_memory(),
+        );
+        sys.process(pid).map(|process| process.memory())
+    }
 
     /// If a word from another dialect is added to the user dictionary, it should be considered
     /// part of the user's dialect as well.
@@ -656,22 +741,38 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false);
+        let lints = linter.lint(text, Language::Plain, false, None);
         assert!(lints.is_empty());
     }
 
     #[test]
-    fn does_not_oom_with_repeated_lints() {
-        for _ in 0..3000 {
-            let mut linter = Linter::new(Dialect::American);
+    fn no_memory_leak_with_repeated_lints() {
+        let pid = Pid::from_u32(std::process::id());
+        let mut sys = System::new();
 
-            let results = linter.lint(
-                "This is a grammatically correct sentence.".to_string(),
-                Language::Plain,
-                false,
-            );
+        let mut prev_memory_usage = get_mem_usage_of_process(&mut sys, pid).unwrap();
 
-            assert!(results.is_empty())
+        if (0..10).all(|_| {
+            // Run a few times.
+            for _ in 0..10 {
+                let mut linter = Linter::new(Dialect::American);
+
+                let results = linter.lint(
+                    "This is a grammatically correct sentence.".to_string(),
+                    Language::Plain,
+                    false,
+                    None,
+                );
+
+                assert!(results.is_empty())
+            }
+            // Check if our process' memory usage increased.
+            let curr_memory_usage = get_mem_usage_of_process(&mut sys, pid).unwrap();
+            let memory_usage_increased = curr_memory_usage > prev_memory_usage;
+            prev_memory_usage = curr_memory_usage;
+            memory_usage_increased
+        }) {
+            panic!("Memory leak!");
         }
     }
 }

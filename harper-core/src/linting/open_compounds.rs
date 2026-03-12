@@ -16,6 +16,7 @@ impl Default for OpenCompounds {
             "a few",
             "a lot",
             "as well",
+            "at all",
             "at least",
             "each other",
             "in case",
@@ -38,13 +39,11 @@ impl Default for OpenCompounds {
         for compound in compound_to_phrase.keys().cloned().collect::<Vec<_>>() {
             compound_wordset.add(&compound);
         }
-        let compound = Lrc::new(SequenceExpr::default().then(compound_wordset));
+        let compound = Lrc::new(SequenceExpr::with(compound_wordset));
 
         let with_prev = SequenceExpr::anything().then(compound.clone());
 
-        let with_next = SequenceExpr::default()
-            .then(compound.clone())
-            .then_anything();
+        let with_next = SequenceExpr::with(compound.clone()).then_anything();
 
         let with_prev_and_next = SequenceExpr::anything()
             .then(compound.clone())
@@ -297,6 +296,17 @@ mod tests {
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
             OpenCompounds::default(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+        );
+    }
+
+    // At all
+
+    #[test]
+    fn correct_atall() {
+        assert_suggestion_result(
+            "claude code with vs code extension not working atall",
+            OpenCompounds::default(),
+            "claude code with vs code extension not working at all",
         );
     }
 

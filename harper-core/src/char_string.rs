@@ -3,9 +3,12 @@ use std::borrow::Cow;
 
 use smallvec::SmallVec;
 
+// TODO: remove this when `SmallVec` allows retrieving this value in a const context.
+pub(crate) const CHAR_STRING_INLINE_SIZE: usize = 16;
+
 /// A char sequence that improves cache locality.
 /// Most English words are fewer than 12 characters.
-pub type CharString = SmallVec<[char; 16]>;
+pub type CharString = SmallVec<[char; CHAR_STRING_INLINE_SIZE]>;
 
 mod private {
     pub trait Sealed {}

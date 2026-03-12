@@ -1,0 +1,9 @@
+expr main [(to loose), (too lose)]
+
+let message "For `not to win`, use `to lose`. For `not tight enough`, use `too loose`."
+let description "Corrects mixing up `to` with `too` and `lose` with `loose`."
+let kind "Spelling"
+let becomes ["to lose", "too loose"]
+
+test "Bits and pieces of legacy code that are lying around on my system and that it would be a pity to loose" "Bits and pieces of legacy code that are lying around on my system and that it would be a pity to lose"
+test "infinite recursion caused by transforms that have their preconditions too lose and/or conflict with each other" "infinite recursion caused by transforms that have their preconditions too loose and/or conflict with each other"

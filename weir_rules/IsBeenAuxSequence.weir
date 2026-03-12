@@ -1,0 +1,34 @@
+expr main (is been)
+
+let message "This helper sequence is nonstandard in edited English."
+let description "Rewrites `is been` to a standard perfect-passive form."
+let kind "Grammar"
+let becomes "has been"
+let strategy "MatchCase"
+
+# True positives
+
+test "The patch is been deployed to production." "The patch has been deployed to production."
+test "My account is been reviewed by support." "My account has been reviewed by support."
+test "This endpoint is been rate-limited today." "This endpoint has been rate-limited today."
+test "The feature is been rolled out gradually." "The feature has been rolled out gradually."
+test "The issue is been tracked in Jira." "The issue has been tracked in Jira."
+test "Our request is been denied again." "Our request has been denied again."
+test "The ticket IS BEEN reopened overnight." "The ticket HAS BEEN reopened overnight."
+test "Everything is been backed up nightly." "Everything has been backed up nightly."
+
+# True negatives / false positives
+
+test "The patch has been deployed to production." "The patch has been deployed to production."
+test "The patch is being deployed to production." "The patch is being deployed to production."
+test "The patch was deployed to production." "The patch was deployed to production."
+test "I think this has been fixed already." "I think this has been fixed already."
+test "The phrase is beneficial for SEO." "The phrase is beneficial for SEO."
+test "This is, been there, done that." "This is, been there, done that."
+
+# False negatives / accepted scope limits
+
+test "The patch was been deployed to production." "The patch was been deployed to production."
+test "The patch is not been deployed to production." "The patch is not been deployed to production."
+test "The patch isn't been deployed to production." "The patch isn't been deployed to production."
+test "The patch is really been deployed to production." "The patch is really been deployed to production."

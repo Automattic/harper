@@ -3,6 +3,13 @@ import type { BinaryModule } from './binary';
 import type { LintConfig, LintOptions } from './main';
 import type Summary from './Summary';
 
+export interface WeirpackTestFailure {
+	expected: string;
+	got: string;
+}
+
+export type WeirpackTestFailures = Record<string, WeirpackTestFailure[]>;
+
 /** An interface for an object that can perform linting actions. */
 export default interface Linter {
 	/** Complete any setup that is necessary before linting. This may include downloading and compiling the WebAssembly binary.
@@ -114,6 +121,20 @@ export default interface Linter {
 
 	/** Import a statistics log file. */
 	importStatsFile(statsFile: string): Promise<void>;
+
+	/**
+	 * Load a Weirpack from a Blob, merging its rules into the current linter.
+	 * Returns `undefined` when the Weirpack tests pass and the rules are imported,
+	 * otherwise returns a map of rule names → failing tests so the caller can
+	 * surface the broken expectations.
+	 */
+	loadWeirpackFromBlob(blob: Blob): Promise<WeirpackTestFailures | undefined>;
+
+	/**
+	 * Load a Weirpack from an array of bytes, merging its rules into the current linter.
+	 * Returns the same failure report structure as `loadWeirpackFromBlob`.
+	 */
+	loadWeirpackFromBytes(bytes: Uint8Array): Promise<WeirpackTestFailures | undefined>;
 }
 
 /** The properties and information needed to construct a Linter. */

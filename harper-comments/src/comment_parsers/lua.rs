@@ -29,7 +29,7 @@ impl Parser for Lua {
         for line in source.split(|c| *c == '\n') {
             if starts_with_prefix(line) {
                 tokens.push(Token::new(
-                    Span::new_with_len(chars_traversed, 0),
+                    Span::empty(chars_traversed),
                     harper_core::TokenKind::Newline(2),
                 ));
                 chars_traversed += line.len() + 1;

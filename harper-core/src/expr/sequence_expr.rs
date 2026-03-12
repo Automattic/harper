@@ -53,7 +53,7 @@ impl Expr for SequenceExpr {
     ///
     /// If any step returns `None`, the entire expression does as well.
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        let mut window = Span::new_with_len(cursor, 0);
+        let mut window = Span::empty(cursor);
 
         for cur_expr in &self.exprs {
             let out = cur_expr.run(cursor, tokens, source)?;
@@ -79,6 +79,11 @@ impl Expr for SequenceExpr {
 
 impl SequenceExpr {
     // Constructor methods
+
+    // Match an [expression](Expr).
+    pub fn with(expr: impl Expr + 'static) -> Self {
+        Self::default().then(expr)
+    }
 
     // Single token methods
 
@@ -131,6 +136,10 @@ impl SequenceExpr {
     /// Match the longest of multiple expressions.
     pub fn longest_of(exprs: Vec<Box<dyn Expr>>) -> Self {
         Self::default().then_longest_of(exprs)
+    }
+
+    pub fn whitespace() -> Self {
+        Self::default().then_whitespace()
     }
 
     /// Will be accepted unless the condition matches.
@@ -214,20 +223,23 @@ impl SequenceExpr {
         self.then_whitespace_or_hyphen()
     }
 
+    /// Match against zero or more occurrences of the given expression. Like `*` in regex.
+    pub fn then_zero_or_more(self, expr: impl Expr + 'static) -> Self {
+        self.then(Repeating::new(Box::new(expr), 0))
+    }
+
+    /// Match against one or more occurrences of the given expression. Like `+` in regex.
     pub fn then_one_or_more(self, expr: impl Expr + 'static) -> Self {
         self.then(Repeating::new(Box::new(expr), 1))
     }
 
-    pub fn then_one_or_more_spaced(self, expr: impl Expr + 'static) -> Self {
+    /// Match against zero or more whitespace-separated occurrences of the given expression.
+    pub fn then_zero_or_more_spaced(self, expr: impl Expr + 'static) -> Self {
         let expr = Lrc::new(expr);
-        self.then(
-            SequenceExpr::default()
-                .then(expr.clone())
-                .then(Repeating::new(
-                    Box::new(SequenceExpr::default().t_ws().then(expr)),
-                    0,
-                )),
-        )
+        self.then(SequenceExpr::with(expr.clone()).then(Repeating::new(
+            Box::new(SequenceExpr::default().t_ws().then(expr)),
+            0,
+        )))
     }
 
     /// Create a new condition that will step one token forward if met.
@@ -426,8 +438,23 @@ impl SequenceExpr {
         })
     }
 
-    gen_then_from_is!(sentence_terminator);
     // More than two kinds
+
+    /// Match a token where both of the first two token kind predicates return true,
+    /// and the third returns false.
+    /// For instance, a word that must be both noun and verb, but not adjective.
+    pub fn then_kind_both_but_not<F1, F2, F3>(
+        self,
+        (pred_is_1, pred_is_2): (F1, F2),
+        pred_not: F3,
+    ) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F3: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then_kind_where(move |k| pred_is_1(k) && pred_is_2(k) && !pred_not(k))
+    }
 
     /// Match a token where any of the token kind predicates returns true.
     /// Like `then_kind_either` but for more than two predicates.
@@ -549,6 +576,7 @@ impl SequenceExpr {
     gen_then_from_is!(verb_simple_past_form);
     gen_then_from_is!(verb_past_participle_form);
     gen_then_from_is!(verb_progressive_form);
+    gen_then_from_is!(verb_third_person_singular_present_form);
 
     // Adjectives
 
@@ -596,12 +624,17 @@ impl SequenceExpr {
     gen_then_from_is!(hyphen);
     gen_then_from_is!(period);
     gen_then_from_is!(semicolon);
+    gen_then_from_is!(acute);
     gen_then_from_is!(quote);
+    gen_then_from_is!(backslash);
+    gen_then_from_is!(slash);
+    gen_then_from_is!(percent);
 
     // Other
 
     gen_then_from_is!(case_separator);
     gen_then_from_is!(likely_homograph);
+    gen_then_from_is!(sentence_terminator);
 }
 
 impl<S> From<S> for SequenceExpr

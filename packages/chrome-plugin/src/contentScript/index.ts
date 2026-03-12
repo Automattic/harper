@@ -6,10 +6,12 @@ import {
 	leafNodes,
 	type UnpackedLint,
 } from 'lint-framework';
+import isSubstack from '../isSubstack';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
+import { createGoogleDocsBridgeSync, isGoogleDocsPage } from './googleDocs';
 
-if (isWordPress()) {
+if (isWordPress() || isSubstack()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
 
@@ -18,6 +20,7 @@ const fw = new LintFramework(
 	{
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
+		getHotkey: () => ProtocolClient.getHotkey(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
@@ -33,6 +36,8 @@ const fw = new LintFramework(
 	},
 );
 
+const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
+
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
 	const normalizedEnd = Math.max(normalizedStart, Math.min(end, source.length));
@@ -44,6 +49,7 @@ function padWithContext(source: string, start: number, end: number, contextLengt
 
 const keepAliveCallback = () => {
 	ProtocolClient.lint('', 'example.com', {});
+	void syncGoogleDocsBridge();
 
 	setTimeout(keepAliveCallback, 400);
 };
@@ -51,6 +57,12 @@ const keepAliveCallback = () => {
 keepAliveCallback();
 
 function scan() {
+	void syncGoogleDocsBridge();
+
+	if (isGoogleDocsPage()) {
+		return;
+	}
+
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
 		if (
 			!isVisible(element) ||
@@ -96,7 +108,33 @@ function scan() {
 		}
 	});
 
+	document
+		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
+		.forEach((element) => {
+			const isTypstPlayground = window.location.hostname === 'typst.app';
+			const explicitlyTypst = element.getAttribute('data-language') === 'typst';
+
+			if (!isTypstPlayground && !explicitlyTypst) {
+				return;
+			}
+
+			if (element.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+				return;
+			}
+
+			if (!isVisible(element)) {
+				return;
+			}
+
+			element.setAttribute('data-language', 'typst');
+			fw.addTarget(element);
+		});
+
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.classList.contains('cm-content') && element.closest('.cm-editor') != null) {
+			return;
+		}
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
@@ -149,6 +187,9 @@ function scan() {
 }
 
 scan();
-new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+new MutationObserver(scan).observe(document.body, {
+	childList: true,
+	subtree: true,
+});
 
 setTimeout(scan, 1000);

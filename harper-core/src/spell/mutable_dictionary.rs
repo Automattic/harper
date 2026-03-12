@@ -5,9 +5,8 @@ use super::{
 };
 use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
-use lazy_static::lazy_static;
-use std::borrow::Cow;
 use std::sync::Arc;
+use std::{borrow::Cow, sync::LazyLock};
 
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
@@ -39,9 +38,7 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
     .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
-lazy_static! {
-    static ref DICT: Arc<MutableDictionary> = uncached_inner_new();
-}
+static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new);
 
 impl MutableDictionary {
     pub fn new() -> Self {

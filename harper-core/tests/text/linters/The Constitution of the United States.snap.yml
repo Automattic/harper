@@ -22,6 +22,16 @@ Message: |
 
 
 
+Lint:    Style (127 priority)
+Message: |
+       5 | **We the People** of the United States, in Order to form a more perfect Union,
+         |                                                            ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
+Suggest:
+  - Replace with: “perfecter”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
@@ -504,6 +514,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     179 | States; If he approve he shall sign it, but if not he shall return it, with his
+         |               ^~~~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “approves”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      181 | Objections at large on their Journal, and proceed to reconsider it. If after
@@ -739,25 +758,6 @@ Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
   - Replace with: “faith”
-
-
-
-Lint:    Grammar (127 priority)
-Message: |
-     276 | No Capitation, or other direct, Tax shall be laid, unless in Proportion to the
-         |                                              ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
-     277 | Census or Enumeration herein before directed to be taken. Congress shall have
-Suggest:
-  - Replace with: “lain”
-
-
-
-Lint:    Grammar (127 priority)
-Message: |
-     282 | No Tax or Duty shall be laid on Articles exported from any State.
-         |                         ^~~~ Use the past participle `lain` instead of `laid` when using compound tenses or passive voice.
-Suggest:
-  - Replace with: “lain”
 
 
 
@@ -1304,6 +1304,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      458 | States."
          | ~~~~~~~ This sentence is 54 words long.
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+     454 | Before he enter on the Execution of his Office, he shall take the following
+         |           ^~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “enters”
 
 
 

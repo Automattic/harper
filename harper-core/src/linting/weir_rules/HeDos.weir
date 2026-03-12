@@ -1,0 +1,22 @@
+expr main <([(he dos), (he ADV dos), (she dos), (she ADV dos), (it dos), (it ADV dos)]), dos>
+
+let message "Did you mean `does`?"
+let description "Corrects the misspelling `dos` after `he`, `she`, or `it`."
+let kind "Typo"
+let becomes "does"
+
+test "He dos not want to go." "He does not want to go."
+test "She dos it." "She does it."
+test "It dos work." "It does work."
+test "he dos not like it." "he does not like it."
+test "HE DOS IT." "HE DOES IT."
+test "He just dos it." "He just does it."
+test "She never dos that." "She never does that."
+test "It really dos." "It really does."
+test "He dos." "He does."
+test "She dos, then she stops." "She does, then she stops."
+allows "I dos it."
+allows "They dos it."
+allows "Dos is Spanish for two."
+allows "He does it."
+allows "He doso it."

@@ -336,17 +336,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-     443 | With their reputation on the line, they decided to fire their PR team.
-         |                                                               ^~ Did you mean to spell `PR` this way?
-Suggest:
-  - Replace with: “Pa”
-  - Replace with: “Par”
-  - Replace with: “Pi”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      449 | slain with robbers.
@@ -371,6 +360,15 @@ Message: |
          | ^~~~~~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Overcome”
+
+
+
+Lint:    Grammar (31 priority)
+Message: |
+     464 | With your kind of body size, you shouldn’t be eating pizza at all.
+         |      ^~~~ Use the contraction `you're` (you are) before predicate adjectives instead of the possessive `your` or its variants.
+Suggest:
+  - Replace with: “you're”
 
 
 

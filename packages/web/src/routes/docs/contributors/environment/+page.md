@@ -9,6 +9,7 @@ In that case, Harper follows all of the standard conventions for Rust projects, 
 If you intend to work on the Chrome extension, Obsidian plugin, or certain other projects, you'll need the full environment set up.
 
 To use _all_ the tooling we use to build and debug Harper, you'll need the following programs available in your `$PATH`.
+Please read the manuals for each tool for instructions on how to install it.
 For Nix users, we provide a [Nix development shell](#Nix-development-shell) to setup all the necessary tooling automatically.
 
 - [`just`](https://github.com/casey/just)

@@ -283,4 +283,46 @@ mod tests {
             0,
         );
     }
+
+    #[test]
+    fn issue_2547() {
+        assert_no_lints(
+            "using the foo feature and its associated parameter",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_past_participle_noun_phrase() {
+        assert_no_lints(
+            "using the foo feature and its abetted parameter",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn corrects_predicative_called() {
+        assert_suggestion_result(
+            "Its called recursion.",
+            ItsContraction::default(),
+            "It's called recursion.",
+        );
+    }
+
+    #[test]
+    fn corrects_predicative_named() {
+        assert_suggestion_result(
+            "Its named Manhattan.",
+            ItsContraction::default(),
+            "It's named Manhattan.",
+        );
+    }
+
+    #[test]
+    fn allows_possessive_generated_code() {
+        assert_no_lints(
+            "The compiler emits its generated code.",
+            ItsContraction::default(),
+        );
+    }
 }

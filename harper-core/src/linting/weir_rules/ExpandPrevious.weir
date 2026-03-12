@@ -1,0 +1,8 @@
+expr main (prev)
+
+let message "Use `previous` instead of `prev`"
+let description "Expands the abbreviation `prev` to the full word `previous` for clarity."
+let kind "Style"
+let becomes "previous"
+
+test "Just change :after by :before in the code above. Otherwise, you'll see the default prev/next images + the font awesome chevrons.Read" "Just change :after by :before in the code above. Otherwise, you'll see the default previous/next images + the font awesome chevrons.Read"

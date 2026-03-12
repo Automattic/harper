@@ -1,6 +1,5 @@
-use lazy_static::lazy_static;
 use serde::Deserialize;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 type Noun = (String, String);
 
@@ -17,9 +16,7 @@ fn uncached_inner_new() -> Arc<IrregularNouns> {
         .unwrap_or_else(|e| panic!("Failed to load irregular noun table: {}", e))
 }
 
-lazy_static! {
-    static ref NOUNS: Arc<IrregularNouns> = uncached_inner_new();
-}
+static NOUNS: LazyLock<Arc<IrregularNouns>> = LazyLock::new(uncached_inner_new);
 
 impl IrregularNouns {
     pub fn new() -> Self {

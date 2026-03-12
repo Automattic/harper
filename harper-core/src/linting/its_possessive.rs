@@ -9,7 +9,6 @@ use crate::expr::ExprMap;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
-use crate::patterns::WordSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
@@ -23,15 +22,14 @@ impl Default for ItsPossessive {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let adj_term = SequenceExpr::default()
+        let adj_term_mid_sentence = SequenceExpr::default()
             .t_ws()
             .then(UPOSSet::new(&[UPOS::ADJ]));
 
-        let mid_sentence = SequenceExpr::default()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
+        let mid_sentence = SequenceExpr::with(UPOSSet::new(&[UPOS::VERB, UPOS::ADP]))
             .t_ws()
             .t_aco("it's")
-            .then_optional(adj_term)
+            .then_optional(adj_term_mid_sentence)
             .t_ws()
             .then(
                 UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
@@ -41,11 +39,47 @@ impl Default for ItsPossessive {
 
         map.insert(mid_sentence, 2);
 
-        let start_of_sentence = SequenceExpr::default()
-            .then(AnchorStart)
+        let start_of_sentence_noun = SequenceExpr::with(AnchorStart)
             .t_aco("it's")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ, UPOS::NOUN, UPOS::PROPN]))
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                }),
+            )
+            .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
+                UPOS::VERB,
+                UPOS::PART,
+                UPOS::ADP,
+                UPOS::NOUN,
+                UPOS::PRON,
+                UPOS::SCONJ,
+                UPOS::CCONJ,
+                UPOS::ADV,
+            ])));
+
+        map.insert(start_of_sentence_noun, 0);
+
+        let start_of_sentence_noun_subject = SequenceExpr::with(AnchorStart)
+            .t_aco("it's")
+            .t_ws()
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                        || ((tok.kind.is_noun() || tok.kind.is_proper_noun())
+                            && !tok.kind.is_adjective()
+                            && !tok.kind.is_adverb())
+                }),
+            )
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX]));
+
+        map.insert(start_of_sentence_noun_subject, 0);
+
+        let start_of_sentence_adjective = SequenceExpr::with(AnchorStart)
+            .t_aco("it's")
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::ADJ]))
             .t_ws()
             .then_unless(UPOSSet::new(&[
                 UPOS::VERB,
@@ -58,11 +92,32 @@ impl Default for ItsPossessive {
                 UPOS::ADV,
             ]));
 
-        map.insert(start_of_sentence, 0);
+        map.insert(start_of_sentence_adjective, 0);
 
-        let special = SequenceExpr::aco("it's")
+        let start_of_chunk_after_conjunction = SequenceExpr::with(AnchorStart)
+            .then(UPOSSet::new(&[UPOS::CCONJ]))
             .t_ws()
-            .then(WordSet::new(&["various"]));
+            .t_aco("it's")
+            .t_ws()
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                }),
+            )
+            .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
+                UPOS::VERB,
+                UPOS::PART,
+                UPOS::ADP,
+                UPOS::NOUN,
+                UPOS::PRON,
+                UPOS::SCONJ,
+                UPOS::CCONJ,
+                UPOS::ADV,
+            ])));
+
+        map.insert(start_of_chunk_after_conjunction, 2);
+
+        let special = SequenceExpr::aco("it's").t_ws().t_aco("various");
 
         map.insert(special, 0);
 
@@ -160,6 +215,15 @@ mod tests {
             "It's benefits are numerous.",
             ItsPossessive::default(),
             "Its benefits are numerous.",
+        );
+    }
+
+    #[test]
+    fn fixes_its_ancestor() {
+        assert_suggestion_result(
+            "It's ancestor is still around.",
+            ItsPossessive::default(),
+            "Its ancestor is still around.",
         );
     }
 
@@ -356,5 +420,28 @@ mod tests {
     #[test]
     fn dont_flag_issue_1722_its_big_enough() {
         assert_no_lints("It's big enough.", ItsPossessive::default());
+    }
+
+    #[test]
+    fn allows_its_awesome() {
+        assert_no_lints("It's awesome.", ItsPossessive::default());
+    }
+
+    #[test]
+    fn flags_all_its_possessive_in_list() {
+        assert_lint_count(
+            "Understand it's code, it's values, and it's purpose.",
+            ItsPossessive::default(),
+            3,
+        );
+    }
+
+    #[test]
+    fn fixes_all_its_possessive_in_list() {
+        assert_suggestion_result(
+            "Understand it's code, it's values, and it's purpose.",
+            ItsPossessive::default(),
+            "Understand its code, its values, and its purpose.",
+        );
     }
 }

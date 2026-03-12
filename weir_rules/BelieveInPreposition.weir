@@ -1,0 +1,37 @@
+expr main [(believe to)]
+
+let message "This verb usually takes `in` here."
+let description "Replaces `believe to` with `believe in` in common object-taking usage."
+let kind "Grammar"
+let becomes "believe in"
+let strategy "MatchCase"
+
+# True positives
+
+test "I believe to this plan." "I believe in this plan."
+test "They believe to ghosts." "They believe in ghosts."
+test "Many teens believe to luck." "Many teens believe in luck."
+test "Do you believe to fate?" "Do you believe in fate?"
+test "We still believe to science." "We still believe in science."
+test "I believe to your potential." "I believe in your potential."
+test "BELIEVE TO YOURSELF FOR ONCE." "BELIEVE IN YOURSELF FOR ONCE."
+test "I wonder if you believe to miracles." "I wonder if you believe in miracles."
+
+# True negatives / false positives
+
+allows "I believe in this plan."
+allows "They believe that this plan works."
+allows "I choose to believe this story."
+allows "We believe in each other."
+allows "Do you believe in fate?"
+
+# Known false positives (current boundary)
+
+test "I believe to this day that we were right." "I believe in this day that we were right."
+test "I believe to this moment it is true." "I believe in this moment it is true."
+
+# Potential false negatives (accepted gaps)
+
+allows "She believes to her team."
+allows "We believed to that strategy for years."
+allows "He is believing to the mission again."

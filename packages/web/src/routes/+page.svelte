@@ -127,7 +127,7 @@ const testimonials = [
 	      	><EdgeLogo width="40px" height="40px" />Add to Edge</Link
 	      >
       {:else}
-	      <Link href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb" class="flex flex-row items-center [&>*]:m-2 skew-hover"
+	      <Link href="https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-homepage&utm_medium=referral" class="flex flex-row items-center [&>*]:m-2 skew-hover"
 	      	><ChromeLogo width="40px" height="40px" />Add to Chrome</Link
 	      >
       {/if}
@@ -405,6 +405,11 @@ const testimonials = [
 					<Link class="text-blue-600 dark:text-blue-400" href="https://discord.gg/invite/JBqcAaKrzQ">Discord</Link>
 					and ask your questions there or you can start a discussion over at
 					<Link class="text-blue-600 dark:text-blue-400" href="https://github.com/Automattic/harper/discussions">GitHub</Link>.
+				</p>
+			</Collapsible>
+			<Collapsible title="Why Isn't Harper Working in Gmail?">
+				<p>
+          Harper will not run in Gmail unless the built-in grammar checker is disabled. If you wish to use Harper in Gmail, please <Link class="text-blue-600 dark:text-blue-400" href="https://support.google.com/mail/answer/7987?hl=en">disable the built-in grammar checker.</Link>
 				</p>
 			</Collapsible>
 		</div>

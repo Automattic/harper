@@ -6,5 +6,5 @@ let kind "Typo"
 let becomes "second thought"
 
 test "I was going to buy it, but on second though, maybe I'll wait." "I was going to buy it, but on second thought, maybe I'll wait."
-test "She considered driving home, but on second thought, she decided to walk." "She considered driving home, but on second thought, she decided to walk."
+allows "She considered driving home, but on second thought, she decided to walk."
 test "My second though is that I'd prefer something else entirely." "My second thought is that I'd prefer something else entirely."

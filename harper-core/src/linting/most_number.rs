@@ -1,7 +1,7 @@
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::{Token, TokenStringExt, patterns::WordSet};
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
@@ -19,7 +19,7 @@ impl Default for MostNumber {
                     SequenceExpr::default()
                         .t_aco("most")
                         .t_ws()
-                        .then(WordSet::new(&["amount", "number"])),
+                        .then_word_set(&["amount", "number"]),
                 ),
                 // Context pattern
                 Box::new(

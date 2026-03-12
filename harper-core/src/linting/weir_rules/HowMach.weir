@@ -1,0 +1,22 @@
+expr main <(how [mach, match] !PUNCT), [mach, match]>
+
+let message "Use `how much` when you're asking about quantity, not the brand name or verb."
+let description "Swaps `how mach` or `how match` with the correct quantifier `how much`."
+let kind "Typo"
+let becomes "much"
+
+test "Do you know how mach it weighs?" "Do you know how much it weighs?"
+test "Tell me how match sugar you want." "Tell me how much sugar you want."
+test "How mach are we supposed to study?" "How much are we supposed to study?"
+test "How match time have we spent already?" "How much time have we spent already?"
+test "He wondered how mach courage it takes." "He wondered how much courage it takes."
+test "She asked how match water to add." "She asked how much water to add."
+test "Ask how mach light you need." "Ask how much light you need."
+test "How mach did you train for this race?" "How much did you train for this race?"
+test "How match of those settings are legal?" "How much of those settings are legal?"
+test "HOW MACH DO YOU WANT IT?" "HOW MUCH DO YOU WANT IT?"
+allows "Now that we know how match() works, let's refactor."
+allows "How Match.com Got Women to Sign Up for Online Dating."
+allows "The engine develops 131.7kN and the speed of the aircraft is Mach 2."
+allows "Tell me how much time you need."
+allows "I can't decide how much of this to keep."

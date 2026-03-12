@@ -1,0 +1,9 @@
+expr main (as of lately)
+
+let message "Standard equivalents are `lately` or `as of late`."
+let description "Corrects `as of lately` to `lately` or `as of late`."
+let kind "WordChoice"
+let becomes ["lately", "as of late"]
+
+test "I haven't noticed any crashing with AMDGPU as of lately, so this looks to not be an issue anymore." "I haven't noticed any crashing with AMDGPU as of late, so this looks to not be an issue anymore."
+test "As of lately, I've been more active on Gitlab." "As of late, I've been more active on Gitlab."

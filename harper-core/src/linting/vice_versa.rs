@@ -78,7 +78,7 @@ impl Default for ViceVersa {
         let expr = SequenceExpr::word_set(&["vice", "vise"])
             .then(matches_hyphen)
             .then_optional(SequenceExpr::aco("a").then(matches_hyphen))
-            .then(SequenceExpr::aco("versa"));
+            .t_aco("versa");
 
         Self {
             expr: Box::new(expr),

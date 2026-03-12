@@ -44,7 +44,7 @@ impl<D: Dictionary + 'static> Linter for UseTitleCase<D> {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     use super::UseTitleCase;
@@ -64,6 +64,40 @@ mod tests {
             "# This is a title\n\n## This is a subtitle",
             UseTitleCase::new(FstDictionary::curated()),
             "# This Is a Title\n\n## This Is a Subtitle",
+        );
+    }
+
+    #[test]
+    fn doesnt_lowercase_this_in_github_template_title() {
+        assert_no_lints(
+            "# How Has This Been Tested?",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn shoud_uppercase_possessive_determiners() {
+        assert_suggestion_result(
+            "# my/our/your/his/her/its/their",
+            UseTitleCase::new(FstDictionary::curated()),
+            "# My/Our/Your/His/Her/Its/Their",
+        );
+    }
+
+    #[test]
+    fn ignores_leading_number_list_marker_in_heading() {
+        assert_no_lints(
+            "### 1. To Do a Thing",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn still_fixes_non_first_small_words_after_leading_number() {
+        assert_suggestion_result(
+            "### 1. To do a thing",
+            UseTitleCase::new(FstDictionary::curated()),
+            "### 1. To Do a Thing",
         );
     }
 }

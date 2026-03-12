@@ -1,6 +1,5 @@
-use lazy_static::lazy_static;
 use std::borrow::Cow;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
@@ -16,10 +15,8 @@ pub struct TrieDictionary<D: Dictionary> {
     inner: D,
 }
 
-lazy_static! {
-    static ref DICT: Arc<TrieDictionary<Arc<FstDictionary>>> =
-        Arc::new(TrieDictionary::new(FstDictionary::curated()));
-}
+pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> =
+    LazyLock::new(|| Arc::new(TrieDictionary::new(FstDictionary::curated())));
 
 impl TrieDictionary<Arc<FstDictionary>> {
     /// Create a dictionary from the curated dictionary included

@@ -3,6 +3,7 @@ import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
+import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
@@ -13,7 +14,12 @@ let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
+let modifyHotkeyButton: Button;
+let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
+let weirpacks: WeirpackMeta[] = $state([]);
+let weirpackBusy = $state(false);
+let weirpackError = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -32,7 +38,6 @@ $effect(() => {
 });
 
 $effect(() => {
-	console.log('hit');
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
@@ -56,8 +61,21 @@ ProtocolClient.getActivationKey().then((d) => {
 	activationKey = d;
 });
 
+ProtocolClient.getHotkey().then((d) => {
+	// Ensure we have a plain object, not a Proxy
+	hotkey = {
+		modifiers: [...d.modifiers],
+		key: d.key,
+	};
+	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
+});
+
 ProtocolClient.getUserDictionary().then((d) => {
 	userDict = dictToString(d.toSorted());
+});
+
+ProtocolClient.getWeirpacks().then((stored) => {
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -144,6 +162,94 @@ async function exportEnabledDomainsCSV() {
 		console.error('Failed to export enabled domains JSON:', e);
 	}
 }
+
+let buttonText = $state('Set Hotkey');
+let isBlue = $state(false); // modify color of hotkey button once it is pressed
+function startHotkeyCapture(_modifyHotkeyButton: Button) {
+	buttonText = 'Press desired hotkey combination now.';
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		event.preventDefault();
+
+		const modifiers: Modifier[] = [];
+		if (event.ctrlKey) modifiers.push('Ctrl');
+		if (event.shiftKey) modifiers.push('Shift');
+		if (event.altKey) modifiers.push('Alt');
+
+		let key = event.key;
+
+		if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
+			if (modifiers.length === 0) {
+				return;
+			}
+			buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
+			// Create a plain object to avoid proxy cloning issues
+			const newHotkey = {
+				modifiers: [...modifiers],
+				key: key,
+			};
+
+			hotkey = newHotkey;
+
+			// Call ProtocolClient directly with the plain object to avoid proxy issues
+			ProtocolClient.setHotkey(newHotkey);
+
+			// Remove listener
+			window.removeEventListener('keydown', handleKeydown);
+
+			// change button color
+			isBlue = !isBlue;
+		}
+	};
+
+	// Add temporary key listener
+	window.addEventListener('keydown', handleKeydown);
+}
+
+async function refreshWeirpacks() {
+	const stored = await ProtocolClient.getWeirpacks();
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
+}
+
+async function handleWeirpackUpload(event: Event) {
+	const input = event.currentTarget as HTMLInputElement | null;
+	const files = input?.files;
+	if (!files || files.length === 0) {
+		return;
+	}
+
+	weirpackError = '';
+	weirpackBusy = true;
+	try {
+		for (const file of files) {
+			const bytes = new Uint8Array(await file.arrayBuffer());
+			await ProtocolClient.addWeirpack(file.name, bytes);
+		}
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to upload Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+		input.value = '';
+	}
+}
+
+async function removeWeirpack(id: string) {
+	weirpackBusy = true;
+	weirpackError = '';
+	try {
+		await ProtocolClient.removeWeirpack(id);
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to remove Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+	}
+}
+
+// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -155,7 +261,7 @@ async function exportEnabledDomainsCSV() {
       </div>
       <div class="flex flex-col">
         <h1 class="text-base tracking-wide font-serif">Harper</h1>
-        <p class="text-xs">Chrome Extension Settings</p>
+        <p class="text-xs">Settings</p>
       </div>
     </Card>
 
@@ -223,6 +329,18 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
+            <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestion to last highlighted word.</p>
+          </div>
+          <Textarea readonly bind:value={buttonText} />
+          <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
+
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
             <h3 class="text-sm">User Dictionary</h3>
             <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
           </div>
@@ -232,6 +350,53 @@ async function exportEnabledDomainsCSV() {
         </div>
       </div>
 
+    </Card>
+
+    <Card class="space-y-4">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">Weirpacks</h2>
+
+      <div class="space-y-2 flex flex-row w-full justify-between">
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Upload one or more <code>.weirpack</code> files to add custom rule packs.
+        </p>
+        <input
+          type="file"
+          accept=".weirpack,application/zip"
+          multiple
+          disabled={weirpackBusy}
+          onchange={handleWeirpackUpload}
+          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white disabled:opacity-50"
+        />
+      </div>
+
+      {#if weirpackError}
+        <p class="text-xs text-red-700 dark:text-red-400">{weirpackError}</p>
+      {/if}
+
+      {#if weirpacks.length === 0}
+        <p class="text-sm text-gray-600 dark:text-gray-400">No Weirpacks installed.</p>
+      {:else}
+        <div class="space-y-3">
+          {#each weirpacks as weirpack}
+            <div class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3">
+              <div class="min-w-0">
+                <p class="truncate text-sm">
+                  {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
+                </p>
+                <p class="truncate text-xs text-gray-600 dark:text-gray-400">{weirpack.filename}</p>
+              </div>
+              <Button
+                size="sm"
+                color="light"
+                disabled={weirpackBusy}
+                on:click={() => removeWeirpack(weirpack.id)}
+              >
+                Remove
+              </Button>
+            </div>
+          {/each}
+        </div>
+      {/if}
     </Card>
 
     <!-- ── RULES ─────────────────────────────── -->

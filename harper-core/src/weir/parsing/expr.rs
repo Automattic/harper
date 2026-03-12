@@ -47,6 +47,12 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
 
     match tok.kind {
         TokenKind::Space(_) => Ok(FoundNode::new(AstExprNode::Whitespace, 1)),
+        // The expr ref notation
+        TokenKind::Punctuation(Punctuation::At) => {
+            let name_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
+            let name = name_tok.span.get_content(source);
+            Ok(FoundNode::new(AstExprNode::ExprRef(name.into()), 2))
+        }
         // The derivation notation.
         TokenKind::Punctuation(Punctuation::Currency(Currency::Dollar)) => {
             let word_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
@@ -455,6 +461,26 @@ mod tests {
         assert_eq!(
             parse_expr_str("PROG", true).unwrap(),
             AstExprNode::Progressive
+        )
+    }
+
+    #[test]
+    fn parses_expr_ref() {
+        assert_eq!(
+            parse_expr_str("@test", true).unwrap(),
+            AstExprNode::ExprRef(char_string!("test"))
+        )
+    }
+
+    #[test]
+    fn parses_expr_ref_array() {
+        assert_eq!(
+            parse_expr_str("[@a, @b, @c]", true).unwrap(),
+            AstExprNode::Arr(vec![
+                AstExprNode::ExprRef(char_string!("a")),
+                AstExprNode::ExprRef(char_string!("b")),
+                AstExprNode::ExprRef(char_string!("c"))
+            ])
         )
     }
 

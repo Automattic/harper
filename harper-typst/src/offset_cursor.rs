@@ -28,7 +28,7 @@ impl<'a> OffsetCursor<'a> {
         }
 
         Some(Self {
-            char: self.char + self.doc.get(self.byte..new_byte)?.chars().count(),
+            char: self.char + self.doc.text().get(self.byte..new_byte)?.chars().count(),
             byte: new_byte,
             ..self
         })

@@ -12,6 +12,20 @@ function randomString(length: number): string {
 	return result;
 }
 
+const WEIRPACK_PASS_BASE64 =
+	'UEsDBBQAAAAIAFR7LFx+V+AhbQAAAIgAAAANAAAAbWFuaWZlc3QuanNvbi2MMQuDMBBG9/yKI3MJdnXrWNBNcE7iaQ9DLlxil+J/l5iO33u876cAtD3Kh0X3oCfMBV5tPqr6omTiWF1nOvNsdMHshVL5m7uakSRZv8PKAjPLjjJQLCjgAjsIbBeKm2kHgTzGjDUe35NW5wVQSwMEFAAAAAgAVHssXLV8hxV2AAAAoQAAABUAAABXZWlycGFja1Rlc3RSdWxlLndlaXJNzrENwzAMBMBeUxDskx0yQMoMQEtvh7BECaKMePwYdorgyz/gH3vrVESNJrEjIWQMKnCXBcQvB4036APtTeJKHS1LRIGNO582wWPXNrQa8eNPbhk0104DPtSWH1/VEvFTPSJnMdTNr2JCrMcu8XXkNuuOxOELUEsBAhQDFAAAAAgAVHssXH5X4CFtAAAAiAAAAA0AAAAAAAAAAAAAAIABAAAAAG1hbmlmZXN0Lmpzb25QSwECFAMUAAAACABUeyxctXyHFXYAAAChAAAAFQAAAAAAAAAAAAAAgAGYAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyUEsFBgAAAAACAAIAfgAAAEEBAAAAAA==';
+const WEIRPACK_FAIL_BASE64 =
+	'UEsDBBQAAAAIABtOLVw9tWbJYgAAAH0AAAANAAAAbWFuaWZlc3QuanNvbi3LMQ9AMBCG4d2vuHSWhtVmNNgk5qYOF01J7zCI/07V+H1P3isDUGaXeQ2qAtUhC9Rp5pEODEyrj1boQpfpHZBtoE1++aoeKWzGLnCSzDAacuQnkJdYp8qRRc8Yi7bpVHY/UEsDBBQAAAAIABtOLVylaCfNfgAAALkAAAAVAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyTY5RDsIwDEP/e4oo/3AHDsAnB+g6b0Rr06rJxI7PYICQf6z4WTG21qlEURqi7gohw6nALM4gvhnI76AHpLeYFupoOSYUqJ/5zY6w1KW5VCW+/JFrBk21k8NcdP7gi+hIfBVLyDkq6mpHMCDV/S/xMeQ0yYaRQ3jVv0f+mfAEUEsBAhQDFAAAAAgAG04tXD21ZsliAAAAfQAAAA0AAAAAAAAAAAAAAIABAAAAAG1hbmlmZXN0Lmpzb25QSwECFAMUAAAACAAbTi1cpWgnzX4AAAC5AAAAFQAAAAAAAAAAAAAAgAGNAAAAV2VpcnBhY2tUZXN0UnVsZS53ZWlyUEsFBgAAAAACAAIAfgAAAD4BAAAAAA==';
+
+function base64ToBytes(value: string): Uint8Array {
+	const raw = atob(value);
+	const bytes = new Uint8Array(raw.length);
+	for (let i = 0; i < raw.length; i++) {
+		bytes[i] = raw.charCodeAt(i);
+	}
+	return bytes;
+}
+
 const linters = {
 	WorkerLinter: WorkerLinter,
 	LocalLinter: LocalLinter,
@@ -446,19 +460,151 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	}, 120000);
-}
 
-test('LocalLinters will lint many times with fresh instances', async () => {
-	for (let i = 0; i < 300; i++) {
-		const linter = new LocalLinter({ binary });
+	test(`${linterName} can load Weirpacks from a Blob`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
 
-		const text = 'This is a grammatically correct sentence.';
-		const lints = await linter.organizedLints(text);
-		expect(lints).not.toBeNull();
+		const bytes = base64ToBytes(WEIRPACK_PASS_BASE64);
+		const arr = new Uint8Array(bytes);
+		const blob = new Blob([arr], { type: 'application/zip' });
+		const failures = await linter.loadWeirpackFromBlob(blob);
+
+		expect(failures).toBeUndefined();
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toHaveLength(1);
 
 		await linter.dispose();
-	}
-}, 120000);
+	});
+
+	test(`${linterName} can load Weirpacks from Uint8Array`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_PASS_BASE64);
+		const failures = await linter.loadWeirpackFromBytes(bytes);
+
+		expect(failures).toBeUndefined();
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toHaveLength(1);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} rejects Weirpacks with failing tests (Blob)`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_FAIL_BASE64);
+		const arr = new Uint8Array(bytes);
+		const blob = new Blob([arr], { type: 'application/zip' });
+		const failures = await linter.loadWeirpackFromBlob(blob);
+
+		expect(failures).toBeTypeOf('object');
+		expect(failures?.WeirpackTestRule?.[0]?.expected).toBe('banana');
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toBeUndefined();
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} rejects Weirpacks with failing tests (Uint8Array)`, async () => {
+		const linter = new Linter({ binary });
+		await linter.setup();
+
+		const bytes = base64ToBytes(WEIRPACK_FAIL_BASE64);
+		const failures = await linter.loadWeirpackFromBytes(bytes);
+
+		expect(failures).toBeTypeOf('object');
+		expect(failures?.WeirpackTestRule?.[0]?.expected).toBe('banana');
+
+		const lints = await linter.organizedLints('banana');
+		expect(lints.WeirpackTestRule).toBeUndefined();
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can exclude things with Regex in organized lint function.`, async () => {
+		const linter = new Linter({ binary });
+
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
+
+		// Without regex, Harper should detect the error.
+		let lints = await linter.organizedLints(source);
+		let flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(1);
+
+		// With regex, Harper should not detect the error.
+		lints = await linter.organizedLints(source, { regex_mask: regex });
+		flattened = Object.values(lints).flat();
+		expect(flattened).toHaveLength(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} returns correct suggestion for 'ned' with organizedLints.`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = "I don't ned it.";
+		const lints = await linter.organizedLints(source);
+		const flattened = Object.values(lints).flat();
+
+		expect(flattened).toHaveLength(1);
+
+		const suggestions = flattened[0].suggestions().map((s) => s.get_replacement_text());
+
+		expect(suggestions).toContain('need');
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can exclude things with Regex in normal lint function.`, async () => {
+		const linter = new Linter({ binary });
+
+		const regex = 'errorz';
+		const source = 'This text contains errorz.';
+
+		// Without regex, Harper should detect the error.
+		let lints = await linter.lint(source);
+		expect(lints).toHaveLength(1);
+
+		// With regex, Harper should not detect the error.
+		lints = await linter.lint(source, { regex_mask: regex });
+		expect(lints).toHaveLength(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} returns correct suggestion for 'ned'.`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = "I don't ned it.";
+		const lints = await linter.lint(source);
+
+		expect(lints).toHaveLength(1);
+		const suggestions = lints[0].suggestions().map((s) => s.get_replacement_text());
+		expect(suggestions).toContain('need');
+
+		await linter.dispose();
+	});
+}
+
+// Disabled because it significantly slows down CI
+// test('LocalLinters will lint many times with fresh instances', async () => {
+// 	for (let i = 0; i < 300; i++) {
+// 		const linter = new LocalLinter({ binary });
+//
+// 		const text = 'This is a grammatically correct sentence.';
+// 		const lints = await linter.organizedLints(text);
+// 		expect(lints).not.toBeNull();
+//
+// 		await linter.dispose();
+// 	}
+// }, 120000);
 
 test('Linters have the same config format', async () => {
 	const configs = [];

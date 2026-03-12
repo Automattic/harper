@@ -12,7 +12,7 @@ This document details how to develop the Visual Studio Code extension locally. I
 
 ## Prerequisites
 
-- Make sure to [set up your environment](./environment). Be sure to run `just setup` as the guide recommends, or at least `pnpm install`, to make sure the extension's dependencies are installed.
+- Make sure to [set up your environment](./environment). Be sure to run `just setup` as the guide recommends to make sure the extension's dependencies are installed.
 - Install the [recommended extension](https://github.com/Automattic/harper/blob/master/packages/vscode-plugin/.vscode/extensions.json), [`connor4312.esbuild-problem-matchers`](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers), so VS Code can understand and run esbuild tasks.
 - Before running or testing the extension using VS Code's Debugger, make sure you have `harper-ls` in `packages/vscode-plugin/bin`. You can either manually create the directory, compile `harper-ls`, and put it there or you can run `just test-vscode` or `just package-vscode` which will do that for you.
 
@@ -35,6 +35,9 @@ just test-vscode
 ```
 
 ### Using VS Code's Debugger
+
+Remember: VS Code can only pick up the tasks and launch configurations set in `packages/vscode-plugin/.vscode` if `packages/vscode-plugin`, not the root of the Harper repository, is open.
+That means you need to manually open VS Code in the `vscode-plugin` directory yourself.
 
 You may also follow these steps to run the tests through your VS Code installation.
 
