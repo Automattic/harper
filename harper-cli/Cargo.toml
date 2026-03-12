@@ -29,6 +29,9 @@ harper-ink = { version = "1.0.0", path = "../harper-ink" }
 enum_dispatch = "0.3.13"
 yansi = "1.0.1"
 
+[dev-dependencies]
+tempfile = "3"
+
 [features]
 default = []
 training = ["harper-pos-utils/training"]

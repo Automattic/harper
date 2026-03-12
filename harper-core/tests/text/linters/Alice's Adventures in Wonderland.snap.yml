@@ -2846,18 +2846,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2303 | treading on her toes when they passed too close, and waving their forepaws to
-         |                                                                   ^~~~~~~~ Did you mean to spell `forepaws` this way?
-    2304 | mark the time, while the Mock Turtle sang this, very slowly and sadly:—
-Suggest:
-  - Replace with: “foreparts”
-  - Replace with: “forepart”
-  - Replace with: “foresaw”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
