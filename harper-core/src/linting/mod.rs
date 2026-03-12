@@ -54,6 +54,7 @@ mod did_past;
 mod didnt;
 mod discourse_markers;
 mod disjoint_prefixes;
+mod do_mistake;
 mod dot_initialisms;
 mod double_click;
 mod double_modal;

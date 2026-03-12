@@ -4605,7 +4605,7 @@
 > So          they began solemnly dancing round      and  round      Alice , every now       and  then
 # NSg/I/J/R/C IPl+ VPt   R        Nᴹ/Vg/J NSg/VB/J/P VB/C NSg/VB/J/P NPr+  . Dq    NSg/J/R/C VB/C NSg/J/R/C
 > treading on  her     toes    when    they passed too close    , and  waving  their forepaws to
-# Nᴹ/Vg/J  J/P ISg/D$+ NPl/V3+ NSg/I/C IPl+ VP/J   R   NSg/VB/J . VB/C Nᴹ/Vg/J D$+   ?        P
+# Nᴹ/Vg/J  J/P ISg/D$+ NPl/V3+ NSg/I/C IPl+ VP/J   R   NSg/VB/J . VB/C Nᴹ/Vg/J D$+   NPl      P
 > mark    the time       , while      the Mock     Turtle  sang    this    , very slowly and  sadly : —
 # NPr/VB+ D   N🅪Sg/VB/J+ . NSg/VB/C/P D   NSg/VB/J NSg/VB+ NPr/VPt I/Ddem+ . J/R  R      VB/C R     . .
 >
