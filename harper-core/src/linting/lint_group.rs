@@ -374,6 +374,7 @@ pub struct LintGroup {
     #[expect(clippy::complexity)]
     chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
+    clashing_linter_names: Option<Vec<String>>,
 }
 
 impl LintGroup {
@@ -386,369 +387,8 @@ impl LintGroup {
             chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
+            clashing_linter_names: None,
         }
-    }
-
-    /// Swap out [`Self::config`] with another [`LintGroupConfig`].
-    pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
-        self.config = config;
-        self
-    }
-
-    pub fn new_curated(dictionary: Arc<dyn Dictionary + 'static>, dialect: Dialect) -> Self {
-        let mut out = Self::empty();
-
-        /// Add a `Linter` to the group, setting it to be enabled by default.
-        macro_rules! insert_struct_rule {
-            ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::default()));
-                out.config
-                    .set_rule_enabled(stringify!($rule), $default_config);
-            };
-        }
-
-        /// Add a chunk-based `ExprLinter` to the group, setting it to be enabled by default.
-        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
-        /// will allow it to use more aggressive caching strategies.
-        macro_rules! insert_expr_rule {
-            ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::default()));
-                out.config
-                    .set_rule_enabled(stringify!($rule), $default_config);
-            };
-        }
-
-        out.merge_from(weir_rules::lint_group());
-        out.merge_from(phrase_set_corrections::lint_group());
-        out.merge_from(proper_noun_capitalization_linters::lint_group());
-        out.merge_from(closed_compounds::lint_group());
-        out.merge_from(initialisms::lint_group());
-
-        // Add all the more complex rules to the group.
-        // Please maintain alphabetical order.
-        // On *nix you can maintain sort order with `sort -t'(' -k2`
-        insert_expr_rule!(APart, true);
-        insert_expr_rule!(AWhile, true);
-        insert_expr_rule!(Addicting, true);
-        insert_expr_rule!(AdjectiveDoubleDegree, true);
-        insert_struct_rule!(AdjectiveOfA, true);
-        insert_expr_rule!(AfterLater, true);
-        insert_expr_rule!(AllHellBreakLoose, true);
-        insert_expr_rule!(AllIntentsAndPurposes, true);
-        insert_expr_rule!(AllowTo, true);
-        insert_expr_rule!(AmInTheMorning, true);
-        insert_expr_rule!(AmountsFor, true);
-        insert_expr_rule!(AndIn, true);
-        insert_expr_rule!(AndTheLike, true);
-        insert_expr_rule!(AnotherThingComing, true);
-        insert_expr_rule!(AnotherThinkComing, false);
-        insert_expr_rule!(ApartFrom, true);
-        insert_expr_rule!(AskNoPreposition, true);
-        insert_expr_rule!(AvoidCurses, true);
-        insert_expr_rule!(BackInTheDay, true);
-        insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BehindTheScenes, true);
-        insert_struct_rule!(BestOfAllTime, true);
-        insert_expr_rule!(BoringWords, false);
-        insert_expr_rule!(Bought, true);
-        insert_expr_rule!(BrandBrandish, true);
-        insert_expr_rule!(ByAccident, true);
-        insert_expr_rule!(Cant, true);
-        insert_struct_rule!(CapitalizePersonalPronouns, true);
-        insert_expr_rule!(CautionaryTale, true);
-        insert_expr_rule!(ChangeTack, true);
-        insert_expr_rule!(ChockFull, true);
-        insert_struct_rule!(CommaFixes, true);
-        insert_struct_rule!(CompoundNouns, true);
-        insert_expr_rule!(CompoundSubjectI, true);
-        insert_expr_rule!(Confident, true);
-        insert_struct_rule!(CorrectNumberSuffix, true);
-        insert_expr_rule!(CriteriaPhenomena, true);
-        insert_expr_rule!(CureFor, true);
-        insert_struct_rule!(CurrencyPlacement, true);
-        insert_expr_rule!(Dashes, true);
-        insert_expr_rule!(DayAndAge, true);
-        insert_expr_rule!(DespiteItIs, true);
-        insert_expr_rule!(DespiteOf, true);
-        insert_expr_rule!(Didnt, true);
-        insert_struct_rule!(DiscourseMarkers, true);
-        insert_expr_rule!(DoMistake, true);
-        insert_expr_rule!(DotInitialisms, true);
-        insert_expr_rule!(DoubleClick, true);
-        insert_expr_rule!(DoubleModal, true);
-        insert_struct_rule!(EllipsisLength, true);
-        insert_expr_rule!(ElsePossessive, true);
-        insert_expr_rule!(EverEvery, true);
-        insert_expr_rule!(Everyday, true);
-        insert_expr_rule!(ExpandMemoryShorthands, true);
-        insert_expr_rule!(ExpandTimeShorthands, true);
-        insert_expr_rule!(FarBeIt, true);
-        insert_expr_rule!(FascinatedBy, true);
-        insert_expr_rule!(FeelFell, true);
-        insert_expr_rule!(FewUnitsOfTimeAgo, true);
-        insert_expr_rule!(FillerWords, true);
-        insert_struct_rule!(FindFine, true);
-        insert_expr_rule!(FirstAidKit, true);
-        insert_expr_rule!(FleshOutVsFullFledged, true);
-        insert_expr_rule!(ForNoun, true);
-        insert_expr_rule!(FreePredicate, true);
-        insert_expr_rule!(FriendOfMe, true);
-        insert_expr_rule!(GoSoFarAsTo, true);
-        insert_expr_rule!(GoToWar, true);
-        insert_expr_rule!(GoodAt, true);
-        insert_expr_rule!(Handful, true);
-        insert_expr_rule!(HavePronoun, true);
-        insert_expr_rule!(Hedging, true);
-        insert_expr_rule!(HelloGreeting, true);
-        insert_expr_rule!(Hereby, true);
-        insert_struct_rule!(HopHope, true);
-        insert_expr_rule!(HowTo, true);
-        insert_expr_rule!(HyphenateNumberDay, true);
-        insert_expr_rule!(IAmAgreement, true);
-        insert_expr_rule!(IfWouldve, true);
-        insert_expr_rule!(InterestedIn, true);
-        insert_expr_rule!(ItLooksLikeThat, true);
-        insert_struct_rule!(ItsContraction, true);
-        insert_expr_rule!(ItsPossessive, true);
-        insert_expr_rule!(JealousOf, true);
-        insert_expr_rule!(JohnsHopkins, true);
-        insert_expr_rule!(LeadRiseTo, true);
-        insert_expr_rule!(LeftRightHand, true);
-        insert_expr_rule!(LessWorse, true);
-        insert_expr_rule!(LetToDo, true);
-        insert_struct_rule!(LetsConfusion, true);
-        insert_expr_rule!(Likewise, true);
-        insert_struct_rule!(LongSentences, true);
-        insert_expr_rule!(LookDownOnesNose, true);
-        insert_expr_rule!(LookingForwardTo, true);
-        insert_struct_rule!(MergeWords, true);
-        insert_expr_rule!(MissingPreposition, true);
-        insert_expr_rule!(MissingTo, true);
-        insert_expr_rule!(Misspell, true);
-        insert_expr_rule!(MixedBag, true);
-        insert_expr_rule!(ModalBeAdjective, true);
-        insert_expr_rule!(ModalOf, true);
-        insert_expr_rule!(ModalSeem, true);
-        insert_expr_rule!(Months, true);
-        insert_expr_rule!(MoreBetter, true);
-        insert_expr_rule!(MostNumber, true);
-        insert_expr_rule!(MostOfTheTimes, true);
-        insert_expr_rule!(MultipleSequentialPronouns, true);
-        insert_expr_rule!(NailOnTheHead, true);
-        insert_expr_rule!(NeedToNoun, true);
-        insert_struct_rule!(NoFrenchSpaces, true);
-        insert_expr_rule!(NoLonger, true);
-        insert_expr_rule!(NoMatchFor, true);
-        insert_struct_rule!(NoOxfordComma, false);
-        insert_expr_rule!(Nobody, true);
-        insert_expr_rule!(NominalWants, true);
-        insert_expr_rule!(NorModalPronoun, true);
-        insert_expr_rule!(NotOnlyInversion, true);
-        insert_struct_rule!(NounVerbConfusion, true);
-        insert_struct_rule!(NumberSuffixCapitalization, true);
-        insert_expr_rule!(ObsessPreposition, true);
-        insert_expr_rule!(OfCourse, true);
-        insert_expr_rule!(OldestInTheBook, true);
-        insert_expr_rule!(OnFloor, true);
-        insert_expr_rule!(OnceOrTwice, true);
-        insert_expr_rule!(OneAndTheSame, true);
-        insert_expr_rule!(OpenCompounds, true);
-        insert_expr_rule!(OpenTheLight, true);
-        insert_expr_rule!(OrthographicConsistency, true);
-        insert_expr_rule!(OughtToBe, true);
-        insert_expr_rule!(OutOfDate, true);
-        insert_struct_rule!(OxfordComma, true);
-        insert_expr_rule!(Oxymorons, true);
-        insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
-        insert_expr_rule!(PiqueInterest, true);
-        insert_expr_rule!(PluralWrongWordOfPhrase, true);
-        insert_expr_rule!(PossessiveYour, true);
-        insert_expr_rule!(ProgressiveNeedsBe, true);
-        insert_expr_rule!(PronounAre, true);
-        insert_struct_rule!(PronounContraction, true);
-        insert_expr_rule!(PronounInflectionBe, true);
-        insert_expr_rule!(PronounKnew, true);
-        insert_expr_rule!(QuantifierNeedsOf, true);
-        insert_expr_rule!(QuantifierNumeralConflict, true);
-        insert_expr_rule!(QuiteQuiet, true);
-        insert_struct_rule!(QuoteSpacing, true);
-        insert_expr_rule!(RedundantAcronyms, true);
-        insert_expr_rule!(RedundantAdditiveAdverbs, true);
-        insert_struct_rule!(RepeatedWords, true);
-        insert_expr_rule!(Respond, true);
-        insert_expr_rule!(RightClick, true);
-        insert_expr_rule!(RiseTheRanks, true);
-        insert_expr_rule!(RollerSkated, true);
-        insert_expr_rule!(SafeToSave, true);
-        insert_expr_rule!(SaveToSafe, true);
-        insert_expr_rule!(ShootOneselfInTheFoot, true);
-        insert_expr_rule!(SimplePastToPastParticiple, true);
-        insert_expr_rule!(SinceDuration, true);
-        insert_expr_rule!(SingleBe, true);
-        insert_expr_rule!(SomeWithoutArticle, true);
-        insert_expr_rule!(SomethingIs, true);
-        insert_expr_rule!(SomewhatSomething, true);
-        insert_expr_rule!(SoonToBe, true);
-        insert_expr_rule!(SoughtAfter, true);
-        insert_struct_rule!(Spaces, true);
-        insert_struct_rule!(SpelledNumbers, false);
-        insert_expr_rule!(SplitWords, true);
-        insert_struct_rule!(SubjectPronoun, true);
-        insert_expr_rule!(TakeALookTo, true);
-        insert_expr_rule!(TakeMedicine, true);
-        insert_expr_rule!(ThatThan, true);
-        insert_expr_rule!(ThatWhich, true);
-        insert_expr_rule!(TheHowWhy, true);
-        insert_expr_rule!(TheMy, true);
-        insert_expr_rule!(ThePointFor, true);
-        insert_expr_rule!(TheProperNounPossessive, true);
-        insert_expr_rule!(ThenThan, true);
-        insert_expr_rule!(Theres, true);
-        insert_expr_rule!(ThesesThese, true);
-        insert_struct_rule!(TheyreConfusions, true);
-        insert_expr_rule!(ThingThink, true);
-        insert_expr_rule!(ThisTypeOfThing, true);
-        insert_expr_rule!(ThoughThought, true);
-        insert_expr_rule!(ThrowAway, true);
-        insert_struct_rule!(ThrowRubbish, true);
-        insert_expr_rule!(ToAdverb, true);
-        insert_struct_rule!(ToTwoToo, true);
-        insert_expr_rule!(Touristic, true);
-        insert_expr_rule!(TryOnesHandAt, true);
-        insert_struct_rule!(UnclosedQuotes, true);
-        insert_expr_rule!(UpdatePlaceNames, true);
-        insert_expr_rule!(VerbToAdjective, true);
-        insert_expr_rule!(VeryUnique, true);
-        insert_expr_rule!(ViceVersa, true);
-        insert_expr_rule!(ViciousCircle, true);
-        insert_expr_rule!(ViciousCircleOrCycle, false);
-        insert_expr_rule!(ViciousCycle, false);
-        insert_expr_rule!(WasAloud, true);
-        insert_expr_rule!(WayTooAdjective, true);
-        insert_expr_rule!(WellEducated, true);
-        insert_expr_rule!(Whereas, true);
-        insert_expr_rule!(WhomSubjectOfVerb, true);
-        insert_expr_rule!(WidelyAccepted, true);
-        insert_expr_rule!(WinPrize, true);
-        insert_expr_rule!(WishCould, true);
-        insert_struct_rule!(WordPressDotcom, true);
-        insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
-
-        out.add(
-            "SpellCheck",
-            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
-        );
-        out.config.set_rule_enabled("SpellCheck", true);
-
-        out.add(
-            "InflectedVerbAfterTo",
-            Box::new(InflectedVerbAfterTo::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("InflectedVerbAfterTo", true);
-
-        out.add_chunk_expr_linter("InOnTheCards", Box::new(InOnTheCards::new(dialect)));
-        out.config.set_rule_enabled("InOnTheCards", true);
-
-        out.add(
-            "SentenceCapitalization",
-            Box::new(SentenceCapitalization::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("SentenceCapitalization", true);
-
-        out.add(
-            "PossessiveNoun",
-            Box::new(PossessiveNoun::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("PossessiveNoun", false);
-
-        out.add_chunk_expr_linter("Regionalisms", Box::new(Regionalisms::new(dialect)));
-        out.config.set_rule_enabled("Regionalisms", true);
-
-        out.add_chunk_expr_linter("HaveTakeALook", Box::new(HaveTakeALook::new(dialect)));
-        out.config.set_rule_enabled("HaveTakeALook", true);
-
-        out.add("MassNouns", Box::new(MassNouns::new(dictionary.clone())));
-        out.config.set_rule_enabled("MassNouns", true);
-
-        out.add(
-            "UseTitleCase",
-            Box::new(UseTitleCase::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("UseTitleCase", true);
-
-        out.add_chunk_expr_linter(
-            "DisjointPrefixes",
-            Box::new(DisjointPrefixes::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("DisjointPrefixes", true);
-
-        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
-        //  `add_sentence_expr_linter`
-        out.add("Damages", Box::new(Damages::default()));
-        out.config.set_rule_enabled("Damages", true);
-
-        out.add(
-            "PronounVerbAgreement",
-            Box::new(PronounVerbAgreement::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("PronounVerbAgreement", true);
-
-        out.add_chunk_expr_linter(
-            "TransposedSpace",
-            Box::new(TransposedSpace::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("TransposedSpace", true);
-
-        out.add_chunk_expr_linter(
-            "OneOfTheSingular",
-            Box::new(OneOfTheSingular::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("OneOfTheSingular", true);
-
-        out.add("AnA", Box::new(AnA::new(dialect)));
-        out.config.set_rule_enabled("AnA", true);
-
-        out.add(
-            "MoreAdjective",
-            Box::new(MoreAdjective::new(dictionary.clone())),
-        );
-        out.config.set_rule_enabled("MoreAdjective", true);
-
-        out.add("WorthToDo", Box::new(WorthToDo::new(dictionary.clone())));
-        out.config.set_rule_enabled("WorthToDo", true);
-
-        out.add_chunk_expr_linter("DidPast", Box::new(DidPast::new(dictionary.clone())));
-        out.config.set_rule_enabled("DidPast", true);
-
-        out.add_chunk_expr_linter("FedUpWith", Box::new(FedUpWith::new(dialect)));
-        out.config.set_rule_enabled("FedUpWith", true);
-
-        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
-        //  `add_sentence_expr_linter`
-        out.add(
-            "MultipleFrequencyAdverbs",
-            Box::new(MultipleFrequencyAdverbs::default()),
-        );
-        out.config
-            .set_rule_enabled("MultipleFrequencyAdverbs", true);
-
-        // add_chunk_expr_linter doesn't support the `Sentence` `Unit` and there is not yet any
-        //  `add_sentence_expr_linter`
-        out.add("PluralDecades", Box::new(PluralDecades::default()));
-        out.config.set_rule_enabled("PluralDecades", true);
-
-        out
-    }
-
-    /// Create a new curated group with all config values cleared out.
-    pub fn new_curated_empty_config(
-        dictionary: Arc<dyn Dictionary + 'static>,
-        dialect: Dialect,
-    ) -> Self {
-        let mut group = Self::new_curated(dictionary, dialect);
-        group.config.clear();
-        group
     }
 
     // Non-constructor methods
@@ -763,6 +403,11 @@ impl LintGroup {
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter + 'static>) -> bool {
         if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(name.as_ref().to_string());
+            }
             false
         } else {
             self.linters.insert(name.as_ref().to_string(), linter);
@@ -782,6 +427,11 @@ impl LintGroup {
         linter: Box<dyn ExprLinter<Unit = Chunk> + 'static>,
     ) -> bool {
         if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(name.as_ref().to_string());
+            }
             false
         } else {
             self.chunk_expr_linters
@@ -791,11 +441,31 @@ impl LintGroup {
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
+    /// The other lint group will be left empty after this operation.
     pub fn merge_from(&mut self, other: LintGroup) {
         self.config.merge_from(other.config);
 
+        if let Some((conflicting_key, _)) = other.linters.iter().find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(conflicting_key.clone());
+            }
+        }
         self.linters.extend(other.linters);
 
+        if let Some((conflicting_key, _)) = other
+            .chunk_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(conflicting_key.clone());
+            }
+        }
         self.chunk_expr_linters.extend(other.chunk_expr_linters);
     }
 
@@ -843,6 +513,344 @@ impl LintGroup {
                     .map(|(key, value)| (key.as_str(), value.description_html())),
             )
             .collect()
+    }
+
+    /// Swap out [`Self::config`] with another [`LintGroupConfig`].
+    pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
+        self.config = config;
+        self
+    }
+
+    pub fn new_curated(dictionary: Arc<dyn Dictionary + 'static>, dialect: Dialect) -> Self {
+        let mut out = Self::empty();
+
+        /// Add a `Linter` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_struct_rule {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), Box::new($rule::default()));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a `Linter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_struct_rule_with_dict {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), Box::new($rule::new(dictionary.clone())));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a `Linter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_struct_rule_with_dialect {
+            ($rule:ident, $default_config:expr) => {
+                out.add(stringify!($rule), Box::new($rule::new(dialect)));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a chunk-based `ExprLinter` to the group, setting it to be enabled or disabled.
+        /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
+        /// will allow it to use more aggressive caching strategies.
+        macro_rules! insert_expr_rule {
+            ($rule:ident, $default_config:expr) => {
+                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::default()));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a chunk-based `ExprLinter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_expr_rule_with_dict {
+            ($rule:ident, $default_config:expr) => {
+                out.add_chunk_expr_linter(
+                    stringify!($rule),
+                    Box::new($rule::new(dictionary.clone())),
+                );
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        /// Add a chunk-based `ExprLinter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_expr_rule_with_dialect {
+            ($rule:ident, $default_config:expr) => {
+                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::new(dialect)));
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
+        out.merge_from(weir_rules::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
+        out.merge_from(closed_compounds::lint_group());
+        out.merge_from(initialisms::lint_group());
+
+        // Add all the more complex rules to the group.
+        // Please maintain alphabetical order.
+        // On *nix you can maintain sort order with `sort -t'(' -k2`
+        insert_expr_rule!(APart, true);
+        insert_expr_rule!(AWhile, true);
+        insert_expr_rule!(Addicting, true);
+        insert_expr_rule!(AdjectiveDoubleDegree, true);
+        insert_struct_rule!(AdjectiveOfA, true);
+        insert_expr_rule!(AfterLater, true);
+        insert_expr_rule!(AllHellBreakLoose, true);
+        insert_expr_rule!(AllIntentsAndPurposes, true);
+        insert_expr_rule!(AllowTo, true);
+        insert_expr_rule!(AmInTheMorning, true);
+        insert_expr_rule!(AmountsFor, true);
+        insert_struct_rule_with_dialect!(AnA, true);
+        insert_expr_rule!(AndIn, true);
+        insert_expr_rule!(AndTheLike, true);
+        insert_expr_rule!(AnotherThingComing, true);
+        insert_expr_rule!(AnotherThinkComing, false);
+        insert_expr_rule!(ApartFrom, true);
+        insert_expr_rule!(AskNoPreposition, true);
+        insert_expr_rule!(AvoidCurses, true);
+        insert_expr_rule!(BackInTheDay, true);
+        insert_expr_rule!(BeAllowed, true);
+        insert_expr_rule!(BehindTheScenes, true);
+        insert_struct_rule!(BestOfAllTime, true);
+        insert_expr_rule!(BoringWords, false);
+        insert_expr_rule!(Bought, true);
+        insert_expr_rule!(BrandBrandish, true);
+        insert_expr_rule!(ByAccident, true);
+        insert_expr_rule!(Cant, true);
+        insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_expr_rule!(CautionaryTale, true);
+        insert_expr_rule!(ChangeTack, true);
+        insert_expr_rule!(ChockFull, true);
+        insert_struct_rule!(CommaFixes, true);
+        insert_struct_rule!(CompoundNouns, true);
+        insert_expr_rule!(CompoundSubjectI, true);
+        insert_expr_rule!(Confident, true);
+        insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CriteriaPhenomena, true);
+        insert_expr_rule!(CureFor, true);
+        insert_struct_rule!(CurrencyPlacement, true);
+        insert_expr_rule!(Dashes, true);
+        insert_expr_rule!(DayAndAge, true);
+        insert_expr_rule!(DespiteItIs, true);
+        insert_expr_rule!(DespiteOf, true);
+        insert_expr_rule_with_dict!(DidPast, true);
+        insert_expr_rule!(Didnt, true);
+        insert_struct_rule!(DiscourseMarkers, true);
+        insert_expr_rule_with_dict!(DisjointPrefixes, true);
+        insert_expr_rule!(DoMistake, true);
+        insert_expr_rule!(DotInitialisms, true);
+        insert_expr_rule!(DoubleClick, true);
+        insert_expr_rule!(DoubleModal, true);
+        insert_struct_rule!(EllipsisLength, true);
+        insert_expr_rule!(ElsePossessive, true);
+        insert_expr_rule!(EverEvery, true);
+        insert_expr_rule!(Everyday, true);
+        insert_expr_rule!(ExpandMemoryShorthands, true);
+        insert_expr_rule!(ExpandTimeShorthands, true);
+        insert_expr_rule!(FarBeIt, true);
+        insert_expr_rule!(FascinatedBy, true);
+        insert_expr_rule_with_dialect!(FedUpWith, true);
+        insert_expr_rule!(FeelFell, true);
+        insert_expr_rule!(FewUnitsOfTimeAgo, true);
+        insert_expr_rule!(FillerWords, true);
+        insert_struct_rule!(FindFine, true);
+        insert_expr_rule!(FirstAidKit, true);
+        insert_expr_rule!(FleshOutVsFullFledged, true);
+        insert_expr_rule!(ForNoun, true);
+        insert_expr_rule!(FreePredicate, true);
+        insert_expr_rule!(FriendOfMe, true);
+        insert_expr_rule!(GoSoFarAsTo, true);
+        insert_expr_rule!(GoToWar, true);
+        insert_expr_rule!(GoodAt, true);
+        insert_expr_rule!(Handful, true);
+        insert_expr_rule!(HavePronoun, true);
+        insert_struct_rule_with_dialect!(HaveTakeALook, true);
+        insert_expr_rule!(Hedging, true);
+        insert_expr_rule!(HelloGreeting, true);
+        insert_expr_rule!(Hereby, true);
+        insert_struct_rule!(HopHope, true);
+        insert_expr_rule!(HowTo, true);
+        insert_expr_rule!(HyphenateNumberDay, true);
+        insert_expr_rule!(IAmAgreement, true);
+        insert_expr_rule!(IfWouldve, true);
+        insert_struct_rule_with_dialect!(InOnTheCards, true);
+        insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
+        insert_expr_rule!(InterestedIn, true);
+        insert_expr_rule!(ItLooksLikeThat, true);
+        insert_struct_rule!(ItsContraction, true);
+        insert_expr_rule!(ItsPossessive, true);
+        insert_expr_rule!(JealousOf, true);
+        insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(LeadRiseTo, true);
+        insert_expr_rule!(LeftRightHand, true);
+        insert_expr_rule!(LessWorse, true);
+        insert_expr_rule!(LetToDo, true);
+        insert_struct_rule!(LetsConfusion, true);
+        insert_expr_rule!(Likewise, true);
+        insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LookDownOnesNose, true);
+        insert_expr_rule!(LookingForwardTo, true);
+        insert_struct_rule_with_dict!(MassNouns, true);
+        insert_struct_rule!(MergeWords, true);
+        insert_expr_rule!(MissingPreposition, true);
+        insert_expr_rule!(MissingTo, true);
+        insert_expr_rule!(Misspell, true);
+        insert_expr_rule!(MixedBag, true);
+        insert_expr_rule!(ModalBeAdjective, true);
+        insert_expr_rule!(ModalOf, true);
+        insert_expr_rule!(ModalSeem, true);
+        insert_expr_rule!(Months, true);
+        insert_expr_rule_with_dict!(MoreAdjective, true);
+        insert_expr_rule!(MoreBetter, true);
+        insert_expr_rule!(MostNumber, true);
+        insert_expr_rule!(MostOfTheTimes, true);
+        insert_expr_rule!(MultipleSequentialPronouns, true);
+        insert_expr_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NeedToNoun, true);
+        insert_struct_rule!(NoFrenchSpaces, true);
+        insert_expr_rule!(NoLonger, true);
+        insert_expr_rule!(NoMatchFor, true);
+        insert_struct_rule!(NoOxfordComma, false);
+        insert_expr_rule!(Nobody, true);
+        insert_expr_rule!(NominalWants, true);
+        insert_expr_rule!(NorModalPronoun, true);
+        insert_expr_rule!(NotOnlyInversion, true);
+        insert_struct_rule!(NounVerbConfusion, true);
+        insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_expr_rule!(ObsessPreposition, true);
+        insert_expr_rule!(OfCourse, true);
+        insert_expr_rule!(OldestInTheBook, true);
+        insert_expr_rule!(OnFloor, true);
+        insert_expr_rule!(OnceOrTwice, true);
+        insert_expr_rule!(OneAndTheSame, true);
+        insert_expr_rule_with_dict!(OneOfTheSingular, true);
+        insert_expr_rule!(OpenCompounds, true);
+        insert_expr_rule!(OpenTheLight, true);
+        insert_expr_rule!(OrthographicConsistency, true);
+        insert_expr_rule!(OughtToBe, true);
+        insert_expr_rule!(OutOfDate, true);
+        insert_struct_rule!(OxfordComma, true);
+        insert_expr_rule!(Oxymorons, true);
+        insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
+        insert_expr_rule!(PiqueInterest, true);
+        insert_expr_rule!(PluralWrongWordOfPhrase, true);
+        insert_struct_rule_with_dict!(PossessiveNoun, false);
+        insert_expr_rule!(PossessiveYour, true);
+        insert_expr_rule!(ProgressiveNeedsBe, true);
+        insert_expr_rule!(PronounAre, true);
+        insert_struct_rule!(PronounContraction, true);
+        insert_expr_rule!(PronounInflectionBe, true);
+        insert_expr_rule!(PronounKnew, true);
+        insert_expr_rule_with_dict!(PronounVerbAgreement, true);
+        insert_expr_rule!(QuantifierNeedsOf, true);
+        insert_expr_rule!(QuantifierNumeralConflict, true);
+        insert_expr_rule!(QuiteQuiet, true);
+        insert_struct_rule!(QuoteSpacing, true);
+        insert_expr_rule!(RedundantAcronyms, true);
+        insert_expr_rule!(RedundantAdditiveAdverbs, true);
+        insert_struct_rule_with_dialect!(Regionalisms, true);
+        insert_struct_rule!(RepeatedWords, true);
+        insert_expr_rule!(Respond, true);
+        insert_expr_rule!(RightClick, true);
+        insert_expr_rule!(RiseTheRanks, true);
+        insert_expr_rule!(RollerSkated, true);
+        insert_expr_rule!(SafeToSave, true);
+        insert_expr_rule!(SaveToSafe, true);
+        insert_struct_rule_with_dict!(SentenceCapitalization, true);
+        insert_expr_rule!(ShootOneselfInTheFoot, true);
+        insert_expr_rule!(SimplePastToPastParticiple, true);
+        insert_expr_rule!(SinceDuration, true);
+        insert_expr_rule!(SingleBe, true);
+        insert_expr_rule!(SomeWithoutArticle, true);
+        insert_expr_rule!(SomethingIs, true);
+        insert_expr_rule!(SomewhatSomething, true);
+        insert_expr_rule!(SoonToBe, true);
+        insert_expr_rule!(SoughtAfter, true);
+        insert_struct_rule!(Spaces, true);
+        insert_struct_rule!(SpelledNumbers, false);
+        insert_expr_rule!(SplitWords, true);
+        insert_struct_rule!(SubjectPronoun, true);
+        insert_expr_rule!(TakeALookTo, true);
+        insert_expr_rule!(TakeMedicine, true);
+        insert_expr_rule!(ThatThan, true);
+        insert_expr_rule!(ThatWhich, true);
+        insert_expr_rule!(TheHowWhy, true);
+        insert_expr_rule!(TheMy, true);
+        insert_expr_rule!(ThePointFor, true);
+        insert_expr_rule!(TheProperNounPossessive, true);
+        insert_expr_rule!(ThenThan, true);
+        insert_expr_rule!(Theres, true);
+        insert_expr_rule!(ThesesThese, true);
+        insert_struct_rule!(TheyreConfusions, true);
+        insert_expr_rule!(ThingThink, true);
+        insert_expr_rule!(ThisTypeOfThing, true);
+        insert_expr_rule!(ThoughThought, true);
+        insert_expr_rule!(ThrowAway, true);
+        insert_struct_rule!(ThrowRubbish, true);
+        insert_expr_rule!(ToAdverb, true);
+        insert_struct_rule!(ToTwoToo, true);
+        insert_expr_rule!(Touristic, true);
+        insert_expr_rule_with_dict!(TransposedSpace, true);
+        insert_expr_rule!(TryOnesHandAt, true);
+        insert_struct_rule!(UnclosedQuotes, true);
+        insert_expr_rule!(UpdatePlaceNames, true);
+        insert_struct_rule_with_dict!(UseTitleCase, true);
+        insert_expr_rule!(VerbToAdjective, true);
+        insert_expr_rule!(VeryUnique, true);
+        insert_expr_rule!(ViceVersa, true);
+        insert_expr_rule!(ViciousCircle, true);
+        insert_expr_rule!(ViciousCircleOrCycle, false);
+        insert_expr_rule!(ViciousCycle, false);
+        insert_expr_rule!(WasAloud, true);
+        insert_expr_rule!(WayTooAdjective, true);
+        insert_expr_rule!(WellEducated, true);
+        insert_expr_rule!(Whereas, true);
+        insert_expr_rule!(WhomSubjectOfVerb, true);
+        insert_expr_rule!(WidelyAccepted, true);
+        insert_expr_rule!(WinPrize, true);
+        insert_expr_rule!(WishCould, true);
+        insert_struct_rule!(WordPressDotcom, true);
+        insert_expr_rule_with_dict!(WorthToDo, true);
+        insert_expr_rule!(WouldNeverHave, true);
+        insert_expr_rule!(WrongApostrophe, true);
+
+        // Uses Sentence rather than Chunk
+        out.add("Damages", Box::new(Damages::default()));
+        out.config.set_rule_enabled("Damages", true);
+
+        // Uses Sentence rather than Chunk
+        out.add(
+            "MultipleFrequencyAdverbs",
+            Box::new(MultipleFrequencyAdverbs::default()),
+        );
+        out.config
+            .set_rule_enabled("MultipleFrequencyAdverbs", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("PluralDecades", Box::new(PluralDecades::default()));
+        out.config.set_rule_enabled("PluralDecades", true);
+
+        // Uses Dictionary and Dialect
+        out.add(
+            "SpellCheck",
+            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
+        );
+        out.config.set_rule_enabled("SpellCheck", true);
+
+        out
+    }
+
+    /// Create a new curated group with all config values cleared out.
+    pub fn new_curated_empty_config(
+        dictionary: Arc<dyn Dictionary + 'static>,
+        dialect: Dialect,
+    ) -> Self {
+        let mut group = Self::new_curated(dictionary, dialect);
+        group.config.clear();
+        group
     }
 
     pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
@@ -1022,6 +1030,22 @@ mod tests {
             if !lints.is_empty() {
                 dbg!(lints);
                 panic!();
+            }
+        }
+    }
+
+    #[test]
+    fn no_linter_names_clash() {
+        let group =
+            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+
+        if let Some(names) = &group.clashing_linter_names {
+            if !names.is_empty() {
+                panic!(
+                    "⚠️ Found {} clashing linter names: {}",
+                    names.len(),
+                    names.join(", ")
+                );
             }
         }
     }
