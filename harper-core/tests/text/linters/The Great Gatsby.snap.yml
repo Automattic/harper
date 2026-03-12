@@ -4087,26 +4087,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ Did you mean to spell `overwound` this way?
-Suggest:
-  - Replace with: “overground”
-  - Replace with: “overfond”
-  - Replace with: “overfund”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
-Suggest:
-  - Replace with: “over wound”
-
-
-
 Lint:    Style (31 priority)
 Message: |
     2872 | “I’ve got a man in England who buys me clothes. He sends over a selection of
