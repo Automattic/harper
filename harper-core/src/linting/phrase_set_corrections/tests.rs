@@ -86,6 +86,44 @@ fn correct_servers_side() {
     );
 }
 
+// CompulseToCompel
+
+#[test]
+fn correct_compulse() {
+    assert_suggestion_result(
+        "Play Store will soon compulse to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+        lint_group(),
+        "Play Store will soon compel to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+    );
+}
+
+#[test]
+fn correct_compulsed() {
+    assert_suggestion_result(
+        "Just alpha, but now i am compulsed to work 10.6 into the github actions and insane docker environment :)",
+        lint_group(),
+        "Just alpha, but now i am compelled to work 10.6 into the github actions and insane docker environment :)",
+    );
+}
+
+#[test]
+fn correct_compulses() {
+    assert_suggestion_result(
+        "Occasionally, a film comes along that compulses me to make a fan poster.",
+        lint_group(),
+        "Occasionally, a film comes along that compels me to make a fan poster.",
+    );
+}
+
+#[test]
+fn correct_compulsing() {
+    assert_suggestion_result(
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compulsing user to update.",
+        lint_group(),
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compelling user to update.",
+    );
+}
+
 // ConfirmThat
 
 #[test]
