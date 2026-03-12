@@ -16,9 +16,17 @@ use crate::spell::{CommonDictFuncs, WordMap};
 /// dictionary inserted will be returned.
 #[derive(Clone, Default)]
 pub struct MergedDictionary {
+    /// A word map containing all the words contained in the constituent dictionaries.
+    ///
+    /// Whenever a dictionary is added, its word map is merged into this one. This is used to
+    /// provide a word map for [`Dictionary::get_word_map`], and it also avoids needing to iterate
+    /// the constituent dictionaries for certain dictionary operations.
     merged_word_map: WordMap,
+    /// The constituent dictionaries.
     children: Vec<Arc<dyn Dictionary>>,
+    /// Used to hash the constituent dictionaries.
     hasher_builder: FixedState,
+    /// The hashes of the constituent dictionaries.
     child_hashes: Vec<u64>,
 }
 
