@@ -124,21 +124,15 @@ impl General {
                 && next_kind
                     .is_some_and(|kind| kind.is_upos(UPOS::SCONJ) || kind.is_upos(UPOS::PART))
         } else if modifier.kind.is_upos(UPOS::VERB) || modifier.kind.is_upos(UPOS::AUX) {
-            if next_non_whitespace_word(source, modifier.span.end).is_some_and(|word| {
-                (matches!(
-                    word.as_str(),
-                    "is" | "was" | "were" | "be" | "been" | "being" | "to"
-                )) && !strong_predicative_verbs.contains(&modifier_lower.as_str())
-            }) {
-                false
-            } else if next_kind.is_some_and(|kind| {
-                (kind.is_noun() || kind.is_proper_noun())
-                    && !strong_predicative_verbs.contains(&modifier_lower.as_str())
-            }) {
-                false
-            } else {
-                true
-            }
+            let blocks_contraction = !strong_predicative_verbs.contains(&modifier_lower.as_str())
+                && (next_non_whitespace_word(source, modifier.span.end).is_some_and(|word| {
+                    matches!(
+                        word.as_str(),
+                        "is" | "was" | "were" | "be" | "been" | "being" | "to"
+                    )
+                }) || next_kind.is_some_and(|kind| kind.is_noun() || kind.is_proper_noun()));
+
+            !blocks_contraction
         } else {
             false
         };
