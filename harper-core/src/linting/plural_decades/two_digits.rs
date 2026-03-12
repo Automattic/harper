@@ -3,6 +3,22 @@ use crate::{
     linting::{LintKind, Suggestion},
 };
 
+#[derive(PartialEq)]
+enum UsageJudgment {
+    NotMistake,
+    IsMistakeForDecade,
+    IsMistakeForAgeRange,
+    Unsure,
+}
+
+// Simplified `TokenType` that works with pattern matching
+enum Tok<'a> {
+    Whitespace,
+    Hyphen,
+    Plus,
+    Word(&'a [char]),
+}
+
 pub fn match_to_lint_two_digits(
     toks: &[Token],
     src: &[char],
@@ -11,75 +27,99 @@ pub fn match_to_lint_two_digits(
     before: Option<&[Token]>,
     after: Option<&[Token]>,
 ) -> Option<Lint> {
-    #[derive(PartialEq)]
-    enum UsageJudgment {
-        NotMistake,
-        IsMistakeForDecade,
-        IsMistakeForAgeRange,
-        Unsure,
-    }
-
-    enum Tok<'a> {
-        Sp,
-        Hy,
-        Plus,
-        W(&'a [char]),
-    }
-
-    let get = |before_or_after: Option<&[Token]>, offset: isize| -> Option<Tok<'_>> {
-        if let Some(toks) = before_or_after
+    let get_tok = |context: Option<&[Token]>, offset: isize| -> Option<Tok<'_>> {
+        if let Some(toks) = context
             && let Some(tok) = toks.get_rel(offset)
         {
             if tok.kind.is_whitespace() {
-                return Some(Tok::Sp);
+                return Some(Tok::Whitespace);
             } else if tok.kind.is_hyphen() {
-                return Some(Tok::Hy);
+                return Some(Tok::Hyphen);
             } else if tok.kind.is_plus() {
                 return Some(Tok::Plus);
             } else if tok.kind.is_word() {
-                return Some(Tok::W(tok.span.get_content(src)));
+                return Some(Tok::Word(tok.span.get_content(src)));
             }
         }
         None
     };
 
-    let get_kind = |before_or_after: Option<&[Token]>, offset: isize| -> Option<TokenKind> {
-        if let Some(toks) = before_or_after
-            && let Some(tok) = toks.get_rel(offset)
-        {
-            Some(tok.kind.clone())
-        } else {
-            None
-        }
+    let get_kind = |context: Option<&[Token]>, offset: isize| -> Option<TokenKind> {
+        context
+            .and_then(|toks| toks.get_rel(offset))
+            .map(|tok| tok.kind.clone())
     };
 
+    let get_tok_with_kind =
+        |context: Option<&[Token]>, offset: isize| -> Option<(Tok<'_>, TokenKind)> {
+            let toks = context?;
+            let tok = toks.get_rel(offset)?;
+
+            Some((
+                if tok.kind.is_whitespace() {
+                    Tok::Whitespace
+                } else if tok.kind.is_hyphen() {
+                    Tok::Hyphen
+                } else if tok.kind.is_plus() {
+                    Tok::Plus
+                } else if tok.kind.is_word() {
+                    Tok::Word(tok.span.get_content(src))
+                } else {
+                    return None;
+                },
+                tok.kind.clone(),
+            ))
+        };
+
     let judge = || {
-        if get(before, -1).is_some_and(|t| matches!(t, Tok::Sp)) {
-            if get_kind(before, -2).is_some_and(|k| k.is_possessive_determiner()) {
-                return UsageJudgment::IsMistakeForAgeRange;
+        let tok1 = get_tok(before, -1);
+        if let Some(tok1) = tok1 {
+            // _20's / _80's
+            if matches!(tok1, Tok::Whitespace)
+                && let Some((tok2, kind2)) = get_tok_with_kind(before, -2)
+            {
+                // in the 80's
+                if matches!(tok2, Tok::Word(w) if w.eq_ignore_ascii_case_str("the"))
+                    && get_kind(before, -3).is_some_and(|k| k.is_whitespace())
+                    && get_kind(before, -4).is_some_and(|k| k.is_preposition())
+                {
+                    return UsageJudgment::IsMistakeForDecade;
+                }
+                // my 20's
+                if kind2.is_possessive_determiner() {
+                    return UsageJudgment::IsMistakeForAgeRange;
+                }
+                // Windows 10's / Xcode 10's
+                if decade.eq_ignore_ascii_case_str("10")
+                    && matches!(tok2, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(&["windows", "xcode", "android"]))
+                {
+                    return UsageJudgment::NotMistake;
+                }
             }
-            if get(before, -2).is_some_and(
-                |t| matches!(t, Tok::W(w) if w.eq_any_ignore_ascii_case_str(&["windows", "xcode"])),
-            ) {
+            // early_20's / late-80's
+            if matches!(tok1, Tok::Whitespace | Tok::Hyphen) && get_tok(before, -2).is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(&["early", "mid", "late"]))) {
+                // my early_20s
+                if get_tok(before, -3).is_some_and(|t| matches!(t, Tok::Whitespace)) && get_kind(before, -4).is_some_and(|k| k.is_possessive_determiner()) {
+                    return UsageJudgment::IsMistakeForAgeRange;
+                }
+                // mid-90's
+                return UsageJudgment::IsMistakeForDecade;
+            }
+            // +10's
+            if matches!(tok1, Tok::Plus)
+                && decade.eq_ignore_ascii_case_str("20")
+                && get_tok(before, -2).is_some_and(|t| matches!(t, Tok::Plus))
+                && get_tok(before, -3)
+                    .is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_ignore_ascii_case_str("c")))
+            {
+                // C++10's
                 return UsageJudgment::NotMistake;
             }
         }
-        if get(before, -1).is_some_and(|t| matches!(t, Tok::Sp | Tok::Hy)) && get(before, -2).is_some_and(|t| matches!(t, Tok::W(w) if w.eq_any_ignore_ascii_case_str(&["early", "mid", "late"]))) {
-            if get(before, -3).is_some_and(|t| matches!(t, Tok::Sp)) && get_kind(before, -4).is_some_and(|k| k.is_possessive_determiner()) {
-                return UsageJudgment::IsMistakeForAgeRange;
-            }
-            return UsageJudgment::IsMistakeForDecade;
-        }
-        if get(before, -1).is_some_and(|t| matches!(t, Tok::Plus))
-            && get(before, -2).is_some_and(|t| matches!(t, Tok::Plus))
-            && get(before, -3)
-                .is_some_and(|t| matches!(t, Tok::W(w) if w.eq_ignore_ascii_case_str("c")))
-        {
-            return UsageJudgment::NotMistake;
-        }
-        if get(after, 0).is_some_and(|t| matches!(t, Tok::Sp | Tok::Hy))
-            && get(after, 1)
-                .is_some_and(|t| matches!(t, Tok::W(w) if w.eq_ignore_ascii_case_str("style")))
+        // 70's_style / 80's-style
+        if get_tok(after, 0).is_some_and(|t| matches!(t, Tok::Whitespace | Tok::Hyphen))
+            && get_tok(after, 1)
+                .is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_ignore_ascii_case_str("style")))
         {
             return UsageJudgment::IsMistakeForDecade;
         }
@@ -120,7 +160,6 @@ mod lints {
     // Made-up examples
 
     #[test]
-    #[ignore = "wip"]
     fn eighties() {
         assert_lint_count("in the 80's", PluralDecades::default(), 1);
     }
@@ -230,7 +269,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn dont_flag_android_10s_scoped_storage() {
         assert_no_lints(
             "Android 10's Scoped storage using Image picker (Gallery / Camera) with compression example.",
@@ -523,7 +561,6 @@ mod lints {
     // 80s
 
     #[test]
-    #[ignore = "wip"]
     fn fix_of_the_80s_npsg() {
         assert_suggestion_result(
             "A reboot of the 80's Microwriter accessible chord keyboard done using an Arduino.",
@@ -543,7 +580,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_80s_npsg() {
         assert_suggestion_result(
             "Small remake of the 80's legendary paperboy arcade game",
@@ -562,7 +598,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_80s_microwriter() {
         assert_suggestion_result(
             "A reboot of the 80's Microwriter accessible chord keyboard done using an Arduino.",
@@ -710,7 +745,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_the_90s_npsg() {
         assert_suggestion_result(
             "A modern vision on the 90's game Log!cal.",
@@ -720,7 +754,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_from_the_90s() {
         assert_suggestion_result(
             "Digital Sound and Music Interface (from the 90's).",
@@ -779,7 +812,6 @@ mod lints {
     }
 
     #[test]
-    #[ignore = "wip"]
     fn fix_domains_in_the_90s() {
         assert_suggestion_result(
             "Whois for gems, because gem names are like domains in the 90's",
