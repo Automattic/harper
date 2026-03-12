@@ -83,4 +83,21 @@ mod tests {
             "# My/Our/Your/His/Her/Its/Their",
         );
     }
+
+    #[test]
+    fn ignores_leading_number_list_marker_in_heading() {
+        assert_no_lints(
+            "### 1. To Do a Thing",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn still_fixes_non_first_small_words_after_leading_number() {
+        assert_suggestion_result(
+            "### 1. To do a thing",
+            UseTitleCase::new(FstDictionary::curated()),
+            "### 1. To Do a Thing",
+        );
+    }
 }
