@@ -106,9 +106,9 @@ impl Dictionary for MergedDictionary {
         if let Some(second) = meta_iter.next() {
             // If so, merge them.
             let mut first = first.into_owned();
-            first.append(&second);
+            first.merge(&second);
             meta_iter.for_each(|additional_md| {
-                first.append(&additional_md);
+                first.merge(&additional_md);
             });
 
             Some(Cow::Owned(first))
