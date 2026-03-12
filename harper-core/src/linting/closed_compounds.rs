@@ -53,7 +53,6 @@ pub fn lint_group() -> LintGroup {
         "Multithreading"  => ("multi threading", "multithreading"),
         "Myself"          => ("my self", "myself"),
         "Nonetheless"     => ("none the less", "nonetheless"),
-        "Nobody"          => ("no body", "nobody"),
         "Nowhere"         => ("no where", "nowhere"),
         "Nothing"         => ("no thing", "nothing"),
         "Notwithstanding" => ("not with standing", "notwithstanding"),
@@ -89,7 +88,7 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     use super::lint_group;
 
@@ -259,6 +258,18 @@ mod tests {
         let test_sentence = "Use this key stoke to open search.";
         let expected = "Use this keystroke to open search.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn in_tact() {
+        let test_sentence = "The code remains in tact after the merge.";
+        let expected = "The code remains intact after the merge.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn intact_is_allowed() {
+        assert_no_lints("The data set remains intact.", lint_group());
     }
 
     #[test]
