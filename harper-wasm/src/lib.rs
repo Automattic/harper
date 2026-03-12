@@ -239,7 +239,7 @@ impl Linter {
     pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
+        let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
             self.dictionary.get_word_map(),
@@ -257,7 +257,7 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
+        let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
             self.dictionary.get_word_map(),
@@ -292,7 +292,7 @@ impl Linter {
         }
 
         let document =
-            Document::new_from_vec(source.clone(), &parser, self.dictionary.get_word_map());
+            Document::new_from_chars(source.clone(), &parser, self.dictionary.get_word_map());
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -352,7 +352,7 @@ impl Linter {
         }
 
         let document =
-            Document::new_from_vec(source.clone(), &parser, self.dictionary.get_word_map());
+            Document::new_from_chars(source.clone(), &parser, self.dictionary.get_word_map());
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -440,7 +440,7 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_vec(
+        let doc = Document::new_from_chars(
             source.clone().into(),
             &lint.language.create_parser(),
             self.dictionary.get_word_map(),

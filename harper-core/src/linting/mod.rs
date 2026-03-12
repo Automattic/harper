@@ -576,7 +576,7 @@ pub mod tests {
         let mut iter_count = 0;
 
         loop {
-            let test = Document::new_from_vec(
+            let test = Document::new_from_chars(
                 text_chars.clone().into(),
                 &Markdown::default(),
                 WordMap::curated(),

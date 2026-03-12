@@ -55,7 +55,7 @@ impl Document {
     pub fn new(text: &str, parser: &impl Parser, dictionary: &WordMap) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(source, parser, dictionary)
+        Self::new_from_chars(source, parser, dictionary)
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -63,12 +63,12 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(source, parser, WordMap::curated())
+        Self::new_from_chars(source, parser, WordMap::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new_from_vec(source: Lrc<[char]>, parser: &impl Parser, dictionary: &WordMap) -> Self {
+    pub fn new_from_chars(source: Lrc<[char]>, parser: &impl Parser, dictionary: &WordMap) -> Self {
         let tokens = parser.parse(&source);
 
         let mut document = Self { source, tokens };
