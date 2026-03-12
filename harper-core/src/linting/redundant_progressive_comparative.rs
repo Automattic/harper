@@ -8,20 +8,6 @@ pub struct RedundantProgressiveComparative {
     expr: Box<dyn Expr>,
 }
 
-impl RedundantProgressiveComparative {
-    fn is_redundant_progression_adverb(tok: &Token, src: &[char]) -> bool {
-        if !tok.kind.is_adverb() {
-            return false;
-        }
-
-        let word = tok.span.get_content(src);
-
-        word.eq_ignore_ascii_case_str("increasingly")
-            || word.eq_ignore_ascii_case_str("progressively")
-            || word.eq_ignore_ascii_case_str("steadily")
-    }
-}
-
 impl Default for RedundantProgressiveComparative {
     fn default() -> Self {
         Self {
@@ -47,7 +33,7 @@ impl ExprLinter for RedundantProgressiveComparative {
         let first = matched_tokens.first()?;
         let second = matched_tokens.get(2)?;
 
-        if !Self::is_redundant_progression_adverb(first, src) {
+        if !first.kind.is_degree_adverb() {
             return None;
         }
 
@@ -76,14 +62,14 @@ impl ExprLinter for RedundantProgressiveComparative {
                 replacement,
                 span.get_content(src),
             )],
-            message: "This phrasing is redundant; use a direct progressive comparative."
+            message: "This phrasing is redundant; use a direct comparative like `more and more`."
                 .to_string(),
             priority: 31,
         })
     }
 
     fn description(&self) -> &'static str {
-        "Detects redundant progressive comparatives like `increasingly more` and `increasingly less`."
+        "Detects redundant degree-adverb comparatives like `increasingly more` and `increasingly less`."
     }
 }
 
@@ -201,6 +187,22 @@ mod tests {
     fn ignores_noun_after_less() {
         assert_no_lints(
             "The issue is increasingly less people reporting crashes.",
+            RedundantProgressiveComparative::default(),
+        );
+    }
+
+    #[test]
+    fn ignores_non_degree_adverb_more() {
+        assert_no_lints(
+            "The issue is much more prevalent in this subsystem.",
+            RedundantProgressiveComparative::default(),
+        );
+    }
+
+    #[test]
+    fn ignores_non_degree_adverb_less() {
+        assert_no_lints(
+            "The issue is significantly less prevalent in this subsystem.",
             RedundantProgressiveComparative::default(),
         );
     }
