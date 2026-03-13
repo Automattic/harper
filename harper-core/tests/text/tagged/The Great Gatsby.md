@@ -1502,8 +1502,8 @@
 #
 > We   waited for   her     down        the road    and  out          of sight    . It       was a   few      days before the
 # IPl+ VP/J   R/C/P ISg/D$+ N🅪Sg/VB/J/P D+  N🅪Sg/J+ VB/C NSg/VB/J/R/P P  N🅪Sg/VB+ . NPr/ISg+ VPt D/P NSg/I/Dq NPl  C/P    D
-> Fourth   of July , and  a   gray           , scrawny Italian child   was setting  torpedoes in        a   row
-# NPr/VB/J P  NPr+ . VB/C D/P NPr🅪Sg/VB/J/Am . J       N🅪Sg/J  NSg/VB+ VPt Nᴹ/Vg/J+ NPl/VB    NPr/J/R/P D/P NSg/VB+
+> Fourth   of July , and  a   gray           , scrawny Italian child   was setting    torpedoes in        a   row
+# NPr/VB/J P  NPr+ . VB/C D/P NPr🅪Sg/VB/J/Am . J       N🅪Sg/J  NSg/VB+ VPt N🅪Sg/Vg/J+ NPl/VB    NPr/J/R/P D/P NSg/VB+
 > along the railroad track   .
 # P     D   NSg/VB+  NSg/VB+ .
 >
@@ -5729,7 +5729,7 @@
 > end     , waited with his     teeth set       , so          to speak  , at    an  inconceivable pitch    of
 # NSg/VB+ . VP/J   P    ISg/D$+ NPl+  NPr/VBP/J . NSg/I/J/R/C P  NSg/VB . NSg/P D/P J             NSg/VB/J P
 > intensity . Now       , in        the reaction   , he       was running   down        like         an  overwound clock   .
-# Nᴹ+       . NSg/J/R/C . NPr/J/R/P D+  N🅪Sg/VB/J+ . NPr/ISg+ VPt Nᴹ/Vg/J/P N🅪Sg/VB/J/P NSg/VB/J/C/P D/P ?         NSg/VB+ .
+# Nᴹ+       . NSg/J/R/C . NPr/J/R/P D+  N🅪Sg/VB/J+ . NPr/ISg+ VPt Nᴹ/Vg/J/P N🅪Sg/VB/J/P NSg/VB/J/C/P D/P VP/J      NSg/VB+ .
 >
 #
 > Recovering himself in        a    minute    he       opened for   us       two hulking patent    cabinets

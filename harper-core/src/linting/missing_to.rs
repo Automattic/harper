@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
@@ -11,8 +9,7 @@ use crate::{
 };
 
 pub struct MissingTo {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    map: ExprMap<usize>,
 }
 
 impl MissingTo {
@@ -200,6 +197,34 @@ impl MissingTo {
 
         None
     }
+
+    fn determiner_within_three(source: &[char], controller_span_start: usize) -> bool {
+        let mut determiner_scan_cursor = controller_span_start;
+
+        for _ in 0..3 {
+            let Some((word, start)) = Self::previous_word_with_span(source, determiner_scan_cursor)
+            else {
+                break;
+            };
+            let word = word.as_str();
+
+            if matches!(word, "and" | "or" | "but") {
+                determiner_scan_cursor = start;
+                continue;
+            }
+
+            if matches!(
+                word,
+                "a" | "an" | "the" | "this" | "that" | "these" | "those"
+            ) {
+                return true;
+            }
+
+            determiner_scan_cursor = start;
+        }
+
+        false
+    }
 }
 
 impl Default for MissingTo {
@@ -216,12 +241,7 @@ impl Default for MissingTo {
             .then_kind_where(|kind| kind.is_verb_lemma());
         map.insert(permissive_pattern, 0);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { map }
     }
 }
 
@@ -229,7 +249,7 @@ impl ExprLinter for MissingTo {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.map
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -238,9 +258,9 @@ impl ExprLinter for MissingTo {
         let span = controller.span;
 
         let controller_text = controller.span.get_content_string(source).to_lowercase();
+        let controller_text = controller_text.as_str();
 
-        let is_adjective_controller =
-            matches!(controller_text.as_str(), "eager" | "inclined" | "ready");
+        let is_adjective_controller = matches!(controller_text, "eager" | "inclined" | "ready");
 
         if controller.kind.is_upos(UPOS::ADJ) && !is_adjective_controller {
             return None;
@@ -253,53 +273,23 @@ impl ExprLinter for MissingTo {
         let previous_word_info = Self::previous_word_with_span(source, span.start);
         let previous_word = previous_word_info.as_ref().map(|(word, _)| word.as_str());
 
-        let mut determiner_within_three = false;
-        let mut determiner_scan_cursor = span.start;
-
-        for _ in 0..3 {
-            let Some((word, start)) = Self::previous_word_with_span(source, determiner_scan_cursor)
-            else {
-                break;
-            };
-
-            if matches!(word.as_str(), "and" | "or" | "but") {
-                determiner_scan_cursor = start;
-                continue;
-            }
-
-            if matches!(
-                word.as_str(),
-                "a" | "an" | "the" | "this" | "that" | "these" | "those"
-            ) {
-                determiner_within_three = true;
-                break;
-            }
-
-            determiner_scan_cursor = start;
-        }
-
         if matches!(
             previous_word,
-            Some("a")
-                | Some("an")
-                | Some("the")
-                | Some("this")
-                | Some("that")
-                | Some("these")
-                | Some("those")
+            Some("a" | "an" | "the" | "this" | "that" | "these" | "those")
+                | Some("very" | "so" | "too" | "quite" | "rather")
         ) {
             return None;
         }
 
-        if matches!(
-            previous_word,
-            Some("very") | Some("so") | Some("too") | Some("quite") | Some("rather")
-        ) {
+        let controller_text_ends_with_d_or_en =
+            controller_text.ends_with('d') || controller_text.ends_with("en");
+
+        if previous_word == Some("of") && controller_text_ends_with_d_or_en {
             return None;
         }
 
-        if previous_word == Some("of")
-            && (controller_text.ends_with('d') || controller_text.ends_with("en"))
+        if previous_word.is_some_and(|word| word.ends_with("ly"))
+            && controller_text_ends_with_d_or_en
         {
             return None;
         }
@@ -312,11 +302,10 @@ impl ExprLinter for MissingTo {
             return None;
         }
 
+        let prev_non_whitespace_char = Self::previous_non_whitespace_char(source, span.start);
+
         if controller_text == "prepare"
-            && matches!(
-                Self::previous_non_whitespace_char(source, span.start),
-                None | Some('.') | Some('!') | Some('?')
-            )
+            && matches!(prev_non_whitespace_char, None | Some('.' | '!' | '?'))
         {
             return None;
         }
@@ -327,16 +316,26 @@ impl ExprLinter for MissingTo {
             .find(|tok| !tok.kind.is_whitespace())?;
 
         let next_text = next_token.span.get_content_string(source).to_lowercase();
-        let next_non_whitespace_char = Self::next_non_whitespace_char(source, next_token.span.end);
 
         if controller_text.starts_with("try") && next_text == "and" {
             return None;
         }
 
-        let next_is_verb = next_token.kind.is_upos(UPOS::VERB);
-        let next_is_noun = next_token.kind.is_upos(UPOS::NOUN)
-            || next_token.kind.is_upos(UPOS::PROPN)
-            || next_token.kind.is_upos(UPOS::ADJ);
+        if next_text.ends_with("ing") {
+            return None;
+        }
+
+        // Ugly workaround since `Option::flatten` doesn't work with `Option<&Option<...>>`.
+        let next_upos = next_token
+            .kind
+            .as_word()
+            .and_then(Option::as_ref)
+            .and_then(|word| word.pos_tag);
+
+        let next_is_verb = next_upos == Some(UPOS::VERB);
+        let next_is_noun = matches!(next_upos, Some(UPOS::NOUN | UPOS::PROPN | UPOS::ADJ));
+
+        let determiner_within_three = Self::determiner_within_three(source, span.start);
 
         if next_token.kind.is_np_member()
             && !next_is_verb
@@ -346,81 +345,44 @@ impl ExprLinter for MissingTo {
         }
 
         if !next_is_verb
-            && (next_token.kind.is_upos(UPOS::ADV)
-                || next_token.kind.is_upos(UPOS::ADJ)
-                || next_token.kind.is_upos(UPOS::ADP)
-                || next_token.kind.is_upos(UPOS::SCONJ)
-                || next_token.kind.is_upos(UPOS::CCONJ))
-        {
-            return None;
-        }
-
-        if next_text.ends_with("ing") {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "learn" | "learned" | "learning" | "learns" | "learnt"
-        ) && next_is_noun
-            && !next_is_verb
-        {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "hope" | "hoped" | "hopes" | "hoping"
-        ) && next_is_noun
-            && !next_is_verb
-        {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "need" | "needed" | "needing" | "needs"
-        ) && next_is_noun
-            && !next_is_verb
-        {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "need" | "needed" | "needing" | "needs"
-        ) && next_text == "help"
-        {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "hope" | "hoped" | "hopes" | "hoping"
-        ) && next_token.kind.is_upos(UPOS::AUX)
-        {
-            return None;
-        }
-
-        if matches!(controller_text.as_str(), "mean" | "means" | "meant")
-            && next_is_noun
-            && !next_is_verb
-        {
-            return None;
-        }
-
-        if matches!(
-            controller_text.as_str(),
-            "need" | "needed" | "needing" | "needs"
-        ) && matches!(next_non_whitespace_char, Some('-'))
-        {
-            return None;
-        }
-
-        if next_token.kind.is_upos(UPOS::PROPN)
             && matches!(
-                Self::previous_non_whitespace_char(source, span.start),
-                Some('"') | Some('\'') | Some('”') | Some('’') | Some('!') | Some('?') | Some(',')
+                next_upos,
+                Some(UPOS::ADV | UPOS::ADJ | UPOS::ADP | UPOS::SCONJ | UPOS::CCONJ)
+            )
+        {
+            return None;
+        }
+
+        let next_is_noun_but_not_verb = next_is_noun && !next_is_verb;
+
+        if matches!(
+            controller_text,
+            "learn" | "learned" | "learning" | "learns" | "learnt" | "mean" | "means" | "meant"
+        ) && next_is_noun_but_not_verb
+        {
+            return None;
+        }
+
+        if matches!(controller_text, "hope" | "hoped" | "hopes" | "hoping")
+            && (next_is_noun_but_not_verb || next_upos == Some(UPOS::AUX))
+        {
+            return None;
+        }
+
+        let next_non_whitespace_char = Self::next_non_whitespace_char(source, next_token.span.end);
+
+        if matches!(controller_text, "need" | "needed" | "needing" | "needs")
+            && (next_is_noun_but_not_verb
+                || next_text == "help"
+                || next_non_whitespace_char == Some('-'))
+        {
+            return None;
+        }
+
+        if next_upos == Some(UPOS::PROPN)
+            && matches!(
+                prev_non_whitespace_char,
+                Some('"' | '\'' | '”' | '’' | '!' | '?' | ',')
             )
         {
             return None;
@@ -532,6 +494,15 @@ mod tests {
             "I'm inclined believe you.",
             MissingTo::default(),
             "I'm inclined to believe you.",
+        );
+    }
+
+    #[test]
+    fn inserts_to_after_resolved() {
+        assert_suggestion_result(
+            "She resolved solve the case.",
+            MissingTo::default(),
+            "She resolved to solve the case.",
         );
     }
 
@@ -648,5 +619,99 @@ mod tests {
     #[test]
     fn no_lint_bad_at_managing_side_effects() {
         assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_conflict() {
+        assert_lint_count("a fully resolved conflict", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_configuration() {
+        assert_lint_count("A resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_configuration() {
+        assert_lint_count("A fully resolved configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_resolved_set_of_configuration() {
+        assert_lint_count("A resolved set of configuration", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_set_of_configuration() {
+        assert_lint_count(
+            "A fully resolved set of configuration",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_system_produced_a_fully_resolved_set_of_dependencies() {
+        assert_lint_count(
+            "System produced a fully resolved set of dependencies",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_resolved_list_of_parameters() {
+        assert_lint_count("A resolved list of parameters", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_resolved_list_of_parameters() {
+        assert_lint_count(
+            "A fully resolved list of parameters",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_prepared_stranger() {
+        assert_lint_count("A prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_stranger() {
+        assert_lint_count("A fully prepared stranger", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_prepared_group_of_strangers() {
+        assert_lint_count("A prepared group of strangers", MissingTo::default(), 0);
+    }
+
+    #[test]
+    fn no_lint_a_fully_prepared_group_of_strangers() {
+        assert_lint_count(
+            "A fully prepared group of strangers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_nicely_arranged_set_of_flowers() {
+        assert_lint_count(
+            "A nicely arranged bunch of flowers",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_a_recently_forgotten_list_of_names() {
+        assert_lint_count(
+            "A recently forgotten list of names",
+            MissingTo::default(),
+            0,
+        );
     }
 }

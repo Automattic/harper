@@ -4605,7 +4605,7 @@
 > So          they began solemnly dancing round      and  round      Alice , every now       and  then
 # NSg/I/J/R/C IPl+ VPt   R        Nᴹ/Vg/J NSg/VB/J/P VB/C NSg/VB/J/P NPr+  . Dq    NSg/J/R/C VB/C NSg/J/R/C
 > treading on  her     toes    when    they passed too close    , and  waving  their forepaws to
-# Nᴹ/Vg/J  J/P ISg/D$+ NPl/V3+ NSg/I/C IPl+ VP/J   R   NSg/VB/J . VB/C Nᴹ/Vg/J D$+   ?        P
+# Nᴹ/Vg/J  J/P ISg/D$+ NPl/V3+ NSg/I/C IPl+ VP/J   R   NSg/VB/J . VB/C Nᴹ/Vg/J D$+   NPl      P
 > mark    the time       , while      the Mock     Turtle  sang    this    , very slowly and  sadly : —
 # NPr/VB+ D   N🅪Sg/VB/J+ . NSg/VB/C/P D   NSg/VB/J NSg/VB+ NPr/VPt I/Ddem+ . J/R  R      VB/C R     . .
 >
@@ -5916,8 +5916,8 @@
 #
 > But     her     sister  sat      still      just as    she  left     her     , leaning her     head      on  her     hand    ,
 # NSg/C/P ISg/D$+ NSg/VB+ NSg/VP/J NSg/VB/J/R J/R  R/C/P ISg+ NPr/VP/J ISg/D$+ . Nᴹ/Vg/J ISg/D$+ NPr/VB/J+ J/P ISg/D$+ NSg/VB+ .
-> watching the setting  sun     , and  thinking of little      Alice and  all           her     wonderful
-# Nᴹ/Vg/J  D+  Nᴹ/Vg/J+ NPr/VB+ . VB/C Nᴹ/Vg/J  P  NPr/I/J/Dq+ NPr+  VB/C NSg/I/J/C/Dq+ ISg/D$+ J+
+> watching the setting    sun     , and  thinking of little      Alice and  all           her     wonderful
+# Nᴹ/Vg/J  D+  N🅪Sg/Vg/J+ NPr/VB+ . VB/C Nᴹ/Vg/J  P  NPr/I/J/Dq+ NPr+  VB/C NSg/I/J/C/Dq+ ISg/D$+ J+
 > Adventures , till       she  too began dreaming after a    fashion  , and  this    was her
 # NPl/V3+    . NSg/VB/C/P ISg+ R   VPt   Nᴹ/Vg/J+ P     D/P+ N🅪Sg/VB+ . VB/C I/Ddem+ VPt ISg/D$+
 > dream     : —

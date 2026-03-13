@@ -1112,16 +1112,6 @@ Suggest:
 
 
 
-Lint:    Repetition (63 priority)
-Message: |
-     950 | “Two studies. One of them I call ‘Montauk Point—The Gulls,’ and the other I call
-         |                      ^~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “them”
-  - Replace with: “I”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      950 | “Two studies. One of them I call ‘Montauk Point—The Gulls,’ and the other I call
@@ -1228,28 +1218,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | chair. Yet high over the city our line of yellow windows must have contributed
          | ~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    1092 | eyes off him, but every time he looked at me I had to pretend to be looking at
-         |                                           ^~~~ There are too many personal pronouns in sequence here.
-    1093 | the advertisement over his head. When we came into the station he was next to
-Suggest:
-  - Replace with: “me”
-  - Replace with: “I”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    1095 | to call a policeman, but he knew I lied. I was so excited that when I got into a
-    1096 | taxi with him I didn’t hardly know I wasn’t getting into a subway train. All I
-         |           ^~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “him”
-  - Replace with: “I”
 
 
 
@@ -3550,14 +3518,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2286 | (said Jordan Baker that afternoon, sitting up very straight on a straight chair
-         |                                                                ^~~~~~~~~~~~~~~~ Did you intend to use an adjective here?
-    2287 | in the tea-garden at the Plaza Hotel)
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2291 | with rubber nobs on the soles that bit into the soft ground. I had on a new
@@ -3568,17 +3528,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2294 | said tut-tut-tut-tut, in a disapproving way.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 44 words long.
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2314 | girl wants to be looked at sometime, and because it seemed romantic to me I have
-         |                                                                        ^~~~ There are too many personal pronouns in sequence here.
-    2315 | remembered the incident ever since. His name was Jay Gatsby, and I didn’t lay
-Suggest:
-  - Replace with: “me”
-  - Replace with: “I”
 
 
 
@@ -3673,27 +3622,6 @@ Suggest:
   - Replace with: “dear's”
   - Replace with: “dares”
   - Replace with: “dearest”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2351 | whoever they belong to. Tell ’em all Daisy’s change’ her mine. Say: ‘Daisy’s
-         |                                                      ^~~~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “her”
-  - Replace with: “mine”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2351 | whoever they belong to. Tell ’em all Daisy’s change’ her mine. Say: ‘Daisy’s
-    2352 | change’ her mine!’”
-         |         ^~~~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “her”
-  - Replace with: “mine”
 
 
 
@@ -4159,26 +4087,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ Did you mean to spell `overwound` this way?
-Suggest:
-  - Replace with: “overground”
-  - Replace with: “overfond”
-  - Replace with: “overfund”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
-Suggest:
-  - Replace with: “over wound”
-
-
-
 Lint:    Style (31 priority)
 Message: |
     2872 | “I’ve got a man in England who buys me clothes. He sends over a selection of
@@ -4297,16 +4205,6 @@ Message: |
          |      ^~~~~~~~~~~~ Did you mean `Kissinger`?
 Suggest:
   - Replace with: “Kissinger”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2968 | “I’m all out of practice, you see. I told you I couldn’t play. I’m all out of
-         |                                           ^~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “you”
-  - Replace with: “I”
 
 
 
@@ -5545,16 +5443,6 @@ Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
   - Replace with: “Biro's”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    4115 | “I told you I went there,” said Gatsby.
-         |         ^~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “you”
-  - Replace with: “I”
 
 
 
@@ -7123,17 +7011,6 @@ Suggest:
 
 
 
-Lint:    Repetition (63 priority)
-Message: |
-    5313 | Dear Mr. Carraway. This has been one of the most terrible shocks of my life to
-    5314 | me I hardly can believe it that it is true at all. Such a mad act as that man
-         | ^~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “me”
-  - Replace with: “I”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5322 | >
@@ -7625,16 +7502,6 @@ Suggest:
   - Replace with: “smoking”
   - Replace with: “shoeing”
   - Replace with: “smocking”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    5613 | great for that. He told me I et like a hog once, and I beat him for it.”
-         |                         ^~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “me”
-  - Replace with: “I”
 
 
 
