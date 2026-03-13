@@ -54264,6 +54264,7 @@ preshared/J
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
+rearchitect/VdGS
 redump/VdGS
 remux/VdGS
 reranker/NgS
@@ -54309,17 +54310,7 @@ z-buffer/NgS
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
-# Word added using the `just addnoun` command will be added here
-
-Compline/NO         # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
-exocentric/JQ
-LFG/NOg             # Lexical Functional Grammar
-licensor/NSg
-omnipredicativity/N0
-supervenience/Nmg   # From emergentist ontology
-volitive/NSgJ
-WordCamp/Og
-worldbuild/V>G     # !! This derives `worldbuilded` - is this intentional? -- no 😅, corrected
+# Words added using the `just addnoun` command will be added here
 
 Afroasiatic/NmgJ # linguistics
 agnatic/J # Most often in the phrase "agnatic primogeniture"
@@ -54328,10 +54319,12 @@ ASMR/Nmg # "Autonomous Sensory Meridian Response"
 chorded/J # music: As refers to "chorded instruments"
 cognatic/J # As with "agnatic"
 comital/J # Adjective version of the noble rank "count/countess/earl"
+Compline/NO         # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
 covenantal/JQ
 cupbearer/NSg
 diahcronic/JQ # linguistics
 discretionarily/Ry
+exocentric/JQ
 exonym/NSg
 fae/Nmg # fantasy alternative for "fey"
 hewn/JT # past participle of "hew"
@@ -54349,9 +54342,11 @@ Kartvelian/NmgJ # linguistics
 kendo/Nmg # martial art
 Kra-Dai/NmgJ # linguistics
 leathercraft/Nwg
+LFG/NOg             # Lexical Functional Grammar
+licensor/NSg
 lingua franca/NSg
-linguae francae/N9g
 linguæ francæ/N9g
+linguae francae/N9g
 longsword/NSg
 luthier/NSg
 menarche/Nmg # medicine
@@ -54360,6 +54355,7 @@ monolatrous/J
 monolatry/Nmg
 Nilotic/NmgJ # linguistics
 offeror/NSg
+omnipredicativity/N0
 orthopractic/J
 orthopraxy/Nwg
 piebaldism/Nmg # medicine
@@ -54377,11 +54373,12 @@ Sino-Tibetan/NmgJ # linguistics
 sociolect/NSg
 sortition/Nmg # Political science: a method of appointment to office by random draw
 subvocalization/Nwg # phonetics
+supervenience/Nmg   # From emergentist ontology
+synæsthesia/Nmg
 synaesthesia/Nmg
 synchronic/JQ # linguistics
 syncretism/Nmg
 synesthesia/Nmg
-synæsthesia/Nmg
 trimeter/NgS # poetry
 trimetre/NgS!@_₹ # poetry
 trimetric/J
@@ -54389,4 +54386,7 @@ unminted/J
 vicomital/J # Adjective version of "viscount/viscountess"
 vicontiel/J #  As above, alternative version
 viscomital/J # As above, alternative version
+volitive/NSgJ
 Westphalian/J # political science and international relations
+WordCamp/Og
+worldbuild/V>G
