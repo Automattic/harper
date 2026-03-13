@@ -278,6 +278,17 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair?
             LintKind::WordChoice
         ),
+        "HitTheNailOnTheHead" => (
+            &[
+                ("hit the nail in the head", "hit the nail on the head"),
+                ("hits the nail in the head", "hits the nail on the head"),
+                ("hitting the nail in the head", "hitting the nail on the head"),
+                ("hitted the nail in the head", "hitted the nail on the head")
+            ],
+            "The correct preposition in this idiom is `on`.",
+            "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
+            LintKind::Eggcorn
+        ),
         "HomeInOn" => (
             &[
                 ("hone in on", "home in on"),
