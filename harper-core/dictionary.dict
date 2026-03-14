@@ -16346,6 +16346,9 @@ callisthenic/JS!_₹
 callosity/NSg
 callous/~JYpNSVGd
 callousness/Nmg
+callout/NgS         # Cambridge (also), Websters
+call out/V/         # Cambridge, Collins, Websters, Longman, Oxford
+call-out/NgS        # American Heritage, Cambridge, Longman, OED, Oxford
 callow/J>^pN
 callowness/Ng
 callus/NgSVdG
@@ -46889,8 +46892,6 @@ stave/~NSgVdG
 stay/~Vd>GSNgJZ
 stay behind/V
 stay-behind/NgS
-std/~N
-stdio
 stead/~NSgV
 steadfast/~JYp
 steadfastness/Nmg
@@ -50088,6 +50089,7 @@ triathlete/NS
 triathlon/NSg
 tribal/~JN
 tribalism/Nmg
+tribalistic/J
 tribe/~NSgV
 tribesman/Ng
 tribesmen/~9
@@ -54283,6 +54285,9 @@ singleplayer/J
 sioyek/Sg           # !! please check and comment !!
 stacktrace/NSg      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
+std/~               # doesn't really behave like any normal POS but more like an affix that's not attached
+stdio/Og            # behaves like a proper noun despite lowercase since not normally used with 'a' or pluralized. But can be used with 'the'
+stdlib/Og           # behaves like a proper noun despite lowercase since not normally used with 'a' or pluralized. But can be used with 'the'
 strat/NgS           # gamer slang strategy
 subchannel/NgS
 subkey/NgS
