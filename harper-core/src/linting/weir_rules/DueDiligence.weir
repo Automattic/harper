@@ -1,0 +1,9 @@
+expr main (do diligence)
+
+let message "If this phrase should function as a noun it should be `due diligence`. If it should function as a verb it should be `do due diligence"
+let description "Corrects `do diligence` to `due diligence`."
+let kind "Usage"
+let becomes ["due diligence", "do due diligence"]
+
+test "Thank you for your time, I am trying to do my do diligence and find some answers." "Thank you for your time, I am trying to do my due diligence and find some answers."
+test "The Technical Committee (TC) will do diligence, write a report, and attach that report to the GitHub issue." "The Technical Committee (TC) will do due diligence, write a report, and attach that report to the GitHub issue."

@@ -8,6 +8,7 @@ mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
 mod after_later;
+mod all_hell_break_loose;
 mod all_intents_and_purposes;
 mod allow_to;
 mod am_in_the_morning;
@@ -27,6 +28,7 @@ mod best_of_all_time;
 mod boring_words;
 mod bought;
 mod brand_brandish;
+mod by_accident;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
@@ -52,6 +54,7 @@ mod did_past;
 mod didnt;
 mod discourse_markers;
 mod disjoint_prefixes;
+mod do_mistake;
 mod dot_initialisms;
 mod double_click;
 mod double_modal;
@@ -64,6 +67,7 @@ mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
 mod fascinated_by;
+mod fed_up_with;
 mod feel_fell;
 mod few_units_of_time_ago;
 mod filler_words;
@@ -130,6 +134,7 @@ mod more_adjective;
 mod more_better;
 mod most_number;
 mod most_of_the_times;
+mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
 mod need_to_noun;
@@ -140,6 +145,7 @@ mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
+mod not_only_inversion;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod obsess_preposition;
@@ -159,6 +165,7 @@ mod oxymorons;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod possessive_noun;
 mod possessive_your;
@@ -175,14 +182,15 @@ mod quite_quiet;
 mod quote_spacing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
+mod redundant_progressive_comparative;
 mod regionalisms;
 mod repeated_words;
 mod respond;
 mod right_click;
+mod rise_the_ranks;
 mod roller_skated;
 mod safe_to_save;
 mod save_to_safe;
-mod semicolon_apostrophe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
@@ -206,10 +214,12 @@ mod that_than;
 mod that_which;
 mod the_how_why;
 mod the_my;
+mod the_point_for;
 mod the_proper_noun_possessive;
 mod then_than;
 mod theres;
 mod theses_these;
+mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
@@ -239,6 +249,7 @@ mod wish_could;
 mod wordpress_dotcom;
 mod worth_to_do;
 mod would_never_have;
+mod wrong_apostrophe;
 
 pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;
@@ -247,7 +258,6 @@ pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
-pub use spell_check::SpellCheck;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
@@ -281,6 +291,50 @@ where
     }
 }
 
+pub mod debug {
+    use crate::Token;
+
+    /// Formats a lint match with surrounding context for debug output.
+    ///
+    /// The function takes the same `matched_tokens` and `source`, and `context` parameters
+    /// passed to `[match_to_lint_with_context]`.
+    ///
+    /// # Arguments
+    /// * `log` - `matched_tokens`
+    /// * `ctx` - `context`, or `None` if calling from `[match_to_lint]`
+    /// * `src` - `source` from `[match_to_lint]` / `[match_to_lint_with_context]`
+    ///
+    /// # Returns
+    /// A string with ANSI escape codes where:
+    /// - Context tokens are dimmed before and after the matched tokens in normal weight.
+    /// - Markup and formatting text hidden in whitespace tokens is filtered out.
+    pub fn format_lint_match(
+        log: &[Token],
+        ctx: Option<(&[Token], &[Token])>,
+        src: &[char],
+    ) -> String {
+        let fmt = |tokens: &[Token]| {
+            tokens
+                .iter()
+                .filter(|t| !t.kind.is_unlintable())
+                .map(|t| t.span.get_content_string(src))
+                .collect::<String>()
+        };
+
+        if let Some((pro, epi)) = ctx {
+            format!(
+                "\x1b[2m{}\x1b[0m{}\x1b[2m{}\x1b[0m",
+                fmt(pro),
+                fmt(log),
+                fmt(epi)
+            )
+        } else {
+            fmt(log)
+        }
+    }
+}
+
+#[cfg(test)]
 pub mod tests {
     use crate::parsers::Markdown;
     use crate::{Document, Span, Token};

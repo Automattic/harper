@@ -4,6 +4,7 @@ import { Button, Link } from 'components';
 import { onMount } from 'svelte';
 import Fa from 'svelte-fa';
 import logo from '/logo.png';
+import detectBrowserEngine from '../detectBrowserEngine';
 import { main, type PopupState } from '../PopupState';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
@@ -41,6 +42,20 @@ $effect(() => {
 function openSettings() {
 	chrome.runtime?.openOptionsPage?.();
 }
+
+function openUpdateHelpPage() {
+	let url: string;
+
+	if (detectBrowserEngine() == 'chromium') {
+		url = 'https://writewithharper.com/docs/integrations/chrome-extension#Updating-the-Extension';
+	} else {
+		url = 'https://writewithharper.com/docs/integrations/firefox-extension#Updating-the-Extension';
+	}
+
+	chrome.tabs.create({
+		url,
+	});
+}
 </script>
 
 <div class="w-[340px] border border-gray-200 font-sans flex flex-col rounded-lg shadow-sm select-none dark:border-slate-800 dark:text-slate-100">
@@ -55,9 +70,9 @@ function openSettings() {
           popupState = main();
        }}><Fa icon={faArrowLeft}/></Button>
     {:else}
-      <div>
+      <div onclick={openUpdateHelpPage}>
         {#if versionMismatch}
-          <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}`}>⚠️</span>
+          <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}. Click to find out more.`}>⚠️</span>
         {/if}
         <span class="text-sm font-mono">{version}</span>
       </div>

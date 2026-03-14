@@ -920,8 +920,8 @@
 # D+  NPl+    NSg/VPt NSg/VP/J P    Nᴹ+     .
 > overcome with happiness
 # VB       P    Nᴹ+
-> green       with envy    ; flushed with success
-# NPr🅪Sg/VB/J P    NSg/VB+ . VP/J    P    N🅪Sg+
+> green       with envy   ; flushed with success
+# NPr🅪Sg/VB/J P    Nᴹ/VB+ . VP/J    P    N🅪Sg+
 > She  was with Acme for   twenty years before retiring last     fall     .
 # ISg+ VPt P    NSg  R/C/P NSg    NPl+  C/P    Nᴹ/Vg/J  NSg/VB/J N🅪Sg/VB+ .
 > With your kind  of body    size     , you    shouldn’t be      eating  pizza at    all          .

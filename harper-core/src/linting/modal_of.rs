@@ -1,6 +1,6 @@
 use crate::{
     Lrc, Token, TokenStringExt,
-    expr::{Expr, LongestMatchOf, OwnedExprExt, SequenceExpr},
+    expr::{Expr, FirstMatchOf, LongestMatchOf, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{ModalVerb, Word},
 };
@@ -20,7 +20,10 @@ impl Default for ModalOf {
             SequenceExpr::with(ModalVerb::default())
                 .then_whitespace()
                 .t_aco("of")
-                .and_not(Word::new_exact("May")),
+                .and_not(FirstMatchOf::new(vec![
+                    Box::new(Word::new("can")),
+                    Box::new(Word::new_exact("May")),
+                ])),
         );
 
         // "will of" is a false positive if "will" is a noun
@@ -332,5 +335,10 @@ mod tests {
     #[test]
     fn dont_flag_in_may_of_last_year_bug_2786() {
         assert_no_lints("This happened in May of last year.", ModalOf::default());
+    }
+
+    #[test]
+    fn dont_flag_can_of_red_bull_2807() {
+        assert_no_lints("I drank a can of Red Bull.", ModalOf::default());
     }
 }

@@ -1,4 +1,4 @@
-expr main [<(their [AUX, (supposed to), (allowed to), (invited to), (going to), (trying to), (coming over), (leaving in), (moving to), (planning a), (waiting for), (answering any), (wondering where), (running behind), (far too), even, (already here), (in the), (on the), (at the), (a lot), an, two, offline, (ADV [PROG, AUX]), (ADV VERB), (PART [PROG, VERB, ADJ, AUX]), (ready to), the]), their>]
+expr main [<(their [AUX, (supposed to), (allowed to), (invited to), (going to), (trying to), (coming over), (coming tonight), (leaving in), (moving to), (planning a), (waiting for), (answering any), (wondering where), (running behind), (running through), (far too), even, (already here), (in the), (on the), (at the), (a lot), an, two, offline, (ADV [PROG, AUX]), (ADV VERB), (PART [PROG, VERB, ADJ, AUX]), (ready to), (always [late, early]), the]), their>, <(there [(moving next), (planning a)]), there>]
 
 let message "Did you mean `they're`?"
 let description "Corrects `their` when the intended meaning is `they're`."
@@ -30,6 +30,12 @@ test "Their ready to start whenever you are." "They're ready to start whenever y
 test "Their not answering any messages." "They're not answering any messages."
 test "Their going to be a problem if we don't hurry." "They're going to be a problem if we don't hurry."
 test "Their probably wondering where we went." "They're probably wondering where we went."
+test "Their always late." "They're always late."
+test "Their going to the store after work." "They're going to the store after work."
+test "Do you know if their coming tonight?" "Do you know if they're coming tonight?"
+test "The neighbors said there moving next month." "The neighbors said they're moving next month."
+test "I saw their running through the park." "I saw they're running through the park."
+test "I heard there planning a surprise party." "I heard they're planning a surprise party."
 
 allows "Their backpacks were stacked neatly by the door."
 allows "I admired their patience during the long, glitchy delay."
