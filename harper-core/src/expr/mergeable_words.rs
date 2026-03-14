@@ -1,5 +1,5 @@
 use super::{Expr, SequenceExpr};
-use crate::spell::MutableDictionary;
+use crate::spell::{CommonDictFuncs, MutableDictionary};
 use crate::{CharString, DictWordMetadata, Span, Token};
 
 type PredicateFn =
@@ -44,21 +44,13 @@ impl MergeableWords {
         let mut compound = a_chars.clone();
         compound.push(' ');
         compound.extend_from_slice(&b_chars);
-        let meta_open = self
-            .dict
-            .get_case_folded_chars(&compound)
-            .next()
-            .map(|wme| &wme.metadata);
+        let meta_open = self.dict.get_word_metadata_combined(&compound);
 
         // Then check if the closed compound exists in the dictionary
         compound.remove(a_chars.len());
-        let meta_closed = self
-            .dict
-            .get_case_folded_chars(&compound)
-            .next()
-            .map(|wme| &wme.metadata);
+        let meta_closed = self.dict.get_word_metadata_combined(&compound);
 
-        if (self.predicate)(meta_closed, meta_open) {
+        if (self.predicate)(meta_closed.as_deref(), meta_open.as_deref()) {
             return Some(compound);
         }
 

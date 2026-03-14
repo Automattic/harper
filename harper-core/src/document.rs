@@ -9,7 +9,7 @@ use paste::paste;
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::punctuation::Punctuation;
-use crate::spell::{CommonDictFuncs, Dictionary, MutableDictionary};
+use crate::spell::{CommonDictFuncs, Dictionary, FstDictionary};
 use crate::vec_ext::VecExt;
 use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
@@ -23,7 +23,7 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, MutableDictionary::curated())
+        Self::new("", &PlainEnglish, FstDictionary::curated())
     }
 }
 
@@ -66,7 +66,7 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_chars(source, parser, MutableDictionary::curated())
+        Self::new_from_chars(source, parser, FstDictionary::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -87,7 +87,7 @@ impl Document {
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, MutableDictionary::curated())
+        Self::new(text, &PlainEnglish, FstDictionary::curated())
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
@@ -115,7 +115,7 @@ impl Document {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            MutableDictionary::curated(),
+            FstDictionary::curated(),
         )
     }
 

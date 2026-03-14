@@ -416,8 +416,7 @@ impl Backend {
 
                 // Don't lint on documents larger than the configured maximum length.
                 if text.len() <= max_file_length {
-                    doc_state.document =
-                        Document::new(text, &parser, doc_state.dict.get_word_map());
+                    doc_state.document = Document::new(text, &parser, &doc_state.dict);
                 } else {
                     // Ensures that existing lints are cleared when we stop linting the file.
                     // Otherwise, prior lints will remain, and they will quickly fall out of sync
@@ -693,7 +692,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_user_dictionary().await;
                 dict.insert(WordMapEntry::new(word.to_smallvec()));
-                self.save_user_dictionary(dict.get_word_map())
+                self.save_user_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -714,7 +713,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_workspace_dictionary().await;
                 dict.insert(WordMapEntry::new(word.to_smallvec()));
-                self.save_workspace_dictionary(dict.get_word_map())
+                self.save_workspace_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -745,7 +744,7 @@ impl LanguageServer for Backend {
                 };
                 dict.insert(WordMapEntry::new(word.to_smallvec()));
 
-                self.save_file_dictionary(&file_uri, dict.get_word_map())
+                self.save_file_dictionary(&file_uri, &dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();

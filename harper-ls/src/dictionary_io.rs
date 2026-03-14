@@ -114,7 +114,7 @@ mod tests {
     async fn writes_sorted_word_list() {
         let test_unsorted_dict = get_test_unsorted_dict();
         let mut test_writer = Cursor::new(Vec::new());
-        write_word_list(test_unsorted_dict.get_word_map(), &mut test_writer)
+        write_word_list(&test_unsorted_dict, &mut test_writer)
             .await
             .expect("writing to Vec<u8> should not fail. (Unless OOM?)");
         assert_eq!(

@@ -452,7 +452,7 @@ mod tests {
             SpellCheck::new(merged_dict.clone(), user_dialect)
                 .lint(&Document::new_markdown_default(
                     "I like to use the software Calibre.",
-                    merged_dict.get_word_map()
+                    &merged_dict
                 ))
                 .len(),
             0,
@@ -463,7 +463,7 @@ mod tests {
             SpellCheck::new(merged_dict.clone(), user_dialect)
                 .lint(&Document::new_markdown_default(
                     "I like to use the spelling colour.",
-                    merged_dict.get_word_map()
+                    &merged_dict
                 ))
                 .len(),
             1

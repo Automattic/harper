@@ -9,7 +9,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
-use harper_core::spell::{CommonDictFuncs, Dictionary, FstDictionary, WordMapEntry};
+use harper_core::spell::{CommonDictFuncs, FstDictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
@@ -154,7 +154,7 @@ impl Linter {
 
     /// Helper method to quickly check if a plain string is likely intended to be English
     pub fn is_likely_english(&self, text: String) -> bool {
-        let document = Document::new_plain_english(&text, self.dictionary.get_word_map());
+        let document = Document::new_plain_english(&text, &self.dictionary);
         is_doc_likely_english(&document, &self.dictionary)
     }
 
@@ -163,7 +163,7 @@ impl Linter {
         let document = Document::new(
             &text,
             &IsolateEnglish::new(Box::new(PlainEnglish), self.dictionary.clone()),
-            self.dictionary.get_word_map(),
+            &self.dictionary,
         );
 
         document.to_string()
@@ -242,7 +242,7 @@ impl Linter {
         let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
-            self.dictionary.get_word_map(),
+            &self.dictionary,
         );
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
@@ -260,7 +260,7 @@ impl Linter {
         let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
-            self.dictionary.get_word_map(),
+            &self.dictionary,
         );
 
         let ctx = LintContext::from_lint(&lint.inner, &document);
@@ -291,8 +291,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document =
-            Document::new_from_chars(source.clone(), &parser, self.dictionary.get_word_map());
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -351,8 +350,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document =
-            Document::new_from_chars(source.clone(), &parser, self.dictionary.get_word_map());
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -443,7 +441,7 @@ impl Linter {
         let doc = Document::new_from_chars(
             source.clone().into(),
             &lint.language.create_parser(),
-            self.dictionary.get_word_map(),
+            &self.dictionary,
         );
 
         self.stats
@@ -508,7 +506,7 @@ impl Linter {
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(&text, &PlainEnglish, MutableDictionary::curated())
+    harper_core::make_title_case_str(&text, &PlainEnglish, FstDictionary::curated())
 }
 
 /// A suggestion to fix a Lint.

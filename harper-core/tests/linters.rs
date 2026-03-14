@@ -194,7 +194,7 @@ fn print_error(lines: &Lines, start: usize, end: usize, message: &str) -> String
 fn test_most_lints() {
     snapshot::snapshot_all_text_files("linters", ".snap.yml", |source, dialect_override| {
         let dict = FstDictionary::curated();
-        let document = Document::new_markdown_default(source, dict.get_word_map());
+        let document = Document::new_markdown_default(source, &dict);
 
         let mut linter = LintGroup::new_curated(
             Arc::new(dict),
