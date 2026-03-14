@@ -9,7 +9,7 @@ export function stringToCustomReplacements(value: string): CustomReplacements {
 			continue;
 		}
 
-		const separator = line.includes('=>') ? '=>' : '->';
+		const separator = ':';
 		if (!line.includes(separator)) {
 			continue;
 		}
@@ -37,7 +37,7 @@ export function customReplacementsToString(customReplacements?: CustomReplacemen
 	}
 
 	return Object.entries(customReplacements)
-		.map(([typo, suggestions]) => `${typo} -> ${suggestions.join(', ')}`)
+		.map(([typo, suggestions]) => `${typo}: ${suggestions.join(', ')}`)
 		.join('\n');
 }
 

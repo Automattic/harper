@@ -140,7 +140,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName('Custom Typo Suggestions')
 			.setDesc(
-				'Add your own typo-to-suggestion mappings. Use one rule per line, like `adn -> and` or `teh -> the, tech`.',
+				'Add your own typo-to-suggestion mappings. Use one rule per line, like `adn: and` or `teh: the, tech`.',
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;

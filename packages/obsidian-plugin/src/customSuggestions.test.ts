@@ -8,9 +8,7 @@ import {
 } from './customSuggestions';
 
 test('parses custom suggestions from textarea format', () => {
-	expect(
-		stringToCustomReplacements('adn -> and\nteh => the, tech\ninvalid\nmissing -> '),
-	).toStrictEqual({
+	expect(stringToCustomReplacements('adn: and\nteh: the, tech\ninvalid\nmissing: ')).toStrictEqual({
 		adn: ['and'],
 		teh: ['the', 'tech'],
 	});
@@ -22,7 +20,7 @@ test('serializes custom suggestions to textarea format', () => {
 			adn: ['and'],
 			teh: ['the', 'tech'],
 		}),
-	).toBe('adn -> and\nteh -> the, tech');
+	).toBe('adn: and\nteh: the, tech');
 });
 
 test('normalizes keys and removes duplicate suggestions', () => {
