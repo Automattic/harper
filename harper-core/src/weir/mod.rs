@@ -19,7 +19,7 @@ use strum_macros::{AsRefStr, EnumString};
 use crate::expr::Expr;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::parsers::Markdown;
-use crate::spell::WordMap;
+use crate::spell::MutableDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
 
 use ast::{Ast, AstVariable};
@@ -174,7 +174,7 @@ impl WeirLinter {
                 let doc = Document::new_from_chars(
                     current.chars().collect::<Vec<_>>().into(),
                     &Markdown::default(),
-                    WordMap::curated(),
+                    MutableDictionary::curated(),
                 );
                 let lints = linter.lint(&doc);
 
@@ -200,7 +200,7 @@ impl WeirLinter {
                 let test = Document::new_from_chars(
                     text_chars.clone().into(),
                     &Markdown::default(),
-                    WordMap::curated(),
+                    MutableDictionary::curated(),
                 );
                 let lints = linter.lint(&test);
 
@@ -227,7 +227,7 @@ impl WeirLinter {
             let document = Document::new_from_chars(
                 text.chars().collect::<Vec<_>>().into(),
                 &Markdown::default(),
-                WordMap::curated(),
+                MutableDictionary::curated(),
             );
 
             linter.lint(&document).len()

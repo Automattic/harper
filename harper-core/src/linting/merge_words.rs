@@ -1,17 +1,17 @@
 use itertools::Itertools;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{CommonDictFuncs, WordMap};
+use crate::spell::{CommonDictFuncs, MutableDictionary};
 use crate::{CharString, Document, Span};
 
 pub struct MergeWords {
-    dict: &'static WordMap,
+    dict: &'static MutableDictionary,
 }
 
 impl MergeWords {
     pub fn new() -> Self {
         Self {
-            dict: WordMap::curated(),
+            dict: MutableDictionary::curated(),
         }
     }
 }

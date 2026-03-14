@@ -13,7 +13,7 @@ use harper_core::spell::{CommonDictFuncs, Dictionary, FstDictionary, WordMapEntr
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
-    spell::{MergedDictionary, MutableDictionary, WordMap},
+    spell::{MergedDictionary, MutableDictionary},
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
@@ -155,7 +155,7 @@ impl Linter {
     /// Helper method to quickly check if a plain string is likely intended to be English
     pub fn is_likely_english(&self, text: String) -> bool {
         let document = Document::new_plain_english(&text, self.dictionary.get_word_map());
-        is_doc_likely_english(&document, self.dictionary.get_word_map())
+        is_doc_likely_english(&document, &self.dictionary)
     }
 
     /// Helper method to remove non-English text from a plain English document.
@@ -508,7 +508,7 @@ impl Linter {
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(&text, &PlainEnglish, WordMap::curated())
+    harper_core::make_title_case_str(&text, &PlainEnglish, MutableDictionary::curated())
 }
 
 /// A suggestion to fix a Lint.

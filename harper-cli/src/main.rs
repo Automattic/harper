@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 use harper_core::spell::{
-    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary, WordMap,
+    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary,
 };
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -467,7 +467,7 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, WordMap::curated());
+                print_word_derivations(dict_word, dict_annot, MutableDictionary::curated());
             };
 
             if !annot.is_empty() {
@@ -478,7 +478,7 @@ fn main() -> anyhow::Result<()> {
                 )?;
 
                 println!("New, from you:");
-                print_word_derivations(&word, &annot, dict.get_word_map());
+                print_word_derivations(&word, &annot, &dict);
             }
 
             Ok(())
@@ -1001,12 +1001,14 @@ fn line_to_parts(line: &str) -> (String, String) {
     }
 }
 
-fn print_word_derivations(word: &str, annot: &str, dictionary: &WordMap) {
+fn print_word_derivations(word: &str, annot: &str, dictionary: &dyn Dictionary) {
     println!("{word}/{annot}");
+
+    let wm = dictionary.get_word_map();
 
     let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary.iter().filter_map(|wme| {
+    let children = wm.iter().filter_map(|wme| {
         wme.metadata
             .derived_from
             .contains(id)

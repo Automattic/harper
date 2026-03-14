@@ -3,21 +3,21 @@ use itertools::Itertools;
 use crate::linting::{LintKind, Suggestion};
 
 use crate::expr::Expr;
-use crate::spell::{WordIdPair, WordMap};
+use crate::spell::{MutableDictionary, WordIdPair};
 use crate::{OrthFlags, Token};
 
 use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OrthographicConsistency {
-    dict: &'static WordMap,
+    dict: &'static MutableDictionary,
     expr: Box<dyn Expr>,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: WordMap::curated(),
+            dict: MutableDictionary::curated(),
             expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
         }
     }

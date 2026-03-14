@@ -1,16 +1,16 @@
 //! This module implements rudimentary, dictionary-based English language detection.
 
-use crate::spell::{CommonDictFuncs, WordMap};
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{Document, Token, TokenKind};
 
 /// Check if the contents of the document are likely intended to represent
 /// English.
-pub fn is_doc_likely_english(doc: &Document, dict: &WordMap) -> bool {
+pub fn is_doc_likely_english(doc: &Document, dict: &dyn Dictionary) -> bool {
     is_likely_english(doc.get_tokens(), doc.get_source(), dict)
 }
 
 /// Check if given tokens are likely intended to represent English.
-pub fn is_likely_english(toks: &[Token], source: &[char], dict: &WordMap) -> bool {
+pub fn is_likely_english(toks: &[Token], source: &[char], dict: &dyn Dictionary) -> bool {
     let mut total_words = 0;
     let mut valid_words = 0;
     let mut punctuation = 0;
@@ -55,10 +55,10 @@ pub fn is_likely_english(toks: &[Token], source: &[char], dict: &WordMap) -> boo
 mod tests {
     use super::is_doc_likely_english;
     use crate::Document;
-    use crate::spell::WordMap;
+    use crate::spell::MutableDictionary;
 
     fn assert_not_english(source: &'static str) {
-        let dict = WordMap::curated();
+        let dict = MutableDictionary::curated();
         let doc = Document::new_plain_english(source, dict);
         let is_likely_english = is_doc_likely_english(&doc, dict);
         dbg!(source);
@@ -66,7 +66,7 @@ mod tests {
     }
 
     fn assert_english(source: &'static str) {
-        let dict = WordMap::curated();
+        let dict = MutableDictionary::curated();
         let doc = Document::new_plain_english(source, dict);
         let is_likely_english = is_doc_likely_english(&doc, dict);
         dbg!(source);

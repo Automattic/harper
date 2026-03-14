@@ -8,11 +8,11 @@ use hashbrown::HashSet;
 use itertools::Itertools;
 
 use crate::Punctuation;
-use crate::spell::{CommonDictFuncs, Dictionary, WordMap};
+use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
-pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &WordMap) -> String {
+pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &dyn Dictionary) -> String {
     let source: Lrc<_> = source.chars().collect();
 
     make_title_case_chars(source, parser, dict).to_string()
@@ -22,14 +22,18 @@ pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &WordMap) -
 pub fn make_title_case_chars(
     source: Lrc<[char]>,
     parser: &impl Parser,
-    dict: &WordMap,
+    dict: &dyn Dictionary,
 ) -> Vec<char> {
     let document = Document::new_from_chars(source.clone(), parser, dict.get_word_map());
 
     make_title_case(document.get_tokens(), &source, dict)
 }
 
-pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> Option<Vec<char>> {
+pub fn try_make_title_case(
+    toks: &[Token],
+    source: &[char],
+    dict: &dyn Dictionary,
+) -> Option<Vec<char>> {
     if toks.is_empty() {
         return None;
     }
@@ -130,7 +134,7 @@ pub fn try_make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> O
     output
 }
 
-pub fn make_title_case(toks: &[Token], source: &[char], dict: &WordMap) -> Vec<char> {
+pub fn make_title_case(toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Vec<char> {
     try_make_title_case(toks, source, dict)
         .unwrap_or_else(|| toks.span().unwrap_or_default().get_content(source).to_vec())
 }
@@ -180,12 +184,16 @@ mod tests {
 
     use super::make_title_case_str;
     use crate::parsers::{Markdown, PlainEnglish};
-    use crate::spell::WordMap;
+    use crate::spell::MutableDictionary;
 
     #[test]
     fn normal() {
         assert_eq!(
-            make_title_case_str("this is a test", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "this is a test",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "This Is a Test"
         )
     }
@@ -196,7 +204,7 @@ mod tests {
             make_title_case_str(
                 "the first and last words should be capitalized, even if it is \"the\"",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "The First and Last Words Should Be Capitalized, Even If It Is \"The\""
         )
@@ -206,7 +214,7 @@ mod tests {
     #[test]
     fn about_uppercase_with_numbers() {
         assert_eq!(
-            make_title_case_str("0 about 0", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("0 about 0", &PlainEnglish, MutableDictionary::curated()),
             "0 About 0"
         )
     }
@@ -214,7 +222,7 @@ mod tests {
     #[test]
     fn pipe_does_not_cause_crash() {
         assert_eq!(
-            make_title_case_str("|", &Markdown::default(), WordMap::curated()),
+            make_title_case_str("|", &Markdown::default(), MutableDictionary::curated()),
             "|"
         )
     }
@@ -222,7 +230,7 @@ mod tests {
     #[test]
     fn a_paragraph_does_not_cause_crash() {
         assert_eq!(
-            make_title_case_str("A\n", &Markdown::default(), WordMap::curated()),
+            make_title_case_str("A\n", &Markdown::default(), MutableDictionary::curated()),
             "A"
         )
     }
@@ -230,7 +238,7 @@ mod tests {
     #[test]
     fn tab_a_becomes_upcase() {
         assert_eq!(
-            make_title_case_str("\ta", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("\ta", &PlainEnglish, MutableDictionary::curated()),
             "\tA"
         )
     }
@@ -238,7 +246,7 @@ mod tests {
     #[test]
     fn fixes_video_press() {
         assert_eq!(
-            make_title_case_str("videopress", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("videopress", &PlainEnglish, MutableDictionary::curated()),
             "VideoPress"
         )
     }
@@ -257,7 +265,7 @@ mod tests {
         let title_case: Vec<_> = make_title_case_str(
             &format!("{prefix} a {postfix}"),
             &Markdown::default(),
-            WordMap::curated(),
+            MutableDictionary::curated(),
         )
         .chars()
         .collect();
@@ -279,7 +287,7 @@ mod tests {
         let title_case: Vec<_> = make_title_case_str(
             &format!("{prefix} about {postfix}"),
             &Markdown::default(),
-            WordMap::curated(),
+            MutableDictionary::curated(),
         )
         .chars()
         .collect();
@@ -289,9 +297,10 @@ mod tests {
 
     #[quickcheck]
     fn first_word_is_upcase(text: String) -> TestResult {
-        let title_case: Vec<_> = make_title_case_str(&text, &PlainEnglish, WordMap::curated())
-            .chars()
-            .collect();
+        let title_case: Vec<_> =
+            make_title_case_str(&text, &PlainEnglish, MutableDictionary::curated())
+                .chars()
+                .collect();
 
         if let Some(first) = title_case.first() {
             if first.is_ascii_alphabetic() {
@@ -307,7 +316,7 @@ mod tests {
     #[test]
     fn united_states() {
         assert_eq!(
-            make_title_case_str("united states", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("united states", &PlainEnglish, MutableDictionary::curated()),
             "United States"
         )
     }
@@ -315,7 +324,11 @@ mod tests {
     #[test]
     fn keeps_decimal() {
         assert_eq!(
-            make_title_case_str("harper turns 1.0 today", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "harper turns 1.0 today",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "Harper Turns 1.0 Today"
         )
     }
@@ -326,7 +339,7 @@ mod tests {
             make_title_case_str(
                 "i spoke at wordcamp u.s. in 2025",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "I Spoke at WordCamp U.S. in 2025",
         );
@@ -335,7 +348,11 @@ mod tests {
     #[test]
     fn fixes_your_correctly() {
         assert_eq!(
-            make_title_case_str("it is not your friend", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "it is not your friend",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "It Is Not Your Friend",
         );
     }
@@ -343,7 +360,11 @@ mod tests {
     #[test]
     fn handles_old_man_and_the_sea() {
         assert_eq!(
-            make_title_case_str("the old man and the sea", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "the old man and the sea",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "The Old Man and the Sea",
         );
     }
@@ -354,7 +375,7 @@ mod tests {
             make_title_case_str(
                 "the great story: a tale of two cities",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "The Great Story: A Tale of Two Cities",
         );
@@ -366,7 +387,7 @@ mod tests {
             make_title_case_str(
                 "lantern flickered; moths began their worship",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "Lantern Flickered; Moths Began Their Worship",
         );
@@ -378,7 +399,7 @@ mod tests {
             make_title_case_str(
                 "static filled the room with ghosts",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "Static Filled the Room with Ghosts",
         );
@@ -390,7 +411,7 @@ mod tests {
             make_title_case_str(
                 "glass trembled before thunder arrived.",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "Glass Trembled Before Thunder Arrived.",
         );
@@ -402,7 +423,7 @@ mod tests {
             make_title_case_str(
                 "an end to hepatitis b shots for all newborns",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "An End to Hepatitis B Shots for All Newborns",
         );
@@ -414,7 +435,7 @@ mod tests {
             make_title_case_str(
                 "trump's approval rating dips as views of his handling of the economy sour",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "Trump's Approval Rating Dips as Views of His Handling of the Economy Sour",
         );
@@ -423,7 +444,7 @@ mod tests {
     #[test]
     fn handles_last_door() {
         assert_eq!(
-            make_title_case_str("the last door", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("the last door", &PlainEnglish, MutableDictionary::curated()),
             "The Last Door",
         );
     }
@@ -431,7 +452,11 @@ mod tests {
     #[test]
     fn handles_midnight_river() {
         assert_eq!(
-            make_title_case_str("midnight river", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "midnight river",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "Midnight River",
         );
     }
@@ -439,7 +464,7 @@ mod tests {
     #[test]
     fn handles_a_quiet_room() {
         assert_eq!(
-            make_title_case_str("a quiet room", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("a quiet room", &PlainEnglish, MutableDictionary::curated()),
             "A Quiet Room",
         );
     }
@@ -447,7 +472,7 @@ mod tests {
     #[test]
     fn handles_broken_map() {
         assert_eq!(
-            make_title_case_str("broken map", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("broken map", &PlainEnglish, MutableDictionary::curated()),
             "Broken Map",
         );
     }
@@ -455,7 +480,11 @@ mod tests {
     #[test]
     fn handles_fire_in_autumn() {
         assert_eq!(
-            make_title_case_str("fire in autumn", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "fire in autumn",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "Fire in Autumn",
         );
     }
@@ -463,7 +492,11 @@ mod tests {
     #[test]
     fn handles_hidden_path() {
         assert_eq!(
-            make_title_case_str("the hidden path", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "the hidden path",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "The Hidden Path",
         );
     }
@@ -471,7 +504,11 @@ mod tests {
     #[test]
     fn handles_under_blue_skies() {
         assert_eq!(
-            make_title_case_str("under blue skies", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "under blue skies",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "Under Blue Skies",
         );
     }
@@ -479,7 +516,11 @@ mod tests {
     #[test]
     fn handles_lost_and_found() {
         assert_eq!(
-            make_title_case_str("lost and found", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "lost and found",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "Lost and Found",
         );
     }
@@ -487,7 +528,11 @@ mod tests {
     #[test]
     fn handles_silent_watcher() {
         assert_eq!(
-            make_title_case_str("the silent watcher", &PlainEnglish, WordMap::curated()),
+            make_title_case_str(
+                "the silent watcher",
+                &PlainEnglish,
+                MutableDictionary::curated()
+            ),
             "The Silent Watcher",
         );
     }
@@ -495,7 +540,7 @@ mod tests {
     #[test]
     fn handles_winter_road() {
         assert_eq!(
-            make_title_case_str("winter road", &PlainEnglish, WordMap::curated()),
+            make_title_case_str("winter road", &PlainEnglish, MutableDictionary::curated()),
             "Winter Road",
         );
     }
@@ -506,7 +551,7 @@ mod tests {
             make_title_case_str(
                 "Alice’s Adventures in Wonderland",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "Alice’s Adventures in Wonderland",
         );
@@ -518,7 +563,7 @@ mod tests {
             make_title_case_str(
                 "# How Has This Been Tested?",
                 &PlainEnglish,
-                WordMap::curated()
+                MutableDictionary::curated()
             ),
             "# How Has This Been Tested?",
         );

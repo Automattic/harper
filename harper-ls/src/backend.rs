@@ -19,7 +19,7 @@ use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{
-    Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMap, WordMapEntry,
+    Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
 };
 use harper_core::{Dialect, Document, IgnoredLints};
 use harper_html::HtmlParser;
@@ -137,7 +137,7 @@ impl Backend {
         Ok(config.file_dict_path.join(fileify_path(uri)?))
     }
 
-    async fn save_file_dictionary(&self, uri: &Uri, dict: &WordMap) -> Result<()> {
+    async fn save_file_dictionary(&self, uri: &Uri, dict: &dyn Dictionary) -> Result<()> {
         save_dict(
             self.get_file_dict_path(uri)
                 .await
@@ -157,7 +157,7 @@ impl Backend {
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: &WordMap) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: &dyn Dictionary) -> Result<()> {
         let config = self.config.read().await;
 
         save_dict(&config.user_dict_path, dict)
@@ -176,7 +176,7 @@ impl Backend {
         .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_workspace_dictionary(&self, dict: &WordMap) -> Result<()> {
+    async fn save_workspace_dictionary(&self, dict: &dyn Dictionary) -> Result<()> {
         let config = self.config.read().await;
         save_dict(&config.workspace_dict_path, dict)
             .await

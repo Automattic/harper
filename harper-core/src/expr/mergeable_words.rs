@@ -1,5 +1,5 @@
 use super::{Expr, SequenceExpr};
-use crate::spell::WordMap;
+use crate::spell::MutableDictionary;
 use crate::{CharString, DictWordMetadata, Span, Token};
 
 type PredicateFn =
@@ -11,7 +11,7 @@ type PredicateFn =
 /// that the two words aren't already a valid entry in the dictionary (like "straight away").
 pub struct MergeableWords {
     inner: SequenceExpr,
-    dict: &'static WordMap,
+    dict: &'static MutableDictionary,
     predicate: Box<PredicateFn>,
 }
 
@@ -24,7 +24,7 @@ impl MergeableWords {
     ) -> Self {
         Self {
             inner: SequenceExpr::any_word().t_ws_h().then_any_word(),
-            dict: WordMap::curated(),
+            dict: MutableDictionary::curated(),
             predicate: Box::new(predicate),
         }
     }

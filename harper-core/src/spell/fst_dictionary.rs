@@ -7,16 +7,16 @@ use hashbrown::HashMap;
 use itertools::Itertools;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, WordMap};
+use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
 use crate::CharStringExt;
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
 /// For dictionaries with changing contents, such as user and file dictionaries, prefer
-/// [`WordMap`].
+/// [`MutableDictionary`].
 pub struct FstDictionary {
-    /// Underlying [`super::WordMap`] used for everything except fuzzy finding
-    word_map: WordMap,
+    /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
+    word_map: MutableDictionary,
     /// Used for fuzzy-finding the index of words or metadata
     fst_map: FstMap<Vec<u8>>,
 }
@@ -46,7 +46,7 @@ impl FstDictionary {
     /// in the Harper binary.
     pub fn curated() -> &'static FstDictionary {
         static DICT: LazyLock<FstDictionary> =
-            LazyLock::new(|| WordMap::curated().clone().to_fst());
+            LazyLock::new(|| MutableDictionary::curated().clone().to_fst());
 
         &DICT
     }
