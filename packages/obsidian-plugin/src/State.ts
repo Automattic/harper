@@ -3,7 +3,13 @@ import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
-import { linter } from './lint';
+import {
+	type CustomReplacements,
+	cloneCustomReplacements,
+	getCustomSuggestions,
+	normalizeCustomReplacements,
+} from './customSuggestions';
+import { type Action, linter } from './lint';
 
 export type Settings = {
 	ignoredLints?: string;
@@ -15,6 +21,7 @@ export type Settings = {
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
 	regexMask?: string;
+	customReplacements?: CustomReplacements;
 };
 
 const DEFAULT_DELAY = -1;
@@ -31,6 +38,8 @@ export default class State {
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
 	private regexMask?: string;
+	private customReplacements: CustomReplacements;
+	private settingsUpdate: Promise<void> = Promise.resolve();
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -43,23 +52,25 @@ export default class State {
 		onExtensionChange: () => void,
 		_editorInfoField?: StateField<MarkdownFileInfo>,
 	) {
-		this.harper = new WorkerLinter({ binary: binaryInlined });
+		this.harper = createHarper(true);
 		this.delay = DEFAULT_DELAY;
 		this.saveData = saveDataCallback;
 		this.onExtensionChange = onExtensionChange;
 		this.editorExtensions = [];
+		this.customReplacements = {};
 
 		this.editorInfoField = _editorInfoField;
 	}
 
 	public async initializeFromSettings(settings: Settings | null) {
-		if (settings == null) {
-			settings = {
-				useWebWorker: true,
-				lintEnabled: true,
-				lintSettings: {},
-			};
-		}
+		const snapshot = cloneSettings(settings);
+
+		this.settingsUpdate = this.settingsUpdate.then(() => this.applySettings(snapshot));
+		return this.settingsUpdate;
+	}
+
+	private async applySettings(settings: Settings) {
+		settings.customReplacements = normalizeCustomReplacements(settings.customReplacements);
 
 		const defaultConfig = await this.harper.getDefaultLintConfig();
 		for (const key of Object.keys(defaultConfig)) {
@@ -69,18 +80,15 @@ export default class State {
 		}
 
 		const oldSettings = await this.getSettings();
+		const nextDelay = settings.delay ?? DEFAULT_DELAY;
+		const shouldRefreshEditorLinter = this.hasEditorLinter() && this.delay !== nextDelay;
 
 		if (
 			settings.useWebWorker !== oldSettings.useWebWorker ||
 			settings.dialect !== oldSettings.dialect
 		) {
-			if (settings.useWebWorker) {
-				this.harper.dispose();
-				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
-			} else {
-				this.harper.dispose();
-				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
-			}
+			await this.harper.dispose();
+			this.harper = createHarper(settings.useWebWorker, settings.dialect);
 		} else {
 			await this.harper.clearIgnoredLints();
 		}
@@ -97,15 +105,15 @@ export default class State {
 		}
 
 		await this.harper.setLintConfig(settings.lintSettings);
-		this.harper.setup();
+		await this.harper.setup();
 
-		this.delay = settings.delay ?? DEFAULT_DELAY;
+		this.delay = nextDelay;
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
 		this.regexMask = settings.regexMask;
+		this.customReplacements = settings.customReplacements;
 
-		// Reinitialize it.
-		if (this.hasEditorLinter()) {
+		if (shouldRefreshEditorLinter) {
 			this.disableEditorLinter(false);
 			this.enableEditorLinter(false);
 		}
@@ -139,58 +147,93 @@ export default class State {
 				return Object.entries(lints).flatMap(([linterName, lints]) =>
 					lints.map((lint) => {
 						const span = lint.span();
+						const problemText = lint.get_problem_text();
+						const customSuggestions = getCustomSuggestions(problemText, this.customReplacements);
 
-						const actions = lint.suggestions().map((sug) => {
-							return {
+						const actions: Action[] = lint
+							.suggestions()
+							.filter((sug) => {
+								if (sug.kind() !== SuggestionKind.Replace) {
+									return true;
+								}
+
+								const replacement = sug.get_replacement_text();
+								return !customSuggestions.some(
+									(customSuggestion) =>
+										customSuggestion.toLowerCase() === replacement.toLowerCase(),
+								);
+							})
+							.map((sug) => {
+								return {
+									kind: 'suggestion' as const,
+									name:
+										sug.kind() == SuggestionKind.Replace
+											? sug.get_replacement_text()
+											: suggestionToLabel(sug),
+									title: suggestionToLabel(sug),
+									apply: (view, from, to) => {
+										if (sug.kind() === SuggestionKind.Remove) {
+											view.dispatch({
+												changes: {
+													from,
+													to,
+													insert: '',
+												},
+												selection: {
+													anchor: from,
+												},
+											});
+										} else if (sug.kind() === SuggestionKind.Replace) {
+											const replacement = sug.get_replacement_text();
+											view.dispatch({
+												changes: {
+													from,
+													to,
+													insert: replacement,
+												},
+												selection: {
+													anchor: from + replacement.length,
+												},
+											});
+										} else if (sug.kind() === SuggestionKind.InsertAfter) {
+											const replacement = sug.get_replacement_text();
+											view.dispatch({
+												changes: {
+													from: to,
+													to,
+													insert: replacement,
+												},
+												selection: {
+													anchor: to + replacement.length,
+												},
+											});
+										}
+									},
+								};
+							});
+
+						for (const replacement of [...customSuggestions].reverse()) {
+							actions.unshift({
 								kind: 'suggestion' as const,
-								name:
-									sug.kind() == SuggestionKind.Replace
-										? sug.get_replacement_text()
-										: suggestionToLabel(sug),
-								title: suggestionToLabel(sug),
+								name: replacement,
+								title: `Replace with “${replacement}” (custom suggestion)`,
 								apply: (view, from, to) => {
-									if (sug.kind() === SuggestionKind.Remove) {
-										view.dispatch({
-											changes: {
-												from,
-												to,
-												insert: '',
-											},
-											selection: {
-												anchor: from,
-											},
-										});
-									} else if (sug.kind() === SuggestionKind.Replace) {
-										const replacement = sug.get_replacement_text();
-										view.dispatch({
-											changes: {
-												from,
-												to,
-												insert: replacement,
-											},
-											selection: {
-												anchor: from + replacement.length,
-											},
-										});
-									} else if (sug.kind() === SuggestionKind.InsertAfter) {
-										const replacement = sug.get_replacement_text();
-										view.dispatch({
-											changes: {
-												from: to,
-												to,
-												insert: replacement,
-											},
-											selection: {
-												anchor: to + replacement.length,
-											},
-										});
-									}
+									view.dispatch({
+										changes: {
+											from,
+											to,
+											insert: replacement,
+										},
+										selection: {
+											anchor: from + replacement.length,
+										},
+									});
 								},
-							};
-						});
+							});
+						}
 
 						if (lint.lint_kind() === 'Spelling') {
-							const word = lint.get_problem_text();
+							const word = problemText;
 
 							actions.push({
 								kind: 'dictionary',
@@ -213,6 +256,7 @@ export default class State {
 							to: span.end,
 							source: linterName,
 							severity: 'error',
+							message: '',
 							title: lint.lint_kind_pretty(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
@@ -271,6 +315,7 @@ export default class State {
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
 			regexMask: this.regexMask,
+			customReplacements: cloneCustomReplacements(this.customReplacements),
 		};
 	}
 
@@ -348,7 +393,6 @@ export default class State {
 			this.lintEnabled = true;
 			this.onExtensionChange();
 			if (reinit) this.reinitialize();
-			console.log('Enabled');
 		}
 	}
 
@@ -360,7 +404,6 @@ export default class State {
 		this.lintEnabled = false;
 		this.onExtensionChange();
 		if (reinit) this.reinitialize();
-		console.log('Disabled');
 	}
 
 	public hasEditorLinter(): boolean {
@@ -382,7 +425,7 @@ export default class State {
 	}
 }
 
-function suggestionToLabel(sug: Suggestion) {
+function suggestionToLabel(sug: Suggestion): string {
 	if (sug.kind() === SuggestionKind.Remove) {
 		return 'Remove';
 	} else if (sug.kind() === SuggestionKind.Replace) {
@@ -390,4 +433,38 @@ function suggestionToLabel(sug: Suggestion) {
 	} else if (sug.kind() === SuggestionKind.InsertAfter) {
 		return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
+
+	return 'Apply suggestion';
+}
+
+function createHarper(useWebWorker: boolean, dialect?: Dialect): Linter {
+	if (useWebWorker && typeof Worker !== 'undefined') {
+		return new WorkerLinter({ binary: binaryInlined, dialect });
+	}
+
+	return new LocalLinter({ binary: binaryInlined, dialect });
+}
+
+function cloneSettings(settings: Settings | null): Settings {
+	if (settings == null) {
+		return {
+			useWebWorker: true,
+			lintEnabled: true,
+			lintSettings: {},
+			customReplacements: {},
+		};
+	}
+
+	return {
+		ignoredLints: settings.ignoredLints,
+		useWebWorker: settings.useWebWorker,
+		dialect: settings.dialect,
+		lintSettings: { ...settings.lintSettings },
+		userDictionary: [...(settings.userDictionary ?? [])],
+		delay: settings.delay,
+		ignoredGlobs: settings.ignoredGlobs ? [...settings.ignoredGlobs] : undefined,
+		lintEnabled: settings.lintEnabled,
+		regexMask: settings.regexMask,
+		customReplacements: cloneCustomReplacements(settings.customReplacements) ?? {},
+	};
 }
