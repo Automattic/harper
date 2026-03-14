@@ -73,7 +73,7 @@ async fn dict_from_word_list(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::spell::{Dictionary, MutableDictionary};
+    use harper_core::spell::MutableDictionary;
     use std::io::Cursor;
 
     const TEST_UNSORTED_WORDS: [&str; 10] = [

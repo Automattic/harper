@@ -11,7 +11,7 @@
 
 use std::sync::Arc;
 
-use harper_core::spell::{Dictionary, FstDictionary};
+use harper_core::spell::FstDictionary;
 use harper_core::{
     Dialect, Document,
     linting::{LintGroup, Linter},
