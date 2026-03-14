@@ -3,6 +3,7 @@ import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
+import { lintKindClass } from './lintKindColor';
 import { linter } from './lint';
 
 export type Settings = {
@@ -213,6 +214,7 @@ export default class State {
 							to: span.end,
 							source: linterName,
 							severity: 'error',
+							markClass: lintKindClass(lint.lint_kind()),
 							title: lint.lint_kind_pretty(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
