@@ -3,8 +3,14 @@ import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
+import {
+	type CustomReplacements,
+	cloneCustomReplacements,
+	getCustomSuggestions,
+	normalizeCustomReplacements,
+} from './customSuggestions';
+import { type Action, linter } from './lint';
 import { lintKindClass } from './lintKindColor';
-import { linter } from './lint';
 
 export type Settings = {
 	ignoredLints?: string;
