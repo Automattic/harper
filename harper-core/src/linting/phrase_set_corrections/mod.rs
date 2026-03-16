@@ -81,6 +81,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
         ),
+        "CompulseToCompel" => (
+            &[
+                ("compulse", "compel"),
+                ("compulsed", "compelled"),
+                ("compulses", "compels"),
+                ("compulsing", "compelling"),
+            ],
+            "Did you mean `compel` rather than the obsolete or archaic (and non-standard) `compulse`?",
+            "Suggests replacing the obsolete or archaic verb `compulse` with the standard `compel`.",
+            LintKind::Nonstandard
+        ),
         "ConfirmThat" => (
             &[
                 ("conform that", "confirm that"),
@@ -266,6 +277,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests `past` for `passed` in case a verb was intended.",
             // ConfusedPair?
             LintKind::WordChoice
+        ),
+        "HitTheNailOnTheHead" => (
+            &[
+                ("hit the nail in the head", "hit the nail on the head"),
+                ("hits the nail in the head", "hits the nail on the head"),
+                ("hitting the nail in the head", "hitting the nail on the head"),
+                ("hitted the nail in the head", "hitted the nail on the head")
+            ],
+            "The correct preposition in this idiom is `on`.",
+            "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
+            LintKind::Eggcorn
         ),
         "HomeInOn" => (
             &[

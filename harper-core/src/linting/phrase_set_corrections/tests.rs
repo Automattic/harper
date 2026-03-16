@@ -86,6 +86,44 @@ fn correct_servers_side() {
     );
 }
 
+// CompulseToCompel
+
+#[test]
+fn correct_compulse() {
+    assert_suggestion_result(
+        "Play Store will soon compulse to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+        lint_group(),
+        "Play Store will soon compel to use SDK 30 on any app updates , and it's mandatory to have SDK 30 for new apps.",
+    );
+}
+
+#[test]
+fn correct_compulsed() {
+    assert_suggestion_result(
+        "Just alpha, but now i am compulsed to work 10.6 into the github actions and insane docker environment :)",
+        lint_group(),
+        "Just alpha, but now i am compelled to work 10.6 into the github actions and insane docker environment :)",
+    );
+}
+
+#[test]
+fn correct_compulses() {
+    assert_suggestion_result(
+        "Occasionally, a film comes along that compulses me to make a fan poster.",
+        lint_group(),
+        "Occasionally, a film comes along that compels me to make a fan poster.",
+    );
+}
+
+#[test]
+fn correct_compulsing() {
+    assert_suggestion_result(
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compulsing user to update.",
+        lint_group(),
+        "We have an button enabled to prompt user to download the app whenever we find difference in version number in our servlet war file and apk verision compelling user to update.",
+    );
+}
+
 // ConfirmThat
 
 #[test]
@@ -770,6 +808,44 @@ fn correct_having_past() {
         "Return to computer, with enough time having past for the computer to go to full sleep.",
         lint_group(),
         "Return to computer, with enough time having passed for the computer to go to full sleep.",
+    );
+}
+
+// HitTheNailOnTheHead
+
+#[test]
+fn correct_hit_the_nail() {
+    assert_suggestion_result(
+        "Ahh, found it! You hit the nail in the head once again.",
+        lint_group(),
+        "Ahh, found it! You hit the nail on the head once again.",
+    );
+}
+
+#[test]
+fn correct_hits_the_nail() {
+    assert_suggestion_result(
+        "I'm not sure if this sentence hits the nail in the head",
+        lint_group(),
+        "I'm not sure if this sentence hits the nail on the head",
+    );
+}
+
+#[test]
+fn correct_hitting_the_nail() {
+    assert_suggestion_result(
+        "You are hitting the nail in the head of my issue with this game, too.",
+        lint_group(),
+        "You are hitting the nail on the head of my issue with this game, too.",
+    );
+}
+
+#[test]
+fn correct_hitted_the_nail() {
+    assert_suggestion_result(
+        "I mean, you just kinda hitted the nail in the head. You cannot do anything with this that you couldn't do in a Raspberry PI.",
+        lint_group(),
+        "I mean, you just kinda hitted the nail on the head. You cannot do anything with this that you couldn't do in a Raspberry PI.",
     );
 }
 

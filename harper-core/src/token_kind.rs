@@ -236,8 +236,13 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Ellipsis))
     }
 
+    // AKA 'minus'
     pub fn is_hyphen(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Hyphen))
+    }
+
+    pub fn is_plus(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Plus))
     }
 
     pub fn is_quote(&self) -> bool {

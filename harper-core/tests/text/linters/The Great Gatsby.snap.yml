@@ -3518,14 +3518,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2286 | (said Jordan Baker that afternoon, sitting up very straight on a straight chair
-         |                                                                ^~~~~~~~~~~~~~~~ Did you intend to use an adjective here?
-    2287 | in the tea-garden at the Plaza Hotel)
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     2291 | with rubber nobs on the soles that bit into the soft ground. I had on a new
@@ -4092,26 +4084,6 @@ Message: |
          |                           ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ Did you mean to spell `overwound` this way?
-Suggest:
-  - Replace with: “overground”
-  - Replace with: “overfond”
-  - Replace with: “overfund”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2866 | intensity. Now, in the reaction, he was running down like an overwound clock.
-         |                                                              ^~~~~~~~~ `overwound` should probably be written as `over wound`.
-Suggest:
-  - Replace with: “over wound”
 
 
 

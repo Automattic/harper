@@ -325,4 +325,190 @@ mod tests {
             ItsContraction::default(),
         );
     }
+
+    #[test]
+    fn corrects_its_anybody() {
+        assert_suggestion_result(
+            "Its anybody who volunteers should speak up.",
+            ItsContraction::default(),
+            "It's anybody who volunteers should speak up.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_anyone() {
+        assert_suggestion_result(
+            "Its anyone you ping will be looped in automatically.",
+            ItsContraction::default(),
+            "It's anyone you ping will be looped in automatically.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_everyone() {
+        assert_suggestion_result(
+            "Its everyone on the thread noticed the spike.",
+            ItsContraction::default(),
+            "It's everyone on the thread noticed the spike.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_everything() {
+        assert_suggestion_result(
+            "Its everything we collect ends up in the archive.",
+            ItsContraction::default(),
+            "It's everything we collect ends up in the archive.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_somebody() {
+        assert_suggestion_result(
+            "Its somebody on call right now.",
+            ItsContraction::default(),
+            "It's somebody on call right now.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_somewhere() {
+        assert_suggestion_result(
+            "Its somewhere safe to stash the nightly dump.",
+            ItsContraction::default(),
+            "It's somewhere safe to stash the nightly dump.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_nobody() {
+        assert_suggestion_result(
+            "Its nobody left who can approve this.",
+            ItsContraction::default(),
+            "It's nobody left who can approve this.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_anywhere() {
+        assert_suggestion_result(
+            "Its anywhere the monitors blink red.",
+            ItsContraction::default(),
+            "It's anywhere the monitors blink red.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_anything() {
+        assert_suggestion_result(
+            "Its anything worth keeping should be archived.",
+            ItsContraction::default(),
+            "It's anything worth keeping should be archived.",
+        );
+    }
+
+    #[test]
+    fn corrects_its_something() {
+        assert_suggestion_result(
+            "Its something that keeps restarting the job.",
+            ItsContraction::default(),
+            "It's something that keeps restarting the job.",
+        );
+    }
+
+    #[test]
+    fn allows_its_tail() {
+        assert_no_lints(
+            "Its tail twitches every time I call it.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_release_pipeline() {
+        assert_no_lints(
+            "Its release pipeline is stable in production.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_nodes() {
+        assert_no_lints(
+            "The cluster updates its nodes nightly.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_cover_page() {
+        assert_no_lints(
+            "Its cover page mentions all contributors.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_not_anybody() {
+        assert_no_lints(
+            "Its not anybody to blame despite the outage.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_never_anywhere() {
+        assert_no_lints(
+            "Its never anywhere near the ideal timing we hoped for.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_at_its_highest() {
+        assert_no_lints(
+            "Curiosity about Gatsby was at its highest that night.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_pull_is() {
+        assert_no_lints(
+            "The Earth is huge, so its pull is super strong.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_unforeseen_consequences() {
+        assert_no_lints(
+            "The experiment continued despite its unforeseen consequences.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_potential_to_benefit() {
+        assert_no_lints(
+            "The proposal emphasized its potential to benefit local businesses.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_cover_was() {
+        assert_no_lints(
+            "Its cover was intricately engraved with floral patterns.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
+    fn allows_its_starting_level() {
+        assert_no_lints(
+            "Reduce the tracker to its starting level.",
+            ItsContraction::default(),
+        );
+    }
 }

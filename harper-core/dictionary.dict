@@ -1985,6 +1985,7 @@ Chad/ONg
 Chadian/JNgS
 Chadwick/Og
 Chagall/NOg
+Chagas disease/Nmg
 Chaitanya/g
 Chaitin/g
 Chaldea/O
@@ -17095,7 +17096,6 @@ cetacean/JNgS
 ceteris
 cf/~V
 cg/~
-ch/~NI^iWv
 chad/~NS
 chafe/NSVGd
 chaff/NgSVGd
@@ -18185,6 +18185,8 @@ coffeepot/NgS
 coffer/NSgV
 cofferdam/NgS
 coffin/~NSgVdG
+cofounder/NSg
+co-founder/NSg
 cog/~NSgV
 cogency/Ng
 cogent/JY
@@ -25600,6 +25602,7 @@ forensic/~JSgQ
 forensics/~Ng
 foreordain/VGSd
 forepart/NgS
+forepaw/NgS
 foreperson/NSg
 foreplay/NgV
 forequarter/NgS
@@ -29907,6 +29910,7 @@ incorrigible/JN
 incorrigibly/Ry
 incorruptibly/Ry
 increasing/~JYV6N
+increasingly/R
 increment/~NSgVdG
 incremental/~JY
 incrementalism/N
@@ -35109,6 +35113,7 @@ mouth/~N0gVGd
 mouthfeel/Nmg
 mouthful/NgSJ
 mouthiness/Nmg
+mouthpart/NSg
 mouthpiece/~NgS
 mouths/~N9Vh
 mouthwash/NgS
@@ -37707,8 +37712,10 @@ overweening/JYNV
 overweight/~JNgV
 overwhelm/~VGdSN
 overwhelming/~V6JYN
+overwind/VGS
 overwinter/VSdGJ
 overwork/VGdSNg
+overwound/VtT/J
 overwrite/VGSN
 overwritten/VT
 overwrote/Vt
@@ -38182,6 +38189,7 @@ parson/~NgS
 parsonage/~NgS
 part/~NSVdGJe
 part of speech/N0g
+part-time/J
 part's
 partake/~VG>SZ
 partaken/VT
@@ -39435,6 +39443,7 @@ plantain/NwSg
 plantar/J
 plantation/~NgS
 planter/~Ng
+planthopper/NgS     # a couple of dictionary prefer 'plant hopper'
 planting/~NgV
 plantlike/J
 plaque/~NwSg
@@ -40673,6 +40682,7 @@ programming/~NmgV6
 progress/~NmgSVdGv
 progression/~NgS
 progressive/~JYpNgS
+progressively/R
 progressiveness/Ng
 progressivism/Nmg
 prohibit/~VdGSv
@@ -42496,6 +42506,7 @@ rerank/VGdS
 reranking/NmgV6
 reread/VbtTGSN
 rerecord/NSVGd
+rerelease/~NSgVGd
 rerunning/V6
 resale/NgSB
 resample/VGdS
@@ -43170,7 +43181,7 @@ rouse/~NSVdG
 roust/VdGSN
 roustabout/NSgV
 rout/~NgSV>Z
-route/~NSVdGr
+route/~NSVdGrB
 route's
 routeing/V6N
 router/~NgV
@@ -52938,7 +52949,7 @@ wipeout/NgS
 wiper/Ng
 wire/~NwSVGdr
 wire's
-wired/~JVtTS
+wired/~JVtT
 wirehair/NgS
 wireless/~JYNgSV
 wiretap/NgSV
@@ -53211,7 +53222,7 @@ would-be/J
 would've/
 wouldn't/A
 wouldst/V
-wound/~NSgVGd>
+wound/~NSgVtTGd>
 wove/VtJr
 woven/~JNVTrU
 wow/~VGdSNg
@@ -54190,6 +54201,7 @@ doomerism/Nmg
 doomscrolling/V6NJ
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
+enshittification/Nmg
 ext2/Ng             # file system
 ext3/Ng             # file system
 ext4/Ng             # file system

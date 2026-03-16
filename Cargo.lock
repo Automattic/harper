@@ -74,9 +74,9 @@ checksum = "4b46cbb362ab8752921c97e041f5e366ee6297bd428a31275b9fcf1e380f7299"
 
 [[package]]
 name = "anstream"
-version = "0.6.19"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "301af1932e46185686725e0fad2f8f2aa7da69dd70bf6ecc44d6b703844a3933"
+checksum = "824a212faf96e9acacdbd09febd34438f8f711fb84e09a8916013cd7815ca28d"
 dependencies = [
  "anstyle",
  "anstyle-parse",
@@ -89,15 +89,15 @@ dependencies = [
 
 [[package]]
 name = "anstyle"
-version = "1.0.11"
+version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "862ed96ca487e809f1c8e5a8447f6ee2cf102f846893800b20cebdf541fc6bbd"
+checksum = "940b3a0ca603d1eade50a4846a2afffd5ef57a9feac2c0e2ec2e14f9ead76000"
 
 [[package]]
 name = "anstyle-parse"
-version = "0.2.7"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e7644824f0aa2c7b9384579234ef10eb7efb6a0deb83f9630a49594dd9c15c2"
+checksum = "52ce7f38b242319f7cabaa6813055467063ecdc9d355bbb4ce0c68908cd8130e"
 dependencies = [
  "utf8parse",
 ]
@@ -844,9 +844,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.5.60"
+version = "4.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2797f34da339ce31042b27d23607e051786132987f595b02ba4f6a6dffb7030a"
+checksum = "b193af5b67834b676abd72466a96c1024e6a6ad978a1f484bd90b85c94041351"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -854,9 +854,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.5.60"
+version = "4.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24a241312cea5059b13574bb9b3861cabf758b879c15190b37b6d6fd63ab6876"
+checksum = "714a53001bf66416adb0e2ef5ac857140e7dc3a0c48fb28b2f10762fc4b5069f"
 dependencies = [
  "anstream",
  "anstyle",
@@ -866,9 +866,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.5.55"
+version = "4.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a92793da1a46a5f2a02a6f4c46c6496b28c43638adea8306fcb0caa1634f24e5"
+checksum = "1110bd8a634a1ab8cb04345d8d878267d57c3cf1b38d91b71af6686408bbca6a"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2705,7 +2705,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2716,7 +2716,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2747,12 +2747,13 @@ dependencies = [
  "serde_json",
  "strum 0.28.0",
  "strum_macros 0.28.0",
+ "tempfile",
  "yansi",
 ]
 
 [[package]]
 name = "harper-comments"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2789,7 +2790,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -2829,7 +2830,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2840,7 +2841,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2851,7 +2852,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2862,7 +2863,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2873,7 +2874,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2904,7 +2905,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2922,7 +2923,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2933,7 +2934,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2944,7 +2945,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2952,7 +2953,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2963,7 +2964,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2982,7 +2983,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "1.9.0"
+version = "1.10.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -3004,7 +3005,7 @@ dependencies = [
  "serde",
  "serde-wasm-bindgen",
  "serde_json",
- "sysinfo 0.38.3",
+ "sysinfo 0.38.4",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -3480,9 +3481,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.174"
+version = "0.2.183"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1171693293099992e19cddea4e8b849964e9846f4acee11b3948bcc337be8776"
+checksum = "b5b646652bf6661599e1da8901b3b9522896f01e736bad5f723fe7a3a27f899d"
 
 [[package]]
 name = "libfuzzer-sys"
@@ -3553,9 +3554,9 @@ dependencies = [
 
 [[package]]
 name = "linux-raw-sys"
-version = "0.9.4"
+version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd945864f07fe9f5371a27ad7b52a172b4b499999f1d97574c9fa68373937e12"
+checksum = "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53"
 
 [[package]]
 name = "litemap"
@@ -4005,18 +4006,18 @@ dependencies = [
 
 [[package]]
 name = "objc2-core-foundation"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1c10c2894a6fed806ade6027bcd50662746363a9589d3ec9d9bef30a4e4bc166"
+checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
 dependencies = [
  "bitflags 2.11.0",
 ]
 
 [[package]]
 name = "objc2-io-kit"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "71c1c64d6120e51cd86033f67176b1cb66780c2efe34dec55176f77befd93c0a"
+checksum = "33fafba39597d6dc1fb709123dfa8289d39406734be322956a69f0931c73bb15"
 dependencies = [
  "libc",
  "objc2-core-foundation",
@@ -4299,9 +4300,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.103"
+version = "1.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ee95bc4ef87b8d5ba32e8b7714ccc834865276eab0aed5c9958d00ec45f49e8"
+checksum = "8fd00f0bb2e90d81d1044c2b32617f68fcb9fa3bb7640c23e9c748e53fb30934"
 dependencies = [
  "unicode-ident",
 ]
@@ -4436,9 +4437,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.41"
+version = "1.0.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce25767e7b499d1b604768e7cde645d14cc8584231ea6b295e9c9eb22c02e1d1"
+checksum = "41f2619966050689382d2b44f664f4bc593e129785a36d6ee376ddf37259b924"
 dependencies = [
  "proc-macro2",
 ]
@@ -4820,15 +4821,15 @@ dependencies = [
 
 [[package]]
 name = "rustix"
-version = "1.0.8"
+version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11181fbabf243db407ef8df94a6ce0b2f9a733bd8be4ad02b4eda9602296cac8"
+checksum = "b6fe4565b9518b83ef4f91bb47ce29620ca828bd32cb7e408f0062e9930ba190"
 dependencies = [
  "bitflags 2.11.0",
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.60.2",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
@@ -5255,9 +5256,9 @@ checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 
 [[package]]
 name = "syn"
-version = "2.0.108"
+version = "2.0.117"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da58917d35242480a05c2897064da0a80589a2a0476c9a3f2fdc83b53502e917"
+checksum = "e665b8803e7b1d2a727f4023456bbbbe74da67099c585258af0ad9c5013b9b99"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -5328,9 +5329,9 @@ dependencies = [
 
 [[package]]
 name = "sysinfo"
-version = "0.38.3"
+version = "0.38.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d03c61d2a49c649a15c407338afe7accafde9dac869995dccb73e5f7ef7d9034"
+checksum = "92ab6a2f8bfe508deb3c6406578252e491d299cbbf3bc0529ecc3313aee4a52f"
 dependencies = [
  "libc",
  "memchr",
@@ -5353,15 +5354,15 @@ dependencies = [
 
 [[package]]
 name = "tempfile"
-version = "3.20.0"
+version = "3.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8a64e3985349f2441a1a9ef0b853f869006c3855f2cda6862a94d26ebb9d6a1"
+checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
 dependencies = [
  "fastrand",
- "getrandom 0.3.4",
+ "getrandom 0.4.1",
  "once_cell",
  "rustix",
- "windows-sys 0.59.0",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
@@ -6071,9 +6072,9 @@ checksum = "c4013970217383f67b18aef68f6fb2e8d409bc5755227092d32efb0422ba24b8"
 
 [[package]]
 name = "tree-sitter-lua"
-version = "0.4.1"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea992f4164d83f371ef1239ae178c4d4596c296c09055e9a48bb02a2760403af"
+checksum = "8daaf5f4235188a58603c39760d5fa5d4b920d36a299c934adddae757f32a10c"
 dependencies = [
  "cc",
  "tree-sitter-language",
