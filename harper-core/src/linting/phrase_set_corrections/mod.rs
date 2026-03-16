@@ -543,6 +543,15 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "CommitmentTo" => (
+            &[
+                (&["commitment toward", "commitment towards"], &["commitment to"]),
+                (&["commitments toward", "commitments towards"], &["commitments to"]),
+            ],
+            "The correct preposition to use with `commitment` is `to`, not `toward` or `towards`.",
+            "Corrects `commitment toward/towards` to `commitment to`.",
+            LintKind::Usage
+        ),
         "Copyright" => (
             &[
                 (&["copywrite"], &["copyright"]),
