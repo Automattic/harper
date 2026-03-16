@@ -2806,7 +2806,6 @@ dependencies = [
  "itertools 0.14.0",
  "levenshtein_automata",
  "lru",
- "once_cell",
  "ordered-float 5.1.0",
  "paste",
  "pulldown-cmark",
