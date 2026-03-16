@@ -3,6 +3,7 @@ import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
 import type { ButtonComponent } from 'obsidian';
 import { type App, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { customReplacementsToString, stringToCustomReplacements } from './customSuggestions';
 import type HarperPlugin from './index.js';
 import type State from './State.js';
 import type { Settings } from './State.js';
@@ -11,12 +12,18 @@ import { linesToString, stringToLines } from './textUtils';
 const LintSettingId = 'HarperLintSettings';
 
 export class HarperSettingTab extends PluginSettingTab {
-	private settings: Settings;
-	private descriptionsHTML: Record<string, string>;
-	private defaultLintConfig: Record<string, boolean>;
+	private settings: Settings = {
+		useWebWorker: true,
+		lintEnabled: true,
+		lintSettings: {},
+		customReplacements: {},
+	};
+	private descriptionsHTML: Record<string, string> = {};
+	private defaultLintConfig: Record<string, boolean> = {};
 	private currentRuleSearchQuery = '';
 	private plugin: HarperPlugin;
 	private toggleAllButton?: ButtonComponent;
+	private ready = false;
 
 	private get state() {
 		return this.plugin.state;
@@ -27,40 +34,44 @@ export class HarperSettingTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
-	update() {
-		this.updateDescriptions();
-		this.updateSettings();
-		this.updateDefaults();
-	}
+	async update() {
+		const state = this.plugin.state;
+		if (state == null) {
+			this.ready = false;
+			return;
+		}
 
-	updateSettings() {
-		this.state.getSettings().then((v) => {
-			this.settings = v;
-			this.updateToggleAllRulesButton();
-		});
-	}
+		const [settings, descriptionsHTML, defaultLintConfig] = await Promise.all([
+			state.getSettings(),
+			state.getDescriptionHTML(),
+			state.getDefaultLintConfig(),
+		]);
 
-	updateDescriptions() {
-		this.state.getDescriptionHTML().then((v) => {
-			this.descriptionsHTML = v;
-		});
-	}
+		this.settings = settings;
+		this.descriptionsHTML = descriptionsHTML;
+		this.defaultLintConfig = defaultLintConfig as unknown as Record<string, boolean>;
+		this.ready = true;
+		this.updateToggleAllRulesButton();
 
-	updateDefaults() {
-		this.state.getDefaultLintConfig().then((v) => {
-			this.defaultLintConfig = v as unknown as Record<string, boolean>;
-			this.updateToggleAllRulesButton();
-		});
+		if (this.containerEl.isConnected) {
+			this.display(false);
+		}
 	}
 
 	display(update = true) {
 		if (update) {
-			this.update();
-			this.display(false);
+			void this.update();
 		}
 
 		const { containerEl } = this;
 		containerEl.empty();
+
+		if (!this.ready) {
+			new Setting(containerEl)
+				.setName('Loading Harper settings...')
+				.setDesc('Open this tab again in a moment if Harper is still starting up.');
+			return;
+		}
 
 		new Setting(containerEl)
 			.setName('Use Web Worker')
@@ -94,7 +105,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setName('Activate Harper')
 			.setDesc('Enable or disable Harper with this option.')
 			.addToggle((toggle) =>
-				toggle.setValue(this.settings.lintEnabled).onChange(async (_value) => {
+				toggle.setValue(this.settings.lintEnabled ?? true).onChange(async (_value) => {
 					this.state.toggleAutoLint();
 					this.plugin.updateStatusBar();
 				}),
@@ -124,6 +135,21 @@ export class HarperSettingTab extends PluginSettingTab {
 					this.settings.userDictionary = dict;
 					await this.state.initializeFromSettings(this.settings);
 				});
+			});
+
+		new Setting(containerEl)
+			.setName('Custom Typo Suggestions')
+			.setDesc(
+				'Add your own typo-to-suggestion mappings. Use one rule per line, like `adn: and` or `teh: the, tech`.',
+			)
+			.addTextArea((ta) => {
+				ta.inputEl.cols = 20;
+				ta.setValue(customReplacementsToString(this.settings.customReplacements)).onChange(
+					async (value) => {
+						this.settings.customReplacements = stringToCustomReplacements(value);
+						await this.state.initializeFromSettings(this.settings);
+					},
+				);
 			});
 
 		new Setting(containerEl)
@@ -234,7 +260,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	private async updateToggleAllRulesButton() {
-		if (!this.toggleAllButton) return;
+		if (!this.toggleAllButton || this.plugin.state == null) return;
 		const anyEnabled = await this.state.areAnyRulesEnabled();
 		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
 	}

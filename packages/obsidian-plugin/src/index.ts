@@ -27,7 +27,7 @@ import {
 import State from './State';
 
 export default class HarperPlugin extends Plugin {
-	state: State;
+	state: State | null = null;
 	private dialectSpan: HTMLSpanElement | null = null;
 	private logo: HTMLSpanElement | null = null;
 	private settings: HarperSettingTab | null = null;
@@ -99,6 +99,11 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	private setupStatusBar() {
+		if (this.state == null) {
+			return;
+		}
+
+		const state = this.state;
 		const statusBarItem: HTMLElement = this.addStatusBarItem();
 		statusBarItem.className += ' mod-clickable';
 
@@ -108,14 +113,14 @@ export default class HarperPlugin extends Plugin {
 
 		const logo = document.createElement('span');
 		logo.style.width = '24px';
-		logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
+		logo.innerHTML = state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
 		this.logo = logo;
 		button.appendChild(logo);
 
 		const dialect = document.createElement('span');
 		this.dialectSpan = dialect;
 
-		this.state.getSettings().then((settings) => {
+		state.getSettings().then((settings) => {
 			const dialectNum = settings.dialect ?? Dialect.American;
 			this.updateStatusBar(dialectNum);
 			button.appendChild(dialect);
@@ -126,7 +131,7 @@ export default class HarperPlugin extends Plugin {
 
 			menu.addItem((item) =>
 				item
-					.setTitle(`${this.state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
+					.setTitle(`${state.hasEditorLinter() ? 'Disable' : 'Enable'} automatic checking`)
 					.setIcon('documents')
 					.onClick(() => {
 						this.toggleAutoLint();
@@ -150,6 +155,10 @@ export default class HarperPlugin extends Plugin {
 
 	/** Preferred over directly calling `this.state.toggleAutoLint()` */
 	private toggleAutoLint() {
+		if (this.state == null) {
+			return;
+		}
+
 		this.state.toggleAutoLint();
 		this.updateStatusBar();
 	}
@@ -253,6 +262,11 @@ export default class HarperPlugin extends Plugin {
 
 	/** Trigger the flow for ignoring all files in a document, including a confirmation modal. */
 	public async doIgnoreAllFlow() {
+		if (this.state == null) {
+			new Notice('Harper is still loading.');
+			return;
+		}
+
 		const file = this.app.workspace.getActiveFile();
 		if (file != null) {
 			const text = await this.app.vault.read(file);
@@ -271,7 +285,7 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	public updateStatusBar(dialect?: Dialect) {
-		if (this.logo != null) {
+		if (this.logo != null && this.state != null) {
 			this.logo.innerHTML = this.state.hasEditorLinter() ? logoSvg : logoSvgDisabled;
 		}
 		if (typeof dialect !== 'undefined') {

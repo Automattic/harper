@@ -223,3 +223,87 @@ test('can overwrite dictionary words in settings', async () => {
 
 	expect(settings.userDictionary).toStrictEqual([]);
 });
+
+test('can persist custom typo suggestions in settings', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	settings.customReplacements = {
+		adn: ['and'],
+		teh: ['the', 'tech'],
+	};
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.customReplacements).toStrictEqual({
+		adn: ['and'],
+		teh: ['the', 'tech'],
+	});
+});
+
+test('custom typo suggestions are normalized when loaded', async () => {
+	const state = createEphemeralState();
+	let settings = await state.getSettings();
+
+	settings.customReplacements = {
+		' ADN ': ['and', 'And'],
+	};
+
+	await state.initializeFromSettings(settings);
+	settings = await state.getSettings();
+
+	expect(settings.customReplacements).toStrictEqual({
+		adn: ['and'],
+	});
+});
+
+test('editing custom typo suggestions does not recreate the editor linter', async () => {
+	const state = createEphemeralState();
+	state.enableEditorLinter(false);
+
+	const before = state.getCMEditorExtensions()[0];
+	const settings = await state.getSettings();
+	settings.customReplacements = { adn: ['and'] };
+
+	await state.initializeFromSettings(settings);
+
+	expect(state.getCMEditorExtensions()).toHaveLength(1);
+	expect(state.getCMEditorExtensions()[0]).toBe(before);
+	settings.customReplacements = { adn: ['and'], teh: ['the'] };
+
+	await state.initializeFromSettings(settings);
+
+	expect(state.getCMEditorExtensions()).toHaveLength(1);
+	expect(state.getCMEditorExtensions()[0]).toBe(before);
+});
+
+test('changing delay recreates the editor linter once', async () => {
+	const state = createEphemeralState();
+	state.enableEditorLinter(false);
+
+	const before = state.getCMEditorExtensions()[0];
+	const settings = await state.getSettings();
+	settings.delay = 250;
+
+	await state.initializeFromSettings(settings);
+
+	expect(state.getCMEditorExtensions()).toHaveLength(1);
+	expect(state.getCMEditorExtensions()[0]).not.toBe(before);
+});
+
+test('concurrent settings writes are applied in order', async () => {
+	const state = createEphemeralState();
+	const first = await state.getSettings();
+	const second = await state.getSettings();
+
+	first.customReplacements = { adn: ['and'] };
+	second.customReplacements = { adn: ['and'], teh: ['the'] };
+
+	await Promise.all([state.initializeFromSettings(first), state.initializeFromSettings(second)]);
+
+	expect((await state.getSettings()).customReplacements).toStrictEqual({
+		adn: ['and'],
+		teh: ['the'],
+	});
+});
