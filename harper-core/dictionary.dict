@@ -1,4 +1,4 @@
-54400
+54500
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3875,6 +3875,7 @@ Gawain/Og
 Gay/Og
 Gayle/Og
 Gaza/Og
+Gazan/JOgS
 Gaziantep/Og
 Gd/                 # Gadolinium
 Gdańsk/Og
@@ -4100,6 +4101,8 @@ Grail/g
 Grammy/Ng
 Grampians/Og
 Granada/Og
+Grand Prix/O0g
+Grands Prix/O9
 Grant/ONg
 Grass/Og
 Graves/Og
@@ -5221,6 +5224,7 @@ Jonathan/ONg
 Jonathon/Og
 Jones/Og
 Jonesboro/Og
+Jong-Un/Og
 Joni/Og
 Jonson/Og
 Joplin/Og
@@ -5715,6 +5719,7 @@ Lachesis/ONg
 Lactobacillus/O
 Lacy/Og
 Lada/NOSg
+Ladakh/Og
 Ladoga/Og
 Ladonna/g
 Lady/NOg
@@ -6731,6 +6736,7 @@ Mel/Og
 Melaka/Og
 Melanesia/Og
 Melanesian/JNg
+Melania/Og
 Melanie/Og
 Melba/Og
 Melbourne/Og
@@ -10069,6 +10075,7 @@ Thespis/g
 Thessalonian/JNSg
 Thessaloniki/Og     # city
 Thessaly/Og
+Thiel/Og
 Thieu/g
 Thimbu/ONg          # capital of bhutan
 Thimphu/O           # capital of bhutan
@@ -10358,6 +10365,7 @@ Tyrone/ONg
 Tyson/Og
 U/                  # Uranium; removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 U-turn/NgSVdG
+U.K./Og
 U.S./Og             # United States
 UAE/Og              # United Arab Emirates
 UAR/O
@@ -15034,6 +15042,7 @@ blindfold/NSgJVdG
 blinding/~V6JYN
 blindness/~Ng
 blindside/NSVdG
+blind spot/NgS
 blini/NgS
 blink/~VGd>SNgZ
 blinker/NgVdG
@@ -54020,6 +54029,7 @@ Red Hat/Og
 Reddit/Og
 ReLU/NwgS           # rectifier linear unit
 Rivian/Sg           # ev company
+Roblox/Og           # game
 Roumania/Og         # pre-WWII spelling
 RustConf/Og         # conference
 Ryzen/ONgS
@@ -54203,6 +54213,7 @@ doomerism/Nmg
 doomscrolling/V6NJ
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
+enshittify/VSdG
 enshittification/Nmg
 ext2/Ng             # file system
 ext3/Ng             # file system
