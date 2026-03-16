@@ -1,8 +1,8 @@
 use crate::{
     Token,
-    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    expr::{All, Expr, FirstMatchOf, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::{InflectionOfBe, Word},
+    patterns::Word,
 };
 
 pub struct BeWorried {
@@ -15,10 +15,20 @@ impl Default for BeWorried {
             expr: SequenceExpr::default()
                 .then_subject_pronoun()
                 .t_ws()
-                .then(InflectionOfBe::default())
+                .t_set(&["am", "are", "is", "was", "were"])
                 .t_ws()
                 .t_aco("worry")
-                .and_not(Word::new("it")),
+                .and_not(FirstMatchOf::new(vec![
+                    Box::new(Word::new("it")),
+                    Box::new(
+                        SequenceExpr::anything()
+                            .t_any()
+                            .t_any()
+                            .t_any()
+                            .t_any()
+                            .then_hyphen(),
+                    ),
+                ])),
         }
     }
 }
@@ -68,6 +78,15 @@ mod tests {
     }
 
     #[test]
+    fn he_was() {
+        assert_suggestion_result(
+            "So he was worry about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
+            BeWorried::default(),
+            "So he was worried about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
+        );
+    }
+
+    #[test]
     fn i_am() {
         assert_suggestion_result(
             "I didn't see any section dedicated to this so I am worry about:",
@@ -76,7 +95,24 @@ mod tests {
         );
     }
 
-    // at the same time they are worry about the price for the upgrade each 3 years
+    #[test]
+    fn i_was() {
+        assert_suggestion_result(
+            "So that's why I was worry.",
+            BeWorried::default(),
+            "So that's why I was worried.",
+        );
+    }
+
+    #[test]
+    fn i_were() {
+        assert_suggestion_result(
+            "The only things that I were worry about is the data that could be lost using this deletion.",
+            BeWorried::default(),
+            "The only things that I were worried about is the data that could be lost using this deletion.",
+        );
+    }
+
     #[test]
     fn they_are() {
         assert_suggestion_result(
@@ -110,6 +146,19 @@ mod tests {
             "Part of it is worry that my bosses will get angry and fire me.",
             BeWorried::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_it_was() {
+        assert_no_lints(
+            "Because what followed wasn't indifference, it was worry.",
+            BeWorried::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_worry_free() {
+        assert_no_lints("textFinally, she was worry-free.", BeWorried::default());
     }
 
     #[test]
