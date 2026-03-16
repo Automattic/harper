@@ -12281,7 +12281,7 @@ alveolar/~JNS
 alveoli/N9
 alveolus/N0g
 always/~R8
-am/~Vn
+am/~Vln             # 1st person singular present of 'be'
 amalgam/~NwSgV
 amalgamate/~VGdSJNXn
 amalgamation/~NwSg
@@ -13071,7 +13071,7 @@ ardor/NgS
 ardour/NwgS!@_₹
 arduous/~JYp
 arduousness/Ng
-are/~VS            # 2nd person singular & plural / 3rd person plural present of 'be'
+are/~VlS            # 2nd person singular & plural / 1st & 3rd person plural present of 'be'
 area/~NwSg
 areal/J
 aren't/V
@@ -14269,7 +14269,7 @@ bazillion/NS
 bazooka/NSgV
 bbl/N
 bdrm/N
-be/~NbA
+be/~NbAVbl
 beach/~NgSVdG
 beachcomber/NSg
 beachfront/JN
@@ -14390,7 +14390,7 @@ beehive/~NgSV
 beekeeper/NgS
 beekeeping/Nmg
 beeline/NgSV
-been/~VTN
+been/~VlTN
 beep/NSgVGd>Z
 beeper/Ng
 beer/~NwgV
@@ -14465,7 +14465,7 @@ beholder/Ng
 behoove/VdSG
 behove/VGdS!_₹
 beige/~NmgJ
-being/~V6NwgC
+being/~Vl6NwgC
 bejewel/VSdG
 bejewelled/VtTJ!@_₹
 bejewelling/V6!@_₹
@@ -30864,7 +30864,7 @@ irritating/JYV
 irritation/~Ng
 irrupt/VdGSv
 irruption/NSg
-is/~Vhl
+is/~Vlh             # 3rd person singular present of 'be'
 ischaemia/N!_₹
 ischaemic/J!_₹
 ischemia/~N
@@ -52296,7 +52296,7 @@ warthog/NSg
 wartime/~Ng
 warty/J^>
 wary/~J^>pVU
-was/~Vt
+was/~Vlt
 wasabi/Nmg
 wash/~Vd>GSNgBzZ
 wash out/V/
@@ -52572,7 +52572,7 @@ wench/NgSV
 wend/VdGSN
 went/~VtN
 wept/V
-were/~VtN
+were/~VltN
 weren't/Vt
 werewolf/~N0g
 werewolves/N9
