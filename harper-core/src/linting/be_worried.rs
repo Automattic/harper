@@ -1,8 +1,11 @@
 use crate::{
-    Token,
-    expr::{All, Expr, FirstMatchOf, OwnedExprExt, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::Word,
+    CharStringExt, Token,
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
+    },
+    patterns::{Word, WordSet},
 };
 
 pub struct BeWorried {
@@ -13,22 +16,20 @@ impl Default for BeWorried {
     fn default() -> Self {
         Self {
             expr: SequenceExpr::default()
-                .then_subject_pronoun()
-                .t_ws()
-                .t_set(&["am", "are", "is", "was", "were"])
+                .then_any_of(vec![
+                    Box::new(
+                        SequenceExpr::default()
+                            .then_subject_pronoun()
+                            .t_ws()
+                            .t_set(&["am", "are", "is", "was", "were"]),
+                    ),
+                    Box::new(WordSet::new(&[
+                        "i'm", "we're", "you're", "he's", "she's", "they're",
+                    ])),
+                ])
                 .t_ws()
                 .t_aco("worry")
-                .and_not(FirstMatchOf::new(vec![
-                    Box::new(Word::new("it")),
-                    Box::new(
-                        SequenceExpr::anything()
-                            .t_any()
-                            .t_any()
-                            .t_any()
-                            .t_any()
-                            .then_hyphen(),
-                    ),
-                ])),
+                .and_not(Word::new("it")),
         }
     }
 }
@@ -40,15 +41,30 @@ impl ExprLinter for BeWorried {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let wtok = matched_tokens.last()?;
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        let wtok = toks.last()?;
+
+        if followed_by_hyphen(ctx)
+            || followed_by_word(ctx, |w| {
+                w.span
+                    .get_content(src)
+                    .eq_any_ignore_ascii_case_str(&["free", "warts"])
+            })
+        {
+            return None;
+        }
 
         Some(Lint {
             span: wtok.span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "worried",
-                wtok.span.get_content(source),
+                wtok.span.get_content(src),
             )],
             message: "Use 'worried' instead of 'worry'.".to_string(),
             ..Default::default()
@@ -123,6 +139,15 @@ mod tests {
     }
 
     #[test]
+    fn theyre_worry() {
+        assert_suggestion_result(
+            "Because they're worry this link is spam or they scare have to pay more money.",
+            BeWorried::default(),
+            "Because they're worried this link is spam or they scare have to pay more money.",
+        );
+    }
+
+    #[test]
     fn we_are() {
         assert_suggestion_result(
             "We are analised this and we are worry because when our platform go to market",
@@ -132,11 +157,29 @@ mod tests {
     }
 
     #[test]
+    fn were() {
+        assert_suggestion_result(
+            "We're worry about all kinds of minority representation in TV.",
+            BeWorried::default(),
+            "We're worried about all kinds of minority representation in TV.",
+        );
+    }
+
+    #[test]
     fn you_are() {
         assert_suggestion_result(
             "You are worry because we are not annotating view interface itself, right?",
             BeWorried::default(),
             "You are worried because we are not annotating view interface itself, right?",
+        );
+    }
+
+    #[test]
+    fn youre() {
+        assert_suggestion_result(
+            "You're worry about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
+            BeWorried::default(),
+            "You're worried about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
         );
     }
 
@@ -157,8 +200,32 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_worry_free() {
+    fn dont_flag_she_was_worry_free() {
         assert_no_lints("textFinally, she was worry-free.", BeWorried::default());
+    }
+
+    #[test]
+    fn dont_flag_theyre_worry_free() {
+        assert_no_lints(
+            "They don't pretend they're worry-free.",
+            BeWorried::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_worry_warts() {
+        assert_no_lints(
+            "Thanks to jQuery, we're worry warts from browser compatibility.",
+            BeWorried::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_were_worry_space_free() {
+        assert_no_lints(
+            "Thanks to jQuery, we're worry free from browser compatibility.",
+            BeWorried::default(),
+        );
     }
 
     #[test]

@@ -152,6 +152,12 @@ pub fn followed_by_word(
     false
 }
 
+pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
+    context
+        .and_then(|(_, after)| after.first())
+        .is_some_and(|hy| hy.kind.is_hyphen())
+}
+
 pub fn preceded_by_word(
     context: Option<(&[Token], &[Token])>,
     predicate: impl Fn(&Token) -> bool,
