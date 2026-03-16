@@ -32,6 +32,7 @@ use super::ask_no_preposition::AskNoPreposition;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
+use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -617,6 +618,7 @@ impl LintGroup {
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
+        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
