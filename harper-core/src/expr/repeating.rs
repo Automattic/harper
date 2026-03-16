@@ -20,7 +20,7 @@ impl Repeating {
 
 impl Expr for Repeating {
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        let mut window = Span::new_with_len(cursor, 0);
+        let mut window = Span::empty(cursor);
         let mut repetition = 0;
 
         loop {

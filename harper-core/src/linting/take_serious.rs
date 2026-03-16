@@ -3,7 +3,7 @@ use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{NominalPhrase, WordSet},
+    patterns::NominalPhrase,
 };
 
 /// Linter that corrects "take X serious" to "take X seriously".
@@ -22,8 +22,7 @@ impl Default for TakeSerious {
     /// - Followed by a nominal phrase
     /// - Ending with "serious"
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then(WordSet::new(&["take", "taken", "takes", "taking", "took"]))
+        let pattern = SequenceExpr::word_set(&["take", "taken", "takes", "taking", "took"])
             .t_ws()
             .then(NominalPhrase)
             .t_ws()

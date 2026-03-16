@@ -18,8 +18,7 @@ impl Default for FewUnitsOfTimeAgo {
         let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
 
         let expr = Lrc::new(
-            SequenceExpr::default()
-                .then(start)
+            SequenceExpr::with(start)
                 .t_aco("few")
                 .then_whitespace()
                 .then(units)

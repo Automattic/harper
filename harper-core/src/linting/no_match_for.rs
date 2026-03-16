@@ -20,8 +20,7 @@ impl Default for NoMatchFor {
             ])),
         ]);
 
-        let expr = SequenceExpr::default()
-            .then(pre_context)
+        let expr = SequenceExpr::with(pre_context)
             .then_whitespace()
             .t_aco("no")
             .then_whitespace()

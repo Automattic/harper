@@ -57,7 +57,7 @@
 
 ;;;; Frob Grovel
 
-;;; This section of code has some important implications:
+;;; This section of the code has some important implications:
 ;;;   1. Foo.
 ;;;   2. Bar.
 ;;;   3. Baz.

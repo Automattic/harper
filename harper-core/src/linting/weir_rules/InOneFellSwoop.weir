@@ -1,7 +1,0 @@
-expr main (in one foul swoop)
-
-let message "Use the correct phrase for something happening suddenly."
-let description "Corrects `in one foul swoop` to `in one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
-let kind "Eggcorn"
-let becomes "in one fell swoop"
-

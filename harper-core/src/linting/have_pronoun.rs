@@ -10,8 +10,7 @@ pub struct HavePronoun {
 
 impl Default for HavePronoun {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .t_aco("has")
             .t_ws()
             .then_kind_either(

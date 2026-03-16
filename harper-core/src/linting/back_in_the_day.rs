@@ -21,8 +21,7 @@ impl Default for BackInTheDay {
         let exceptions = Lrc::new(WordSet::new(&["before", "of", "when"]));
         let phrase = Lrc::new(FixedPhrase::from_phrase("back in the days"));
 
-        let pattern = SequenceExpr::default()
-            .then(phrase.clone())
+        let pattern = SequenceExpr::with(phrase.clone())
             .then_whitespace()
             .then(exceptions.clone())
             .or_longest(phrase);

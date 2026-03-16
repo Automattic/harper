@@ -3,7 +3,7 @@ import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
-import type { Hotkey, Modifier } from '../protocol';
+import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
@@ -17,6 +17,9 @@ let userDict = $state('');
 let modifyHotkeyButton: Button;
 let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
+let weirpacks: WeirpackMeta[] = $state([]);
+let weirpackBusy = $state(false);
+let weirpackError = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -69,6 +72,10 @@ ProtocolClient.getHotkey().then((d) => {
 
 ProtocolClient.getUserDictionary().then((d) => {
 	userDict = dictToString(d.toSorted());
+});
+
+ProtocolClient.getWeirpacks().then((stored) => {
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -199,6 +206,49 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
 	window.addEventListener('keydown', handleKeydown);
 }
 
+async function refreshWeirpacks() {
+	const stored = await ProtocolClient.getWeirpacks();
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
+}
+
+async function handleWeirpackUpload(event: Event) {
+	const input = event.currentTarget as HTMLInputElement | null;
+	const files = input?.files;
+	if (!files || files.length === 0) {
+		return;
+	}
+
+	weirpackError = '';
+	weirpackBusy = true;
+	try {
+		for (const file of files) {
+			const bytes = new Uint8Array(await file.arrayBuffer());
+			await ProtocolClient.addWeirpack(file.name, bytes);
+		}
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to upload Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+		input.value = '';
+	}
+}
+
+async function removeWeirpack(id: string) {
+	weirpackBusy = true;
+	weirpackError = '';
+	try {
+		await ProtocolClient.removeWeirpack(id);
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to remove Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+	}
+}
+
 // Import removed
 </script>
 
@@ -300,6 +350,53 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
         </div>
       </div>
 
+    </Card>
+
+    <Card class="space-y-4">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">Weirpacks</h2>
+
+      <div class="space-y-2 flex flex-row w-full justify-between">
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Upload one or more <code>.weirpack</code> files to add custom rule packs.
+        </p>
+        <input
+          type="file"
+          accept=".weirpack,application/zip"
+          multiple
+          disabled={weirpackBusy}
+          onchange={handleWeirpackUpload}
+          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white disabled:opacity-50"
+        />
+      </div>
+
+      {#if weirpackError}
+        <p class="text-xs text-red-700 dark:text-red-400">{weirpackError}</p>
+      {/if}
+
+      {#if weirpacks.length === 0}
+        <p class="text-sm text-gray-600 dark:text-gray-400">No Weirpacks installed.</p>
+      {:else}
+        <div class="space-y-3">
+          {#each weirpacks as weirpack}
+            <div class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3">
+              <div class="min-w-0">
+                <p class="truncate text-sm">
+                  {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
+                </p>
+                <p class="truncate text-xs text-gray-600 dark:text-gray-400">{weirpack.filename}</p>
+              </div>
+              <Button
+                size="sm"
+                color="light"
+                disabled={weirpackBusy}
+                on:click={() => removeWeirpack(weirpack.id)}
+              >
+                Remove
+              </Button>
+            </div>
+          {/each}
+        </div>
+      {/if}
     </Card>
 
     <!-- ── RULES ─────────────────────────────── -->

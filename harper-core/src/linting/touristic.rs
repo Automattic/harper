@@ -59,17 +59,13 @@ const WHITELIST: &[&str] = &[
 
 impl Default for Touristic {
     fn default() -> Self {
-        let with_prev_and_next_word = SequenceExpr::default()
-            .then_any_word()
+        let with_prev_and_next_word = SequenceExpr::any_word()
             .t_ws()
             .t_aco("touristic")
             .t_ws()
             .then_any_word();
 
-        let with_prev_word = SequenceExpr::default()
-            .then_any_word()
-            .t_ws()
-            .t_aco("touristic");
+        let with_prev_word = SequenceExpr::any_word().t_ws().t_aco("touristic");
 
         let with_next_word = SequenceExpr::default()
             .t_aco("touristic")

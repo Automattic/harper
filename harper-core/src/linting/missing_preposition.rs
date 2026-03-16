@@ -17,23 +17,22 @@ pub struct MissingPreposition {
 
 impl Default for MissingPreposition {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(
-                AnchorStart.or_longest(
-                    SequenceExpr::default()
-                        .then_non_quantifier_determiner()
-                        .t_ws(),
-                ),
-            )
-            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
-            .t_ws()
-            .then(UPOSSet::new(&[UPOS::AUX]))
-            .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ]))
-            .t_ws()
-            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
-            .then_optional(AnyPattern)
-            .then_optional(AnyPattern);
+        let expr = SequenceExpr::with(
+            AnchorStart.or_longest(
+                SequenceExpr::default()
+                    .then_non_quantifier_determiner()
+                    .t_ws(),
+            ),
+        )
+        .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
+        .t_ws()
+        .then(UPOSSet::new(&[UPOS::AUX]))
+        .t_ws()
+        .then(UPOSSet::new(&[UPOS::ADJ]))
+        .t_ws()
+        .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
+        .then_optional(AnyPattern)
+        .then_optional(AnyPattern);
 
         Self {
             expr: Box::new(expr),

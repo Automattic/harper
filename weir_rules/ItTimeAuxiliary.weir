@@ -1,0 +1,34 @@
+expr main <([([it, It] time to), ([it, It] time for)]), [it, It]>
+
+let message "This phrase usually needs the contraction `it's` before `time` in this construction."
+let description "Fixes missing auxiliary usage in `it time to/for ...` patterns by inserting the contraction form."
+let kind "Grammar"
+let becomes "it's"
+let strategy "MatchCase"
+
+# True positives
+
+test "It time to leave the thread." "It's time to leave the thread."
+test "it time to update the docs." "it's time to update the docs."
+test "It time for lunch." "It's time for lunch."
+test "it time for another deploy." "it's time for another deploy."
+test "I think it time to restart." "I think it's time to restart."
+test "When it time for backups, ping me." "When it's time for backups, ping me."
+test "IT TIME TO SHIP." "IT'S TIME TO SHIP."
+test "If it time to vote, we should vote." "If it's time to vote, we should vote."
+
+# False positives / true negatives
+
+test "It's time to leave the thread." "It's time to leave the thread."
+test "It's time for lunch." "It's time for lunch."
+test "I know it is time to restart." "I know it is time to restart."
+test "Give it a minute to cool down." "Give it a minute to cool down."
+test "The app tracks time for every task." "The app tracks time for every task."
+test "It was time to go." "It was time to go."
+test "It takes time to go from draft to launch." "It takes time to go from draft to launch."
+
+# False negatives / boundary behavior
+
+test "It finally time to merge." "It finally time to merge."
+test "it now time for bed." "it now time for bed."
+test "it,time to move" "it,time to move"

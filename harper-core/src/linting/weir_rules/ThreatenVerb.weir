@@ -1,0 +1,34 @@
+expr modalAux [will, would, should, could, can, may, might, must, shall, won't, wouldn't, shouldn't, couldn't, can't, mustn't]
+
+expr subject [(DET NOUN), (DET PROPN), PRON, NOUN, PROPN]
+expr main <([( @modalAux threat), (@modalAux @subject threat)]), threat>
+
+let message "Modal verbs followed by `threat` almost always intend the verb `threaten`."
+let description "Normalize `threat` to `threaten` when it is used after modals (or their contractions) because the noun form is being mistaken for a verb."
+let kind "Grammar"
+let becomes "threaten"
+let strategy "MatchCase"
+
+test "I will threat the vendor if they miss another check-in." "I will threaten the vendor if they miss another check-in."
+test "You shouldn't threat the partnership over a misunderstanding." "You shouldn't threaten the partnership over a misunderstanding."
+test "We could threat the release if the bug persists." "We could threaten the release if the bug persists."
+test "They might threat the roadmap during the review." "They might threaten the roadmap during the review."
+test "You must threat the issue before it escalates." "You must threaten the issue before it escalates."
+test "He should threat his backup plan." "He should threaten his backup plan."
+test "We wouldn't threat our customers for honest feedback." "We wouldn't threaten our customers for honest feedback."
+test "She can't threat the crew without checking policy." "She can't threaten the crew without checking policy."
+test "I would threat the system again if it keeps failing." "I would threaten the system again if it keeps failing."
+test "May I threat them later?" "May I threaten them later?"
+test "Might you threat the schedule to force a fix?" "Might you threaten the schedule to force a fix?"
+test "You won't threat me with the same ultimatum twice." "You won't threaten me with the same ultimatum twice."
+test "Should they threat the platform to pressure the release?" "Should they threaten the platform to pressure the release?"
+test "I WILL threat the contract if the clauses keep changing." "I WILL threaten the contract if the clauses keep changing."
+test "They mustn't threat the new hires." "They mustn't threaten the new hires."
+
+allows "The threat on the board made everyone nervous."
+allows "This threat level matches last winter's storms."
+allows "Threat modeling exercises take several days."
+allows "Treat each threat seriously, but don't confuse the noun with the verb."
+allows "A threat scenario looks at possible attackers and motives."
+allows "Her tone sounded like the threat of a storm, not a promise."
+allows "Threat actors often test the defenses before committing to a breach."

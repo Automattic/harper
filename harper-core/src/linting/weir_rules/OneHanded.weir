@@ -1,0 +1,31 @@
+expr main <([one, two] handed ![DET, PRON, ADP, PUNCT]), ([one, two] handed)>
+
+let message "Keep the numeral and 'handed' joined as a hyphenated modifier when they describe a noun."
+let description "Treat 'one handed' and 'two handed' as single adjectives before nouns so the measurement stays attached to 'handed'."
+let kind "Punctuation"
+let becomes ["one-handed", "two-handed"]
+let strategy "MatchCase"
+
+# True positives
+# The hyphenated form is preferred whenever the compound modifies a noun.
+test "A one handed catch can seal the win." "A one-handed catch can seal the win."
+test "We built two handed handles for the door." "We built two-handed handles for the door."
+test "The mechanic admired that one handed tool." "The mechanic admired that one-handed tool."
+test "Two handed swords need extra clearance." "Two-handed swords need extra clearance."
+test "one handed work is still performed by skilled climbers." "one-handed work is still performed by skilled climbers."
+test "Our Two Handed lift completed the load." "Our Two-Handed lift completed the load."
+test "Two handed heavy lifts stress the crew." "Two-handed heavy lifts stress the crew."
+test "Her one handed strike knocked them down." "Her one-handed strike knocked them down."
+test "The two handed mammal puppet looked real." "The two-handed mammal puppet looked real."
+test "ONE HANDED MOVES LOOK ELEGANT ON STAGE." "ONE-HANDED MOVES LOOK ELEGANT ON STAGE."
+test "The two handed steel brace kept flex to a minimum." "The two-handed steel brace kept flex to a minimum."
+test "Our two handed design earned praise from the panel." "Our two-handed design earned praise from the panel."
+test "a one handed grip is required for that maneuver." "a one-handed grip is required for that maneuver."
+
+# True negatives / false positives
+# These scenarios treat 'handed' as a verb or object, so they should stay untouched.
+test "No one handed them anything." "No one handed them anything."
+test "One handed me a basket and left." "One handed me a basket and left."
+test "All but one handed in their notices." "All but one handed in their notices."
+test "One handed the baton to his mate." "One handed the baton to his mate."
+test "Two handed the paperwork to the new hire." "Two handed the paperwork to the new hire."

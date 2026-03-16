@@ -4,7 +4,6 @@ use crate::expr::SequenceExpr;
 use crate::{
     Lrc, Token, TokenStringExt,
     linting::{LintKind, Suggestion},
-    patterns::WordSet,
 };
 
 use super::{ExprLinter, Lint};
@@ -36,16 +35,14 @@ impl Default for OpenTheLight {
         ];
 
         let open_the_device = Lrc::new(
-            SequenceExpr::default()
-                .then(WordSet::new(TO_OPEN))
+            SequenceExpr::word_set(TO_OPEN)
                 .t_ws()
                 .then_determiner()
                 .t_ws()
-                .then(WordSet::new(DEVICES)),
+                .then_word_set(DEVICES),
         );
 
-        let open_the_device_then_noun = SequenceExpr::default()
-            .then(open_the_device.clone())
+        let open_the_device_then_noun = SequenceExpr::with(open_the_device.clone())
             .t_ws()
             .then_noun();
 

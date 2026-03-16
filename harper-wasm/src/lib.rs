@@ -5,16 +5,16 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-use harper_core::DialectFlags;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
-use harper_core::parsers::{IsolateEnglish, Markdown, OopsAllHeadings, Parser, PlainEnglish};
+use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
+use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
 use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
@@ -22,7 +22,7 @@ use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
 use wasm_bindgen::prelude::wasm_bindgen;
 
-/// Setup the WebAssembly module's logging.
+/// Set up the WebAssembly module's logging.
 #[wasm_bindgen(start)]
 pub fn setup() {
     console_error_panic_hook::set_once();
@@ -271,11 +271,21 @@ impl Linter {
         text: String,
         language: Language,
         all_headings: bool,
+        regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
         let mut parser = language.create_parser();
+
+        if let Some(regex) = regex_mask {
+            let masker_maybe = RegexMasker::new(regex.as_str(), true);
+            if let Some(masker) = masker_maybe {
+                parser = Box::new(Mask::new(masker, parser));
+            } else {
+                return vec![];
+            }
+        }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));
@@ -314,11 +324,28 @@ impl Linter {
     }
 
     /// Perform the configured linting on the provided text.
-    pub fn lint(&mut self, text: String, language: Language, all_headings: bool) -> Vec<Lint> {
+    ///
+    /// If the provided regex mask cannot be parsed, this method will return an empty array.
+    pub fn lint(
+        &mut self,
+        text: String,
+        language: Language,
+        all_headings: bool,
+        regex_mask: Option<String>,
+    ) -> Vec<Lint> {
         let source: Vec<_> = text.chars().collect();
         let source = Lrc::new(source);
 
         let mut parser = language.create_parser();
+
+        if let Some(regex) = regex_mask {
+            let masker_maybe = RegexMasker::new(regex.as_str(), true);
+            if let Some(masker) = masker_maybe {
+                parser = Box::new(Mask::new(masker, parser));
+            } else {
+                return vec![];
+            }
+        }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));
@@ -714,7 +741,7 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false);
+        let lints = linter.lint(text, Language::Plain, false, None);
         assert!(lints.is_empty());
     }
 
@@ -734,6 +761,7 @@ mod tests {
                     "This is a grammatically correct sentence.".to_string(),
                     Language::Plain,
                     false,
+                    None,
                 );
 
                 assert!(results.is_empty())

@@ -11,8 +11,7 @@ pub struct SomeWithoutArticle {
 
 impl Default for SomeWithoutArticle {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_any_capitalization_of("the")
+        let expr = SequenceExpr::any_capitalization_of("the")
             .t_ws()
             .then_any_capitalization_of("some");
 

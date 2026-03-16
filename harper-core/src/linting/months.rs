@@ -68,14 +68,12 @@ impl Default for Months {
         let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
             Box::new(only_months),
             Box::new(
-                SequenceExpr::default()
-                    .then(before_month_sense_only)
+                SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()
                     .then(ambiguous_months.clone()),
             ),
             Box::new(
-                SequenceExpr::default()
-                    .then(ambiguous_months)
+                SequenceExpr::with(ambiguous_months)
                     .then_whitespace()
                     .then(year_or_day_of_month),
             ),

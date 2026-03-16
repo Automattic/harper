@@ -1,15 +1,47 @@
-import type { Span } from 'harper.js';
+import { type Span, SuggestionKind } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
 import { getRangeForTextSpan } from './domUtils';
 import {
 	getCkEditorRoot,
+	getCMRoot,
 	getDraftRoot,
 	getLexicalRoot,
 	getSlateRoot,
 	isFormEl,
 } from './editorUtils';
 import TextFieldRange from './TextFieldRange';
-import { applySuggestion, type UnpackedLint, type UnpackedSuggestion } from './unpackLint';
+import {
+	applySuggestion,
+	type UnpackedLint,
+	type UnpackedSpan,
+	type UnpackedSuggestion,
+} from './unpackLint';
+
+const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
+
+type GoogleDocsReplacePayload = {
+	start: number;
+	end: number;
+	replacementText: string;
+	expectedText: string;
+	beforeContext: string;
+	afterContext: string;
+};
+
+type GoogleDocsBridgeClientLike = {
+	replaceText: (
+		start: number,
+		end: number,
+		replacementText: string,
+		expectedText?: string,
+		beforeContext?: string,
+		afterContext?: string,
+	) => Promise<unknown> | unknown;
+};
+
+type WindowWithGoogleDocsBridgeClient = Window & {
+	__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClientLike;
+};
 
 export default function computeLintBoxes(
 	el: HTMLElement,
@@ -17,6 +49,10 @@ export default function computeLintBoxes(
 	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
+	if (isGoogleDocsTarget(el)) {
+		return computeGoogleDocsLintBoxes(el, lint, rule, opts);
+	}
+
 	try {
 		let range: Range | TextFieldRange | null = null;
 
@@ -70,8 +106,7 @@ export default function computeLintBoxes(
 					const current = isFormEl(el)
 						? (el as HTMLInputElement | HTMLTextAreaElement).value
 						: (el.textContent ?? '');
-					const newValue = applySuggestion(current, lint.span, sug);
-					replaceValue(el, newValue, lint.span, sug.replacement_text);
+					replaceValue(el, lint.span, suggestionToReplacementText(sug, lint.span, current));
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -83,29 +118,144 @@ export default function computeLintBoxes(
 	}
 }
 
+function isGoogleDocsTarget(el: HTMLElement): boolean {
+	return el.getAttribute('data-harper-google-docs-target') === 'true';
+}
+
+function computeGoogleDocsLintBoxes(
+	target: HTMLElement,
+	lint: UnpackedLint,
+	rule: string,
+	opts: { ignoreLint?: (hash: string) => Promise<void> },
+): IgnorableLintBox[] {
+	try {
+		const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR) as HTMLElement | null;
+		const source = target.textContent ?? '';
+
+		if (!editor) {
+			return [];
+		}
+
+		if (lint.source !== source) {
+			return [];
+		}
+
+		const range = getRangeForTextSpan(target, lint.span as Span);
+		if (!range) {
+			return [];
+		}
+
+		const targetRects = Array.from(range.getClientRects ? range.getClientRects() : []);
+		const elBox = domRectToBox(range.getBoundingClientRect());
+		(range as any).detach?.();
+
+		const boxes: IgnorableLintBox[] = [];
+		for (const targetRect of targetRects as DOMRect[]) {
+			if (!isBottomEdgeInBox(targetRect, elBox)) {
+				continue;
+			}
+
+			const shrunkBox = shrinkBoxToFit(targetRect, elBox);
+			boxes.push({
+				x: shrunkBox.x,
+				y: shrunkBox.y,
+				width: shrunkBox.width,
+				height: shrunkBox.height,
+				lint,
+				source: editor,
+				rule,
+				applySuggestion: (sug: UnpackedSuggestion) => {
+					const replacementText = suggestionToReplacementText(sug, lint.span, source);
+					replaceGoogleDocsValue(lint.span, replacementText, source);
+				},
+				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
+			});
+		}
+
+		return boxes;
+	} catch {
+		return [];
+	}
+}
+
+/** Transform an arbitrary suggestion to the equivalent replacement text. */
+function suggestionToReplacementText(
+	sug: UnpackedSuggestion,
+	span: UnpackedSpan,
+	source: string,
+): string {
+	switch (sug.kind) {
+		case SuggestionKind.Replace:
+			return sug.replacement_text;
+		case SuggestionKind.Remove:
+			return '';
+		case SuggestionKind.InsertAfter:
+			return source.slice(span.start, span.end) + sug.replacement_text;
+	}
+}
+
 function replaceValue(
 	el: HTMLElement,
-	value: string,
-	span?: { start: number; end: number },
-	replacementText?: string,
+	span: { start: number; end: number },
+	replacementText: string,
 ) {
-	if (isFormEl(el) && span && replacementText !== undefined) {
+	if (isFormEl(el)) {
 		replaceFormElementValue(el as HTMLTextAreaElement | HTMLInputElement, span, replacementText);
-	} else if (getLexicalRoot(el) != null && span && replacementText !== undefined) {
+	} else if (getLexicalRoot(el) != null) {
 		replaceLexicalValue(el, span, replacementText);
-	} else if (getDraftRoot(el) != null && span && replacementText !== undefined) {
+	} else if (getDraftRoot(el) != null) {
 		replaceDraftValue(el, span, replacementText);
-	} else if (
-		(getSlateRoot(el) != null || getCkEditorRoot(el) != null) &&
-		span &&
-		replacementText !== undefined
-	) {
+	} else if (getCMRoot(el) != null) {
+		replaceCodeMirrorValue(el, span, replacementText);
+	} else if (getSlateRoot(el) != null || getCkEditorRoot(el) != null) {
 		replaceRichTextEditorValue(el, span, replacementText);
 	} else {
-		replaceGenericContentEditable(el, value, span, replacementText);
+		replaceGenericContentEditable(el, span, replacementText);
 	}
 
 	el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function replaceGoogleDocsValue(
+	span: { start: number; end: number },
+	replacementText: string,
+	source: string,
+) {
+	try {
+		const safeStart = Math.max(0, Math.min(span.start, source.length));
+		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
+		const expectedText = source.slice(safeStart, safeEnd);
+		const contextRadius = 64;
+		const beforeContext = source.slice(Math.max(0, safeStart - contextRadius), safeStart);
+		const afterContext = source.slice(safeEnd, Math.min(source.length, safeEnd + contextRadius));
+
+		const payload: GoogleDocsReplacePayload = {
+			start: span.start,
+			end: span.end,
+			replacementText,
+			expectedText,
+			beforeContext,
+			afterContext,
+		};
+		// This looks awkward because lint-framework cannot import chrome-plugin code directly.
+		// The content script puts the bridge client on window so this shared package can call it.
+		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
+			.__harperGoogleDocsBridgeClient;
+		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
+			void Promise.resolve(
+				bridgeClient.replaceText(
+					payload.start,
+					payload.end,
+					payload.replacementText,
+					payload.expectedText,
+					payload.beforeContext,
+					payload.afterContext,
+				),
+			);
+		}
+	} catch {
+		// Ignore bridge dispatch failures.
+	}
 }
 
 function replaceFormElementValue(
@@ -213,6 +363,45 @@ function replaceRichTextEditorValue(
 	}
 }
 
+function replaceCodeMirrorValue(
+	el: HTMLElement,
+	span: { start: number; end: number },
+	replacementText: string,
+) {
+	const setup = selectSpanInEditor(el, span);
+	if (!setup) return;
+
+	const { doc, sel, range } = setup;
+
+	const evInit: InputEventInit = {
+		bubbles: true,
+		cancelable: true,
+		inputType: 'insertReplacementText',
+		data: replacementText,
+	};
+
+	if ('StaticRange' in self) {
+		evInit.targetRanges = [new StaticRange(range)];
+	}
+
+	const beforeEvt = new InputEvent('beforeinput', evInit);
+	el.dispatchEvent(beforeEvt);
+
+	// CodeMirror-style editors can handle replacement during beforeinput.
+	// If not handled, fall back to direct DOM replacement.
+	if (!beforeEvt.defaultPrevented) {
+		replaceTextInRange(doc, sel, range, replacementText);
+		el.dispatchEvent(
+			new InputEvent('input', {
+				bubbles: true,
+				cancelable: false,
+				inputType: 'insertReplacementText',
+				data: replacementText,
+			}),
+		);
+	}
+}
+
 function replaceTextInRange(doc: Document, sel: Selection, range: Range, replacementText: string) {
 	const startContainer = range.startContainer;
 	const endContainer = range.endContainer;
@@ -251,9 +440,8 @@ function replaceTextInRange(doc: Document, sel: Selection, range: Range, replace
 
 function replaceGenericContentEditable(
 	el: HTMLElement,
-	value: string,
-	span?: { start: number; end: number },
-	replacementText?: string,
+	span: { start: number; end: number },
+	replacementText: string,
 ) {
 	if (span && replacementText !== undefined) {
 		const setup = selectSpanInEditor(el, span);
@@ -266,6 +454,9 @@ function replaceGenericContentEditable(
 	}
 
 	// Fallback: replace entire content
-	el.textContent = value;
+	el.textContent = applySuggestion(el.textContent, span, {
+		kind: SuggestionKind.Replace,
+		replacement_text: replacementText,
+	});
 	el.dispatchEvent(new InputEvent('input', { bubbles: true }));
 }

@@ -14,16 +14,16 @@ pub struct ToTooAdjectivePunct {
 
 impl Default for ToTooAdjectivePunct {
     fn default() -> Self {
-        let expr = SequenceExpr::optional(
-            SequenceExpr::default()
-                .then_any_word()
-                .then(WhitespacePattern),
-        )
-        .t_aco("to")
-        .t_ws()
-        .then_kind_is_but_is_not_except(TokenKind::is_adjective, TokenKind::is_verb, &["standard"])
-        .then_optional(WhitespacePattern)
-        .then_sentence_terminator();
+        let expr = SequenceExpr::optional(SequenceExpr::any_word().t_ws())
+            .t_aco("to")
+            .t_ws()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_adjective,
+                TokenKind::is_verb,
+                &["standard"],
+            )
+            .then_optional(WhitespacePattern)
+            .then_sentence_terminator();
 
         Self {
             expr: Box::new(expr),
@@ -53,7 +53,7 @@ impl ExprLinter for ToTooAdjectivePunct {
             return None;
         }
         let adjective = &tokens[idx];
-        if !adjective.kind.is_adjective() {
+        if !adjective.kind.is_adjective() || !adjective.kind.is_positive_adjective() {
             return None;
         }
         if adjective.kind.is_preposition() {

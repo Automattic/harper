@@ -985,15 +985,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     558 | ## CHAPTER IV: The Rabbit Sends in a Little Bill
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER IV: The Rabbit Sends in a little Bill”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      564 | wonder?” Alice guessed in a moment that it was looking for the fan and the pair
@@ -1542,16 +1533,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      968 | far below her.
          | ~~~~~~~~~~~~~~ This sentence is 58 words long.
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-     971 | to? And oh, my poor hands, how is it I can’t see you?” She was moving them about
-         |                                   ^~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “it”
-  - Replace with: “I”
 
 
 
@@ -2394,8 +2375,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “tic”
   - Replace with: “ti's”
+  - Replace with: “tic”
 
 
 
@@ -2406,8 +2387,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “tic”
   - Replace with: “ti's”
+  - Replace with: “tic”
 
 
 
@@ -2635,16 +2616,6 @@ Message: |
          |      ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Then”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2177 | great relief. “Now at ours they had at the end of the bill, ‘French, music, and
-         |                       ^~~~~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “ours”
-  - Replace with: “they”
 
 
 
@@ -2920,18 +2891,6 @@ Message: |
     2303 | treading on her toes when they passed too close, and waving their forepaws to
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    2303 | treading on her toes when they passed too close, and waving their forepaws to
-         |                                                                   ^~~~~~~~ Did you mean to spell `forepaws` this way?
-    2304 | mark the time, while the Mock Turtle sang this, very slowly and sadly:—
-Suggest:
-  - Replace with: “foreparts”
-  - Replace with: “forepart”
-  - Replace with: “foresaw”
 
 
 
@@ -3778,6 +3737,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2724 | sight, he said in a deep voice, “What are tarts made of?”
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 42 words long.
+
+
+
+Lint:    Grammar (31 priority)
+Message: |
+    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
+         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
+    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
+Suggest:
+  - Replace with: “them”
 
 
 

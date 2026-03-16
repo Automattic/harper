@@ -1,0 +1,26 @@
+expr main <(([(haven't), (hasn't), (hadn't), (have not), (has not), (had not), (have n't), (has n't), (had n't)] VERB no NOUN)), no>
+
+let message "This negative form sounds nonstandard; use `any` after the negated auxiliary."
+let description "Rewrites `no` to `any` in clauses like `haven't done no X` so the sentence keeps a single clear negation."
+let kind "Grammar"
+let becomes "any"
+
+# True positives
+test "I haven't done no harm." "I haven't done any harm."
+test "She hasn't seen no emails yet." "She hasn't seen any emails yet."
+test "They hadn't made no progress by noon." "They hadn't made any progress by noon."
+test "We have not received no update." "We have not received any update."
+test "He has not shown no interest." "He has not shown any interest."
+test "You had not found no evidence." "You had not found any evidence."
+test "I have n't done no chores today." "I have n't done any chores today."
+test "WE HAVEN'T DONE NO WORK." "WE HAVEN'T DONE ANY WORK."
+test "She hasn't caused no trouble, honestly." "She hasn't caused any trouble, honestly."
+test "They hadn't kept no records." "They hadn't kept any records."
+
+# False positives / true negatives
+allows "I haven't done any harm."
+allows "She has done no harm."
+allows "We did not make no promises."
+allows "I have no idea what happened."
+allows "They haven't gone anywhere."
+allows "He hadn't, no joke, slept all week."

@@ -236,8 +236,13 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Ellipsis))
     }
 
+    // AKA 'minus'
     pub fn is_hyphen(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Hyphen))
+    }
+
+    pub fn is_plus(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Plus))
     }
 
     pub fn is_quote(&self) -> bool {
@@ -264,12 +269,24 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
     }
 
+    pub fn is_acute(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Acute))
+    }
+
     pub fn is_ampersand(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Ampersand))
     }
 
+    pub fn is_backslash(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Backslash))
+    }
+
     pub fn is_slash(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::ForwardSlash))
+    }
+
+    pub fn is_percent(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Percent))
     }
 
     // Miscellaneous is-methods

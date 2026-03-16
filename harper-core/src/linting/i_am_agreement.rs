@@ -13,9 +13,7 @@ impl Default for IAmAgreement {
     fn default() -> Self {
         let i_are = Lrc::new(FixedPhrase::from_phrase("I are"));
 
-        let nothing_before_i_are = SequenceExpr::default()
-            .then(AnchorStart)
-            .then(i_are.clone());
+        let nothing_before_i_are = SequenceExpr::with(AnchorStart).then(i_are.clone());
 
         let non_and_word_before_i_are = SequenceExpr::default()
             .then_word_except(&["and"])

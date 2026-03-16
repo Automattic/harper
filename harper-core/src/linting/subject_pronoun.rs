@@ -10,8 +10,7 @@ pub struct SubjectPronoun {
 
 impl Default for SubjectPronoun {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .t_aco("me")
             .t_ws()
             .t_aco("and")

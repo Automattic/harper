@@ -23,8 +23,7 @@ impl Default for HowTo {
             .then_verb_lemma();
         pattern.add(pos_pattern);
 
-        let exceptions = SequenceExpr::default()
-            .then_unless(UPOSSet::new(&[UPOS::PART]))
+        let exceptions = SequenceExpr::unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_unless(|tok: &Token, _: &[char]| tok.kind.is_np_member())
             .then_anything()
