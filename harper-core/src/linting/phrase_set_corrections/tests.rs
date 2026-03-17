@@ -1796,6 +1796,44 @@ fn correct_awaited_for() {
     );
 }
 
+// CommitmentTo
+
+#[test]
+fn singular_towards() {
+    assert_suggestion_result(
+        "the platform's focus on multimedia projects and VideoLAN's long history of commitment towards free and open multimedia",
+        lint_group(),
+        "the platform's focus on multimedia projects and VideoLAN's long history of commitment to free and open multimedia",
+    );
+}
+
+#[test]
+fn plural_towards() {
+    assert_suggestion_result(
+        "the signer may express multiple commitments towards the data objects",
+        lint_group(),
+        "the signer may express multiple commitments to the data objects",
+    );
+}
+
+#[test]
+fn singular_toward() {
+    assert_suggestion_result(
+        "This document outlines the current level of commitment toward Linux distributions and packaging formats.",
+        lint_group(),
+        "This document outlines the current level of commitment to Linux distributions and packaging formats.",
+    );
+}
+
+#[test]
+fn plural_toward() {
+    assert_suggestion_result(
+        "... and are expected to inform parties in updating their commitments toward the Paris Agreement",
+        lint_group(),
+        "... and are expected to inform parties in updating their commitments to the Paris Agreement",
+    );
+}
+
 // Copyright
 
 #[test]
