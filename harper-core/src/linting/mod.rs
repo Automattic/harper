@@ -180,6 +180,7 @@ mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
 mod quite_quiet;
 mod quote_spacing;
+mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod redundant_progressive_comparative;

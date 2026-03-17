@@ -171,6 +171,7 @@ use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
+use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
@@ -753,6 +754,7 @@ impl LintGroup {
         insert_expr_rule!(QuantifierNumeralConflict, true);
         insert_expr_rule!(QuiteQuiet, true);
         insert_struct_rule!(QuoteSpacing, true);
+        insert_expr_rule!(ReasonForDoing, true);
         insert_expr_rule!(RedundantAcronyms, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
         insert_expr_rule!(RedundantProgressiveComparative, true);
