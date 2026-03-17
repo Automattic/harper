@@ -195,7 +195,7 @@ fn lex_uchar(source: &[char]) -> Option<usize> {
 
 #[cfg(test)]
 mod tests {
-    use rand::Rng;
+    use rand::RngExt;
 
     use super::lex_url;
 
@@ -243,12 +243,12 @@ mod tests {
     /// situations.
     #[test]
     fn survives_random_chars() {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
 
         let mut buf = [' '; 128];
 
         for _ in 0..1 << 16 {
-            rng.try_fill(&mut buf).unwrap();
+            buf.fill_with(|| rng.random());
 
             lex_url(&buf);
         }
