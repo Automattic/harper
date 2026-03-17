@@ -23,6 +23,7 @@ import {
 	WidgetType,
 } from '@codemirror/view';
 import elt from 'crelt';
+import { LINT_KIND_COLORS } from './lintKindColor';
 
 type Severity = 'hint' | 'info' | 'warning' | 'error';
 
@@ -420,7 +421,9 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 	const keys = inPanel ? assignKeys(diagnostic.actions) : [];
 	return elt(
 		'li',
-		{ class: `cm-diagnostic cm-diagnostic-${diagnostic.severity}` },
+		{
+			class: `cm-diagnostic cm-diagnostic-${diagnostic.severity}${diagnostic.markClass ? ` ${diagnostic.markClass}` : ''}`,
+		},
 		elt('span', { class: 'cm-diagnosticTitle' }, diagnostic.title),
 		elt(
 			'span',
@@ -506,7 +509,9 @@ class DiagnosticWidget extends WidgetType {
 	}
 
 	toDOM() {
-		return elt('span', { class: `cm-lintPoint cm-lintPoint-${this.diagnostic.severity}` });
+		return elt('span', {
+			class: `cm-lintPoint cm-lintPoint-${this.diagnostic.severity}${this.diagnostic.markClass ? ` ${this.diagnostic.markClass}` : ''}`,
+		});
 	}
 }
 
@@ -520,6 +525,27 @@ function underline(color: string) {
 		`width="6" height="3"`,
 	);
 }
+
+const lintKindRangeTheme = Object.fromEntries(
+	Object.entries(LINT_KIND_COLORS).map(([lintKind, color]) => [
+		`.cm-lintRange.harper-lintRange-${lintKind}`,
+		{ backgroundImage: underline(color) },
+	]),
+);
+
+const lintKindDiagnosticTheme = Object.fromEntries(
+	Object.entries(LINT_KIND_COLORS).map(([lintKind, color]) => [
+		`.cm-diagnostic.harper-lintRange-${lintKind} .cm-diagnosticTitle`,
+		{ boxShadow: `inset 0 -2px ${color}` },
+	]),
+);
+
+const lintKindPointTheme = Object.fromEntries(
+	Object.entries(LINT_KIND_COLORS).map(([lintKind, color]) => [
+		`.cm-lintPoint.harper-lintRange-${lintKind}`,
+		{ '&:after': { borderBottomColor: color } },
+	]),
+);
 
 const baseTheme = EditorView.baseTheme({
 	'.cm-diagnostic': {
@@ -628,6 +654,7 @@ const baseTheme = EditorView.baseTheme({
 	'.cm-lintRange-warning': { backgroundImage: underline('orange') },
 	'.cm-lintRange-info': { backgroundImage: underline('#999') },
 	'.cm-lintRange-hint': { backgroundImage: underline('#66d') },
+	...lintKindRangeTheme,
 	'.cm-lintRange-active': { backgroundColor: '#ffdd9980' },
 
 	'.cm-tooltip-lint': {
@@ -658,6 +685,8 @@ const baseTheme = EditorView.baseTheme({
 	'.cm-lintPoint-hint': {
 		'&:after': { borderBottomColor: '#66d' },
 	},
+	...lintKindPointTheme,
+	...lintKindDiagnosticTheme,
 
 	'.cm-panel.cm-panel-lint': {
 		position: 'relative',

@@ -182,6 +182,7 @@ mod quite_quiet;
 mod quote_spacing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
+mod redundant_progressive_comparative;
 mod regionalisms;
 mod repeated_words;
 mod respond;

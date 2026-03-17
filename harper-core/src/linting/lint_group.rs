@@ -173,6 +173,7 @@ use super::quite_quiet::QuiteQuiet;
 use super::quote_spacing::QuoteSpacing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::redundant_progressive_comparative::RedundantProgressiveComparative;
 use super::regionalisms::Regionalisms;
 use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
@@ -754,6 +755,7 @@ impl LintGroup {
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(RedundantAcronyms, true);
         insert_expr_rule!(RedundantAdditiveAdverbs, true);
+        insert_expr_rule!(RedundantProgressiveComparative, true);
         insert_struct_rule_with_dialect!(Regionalisms, true);
         insert_struct_rule!(RepeatedWords, true);
         insert_expr_rule!(Respond, true);
