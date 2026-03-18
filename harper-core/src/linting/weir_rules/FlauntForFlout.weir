@@ -1,0 +1,33 @@
+expr determiners [the, a, an, all, every, any, some, these, those, its, their, our, your, his, her]
+expr ruleNouns [rules, law, laws, regulation, regulations, convention, conventions, norm, norms, guideline, guidelines, authority, ban, bans, prohibition, prohibitions, restriction, restrictions, order, orders, protocol, protocols, standards, requirement, requirements, policy, policies]
+expr main <([(flaunt @ruleNouns), (flaunt @determiners @ruleNouns)]), flaunt>
+
+let message "Use `flout` when you mean to openly disregard rules or conventions."
+let description "Corrects `flaunt` to `flout` when used before rule-like nouns. `Flaunt` means to show off; `flout` means to openly ignore rules."
+let kind "WordChoice"
+let becomes "flout"
+let strategy "MatchCase"
+
+# True positives
+
+test "They flaunt authority at every opportunity." "They flout authority at every opportunity."
+test "People who flaunt convention tend to stand out." "People who flout convention tend to stand out."
+test "Some users flaunt the rules of punctuation." "Some users flout the rules of punctuation."
+test "They flaunt the law openly." "They flout the law openly."
+test "Workers who flaunt the policy get fired." "Workers who flout the policy get fired."
+test "FLAUNT THE RULES if you dare." "FLOUT THE RULES if you dare."
+test "Developers who flaunt the guidelines regret it." "Developers who flout the guidelines regret it."
+test "Companies that flaunt regulations face fines." "Companies that flout regulations face fines."
+test "You cannot just flaunt the ban like that." "You cannot just flout the ban like that."
+test "They flaunt every restriction placed on them." "They flout every restriction placed on them."
+
+# False positives / true negatives
+
+allows "She flaunted her new car at the party."
+allows "He likes to flaunt his wealth."
+allows "They were flaunting their success."
+allows "She flouts the rules every chance she gets."
+allows "The company flouted safety regulations openly."
+allows "Stop flaunting your achievements."
+allows "He was flaunting the trophy around the office."
+allows "Flaunt your best work at the conference."
