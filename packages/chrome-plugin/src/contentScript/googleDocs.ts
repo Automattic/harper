@@ -21,6 +21,8 @@ const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scrol
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
 const GOOGLE_DOCS_SVG_RECT_SELECTOR = 'rect[aria-label]';
 const GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX = 60;
+const GOOGLE_DOCS_PARAGRAPH_BREAK_GAP_RATIO = 0.5;
+const GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX = 6;
 
 type LayoutRefreshFramework = LintFramework & {
 	refreshLayout?: () => void;
@@ -73,6 +75,7 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 			bridge.style.opacity = '0';
 			bridge.style.zIndex = '-2147483648';
 			bridge.setAttribute('contenteditable', 'false');
+			bridge.setAttribute('data-language', 'plaintext');
 			editor.appendChild(bridge);
 		}
 
@@ -168,6 +171,10 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		return next;
 	}
 
+	function isGoogleDocsStandaloneListMarker(label: string): boolean {
+		return /^(\d+\.|[-+*•◦▪‣])$/.test(label.trim());
+	}
+
 	/**
 	 * Rebuilds the hidden clone from Docs SVG text rects.
 	 *
@@ -217,17 +224,27 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 			const shouldInsertLineBreak =
 				(currentLineBand != null && !sharesVisualLine) ||
 				(sharesVisualLine &&
+					!isGoogleDocsStandaloneListMarker(lastLabel) &&
 					lastRight != null &&
 					left - lastRight >= GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX);
 
 			if (shouldInsertLineBreak && parts.length > 0 && !parts[parts.length - 1].endsWith('\n')) {
-				parts.push('\n');
-				fragment.appendChild(document.createTextNode('\n'));
+				const lineGap =
+					currentLineBand == null ? 0 : Math.max(0, layoutRect.top - currentLineBand.bottom);
+				const paragraphBreakThreshold = Math.max(
+					GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX,
+					Math.min(currentLineBand?.bottom - currentLineBand?.top || 0, layoutRect.height) *
+						GOOGLE_DOCS_PARAGRAPH_BREAK_GAP_RATIO,
+				);
+				const breakText = !sharesVisualLine && lineGap >= paragraphBreakThreshold ? '\n\n' : '\n';
+				parts.push(breakText);
+				fragment.appendChild(document.createTextNode(breakText));
 			}
 			if (
 				!shouldInsertLineBreak &&
 				lastLayoutRect != null &&
-				shouldInsertGoogleDocsSpace(lastLayoutRect, layoutRect, lastLabel, normalizedLabel)
+				(isGoogleDocsStandaloneListMarker(lastLabel) ||
+					shouldInsertGoogleDocsSpace(lastLayoutRect, layoutRect, lastLabel, normalizedLabel))
 			) {
 				parts.push(' ');
 				fragment.appendChild(document.createTextNode(' '));
