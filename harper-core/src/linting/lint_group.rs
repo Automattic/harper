@@ -141,6 +141,7 @@ use super::nor_modal_pronoun::NorModalPronoun;
 use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
 use super::oldest_in_the_book::OldestInTheBook;
@@ -725,6 +726,7 @@ impl LintGroup {
         insert_expr_rule!(NotOnlyInversion, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_expr_rule!(NumericRangeEnDash, true);
         insert_expr_rule!(ObsessPreposition, true);
         insert_expr_rule!(OfCourse, true);
         insert_expr_rule!(OldestInTheBook, true);
