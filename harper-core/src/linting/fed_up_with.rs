@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub struct FedUpWith {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dialect: Dialect,
 }
 
@@ -13,10 +13,7 @@ impl FedUpWith {
     pub fn new(dialect: Dialect) -> Self {
         let expr = SequenceExpr::fixed_phrase("fed up of");
 
-        Self {
-            expr: Box::new(expr),
-            dialect,
-        }
+        Self { expr, dialect }
     }
 }
 
@@ -24,7 +21,7 @@ impl ExprLinter for FedUpWith {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

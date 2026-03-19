@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct HaveTakeALook {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dialect: Dialect,
 }
 
@@ -22,10 +22,7 @@ impl HaveTakeALook {
             .t_ws()
             .then_fixed_phrase("a look");
 
-        Self {
-            expr: Box::new(expr),
-            dialect,
-        }
+        Self { expr, dialect }
     }
 }
 
@@ -33,7 +30,7 @@ impl ExprLinter for HaveTakeALook {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

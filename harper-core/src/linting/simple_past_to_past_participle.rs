@@ -9,13 +9,13 @@ use crate::{
 
 /// Corrects simple past tense verbs to past participle after auxiliary verbs like "have" or "be".
 pub struct SimplePastToPastParticiple {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for SimplePastToPastParticiple {
     fn default() -> Self {
         Self {
-            expr: Box::new(All::new(vec![
+            expr: All::new(vec![
                 // positive: the general case
                 Box::new(
                     SequenceExpr::any_of(vec![
@@ -50,7 +50,7 @@ impl Default for SimplePastToPastParticiple {
                             .then_word_set(&["came", "did", "went"]),
                     ),
                 ]))),
-            ])),
+            ]),
         }
     }
 }
@@ -59,7 +59,7 @@ impl ExprLinter for SimplePastToPastParticiple {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -105,9 +105,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 #[cfg(test)]
 mod tests {
     use super::SimplePastToPastParticiple;
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // "Be" and "have"
 
@@ -122,7 +120,7 @@ mod tests {
 
     #[test]
     fn correct_had_went() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Not sure if TroLoos had went from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
             SimplePastToPastParticiple::default(),
             "Not sure if TroLoos had gone from Tasmota->minimal->Tasmota, or directly Minimal->Tasmota, but going ESPHome->Minimal->Tasmota is not possible",
@@ -203,7 +201,7 @@ mod tests {
 
     #[test]
     fn correct_had_began() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I had began learning Android App development since Aug 2021",
             SimplePastToPastParticiple::default(),
             "I had begun learning Android App development since Aug 2021",
@@ -221,7 +219,7 @@ mod tests {
 
     #[test]
     fn correct_have_saw() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I have saw that your paper has been accepted by JAIR",
             SimplePastToPastParticiple::default(),
             "I have seen that your paper has been accepted by JAIR",

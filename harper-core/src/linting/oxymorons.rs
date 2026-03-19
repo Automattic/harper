@@ -7,7 +7,7 @@ use crate::{Token, TokenStringExt};
 
 /// A linter that flags oxymoronic phrases.
 pub struct Oxymorons {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Oxymorons {
@@ -39,8 +39,9 @@ impl Oxymorons {
             .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let expr = Box::new(FirstMatchOf::new(exprs));
-        Self { expr }
+        Self {
+            expr: FirstMatchOf::new(exprs),
+        }
     }
 }
 
@@ -55,7 +56,7 @@ impl ExprLinter for Oxymorons {
 
     /// Returns the underlying pattern.
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

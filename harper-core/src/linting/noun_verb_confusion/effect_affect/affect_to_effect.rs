@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
@@ -11,8 +9,7 @@ use crate::{
 };
 
 pub(super) struct AffectToEffect {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for AffectToEffect {
@@ -72,12 +69,7 @@ impl Default for AffectToEffect {
 
         map.insert(great_affect, 2);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -85,11 +77,11 @@ impl ExprLinter for AffectToEffect {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_index = *self.map.lookup(0, matched_tokens, source)?;
+        let offending_index = *self.expr.lookup(0, matched_tokens, source)?;
         let target = &matched_tokens[offending_index];
 
         let preceding = matched_tokens[..offending_index]

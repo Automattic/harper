@@ -10,23 +10,21 @@ use crate::{
 };
 
 pub struct ByAccident {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ByAccident {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("on")
-                    .t_ws()
-                    .then_optional(
-                        SequenceExpr::word_set(&[
-                            "complete", "happy", "literal", "mere", "pure", "sheer", "total",
-                        ])
-                        .t_ws(),
-                    )
-                    .t_aco("accident"),
-            ),
+            expr: SequenceExpr::aco("on")
+                .t_ws()
+                .then_optional(
+                    SequenceExpr::word_set(&[
+                        "complete", "happy", "literal", "mere", "pure", "sheer", "total",
+                    ])
+                    .t_ws(),
+                )
+                .t_aco("accident"),
         }
     }
 }
@@ -39,7 +37,7 @@ impl ExprLinter for ByAccident {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

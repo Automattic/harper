@@ -4,40 +4,38 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{ExprLinter, expr_linter::Chunk};
 
 pub struct WishCould {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for WishCould {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["wish", "wished", "wishes", "wishing"])
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_subject_pronoun()),
-                        Box::new(SequenceExpr::word_set(&[
-                            // Elective existential indefinite pronouns
-                            "anybody",
-                            "anyone",
-                            // Universal indefinite pronouns
-                            "everybody",
-                            "everyone",
-                            // Negative indefinite pronouns (correct)
-                            "nobody",
-                            // Negative indefinite pronouns (incorrect)
-                            "noone",
-                            // Assertive existential indefinite pronouns
-                            "somebody",
-                            "someone",
-                            // Demonstrative pronouns
-                            "these",
-                            "this",
-                            "those",
-                        ])),
-                    ])
-                    .t_ws()
-                    .t_aco("can"),
-            ),
+            expr: SequenceExpr::word_set(&["wish", "wished", "wishes", "wishing"])
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_subject_pronoun()),
+                    Box::new(SequenceExpr::word_set(&[
+                        // Elective existential indefinite pronouns
+                        "anybody",
+                        "anyone",
+                        // Universal indefinite pronouns
+                        "everybody",
+                        "everyone",
+                        // Negative indefinite pronouns (correct)
+                        "nobody",
+                        // Negative indefinite pronouns (incorrect)
+                        "noone",
+                        // Assertive existential indefinite pronouns
+                        "somebody",
+                        "someone",
+                        // Demonstrative pronouns
+                        "these",
+                        "this",
+                        "those",
+                    ])),
+                ])
+                .t_ws()
+                .t_aco("can"),
         }
     }
 }
@@ -46,7 +44,7 @@ impl ExprLinter for WishCould {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        &*self.expr
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

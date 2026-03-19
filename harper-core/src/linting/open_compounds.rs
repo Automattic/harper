@@ -6,7 +6,7 @@ use crate::linting::expr_linter::Chunk;
 use hashbrown::HashMap;
 
 pub struct OpenCompounds {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     compound_to_phrase: HashMap<String, String>,
 }
 
@@ -50,12 +50,12 @@ impl Default for OpenCompounds {
             .then_anything();
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(with_prev_and_next),
                 Box::new(with_prev),
                 Box::new(with_next),
                 Box::new(compound),
-            ])),
+            ]),
             compound_to_phrase,
         }
     }
@@ -65,7 +65,7 @@ impl ExprLinter for OpenCompounds {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {

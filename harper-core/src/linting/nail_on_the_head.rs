@@ -8,7 +8,7 @@ use crate::{
 };
 
 pub struct NailOnTheHead {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NailOnTheHead {
@@ -22,9 +22,7 @@ impl Default for NailOnTheHead {
             .t_aco("the")
             .then_whitespace()
             .then(mis);
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -32,7 +30,7 @@ impl ExprLinter for NailOnTheHead {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

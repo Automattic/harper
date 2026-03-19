@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct HopeYoure {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for HopeYoure {
@@ -25,9 +25,7 @@ impl Default for HopeYoure {
             .t_ws()
             .then(loc);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -35,7 +33,7 @@ impl ExprLinter for HopeYoure {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn crate::expr::Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct IAmAgreement {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for IAmAgreement {
@@ -25,9 +25,7 @@ impl Default for IAmAgreement {
             Box::new(non_and_word_before_i_are),
         ]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -35,7 +33,7 @@ impl ExprLinter for IAmAgreement {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

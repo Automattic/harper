@@ -19,7 +19,7 @@ const ACRONYMS: &[(&str, &[&str], &str)] = &[
 ];
 
 pub struct RedundantAcronyms {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for RedundantAcronyms {
@@ -40,7 +40,7 @@ impl Default for RedundantAcronyms {
             .collect();
 
         Self {
-            expr: Box::new(FirstMatchOf::new(exprs)),
+            expr: FirstMatchOf::new(exprs),
         }
     }
 }
@@ -49,7 +49,7 @@ impl ExprLinter for RedundantAcronyms {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

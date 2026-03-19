@@ -9,7 +9,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct ShootOneselfInTheFoot {
-    pattern: Box<dyn Expr>,
+    pattern: SequenceExpr,
 }
 
 impl Default for ShootOneselfInTheFoot {
@@ -27,9 +27,7 @@ impl Default for ShootOneselfInTheFoot {
             .then_determiner()
             .t_ws()
             .then(body_parts);
-        Self {
-            pattern: Box::new(pattern),
-        }
+        Self { pattern }
     }
 }
 
@@ -37,7 +35,7 @@ impl ExprLinter for ShootOneselfInTheFoot {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.pattern.as_ref()
+        &self.pattern
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

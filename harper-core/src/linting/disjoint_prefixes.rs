@@ -1,12 +1,12 @@
 use crate::{
     Lint, Token, TokenKind, TokenStringExt,
-    expr::{Expr, OwnedExprExt, SequenceExpr},
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
 pub struct DisjointPrefixes<D> {
-    expr: Box<dyn Expr>,
+    expr: All,
     dict: D,
 }
 
@@ -22,38 +22,36 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&[
-                    // These prefixes rarely cause false positives
-                    "anti", "auto", "bi", "counter", "de", "dis", "extra", "fore", "hyper", "il",
-                    "im", "inter", "ir", "macro", "mal", "micro", "mid", "mini", "mis", "mono",
-                    "multi", "non", "omni", "post", "pre", "pro", "re", "semi", "sub", "super",
-                    "trans", "tri", "ultra", "un", "uni",
-                    // "co" has one very common false positive: co-op != coop
-                    "co",
-                    // These prefixes are all also words in their own right, which leads to more false positives.
-                    "out", "over", "under",
-                    "up",
-                    // These prefixes are commented out due to too many false positives
-                    // or incorrect transformations:
-                    // "a": a live -> alive
-                    // "in": in C -> inc; in action -> inaction
-                ])
-                .t_ws_h()
-                .then_kind_either(TokenKind::is_verb, TokenKind::is_noun)
-                .then_optional_hyphen()
-                .and_not(SequenceExpr::any_of(vec![
-                    // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
-                    Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
-                    // Don't merge "co op" whether separated by space or hyphen.
-                    Box::new(SequenceExpr::aco("co").t_any().t_set(&["op", "ops"])),
-                    // Merge these if they're separated by hyphen, but not space.
-                    Box::new(SequenceExpr::aco("out").t_ws().t_set(OUT_EXCEPTIONS)),
-                    Box::new(SequenceExpr::aco("over").t_ws().t_set(OVER_EXCEPTIONS)),
-                    Box::new(SequenceExpr::aco("under").t_ws().t_set(UNDER_EXCEPTIONS)),
-                    Box::new(SequenceExpr::aco("up").t_ws().t_set(UP_EXCEPTIONS)),
-                ])),
-            ),
+            expr: SequenceExpr::word_set(&[
+                // These prefixes rarely cause false positives
+                "anti", "auto", "bi", "counter", "de", "dis", "extra", "fore", "hyper", "il", "im",
+                "inter", "ir", "macro", "mal", "micro", "mid", "mini", "mis", "mono", "multi",
+                "non", "omni", "post", "pre", "pro", "re", "semi", "sub", "super", "trans", "tri",
+                "ultra", "un", "uni",
+                // "co" has one very common false positive: co-op != coop
+                "co",
+                // These prefixes are all also words in their own right, which leads to more false positives.
+                "out", "over", "under",
+                "up",
+                // These prefixes are commented out due to too many false positives
+                // or incorrect transformations:
+                // "a": a live -> alive
+                // "in": in C -> inc; in action -> inaction
+            ])
+            .t_ws_h()
+            .then_kind_either(TokenKind::is_verb, TokenKind::is_noun)
+            .then_optional_hyphen()
+            .and_not(SequenceExpr::any_of(vec![
+                // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
+                Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
+                // Don't merge "co op" whether separated by space or hyphen.
+                Box::new(SequenceExpr::aco("co").t_any().t_set(&["op", "ops"])),
+                // Merge these if they're separated by hyphen, but not space.
+                Box::new(SequenceExpr::aco("out").t_ws().t_set(OUT_EXCEPTIONS)),
+                Box::new(SequenceExpr::aco("over").t_ws().t_set(OVER_EXCEPTIONS)),
+                Box::new(SequenceExpr::aco("under").t_ws().t_set(UNDER_EXCEPTIONS)),
+                Box::new(SequenceExpr::aco("up").t_ws().t_set(UP_EXCEPTIONS)),
+            ])),
             dict,
         }
     }
@@ -66,7 +64,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

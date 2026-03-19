@@ -6,7 +6,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct HyphenateNumberDay {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for HyphenateNumberDay {
@@ -26,9 +26,7 @@ impl Default for HyphenateNumberDay {
                 ),
             ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -36,7 +34,7 @@ impl ExprLinter for HyphenateNumberDay {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

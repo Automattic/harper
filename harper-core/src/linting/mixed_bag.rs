@@ -8,23 +8,21 @@ use crate::{
 };
 
 pub struct MixedBag {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MixedBag {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_kind_any_or_words(
-                        &[TokenKind::is_adjective, TokenKind::is_adverb] as &[_],
-                        &["a"],
-                    )
-                    .t_ws()
-                    .t_aco("mixed")
-                    .t_ws()
-                    .t_aco("bad"),
-            ),
+            expr: SequenceExpr::default()
+                .then_kind_any_or_words(
+                    &[TokenKind::is_adjective, TokenKind::is_adverb] as &[_],
+                    &["a"],
+                )
+                .t_ws()
+                .t_aco("mixed")
+                .t_ws()
+                .t_aco("bad"),
         }
     }
 }
@@ -33,7 +31,7 @@ impl ExprLinter for MixedBag {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -1,7 +1,7 @@
 //! Corrects common mistaken forms of "of course" while ignoring valid phrases like
 //! "kind of curse".
 
-use crate::expr::{Expr, OwnedExprExt, SequenceExpr};
+use crate::expr::{Expr, LongestMatchOf, OwnedExprExt, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
@@ -10,7 +10,7 @@ use crate::{
 };
 
 pub struct OfCourse {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for OfCourse {
@@ -35,9 +35,7 @@ impl Default for OfCourse {
             )
             .or_longest(WordSet::new(&["ofcourse"]));
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -45,7 +43,7 @@ impl ExprLinter for OfCourse {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {

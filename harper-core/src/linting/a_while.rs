@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::char_string::char_string;
@@ -11,8 +9,7 @@ use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AWhile {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<(CharString, &'static str)>>,
+    expr: ExprMap<(CharString, &'static str)>,
 }
 
 impl Default for AWhile {
@@ -45,12 +42,7 @@ impl Default for AWhile {
             ),
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -58,11 +50,11 @@ impl ExprLinter for AWhile {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let &(ref suggestion, message) = self.map.lookup(0, matched_tokens, source)?;
+        let &(ref suggestion, message) = self.expr.lookup(0, matched_tokens, source)?;
         let span = matched_tokens[2..].span()?;
         let suggestion =
             Suggestion::replace_with_match_case(suggestion.to_vec(), span.get_content(source));
