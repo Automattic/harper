@@ -299,7 +299,6 @@ mod tests {
 
     #[test]
     fn check_2966_is_avoided() {
-        // "Honestly and graciously convince someone of something."
         assert_no_lints(
             "Honestly and graciously convince someone of something.",
             DiscourseMarkers::default(),
