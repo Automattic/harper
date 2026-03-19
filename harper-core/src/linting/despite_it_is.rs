@@ -19,7 +19,7 @@ use crate::{
 /// - "despite it is" -> "despite it being" or "despite its being"
 /// - "despite I am" -> "despite me being" or "despite my being"
 pub struct DespiteItIs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DespiteItIs {
@@ -33,9 +33,7 @@ impl Default for DespiteItIs {
             .t_ws()
             .then(be);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -47,7 +45,7 @@ impl ExprLinter for DespiteItIs {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

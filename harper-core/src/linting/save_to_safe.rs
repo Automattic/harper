@@ -9,7 +9,7 @@ use crate::{
 };
 
 pub struct SaveToSafe {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SaveToSafe {
@@ -21,9 +21,7 @@ impl Default for SaveToSafe {
             .t_aco("to")
             .then_whitespace()
             .then_verb();
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -31,7 +29,7 @@ impl ExprLinter for SaveToSafe {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

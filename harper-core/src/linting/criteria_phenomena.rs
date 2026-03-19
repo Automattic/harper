@@ -9,7 +9,7 @@ use crate::{Lint, Lrc, Token, TokenStringExt};
 
 /// Linter that checks if 'criteria' or 'phenomena' is used as singular.
 pub struct CriteriaPhenomena {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     plural_words: Lrc<WordSet>,
     singular_modifiers: Lrc<WordSet>,
 }
@@ -21,11 +21,9 @@ impl CriteriaPhenomena {
         let singular_modifiers = Lrc::new(WordSet::new(&["this", "that", "a", "one"]));
 
         Self {
-            expr: Box::new(
-                SequenceExpr::with(singular_modifiers.clone())
-                    .then_whitespace()
-                    .then(plural_words.clone()),
-            ),
+            expr: SequenceExpr::with(singular_modifiers.clone())
+                .then_whitespace()
+                .then(plural_words.clone()),
             plural_words,
             singular_modifiers,
         }
@@ -36,7 +34,7 @@ impl ExprLinter for CriteriaPhenomena {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

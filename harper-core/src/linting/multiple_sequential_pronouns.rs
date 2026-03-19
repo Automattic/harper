@@ -7,7 +7,7 @@ use crate::{
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
 pub struct MultipleSequentialPronouns {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl MultipleSequentialPronouns {
@@ -20,10 +20,8 @@ impl MultipleSequentialPronouns {
         });
 
         Self {
-            expr: Box::new(
-                SequenceExpr::with(pronouns.clone())
-                    .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
-            ),
+            expr: SequenceExpr::with(pronouns.clone())
+                .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
         }
     }
 }
@@ -32,7 +30,7 @@ impl ExprLinter for MultipleSequentialPronouns {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

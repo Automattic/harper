@@ -5,19 +5,17 @@ use crate::{
 };
 
 pub struct GoToWar {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for GoToWar {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
-                    .t_ws()
-                    .then_preposition()
-                    .t_ws()
-                    .then_word_set(&["war"]),
-            ),
+            expr: SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
+                .t_ws()
+                .then_preposition()
+                .t_ws()
+                .then_word_set(&["war"]),
         }
     }
 }
@@ -30,7 +28,7 @@ impl ExprLinter for GoToWar {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

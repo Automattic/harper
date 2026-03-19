@@ -12,7 +12,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct MissingPreposition {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MissingPreposition {
@@ -34,9 +34,7 @@ impl Default for MissingPreposition {
         .then_optional(AnyPattern)
         .then_optional(AnyPattern);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -44,7 +42,7 @@ impl ExprLinter for MissingPreposition {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

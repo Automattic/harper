@@ -7,16 +7,14 @@ use crate::{
 
 /// Both `another thing coming` and `another think coming` are correct, but `another think coming` is the original.
 pub struct AnotherThinkComing {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AnotherThinkComing {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["had", "has", "have", "got"])
-                    .then_fixed_phrase(" another thing coming"),
-            ),
+            expr: SequenceExpr::word_set(&["had", "has", "have", "got"])
+                .then_fixed_phrase(" another thing coming"),
         }
     }
 }
@@ -25,7 +23,7 @@ impl ExprLinter for AnotherThinkComing {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

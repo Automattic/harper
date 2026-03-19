@@ -5,19 +5,17 @@ use crate::{
 };
 
 pub struct BrandBrandish {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for BrandBrandish {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["brandish", "brandished", "brandishes", "brandishing"])
-                    .t_ws()
-                    // "her" is also a possessive determiner as in "she brandished her sword"
-                    // "it" and "them" can refer to objects as in "draw your sword(s) and brandish it/them"
-                    .then_kind_except(TokenKind::is_object_pronoun, &["her", "it", "them"]),
-            ),
+            expr: SequenceExpr::word_set(&["brandish", "brandished", "brandishes", "brandishing"])
+                .t_ws()
+                // "her" is also a possessive determiner as in "she brandished her sword"
+                // "it" and "them" can refer to objects as in "draw your sword(s) and brandish it/them"
+                .then_kind_except(TokenKind::is_object_pronoun, &["her", "it", "them"]),
         }
     }
 }
@@ -26,7 +24,7 @@ impl ExprLinter for BrandBrandish {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

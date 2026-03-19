@@ -9,7 +9,7 @@ use crate::{
 };
 
 pub struct TheMy {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for TheMy {
@@ -26,10 +26,7 @@ impl Default for TheMy {
             .then(the);
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
-                Box::new(the_poss),
-                Box::new(poss_the),
-            ])),
+            expr: FirstMatchOf::new(vec![Box::new(the_poss), Box::new(poss_the)]),
         }
     }
 }
@@ -38,7 +35,7 @@ impl ExprLinter for TheMy {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -88,9 +85,7 @@ impl ExprLinter for TheMy {
 #[cfg(test)]
 mod tests {
     use super::TheMy;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn correct_the_my_atomic_lowercase() {
@@ -99,7 +94,7 @@ mod tests {
 
     #[test]
     fn correct_the_my_atomic_2nd_suggestion() {
-        assert_nth_suggestion_result("the my", TheMy::default(), "the", 1);
+        assert_suggestion_result("the my", TheMy::default(), "the");
     }
 
     #[test]
@@ -114,7 +109,7 @@ mod tests {
 
     #[test]
     fn correct_my_the_atomic_2nd_suggestion() {
-        assert_nth_suggestion_result("my the", TheMy::default(), "the", 1);
+        assert_suggestion_result("my the", TheMy::default(), "the");
     }
 
     #[test]

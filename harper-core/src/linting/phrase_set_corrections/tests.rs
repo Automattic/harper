@@ -1,6 +1,5 @@
 use crate::linting::tests::{
-    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
-    assert_nth_suggestion_result, assert_suggestion_result, assert_top3_suggestion_result,
+    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints, assert_suggestion_result,
 };
 
 use super::lint_group;
@@ -1932,7 +1931,7 @@ fn correct_double_edged_space_plural() {
 
 #[test]
 fn corrects_allocs() {
-    assert_top3_suggestion_result(
+    assert_suggestion_result(
         "cmd/compile: avoid allocs by better tracking of literals for interface conversions and make",
         lint_group(),
         "cmd/compile: avoid allocations by better tracking of literals for interface conversions and make",
@@ -1941,7 +1940,7 @@ fn corrects_allocs() {
 
 #[test]
 fn expand_alloc() {
-    assert_top3_suggestion_result(
+    assert_suggestion_result(
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
@@ -2160,11 +2159,10 @@ fn correct_how_it_looks_like_1() {
 
 #[test]
 fn correct_how_it_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "This is how it looks like when run from Windows PowerShell or Cmd: image.",
         lint_group(),
         "This is what it looks like when run from Windows PowerShell or Cmd: image.",
-        1,
     );
 }
 
@@ -2179,11 +2177,10 @@ fn correct_how_they_look_like_1() {
 
 #[test]
 fn correct_how_they_look_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "So for now I'll just leave this issue here of how they look like in the XLSX",
         lint_group(),
         "So for now I'll just leave this issue here of what they look like in the XLSX",
-        1,
     );
 }
 
@@ -2198,11 +2195,10 @@ fn correct_how_they_looks_like_1() {
 
 #[test]
 fn correct_how_they_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "You can check how they looks like on Android app by this command:",
         lint_group(),
         "You can check what they look like on Android app by this command:",
-        1,
     );
 }
 
@@ -2217,11 +2213,10 @@ fn correct_how_she_looks_like_1() {
 
 #[test]
 fn correct_how_he_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "Here's how he looks like, when he's supposed to just look like his old fatui design.",
         lint_group(),
         "Here's what he looks like, when he's supposed to just look like his old fatui design.",
-        1,
     );
 }
 
@@ -2236,11 +2231,10 @@ fn correct_how_it_look_like_1() {
 
 #[test]
 fn correct_how_it_look_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "Here is how it look like in your browser:",
         lint_group(),
         "Here is what it looks like in your browser:",
-        1,
     );
 }
 
@@ -2769,7 +2763,7 @@ fn correct_atomic_a_whole_entire_to_a_whole() {
 
 #[test]
 fn correct_atomic_a_whole_entire_to_an_entire() {
-    assert_nth_suggestion_result("a whole entire", lint_group(), "an entire", 1);
+    assert_suggestion_result("a whole entire", lint_group(), "an entire");
 }
 
 #[test]
@@ -2783,11 +2777,10 @@ fn correct_real_world_a_whole_entire_to_a_whole() {
 
 #[test]
 fn correct_real_world_a_whole_entire_to_an_entire() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "I am not sure I can pass in a whole entire query via the include.",
         lint_group(),
         "I am not sure I can pass in an entire query via the include.",
-        1,
     );
 }
 
