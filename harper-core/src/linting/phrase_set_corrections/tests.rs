@@ -1880,6 +1880,31 @@ fn copywrote() {
     );
 }
 
+// DateBackFrom
+
+#[test]
+fn corrects_date_back_from() {
+    assert_suggestion_result(
+        "There are too many open issues that date back from 4 years ago.",
+        lint_group(),
+        "There are too many open issues that date from 4 years ago.",
+    );
+}
+
+#[test]
+fn corrects_dates_back_from() {
+    assert_suggestion_result(
+        "This code dates back from 2014.",
+        lint_group(),
+        "This code dates from 2014.",
+    );
+}
+
+#[test]
+fn allows_date_back_to() {
+    assert_no_lints("These scripts date back to when Perl was popular.", lint_group());
+}
+
 // DoubleEdgedSword
 
 #[test]
