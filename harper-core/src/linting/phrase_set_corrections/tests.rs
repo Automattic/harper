@@ -1630,15 +1630,6 @@ fn i_wish_it_was() {
 // UseToUsedTo
 
 #[test]
-fn corrects_i_use_to() {
-    assert_suggestion_result(
-        "I use to develop with objects in JS.",
-        lint_group(),
-        "I used to develop with objects in JS.",
-    );
-}
-
-#[test]
 fn corrects_getting_use_to() {
     assert_suggestion_result(
         "I'm getting use to it slowly.",
@@ -1654,6 +1645,20 @@ fn corrects_are_use_to() {
         lint_group(),
         "If you are used to Ubuntu, then the way sudo works should not be strange.",
     );
+}
+
+#[test]
+fn corrects_im_use_to() {
+    assert_suggestion_result(
+        "I'm use to doing a lot of work.",
+        lint_group(),
+        "I'm used to doing a lot of work.",
+    );
+}
+
+#[test]
+fn allows_use_to_as_verb() {
+    assert_no_lints("This is the editor I use to write code.", lint_group());
 }
 
 #[test]
