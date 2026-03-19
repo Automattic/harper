@@ -1627,6 +1627,40 @@ fn i_wish_it_was() {
     );
 }
 
+// UseToUsedTo
+
+#[test]
+fn corrects_i_use_to() {
+    assert_suggestion_result(
+        "I use to develop with objects in JS.",
+        lint_group(),
+        "I used to develop with objects in JS.",
+    );
+}
+
+#[test]
+fn corrects_getting_use_to() {
+    assert_suggestion_result(
+        "I'm getting use to it slowly.",
+        lint_group(),
+        "I'm getting used to it slowly.",
+    );
+}
+
+#[test]
+fn corrects_are_use_to() {
+    assert_suggestion_result(
+        "If you are use to Ubuntu, then the way sudo works should not be strange.",
+        lint_group(),
+        "If you are used to Ubuntu, then the way sudo works should not be strange.",
+    );
+}
+
+#[test]
+fn allows_used_to() {
+    assert_no_lints("I used to develop with objects in JS.", lint_group());
+}
+
 // WreakHavoc
 
 #[test]
