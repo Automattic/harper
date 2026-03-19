@@ -236,22 +236,6 @@ fn corrects_dose_not() {
     );
 }
 
-// RedundantSuperlatives
-
-#[test]
-fn redundant_more_optimal() {
-    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
-}
-
-#[test]
-fn redundant_most_ideal() {
-    assert_suggestion_result(
-        "This is the most ideal scenario.",
-        lint_group(),
-        "This is the ideal scenario.",
-    );
-}
-
 // -dose it true positive-
 #[test]
 #[ignore = "due to false positives this can't be fixed yet"]
@@ -772,6 +756,55 @@ fn corrects_gotten_used_of() {
     );
 }
 
+// GrindToAHalt
+
+#[test]
+fn corrects_grind_to_halt() {
+    // Without this it will eventually grind to halt as it backs up upon itself
+    assert_suggestion_result(
+        "Without this it will eventually grind to halt as it backs up upon itself",
+        lint_group(),
+        "Without this it will eventually grind to a halt as it backs up upon itself",
+    );
+}
+
+#[test]
+#[ignore = "Fails due to how replace_with_matched_case works"]
+fn corrects_grind_to_halt_title_case() {
+    assert_suggestion_result(
+        "Smart Search Tools Cause System to Grind to Halt",
+        lint_group(),
+        "Smart Search Tools Cause System to Grind to a Halt",
+    );
+}
+
+#[test]
+fn corrects_grinding_to_halt() {
+    assert_suggestion_result(
+        "app grinding to halt when loading many objects",
+        lint_group(),
+        "app grinding to a halt when loading many objects",
+    );
+}
+
+#[test]
+fn corrects_grinds_to_halt() {
+    assert_suggestion_result(
+        "If your machine grinds to halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+        lint_group(),
+        "If your machine grinds to a halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+    );
+}
+
+#[test]
+fn corrects_ground_to_halt() {
+    assert_suggestion_result(
+        "As you have probably guessed, my work on my fork has ground to halt.",
+        lint_group(),
+        "As you have probably guessed, my work on my fork has ground to a halt.",
+    );
+}
+
 // HavePassed
 
 #[test]
@@ -1193,7 +1226,20 @@ fn fix_peaks() {
 // -none-
 
 // RedundantSuperlatives
-// -none-
+
+#[test]
+fn redundant_more_optimal() {
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
+}
+
+#[test]
+fn redundant_most_ideal() {
+    assert_suggestion_result(
+        "This is the most ideal scenario.",
+        lint_group(),
+        "This is the ideal scenario.",
+    );
+}
 
 // ResponsibilityFor
 

@@ -266,6 +266,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `used of` to `used to`.",
             LintKind::Usage
         ),
+        "GrindToAHalt" => (
+            &[
+                ("grind to halt", "grind to a halt"),
+                ("grinding to halt", "grinding to a halt"),
+                ("grinds to halt", "grinds to a halt"),
+                ("ground to halt", "ground to a halt"),
+            ],
+            "You are missing the indefinite article `a` before `halt`.",
+            "Corrects the idiom `grind to halt` to the standard `grind to a halt`.",
+            LintKind::Nonstandard
+        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
