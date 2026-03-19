@@ -1665,6 +1665,40 @@ fn fix_wrecks_havoc() {
     );
 }
 
+// VerseAsVerb
+
+#[test]
+fn corrects_verse_against() {
+    assert_suggestion_result(
+        "A game of Morra, with 3 different AI you can verse against.",
+        lint_group(),
+        "A game of Morra, with 3 different AI you can play against.",
+    );
+}
+
+#[test]
+fn corrects_versing_against() {
+    assert_suggestion_result(
+        "This will help when you are versing against a particular boss.",
+        lint_group(),
+        "This will help when you are playing against a particular boss.",
+    );
+}
+
+#[test]
+fn corrects_verse_me() {
+    assert_suggestion_result(
+        "Come verse me in this game.",
+        lint_group(),
+        "Come play me in this game.",
+    );
+}
+
+#[test]
+fn allows_versus() {
+    assert_no_lints("It was red versus blue in the finals.", lint_group());
+}
+
 // WroteToRote
 
 #[test]

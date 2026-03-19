@@ -525,6 +525,22 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
             LintKind::Eggcorn
         ),
+        "VerseAsVerb" => (
+            &[
+                ("verse against", "play against"),
+                ("versed against", "played against"),
+                ("versing against", "playing against"),
+                ("verses against", "plays against"),
+                ("verse me", "play me"),
+                ("verse him", "play him"),
+                ("verse her", "play her"),
+                ("verse them", "play them"),
+                ("verse you", "play you"),
+            ],
+            "`Verse` is not a verb meaning to compete. Use `play against` or `compete against` instead.",
+            "Corrects the nonstandard use of `verse` as a verb (from `versus`) to standard alternatives.",
+            LintKind::Nonstandard
+        ),
         "WroteToRote" => (
             &[
                 ("by wrote", "by rote"),
