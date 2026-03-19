@@ -26,6 +26,133 @@ fn corrects_much_ado() {
     );
 }
 
+// Bollocks
+
+#[test]
+fn fix_complete_bullocks() {
+    assert_suggestion_result(
+        "why you think some of them are complete bullocks or would be a bad idea",
+        lint_group(),
+        "why you think some of them are complete bollocks or would be a bad idea",
+    );
+}
+
+#[test]
+fn fix_dogs() {
+    assert_suggestion_result(
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bullocks.",
+        lint_group(),
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bollocks.",
+    );
+}
+
+#[test]
+fn fix_dogs_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "some dumb rubbish that i do not give a dogs bullocks about",
+        lint_group(),
+        "some dumb rubbish that i do not give a dogs bollocks about",
+    );
+}
+
+#[test]
+fn fix_is_bullocks() {
+    assert_suggestion_result(
+        "for me this is bullocks, when the same user can sudo rm -rf",
+        lint_group(),
+        "for me this is bollocks, when the same user can sudo rm -rf",
+    );
+}
+
+#[test]
+fn fix_its_bullocks() {
+    assert_suggestion_result(
+        "I'm too lazy to explain why, but I think it's bullocks.",
+        lint_group(),
+        "I'm too lazy to explain why, but I think it's bollocks.",
+    );
+}
+
+#[test]
+fn fix_its_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "but lance, dont claim to be clean, because we all know its bullocks",
+        lint_group(),
+        "but lance, dont claim to be clean, because we all know its bollocks",
+    );
+}
+
+#[test]
+fn fix_such_bullocks() {
+    assert_suggestion_result(
+        "This is why numerology is such bullocks.",
+        lint_group(),
+        "This is why numerology is such bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_bullocks() {
+    assert_suggestion_result(
+        "Respectfully, that's bullocks.",
+        lint_group(),
+        "Respectfully, that's bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "In CSS thats bullocks as directives have priority in the order they are defined.",
+        lint_group(),
+        "In CSS thats bollocks as directives have priority in the order they are defined.",
+    );
+}
+
+#[test]
+fn fix_total_bullocks() {
+    assert_suggestion_result(
+        "Pointing out to the audience that their gravity explanation is total bullocks would seem an ethical must as well.",
+        lint_group(),
+        "Pointing out to the audience that their gravity explanation is total bollocks would seem an ethical must as well.",
+    );
+}
+
+#[test]
+fn fix_utter_bullocks() {
+    assert_suggestion_result(
+        "what utter bullocks a self employed person will get £94 under corona virus crisis",
+        lint_group(),
+        "what utter bollocks a self employed person will get £94 under corona virus crisis",
+    );
+}
+
+#[test]
+fn fix_was_bullocks() {
+    assert_suggestion_result(
+        "a few years ago I thought that was bullocks",
+        lint_group(),
+        "a few years ago I thought that was bollocks",
+    );
+}
+
+#[test]
+fn fix_bullocks_exclamation() {
+    assert_suggestion_result(
+        "throw(new Error('Bullocks!')));",
+        lint_group(),
+        "throw(new Error('Bollocks!')));",
+    );
+}
+
+#[test]
+fn dont_flag_herd_of_bullocks() {
+    assert_no_lints(
+        "driven back (literally) by a herd of bullocks across the path",
+        lint_group(),
+    );
+}
+
 // ChampAtTheBit
 #[test]
 fn correct_chomp_at_the_bit() {
