@@ -232,6 +232,30 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
+        "FlauntForFlout" => (
+            &[
+                ("flaunt the rules", "flout the rules"),
+                ("flaunts the rules", "flouts the rules"),
+                ("flaunted the rules", "flouted the rules"),
+                ("flaunting the rules", "flouting the rules"),
+                ("flaunt the law", "flout the law"),
+                ("flaunts the law", "flouts the law"),
+                ("flaunted the law", "flouted the law"),
+                ("flaunting the law", "flouting the law"),
+                ("flaunt the regulations", "flout the regulations"),
+                ("flaunt authority", "flout authority"),
+                ("flaunts authority", "flouts authority"),
+                ("flaunted authority", "flouted authority"),
+                ("flaunting authority", "flouting authority"),
+                ("flaunt convention", "flout convention"),
+                ("flaunts convention", "flouts convention"),
+                ("flaunted convention", "flouted convention"),
+                ("flaunting convention", "flouting convention"),
+            ],
+            "`Flaunt` means to show off. Use `flout` when you mean to openly disregard rules or conventions.",
+            "Corrects `flaunt` to `flout` when used with rule-like nouns.",
+            LintKind::WordChoice
+        ),
         "FoamAtTheMouth" => (
             &[
                 ("foam out the mouth", "foam at the mouth"),
