@@ -5363,6 +5363,16 @@ Suggest:
 
 
 
+Lint:    Grammar (31 priority)
+Message: |
+    4066 | “That was his cousin. I knew his whole family history before he left. He gave me
+    4067 | an aluminum putter that I use to-day.”
+         |                         ^~~~~~~~ The correct form is `used to`, not `use to`.
+Suggest:
+  - Replace with: “I used to”
+
+
+
 Lint:    Spelling (31 priority)
 Message: |
     4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
