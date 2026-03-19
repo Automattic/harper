@@ -1,9 +1,9 @@
 expr main [(cutting age), (cutting-age)]
 
-let message "Did you mean `cutting-edge`?"
-let description "Corrects the eggcorn `cutting age` or `cutting-age` to `cutting-edge`."
+let message "Did you mean `cutting-edge` (adjective before a noun) or `cutting edge` (in other positions)?"
+let description "Corrects the eggcorn `cutting age` or `cutting-age` to `cutting-edge` or `cutting edge`."
 let kind "Eggcorn"
-let becomes "cutting-edge"
+let becomes ["cutting-edge", "cutting edge"]
 let strategy "MatchCase"
 
 # True positives
@@ -15,7 +15,7 @@ test "CUTTING AGE software is our specialty." "CUTTING-EDGE software is our spec
 test "The cutting age approach impressed everyone." "The cutting-edge approach impressed everyone."
 test "We chose cutting age tools for this project." "We chose cutting-edge tools for this project."
 
-# False positives / true negatives
+# True negatives
 
 allows "We use cutting-edge technology."
 allows "This is a cutting-edge framework."
