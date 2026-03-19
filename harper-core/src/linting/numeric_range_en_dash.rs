@@ -26,6 +26,7 @@ fn is_chained_numeric_form(context: Option<(&[Token], &[Token])>) -> bool {
         return false;
     };
 
+    // Skip multi-part numeric chains like dates (`2026-03-18`) and versions (`1-2-3`).
     let preceded_by_numeric_dash = matches!(
         before,
         [.., number, dash] if number.kind.is_number() && is_numeric_range_dash(dash)
