@@ -1902,7 +1902,10 @@ fn corrects_dates_back_from() {
 
 #[test]
 fn allows_date_back_to() {
-    assert_no_lints("These scripts date back to when Perl was popular.", lint_group());
+    assert_no_lints(
+        "These scripts date back to when Perl was popular.",
+        lint_group(),
+    );
 }
 
 // DoubleEdgedSword
