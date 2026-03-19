@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub struct PluralWrongWordOfPhrase {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 // If a noun needs other than an -s suffix to be pluralized, include it as the 2nd array element.
@@ -60,7 +60,7 @@ impl Default for PluralWrongWordOfPhrase {
         }
 
         Self {
-            expr: Box::new(SequenceExpr::any_of(mistakes)),
+            expr: SequenceExpr::any_of(mistakes),
         }
     }
 }
@@ -73,7 +73,7 @@ impl ExprLinter for PluralWrongWordOfPhrase {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -5,7 +5,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct HavePronoun {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for HavePronoun {
@@ -18,9 +18,7 @@ impl Default for HavePronoun {
                 TokenKind::is_plural_pronoun,
             );
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -28,7 +26,7 @@ impl ExprLinter for HavePronoun {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

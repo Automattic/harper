@@ -6,7 +6,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct Whereas {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Whereas {
@@ -16,9 +16,7 @@ impl Default for Whereas {
             .then_whitespace()
             .t_aco("as");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for Whereas {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

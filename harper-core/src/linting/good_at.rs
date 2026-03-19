@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct GoodAt {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for GoodAt {
@@ -65,9 +65,7 @@ impl Default for GoodAt {
             Box::new(good_in_skill_or_subject),
         ]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -75,7 +73,7 @@ impl ExprLinter for GoodAt {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

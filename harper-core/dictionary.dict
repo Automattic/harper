@@ -1,4 +1,4 @@
-54400
+54500
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -3875,6 +3875,7 @@ Gawain/Og
 Gay/Og
 Gayle/Og
 Gaza/Og
+Gazan/JOgS
 Gaziantep/Og
 Gd/                 # Gadolinium
 Gdańsk/Og
@@ -4100,6 +4101,8 @@ Grail/g
 Grammy/Ng
 Grampians/Og
 Granada/Og
+Grand Prix/O0g
+Grands Prix/O9
 Grant/ONg
 Grass/Og
 Graves/Og
@@ -5221,6 +5224,7 @@ Jonathan/ONg
 Jonathon/Og
 Jones/Og
 Jonesboro/Og
+Jong-Un/Og
 Joni/Og
 Jonson/Og
 Joplin/Og
@@ -5345,9 +5349,10 @@ Kandinsky/g
 Kane/Og
 Kaneohe/Og
 Kankakee/Og
-Kannada/Ng          # language
+Kannada/Omg         # language
 Kano/Og
 Kanpur/Og
+Kansai/Og
 Kansan/JNgS
 Kansas/Og
 Kant/Og             # immanuel -
@@ -5715,6 +5720,7 @@ Lachesis/ONg
 Lactobacillus/O
 Lacy/Og
 Lada/NOSg
+Ladakh/Og
 Ladoga/Og
 Ladonna/g
 Lady/NOg
@@ -6731,6 +6737,7 @@ Mel/Og
 Melaka/Og
 Melanesia/Og
 Melanesian/JNg
+Melania/Og
 Melanie/Og
 Melba/Og
 Melbourne/Og
@@ -10069,6 +10076,7 @@ Thespis/g
 Thessalonian/JNSg
 Thessaloniki/Og     # city
 Thessaly/Og
+Thiel/Og
 Thieu/g
 Thimbu/ONg          # capital of bhutan
 Thimphu/O           # capital of bhutan
@@ -10358,6 +10366,7 @@ Tyrone/ONg
 Tyson/Og
 U/                  # Uranium; removed `1`noun `5`adj. `2`proper noun `+`prep., was interfering with linter heuristics. I only know this as an abbreviation for university
 U-turn/NgSVdG
+U.K./Og
 U.S./Og             # United States
 UAE/Og              # United Arab Emirates
 UAR/O
@@ -12273,7 +12282,7 @@ alveolar/~JNS
 alveoli/N9
 alveolus/N0g
 always/~R8
-am/~Vn
+am/~Vln             # 1st person singular present of 'be'
 amalgam/~NwSgV
 amalgamate/~VGdSJNXn
 amalgamation/~NwSg
@@ -13063,7 +13072,7 @@ ardor/NgS
 ardour/NwgS!@_₹
 arduous/~JYp
 arduousness/Ng
-are/~VS            # 2nd person singular & plural / 3rd person plural present of 'be'
+are/~VlS            # 2nd person singular & plural / 1st & 3rd person plural present of 'be'
 area/~NwSg
 areal/J
 aren't/V
@@ -14261,7 +14270,7 @@ bazillion/NS
 bazooka/NSgV
 bbl/N
 bdrm/N
-be/~NbA
+be/~NAVbl
 beach/~NgSVdG
 beachcomber/NSg
 beachfront/JN
@@ -14382,7 +14391,7 @@ beehive/~NgSV
 beekeeper/NgS
 beekeeping/Nmg
 beeline/NgSV
-been/~VTN
+been/~VlTN
 beep/NSgVGd>Z
 beeper/Ng
 beer/~NwgV
@@ -14457,7 +14466,7 @@ beholder/Ng
 behoove/VdSG
 behove/VGdS!_₹
 beige/~NmgJ
-being/~V6NwgC
+being/~Vl6NwgC
 bejewel/VSdG
 bejewelled/VtTJ!@_₹
 bejewelling/V6!@_₹
@@ -15034,6 +15043,7 @@ blindfold/NSgJVdG
 blinding/~V6JYN
 blindness/~Ng
 blindside/NSVdG
+blind spot/NgS
 blini/NgS
 blink/~VGd>SNgZ
 blinker/NgVdG
@@ -16346,6 +16356,9 @@ callisthenic/JS!_₹
 callosity/NSg
 callous/~JYpNSVGd
 callousness/Nmg
+callout/NgS         # Cambridge (also), Websters
+call out/V/         # Cambridge, Collins, Websters, Longman, Oxford
+call-out/NgS        # American Heritage, Cambridge, Longman, OED, Oxford
 callow/J>^pN
 callowness/Ng
 callus/NgSVdG
@@ -21657,6 +21670,7 @@ discrepant/JN
 discrete/~JYpn
 discreteness/Nmg
 discretion/~Ngi
+discretionarily/Ry
 discretionary/~J
 discretisation/Ng!_₹
 discretization/Ng
@@ -28441,6 +28455,7 @@ heterosexuality/Nmg
 heuristic/JNgSQ
 heuristics/Ng
 hew/VGd>SNZ
+hewn/JT             # past participle of "hew"
 hewer/Ng
 hex/~VGdSNwg
 hexadecimal/NwSJ
@@ -29910,6 +29925,7 @@ incorrigible/JN
 incorrigibly/Ry
 incorruptibly/Ry
 increasing/~JYV6N
+increasingly/R
 increment/~NSgVdG
 incremental/~JY
 incrementalism/N
@@ -29946,6 +29962,7 @@ indefatigably/Ry
 indefeasible/J
 indefeasibly/Ry
 indefinably/Ry
+indefinitely/Ry
 indelible/J
 indelibly/Ry
 indemnification/Ng
@@ -30851,7 +30868,7 @@ irritating/JYV
 irritation/~Ng
 irrupt/VdGSv
 irruption/NSg
-is/~Vhl
+is/~Vlh             # 3rd person singular present of 'be'
 ischaemia/N!_₹
 ischaemic/J!_₹
 ischemia/~N
@@ -31362,6 +31379,7 @@ kegel/NgS
 kelp/NgV
 kelvin/~NSg
 ken/~VSNg
+kendo/Nmg           # martial art
 kenned/VtT
 kennel/~NSgVGd
 kennelled/VtT!@_₹
@@ -32036,6 +32054,7 @@ leash's
 least/~NgJDq
 leastwise/
 leather/~NwgSJV
+leathercraft/Nwg
 leatherette/Ng
 leatherman/Ng
 leatherneck/NgS
@@ -32755,6 +32774,7 @@ longshoreman/N0g
 longshoremen/N9
 longsighted/J
 longstanding/~J
+longsword/NSg
 longtime/~J
 longueur/NSg
 longways/
@@ -32991,6 +33011,7 @@ lutanist/NSg
 lute/~NgSV
 lutenist/NSg
 lutetium/Nmg
+luthier/NSg
 lux/~NV
 luxuriance/Ng
 luxuriant/JY
@@ -39699,6 +39720,7 @@ polarity/~NwSg
 polarization/~NwSge
 polarize/VdSGe
 pole/~NgSV
+polearm/NSg
 poleaxe/NSVGd
 polecat/NgS
 polemic/~NgSJ
@@ -40681,6 +40703,7 @@ programming/~NmgV6
 progress/~NmgSVdGv
 progression/~NgS
 progressive/~JYpNgS
+progressively/R
 progressiveness/Ng
 progressivism/Nmg
 prohibit/~VdGSv
@@ -40791,6 +40814,7 @@ proprietorial/JY
 proprietorship/Ng
 proprietress/NgS
 propriety/~NSg
+proprioception/Nmg  # medicine
 propulsion/~Nmg
 propulsive/J
 prorate/VdSG
@@ -42821,6 +42845,7 @@ rhododendron/~NSg
 rhomboid/NSgJ
 rhomboidal/J
 rhombus/NgS
+rhotic/NSgJ         # linguistics
 rhubarb/NgSJV
 rhyme/~NgSVGd>Z
 rhymer/NgS
@@ -44934,6 +44959,7 @@ shortness/Ng
 shortsighted/JYp
 shortsightedness/Ng
 shortstop/~NgSV
+shortsword/NSg
 shortwave/~JNgS
 shorty/NSgI
 shot/~JNgSVtT
@@ -46889,8 +46915,6 @@ stave/~NSgVdG
 stay/~Vd>GSNgJZ
 stay behind/V
 stay-behind/NgS
-std/~N
-stdio
 stead/~NSgV
 steadfast/~JYp
 steadfastness/Nmg
@@ -48217,6 +48241,8 @@ symposium/~NgS
 symptom/~NgS
 symptomatic/~JNQ
 syn/~JN
+synæsthesia/Nmg
+synaesthesia/Nmg
 synagogal/J
 synagogue/~NSg
 synapse/~NgSV
@@ -48234,6 +48260,7 @@ syncopate/VdSGn
 syncopation/Ng
 syncope/Ng
 syncretic/~J
+syncretism/Nmg
 syndicalism/N
 syndicalist/NS
 syndicate/~NSgVdGn
@@ -48243,6 +48270,7 @@ synergism/Ng
 synergistic/J
 synergize/VSdG
 synergy/~NSg
+synesthesia/Nmg
 synfuel/NgS
 synod/~NSg
 synonym/~NSg
@@ -50088,6 +50116,7 @@ triathlete/NS
 triathlon/NSg
 tribal/~JN
 tribalism/Nmg
+tribalistic/J
 tribe/~NSgV
 tribesman/Ng
 tribesmen/~9
@@ -52283,7 +52312,7 @@ warthog/NSg
 wartime/~Ng
 warty/J^>
 wary/~J^>pVU
-was/~Vt
+was/~Vlt
 wasabi/Nmg
 wash/~Vd>GSNgBzZ
 wash out/V/
@@ -52559,7 +52588,7 @@ wench/NgSV
 wend/VdGSN
 went/~VtN
 wept/V
-were/~VtN
+were/~VltN
 weren't/Vt
 werewolf/~N0g
 werewolves/N9
@@ -53604,10 +53633,12 @@ APFS/Og             # Apple file system
 ARM64/Og            # see also AArch64
 ASLR/Ng             # Address Space Layout Randomization
 ASM/N               # assembly language - should "asm" be included as well/instead?
+ASMR/Nmg            # "Autonomous Sensory Meridian Response"
 ASUS/Og
 ATF/Ng              # automatic transmission fluid
 AVC/Ng              # H.264 video format
 AVL tree/NgS        # data structure
+Afroasiatic/OmgJ.   # linguistics
 Airbnb/ONSg
 Akismet/Og
 Alexa/Og            # voice assistant
@@ -53811,6 +53842,7 @@ HTML5
 Hasan/OgS           # surname, given name
 HashiCorp/Og        # software company: Consul, Terraform, Vault, etc.
 Hiera/Sg
+Hmong-Mien/Omg      # linguistics
 Holmdel/Sg
 Hugging Face/Og
 IBAN/NgS            # International Bank Account Number
@@ -53828,6 +53860,9 @@ IPS/J               # in-plane switching (screen technology)
 IPv4/OgS
 IPv6/OgS
 ISA/NOSg            # instruction set architecture; industry standard architecture
+Indo-Aryan/OmgSJ    # linguistics
+Indo-European/OmSgJ # linguistics
+Indo-Iranian/NmgJ   # linguistics
 IntelliJ/Sg
 IntelliSense/Og
 IoT/Ng              # internet of things
@@ -53839,6 +53874,7 @@ JSONP/Og
 JVM/Sg              # Java virtual machine
 JWT/Ng              # JSON Web Token
 Jacoco/Sg
+Japonic/OmgJ        # linguistics
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
 JetBrains/Og
@@ -53852,12 +53888,15 @@ KVM/NSg             # keyboard-video-mouse
 Kagi/Sg
 Kahneman/Sg
 KanBan/Ng
+Kartvelian/OmgJ     # linguistics
 KiCad/Og            # software
 Kia/ONSg            # automobile brand
+Kra-Dai/OmgJ        # linguistics
 Kubernetes/OgS
 LADAR
 LDAP/Og             # Lightweight Directory Access Protocol
 LEGO/NSg            # official trademark form of Lego
+LFG/Omg             # Lexical Functional Grammar
 LIBOR/N             # London Interbank Offered Rate
 LIDAR/N             # FIXME! elsewhere we have LiDAR
 LLM/NgS             # large language model
@@ -53939,6 +53978,7 @@ NetBSD/Og           # operating system
 Netlify/Og          # cloud
 Next.js/ONg         # framework
 Nikolay/Sg
+Nilotic/OmgJ        # linguistics
 NixOS/Og
 NoSQL/N
 Node.js/Og          # official spelling has dot
@@ -54016,6 +54056,7 @@ Red Hat/Og
 Reddit/Og
 ReLU/NwgS           # rectifier linear unit
 Rivian/Sg           # ev company
+Roblox/Og           # game
 Roumania/Og         # pre-WWII spelling
 RustConf/Og         # conference
 Ryzen/ONgS
@@ -54045,6 +54086,7 @@ Shibuya/Og
 Shinjuku/Og
 Shopify/Og          # company
 Simplenote/Og
+Sino-Tibetan/NmgJ   # linguistics
 Sioyek/Ng
 Siri/Og             # voice assistant
 Skia/Og             # 2d graphics library
@@ -54137,6 +54179,7 @@ WebGPU/Sg
 WebKit/Og
 WebRTC/Og
 WebSocket/Sg
+Westphalian/J       # political science and international relations
 WhatsApp/NOgVG      # messaging app
 Wikilink/NSg        # !! please check and comment !! elsewhere we have wikilink
 Wikimedia/Og        # foundation that runs Wikipedia etc.
@@ -54193,12 +54236,14 @@ datetime/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+diahcronic/JQ       # linguistics
 diarization/NmgS    # used in voice recognition
 docstring/NSg
 doomerism/Nmg
 doomscrolling/V6NJ
 dotfile/~NSg        # not well covered by dictionaries.
 eVTOL/NgS
+enshittify/VSdG
 enshittification/Nmg
 ext2/Ng             # file system
 ext3/Ng             # file system
@@ -54230,6 +54275,7 @@ hotwire/VGB         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
 iPadOS/Og
 iTerm2/Og           # macOS terminal emulator
+idiolect/NSg        # linguistics
 iframe/NgS
 infosec/NmG         # information security
 inpaint/VGdS
@@ -54240,6 +54286,9 @@ jQuery/Og
 keybind/NgS         # key binding
 keyserver/NgS
 labriola/Sg         # !! please check and comment !! - should be uppercase surname?
+lingua franca/NSg
+linguæ francæ/N9g
+linguae francae/N9g
 linkification/Nmg
 manip/NgS           # gamer slang manipulation
 megatron/NgS
@@ -54258,12 +54307,16 @@ pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
 plist/NgS           # Apple property list
+polysyntheses/N9    # linguistics
+polysynthesis/Nw0g  # linguistics
+polysynthetic/J.    # linguistics
 postfix/NgSVdG
 pre/~PNV(           # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
+rearchitect/VdGS
 redump/VdGS
 remux/VdGS
 reranker/NgS
@@ -54280,13 +54333,18 @@ sed/Og              # *nix tool / language
 sigil/NgS
 singleplayer/J
 sioyek/Sg           # !! please check and comment !!
+sociolect/NSg
 stacktrace/NSg      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
+std/~               # doesn't really behave like any normal POS but more like an affix that's not attached
+stdio/Og            # behaves like a proper noun despite lowercase since not normally used with 'a' or pluralized. But can be used with 'the'
+stdlib/Og           # behaves like a proper noun despite lowercase since not normally used with 'a' or pluralized. But can be used with 'the'
 strat/NgS           # gamer slang strategy
 subchannel/NgS
 subkey/NgS
 subreddit/NgS       # see Reddit
 supersequence/NgS
+synchronic/JQ       # linguistics
 tagset/NgS
 terraform/VGdS
 timespan/NgS
@@ -54299,6 +54357,7 @@ upsert/VdSGNg       # database operation: update or insert
 upsertion/NgS       # database operation: update or insert
 uptime/NwgS
 vid/NgS             # video
+volitive/NSgJ
 waitlist/NgS
 watchOS/Og
 webpack/Og
@@ -54309,84 +54368,45 @@ z-buffer/NgS
 # New entries may be added below this line
 # If you're not confident in using the affix annotations, add missing words here
 # And they will be reviewed
-# Word added using the `just addnoun` command will be added here
+# Words added using the `just addnoun` command will be added here
 
+agnatic/J           # Most often in the phrase "agnatic primogeniture"
+APAC/gO             # Acronym for Asia-Pacific
+archipelagic/J      # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
+chorded/J           # music: As refers to "chorded instruments"
+cognatic/J          # As with "agnatic"
+comital/J           # Adjective version of the noble rank "count/countess/earl"
 Compline/NO         # Final prayer of the day in the Christian Daily Office and/or Liturgy of the Hours
-exocentric/JQ
-LFG/NOg             # Lexical Functional Grammar
-licensor/NSg
-omnipredicativity/N0
-supervenience/Nmg   # From emergentist ontology
-volitive/NSgJ
-WordCamp/Og
-worldbuild/V>G     # !! This derives `worldbuilded` - is this intentional? -- no 😅, corrected
-
-Afroasiatic/NmgJ # linguistics
-agnatic/J # Most often in the phrase "agnatic primogeniture"
-archipelagic/J # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
-ASMR/Nmg # "Autonomous Sensory Meridian Response"
-chorded/J # music: As refers to "chorded instruments"
-cognatic/J # As with "agnatic"
-comital/J # Adjective version of the noble rank "count/countess/earl"
 covenantal/JQ
 cupbearer/NSg
-diahcronic/JQ # linguistics
-discretionarily/Ry
-exonym/NSg
-fae/Nmg # fantasy alternative for "fey"
-hewn/JT # past participle of "hew"
-Hmong-Mien/NmgJ # linguistics
-iaido/Nmg # martial art
-idiolect/NSg # linguistics
-indefinitely/Ry
-Indo-Aryan/NmgJ # linguistics
-Indo-European/NmgJ # linguistics
-Indo-Iranian/NmgJ # linguistics
-Japonic/NmgJ # linguistics
+DACH/gO             # Acronym for Deutschland, Austria, Switzerland
+EMEA/gO             # Acronym for Europe, the Middle East and Africa
+exocentric/JQ
+fae/Nmg             # fantasy alternative for "fey"
+iaido/Nmg           # martial art
 kalimba/NSg
-Kansai/NOg
-Kartvelian/NmgJ # linguistics
-kendo/Nmg # martial art
-Kra-Dai/NmgJ # linguistics
-leathercraft/Nwg
-lingua franca/NSg
-linguae francae/N9g
-linguæ francæ/N9g
-longsword/NSg
-luthier/NSg
-menarche/Nmg # medicine
+licensor/NSg
+menarche/Nmg        # medicine
 micronutrient/NSg
 monolatrous/J
 monolatry/Nmg
-Nilotic/NmgJ # linguistics
 offeror/NSg
+omnipredicativity/N0
 orthopractic/J
 orthopraxy/Nwg
-piebaldism/Nmg # medicine
-polearm/NSg
-polysyntheses/N9 # linguistics
-polysynthesis/Nw0g # linguistics
-polysynthetic/J # linguistics
+piebaldism/Nmg      # medicine
 praxis/Nmg
-proprioception/Nmg # medicine
 queenship/Nwg
 resolutive/J
-rhotic/NSgJ # linguistics
-shortsword/NSg
-Sino-Tibetan/NmgJ # linguistics
-sociolect/NSg
-sortition/Nmg # Political science: a method of appointment to office by random draw
+sortition/Nmg       # Political science: a method of appointment to office by random draw
 subvocalization/Nwg # phonetics
-synaesthesia/Nmg
-synchronic/JQ # linguistics
-syncretism/Nmg
-synesthesia/Nmg
-synæsthesia/Nmg
-trimeter/NgS # poetry
-trimetre/NgS!@_₹ # poetry
+supervenience/Nmg   # From emergentist ontology
+trimeter/NgS        # poetry
+trimetre/NgS!@_₹    # poetry
 trimetric/J
 unminted/J
-vicomital/J # Adjective version of "viscount/viscountess"
-vicontiel/J #  As above, alternative version
-viscomital/J # As above, alternative version
-Westphalian/J # political science and international relations
+vicomital/J         # Adjective version of "viscount/viscountess"
+vicontiel/J         #  As above, alternative version
+viscomital/J        # As above, alternative version
+WordCamp/Og
+worldbuild/V>G

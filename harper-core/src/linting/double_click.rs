@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
@@ -8,8 +6,7 @@ use crate::{
 };
 
 pub struct DoubleClick {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl DoubleClick {
@@ -48,12 +45,7 @@ impl Default for DoubleClick {
             0,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -61,11 +53,11 @@ impl ExprLinter for DoubleClick {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let double_idx = *self.map.lookup(0, matched_tokens, source)?;
+        let double_idx = *self.expr.lookup(0, matched_tokens, source)?;
         let click_idx = 2;
         let span = matched_tokens.get(double_idx..=click_idx)?.span()?;
         let template = span.get_content(source);

@@ -6,37 +6,35 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 pub struct AllIntentsAndPurposes {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AllIntentsAndPurposes {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_preposition() // Only "for" or "to" are OK
-                    .t_ws()
-                    .t_aco("all")
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(
-                            SequenceExpr::word_set(&[
-                                "intents", // Correct, as long as it follows "for" or "to"
-                                "extents", "intense", // Incorrect, no matter the preposition
-                            ])
-                            .t_ws()
-                            .t_aco("and"),
-                        ),
-                        Box::new(SequenceExpr::word_set(&[
-                            "intended",
-                            "intense",
-                            "intensive",
-                            "intrinsic",
-                        ])),
-                    ])
-                    .t_ws()
-                    .t_aco("purposes"),
-            ),
+            expr: SequenceExpr::default()
+                .then_preposition() // Only "for" or "to" are OK
+                .t_ws()
+                .t_aco("all")
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(
+                        SequenceExpr::word_set(&[
+                            "intents", // Correct, as long as it follows "for" or "to"
+                            "extents", "intense", // Incorrect, no matter the preposition
+                        ])
+                        .t_ws()
+                        .t_aco("and"),
+                    ),
+                    Box::new(SequenceExpr::word_set(&[
+                        "intended",
+                        "intense",
+                        "intensive",
+                        "intrinsic",
+                    ])),
+                ])
+                .t_ws()
+                .t_aco("purposes"),
         }
     }
 }
@@ -45,7 +43,7 @@ impl ExprLinter for AllIntentsAndPurposes {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

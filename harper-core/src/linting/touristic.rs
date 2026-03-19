@@ -19,7 +19,7 @@ pub enum SuggestionPreference {
 use SuggestionPreference::*;
 
 pub struct Touristic {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: LongestMatchOf,
 }
 
 // "touristy" doesn't sound natural with these words
@@ -79,9 +79,7 @@ impl Default for Touristic {
             Box::new(SequenceExpr::default().t_aco("touristic")),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -89,7 +87,7 @@ impl ExprLinter for Touristic {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::Token;
@@ -14,8 +12,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct ItsPossessive {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for ItsPossessive {
@@ -121,12 +118,7 @@ impl Default for ItsPossessive {
 
         map.insert(special, 0);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -134,11 +126,11 @@ impl ExprLinter for ItsPossessive {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_idx = self.map.lookup(0, matched_tokens, source).unwrap();
+        let offending_idx = self.expr.lookup(0, matched_tokens, source).unwrap();
         let span = matched_tokens[*offending_idx].span;
 
         Some(Lint {

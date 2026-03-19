@@ -20,22 +20,20 @@ fn match_case_string<'a>(template: &[char], variants: [&'a [char]; 3]) -> &'a [c
 }
 
 pub struct SinceDuration {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SinceDuration {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::any_capitalization_of("since")
-                    .then_whitespace()
-                    .then(DurationExpr)
-                    .then_optional(
-                        SequenceExpr::default()
-                            .t_ws()
-                            .then_word_set(&["ago", "old"]),
-                    ),
-            ),
+            expr: SequenceExpr::any_capitalization_of("since")
+                .then_whitespace()
+                .then(DurationExpr)
+                .then_optional(
+                    SequenceExpr::default()
+                        .t_ws()
+                        .then_word_set(&["ago", "old"]),
+                ),
         }
     }
 }
@@ -44,7 +42,7 @@ impl ExprLinter for SinceDuration {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -92,9 +90,7 @@ impl ExprLinter for SinceDuration {
 #[cfg(test)]
 mod tests {
     use super::SinceDuration;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn catches_spelled() {
@@ -132,7 +128,7 @@ mod tests {
 
     #[test]
     fn correct_without_issues() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I'm running v2.2.1 on bare metal (no docker, vm) since two weeks without issues.",
             SinceDuration::default(),
             "I'm running v2.2.1 on bare metal (no docker, vm) for two weeks without issues.",
@@ -141,7 +137,7 @@ mod tests {
 
     #[test]
     fn correct_anything_back() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I have not heard anything back since three months.",
             SinceDuration::default(),
             "I have not heard anything back for three months.",
@@ -150,7 +146,7 @@ mod tests {
 
     #[test]
     fn correct_get_done() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I am trying to get this done since two days, someone please help.",
             SinceDuration::default(),
             "I am trying to get this done for two days, someone please help.",
@@ -159,7 +155,7 @@ mod tests {
 
     #[test]
     fn correct_deprecated() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "This project is now officially deprecated, since I worked with virtualabs on the next version of Mirage since three years now: an ecosystem of tools named WHAD.",
             SinceDuration::default(),
             "This project is now officially deprecated, since I worked with virtualabs on the next version of Mirage for three years now: an ecosystem of tools named WHAD.",
@@ -168,7 +164,7 @@ mod tests {
 
     #[test]
     fn correct_same() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Same! Since two days.",
             SinceDuration::default(),
             "Same! For two days.",
@@ -177,7 +173,7 @@ mod tests {
 
     #[test]
     fn correct_what_changed() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "What changed since two weeks?",
             SinceDuration::default(),
             "What changed since two weeks ago?",
@@ -186,7 +182,7 @@ mod tests {
 
     #[test]
     fn correct_with_period() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I have been waiting since two hours.",
             SinceDuration::default(),
             "I have been waiting since two hours ago.",
@@ -195,7 +191,7 @@ mod tests {
 
     #[test]
     fn correct_with_exclamation() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I have been waiting since two hours!",
             SinceDuration::default(),
             "I have been waiting since two hours ago!",
@@ -204,7 +200,7 @@ mod tests {
 
     #[test]
     fn correct_with_question_mark() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Have you been waiting since two hours?",
             SinceDuration::default(),
             "Have you been waiting for two hours?",
@@ -213,7 +209,7 @@ mod tests {
 
     #[test]
     fn correct_with_comma() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Since two days, I have been trying to get this done.",
             SinceDuration::default(),
             "For two days, I have been trying to get this done.",
@@ -222,7 +218,7 @@ mod tests {
 
     #[test]
     fn correct_for_title_case() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Since 45 Minutes I See The Following Picture In The Terminal.",
             SinceDuration::default(),
             "For 45 Minutes I See The Following Picture In The Terminal.",
@@ -231,7 +227,7 @@ mod tests {
 
     #[test]
     fn correct_for_all_caps() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "STOPPED SINCE 12 HOURS WITH EXIT CODE 0",
             SinceDuration::default(),
             "STOPPED FOR 12 HOURS WITH EXIT CODE 0",
@@ -240,7 +236,7 @@ mod tests {
 
     #[test]
     fn correct_ago_title_case() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "It Is In Development Since Two Years.",
             SinceDuration::default(),
             "It Is In Development Since Two Years Ago.",
@@ -249,7 +245,7 @@ mod tests {
 
     #[test]
     fn correct_ago_all_caps() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "BUG: SINCE 6 MONTHS UNLOAD CHECKPOINT",
             SinceDuration::default(),
             "BUG: SINCE 6 MONTHS AGO UNLOAD CHECKPOINT",
@@ -259,7 +255,7 @@ mod tests {
     #[test]
     #[ignore = "We can't yet handle modifiers like 'over'. Plus it doesn't work with 'ago'."]
     fn not_yet_handled() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "It's an asked feature since over 9 years",
             SinceDuration::default(),
             "It's an asked feature for over 9 years.",
@@ -269,7 +265,7 @@ mod tests {
     #[test]
     #[ignore = "We can't yet handle modifiers like 'more than'. Plus it doesn't work with 'ago'."]
     fn not_yet_handled_2() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "It's an asked feature since more than 9 years",
             SinceDuration::default(),
             "It's an asked feature for more than 9 years.",
@@ -279,7 +275,7 @@ mod tests {
     #[test]
     #[ignore = "We can't yet handle indefinite numbers."]
     fn not_yet_handled_3() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I use a Wacom Cintiq 27QHDT since several years on Linux",
             SinceDuration::default(),
             "I use a Wacom Cintiq 27QHDT for several years on Linux",

@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct ChangeTack {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for ChangeTack {
@@ -16,7 +16,7 @@ impl Default for ChangeTack {
         let eggcorns = &["tact", "tacks", "tacts"];
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(
                     SequenceExpr::longest_of(vec![
                         Box::new(SequenceExpr::word_set(verb_forms).then_optional(
@@ -31,7 +31,7 @@ impl Default for ChangeTack {
                     .then_word_set(eggcorns),
                 ),
                 Box::new(SequenceExpr::aco("different").t_ws().t_aco("tact")),
-            ])),
+            ]),
         }
     }
 }
@@ -40,7 +40,7 @@ impl ExprLinter for ChangeTack {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

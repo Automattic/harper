@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct CureFor {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for CureFor {
@@ -16,9 +16,7 @@ impl Default for CureFor {
             .t_ws()
             .t_aco("against");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for CureFor {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

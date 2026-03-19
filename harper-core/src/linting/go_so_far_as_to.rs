@@ -6,18 +6,16 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind};
 
 pub struct GoSoFarAsTo {
-    exp: Box<dyn Expr>,
+    exp: SequenceExpr,
 }
 
 impl Default for GoSoFarAsTo {
     fn default() -> Self {
         Self {
-            exp: Box::new(
-                SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
-                    .then_fixed_phrase(" so far to ")
-                    .then_optional(SequenceExpr::default().then_adverb().t_ws())
-                    .then_any_word(),
-            ),
+            exp: SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
+                .then_fixed_phrase(" so far to ")
+                .then_optional(SequenceExpr::default().then_adverb().t_ws())
+                .then_any_word(),
         }
     }
 }
@@ -26,7 +24,7 @@ impl ExprLinter for GoSoFarAsTo {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.exp.as_ref()
+        &self.exp
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

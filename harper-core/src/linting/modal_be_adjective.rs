@@ -9,30 +9,28 @@ use crate::{
 };
 
 pub struct ModalBeAdjective {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ModalBeAdjective {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::with(ModalVerb::default())
-                    .t_ws()
-                    .then_kind_is_but_isnt_any_of_except(
-                        TokenKind::is_adjective,
-                        &[
-                            TokenKind::is_verb_lemma,  // set
-                            TokenKind::is_adverb,      // ever
-                            TokenKind::is_preposition, // on
-                            TokenKind::is_determiner,  // all
-                            TokenKind::is_pronoun,     // all
-                        ] as &[_],
-                        &[
-                            "backup", // adjective commonly misused as a verb
-                            "likely", // adjective but with special usage
-                        ] as &[_],
-                    ),
-            ),
+            expr: SequenceExpr::with(ModalVerb::default())
+                .t_ws()
+                .then_kind_is_but_isnt_any_of_except(
+                    TokenKind::is_adjective,
+                    &[
+                        TokenKind::is_verb_lemma,  // set
+                        TokenKind::is_adverb,      // ever
+                        TokenKind::is_preposition, // on
+                        TokenKind::is_determiner,  // all
+                        TokenKind::is_pronoun,     // all
+                    ] as &[_],
+                    &[
+                        "backup", // adjective commonly misused as a verb
+                        "likely", // adjective but with special usage
+                    ] as &[_],
+                ),
         }
     }
 }
@@ -41,7 +39,7 @@ impl ExprLinter for ModalBeAdjective {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

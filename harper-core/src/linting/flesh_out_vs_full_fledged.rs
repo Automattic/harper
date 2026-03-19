@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct FleshOutVsFullFledged {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FleshOutVsFullFledged {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
-                    .then_word_set(&[
-                        "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
-                        "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged",
-                        "pledges", "pledging",
-                    ])
-                    .then_optional(SequenceExpr::default().t_ws_h().t_aco("out")),
-            ),
+            expr: SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
+                .then_word_set(&[
+                    "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
+                    "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged", "pledges",
+                    "pledging",
+                ])
+                .then_optional(SequenceExpr::default().t_ws_h().t_aco("out")),
         }
     }
 }
@@ -28,7 +26,7 @@ impl ExprLinter for FleshOutVsFullFledged {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

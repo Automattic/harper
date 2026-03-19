@@ -6,33 +6,29 @@ use crate::{
 };
 
 pub struct ThisTypeOfThing {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThisTypeOfThing {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["this", "these", "that", "those"])
-                    .t_ws()
-                    .then(
-                        SequenceExpr::word_set(&[
-                            "kind", "kinds", "sort", "sorts", "type", "types",
-                        ])
+            expr: SequenceExpr::word_set(&["this", "these", "that", "those"])
+                .t_ws()
+                .then(
+                    SequenceExpr::word_set(&["kind", "kinds", "sort", "sorts", "type", "types"])
                         .t_ws(),
-                    )
-                    .t_aco("of")
-                    .t_ws()
-                    .then_any_of(vec![
-                        // "thing" is common in this construction and won't be part of a compound noun.
-                        Box::new(WordSet::new(&["thing", "things"])),
-                        // Other singular nouns may be part of hard-to-determine compound nouns, but plural nouns won't.
-                        Box::new(
-                            SequenceExpr::default()
-                                .then_kind_where(|k| k.is_plural_noun() && !k.is_singular_noun()),
-                        ),
-                    ]),
-            ),
+                )
+                .t_aco("of")
+                .t_ws()
+                .then_any_of(vec![
+                    // "thing" is common in this construction and won't be part of a compound noun.
+                    Box::new(WordSet::new(&["thing", "things"])),
+                    // Other singular nouns may be part of hard-to-determine compound nouns, but plural nouns won't.
+                    Box::new(
+                        SequenceExpr::default()
+                            .then_kind_where(|k| k.is_plural_noun() && !k.is_singular_noun()),
+                    ),
+                ]),
         }
     }
 }
@@ -41,7 +37,7 @@ impl ExprLinter for ThisTypeOfThing {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn description(&self) -> &str {

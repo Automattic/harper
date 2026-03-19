@@ -147,7 +147,6 @@ impl ExprLinter for SplitWords {
 mod tests {
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
-        assert_top3_suggestion_result,
     };
 
     use super::SplitWords;
@@ -228,7 +227,7 @@ mod tests {
 
     #[test]
     fn test_atall_to_a_tall() {
-        assert_top3_suggestion_result("atall", SplitWords::default(), "a tall");
+        assert_suggestion_result("atall", SplitWords::default(), "a tall");
     }
 
     #[test]

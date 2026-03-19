@@ -61,6 +61,27 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "Bollocks" => (
+            &[
+                ("bullocks!", "bollocks!"),
+                ("complete bullocks", "complete bollocks"),
+                ("dogs bullocks", "dogs bollocks"),
+                ("dog's bullocks", "dog's bollocks"),
+                ("is bullocks", "is bollocks"),
+                ("it's bullocks", "it's bollocks"),
+                ("its bullocks", "its bollocks"),
+                ("such bullocks", "such bollocks"),
+                ("that's bullocks", "that's bollocks"),
+                ("thats bullocks", "thats bollocks"),
+                ("total bullocks", "total bollocks"),
+                ("utter bullocks", "utter bollocks"),
+                ("was bullocks", "was bollocks"),
+                ("what bullocks", "what bollocks"),
+            ],
+            "The slang word for `nonsense` is `bollocks`. `Bullocks` are male cattle.",
+            "Corrects `bullocks` to `bollocks` when the meaning is `nonsense`.",
+            LintKind::Spelling
+        ),
         "ChampAtTheBit" => (
             &[
                 ("chomp at the bit", "champ at the bit"),
@@ -266,6 +287,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `used of` to `used to`.",
             LintKind::Usage
         ),
+        "GrindToAHalt" => (
+            &[
+                ("grind to halt", "grind to a halt"),
+                ("grinding to halt", "grinding to a halt"),
+                ("grinds to halt", "grinds to a halt"),
+                ("ground to halt", "ground to a halt"),
+            ],
+            "You are missing the indefinite article `a` before `halt`.",
+            "Corrects the idiom `grind to halt` to the standard `grind to a halt`.",
+            LintKind::Nonstandard
+        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
@@ -277,6 +309,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests `past` for `passed` in case a verb was intended.",
             // ConfusedPair?
             LintKind::WordChoice
+        ),
+        "HitTheNailOnTheHead" => (
+            &[
+                ("hit the nail in the head", "hit the nail on the head"),
+                ("hits the nail in the head", "hits the nail on the head"),
+                ("hitting the nail in the head", "hitting the nail on the head"),
+                ("hitted the nail in the head", "hitted the nail on the head")
+            ],
+            "The correct preposition in this idiom is `on`.",
+            "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
+            LintKind::Eggcorn
         ),
         "HomeInOn" => (
             &[
@@ -542,6 +585,15 @@ pub fn lint_group() -> LintGroup {
             "`Await` and `for` are redundant when used together - use one or the other",
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
+        ),
+        "CommitmentTo" => (
+            &[
+                (&["commitment toward", "commitment towards"], &["commitment to"]),
+                (&["commitments toward", "commitments towards"], &["commitments to"]),
+            ],
+            "The correct preposition to use with `commitment` is `to`, not `toward` or `towards`.",
+            "Corrects `commitment toward/towards` to `commitment to`.",
+            LintKind::Usage
         ),
         "Copyright" => (
             &[

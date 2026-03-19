@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
@@ -8,8 +6,7 @@ use crate::{
 };
 
 pub struct BeAllowed {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for BeAllowed {
@@ -42,12 +39,7 @@ impl Default for BeAllowed {
             2,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -55,11 +47,11 @@ impl ExprLinter for BeAllowed {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let allowed_index = *self.map.lookup(0, matched_tokens, source)?;
+        let allowed_index = *self.expr.lookup(0, matched_tokens, source)?;
         let allowed_token = matched_tokens.get(allowed_index)?;
         let span = allowed_token.span;
         let template = span.get_content(source);

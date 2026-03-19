@@ -1,5 +1,5 @@
 > " This    " and  " that          " are common   and  fulfill multiple purposes in        everyday English      .
-# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VB  NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/R/P NSg/J+   NPr🅪Sg/VB/J+ .
+# . I/Ddem+ . VB/C . NSg/I/C/Ddem+ . VLB NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/R/P NSg/J+   NPr🅪Sg/VB/J+ .
 > As    such  , disambiguating them     is  necessary .
 # R/C/P NSg/I . Nᴹ/Vg/J        NSg/IPl+ VL3 NSg/J     .
 >
@@ -23,13 +23,13 @@
 > That          is  nice  .
 # NSg/I/C/Ddem+ VL3 NPr/J .
 > These  triangles are nice  .
-# I/Ddem NPl       VB  NPr/J .
+# I/Ddem NPl       VLB NPr/J .
 > These   are nice  .
-# I/Ddem+ VB  NPr/J .
+# I/Ddem+ VLB NPr/J .
 > Those  triangles are nice  .
-# I/Ddem NPl       VB  NPr/J .
+# I/Ddem NPl       VLB NPr/J .
 > Those   are nice  .
-# I/Ddem+ VB  NPr/J .
+# I/Ddem+ VLB NPr/J .
 >
 #
 > This    massage is  nice  .
@@ -37,9 +37,9 @@
 > That         massage is  nice  .
 # NSg/I/C/Ddem NSg/VB+ VL3 NPr/J .
 > These   massages are nice  .
-# I/Ddem+ NPl/V3+  VB  NPr/J .
+# I/Ddem+ NPl/V3+  VLB NPr/J .
 > Those   massages are nice  .
-# I/Ddem+ NPl/V3+  VB  NPr/J .
+# I/Ddem+ NPl/V3+  VLB NPr/J .
 > This    massages well       .
 # I/Ddem+ NPl/V3+  NSg/VB/J/R .
 > That          massages well       .
@@ -50,10 +50,10 @@
 # I/Ddem+ NSg/VB+ NSg/VB/J/R .
 >
 #
-> That          could   be      a    solution .
-# NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
-> Find   all           candidates that          could   be      a    solution .
-# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VXB D/P+ N🅪Sg+    .
+> That          could   be       a    solution .
+# NSg/I/C/Ddem+ NSg/VXB NSg/VLXB D/P+ N🅪Sg+    .
+> Find   all           candidates that          could   be       a    solution .
+# NSg/VB NSg/I/J/C/Dq+ NPl/V3+    NSg/I/C/Ddem+ NSg/VXB NSg/VLXB D/P+ N🅪Sg+    .
 >
 #
 > This    is  all          that         I       have    .
