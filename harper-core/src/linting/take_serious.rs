@@ -11,7 +11,7 @@ use crate::{
 /// This linter identifies and corrects the common mistake of using the adjective "serious"
 /// instead of the adverb "seriously" in phrases like "take it serious".
 pub struct TakeSerious {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for TakeSerious {
@@ -28,9 +28,7 @@ impl Default for TakeSerious {
             .t_ws()
             .t_aco("serious");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -38,7 +36,7 @@ impl ExprLinter for TakeSerious {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

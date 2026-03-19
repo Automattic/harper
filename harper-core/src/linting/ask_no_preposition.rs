@@ -8,7 +8,7 @@ use crate::{
 };
 
 pub struct AskNoPreposition {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AskNoPreposition {
@@ -25,9 +25,7 @@ impl Default for AskNoPreposition {
             .then_whitespace()
             .then(objs);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -35,7 +33,7 @@ impl ExprLinter for AskNoPreposition {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

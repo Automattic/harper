@@ -155,9 +155,7 @@ mod tests {
     };
     use crate::{
         Dialect,
-        linting::tests::{
-            assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-        },
+        linting::tests::{assert_lint_count, assert_suggestion_result},
     };
     use crate::{DictWordMetadata, Document};
 
@@ -332,7 +330,7 @@ mod tests {
     #[test]
     fn corrects_abandonedware_1131_1166() {
         // assert_suggestion_result(
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
@@ -482,13 +480,13 @@ mod tests {
 
     #[test]
     fn issue_2026() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "'Tere' is supposed to be 'There'",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "'There' is supposed to be 'There'",
         );
 
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "'fll' is supposed to be 'fill'",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "'fill' is supposed to be 'fill'",
@@ -496,7 +494,7 @@ mod tests {
     }
     #[test]
     fn issue_2261() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Generaly",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "Generally",
@@ -953,7 +951,7 @@ mod tests {
     // is_ei_ie_misspelling
     #[test]
     fn fix_cheif_and_recieved() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The cheif recieved a letter.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The chief received a letter.",
@@ -963,7 +961,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_titlecase() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The Cheif Recieved a Letter.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "The Chief Received a Letter.",
@@ -973,10 +971,37 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn fix_cheif_and_recieved_all_caps() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "THE CHEIF RECIEVED A LETTER.",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "THE CHEIF RECEIVED A LETTER.",
+        );
+    }
+
+    #[test]
+    fn fix_vs_apostrophe() {
+        assert_suggestion_result(
+            "v's",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "vs",
+        );
+    }
+
+    #[test]
+    fn fix_vs_typographical_apostrophe() {
+        assert_suggestion_result(
+            "v’s",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "vs",
+        );
+    }
+
+    #[test]
+    fn fix_childrens_missing_apostrophe() {
+        assert_suggestion_result(
+            "childrens",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+            "children's",
         );
     }
 }

@@ -20,13 +20,13 @@ static KEYWORDS: &[&str] = &[
 ];
 
 pub struct Damages {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Damages {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::word_set(&["damages", "damage"])),
+            expr: SequenceExpr::word_set(&["damages", "damage"]),
         }
     }
 }
@@ -35,7 +35,7 @@ impl ExprLinter for Damages {
     type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

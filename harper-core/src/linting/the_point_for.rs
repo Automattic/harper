@@ -6,24 +6,22 @@ use crate::{
 };
 
 pub struct ThePointFor {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThePointFor {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::any_of(vec![Box::new(WordSet::new(&[
-                    // "that's" leads to false positives: "that's the point for me"
-                    "is", "was", "what's", "whats",
-                ]))])
-                .t_ws()
-                .t_aco("the")
-                .t_ws()
-                .t_aco("point")
-                .t_ws()
-                .t_aco("for"),
-            ),
+            expr: SequenceExpr::any_of(vec![Box::new(WordSet::new(&[
+                // "that's" leads to false positives: "that's the point for me"
+                "is", "was", "what's", "whats",
+            ]))])
+            .t_ws()
+            .t_aco("the")
+            .t_ws()
+            .t_aco("point")
+            .t_ws()
+            .t_aco("for"),
         }
     }
 }
@@ -36,7 +34,7 @@ impl ExprLinter for ThePointFor {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

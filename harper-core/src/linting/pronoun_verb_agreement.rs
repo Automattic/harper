@@ -31,7 +31,7 @@ static DITRANSITIVE: &[&str] = &[
 ];
 
 pub struct PronounVerbAgreement<D> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
@@ -81,7 +81,7 @@ where
         };
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 // One Expr for the "I walks" type:
                 Box::new(non_3p_sing_pres_pron_with_3p_sing_pres_verb),
                 // Two Expr's for the "he walk" type:
@@ -91,7 +91,7 @@ where
                         .then(verb_lemma),
                 ),
                 Box::new(SequenceExpr::aco("it").t_ws().t_aco("don't")),
-            ])),
+            ]),
             dict,
         }
     }
@@ -176,7 +176,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -246,9 +246,7 @@ where
 #[cfg(test)]
 mod lints {
     use super::PronounVerbAgreement;
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     // Expected to be fixed, but there are exceptions
@@ -291,7 +289,7 @@ mod lints {
 
     #[test]
     fn issue_233_2_reverse() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "She sit under the AC.",
             PronounVerbAgreement::new(FstDictionary::curated()),
             "She sits under the AC.",

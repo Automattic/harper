@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub struct OldestInTheBook {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for OldestInTheBook {
@@ -41,11 +41,9 @@ impl Default for OldestInTheBook {
         let noun_phrase = SequenceExpr::optional(adjseq).then(nounseq);
 
         Self {
-            expr: Box::new(
-                SequenceExpr::fixed_phrase("oldest ")
-                    .then(noun_phrase)
-                    .then_fixed_phrase(" in the books"),
-            ),
+            expr: SequenceExpr::fixed_phrase("oldest ")
+                .then(noun_phrase)
+                .then_fixed_phrase(" in the books"),
         }
     }
 }
@@ -54,7 +52,7 @@ impl ExprLinter for OldestInTheBook {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

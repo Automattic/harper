@@ -23,7 +23,7 @@ const ALL_MONTHS: &[&str] = &[
 ];
 
 pub struct Months {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Months {
@@ -79,9 +79,7 @@ impl Default for Months {
             ),
         ]));
 
-        Self {
-            expr: Box::new(month_expr),
-        }
+        Self { expr: month_expr }
     }
 }
 
@@ -89,7 +87,7 @@ impl ExprLinter for Months {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {

@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct LookDownOnesNose {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for LookDownOnesNose {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["look", "looked", "looking", "looks"])
-                    .t_ws()
-                    .then_possessive_determiner()
-                    .t_ws()
-                    .then_word_set(&["nose", "noses"])
-                    .t_ws()
-                    .t_aco("down"),
-            ),
+            expr: SequenceExpr::word_set(&["look", "looked", "looking", "looks"])
+                .t_ws()
+                .then_possessive_determiner()
+                .t_ws()
+                .then_word_set(&["nose", "noses"])
+                .t_ws()
+                .t_aco("down"),
         }
     }
 }
@@ -55,7 +53,7 @@ impl ExprLinter for LookDownOnesNose {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 }
 

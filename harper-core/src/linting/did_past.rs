@@ -9,7 +9,7 @@ use crate::{
 };
 
 pub struct DidPast<D> {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dict: D,
 }
 
@@ -19,19 +19,17 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::longest_of(vec![
-                    Box::new(WordSet::new(&["did", "didn't", "didnt"])),
-                    Box::new(FixedPhrase::from_phrase("did not")),
-                ])
-                .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
-                .t_ws()
-                // Note that 'simple past forms' may apply only to irregular verbs
-                // Note and that 'past forms' applies to regular verbs where preterite and participle share a form
-                .then_kind_where(|k| {
-                    (k.is_verb_simple_past_form() || k.is_verb_past_form()) && !k.is_verb_lemma()
-                }),
-            ),
+            expr: SequenceExpr::longest_of(vec![
+                Box::new(WordSet::new(&["did", "didn't", "didnt"])),
+                Box::new(FixedPhrase::from_phrase("did not")),
+            ])
+            .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
+            .t_ws()
+            // Note that 'simple past forms' may apply only to irregular verbs
+            // Note and that 'past forms' applies to regular verbs where preterite and participle share a form
+            .then_kind_where(|k| {
+                (k.is_verb_simple_past_form() || k.is_verb_past_form()) && !k.is_verb_lemma()
+            }),
             dict,
         }
     }
@@ -58,7 +56,7 @@ where
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

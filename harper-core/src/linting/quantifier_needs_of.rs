@@ -6,7 +6,7 @@ use crate::linting::expr_linter::Chunk;
 
 /// Flags phrases like `a couple months` → should be `a couple **of** months`.
 pub struct QuantifierNeedsOf {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for QuantifierNeedsOf {
@@ -18,9 +18,7 @@ impl Default for QuantifierNeedsOf {
             .t_ws()
             .then_plural_nominal();
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -28,7 +26,7 @@ impl ExprLinter for QuantifierNeedsOf {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

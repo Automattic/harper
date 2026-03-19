@@ -8,7 +8,7 @@ use crate::spell::{CommonDictFuncs, Dictionary};
 use crate::{Token, TokenKind};
 
 pub struct PossessiveNoun<D> {
-    expr: Box<dyn Expr>,
+    expr: All,
     dict: D,
 }
 
@@ -34,11 +34,11 @@ where
                 .then_unless(WordSet::new(&["form", "go"]));
 
         Self {
-            expr: Box::new(All::new(vec![
+            expr: All::new(vec![
                 Box::new(expr),
                 Box::new(additional_req),
                 Box::new(exceptions),
-            ])),
+            ]),
             dict,
         }
     }
@@ -51,7 +51,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

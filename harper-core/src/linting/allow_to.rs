@@ -5,21 +5,19 @@ use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
 pub struct AllowTo {
-    exp: Box<dyn Expr>,
+    exp: SequenceExpr,
 }
 
 impl Default for AllowTo {
     fn default() -> Self {
         Self {
             // Note: Does not include "allowed to", which is a legitimate usage in its own right.
-            exp: Box::new(
-                SequenceExpr::word_set(&["allow", "allowing", "allows"])
-                    .t_ws()
-                    .t_aco("to")
-                    .then_optional(SequenceExpr::default().t_ws().then_adverb())
-                    .t_ws()
-                    .then_any_word(),
-            ),
+            exp: SequenceExpr::word_set(&["allow", "allowing", "allows"])
+                .t_ws()
+                .t_aco("to")
+                .then_optional(SequenceExpr::default().t_ws().then_adverb())
+                .t_ws()
+                .then_any_word(),
         }
     }
 }
@@ -28,7 +26,7 @@ impl ExprLinter for AllowTo {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.exp.as_ref()
+        &self.exp
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

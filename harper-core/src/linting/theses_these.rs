@@ -6,7 +6,7 @@ use crate::patterns::UPOSSet;
 use harper_brill::UPOS;
 
 pub struct ThesesThese {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThesesThese {
@@ -16,9 +16,7 @@ impl Default for ThesesThese {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for ThesesThese {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

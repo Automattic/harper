@@ -1,6 +1,5 @@
 use crate::linting::tests::{
-    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
-    assert_nth_suggestion_result, assert_suggestion_result, assert_top3_suggestion_result,
+    assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints, assert_suggestion_result,
 };
 
 use super::lint_group;
@@ -24,6 +23,133 @@ fn corrects_much_ado() {
         "After much adieu this functionality is now available.",
         lint_group(),
         "After much ado this functionality is now available.",
+    );
+}
+
+// Bollocks
+
+#[test]
+fn fix_complete_bullocks() {
+    assert_suggestion_result(
+        "why you think some of them are complete bullocks or would be a bad idea",
+        lint_group(),
+        "why you think some of them are complete bollocks or would be a bad idea",
+    );
+}
+
+#[test]
+fn fix_dogs() {
+    assert_suggestion_result(
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bullocks.",
+        lint_group(),
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bollocks.",
+    );
+}
+
+#[test]
+fn fix_dogs_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "some dumb rubbish that i do not give a dogs bullocks about",
+        lint_group(),
+        "some dumb rubbish that i do not give a dogs bollocks about",
+    );
+}
+
+#[test]
+fn fix_is_bullocks() {
+    assert_suggestion_result(
+        "for me this is bullocks, when the same user can sudo rm -rf",
+        lint_group(),
+        "for me this is bollocks, when the same user can sudo rm -rf",
+    );
+}
+
+#[test]
+fn fix_its_bullocks() {
+    assert_suggestion_result(
+        "I'm too lazy to explain why, but I think it's bullocks.",
+        lint_group(),
+        "I'm too lazy to explain why, but I think it's bollocks.",
+    );
+}
+
+#[test]
+fn fix_its_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "but lance, dont claim to be clean, because we all know its bullocks",
+        lint_group(),
+        "but lance, dont claim to be clean, because we all know its bollocks",
+    );
+}
+
+#[test]
+fn fix_such_bullocks() {
+    assert_suggestion_result(
+        "This is why numerology is such bullocks.",
+        lint_group(),
+        "This is why numerology is such bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_bullocks() {
+    assert_suggestion_result(
+        "Respectfully, that's bullocks.",
+        lint_group(),
+        "Respectfully, that's bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "In CSS thats bullocks as directives have priority in the order they are defined.",
+        lint_group(),
+        "In CSS thats bollocks as directives have priority in the order they are defined.",
+    );
+}
+
+#[test]
+fn fix_total_bullocks() {
+    assert_suggestion_result(
+        "Pointing out to the audience that their gravity explanation is total bullocks would seem an ethical must as well.",
+        lint_group(),
+        "Pointing out to the audience that their gravity explanation is total bollocks would seem an ethical must as well.",
+    );
+}
+
+#[test]
+fn fix_utter_bullocks() {
+    assert_suggestion_result(
+        "what utter bullocks a self employed person will get £94 under corona virus crisis",
+        lint_group(),
+        "what utter bollocks a self employed person will get £94 under corona virus crisis",
+    );
+}
+
+#[test]
+fn fix_was_bullocks() {
+    assert_suggestion_result(
+        "a few years ago I thought that was bullocks",
+        lint_group(),
+        "a few years ago I thought that was bollocks",
+    );
+}
+
+#[test]
+fn fix_bullocks_exclamation() {
+    assert_suggestion_result(
+        "throw(new Error('Bullocks!')));",
+        lint_group(),
+        "throw(new Error('Bollocks!')));",
+    );
+}
+
+#[test]
+fn dont_flag_herd_of_bullocks() {
+    assert_no_lints(
+        "driven back (literally) by a herd of bullocks across the path",
+        lint_group(),
     );
 }
 
@@ -234,22 +360,6 @@ fn corrects_dose_not() {
         "It dose not run windows ?",
         lint_group(),
         "It does not run windows ?",
-    );
-}
-
-// RedundantSuperlatives
-
-#[test]
-fn redundant_more_optimal() {
-    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
-}
-
-#[test]
-fn redundant_most_ideal() {
-    assert_suggestion_result(
-        "This is the most ideal scenario.",
-        lint_group(),
-        "This is the ideal scenario.",
     );
 }
 
@@ -773,6 +883,55 @@ fn corrects_gotten_used_of() {
     );
 }
 
+// GrindToAHalt
+
+#[test]
+fn corrects_grind_to_halt() {
+    // Without this it will eventually grind to halt as it backs up upon itself
+    assert_suggestion_result(
+        "Without this it will eventually grind to halt as it backs up upon itself",
+        lint_group(),
+        "Without this it will eventually grind to a halt as it backs up upon itself",
+    );
+}
+
+#[test]
+#[ignore = "Fails due to how replace_with_matched_case works"]
+fn corrects_grind_to_halt_title_case() {
+    assert_suggestion_result(
+        "Smart Search Tools Cause System to Grind to Halt",
+        lint_group(),
+        "Smart Search Tools Cause System to Grind to a Halt",
+    );
+}
+
+#[test]
+fn corrects_grinding_to_halt() {
+    assert_suggestion_result(
+        "app grinding to halt when loading many objects",
+        lint_group(),
+        "app grinding to a halt when loading many objects",
+    );
+}
+
+#[test]
+fn corrects_grinds_to_halt() {
+    assert_suggestion_result(
+        "If your machine grinds to halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+        lint_group(),
+        "If your machine grinds to a halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+    );
+}
+
+#[test]
+fn corrects_ground_to_halt() {
+    assert_suggestion_result(
+        "As you have probably guessed, my work on my fork has ground to halt.",
+        lint_group(),
+        "As you have probably guessed, my work on my fork has ground to a halt.",
+    );
+}
+
 // HavePassed
 
 #[test]
@@ -808,6 +967,44 @@ fn correct_having_past() {
         "Return to computer, with enough time having past for the computer to go to full sleep.",
         lint_group(),
         "Return to computer, with enough time having passed for the computer to go to full sleep.",
+    );
+}
+
+// HitTheNailOnTheHead
+
+#[test]
+fn correct_hit_the_nail() {
+    assert_suggestion_result(
+        "Ahh, found it! You hit the nail in the head once again.",
+        lint_group(),
+        "Ahh, found it! You hit the nail on the head once again.",
+    );
+}
+
+#[test]
+fn correct_hits_the_nail() {
+    assert_suggestion_result(
+        "I'm not sure if this sentence hits the nail in the head",
+        lint_group(),
+        "I'm not sure if this sentence hits the nail on the head",
+    );
+}
+
+#[test]
+fn correct_hitting_the_nail() {
+    assert_suggestion_result(
+        "You are hitting the nail in the head of my issue with this game, too.",
+        lint_group(),
+        "You are hitting the nail on the head of my issue with this game, too.",
+    );
+}
+
+#[test]
+fn correct_hitted_the_nail() {
+    assert_suggestion_result(
+        "I mean, you just kinda hitted the nail in the head. You cannot do anything with this that you couldn't do in a Raspberry PI.",
+        lint_group(),
+        "I mean, you just kinda hitted the nail on the head. You cannot do anything with this that you couldn't do in a Raspberry PI.",
     );
 }
 
@@ -1156,7 +1353,20 @@ fn fix_peaks() {
 // -none-
 
 // RedundantSuperlatives
-// -none-
+
+#[test]
+fn redundant_more_optimal() {
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
+}
+
+#[test]
+fn redundant_most_ideal() {
+    assert_suggestion_result(
+        "This is the most ideal scenario.",
+        lint_group(),
+        "This is the ideal scenario.",
+    );
+}
 
 // ResponsibilityFor
 
@@ -1758,6 +1968,44 @@ fn correct_awaited_for() {
     );
 }
 
+// CommitmentTo
+
+#[test]
+fn singular_towards() {
+    assert_suggestion_result(
+        "the platform's focus on multimedia projects and VideoLAN's long history of commitment towards free and open multimedia",
+        lint_group(),
+        "the platform's focus on multimedia projects and VideoLAN's long history of commitment to free and open multimedia",
+    );
+}
+
+#[test]
+fn plural_towards() {
+    assert_suggestion_result(
+        "the signer may express multiple commitments towards the data objects",
+        lint_group(),
+        "the signer may express multiple commitments to the data objects",
+    );
+}
+
+#[test]
+fn singular_toward() {
+    assert_suggestion_result(
+        "This document outlines the current level of commitment toward Linux distributions and packaging formats.",
+        lint_group(),
+        "This document outlines the current level of commitment to Linux distributions and packaging formats.",
+    );
+}
+
+#[test]
+fn plural_toward() {
+    assert_suggestion_result(
+        "... and are expected to inform parties in updating their commitments toward the Paris Agreement",
+        lint_group(),
+        "... and are expected to inform parties in updating their commitments to the Paris Agreement",
+    );
+}
+
 // Copyright
 
 #[test]
@@ -1856,7 +2104,7 @@ fn correct_double_edged_space_plural() {
 
 #[test]
 fn corrects_allocs() {
-    assert_top3_suggestion_result(
+    assert_suggestion_result(
         "cmd/compile: avoid allocs by better tracking of literals for interface conversions and make",
         lint_group(),
         "cmd/compile: avoid allocations by better tracking of literals for interface conversions and make",
@@ -1865,7 +2113,7 @@ fn corrects_allocs() {
 
 #[test]
 fn expand_alloc() {
-    assert_top3_suggestion_result(
+    assert_suggestion_result(
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
@@ -2084,11 +2332,10 @@ fn correct_how_it_looks_like_1() {
 
 #[test]
 fn correct_how_it_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "This is how it looks like when run from Windows PowerShell or Cmd: image.",
         lint_group(),
         "This is what it looks like when run from Windows PowerShell or Cmd: image.",
-        1,
     );
 }
 
@@ -2103,11 +2350,10 @@ fn correct_how_they_look_like_1() {
 
 #[test]
 fn correct_how_they_look_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "So for now I'll just leave this issue here of how they look like in the XLSX",
         lint_group(),
         "So for now I'll just leave this issue here of what they look like in the XLSX",
-        1,
     );
 }
 
@@ -2122,11 +2368,10 @@ fn correct_how_they_looks_like_1() {
 
 #[test]
 fn correct_how_they_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "You can check how they looks like on Android app by this command:",
         lint_group(),
         "You can check what they look like on Android app by this command:",
-        1,
     );
 }
 
@@ -2141,11 +2386,10 @@ fn correct_how_she_looks_like_1() {
 
 #[test]
 fn correct_how_he_looks_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "Here's how he looks like, when he's supposed to just look like his old fatui design.",
         lint_group(),
         "Here's what he looks like, when he's supposed to just look like his old fatui design.",
-        1,
     );
 }
 
@@ -2160,11 +2404,10 @@ fn correct_how_it_look_like_1() {
 
 #[test]
 fn correct_how_it_look_like_2() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "Here is how it look like in your browser:",
         lint_group(),
         "Here is what it looks like in your browser:",
-        1,
     );
 }
 
@@ -2693,7 +2936,7 @@ fn correct_atomic_a_whole_entire_to_a_whole() {
 
 #[test]
 fn correct_atomic_a_whole_entire_to_an_entire() {
-    assert_nth_suggestion_result("a whole entire", lint_group(), "an entire", 1);
+    assert_suggestion_result("a whole entire", lint_group(), "an entire");
 }
 
 #[test]
@@ -2707,11 +2950,10 @@ fn correct_real_world_a_whole_entire_to_a_whole() {
 
 #[test]
 fn correct_real_world_a_whole_entire_to_an_entire() {
-    assert_nth_suggestion_result(
+    assert_suggestion_result(
         "I am not sure I can pass in a whole entire query via the include.",
         lint_group(),
         "I am not sure I can pass in an entire query via the include.",
-        1,
     );
 }
 

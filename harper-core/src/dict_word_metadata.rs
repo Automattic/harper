@@ -183,7 +183,7 @@ impl DictWordMetadata {
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
         let mut clone = self.clone();
-        clone.append(other);
+        clone.merge(other);
         clone
     }
 
@@ -728,7 +728,7 @@ impl DictWordMetadata {
     }
 
     /// Same thing as [`Self::or`], except in-place rather than a clone.
-    pub fn append(&mut self, other: &Self) -> &mut Self {
+    pub fn merge(&mut self, other: &Self) -> &mut Self {
         macro_rules! merge {
             ($a:expr, $b:expr) => {
                 match ($a, $b) {

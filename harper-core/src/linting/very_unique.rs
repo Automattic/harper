@@ -6,19 +6,17 @@ use crate::{
 };
 
 pub struct VeryUnique {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for VeryUnique {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&[
-                    "fairly", "pretty", "rather", "quite", "somewhat", "very",
-                ])
-                .t_ws()
-                .t_aco("unique"),
-            ),
+            expr: SequenceExpr::word_set(&[
+                "fairly", "pretty", "rather", "quite", "somewhat", "very",
+            ])
+            .t_ws()
+            .t_aco("unique"),
         }
     }
 }
@@ -27,7 +25,7 @@ impl ExprLinter for VeryUnique {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -69,7 +67,7 @@ impl ExprLinter for VeryUnique {
 #[cfg(test)]
 mod tests {
     use super::VeryUnique;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     #[test]
     fn fix_very_unique() {
@@ -85,7 +83,7 @@ mod tests {
 
     #[test]
     fn fix_pretty_unique() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Numerous accounts with my exact full name/surname (which is pretty unique) has been created (most recently).",
             VeryUnique::default(),
             "Numerous accounts with my exact full name/surname (which is pretty rare) has been created (most recently).",
@@ -106,7 +104,7 @@ mod tests {
 
     #[test]
     fn fix_somewhat_unique() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "A new pack of somewhat unique upgrades for R.E.P.O.!",
             VeryUnique::default(),
             "A new pack of somewhat unusual upgrades for R.E.P.O.!",
@@ -127,7 +125,7 @@ mod tests {
 
     #[test]
     fn fix_rather_unique() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I regret using the Vue compiler because the resulting AST is rather unique.",
             VeryUnique::default(),
             "I regret using the Vue compiler because the resulting AST is rather unusual.",

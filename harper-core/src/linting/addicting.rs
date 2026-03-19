@@ -6,13 +6,13 @@ use crate::{
 };
 
 pub struct Addicting {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for Addicting {
     fn default() -> Self {
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 // matches `addicting` without anything after
                 Box::new(SequenceExpr::aco("addicting").then(AnchorEnd)),
                 // matches `addicting` <ws> [ any word but not a reflexive pronoun or object pronoun ]
@@ -29,7 +29,7 @@ impl Default for Addicting {
                             ]))),
                         ])),
                 ),
-            ])),
+            ]),
         }
     }
 }
@@ -38,7 +38,7 @@ impl ExprLinter for Addicting {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

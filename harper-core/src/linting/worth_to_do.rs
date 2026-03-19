@@ -10,7 +10,7 @@ pub struct WorthToDo<D>
 where
     D: Dictionary,
 {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dict: D,
 }
 
@@ -20,13 +20,11 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("worth")
-                    .t_ws()
-                    .t_aco("to")
-                    .t_ws()
-                    .then_verb_lemma(),
-            ),
+            expr: SequenceExpr::aco("worth")
+                .t_ws()
+                .t_aco("to")
+                .t_ws()
+                .then_verb_lemma(),
             dict,
         }
     }
@@ -39,7 +37,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

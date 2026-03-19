@@ -6,13 +6,13 @@ use crate::token_string_ext::TokenStringExt;
 use crate::{CharStringExt, Lint, Token};
 
 pub struct QuantifierNumeralConflict {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for QuantifierNumeralConflict {
     fn default() -> Self {
         Self {
-            expr: Box::new(All::new(vec![
+            expr: All::new(vec![
                 Box::new(
                     SequenceExpr::default()
                         .then_quantifier()
@@ -30,7 +30,7 @@ impl Default for QuantifierNumeralConflict {
                             .t_aco("one"),
                     ),
                 ]))),
-            ])),
+            ]),
         }
     }
 }
@@ -39,7 +39,7 @@ impl ExprLinter for QuantifierNumeralConflict {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

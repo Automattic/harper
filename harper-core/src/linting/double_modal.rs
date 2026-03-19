@@ -8,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct DoubleModal {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DoubleModal {
@@ -17,9 +17,7 @@ impl Default for DoubleModal {
             .t_ws()
             .then(ModalVerb::default());
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -27,7 +25,7 @@ impl ExprLinter for DoubleModal {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

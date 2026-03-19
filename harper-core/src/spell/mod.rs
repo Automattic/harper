@@ -316,6 +316,31 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 5;
     }
 
+    // Promote suggestions that differ only by an apostrophe
+    let check_apostrophe_diff = |longer: &[char], shorter: &[char]| -> bool {
+        if let Some(pos) = longer.iter().position(|&c| c == '\'' || c == '’') {
+            longer.len() - 1 == shorter.len()
+                && longer.starts_with(&shorter[..pos])
+                && longer.ends_with(&shorter[pos..])
+        } else {
+            false
+        }
+    };
+
+    match (
+        misspelled_word.len() as i32 - sug.word.len() as i32,
+        sug.metadata.is_apostrophized(),
+    ) {
+        (1, _)
+            if (misspelled_word.contains(&'\'') || misspelled_word.contains(&'\u{2019}'))
+                && check_apostrophe_diff(misspelled_word, sug.word) =>
+        {
+            score -= 8
+        }
+        (-1, true) if check_apostrophe_diff(sug.word, misspelled_word) => score -= 8,
+        _ => {} // not a single-character apostrophe difference
+    }
+
     // Boost common words.
     if sug.metadata.common {
         score -= 5;
@@ -552,5 +577,20 @@ mod tests {
     #[test]
     fn conciousness_correction() {
         assert_suggests_correction("conciousness", "consciousness");
+    }
+
+    #[test]
+    fn v_apostrophe_s_suggests_vs() {
+        assert_suggests_correction("v's", "vs");
+    }
+
+    #[test]
+    fn v_apostrophe_typographical_s_suggests_vs() {
+        assert_suggests_correction("v’s", "vs");
+    }
+
+    #[test]
+    fn missing_apostrophe_childrens_suggests_childrens() {
+        assert_suggests_correction("childrens", "children's");
     }
 }

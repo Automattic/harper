@@ -6,24 +6,21 @@ use crate::{
 };
 
 pub struct WhomSubjectOfVerb {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for WhomSubjectOfVerb {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["whom", "whomever", "whomsoever"])
-                    .t_ws()
-                    // .then_verb()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_kind_where(|k| {
-                            k.is_verb_third_person_singular_present_form()
-                                || k.is_verb_simple_past_form()
-                        })),
-                        Box::new(ModalVerb::with_common_errors()),
-                    ]),
-            ),
+            expr: SequenceExpr::word_set(&["whom", "whomever", "whomsoever"])
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_kind_where(|k| {
+                        k.is_verb_third_person_singular_present_form()
+                            || k.is_verb_simple_past_form()
+                    })),
+                    Box::new(ModalVerb::with_common_errors()),
+                ]),
         }
     }
 }
@@ -36,7 +33,7 @@ impl ExprLinter for WhomSubjectOfVerb {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

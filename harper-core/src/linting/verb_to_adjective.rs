@@ -7,7 +7,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct VerbToAdjective {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for VerbToAdjective {
@@ -20,9 +20,7 @@ impl Default for VerbToAdjective {
             .t_ws()
             .then(WordSet::new(&["of"]));
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -30,7 +28,7 @@ impl ExprLinter for VerbToAdjective {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct ThatThan {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThatThan {
@@ -22,7 +22,7 @@ impl Default for ThatThan {
             .then_word_except(&["way"]);
 
         Self {
-            expr: Box::new(adjective_er_that_nextword),
+            expr: adjective_er_that_nextword,
         }
     }
 }
@@ -31,7 +31,7 @@ impl ExprLinter for ThatThan {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

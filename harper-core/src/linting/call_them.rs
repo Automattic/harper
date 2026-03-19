@@ -8,8 +8,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct CallThem {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<Range<usize>>>,
+    expr: ExprMap<Range<usize>>,
 }
 
 impl Default for CallThem {
@@ -38,12 +37,7 @@ impl Default for CallThem {
             1..3,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -51,11 +45,11 @@ impl ExprLinter for CallThem {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let removal_range = self.map.lookup(0, matched_tokens, source)?.clone();
+        let removal_range = self.expr.lookup(0, matched_tokens, source)?.clone();
         let offending_tokens = matched_tokens.get(removal_range)?;
 
         Some(Lint {

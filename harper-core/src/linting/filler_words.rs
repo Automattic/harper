@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct FillerWords {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FillerWords {
@@ -20,9 +20,7 @@ impl Default for FillerWords {
             Box::new(SequenceExpr::whitespace().then(filler_words)),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -30,7 +28,7 @@ impl ExprLinter for FillerWords {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

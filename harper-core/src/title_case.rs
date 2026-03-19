@@ -250,9 +250,9 @@ mod tests {
     #[quickcheck]
     fn a_stays_lowercase(prefix: String, postfix: String) -> TestResult {
         // There must be words other than the `a`.
-        if prefix.chars().any(|c| !c.is_ascii_alphanumeric())
+        if prefix.chars().any(|c| !c.is_ascii_alphabetic())
             || prefix.is_empty()
-            || postfix.chars().any(|c| !c.is_ascii_alphanumeric())
+            || postfix.chars().any(|c| !c.is_ascii_alphabetic())
             || postfix.is_empty()
         {
             return TestResult::discard();

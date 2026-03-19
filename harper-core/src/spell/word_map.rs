@@ -112,7 +112,7 @@ impl WordMap {
 
         if let Some(existing_entry) = self.canonical.get_mut(&canonical_id) {
             // An existing word with the same canonical ID exists; update its entry.
-            existing_entry.metadata.append(&entry.metadata);
+            existing_entry.metadata.merge(&entry.metadata);
         } else {
             // An existing word with the same canonical ID does NOT exist; insert it.
             let (canonical_idx, _) = self.canonical.insert_full(canonical_id, entry);

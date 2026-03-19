@@ -41,7 +41,7 @@ for lint in lints {
 ## Features
 
 `concurrent`: Whether to use thread-safe primitives (`Arc` vs `Rc`). Disabled by default.
-It is not recommended unless you need thread-safely (i.e. you want to use something like `tokio`).
+It is not recommended unless you need thread safety (i.e. you want to use something like `tokio`).
 
 ## Other Relevant Packages
 

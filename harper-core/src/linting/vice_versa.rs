@@ -70,7 +70,7 @@ fn replacement_for(template: &[char]) -> Vec<char> {
 }
 
 pub struct ViceVersa {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ViceVersa {
@@ -80,9 +80,7 @@ impl Default for ViceVersa {
             .then_optional(SequenceExpr::aco("a").then(matches_hyphen))
             .t_aco("versa");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -90,7 +88,7 @@ impl ExprLinter for ViceVersa {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

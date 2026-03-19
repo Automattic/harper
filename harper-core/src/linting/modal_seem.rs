@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
@@ -14,8 +12,7 @@ struct MatchContext {
 }
 
 pub struct ModalSeem {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<MatchContext>>,
+    expr: ExprMap<MatchContext>,
 }
 
 impl ModalSeem {
@@ -58,12 +55,7 @@ impl Default for ModalSeem {
             MatchContext::default(),
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -71,11 +63,11 @@ impl ExprLinter for ModalSeem {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let context = self.map.lookup(0, matched_tokens, source)?;
+        let context = self.expr.lookup(0, matched_tokens, source)?;
 
         let seen_token = matched_tokens
             .iter()
@@ -110,9 +102,7 @@ impl ExprLinter for ModalSeem {
 #[cfg(test)]
 mod tests {
     use super::ModalSeem;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_case() {
@@ -134,11 +124,10 @@ mod tests {
 
     #[test]
     fn offers_be_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "It may seen impossible to finish.",
             ModalSeem::default(),
             "It may be impossible to finish.",
-            1,
         );
     }
 

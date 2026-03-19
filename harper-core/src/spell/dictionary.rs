@@ -90,7 +90,7 @@ pub trait CommonDictFuncs: Dictionary {
             _ => Some(Cow::Owned({
                 let mut first = found_words.next().unwrap().metadata.to_owned();
                 found_words.for_each(|found_word| {
-                    first.append(&found_word.metadata);
+                    first.merge(&found_word.metadata);
                 });
                 first
             })),

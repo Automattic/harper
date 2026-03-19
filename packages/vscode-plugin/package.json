@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -785,6 +785,12 @@
 					"default": true,
 					"description": "Fix common comma errors such as no space after, erroneous space before, etc., Asian commas instead of English commas, etc."
 				},
+				"harper.linters.CommitmentTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `commitment toward/towards` to `commitment to`."
+				},
 				"harper.linters.CompaniesProductsAndTrademarks": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1000,6 +1006,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Swaps the helping verb `do` for `am` in `Do I <adjective>` questions so they use the correct linking verb."
+				},
+				"harper.linters.DoMistake": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `do a mistake` to `make a mistake`."
 				},
 				"harper.linters.DoNotWant": {
 					"scope": "resource",
@@ -1637,6 +1649,12 @@
 					"default": true,
 					"description": "Corrects `hidden into` to `hidden in`."
 				},
+				"harper.linters.HitTheNailOnTheHead": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`."
+				},
 				"harper.linters.Holidays": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1887,7 +1905,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
+					"description": "Looks for incorrect spacing inside the closed compound `intact`."
 				},
 				"harper.linters.InterestedIn": {
 					"scope": "resource",
@@ -1923,7 +1941,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "The possessive `its` is often mistaken for `it's` when it is followed by vague pronouns (any-, every-, some-, or no- + body/one/thing/where)."
+					"description": "Detects places where the possessive `its` should be the contraction `it's`, including before verbs/clauses and before proper nouns after opinion verbs."
 				},
 				"harper.linters.ItsPossessive": {
 					"scope": "resource",
@@ -2571,7 +2589,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Detects common mistaken forms of `of course`."
+					"description": "Corrects common mistaken forms of `of course`, including `of curse`, `off course`, and `ofcourse`, while ignoring valid phrases like `kind of curse`."
 				},
 				"harper.linters.OffTheCuff": {
 					"scope": "resource",
@@ -2975,6 +2993,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.ReasonForDoing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `reason of doing` to `reason for doing` etc."
+				},
 				"harper.linters.RedundantAcronyms": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2999,6 +3023,12 @@
 					"default": true,
 					"description": "`Pretty` is redundant when modifying `decent`. Use `decent` alone."
 				},
+				"harper.linters.RedundantProgressiveComparative": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects redundant comparatives like `increasingly more` and `increasingly less`."
+				},
 				"harper.linters.RedundantSuperlatives": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3022,6 +3052,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Regionalisms"
+				},
+				"harper.linters.RegularIrregulars": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces wrong regular inflections of words with their correct irregular forms."
 				},
 				"harper.linters.RepeatedWords": {
 					"scope": "resource",
@@ -3412,6 +3448,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `the another`."
+				},
+				"harper.linters.TheDifferenceBetween": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `the different(s) between to `the difference between`."
 				},
 				"harper.linters.TheHowWhy": {
 					"scope": "resource",

@@ -1,24 +1,22 @@
 use itertools::Itertools;
 
-use crate::linting::{LintKind, Suggestion};
-
-use crate::expr::Expr;
-use crate::spell::{MutableDictionary, WordIdPair};
-use crate::{OrthFlags, Token};
-
-use super::{ExprLinter, Lint};
-use crate::linting::expr_linter::Chunk;
+use crate::{
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    spell::{MutableDictionary, WordIdPair},
+    {OrthFlags, Token},
+};
 
 pub struct OrthographicConsistency {
     dict: &'static MutableDictionary,
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
             dict: MutableDictionary::curated(),
-            expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
+            expr: SequenceExpr::any_word(),
         }
     }
 }
@@ -37,7 +35,7 @@ impl ExprLinter for OrthographicConsistency {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

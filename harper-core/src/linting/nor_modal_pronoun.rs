@@ -6,19 +6,17 @@ use crate::{
 };
 
 pub struct NorModalPronoun {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NorModalPronoun {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("nor")
-                    .t_ws()
-                    .then_subject_pronoun()
-                    .t_ws()
-                    .then(ModalVerb::with_common_errors()),
-            ),
+            expr: SequenceExpr::aco("nor")
+                .t_ws()
+                .then_subject_pronoun()
+                .t_ws()
+                .then(ModalVerb::with_common_errors()),
         }
     }
 }
@@ -31,7 +29,7 @@ impl ExprLinter for NorModalPronoun {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

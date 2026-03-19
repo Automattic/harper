@@ -4,13 +4,13 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AndIn {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AndIn {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::fixed_phrase("an in").then_optional_hyphen()),
+            expr: SequenceExpr::fixed_phrase("an in").then_optional_hyphen(),
         }
     }
 }
@@ -19,7 +19,7 @@ impl ExprLinter for AndIn {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        &*self.expr
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
