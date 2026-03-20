@@ -191,16 +191,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-      63 | one Representative; and until such enumeration shall be made, the State of New
-      64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
-         |                                ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
@@ -209,15 +199,6 @@ Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
   - Replace with: “chose”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-      72 | The House of Representatives shall chuse their Speaker and other Officers; and
-         |                                    ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
 
 
 
@@ -263,15 +244,6 @@ Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
   - Replace with: “chose”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
-         |                  ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
 
 
 
@@ -376,16 +348,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-     124 | thereof; but the Congress may at any time by Law make or alter such
-     125 | Regulations, except as to the Places of chusing Senators.
-         |                                         ^~~~~~~ `chusing` should probably be written as `ch using`.
-Suggest:
-  - Replace with: “ch using”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      133 | Each House shall be the Judge of the Elections, Returns and
@@ -484,16 +446,6 @@ Suggest:
   - Replace with: “increased”
   - Replace with: “encased”
   - Replace with: “entreated”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     163 | which shall have been created, or the Emoluments whereof shall have been
-     164 | encreased during such time; and no Person holding any Office under the United
-         | ^~~~~~~~~ `encreased` should probably be written as `en creased`.
-Suggest:
-  - Replace with: “en creased”
 
 
 
@@ -1053,16 +1005,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-     383 | The Congress may determine the Time of chusing the Electors, and the Day on
-         |                                        ^~~~~~~ `chusing` should probably be written as `ch using`.
-     384 | which they shall give their Votes; which Day shall be the same throughout the
-Suggest:
-  - Replace with: “ch using”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      388 | #### SubSection. 2
@@ -1319,16 +1261,6 @@ Suggest:
   - Replace with: “increased”
   - Replace with: “encased”
   - Replace with: “entreated”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     449 | Services, a Compensation, which shall neither be encreased nor diminished
-         |                                                  ^~~~~~~~~ `encreased` should probably be written as `en creased`.
-     450 | during the Period for which he shall have been elected, and he shall not
-Suggest:
-  - Replace with: “en creased”
 
 
 
