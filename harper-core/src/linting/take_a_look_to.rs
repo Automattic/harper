@@ -1,7 +1,10 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_word},
+    },
     patterns::WordSet,
 };
 
@@ -9,24 +12,22 @@ static TAKE_FORMS: &[&str] = &["take", "took", "taken", "takes", "taking"];
 static HAVE_FORMS: &[&str] = &["have", "had", "has", "having"];
 
 pub struct TakeALookTo {
-    pub expr: Box<dyn Expr>,
+    pub expr: SequenceExpr,
 }
 
 impl Default for TakeALookTo {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::any_of(vec![
-                    Box::new(WordSet::new(TAKE_FORMS)),
-                    Box::new(WordSet::new(HAVE_FORMS)),
-                ])
-                .t_ws()
-                .t_aco("a")
-                .t_ws()
-                .t_aco("look")
-                .t_ws()
-                .t_aco("to"),
-            ),
+            expr: SequenceExpr::any_of(vec![
+                Box::new(WordSet::new(TAKE_FORMS)),
+                Box::new(WordSet::new(HAVE_FORMS)),
+            ])
+            .t_ws()
+            .t_aco("a")
+            .t_ws()
+            .t_aco("look")
+            .t_ws()
+            .t_aco("to"),
         }
     }
 }
@@ -39,7 +40,7 @@ impl ExprLinter for TakeALookTo {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -48,26 +49,17 @@ impl ExprLinter for TakeALookTo {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let next_word_tok =
-            ctx.and_then(|(_, after)| after.get(..2))
-                .and_then(|tokens| match tokens {
-                    [ws, next, ..] if ws.kind.is_whitespace() => Some(next),
-                    _ => None,
-                });
-
-        // Exception 1. Have/take a look to see if everything is ok
-        if next_word_tok.is_some_and(|nw| nw.kind.is_verb_lemma()) {
-            return None;
-        }
-
-        // Exception 2. It has a look to it that I don't like
-        if next_word_tok.is_some_and(|xyz| xyz.span.get_content(src).eq_ignore_ascii_case_str("it"))
-            && toks.first().is_some_and(|tok| {
-                tok.span
-                    .get_content(src)
-                    .eq_any_ignore_ascii_case_str(HAVE_FORMS)
-            })
-        {
+        if followed_by_word(ctx, |nw| {
+            nw.kind.is_verb_lemma()
+                // Exception 1. Have/take a look to see if everything is ok
+                || (nw.span.get_content(src).eq_ignore_ascii_case_str("it")
+                    // Exception 2. It has a look to it that I don't like
+                    && toks.first().is_some_and(|tok| {
+                        tok.span
+                            .get_content(src)
+                            .eq_any_ignore_ascii_case_str(HAVE_FORMS)
+                    }))
+        }) {
             return None;
         }
 

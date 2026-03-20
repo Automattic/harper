@@ -271,32 +271,31 @@ update-vscode-linters:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  linters=$(
-    cargo run --bin harper-cli -- config |
-      jq 'with_entries(.key |= "harper.linters." + . |
-        .value |= {
-          "scope": "resource",
-          "type": "boolean",
-          "default": .default_value,
-          "description": .description
-        }
-      )'
-  )
+  linters_file="$(mktemp)"
+  output_file="$(mktemp)"
+  trap 'rm -f "$linters_file" "$output_file"' EXIT
+
+  cargo run --bin harper-cli -- config |
+    jq 'with_entries(.key |= "harper.linters." + . |
+      .value |= {
+        "scope": "resource",
+        "type": "boolean",
+        "default": .default_value,
+        "description": .description
+      }
+    )' > "$linters_file"
 
   cd "{{justfile_directory()}}/packages/vscode-plugin"
 
-  manifest_without_linters=$(
-    jq 'walk(
-      if type == "object" then
-        with_entries(select(.key | startswith("harper.linters") | not))
-      end
-    )' package.json
-  )
-
-  jq --argjson linters "$linters" \
-    '.contributes.configuration.properties += $linters' <<< \
-    "$manifest_without_linters" > \
-    package.json
+  jq 'walk(
+    if type == "object" then
+      with_entries(select(.key | startswith("harper.linters") | not))
+    end
+  )' package.json |
+    jq --slurpfile linters "$linters_file" \
+      '.contributes.configuration.properties += $linters[0]' > \
+      "$output_file"
+  mv "$output_file" package.json
   just format
 
 # Run Rust formatting and linting.

@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct AllHellBreakLoose {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AllHellBreakLoose {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("all")
-                    .t_ws()
-                    .t_aco("hell")
-                    .t_ws()
-                    .then_word_set(&["break", "breaking", "breaks", "broke", "broken"])
-                    .t_ws()
-                    .t_aco("out"),
-            ),
+            expr: SequenceExpr::aco("all")
+                .t_ws()
+                .t_aco("hell")
+                .t_ws()
+                .then_word_set(&["break", "breaking", "breaks", "broke", "broken"])
+                .t_ws()
+                .t_aco("out"),
         }
     }
 }
@@ -46,7 +44,7 @@ impl ExprLinter for AllHellBreakLoose {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 }
 

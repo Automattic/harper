@@ -7,7 +7,7 @@ use crate::{Token, patterns::Word};
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Confident {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Confident {
@@ -21,9 +21,7 @@ impl Default for Confident {
         .then_whitespace()
         .t_aco("confidant");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -31,7 +29,7 @@ impl ExprLinter for Confident {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

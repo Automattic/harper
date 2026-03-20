@@ -61,6 +61,27 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "Bollocks" => (
+            &[
+                ("bullocks!", "bollocks!"),
+                ("complete bullocks", "complete bollocks"),
+                ("dogs bullocks", "dogs bollocks"),
+                ("dog's bullocks", "dog's bollocks"),
+                ("is bullocks", "is bollocks"),
+                ("it's bullocks", "it's bollocks"),
+                ("its bullocks", "its bollocks"),
+                ("such bullocks", "such bollocks"),
+                ("that's bullocks", "that's bollocks"),
+                ("thats bullocks", "thats bollocks"),
+                ("total bullocks", "total bollocks"),
+                ("utter bullocks", "utter bollocks"),
+                ("was bullocks", "was bollocks"),
+                ("what bullocks", "what bollocks"),
+            ],
+            "The slang word for `nonsense` is `bollocks`. `Bullocks` are male cattle.",
+            "Corrects `bullocks` to `bollocks` when the meaning is `nonsense`.",
+            LintKind::Spelling
+        ),
         "ChampAtTheBit" => (
             &[
                 ("chomp at the bit", "champ at the bit"),
@@ -80,6 +101,17 @@ pub fn lint_group() -> LintGroup {
             "`Client-side` and `server-side` do not use an apostrophe.",
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
+        ),
+        "CompulseToCompel" => (
+            &[
+                ("compulse", "compel"),
+                ("compulsed", "compelled"),
+                ("compulses", "compels"),
+                ("compulsing", "compelling"),
+            ],
+            "Did you mean `compel` rather than the obsolete or archaic (and non-standard) `compulse`?",
+            "Suggests replacing the obsolete or archaic verb `compulse` with the standard `compel`.",
+            LintKind::Nonstandard
         ),
         "ConfirmThat" => (
             &[
@@ -243,6 +275,29 @@ pub fn lint_group() -> LintGroup {
             "Corrects `flip the bill` to `foot the bill`.",
             LintKind::Nonstandard
         ),
+        "GetUsedTo" => (
+            &[
+                ("get used of", "get used to"),
+                ("gets used of", "gets used to"),
+                ("getting used of", "getting used to"),
+                ("got used of", "got used to"),
+                ("gotten used of", "gotten used to"),
+            ],
+            "Use `used to` instead of `used of`.",
+            "Corrects `used of` to `used to`.",
+            LintKind::Usage
+        ),
+        "GrindToAHalt" => (
+            &[
+                ("grind to halt", "grind to a halt"),
+                ("grinding to halt", "grinding to a halt"),
+                ("grinds to halt", "grinds to a halt"),
+                ("ground to halt", "ground to a halt"),
+            ],
+            "You are missing the indefinite article `a` before `halt`.",
+            "Corrects the idiom `grind to halt` to the standard `grind to a halt`.",
+            LintKind::Nonstandard
+        ),
         "HavePassed" => (
             &[
                 ("had past", "had passed"),
@@ -254,6 +309,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests `past` for `passed` in case a verb was intended.",
             // ConfusedPair?
             LintKind::WordChoice
+        ),
+        "HitTheNailOnTheHead" => (
+            &[
+                ("hit the nail in the head", "hit the nail on the head"),
+                ("hits the nail in the head", "hits the nail on the head"),
+                ("hitting the nail in the head", "hitting the nail on the head"),
+                ("hitted the nail in the head", "hitted the nail on the head")
+            ],
+            "The correct preposition in this idiom is `on`.",
+            "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
+            LintKind::Eggcorn
         ),
         "HomeInOn" => (
             &[
@@ -408,6 +474,26 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "ResponsibilityFor" => (
+            &[
+                ("take responsibility of", "take responsibility for"),
+                ("took responsibility of", "took responsibility for"),
+                ("taken responsibility of", "taken responsibility for"),
+                ("taking responsibility of", "taking responsibility for"),
+                ("takes responsibility of", "takes responsibility for"),
+                ("assume responsibility of", "assume responsibility for"),
+                ("assumed responsibility of", "assumed responsibility for"),
+                ("assuming responsibility of", "assuming responsibility for"),
+                ("assumes responsibility of", "assumes responsibility for"),
+                ("claim responsibility of", "claim responsibility for"),
+                ("claimed responsibility of", "claimed responsibility for"),
+                ("claiming responsibility of", "claiming responsibility for"),
+                ("claims responsibility of", "claims responsibility for"),
+            ],
+            "The correct preposition is `for`, not `of`.",
+            "Corrects `take/assume/claim responsibility of` to `take/assume/claim responsibility for`.",
+            LintKind::Usage
+        ),
         "ScapeGoat" => (
             &[
                 ("an escape goat", "a scapegoat"),
@@ -417,23 +503,6 @@ pub fn lint_group() -> LintGroup {
             "If you're referring someone is being blamed unfairly, write it as a single word: `scapegoat`.",
             "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures.",
             LintKind::Eggcorn
-        ),
-        "SubjunctiveWasToWere" => (
-            &[
-                ("if only there was", "if only there were"),
-                ("if only i was", "if only i were"),
-                ("if only he was", "if only he were"),
-                ("if only she was", "if only she were"),
-                ("if only it was", "if only it were"),
-                ("i wish there was", "i wish there were"),
-                ("i wish i was", "i wish i were"),
-                ("i wish he was", "i wish he were"),
-                ("i wish she was", "i wish she were"),
-                ("i wish it was", "i wish it were")
-            ],
-            "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
-            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
-            LintKind::Grammar
         ),
         "SeamToSeem" => (
             &[
@@ -459,6 +528,23 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
+        ),
+        "SubjunctiveWasToWere" => (
+            &[
+                ("if only there was", "if only there were"),
+                ("if only i was", "if only i were"),
+                ("if only he was", "if only he were"),
+                ("if only she was", "if only she were"),
+                ("if only it was", "if only it were"),
+                ("i wish there was", "i wish there were"),
+                ("i wish i was", "i wish i were"),
+                ("i wish he was", "i wish he were"),
+                ("i wish she was", "i wish she were"),
+                ("i wish it was", "i wish it were")
+            ],
+            "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
+            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
+            LintKind::Grammar
         ),
         "WreakHavoc" => (
             &[
@@ -499,6 +585,15 @@ pub fn lint_group() -> LintGroup {
             "`Await` and `for` are redundant when used together - use one or the other",
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
+        ),
+        "CommitmentTo" => (
+            &[
+                (&["commitment toward", "commitment towards"], &["commitment to"]),
+                (&["commitments toward", "commitments towards"], &["commitments to"]),
+            ],
+            "The correct preposition to use with `commitment` is `to`, not `toward` or `towards`.",
+            "Corrects `commitment toward/towards` to `commitment to`.",
+            LintKind::Usage
         ),
         "Copyright" => (
             &[

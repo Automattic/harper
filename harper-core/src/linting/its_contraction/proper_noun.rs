@@ -1,18 +1,16 @@
 use std::ops::Range;
-use std::sync::Arc;
 
 use harper_brill::UPOS;
 
 use crate::{
     Document, Token, TokenStringExt,
-    expr::{Expr, ExprExt, ExprMap, OwnedExprExt, SequenceExpr},
+    expr::{ExprExt, ExprMap, OwnedExprExt, SequenceExpr},
     linting::{Lint, LintKind, Linter, Suggestion},
     patterns::{DerivedFrom, UPOSSet},
 };
 
 pub struct ProperNoun {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<Range<usize>>>,
+    expr: ExprMap<Range<usize>>,
 }
 
 impl Default for ProperNoun {
@@ -49,12 +47,7 @@ impl Default for ProperNoun {
             2..3,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -101,7 +94,7 @@ impl ProperNoun {
             }
         }
 
-        let range = self.map.lookup(0, matched_tokens, source)?.clone();
+        let range = self.expr.lookup(0, matched_tokens, source)?.clone();
         let offending = matched_tokens.get(range.start)?;
         let offender_text = offending.span.get_content(source);
 

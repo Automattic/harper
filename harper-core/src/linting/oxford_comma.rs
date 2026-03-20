@@ -1,4 +1,3 @@
-use crate::expr::Expr;
 use crate::expr::ExprExt;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
@@ -7,7 +6,7 @@ use crate::{Lrc, Token, TokenStringExt, linting::Linter};
 use super::{super::Lint, LintKind, Suggestion};
 
 pub struct OxfordComma {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for OxfordComma {
@@ -32,9 +31,7 @@ impl Default for OxfordComma {
             .then_whitespace()
             .then(item.clone());
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 

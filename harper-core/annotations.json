@@ -707,7 +707,8 @@
 			"metadata": {
 				"common": true
 			},
-			"rename_ok": true
+			"rename_ok": true,
+			"propagate": true
 		},
 		"P": {
 			"#": "preposition property",

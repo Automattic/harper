@@ -89,7 +89,7 @@ Importantly, all of the tools available in this repository are available via `ju
 - `harper-core`: The core grammar checking engine. This is a dependency to pretty much everything related to Harper.
 - `harper-ls`: A Language Server compatible with a number of text editors, including Neovim, Zed, and Helix. See above linked documentation for more details.
 - `harper-cli`: A command-line binary for debugging Harper's core engine and markup language support.
-- `harper-comments`: Provides parsers for a number of programming langauges to support linting their comments.
+- `harper-comments`: Provides parsers for a number of programming languages to support linting their comments.
 - `harper-wasm`: The WebAssembly build target that powers browser and JavaScript integrations such as `harper.js`.
 - `packages/lint-framework`: A package containing the tooling necessary to read/write/highlight text on the web for the purpose of linting.
 - `packages/components`: Shared Svelte component package used by web-facing packages.

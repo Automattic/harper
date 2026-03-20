@@ -124,6 +124,8 @@ async function enableDefaultDomains() {
 		'ckeditor.com',
 		'app.slack.com',
 		'openrouter.ai',
+		'docs.google.com',
+		'typst.app',
 	];
 
 	for (const item of defaultEnabledDomains) {

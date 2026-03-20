@@ -1,6 +1,4 @@
-use crate::expr::Expr;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
+use crate::expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
@@ -9,7 +7,7 @@ use crate::{
 };
 
 pub struct ItWouldBe {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for ItWouldBe {
@@ -57,9 +55,7 @@ impl Default for ItWouldBe {
             .or(branch(true, false))
             .or(branch(true, true));
 
-        Self {
-            expr: Box::new(combined),
-        }
+        Self { expr: combined }
     }
 }
 
@@ -67,7 +63,7 @@ impl ExprLinter for ItWouldBe {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

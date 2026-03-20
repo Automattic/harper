@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct DayAndAge {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DayAndAge {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["this", "these"])
-                    .t_ws()
-                    .then_word_set(&["day", "days"])
-                    .t_ws()
-                    .then_word_set(&["and", "in", "an", "on"])
-                    .t_ws()
-                    .then_word_set(&["age", "ages"]),
-            ),
+            expr: SequenceExpr::word_set(&["this", "these"])
+                .t_ws()
+                .then_word_set(&["day", "days"])
+                .t_ws()
+                .then_word_set(&["and", "in", "an", "on"])
+                .t_ws()
+                .then_word_set(&["age", "ages"]),
         }
     }
 }
@@ -32,7 +30,7 @@ impl ExprLinter for DayAndAge {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

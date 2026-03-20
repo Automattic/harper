@@ -236,8 +236,13 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Ellipsis))
     }
 
+    // AKA 'minus'
     pub fn is_hyphen(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Hyphen))
+    }
+
+    pub fn is_plus(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Plus))
     }
 
     pub fn is_quote(&self) -> bool {
@@ -262,6 +267,10 @@ impl TokenKind {
 
     pub fn is_semicolon(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Semicolon))
+    }
+
+    pub fn is_acute(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Acute))
     }
 
     pub fn is_ampersand(&self) -> bool {

@@ -7,41 +7,39 @@ use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct LetToDo {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for LetToDo {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["let", "lets", "let's"])
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_object_pronoun()),
-                        Box::new(SequenceExpr::word_set(&[
-                            // Elective existential indefinite pronouns
-                            "anybody",
-                            "anyone",
-                            // Universal indefinite pronouns
-                            "everybody",
-                            "everyone",
-                            // Negative indefinite pronouns (correct)
-                            "nobody",
-                            // Negative indefinite pronouns (incorrect)
-                            "noone",
-                            // Assertive existential indefinite pronouns
-                            "somebody",
-                            "someone",
-                        ])),
-                        Box::new(
-                            SequenceExpr::word_set(&["any", "every", "no", "some"])
-                                .t_ws()
-                                .then_word_set(&["body", "one"]),
-                        ),
-                    ])
-                    .t_ws()
-                    .t_aco("to"),
-            ),
+            expr: SequenceExpr::word_set(&["let", "lets", "let's"])
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_object_pronoun()),
+                    Box::new(SequenceExpr::word_set(&[
+                        // Elective existential indefinite pronouns
+                        "anybody",
+                        "anyone",
+                        // Universal indefinite pronouns
+                        "everybody",
+                        "everyone",
+                        // Negative indefinite pronouns (correct)
+                        "nobody",
+                        // Negative indefinite pronouns (incorrect)
+                        "noone",
+                        // Assertive existential indefinite pronouns
+                        "somebody",
+                        "someone",
+                    ])),
+                    Box::new(
+                        SequenceExpr::word_set(&["any", "every", "no", "some"])
+                            .t_ws()
+                            .then_word_set(&["body", "one"]),
+                    ),
+                ])
+                .t_ws()
+                .t_aco("to"),
         }
     }
 }
@@ -50,7 +48,7 @@ impl ExprLinter for LetToDo {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

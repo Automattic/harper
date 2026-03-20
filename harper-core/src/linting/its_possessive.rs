@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_brill::UPOS;
 
 use crate::Token;
@@ -14,8 +12,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct ItsPossessive {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for ItsPossessive {
@@ -59,6 +56,22 @@ impl Default for ItsPossessive {
             ])));
 
         map.insert(start_of_sentence_noun, 0);
+
+        let start_of_sentence_noun_subject = SequenceExpr::with(AnchorStart)
+            .t_aco("it's")
+            .t_ws()
+            .then(
+                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
+                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
+                        || ((tok.kind.is_noun() || tok.kind.is_proper_noun())
+                            && !tok.kind.is_adjective()
+                            && !tok.kind.is_adverb())
+                }),
+            )
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX]));
+
+        map.insert(start_of_sentence_noun_subject, 0);
 
         let start_of_sentence_adjective = SequenceExpr::with(AnchorStart)
             .t_aco("it's")
@@ -105,12 +118,7 @@ impl Default for ItsPossessive {
 
         map.insert(special, 0);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -118,11 +126,11 @@ impl ExprLinter for ItsPossessive {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_idx = self.map.lookup(0, matched_tokens, source).unwrap();
+        let offending_idx = self.expr.lookup(0, matched_tokens, source).unwrap();
         let span = matched_tokens[*offending_idx].span;
 
         Some(Lint {
@@ -199,6 +207,15 @@ mod tests {
             "It's benefits are numerous.",
             ItsPossessive::default(),
             "Its benefits are numerous.",
+        );
+    }
+
+    #[test]
+    fn fixes_its_ancestor() {
+        assert_suggestion_result(
+            "It's ancestor is still around.",
+            ItsPossessive::default(),
+            "Its ancestor is still around.",
         );
     }
 
@@ -395,6 +412,11 @@ mod tests {
     #[test]
     fn dont_flag_issue_1722_its_big_enough() {
         assert_no_lints("It's big enough.", ItsPossessive::default());
+    }
+
+    #[test]
+    fn allows_its_awesome() {
+        assert_no_lints("It's awesome.", ItsPossessive::default());
     }
 
     #[test]

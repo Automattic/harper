@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct ThrowAway {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThrowAway {
@@ -16,9 +16,7 @@ impl Default for ThrowAway {
             .t_ws()
             .t_aco("away");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for ThrowAway {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -54,9 +52,7 @@ impl ExprLinter for ThrowAway {
 #[cfg(test)]
 mod tests {
     use super::ThrowAway;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_simple_case() {
@@ -69,11 +65,10 @@ mod tests {
 
     #[test]
     fn offers_past_tense_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "We through away the old code.",
             ThrowAway::default(),
             "We threw away the old code.",
-            1,
         );
     }
 

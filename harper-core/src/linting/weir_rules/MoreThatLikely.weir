@@ -1,0 +1,25 @@
+expr main <(more that likely), that>
+
+let message "Did you mean `more than likely`?"
+let description "Corrects the common typo `more that likely` to `more than likely`."
+let kind "Typo"
+let becomes "than"
+let strategy "MatchCase"
+
+# True positives
+
+test "It is more that likely a typo." "It is more than likely a typo."
+test "More that likely this is due to a config issue." "More than likely this is due to a config issue."
+test "There is more that likely some obvious solution." "There is more than likely some obvious solution."
+test "It's more that likely that I messed something up." "It's more than likely that I messed something up."
+test "MORE THAT LIKELY this broke in the last release." "MORE THAN LIKELY this broke in the last release."
+test "So it is more that likely a bug." "So it is more than likely a bug."
+
+# False positives / true negatives
+
+allows "It is more than likely a typo."
+allows "More than likely this is a config issue."
+allows "There is more that I need to tell you."
+allows "I know more that could help."
+allows "He said more that day than usual."
+allows "She offered more that the others couldn't."

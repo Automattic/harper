@@ -6,7 +6,10 @@ use crate::{
     CharStringExt, Token, TokenStringExt,
     dict_word_metadata::Person,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_word},
+    },
     patterns::WordSet,
 };
 
@@ -16,7 +19,7 @@ use crate::{
 /// - "despite it is" -> "despite it being" or "despite its being"
 /// - "despite I am" -> "despite me being" or "despite my being"
 pub struct DespiteItIs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DespiteItIs {
@@ -30,9 +33,7 @@ impl Default for DespiteItIs {
             .t_ws()
             .then(be);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -44,7 +45,7 @@ impl ExprLinter for DespiteItIs {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -53,12 +54,7 @@ impl ExprLinter for DespiteItIs {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let next_is_ing = ctx.is_some_and(|(_, then)| {
-            then.first().is_some_and(|t| t.kind.is_whitespace())
-                && then
-                    .get(1)
-                    .is_some_and(|t| t.kind.is_verb_progressive_form())
-        });
+        let next_is_ing = followed_by_word(ctx, |nw| nw.kind.is_verb_progressive_form());
 
         let subj = toks.get(2)?;
         let be = toks.get(4)?;

@@ -6,13 +6,13 @@ use crate::token_string_ext::TokenStringExt;
 use crate::{Lint, Token};
 
 pub struct AndTheLike {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for AndTheLike {
     fn default() -> Self {
         Self {
-            expr: Box::new(All::new(vec![
+            expr: All::new(vec![
                 Box::new(
                     // All known variants seen in the wild, good and bad
                     SequenceExpr::word_set(&["and", "or", "an"])
@@ -30,7 +30,7 @@ impl Default for AndTheLike {
                             Box::new(WordSet::new(&["like", "likes"])),
                         ]),
                 )),
-            ])),
+            ]),
         }
     }
 }
@@ -39,7 +39,7 @@ impl ExprLinter for AndTheLike {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

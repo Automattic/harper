@@ -8,7 +8,7 @@ use crate::{
 };
 
 pub struct FirstAidKit {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FirstAidKit {
@@ -17,9 +17,7 @@ impl Default for FirstAidKit {
         let pattern = SequenceExpr::with(supply_words)
             .then_whitespace()
             .then_any_capitalization_of("kid");
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -27,7 +25,7 @@ impl ExprLinter for FirstAidKit {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
