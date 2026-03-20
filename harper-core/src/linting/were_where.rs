@@ -343,10 +343,7 @@ mod tests {
     #[test]
     fn no_flag_tell_you_where_the() {
         // "you where" followed by DET — not flagged (DET is not VERB/AUX/ADJ)
-        assert_no_lints(
-            "I'll tell you where the exit is.",
-            WereWhere::default(),
-        );
+        assert_no_lints("I'll tell you where the exit is.", WereWhere::default());
     }
 
     #[test]
