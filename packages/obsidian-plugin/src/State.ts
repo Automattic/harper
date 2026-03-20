@@ -22,6 +22,7 @@ export type Settings = {
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
 	regexMask?: string;
+	useWebStyleLints?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -38,6 +39,7 @@ export default class State {
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
 	private regexMask?: string;
+	private useWebStyleLints = false;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -110,6 +112,7 @@ export default class State {
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
 		this.regexMask = settings.regexMask;
+		this.useWebStyleLints = settings.useWebStyleLints ?? false;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -220,7 +223,7 @@ export default class State {
 							to: span.end,
 							source: linterName,
 							severity: 'error',
-							markClass: lintKindClass(lint.lint_kind()),
+							markClass: `${lintKindClass(lint.lint_kind())} ${this.useWebStyleLints ? 'harper-web-style' : 'harper-squiggly-style'}`,
 							title: lint.lint_kind_pretty(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
@@ -279,6 +282,7 @@ export default class State {
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
 			regexMask: this.regexMask,
+			useWebStyleLints: this.useWebStyleLints,
 		};
 	}
 

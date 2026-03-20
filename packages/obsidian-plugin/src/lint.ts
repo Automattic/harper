@@ -526,10 +526,25 @@ function underline(color: string) {
 	);
 }
 
-const lintKindRangeTheme = Object.fromEntries(
+const lintKindRangeThemeStraight = Object.fromEntries(
 	Object.entries(LINT_KIND_COLORS).map(([lintKind, color]) => [
-		`.cm-lintRange.harper-lintRange-${lintKind}`,
-		{ backgroundImage: underline(color) },
+		`.cm-lintRange.harper-lintRange-${lintKind}.harper-web-style`,
+		{
+			borderBottom: `2px solid ${color}`,
+			backgroundColor: `${color}22`,
+		},
+	]),
+);
+
+const lintKindRangeThemeSquiggly = Object.fromEntries(
+	Object.entries(LINT_KIND_COLORS).map(([lintKind, color]) => [
+		`.cm-lintRange.harper-lintRange-${lintKind}.harper-squiggly-style`,
+		{
+			backgroundImage: underline(color),
+			backgroundPosition: 'left bottom',
+			backgroundRepeat: 'repeat-x',
+			paddingBottom: '0.7px',
+		},
 	]),
 );
 
@@ -645,16 +660,49 @@ const baseTheme = EditorView.baseTheme({
 	},
 
 	'.cm-lintRange': {
-		backgroundPosition: 'left bottom',
-		backgroundRepeat: 'repeat-x',
 		paddingBottom: '0.7px',
 	},
 
-	'.cm-lintRange-error': { backgroundImage: underline('#d11') },
-	'.cm-lintRange-warning': { backgroundImage: underline('orange') },
-	'.cm-lintRange-info': { backgroundImage: underline('#999') },
-	'.cm-lintRange-hint': { backgroundImage: underline('#66d') },
-	...lintKindRangeTheme,
+	'.cm-lintRange-error.harper-web-style': {
+		borderBottom: '2px solid #dd1111',
+		backgroundColor: '#dd111122',
+	},
+	'.cm-lintRange-warning.harper-web-style': {
+		borderBottom: '2px solid #ffa500',
+		backgroundColor: '#ffa50022',
+	},
+	'.cm-lintRange-info.harper-web-style': {
+		borderBottom: '2px solid #999999',
+		backgroundColor: '#99999922',
+	},
+	'.cm-lintRange-hint.harper-web-style': {
+		borderBottom: '2px solid #6666dd',
+		backgroundColor: '#6666dd22',
+	},
+
+	'.cm-lintRange-error.harper-squiggly-style': {
+		backgroundImage: underline('#d11'),
+		backgroundPosition: 'left bottom',
+		backgroundRepeat: 'repeat-x',
+	},
+	'.cm-lintRange-warning.harper-squiggly-style': {
+		backgroundImage: underline('orange'),
+		backgroundPosition: 'left bottom',
+		backgroundRepeat: 'repeat-x',
+	},
+	'.cm-lintRange-info.harper-squiggly-style': {
+		backgroundImage: underline('#999'),
+		backgroundPosition: 'left bottom',
+		backgroundRepeat: 'repeat-x',
+	},
+	'.cm-lintRange-hint.harper-squiggly-style': {
+		backgroundImage: underline('#66d'),
+		backgroundPosition: 'left bottom',
+		backgroundRepeat: 'repeat-x',
+	},
+
+	...lintKindRangeThemeStraight,
+	...lintKindRangeThemeSquiggly,
 	'.cm-lintRange-active': { backgroundColor: '#ffdd9980' },
 
 	'.cm-tooltip-lint': {
