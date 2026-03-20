@@ -54,15 +54,7 @@ pub fn try_make_title_case(
             .is_some_and(|o: &Vec<char>| o[idx] != new_char)
             || relevant_text[idx] != new_char
         {
-            if output.is_none() {
-                output = Some(relevant_text.to_vec())
-            }
-
-            let Some(mutable) = &mut output else {
-                panic!("We just set output to `Some`. This should be impossible.");
-            };
-
-            mutable[idx] = new_char;
+            output.get_or_insert_with(|| relevant_text.to_vec())[idx] = new_char;
         }
     };
 
