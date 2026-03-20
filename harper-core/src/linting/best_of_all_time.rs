@@ -3,7 +3,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Sentence};
 
 pub struct BestOfAllTime {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for BestOfAllTime {
@@ -36,9 +36,7 @@ impl Default for BestOfAllTime {
         )
         .then_fixed_phrase(" of all times");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -46,7 +44,7 @@ impl ExprLinter for BestOfAllTime {
     type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

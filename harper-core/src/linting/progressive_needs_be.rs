@@ -5,7 +5,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct ProgressiveNeedsBe {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ProgressiveNeedsBe {
@@ -26,9 +26,7 @@ impl Default for ProgressiveNeedsBe {
 
         let expr = SequenceExpr::any_of(vec![Box::new(contracted), Box::new(non_contracted)]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -36,7 +34,7 @@ impl ExprLinter for ProgressiveNeedsBe {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct TryOnesHandAt {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for TryOnesHandAt {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["try", "tried", "tries", "trying"])
-                    .t_ws()
-                    .then_possessive_determiner()
-                    .t_ws()
-                    .t_aco("hands")
-                    .t_ws()
-                    .t_aco("at"),
-            ),
+            expr: SequenceExpr::word_set(&["try", "tried", "tries", "trying"])
+                .t_ws()
+                .then_possessive_determiner()
+                .t_ws()
+                .t_aco("hands")
+                .t_ws()
+                .t_aco("at"),
         }
     }
 }
@@ -28,7 +26,7 @@ impl ExprLinter for TryOnesHandAt {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

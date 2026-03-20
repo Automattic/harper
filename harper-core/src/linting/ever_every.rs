@@ -1,33 +1,31 @@
 use crate::{
     Lint, Token,
-    expr::{Expr, OwnedExprExt, SequenceExpr},
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{ModalVerb, WordSet},
 };
 
 pub struct EverEvery {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for EverEvery {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::any_of(vec![
-                    Box::new(WordSet::new(&[
-                        "are", "aren't", "arent", "did", "didn't", "didnt", "do", "does",
-                        "doesn't", "doesnt", "dont", "don't", "had", "hadn't", "hadnt", "has",
-                        "hasn't", "hasnt", "have", "haven't", "havent", "is", "isn't", "isnt",
-                        "was", "wasn't", "wasnt", "were", "weren't", "werent",
-                    ])),
-                    Box::new(ModalVerb::with_common_errors()),
-                ])
-                .t_ws()
-                .then_subject_pronoun()
-                .t_ws()
-                .t_aco("every")
-                .and_not(SequenceExpr::anything().t_any().t_aco("it")),
-            ),
+            expr: SequenceExpr::any_of(vec![
+                Box::new(WordSet::new(&[
+                    "are", "aren't", "arent", "did", "didn't", "didnt", "do", "does", "doesn't",
+                    "doesnt", "dont", "don't", "had", "hadn't", "hadnt", "has", "hasn't", "hasnt",
+                    "have", "haven't", "havent", "is", "isn't", "isnt", "was", "wasn't", "wasnt",
+                    "were", "weren't", "werent",
+                ])),
+                Box::new(ModalVerb::with_common_errors()),
+            ])
+            .t_ws()
+            .then_subject_pronoun()
+            .t_ws()
+            .t_aco("every")
+            .and_not(SequenceExpr::anything().t_any().t_aco("it")),
         }
     }
 }
@@ -36,7 +34,7 @@ impl ExprLinter for EverEvery {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

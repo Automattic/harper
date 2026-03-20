@@ -9,7 +9,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct PronounInflectionBe {
-    expr: Box<dyn Expr>,
+    expr: All,
     map: Lrc<ExprMap<&'static str>>,
 }
 
@@ -125,10 +125,7 @@ impl PronounInflectionBe {
         all.add(map.clone());
         all.add(|tok: &Token, _: &[char]| tok.kind.is_upos(UPOS::PRON));
 
-        Self {
-            expr: Box::new(all),
-            map,
-        }
+        Self { expr: all, map }
     }
 }
 
@@ -142,7 +139,7 @@ impl ExprLinter for PronounInflectionBe {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

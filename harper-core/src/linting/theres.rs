@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct Theres {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Theres {
@@ -16,9 +16,7 @@ impl Default for Theres {
             &["no", "enough"],
         );
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for Theres {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn crate::expr::Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

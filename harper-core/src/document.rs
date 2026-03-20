@@ -81,6 +81,16 @@ impl Document {
         document
     }
 
+    /// Create a new document from character data using the built-in [`PlainEnglish`]
+    /// parser and curated dictionary. This avoids string-to-char conversions.
+    pub fn new_plain_english_curated_chars(source: &[char]) -> Self {
+        Self::new_from_vec(
+            Lrc::new(source.to_vec()),
+            &PlainEnglish,
+            &FstDictionary::curated(),
+        )
+    }
+
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
@@ -116,6 +126,16 @@ impl Document {
         )
     }
 
+    /// Create a new document from character data using the built-in [`Markdown`] parser
+    /// and curated dictionary. This avoids string-to-char conversions.
+    pub fn new_markdown_default_curated_chars(chars: &[char]) -> Self {
+        Self::new_from_vec(
+            chars.to_vec().into(),
+            &Markdown::default(),
+            &FstDictionary::curated(),
+        )
+    }
+
     /// Parse text to produce a document using the built-in [`Markdown`] parser
     /// and curated dictionary with the default Markdown configuration.
     pub fn new_markdown_default_curated(text: &str) -> Self {
@@ -145,7 +165,7 @@ impl Document {
         self.condense_dotted_initialisms();
         self.condense_number_suffixes();
         self.condense_ellipsis();
-        self.condense_latin();
+        self.condense_dotted_truncations();
         self.condense_common_top_level_domains();
         self.condense_filename_extensions();
         self.condense_tldr();
@@ -501,12 +521,12 @@ impl Document {
     }
 
     thread_local! {
-        static LATIN_EXPR: Lrc<FirstMatchOf> = Document::uncached_latin_expr();
+        static DOTTED_TRUNCATION_EXPR: Lrc<FirstMatchOf> = Document::uncached_dotted_truncation_expr();
     }
 
-    fn uncached_latin_expr() -> Lrc<FirstMatchOf> {
+    fn uncached_dotted_truncation_expr() -> Lrc<FirstMatchOf> {
         Lrc::new(FirstMatchOf::new(vec![
-            Box::new(SequenceExpr::word_set(&["etc", "vs"]).then_period()),
+            Box::new(SequenceExpr::word_set(&["esp", "etc", "vs"]).then_period()),
             Box::new(
                 SequenceExpr::aco("et")
                     .then_whitespace()
@@ -535,8 +555,8 @@ impl Document {
         self.tokens.remove_indices(remove_indices);
     }
 
-    fn condense_latin(&mut self) {
-        self.condense_expr(&Self::LATIN_EXPR.with(|v| v.clone()), |_| {})
+    fn condense_dotted_truncations(&mut self) {
+        self.condense_expr(&Self::DOTTED_TRUNCATION_EXPR.with(|v| v.clone()), |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down

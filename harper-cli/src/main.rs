@@ -36,7 +36,7 @@ mod annotate;
 use annotate::AnnotationType;
 
 mod lint;
-use crate::lint::lint;
+use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
@@ -59,8 +59,8 @@ enum Args {
         /// standard input.
         inputs: Vec<AnyInput>,
         /// Whether to merely print out the number of errors encountered,
-        /// without further details.
-        #[arg(short, long)]
+        /// without further details. Only valid with the default output format.
+        #[arg(short, long, conflicts_with = "format")]
         count: bool,
         /// Restrict linting to only a specific set of rules.
         /// If omitted, `harper-cli` will run every rule.
@@ -85,6 +85,9 @@ enum Args {
         /// Path to a Weirpack file to load. May be supplied multiple times.
         #[arg(long, value_name = "WEIRPACK")]
         weirpacks: Vec<SingleInput>,
+        /// Output format for lint results.
+        #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
+        format: OutputFormat,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -234,6 +237,7 @@ fn main() -> anyhow::Result<()> {
             user_dict_path,
             file_dict_path,
             weirpacks,
+            format,
         } => {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
@@ -250,6 +254,7 @@ fn main() -> anyhow::Result<()> {
                     dialect,
                     weirpack_inputs: weirpacks,
                     color,
+                    format,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?

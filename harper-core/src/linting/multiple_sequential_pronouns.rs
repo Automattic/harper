@@ -1,73 +1,28 @@
-use super::Suggestion;
-use super::expr_linter::ExprLinter;
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::linting::LintKind;
-use crate::linting::expr_linter::Chunk;
-use crate::patterns::WordSet;
-use crate::{CharStringExt, Lint, Lrc, Token, TokenStringExt};
+use crate::{
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    {Lint, Lrc, Token, TokenStringExt},
+};
 
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
 pub struct MultipleSequentialPronouns {
-    expr: Box<dyn Expr>,
-    subject_pronouns: Lrc<WordSet>,
-    object_pronouns: Lrc<WordSet>,
-    possessive_adjectives: Lrc<WordSet>,
+    expr: SequenceExpr,
 }
 
 impl MultipleSequentialPronouns {
     fn new() -> Self {
-        // Some words occur in multiple positions in the paradigm
-        // but this is a set, so it doesn't matter and is much clearer
-        let pronouns = Lrc::new(WordSet::new(&[
-            "i", "you", "he", "she", "it", // subject case, singular
-            "me", "you", "him", "her", "it", // object case, singular
-            "we", "you", "they", // subject case, plural
-            "us", "you", "them", // object case, plural
-            "mine", "yours", "his", "hers", // possessive pronouns, singular
-            "ours", "yours", "theirs", // possessive pronouns, plural
-            "my", "your", "his", "her", "its", // possessive adjectives, singular
-            "our", "your", "their", // possessive adjectives, plural
-        ]));
-
-        // TODO: temporary sets of pronouns - remove when DictWordMetadata has this info
-        let subject_pronouns = Lrc::new(WordSet::new(&[
-            "i", "you", "he", "she", "it", // subject case, singular
-            "we", "you", "they", // subject case, plural
-        ]));
-
-        let object_pronouns = Lrc::new(WordSet::new(&[
-            "me", "you", "him", "her", "it", // object case, singular
-            "us", "you", "them", // object case, plural
-        ]));
-
-        let possessive_adjectives = Lrc::new(WordSet::new(&[
-            "my", "your", "his", "her", "its", // possessive adjectives, singular
-            "our", "your", "their", // possessive adjectives, plural
-        ]));
+        let pronouns = Lrc::new(|t: &Token, _s: &[char]| {
+            t.kind.is_subject_pronoun() // e.g. I
+                || t.kind.is_object_pronoun() // e.g. me
+                || t.kind.is_possessive_pronoun() // e.g. mine
+                || t.kind.is_possessive_determiner() // e.g. my
+        });
 
         Self {
-            expr: Box::new(
-                SequenceExpr::with(pronouns.clone())
-                    .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
-            ),
-            subject_pronouns,
-            object_pronouns,
-            possessive_adjectives,
+            expr: SequenceExpr::with(pronouns.clone())
+                .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
         }
-    }
-
-    fn is_subject_pronoun(&self, word: &str) -> bool {
-        self.subject_pronouns.contains(word)
-    }
-
-    fn is_object_pronoun(&self, word: &str) -> bool {
-        self.object_pronouns.contains(word)
-    }
-
-    fn is_possessive_adjective(&self, word: &str) -> bool {
-        self.possessive_adjectives.contains(word)
     }
 }
 
@@ -75,32 +30,40 @@ impl ExprLinter for MultipleSequentialPronouns {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let mut suggestions = Vec::new();
 
         if matched_tokens.len() == 3 {
-            let first_word_raw = matched_tokens[0].span.get_content(source).to_string();
-            let first_word = first_word_raw.to_ascii_lowercase();
-            let second_word = matched_tokens[2].span.get_content(source).to_string();
+            let first_word_tok = &matched_tokens[0];
+            let second_word_tok = &matched_tokens[2];
+
+            let first_word_raw = first_word_tok.span.get_content(source);
+            let second_word_raw = second_word_tok.span.get_content(source);
             // Bug 578: "I can lend you my car" - if 1st is object and second is possessive adjective, don't lint
-            if self.is_object_pronoun(&first_word) && self.is_possessive_adjective(&second_word) {
+            if first_word_tok.kind.is_object_pronoun()
+                && second_word_tok.kind.is_possessive_determiner()
+            {
                 return None;
             }
             // Bug 724: "One told me they were able to begin reading" - if 1st is object ans second is subject, don't lint
-            if self.is_object_pronoun(&first_word) && self.is_subject_pronoun(&second_word) {
+            if first_word_tok.kind.is_object_pronoun() && second_word_tok.kind.is_subject_pronoun()
+            {
                 return None;
             }
 
             // US is a qualifier meaning American, so uppercase after a possessive is OK.
-            if self.is_possessive_adjective(&first_word) && second_word == "US" {
+            // Likewise, IT means Information Technology, as in "our IT director"
+            if first_word_tok.kind.is_possessive_determiner()
+                && (second_word_raw == ['U', 'S'] || second_word_raw == ['I', 'T'])
+            {
                 return None;
             }
 
             // The same applies to uppercase before a subject pronoun
-            if first_word_raw == "US" && self.is_subject_pronoun(&second_word) {
+            if first_word_raw == ['U', 'S'] && second_word_tok.kind.is_subject_pronoun() {
                 return None;
             }
 
@@ -227,6 +190,15 @@ mod tests {
     fn dont_flag_case_insensitive_cost_him_his_life() {
         assert_lint_count(
             "to the point where it very well likely cost Him his life",
+            MultipleSequentialPronouns::new(),
+            0,
+        )
+    }
+
+    #[test]
+    fn dont_flag_2870() {
+        assert_lint_count(
+            "their sales derp was just having none of it when our IT director told him, point blank, that we're not moving anything into the cloud",
             MultipleSequentialPronouns::new(),
             0,
         )

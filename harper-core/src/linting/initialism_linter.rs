@@ -13,7 +13,7 @@ type InitialismPhrase = Vec<InitialismWord>;
 /// A struct that can be composed to expand initialisms, respecting the capitalization of each
 /// item.
 pub struct InitialismLinter {
-    expr: Box<dyn Expr>,
+    expr: Word,
     /// The lowercase-normalized expansion of the initialism.
     expansions_lower: Vec<InitialismPhrase>,
 }
@@ -32,7 +32,7 @@ impl InitialismLinter {
             .collect();
 
         Self {
-            expr: Box::new(Word::from_char_string(initialism.chars().collect())),
+            expr: Word::from_char_string(initialism.chars().collect()),
             expansions_lower,
         }
     }
@@ -42,7 +42,7 @@ impl ExprLinter for InitialismLinter {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

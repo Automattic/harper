@@ -8,7 +8,7 @@ use crate::{
 };
 
 pub struct APart {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for APart {
@@ -20,9 +20,7 @@ impl Default for APart {
             Box::new(FixedPhrase::from_phrase("far a part")),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -30,7 +28,7 @@ impl ExprLinter for APart {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -90,7 +88,7 @@ impl ExprLinter for APart {
 #[cfg(test)]
 mod tests {
     use super::APart;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn allow_normal_use_of_a_part() {
@@ -128,7 +126,7 @@ mod tests {
 
     #[test]
     fn corrects_a_part_from_to_apart_from_format() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Is it correct that the output file seems to be the same of the input file a part from the format (input: jpg, output: png)?",
             APart::default(),
             "Is it correct that the output file seems to be the same of the input file apart from the format (input: jpg, output: png)?",
@@ -137,7 +135,7 @@ mod tests {
 
     #[test]
     fn corrects_a_part_from_to_apart_from_english() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Do you know there are more languages out there a part from English right?",
             APart::default(),
             "Do you know there are more languages out there apart from English right?",
@@ -146,7 +144,7 @@ mod tests {
 
     #[test]
     fn corrects_a_part_from_to_a_part_of() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "An easy tool to generate backdoor with msfvenom (a part from metasploit framework).",
             APart::default(),
             "An easy tool to generate backdoor with msfvenom (a part of metasploit framework).",
@@ -155,7 +153,7 @@ mod tests {
 
     #[test]
     fn corrects_apart_of_to_apart_from_cflinuxfs() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Doesn't work with any stacks apart of cflinuxfs2 and cflinuxfs3",
             APart::default(),
             "Doesn't work with any stacks apart from cflinuxfs2 and cflinuxfs3",
@@ -164,7 +162,7 @@ mod tests {
 
     #[test]
     fn corrects_apart_of_to_apart_from_using() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "apart of using filter, i can't find it in the documentation",
             APart::default(),
             "apart from using filter, i can't find it in the documentation",
@@ -173,7 +171,7 @@ mod tests {
 
     #[test]
     fn corrects_apart_of_to_a_part_of_openai() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "export 'Usage' class as apart of openai.types",
             APart::default(),
             "export 'Usage' class as a part of openai.types",
@@ -182,7 +180,7 @@ mod tests {
 
     #[test]
     fn corrects_apart_of_to_a_part_of_formly() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "FormlyDatepickerTypeComponent is not listed as apart of the Formly Public API",
             APart::default(),
             "FormlyDatepickerTypeComponent is not listed as a part of the Formly Public API",
@@ -191,7 +189,7 @@ mod tests {
 
     #[test]
     fn corrects_far_a_part() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "That leaves you only the other hand on the keyboard and you don't want the keys to be that far a part.",
             APart::default(),
             "That leaves you only the other hand on the keyboard and you don't want the keys to be that far apart.",
@@ -200,7 +198,7 @@ mod tests {
 
     #[test]
     fn corrects_so_far_a_part_from_being_taken() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "I can't see in the code what is done really with this session_timeout so far a part from being taken from the conf if defined there or setup ...",
             APart::default(),
             "I can't see in the code what is done really with this session_timeout so far apart from being taken from the conf if defined there or setup ...",
@@ -209,7 +207,7 @@ mod tests {
 
     #[test]
     fn corrects_so_far_a_part_from_version_upgrade() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Any workaround so far a part from the version upgrade?",
             APart::default(),
             "Any workaround so far apart from the version upgrade?",
@@ -218,7 +216,7 @@ mod tests {
 
     #[test]
     fn corrects_fall_a_part() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall a part.",
             APart::default(),
             "When I set up a script I set up card priority based on my frontline but sometimes a servant dies which sometimes causes things to fall apart.",

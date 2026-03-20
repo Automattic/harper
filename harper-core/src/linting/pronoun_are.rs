@@ -7,7 +7,7 @@ use crate::{
 
 /// Corrects the shorthand `r` after plural first- and second-person pronouns.
 pub struct PronounAre {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for PronounAre {
@@ -23,9 +23,7 @@ impl Default for PronounAre {
             .t_ws()
             .t_aco("r");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -33,7 +31,7 @@ impl ExprLinter for PronounAre {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -93,9 +91,7 @@ impl ExprLinter for PronounAre {
 #[cfg(test)]
 mod tests {
     use super::PronounAre;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fixes_you_r() {
@@ -108,11 +104,10 @@ mod tests {
 
     #[test]
     fn offers_contraction_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "You r absolutely right.",
             PronounAre::default(),
             "You're absolutely right.",
-            1,
         );
     }
 

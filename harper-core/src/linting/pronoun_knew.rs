@@ -10,7 +10,7 @@ use crate::{
 };
 
 pub struct PronounKnew {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 trait PronounKnewExt {
@@ -52,7 +52,7 @@ impl Default for PronounKnew {
         ]);
 
         Self {
-            expr: Box::new(combined_pattern),
+            expr: combined_pattern,
         }
     }
 }
@@ -61,7 +61,7 @@ impl ExprLinter for PronounKnew {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

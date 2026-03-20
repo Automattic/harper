@@ -9,7 +9,7 @@ use crate::{
 };
 
 pub struct MoreAdjective<D> {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dict: D,
 }
 
@@ -19,11 +19,9 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["more", "most"])
-                    .t_ws()
-                    .then_positive_adjective(),
-            ),
+            expr: SequenceExpr::word_set(&["more", "most"])
+                .t_ws()
+                .then_positive_adjective(),
             dict,
         }
     }
@@ -47,7 +45,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
