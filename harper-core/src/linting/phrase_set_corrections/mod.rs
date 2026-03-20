@@ -578,8 +578,6 @@ pub fn lint_group() -> LintGroup {
             &[
                 (&["date back from"], &["date from", "date back to"]),
                 (&["dates back from"], &["dates from", "dates back to"]),
-                (&["dated back from"], &["dated from", "dated back to"]),
-                (&["dating back from"], &["dating from", "dating back to"]),
             ],
             "Use `date from` or `date back to`, not `date back from`.",
             "Corrects the blend of `date from` and `date back to` into the nonstandard `date back from`.",

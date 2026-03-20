@@ -1916,6 +1916,10 @@ fn allows_date_back_to() {
     );
 }
 
+// Note: "the date back from" and "get dates back from" are known false
+// positives where "date" is a noun (retrieving data). Phrase set matching
+// cannot distinguish these from the verb form. See issue #2864.
+
 // DoubleEdgedSword
 
 #[test]
