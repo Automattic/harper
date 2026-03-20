@@ -1088,6 +1088,15 @@ mod tests {
     }
 
     #[test]
+    fn no_change_side_effect() {
+        assert_lint_count(
+            "I forgot to test the side effect that users are deleted when clearing data.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn corrects_cause_and_affect() {
         assert_suggestion_result(
             "Cause and affect are not the same thing.",
