@@ -93,8 +93,8 @@ impl ExprLinter for WereWhere {
                 message: "It looks like this is a typo, did you mean `were`?".to_string(),
                 ..Default::default()
             })
-        } else if let Some(tok) = were_tok {
-            Some(Lint {
+        } else {
+            were_tok.map(|tok| Lint {
                 span: tok.span,
                 lint_kind: LintKind::Typo,
                 suggestions: vec![Suggestion::replace_with_match_case_str(
@@ -104,8 +104,6 @@ impl ExprLinter for WereWhere {
                 message: "It looks like this is a typo, did you mean `where`?".to_string(),
                 ..Default::default()
             })
-        } else {
-            None
         }
     }
 
@@ -283,7 +281,7 @@ mod tests {
         assert_suggestion_result(
             "Check were the error occurred.",
             WereWhere::default(),
-            "Check were the error occurred.",
+            "Check where the error occurred.",
         );
     }
 
@@ -318,10 +316,7 @@ mod tests {
 
     #[test]
     fn no_flag_where_they_are() {
-        assert_no_lints(
-            "Do you know where they are going?",
-            WereWhere::default(),
-        );
+        assert_no_lints("Do you know where they are going?", WereWhere::default());
     }
 
     #[test]
