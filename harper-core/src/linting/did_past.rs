@@ -37,7 +37,7 @@ where
     fn keep_suggestion_if_lemma(&self, suggs: &mut Vec<Vec<char>>, candidate: &[char]) {
         if self
             .dict
-            .get_word_metadata_combined(candidate)
+            .get_word_metadata(candidate)
             .is_some_and(|md| md.is_verb_lemma())
         {
             suggs.push(candidate.to_vec());

@@ -122,10 +122,10 @@ impl PhrasalVerbAsCompoundNoun {
         // So far we only have a small number of phrasal verbs in the dictionary.
         let (verb_part_is_verb, phrasal_verb_is_verb) = (
             self.dict
-                .get_word_metadata_combined(verb_part)
+                .get_word_metadata(verb_part)
                 .is_some_and(|md| md.verb.is_some()),
             self.dict
-                .get_word_metadata_combined(&phrasal_verb)
+                .get_word_metadata(&phrasal_verb)
                 .is_some_and(|md| md.verb.is_some()),
         );
 
