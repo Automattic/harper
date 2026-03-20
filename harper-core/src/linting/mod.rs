@@ -120,6 +120,7 @@ mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
 mod mass_nouns;
+mod means_a_lot_to;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
