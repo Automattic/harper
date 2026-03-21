@@ -717,4 +717,101 @@ mod tests {
         let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
         assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
     }
+
+    #[track_caller]
+    fn assert_no_matches_for(s: &str, expr: &SequenceExpr) {
+        let doc = Document::new_plain_english_curated(s);
+        let mut matches = expr.iter_matches_in_doc(&doc);
+        assert!(matches.next().is_none());
+    }
+
+    #[test]
+    fn test_start_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("world", &expr);
+        assert_no_matches_for(" world", &expr);
+    }
+
+    #[test]
+    fn test_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["hello"]);
+
+        assert_no_matches_for("hello", &expr);
+        assert_no_matches_for("hello ", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("hello world", &expr);
+        assert_no_matches_for("world testing", &expr);
+        assert_no_matches_for("world", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .t_ws()
+            .then_exact_word("testing")
+            .end_capture()
+            .t_ws()
+            .then_any_word();
+
+        let doc = Document::new_plain_english_curated("hello world testing something else");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world testing"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_match() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_any_word()
+            .t_ws()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated(
+            "hello one world testing hello two world testing hello three world something else",
+        );
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["one world", "two world"]);
+    }
 }
