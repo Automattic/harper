@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures';
+import { expect, test } from './fixtures';
 import { clickHarperHighlight, getTextarea, replaceEditorContent } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/popup_reconnect.html';
@@ -24,7 +24,11 @@ test('Reconnects the popup host before opening the popover', async ({ page }) =>
 	await expect(page.locator('#harper-highlight').first()).toBeVisible();
 
 	await page.evaluate(() => {
-		(window as typeof window & { rehomeBodyPreservingApp?: () => void }).rehomeBodyPreservingApp?.();
+		(
+			window as typeof window & {
+				rehomeBodyPreservingApp?: () => void;
+			}
+		).rehomeBodyPreservingApp?.();
 	});
 
 	await expect(page.locator('#harper-highlight').first()).toBeVisible();
