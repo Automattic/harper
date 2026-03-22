@@ -62,8 +62,8 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
-	handleRequest(request).then(sendResponse);
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	handleRequest(request, sender).then(sendResponse);
 
 	return true;
 });
@@ -137,12 +137,15 @@ async function enableDefaultDomains() {
 
 enableDefaultDomains();
 
-function handleRequest(message: Request): Promise<Response> {
+function handleRequest(
+	message: Request,
+	sender?: chrome.runtime.MessageSender,
+): Promise<Response> {
 	console.log(`Handling ${message.kind} request`);
 
 	switch (message.kind) {
 		case 'lint':
-			return handleLint(message);
+			return handleLint(message, sender);
 		case 'getConfig':
 			return handleGetConfig(message);
 		case 'setConfig':
@@ -202,8 +205,11 @@ function handleRequest(message: Request): Promise<Response> {
 }
 
 /** Handle a request for linting. */
-async function handleLint(req: LintRequest): Promise<LintResponse> {
-	if (!(await enabledForDomain(req.domain))) {
+async function handleLint(
+	req: LintRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<LintResponse> {
+	if (!(await shouldLintForRequest(req, sender))) {
 		return { kind: 'lints', lints: {} };
 	}
 
@@ -216,6 +222,39 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	);
 	const unpackedBySource = Object.fromEntries(unpackedEntries) as UnpackedLintGroups;
 	return { kind: 'lints', lints: unpackedBySource };
+}
+
+async function shouldLintForRequest(
+	req: LintRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<boolean> {
+	if (await enabledForDomain(req.domain)) {
+		return true;
+	}
+
+	if (await isDomainSet(req.domain)) {
+		return false;
+	}
+
+	const parentDomain = getParentDomain(sender);
+	if (parentDomain == null || parentDomain === req.domain) {
+		return false;
+	}
+
+	return await enabledForDomain(parentDomain);
+}
+
+function getParentDomain(sender?: chrome.runtime.MessageSender): string | null {
+	const url = sender?.tab?.url;
+	if (url == null) {
+		return null;
+	}
+
+	try {
+		return new URL(url).hostname;
+	} catch {
+		return null;
+	}
 }
 
 async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
