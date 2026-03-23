@@ -515,7 +515,7 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_have_lost() {
+    fn dont_flag_have_lost_issue_3011() {
         assert_no_lints(
             "Elite Universities Have Lost Their Way",
             SimplePastToPastParticiple::default(),
