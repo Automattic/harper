@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
+use std::fs;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use std::{fs, process};
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
@@ -342,6 +342,8 @@ pub fn lint(
         }
     }
 
+    let has_lints = !all_lint_kinds.is_empty();
+
     match report_mode {
         ReportStyle::Json => {
             println!("{}", serde_json::to_string_pretty(&json_results)?);
@@ -360,7 +362,11 @@ pub fn lint(
         }
     }
 
-    process::exit(1);
+    if has_lints {
+        anyhow::bail!("Lints were found");
+    }
+
+    Ok(())
 }
 
 struct LintOneResult {
