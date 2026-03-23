@@ -31,6 +31,11 @@ async function seedDomainSettings(
 	);
 }
 
+test.skip(
+	({ browserName }) => browserName === 'firefox',
+	'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+);
+
 function getChildFrame(page: Page) {
 	return page.frameLocator('#editor-frame');
 }

@@ -76,6 +76,11 @@ async function expectNoChildHighlights(page: Page) {
 }
 
 test.describe('parent-origin inheritance', () => {
+	test.skip(
+		({ browserName }) => browserName === 'firefox',
+		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+	);
+
 	test('inherits the parent enabled state when the iframe host is unset', async ({
 		context,
 		page,
