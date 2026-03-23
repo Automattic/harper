@@ -51,8 +51,8 @@ Message: |
          |                                     ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
       22 | ought to have wondered at this, but at the time it all seemed quite natural);
 Suggest:
-  - Replace with: “afterward”
   - Replace with: “afterwords”
+  - Replace with: “afterward”
   - Replace with: “afterword's”
 
 
@@ -103,8 +103,8 @@ Message: |
          | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “cent's”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -895,9 +895,9 @@ Message: |
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
-  - Replace with: “Gathering”
   - Replace with: “Adhering”
   - Replace with: “Fathering”
+  - Replace with: “Gathering”
 
 
 
@@ -1778,7 +1778,7 @@ Message: |
 Suggest:
   - Replace with: “nature”
   - Replace with: “natures”
-  - Replace with: “natural”
+  - Replace with: “nature's”
 
 
 
@@ -1927,7 +1927,7 @@ Message: |
 Suggest:
   - Replace with: “Lace”
   - Replace with: “Lacier”
-  - Replace with: “Lac”
+  - Replace with: “Lac's”
 
 
 
@@ -1936,9 +1936,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
+  - Replace with: “Till's”
   - Replace with: “Tile”
   - Replace with: “Till”
-  - Replace with: “Till's”
 
 
 
@@ -2315,8 +2315,8 @@ Message: |
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -2517,9 +2517,9 @@ Message: |
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
          |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
+  - Replace with: “Hickory”
+  - Replace with: “Hickory”
   - Replace with: “Hacker”
-  - Replace with: “Hickory”
-  - Replace with: “Hickory”
 
 
 
@@ -2872,7 +2872,7 @@ Message: |
 Suggest:
   - Replace with: “Din”
   - Replace with: “Dine”
-  - Replace with: “Ding”
+  - Replace with: “Diann”
 
 
 
@@ -3014,8 +3014,8 @@ Message: |
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -3041,8 +3041,8 @@ Message: |
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -3803,8 +3803,8 @@ Message: |
     2929 | “No, no!” said the Queen. “Sentence first—verdict afterwards.”
          |                                                   ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
 Suggest:
-  - Replace with: “afterward”
   - Replace with: “afterwords”
+  - Replace with: “afterward”
   - Replace with: “afterword's”
 
 

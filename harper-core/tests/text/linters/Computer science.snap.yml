@@ -46,8 +46,8 @@ Message: |
          |                                ^~~~~~~~ Did you mean to spell `Reckoner` this way?
 Suggest:
   - Replace with: “Reckoned”
-  - Replace with: “Recover”
   - Replace with: “Reasoner”
+  - Replace with: “Rickover”
 
 
 
@@ -424,7 +424,7 @@ Message: |
 Suggest:
   - Replace with: “automatic”
   - Replace with: “automatics”
-  - Replace with: “automata”
+  - Replace with: “automatic's”
 
 
 
@@ -716,7 +716,7 @@ Message: |
 Suggest:
   - Replace with: “Wagner”
   - Replace with: “Wigner”
-  - Replace with: “Wager”
+  - Replace with: “Wetter”
 
 
 
@@ -1141,7 +1141,7 @@ Message: |
 Suggest:
   - Replace with: “Petra”
   - Replace with: “Perth”
-  - Replace with: “Pear”
+  - Replace with: “Pet's”
 
 
 

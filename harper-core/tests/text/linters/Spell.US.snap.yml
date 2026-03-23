@@ -3,8 +3,8 @@ Message: |
        9 | - Afterwards.
          |   ^~~~~~~~~~ Did you mean to spell `Afterwards` this way?
 Suggest:
-  - Replace with: “Afterward”
   - Replace with: “Afterwords”
+  - Replace with: “Afterward”
   - Replace with: “Afterword's”
 
 
@@ -15,8 +15,8 @@ Message: |
          |   ^~~~~~ Did you mean to spell `Centre` this way?
 Suggest:
   - Replace with: “Center”
+  - Replace with: “Cent's”
   - Replace with: “Censure”
-  - Replace with: “Cent”
 
 
 
@@ -141,8 +141,8 @@ Message: |
          |   ^~~~~~~ Did you mean to spell `Theatre` this way?
 Suggest:
   - Replace with: “Theater”
-  - Replace with: “There”
   - Replace with: “They're”
+  - Replace with: “There”
 
 
 

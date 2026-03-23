@@ -49,7 +49,7 @@ Message: |
 Suggest:
   - Replace with: “E”
   - Replace with: “Ea”
-  - Replace with: “Ed”
+  - Replace with: “Eh”
 
 
 
@@ -150,8 +150,8 @@ Message: |
          |              ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Debase”
-  - Replace with: “Decode”
+  - Replace with: “Demise”
+  - Replace with: “Dense”
 
 
 
@@ -450,8 +450,8 @@ Message: |
          |                 ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Debase”
-  - Replace with: “Decode”
+  - Replace with: “Demise”
+  - Replace with: “Dense”
 
 
 
@@ -473,8 +473,8 @@ Message: |
          |                             ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verb”
-  - Replace with: “Veteran”
+  - Replace with: “Viper's”
+  - Replace with: “Voter's”
 
 
 
@@ -484,8 +484,8 @@ Message: |
          |         ^~~~~~ Did you mean to spell `DeRose` this way?
 Suggest:
   - Replace with: “Depose”
-  - Replace with: “Debase”
-  - Replace with: “Decode”
+  - Replace with: “Demise”
+  - Replace with: “Dense”
 
 
 
@@ -588,8 +588,8 @@ Message: |
      201 | algorithm, Brill tagger, Constraint Grammar, and the Baum-Welch algorithm (also
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verb”
-  - Replace with: “Veteran”
+  - Replace with: “Viper's”
+  - Replace with: “Voter's”
 
 
 
@@ -611,8 +611,8 @@ Message: |
          |                                                 ^~~~~~~ Did you mean to spell `Viterbi` this way?
 Suggest:
   - Replace with: “Vite's”
-  - Replace with: “Verb”
-  - Replace with: “Veteran”
+  - Replace with: “Viper's”
+  - Replace with: “Voter's”
 
 
 

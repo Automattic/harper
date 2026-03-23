@@ -6,14 +6,15 @@ use harper_core::spell::{
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
-use std::io::BufReader;
+use std::io::{self, BufReader};
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
-use clap::Parser;
+use clap::{CommandFactory, Parser, ValueHint};
+use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
@@ -79,10 +80,10 @@ enum Args {
         #[arg(short, long, default_value = "us")]
         dialect: String,
         /// Path to the user dictionary.
-        #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string())]
+        #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string(), value_hint = ValueHint::FilePath)]
         user_dict_path: PathBuf,
         /// Path to the directory for file-local dictionaries.
-        #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string())]
+        #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string(), value_hint = ValueHint::FilePath)]
         file_dict_path: PathBuf,
         /// Path to a Weirpack file to load. May be supplied multiple times.
         #[arg(long, value_name = "WEIRPACK")]
@@ -130,7 +131,10 @@ enum Args {
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
     Words,
     /// Summarize a lint record
-    SummarizeLintRecord { file: PathBuf },
+    SummarizeLintRecord {
+        #[arg(value_hint = ValueHint::FilePath)]
+        file: PathBuf,
+    },
     /// Print the default config with descriptions.
     Config,
     /// Print a list of all the words in a document, sorted by frequency.
@@ -169,8 +173,8 @@ enum Args {
         // The number of embedding dimensions
         #[arg(long)]
         dim: usize,
-        /// The path to write the final  model file to.
-        #[arg(short, long)]
+        /// The path to write the final model file to.
+        #[arg(short, long, value_hint = ValueHint::FilePath)]
         output: PathBuf,
         /// The number of epochs to train.
         #[arg(short, long)]
@@ -191,12 +195,14 @@ enum Args {
         old: String,
         /// The new flag.
         new: String,
+        #[arg(value_hint = ValueHint::DirPath)]
         /// The directory containing the dictionary and affixes.
         dir: PathBuf,
     },
     /// Audit the `dictionary.dict` file.
     AuditDictionary {
         /// The directory containing the dictionary and affixes.
+        #[arg(value_hint = ValueHint::DirPath)]
         dir: PathBuf,
     },
     /// Emit a decompressed, line-separated list of the compounds in Harper's dictionary.
@@ -213,7 +219,14 @@ enum Args {
     /// Run the tests contained within a Weir file.
     Test {
         /// The location of the Weir file to test
+        #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Generate shell completions.
+    #[command(hide = true)]
+    Completion {
+        /// Generate completions for this shell.
+        shell: Shell,
     },
 }
 
@@ -975,6 +988,15 @@ fn main() -> anyhow::Result<()> {
                 eprintln!("{:?}", failing_tests);
                 process::exit(1);
             }
+        }
+        Args::Completion { shell } => {
+            generate(
+                shell,
+                &mut Cli::command(),
+                env!("CARGO_BIN_NAME"),
+                &mut io::stdout(),
+            );
+            Ok(())
         }
     }
 }

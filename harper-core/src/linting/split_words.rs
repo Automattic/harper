@@ -232,4 +232,31 @@ mod tests {
     fn atall_should_split_to_a_tall_and_at_all() {
         assert_good_and_bad_suggestions("atall", SplitWords::default(), &["a tall", "at all"], &[]);
     }
+
+    #[test]
+    fn issue_2763_leaves() {
+        assert_suggestion_result(
+            "I love to eat cornleaves.",
+            SplitWords::default(),
+            "I love to eat corn leaves.",
+        );
+    }
+
+    #[test]
+    fn issue_2763_husks() {
+        assert_suggestion_result(
+            "I love to eat cornhusks.",
+            SplitWords::default(),
+            "I love to eat corn husks.",
+        );
+    }
+
+    #[test]
+    fn issue_2763_singular() {
+        assert_suggestion_result(
+            "I would love to eat a cornleaf.",
+            SplitWords::default(),
+            "I would love to eat a corn leaf.",
+        );
+    }
 }
