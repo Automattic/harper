@@ -59,10 +59,7 @@ async function clickChildHighlight(page: Page) {
 	await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 }
 
-test('attaches to a dynamically revealed iframe textarea on focus', async ({
-	context,
-	page,
-}) => {
+test('attaches to a dynamically revealed iframe textarea on focus', async ({ context, page }) => {
 	test.slow();
 	await seedDomainSettings(context, { [PARENT_DOMAIN]: true });
 

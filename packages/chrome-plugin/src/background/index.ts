@@ -137,10 +137,7 @@ async function enableDefaultDomains() {
 
 enableDefaultDomains();
 
-function handleRequest(
-	message: Request,
-	sender?: chrome.runtime.MessageSender,
-): Promise<Response> {
+function handleRequest(message: Request, sender?: chrome.runtime.MessageSender): Promise<Response> {
 	console.log(`Handling ${message.kind} request`);
 
 	switch (message.kind) {
@@ -209,6 +206,11 @@ async function handleLint(
 	req: LintRequest,
 	sender?: chrome.runtime.MessageSender,
 ): Promise<LintResponse> {
+	// Keep the content-script keepalive ping cheap; empty requests should not hit inheritance or linting.
+	if (req.text.length === 0) {
+		return { kind: 'lints', lints: {} };
+	}
+
 	if (!(await shouldLintForRequest(req, sender))) {
 		return { kind: 'lints', lints: {} };
 	}
@@ -577,12 +579,33 @@ function formatDomainKey(domain: string): string {
 	return `domainStatus ${domain}`;
 }
 
+function getDomainLookupCandidates(domain: string): string[] {
+	const withoutWww = domain.replace(/^www\./, '');
+	return withoutWww === domain ? [domain] : [domain, withoutWww];
+}
+
+async function getStoredDomainStatus(domain: string): Promise<boolean | undefined> {
+	const candidates = getDomainLookupCandidates(domain);
+	const response = await chrome.storage.local.get(candidates.map(formatDomainKey));
+
+	for (const candidate of candidates) {
+		const value = response[formatDomainKey(candidate)];
+		if (typeof value === 'boolean') {
+			return value;
+		}
+	}
+
+	return undefined;
+}
+
 /** Check if Harper has been enabled for a given domain. */
 async function enabledForDomain(domain: string): Promise<boolean | null> {
-	const req = await chrome.storage.local.get({
-		[formatDomainKey(domain)]: await enabledByDefault(),
-	});
-	return req[formatDomainKey(domain)];
+	const stored = await getStoredDomainStatus(domain);
+	if (stored !== undefined) {
+		return stored;
+	}
+
+	return await enabledByDefault();
 }
 
 /** Set whether Harper is enabled for a given domain.
@@ -614,8 +637,7 @@ async function enabledByDefault(): Promise<boolean> {
 
 /** Check whether Harper's state has been set for a given domain. */
 async function isDomainSet(domain: string): Promise<boolean> {
-	const resp = await chrome.storage.local.get(formatDomainKey(domain));
-	return typeof resp[formatDomainKey(domain)] == 'boolean';
+	return (await getStoredDomainStatus(domain)) !== undefined;
 }
 
 /** Reset the persistent user dictionary. */

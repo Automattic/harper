@@ -2,9 +2,10 @@ import type { BrowserContext, Page } from '@playwright/test';
 import { expect, test } from './fixtures';
 import { replaceEditorContent } from './testUtils';
 
-const PARENT_DOMAIN = 'localhost';
+const PARENT_DOMAIN = 'parent.localhost';
 const CHILD_DOMAIN = '127.0.0.1';
-const TEST_PAGE_URL = 'http://localhost:8081/iframe_parent_origin.html';
+const TEST_PAGE_URL = 'http://parent.localhost:8081/iframe_parent_origin.html';
+const TEST_PAGE_WWW_URL = 'http://www.parent.localhost:8081/iframe_parent_origin.html';
 
 async function getBackground(context: BrowserContext) {
 	return (
@@ -83,6 +84,20 @@ test.describe('parent-origin inheritance', () => {
 		await seedDomainSettings(context, { [PARENT_DOMAIN]: true });
 
 		await page.goto(TEST_PAGE_URL);
+		await typeLintableText(page);
+		await clickChildHighlight(page);
+
+		await expect(getChildPopup(page)).toBeVisible();
+	});
+
+	test('inherits when the parent is `www.` but the stored key follows the popup pattern', async ({
+		context,
+		page,
+	}) => {
+		test.slow();
+		await seedDomainSettings(context, { [PARENT_DOMAIN]: true });
+
+		await page.goto(TEST_PAGE_WWW_URL);
 		await typeLintableText(page);
 		await clickChildHighlight(page);
 
