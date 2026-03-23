@@ -326,7 +326,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can reimport ignored lints.`, async () => {
-		const source = 'This is an test of xporting lints.';
+		const source = 'This is an test of exprting lints.';
 
 		const firstLinter = new Linter({ binary });
 

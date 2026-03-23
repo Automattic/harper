@@ -29,6 +29,7 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::ask_no_preposition::AskNoPreposition;
+use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
@@ -68,6 +69,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
 use super::everyday::Everyday;
+use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
@@ -115,6 +117,7 @@ use super::long_sentences::LongSentences;
 use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
+use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
@@ -234,6 +237,7 @@ use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::well_educated::WellEducated;
+use super::were_where::WereWhere;
 use super::whereas::Whereas;
 use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
@@ -656,6 +660,7 @@ impl LintGroup {
         insert_expr_rule!(ElsePossessive, true);
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
+        insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
@@ -702,6 +707,7 @@ impl LintGroup {
         insert_expr_rule!(LookDownOnesNose, true);
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule_with_dict!(MassNouns, true);
+        insert_expr_rule!(MeansALotTo, true);
         insert_struct_rule!(MergeWords, true);
         insert_expr_rule!(MissingPreposition, true);
         insert_expr_rule!(MissingTo, true);
@@ -818,6 +824,7 @@ impl LintGroup {
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
+        insert_expr_rule!(WereWhere, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WhomSubjectOfVerb, true);
         insert_expr_rule!(WidelyAccepted, true);
@@ -827,6 +834,10 @@ impl LintGroup {
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
         insert_expr_rule!(WrongApostrophe, true);
+
+        // Uses Sentence rather than Chunk
+        out.add("AspireTo", AspireTo::default());
+        out.config.set_rule_enabled("AspireTo", true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

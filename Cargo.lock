@@ -690,24 +690,25 @@ checksum = "1e748733b7cbc798e1434b6ac524f0c1ff2ab456fe201501e6497c8417a4fc33"
 
 [[package]]
 name = "cached"
-version = "0.56.0"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "801927ee168e17809ab8901d9f01f700cd7d8d6a6527997fee44e4b0327a253c"
+checksum = "53b6f5d101f0f6322c8646a45b7c581a673e476329040d97565815c2461dd0c4"
 dependencies = [
  "ahash",
  "cached_proc_macro",
  "cached_proc_macro_types",
- "hashbrown 0.15.5",
+ "hashbrown 0.16.1",
  "once_cell",
+ "parking_lot",
  "thiserror 2.0.18",
  "web-time",
 ]
 
 [[package]]
 name = "cached_proc_macro"
-version = "0.25.0"
+version = "0.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9225bdcf4e4a9a4c08bf16607908eb2fbf746828d5e0b5e019726dbf6571f201"
+checksum = "8ebcf9c75f17a17d55d11afc98e46167d4790a263f428891b8705ab2f793eca3"
 dependencies = [
  "darling 0.20.11",
  "proc-macro2",
@@ -873,6 +874,15 @@ dependencies = [
  "anstyle",
  "clap_lex",
  "strsim",
+]
+
+[[package]]
+name = "clap_complete"
+version = "4.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "19c9f1dde76b736e3681f28cec9d5a61299cbaae0fce80a68e43724ad56031eb"
+dependencies = [
+ "clap",
 ]
 
 [[package]]
@@ -2725,7 +2735,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2736,7 +2746,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2749,6 +2759,7 @@ dependencies = [
  "anyhow",
  "ariadne",
  "clap",
+ "clap_complete",
  "dirs 6.0.0",
  "enum_dispatch",
  "harper-asciidoc",
@@ -2773,7 +2784,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2810,7 +2821,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -2844,12 +2855,12 @@ dependencies = [
  "unicode-blocks",
  "unicode-script",
  "unicode-width",
- "zip 8.1.0",
+ "zip 8.3.1",
 ]
 
 [[package]]
 name = "harper-html"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2860,7 +2871,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2871,7 +2882,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2882,7 +2893,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2893,7 +2904,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2924,7 +2935,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2942,7 +2953,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2953,7 +2964,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2964,7 +2975,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2972,7 +2983,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2983,7 +2994,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -3002,7 +3013,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "1.11.0"
+version = "1.12.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4334,9 +4345,9 @@ checksum = "3eb8486b569e12e2c32ad3e204dbaba5e4b5b216e9367044f25f1dba42341773"
 
 [[package]]
 name = "pulldown-cmark"
-version = "0.13.1"
+version = "0.13.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83c41efbf8f90ac44de7f3a868f0867851d261b56291732d0cbf7cceaaeb55a6"
+checksum = "7c3a14896dfa883796f1cb410461aef38810ea05f2b2c33c5aded3649095fdad"
 dependencies = [
  "bitflags 2.11.0",
  "getopts",
@@ -4865,9 +4876,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.103.8"
+version = "0.103.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ffdfa2f5286e2247234e03f680868ac2815974dc39e00ea15adc445d0aafe52"
+checksum = "df33b2b81ac578cabaf06b89b0631153a3f416b0a886e8a7a1707fb51abbd1ef"
 dependencies = [
  "ring",
  "rustls-pki-types",
@@ -5350,9 +5361,9 @@ dependencies = [
 
 [[package]]
 name = "tar"
-version = "0.4.44"
+version = "0.4.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d863878d212c87a19c1a610eb53bb01fe12951c0501cf5a0d65f724914a667a"
+checksum = "22692a6476a21fa75fdfc11d452fda482af402c008cdbaf3476414e122040973"
 dependencies = [
  "filetime",
  "libc",
@@ -6139,9 +6150,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-rust"
-version = "0.24.0"
+version = "0.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4b9b18034c684a2420722be8b2a91c9c44f2546b631c039edf575ccba8c61be1"
+checksum = "f715f73a0687261ddb686f0d64a1e5af57bd199c4d12be5fdda6676ce1885bf9"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -7538,9 +7549,9 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "8.1.0"
+version = "8.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e499faf5c6b97a0d086f4a8733de6d47aee2252b8127962439d8d4311a73f72"
+checksum = "5c546feb4481b0fbafb4ef0d79b6204fc41c6f9884b1b73b1d73f82442fc0845"
 dependencies = [
  "crc32fast",
  "flate2",
