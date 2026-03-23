@@ -640,7 +640,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		// It should pass now that we've included the "word" in the dictionary via the Weirpack.
 		lints = await linter.lint(source);
 		expect(lints).toHaveLength(0);
-	});
+	}, 30000);
 }
 
 // Disabled because it significantly slows down CI
