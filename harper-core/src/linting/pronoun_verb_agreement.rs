@@ -190,6 +190,15 @@ where
 
         let verb_tok = toks.last()?;
 
+        // If the verb is immediately followed by a hyphen, it's a compound word prefix
+        // (e.g. "co-founded"), not a standalone verb. Skip it.
+        if let Some((_, after)) = ctx
+            && let [next_tok, ..] = after
+            && next_tok.kind.is_hyphen()
+        {
+            return None;
+        }
+
         if let Some((before, _)) = ctx
             && let [.., prev_word_tok, ws_tok] = before
             && ws_tok.kind.is_whitespace()
@@ -649,6 +658,14 @@ mod lints {
     fn false_positive_she_hung_up() {
         assert_no_lints(
             "When I reiterated the conditions I'd previously set, she hung up on me.",
+            PronounVerbAgreement::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn false_positive_co_founded() {
+        assert_no_lints(
+            "In 2014, he co-founded Social Chain.",
             PronounVerbAgreement::new(FstDictionary::curated()),
         );
     }
