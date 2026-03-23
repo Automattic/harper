@@ -73,7 +73,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 
         if let Some(past_participle) = IrregularVerbs::curated()
             .get_past_participle_for_preterite(&simple_past)
-            .filter(|pp| pp != &simple_past)
+            .filter(|pp| !pp.eq_ignore_ascii_case(&simple_past))
         {
             let suggestions = vec![Suggestion::replace_with_match_case(
                 past_participle.chars().collect(),
@@ -510,6 +510,22 @@ mod tests {
     fn dont_flag_id_went() {
         assert_no_lints(
             "Could not determine debug ID went away after cleaning the dist/ before the build, so that's unrelated.",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_have_lost() {
+        assert_no_lints(
+            "Elite Universities Have Lost Their Way",
+            SimplePastToPastParticiple::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_has_lost() {
+        assert_no_lints(
+            "He has lost his keys.",
             SimplePastToPastParticiple::default(),
         );
     }
