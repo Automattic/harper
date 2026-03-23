@@ -8,7 +8,7 @@ use crate::linting::expr_linter::Chunk;
 use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandMemoryShorthands {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl ExpandMemoryShorthands {
@@ -19,10 +19,10 @@ impl ExpandMemoryShorthands {
         ]));
 
         Self {
-            expr: Box::new(SequenceExpr::with(ImpliesQuantity).then_longest_of(vec![
+            expr: SequenceExpr::with(ImpliesQuantity).then_longest_of(vec![
                 Box::new(SequenceExpr::with(hotwords.clone())),
                 Box::new(SequenceExpr::default().t_ws_h().then(hotwords.clone())),
-            ])),
+            ]),
         }
     }
 
@@ -70,7 +70,7 @@ impl ExprLinter for ExpandMemoryShorthands {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

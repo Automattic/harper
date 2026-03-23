@@ -6,19 +6,17 @@ use crate::{
 };
 
 pub struct AdjectiveDoubleDegree {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AdjectiveDoubleDegree {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["more", "most"])
-                    .t_ws()
-                    .then_kind_where(|kind| {
-                        kind.is_comparative_adjective() || kind.is_superlative_adjective()
-                    }),
-            ),
+            expr: SequenceExpr::word_set(&["more", "most"])
+                .t_ws()
+                .then_kind_where(|kind| {
+                    kind.is_comparative_adjective() || kind.is_superlative_adjective()
+                }),
         }
     }
 }
@@ -27,7 +25,7 @@ impl ExprLinter for AdjectiveDoubleDegree {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct ModalOf {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for ModalOf {
@@ -53,13 +53,13 @@ impl Default for ModalOf {
             Lrc::new(SequenceExpr::with(anyword_might_of.clone()).then(ws_course.clone()));
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(anyword_might_of_course),
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
                 Box::new(noun_will_of_naive),
                 Box::new(modal_of),
-            ])),
+            ]),
         }
     }
 }
@@ -68,7 +68,7 @@ impl ExprLinter for ModalOf {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {

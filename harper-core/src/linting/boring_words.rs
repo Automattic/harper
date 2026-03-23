@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-use crate::expr::{Expr, WordExprGroup};
+use crate::expr::{Expr, FirstMatchOf, WordExprGroup};
 use crate::thesaurus_helper;
 use crate::{Token, TokenStringExt};
 
@@ -8,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct BoringWords {
-    expr: Box<dyn Expr>,
+    expr: WordExprGroup<FirstMatchOf>,
 }
 
 impl Default for BoringWords {
@@ -21,9 +21,7 @@ impl Default for BoringWords {
         expr.add_word("most");
         expr.add_word("many");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -31,7 +29,7 @@ impl ExprLinter for BoringWords {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

@@ -7,4 +7,4 @@ It is a work-in-progress. Here be dragons!
 
 ## Contributing
 
-Refer to [the online documentation](https://writewithharper.com/docs/contributors/wordpress) for instruction to contribute to the plugin.
+Refer to [the online documentation](https://writewithharper.com/docs/contributors/wordpress) for instructions to contribute to the plugin.

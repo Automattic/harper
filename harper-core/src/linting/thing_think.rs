@@ -8,7 +8,7 @@ use crate::{
 
 /// Corrects the typo "thing" for "think".
 pub struct ThingThink {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThingThink {
@@ -67,9 +67,7 @@ impl Default for ThingThink {
 
         let pattern = SequenceExpr::with(pre_context).t_ws().t_aco("thing");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -77,7 +75,7 @@ impl ExprLinter for ThingThink {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

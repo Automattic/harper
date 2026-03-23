@@ -1,37 +1,35 @@
 use crate::{
     Lint, Token, TokenKind,
-    expr::{Expr, OwnedExprExt, SequenceExpr},
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{Chunk, ExprLinter, LintKind, Suggestion},
 };
 
 pub struct NoLonger {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for NoLonger {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("not")
-                    .t_ws()
-                    .t_aco("longer")
-                    .then_optional(SequenceExpr::default().t_ws().then_kind_any(
-                        &[
-                            TokenKind::is_verb_lemma,
-                            TokenKind::is_verb_third_person_singular_present_form,
-                            TokenKind::is_verb_past_participle_form,
-                            TokenKind::is_verb_progressive_form,
-                            TokenKind::is_adjective,
-                        ][..],
-                    ))
-                    .and_not(
-                        SequenceExpr::anything()
-                            .t_any()
-                            .t_any()
-                            .t_any()
-                            .t_aco("than"),
-                    ),
-            ),
+            expr: SequenceExpr::aco("not")
+                .t_ws()
+                .t_aco("longer")
+                .then_optional(SequenceExpr::default().t_ws().then_kind_any(
+                    &[
+                        TokenKind::is_verb_lemma,
+                        TokenKind::is_verb_third_person_singular_present_form,
+                        TokenKind::is_verb_past_participle_form,
+                        TokenKind::is_verb_progressive_form,
+                        TokenKind::is_adjective,
+                    ][..],
+                ))
+                .and_not(
+                    SequenceExpr::anything()
+                        .t_any()
+                        .t_any()
+                        .t_any()
+                        .t_aco("than"),
+                ),
         }
     }
 }
@@ -40,7 +38,7 @@ impl ExprLinter for NoLonger {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn description(&self) -> &str {

@@ -5,26 +5,24 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind};
 
 pub struct ThoughThought {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThoughThought {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_kind_is_but_is_not(
-                        TokenKind::is_subject_pronoun,
-                        TokenKind::is_object_pronoun,
-                    )
-                    .t_ws()
-                    .t_aco("though")
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_subject_pronoun()),
-                        Box::new(SequenceExpr::aco("that")),
-                    ]),
-            ),
+            expr: SequenceExpr::default()
+                .then_kind_is_but_is_not(
+                    TokenKind::is_subject_pronoun,
+                    TokenKind::is_object_pronoun,
+                )
+                .t_ws()
+                .t_aco("though")
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_subject_pronoun()),
+                    Box::new(SequenceExpr::aco("that")),
+                ]),
         }
     }
 }
@@ -33,7 +31,7 @@ impl ExprLinter for ThoughThought {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

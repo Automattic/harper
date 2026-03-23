@@ -6,7 +6,7 @@ use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct FeelFell {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FeelFell {
@@ -33,10 +33,7 @@ impl Default for FeelFell {
             ]);
 
         Self {
-            expr: Box::new(SequenceExpr::any_of(vec![
-                Box::new(with_word_before),
-                Box::new(with_word_after),
-            ])),
+            expr: SequenceExpr::any_of(vec![Box::new(with_word_before), Box::new(with_word_after)]),
         }
     }
 }
@@ -45,7 +42,7 @@ impl ExprLinter for FeelFell {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

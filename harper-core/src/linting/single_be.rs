@@ -57,7 +57,7 @@ fn looks_like_be_contraction(token: &Token, source: &[char]) -> bool {
 }
 
 pub struct SingleBe {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SingleBe {
@@ -74,9 +74,7 @@ impl Default for SingleBe {
             .t_ws()
             .then(be_like_expr());
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -84,7 +82,7 @@ impl ExprLinter for SingleBe {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

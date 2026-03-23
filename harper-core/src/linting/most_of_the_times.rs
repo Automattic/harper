@@ -5,20 +5,18 @@ use crate::patterns::Word;
 use crate::{Lint, Token};
 
 pub struct MostOfTheTimes {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MostOfTheTimes {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::any_of(vec![
-                    Box::new(FixedPhrase::from_phrase("a lot")),
-                    Box::new(Word::new("most")),
-                ])
-                .t_ws()
-                .then_fixed_phrase("of the times"),
-            ),
+            expr: SequenceExpr::any_of(vec![
+                Box::new(FixedPhrase::from_phrase("a lot")),
+                Box::new(Word::new("most")),
+            ])
+            .t_ws()
+            .then_fixed_phrase("of the times"),
         }
     }
 }
@@ -27,7 +25,7 @@ impl ExprLinter for MostOfTheTimes {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

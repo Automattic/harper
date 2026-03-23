@@ -8,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct WayTooAdjective {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for WayTooAdjective {
@@ -31,9 +31,7 @@ impl Default for WayTooAdjective {
             Box::new(SequenceExpr::unless(exceptions)),
         ]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -41,7 +39,7 @@ impl ExprLinter for WayTooAdjective {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

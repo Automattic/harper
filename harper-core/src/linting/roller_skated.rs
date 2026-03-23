@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
@@ -9,8 +7,7 @@ use crate::{
 
 /// Suggests hyphenating the past tense of `roller-skate`.
 pub struct RollerSkated {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl RollerSkated {
@@ -57,12 +54,7 @@ impl Default for RollerSkated {
             0,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -70,11 +62,11 @@ impl ExprLinter for RollerSkated {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let roller_idx = *self.map.lookup(0, matched_tokens, source)?;
+        let roller_idx = *self.expr.lookup(0, matched_tokens, source)?;
         let skated_idx = roller_idx.checked_add(2)?;
         let window = matched_tokens.get(roller_idx..=skated_idx)?;
         let span = window.span()?;

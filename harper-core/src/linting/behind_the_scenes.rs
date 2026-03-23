@@ -5,19 +5,17 @@ use crate::{
 };
 
 pub struct BehindTheScenes {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for BehindTheScenes {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("behind")
-                    .t_ws_h()
-                    .t_aco("the")
-                    .t_ws_h()
-                    .t_aco("scene"),
-            ),
+            expr: SequenceExpr::aco("behind")
+                .t_ws_h()
+                .t_aco("the")
+                .t_ws_h()
+                .t_aco("scene"),
         }
     }
 }
@@ -30,7 +28,7 @@ impl ExprLinter for BehindTheScenes {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(

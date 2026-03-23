@@ -9,7 +9,7 @@ use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct InOnTheCards {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
     dialect: Dialect,
 }
 
@@ -33,10 +33,7 @@ impl InOnTheCards {
             .t_aco(preposition)
             .then_fixed_phrase(" the cards");
 
-        Self {
-            expr: Box::new(expr),
-            dialect,
-        }
+        Self { expr, dialect }
     }
 }
 
@@ -44,7 +41,7 @@ impl ExprLinter for InOnTheCards {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

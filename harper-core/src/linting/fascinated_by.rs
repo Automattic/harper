@@ -5,13 +5,13 @@ use crate::{
 };
 
 pub struct FascinatedBy {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FascinatedBy {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::aco("fascinated").t_ws().then_preposition()),
+            expr: SequenceExpr::aco("fascinated").t_ws().then_preposition(),
         }
     }
 }
@@ -20,7 +20,7 @@ impl ExprLinter for FascinatedBy {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

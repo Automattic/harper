@@ -185,35 +185,9 @@ impl DictWordMetadata {
 
     /// Produce a copy of `self` with the known properties of `other` set.
     pub fn or(&self, other: &Self) -> Self {
-        macro_rules! merge {
-            ($a:expr, $b:expr) => {
-                match ($a, $b) {
-                    (Some(a), Some(b)) => Some(a.or(&b)),
-                    (Some(a), None) => Some(a),
-                    (None, Some(b)) => Some(b),
-                    (None, None) => None,
-                }
-            };
-        }
-
-        Self {
-            noun: merge!(self.noun, other.noun),
-            pronoun: merge!(self.pronoun, other.pronoun),
-            verb: merge!(self.verb, other.verb),
-            adjective: merge!(self.adjective, other.adjective),
-            adverb: merge!(self.adverb, other.adverb),
-            conjunction: merge!(self.conjunction, other.conjunction),
-            determiner: merge!(self.determiner, other.determiner),
-            affix: merge!(self.affix, other.affix),
-            preposition: self.preposition || other.preposition,
-            dialects: self.dialects | other.dialects,
-            orth_info: self.orth_info | other.orth_info,
-            swear: self.swear.or(other.swear),
-            common: self.common || other.common,
-            derived_from: self.derived_from.or(other.derived_from),
-            pos_tag: self.pos_tag.or(other.pos_tag),
-            np_member: self.np_member.or(other.np_member),
-        }
+        let mut clone = self.clone();
+        clone.merge(other);
+        clone
     }
 
     /// Given a UPOS tag, discard any metadata that would disagree with the given POS tag.
@@ -757,8 +731,35 @@ impl DictWordMetadata {
     }
 
     /// Same thing as [`Self::or`], except in-place rather than a clone.
-    pub fn append(&mut self, other: &Self) -> &mut Self {
-        *self = self.or(other);
+    pub fn merge(&mut self, other: &Self) -> &mut Self {
+        macro_rules! merge {
+            ($a:expr, $b:expr) => {
+                match ($a, $b) {
+                    (Some(a), Some(b)) => Some(a.or(&b)),
+                    (Some(a), None) => Some(a),
+                    (None, Some(b)) => Some(b),
+                    (None, None) => None,
+                }
+            };
+        }
+
+        self.noun = merge!(self.noun, other.noun);
+        self.pronoun = merge!(self.pronoun, other.pronoun);
+        self.verb = merge!(self.verb, other.verb);
+        self.adjective = merge!(self.adjective, other.adjective);
+        self.adverb = merge!(self.adverb, other.adverb);
+        self.conjunction = merge!(self.conjunction, other.conjunction);
+        self.determiner = merge!(self.determiner, other.determiner);
+        self.affix = merge!(self.affix, other.affix);
+        self.preposition |= other.preposition;
+        self.dialects |= other.dialects;
+        self.orth_info |= other.orth_info;
+        self.swear = self.swear.or(other.swear);
+        self.common |= other.common;
+        self.derived_from = self.derived_from.or(other.derived_from);
+        self.pos_tag = self.pos_tag.or(other.pos_tag);
+        self.np_member = self.np_member.or(other.np_member);
+
         self
     }
 }

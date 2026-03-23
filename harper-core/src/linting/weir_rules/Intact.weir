@@ -1,9 +1,0 @@
-expr main (in tact)
-
-let message "Use `intact` to mean undamaged or whole."
-let description "Prevents the erroneous spacing in `in tact`; `intact` is the single correct word."
-let kind "BoundaryError"
-let becomes "intact"
-
-test "The code remains in tact after the merge." "The code remains intact after the merge."
-allows "The data set remains intact."

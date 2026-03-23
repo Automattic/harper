@@ -5,13 +5,13 @@ use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
 pub struct MoreBetter {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MoreBetter {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::any_of(vec![
+            expr: SequenceExpr::any_of(vec![
                 Box::new(
                     SequenceExpr::default()
                         .t_aco("more")
@@ -24,7 +24,7 @@ impl Default for MoreBetter {
                         .t_ws()
                         .then_superlative_adjective(),
                 ),
-            ])),
+            ]),
         }
     }
 }
@@ -33,7 +33,7 @@ impl ExprLinter for MoreBetter {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -6,7 +6,7 @@ use crate::{Lint, Token, TokenStringExt};
 type PlaceNameMappings<'a> = &'a [((i16, &'a str), &'a [&'a str])];
 
 pub struct UpdatePlaceNames<'a> {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     place_name_mappings: PlaceNameMappings<'a>,
 }
 
@@ -83,12 +83,12 @@ impl<'a> Default for UpdatePlaceNames<'a> {
                 .collect(),
         );
 
-        Self::new(Box::new(expr), place_name_mappings)
+        Self::new(expr, place_name_mappings)
     }
 }
 
 impl<'a> UpdatePlaceNames<'a> {
-    pub fn new(expr: Box<dyn Expr>, place_name_mappings: PlaceNameMappings<'a>) -> Self {
+    pub fn new(expr: LongestMatchOf, place_name_mappings: PlaceNameMappings<'a>) -> Self {
         Self {
             expr,
             place_name_mappings,
@@ -100,7 +100,7 @@ impl<'a> ExprLinter for UpdatePlaceNames<'a> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

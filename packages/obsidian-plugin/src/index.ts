@@ -42,8 +42,6 @@ export default class HarperPlugin extends Plugin {
 			return;
 		}
 
-		const data = await this.loadData();
-
 		this.app.workspace.onLayoutReady(async () => {
 			this.state = new State(
 				(n) => this.saveData(n),
@@ -51,13 +49,8 @@ export default class HarperPlugin extends Plugin {
 				editorInfoField,
 			);
 
-			await this.state.initializeFromSettings(data);
 			this.registerEditorExtension(this.state.getCMEditorExtensions());
-			if (!(data?.lintEnabled ?? true)) {
-				this.state.disableEditorLinter(false);
-			} else this.state.enableEditorLinter(false);
-			this.settings?.update();
-
+			await this.reloadSettingsFromDisk();
 			this.setupStatusBar();
 		});
 
@@ -65,6 +58,28 @@ export default class HarperPlugin extends Plugin {
 		this.addSettingTab(this.settings);
 
 		this.setupCommands();
+	}
+
+	async onExternalSettingsChange() {
+		await this.reloadSettingsFromDisk();
+	}
+
+	private async reloadSettingsFromDisk() {
+		const data = await this.loadData();
+		if (this.state == null) {
+			return;
+		}
+
+		await this.state.initializeFromSettings(data);
+
+		if (!(data?.lintEnabled ?? true)) {
+			this.state.disableEditorLinter(false);
+		} else {
+			this.state.enableEditorLinter(false);
+		}
+
+		this.settings?.update();
+		this.updateStatusBar(data?.dialect ?? Dialect.American);
 	}
 
 	private getDialectStatus(dialectNum: Dialect): string {
@@ -196,7 +211,7 @@ export default class HarperPlugin extends Plugin {
 		this.addCommand({
 			id: 'harper-ignore-focused-diagnostic',
 			name: 'Ignore focused diagnostic',
-			hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'i' }],
+			hotkeys: [],
 			checkCallback: (checking) => {
 				const editorView = this.getActiveEditorView();
 				if (!editorView) return false;

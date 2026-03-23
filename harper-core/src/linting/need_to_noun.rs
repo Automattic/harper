@@ -1,10 +1,6 @@
 use crate::Token;
 use crate::char_string::char_string;
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::expr::UnlessStep;
+use crate::expr::{All, Expr, LongestMatchOf, OwnedExprExt, SequenceExpr, UnlessStep};
 use crate::patterns::DerivedFrom;
 use crate::patterns::WordSet;
 
@@ -12,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct NeedToNoun {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for NeedToNoun {
@@ -34,12 +30,16 @@ impl Default for NeedToNoun {
             .then_word_set(&["be", "match"]);
 
         let a = SequenceExpr::default()
-            .then_kind_where(|kind| kind.is_nominal())
+            .then_kind_where(|kind| kind.is_nominal() && !kind.is_likely_homograph())
             .t_ws()
             .then_unless(postfix_exceptions);
 
-        let b =
-            SequenceExpr::default().then_kind_where(|kind| kind.is_nominal() && !kind.is_verb());
+        // Bare words after infinitive `to` are the hardest cases to disambiguate.
+        // If the token is a noun/verb homograph, prefer not linting over inserting
+        // `the` into a potentially valid verb phrase.
+        let b = SequenceExpr::default().then_kind_where(|kind| {
+            kind.is_nominal() && !kind.is_verb() && !kind.is_likely_homograph()
+        });
 
         let expr = SequenceExpr::with(DerivedFrom::new_from_str("need"))
             .t_ws()
@@ -48,7 +48,7 @@ impl Default for NeedToNoun {
             .then(a.or(b));
 
         Self {
-            expr: Box::new(expr.and(UnlessStep::new(exceptions, |_: &Token, _: &[char]| true))),
+            expr: expr.and(UnlessStep::new(exceptions, |_: &Token, _: &[char]| true)),
         }
     }
 }
@@ -57,7 +57,7 @@ impl ExprLinter for NeedToNoun {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -214,29 +214,27 @@ mod tests {
     }
 
     #[test]
-    fn catches_false_negative_for_need_to_credentials() {
+    fn flags_need_to_verification() {
         assert_suggestion_result(
-            "I need to credentials before logging in.",
+            "I need to verification before logging in.",
             NeedToNoun::default(),
-            "I need the credentials before logging in.",
+            "I need the verification before logging in.",
         );
     }
 
     #[test]
-    fn flags_need_to_report() {
-        assert_suggestion_result(
+    fn allows_need_to_report() {
+        assert_no_lints(
             "We need to report before the meeting starts.",
             NeedToNoun::default(),
-            "We need the report before the meeting starts.",
         );
     }
 
     #[test]
-    fn flags_need_to_password() {
-        assert_suggestion_result(
+    fn allows_need_to_password() {
+        assert_no_lints(
             "You need to password to access the server.",
             NeedToNoun::default(),
-            "You need the password to access the server.",
         );
     }
 
@@ -259,57 +257,48 @@ mod tests {
     }
 
     #[test]
-    fn flags_need_to_backup() {
-        assert_suggestion_result(
+    fn allows_need_to_backup() {
+        assert_no_lints(
             "We might need to backup if the main system fails.",
             NeedToNoun::default(),
-            "We might need the backup if the main system fails.",
         );
     }
 
     #[test]
-    fn flags_need_to_permit() {
-        assert_suggestion_result(
+    fn allows_need_to_permit() {
+        assert_no_lints(
             "He didn’t realize he would need to permit to film there.",
             NeedToNoun::default(),
-            "He didn’t realize he would need the permit to film there.",
         );
     }
 
     #[test]
-    fn flags_need_to_tools() {
-        assert_suggestion_result(
+    fn allows_need_to_tools() {
+        assert_no_lints(
             "You’ll need to right tools to fix that.",
             NeedToNoun::default(),
-            "You’ll need the right tools to fix that.",
         );
     }
 
     #[test]
-    fn flags_need_to_context() {
-        assert_suggestion_result(
+    fn allows_need_to_context() {
+        assert_no_lints(
             "We need to context to make sense of his decision.",
             NeedToNoun::default(),
-            "We need the context to make sense of his decision.",
         );
     }
 
     #[test]
-    fn flags_need_to_funds() {
-        assert_suggestion_result(
+    fn allows_need_to_funds() {
+        assert_no_lints(
             "They need to funds released before construction begins.",
             NeedToNoun::default(),
-            "They need the funds released before construction begins.",
         );
     }
 
     #[test]
-    fn flags_need_to_silence() {
-        assert_suggestion_result(
-            "I need to silence to think clearly.",
-            NeedToNoun::default(),
-            "I need the silence to think clearly.",
-        );
+    fn allows_need_to_silence() {
+        assert_no_lints("I need to silence to think clearly.", NeedToNoun::default());
     }
 
     #[test]
@@ -331,11 +320,11 @@ mod tests {
     }
 
     #[test]
-    fn catches_false_negative_for_needs_to_credentials() {
+    fn flags_needs_to_verification() {
         assert_suggestion_result(
-            "He needs to credentials ready before the audit.",
+            "He needs to verification ready before the audit.",
             NeedToNoun::default(),
-            "He needs the credentials ready before the audit.",
+            "He needs the verification ready before the audit.",
         );
     }
 
@@ -349,11 +338,10 @@ mod tests {
     }
 
     #[test]
-    fn flags_needed_to_permit() {
-        assert_suggestion_result(
+    fn allows_needed_to_permit() {
+        assert_no_lints(
             "They needed to permit before entering the site.",
             NeedToNoun::default(),
-            "They needed the permit before entering the site.",
         );
     }
 
@@ -468,5 +456,109 @@ mod tests {
     #[test]
     fn allows_need_to_match_exactly_2446() {
         assert_no_lints("They need to match exactly.", NeedToNoun::default());
+    }
+
+    #[test]
+    fn allows_need_to_use_php_code_fuzz() {
+        assert_no_lints(
+            "To display the custom field data on your website, you'll likely need to use PHP code within your theme files.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_display_images_fuzz() {
+        assert_no_lints(
+            "I'm building a photography portfolio site for a client and need to display images in a responsive gallery.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_build_brighter_futures_fuzz() {
+        assert_no_lints(
+            "At Haven House, our mission is to provide families with the resources they need to build brighter futures.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_redefine_success_fuzz() {
+        assert_no_lints(
+            "We need to redefine success to include wellbeing and sustainability.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_shift_from_fuzz() {
+        assert_no_lints(
+            "We need to shift from a deficit model to an abundance model.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_research_and_choose_fuzz() {
+        assert_no_lints(
+            "This means you need to research and choose adapters carefully.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_model_healthy_habits_fuzz() {
+        assert_no_lints(
+            "Leaders need to model healthy work habits and create a safe space for employees.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_start_2320() {
+        assert_no_lints(
+            "You need to start the server before running tests.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_have_2320() {
+        assert_no_lints(
+            "You need to have a valid license to use this software.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_configure_2320() {
+        assert_no_lints(
+            "You need to configure the database connection first.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_set_2320() {
+        assert_no_lints(
+            "You need to set the environment variable before deploying.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_send_2320() {
+        assert_no_lints(
+            "You need to send the request with the correct headers.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_receive_2320() {
+        assert_no_lints(
+            "You need to receive confirmation before proceeding.",
+            NeedToNoun::default(),
+        );
     }
 }
