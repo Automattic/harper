@@ -84,8 +84,8 @@
 # NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB D/P+ NSg/J+         NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P
 > twenty five Years , and  been     seven Years a   Citizen of the United States    , and  who
 # NSg    NSg  NPl+  . VB/C NSg/VLPp NSg   NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+
-> shall not     , when    elected  , be       an  Inhabitant of that         State    in        which he       shall be
-# VXB   NSg/R/C . NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  NSg/I/C/Ddem N🅪Sg/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VLXB
+> shall not     , when    elected  , be       an  Inhabitant of that     State    in        which he       shall be
+# VXB   NSg/R/C . NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  I/C/Ddem N🅪Sg/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VLXB
 > chosen   .
 # Nᴹ/VPp/J .
 >
@@ -168,14 +168,14 @@
 # NPl      P  D+  NSg/J+ N🅪Sg/VB/J+ VXB   NSg/VLXB VP/J    NSg/P D   N🅪Sg       P  D+  NSg/VB/J+
 > Year , of the second   Class      at    the Expiration of the fourth    Year , and  of the
 # NSg+ . P  D   NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NPr/VB/J+ NSg+ . VB/C P  D
-> third    Class      at    the Expiration of the sixth     Year , so          that         one     third    may     be
-# NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/R/C NSg/I/C/Ddem NSg/I/J NSg/VB/J NPr/VXB NSg/VLXB
+> third    Class      at    the Expiration of the sixth     Year , so          that     one     third    may     be
+# NSg/VB/J N🅪Sg/VB/J+ NSg/P D   N🅪Sg       P  D+  NSg/VB/J+ NSg+ . NSg/I/J/R/C I/C/Ddem NSg/I/J NSg/VB/J NPr/VXB NSg/VLXB
 > chosen   every second    Year ; and  when    vacancies happen in        the representation of
 # Nᴹ/VPp/J Dq+   NSg/VB/J+ NSg+ . VB/C NSg/I/C NPl       VB     NPr/J/R/P D   NSg            P
 > any    State    in        the Senate , the executive authority of such  State    shall issue
 # I/R/Dq N🅪Sg/VB+ NPr/J/R/P D   NPr+   . D   NSg/J     N🅪Sg      P  NSg/I N🅪Sg/VB+ VXB   NSg/VB+
-> writs  of election to fill   such  vacancies : Provided , That         the legislature of any
-# NPl/V3 P  NSg+     P  NSg/VB NSg/I NPl       . VP/J/C   . NSg/I/C/Ddem D   NSg         P  I/R/Dq
+> writs  of election to fill   such  vacancies : Provided , That     the legislature of any
+# NPl/V3 P  NSg+     P  NSg/VB NSg/I NPl       . VP/J/C   . I/C/Ddem D   NSg         P  I/R/Dq
 > State    may     empower the executive thereof to make   temporary appointments until
 # N🅪Sg/VB+ NPr/VXB VB      D   NSg/J     R       P  NSg/VB NSg/J     NPl+         C/P
 > the people  fill   the vacancies by    election as    the legislature may     direct .
@@ -186,8 +186,8 @@
 # NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB D/P+ NSg+    NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P  NSg
 > Years , and  been     nine Years a   Citizen of the United States    , and  who    shall not     ,
 # NPl+  . VB/C NSg/VLPp NSg  NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+ VXB   NSg/R/C .
-> when    elected  , be       an  Inhabitant of that         State    for   which he       shall be       chosen   .
-# NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  NSg/I/C/Ddem N🅪Sg/VB+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VLXB Nᴹ/VPp/J .
+> when    elected  , be       an  Inhabitant of that     State    for   which he       shall be       chosen   .
+# NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  I/C/Ddem N🅪Sg/VB+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VLXB Nᴹ/VPp/J .
 >
 #
 > The Vice        President of the United States    shall be       President of the Senate , but
@@ -206,8 +206,8 @@
 #
 > The Senate shall have    the sole      Power      to try      all          Impeachments . When    sitting  for
 # D+  NPr+   VXB   NSg/VXB D+  NSg/VB/J+ N🅪Sg/VB/J+ P  NSg/VB/J NSg/I/J/C/Dq NPl          . NSg/I/C NSg/Vg/J R/C/P
-> that          Purpose  , they shall be       on  Oath    or    Affirmation . When    the President of the
-# NSg/I/C/Ddem+ N🅪Sg/VB+ . IPl+ VXB   NSg/VLXB J/P NSg/VB+ NPr/C NSg         . NSg/I/C D   NSg/VB    P  D+
+> that      Purpose  , they shall be       on  Oath    or    Affirmation . When    the President of the
+# I/C/Ddem+ N🅪Sg/VB+ . IPl+ VXB   NSg/VLXB J/P NSg/VB+ NPr/C NSg         . NSg/I/C D   NSg/VB    P  D+
 > United States    is  tried , the Chief     Justice shall preside : And  no        Person  shall be
 # VP/J   NPrPl/V3+ VL3 VP/J  . D+  NSg/VB/J+ NPr🅪Sg+ VXB   VB      . VB/C NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB
 > convicted without the Concurrence of two thirds of the Members present  .
@@ -283,7 +283,7 @@
 > Neither House   , during the Session of Congress , shall , without the Consent of
 # I/C     NPr/VB+ . VB/P   D   NSg/VB  P  NPr/VB+  . VXB   . C/P     D   N🅪Sg/VP P
 > the other    , adjourn for   more         than three days , nor   to any    other    Place    than that
-# D   NSg/VB/J . VB      R/C/P NPr/I/J/R/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/VB/J N🅪Sg/VB+ C/P  NSg/I/C/Ddem+
+# D   NSg/VB/J . VB      R/C/P NPr/I/J/R/Dq C/P  NSg   NPl+ . NSg/C P  I/R/Dq NSg/VB/J N🅪Sg/VB+ C/P  I/C/Ddem+
 > in        which the two Houses  shall be       sitting  .
 # NPr/J/R/P I/C+  D   NSg NPl/V3+ VXB   NSg/VLXB NSg/Vg/J .
 >
@@ -344,16 +344,16 @@
 # VXB   . C/P    NPr/ISg+ VBPp   D/P+ N🅪Sg/VB+ . NSg/VLXB VP/J      P  D   NSg/VB    P  D+  VP/J
 > States    ; If    he       approve he       shall sign   it       , but     if    not     he       shall return it       , with his
 # NPrPl/V3+ . NSg/C NPr/ISg+ VB      NPr/ISg+ VXB   NSg/VB NPr/ISg+ . NSg/C/P NSg/C NSg/R/C NPr/ISg+ VXB   NSg/VB NPr/ISg+ . P    ISg/D$+
-> Objections to that          House   in        which it       shall have    originated , who    shall enter  the
-# NPl+       P  NSg/I/C/Ddem+ NPr/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VXB VP/J       . NPr/I+ VXB   NSg/VB D+
+> Objections to that      House   in        which it       shall have    originated , who    shall enter  the
+# NPl+       P  I/C/Ddem+ NPr/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VXB VP/J       . NPr/I+ VXB   NSg/VB D+
 > Objections at    large on  their Journal   , and  proceed to reconsider it       . If    after
 # NPl+       NSg/P NSg/J J/P D$+   NSg/VB/J+ . VB/C VB      P  VB         NPr/ISg+ . NSg/C P
-> such  Reconsideration two thirds of that         House   shall agree to pass   the Bill    , it
-# NSg/I N🅪Sg            NSg NPl/V3 P  NSg/I/C/Ddem NPr/VB+ VXB   VB    P  NSg/VB D   NPr/VB+ . NPr/ISg+
+> such  Reconsideration two thirds of that     House   shall agree to pass   the Bill    , it
+# NSg/I N🅪Sg            NSg NPl/V3 P  I/C/Ddem NPr/VB+ VXB   VB    P  NSg/VB D   NPr/VB+ . NPr/ISg+
 > shall be       sent   , together with the Objections , to the other    House   , by    which it
 # VXB   NSg/VLXB NSg/VP . J        P    D   NPl+       . P  D   NSg/VB/J NPr/VB+ . NSg/P I/C+  NPr/ISg+
-> shall likewise be       reconsidered , and  if    approved by    two thirds of that         House   , it
-# VXB   R        NSg/VLXB VP/J         . VB/C NSg/C VP/J     NSg/P NSg NPl/V3 P  NSg/I/C/Ddem NPr/VB+ . NPr/ISg+
+> shall likewise be       reconsidered , and  if    approved by    two thirds of that     House   , it
+# VXB   R        NSg/VLXB VP/J         . VB/C NSg/C VP/J     NSg/P NSg NPl/V3 P  I/C/Ddem NPr/VB+ . NPr/ISg+
 > shall become a   Law      . But     in        all          such  Cases   the Votes  of both   Houses  shall be
 # VXB   VBPp   D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/I/J/C/Dq NSg/I NPl/V3+ D   NPl/V3 P  I/C/Dq NPl/V3+ VXB   NSg/VLXB
 > determined by    yeas and  Nays   , and  the Names  of the Persons voting   for   and
@@ -498,8 +498,8 @@
 #
 >
 #
-> To raise  and  support  Armies , but     no       Appropriation of Money   to that          Use     shall be
-# P  NSg/VB VB/C N🅪Sg/VB+ NPl+   . NSg/C/P NSg/Dq/P NSg           P  N🅪Sg/J+ P  NSg/I/C/Ddem+ N🅪Sg/VB VXB   NSg/VLXB
+> To raise  and  support  Armies , but     no       Appropriation of Money   to that      Use     shall be
+# P  NSg/VB VB/C N🅪Sg/VB+ NPl+   . NSg/C/P NSg/Dq/P NSg           P  N🅪Sg/J+ P  I/C/Ddem+ N🅪Sg/VB VXB   NSg/VLXB
 > for   a   longer Term     than two  Years ;
 # R/C/P D/P NSg/JC NSg/VB/J C/P  NSg+ NPl+  .
 >
@@ -816,8 +816,8 @@
 # NSg      P  D   NSg/J N🅪Sg/VB/JC+ VXB   NSg/VLXB NSg/J     P  D/P N🅪Sg/J+ . NSg/C/P NSg/Dq/P+ NSg/VB+
 > constitutionally ineligible to the office of President shall be       eligible to
 # R                NSg/J      P  D   NSg/VB P  NSg/VB+   VXB   NSg/VLXB NSg/J    P
-> that         of Vice        - President of the United States    .
-# NSg/I/C/Ddem P  NSg/VB/J/P+ . NSg/VB    P  D   VP/J   NPrPl/V3+ .
+> that     of Vice        - President of the United States    .
+# I/C/Ddem P  NSg/VB/J/P+ . NSg/VB    P  D   VP/J   NPrPl/V3+ .
 >
 #
 > The Congress may     determine the Time      of chusing the Electors , and  the Day     on
@@ -838,8 +838,8 @@
 # VP/J   NPrPl/V3+ . NSg/P D   N🅪Sg/VB/J P  D   N🅪Sg     P  I/Ddem+ NPr+         . VXB   NSg/VLXB
 > eligible to the Office of President ; neither shall any     Person  be       eligible to
 # NSg/J    P  D   NSg/VB P  NSg/VB+   . I/C     VXB   I/R/Dq+ NSg/VB+ NSg/VLXB NSg/J    P
-> that         Office  who    shall not     have    attained to the Age     of thirty five Years , and
-# NSg/I/C/Ddem NSg/VB+ NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P  NSg    NSg  NPl+  . VB/C
+> that     Office  who    shall not     have    attained to the Age     of thirty five Years , and
+# I/C/Ddem NSg/VB+ NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P  NSg    NSg  NPl+  . VB/C
 > been     fourteen Years a   Resident within  the United States    .
 # NSg/VLPp NSg      NPl+  D/P NSg/J+   NSg/J/P D   VP/J   NPrPl/V3+ .
 >
@@ -884,8 +884,8 @@
 #
 > Whenever the President transmits to the President pro     tempore of the Senate and
 # C        D+  NSg/VB+   V3        P  D   NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C
-> the Speaker of the House  of Representatives his     written declaration that          he       is
-# D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VPp/J   NSg+        NSg/I/C/Ddem+ NPr/ISg+ VL3
+> the Speaker of the House  of Representatives his     written declaration that      he       is
+# D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VPp/J   NSg+        I/C/Ddem+ NPr/ISg+ VL3
 > unable   to discharge the powers    and  duties of his     office  , and  until he       transmits
 # NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . VB/C C/P   NPr/ISg+ V3
 > to them     a   written declaration to the contrary  , such  powers   and  duties shall be
@@ -900,8 +900,8 @@
 # D   NSg/J     NPl+        NPr/C P  NSg/I NSg/VB/J+ NSg/VB+ R/C/P NPr/VB+  NPr/VXB NSg/P N🅪Sg/VB+ VB      .
 > transmit to the President pro     tempore of the Senate and  the Speaker of the
 # VB       P  D+  NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C D   NSg     P  D
-> House  of Representatives their written declaration that         the President is  unable
-# NPr/VB P  NPl+            D$+   VPp/J   NSg+        NSg/I/C/Ddem D   NSg/VB+   VL3 NSg/VB/J
+> House  of Representatives their written declaration that     the President is  unable
+# NPr/VB P  NPl+            D$+   VPp/J   NSg+        I/C/Ddem D   NSg/VB+   VL3 NSg/VB/J
 > to discharge the powers    and  duties of his     office  , the Vice        President shall
 # P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . D   NSg/VB/J/P+ NSg/VB+   VXB
 > immediately assume the powers    and  duties of the office  as    Acting  President .
@@ -912,28 +912,28 @@
 # NSg        . NSg/I/C D+  NSg/VB+   V3        P  D   NSg/VB+   NSg/J/P ?       P  D
 > Senate and  the Speaker of the House  of Representatives his     written declaration
 # NPr+   VB/C D   NSg     P  D   NPr/VB P  NPl+            ISg/D$+ VPp/J   NSg+
-> that         no       inability exists , he       shall resume the powers    and  duties of his     office
-# NSg/I/C/Ddem NSg/Dq/P N🅪Sg+     V3     . NPr/ISg+ VXB   NSg/VB D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+
+> that     no       inability exists , he       shall resume the powers    and  duties of his     office
+# I/C/Ddem NSg/Dq/P N🅪Sg+     V3     . NPr/ISg+ VXB   NSg/VB D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+
 > unless the Vice        President and  a   majority of either the principal officers of
 # C      D   NSg/VB/J/P+ NSg/VB+   VB/C D/P NSg      P  I/C    D   NSg/J     NPl/V3   P
 > the executive department or    of such  other    body    as    Congress may     by    law      provide ,
 # D   NSg/J     NSg+       NPr/C P  NSg/I NSg/VB/J NSg/VB+ R/C/P NPr/VB+  NPr/VXB NSg/P N🅪Sg/VB+ VB      .
 > transmit within  four days to the President pro     tempore of the Senate and  the
 # VB       NSg/J/P NSg  NPl+ P  D   NSg/VB+   NSg/J/P ?       P  D   NPr+   VB/C D
-> Speaker of the House  of Representatives their written declaration that         the
-# NSg     P  D   NPr/VB P  NPl+            D$+   VPp/J   NSg+        NSg/I/C/Ddem D
+> Speaker of the House  of Representatives their written declaration that     the
+# NSg     P  D   NPr/VB P  NPl+            D$+   VPp/J   NSg+        I/C/Ddem D
 > President is  unable   to discharge the powers    and  duties of his     office  . Thereupon
 # NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D   NPrPl/V3+ VB/C NPl    P  ISg/D$+ NSg/VB+ . R
 > Congress shall decide the issue   , assembling within  forty - eight hours for   that
-# NPr/VB+  VXB   VB     D   NSg/VB+ . Nᴹ/Vg/J    NSg/J/P NSg/J . NSg/J NPl+  R/C/P NSg/I/C/Ddem
+# NPr/VB+  VXB   VB     D   NSg/VB+ . Nᴹ/Vg/J    NSg/J/P NSg/J . NSg/J NPl+  R/C/P I/C/Ddem
 > purpose  if    not     in        session . If    the Congress , within  twenty - one     days after
 # N🅪Sg/VB+ NSg/C NSg/R/C NPr/J/R/P NSg/VB+ . NSg/C D+  NPr/VB+  . NSg/J/P NSg    . NSg/I/J NPl  P
 > receipt of the latter written declaration , or    , if    Congress is  not     in        session ,
 # NSg/VB  P  D+  NSg/J+ VPp/J   NSg+        . NPr/C . NSg/C NPr/VB+  VL3 NSg/R/C NPr/J/R/P NSg/VB+ .
 > within  twenty - one     days after Congress is  required to assemble , determines by
 # NSg/J/P NSg    . NSg/I/J NPl  P     NPr/VB+  VL3 VP/J     P  VB       . V3         NSg/P
-> two - thirds vote   of both   Houses  that         the President is  unable   to discharge the
-# NSg . NPl/V3 NSg/VB P  I/C/Dq NPl/V3+ NSg/I/C/Ddem D+  NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D
+> two - thirds vote   of both   Houses  that     the President is  unable   to discharge the
+# NSg . NPl/V3 NSg/VB P  I/C/Dq NPl/V3+ I/C/Ddem D+  NSg/VB+   VL3 NSg/VB/J P  N🅪Sg/VB   D
 > powers   and  duties of his     office  , the Vice        President shall continue to discharge
 # NPrPl/V3 VB/C NPl    P  ISg/D$+ NSg/VB+ . D+  NSg/VB/J/P+ NSg/VB+   VXB   NSg/VB   P  N🅪Sg/VB
 > the same as    Acting  President ; otherwise , the President shall resume the powers
@@ -952,16 +952,16 @@
 # NPl/V3+  . D/P+ N🅪Sg+        . I/C+  VXB   I/C     NSg/VLXB ?         NSg/C VP/J
 > during the Period    for   which he       shall have    been     elected  , and  he       shall not
 # VB/P   D   NSg/VB/J+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VXB NSg/VLPp NSg/VP/J . VB/C NPr/ISg+ VXB   NSg/R/C
-> receive within  that         Period    any    other    Emolument from the United States    , or    any
-# NSg/VB  NSg/J/P NSg/I/C/Ddem NSg/VB/J+ I/R/Dq NSg/VB/J NSg       P    D   VP/J   NPrPl/V3+ . NPr/C I/R/Dq
+> receive within  that     Period    any    other    Emolument from the United States    , or    any
+# NSg/VB  NSg/J/P I/C/Ddem NSg/VB/J+ I/R/Dq NSg/VB/J NSg       P    D   VP/J   NPrPl/V3+ . NPr/C I/R/Dq
 > of them     .
 # P  NSg/IPl+ .
 >
 #
 > Before he       enter  on  the Execution of his     Office  , he       shall take   the following
 # C/P    NPr/ISg+ NSg/VB J/P D   N🅪Sg      P  ISg/D$+ NSg/VB+ . NPr/ISg+ VXB   NSg/VB D   N🅪Sg/Vg/J/P
-> Oath    or    Affirmation : - - " I       do  solemnly swear    ( or    affirm ) that         I       will    faithfully
-# NSg/VB+ NPr/C NSg         . . . . ISg/#r+ VXB R        NSg/VB/J . NPr/C VB     . NSg/I/C/Ddem ISg/#r+ NPr/VXB R
+> Oath    or    Affirmation : - - " I       do  solemnly swear    ( or    affirm ) that     I       will    faithfully
+# NSg/VB+ NPr/C NSg         . . . . ISg/#r+ VXB R        NSg/VB/J . NPr/C VB     . I/C/Ddem ISg/#r+ NPr/VXB R
 > execute the Office of President of the United States    , and  will    to the best       of
 # VB      D   NSg/VB P  NSg/VB    P  D   VP/J   NPrPl/V3+ . VB/C NPr/VXB P  D   NPr/VXB/JS P
 > my  Ability , preserve , protect and  defend the Constitution of the United
@@ -1038,8 +1038,8 @@
 # NPl+        .
 >
 #
-> The President shall have    Power      to fill   up         all          Vacancies that          may     happen during
-# D+  NSg/VB+   VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VB NSg/VB/J/P NSg/I/J/C/Dq NPl       NSg/I/C/Ddem+ NPr/VXB VB     VB/P
+> The President shall have    Power      to fill   up         all          Vacancies that      may     happen during
+# D+  NSg/VB+   VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VB NSg/VB/J/P NSg/I/J/C/Dq NPl       I/C/Ddem+ NPr/VXB VB     VB/P
 > the Recess   of the Senate , by    granting Commissions which shall expire at    the End
 # D   NSg/VB/J P  D   NPr+   . NSg/P Nᴹ/Vg/J+ NPl/V3+     I/C+  VXB   VB     NSg/P D   NSg/VB
 > of their next    Session .
@@ -1070,8 +1070,8 @@
 # NSg/IPl+ . P    Nᴹ/VB+  P  D   N🅪Sg/VB/J+ P  NSg         . NPr/ISg+ NPr/VXB VB      NSg/IPl+ P  NSg/I N🅪Sg/VB/J+
 > as    he       shall think  proper ; he       shall receive Ambassadors and  other    public
 # R/C/P NPr/ISg+ VXB   NSg/VB NSg/J  . NPr/ISg+ VXB   NSg/VB  NPl         VB/C NSg/VB/J Nᴹ/VB/J
-> Ministers ; he       shall take   Care     that         the Laws    be       faithfully executed , and  shall
-# NPl/V3+   . NPr/ISg+ VXB   NSg/VB N🅪Sg/VB+ NSg/I/C/Ddem D   NPl/V3+ NSg/VLXB R          VP/J     . VB/C VXB
+> Ministers ; he       shall take   Care     that     the Laws    be       faithfully executed , and  shall
+# NPl/V3+   . NPr/ISg+ VXB   NSg/VB N🅪Sg/VB+ I/C/Ddem D   NPl/V3+ NSg/VLXB R          VP/J     . VB/C VXB
 > Commission all          the Officers of the United States    .
 # N🅪Sg/VB    NSg/I/J/C/Dq D   NPl/V3   P  D   VP/J   NPrPl/V3+ .
 >
@@ -1392,12 +1392,12 @@
 # NSg   NSg     P  D   J/Dq    NPrPl/V3+ . NPr/C NSg/P NPl+        NPr/J/R/P NSg   NSg
 > thereof , as    the one      or    the other    Mode of Ratification may     be       proposed by    the
 # R       . R/C/P D   NSg/I/J+ NPr/C D   NSg/VB/J NSg  P  NSg+         NPr/VXB NSg/VLXB VP/J     NSg/P D
-> Congress ; Provided that         no       Amendment which may     be       made prior to the Year One
-# NPr/VB+  . VP/J/C   NSg/I/C/Ddem NSg/Dq/P NSg+      I/C+  NPr/VXB NSg/VLXB VP   NSg/J P  D   NSg+ NSg/I/J+
+> Congress ; Provided that     no       Amendment which may     be       made prior to the Year One
+# NPr/VB+  . VP/J/C   I/C/Ddem NSg/Dq/P NSg+      I/C+  NPr/VXB NSg/VLXB VP   NSg/J P  D   NSg+ NSg/I/J+
 > thousand eight hundred and  eight shall in        any    Manner affect the first and
 # NSg      NSg/J NSg     VB/C NSg/J VXB+  NPr/J/R/P I/R/Dq NSg+   NSg/VB D   NSg/J VB/C
-> fourth   Clauses in        the Ninth    Section of the first Article ; and  that         no       State    ,
-# NPr/VB/J NPl/V3+ NPr/J/R/P D   NSg/VB/J NSg/VB  P  D   NSg/J NSg/VB+ . VB/C NSg/I/C/Ddem NSg/Dq/P N🅪Sg/VB+ .
+> fourth   Clauses in        the Ninth    Section of the first Article ; and  that     no       State    ,
+# NPr/VB/J NPl/V3+ NPr/J/R/P D   NSg/VB/J NSg/VB  P  D   NSg/J NSg/VB+ . VB/C I/C/Ddem NSg/Dq/P N🅪Sg/VB+ .
 > without its     Consent , shall be       deprived of its     equal    Suffrage in        the Senate .
 # C/P     ISg/D$+ N🅪Sg/VP . VXB   NSg/VLXB VP/J     P  ISg/D$+ NSg/VB/J NSg+     NPr/J/R/P D   NPr+   .
 >
