@@ -180,7 +180,7 @@ mod tests {
         #[test]
         fn fix_that_it_verb_lemma() {
             // "that" is being wrongly used as a relative pronoun
-            // But it's hard to check becuase 'renovate' is a verb but is being used as a noun
+            // But it's hard to check because 'renovate' is a verb but is being used as a noun
             assert_suggestion_result(
                 "It looks like that Renovate decides to not reuse the branch when there are no changes in it",
                 ItLooksLikeThat::default(),

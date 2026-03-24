@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "1.11.0",
+	"version": "1.12.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -497,6 +497,12 @@
 					"default": true,
 					"description": "Corrects `in the end of the day` to `at the end of the day`."
 				},
+				"harper.linters.AtTheExpenseOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "The correct idiom is `at the expense of`, with singular `expense`. But retain `expanse` if this phrase refers to a wide area."
+				},
 				"harper.linters.Australia": {
 					"scope": "resource",
 					"type": "boolean",
@@ -581,6 +587,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.BeWorried": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects incorrect use of 'be worry' instead of `be worried`."
+				},
 				"harper.linters.BeckAndCall": {
 					"scope": "resource",
 					"type": "boolean",
@@ -646,6 +658,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects common errors in the phrase `blanket statement`."
+				},
+				"harper.linters.Bollocks": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `bullocks` to `bollocks` when the meaning is `nonsense`."
 				},
 				"harper.linters.BoringWords": {
 					"scope": "resource",
@@ -880,6 +898,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "The location of currency symbols varies by country. The rule looks for and corrects improper positioning."
+				},
+				"harper.linters.CuttingAgeEggcorn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the eggcorn `cutting age` or `cutting-age` to `cutting-edge` or `cutting edge`."
 				},
 				"harper.linters.Cybersec": {
 					"scope": "resource",
@@ -1558,6 +1582,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "When referring to Google products and services, make sure to treat them as proper nouns."
+				},
+				"harper.linters.GrindToAHalt": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the idiom `grind to halt` to the standard `grind to a halt`."
 				},
 				"harper.linters.GuineaBissau": {
 					"scope": "resource",
@@ -2350,6 +2380,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Finds redundant paring of `more` or `most` with adjectives already in the comparative or superlative form."
+				},
+				"harper.linters.MoreThatLikely": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the common typo `more that likely` to `more than likely`."
 				},
 				"harper.linters.MostNumber": {
 					"scope": "resource",

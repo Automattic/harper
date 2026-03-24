@@ -26,6 +26,133 @@ fn corrects_much_ado() {
     );
 }
 
+// Bollocks
+
+#[test]
+fn fix_complete_bullocks() {
+    assert_suggestion_result(
+        "why you think some of them are complete bullocks or would be a bad idea",
+        lint_group(),
+        "why you think some of them are complete bollocks or would be a bad idea",
+    );
+}
+
+#[test]
+fn fix_dogs() {
+    assert_suggestion_result(
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bullocks.",
+        lint_group(),
+        "The cat's ass, priceless! I have to steal that one. My go to phrase is “The dog's bollocks.",
+    );
+}
+
+#[test]
+fn fix_dogs_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "some dumb rubbish that i do not give a dogs bullocks about",
+        lint_group(),
+        "some dumb rubbish that i do not give a dogs bollocks about",
+    );
+}
+
+#[test]
+fn fix_is_bullocks() {
+    assert_suggestion_result(
+        "for me this is bullocks, when the same user can sudo rm -rf",
+        lint_group(),
+        "for me this is bollocks, when the same user can sudo rm -rf",
+    );
+}
+
+#[test]
+fn fix_its_bullocks() {
+    assert_suggestion_result(
+        "I'm too lazy to explain why, but I think it's bullocks.",
+        lint_group(),
+        "I'm too lazy to explain why, but I think it's bollocks.",
+    );
+}
+
+#[test]
+fn fix_its_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "but lance, dont claim to be clean, because we all know its bullocks",
+        lint_group(),
+        "but lance, dont claim to be clean, because we all know its bollocks",
+    );
+}
+
+#[test]
+fn fix_such_bullocks() {
+    assert_suggestion_result(
+        "This is why numerology is such bullocks.",
+        lint_group(),
+        "This is why numerology is such bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_bullocks() {
+    assert_suggestion_result(
+        "Respectfully, that's bullocks.",
+        lint_group(),
+        "Respectfully, that's bollocks.",
+    );
+}
+
+#[test]
+fn fix_thats_no_apostrophe_bullocks() {
+    assert_suggestion_result(
+        "In CSS thats bullocks as directives have priority in the order they are defined.",
+        lint_group(),
+        "In CSS thats bollocks as directives have priority in the order they are defined.",
+    );
+}
+
+#[test]
+fn fix_total_bullocks() {
+    assert_suggestion_result(
+        "Pointing out to the audience that their gravity explanation is total bullocks would seem an ethical must as well.",
+        lint_group(),
+        "Pointing out to the audience that their gravity explanation is total bollocks would seem an ethical must as well.",
+    );
+}
+
+#[test]
+fn fix_utter_bullocks() {
+    assert_suggestion_result(
+        "what utter bullocks a self employed person will get £94 under corona virus crisis",
+        lint_group(),
+        "what utter bollocks a self employed person will get £94 under corona virus crisis",
+    );
+}
+
+#[test]
+fn fix_was_bullocks() {
+    assert_suggestion_result(
+        "a few years ago I thought that was bullocks",
+        lint_group(),
+        "a few years ago I thought that was bollocks",
+    );
+}
+
+#[test]
+fn fix_bullocks_exclamation() {
+    assert_suggestion_result(
+        "throw(new Error('Bullocks!')));",
+        lint_group(),
+        "throw(new Error('Bollocks!')));",
+    );
+}
+
+#[test]
+fn dont_flag_herd_of_bullocks() {
+    assert_no_lints(
+        "driven back (literally) by a herd of bullocks across the path",
+        lint_group(),
+    );
+}
+
 // ChampAtTheBit
 #[test]
 fn correct_chomp_at_the_bit() {
@@ -233,22 +360,6 @@ fn corrects_dose_not() {
         "It dose not run windows ?",
         lint_group(),
         "It does not run windows ?",
-    );
-}
-
-// RedundantSuperlatives
-
-#[test]
-fn redundant_more_optimal() {
-    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
-}
-
-#[test]
-fn redundant_most_ideal() {
-    assert_suggestion_result(
-        "This is the most ideal scenario.",
-        lint_group(),
-        "This is the ideal scenario.",
     );
 }
 
@@ -644,6 +755,40 @@ fn correct_to_an_extend() {
     );
 }
 
+// FlauntForFlout
+
+#[test]
+fn corrects_flaunt_the_rules() {
+    assert_suggestion_result(
+        "Some users flaunt the rules of punctuation.",
+        lint_group(),
+        "Some users flout the rules of punctuation.",
+    );
+}
+
+#[test]
+fn corrects_flaunted_the_law() {
+    assert_suggestion_result(
+        "He flaunted the law for personal gain.",
+        lint_group(),
+        "He flouted the law for personal gain.",
+    );
+}
+
+#[test]
+fn corrects_flaunting_authority() {
+    assert_suggestion_result(
+        "She was flaunting authority at every turn.",
+        lint_group(),
+        "She was flouting authority at every turn.",
+    );
+}
+
+#[test]
+fn allows_flaunt_wealth() {
+    assert_no_lints("He likes to flaunt his wealth.", lint_group());
+}
+
 // FoamAtTheMouth
 
 #[test]
@@ -769,6 +914,55 @@ fn corrects_gotten_used_of() {
         "The tutorial has indeed been of help, and I've gotten used of using Hull.",
         lint_group(),
         "The tutorial has indeed been of help, and I've gotten used to using Hull.",
+    );
+}
+
+// GrindToAHalt
+
+#[test]
+fn corrects_grind_to_halt() {
+    // Without this it will eventually grind to halt as it backs up upon itself
+    assert_suggestion_result(
+        "Without this it will eventually grind to halt as it backs up upon itself",
+        lint_group(),
+        "Without this it will eventually grind to a halt as it backs up upon itself",
+    );
+}
+
+#[test]
+#[ignore = "Fails due to how replace_with_matched_case works"]
+fn corrects_grind_to_halt_title_case() {
+    assert_suggestion_result(
+        "Smart Search Tools Cause System to Grind to Halt",
+        lint_group(),
+        "Smart Search Tools Cause System to Grind to a Halt",
+    );
+}
+
+#[test]
+fn corrects_grinding_to_halt() {
+    assert_suggestion_result(
+        "app grinding to halt when loading many objects",
+        lint_group(),
+        "app grinding to a halt when loading many objects",
+    );
+}
+
+#[test]
+fn corrects_grinds_to_halt() {
+    assert_suggestion_result(
+        "If your machine grinds to halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+        lint_group(),
+        "If your machine grinds to a halt due to memory oversubscription, you may want to try to set the MOLD_JOBS environment variable to 1",
+    );
+}
+
+#[test]
+fn corrects_ground_to_halt() {
+    assert_suggestion_result(
+        "As you have probably guessed, my work on my fork has ground to halt.",
+        lint_group(),
+        "As you have probably guessed, my work on my fork has ground to a halt.",
     );
 }
 
@@ -1193,7 +1387,20 @@ fn fix_peaks() {
 // -none-
 
 // RedundantSuperlatives
-// -none-
+
+#[test]
+fn redundant_more_optimal() {
+    assert_suggestion_result("Is this more optimal?", lint_group(), "Is this optimal?");
+}
+
+#[test]
+fn redundant_most_ideal() {
+    assert_suggestion_result(
+        "This is the most ideal scenario.",
+        lint_group(),
+        "This is the ideal scenario.",
+    );
+}
 
 // ResponsibilityFor
 
