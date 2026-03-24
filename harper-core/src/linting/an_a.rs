@@ -336,4 +336,18 @@ mod tests {
         assert_lint_count("an LED", AnA::new(Dialect::American), 0);
         assert_lint_count("a LED", AnA::new(Dialect::American), 0);
     }
+
+    #[test]
+    fn allow_a_and_an_for_url() {
+        assert_lint_count(
+            "I pronounce URL as 'yoo-are-ell' so for me it's 'a URL'",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count(
+            "But some people pronounce it like 'earl' so for them it's 'an URL'",
+            AnA::new(Dialect::American),
+            0,
+        );
+    }
 }

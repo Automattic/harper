@@ -23,7 +23,7 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
         return None;
     }
 
-    if matches!(word, ['S', 'Q', 'L'] | ['L', 'E', 'D']) {
+    if matches!(word, ['L', 'E', 'D'] | ['S', 'Q', 'L'] | ['U', 'R', 'L']) {
         return Some(InitialSound::Either);
     }
 

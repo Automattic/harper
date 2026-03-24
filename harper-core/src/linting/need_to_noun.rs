@@ -513,4 +513,52 @@ mod tests {
             NeedToNoun::default(),
         );
     }
+
+    #[test]
+    fn allows_need_to_start_2320() {
+        assert_no_lints(
+            "You need to start the server before running tests.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_have_2320() {
+        assert_no_lints(
+            "You need to have a valid license to use this software.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_configure_2320() {
+        assert_no_lints(
+            "You need to configure the database connection first.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_set_2320() {
+        assert_no_lints(
+            "You need to set the environment variable before deploying.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_send_2320() {
+        assert_no_lints(
+            "You need to send the request with the correct headers.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_receive_2320() {
+        assert_no_lints(
+            "You need to receive confirmation before proceeding.",
+            NeedToNoun::default(),
+        );
+    }
 }

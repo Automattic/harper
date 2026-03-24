@@ -672,6 +672,18 @@
 				"swear": true
 			}
 		},
+		"†": {
+			"#": "slang/informal/nonstandard (always) property",
+			"metadata": {
+				"slang": true
+			}
+		},
+		"‡": {
+			"#": "slang/informal/nonstandard (some senses only) property",
+			"metadata": {
+				"slang": true
+			}
+		},
 		"C": {
 			"#": "conjunction property",
 			"metadata": {
