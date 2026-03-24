@@ -584,6 +584,12 @@ function getDomainLookupCandidates(domain: string): string[] {
 	return withoutWww === domain ? [domain] : [domain, withoutWww];
 }
 
+/**
+ * Looks up a domain-specific enable/disable setting in local storage.
+ * The lookup is normalized through `getDomainLookupCandidates` so we can try
+ * both the exact hostname and a `www.`-stripped variant when sites are stored
+ * under either form. Returns `undefined` when no stored override exists.
+ */
 async function getStoredDomainStatus(domain: string): Promise<boolean | undefined> {
 	const candidates = getDomainLookupCandidates(domain);
 	const response = await chrome.storage.local.get(candidates.map(formatDomainKey));
