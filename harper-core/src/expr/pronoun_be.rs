@@ -2,7 +2,27 @@ use crate::{Span, Token, patterns::WordSet};
 
 use super::{Expr, SequenceExpr};
 
-pub struct PronounBe;
+pub struct PronounBe {
+    expr: SequenceExpr,
+}
+
+impl Default for PronounBe {
+    fn default() -> Self {
+        Self {
+            expr: SequenceExpr::default().then_any_of(vec![
+                Box::new(
+                    SequenceExpr::default()
+                        .then_subject_pronoun()
+                        .t_ws()
+                        .t_set(&["am", "are", "is", "was", "were"]),
+                ),
+                Box::new(WordSet::new(&[
+                    "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
+                ])),
+            ]),
+        }
+    }
+}
 
 impl Expr for PronounBe {
     fn run(&self, cursor: usize, toks: &[Token], src: &[char]) -> Option<Span<Token>> {
@@ -10,19 +30,7 @@ impl Expr for PronounBe {
             return None;
         }
 
-        let expr = SequenceExpr::default().then_any_of(vec![
-            Box::new(
-                SequenceExpr::default()
-                    .then_subject_pronoun()
-                    .t_ws()
-                    .t_set(&["am", "are", "is", "was", "were"]),
-            ),
-            Box::new(WordSet::new(&[
-                "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
-            ])),
-        ]);
-
-        expr.run(cursor, toks, src)
+        self.expr.run(cursor, toks, src)
     }
 }
 
@@ -35,7 +43,7 @@ mod tests {
 
     fn assert_count(text: &str, expected_count: usize) {
         assert_eq!(
-            PronounBe
+            PronounBe::default()
                 .iter_matches_in_doc(&Document::new_plain_english_curated(text))
                 .count(),
             expected_count
