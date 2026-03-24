@@ -755,6 +755,40 @@ fn correct_to_an_extend() {
     );
 }
 
+// FlauntForFlout
+
+#[test]
+fn corrects_flaunt_the_rules() {
+    assert_suggestion_result(
+        "Some users flaunt the rules of punctuation.",
+        lint_group(),
+        "Some users flout the rules of punctuation.",
+    );
+}
+
+#[test]
+fn corrects_flaunted_the_law() {
+    assert_suggestion_result(
+        "He flaunted the law for personal gain.",
+        lint_group(),
+        "He flouted the law for personal gain.",
+    );
+}
+
+#[test]
+fn corrects_flaunting_authority() {
+    assert_suggestion_result(
+        "She was flaunting authority at every turn.",
+        lint_group(),
+        "She was flouting authority at every turn.",
+    );
+}
+
+#[test]
+fn allows_flaunt_wealth() {
+    assert_no_lints("He likes to flaunt his wealth.", lint_group());
+}
+
 // FoamAtTheMouth
 
 #[test]

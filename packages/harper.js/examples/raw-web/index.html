@@ -6,7 +6,7 @@
   <script type="module">
     // We can import `harper.js` using native ECMAScript syntax.
     // TODO: Update to the latest version.
-    import {binaryInlined, WorkerLinter } from 'https://unpkg.com/harper.js@0.54.0/dist/harper.js';
+    import {binaryInlined, WorkerLinter } from 'https://unpkg.com/harper.js@1.12.0/dist/harper.js';
 
     // Since we are working in the browser, we can use either `WorkerLinter`, which doesn't block the event loop, or `LocalLinter`, which does.
     const linter = new WorkerLinter({binary: binaryInlined});
