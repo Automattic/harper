@@ -25,8 +25,13 @@ where
                     .t_ws()
                     .then_kind_where(|kind| {
                         kind.is_verb()
+                            // flag "will walked/walks/walking" but not "will walk" (lemma)
                             && !kind.is_verb_lemma()
+                            // avoid flagging "will drinks be expensive" ("drinks" is a noun in context)
+                            // but "coming" is also a noun since it's a gerund and we do want to flag "will coming next soon"
                             && (!kind.is_noun() || kind.is_verb_progressive_form())
+                            // avoid flagging "will was read" ("will" is a noun in context this time)
+                            && !(kind.is_linking_verb() && kind.is_verb_simple_past_form())
                     }),
             ),
             dict,
@@ -237,6 +242,24 @@ mod tests {
                 "on CPU and GPU (NPU support will be coming next)",
             ],
             &[],
+        );
+    }
+
+    #[test]
+    fn ignore_will_was_read_pr_review() {
+        assert_lint_count(
+            "Around November 2023, shortly after the will was read, Eleanor started asking about using the cottage.",
+            WillNonLemma::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_will_was_straightforward_pr_review() {
+        assert_lint_count(
+            "Vivian’s will was straightforward. The house, all its contents, and her savings were to be left to me.",
+            WillNonLemma::new(FstDictionary::curated()),
+            0,
         );
     }
 }
