@@ -1834,6 +1834,45 @@ fn i_wish_it_was() {
     );
 }
 
+// UseToUsedTo
+
+#[test]
+fn corrects_getting_use_to() {
+    assert_suggestion_result(
+        "I'm getting use to it slowly.",
+        lint_group(),
+        "I'm getting used to it slowly.",
+    );
+}
+
+#[test]
+fn corrects_are_use_to() {
+    assert_suggestion_result(
+        "If you are use to Ubuntu, then the way sudo works should not be strange.",
+        lint_group(),
+        "If you are used to Ubuntu, then the way sudo works should not be strange.",
+    );
+}
+
+#[test]
+fn corrects_im_use_to() {
+    assert_suggestion_result(
+        "I'm use to doing a lot of work.",
+        lint_group(),
+        "I'm used to doing a lot of work.",
+    );
+}
+
+#[test]
+fn allows_use_to_as_verb() {
+    assert_no_lints("This is the editor I use to write code.", lint_group());
+}
+
+#[test]
+fn allows_used_to() {
+    assert_no_lints("I used to develop with objects in JS.", lint_group());
+}
+
 // WreakHavoc
 
 #[test]
@@ -1870,6 +1909,40 @@ fn fix_wrecks_havoc() {
         lint_group(),
         "Small POC using rust with ptrace that wreaks havoc on msync",
     );
+}
+
+// VerseAsVerb
+
+#[test]
+fn corrects_verse_against() {
+    assert_suggestion_result(
+        "A game of Morra, with 3 different AI you can verse against.",
+        lint_group(),
+        "A game of Morra, with 3 different AI you can play against.",
+    );
+}
+
+#[test]
+fn corrects_versing_against() {
+    assert_suggestion_result(
+        "This will help when you are versing against a particular boss.",
+        lint_group(),
+        "This will help when you are playing against a particular boss.",
+    );
+}
+
+#[test]
+fn corrects_verse_me() {
+    assert_suggestion_result(
+        "Come verse me in this game.",
+        lint_group(),
+        "Come play me in this game.",
+    );
+}
+
+#[test]
+fn allows_versus() {
+    assert_no_lints("It was red versus blue in the finals.", lint_group());
 }
 
 // WroteToRote
@@ -2086,6 +2159,46 @@ fn copywrote() {
         "How do you find out if someone copyrighted a movie",
     );
 }
+
+// DateBackFrom
+
+#[test]
+fn corrects_date_back_from() {
+    assert_good_and_bad_suggestions(
+        "There are too many open issues that date back from 4 years ago.",
+        lint_group(),
+        &[
+            "There are too many open issues that date from 4 years ago.",
+            "There are too many open issues that date back to 4 years ago.",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn corrects_dates_back_from() {
+    assert_good_and_bad_suggestions(
+        "This code dates back from 2014.",
+        lint_group(),
+        &[
+            "This code dates from 2014.",
+            "This code dates back to 2014.",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn allows_date_back_to() {
+    assert_no_lints(
+        "These scripts date back to when Perl was popular.",
+        lint_group(),
+    );
+}
+
+// Note: "the date back from" and "get dates back from" are known false
+// positives where "date" is a noun (retrieving data). Phrase set matching
+// cannot distinguish these from the verb form. See issue #2864.
 
 // DoubleEdgedSword
 

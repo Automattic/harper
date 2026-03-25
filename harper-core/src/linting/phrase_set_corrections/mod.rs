@@ -570,6 +570,32 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "UseToUsedTo" => (
+            &[
+                // "be" verbs + "use to" -> "used to" (accustomed to)
+                ("am use to", "am used to"),
+                ("are use to", "are used to"),
+                ("is use to", "is used to"),
+                ("was use to", "was used to"),
+                ("were use to", "were used to"),
+                ("be use to", "be used to"),
+                // contractions of "be"
+                ("i'm use to", "i'm used to"),
+                ("we're use to", "we're used to"),
+                ("you're use to", "you're used to"),
+                ("they're use to", "they're used to"),
+                ("he's use to", "he's used to"),
+                ("she's use to", "she's used to"),
+                ("it's use to", "it's used to"),
+                // "get" forms + "use to" -> "used to" (becoming accustomed)
+                ("getting use to", "getting used to"),
+                ("get use to", "get used to"),
+                ("got use to", "got used to"),
+            ],
+            "The correct form is `used to`, not `use to`.",
+            "Corrects `use to` to `used to` when meaning accustomed to (after forms of `be` or `get`).",
+            LintKind::Grammar
+        ),
         "WreakHavoc" => (
             &[
                 ("wreck havoc", "wreak havoc"),
@@ -580,6 +606,22 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `wreak havoc`?",
             "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
             LintKind::Eggcorn
+        ),
+        "VerseAsVerb" => (
+            &[
+                ("verse against", "play against"),
+                ("versed against", "played against"),
+                ("versing against", "playing against"),
+                ("verses against", "plays against"),
+                ("verse me", "play me"),
+                ("verse him", "play him"),
+                ("verse her", "play her"),
+                ("verse them", "play them"),
+                ("verse you", "play you"),
+            ],
+            "`Verse` is not a verb meaning to compete. Use `play against` or `compete against` instead.",
+            "Corrects the nonstandard use of `verse` as a verb (from `versus`) to standard alternatives.",
+            LintKind::Nonstandard
         ),
         "WroteToRote" => (
             &[
@@ -629,6 +671,15 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
+        ),
+        "DateBackFrom" => (
+            &[
+                (&["date back from"], &["date from", "date back to"]),
+                (&["dates back from"], &["dates from", "dates back to"]),
+            ],
+            "Use `date from` or `date back to`, not `date back from`.",
+            "Corrects the blend of `date from` and `date back to` into the nonstandard `date back from`.",
+            LintKind::Usage
         ),
         "DoubleEdgedSword" => (
             &[

@@ -236,6 +236,7 @@ mod to_two_too;
 mod touristic;
 mod transposed_space;
 mod try_ones_hand_at;
+mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
 mod use_title_case;

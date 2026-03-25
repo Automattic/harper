@@ -8,6 +8,7 @@ use zip::write::FileOptions;
 use zip::{CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::linting::LintGroup;
+use crate::spell::MutableDictionary;
 use crate::weir::{TestResult, WeirLinter};
 
 mod error;
@@ -21,6 +22,10 @@ pub use manifest::WeirpackManifest;
 #[derive(Debug, Clone, Default)]
 pub struct Weirpack {
     pub rules: HashMap<String, String>,
+    /// The `dictionary.dict` file, if it exists.
+    pub dictionary: Option<String>,
+    /// The `annotations.json` file, if it exists.
+    pub annotations: Option<String>,
     pub manifest: WeirpackManifest,
 }
 
@@ -29,6 +34,8 @@ impl Weirpack {
     pub fn new(manifest: WeirpackManifest) -> Self {
         Self {
             rules: HashMap::new(),
+            annotations: None,
+            dictionary: None,
             manifest,
         }
     }
@@ -86,6 +93,25 @@ impl Weirpack {
         Ok(())
     }
 
+    /// Loads the dictionary that may or may not be contained within the Weirpack.
+    ///
+    /// The dictionary is in the Rune format and thus is composed of two files, `annotations.json`
+    /// and `dictionary.dict`.
+    ///
+    /// Returns `None` if the relevant files are not present in the Weirpack.
+    pub fn load_dictionary(&self) -> Result<Option<MutableDictionary>, Error> {
+        if let Some(dict) = &self.dictionary
+            && let Some(annot) = &self.annotations
+        {
+            Ok(Some(
+                MutableDictionary::from_rune_files(dict, annot)
+                    .map_err(|_| Error::InvalidDictionaryFormat)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+
     /// Load a Weirpack from bytes.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, Error> {
         let cursor = std::io::Cursor::new(bytes);
@@ -93,6 +119,8 @@ impl Weirpack {
 
         let mut manifest = None;
         let mut rules = HashMap::new();
+        let mut dictionary = None;
+        let mut annotations = None;
 
         for i in 0..archive.len() {
             let mut file = archive.by_index(i)?;
@@ -110,28 +138,39 @@ impl Weirpack {
                 continue;
             }
 
-            if !name.ends_with(".weir") {
-                continue;
+            if name.ends_with(".weir") {
+                let path = Path::new(&name);
+                let file_name = path
+                    .file_name()
+                    .and_then(|segment| segment.to_str())
+                    .ok_or_else(|| Error::InvalidRuleFileName(name.clone()))?;
+                let rule_name = Path::new(file_name)
+                    .file_stem()
+                    .and_then(|stem| stem.to_str())
+                    .ok_or_else(|| Error::InvalidRuleFileName(name.clone()))?;
+
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
+                rules.insert(rule_name.to_string(), contents);
+            } else if name == "dictionary.dict" {
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
+                dictionary = Some(contents);
+            } else if name == "annotations.json" {
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
+                annotations = Some(contents);
             }
-
-            let path = Path::new(&name);
-            let file_name = path
-                .file_name()
-                .and_then(|segment| segment.to_str())
-                .ok_or_else(|| Error::InvalidRuleFileName(name.clone()))?;
-            let rule_name = Path::new(file_name)
-                .file_stem()
-                .and_then(|stem| stem.to_str())
-                .ok_or_else(|| Error::InvalidRuleFileName(name.clone()))?;
-
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
-            rules.insert(rule_name.to_string(), contents);
         }
 
         let manifest = manifest.ok_or(Error::MissingManifest("manifest.json"))?;
 
-        Ok(Self { rules, manifest })
+        Ok(Self {
+            rules,
+            manifest,
+            annotations,
+            dictionary,
+        })
     }
 
     /// Write a Weirpack into bytes.
@@ -143,6 +182,16 @@ impl Weirpack {
         self.manifest.write_to(&mut manifest_bytes)?;
         zip.start_file("manifest.json", options)?;
         zip.write_all(&manifest_bytes)?;
+
+        if let Some(annot) = &self.annotations {
+            zip.start_file("annotations.json", options)?;
+            zip.write_all(annot.as_bytes())?;
+        }
+
+        if let Some(dict) = &self.dictionary {
+            zip.start_file("dictionary.dict", options)?;
+            zip.write_all(dict.as_bytes())?;
+        }
 
         let mut rule_names: Vec<_> = self.rules.keys().collect();
         rule_names.sort();
