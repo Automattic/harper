@@ -140,7 +140,7 @@ impl ExprLinter for ThisTypeOfThing {
                 }
                 .chars()
                 .collect(),
-                bad_tok.span.get_content(src),
+                bad_tok.get_ch(src),
             )],
             message: "The grammatical number of the determiner and the two nouns must agree."
                 .to_string(),

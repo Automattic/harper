@@ -35,7 +35,7 @@ impl ExprLinter for FindFine {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "fine",
-                offending_word.span.get_content(source),
+                offending_word.get_ch(source),
             )],
             message: "Did you mean `fine`?".to_owned(),
             priority: 63,

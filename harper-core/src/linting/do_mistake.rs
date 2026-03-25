@@ -60,13 +60,13 @@ impl ExprLinter for DoMistake {
             return None;
         }
 
-        let make = if chars.eq_ignore_ascii_case_str("do") {
+        let make = if chars.eq_str("do") {
             "make"
-        } else if chars.eq_ignore_ascii_case_str("did") || chars.eq_ignore_ascii_case_str("done") {
+        } else if chars.eq_str("did") || chars.eq_str("done") {
             "made"
-        } else if chars.eq_ignore_ascii_case_str("does") {
+        } else if chars.eq_str("does") {
             "makes"
-        } else if chars.eq_ignore_ascii_case_str("doing") {
+        } else if chars.eq_str("doing") {
             "making"
         } else {
             return None;

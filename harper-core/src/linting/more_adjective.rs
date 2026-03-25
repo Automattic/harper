@@ -70,11 +70,11 @@ where
         }
 
         let degree_tok = &toks[0];
-        let degree_chars = degree_tok.span.get_content(src);
+        let degree_chars = degree_tok.get_ch(src);
 
-        let degree = if degree_chars.eq_ignore_ascii_case_str("more") {
+        let degree = if degree_chars.eq_str("more") {
             Degree::Comparative
-        } else if degree_chars.eq_ignore_ascii_case_str("most") {
+        } else if degree_chars.eq_str("most") {
             Degree::Superlative
         } else {
             return None;

@@ -20,9 +20,7 @@ where
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
         let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
-            tok.span
-                .get_content(src)
-                .ends_with_ignore_ascii_case_chars(&['s'])
+            tok.get_ch(src).ends_with_ignore_ascii_case_chars(&['s'])
         });
         let oov_looks_plural = All::new(vec![Box::new(oov), Box::new(looks_plural)]);
 
@@ -76,7 +74,7 @@ where
         } else {
             let invalid_plural_tok = &invalid_plural_toks[0];
             // Not a fixed phrase, so it's a single word that's not in the dictionary and ends with -s
-            let mut remaining_chars = invalid_plural_tok.span.get_content(src);
+            let mut remaining_chars = invalid_plural_tok.get_ch(src);
 
             // -s
             if remaining_chars.ends_with(&['s']) {

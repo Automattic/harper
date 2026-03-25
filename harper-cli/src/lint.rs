@@ -481,7 +481,7 @@ fn lint_one_input(
                         for lint in rule_lints {
                             let (line, column) =
                                 char_index_to_line_col(source_chars, lint.span.start);
-                            let matched_text = lint.span.get_content_string(source_chars);
+                            let matched_text = lint.get_str(source_chars);
                             let suggestions: Vec<String> =
                                 lint.suggestions.iter().map(|s| format!("{s}")).collect();
                             lints.push(JsonLint {
@@ -612,7 +612,7 @@ fn collect_spellos(
         .get("SpellCheck")
         .into_iter()
         .flatten()
-        .map(|lint| lint.span.get_content_string(source))
+        .map(|lint| lint.get_str(source))
         .fold(HashMap::new(), |mut acc, spello| {
             *acc.entry(spello).or_insert(0) += 1;
             acc
@@ -769,7 +769,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
             curr_len_chars = 0;
             current_line_start_tok_idx = idx + 1;
         } else if matches!(tok.kind, TokenKind::Unlintable) {
-            // TODO would be more accurate to scan for \n in the tok.span.get_content(src)
+            // TODO would be more accurate to scan for \n in the tok.get_ch(src)
         } else {
             curr_len_chars += tok.span.len();
         }

@@ -37,8 +37,8 @@ impl MergeableWords {
         word_b: &Token,
         source: &[char],
     ) -> Option<CharString> {
-        let a_chars: CharString = word_a.span.get_content(source).into();
-        let b_chars: CharString = word_b.span.get_content(source).into();
+        let a_chars: CharString = word_a.get_ch(source).into();
+        let b_chars: CharString = word_b.get_ch(source).into();
 
         // First check if the open compound exists in the dictionary
         let mut compound = a_chars.clone();

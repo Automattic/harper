@@ -44,7 +44,7 @@ impl ExprLinter for SplitWords {
             return None;
         }
 
-        let chars = &word.span.get_content(source);
+        let chars = &word.get_ch(source);
 
         // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);

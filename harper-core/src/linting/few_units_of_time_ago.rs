@@ -39,7 +39,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
         let mut span = None;
 
         for tok in toks.iter().take(3) {
-            if tok.span.get_content_string(src).eq_ignore_ascii_case("few") {
+            if tok.get_str(src).eq_ignore_ascii_case("few") {
                 span = Some(tok.span);
                 break;
             }

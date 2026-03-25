@@ -37,7 +37,7 @@ impl SingleTokenPattern for WithinEditDistance {
             return false;
         }
 
-        let content = token.span.get_content(source);
+        let content = token.get_ch(source);
 
         BUFFERS.with_borrow_mut(|(buffer_a, buffer_b)| {
             let distance = edit_distance_min_alloc(

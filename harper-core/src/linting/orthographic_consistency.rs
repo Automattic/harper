@@ -64,7 +64,7 @@ impl ExprLinter for OrthographicConsistency {
             return None;
         };
 
-        let chars = word.span.get_content(source);
+        let chars = word.get_ch(source);
 
         // Cache the ID so we don't have to recalculate it.
         let word_ids = WordIdPair::from_word_chars(chars);
