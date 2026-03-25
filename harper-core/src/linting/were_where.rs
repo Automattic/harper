@@ -72,14 +72,12 @@ impl ExprLinter for WereWhere {
 
         // Check if "where" appears in the match (where → were case)
         let where_tok = toks.iter().find(|tok| {
-            matches!(tok.kind, TokenKind::Word(_))
-                && tok.span.get_content(src).eq_ignore_ascii_case_chars(WHERE)
+            matches!(tok.kind, TokenKind::Word(_)) && tok.span.get_content(src).eq_ch(WHERE)
         });
 
         // Check if "were" appears in the match (were → where case)
         let were_tok = toks.iter().find(|tok| {
-            matches!(tok.kind, TokenKind::Word(_))
-                && tok.span.get_content(src).eq_ignore_ascii_case_chars(WERE)
+            matches!(tok.kind, TokenKind::Word(_)) && tok.span.get_content(src).eq_ch(WERE)
         });
 
         if let Some(tok) = where_tok {

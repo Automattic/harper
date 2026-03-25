@@ -43,7 +43,7 @@ impl ExprLinter for MostNumber {
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
         let most_amt_num_span = toks[0..3].span()?;
-        let noun_string = toks[2].span.get_content_string(source);
+        let noun_string = toks[2].get_str(source);
         let superlatives = if noun_string == "amount" {
             vec!["largest", "greatest", "maximum"]
         } else {
@@ -64,7 +64,7 @@ impl ExprLinter for MostNumber {
             suggestions,
             message: format!(
                 "`Most` is not standard before `{}`.",
-                toks[2].span.get_content_string(source)
+                toks[2].get_str(source)
             ),
             priority: 31,
         })

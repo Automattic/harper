@@ -51,16 +51,9 @@ impl ExprLinter for ModalBeAdjective {
         if followed_by_word(ctx, |nw| {
             (nw.kind.is_noun()
                 && !nw
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .eq_any_ignore_ascii_case_str(&["at", "by", "if"]))
-                || (toks
-                    .last()
-                    .unwrap()
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_str("kind")
-                    && nw.span.get_content(src).eq_ignore_ascii_case_str("of"))
+                || (toks.last().unwrap().get_ch(src).eq_str("kind") && nw.get_ch(src).eq_str("of"))
         }) {
             return None;
         }

@@ -31,7 +31,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
                 continue;
             }
             let prep_to = document.get_span_content(&prep.span);
-            if !prep_to.eq_ignore_ascii_case_chars(&['t', 'o']) {
+            if !prep_to.eq_ch(&['t', 'o']) {
                 continue;
             }
 

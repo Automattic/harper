@@ -36,7 +36,7 @@ impl ExprLinter for WinPrize {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let candidate = toks.last()?;
-        let raw = candidate.span.get_content_string(src).to_lowercase();
+        let raw = candidate.get_str(src).to_lowercase();
         let repl = match raw.as_str() {
             "price" | "prise" => "prize",
             "prices" | "prises" => "prizes",

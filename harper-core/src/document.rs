@@ -187,31 +187,38 @@ impl Document {
             let token_strings: Vec<_> = sent
                 .iter()
                 .filter(|t| !t.kind.is_whitespace())
-                .map(|t| t.span.get_content_string(&self.source))
+                .map(|t| t.get_str(&self.source))
                 .collect();
 
             let token_tags = tagger.tag_sentence(&token_strings);
             let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
-            let mut i = 0;
-
             // Annotate DictWord metadata
+            let word_sources: Vec<_> = sent
+                .iter()
+                .filter(|t| matches!(t.kind, TokenKind::Word(_)))
+                .map(|t| t.get_ch(&self.source))
+                .collect();
+
+            let mut ti = 0; // Index for token_tags/np_flags (all non-whitespace tokens)
+            let mut wi = 0; // Index for word_sources (only word tokens)
             for token in sent.iter_mut() {
                 if let TokenKind::Word(meta) = &mut token.kind {
-                    let word_source = token.span.get_content(&self.source);
+                    let word_source = word_sources[wi];
                     let mut found_meta = dictionary
                         .get_word_metadata(word_source)
                         .map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {
-                        inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());
-                        inner.np_member = Some(np_flags[i]);
+                        inner.pos_tag = token_tags[ti].or_else(|| inner.infer_pos_tag());
+                        inner.np_member = Some(np_flags[ti]);
                     }
 
                     *meta = found_meta;
-                    i += 1;
+                    ti += 1;
+                    wi += 1;
                 } else if !token.kind.is_whitespace() {
-                    i += 1;
+                    ti += 1;
                 }
             }
         }
@@ -672,7 +679,7 @@ impl Document {
                     || (l.is_some_and(|t| t.kind.is_open_round())
                         && r.is_some_and(|t| t.kind.is_close_round())))
                 && {
-                    let ext_chars = x.span.get_content(&self.source);
+                    let ext_chars = x.get_ch(&self.source);
                     ext_chars.iter().all(|c| c.is_ascii_lowercase())
                         || ext_chars.iter().all(|c| c.is_ascii_uppercase())
                 };
@@ -735,13 +742,11 @@ impl Document {
             let is_tld_chunk = d.kind.is_period()
                 && tld.kind.is_word()
                 && tld
-                    .span
-                    .get_content(&self.source)
+                    .get_ch(&self.source)
                     .iter()
                     .all(|c| c.is_ascii_alphabetic())
                 && tld
-                    .span
-                    .get_content(&self.source)
+                    .get_ch(&self.source)
                     .eq_any_ignore_ascii_case_str(COMMON_TOP_LEVEL_DOMAINS)
                 && ((l.is_none_or(|t| t.kind.is_whitespace())
                     && r.is_none_or(|t| t.kind.is_whitespace()))
@@ -774,17 +779,13 @@ impl Document {
 
             let is_tldr_chunk = tl.kind.is_word()
                 && tl.span.len() == 2
-                && tl
-                    .span
-                    .get_content(&self.source)
-                    .eq_ignore_ascii_case_chars(&['t', 'l'])
+                && tl.get_ch(&self.source).eq_ch(&['t', 'l'])
                 && simicolon.kind.is_semicolon()
                 && dr.kind.is_word()
                 && dr.span.len() >= 2
                 && dr.span.len() <= 3
                 && dr
-                    .span
-                    .get_content(&self.source)
+                    .get_ch(&self.source)
                     .eq_any_ignore_ascii_case_chars(&[&['d', 'r'], &['d', 'r', 's']]);
 
             if is_tldr_chunk {
@@ -842,8 +843,8 @@ impl Document {
 
             if is_delimited_chunk {
                 let (l1, l2) = (
-                    l1.span.get_content(&self.source).first(),
-                    l2.span.get_content(&self.source).first(),
+                    l1.get_ch(&self.source).first(),
+                    l2.get_ch(&self.source).first(),
                 );
 
                 let is_valid_pair = match (l1, l2) {
@@ -1313,10 +1314,10 @@ mod tests {
         let tldrs = doc
             .tokens
             .iter()
-            .filter(|t| t.span.get_content(&doc.source).contains(&';'))
+            .filter(|t| t.get_ch(&doc.source).contains(&';'))
             .collect_vec();
         assert!(tldrs.len() == 1);
-        assert!(tldrs[0].span.get_content_string(&doc.source) == "TL;DRs");
+        assert!(tldrs[0].get_str(&doc.source) == "TL;DRs");
     }
 
     #[test]
@@ -1383,7 +1384,7 @@ mod tests {
             Document::new_plain_english_curated("A Q&A platform software for teams at any scales.");
         assert!(doc.tokens.len() >= 3);
         assert!(doc.tokens[2].kind.is_word());
-        assert!(doc.tokens[2].span.get_content_string(&doc.source) == "Q&A");
+        assert!(doc.tokens[2].get_str(&doc.source) == "Q&A");
     }
 
     #[test]

@@ -32,7 +32,7 @@ impl ExprLinter for SubjectPronoun {
         let span = matched_tokens.span()?;
 
         let mut suggestion_chars = Vec::new();
-        suggestion_chars.extend_from_slice(matched_tokens.last()?.span.get_content(source));
+        suggestion_chars.extend_from_slice(matched_tokens.last()?.get_ch(source));
         suggestion_chars.extend(" and I".chars());
 
         Some(Lint {
@@ -50,7 +50,7 @@ impl ExprLinter for SubjectPronoun {
 }
 
 fn append_token_chars(chars: &mut Vec<char>, token: &Token, source: &[char]) {
-    chars.extend(token.span.get_content(source).iter().copied());
+    chars.extend(token.get_ch(source).iter().copied());
 }
 
 fn append_tokens_chars(chars: &mut Vec<char>, tokens: &[Token], source: &[char]) {

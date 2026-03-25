@@ -39,11 +39,9 @@ impl ExprLinter for ToTooAdjectivePunct {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_index = tokens.iter().position(|t| {
-            t.span
-                .get_content(source)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        })?;
+        let to_index = tokens
+            .iter()
+            .position(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         let mut idx = to_index + 1;
         while idx < tokens.len() && tokens[idx].kind.is_whitespace() {
@@ -74,7 +72,7 @@ impl ExprLinter for ToTooAdjectivePunct {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "too",
-                to_tok.span.get_content(source),
+                to_tok.get_ch(source),
             )],
             message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
             ..Default::default()

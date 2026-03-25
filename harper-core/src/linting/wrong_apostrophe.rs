@@ -43,12 +43,11 @@ impl ExprLinter for WrongApostrophe {
 
         let replacement_str = format!(
             "{}'{}",
-            base.span.get_content_string(src).to_lowercase(),
-            ending.span.get_content_string(src).to_lowercase()
+            base.get_str(src).to_lowercase(),
+            ending.get_str(src).to_lowercase()
         );
 
-        let lettercase_template =
-            [base.span.get_content(src), ending.span.get_content(src)].concat();
+        let lettercase_template = [base.get_ch(src), ending.get_ch(src)].concat();
 
         Some(Lint {
             span: whole_span,

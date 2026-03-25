@@ -237,6 +237,7 @@ mod to_two_too;
 mod touristic;
 mod transposed_space;
 mod try_ones_hand_at;
+mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
 mod use_title_case;
@@ -325,7 +326,7 @@ pub mod debug {
             tokens
                 .iter()
                 .filter(|t| !t.kind.is_unlintable())
-                .map(|t| t.span.get_content_string(src))
+                .map(|t| t.get_str(src))
                 .collect::<String>()
         };
 
@@ -393,10 +394,7 @@ pub mod tests {
                 // Check if word matches any of the patterns in the map
                 for (errors, fixes) in self.map {
                     // if any of the errors match, add all of the corrections
-                    if errors
-                        .iter()
-                        .any(|&e| word_chars.eq_ignore_ascii_case_str(e))
-                    {
+                    if errors.iter().any(|&e| word_chars.eq_str(e)) {
                         corr.push((wordspan, word_chars, fixes))
                     }
                 }
