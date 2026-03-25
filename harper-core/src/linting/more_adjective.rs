@@ -21,7 +21,14 @@ where
         Self {
             expr: SequenceExpr::word_set(&["more", "most"])
                 .t_ws()
-                .then_positive_adjective(),
+                .then_positive_adjective()
+                // Include a following "than adjective" which we'll use to identify a false positive #2925
+                .then_optional(
+                    SequenceExpr::whitespace()
+                        .t_aco("than")
+                        .t_ws()
+                        .then_positive_adjective(),
+                ),
             dict,
         }
     }
@@ -49,7 +56,7 @@ where
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        // Check invariants just in case the Expr changes
+        // Abort when the optional clause is present, or when the `Expr` changes
         if toks.len() != 3 || !toks[1].kind.is_whitespace() || !toks[2].kind.is_positive_adjective()
         {
             return None;
@@ -177,11 +184,13 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+    use super::MoreAdjective;
+    use crate::{
+        linting::tests::{
+            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        },
+        spell::FstDictionary,
     };
-    use crate::spell::FstDictionary;
 
     // True positives
 
@@ -303,6 +312,14 @@ mod tests {
     fn dont_flag_more_foreign() {
         assert_no_lints(
             "There are more foreign visitors this year.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_subtle_than_direct_2925() {
+        assert_no_lints(
+            "more subtle than direct",
             MoreAdjective::new(FstDictionary::curated()),
         );
     }

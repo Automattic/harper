@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="app">
+      <textarea rows="5" cols="33"></textarea>
+    </div>
+    <script>
+      window.rehomeBodyPreservingApp = () => {
+        const app = document.getElementById('app');
+        if (!app) return;
+
+        const newBody = document.createElement('body');
+        newBody.appendChild(app);
+        document.documentElement.replaceChild(newBody, document.body);
+      };
+    </script>
+  </body>
+</html>

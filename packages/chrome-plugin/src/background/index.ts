@@ -126,6 +126,10 @@ async function enableDefaultDomains() {
 		'openrouter.ai',
 		'docs.google.com',
 		'typst.app',
+		'steamcommunity.com',
+		'store.steampowered.com',
+		'steampowered.com',
+		'help.steampowered.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
