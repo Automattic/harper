@@ -28,4 +28,3 @@ sysinfo = { version = "0.38.3", default-features = false, features = [ "system" 
 [features]
 default = ["typst"]
 typst = ["dep:harper-typst"]
-thesaurus = ["harper-core/thesaurus"]
