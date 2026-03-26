@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
@@ -19,7 +17,7 @@ macro_rules! create_test {
                     )
                 );
 
-                let dict = Arc::new(FstDictionary::curated());
+                let dict = FstDictionary::curated();
                 let document = Document::new_markdown_default(&source, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
@@ -51,7 +49,7 @@ macro_rules! create_org_test {
                     )
                 );
 
-                let dict = Arc::new(FstDictionary::curated());
+                let dict = FstDictionary::curated();
                 let document = Document::new(&source, &OrgMode, &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);

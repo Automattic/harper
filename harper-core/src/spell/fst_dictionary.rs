@@ -1,6 +1,8 @@
-use std::borrow::Cow;
-use std::cell::RefCell;
-use std::sync::LazyLock;
+use std::{
+    borrow::Cow,
+    cell::RefCell,
+    sync::{Arc, LazyLock},
+};
 
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
@@ -44,11 +46,11 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> &'static FstDictionary {
-        static DICT: LazyLock<FstDictionary> =
-            LazyLock::new(|| MutableDictionary::curated().clone().to_fst());
+    pub fn curated() -> Arc<Self> {
+        static DICT: LazyLock<Arc<FstDictionary>> =
+            LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().to_fst()));
 
-        &DICT
+        (*DICT).clone()
     }
 
     /// Construct a new [`FstDictionary`] using a word map as a source.

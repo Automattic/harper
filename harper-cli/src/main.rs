@@ -6,7 +6,7 @@ use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
-use std::sync::Arc;
+// use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -478,7 +478,7 @@ fn main() -> anyhow::Result<()> {
 
             if let Some((dict_word, dict_annot)) = &entry_in_dict {
                 println!("Old, from the dictionary:");
-                print_word_derivations(dict_word, dict_annot, MutableDictionary::curated());
+                print_word_derivations(dict_word, dict_annot, &FstDictionary::curated());
             };
 
             if !annot.is_empty() {
@@ -501,7 +501,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(Arc::new(curated_dictionary), Dialect::American);
+            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -1021,7 +1021,7 @@ fn line_to_parts(line: &str) -> (String, String) {
     }
 }
 
-fn print_word_derivations(word: &str, annot: &str, dictionary: &dyn Dictionary) {
+fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
     let wm = dictionary.get_word_map();

@@ -9,7 +9,16 @@ pub struct WordMapEntry {
 
 impl WordMapEntry {
     /// Construct a new word map entry with default metadata.
-    pub fn new(canonical_spelling: CharString) -> Self {
+    pub fn new(canonical_spelling: impl Into<CharString>) -> Self {
+        Self::_new(canonical_spelling.into())
+    }
+
+    /// Construct a new word map entry with default metadata.
+    pub fn new_str(canonical_spelling: &str) -> Self {
+        Self::_new(canonical_spelling.chars().collect())
+    }
+
+    fn _new(canonical_spelling: CharString) -> Self {
         let word_ids = WordIdPair::from_word_chars(&canonical_spelling);
 
         Self {
@@ -17,11 +26,6 @@ impl WordMapEntry {
             canonical_spelling,
             word_ids,
         }
-    }
-
-    /// Construct a new word map entry with default metadata.
-    pub fn new_str(canonical_spelling: &str) -> Self {
-        Self::new(canonical_spelling.chars().collect())
     }
 
     pub fn with_md(mut self, metadata: DictWordMetadata) -> Self {

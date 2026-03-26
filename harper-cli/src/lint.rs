@@ -11,7 +11,7 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    CharString, Dialect, Document, Token, TokenKind,
+    Dialect, Document, Token, TokenKind,
     linting::{Lint, LintGroup, LintGroupConfig, LintKind},
     parsers::MarkdownOptions,
     remove_overlaps_map,
@@ -30,10 +30,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend(
-        str.lines()
-            .map(|l| WordMapEntry::new(l.chars().collect::<CharString>())),
-    );
+    dict.extend(str.lines().map(WordMapEntry::new_str));
 
     Ok(dict)
 }
@@ -178,7 +175,7 @@ impl InputInfo<'_> {
 
 pub fn lint(
     markdown_options: MarkdownOptions,
-    curated_dictionary: &'static dyn Dictionary,
+    curated_dictionary: Arc<dyn Dictionary>,
     mut inputs: Vec<AnyInput>,
     mut lint_options: LintOptions,
     user_dict_path: PathBuf,
@@ -446,7 +443,7 @@ fn lint_one_input(
             }
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(Arc::new(merged_dictionary), *dialect);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;

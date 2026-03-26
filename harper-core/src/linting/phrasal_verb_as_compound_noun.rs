@@ -1,10 +1,12 @@
+use std::sync::Arc;
+
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{Dictionary, MutableDictionary};
+use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharStringExt, Document, Span, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
-    dict: &'static MutableDictionary,
+    dict: Arc<FstDictionary>,
 }
 
 #[derive(Debug)]
@@ -16,7 +18,7 @@ enum Confidence {
 impl PhrasalVerbAsCompoundNoun {
     pub fn new() -> Self {
         Self {
-            dict: MutableDictionary::curated(),
+            dict: FstDictionary::curated(),
         }
     }
 }
@@ -24,7 +26,7 @@ impl PhrasalVerbAsCompoundNoun {
 impl Default for PhrasalVerbAsCompoundNoun {
     fn default() -> Self {
         Self {
-            dict: MutableDictionary::curated(),
+            dict: FstDictionary::curated(),
         }
     }
 }

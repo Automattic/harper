@@ -2928,7 +2928,6 @@ dependencies = [
  "resolve-path",
  "serde",
  "serde_json",
- "smallvec",
  "tokio",
  "tower-lsp-server",
  "tracing",
@@ -2999,7 +2998,6 @@ name = "harper-tree-sitter"
 version = "1.12.0"
 dependencies = [
  "harper-core",
- "smallvec",
  "tree-sitter",
 ]
 

@@ -16,8 +16,6 @@ If you would prefer to run Harper from inside a JavaScript runtime, [we have a p
 Here's what a full end-to-end linting pipeline could look like using `harper-core`.
 
 ```rust
-use std::sync::Arc;
-
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::PlainEnglish;
 use harper_core::spell::FstDictionary;
@@ -28,7 +26,7 @@ let parser = PlainEnglish;
 
 let document = Document::new_curated(text, &parser);
 
-let dict = Arc::new(FstDictionary::curated());
+let dict = FstDictionary::curated();
 let mut linter = LintGroup::new_curated(dict, Dialect::American);
 
 let lints = linter.lint(&document);

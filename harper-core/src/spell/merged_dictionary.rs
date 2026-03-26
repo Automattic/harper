@@ -5,8 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::FstDictionary;
-use super::{FuzzyMatchResult, dictionary::Dictionary};
+use super::{FstDictionary, FuzzyMatchResult, dictionary::Dictionary};
 use crate::spell::WordMap;
 
 /// A simple wrapper over [`Dictionary`] that allows
@@ -51,7 +50,10 @@ impl MergedDictionary {
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
-        if std::ptr::eq(Arc::as_ptr(dictionary), FstDictionary::curated()) {
+        if Arc::ptr_eq(
+            dictionary,
+            &(FstDictionary::curated() as Arc<dyn Dictionary>),
+        ) {
             return 1;
         }
 

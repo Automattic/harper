@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 
 type Verb = (String, String, String);
 
@@ -10,12 +10,13 @@ pub struct IrregularVerbs {
 
 /// The uncached function that is used to produce the original copy of the
 /// irregular verb table.
-fn uncached_inner_new() -> IrregularVerbs {
+fn uncached_inner_new() -> Arc<IrregularVerbs> {
     IrregularVerbs::from_json_file(include_str!("../irregular_verbs.json"))
+        .map(Arc::new)
         .unwrap_or_else(|e| panic!("Failed to load irregular verb table: {}", e))
 }
 
-static VERBS: LazyLock<IrregularVerbs> = LazyLock::new(uncached_inner_new);
+static VERBS: LazyLock<Arc<IrregularVerbs>> = LazyLock::new(uncached_inner_new);
 
 impl IrregularVerbs {
     pub fn new() -> Self {
@@ -52,8 +53,8 @@ impl IrregularVerbs {
         Ok(Self { verbs })
     }
 
-    pub fn curated() -> &'static Self {
-        &VERBS
+    pub fn curated() -> Arc<Self> {
+        (*VERBS).clone()
     }
 
     pub fn get_past_participle_for_preterite(&self, preterite: &str) -> Option<&str> {

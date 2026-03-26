@@ -1,17 +1,19 @@
+use std::sync::Arc;
+
 use itertools::Itertools;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{Dictionary, MutableDictionary};
+use crate::spell::{Dictionary, FstDictionary};
 use crate::{CharString, Document, Span};
 
 pub struct MergeWords {
-    dict: &'static MutableDictionary,
+    dict: Arc<FstDictionary>,
 }
 
 impl MergeWords {
     pub fn new() -> Self {
         Self {
-            dict: MutableDictionary::curated(),
+            dict: FstDictionary::curated(),
         }
     }
 }

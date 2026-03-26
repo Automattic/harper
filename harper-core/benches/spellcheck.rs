@@ -2,7 +2,7 @@ use criterion::{
     BenchmarkGroup, Criterion, Throughput, criterion_group, criterion_main, measurement::WallTime,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, suggest_correct_spelling};
-use std::{hint::black_box, sync::Arc};
+use std::hint::black_box;
 
 static ESSAY: &str = include_str!("./essay.md");
 
@@ -114,7 +114,7 @@ fn bench_suggest_correct_spelling(
     let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
-        black_box(suggest_correct_spelling(word, 200, 3, dict)).len()
+        black_box(suggest_correct_spelling(word, 200, 3, &*dict)).len()
     });
 }
 
@@ -130,7 +130,7 @@ fn bench_fuzzy_match_merged_dict_single_child(
 ) {
     let dict = FstDictionary::curated();
     let mut merged = MergedDictionary::new();
-    merged.add_dictionary(Arc::new(dict));
+    merged.add_dictionary(dict);
 
     bench_word_list(group, name, words, |word| {
         black_box(merged.fuzzy_match(word, 3, 200)).len()

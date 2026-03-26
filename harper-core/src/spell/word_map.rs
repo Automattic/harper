@@ -1,4 +1,8 @@
-use std::{borrow::Cow, ops::Index, sync::LazyLock};
+use std::{
+    borrow::Cow,
+    ops::Index,
+    sync::{Arc, LazyLock},
+};
 
 use hashbrown::{DefaultHashBuilder, HashMap};
 use indexmap::IndexMap;
@@ -48,12 +52,13 @@ impl WordMap {
     }
 
     /// A word map containing entries from the curated dictionary.
-    pub fn curated() -> &'static WordMap {
+    pub fn curated() -> Arc<Self> {
         /// A word map containing entries from the curated dictionary.
-        static CURATED: LazyLock<WordMap> =
-            LazyLock::new(|| WordMap::from_rune_files(CURATED_DICT_STR, ANNOTATIONS_STR).unwrap());
+        static CURATED: LazyLock<Arc<WordMap>> = LazyLock::new(|| {
+            Arc::new(WordMap::from_rune_files(CURATED_DICT_STR, ANNOTATIONS_STR).unwrap())
+        });
 
-        &CURATED
+        (*CURATED).clone()
     }
 
     /// Does the word map contain a word with the given [`CanonicalWordId`]?

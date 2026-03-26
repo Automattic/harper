@@ -9,11 +9,10 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
-use harper_core::spell::{Dictionary, FstDictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
-    CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
-    spell::{MergedDictionary, MutableDictionary},
+    DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
+    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry},
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
@@ -165,10 +164,10 @@ impl Linter {
     fn construct_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
-        lint_dict.add_dictionary(Arc::new(FstDictionary::curated()));
+        lint_dict.add_dictionary(FstDictionary::curated());
 
         for dict in dicts {
-            lint_dict.add_dictionary(Arc::new(dict.clone()));
+            lint_dict.add_dictionary(dict.clone());
         }
 
         Arc::new(lint_dict)
@@ -421,7 +420,7 @@ impl Linter {
 
         self.user_dictionary
             .extend(additional_words.iter().map(|word| {
-                WordMapEntry::new(word.chars().collect::<CharString>()).with_md(DictWordMetadata {
+                WordMapEntry::new_str(word).with_md(DictWordMetadata {
                     dialects: DialectFlags::from_dialect(self.dialect.into()),
                     ..Default::default()
                 })
@@ -530,7 +529,7 @@ impl Linter {
 
 #[wasm_bindgen]
 pub fn to_title_case(text: String) -> String {
-    harper_core::make_title_case_str(&text, &PlainEnglish, FstDictionary::curated())
+    harper_core::make_title_case_str(&text, &PlainEnglish, &FstDictionary::curated())
 }
 
 /// A suggestion to fix a Lint.
@@ -663,7 +662,7 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
     let config =
-        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
+        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
 
     serde_json::to_string(&config).unwrap()
 }
@@ -671,7 +670,7 @@ pub fn get_default_lint_config_as_json() -> String {
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
     let config =
-        LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American.into()).config;
+        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

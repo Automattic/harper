@@ -93,11 +93,13 @@ where
 
 #[cfg(test)]
 mod tests {
+    use std::sync::Arc;
+
     use super::PossessiveNoun;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
-    fn test_linter() -> PossessiveNoun<&'static FstDictionary> {
+    fn test_linter() -> PossessiveNoun<Arc<FstDictionary>> {
         PossessiveNoun::new(FstDictionary::curated())
     }
 

@@ -289,7 +289,7 @@ pub struct LintGroupConfig {
 #[cached]
 fn curated_config() -> LintGroupConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(Arc::new(MutableDictionary::new()), Dialect::American);
+    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
     group.config
 }
 
@@ -410,7 +410,7 @@ impl LintGroup {
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
-    pub fn add(&mut self, name: impl AsRef<str>, linter: Box<dyn Linter + 'static>) -> bool {
+    pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
         if self.contains_key(&name) {
             if self.clashing_linter_names.is_none() {
                 self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
@@ -419,7 +419,8 @@ impl LintGroup {
             }
             false
         } else {
-            self.linters.insert(name.as_ref().to_string(), linter);
+            self.linters
+                .insert(name.as_ref().to_string(), Box::new(linter));
             true
         }
     }
@@ -433,7 +434,7 @@ impl LintGroup {
         &mut self,
         name: impl AsRef<str>,
         // linter: impl ExprLinter + 'static,
-        linter: Box<dyn ExprLinter<Unit = Chunk> + 'static>,
+        linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
             if self.clashing_linter_names.is_none() {
@@ -444,7 +445,7 @@ impl LintGroup {
             false
         } else {
             self.chunk_expr_linters
-                .insert(name.as_ref().to_string(), linter as _);
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
             true
         }
     }
@@ -535,7 +536,7 @@ impl LintGroup {
         /// Add a `Linter` to the group, setting it to be enabled or disabled.
         macro_rules! insert_struct_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::default()));
+                out.add(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -544,7 +545,7 @@ impl LintGroup {
         /// Add a `Linter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
         macro_rules! insert_struct_rule_with_dict {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::new(dictionary.clone())));
+                out.add(stringify!($rule), $rule::new(dictionary.clone()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -553,7 +554,7 @@ impl LintGroup {
         /// Add a `Linter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
         macro_rules! insert_struct_rule_with_dialect {
             ($rule:ident, $default_config:expr) => {
-                out.add(stringify!($rule), Box::new($rule::new(dialect)));
+                out.add(stringify!($rule), $rule::new(dialect));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -564,7 +565,7 @@ impl LintGroup {
         /// will allow it to use more aggressive caching strategies.
         macro_rules! insert_expr_rule {
             ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::default()));
+                out.add_chunk_expr_linter(stringify!($rule), $rule::default());
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -573,10 +574,7 @@ impl LintGroup {
         /// Add a chunk-based `ExprLinter` that requires a `Dictionary` to the group, setting it to be enabled or disabled.
         macro_rules! insert_expr_rule_with_dict {
             ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(
-                    stringify!($rule),
-                    Box::new($rule::new(dictionary.clone())),
-                );
+                out.add_chunk_expr_linter(stringify!($rule), $rule::new(dictionary.clone()));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -585,7 +583,7 @@ impl LintGroup {
         /// Add a chunk-based `ExprLinter` that requires a `Dialect` to the group, setting it to be enabled or disabled.
         macro_rules! insert_expr_rule_with_dialect {
             ($rule:ident, $default_config:expr) => {
-                out.add_chunk_expr_linter(stringify!($rule), Box::new($rule::new(dialect)));
+                out.add_chunk_expr_linter(stringify!($rule), $rule::new(dialect));
                 out.config
                     .set_rule_enabled(stringify!($rule), $default_config);
             };
@@ -836,30 +834,27 @@ impl LintGroup {
         insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
-        out.add("AspireTo", Box::new(AspireTo::default()));
+        out.add("AspireTo", AspireTo::default());
         out.config.set_rule_enabled("AspireTo", true);
 
         // Uses Sentence rather than Chunk
-        out.add("Damages", Box::new(Damages::default()));
+        out.add("Damages", Damages::default());
         out.config.set_rule_enabled("Damages", true);
 
         // Uses Sentence rather than Chunk
         out.add(
             "MultipleFrequencyAdverbs",
-            Box::new(MultipleFrequencyAdverbs::default()),
+            MultipleFrequencyAdverbs::default(),
         );
         out.config
             .set_rule_enabled("MultipleFrequencyAdverbs", true);
 
         // Uses Sentence rather than Chunk
-        out.add("PluralDecades", Box::new(PluralDecades::default()));
+        out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
         // Uses Dictionary and Dialect
-        out.add(
-            "SpellCheck",
-            Box::new(SpellCheck::new(dictionary.clone(), dialect)),
-        );
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
         out
@@ -1026,13 +1021,12 @@ mod tests {
     ///    in the context of another linter's description.
     #[test]
     fn lint_descriptions_are_clean() {
-        let curated_fst_dict = Arc::new(FstDictionary::curated());
-
-        let lints_to_check = LintGroup::new_curated(curated_fst_dict.clone(), Dialect::American);
+        let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
         let enforcer_config = LintGroupConfig::new_curated();
-        let mut lints_to_enforce = LintGroup::new_curated(curated_fst_dict, Dialect::American)
-            .with_lint_config(enforcer_config);
+        let mut lints_to_enforce =
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+                .with_lint_config(enforcer_config);
 
         let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()

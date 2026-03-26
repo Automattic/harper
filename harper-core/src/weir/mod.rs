@@ -22,7 +22,7 @@ use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
 
-use ast::{Ast, AstVariable};
+use self::ast::{Ast, AstVariable};
 
 pub(crate) fn weir_expr_to_expr(weir_code: &str) -> Result<Box<dyn Expr>, Error> {
     let ast = parse_expr_str(weir_code, true)?;
@@ -174,7 +174,7 @@ impl WeirLinter {
                 let doc = Document::new_from_chars(
                     current.chars().collect::<Vec<_>>().into(),
                     &Markdown::default(),
-                    FstDictionary::curated(),
+                    &FstDictionary::curated(),
                 );
                 let lints = linter.lint(&doc);
 
@@ -200,7 +200,7 @@ impl WeirLinter {
                 let test = Document::new_from_chars(
                     text_chars.clone().into(),
                     &Markdown::default(),
-                    FstDictionary::curated(),
+                    &FstDictionary::curated(),
                 );
                 let lints = linter.lint(&test);
 
@@ -227,7 +227,7 @@ impl WeirLinter {
             let document = Document::new_from_chars(
                 text.chars().collect::<Vec<_>>().into(),
                 &Markdown::default(),
-                FstDictionary::curated(),
+                &FstDictionary::curated(),
             );
 
             linter.lint(&document).len()

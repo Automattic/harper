@@ -365,7 +365,8 @@ impl Formatter {
 #[test]
 fn test_pos_tagger() {
     snapshot::snapshot_all_text_files("tagged", ".md", |source, _| {
-        let document = Document::new_markdown_default(source, FstDictionary::curated());
+        let dict = FstDictionary::curated();
+        let document = Document::new_markdown_default(source, &dict);
 
         let mut formatter = Formatter::new();
         for token in document.fat_string_tokens() {

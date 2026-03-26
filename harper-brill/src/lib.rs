@@ -1,6 +1,6 @@
 use std::num::NonZero;
 use std::rc::Rc;
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 
 pub use harper_pos_utils::{
     BrillChunker, BrillTagger, BurnChunkerCpu, CachedChunker, Chunker, FreqDict, Tagger, UPOS,
@@ -8,7 +8,8 @@ pub use harper_pos_utils::{
 
 const BRILL_TAGGER_SOURCE: &str = include_str!("../trained_tagger_model.json");
 
-static BRILL_TAGGER: LazyLock<BrillTagger<FreqDict>> = LazyLock::new(uncached_brill_tagger);
+static BRILL_TAGGER: LazyLock<Arc<BrillTagger<FreqDict>>> =
+    LazyLock::new(|| Arc::new(uncached_brill_tagger()));
 
 fn uncached_brill_tagger() -> BrillTagger<FreqDict> {
     serde_json::from_str(BRILL_TAGGER_SOURCE).unwrap()
@@ -16,13 +17,14 @@ fn uncached_brill_tagger() -> BrillTagger<FreqDict> {
 
 /// Get a copy of a shared, lazily-initialized [`BrillTagger`]. There will be only one instance
 /// per-process.
-pub fn brill_tagger() -> &'static BrillTagger<FreqDict> {
-    &BRILL_TAGGER
+pub fn brill_tagger() -> Arc<BrillTagger<FreqDict>> {
+    (*BRILL_TAGGER).clone()
 }
 
 const BRILL_CHUNKER_SOURCE: &str = include_str!("../trained_chunker_model.json");
 
-static BRILL_CHUNKER: LazyLock<BrillChunker> = LazyLock::new(uncached_brill_chunker);
+static BRILL_CHUNKER: LazyLock<Arc<BrillChunker>> =
+    LazyLock::new(|| Arc::new(uncached_brill_chunker()));
 
 fn uncached_brill_chunker() -> BrillChunker {
     serde_json::from_str(BRILL_CHUNKER_SOURCE).unwrap()
@@ -30,8 +32,8 @@ fn uncached_brill_chunker() -> BrillChunker {
 
 /// Get a copy of a shared, lazily-initialized [`BrillChunker`]. There will be only one instance
 /// per-process.
-pub fn brill_chunker() -> &'static BrillChunker {
-    &BRILL_CHUNKER
+pub fn brill_chunker() -> Arc<BrillChunker> {
+    (*BRILL_CHUNKER).clone()
 }
 
 const BURN_CHUNKER_VOCAB: &[u8; 627993] = include_bytes!("../finished_chunker/vocab.json");

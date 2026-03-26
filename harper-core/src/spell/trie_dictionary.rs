@@ -1,5 +1,5 @@
 use std::borrow::Cow;
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
@@ -13,14 +13,14 @@ pub struct TrieDictionary<D: Dictionary> {
     inner: D,
 }
 
-pub static DICT: LazyLock<TrieDictionary<&'static FstDictionary>> =
-    LazyLock::new(|| TrieDictionary::new(FstDictionary::curated()));
+pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> =
+    LazyLock::new(|| Arc::new(TrieDictionary::new(FstDictionary::curated())));
 
-impl TrieDictionary<&'static FstDictionary> {
+impl TrieDictionary<Arc<FstDictionary>> {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated() -> &'static Self {
-        &DICT
+    pub fn curated() -> Arc<Self> {
+        (*DICT).clone()
     }
 }
 

@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use itertools::Itertools;
 
 use crate::{
@@ -8,7 +10,7 @@ use crate::{
 };
 
 pub struct OrthographicConsistency {
-    dict: &'static MutableDictionary,
+    dict: Arc<MutableDictionary>,
     expr: SequenceExpr,
 }
 

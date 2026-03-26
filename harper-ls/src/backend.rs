@@ -31,7 +31,6 @@ use harper_stats::{Record, Stats};
 use harper_tex::TeX;
 use harper_typst::Typst;
 use serde_json::{Value, json};
-use smallvec::ToSmallVec;
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
 use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
@@ -137,7 +136,7 @@ impl Backend {
         Ok(config.file_dict_path.join(fileify_path(uri)?))
     }
 
-    async fn save_file_dictionary(&self, uri: &Uri, dict: &dyn Dictionary) -> Result<()> {
+    async fn save_file_dictionary(&self, uri: &Uri, dict: impl Dictionary) -> Result<()> {
         save_dict(
             self.get_file_dict_path(uri)
                 .await
@@ -157,7 +156,7 @@ impl Backend {
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: &dyn Dictionary) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
         let config = self.config.read().await;
 
         save_dict(&config.user_dict_path, dict)
@@ -176,7 +175,7 @@ impl Backend {
         .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_workspace_dictionary(&self, dict: &dyn Dictionary) -> Result<()> {
+    async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
         let config = self.config.read().await;
         save_dict(&config.workspace_dict_path, dict)
             .await
@@ -205,7 +204,7 @@ impl Backend {
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
-        dict.add_dictionary(Arc::new(FstDictionary::curated()));
+        dict.add_dictionary(FstDictionary::curated());
         let user_dict = self.load_user_dictionary().await;
         dict.add_dictionary(Arc::new(user_dict));
         let ws_dict = self.load_workspace_dictionary().await;
@@ -337,7 +336,7 @@ impl Backend {
 
             Ok(Box::new(CollapseIdentifiers::new(
                 Box::new(parser),
-                doc_state.dict.clone(),
+                Box::new(doc_state.dict.clone()),
             )))
         }
 
@@ -682,7 +681,7 @@ impl LanguageServer for Backend {
                 stats.records.push(record);
             }
             "HarperAddToUserDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -691,7 +690,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.insert(WordMapEntry::new(word.to_smallvec()));
+                dict.insert(WordMapEntry::new(word));
                 self.save_user_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -703,7 +702,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToWSDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -712,7 +711,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.insert(WordMapEntry::new(word.to_smallvec()));
+                dict.insert(WordMapEntry::new(word));
                 self.save_workspace_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -724,7 +723,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToFileDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -742,7 +741,7 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.insert(WordMapEntry::new(word.to_smallvec()));
+                dict.insert(WordMapEntry::new(word));
 
                 self.save_file_dictionary(&file_uri, &dict)
                     .await

@@ -23,7 +23,7 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, FstDictionary::curated())
+        Self::new("", &PlainEnglish, &FstDictionary::curated())
     }
 }
 
@@ -52,7 +52,7 @@ impl Document {
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new(text: &str, parser: &impl Parser, dictionary: &dyn Dictionary) -> Self {
+    pub fn new(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
         Self::new_from_chars(source, parser, dictionary)
@@ -63,7 +63,7 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_chars(source, parser, FstDictionary::curated())
+        Self::new_from_chars(source, parser, &FstDictionary::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -84,13 +84,13 @@ impl Document {
     /// Create a new document from character data using the built-in [`PlainEnglish`]
     /// parser and curated dictionary. This avoids string-to-char conversions.
     pub fn new_plain_english_curated_chars(source: &[char]) -> Self {
-        Self::new_from_chars(Lrc::from(source), &PlainEnglish, FstDictionary::curated())
+        Self::new_from_chars(Lrc::from(source), &PlainEnglish, &FstDictionary::curated())
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, FstDictionary::curated())
+        Self::new(text, &PlainEnglish, &FstDictionary::curated())
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
@@ -108,7 +108,7 @@ impl Document {
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and a provided dictionary.
-    pub fn new_plain_english(text: &str, dictionary: &dyn Dictionary) -> Self {
+    pub fn new_plain_english(text: &str, dictionary: &impl Dictionary) -> Self {
         Self::new(text, &PlainEnglish, dictionary)
     }
 
@@ -118,7 +118,7 @@ impl Document {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            FstDictionary::curated(),
+            &FstDictionary::curated(),
         )
     }
 
@@ -128,7 +128,7 @@ impl Document {
         Self::new_from_chars(
             chars.to_vec().into(),
             &Markdown::default(),
-            FstDictionary::curated(),
+            &FstDictionary::curated(),
         )
     }
 
@@ -143,14 +143,14 @@ impl Document {
     pub fn new_markdown(
         text: &str,
         markdown_options: MarkdownOptions,
-        dictionary: &dyn Dictionary,
+        dictionary: &impl Dictionary,
     ) -> Self {
         Self::new(text, &Markdown::new(markdown_options), dictionary)
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and the curated dictionary with the default Markdown configuration.
-    pub fn new_markdown_default(text: &str, dictionary: &dyn Dictionary) -> Self {
+    pub fn new_markdown_default(text: &str, dictionary: &impl Dictionary) -> Self {
         Self::new_markdown(text, MarkdownOptions::default(), dictionary)
     }
 
@@ -527,6 +527,22 @@ impl Document {
         self.tokens.remove_indices(remove_these);
     }
 
+    thread_local! {
+        static DOTTED_TRUNCATION_EXPR: Lrc<FirstMatchOf> = Document::uncached_dotted_truncation_expr();
+    }
+
+    fn uncached_dotted_truncation_expr() -> Lrc<FirstMatchOf> {
+        Lrc::new(FirstMatchOf::new(vec![
+            Box::new(SequenceExpr::word_set(&["esp", "etc", "vs"]).then_period()),
+            Box::new(
+                SequenceExpr::aco("et")
+                    .then_whitespace()
+                    .t_aco("al")
+                    .then_period(),
+            ),
+        ]))
+    }
+
     /// Assumes that the first matched token is the canonical one to be condensed into.
     /// Takes a callback that can be used to retroactively edit the canonical token afterwards.
     fn condense_expr<F>(&mut self, expr: &impl Expr, edit: F)
@@ -547,7 +563,7 @@ impl Document {
     }
 
     fn condense_dotted_truncations(&mut self) {
-        DOTTED_TRUNCATION_EXPR.with(|expr| self.condense_expr(expr, |_| {}));
+        self.condense_expr(&Self::DOTTED_TRUNCATION_EXPR.with(|v| v.clone()), |_| {})
     }
 
     /// Searches for multiple sequential newline tokens and condenses them down
@@ -897,34 +913,21 @@ impl Document {
         );
     }
 
+    fn uncached_ellipsis_pattern() -> Lrc<Repeating> {
+        let period = SequenceExpr::default().then_period();
+        Lrc::new(Repeating::new(Box::new(period), 2))
+    }
+
+    thread_local! {
+        static ELLIPSIS_EXPR: Lrc<Repeating> = Document::uncached_ellipsis_pattern();
+    }
+
     fn condense_ellipsis(&mut self) {
-        ELLIPSIS_EXPR.with(|expr| {
-            self.condense_expr(expr, |tok| {
-                tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
-            })
+        let expr = Self::ELLIPSIS_EXPR.with(|v| v.clone());
+        self.condense_expr(&expr, |tok| {
+            tok.kind = TokenKind::Punctuation(Punctuation::Ellipsis)
         });
     }
-}
-
-thread_local! {
-    static DOTTED_TRUNCATION_EXPR: FirstMatchOf = {
-        FirstMatchOf::new(vec![
-            Box::new(SequenceExpr::word_set(&["esp", "etc", "vs"]).then_period()),
-            Box::new(
-                SequenceExpr::aco("et")
-                    .then_whitespace()
-                    .t_aco("al")
-                    .then_period(),
-            ),
-        ])
-    };
-}
-
-thread_local! {
-    static ELLIPSIS_EXPR: Repeating = {
-        let period = SequenceExpr::default().then_period();
-        Repeating::new(Box::new(period), 2)
-    };
 }
 
 /// Creates functions necessary to implement [`TokenStringExt]` on a document.
