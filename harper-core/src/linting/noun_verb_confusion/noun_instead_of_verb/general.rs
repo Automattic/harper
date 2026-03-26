@@ -20,11 +20,7 @@ impl Default for GeneralNounInsteadOfVerb {
         // Adverbs that can come before verbs but not nouns
         // Note: "Sometimes" can come before a noun.
         let adverb_of_frequency = |tok: &Token, src: &[char]| {
-            tok.kind.is_frequency_adverb()
-                && !tok
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_str("sometimes")
+            tok.kind.is_frequency_adverb() && !tok.get_ch(src).eq_str("sometimes")
         };
 
         let pre_context = FirstMatchOf::new(vec![
@@ -84,8 +80,7 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
             {
                 // But first rule out marginal "nouns"
                 if !following_tok
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .eq_any_ignore_ascii_case_str(&["it", "me", "on", "that"])
                 {
                     return None;
@@ -93,30 +88,20 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
             }
 
             // If the previous word is "to", use the following word to disambiguate
-            if prev_tok
-                .span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-                && !following_tok.kind.is_determiner()
-            {
+            if prev_tok.get_ch(src).eq_ch(&['t', 'o']) && !following_tok.kind.is_determiner() {
                 return None;
             }
         }
 
         // If we don't have the next word token, don't continue if the previous token is "to"
         // since "to" is a preposition and an infinitive marker and there's not enough context to disambiguate.
-        if toks.len() <= 4
-            && prev_tok
-                .span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['t', 'o'])
-        {
+        if toks.len() <= 4 && prev_tok.get_ch(src).eq_ch(&['t', 'o']) {
             return None;
         }
 
         let noun_tok = &toks[2];
-        let noun_chars = noun_tok.span.get_content(src);
-        let noun_text = noun_tok.span.get_content_string(src);
+        let noun_chars = noun_tok.get_ch(src);
+        let noun_text = noun_tok.get_str(src);
         let noun_lower = noun_text.to_lowercase();
 
         let verb = NOUN_VERB_PAIRS

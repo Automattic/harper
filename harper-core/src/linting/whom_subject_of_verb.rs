@@ -45,12 +45,9 @@ impl ExprLinter for WhomSubjectOfVerb {
         if let Some((before, _)) = ctx
             && let [.., word, ws1, prep, ws2] = before
             && ws2.kind.is_whitespace()
-            && prep
-                .span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['o', 'f'])
+            && prep.get_ch(src).eq_ch(&['o', 'f'])
             && ws1.kind.is_whitespace()
-            && word.span.get_content(src).eq_ignore_ascii_case_str("many")
+            && word.get_ch(src).eq_str("many")
         {
             return None;
         }

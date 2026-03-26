@@ -1,5 +1,5 @@
 expr determiner [the, a, an, this, that, these, those, my, your, his, her, its, our, their]
-expr main <([(@determiner make up), (@determiner ADJ make up)]), (make up)>
+expr main <([((@determiner make up) !DET), ((@determiner ADJ make up) !DET)]), (make up)>
 
 let message "Use the closed compound for this cosmetics noun form."
 let description "Finds determiner-led noun phrases where the split spelling appears and closes it."
@@ -28,6 +28,7 @@ test "She asked them to make up before dinner." "She asked them to make up befor
 test "The team tried to make up ground in Q4." "The team tried to make up ground in Q4."
 test "This makeup kit is already packed." "This makeup kit is already packed."
 test "Makeup tutorials are everywhere." "Makeup tutorials are everywhere."
+test "The ordinary moments that make up a life well-lived." "The ordinary moments that make up a life well-lived."
 
 # Expected limits / false negatives currently out of scope
 

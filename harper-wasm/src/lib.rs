@@ -100,6 +100,7 @@ pub struct Linter {
     /// To make changes affect linting, run [`Self::synchronize_lint_dict`].
     user_dictionary: MutableDictionary,
     dictionary: Arc<MergedDictionary>,
+    weirpack_dictionaries: Vec<Arc<MutableDictionary>>,
     ignored_lints: IgnoredLints,
     dialect: Dialect,
     stats: Stats,
@@ -117,12 +118,13 @@ impl Linter {
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
-        let dictionary = Self::construct_merged_dict(MutableDictionary::default());
+        let dictionary = Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())]);
         let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
 
         Self {
             lint_group,
             user_dictionary: MutableDictionary::new(),
+            weirpack_dictionaries: Vec::new(),
             dictionary,
             ignored_lints: IgnoredLints::default(),
             dialect,
@@ -134,19 +136,28 @@ impl Linter {
     /// This clears any linter caches, so use it sparingly.
     fn synchronize_lint_dict(&mut self) {
         let mut lint_config = self.lint_group.config.clone();
-        self.dictionary = Self::construct_merged_dict(self.user_dictionary.clone());
+
+        let mut constituent_dictionaries = vec![Arc::new(self.user_dictionary.clone())];
+        constituent_dictionaries.extend(self.weirpack_dictionaries.iter().cloned());
+
+        self.dictionary = Self::construct_merged_dict(&constituent_dictionaries);
+
         self.lint_group =
             LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+
         self.lint_group.config.merge_from(&mut lint_config);
     }
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
-    /// and [`Self::user_dictionary`].
-    fn construct_merged_dict(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
+    /// and any other runtime-provided dictionaries.
+    fn construct_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
         lint_dict.add_dictionary(FstDictionary::curated());
-        lint_dict.add_dictionary(Arc::new(user_dictionary));
+
+        for dict in dicts {
+            lint_dict.add_dictionary(Arc::new(dict.clone()));
+        }
 
         Arc::new(lint_dict)
     }
@@ -313,7 +324,7 @@ impl Linter {
                 lints: ls
                     .into_iter()
                     .map(|l| {
-                        let problem_text = l.span.get_content_string(&source);
+                        let problem_text = l.get_str(&source);
                         let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
 
                         Lint::new(l, span, problem_text, language)
@@ -366,7 +377,7 @@ impl Linter {
         lints
             .into_iter()
             .map(|l| {
-                let problem_text = l.span.get_content_string(&source);
+                let problem_text = l.get_str(&source);
                 let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
                 Lint::new(l, span, problem_text, language)
             })
@@ -500,6 +511,11 @@ impl Linter {
                 .serialize(&serializer)
                 .map_err(|err| err.to_string())?;
             return Ok(value);
+        }
+
+        if let Some(dict) = pack.load_dictionary().map_err(|err| err.to_string())? {
+            self.weirpack_dictionaries.push(Arc::new(dict));
+            self.synchronize_lint_dict();
         }
 
         let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;

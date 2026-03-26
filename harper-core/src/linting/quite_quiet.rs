@@ -26,8 +26,7 @@ impl Default for QuiteQuiet {
             if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
                 return false;
             }
-            tok.span
-                .get_content(src)
+            tok.get_ch(src)
                 .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
         })
         .t_ws()

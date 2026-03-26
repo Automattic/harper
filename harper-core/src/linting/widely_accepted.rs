@@ -31,7 +31,7 @@ impl ExprLinter for WidelyAccepted {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         // We only need to replace the `wide` token with `widely`.
         let wide_token = matched_tokens.first()?;
-        let wide_chars = wide_token.span.get_content(source);
+        let wide_chars = wide_token.get_ch(source);
 
         Some(Lint {
             span: wide_token.span,

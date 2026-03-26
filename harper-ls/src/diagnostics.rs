@@ -45,11 +45,9 @@ pub fn lint_to_code_actions<'a>(
                 let replace_string = match suggestion {
                     Suggestion::ReplaceWith(with) => with.iter().collect(),
                     Suggestion::Remove => "".to_string(),
-                    Suggestion::InsertAfter(with) => format!(
-                        "{}{}",
-                        lint.span.get_content_string(source),
-                        with.to_string()
-                    ),
+                    Suggestion::InsertAfter(with) => {
+                        format!("{}{}", lint.get_str(source), with.to_string())
+                    }
                 };
 
                 Some(CodeAction {
@@ -92,7 +90,7 @@ pub fn lint_to_code_actions<'a>(
     }));
 
     if lint.lint_kind.is_spelling() {
-        let orig = lint.span.get_content_string(source);
+        let orig = lint.get_str(source);
 
         results.push(CodeActionOrCommand::Command(Command::new(
             format!("Add \"{orig}\" to the user dictionary."),
