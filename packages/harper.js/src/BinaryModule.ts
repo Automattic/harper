@@ -1,9 +1,4 @@
 import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
-import { default as binaryInlinedUrl } from 'harper-wasm/harper_wasm_bg.wasm?inline';
-import { default as binaryUrl } from 'harper-wasm/harper_wasm_bg.wasm?no-inline';
-
-import { default as slimBinaryInlinedUrl } from 'harper-wasm/harper_wasm_slim_bg.wasm?inline';
-import { default as slimBinaryUrl } from 'harper-wasm/harper_wasm_slim_bg.wasm?no-inline';
 
 import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
@@ -79,19 +74,3 @@ export class SuperBinaryModule extends BinaryModule {
 		);
 	}
 }
-
-/** A version of the Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const binary = /*@__PURE__*/ BinaryModule.create(binaryUrl);
-
-/** A version of the Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const binaryInlined = /*@__PURE__*/ BinaryModule.create(binaryInlinedUrl);
-
-/** A version of the slimmed-down Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const slimBinary = /*@__PURE__*/ BinaryModule.create(slimBinaryUrl);
-
-/** A version of the slimmed-down Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const slimBinaryInlined = /*@__PURE__*/ BinaryModule.create(slimBinaryInlinedUrl);

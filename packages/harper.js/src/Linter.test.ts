@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
-import { binary, slimBinary } from './binary';
+import { binary } from './binaries/binary';
+import { slimBinary } from './binaries/slimBinary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 import { packWeirpackFiles } from './weirpack';

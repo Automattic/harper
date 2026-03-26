@@ -1,12 +1,7 @@
 import type { Extension, StateField } from '@codemirror/state';
 import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
-import {
-	type Dialect,
-	LocalLinter,
-	SuggestionKind,
-	slimBinaryInlined,
-	WorkerLinter,
-} from 'harper.js';
+import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
+import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
 import {
