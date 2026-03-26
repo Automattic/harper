@@ -89,10 +89,10 @@ export default class State {
 		) {
 			if (settings.useWebWorker) {
 				this.harper.dispose();
-				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
+				this.harper = new WorkerLinter({ binary: slimBinaryInlined, dialect: settings.dialect });
 			} else {
 				this.harper.dispose();
-				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
+				this.harper = new LocalLinter({ binary: slimBinaryInlined, dialect: settings.dialect });
 			}
 		} else {
 			await this.harper.clearIgnoredLints();
