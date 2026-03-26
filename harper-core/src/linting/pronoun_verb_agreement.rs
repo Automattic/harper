@@ -77,7 +77,7 @@ where
                 && !t.kind.is_conjunction() // "and"
                 && (!t.kind.is_auxiliary_verb() // "I go"≠"he goes" but "I can"="he can"
                 // We don't want modals because they don't inflect, but we want the other auxiliaries.
-                || t.span.get_content(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
+                || t.get_ch(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
         };
 
         Self {
@@ -118,10 +118,7 @@ where
             }
         }
 
-        if let Some((lemma, _)) = IRREGULAR
-            .iter()
-            .find(|(_, f)| form.eq_ignore_ascii_case_str(f))
-        {
+        if let Some((lemma, _)) = IRREGULAR.iter().find(|(_, f)| form.eq_str(f)) {
             words.push(lemma.chars().collect::<Vec<char>>());
         }
 
@@ -194,14 +191,14 @@ where
             && let [.., prev_word_tok, ws_tok] = before
             && ws_tok.kind.is_whitespace()
         {
-            let prev_word = prev_word_tok.span.get_content(src);
+            let prev_word = prev_word_tok.get_ch(src);
             let is_exempt = if is_3psg {
                 prev_word_tok.kind.is_auxiliary_verb()
                     || prev_word.eq_any_ignore_ascii_case_str(SUBJUNCTIVE)
             } else if pron_tok.kind.is_subject_pronoun() {
                 // Clause structure: (... in you) is ... ≠ you is
                 // Look for "true" prepositions, not ones that are more like adverbial particles
-                prev_word_tok.kind.is_preposition() && !prev_word.eq_ignore_ascii_case_str("up")
+                prev_word_tok.kind.is_preposition() && !prev_word.eq_str("up")
                     // When the verb is ditransitive, the pronoun is object case, the verb position is actually a noun
                     || (prev_word.eq_any_ignore_ascii_case_str(DITRANSITIVE) && verb_tok.kind.is_noun())
             } else {
@@ -214,8 +211,8 @@ where
         }
 
         let verb_span = verb_tok.span;
-        let verb_chars = verb_tok.span.get_content(src);
-        let verb_str = verb_tok.span.get_content_string(src);
+        let verb_chars = verb_tok.get_ch(src);
+        let verb_str = verb_tok.get_str(src);
 
         let suggs = if is_3psg {
             self.lemma_to_third_person_singular_present(&verb_str)

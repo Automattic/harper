@@ -67,7 +67,7 @@ impl ExprLinter for NeedToNoun {
         let noun_idx = 4;
         let noun_token = &matched_tokens[noun_idx];
 
-        let noun_text = noun_token.span.get_content_string(source);
+        let noun_text = noun_token.get_str(source);
         let span = to_token.span;
 
         Some(Lint {

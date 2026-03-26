@@ -54,7 +54,7 @@ impl ExprLinter for EffectToAffect {
         let second_following = following.next();
 
         if let Some(prev) = preceding {
-            let lower_prev = prev.span.get_content_string(source).to_lowercase();
+            let lower_prev = prev.get_str(source).to_lowercase();
 
             if matches!(
                 lower_prev.as_str(),
@@ -68,10 +68,7 @@ impl ExprLinter for EffectToAffect {
             return None;
         }
 
-        let first_following_lower = first_following
-            .span
-            .get_content_string(source)
-            .to_lowercase();
+        let first_following_lower = first_following.get_str(source).to_lowercase();
 
         if matches!(
             first_following_lower.as_str(),
@@ -116,7 +113,7 @@ impl ExprLinter for EffectToAffect {
             return None;
         }
 
-        let token_text = target.span.get_content_string(source);
+        let token_text = target.get_str(source);
         let lower = token_text.to_lowercase();
 
         if lower.as_str() == "effects" && preceding.is_some_and(|tok| tok.kind.is_upos(UPOS::VERB))
@@ -136,7 +133,7 @@ impl ExprLinter for EffectToAffect {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 replacement,
-                target.span.get_content(source),
+                target.get_ch(source),
             )],
             message:
                 "Use `affect` for the verb meaning to influence; `effect` usually names the result."
@@ -158,15 +155,12 @@ fn is_effect_word(token: &Token, source: &[char]) -> bool {
     const EFFECT: &[char] = &['e', 'f', 'f', 'e', 'c', 't'];
     const EFFECTS: &[char] = &['e', 'f', 'f', 'e', 'c', 't', 's'];
 
-    let text = token.span.get_content(source);
-    text.eq_ignore_ascii_case_chars(EFFECT) || text.eq_ignore_ascii_case_chars(EFFECTS)
+    let text = token.get_ch(source);
+    text.eq_ch(EFFECT) || text.eq_ch(EFFECTS)
 }
 
 fn is_token_to(token: &Token, source: &[char]) -> bool {
-    token
-        .span
-        .get_content(source)
-        .eq_ignore_ascii_case_chars(&['t', 'o'])
+    token.get_ch(source).eq_ch(&['t', 'o'])
 }
 
 fn is_change_like(token: &Token, source: &[char]) -> bool {
@@ -175,11 +169,7 @@ fn is_change_like(token: &Token, source: &[char]) -> bool {
     }
 
     matches!(
-        token
-            .span
-            .get_content_string(source)
-            .to_lowercase()
-            .as_str(),
+        token.get_str(source).to_lowercase().as_str(),
         "change" | "changes" | "substitution" | "substitutions"
     )
 }

@@ -56,7 +56,7 @@ impl ExprLinter for QuantifierNumeralConflict {
         }
 
         let qtok = toks.first().unwrap();
-        let quant = qtok.span.get_content_string(src);
+        let quant = qtok.get_str(src);
 
         // Handle special cases for "least", "most", "each", and "both"
         match quant.to_ascii_lowercase().as_str() {
@@ -65,10 +65,7 @@ impl ExprLinter for QuantifierNumeralConflict {
                     && let [.., prev_word, prev_space] = previous
                     && prev_space.kind.is_whitespace()
                     && prev_word.kind.is_word()
-                    && prev_word
-                        .span
-                        .get_content(src)
-                        .eq_ignore_ascii_case_chars(&['a', 't'])
+                    && prev_word.get_ch(src).eq_ch(&['a', 't'])
                 {
                     return None;
                 }
@@ -80,7 +77,7 @@ impl ExprLinter for QuantifierNumeralConflict {
                     lint_kind: LintKind::Usage,
                     suggestions: vec![Suggestion::replace_with_match_case(
                         "every".chars().collect(),
-                        qtok.span.get_content(src),
+                        qtok.get_ch(src),
                     )],
                     message: "Use 'every' instead of 'each' before a number.".to_owned(),
                     ..Default::default()
@@ -93,10 +90,7 @@ impl ExprLinter for QuantifierNumeralConflict {
                     && let [ws, conj, ..] = following.get(noun_phrase_span.end..).unwrap_or(&[])
                     && ws.kind.is_whitespace()
                     && conj.kind.is_conjunction()
-                    && conj
-                        .span
-                        .get_content_string(src)
-                        .eq_ignore_ascii_case("and")
+                    && conj.get_str(src).eq_ignore_ascii_case("and")
                 {
                     return None;
                 }

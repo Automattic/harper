@@ -81,6 +81,28 @@ require('lspconfig').harper_ls.setup {
 }
 ```
 
+## Native Neovim LSP Config
+
+Neovim supports language servers [natively](https://neovim.io/doc/user/lsp.html), and therefore, Neovim supports Harper natively. To set up, first make sure that `harper-ls` is available on your system path. Next, add the following lines to your `init.lua` file:
+
+```lua
+-- General LSP setup
+vim.lsp.config['*'] = {
+    capabilities = { textDocument = { semanticTokens = { multilineTokenSupport = true } } },
+    root_markers = { '.git' },
+}
+vim.diagnostic.config({ virtual_lines = true })
+
+-- Harper specific setup
+vim.lsp.config['harper'] = {
+    cmd = { 'harper-ls', '--stdio' },
+    filetypes = { 'markdown', 'text', 'tex', 'typst' }
+}
+vim.lsp.enable('harper')
+```
+
+And that is it! Run `:help gra` in Neovim for more information on code action support.
+
 ## Additional Links
 
 - [nvim-lspconfig's documentation on `harper-ls`](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#harper_ls)

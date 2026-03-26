@@ -69,7 +69,7 @@ impl ExprLinter for TheHowWhy {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let the_token_span = matched_tokens[0..2].span()?;
         let question_word_token = matched_tokens.get(2)?;
-        let question_word = question_word_token.span.get_content(source);
+        let question_word = question_word_token.get_ch(source);
 
         Some(Lint {
             span: the_token_span,

@@ -61,17 +61,13 @@ pub fn try_make_title_case(
 
     while let Some(word_idx) = word_likes.next() {
         let word = &toks[word_idx];
-        let is_alphabetic_word = word
-            .span
-            .get_content(source)
-            .iter()
-            .any(|c| c.is_alphabetic());
+        let is_alphabetic_word = word.get_ch(source).iter().any(|c| c.is_alphabetic());
 
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
             // Replace it with the dictionary entry verbatim.
-            let orig_text = word.span.get_content(source);
+            let orig_text = word.get_ch(source);
 
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
@@ -149,7 +145,7 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
                     .collect()
             });
 
-            let chars = tok.span.get_content(source);
+            let chars = tok.get_ch(source);
             let chars_lower = chars.to_lower();
 
             let metadata = Cow::Borrowed(metadata);

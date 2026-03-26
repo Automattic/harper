@@ -38,8 +38,8 @@ impl ExprLinter for RightClick {
         let span = matched_tokens.get(start_idx..=click_idx)?.span()?;
         let template = span.get_content(source);
 
-        let direction = matched_tokens.get(start_idx)?.span.get_content(source);
-        let click = matched_tokens.get(click_idx)?.span.get_content(source);
+        let direction = matched_tokens.get(start_idx)?.get_ch(source);
+        let click = matched_tokens.get(click_idx)?.get_ch(source);
 
         let replacement: Vec<char> = direction
             .iter()

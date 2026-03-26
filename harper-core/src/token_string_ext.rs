@@ -98,10 +98,10 @@ pub trait TokenStringExt: private::Sealed {
     /// # fn main() {
     /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
     /// let tokens = PlainEnglish.parse(&source);
-    /// assert_eq!(tokens.get_rel(0).unwrap().span.get_content_string(&source), "The");
+    /// assert_eq!(tokens.get_rel(0).unwrap().get_str(&source), "The");
     /// assert_eq!(tokens.get_rel(1).unwrap().kind.is_whitespace(), true);
     /// assert_eq!(tokens.get_rel(-1).unwrap().kind.is_punctuation(), true);
-    /// assert_eq!(tokens.get_rel(-2).unwrap().span.get_content_string(&source), "mat");
+    /// assert_eq!(tokens.get_rel(-2).unwrap().get_str(&source), "mat");
     /// # }
     /// ```
     ///
