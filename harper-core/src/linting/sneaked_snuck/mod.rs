@@ -35,14 +35,14 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
 
     let (target_word, source_word) = match pref {
         Prefer::Snuck => {
-            if word.eq_ignore_ascii_case_chars(&['s', 'n', 'e', 'a', 'k', 'e', 'd']) {
+            if word.eq_ch(&['s', 'n', 'e', 'a', 'k', 'e', 'd']) {
                 (SNUCK, SNEAKED)
             } else {
                 return None;
             }
         }
         Prefer::Sneaked => {
-            if word.eq_ignore_ascii_case_chars(&['s', 'n', 'u', 'c', 'k']) {
+            if word.eq_ch(&['s', 'n', 'u', 'c', 'k']) {
                 (SNEAKED, SNUCK)
             } else {
                 return None;
