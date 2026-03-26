@@ -49,7 +49,7 @@ impl ExprLinter for Addicting {
             lint_kind: LintKind::Style,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "addictive".chars().collect(),
-                tok.span.get_content(src),
+                tok.get_ch(src),
             )],
             message: "When used as an adjective, `addictive` is the traditional and more f form."
                 .to_owned(),

@@ -37,7 +37,7 @@ impl ExprLinter for GoToWar {
         let prep_span = prep_tok.span;
         let prep_chars = prep_span.get_content(src);
 
-        if prep_chars.eq_ignore_ascii_case_chars(&['t', 'o']) {
+        if prep_chars.eq_ch(&['t', 'o']) {
             return None;
         }
 

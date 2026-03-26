@@ -66,10 +66,7 @@ fn replacement_for(
         base
     };
 
-    Suggestion::replace_with_match_case(
-        replacement.chars().collect(),
-        verb.span.get_content(source),
-    )
+    Suggestion::replace_with_match_case(replacement.chars().collect(), verb.get_ch(source))
 }
 
 impl ExprLinter for TakeMedicine {
