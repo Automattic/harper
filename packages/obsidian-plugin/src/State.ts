@@ -1,6 +1,12 @@
 import type { Extension, StateField } from '@codemirror/state';
 import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
-import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
+import {
+	type Dialect,
+	LocalLinter,
+	SuggestionKind,
+	slimBinaryInlined,
+	WorkerLinter,
+} from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
 import {
@@ -50,7 +56,7 @@ export default class State {
 		onExtensionChange: () => void,
 		_editorInfoField?: StateField<MarkdownFileInfo>,
 	) {
-		this.harper = new WorkerLinter({ binary: binaryInlined });
+		this.harper = new WorkerLinter({ binary: slimBinaryInlined });
 		this.delay = DEFAULT_DELAY;
 		this.saveData = saveDataCallback;
 		this.onExtensionChange = onExtensionChange;

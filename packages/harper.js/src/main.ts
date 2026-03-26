@@ -4,6 +4,8 @@ export {
 	BinaryModule,
 	binary,
 	binaryInlined,
+	slimBinary,
+	slimBinaryInlined,
 } from './binary';
 export type {
 	default as Linter,

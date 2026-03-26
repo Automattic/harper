@@ -57,8 +57,8 @@ let lfw = new LintFramework(
 );
 
 (async () => {
-	let { WorkerLinter, binary } = await import('harper.js');
-	let newLinter = new WorkerLinter({ binary });
+	let { WorkerLinter, slimBinary } = await import('harper.js');
+	let newLinter = new WorkerLinter({ binary: slimBinary });
 
 	newLinter.setup();
 	await newLinter.lint(content);
