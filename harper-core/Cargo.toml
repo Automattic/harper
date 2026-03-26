@@ -48,6 +48,10 @@ rayon = "1.11.0"
 name = "parse_essay"
 harness = false
 
+[[bench]]
+name = "spellcheck"
+harness = false
+
 [features]
 default = ["thesaurus"]
 concurrent = []
