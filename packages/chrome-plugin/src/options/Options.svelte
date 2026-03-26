@@ -358,6 +358,7 @@ async function removeWeirpack(id: string) {
       <div class="space-y-2 flex flex-row w-full justify-between">
         <p class="text-xs text-gray-600 dark:text-gray-400">
           Upload one or more <code>.weirpack</code> files to add custom rule packs.
+          <a href="https://writewithharper.com/docs/weir#Weirpacks">What is a Weirpack?</a>
         </p>
         <input
           type="file"
@@ -432,7 +433,7 @@ async function removeWeirpack(id: string) {
               <Select
                 size="md"
                 value={configValueToString(value)}
-                on:change={(e) => {
+                onchange={(e) => {
                   lintConfig[key] = configStringToValue(e.target.value);
                 }}
               >

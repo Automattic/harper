@@ -49,8 +49,8 @@ impl ExprLinter for IfWouldve {
             .rev()
             .step_by(2) // Check every other token since we're looking at pairs
             .find_map(|i| {
-                let prev = toks[i - 2].span.get_content(src);
-                let curr = toks[i].span.get_content(src);
+                let prev = toks[i - 2].get_ch(src);
+                let curr = toks[i].get_ch(src);
 
                 let would_had = &["would", "had"];
 

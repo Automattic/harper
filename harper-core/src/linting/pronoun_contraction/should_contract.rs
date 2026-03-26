@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use crate::TokenKind;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
@@ -25,12 +24,13 @@ impl Default for ShouldContract {
         let cap = Arc::new(
             SequenceExpr::word_set(&["your", "were"])
                 .then_whitespace()
-                .then_kind_is_but_is_not(
-                    TokenKind::is_non_quantifier_determiner,
-                    TokenKind::is_pronoun,
-                )
+                .then_non_quantifier_determiner()
                 .then_whitespace()
-                .then_adjective(),
+                .then(
+                    SequenceExpr::default()
+                        .then_adjective()
+                        .or(SequenceExpr::word_set(&["man", "boss"])),
+                ),
         );
 
         let start = SequenceExpr::with(AnchorStart).then(cap.clone());

@@ -29,6 +29,7 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::ask_no_preposition::AskNoPreposition;
+use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
@@ -68,6 +69,7 @@ use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
 use super::everyday::Everyday;
+use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
@@ -224,6 +226,7 @@ use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
+use super::try_ones_luck::TryOnesLuck;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_title_case::UseTitleCase;
@@ -399,8 +402,6 @@ impl LintGroup {
             clashing_linter_names: None,
         }
     }
-
-    // Non-constructor methods
 
     /// Check if the group already contains a linter with a given name.
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
@@ -659,6 +660,7 @@ impl LintGroup {
         insert_expr_rule!(ElsePossessive, true);
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
+        insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
@@ -811,6 +813,7 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_expr_rule_with_dict!(TransposedSpace, true);
         insert_expr_rule!(TryOnesHandAt, true);
+        insert_expr_rule!(TryOnesLuck, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_struct_rule_with_dict!(UseTitleCase, true);
@@ -833,6 +836,10 @@ impl LintGroup {
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
         insert_expr_rule!(WrongApostrophe, true);
+
+        // Uses Sentence rather than Chunk
+        out.add("AspireTo", AspireTo::default());
+        out.config.set_rule_enabled("AspireTo", true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

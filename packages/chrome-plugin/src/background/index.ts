@@ -62,8 +62,8 @@ chrome.runtime.onInstalled.addListener((details) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
-	handleRequest(request).then(sendResponse);
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	handleRequest(request, sender).then(sendResponse);
 
 	return true;
 });
@@ -126,6 +126,10 @@ async function enableDefaultDomains() {
 		'openrouter.ai',
 		'docs.google.com',
 		'typst.app',
+		'steamcommunity.com',
+		'store.steampowered.com',
+		'steampowered.com',
+		'help.steampowered.com',
 	];
 
 	for (const item of defaultEnabledDomains) {
@@ -137,12 +141,12 @@ async function enableDefaultDomains() {
 
 enableDefaultDomains();
 
-function handleRequest(message: Request): Promise<Response> {
+function handleRequest(message: Request, sender?: chrome.runtime.MessageSender): Promise<Response> {
 	console.log(`Handling ${message.kind} request`);
 
 	switch (message.kind) {
 		case 'lint':
-			return handleLint(message);
+			return handleLint(message, sender);
 		case 'getConfig':
 			return handleGetConfig(message);
 		case 'setConfig':
@@ -202,8 +206,16 @@ function handleRequest(message: Request): Promise<Response> {
 }
 
 /** Handle a request for linting. */
-async function handleLint(req: LintRequest): Promise<LintResponse> {
-	if (!(await enabledForDomain(req.domain))) {
+async function handleLint(
+	req: LintRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<LintResponse> {
+	// Keep the content-script keepalive ping cheap; empty requests should not hit inheritance or linting.
+	if (req.text.length === 0) {
+		return { kind: 'lints', lints: {} };
+	}
+
+	if (!(await shouldLintForRequest(req, sender))) {
 		return { kind: 'lints', lints: {} };
 	}
 
@@ -216,6 +228,39 @@ async function handleLint(req: LintRequest): Promise<LintResponse> {
 	);
 	const unpackedBySource = Object.fromEntries(unpackedEntries) as UnpackedLintGroups;
 	return { kind: 'lints', lints: unpackedBySource };
+}
+
+async function shouldLintForRequest(
+	req: LintRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<boolean> {
+	if (await enabledForDomain(req.domain)) {
+		return true;
+	}
+
+	if (await isDomainSet(req.domain)) {
+		return false;
+	}
+
+	const parentDomain = getParentDomain(sender);
+	if (parentDomain == null || parentDomain === req.domain) {
+		return false;
+	}
+
+	return await enabledForDomain(parentDomain);
+}
+
+function getParentDomain(sender?: chrome.runtime.MessageSender): string | null {
+	const url = sender?.tab?.url;
+	if (url == null) {
+		return null;
+	}
+
+	try {
+		return new URL(url).hostname;
+	} catch {
+		return null;
+	}
 }
 
 async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
@@ -538,12 +583,39 @@ function formatDomainKey(domain: string): string {
 	return `domainStatus ${domain}`;
 }
 
+function getDomainLookupCandidates(domain: string): string[] {
+	const withoutWww = domain.replace(/^www\./, '');
+	return withoutWww === domain ? [domain] : [domain, withoutWww];
+}
+
+/**
+ * Looks up a domain-specific enable/disable setting in local storage.
+ * The lookup is normalized through `getDomainLookupCandidates` so we can try
+ * both the exact hostname and a `www.`-stripped variant when sites are stored
+ * under either form. Returns `undefined` when no stored override exists.
+ */
+async function getStoredDomainStatus(domain: string): Promise<boolean | undefined> {
+	const candidates = getDomainLookupCandidates(domain);
+	const response = await chrome.storage.local.get(candidates.map(formatDomainKey));
+
+	for (const candidate of candidates) {
+		const value = response[formatDomainKey(candidate)];
+		if (typeof value === 'boolean') {
+			return value;
+		}
+	}
+
+	return undefined;
+}
+
 /** Check if Harper has been enabled for a given domain. */
 async function enabledForDomain(domain: string): Promise<boolean | null> {
-	const req = await chrome.storage.local.get({
-		[formatDomainKey(domain)]: await enabledByDefault(),
-	});
-	return req[formatDomainKey(domain)];
+	const stored = await getStoredDomainStatus(domain);
+	if (stored !== undefined) {
+		return stored;
+	}
+
+	return await enabledByDefault();
 }
 
 /** Set whether Harper is enabled for a given domain.
@@ -575,8 +647,7 @@ async function enabledByDefault(): Promise<boolean> {
 
 /** Check whether Harper's state has been set for a given domain. */
 async function isDomainSet(domain: string): Promise<boolean> {
-	const resp = await chrome.storage.local.get(formatDomainKey(domain));
-	return typeof resp[formatDomainKey(domain)] == 'boolean';
+	return (await getStoredDomainStatus(domain)) !== undefined;
 }
 
 /** Reset the persistent user dictionary. */

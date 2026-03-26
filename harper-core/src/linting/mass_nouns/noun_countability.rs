@@ -84,10 +84,10 @@ impl ExprLinter for NounCountability {
         }
 
         // the determiner or quantifier
-        let dq = toks[0].span.get_content_string(src).to_lowercase();
+        let dq = toks[0].get_str(src).to_lowercase();
 
         // the mass noun
-        let noun = toks[2].span.get_content_string(src).to_lowercase();
+        let noun = toks[2].get_str(src).to_lowercase();
 
         let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
             ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[
