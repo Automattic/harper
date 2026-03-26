@@ -16,7 +16,6 @@ use harper_core::{
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
-use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
@@ -64,7 +63,19 @@ impl Language {
             Language::Plain => Box::new(PlainEnglish),
             // TODO: Have a way to configure the Markdown parser
             Language::Markdown => Box::new(Markdown::default()),
-            Language::Typst => Box::new(Typst),
+            Language::Typst => {
+                #[cfg(feature = "typst")]
+                {
+                    use harper_typst::Typst;
+                    Box::new(Typst)
+                }
+                #[cfg(not(feature = "typst"))]
+                {
+                    panic!(
+                        "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
+                    )
+                }
+            }
         }
     }
 }

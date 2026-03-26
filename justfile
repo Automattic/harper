@@ -18,9 +18,11 @@ build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt
+    wasm-pack build --target web --no-opt --out-name harper_wasm
+    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
   else
-    wasm-pack build --target web
+    wasm-pack build --target web --out-name harper_wasm
+    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
   fi
 
 # Build `harper.js` with all size optimizations available.
@@ -31,6 +33,7 @@ build-harperjs: build-wasm
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install

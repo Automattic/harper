@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { binary } from './binary';
+import { binary, slimBinary } from './binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 import { packWeirpackFiles } from './weirpack';
@@ -641,6 +641,25 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		lints = await linter.lint(source);
 		expect(lints).toHaveLength(0);
 	}, 30000);
+
+	test(`${linterName} can request a Typst parser with normal binary.`, async () => {
+		const linter = new Linter({ binary });
+
+		const lints = await linter.lint(
+			`
+= Hello, world!
+
+This is a simple Typst document.
+
+- Item one
+- Item two
+- Item three
+      `,
+			{ language: 'typst' },
+		);
+
+		expect(lints).toHaveLength(0);
+	});
 }
 
 // Disabled because it significantly slows down CI
@@ -687,4 +706,10 @@ test('Linters have the same JSON config format', async () => {
 		expect(config).toEqual(configs[0]);
 		expect(config).toBeTypeOf('string');
 	}
+});
+
+test('Requesting a Typst parser with the slim binary should panic.', async () => {
+	const linter = new LocalLinter({ binary: slimBinary });
+
+	await expect(linter.lint('', { language: 'typst' })).rejects.toThrowError();
 });
