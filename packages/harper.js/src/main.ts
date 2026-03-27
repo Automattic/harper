@@ -1,6 +1,6 @@
 export type { Lint, Span, Suggestion } from 'harper-wasm';
 export { Dialect, SuggestionKind } from 'harper-wasm';
-export { BinaryModule } from './BinaryModule';
+export type { BinaryModule } from './BinaryModule';
 export type {
 	default as Linter,
 	LinterInit,
