@@ -55,7 +55,7 @@ impl Document {
     pub fn new(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(source, parser, dictionary)
+        Self::new_from_chars(source, parser, dictionary)
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -63,12 +63,12 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(source, parser, &FstDictionary::curated())
+        Self::new_from_chars(source, parser, &FstDictionary::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new_from_vec(
+    pub fn new_from_chars(
         source: Lrc<[char]>,
         parser: &impl Parser,
         dictionary: &impl Dictionary,
@@ -84,7 +84,7 @@ impl Document {
     /// Create a new document from character data using the built-in [`PlainEnglish`]
     /// parser and curated dictionary. This avoids string-to-char conversions.
     pub fn new_plain_english_curated_chars(source: &[char]) -> Self {
-        Self::new_from_vec(Lrc::from(source), &PlainEnglish, &FstDictionary::curated())
+        Self::new_from_chars(Lrc::from(source), &PlainEnglish, &FstDictionary::curated())
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -125,7 +125,7 @@ impl Document {
     /// Create a new document from character data using the built-in [`Markdown`] parser
     /// and curated dictionary. This avoids string-to-char conversions.
     pub fn new_markdown_default_curated_chars(chars: &[char]) -> Self {
-        Self::new_from_vec(
+        Self::new_from_chars(
             chars.to_vec().into(),
             &Markdown::default(),
             &FstDictionary::curated(),

@@ -250,7 +250,7 @@ impl Linter {
         let source: Lrc<_> = source_text.chars().collect();
 
         let document =
-            Document::new_from_vec(source, &lint.language.create_parser(), &self.dictionary);
+            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
     }
@@ -264,7 +264,7 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
+        let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
             &self.dictionary,
@@ -298,7 +298,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -357,7 +357,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -448,7 +448,7 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_vec(
+        let doc = Document::new_from_chars(
             source.clone().into(),
             &lint.language.create_parser(),
             &self.dictionary,
