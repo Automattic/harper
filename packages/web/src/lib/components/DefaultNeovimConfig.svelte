@@ -1,6 +1,7 @@
 <script>
 import { Button } from 'components';
-import { binary, LocalLinter } from 'harper.js';
+import { LocalLinter } from 'harper.js';
+import { binary } from "harper.js/binary"
 
 let linter = new LocalLinter({ binary });
 

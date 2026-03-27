@@ -8,10 +8,11 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'components';
-import { binary, type Summary, WorkerLinter } from 'harper.js';
+import { type Summary, WorkerLinter } from 'harper.js';
+import { binary } from "harper.js/binary";
 import LintKindChart from '$lib/components/LintKindChart.svelte';
 
-let linter = new WorkerLinter({ binary: binary });
+let linter = new WorkerLinter({ binary });
 let files = $state<FileList | undefined>();
 let summary: Summary | undefined = $state();
 

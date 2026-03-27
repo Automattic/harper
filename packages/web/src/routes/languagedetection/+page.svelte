@@ -1,6 +1,7 @@
 <script lang="ts">
 import { Select, Textarea } from 'components';
-import { binary, WorkerLinter } from 'harper.js';
+import { WorkerLinter } from 'harper.js';
+import { binary } from "harper.js/binary"
 import demoText from '../../../../../demo.md?raw';
 
 let isEnglish: boolean | null = null;
