@@ -12853,6 +12853,7 @@ apiece/~
 apish/JY
 aplenty/J
 aplomb/Nmg
+apnea/NwgS
 apocalypse/~NSg
 apocalyptic/~JN
 apocrypha/Nmg
@@ -17592,6 +17593,7 @@ chromatin/~Ng
 chromatography/~Nmg
 chrome/~NmgSVGd
 chromium/~Nmg
+chromodynamics/Nmg
 chromoly/Nmg
 chromosomal/~J
 chromosome/~NgS
@@ -27697,6 +27699,7 @@ had/~VtT
 haddock/NwSg
 hadith/~N
 hadn't/Vt
+hadron/NgS          # subatomic particle made of quarks
 hadst/V
 haem/N!@_₹
 haematite/Ng!_₹
@@ -42075,6 +42078,7 @@ redemptive/J
 redhead/NSgd
 redialling/V6!_₹
 redirection/Nmg
+redistributable/J
 redistribution/VGdSNg
 redistrict/VGd
 redivide/VGdS
@@ -54215,6 +54219,7 @@ Westphalian/J       # political science and international relations
 WhatsApp/NOgVG      # messaging app
 Wikilink/NSg        # !! please check and comment !! elsewhere we have wikilink
 Wikimedia/Og        # foundation that runs Wikipedia etc.
+Win32/Og            # Microsoft Windows API
 WireGuard/Sg
 WooCommerce/Og
 XFS/Ng              # file system
