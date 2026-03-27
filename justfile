@@ -121,8 +121,20 @@ build-obsidian: build-harperjs
   
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
+  max_bundle_size_bytes=$((30 * 1024 * 1024))
+
   pnpm install
   pnpm build
+
+  bundle_size_bytes=$(wc -c < main.js | tr -d '[:space:]')
+
+  if [ "$bundle_size_bytes" -gt "$max_bundle_size_bytes" ]; then
+    bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $bundle_size_bytes / 1024 / 1024 }")
+    max_bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $max_bundle_size_bytes / 1024 / 1024 }")
+
+    echo "Obsidian plugin bundle size ${bundle_size_mb} MB exceeds the ${max_bundle_size_mb} MB limit. This can cause problems for mobile devices with limited memory." >&2
+    exit 1
+  fi
 
   zip harper-obsidian-plugin.zip manifest.json main.js
 
