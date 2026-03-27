@@ -9,7 +9,7 @@ import {
 	TableHeadCell,
 } from 'components';
 import { type Summary, WorkerLinter } from 'harper.js';
-import { binary } from "harper.js/binary";
+import { binary } from 'harper.js/binary';
 import LintKindChart from '$lib/components/LintKindChart.svelte';
 
 let linter = new WorkerLinter({ binary });
