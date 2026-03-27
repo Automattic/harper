@@ -96,6 +96,7 @@ mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
 mod in_on_the_cards;
+mod in_time_from_now;
 mod inflected_verb_after_to;
 mod initialism_linter;
 mod initialisms;
