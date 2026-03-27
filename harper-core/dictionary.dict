@@ -20538,7 +20538,7 @@ day/~NwSg
 day-to-day/JR
 daybed/NgS
 daybreak/~Nwg
-daycare/Nmg
+daycare/NwgS
 daydream/NgSVd>GZ
 daydreamer/NgS
 daylight/~NwgSV
@@ -22985,7 +22985,7 @@ electron/~NgS
 electronic/~JS
 electronica/~Nmg
 electronically/~Ry
-electronics/~Nmg
+electronics/~Nm09g
 electroplate/VdGSN
 electroscope/NSg
 electroscopic/J
@@ -29298,6 +29298,7 @@ hypersensitiveness/Ng
 hypersensitivity/~NSg
 hypersexualise/VSdG!_₹
 hypersexualize/VSdG
+hypersonic/J
 hyperspace/NmSV
 hypertension/~Ng
 hypertensive/JNSg
@@ -32143,7 +32144,7 @@ legislation/~Ng
 legislative/~JYN
 legislator/~NgS
 legislature/~NSg
-legit/~NJ
+legit/~NJ†
 legitimacy/~Ng
 legitimate/~JYNSVdG
 legitimatise/VGdS!_₹
@@ -32278,7 +32279,7 @@ liable/~Jr
 liaise/VGdS
 liaison/~NgSV
 liar/~NgS
-lib/~NgV
+lib/~NwgS           # Should this have †/‡?
 libation/NSg
 libber/NgS
 libel/~NSgVGd>Z
@@ -33958,6 +33959,7 @@ mentor/~NgSVdG
 mentorship/N
 menu/~NgSVG
 meow/NgSVdG
+merc/NgS†           # slang for mercenary
 mercantile/~J
 mercantilism/Ng
 mercantilist/JNSg
@@ -34290,7 +34292,7 @@ militarist/NSg
 militaristic/J
 militarization/Nge
 militarize/VdSGe
-military/~JNg
+military/~JNgS
 militate/VGdS
 militia/~NSg
 militiaman/Ng
@@ -34355,7 +34357,7 @@ minatory/J
 mince/NSgVd>GZ
 mincemeat/Ng
 mincer/Ng
-mind/~NSVd>GrZ
+mind/~NSVd>GZ
 mind-blowing/J
 mind-boggling/JY!@_₹
 mind game/NgS
@@ -42354,6 +42356,7 @@ remember/~VdG
 remembered/~VtTU
 remembrance/~NgSV
 remilitarize/VGdS
+remind/VGdS
 reminder/~Ng
 reminisce/VGdSN
 reminiscence/NgS
@@ -53732,6 +53735,7 @@ CTE/NS
 CTF/NSg             # capture the flag
 CVE/NSg             # Common Vulnerabilities and Exposures
 ChatGPT/Og          # OpenAI product
+Chinesium/Nmg†      # slang for low-grade materials
 ClickHouse/Og
 CloudFront/Og       # CDN service
 Cloudflare/Og
@@ -54147,6 +54151,7 @@ Tauri/Og            # web-tech framework for desktop apps
 TeX/Og              # Typesetting engine; must come after Tex!
 TeXes
 TechCrunch/g
+Temu/Og
 Tencent/Og
 TensorFlow/Og
 TextMate/Og         # text editor and syntax highlighting standard
