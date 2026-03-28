@@ -89,8 +89,8 @@ Message: |
          |        ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “cent's”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -100,8 +100,8 @@ Message: |
          |                      ^~~~~~~ Did you mean to spell `theatre` this way?
 Suggest:
   - Replace with: “theater”
-  - Replace with: “there”
   - Replace with: “they're”
+  - Replace with: “there”
 
 
 

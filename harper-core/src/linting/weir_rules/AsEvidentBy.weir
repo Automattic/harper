@@ -1,0 +1,27 @@
+expr main [<(as is evident by), evident>, <(as evident by), evident>, <(is evident by), evident>]
+
+let message "Did you mean `evidenced`? The correct phrase uses the past participle of the verb `evidence`."
+let description "Corrects `evident by` to `evidenced by` in passive constructions where `evidence` is used as a verb."
+let kind "Grammar"
+let becomes "evidenced"
+let strategy "MatchCase"
+
+# True positives (from real-world examples in issue #2895)
+
+test "as many others have differing preferences as is evident by the differing feedback" "as many others have differing preferences as is evidenced by the differing feedback"
+test "But as is evident by this bug, I'm not certain this will always be the case." "But as is evidenced by this bug, I'm not certain this will always be the case."
+test "This is evident by the call to remove_connection by the establish_connection method." "This is evidenced by the call to remove_connection by the establish_connection method."
+test "I noticed it always gets compiled, as evident by the cranelift log." "I noticed it always gets compiled, as evidenced by the cranelift log."
+test "As evident by gits history, it was made on purpose." "As evidenced by gits history, it was made on purpose."
+test "Errors thrown synchronously are caught (as evident by the stacktrace)." "Errors thrown synchronously are caught (as evidenced by the stacktrace)."
+test "I had the wrong username (as evident by my server's ssh log)." "I had the wrong username (as evidenced by my server's ssh log)."
+test "AS IS EVIDENT BY the data, this approach works." "AS IS EVIDENCED BY the data, this approach works."
+
+# True negatives
+
+allows "As evidenced by the data, this approach works."
+allows "This is evidenced by the test results."
+allows "The trend is evident from the chart."
+allows "It was evident in his tone of voice."
+allows "The answer is self-evident."
+allows "This problem is not evident to new users."

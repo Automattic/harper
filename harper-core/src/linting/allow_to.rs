@@ -32,7 +32,7 @@ impl ExprLinter for AllowTo {
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         let span = toks.span()?;
         let first = toks.first()?;
-        let allow = first.span.get_content_string(_src);
+        let allow = first.get_str(_src);
 
         let message = format!(
             "For correct usage, either add a subject between `{allow}` and `to` (e.g., `{allow} someone to do`) or use the present participle (e.g., `{allow} doing`)."

@@ -6,8 +6,8 @@
 # D/P N🅪Sg       P  VB/J      NPl/V3+   P  NSg/VB NPr$     N🅪Sg+   P  R         NSg/VB+ NSg/J   . NSg/VB/J NSg/C/P NSg/VB/J NPl/V3+   .
 >
 #
-> Note    that         some      word    may     not     be       tagged correctly right    now       .
-# NSg/VB+ NSg/I/C/Ddem I/J/R/Dq+ NSg/VB+ NPr/VXB NSg/R/C NSg/VLXB VP/J   R         NPr/VB/J NSg/J/R/C .
+> Note    that     some      word    may     not     be       tagged correctly right    now       .
+# NSg/VB+ I/C/Ddem I/J/R/Dq+ NSg/VB+ NPr/VXB NSg/R/C NSg/VLXB VP/J   R         NPr/VB/J NSg/J/R/C .
 >
 #
 > Most         example sentences are taken from https://en.wiktionary.org/. License : CC         BY    - SA        4.0 .
@@ -128,12 +128,12 @@
 # NSg/P . NSg/J/R . ISg+ NPl/V3 . NSg/Dq/P . .
 > The electricity was  cut       off        , so          we   had to read    by    candlelight .
 # D+  Nᴹ+         VLPt NSg/VBP/J NSg/VB/J/P . NSg/I/J/R/C IPl+ VP  P  NSg/VBP NSg/P Nᴹ          .
-> By    the power      vested in        me       , I       now       pronounce you    man      and  wife      .
-# NSg/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/R/P NPr/ISg+ . ISg/#r+ NSg/J/R/C NSg/VB    ISgPl+ NPr/VB/J VB/C NSg/VB/J+ .
+> By    the power      vested in        me       , I       now       pronounce you    man    and  wife      .
+# NSg/P D+  N🅪Sg/VB/J+ VP/J   NPr/J/R/P NPr/ISg+ . ISg/#r+ NSg/J/R/C NSg/VB    ISgPl+ NPr/VB VB/C NSg/VB/J+ .
 > By    Jove ! I       think  she's got it       !
 # NSg/P NPr+ . ISg/#r+ NSg/VB K     VP  NPr/ISg+ .
-> By    all           that          is  holy    , I'll put     an  end     to this    .
-# NSg/P NSg/I/J/C/Dq+ NSg/I/C/Ddem+ VL3 NSg/J/R . K    NSg/VBP D/P NSg/VB+ P  I/Ddem+ .
+> By    all           that      is  holy    , I'll put     an  end     to this    .
+# NSg/P NSg/I/J/C/Dq+ I/C/Ddem+ VL3 NSg/J/R . K    NSg/VBP D/P NSg/VB+ P  I/Ddem+ .
 > I       sorted the items   by    category .
 # ISg/#r+ VP/J   D   NPl/V3+ NSg/P NSg+     .
 > Table   1 shows  details of our employees broken down        by    sex    and  age      .
@@ -240,8 +240,8 @@
 # D+  N🅪Sg/VB+ VL3 R/C/P NPr/VB VB/C NPr$    NSg+        .
 > This    medicine is  for   your cough   .
 # I/Ddem+ N🅪Sg/VB+ VL3 R/C/P D$+  NSg/VB+ .
-> He       wouldn't apologize ; and  just for   that          , she  refused to help   him  .
-# NPr/ISg+ VXB      VB        . VB/C J/R  R/C/P NSg/I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
+> He       wouldn't apologize ; and  just for   that      , she  refused to help   him  .
+# NPr/ISg+ VXB      VB        . VB/C J/R  R/C/P I/C/Ddem+ . ISg+ VP/J    P  NSg/VB ISg+ .
 > He       looks  better     for   having  lost weight   . ( UK   usage )
 # NPr/ISg+ NPl/V3 NSg/VXB/JC R/C/P Nᴹ/Vg/J VP/J N🅪Sg/VB+ . . NPr+ N🅪Sg+ .
 > She  was  the worse     for   drink   .
@@ -308,8 +308,8 @@
 # R/C/P I/D     . IPl+ VXB   NSg/VXB I/R/Dq Nᴹ+       .
 > He       is  named for   his     grandfather .
 # NPr/ISg+ VL3 VP/J  R/C/P ISg/D$+ NSg/VB/J+   .
-> He       totally screwed up         that          project . Now       he's surely for   the sack   .
-# NPr/ISg+ R       VP/J    NSg/VB/J/P NSg/I/C/Ddem+ NSg/VB+ . NSg/J/R/C NPr$ R      R/C/P D   NSg/VB .
+> He       totally screwed up         that      project . Now       he's surely for   the sack   .
+# NPr/ISg+ R       VP/J    NSg/VB/J/P I/C/Ddem+ NSg/VB+ . NSg/J/R/C NPr$ R      R/C/P D   NSg/VB .
 > In        term     of base      hits   , Jones   was  three for   four on  the day
 # NPr/J/R/P NSg/VB/J P  NSg/VB/J+ NPl/V3 . NPr/VB+ VLPt NSg   R/C/P NSg  J/P D+  NPr🅪Sg+
 > At    close    of play    , England were     305 for   3 .
@@ -454,18 +454,18 @@
 # HeadingStart NSg/VB+
 >
 #
-> He       that          ears    my  land       spares my  team    and  gives  me       leave  to in        the crop    .
-# NPr/ISg+ NSg/I/C/Ddem+ NPl/V3+ D$+ NPr🅪Sg/VB+ NPl/V3 D$+ NSg/VB+ VB/C NPl/V3 NPr/ISg+ NSg/VB P  NPr/J/R/P D   NSg/VB+ .
+> He       that      ears    my  land       spares my  team    and  gives  me       leave  to in        the crop    .
+# NPr/ISg+ I/C/Ddem+ NPl/V3+ D$+ NPr🅪Sg/VB+ NPl/V3 D$+ NSg/VB+ VB/C NPl/V3 NPr/ISg+ NSg/VB P  NPr/J/R/P D   NSg/VB+ .
 >
 #
 >              Adverb
 # HeadingStart NSg/VB+
 >
 #
-> Suddenly a    strange   man       walked in        .
-# R        D/P+ NSg/VB/J+ NPr/VB/J+ VP/J   NPr/J/R/P .
-> Would you    like         that          to take   away or    eat in        ?
-# VXB   ISgPl+ NSg/VB/J/C/P NSg/I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/R/P .
+> Suddenly a    strange   man     walked in        .
+# R        D/P+ NSg/VB/J+ NPr/VB+ VP/J   NPr/J/R/P .
+> Would you    like         that      to take   away or    eat in        ?
+# VXB   ISgPl+ NSg/VB/J/C/P I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/R/P .
 > He       ran     to the edge   of the swimming pool    and  dived in        .
 # NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/Vg   NSg/VB+ VB/C VP/J  NPr/J/R/P .
 > They flew      in        from London last      night    .
@@ -514,8 +514,8 @@
 # NPr/ISg+ VL3 J/R  NPr/J/R/P P    D   NPl/V3  .
 > I       need     to keep   in        with the neighbours   in        case       I       ever need     a    favour        from them     .
 # ISg/#r+ N🅪Sg/VXB P  NSg/VB NPr/J/R/P P    D   NPl/V3/Comm+ NPr/J/R/P NPr🅪Sg/VB+ ISg/#r+ J/R  N🅪Sg/VXB D/P+ N🅪Sg/VB/Comm+ P    NSg/IPl+ .
-> I       think  that          bird      fancies you    . You're in        there , mate   !
-# ISg/#r+ NSg/VB NSg/I/C/Ddem+ NPr/VB/J+ NPl/V3  ISgPl+ . +      NPr/J/R/P R     . NSg/VB .
+> I       think  that      bird      fancies you    . You're in        there , mate   !
+# ISg/#r+ NSg/VB I/C/Ddem+ NPr/VB/J+ NPl/V3  ISgPl+ . +      NPr/J/R/P R     . NSg/VB .
 > I'm three drinks  in        right    now       .
 # K   NSg+  NPl/V3+ NPr/J/R/P NPr/VB/J NSg/J/R/C .
 > I       was  500 dollars in        when    the stock      crashed .
@@ -550,8 +550,8 @@
 # NPr/VB P  NPr+
 > The invention was  born     of necessity .
 # D+  N🅪Sg+     VLPt NPr/VB/J P  NSg+      .
-> It       is  said that         she  died of a    broken heart    .
-# NPr/ISg+ VL3 VP/J NSg/I/C/Ddem ISg+ VP/J P  D/P+ VPp/J  N🅪Sg/VB+ .
+> It       is  said that     she  died of a    broken heart    .
+# NPr/ISg+ VL3 VP/J I/C/Ddem ISg+ VP/J P  D/P+ VPp/J  N🅪Sg/VB+ .
 > What   a   lot    of nonsense !
 # NSg/I+ D/P NPr/VB P  Nᴹ/VB/J+ .
 > I'll have    a   dozen of those  apples , please .
@@ -574,8 +574,8 @@
 # D   NSg   P  D+  NSg/VB+   VLPt VP/J     .
 > My  companion seemed affable and  easy     of manner .
 # D$+ NSg/VB+   VP/J   J       VB/C NSg/VB/J P  NSg+   .
-> It's not     that         big   of a    deal      .
-# +    NSg/R/C NSg/I/C/Ddem NSg/J P  D/P+ NSg/VB/J+ .
+> It's not     that     big   of a    deal      .
+# +    NSg/R/C I/C/Ddem NSg/J P  D/P+ NSg/VB/J+ .
 > I’ve not     taken her     out          of a   goodly long     while      .
 # K    NSg/R/C VPp/J ISg/D$+ NSg/VB/J/R/P P  D/P J/R    NPr/VB/J NSg/VB/C/P .
 > After a   delay      of three hours , the plane     finally took off        .
@@ -596,8 +596,8 @@
 # IPl+ VP  P  NSg/VB D$+ NSg+ C/P     R+    VLPt D/P+ N🅪Sg/VB+ J/P .
 > Some     of the cast     went    down        with flu  , but     the show's still      on  .
 # I/J/R/Dq P  D   NSg/VB/J NSg/VPt N🅪Sg/VB/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/VB/J/R J/P .
-> That          TV   programme     that          you    wanted to watch  is  on  now       .
-# NSg/I/C/Ddem+ NSg+ NSg/VB/Au/Br+ NSg/I/C/Ddem+ ISgPl+ VP/J   P  NSg/VB VL3 J/P NSg/J/R/C .
+> That      TV   programme     that      you    wanted to watch  is  on  now       .
+# I/C/Ddem+ NSg+ NSg/VB/Au/Br+ I/C/Ddem+ ISgPl+ VP/J   P  NSg/VB VL3 J/P NSg/J/R/C .
 > This    is  her     last      song  . You're on  next    !
 # I/Ddem+ VL3 ISg/D$+ NSg/VB/J+ N🅪Sg+ . +      J/P NSg/J/P .
 > Are we   still      on  for   tonight ?
@@ -610,10 +610,10 @@
 # D$+  NPl+ NPr/VXB J/R  NSg/VB/J NSg/VB/J/P NSg/C D$+  NPl/V3+ VLB J/P .
 > I       was  trying  to drink  out          of the bottle  while      the top       was  still      on  !
 # ISg/#r+ VLPt Nᴹ/Vg/J P  NSg/VB NSg/VB/J/R/P P  D+  NSg/VB+ NSg/VB/C/P D+  NSg/VB/J+ VLPt NSg/VB/J/R J/P .
-> Climbing up         that          steep     ridge   isn't   on  . We'll have    to find   another route   .
-# Nᴹ/Vg/J  NSg/VB/J/P NSg/I/C/Ddem+ NSg/VB/J+ NSg/VB+ NSg/VX3 J/P . K     NSg/VXB P  NSg/VB I/D     NSg/VB+ .
-> He'd like         to play    the red    next    to the black     spot      , but     that         shot      isn't   on  .
-# K    NSg/VB/J/C/P P  N🅪Sg/VB D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/VB/J NSg/VB/J+ . NSg/C/P NSg/I/C/Ddem NSg/VP/J+ NSg/VX3 J/P .
+> Climbing up         that      steep     ridge   isn't   on  . We'll have    to find   another route   .
+# Nᴹ/Vg/J  NSg/VB/J/P I/C/Ddem+ NSg/VB/J+ NSg/VB+ NSg/VX3 J/P . K     NSg/VXB P  NSg/VB I/D     NSg/VB+ .
+> He'd like         to play    the red    next    to the black     spot      , but     that     shot      isn't   on  .
+# K    NSg/VB/J/C/P P  N🅪Sg/VB D   N🅪Sg/J NSg/J/P P  D   N🅪Sg/VB/J NSg/VB/J+ . NSg/C/P I/C/Ddem NSg/VP/J+ NSg/VX3 J/P .
 > The captain moved two fielders to the on  side      .
 # D+  NSg/VB+ VP/J  NSg W?       P  D   J/P NSg/VB/J+ .
 > Ponsonby - Smythe hit       a   thumping on  drive   .
@@ -670,8 +670,8 @@
 # VXB    R+    NSg/VLXB D/P NSg/VB+ J/P D   . NPr/I+ . .
 > He       wore old   shoes   on  his     feet .
 # NPr/ISg+ VPt  NSg/J NPl/V3+ J/P ISg/D$+ NPl+ .
-> The lighthouse that          you    can     see    is  on  the mainland .
-# D+  NSg+       NSg/I/C/Ddem+ ISgPl+ NPr/VXB NSg/VB VL3 J/P D+  NSg+     .
+> The lighthouse that      you    can     see    is  on  the mainland .
+# D+  NSg+       I/C/Ddem+ ISgPl+ NPr/VXB NSg/VB VL3 J/P D+  NSg+     .
 > The suspect   is  thought to still      be       on  the campus  .
 # D+  NSg/VB/J+ VL3 N🅪Sg/VP P  NSg/VB/J/R NSg/VLXB J/P D+  NSg/VB+ .
 > We   live on  the edge   of the city .
@@ -926,8 +926,8 @@
 # ISg+ VLPt P    NSg  R/C/P NSg    NPl+  C/P    Nᴹ/Vg/J  NSg/VB/J N🅪Sg/VB+ .
 > With your kind  of body    size     , you    shouldn’t be       eating  pizza at    all          .
 # P    D$+  NSg/J P  NSg/VB+ N🅪Sg/VB+ . ISgPl+ VXB       NSg/VLXB Nᴹ/Vg/J N🅪Sg+ NSg/P NSg/I/J/C/Dq .
-> That          was  a   lot    to explain ; are you    still      with me       ?
-# NSg/I/C/Ddem+ VLPt D/P NPr/VB P  VB      . VLB ISgPl+ NSg/VB/J/R P    NPr/ISg+ .
+> That      was  a   lot    to explain ; are you    still      with me       ?
+# I/C/Ddem+ VLPt D/P NPr/VB P  VB      . VLB ISgPl+ NSg/VB/J/R P    NPr/ISg+ .
 >
 #
 >              Adverb

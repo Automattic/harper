@@ -2,6 +2,11 @@ import type { Locator, Page } from '@playwright/test';
 import type { Box } from 'lint-framework';
 import { expect, test } from './fixtures';
 
+type ScreenPoint = {
+	x: number;
+	y: number;
+};
+
 export function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	let result = '';
@@ -50,6 +55,36 @@ export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
 }
 
+/**
+ * Wait for the first Harper highlight to exist and return its screen-space center.
+ *
+ * We return screen coordinates instead of a DOM node because some editors replace parts of
+ * the DOM during updates. Coordinates are still usable even if the original highlight element
+ * gets disconnected and recreated.
+ */
+export async function waitForHarperHighlightCenter(
+	page: Page,
+	timeoutMs = 12000,
+): Promise<ScreenPoint | null> {
+	const highlight = getHarperHighlights(page).first();
+
+	try {
+		await highlight.waitFor({ state: 'visible', timeout: timeoutMs });
+	} catch {
+		return null;
+	}
+
+	const box = await highlight.boundingBox();
+	if (box == null || box.width <= 0 || box.height <= 0) {
+		return null;
+	}
+
+	return {
+		x: box.x + box.width / 2,
+		y: box.y + box.height / 2,
+	};
+}
+
 export async function assertLocatorIsFocused(page: Page, loc: Locator) {
 	await assertLocatorsResolveEqually(page, loc, page.locator(':focus'));
 }
@@ -68,24 +103,49 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
  * It should result in the popup opening.
  * Returns whether the highlight was found. */
 export async function clickHarperHighlight(page: Page): Promise<boolean> {
-	const highlights = getHarperHighlights(page);
+	const center = await waitForHarperHighlightCenter(page);
+	if (center == null) return false;
 
-	// Wait briefly for at least one highlight to appear.
-	// If none appear within a reasonable time, return false.
-	try {
-		await highlights.first().waitFor({ state: 'visible', timeout: 12000 });
-	} catch {
+	await page.mouse.click(center.x, center.y);
+	return true;
+}
+
+/**
+ * Open the Harper popup by dispatching the same `pointerdown` event Harper receives from
+ * the editor itself.
+ *
+ * This is intentionally different from clicking the floating highlight. Some editors replace
+ * parts of the DOM while the popup is opening, which can briefly disconnect and recreate
+ * Harper's popup host. Tests for that behavior need to follow the same event path as a real
+ * editor interaction.
+ */
+export async function openHarperPopupFromEditorPointerDown(
+	page: Page,
+	editor: Locator,
+): Promise<boolean> {
+	const center = await waitForHarperHighlightCenter(page);
+	if (center == null) {
 		return false;
 	}
 
-	const box = await highlights.first().boundingBox();
-	if (box == null) return false;
-
-	// Locate the center of the element and click to open the popup.
-	const cx = box.x + box.width / 2;
-	const cy = box.y + box.height / 2;
-	await page.mouse.click(cx, cy);
-	return true;
+	try {
+		await editor.dispatchEvent('pointerdown', {
+			bubbles: true,
+			composed: true,
+			button: 0,
+			buttons: 1,
+			clientX: center.x,
+			clientY: center.y,
+			pointerId: 1,
+			pointerType: 'mouse',
+			screenX: center.x,
+			screenY: center.y,
+		});
+		await page.locator('.harper-container').waitFor({ state: 'visible', timeout: 2000 });
+		return true;
+	} catch {
+		return false;
+	}
 }
 
 /** Grab the first `<textarea />` on a page. */

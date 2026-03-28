@@ -167,10 +167,7 @@ impl PhrasalVerbAsCompoundNoun {
             // "dictionary lookup" is not a mistake but "couples breakup" is.
             // But "settings plugin" is not.
             if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun()
-                || prev_tok
-                    .span
-                    .get_content(document.get_source())
-                    .eq_ignore_ascii_case_str("settings")
+                || prev_tok.get_ch(document.get_source()).eq_str("settings")
             {
                 return Err(Why::ItsPrecededByANonPluralNoun);
             }
@@ -181,10 +178,7 @@ impl PhrasalVerbAsCompoundNoun {
 
             // If the previous word is (only) a preposition, this word is surely a noun
             if prev_tok.kind.is_preposition()
-                && !prev_tok
-                    .span
-                    .get_content(document.get_source())
-                    .eq_ignore_ascii_case_str("to")
+                && !prev_tok.get_ch(document.get_source()).eq_str("to")
             {
                 return Err(Why::ItsPrecededByAPreposition);
             }
@@ -208,8 +202,7 @@ impl PhrasalVerbAsCompoundNoun {
             // "That" or "which" can follow a noun as relative pronouns.
             if next_tok.kind.is_pronoun()
                 && next_tok
-                    .span
-                    .get_content(document.get_source())
+                    .get_ch(document.get_source())
                     .eq_any_ignore_ascii_case_chars(&[
                         &['t', 'h', 'a', 't'][..],
                         &['w', 'h', 'i', 'c', 'h'][..],
@@ -260,8 +253,7 @@ impl PhrasalVerbAsCompoundNoun {
             }
             .contains(
                 &next_tok
-                    .span
-                    .get_content_string(document.get_source())
+                    .get_str(document.get_source())
                     .to_lowercase()
                     .as_ref(),
             )

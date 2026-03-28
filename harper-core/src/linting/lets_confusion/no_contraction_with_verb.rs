@@ -64,8 +64,8 @@ impl ExprLinter for NoContractionWithVerb {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let (let_string, verb_string) = (
-            matched_tokens[0].span.get_content_string(source),
-            matched_tokens[2].span.get_content_string(source),
+            matched_tokens[0].get_str(source),
+            matched_tokens[2].get_str(source),
         );
 
         // "to let go" is a phrasal verb but "lets go" is quite a common mistake for "let's go"

@@ -672,6 +672,18 @@
 				"swear": true
 			}
 		},
+		"†": {
+			"#": "slang/informal/nonstandard (always) property",
+			"metadata": {
+				"slang": true
+			}
+		},
+		"‡": {
+			"#": "slang/informal/nonstandard (some senses only) property",
+			"metadata": {
+				"slang": true
+			}
+		},
 		"C": {
 			"#": "conjunction property",
 			"metadata": {
@@ -707,7 +719,8 @@
 			"metadata": {
 				"common": true
 			},
-			"rename_ok": true
+			"rename_ok": true,
+			"propagate": true
 		},
 		"P": {
 			"#": "preposition property",

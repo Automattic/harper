@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 import { binary } from './binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
+import { packWeirpackFiles } from './weirpack';
 
 function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -10,6 +11,35 @@ function randomString(length: number): string {
 		result += chars.charAt(Math.floor(Math.random() * chars.length));
 	}
 	return result;
+}
+
+function createTestWeirpack(): Map<string, string> {
+	const manifest = `{
+    "name": "Test Weirpack",
+    "author": "Anonymous",
+    "version": "0.1.0",
+    "description": "",
+    "license": "MIT"
+  }`;
+
+	const annotations = `
+    {
+    	"affixes": {
+    	},
+    	"properties": {
+    	}
+    }
+  `;
+
+	const dict = '1000\n\n';
+
+	const pack = new Map();
+
+	pack.set('annotations.json', annotations);
+	pack.set('manifest.json', manifest);
+	pack.set('dictionary.dict', dict);
+
+	return pack;
 }
 
 const WEIRPACK_PASS_BASE64 =
@@ -296,7 +326,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	});
 
 	test(`${linterName} can reimport ignored lints.`, async () => {
-		const source = 'This is an test of xporting lints.';
+		const source = 'This is an test of exprting lints.';
 
 		const firstLinter = new Linter({ binary });
 
@@ -591,6 +621,26 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		await linter.dispose();
 	});
+
+	test(`${linterName} can load dictionaries from Weirpacks`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'I adore this akljsfhl group!';
+
+		// Show that the word is marked as misspelled when the Weirpack is not included.
+		let lints = await linter.lint(source);
+		expect(lints).toHaveLength(1);
+
+		// Load the dictionary
+		const weirpack = createTestWeirpack();
+		weirpack.set('dictionary.dict', '1000\n\nakljsfhl');
+		const packed = packWeirpackFiles(weirpack);
+		await linter.loadWeirpackFromBytes(packed);
+
+		// It should pass now that we've included the "word" in the dictionary via the Weirpack.
+		lints = await linter.lint(source);
+		expect(lints).toHaveLength(0);
+	}, 30000);
 }
 
 // Disabled because it significantly slows down CI

@@ -214,8 +214,8 @@ Message: |
      310 | Ponsonby-Smythe hit a thumping on drive.
          | ^~~~~~~~ Did you mean to spell `Ponsonby` this way?
 Suggest:
-  - Replace with: “Poison”
   - Replace with: “Poison's”
+  - Replace with: “Poison”
   - Replace with: “Poisoned”
 
 
@@ -320,8 +320,8 @@ Message: |
          |    ^~~~~~~~~ Did you mean to spell `travelled` this way?
 Suggest:
   - Replace with: “traveled”
-  - Replace with: “traveler”
   - Replace with: “travailed”
+  - Replace with: “traveler”
 
 
 

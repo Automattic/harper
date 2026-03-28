@@ -33,7 +33,7 @@ impl ExprLinter for AndIn {
             message: "Did you mean `and in`?".to_string(),
             suggestions: vec![Suggestion::replace_with_match_case(
                 ['a', 'n', 'd'].to_vec(),
-                toks[2].span.get_content(src),
+                toks[2].get_ch(src),
             )],
             ..Default::default()
         })

@@ -29,9 +29,9 @@ impl ExprLinter for OnceOrTwice {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let article = matched_tokens.iter().find(|token| {
-            token.kind.is_word() && token.span.get_content(source).eq_ignore_ascii_case_str("a")
-        })?;
+        let article = matched_tokens
+            .iter()
+            .find(|token| token.kind.is_word() && token.get_ch(source).eq_str("a"))?;
 
         let span = article.span;
         let original = span.get_content(source);
