@@ -1672,7 +1672,7 @@ CNC'd/VtT           # past
 CNCing/NV6          # present, gerund
 CNN/ONSg            # media company; convolutional neural network
 CNS/Ng
-CO/ONgV             # US state (Colorado)
+CO/ONg              # US state (Colorado)
 COBOL/OgS           # programming language
 COD/ON
 COFF/ONg            # common object file format
@@ -25138,6 +25138,7 @@ flagellate/VGdSJNn
 flagellation/Ng
 flagellum/Ng
 flagged/~VtTJ
+flagger/NgS
 flagging/V6JNU
 flagman/Ng
 flagmen/9
@@ -34695,11 +34696,12 @@ moccasin/NSg
 mocha/NwSgJ
 mock/~NSVd>GJZ
 mock up/V
-mock-up/NgS
+mock-up/NgS         # Cambridge, Chambers, Collins, Longman, OED, Oxford Learner's, Webster
 mocker/NgS
 mockery/~NwSg
 mocking/~VNJY
 mockingbird/~NSg
+mockup/NgS          # American Heritage ("also" in Cambridge, Collins)
 mod/~NSgVJ^
 modal/~JNSg
 modality/~NwSg
@@ -42498,6 +42500,7 @@ reprise/~NSgVG
 reproach/NgSVGdB
 reproachful/JY
 reprobate/JNgSV
+reproducibility/Nmg
 reproductive/~JN
 reprogramming/V6Nmg
 reproving/VJYN
@@ -45230,6 +45233,7 @@ silvery/~J
 sim/~NSgV
 simian/JNgS
 similar/~JYN
+similarish/J†
 similarity/~NSgE
 simile/NgS
 similitude/NgE
@@ -49721,6 +49725,9 @@ totterer/Ng
 totting/V6N
 toucan/NgS
 touch/~VGdSNwgr
+touch-type/VdS
+touch-typing/Nm
+touch-typist/NgS
 touchdown/~NSg
 touche/Bz
 touched/~JVtTU

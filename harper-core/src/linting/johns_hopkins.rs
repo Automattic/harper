@@ -12,15 +12,11 @@ pub struct JohnsHopkins {
 impl Default for JohnsHopkins {
     fn default() -> Self {
         let expr = SequenceExpr::with(|tok: &Token, src: &[char]| {
-            tok.kind.is_proper_noun() && tok.span.get_content(src).eq_ignore_ascii_case_str("john")
+            tok.kind.is_proper_noun() && tok.get_ch(src).eq_str("john")
         })
         .t_ws()
         .then(|tok: &Token, src: &[char]| {
-            tok.kind.is_proper_noun()
-                && tok
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_str("hopkins")
+            tok.kind.is_proper_noun() && tok.get_ch(src).eq_str("hopkins")
         });
 
         Self { expr }

@@ -61,7 +61,7 @@ impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
         let mut broken = false;
 
         for (err_token, correct_token) in matched_tokens.iter().zip(canonical_case.fat_tokens()) {
-            let err_chars = err_token.span.get_content(source);
+            let err_chars = err_token.get_ch(source);
             if err_chars != correct_token.content {
                 broken = true;
                 break;

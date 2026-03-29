@@ -100,6 +100,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
@@ -225,6 +226,7 @@ use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
+use super::try_ones_luck::TryOnesLuck;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_title_case::UseTitleCase;
@@ -400,8 +402,6 @@ impl LintGroup {
             clashing_linter_names: None,
         }
     }
-
-    // Non-constructor methods
 
     /// Check if the group already contains a linter with a given name.
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
@@ -690,6 +690,7 @@ impl LintGroup {
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
+        insert_expr_rule!(InTimeFromNow, true);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
@@ -812,6 +813,7 @@ impl LintGroup {
         insert_expr_rule!(Touristic, true);
         insert_expr_rule_with_dict!(TransposedSpace, true);
         insert_expr_rule!(TryOnesHandAt, true);
+        insert_expr_rule!(TryOnesLuck, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
         insert_struct_rule_with_dict!(UseTitleCase, true);
