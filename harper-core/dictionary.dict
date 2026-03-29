@@ -34,7 +34,8 @@ AFC/ONg
 AFDC/O
 AFN/ON
 AFT/O
-AI/NOwSg            # artificial intelligence
+AI/NwSg             # artificial intelligence
+A.I./NwSg
 AIDS/NgJ            # disease
 AK/ON               # US state (Alaska)
 AKP/Og              # political party
@@ -841,6 +842,7 @@ BBQ/NV
 BBS/N
 BBSes/N
 BC/ONgJ
+BDSM/Nmg
 BFF/N
 BIA/O
 BIOS/N
@@ -16198,6 +16200,7 @@ buzzcut/NgS
 buzzer/Ng
 buzzkill/NSg
 buzzword/NSg
+buzzy/H
 bx/~N
 bxs/N
 by/~PNg             # removed adjective sense
@@ -19339,6 +19342,7 @@ copulate/VGdSJnv
 copulation/Ng
 copulative/JNSg
 copy/~NSVdGr
+copy editor/NgS
 copy's
 copybook/NSg
 copycat/NgSJV
@@ -19551,6 +19555,7 @@ coughs/NV
 could/~NA
 could've/V
 couldn't/~VA
+couldn't've/VA†
 coulee/NSg
 coulis/N
 coulomb/~NgS
@@ -21077,6 +21082,7 @@ deprecation/Ng
 deprecatory/J
 depreciate/VdSGn
 depreciation/~Ng
+depreciative/J
 depredation/NSg
 depressant/NSgJ
 depressing/JYV6
@@ -22513,6 +22519,7 @@ dumb/~JY^>pV
 dumbass/NSgx
 dumbbell/~NSg
 dumbfound/VSdG
+dumbfuck/x
 dumbness/Nmg
 dumbo/NgS
 dumbstruck/J
@@ -23810,6 +23817,7 @@ etude/NSg
 etymological/~JY
 etymologist/NSg
 etymology/~NwSg
+etymon/NgS
 # eu                # prefixes that are not also words in their own right don't belong in the dictionary
 eucalypti/N9
 eucalyptus/~N0gS
@@ -24507,6 +24515,7 @@ fancywork/Ng
 fandango/~NgSV
 fandom/~N
 fanfare/~NwSgV
+fanfic/Nmg†
 fang/~NgSVd
 fanlight/NSg
 fanmade/J
@@ -28283,6 +28292,7 @@ heft/NmgSVdG
 heftily/Ry
 heftiness/Nmg
 hefty/~J>^p
+hegemon/NgS
 hegemonic/~J
 hegemony/~Nmg
 hegira/NSg
@@ -29870,6 +29880,8 @@ incel/NgS
 incendiary/~JNSg
 incense/~NwgSVGd
 incentive/~NwgSE
+incentivisation/NwSg!_₹
+incentivise/VGdSE!_₹
 incentivization/NwSg
 incentivize/VGdSE
 inception/~NwSg
@@ -33475,6 +33487,7 @@ marginalise/VGdS!_₹
 marginality/Ng
 marginalization/Ng
 marginalize/VGdS
+margined/VtTJ
 maria/~Ng
 mariachi/JNgS
 marigold/NgSJ
@@ -34884,7 +34897,7 @@ monograph/~NgV
 monographs/~N
 monolingual/~JNgS
 monolith/~NgV
-monolithic/~J
+monolithic/~JQ
 monoliths/N
 monologist/NSg
 monologue/~NSgV
@@ -37295,6 +37308,8 @@ ought/~INA
 oughtn't/A
 ounce/~NgS
 our/~D5
+ouroboros/N0gS
+ouroboroi/N9
 ours/~I
 ourself/Ia1F        # I:pronoun a:personal 1:person .~singular F:reflexive (of the 'Royal We')
 ourselves/~Ia1F:    # I:pronoun a:personal 1:person :~plural F:reflexive
@@ -37991,6 +38006,7 @@ panelling/NSgV6!@_₹
 panellist/NSg!@_₹
 panes/~N9
 pang/~NgSV
+pangram/NgS
 panhandle/~NSgVd>GZ
 panhandler/NgS
 panic/~JNwSgV
@@ -40875,6 +40891,7 @@ protactinium/Nmg
 protagonist/~NSg
 protean/JN
 protect/~VGSdv
+protectable/JU
 protectant/NSg
 protected/~JVU
 protection/~NwSg
@@ -47274,6 +47291,7 @@ stratospheric/J
 stratum/~N0g
 stratus/N0g
 straw/~NwSgJVGd
+straw man/N0g
 strawberry/~NwSgJV
 stray/~NSgVGdJ
 streak/~NgSVd>GZ
@@ -47511,6 +47529,7 @@ subflow/NSg
 subfolder/NgS
 subframe/NgS
 subfreezing/J
+subgenre/NgS
 subgroup/~NgSV
 subhead/NgSGz
 subheading/Ng
@@ -50711,7 +50730,7 @@ unaccommodating/J
 unaccountably/Ry
 unadventurous/J
 unaesthetic/J
-unaffected/J
+unaffected/JY
 unaffordable/J
 unalive/NgSVdGJ
 unallocated/J
@@ -51213,6 +51232,7 @@ unshakable/J
 unshakably/Ry
 unshakeable/J!_₹
 unshapely/J
+unsheltered/J
 unshockable/J
 unshorn/J
 unsightliness/Ng
@@ -53703,6 +53723,7 @@ BYD/OgS             # Chinese automobile manufacturer
 Bachiyski/Sg
 BadgerDB/Og         # key-value database
 Bezos/O             # Surname, Amazon founder
+BibTeX/Og           # file format & tool
 Binance/Og
 Bing/Og             # Microsoft product
 BitKeeper/Og        # version control
@@ -53849,6 +53870,7 @@ GUID/Og             # globally unique identifier
 Ganeti/Sg
 Gateron/Sg
 GeForce/Og
+GenAI/Nmg           # generative AI
 GeoJSON/Og          # geographic data format (JSON based)
 Gerber/Ng           # file format
 Ghidra/Og           # reverse engineering
@@ -53885,6 +53907,7 @@ IDA/Og              # reverse engineering software
 IFRS/Og             # International Financial Reporting Standards
 IIFE/NgS            # immediately-invoked function expression
 IMAP/Sg             # internet message access protocol
+IMDb/Og             # Internet Movie Database
 IME/NgS             # input method editor
 IMSI/N              # international mobile subscriber identity
 IPC/Ng              # interprocess communication
@@ -54193,6 +54216,7 @@ VaultPress/Og
 Vercel/Og           # cloud
 VideoPress/Og
 Viktor/Sg
+Vim script/Omg      # the spelling/capitalization variant used on Vim's docs
 Vimeo/Og            # video platform
 VirtualBox/ONSg
 Vite/Sg
@@ -54336,11 +54360,16 @@ mergesort
 microframework/NgS
 multicast/JVSdG
 nonmutating/J
+noosphere/Ng        # the ~ = the sphere of reason
 npm/Og              # node package manager
+nullable/J
+nullability/Nmg
 nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
+optional/NgS        # a polymorphic type also called "option" and "maybe"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
 pastebin/NgS
+paywall/VSdG        # unlike the noun sense, the verb sense has not made it to dictionaries
 pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
@@ -54352,6 +54381,7 @@ polysynthetic/J.    # linguistics
 postfix/NgSVdG
 pre/~PNV(           # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
+protoform/NgS       # linguistics
 quadtree/NgS        # data structure
 quicksort/NgSVdG    # algo
 raytracer/N         # dictionaries prefer: ray tracer
@@ -54372,6 +54402,7 @@ sed/Og              # *nix tool / language
 sigil/NgS
 singleplayer/J
 sioyek/Sg           # !! please check and comment !!
+snowclone/NgS       # a type of cliché
 sociolect/NSg
 stacktrace/NSg      # dictionaries prefer: stack trace
 standup/Sg          # dictionaries prefer: stand-up
