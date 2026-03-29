@@ -33,7 +33,6 @@ use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
-use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -255,7 +254,9 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
+use crate::linting::{
+    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -599,6 +600,7 @@ impl LintGroup {
         ));
         out.merge_from(&mut closed_compounds::lint_group());
         out.merge_from(&mut initialisms::lint_group());
+        out.merge_from(&mut be_adjective_confusions::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -624,7 +626,6 @@ impl LintGroup {
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
