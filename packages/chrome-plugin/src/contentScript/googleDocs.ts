@@ -1,358 +1,633 @@
-import type { LintFramework } from 'lint-framework';
-import GoogleDocsBridgeClient from './GoogleDocsBridgeClient';
+import type { LintFramework } from "lint-framework";
+import GoogleDocsBridgeClient from "./GoogleDocsBridgeClient";
 import {
-	createGoogleDocsLineBand,
-	extendGoogleDocsLineBand,
-	type GoogleDocsLineBand,
-	type GoogleDocsRectLayout,
-	rectSharesGoogleDocsLineBand,
-	shouldInsertGoogleDocsSpace,
-} from './googleDocsLayout';
+  createGoogleDocsLineBand,
+  extendGoogleDocsLineBand,
+  getGoogleDocsParagraphBreakThreshold,
+  type GoogleDocsLineBand,
+  type GoogleDocsRectLayout,
+  rectSharesGoogleDocsLineBand,
+  shouldInsertGoogleDocsSpace,
+} from "./googleDocsLayout";
 
 declare global {
-	interface Window {
-		__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClient;
-	}
+  interface Window {
+    __harperGoogleDocsBridgeClient?: GoogleDocsBridgeClient;
+  }
 }
 
-const GOOGLE_DOCS_BRIDGE_ID = 'harper-google-docs-target';
-const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-const GOOGLE_DOCS_SCROLL_LAYOUT_REASONS = new Set(['scroll', 'wheel', 'key-scroll']);
-const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
-const GOOGLE_DOCS_SVG_RECT_SELECTOR = 'rect[aria-label]';
-const GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX = 60;
-const GOOGLE_DOCS_PARAGRAPH_BREAK_GAP_RATIO = 0.5;
+const GOOGLE_DOCS_TARGET_ID = "harper-google-docs-target";
+const GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID = "harper-google-docs-main-world-bridge";
+const GOOGLE_DOCS_EDITOR_SELECTOR = ".kix-appview-editor";
+const GOOGLE_DOCS_RECT_SELECTOR = "rect[aria-label]";
+const GOOGLE_DOCS_SYNCING_ATTR = "data-harper-gdocs-syncing";
+const GOOGLE_DOCS_IGNORED_LAYOUT_REASONS = new Set([
+  "scroll",
+  "wheel",
+  "key-scroll",
+]);
 const GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX = 6;
+const GOOGLE_DOCS_PARAGRAPH_BREAK_RATIO = 0.5;
 
 type LayoutRefreshFramework = LintFramework & {
-	refreshLayout?: () => void;
+  refreshLayout?: () => void;
+};
+
+type GoogleDocsRectSegment = {
+  rectNode: SVGRectElement;
+  text: string;
+  rect: GoogleDocsRectLayout;
+};
+
+type GoogleDocsCloneSnapshot = {
+  fragment: DocumentFragment;
+  text: string;
+  source: "logical" | "rects";
+  segmentCount: number;
+  signature: string;
 };
 
 export function isGoogleDocsPage(): boolean {
-	return (
-		window.location.hostname === 'docs.google.com' &&
-		window.location.pathname.startsWith('/document/')
-	);
+  return (
+    window.location.hostname === "docs.google.com" &&
+    window.location.pathname.startsWith("/document/")
+  );
 }
 
-/**
- * Creates a serialized sync function that keeps Harper's hidden lint target in step with
- * Google Docs' rendered text layer.
- *
- * Why: Google Docs does not expose a stable, contenteditable DOM surface we can lint directly.
- * We instead mirror its visual text rects into our own hidden bridge node, then point
- * `LintFramework` at that node.
- */
-export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<void> {
-	let googleDocsSyncInFlight = false;
-	let googleDocsSyncPending = false;
-	let googleDocsBridgeAttached = false;
-	let googleDocsEventsBound = false;
-	let googleDocsCloneSignature = '';
-	let googleDocsBridgeClient: GoogleDocsBridgeClient | null = null;
+export function createGoogleDocsBridgeSync(
+  fw: LintFramework,
+): () => Promise<void> {
+  let bridgeClient: GoogleDocsBridgeClient | null = null;
+  let bridgeAttached = false;
+  let syncInFlight = false;
+  let syncPending = false;
+  let syncingClearTimer: number | null = null;
+  let lastCloneSignature = "";
+  let injectedMainWorldBridge = false;
 
-	/**
-	 * Ensures the hidden bridge element exists under the live editor container.
-	 *
-	 * Why: attaching to the editor keeps coordinate systems aligned so lint overlays map
-	 * correctly to what the user sees.
-	 */
-	function getGoogleDocsBridge(editor: HTMLElement): HTMLElement {
-		let bridge = document.getElementById(GOOGLE_DOCS_BRIDGE_ID);
+  function ensureTarget(editor: HTMLElement): HTMLElement {
+    let target = document.getElementById(GOOGLE_DOCS_TARGET_ID);
 
-		if (!bridge) {
-			bridge = document.createElement('div');
-			bridge.id = GOOGLE_DOCS_BRIDGE_ID;
-			bridge.setAttribute('data-harper-google-docs-target', 'true');
-			bridge.setAttribute('aria-hidden', 'true');
-			bridge.style.position = 'absolute';
-			bridge.style.top = '0';
-			bridge.style.left = '0';
-			bridge.style.width = '0';
-			bridge.style.height = '0';
-			bridge.style.overflow = 'visible';
-			bridge.style.pointerEvents = 'none';
-			bridge.style.opacity = '0';
-			bridge.style.zIndex = '-2147483648';
-			bridge.setAttribute('contenteditable', 'false');
-			bridge.setAttribute('data-language', 'plaintext');
-			editor.appendChild(bridge);
-		}
+    if (!(target instanceof HTMLElement)) {
+      target = document.createElement("div");
+      target.id = GOOGLE_DOCS_TARGET_ID;
+      target.setAttribute("data-harper-google-docs-target", "true");
+      target.setAttribute("aria-hidden", "true");
+      target.setAttribute("contenteditable", "false");
+      target.setAttribute("data-language", "plaintext");
+      target.style.position = "absolute";
+      target.style.top = "0";
+      target.style.left = "0";
+      target.style.width = "0";
+      target.style.height = "0";
+      target.style.overflow = "visible";
+      target.style.pointerEvents = "none";
+      target.style.opacity = "0";
+      target.style.zIndex = "-2147483648";
+      editor.appendChild(target);
+    }
 
-		if (bridge.parentElement !== editor) {
-			editor.appendChild(bridge);
-		}
+    if (target.parentElement !== editor) {
+      editor.appendChild(target);
+    }
 
-		return bridge;
-	}
+    return target;
+  }
 
-	/**
-	 * Injects the page-world bridge script once.
-	 *
-	 * Why: content scripts run in an isolated world and cannot directly access some
-	 * Google Docs internals. The injected main-world bridge can, then communicates via DOM events.
-	 */
-	function ensureGoogleDocsMainWorldBridge() {
-		if (document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID)) {
-			return;
-		}
+  function ensureMainWorldBridge() {
+    if (
+      injectedMainWorldBridge ||
+      document.getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID) != null
+    ) {
+      injectedMainWorldBridge = true;
+      return;
+    }
 
-		const script = document.createElement('script');
-		script.type = 'module';
-		script.src = chrome.runtime.getURL('google-docs-bridge.js');
-		(document.head || document.documentElement).appendChild(script);
-		script.onload = () => script.remove();
-	}
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = chrome.runtime.getURL("google-docs-bridge.js");
+    script.onload = () => script.remove();
+    (document.head || document.documentElement).appendChild(script);
+    injectedMainWorldBridge = true;
+  }
 
-	/**
-	 * Wires bridge events into framework refresh paths.
-	 *
-	 * Why: we react to push-style updates from Docs instead of polling heavily.
-	 * Layout refreshes intentionally ignore pure scroll reasons to avoid expensive
-	 * recalculations on high-frequency movement.
-	 */
-	function bindGoogleDocsBridgeEvents(syncGoogleDocsBridge: () => Promise<void>) {
-		if (!isGoogleDocsPage() || googleDocsEventsBound) {
-			return;
-		}
+  function bindBridgeClient() {
+    if (bridgeClient != null) {
+      return;
+    }
 
-		googleDocsEventsBound = true;
-		googleDocsBridgeClient = new GoogleDocsBridgeClient(document);
-		window.__harperGoogleDocsBridgeClient = googleDocsBridgeClient;
-		googleDocsBridgeClient.onTextUpdated(() => {
-			void syncGoogleDocsBridge();
-		});
-		googleDocsBridgeClient.onLayoutChanged((reason) => {
-			if (!GOOGLE_DOCS_SCROLL_LAYOUT_REASONS.has(String(reason))) {
-				(fw as LayoutRefreshFramework).refreshLayout?.();
-			}
-		});
-	}
+    bridgeClient = new GoogleDocsBridgeClient(document);
+    window.__harperGoogleDocsBridgeClient = bridgeClient;
 
-	/**
-	 * Normalizes Google Docs aria-label text into a whitespace shape closer to user-visible text.
-	 *
-	 * Why: Docs tokenization can collapse or split spaces around punctuation in ways that
-	 * produce false positives/offset drift for lint spans.
-	 */
-	function normalizeGoogleDocsLabel(label: string): string {
-		const tokens = label.split(' ');
+    bridgeClient.onTextUpdated(() => {
+      void syncGoogleDocsBridge();
+    });
 
-		for (let i = 0; i < tokens.length; i += 1) {
-			const token = tokens[i];
-			if (token === '') {
-				tokens[i] = '\xa0';
-				continue;
-			}
+    bridgeClient.onLayoutChanged((reason) => {
+      if (!GOOGLE_DOCS_IGNORED_LAYOUT_REASONS.has(reason)) {
+        (fw as LayoutRefreshFramework).refreshLayout?.();
+      }
+    });
+  }
 
-			const isLast = i === tokens.length - 1;
-			const lastChar = token.charAt(token.length - 1);
-			const nextFirstChar = tokens[i + 1]?.charAt(0) ?? '';
-			const keepTightTrailing = /[(["'“\-_`]/.test(lastChar);
-			const keepTightLeadingNext = /[)\]"'”\-_`]/.test(nextFirstChar);
+  function disposeBridgeClient() {
+    bridgeClient?.dispose();
+    bridgeClient = null;
+    delete window.__harperGoogleDocsBridgeClient;
+  }
 
-			tokens[i] = !isLast && !keepTightTrailing && !keepTightLeadingNext ? `${token} ` : token;
-		}
+  function addSignatureToken(hash: number, token: string): number {
+    let nextHash = hash;
+    for (let index = 0; index < token.length; index += 1) {
+      nextHash = (nextHash * 33 + token.charCodeAt(index)) >>> 0;
+    }
+    return nextHash;
+  }
 
-		return tokens.join('');
-	}
+  function normalizeGoogleDocsRectLabel(label: string): string {
+    const parts = label.split(" ");
+    let normalized = "";
 
-	/**
-	 * Adds a token to a small rolling hash (djb2 variant).
-	 *
-	 * Why: fast change detection lets us skip expensive DOM replacement and framework updates
-	 * when reconstructed clone output is effectively unchanged.
-	 */
-	function addHashToken(hash: number, token: string): number {
-		let next = hash;
-		for (let i = 0; i < token.length; i += 1) {
-			next = (next * 33 + token.charCodeAt(i)) >>> 0;
-		}
-		return next;
-	}
+    for (let index = 0; index < parts.length; index += 1) {
+      const part = parts[index];
+      if (part === "") {
+        normalized += "\u00a0";
+        continue;
+      }
 
-	function isGoogleDocsStandaloneListMarker(label: string): boolean {
-		return /^(\d+\.|[-+*•◦▪‣])$/.test(label.trim());
-	}
+      normalized += part;
+      if (index === parts.length - 1) {
+        continue;
+      }
 
-	/**
-	 * Rebuilds the hidden clone from Docs SVG text rects.
-	 *
-	 * How: each labeled rect becomes an absolutely-positioned span in the bridge.
-	 * Why: this preserves enough geometry for highlight placement while giving Harper a
-	 * stable text surface. The signature short-circuits no-op updates.
-	 */
-	function rebuildGoogleDocsClone(editor: HTMLElement, clone: HTMLElement): { changed: boolean } {
-		const rectNodes = editor.querySelectorAll<SVGRectElement>(GOOGLE_DOCS_SVG_RECT_SELECTOR);
-		const editorRect = editor.getBoundingClientRect();
-		const scrollTop = editor.scrollTop;
-		const scrollLeft = editor.scrollLeft;
-		const fragment = document.createDocumentFragment();
-		const parts: string[] = [];
-		let nextHash = 5381;
-		let currentLineBand: GoogleDocsLineBand | null = null;
-		let lastLayoutRect: GoogleDocsRectLayout | null = null;
-		let lastLabel = '';
-		let lastRight: number | null = null;
-		let segmentCount = 0;
+      const keepTightRight = /[(["'“‘/_`-]$/u.test(part);
+      const keepTightLeft = /^[)\]"'”’/_`—–-]/u.test(parts[index + 1] ?? "");
 
-		for (const rectNode of Array.from(rectNodes)) {
-			const areaLabel = rectNode.getAttribute('aria-label');
-			if (!areaLabel) continue;
+      if (!keepTightRight && !keepTightLeft) {
+        normalized += " ";
+      }
+    }
 
-			const normalizedLabel = normalizeGoogleDocsLabel(areaLabel);
-			if (!normalizedLabel) continue;
+    return normalized;
+  }
 
-			const rect = rectNode.getBoundingClientRect();
-			if (!Number.isFinite(rect.top) || rect.width <= 0 || rect.height <= 0) continue;
+  function isStandaloneListMarker(text: string): boolean {
+    return /^((\d+|[a-zA-Z]|[ivxlcdmIVXLCDM]+)[.)]|[-+*•◦▪‣●☐☑☒])$/u.test(
+      text.trim(),
+    );
+  }
 
-			const top = rect.top - editorRect.top + scrollTop;
-			const left = rect.left - editorRect.left + scrollLeft;
-			const right = left + rect.width;
-			if (!Number.isFinite(top)) continue;
-			if (!Number.isFinite(left)) continue;
-			if (!Number.isFinite(right)) continue;
+  function appendText(
+    fragment: DocumentFragment,
+    parts: string[],
+    text: string,
+  ) {
+    if (text.length === 0) {
+      return;
+    }
 
-			const layoutRect: GoogleDocsRectLayout = {
-				top,
-				left,
-				width: rect.width,
-				height: rect.height,
-			};
-			const sharesVisualLine =
-				currentLineBand != null && rectSharesGoogleDocsLineBand(layoutRect, currentLineBand);
-			const shouldInsertLineBreak =
-				(currentLineBand != null && !sharesVisualLine) ||
-				(sharesVisualLine &&
-					!isGoogleDocsStandaloneListMarker(lastLabel) &&
-					lastRight != null &&
-					left - lastRight >= GOOGLE_DOCS_TABLE_CELL_GAP_THRESHOLD_PX);
+    parts.push(text);
+    fragment.appendChild(document.createTextNode(text));
+  }
 
-			if (shouldInsertLineBreak && parts.length > 0 && !parts[parts.length - 1].endsWith('\n')) {
-				const lineGap =
-					currentLineBand == null ? 0 : Math.max(0, layoutRect.top - currentLineBand.bottom);
-				const paragraphBreakThreshold = Math.max(
-					GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX,
-					Math.min(currentLineBand?.bottom - currentLineBand?.top || 0, layoutRect.height) *
-						GOOGLE_DOCS_PARAGRAPH_BREAK_GAP_RATIO,
-				);
-				const breakText = !sharesVisualLine && lineGap >= paragraphBreakThreshold ? '\n\n' : '\n';
-				parts.push(breakText);
-				fragment.appendChild(document.createTextNode(breakText));
-			}
-			if (
-				!shouldInsertLineBreak &&
-				lastLayoutRect != null &&
-				(isGoogleDocsStandaloneListMarker(lastLabel) ||
-					shouldInsertGoogleDocsSpace(lastLayoutRect, layoutRect, lastLabel, normalizedLabel))
-			) {
-				parts.push(' ');
-				fragment.appendChild(document.createTextNode(' '));
-			}
+  function createCloneSpan(
+    segment: GoogleDocsRectSegment,
+    text: string,
+  ): HTMLSpanElement {
+    const span = document.createElement("span");
+    span.textContent = text;
+    span.style.position = "absolute";
+    span.style.whiteSpace = "pre";
+    span.style.overflow = "hidden";
+    span.style.left = `${segment.rect.left}px`;
+    span.style.top = `${segment.rect.top}px`;
+    span.style.width = `${Math.max(1, segment.rect.width)}px`;
+    span.style.height = `${Math.max(1, segment.rect.height)}px`;
+    span.style.lineHeight = `${Math.max(1, segment.rect.height)}px`;
 
-			const span = document.createElement('span');
-			span.textContent = normalizedLabel;
-			span.style.position = 'absolute';
-			span.style.whiteSpace = 'pre';
-			span.style.overflow = 'hidden';
-			span.style.left = `${left}px`;
-			span.style.top = `${top}px`;
-			span.style.width = `${Math.max(rect.width, 1)}px`;
-			span.style.height = `${Math.max(rect.height, 1)}px`;
-			span.style.lineHeight = `${Math.max(rect.height, 1)}px`;
-			const fontCss = rectNode.getAttribute('data-font-css');
-			if (fontCss) {
-				span.style.font = fontCss;
-			}
-			fragment.appendChild(span);
+    const fontCss = segment.rectNode.getAttribute("data-font-css");
+    if (fontCss) {
+      span.style.font = fontCss;
+    }
 
-			parts.push(normalizedLabel);
-			currentLineBand =
-				currentLineBand == null || shouldInsertLineBreak
-					? createGoogleDocsLineBand(layoutRect)
-					: extendGoogleDocsLineBand(currentLineBand, layoutRect);
-			lastLayoutRect = layoutRect;
-			lastLabel = normalizedLabel;
-			lastRight = right;
-			segmentCount += 1;
+    return span;
+  }
 
-			nextHash = addHashToken(nextHash, normalizedLabel);
-			nextHash = addHashToken(
-				nextHash,
-				`${Math.round(top)}:${Math.round(left)}:${Math.round(rect.width)}`,
-			);
-		}
+  function canIgnoreLogicalGap(text: string): boolean {
+    return /^\s*$/u.test(text);
+  }
 
-		const nextText = parts.join('');
-		nextHash = addHashToken(
-			nextHash,
-			`${nextText.length}:${segmentCount}:${Math.round(scrollTop)}`,
-		);
-		const nextSignature = String(nextHash);
-		if (nextSignature === googleDocsCloneSignature && clone.textContent === nextText) {
-			return { changed: false };
-		}
+  function segmentsShareVisualLine(
+    left: GoogleDocsRectSegment,
+    right: GoogleDocsRectSegment,
+  ): boolean {
+    return (
+      rectSharesGoogleDocsLineBand(
+        left.rect,
+        createGoogleDocsLineBand(right.rect),
+      ) ||
+      rectSharesGoogleDocsLineBand(
+        right.rect,
+        createGoogleDocsLineBand(left.rect),
+      )
+    );
+  }
 
-		clone.replaceChildren(fragment);
-		clone.setAttribute('data-harper-gdocs-segments', String(segmentCount));
-		googleDocsCloneSignature = nextSignature;
-		return { changed: true };
-	}
+  function compareSegments(
+    left: GoogleDocsRectSegment,
+    right: GoogleDocsRectSegment,
+  ): number {
+    if (segmentsShareVisualLine(left, right)) {
+      const horizontalDelta = left.rect.left - right.rect.left;
+      if (Math.abs(horizontalDelta) > 1) {
+        return horizontalDelta;
+      }
+    }
 
-	/**
-	 * Performs one sync pass, with in-flight serialization and a pending replay.
-	 *
-	 * Why: Docs can fire bursts of changes; serialization prevents overlapping `fw.update()`
-	 * work and ensures we process at least one follow-up pass after a busy interval.
-	 */
-	async function syncGoogleDocsBridge() {
-		if (!isGoogleDocsPage()) {
-			if (googleDocsBridgeClient) {
-				googleDocsBridgeClient.dispose();
-				googleDocsBridgeClient = null;
-			}
-			delete window.__harperGoogleDocsBridgeClient;
-			googleDocsEventsBound = false;
-			return;
-		}
+    const verticalDelta = left.rect.top - right.rect.top;
+    if (Math.abs(verticalDelta) > 1) {
+      return verticalDelta;
+    }
 
-		if (googleDocsSyncInFlight) {
-			googleDocsSyncPending = true;
-			return;
-		}
+    const horizontalDelta = left.rect.left - right.rect.left;
+    if (Math.abs(horizontalDelta) > 1) {
+      return horizontalDelta;
+    }
 
-		googleDocsSyncInFlight = true;
+    return 0;
+  }
 
-		try {
-			ensureGoogleDocsMainWorldBridge();
-			bindGoogleDocsBridgeEvents(syncGoogleDocsBridge);
+  function collectRectSegments(editor: HTMLElement): GoogleDocsRectSegment[] {
+    const editorRect = editor.getBoundingClientRect();
+    const segments: GoogleDocsRectSegment[] = [];
 
-			const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR);
-			if (!(editor instanceof HTMLElement)) {
-				return;
-			}
-			const target = getGoogleDocsBridge(editor);
-			const { changed } = rebuildGoogleDocsClone(editor, target);
+    for (const rectNode of Array.from(
+      editor.querySelectorAll<SVGRectElement>(GOOGLE_DOCS_RECT_SELECTOR),
+    )) {
+      const rawLabel = rectNode.getAttribute("aria-label");
+      if (!rawLabel) {
+        continue;
+      }
 
-			if (!googleDocsBridgeAttached) {
-				await fw.addTarget(target);
-				googleDocsBridgeAttached = true;
-			}
+      const text = normalizeGoogleDocsRectLabel(rawLabel);
+      if (text.length === 0) {
+        continue;
+      }
 
-			if (changed) {
-				await fw.update();
-			}
-		} catch (err) {
-			console.error('Failed to sync Google Docs bridge text', err);
-		} finally {
-			googleDocsSyncInFlight = false;
+      const rect = rectNode.getBoundingClientRect();
+      if (!Number.isFinite(rect.top) || rect.width <= 0 || rect.height <= 0) {
+        continue;
+      }
 
-			if (googleDocsSyncPending) {
-				googleDocsSyncPending = false;
-				void syncGoogleDocsBridge();
-			}
-		}
-	}
+      const top = rect.top - editorRect.top + editor.scrollTop;
+      const left = rect.left - editorRect.left + editor.scrollLeft;
+      if (!Number.isFinite(top) || !Number.isFinite(left)) {
+        continue;
+      }
 
-	return syncGoogleDocsBridge;
+      segments.push({
+        rectNode,
+        text,
+        rect: {
+          top,
+          left,
+          width: rect.width,
+          height: rect.height,
+        },
+      });
+    }
+
+    segments.sort(compareSegments);
+    return segments;
+  }
+
+  function shouldRepairCollapsedGap(
+    skippedText: string,
+    previousText: string,
+    nextText: string,
+    sharesVisualLine: boolean,
+  ): boolean {
+    return (
+      skippedText.length === 0 &&
+      !sharesVisualLine &&
+      /[\p{L}\p{N}]$/u.test(previousText) &&
+      /^[\p{L}\p{N}]/u.test(nextText)
+    );
+  }
+
+  function normalizeLogicalGap(
+    skippedText: string,
+    previousText: string,
+    nextText: string,
+    sharesVisualLine: boolean,
+    currentRect: GoogleDocsRectLayout,
+    nextRect: GoogleDocsRectLayout | null,
+  ): string {
+    if (
+      shouldRepairCollapsedGap(
+        skippedText,
+        previousText,
+        nextText,
+        sharesVisualLine,
+      )
+    ) {
+      return " ";
+    }
+
+    if (!skippedText.includes("\n")) {
+      return skippedText;
+    }
+
+    const startsNewTableColumn =
+      nextRect != null &&
+      rectSharesGoogleDocsLineBand(
+        currentRect,
+        createGoogleDocsLineBand(nextRect),
+      ) &&
+      nextRect.left - currentRect.left > currentRect.width + 120;
+
+    if (sharesVisualLine || startsNewTableColumn) {
+      return skippedText.replace(/\n+/gu, "\n");
+    }
+
+    const shouldKeepParagraphBreak =
+      !isStandaloneListMarker(previousText) &&
+      !isStandaloneListMarker(nextText);
+
+    return skippedText.replace(
+      /\n+/gu,
+      shouldKeepParagraphBreak ? "\n\n" : "\n",
+    );
+  }
+
+  function shouldInsertSoftWrapSpace(
+    previousText: string,
+    nextText: string,
+    lineGap: number,
+    paragraphBreakThreshold: number,
+  ): boolean {
+    return (
+      lineGap < paragraphBreakThreshold &&
+      /[\p{L}\p{N}]$/u.test(previousText) &&
+      /^[\p{Ll}\p{N}]/u.test(nextText)
+    );
+  }
+
+  function computeSignature(
+    source: GoogleDocsCloneSnapshot["source"],
+    text: string,
+    segments: GoogleDocsRectSegment[],
+    editor: HTMLElement,
+  ): string {
+    let hash = 5381;
+    hash = addSignatureToken(hash, source);
+    hash = addSignatureToken(hash, text);
+    hash = addSignatureToken(
+      hash,
+      `${editor.scrollTop}:${editor.scrollLeft}:${segments.length}`,
+    );
+
+    for (const segment of segments) {
+      hash = addSignatureToken(
+        hash,
+        `${Math.round(segment.rect.top)}:${Math.round(segment.rect.left)}:${Math.round(segment.rect.width)}:${Math.round(segment.rect.height)}:${segment.text}`,
+      );
+    }
+
+    return String(hash);
+  }
+
+  function buildLogicalSnapshot(
+    editor: HTMLElement,
+    segments: GoogleDocsRectSegment[],
+    logicalText: string,
+  ): GoogleDocsCloneSnapshot | null {
+    if (logicalText.length === 0 || segments.length === 0) {
+      return null;
+    }
+
+    const fragment = document.createDocumentFragment();
+    const parts: string[] = [];
+    let cursor = 0;
+    let previousText = "";
+    let currentLineBand: GoogleDocsLineBand | null = null;
+
+    for (let index = 0; index < segments.length; index += 1) {
+      const segment = segments[index];
+      const startAtCursor = logicalText.startsWith(segment.text, cursor)
+        ? cursor
+        : logicalText.indexOf(segment.text, cursor);
+
+      if (startAtCursor < 0) {
+        return null;
+      }
+
+      const skippedText = logicalText.slice(cursor, startAtCursor);
+      if (!canIgnoreLogicalGap(skippedText)) {
+        return null;
+      }
+
+      const sharesVisualLine: boolean =
+        currentLineBand != null &&
+        rectSharesGoogleDocsLineBand(segment.rect, currentLineBand);
+      const normalizedGap = normalizeLogicalGap(
+        skippedText,
+        previousText,
+        segment.text,
+        sharesVisualLine,
+        segment.rect,
+        segments[index + 1]?.rect ?? null,
+      );
+      appendText(fragment, parts, normalizedGap);
+
+      fragment.appendChild(createCloneSpan(segment, segment.text));
+      parts.push(segment.text);
+      cursor = startAtCursor + segment.text.length;
+      previousText = segment.text;
+      currentLineBand =
+        currentLineBand == null || !sharesVisualLine
+          ? createGoogleDocsLineBand(segment.rect)
+          : extendGoogleDocsLineBand(currentLineBand, segment.rect);
+    }
+
+    const trailingText = logicalText.slice(cursor);
+    if (!canIgnoreLogicalGap(trailingText)) {
+      return null;
+    }
+
+    appendText(fragment, parts, trailingText);
+    const text = parts.join("");
+
+    return {
+      fragment,
+      text,
+      source: "logical",
+      segmentCount: segments.length,
+      signature: computeSignature("logical", text, segments, editor),
+    };
+  }
+
+  function buildRectSnapshot(
+    editor: HTMLElement,
+    segments: GoogleDocsRectSegment[],
+  ): GoogleDocsCloneSnapshot {
+    const fragment = document.createDocumentFragment();
+    const parts: string[] = [];
+    let previousText = "";
+    let previousRect: GoogleDocsRectLayout | null = null;
+    let currentLineBand: GoogleDocsLineBand | null = null;
+
+    for (const segment of segments) {
+      const sharesVisualLine: boolean =
+        currentLineBand != null &&
+        rectSharesGoogleDocsLineBand(segment.rect, currentLineBand);
+      const startsNewLine: boolean =
+        currentLineBand != null && !sharesVisualLine;
+
+      if (startsNewLine && currentLineBand != null) {
+        const lineGap = Math.max(0, segment.rect.top - currentLineBand.bottom);
+        const paragraphBreakThreshold = Math.max(
+          GOOGLE_DOCS_MIN_PARAGRAPH_BREAK_GAP_PX,
+          getGoogleDocsParagraphBreakThreshold(currentLineBand, segment.rect),
+          Math.min(currentLineBand.height, segment.rect.height) *
+            GOOGLE_DOCS_PARAGRAPH_BREAK_RATIO,
+        );
+        const breakText = shouldInsertSoftWrapSpace(
+          previousText,
+          segment.text,
+          lineGap,
+          paragraphBreakThreshold,
+        )
+          ? " "
+          : lineGap >= paragraphBreakThreshold
+            ? "\n\n"
+            : "\n";
+        appendText(fragment, parts, breakText);
+      } else if (
+        previousRect != null &&
+        (isStandaloneListMarker(previousText) ||
+          shouldInsertGoogleDocsSpace(
+            previousRect,
+            segment.rect,
+            previousText,
+            segment.text,
+          ))
+      ) {
+        appendText(fragment, parts, " ");
+      }
+
+      fragment.appendChild(createCloneSpan(segment, segment.text));
+      parts.push(segment.text);
+      previousText = segment.text;
+      previousRect = segment.rect;
+      currentLineBand =
+        currentLineBand == null || startsNewLine
+          ? createGoogleDocsLineBand(segment.rect)
+          : extendGoogleDocsLineBand(currentLineBand, segment.rect);
+    }
+
+    const text = parts.join("");
+
+    return {
+      fragment,
+      text,
+      source: "rects",
+      segmentCount: segments.length,
+      signature: computeSignature("rects", text, segments, editor),
+    };
+  }
+
+  function buildSnapshot(editor: HTMLElement): GoogleDocsCloneSnapshot {
+    const segments = collectRectSegments(editor);
+    const logicalText =
+      document
+        .getElementById(GOOGLE_DOCS_MAIN_WORLD_BRIDGE_ID)
+        ?.textContent?.replace(/\r\n?/gu, "\n") ?? "";
+
+    return (
+      buildLogicalSnapshot(editor, segments, logicalText) ??
+      buildRectSnapshot(editor, segments)
+    );
+  }
+
+  function applySnapshot(
+    target: HTMLElement,
+    snapshot: GoogleDocsCloneSnapshot,
+  ): boolean {
+    if (
+      snapshot.signature === lastCloneSignature &&
+      target.textContent === snapshot.text
+    ) {
+      return false;
+    }
+
+    target.replaceChildren(snapshot.fragment);
+    target.setAttribute("data-harper-gdocs-source", snapshot.source);
+    target.setAttribute(
+      "data-harper-gdocs-segments",
+      String(snapshot.segmentCount),
+    );
+    lastCloneSignature = snapshot.signature;
+    return true;
+  }
+
+  async function syncGoogleDocsBridge() {
+    if (!isGoogleDocsPage()) {
+      disposeBridgeClient();
+      bridgeAttached = false;
+      return;
+    }
+
+    if (syncInFlight) {
+      syncPending = true;
+      return;
+    }
+
+    syncInFlight = true;
+
+    try {
+      ensureMainWorldBridge();
+      bindBridgeClient();
+
+      const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR);
+      if (!(editor instanceof HTMLElement)) {
+        return;
+      }
+
+      const target = ensureTarget(editor);
+      if (syncingClearTimer != null) {
+        window.clearTimeout(syncingClearTimer);
+        syncingClearTimer = null;
+      }
+      editor.setAttribute(GOOGLE_DOCS_SYNCING_ATTR, "true");
+
+      const changed = applySnapshot(target, buildSnapshot(editor));
+      if (!bridgeAttached) {
+        await fw.addTarget(target);
+        bridgeAttached = true;
+      }
+
+      if (changed) {
+        await fw.update();
+      }
+    } catch (error) {
+      console.error("Failed to sync Google Docs bridge text", error);
+    } finally {
+      const editor = document.querySelector(GOOGLE_DOCS_EDITOR_SELECTOR);
+      if (editor instanceof HTMLElement) {
+        syncingClearTimer = window.setTimeout(() => {
+          editor.removeAttribute(GOOGLE_DOCS_SYNCING_ATTR);
+          syncingClearTimer = null;
+        }, 150);
+      }
+
+      syncInFlight = false;
+      if (syncPending) {
+        syncPending = false;
+        void syncGoogleDocsBridge();
+      }
+    }
+  }
+
+  return syncGoogleDocsBridge;
 }

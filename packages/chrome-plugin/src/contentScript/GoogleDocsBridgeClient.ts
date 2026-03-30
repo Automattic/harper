@@ -1,193 +1,274 @@
-// @ts-nocheck
+const PROTOCOL_VERSION = "harper-gdocs-bridge/v1";
+const EVENT_REQUEST = "harper:gdocs:request";
+const EVENT_RESPONSE = "harper:gdocs:response";
+const EVENT_NOTIFICATION = "harper:gdocs:notification";
 
-import type {
-	GoogleDocsGetRectsResponse,
-	GoogleDocsNotificationMessage,
-	GoogleDocsRect,
-	GoogleDocsRequest,
-	GoogleDocsRequestMessage,
-	GoogleDocsResponse,
-	GoogleDocsResponseMessage,
-} from '../../public/google-docs-protocol.js';
-
-type PendingRequest = {
-	resolve: (value: GoogleDocsResponse) => void;
-	reject: (reason?: unknown) => void;
-	timerId: number;
+type GoogleDocsRect = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
-const PROTOCOL_VERSION = 'harper-gdocs-bridge/v1';
-const EVENT_REQUEST = 'harper:gdocs:request';
-const EVENT_RESPONSE = 'harper:gdocs:response';
-const EVENT_NOTIFICATION = 'harper:gdocs:notification';
+type GoogleDocsRequest =
+  | {
+      kind: "getRects";
+      start: number;
+      end: number;
+    }
+  | {
+      kind: "replaceText";
+      start: number;
+      end: number;
+      replacementText: string;
+      expectedText?: string;
+      beforeContext?: string;
+      afterContext?: string;
+    };
 
-/** Content-script client for Google Docs bridge request/response + notifications. */
+type GoogleDocsGetRectsResponse = {
+  kind: "getRects";
+  rects: GoogleDocsRect[];
+};
+
+type GoogleDocsResponse =
+  | GoogleDocsGetRectsResponse
+  | {
+      kind: "replaceText";
+      applied: boolean;
+    }
+  | {
+      kind: "error";
+      requestKind: GoogleDocsRequest["kind"];
+      code: string;
+      message: string;
+    };
+
+type GoogleDocsRequestMessage = {
+  protocol: string;
+  requestId: string;
+  request: GoogleDocsRequest;
+};
+
+type GoogleDocsResponseMessage = {
+  protocol: string;
+  requestId: string;
+  response: GoogleDocsResponse;
+};
+
+type GoogleDocsNotificationMessage = {
+  protocol: string;
+  notification:
+    | {
+        kind: "textUpdated";
+        length: number;
+      }
+    | {
+        kind: "layoutChanged";
+        reason: string;
+        layoutEpoch: number;
+      };
+};
+
+type PendingRequest = {
+  resolve: (value: GoogleDocsResponse) => void;
+  reject: (reason?: unknown) => void;
+  timeoutId: number;
+};
+
+type BridgeNotificationListener = (
+  message: GoogleDocsNotificationMessage["notification"],
+) => void;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value != null && typeof value === "object";
+}
+
+function isResponseMessage(value: unknown): value is GoogleDocsResponseMessage {
+  if (!isRecord(value) || value.protocol !== PROTOCOL_VERSION) {
+    return false;
+  }
+
+  return (
+    typeof value.requestId === "string" &&
+    isRecord(value.response) &&
+    typeof value.response.kind === "string"
+  );
+}
+
+function isNotificationMessage(
+  value: unknown,
+): value is GoogleDocsNotificationMessage {
+  if (!isRecord(value) || value.protocol !== PROTOCOL_VERSION) {
+    return false;
+  }
+
+  return (
+    isRecord(value.notification) && typeof value.notification.kind === "string"
+  );
+}
+
 export default class GoogleDocsBridgeClient {
-	private readonly documentRef: Document;
-	private readonly timeoutMs: number;
-	private readonly pending = new Map<string, PendingRequest>();
-	private readonly onResponseBound: EventListener;
-	private readonly onNotificationBound: EventListener;
+  private readonly documentRef: Document;
+  private readonly requestTimeoutMs: number;
+  private readonly pending = new Map<string, PendingRequest>();
+  private readonly notificationListeners =
+    new Set<BridgeNotificationListener>();
+  private readonly onResponseBound: EventListener;
+  private readonly onNotificationBound: EventListener;
 
-	private readonly textUpdatedListeners = new Set<(length: number) => void>();
-	private readonly layoutChangedListeners = new Set<
-		(reason: string, layoutEpoch: number) => void
-	>();
+  public constructor(
+    documentRef: Document = document,
+    requestTimeoutMs = 2000,
+  ) {
+    this.documentRef = documentRef;
+    this.requestTimeoutMs = requestTimeoutMs;
+    this.onResponseBound = this.onResponse.bind(this);
+    this.onNotificationBound = this.handleNotificationEvent.bind(this);
+    this.documentRef.addEventListener(EVENT_RESPONSE, this.onResponseBound);
+    this.documentRef.addEventListener(
+      EVENT_NOTIFICATION,
+      this.onNotificationBound,
+    );
+  }
 
-	public constructor(documentRef: Document = document, timeoutMs = 2000) {
-		this.documentRef = documentRef;
-		this.timeoutMs = timeoutMs;
-		this.onResponseBound = this.onResponse.bind(this);
-		this.onNotificationBound = this.onNotification.bind(this);
-		this.documentRef.addEventListener(EVENT_RESPONSE, this.onResponseBound);
-		this.documentRef.addEventListener(EVENT_NOTIFICATION, this.onNotificationBound);
-	}
+  public dispose() {
+    this.documentRef.removeEventListener(EVENT_RESPONSE, this.onResponseBound);
+    this.documentRef.removeEventListener(
+      EVENT_NOTIFICATION,
+      this.onNotificationBound,
+    );
 
-	/** Remove listeners and reject any pending bridge requests. */
-	public dispose() {
-		this.documentRef.removeEventListener(EVENT_RESPONSE, this.onResponseBound);
-		this.documentRef.removeEventListener(EVENT_NOTIFICATION, this.onNotificationBound);
-		for (const [requestId, pending] of this.pending.entries()) {
-			clearTimeout(pending.timerId);
-			pending.reject(new Error(`Google Docs bridge request "${requestId}" was disposed`));
-		}
-		this.pending.clear();
-		this.textUpdatedListeners.clear();
-		this.layoutChangedListeners.clear();
-	}
+    for (const [requestId, request] of this.pending) {
+      window.clearTimeout(request.timeoutId);
+      request.reject(
+        new Error(`Google Docs bridge request "${requestId}" was disposed`),
+      );
+    }
 
-	/** Get on-screen rects for a text span in the Google Doc. */
-	public async getRects(start: number, end: number): Promise<GoogleDocsRect[]> {
-		const response = (await this.request({
-			kind: 'getRects',
-			start,
-			end,
-		})) as GoogleDocsGetRectsResponse;
-		return response.rects;
-	}
+    this.pending.clear();
+    this.notificationListeners.clear();
+  }
 
-	/** Replace a text span in the Google Doc. Returns true if the edit was applied. */
-	public async replaceText(
-		start: number,
-		end: number,
-		replacementText: string,
-		expectedText?: string,
-		beforeContext?: string,
-		afterContext?: string,
-	): Promise<boolean> {
-		const response = await this.request({
-			kind: 'replaceText',
-			start,
-			end,
-			replacementText,
-			expectedText,
-			beforeContext,
-			afterContext,
-		});
-		return response.kind === 'replaceText' ? response.applied : false;
-	}
+  public async getRects(start: number, end: number): Promise<GoogleDocsRect[]> {
+    const response = (await this.request({
+      kind: "getRects",
+      start,
+      end,
+    })) as GoogleDocsGetRectsResponse;
 
-	/** Listen for bridge text updates. Returns an unsubscribe function. */
-	public onTextUpdated(cb: (length: number) => void): () => void {
-		this.textUpdatedListeners.add(cb);
-		return () => this.textUpdatedListeners.delete(cb);
-	}
+    return response.rects;
+  }
 
-	/** Listen for bridge layout changes. Returns an unsubscribe function. */
-	public onLayoutChanged(cb: (reason: string, layoutEpoch: number) => void): () => void {
-		this.layoutChangedListeners.add(cb);
-		return () => this.layoutChangedListeners.delete(cb);
-	}
+  public async replaceText(
+    start: number,
+    end: number,
+    replacementText: string,
+    expectedText?: string,
+    beforeContext?: string,
+    afterContext?: string,
+  ): Promise<boolean> {
+    const response = await this.request({
+      kind: "replaceText",
+      start,
+      end,
+      replacementText,
+      expectedText,
+      beforeContext,
+      afterContext,
+    });
 
-	/** Send one bridge request and wait for the response with the same request id. */
-	private async request(request: GoogleDocsRequest): Promise<GoogleDocsResponse> {
-		const requestId = this.createRequestId();
-		const message: GoogleDocsRequestMessage = {
-			protocol: PROTOCOL_VERSION,
-			requestId,
-			request,
-		};
+    return response.kind === "replaceText" ? response.applied : false;
+  }
 
-		return new Promise((resolve, reject) => {
-			const timerId = window.setTimeout(() => {
-				this.pending.delete(requestId);
-				reject(new Error(`Google Docs bridge request "${request.kind}" timed out`));
-			}, this.timeoutMs);
+  public onTextUpdated(listener: (length: number) => void): () => void {
+    return this.addNotificationListener((notification) => {
+      if (notification.kind === "textUpdated") {
+        listener(notification.length);
+      }
+    });
+  }
 
-			this.pending.set(requestId, { resolve, reject, timerId });
-			this.documentRef.dispatchEvent(new CustomEvent(EVENT_REQUEST, { detail: message }));
-		});
-	}
+  public onLayoutChanged(
+    listener: (reason: string, layoutEpoch: number) => void,
+  ): () => void {
+    return this.addNotificationListener((notification) => {
+      if (notification.kind === "layoutChanged") {
+        listener(notification.reason, notification.layoutEpoch);
+      }
+    });
+  }
 
-	/** Route bridge responses to the matching pending request. */
-	private onResponse(event: Event) {
-		const detail = (event as CustomEvent).detail;
-		if (!this.isResponseMessage(detail)) {
-			return;
-		}
+  private addNotificationListener(
+    listener: BridgeNotificationListener,
+  ): () => void {
+    this.notificationListeners.add(listener);
+    return () => this.notificationListeners.delete(listener);
+  }
 
-		const pending = this.pending.get(detail.requestId);
-		if (!pending) {
-			return;
-		}
+  private async request(
+    request: GoogleDocsRequest,
+  ): Promise<GoogleDocsResponse> {
+    const requestId = this.createRequestId();
+    const requestMessage: GoogleDocsRequestMessage = {
+      protocol: PROTOCOL_VERSION,
+      requestId,
+      request,
+    };
 
-		this.pending.delete(detail.requestId);
-		clearTimeout(pending.timerId);
-		if (detail.response.kind === 'error') {
-			pending.reject(new Error(detail.response.message || 'Google Docs bridge request failed'));
-			return;
-		}
+    return await new Promise<GoogleDocsResponse>((resolve, reject) => {
+      const timeoutId = window.setTimeout(() => {
+        this.pending.delete(requestId);
+        reject(
+          new Error(`Google Docs bridge request "${request.kind}" timed out`),
+        );
+      }, this.requestTimeoutMs);
 
-		pending.resolve(detail.response);
-	}
+      this.pending.set(requestId, { resolve, reject, timeoutId });
+      this.documentRef.dispatchEvent(
+        new CustomEvent(EVENT_REQUEST, { detail: requestMessage }),
+      );
+    });
+  }
 
-	/** Route bridge notifications to local subscribers. */
-	private onNotification(event: Event) {
-		const detail = (event as CustomEvent).detail;
-		if (!this.isNotificationMessage(detail)) {
-			return;
-		}
+  private onResponse(event: Event) {
+    const detail = (event as CustomEvent).detail;
+    if (!isResponseMessage(detail)) {
+      return;
+    }
 
-		const { notification } = detail;
-		if (notification.kind === 'textUpdated') {
-			for (const listener of this.textUpdatedListeners) {
-				listener(notification.length);
-			}
-			return;
-		}
+    const pendingRequest = this.pending.get(detail.requestId);
+    if (!pendingRequest) {
+      return;
+    }
 
-		if (notification.kind === 'layoutChanged') {
-			for (const listener of this.layoutChangedListeners) {
-				listener(notification.reason, notification.layoutEpoch);
-			}
-		}
-	}
+    this.pending.delete(detail.requestId);
+    window.clearTimeout(pendingRequest.timeoutId);
 
-	/** Create a request id for request/response matching. */
-	private createRequestId(): string {
-		return `gdocs-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-	}
+    if (detail.response.kind === "error") {
+      pendingRequest.reject(
+        new Error(
+          detail.response.message || "Google Docs bridge request failed",
+        ),
+      );
+      return;
+    }
 
-	private isResponseMessage(value: unknown): value is GoogleDocsResponseMessage {
-		if (!this.isObject(value)) return false;
-		return (
-			value.protocol === PROTOCOL_VERSION &&
-			typeof value.requestId === 'string' &&
-			this.isObject(value.response) &&
-			typeof value.response.kind === 'string'
-		);
-	}
+    pendingRequest.resolve(detail.response);
+  }
 
-	private isNotificationMessage(value: unknown): value is GoogleDocsNotificationMessage {
-		if (!this.isObject(value)) return false;
-		return (
-			value.protocol === PROTOCOL_VERSION &&
-			this.isObject(value.notification) &&
-			typeof value.notification.kind === 'string'
-		);
-	}
+  private handleNotificationEvent(event: Event) {
+    const detail = (event as CustomEvent).detail;
+    if (!isNotificationMessage(detail)) {
+      return;
+    }
 
-	private isObject(value: unknown): value is Record<string, any> {
-		return value != null && typeof value === 'object';
-	}
+    for (const listener of this.notificationListeners) {
+      listener(detail.notification);
+    }
+  }
+
+  private createRequestId(): string {
+    return `gdocs-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
 }

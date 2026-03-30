@@ -1,598 +1,842 @@
-import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-handler.js';
+import { GoogleDocsBridgeRequestHandler } from "./google-docs-bridge-request-handler.js";
 
 (() => {
-	/**
-	 * @typedef {{ x: number, y: number, width: number, height: number }} Rect
-	 */
+  /**
+   * @typedef {{ x: number, y: number, width: number, height: number }} Rect
+   * @typedef {{ start: number, end: number }} SelectionEndpoints
+   * @typedef {{
+   *   getText: () => string,
+   *   setSelection: (start: number, end: number) => void,
+   *   getSelection?: () => Array<Record<string, unknown>>
+   * }} AnnotatedText
+   * @typedef {{ node: Window | Element, left: number, top: number }} ScrollSnapshot
+   */
 
-	/**
-	 * @typedef {{ start: number, end: number }} SelectionEndpoints
-	 */
+  const PROTOCOL_VERSION = "harper-gdocs-bridge/v1";
+  const BRIDGE_ID = "harper-google-docs-main-world-bridge";
+  const POLL_INTERVAL_MS = 125;
+  const EDITOR_SELECTOR = ".kix-appview-editor";
+  const EDITOR_CONTAINER_SELECTOR = ".kix-appview-editor-container";
+  const DOCS_EDITOR_SELECTOR = "#docs-editor";
+  const CARET_SELECTOR = ".kix-cursor-caret";
+  const TEXT_EVENT_IFRAME_SELECTOR = ".docs-texteventtarget-iframe";
+  const LAYOUT_EPOCH_ATTR = "data-harper-layout-epoch";
+  const LAYOUT_REASON_ATTR = "data-harper-layout-reason";
+  const SELECTION_START_ATTR = "data-harper-selection-start";
+  const SELECTION_END_ATTR = "data-harper-selection-end";
+  const EVENT_NOTIFICATION = "harper:gdocs:notification";
+  const EVENT_TEXT_UPDATED = "harper:gdocs:text-updated";
+  const EVENT_LAYOUT_CHANGED = "harper:gdocs:layout-changed";
+  const EVENT_GET_RECTS = "harper:gdocs:get-rects";
+  const EVENT_REPLACE = "harper:gdocs:replace";
+  const CARET_DIRECTION_THRESHOLD = 20;
+  const CARET_CHOICE_STALE_MS = 1500;
 
-	/**
-	 * @typedef {{
-	 *   getText: () => string,
-	 *   setSelection: (start: number, end: number) => void,
-	 *   getSelection?: () => Array<Record<string, unknown>>
-	 * }} AnnotatedText
-	 */
+  let bridgeNode = /** @type {HTMLElement | null} */ (
+    document.getElementById(BRIDGE_ID)
+  );
+  let currentAnnotated = /** @type {AnnotatedText | null} */ (null);
+  let observedEditor = /** @type {HTMLElement | null} */ (null);
+  let layoutObserver = /** @type {MutationObserver | null} */ (null);
+  let resizeObserver = /** @type {ResizeObserver | null} */ (null);
+  let layoutEpoch = 0;
+  let layoutScheduled = false;
+  let lastCaretChoice =
+    /** @type {{ rect: Rect, position: number, at: number } | null} */ (null);
+  let textSyncInFlight = false;
 
-	const PROTOCOL_VERSION = 'harper-gdocs-bridge/v1';
-	const BRIDGE_ID = 'harper-google-docs-main-world-bridge';
-	const SYNC_INTERVAL_MS = 100;
-	const EDITOR_SELECTOR = '.kix-appview-editor';
-	const EDITOR_CONTAINER_SELECTOR = '.kix-appview-editor-container';
-	const DOCS_EDITOR_SELECTOR = '#docs-editor';
-	const CARET_SELECTOR = '.kix-cursor-caret';
-	const TEXT_EVENT_IFRAME_SELECTOR = '.docs-texteventtarget-iframe';
-	const LAYOUT_EPOCH_ATTR = 'data-harper-layout-epoch';
-	const LAYOUT_REASON_ATTR = 'data-harper-layout-reason';
-	const SELECTION_START_ATTR = 'data-harper-selection-start';
-	const SELECTION_END_ATTR = 'data-harper-selection-end';
-	const EVENT_NOTIFICATION = 'harper:gdocs:notification';
-	const EVENT_TEXT_UPDATED = 'harper:gdocs:text-updated';
-	const EVENT_LAYOUT_CHANGED = 'harper:gdocs:layout-changed';
-	const EVENT_GET_RECTS = 'harper:gdocs:get-rects';
-	const EVENT_REPLACE = 'harper:gdocs:replace';
+  function ensureBridgeNode() {
+    if (bridgeNode instanceof HTMLElement) {
+      return bridgeNode;
+    }
 
-	let isComputingRects = false;
-	let layoutEpoch = 0;
-	let layoutBumpPending = false;
-	let lastCaretChoice = null;
-	const CARET_DIRECTION_THRESHOLD = 20;
-	const CARET_CHOICE_STALE_MS = 1500;
+    const nextBridge = document.createElement("div");
+    nextBridge.id = BRIDGE_ID;
+    nextBridge.setAttribute("aria-hidden", "true");
+    nextBridge.style.display = "none";
+    document.documentElement.appendChild(nextBridge);
+    bridgeNode = nextBridge;
+    return nextBridge;
+  }
 
-	/** @type {HTMLElement | null} */
-	let bridge = document.getElementById(BRIDGE_ID);
+  function dispatchEvent(name, detail) {
+    try {
+      document.dispatchEvent(new CustomEvent(name, { detail }));
+    } catch {}
+  }
 
-	/** @returns {HTMLElement} */
-	function ensureBridgeExists() {
-		if (bridge) {
-			return bridge;
-		}
+  function dispatchNotification(kind, detail) {
+    dispatchEvent(EVENT_NOTIFICATION, {
+      protocol: PROTOCOL_VERSION,
+      notification: {
+        kind,
+        ...detail,
+      },
+    });
+  }
 
-		const nextBridge = document.createElement('div');
-		nextBridge.id = BRIDGE_ID;
-		nextBridge.setAttribute('aria-hidden', 'true');
-		nextBridge.style.display = 'none';
-		document.documentElement.appendChild(nextBridge);
-		bridge = nextBridge;
+  function scheduleLayoutUpdate(reason) {
+    if (layoutScheduled) {
+      return;
+    }
 
-		return nextBridge;
-	}
+    layoutScheduled = true;
+    queueMicrotask(() => {
+      layoutScheduled = false;
+      layoutEpoch += 1;
+      const bridge = ensureBridgeNode();
+      bridge.setAttribute(LAYOUT_EPOCH_ATTR, String(layoutEpoch));
+      bridge.setAttribute(LAYOUT_REASON_ATTR, String(reason));
+      dispatchEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
+      dispatchNotification("layoutChanged", { layoutEpoch, reason });
+    });
+  }
 
-	ensureBridgeExists();
+  function normalizeGoogleDocsText(text) {
+    const raw = String(text ?? "");
+    const withoutSentinel = raw.startsWith("\u0003") ? raw.slice(1) : raw;
+    return withoutSentinel.endsWith("\n")
+      ? withoutSentinel.slice(0, -1)
+      : withoutSentinel;
+  }
 
-	/** @param {string} name
-	 * @param {Record<string, unknown>} detail
-	 * @returns {void}
-	 */
-	const emitEvent = (name, detail) => {
-		try {
-			document.dispatchEvent(new CustomEvent(name, { detail }));
-		} catch {}
-	};
+  function normalizedToRawOffset(rawText, normalizedOffset) {
+    const raw = String(rawText ?? "");
+    const leadingOffset = raw.startsWith("\u0003") ? 1 : 0;
+    const trailingOffset = raw.endsWith("\n") ? 1 : 0;
+    const rawEnd = Math.max(leadingOffset, raw.length - trailingOffset);
+    const safeOffset = Math.max(
+      0,
+      Number.isFinite(normalizedOffset) ? normalizedOffset : 0,
+    );
 
-	/**
-	 * @param {'textUpdated' | 'layoutChanged'} name
-	 * @param {Record<string, unknown>} detail
-	 * @returns {void}
-	 */
-	const emitNotification = (name, detail) => {
-		try {
-			document.dispatchEvent(
-				new CustomEvent(EVENT_NOTIFICATION, {
-					detail: {
-						protocol: PROTOCOL_VERSION,
-						notification: { kind: name, ...detail },
-					},
-				}),
-			);
-		} catch {}
-	};
+    return Math.max(
+      leadingOffset,
+      Math.min(rawEnd, safeOffset + leadingOffset),
+    );
+  }
 
-	/**
-	 * @param {string} reason
-	 * @returns {void}
-	 */
-	const bumpLayoutEpoch = (reason) => {
-		if (layoutBumpPending) return;
-		layoutBumpPending = true;
-		queueMicrotask(() => {
-			layoutBumpPending = false;
-			layoutEpoch += 1;
-			const bridgeNode = ensureBridgeExists();
-			bridgeNode.setAttribute(LAYOUT_EPOCH_ATTR, String(layoutEpoch));
-			bridgeNode.setAttribute(LAYOUT_REASON_ATTR, String(reason));
-			emitEvent(EVENT_LAYOUT_CHANGED, { layoutEpoch, reason });
-			emitNotification('layoutChanged', { layoutEpoch, reason });
-		});
-	};
+  function rawToNormalizedOffset(rawText, rawOffset) {
+    const raw = String(rawText ?? "");
+    const leadingOffset = raw.startsWith("\u0003") ? 1 : 0;
+    const trailingOffset = raw.endsWith("\n") ? 1 : 0;
+    const rawEnd = Math.max(leadingOffset, raw.length - trailingOffset);
+    const safeOffset = Math.max(
+      leadingOffset,
+      Math.min(rawEnd, Number.isFinite(rawOffset) ? rawOffset : leadingOffset),
+    );
 
-	/** @returns {Promise<void>} */
-	const syncText = async () => {
-		try {
-			const getAnnotatedText = window._docs_annotate_getAnnotatedText;
-			if (typeof getAnnotatedText !== 'function') return;
-			/** @type {AnnotatedText | null | undefined} */
-			const annotated = await getAnnotatedText();
-			if (!annotated || typeof annotated.getText !== 'function') return;
-			window.__harperGoogleDocsAnnotatedText = annotated;
-			try {
-				const selection = annotated.getSelection?.()?.[0];
-				const endpoints = getSelectionEndpoints(selection);
-				const bridgeNode = ensureBridgeExists();
-				if (endpoints) {
-					bridgeNode.setAttribute(SELECTION_START_ATTR, String(endpoints.start));
-					bridgeNode.setAttribute(SELECTION_END_ATTR, String(endpoints.end));
-				} else {
-					bridgeNode.removeAttribute(SELECTION_START_ATTR);
-					bridgeNode.removeAttribute(SELECTION_END_ATTR);
-				}
-			} catch {}
-			const nextText = annotated.getText();
-			const bridgeNode = ensureBridgeExists();
-			if (bridgeNode.textContent !== nextText) {
-				bridgeNode.textContent = nextText;
-				emitEvent(EVENT_TEXT_UPDATED, { length: nextText.length });
-				emitNotification('textUpdated', { length: nextText.length });
-			}
-		} catch {}
-	};
+    return Math.max(0, safeOffset - leadingOffset);
+  }
 
-	/**
-	 * @param {AnnotatedText} annotated
-	 * @param {number} position
-	 * @returns {Rect | null}
-	 */
-	const getCaretRect = (annotated, position) => {
-		annotated.setSelection(position, position);
-		const viewportWidth = window.innerWidth;
-		const viewportHeight = window.innerHeight;
-		const epsilon = 0.5;
-		/** @type {Rect[]} */
-		const carets = Array.from(document.querySelectorAll(CARET_SELECTOR))
-			.map((caret) => {
-				const rect = caret.getBoundingClientRect();
-				const style = window.getComputedStyle(caret);
-				const isFullyOnScreen =
-					rect.left >= -epsilon &&
-					rect.top >= -epsilon &&
-					rect.right <= viewportWidth + epsilon &&
-					rect.bottom <= viewportHeight + epsilon;
-				if (
-					!rect ||
-					rect.width <= 0 ||
-					rect.height <= 0 ||
-					style.display === 'none' ||
-					style.visibility === 'hidden' ||
-					style.opacity === '0' ||
-					!isFullyOnScreen
-				) {
-					return null;
-				}
-				return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
-			})
-			.filter((rect) => rect != null);
-		if (carets.length === 0) return null;
-		const inPage = carets.filter((rect) => rect.x > 100);
-		const pool = inPage.length > 0 ? inPage : carets;
-		const now = Date.now();
-		if (!lastCaretChoice || now - lastCaretChoice.at > CARET_CHOICE_STALE_MS) {
-			const seed = pool.reduce((best, rect) => (rect.x < best.x ? rect : best), pool[0]);
-			lastCaretChoice = { rect: seed, position, at: now };
-			return seed;
-		}
+  function asFiniteNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
 
-		const deltaPos = position - lastCaretChoice.position;
-		let chosen = null;
+  function getSelectionEndpoints(selection) {
+    if (!selection || typeof selection !== "object") {
+      return null;
+    }
 
-		if (deltaPos > CARET_DIRECTION_THRESHOLD) {
-			const downward = pool.filter((rect) => rect.y >= lastCaretChoice.rect.y - 2);
-			if (downward.length > 0) {
-				chosen = downward.reduce((best, rect) => {
-					if (rect.y > best.y + 1) return rect;
-					if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
-					return best;
-				}, downward[0]);
-			}
-		} else if (deltaPos < -CARET_DIRECTION_THRESHOLD) {
-			const upward = pool.filter((rect) => rect.y <= lastCaretChoice.rect.y + 2);
-			if (upward.length > 0) {
-				chosen = upward.reduce((best, rect) => {
-					if (rect.y < best.y - 1) return rect;
-					if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
-					return best;
-				}, upward[0]);
-			}
-		}
+    for (const [startKey, endKey] of [
+      ["anchor", "focus"],
+      ["base", "extent"],
+      ["start", "end"],
+    ]) {
+      const start = asFiniteNumber(selection[startKey]);
+      const end = asFiniteNumber(selection[endKey]);
+      if (start != null && end != null) {
+        return { start, end };
+      }
+    }
 
-		if (!chosen) {
-			chosen = pool.reduce((best, rect) => {
-				const bestScore =
-					Math.abs(best.y - lastCaretChoice.rect.y) * 4 + Math.abs(best.x - lastCaretChoice.rect.x);
-				const rectScore =
-					Math.abs(rect.y - lastCaretChoice.rect.y) * 4 + Math.abs(rect.x - lastCaretChoice.rect.x);
-				return rectScore < bestScore ? rect : best;
-			}, pool[0]);
-		}
+    return null;
+  }
 
-		lastCaretChoice = { rect: chosen, position, at: now };
-		return chosen;
-	};
+  function getAnnotatedTextApi() {
+    return typeof window._docs_annotate_getAnnotatedText === "function"
+      ? window._docs_annotate_getAnnotatedText
+      : null;
+  }
 
-	/**
-	 * @param {unknown} value
-	 * @returns {number | null}
-	 */
-	const asFiniteNumber = (value) => {
-		const num = Number(value);
-		return Number.isFinite(num) ? num : null;
-	};
+  async function syncText() {
+    if (textSyncInFlight) {
+      return;
+    }
 
-	/**
-	 * @param {unknown} selection
-	 * @returns {SelectionEndpoints | null}
-	 */
-	const getSelectionEndpoints = (selection) => {
-		if (!selection || typeof selection !== 'object') {
-			return null;
-		}
+    textSyncInFlight = true;
 
-		const candidates = [
-			['anchor', 'focus'],
-			['base', 'extent'],
-			['start', 'end'],
-		];
+    try {
+      const getAnnotatedText = getAnnotatedTextApi();
+      if (!getAnnotatedText) {
+        return;
+      }
 
-		for (const [a, b] of candidates) {
-			const start = asFiniteNumber(selection[a]);
-			const end = asFiniteNumber(selection[b]);
-			if (start != null && end != null) {
-				return { start, end };
-			}
-		}
+      const annotated = await getAnnotatedText();
+      if (!annotated || typeof annotated.getText !== "function") {
+        return;
+      }
 
-		return null;
-	};
+      currentAnnotated = annotated;
+      window.__harperGoogleDocsAnnotatedText = annotated;
 
-	/**
-	 * @param {AnnotatedText} annotated
-	 * @param {SelectionEndpoints | null} selection
-	 * @returns {void}
-	 */
-	const restoreSelection = (annotated, selection) => {
-		if (!selection) return;
-		try {
-			annotated.setSelection(selection.start, selection.end);
-		} catch {}
-	};
+      const rawText = annotated.getText();
+      const normalizedText = normalizeGoogleDocsText(rawText);
+      const bridge = ensureBridgeNode();
+      const selection = getSelectionEndpoints(annotated.getSelection?.()?.[0]);
 
-	/**
-	 * @param {number} start
-	 * @param {number} end
-	 * @param {SelectionEndpoints | null} selection
-	 * @returns {boolean}
-	 */
-	const isSpanNearSelection = (start, end, selection) => {
-		if (!selection) return false;
-		const spanStart = Math.max(0, Math.min(start, end));
-		const spanEnd = Math.max(spanStart, Math.max(start, end));
-		const selStart = Math.min(selection.start, selection.end);
-		const selEnd = Math.max(selection.start, selection.end);
-		const maxDistance = 2000;
+      if (selection) {
+        bridge.setAttribute(
+          SELECTION_START_ATTR,
+          String(rawToNormalizedOffset(rawText, selection.start)),
+        );
+        bridge.setAttribute(
+          SELECTION_END_ATTR,
+          String(rawToNormalizedOffset(rawText, selection.end)),
+        );
+      } else {
+        bridge.removeAttribute(SELECTION_START_ATTR);
+        bridge.removeAttribute(SELECTION_END_ATTR);
+      }
 
-		if (spanStart <= selEnd && spanEnd >= selStart) {
-			return true;
-		}
-		if (spanEnd < selStart) {
-			return selStart - spanEnd <= maxDistance;
-		}
-		return spanStart - selEnd <= maxDistance;
-	};
+      if (bridge.textContent !== normalizedText) {
+        bridge.textContent = normalizedText;
+        dispatchEvent(EVENT_TEXT_UPDATED, { length: normalizedText.length });
+        dispatchNotification("textUpdated", { length: normalizedText.length });
+      }
+    } catch {
+      // Ignore bridge sync failures. The next poll or mutation will retry.
+    } finally {
+      textSyncInFlight = false;
+    }
+  }
 
-	/**
-	 * @typedef {{
-	 *   node: Window | Element,
-	 *   left: number,
-	 *   top: number
-	 * }} ScrollSnapshot
-	 */
+  function disconnectLayoutObservers() {
+    layoutObserver?.disconnect();
+    layoutObserver = null;
+    resizeObserver?.disconnect();
+    resizeObserver = null;
+    observedEditor = null;
+  }
 
-	/**
-	 * @returns {ScrollSnapshot[]}
-	 */
-	const snapshotScroll = () => {
-		/** @type {ScrollSnapshot[]} */
-		const snapshots = [{ node: window, left: window.scrollX, top: window.scrollY }];
-		const selectors = [EDITOR_SELECTOR, EDITOR_CONTAINER_SELECTOR, DOCS_EDITOR_SELECTOR];
-		for (const selector of selectors) {
-			const node = document.querySelector(selector);
-			if (!(node instanceof Element)) continue;
-			if (snapshots.some((entry) => entry.node === node)) continue;
-			snapshots.push({ node, left: node.scrollLeft, top: node.scrollTop });
-		}
-		return snapshots;
-	};
+  function bindLayoutObservers() {
+    const editor = document.querySelector(EDITOR_SELECTOR);
+    if (!(editor instanceof HTMLElement)) {
+      disconnectLayoutObservers();
+      return;
+    }
 
-	/**
-	 * @param {ScrollSnapshot[]} snapshots
-	 * @returns {void}
-	 */
-	const restoreScroll = (snapshots) => {
-		for (const snap of snapshots) {
-			if (snap.node === window) {
-				if (window.scrollX !== snap.left || window.scrollY !== snap.top) {
-					window.scrollTo(snap.left, snap.top);
-				}
-				continue;
-			}
-			if (!(snap.node instanceof Element)) continue;
-			if (snap.node.scrollLeft !== snap.left) {
-				snap.node.scrollLeft = snap.left;
-			}
-			if (snap.node.scrollTop !== snap.top) {
-				snap.node.scrollTop = snap.top;
-			}
-		}
-	};
+    if (editor === observedEditor) {
+      return;
+    }
 
-	/**
-	 * @template T
-	 * @param {() => T} fn
-	 * @returns {T}
-	 */
-	const withSuppressedScrolling = (fn) => {
-		/** @type {Array<() => void>} */
-		const restorers = [];
-		const noop = () => {};
-		const tryOverride = (obj, key) => {
-			if (!obj) return;
-			const original = obj[key];
-			if (typeof original !== 'function') return;
-			try {
-				obj[key] = noop;
-				restorers.push(() => {
-					try {
-						obj[key] = original;
-					} catch {}
-				});
-			} catch {}
-		};
+    disconnectLayoutObservers();
+    observedEditor = editor;
+    scheduleLayoutUpdate("init");
 
-		tryOverride(window, 'scrollTo');
-		tryOverride(window, 'scrollBy');
-		tryOverride(Element.prototype, 'scrollIntoView');
-		tryOverride(Element.prototype, 'scrollTo');
-		tryOverride(Element.prototype, 'scrollBy');
+    layoutObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList" || mutation.type === "attributes") {
+          scheduleLayoutUpdate("mutation");
+          break;
+        }
+      }
+    });
+    layoutObserver.observe(editor, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
 
-		try {
-			return fn();
-		} finally {
-			for (let i = restorers.length - 1; i >= 0; i -= 1) {
-				restorers[i]();
-			}
-		}
-	};
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(() => {
+        scheduleLayoutUpdate("resize");
+      });
+      resizeObserver.observe(editor);
+    }
+  }
 
-	/**
-	 * @param {{ start?: number, end?: number }} request
-	 * @returns {Promise<{ kind: 'getRects', rects: Rect[] }>}
-	 */
-	const handleGetRectsRequest = async (request) => {
-		const start = Number(request.start);
-		const end = Number(request.end);
-		/** @type {AnnotatedText | undefined} */
-		const annotated = window.__harperGoogleDocsAnnotatedText;
-		if (!annotated || typeof annotated.setSelection !== 'function') {
-			return { kind: 'getRects', rects: [] };
-		}
+  function snapshotScroll() {
+    /** @type {ScrollSnapshot[]} */
+    const snapshots = [
+      { node: window, left: window.scrollX, top: window.scrollY },
+    ];
+    const selectors = [
+      EDITOR_SELECTOR,
+      EDITOR_CONTAINER_SELECTOR,
+      DOCS_EDITOR_SELECTOR,
+    ];
 
-		const currentSelection = annotated.getSelection?.()?.[0];
-		const previousSelection = getSelectionEndpoints(currentSelection);
-		if (!isSpanNearSelection(start, end, previousSelection)) {
-			return { kind: 'getRects', rects: [] };
-		}
+    for (const selector of selectors) {
+      const node = document.querySelector(selector);
+      if (
+        !(node instanceof Element) ||
+        snapshots.some((entry) => entry.node === node)
+      ) {
+        continue;
+      }
 
-		/** @type {Rect[]} */
-		const rects = [];
-		isComputingRects = true;
-		const scrollSnapshot = snapshotScroll();
-		try {
-			const spanStart = Math.max(0, Math.min(start, end));
-			const spanEnd = Math.max(spanStart, end);
-			const { startRect, endRect } = withSuppressedScrolling(() => {
-				return {
-					startRect: getCaretRect(annotated, spanStart),
-					endRect: getCaretRect(annotated, spanEnd),
-				};
-			});
+      snapshots.push({
+        node,
+        left: node.scrollLeft,
+        top: node.scrollTop,
+      });
+    }
 
-			if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
-				rects.push({
-					x: Math.min(startRect.x, endRect.x),
-					y: startRect.y,
-					width: Math.max(4, Math.abs(endRect.x - startRect.x)),
-					height: startRect.height,
-				});
-			} else if (startRect) {
-				rects.push({
-					x: startRect.x,
-					y: startRect.y,
-					width: 8,
-					height: startRect.height,
-				});
-			}
-		} finally {
-			isComputingRects = false;
-			restoreSelection(annotated, previousSelection);
-			restoreScroll(scrollSnapshot);
-			requestAnimationFrame(() => restoreScroll(scrollSnapshot));
-		}
+    return snapshots;
+  }
 
-		return { kind: 'getRects', rects };
-	};
+  function restoreScroll(snapshots) {
+    for (const snapshot of snapshots) {
+      if (snapshot.node === window) {
+        if (
+          window.scrollX !== snapshot.left ||
+          window.scrollY !== snapshot.top
+        ) {
+          window.scrollTo(snapshot.left, snapshot.top);
+        }
+        continue;
+      }
 
-	/**
-	 * @param {{ start?: number, end?: number, replacementText?: string, expectedText?: string, beforeContext?: string, afterContext?: string }} request
-	 * @returns {Promise<{ kind: 'replaceText', applied: boolean }>}
-	 */
-	const handleReplaceTextRequest = async (request) => {
-		let start = Number(request.start);
-		let end = Number(request.end);
-		const replacementText = String(request.replacementText ?? '');
-		const expectedText = String(request.expectedText ?? '');
-		const beforeContext = String(request.beforeContext ?? '');
-		const afterContext = String(request.afterContext ?? '');
-		const getAnnotatedText = window._docs_annotate_getAnnotatedText;
-		if (typeof getAnnotatedText !== 'function') {
-			return { kind: 'replaceText', applied: false };
-		}
-		/** @type {AnnotatedText | null | undefined} */
-		const annotated = await getAnnotatedText();
-		if (!annotated || typeof annotated.setSelection !== 'function') {
-			return { kind: 'replaceText', applied: false };
-		}
+      if (!(snapshot.node instanceof Element)) {
+        continue;
+      }
 
-		if (expectedText) {
-			const currentText = annotated.getText?.();
-			if (typeof currentText === 'string') {
-				const spanLength = Math.max(0, end - start);
-				const normalizeStart = Math.max(0, Math.min(start, currentText.length));
-				const normalizeEnd = Math.max(normalizeStart, Math.min(end, currentText.length));
-				const direct = currentText.slice(normalizeStart, normalizeEnd);
-				if (direct !== expectedText) {
-					const resolveByOffsetWindow = () => {
-						for (let delta = -12; delta <= 12; delta += 1) {
-							const candidateStart = normalizeStart + delta;
-							if (candidateStart < 0) continue;
-							const candidateEnd = candidateStart + spanLength;
-							if (candidateEnd > currentText.length) continue;
-							if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
-								return { start: candidateStart, end: candidateEnd };
-							}
-						}
-						return null;
-					};
+      if (snapshot.node.scrollLeft !== snapshot.left) {
+        snapshot.node.scrollLeft = snapshot.left;
+      }
 
-					const resolveByContext = () => {
-						const hits = [];
-						let cursor = 0;
-						while (cursor <= currentText.length) {
-							const index = currentText.indexOf(expectedText, cursor);
-							if (index < 0) break;
-							const indexEnd = index + expectedText.length;
-							const beforeTail = beforeContext ? beforeContext.slice(-16) : '';
-							const afterHead = afterContext ? afterContext.slice(0, 16) : '';
-							let score = 0;
-							if (
-								beforeTail &&
-								currentText.slice(Math.max(0, index - beforeTail.length), index) === beforeTail
-							) {
-								score += 2;
-							}
-							if (
-								afterHead &&
-								currentText.slice(
-									indexEnd,
-									Math.min(currentText.length, indexEnd + afterHead.length),
-								) === afterHead
-							) {
-								score += 2;
-							}
-							score -= Math.abs(index - normalizeStart) / 1000;
-							hits.push({ start: index, end: indexEnd, score });
-							cursor = index + 1;
-						}
+      if (snapshot.node.scrollTop !== snapshot.top) {
+        snapshot.node.scrollTop = snapshot.top;
+      }
+    }
+  }
 
-						if (hits.length === 0) return null;
-						hits.sort((a, b) => b.score - a.score);
-						return { start: hits[0].start, end: hits[0].end };
-					};
+  function withSuppressedScrolling(fn) {
+    /** @type {Array<() => void>} */
+    const restorers = [];
+    const noop = () => {};
 
-					const resolved = resolveByOffsetWindow() ?? resolveByContext();
-					if (resolved) {
-						start = resolved.start;
-						end = resolved.end;
-					}
-				}
-			}
-		}
+    const tryOverride = (target, key) => {
+      if (!target || typeof target[key] !== "function") {
+        return;
+      }
 
-		annotated.setSelection(start, end);
-		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
-		const target = iframe?.contentDocument?.activeElement;
-		if (!target) {
-			return { kind: 'replaceText', applied: false };
-		}
+      const original = target[key];
+      try {
+        target[key] = noop;
+        restorers.push(() => {
+          try {
+            target[key] = original;
+          } catch {}
+        });
+      } catch {}
+    };
 
-		const dt = new DataTransfer();
-		dt.setData('text/plain', replacementText);
-		const pasteEvent = new ClipboardEvent('paste', {
-			clipboardData: dt,
-			cancelable: true,
-			bubbles: true,
-		});
-		target.dispatchEvent(pasteEvent);
-		setTimeout(syncText, 0);
-		return { kind: 'replaceText', applied: true };
-	};
+    tryOverride(window, "scrollTo");
+    tryOverride(window, "scrollBy");
+    tryOverride(Element.prototype, "scrollIntoView");
+    tryOverride(Element.prototype, "scrollTo");
+    tryOverride(Element.prototype, "scrollBy");
 
-	const requestHandler = new GoogleDocsBridgeRequestHandler({
-		onGetRectsRequest: handleGetRectsRequest,
-		onReplaceTextRequest: handleReplaceTextRequest,
-	});
-	requestHandler.start();
+    try {
+      return fn();
+    } finally {
+      for (let index = restorers.length - 1; index >= 0; index -= 1) {
+        restorers[index]();
+      }
+    }
+  }
 
-	// Legacy compatibility bridge while callers migrate to request/response protocol.
-	document.addEventListener(EVENT_GET_RECTS, (event) => {
-		try {
-			const detail = /** @type {CustomEvent} */ (event).detail || {};
-			const requestId = String(detail.requestId || '');
-			if (!requestId) return;
-			void handleGetRectsRequest(detail).then((response) => {
-				ensureBridgeExists().setAttribute(
-					`data-harper-rects-${requestId}`,
-					JSON.stringify(response.rects),
-				);
-			});
-		} catch {}
-	});
+  function getCaretRect(annotated, position) {
+    annotated.setSelection(position, position);
+    const epsilon = 0.5;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    /** @type {Rect[]} */
+    const carets = Array.from(document.querySelectorAll(CARET_SELECTOR))
+      .map((caret) => {
+        const rect = caret.getBoundingClientRect();
+        const style = window.getComputedStyle(caret);
+        const onScreen =
+          rect.left >= -epsilon &&
+          rect.top >= -epsilon &&
+          rect.right <= viewportWidth + epsilon &&
+          rect.bottom <= viewportHeight + epsilon;
 
-	document.addEventListener(EVENT_REPLACE, (event) => {
-		try {
-			const detail = /** @type {CustomEvent} */ (event).detail || {};
-			void handleReplaceTextRequest(detail);
-		} catch {}
-	});
+        if (
+          rect.width <= 0 ||
+          rect.height <= 0 ||
+          style.display === "none" ||
+          style.visibility === "hidden" ||
+          style.opacity === "0" ||
+          !onScreen
+        ) {
+          return null;
+        }
 
-	window.addEventListener('resize', () => bumpLayoutEpoch('resize'));
+        return {
+          x: rect.x,
+          y: rect.y,
+          width: rect.width,
+          height: rect.height,
+        };
+      })
+      .filter((rect) => rect != null);
 
-	const observeLayout = () => {
-		const editor = document.querySelector(EDITOR_SELECTOR);
-		if (!(editor instanceof HTMLElement)) {
-			setTimeout(observeLayout, 250);
-			return;
-		}
+    if (carets.length === 0) {
+      return null;
+    }
 
-		bumpLayoutEpoch('init');
-		const observer = new MutationObserver((mutations) => {
-			for (const mutation of mutations) {
-				if (mutation.type === 'childList' || mutation.type === 'attributes') {
-					bumpLayoutEpoch('mutation');
-					break;
-				}
-			}
-		});
-		observer.observe(editor, {
-			subtree: true,
-			childList: true,
-			attributes: true,
-			attributeFilter: ['style', 'class'],
-		});
-	};
+    const visiblePageCarets = carets.filter((rect) => rect.x > 100);
+    const pool = visiblePageCarets.length > 0 ? visiblePageCarets : carets;
+    const now = Date.now();
 
-	observeLayout();
-	syncText();
-	setInterval(syncText, SYNC_INTERVAL_MS);
+    if (!lastCaretChoice || now - lastCaretChoice.at > CARET_CHOICE_STALE_MS) {
+      const choice = pool.reduce(
+        (best, rect) => (rect.x < best.x ? rect : best),
+        pool[0],
+      );
+      lastCaretChoice = { rect: choice, position, at: now };
+      return choice;
+    }
+
+    const positionDelta = position - lastCaretChoice.position;
+    let choice = null;
+
+    if (positionDelta > CARET_DIRECTION_THRESHOLD) {
+      const lowerRects = pool.filter(
+        (rect) => rect.y >= lastCaretChoice.rect.y - 2,
+      );
+      if (lowerRects.length > 0) {
+        choice = lowerRects.reduce((best, rect) => {
+          if (rect.y > best.y + 1) return rect;
+          if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
+          return best;
+        }, lowerRects[0]);
+      }
+    } else if (positionDelta < -CARET_DIRECTION_THRESHOLD) {
+      const upperRects = pool.filter(
+        (rect) => rect.y <= lastCaretChoice.rect.y + 2,
+      );
+      if (upperRects.length > 0) {
+        choice = upperRects.reduce((best, rect) => {
+          if (rect.y < best.y - 1) return rect;
+          if (Math.abs(rect.y - best.y) <= 1 && rect.x < best.x) return rect;
+          return best;
+        }, upperRects[0]);
+      }
+    }
+
+    if (!choice) {
+      choice = pool.reduce((best, rect) => {
+        const bestScore =
+          Math.abs(best.y - lastCaretChoice.rect.y) * 4 +
+          Math.abs(best.x - lastCaretChoice.rect.x);
+        const rectScore =
+          Math.abs(rect.y - lastCaretChoice.rect.y) * 4 +
+          Math.abs(rect.x - lastCaretChoice.rect.x);
+        return rectScore < bestScore ? rect : best;
+      }, pool[0]);
+    }
+
+    lastCaretChoice = { rect: choice, position, at: now };
+    return choice;
+  }
+
+  function restoreSelection(annotated, selection) {
+    if (!selection) {
+      return;
+    }
+
+    try {
+      annotated.setSelection(selection.start, selection.end);
+    } catch {}
+  }
+
+  function isSpanNearSelection(start, end, selection) {
+    if (!selection) {
+      return false;
+    }
+
+    const spanStart = Math.max(0, Math.min(start, end));
+    const spanEnd = Math.max(spanStart, Math.max(start, end));
+    const selectionStart = Math.min(selection.start, selection.end);
+    const selectionEnd = Math.max(selection.start, selection.end);
+    const maxDistance = 2000;
+
+    if (spanStart <= selectionEnd && spanEnd >= selectionStart) {
+      return true;
+    }
+
+    if (spanEnd < selectionStart) {
+      return selectionStart - spanEnd <= maxDistance;
+    }
+
+    return spanStart - selectionEnd <= maxDistance;
+  }
+
+  function getCommonPrefixLength(left, right) {
+    const maxLength = Math.min(left.length, right.length);
+    let index = 0;
+
+    while (
+      index < maxLength &&
+      left.charCodeAt(index) === right.charCodeAt(index)
+    ) {
+      index += 1;
+    }
+
+    return index;
+  }
+
+  function getCommonSuffixLength(left, right) {
+    const maxLength = Math.min(left.length, right.length);
+    let index = 0;
+
+    while (
+      index < maxLength &&
+      left.charCodeAt(left.length - 1 - index) ===
+        right.charCodeAt(right.length - 1 - index)
+    ) {
+      index += 1;
+    }
+
+    return index;
+  }
+
+  function getLongestCommonSubsequenceLength(left, right) {
+    if (!left || !right) {
+      return 0;
+    }
+
+    const previous = new Array(right.length + 1).fill(0);
+    const current = new Array(right.length + 1).fill(0);
+
+    for (let i = 1; i <= left.length; i += 1) {
+      current[0] = 0;
+
+      for (let j = 1; j <= right.length; j += 1) {
+        if (left.charCodeAt(i - 1) === right.charCodeAt(j - 1)) {
+          current[j] = previous[j - 1] + 1;
+        } else {
+          current[j] = Math.max(previous[j], current[j - 1]);
+        }
+      }
+
+      for (let j = 0; j <= right.length; j += 1) {
+        previous[j] = current[j];
+      }
+    }
+
+    return previous[right.length];
+  }
+
+  function resolveReplacementRange(
+    currentText,
+    start,
+    end,
+    expectedText,
+    beforeContext,
+    afterContext,
+  ) {
+    const normalizedStart = Math.max(0, Math.min(start, currentText.length));
+    const normalizedEnd = Math.max(
+      normalizedStart,
+      Math.min(end, currentText.length),
+    );
+    const directText = currentText.slice(normalizedStart, normalizedEnd);
+
+    if (!expectedText || directText === expectedText) {
+      return {
+        start: normalizedStart,
+        end: normalizedEnd,
+      };
+    }
+
+    const spanLength = normalizedEnd - normalizedStart;
+
+    for (let delta = -12; delta <= 12; delta += 1) {
+      const candidateStart = normalizedStart + delta;
+      if (candidateStart < 0) {
+        continue;
+      }
+
+      const candidateEnd = candidateStart + spanLength;
+      if (candidateEnd > currentText.length) {
+        continue;
+      }
+
+      if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
+        return {
+          start: candidateStart,
+          end: candidateEnd,
+        };
+      }
+    }
+
+    const beforeWindowLength = Math.max(
+      beforeContext.length * 2,
+      beforeContext.length + 64,
+    );
+    const afterWindowLength = Math.max(
+      afterContext.length * 2,
+      afterContext.length + 64,
+    );
+    const hits = [];
+    let cursor = 0;
+
+    while (cursor <= currentText.length) {
+      const index = currentText.indexOf(expectedText, cursor);
+      if (index < 0) {
+        break;
+      }
+
+      const indexEnd = index + expectedText.length;
+      const candidateBefore = currentText.slice(
+        Math.max(0, index - beforeWindowLength),
+        index,
+      );
+      const candidateAfter = currentText.slice(
+        indexEnd,
+        Math.min(currentText.length, indexEnd + afterWindowLength),
+      );
+      let score = 0;
+
+      score +=
+        getLongestCommonSubsequenceLength(beforeContext, candidateBefore) * 8;
+      score +=
+        getLongestCommonSubsequenceLength(afterContext, candidateAfter) * 8;
+      score += getCommonPrefixLength(beforeContext, candidateBefore) * 4;
+      score += getCommonSuffixLength(beforeContext, candidateBefore) * 4;
+      score += getCommonPrefixLength(afterContext, candidateAfter) * 4;
+      score += getCommonSuffixLength(afterContext, candidateAfter) * 4;
+      score -= Math.abs(index - normalizedStart) / 1000;
+      hits.push({ start: index, end: indexEnd, score });
+      cursor = index + 1;
+    }
+
+    if (hits.length === 0) {
+      return {
+        start: normalizedStart,
+        end: normalizedEnd,
+      };
+    }
+
+    hits.sort((left, right) => right.score - left.score);
+    return {
+      start: hits[0].start,
+      end: hits[0].end,
+    };
+  }
+
+  async function handleGetRectsRequest(request) {
+    const annotated = currentAnnotated;
+    if (!annotated || typeof annotated.setSelection !== "function") {
+      return { kind: "getRects", rects: [] };
+    }
+
+    const rawText = annotated.getText?.() ?? "";
+    const normalizedStart = Number(request.start);
+    const normalizedEnd = Number(request.end);
+    const rawStart = normalizedToRawOffset(rawText, normalizedStart);
+    const rawEnd = normalizedToRawOffset(rawText, normalizedEnd);
+    const currentSelection = getSelectionEndpoints(
+      annotated.getSelection?.()?.[0],
+    );
+    const previousSelection = currentSelection
+      ? {
+          start: rawToNormalizedOffset(rawText, currentSelection.start),
+          end: rawToNormalizedOffset(rawText, currentSelection.end),
+        }
+      : null;
+
+    if (
+      !isSpanNearSelection(normalizedStart, normalizedEnd, previousSelection)
+    ) {
+      return { kind: "getRects", rects: [] };
+    }
+
+    const scrollSnapshots = snapshotScroll();
+    try {
+      const spanStart = Math.max(0, Math.min(rawStart, rawEnd));
+      const spanEnd = Math.max(spanStart, Math.max(rawStart, rawEnd));
+      const { startRect, endRect } = withSuppressedScrolling(() => ({
+        startRect: getCaretRect(annotated, spanStart),
+        endRect: getCaretRect(annotated, spanEnd),
+      }));
+
+      /** @type {Rect[]} */
+      const rects = [];
+
+      if (startRect && endRect && Math.abs(startRect.y - endRect.y) < 6) {
+        rects.push({
+          x: Math.min(startRect.x, endRect.x),
+          y: startRect.y,
+          width: Math.max(4, Math.abs(endRect.x - startRect.x)),
+          height: startRect.height,
+        });
+      } else if (startRect) {
+        rects.push({
+          x: startRect.x,
+          y: startRect.y,
+          width: 8,
+          height: startRect.height,
+        });
+      }
+
+      return {
+        kind: "getRects",
+        rects,
+      };
+    } finally {
+      restoreSelection(annotated, currentSelection);
+      restoreScroll(scrollSnapshots);
+      requestAnimationFrame(() => restoreScroll(scrollSnapshots));
+    }
+  }
+
+  async function handleReplaceTextRequest(request) {
+    const getAnnotatedText = getAnnotatedTextApi();
+    if (!getAnnotatedText) {
+      return { kind: "replaceText", applied: false };
+    }
+
+    const annotated = await getAnnotatedText();
+    if (!annotated || typeof annotated.setSelection !== "function") {
+      return { kind: "replaceText", applied: false };
+    }
+
+    currentAnnotated = annotated;
+    window.__harperGoogleDocsAnnotatedText = annotated;
+
+    const replacementText = String(request.replacementText ?? "");
+    const rawText = annotated.getText?.() ?? "";
+    const currentText = normalizeGoogleDocsText(rawText);
+    const resolvedRange = resolveReplacementRange(
+      currentText,
+      Number(request.start),
+      Number(request.end),
+      String(request.expectedText ?? ""),
+      String(request.beforeContext ?? ""),
+      String(request.afterContext ?? ""),
+    );
+    const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
+    const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
+
+    annotated.setSelection(rawStart, rawEnd);
+
+    const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
+    const targetDocument = iframe?.contentDocument;
+    const target = targetDocument?.activeElement;
+    if (!target) {
+      return { kind: "replaceText", applied: false };
+    }
+
+    target.focus?.();
+
+    const expectedNextText =
+      currentText.slice(0, resolvedRange.start) +
+      replacementText +
+      currentText.slice(resolvedRange.end);
+
+    const didApplyReplacement = async () => {
+      const nextAnnotated = await getAnnotatedText();
+      return (
+        normalizeGoogleDocsText(nextAnnotated?.getText?.()) === expectedNextText
+      );
+    };
+
+    if (targetDocument?.execCommand?.("insertText", false, replacementText)) {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      if (await didApplyReplacement()) {
+        queueMicrotask(() => {
+          void syncText();
+        });
+        return { kind: "replaceText", applied: true };
+      }
+    }
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.setData("text/plain", replacementText);
+    target.dispatchEvent(
+      new ClipboardEvent("paste", {
+        clipboardData: dataTransfer,
+        cancelable: true,
+        bubbles: true,
+      }),
+    );
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    const applied = await didApplyReplacement();
+    if (applied) {
+      queueMicrotask(() => {
+        void syncText();
+      });
+    }
+
+    return {
+      kind: "replaceText",
+      applied,
+    };
+  }
+
+  ensureBridgeNode();
+
+  const requestHandler = new GoogleDocsBridgeRequestHandler({
+    onGetRectsRequest: handleGetRectsRequest,
+    onReplaceTextRequest: handleReplaceTextRequest,
+  });
+  requestHandler.start();
+
+  document.addEventListener(EVENT_GET_RECTS, (event) => {
+    const detail = /** @type {CustomEvent} */ (event).detail ?? {};
+    const requestId = String(detail.requestId ?? "");
+    if (!requestId) {
+      return;
+    }
+
+    void handleGetRectsRequest(detail).then((response) => {
+      ensureBridgeNode().setAttribute(
+        `data-harper-rects-${requestId}`,
+        JSON.stringify(response.rects),
+      );
+    });
+  });
+
+  document.addEventListener(EVENT_REPLACE, (event) => {
+    const detail = /** @type {CustomEvent} */ (event).detail ?? {};
+    void handleReplaceTextRequest(detail);
+  });
+
+  window.addEventListener(
+    "resize",
+    () => {
+      scheduleLayoutUpdate("resize");
+    },
+    { passive: true },
+  );
+  window.addEventListener(
+    "scroll",
+    () => {
+      scheduleLayoutUpdate("scroll");
+    },
+    { passive: true, capture: true },
+  );
+  document.addEventListener(
+    "wheel",
+    () => {
+      scheduleLayoutUpdate("wheel");
+    },
+    { passive: true, capture: true },
+  );
+
+  void syncText();
+  bindLayoutObservers();
+  window.setInterval(() => {
+    void syncText();
+    bindLayoutObservers();
+  }, POLL_INTERVAL_MS);
 })();

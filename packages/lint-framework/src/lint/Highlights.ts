@@ -108,6 +108,11 @@ export default class Highlights {
 		const updated = new Set();
 
 		for (const [source, { boxes, cpa }] of sourceToBoxes.entries()) {
+			if (isGoogleDocsSourceSyncing(source)) {
+				updated.add(source);
+				continue;
+			}
+
 			const renderBox = this.renderBoxes.get(source)!;
 
 			const host = renderBox.getShadowHost();
@@ -159,6 +164,9 @@ export default class Highlights {
 
 		for (const [source, box] of this.renderBoxes.entries()) {
 			if (!updated.has(source)) {
+				if (isGoogleDocsSourceSyncing(source)) {
+					continue;
+				}
 				box.render(h('div', {}, []));
 			}
 		}
@@ -285,6 +293,15 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 	}
 
 	return null;
+}
+
+function isGoogleDocsSourceSyncing(source: SourceElement): boolean {
+	return (
+		source instanceof HTMLElement &&
+		(source.classList.contains('kix-appview-editor') ||
+			source.closest('.kix-appview-editor') != null) &&
+		source.getAttribute('data-harper-gdocs-syncing') === 'true'
+	);
 }
 
 /**
