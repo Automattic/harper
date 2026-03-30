@@ -1,9 +1,9 @@
 import {
-	type BinaryModule,
 	type Dialect,
 	type LintConfig,
 	LocalLinter,
 	unpackWeirpackBytes,
+  createBinaryModuleFromUrl
 } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
@@ -562,7 +562,7 @@ function initializeLinter(dialect: Dialect) {
 	}
 
 	linter = new LocalLinter({
-		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: createBinaryModuleFromUrl(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 

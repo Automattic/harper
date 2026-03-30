@@ -36,6 +36,10 @@ export interface BinaryModule {
 	setup(): Promise<void>;
 }
 
+export function createBinaryModuleFromUrl(url: string): BinaryModule{
+   return BinaryModuleImpl.create(url);
+}
+
 /** A wrapper around the underlying WebAssembly module that contains Harper's core code. Used to construct a `Linter`, as well as access some miscellaneous other functions. */
 export class BinaryModuleImpl {
 	public url: string | URL = '';
