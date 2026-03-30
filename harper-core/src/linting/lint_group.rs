@@ -219,6 +219,7 @@ use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
+use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
@@ -257,7 +258,7 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Dialect, Document, TokenStringExt};
+use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -384,7 +385,8 @@ pub struct LintGroup {
     ///
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
+    #[expect(clippy::complexity)]
+    chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -806,6 +808,7 @@ impl LintGroup {
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
+        insert_expr_rule!(ThriveOn, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(ToAdverb, true);
@@ -880,7 +883,7 @@ impl LintGroup {
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.insert(key.clone(), linter.lint(document));
+                results.insert(key.to_owned(), linter.lint(document));
             }
         }
 
@@ -892,9 +895,10 @@ impl LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let cache_key = (chunk_chars.into(), config_hash);
+            let char_hash = self.hasher_builder.hash_one(chunk_chars);
+            let cache_key = (char_hash, config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
+            let chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
                 let mut pattern_lints = BTreeMap::new();
@@ -911,19 +915,21 @@ impl LintGroup {
                     }
                 }
 
+                let pattern_lints = Lrc::new(pattern_lints);
+
                 self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
-            // Bring the spans back into document-space
-            for value in chunk_results.values_mut() {
-                for lint in value {
-                    lint.span.push_by(chunk_span.start);
-                }
-            }
-
-            for (key, mut vec) in chunk_results {
-                results.entry(key).or_default().append(&mut vec);
+            for (key, vec) in chunk_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(chunk_span.start);
+                        lint
+                    }));
             }
         }
 

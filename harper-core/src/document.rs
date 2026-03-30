@@ -17,7 +17,7 @@ use crate::{OrdinalSuffix, Span};
 /// A document containing some amount of lexed and parsed English text.
 #[derive(Debug, Clone)]
 pub struct Document {
-    source: Lrc<Vec<char>>,
+    source: Lrc<[char]>,
     tokens: Vec<Token>,
 }
 
@@ -53,23 +53,23 @@ impl Document {
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
     pub fn new(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
-        let source: Vec<_> = text.chars().collect();
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, dictionary)
+        Self::new_from_chars(source, parser, dictionary)
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and the included curated dictionary.
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
-        let source: Vec<_> = text.chars().collect();
+        let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_vec(Lrc::new(source), parser, &FstDictionary::curated())
+        Self::new_from_chars(source, parser, &FstDictionary::curated())
     }
 
     /// Lexes and parses text to produce a document using a provided language
     /// parser and dictionary.
-    pub fn new_from_vec(
-        source: Lrc<Vec<char>>,
+    pub fn new_from_chars(
+        source: Lrc<[char]>,
         parser: &impl Parser,
         dictionary: &impl Dictionary,
     ) -> Self {
@@ -84,11 +84,7 @@ impl Document {
     /// Create a new document from character data using the built-in [`PlainEnglish`]
     /// parser and curated dictionary. This avoids string-to-char conversions.
     pub fn new_plain_english_curated_chars(source: &[char]) -> Self {
-        Self::new_from_vec(
-            Lrc::new(source.to_vec()),
-            &PlainEnglish,
-            &FstDictionary::curated(),
-        )
+        Self::new_from_chars(Lrc::from(source), &PlainEnglish, &FstDictionary::curated())
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
@@ -103,7 +99,7 @@ impl Document {
     /// This avoids running potentially expensive metadata generation code, so this is more
     /// efficient if you don't need that information.
     pub(crate) fn new_basic_tokenize(text: &str, parser: &impl Parser) -> Self {
-        let source = Lrc::new(text.chars().collect_vec());
+        let source: Lrc<_> = text.chars().collect();
         let tokens = parser.parse(&source);
         let mut document = Self { source, tokens };
         document.apply_fixups();
@@ -129,7 +125,7 @@ impl Document {
     /// Create a new document from character data using the built-in [`Markdown`] parser
     /// and curated dictionary. This avoids string-to-char conversions.
     pub fn new_markdown_default_curated_chars(chars: &[char]) -> Self {
-        Self::new_from_vec(
+        Self::new_from_chars(
             chars.to_vec().into(),
             &Markdown::default(),
             &FstDictionary::curated(),

@@ -2837,7 +2837,7 @@ dependencies = [
  "itertools 0.14.0",
  "levenshtein_automata",
  "lru",
- "ordered-float 5.1.0",
+ "ordered-float 5.3.0",
  "paste",
  "pulldown-cmark",
  "quickcheck",
@@ -2855,7 +2855,7 @@ dependencies = [
  "unicode-blocks",
  "unicode-script",
  "unicode-width",
- "zip 8.3.1",
+ "zip 8.4.0",
 ]
 
 [[package]]
@@ -3017,7 +3017,7 @@ version = "1.12.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
- "ordered-float 5.1.0",
+ "ordered-float 5.3.0",
  "paste",
  "typst-syntax",
 ]
@@ -4099,9 +4099,9 @@ dependencies = [
 
 [[package]]
 name = "ordered-float"
-version = "5.1.0"
+version = "5.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f4779c6901a562440c3786d08192c6fbda7c1c2060edd10006b05ee35d10f2d"
+checksum = "b7d950ca161dc355eaf28f82b11345ed76c6e1f6eb1f4f4479e0323b9e2fbd0e"
 dependencies = [
  "num-traits",
  "rand 0.8.5",
@@ -6034,9 +6034,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-ink-lbz"
-version = "0.0.1"
+version = "0.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a44bf578477077d12eb671fd67fc47ab71516a1f3913a5dac96346a8faa33210"
+checksum = "d57e430493707c89d223ca6c9743a12915a20d3b97c5f8fea16065c2e823747e"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -7549,9 +7549,9 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "8.3.1"
+version = "8.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c546feb4481b0fbafb4ef0d79b6204fc41c6f9884b1b73b1d73f82442fc0845"
+checksum = "7756d0206d058333667493c4014f545f4b9603c4330ccd6d9b3f86dcab59f7d9"
 dependencies = [
  "crc32fast",
  "flate2",

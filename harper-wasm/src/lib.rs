@@ -247,13 +247,10 @@ impl Linter {
     }
 
     pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
-        let source: Vec<_> = source_text.chars().collect();
+        let source: Lrc<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        let document =
+            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
     }
@@ -267,7 +264,7 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
+        let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
             &self.dictionary,
@@ -284,8 +281,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -302,7 +298,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -325,7 +321,7 @@ impl Linter {
                     .into_iter()
                     .map(|l| {
                         let problem_text = l.get_str(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
 
                         Lint::new(l, span, problem_text, language)
                     })
@@ -344,8 +340,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<Lint> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -362,7 +357,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -378,7 +373,7 @@ impl Linter {
             .into_iter()
             .map(|l| {
                 let problem_text = l.get_str(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                let span = Into::<Span>::into(l.span).to_js_indices(&source);
                 Lint::new(l, span, problem_text, language)
             })
             .collect()
@@ -453,7 +448,7 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_vec(
+        let doc = Document::new_from_chars(
             source.clone().into(),
             &lint.language.create_parser(),
             &self.dictionary,
