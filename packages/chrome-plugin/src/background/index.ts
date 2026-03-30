@@ -1,9 +1,9 @@
 import {
+	createBinaryModuleFromUrl,
 	type Dialect,
 	type LintConfig,
 	LocalLinter,
 	unpackWeirpackBytes,
-  createBinaryModuleFromUrl
 } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
