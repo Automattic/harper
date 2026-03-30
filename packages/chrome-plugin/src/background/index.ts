@@ -1,5 +1,5 @@
 import {
-	BinaryModule,
+	type BinaryModule,
 	type Dialect,
 	type LintConfig,
 	LocalLinter,
