@@ -112,6 +112,19 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
     word_index_pairs
 }
 
+/// Merges index-distance pairs, keeping the smallest distance for each word.
+fn merge_best_distances(
+    best_distances: &mut HashMap<u64, u8>,
+    distances: impl IntoIterator<Item = (u64, u8)>,
+) {
+    for (idx, dist) in distances {
+        best_distances
+            .entry(idx)
+            .and_modify(|existing| *existing = (*existing).min(dist))
+            .or_insert(dist);
+    }
+}
+
 impl Dictionary for FstDictionary {
     fn contains_word(&self, word: &[char]) -> bool {
         self.mutable_dict.contains_word(word)
@@ -137,32 +150,35 @@ impl Dictionary for FstDictionary {
     ) -> Vec<FuzzyMatchResult<'_>> {
         let misspelled_word_charslice = word.normalized();
         let misspelled_word_string = misspelled_word_charslice.to_string();
+        let misspelled_lower = misspelled_word_string.to_lowercase();
+        let is_already_lower = misspelled_lower == misspelled_word_string;
 
         // Actual FST search
         let dfa = build_dfa(max_distance, &misspelled_word_string);
-        let dfa_lowercase = build_dfa(max_distance, &misspelled_word_string.to_lowercase());
         let mut word_indexes_stream = self.word_map.search_with_state(&dfa).into_stream();
-        let mut word_indexes_lowercase_stream = self
-            .word_map
-            .search_with_state(&dfa_lowercase)
-            .into_stream();
-
         let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
-        let lower_dists = stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
 
         // Merge the two results, keeping the smallest distance when both DFAs match.
         // The uppercase and lowercase searches can return different result counts, so
         // we can't simply zip the vectors without losing matches.
-        let mut merged = Vec::with_capacity(upper_dists.len().max(lower_dists.len()));
         let mut best_distances = HashMap::<u64, u8>::new();
 
-        for (idx, dist) in upper_dists.into_iter().chain(lower_dists.into_iter()) {
-            best_distances
-                .entry(idx)
-                .and_modify(|existing| *existing = (*existing).min(dist))
-                .or_insert(dist);
+        merge_best_distances(&mut best_distances, upper_dists);
+
+        // Only build the lowercase DFA when the query is not already lowercase.
+        if !is_already_lower {
+            let dfa_lowercase = build_dfa(max_distance, &misspelled_lower);
+            let mut word_indexes_lowercase_stream = self
+                .word_map
+                .search_with_state(&dfa_lowercase)
+                .into_stream();
+            let lower_dists =
+                stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
+
+            merge_best_distances(&mut best_distances, lower_dists);
         }
 
+        let mut merged = Vec::with_capacity(best_distances.len());
         for (index, edit_distance) in best_distances {
             let (word, metadata) = &self.words[index as usize];
             merged.push(FuzzyMatchResult {
@@ -235,9 +251,38 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::spell::{Dictionary, WordId};
+    use crate::DictWordMetadata;
+    use crate::spell::{Dictionary, MutableDictionary, WordId};
 
     use super::FstDictionary;
+
+    fn test_dictionaries(words: &[&str]) -> (MutableDictionary, FstDictionary) {
+        let mut mutable = MutableDictionary::new();
+
+        for word in words {
+            mutable.append_word_str(word, DictWordMetadata::default());
+        }
+
+        let fst = FstDictionary::from(mutable.clone());
+
+        (mutable, fst)
+    }
+
+    fn fuzzy_matches<D: Dictionary + ?Sized>(
+        dict: &D,
+        word: &str,
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<(String, u8)> {
+        let mut matches = dict
+            .fuzzy_match_str(word, max_distance, max_results)
+            .into_iter()
+            .map(|result| (result.word.iter().collect::<String>(), result.edit_distance))
+            .collect_vec();
+
+        matches.sort_unstable_by(|a, b| a.1.cmp(&b.1).then_with(|| a.0.cmp(&b.0)));
+        matches
+    }
 
     #[test]
     fn damerau_transposition_costs_one() {
@@ -386,5 +431,54 @@ mod tests {
                 .unwrap(),
             WordId::from_word_str("quick")
         );
+    }
+
+    #[test]
+    fn lowercase_fuzzy_match_matches_mutable_dictionary() {
+        let (mutable, fst) =
+            test_dictionaries(&["spelling", "spilling", "selling", "smelling", "shelling"]);
+
+        let mutable_results = fuzzy_matches(&mutable, "speling", 3, 10);
+        let fst_results = fuzzy_matches(&fst, "speling", 3, 10);
+
+        assert_eq!(fst_results, mutable_results);
+        assert_eq!(fst_results.first(), Some(&(String::from("spelling"), 1)));
+    }
+
+    #[test]
+    fn capitalized_fuzzy_match_matches_mutable_dictionary() {
+        let (mutable, fst) =
+            test_dictionaries(&["spelling", "spilling", "selling", "smelling", "shelling"]);
+
+        let mutable_results = fuzzy_matches(&mutable, "Speling", 3, 10);
+        let fst_results = fuzzy_matches(&fst, "Speling", 3, 10);
+
+        assert_eq!(fst_results, mutable_results);
+        assert_eq!(fst_results.first(), Some(&(String::from("spelling"), 1)));
+    }
+
+    #[test]
+    fn uppercase_fuzzy_match_matches_mutable_dictionary() {
+        let (mutable, fst) =
+            test_dictionaries(&["spelling", "spilling", "selling", "smelling", "shelling"]);
+
+        let mutable_results = fuzzy_matches(&mutable, "SPELING", 3, 10);
+        let fst_results = fuzzy_matches(&fst, "SPELING", 3, 10);
+
+        assert_eq!(fst_results, mutable_results);
+        assert_eq!(fst_results.first(), Some(&(String::from("spelling"), 1)));
+    }
+
+    #[test]
+    fn query_casing_produces_the_same_fuzzy_matches() {
+        let (_, fst) =
+            test_dictionaries(&["spelling", "spilling", "selling", "smelling", "shelling"]);
+
+        let lowercase = fuzzy_matches(&fst, "speling", 3, 10);
+        let capitalized = fuzzy_matches(&fst, "Speling", 3, 10);
+        let uppercase = fuzzy_matches(&fst, "SPELING", 3, 10);
+
+        assert_eq!(lowercase, capitalized);
+        assert_eq!(lowercase, uppercase);
     }
 }
