@@ -47,10 +47,7 @@ impl ExprLinter for ThePointFor {
         if let Some((_, after)) = ctx
             && after.len() >= 2
             && after[0].kind.is_whitespace()
-            && after[1]
-                .span
-                .get_content(src)
-                .eq_ignore_ascii_case_str("which")
+            && after[1].get_ch(src).eq_str("which")
         {
             return None;
         }

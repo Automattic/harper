@@ -18,9 +18,11 @@ build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt
+    wasm-pack build --target web --no-opt --out-name harper_wasm
+    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
   else
-    wasm-pack build --target web
+    wasm-pack build --target web --out-name harper_wasm
+    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
   fi
 
 # Build `harper.js` with all size optimizations available.
@@ -31,6 +33,7 @@ build-harperjs: build-wasm
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
@@ -118,8 +121,20 @@ build-obsidian: build-harperjs
 
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
+  max_bundle_size_bytes=$((30 * 1024 * 1024))
+
   pnpm install
   pnpm build
+
+  bundle_size_bytes=$(wc -c < main.js | tr -d '[:space:]')
+
+  if [ "$bundle_size_bytes" -gt "$max_bundle_size_bytes" ]; then
+    bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $bundle_size_bytes / 1024 / 1024 }")
+    max_bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $max_bundle_size_bytes / 1024 / 1024 }")
+
+    echo "Obsidian plugin bundle size ${bundle_size_mb} MB exceeds the ${max_bundle_size_mb} MB limit. This can cause problems for mobile devices with limited memory." >&2
+    exit 1
+  fi
 
   zip harper-obsidian-plugin.zip manifest.json main.js
 

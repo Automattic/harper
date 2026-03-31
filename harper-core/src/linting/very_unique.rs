@@ -32,7 +32,7 @@ impl ExprLinter for VeryUnique {
         let very_unique_span = toks.span()?;
         let very_unique_chars = very_unique_span.get_content(src);
         let qualifier_tok = &toks.first()?;
-        let qualifier_str = qualifier_tok.span.get_content_string(src);
+        let qualifier_str = qualifier_tok.get_str(src);
 
         let adjectives = ["special", "rare", "unusual"];
 
