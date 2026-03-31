@@ -472,8 +472,9 @@ fn main() -> anyhow::Result<()> {
                                 status_summary
                                     .push_str("\n  Your annotations differ from the dictionary.\n");
                             } else {
-                                status_summary
-                                    .push_str("\n  Your annotations are the same as the dictionary.\n");
+                                status_summary.push_str(
+                                    "\n  Your annotations are the same as the dictionary.\n",
+                                );
                             }
                         }
 
