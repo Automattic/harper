@@ -171,7 +171,7 @@ impl WeirLinter {
                     continue;
                 }
 
-                let doc = Document::new_from_vec(
+                let doc = Document::new_from_chars(
                     current.chars().collect::<Vec<_>>().into(),
                     &Markdown::default(),
                     &FstDictionary::curated(),
@@ -197,7 +197,7 @@ impl WeirLinter {
             let mut iter_count = 0;
 
             loop {
-                let test = Document::new_from_vec(
+                let test = Document::new_from_chars(
                     text_chars.clone().into(),
                     &Markdown::default(),
                     &FstDictionary::curated(),
@@ -224,7 +224,7 @@ impl WeirLinter {
         }
 
         fn lint_count(text: &str, linter: &mut impl Linter) -> usize {
-            let document = Document::new_from_vec(
+            let document = Document::new_from_chars(
                 text.chars().collect::<Vec<_>>().into(),
                 &Markdown::default(),
                 &FstDictionary::curated(),
