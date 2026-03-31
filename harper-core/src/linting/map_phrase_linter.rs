@@ -85,7 +85,10 @@ impl MapPhraseLinter {
         )
     }
 
-    pub fn new_closed_compound(phrase: impl AsRef<str>, correct_form: impl ToString) -> Self {
+    pub fn new_closed_compound(
+        phrases: impl IntoIterator<Item = impl AsRef<str>>,
+        correct_form: impl ToString,
+    ) -> Self {
         let message = format!(
             "Did you mean the closed compound `{}`?",
             correct_form.to_string()
@@ -96,8 +99,8 @@ impl MapPhraseLinter {
             correct_form.to_string()
         );
 
-        Self::new_fixed_phrase(
-            phrase,
+        Self::new_fixed_phrases(
+            phrases,
             [correct_form],
             message,
             description,

@@ -58,7 +58,7 @@ impl ExprLinter for EffectToAffect {
 
             if matches!(
                 lower_prev.as_str(),
-                "take" | "takes" | "taking" | "took" | "taken"
+                "take" | "takes" | "taking" | "took" | "taken" | "side"
             ) {
                 return None;
             }
