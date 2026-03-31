@@ -1,6 +1,6 @@
 use crate::{
     Lint, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
+    expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Sentence},
     patterns::WordSet,
 };
@@ -12,32 +12,27 @@ pub struct WebScraping {
 impl Default for WebScraping {
     fn default() -> Self {
         let scrap_verbs = &["scrap", "scrapped", "scraps", "scrapping"][..];
-
         let scrap_nouns = &["scrapper", "scrappers"][..];
 
-        let all_scraps = &[scrap_verbs, scrap_nouns].concat();
+        let mut closed_compounds = WordSet::new(&[]);
+        let mut open_and_hyphenated_compounds = vec![];
 
-        let mut closed_compound_word_set = WordSet::new(&[]);
-        let mut open_compound_vec = vec![];
-        let mut hyphenated_compounds_vec = vec![];
-
-        all_scraps.iter().for_each(|s| {
-            closed_compound_word_set.add(format!("web{}", s).as_str());
-            open_compound_vec.push(
-                Box::new(FixedPhrase::from_phrase(format!("web {}", s).as_str())) as Box<dyn Expr>,
+        scrap_verbs.iter().chain(scrap_nouns).for_each(|scrap| {
+            closed_compounds.add_chars(
+                &['w', 'e', 'b']
+                    .into_iter()
+                    .chain(scrap.chars())
+                    .collect::<Vec<char>>(),
             );
-            hyphenated_compounds_vec.push(Box::new(FixedPhrase::from_phrase(
-                format!("web-{}", s).as_str(),
-            )) as Box<dyn Expr>);
+            open_and_hyphenated_compounds
+                .push(Box::new(SequenceExpr::aco("web").t_ws_h().t_aco(scrap)) as Box<dyn Expr>);
         });
 
-        let open_compound_first_match_of = FirstMatchOf::new(open_compound_vec);
-        let hyphenated_compounds_first_match_of = FirstMatchOf::new(hyphenated_compounds_vec);
+        let hyphenated_compounds = FirstMatchOf::new(open_and_hyphenated_compounds);
 
         let web_scraps = FirstMatchOf::new(vec![
-            Box::new(closed_compound_word_set),
-            Box::new(open_compound_first_match_of),
-            Box::new(hyphenated_compounds_first_match_of),
+            Box::new(closed_compounds),
+            Box::new(hyphenated_compounds),
         ]);
 
         let scrapables = &[
