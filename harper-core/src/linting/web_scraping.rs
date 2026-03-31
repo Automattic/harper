@@ -1,5 +1,5 @@
 use crate::{
-    Lint, Token, TokenStringExt,
+    CharStringExt, Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Sentence},
     patterns::WordSet,
@@ -64,7 +64,7 @@ impl Default for WebScraping {
             .t_ws()
             .then_zero_or_more(
                 SequenceExpr::with(|t: &Token, s: &[char]| {
-                    t.kind.is_word() && !scrapables.contains(&t.get_str(s).as_str())
+                    t.kind.is_word() && !t.get_ch(s).eq_any_ignore_ascii_case_str(scrapables)
                 })
                 .t_ws(),
             )
