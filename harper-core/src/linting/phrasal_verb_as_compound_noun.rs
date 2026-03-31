@@ -1,5 +1,5 @@
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{CommonDictFuncs, MutableDictionary};
+use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharStringExt, Document, Span, TokenStringExt};
 
 /// Detect phrasal verbs written as compound nouns.

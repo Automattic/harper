@@ -1,7 +1,5 @@
 use std::borrow::Cow;
 
-use blanket::blanket;
-
 use super::FuzzyMatchResult;
 use crate::{
     DictWordMetadata,
@@ -14,7 +12,6 @@ pub(crate) static ANNOTATIONS_STR: &str = include_str!("../../annotations.json")
 /// An in-memory database that contains everything necessary to parse and analyze English text.
 ///
 /// See also: [`super::FstDictionary`] and [`super::MutableDictionary`].
-#[blanket(derive(Arc, Ref))]
 pub trait Dictionary: Send + Sync {
     /// Get the underlying [`WordMap`] used by the dictionary.
     fn get_word_map(&self) -> &WordMap;
@@ -42,18 +39,7 @@ pub trait Dictionary: Send + Sync {
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.fuzzy_match(str_to_chars(word).as_ref(), max_distance, max_results)
     }
-}
 
-/// The default conversion function for converting a str to a sequence of characters.
-///
-/// For use by default implementations of the "str variants" of dictionary functions.
-fn str_to_chars(word: &str) -> impl AsRef<[char]> {
-    word.chars().collect::<Vec<_>>()
-}
-
-// This trait doesn't need to be dyn-compatible, as such, it can use things like generics.
-/// Contains functions which have a common implementation across all dictionaries.
-pub trait CommonDictFuncs: Dictionary {
     /// Get the associated [`WordMapEntry`] for any capitalization of a given word.
     ///
     /// Since the dictionary might contain words that differ only in capitalization, this may
@@ -61,7 +47,10 @@ pub trait CommonDictFuncs: Dictionary {
     fn get_word(
         &self,
         word: &[char],
-    ) -> impl ExactSizeIterator<Item = &WordMapEntry> + use<'_, Self> {
+    ) -> impl ExactSizeIterator<Item = &WordMapEntry> + use<'_, Self>
+    where
+        Self: Sized,
+    {
         self.get_word_map().get_case_folded_chars(word)
     }
 
@@ -81,7 +70,10 @@ pub trait CommonDictFuncs: Dictionary {
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>
+    where
+        Self: Sized,
+    {
         let mut found_words = self.get_word(word);
 
         match found_words.len() {
@@ -115,7 +107,10 @@ pub trait CommonDictFuncs: Dictionary {
     }
 
     /// Iterate over the words in the dictionary.
-    fn words_iter(&self) -> impl ExactSizeIterator<Item = &[char]> {
+    fn words_iter(&self) -> impl ExactSizeIterator<Item = &[char]>
+    where
+        Self: Sized,
+    {
         self.get_word_map()
             .iter()
             .map(|wme| wme.canonical_spelling.as_slice())
@@ -125,7 +120,10 @@ pub trait CommonDictFuncs: Dictionary {
     fn get_correct_capitalizations_of(
         &self,
         word: &[char],
-    ) -> impl ExactSizeIterator<Item = &[char]> + use<'_, Self> {
+    ) -> impl ExactSizeIterator<Item = &[char]> + use<'_, Self>
+    where
+        Self: Sized,
+    {
         self.get_word(word)
             .map(|word| word.canonical_spelling.as_slice())
     }
@@ -137,10 +135,10 @@ pub trait CommonDictFuncs: Dictionary {
     ///
     /// Since the dictionary might contain words that differ only in capitalization, this may
     /// return multiple entries.
-    fn get_word_str(
-        &self,
-        word: &str,
-    ) -> impl ExactSizeIterator<Item = &WordMapEntry> + use<'_, Self> {
+    fn get_word_str(&self, word: &str) -> impl ExactSizeIterator<Item = &WordMapEntry>
+    where
+        Self: Sized,
+    {
         self.get_word(str_to_chars(word).as_ref())
     }
 
@@ -169,10 +167,114 @@ pub trait CommonDictFuncs: Dictionary {
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>
+    where
+        Self: Sized,
+    {
         self.get_word_metadata(str_to_chars(word).as_ref())
     }
     // STRING FUNCTION VARIANTS END
 }
 
-impl<D: Dictionary> CommonDictFuncs for D {}
+/// The default conversion function for converting a str to a sequence of characters.
+///
+/// For use by default implementations of the "str variants" of dictionary functions.
+fn str_to_chars(word: &str) -> impl AsRef<[char]> {
+    word.chars().collect::<Vec<_>>()
+}
+
+use std::sync::Arc;
+
+impl<D: Dictionary> Dictionary for Arc<D> {
+    fn get_word_map(&self) -> &WordMap {
+        self.as_ref().get_word_map()
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.as_ref().fuzzy_match(word, max_distance, max_results)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.as_ref().find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.as_ref().find_words_with_common_prefix(word)
+    }
+}
+
+impl<D: Dictionary + Send + Sync> Dictionary for &D {
+    fn get_word_map(&self) -> &WordMap {
+        (*self).get_word_map()
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        (*self).fuzzy_match(word, max_distance, max_results)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        (*self).find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        (*self).find_words_with_common_prefix(word)
+    }
+}
+
+impl Dictionary for &dyn Dictionary {
+    fn get_word_map(&self) -> &WordMap {
+        (*self).get_word_map()
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.get_word_map()
+            .fuzzy_match(word, max_distance, max_results)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.get_word_map().find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.get_word_map().find_words_with_common_prefix(word)
+    }
+}
+
+impl Dictionary for Arc<dyn Dictionary> {
+    fn get_word_map(&self) -> &WordMap {
+        self.as_ref().get_word_map()
+    }
+
+    fn fuzzy_match(
+        &'_ self,
+        word: &[char],
+        max_distance: u8,
+        max_results: usize,
+    ) -> Vec<FuzzyMatchResult<'_>> {
+        self.get_word_map()
+            .fuzzy_match(word, max_distance, max_results)
+    }
+
+    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.get_word_map().find_words_with_prefix(prefix)
+    }
+
+    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
+        self.get_word_map().find_words_with_common_prefix(word)
+    }
+}

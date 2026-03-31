@@ -1,7 +1,7 @@
 use itertools::Itertools;
 
 use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{CommonDictFuncs, MutableDictionary};
+use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Document, Span};
 
 pub struct MergeWords {

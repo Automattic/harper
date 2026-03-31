@@ -8,7 +8,7 @@ use crate::{
     CharStringExt, DictWordMetadata,
     edit_distance::edit_distance_min_alloc,
     spell::{
-        CommonDictFuncs, Dictionary, FstDictionary, FuzzyMatchResult,
+        Dictionary, FstDictionary, FuzzyMatchResult,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},

@@ -294,7 +294,7 @@ impl HumanReadableAttributeList {
 
 #[cfg(test)]
 mod tests {
-    use crate::spell::{CommonDictFuncs, FstDictionary};
+    use crate::spell::{Dictionary, FstDictionary};
 
     #[test]
     fn proper_noun_property_propagates_to_plurals() {

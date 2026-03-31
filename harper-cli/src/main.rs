@@ -1,8 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{
-    CanonicalWordId, CommonDictFuncs, Dictionary, FstDictionary, MutableDictionary,
-};
+use harper_core::spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;

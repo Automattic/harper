@@ -9,7 +9,7 @@ use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
-use harper_core::spell::{CommonDictFuncs, Dictionary, FstDictionary, WordMapEntry};
+use harper_core::spell::{Dictionary, FstDictionary, WordMapEntry};
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
@@ -736,7 +736,6 @@ pub struct OrganizedGroup {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::spell::CommonDictFuncs;
     use sysinfo::{Pid, ProcessRefreshKind, ProcessesToUpdate, System};
 
     /// Get memory usage for the process with the given PID, in bytes.

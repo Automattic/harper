@@ -1194,7 +1194,7 @@ pub mod tests {
     use std::borrow::Cow;
 
     use crate::DictWordMetadata;
-    use crate::spell::{CommonDictFuncs, FstDictionary};
+    use crate::spell::{Dictionary, FstDictionary};
 
     // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> Cow<'_, DictWordMetadata> {

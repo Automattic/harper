@@ -6,7 +6,7 @@ use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, B
 
 use harper_core::{
     CharString, Dialect, DialectFlags, DictWordMetadata,
-    spell::{CommonDictFuncs, Dictionary, MutableDictionary, WordMapEntry},
+    spell::{Dictionary, MutableDictionary, WordMapEntry},
 };
 
 /// Save the contents of a dictionary to a file.
@@ -29,7 +29,7 @@ pub async fn save_dict(path: impl AsRef<Path>, dict: &dyn Dictionary) -> Result<
 async fn write_word_list(dict: &dyn Dictionary, mut w: impl AsyncWrite + Unpin) -> Result<()> {
     let mut cur_str = String::new();
 
-    for word in dict.words_iter().sorted() {
+    for word in dict.get_word_map().words_iter().sorted() {
         cur_str.clear();
         cur_str.extend(word);
 

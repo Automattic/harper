@@ -8,11 +8,11 @@ use hashbrown::HashSet;
 use itertools::Itertools;
 
 use crate::Punctuation;
-use crate::spell::{CommonDictFuncs, Dictionary};
+use crate::spell::Dictionary;
 use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
-pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &dyn Dictionary) -> String {
+pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &impl Dictionary) -> String {
     let source: Lrc<_> = source.chars().collect();
 
     make_title_case_chars(source, parser, dict).to_string()
@@ -22,7 +22,7 @@ pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &dyn Dictio
 pub fn make_title_case_chars(
     source: Lrc<[char]>,
     parser: &impl Parser,
-    dict: &dyn Dictionary,
+    dict: &impl Dictionary,
 ) -> Vec<char> {
     let document = Document::new_from_chars(source.clone(), parser, &dict);
 
@@ -32,7 +32,7 @@ pub fn make_title_case_chars(
 pub fn try_make_title_case(
     toks: &[Token],
     source: &[char],
-    dict: &dyn Dictionary,
+    dict: &impl Dictionary,
 ) -> Option<Vec<char>> {
     if toks.is_empty() {
         return None;
@@ -122,7 +122,7 @@ pub fn try_make_title_case(
     output
 }
 
-pub fn make_title_case(toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Vec<char> {
+pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) -> Vec<char> {
     try_make_title_case(toks, source, dict)
         .unwrap_or_else(|| toks.span().unwrap_or_default().get_content(source).to_vec())
 }

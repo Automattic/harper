@@ -193,9 +193,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::spell::{
-        CanonicalWordId, CommonDictFuncs, Dictionary, MutableDictionary, WordMapEntry,
-    };
+    use crate::spell::{CanonicalWordId, Dictionary, MutableDictionary, WordMapEntry};
 
     use super::FstDictionary;
 

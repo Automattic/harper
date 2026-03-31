@@ -6,7 +6,7 @@ use smallvec::ToSmallVec;
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::document::Document;
-use crate::spell::{CommonDictFuncs, Dictionary, suggest_correct_spelling};
+use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
@@ -151,7 +151,7 @@ mod tests {
     use crate::linting::Linter;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{
-        CommonDictFuncs, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
+        Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
     };
     use crate::{
         Dialect,

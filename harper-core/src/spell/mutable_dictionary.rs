@@ -18,7 +18,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::char_string::char_string;
-    use crate::spell::{CommonDictFuncs, Dictionary, MutableDictionary, WordMapEntry};
+    use crate::spell::{Dictionary, MutableDictionary, WordMapEntry};
 
     #[test]
     fn curated_contains_no_duplicates() {

@@ -5,7 +5,7 @@ use crate::{
     irregular_nouns::IrregularNouns,
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{CommonDictFuncs, Dictionary},
+    spell::Dictionary,
 };
 use hashbrown::HashSet;
 
@@ -131,7 +131,7 @@ fn handle_adjectives(suggs: &mut HashSet<String>, chars: &[char]) {
     }
 }
 
-fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars: &[char]) {
+fn handle_plural_nouns(dict: &impl Dictionary, suggs: &mut HashSet<String>, chars: &[char]) {
     let mut plurals = vec![];
     let mut sg_candidates = vec![];
 
@@ -211,7 +211,7 @@ fn handle_plural_nouns(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars
     }
 }
 
-fn handle_past_verbs(dict: &dyn Dictionary, suggs: &mut HashSet<String>, chars: &[char]) {
+fn handle_past_verbs(dict: &impl Dictionary, suggs: &mut HashSet<String>, chars: &[char]) {
     let mut pasts: HashSet<Vec<char>> = HashSet::new();
     let mut vp_candidates = vec![];
 

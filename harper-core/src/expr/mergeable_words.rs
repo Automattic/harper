@@ -1,5 +1,5 @@
 use super::{Expr, SequenceExpr};
-use crate::spell::{CommonDictFuncs, MutableDictionary};
+use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, DictWordMetadata, Span, Token};
 
 type PredicateFn =

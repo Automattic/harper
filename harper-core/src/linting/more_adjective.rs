@@ -5,7 +5,7 @@ use crate::{
     char_ext::CharExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{CommonDictFuncs, Dictionary},
+    spell::Dictionary,
 };
 
 pub struct MoreAdjective<D> {

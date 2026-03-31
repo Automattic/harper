@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use super::FstDictionary;
 use super::{FuzzyMatchResult, dictionary::Dictionary};
-use crate::spell::{CommonDictFuncs, WordMap};
+use crate::spell::WordMap;
 
 /// A simple wrapper over [`Dictionary`] that allows
 /// one to merge multiple dictionaries without copying.

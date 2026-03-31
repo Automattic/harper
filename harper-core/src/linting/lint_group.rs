@@ -529,7 +529,7 @@ impl LintGroup {
         self
     }
 
-    pub fn new_curated(dictionary: Arc<dyn Dictionary + 'static>, dialect: Dialect) -> Self {
+    pub fn new_curated(dictionary: Arc<impl Dictionary + 'static>, dialect: Dialect) -> Self {
         let mut out = Self::empty();
 
         /// Add a `Linter` to the group, setting it to be enabled or disabled.
@@ -867,7 +867,7 @@ impl LintGroup {
 
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
-        dictionary: Arc<dyn Dictionary + 'static>,
+        dictionary: Arc<impl Dictionary + 'static>,
         dialect: Dialect,
     ) -> Self {
         let mut group = Self::new_curated(dictionary, dialect);

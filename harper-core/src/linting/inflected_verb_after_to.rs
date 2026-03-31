@@ -1,6 +1,6 @@
 use super::{Lint, LintKind, Linter, Suggestion};
 use crate::char_string::CharStringExt;
-use crate::spell::{CommonDictFuncs, Dictionary};
+use crate::spell::Dictionary;
 use crate::{Document, Span, TokenStringExt};
 
 pub struct InflectedVerbAfterTo<T>

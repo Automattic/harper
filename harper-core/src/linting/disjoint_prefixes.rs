@@ -2,7 +2,7 @@ use crate::{
     Lint, Token, TokenKind, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{CommonDictFuncs, Dictionary},
+    spell::Dictionary,
 };
 
 pub struct DisjointPrefixes<D> {

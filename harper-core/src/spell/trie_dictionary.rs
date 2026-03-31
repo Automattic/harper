@@ -4,8 +4,6 @@ use std::sync::LazyLock;
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::spell::CommonDictFuncs;
-
 use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
