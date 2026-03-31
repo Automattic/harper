@@ -1,5 +1,5 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
-import type { BinaryModule } from './binary';
+import type { BinaryModule } from './BinaryModule';
 import type { LintConfig, LintOptions } from './main';
 import type Summary from './Summary';
 

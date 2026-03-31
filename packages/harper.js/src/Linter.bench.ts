@@ -1,5 +1,5 @@
 import { bench } from 'vitest';
-import { binary } from './binary';
+import { binary } from './binaries/binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 

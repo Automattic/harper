@@ -1,7 +1,7 @@
 import type { Dialect, Lint, Suggestion, Linter as WasmLinter } from 'harper-wasm';
 import { Language } from 'harper-wasm';
 import LazyPromise from 'p-lazy';
-import type { SuperBinaryModule } from './binary';
+import type { SuperBinaryModule } from './BinaryModule';
 import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
 import type { LintConfig, LintOptions } from './main';

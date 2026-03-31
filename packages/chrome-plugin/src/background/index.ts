@@ -1,5 +1,5 @@
 import {
-	BinaryModule,
+	createBinaryModuleFromUrl,
 	type Dialect,
 	type LintConfig,
 	LocalLinter,
@@ -562,7 +562,7 @@ function initializeLinter(dialect: Dialect) {
 	}
 
 	linter = new LocalLinter({
-		binary: BinaryModule.create(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary: createBinaryModuleFromUrl(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
 		dialect,
 	});
 

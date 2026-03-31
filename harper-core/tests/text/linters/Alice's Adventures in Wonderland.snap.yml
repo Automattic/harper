@@ -2235,6 +2235,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (31 priority)
+Message: |
+    1869 | Queen was close behind her, listening: so she went on, “—likely to win, that
+    1870 | it’s hardly worth while finishing the game.”
+         |             ^~~~~~~~~~~ Did you mean the closed compound `worthwhile`?
+Suggest:
+  - Replace with: “worthwhile”
+
+
+
 Lint:    Style (31 priority)
 Message: |
     1894 | The Queen had only one way of settling all difficulties, great or small. “Off
