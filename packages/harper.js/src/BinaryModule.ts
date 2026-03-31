@@ -1,6 +1,5 @@
 import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
-import { default as binaryInlinedUrl } from 'harper-wasm/harper_wasm_bg.wasm?inline';
-import { default as binaryUrl } from 'harper-wasm/harper_wasm_bg.wasm?no-inline';
+
 import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
 import type { LintConfig } from './main';
@@ -25,13 +24,29 @@ const loadBinary = pMemoize(async (binary: string) => {
 	return exports;
 });
 
+export interface BinaryModule {
+	url: string | URL;
+
+	getDefaultLintConfigAsJSON(): Promise<string>;
+
+	getDefaultLintConfig(): Promise<LintConfig>;
+
+	toTitleCase(text: string): Promise<string>;
+
+	setup(): Promise<void>;
+}
+
+export function createBinaryModuleFromUrl(url: string): BinaryModule {
+	return BinaryModuleImpl.create(url);
+}
+
 /** A wrapper around the underlying WebAssembly module that contains Harper's core code. Used to construct a `Linter`, as well as access some miscellaneous other functions. */
-export class BinaryModule {
+export class BinaryModuleImpl {
 	public url: string | URL = '';
 	private inner: Promise<typeof import('harper-wasm')> | null = null;
 
 	/** Load a binary from a specified URL. This is the only recommended way to construct this type. */
-	public static create(url: string | URL): BinaryModule {
+	public static create(url: string | URL): BinaryModuleImpl {
 		const module = new SuperBinaryModule();
 
 		module.url = url;
@@ -63,7 +78,7 @@ export class BinaryModule {
 	}
 }
 
-export class SuperBinaryModule extends BinaryModule {
+export class SuperBinaryModule extends BinaryModuleImpl {
 	async createLinter(dialect?: Dialect): Promise<WasmLinter> {
 		const exported = await this.getBinaryModule();
 		return exported.Linter.new(dialect ?? Dialect.American);
@@ -75,11 +90,3 @@ export class SuperBinaryModule extends BinaryModule {
 		);
 	}
 }
-
-/** A version of the Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const binary = /*@__PURE__*/ BinaryModule.create(binaryUrl);
-
-/** A version of the Harper WebAssembly binary stored inline as a data URL.
- * Can be tree-shaken if unused. */
-export const binaryInlined = /*@__PURE__*/ BinaryModule.create(binaryInlinedUrl);

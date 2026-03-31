@@ -219,6 +219,7 @@ use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
+use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
@@ -449,7 +450,6 @@ impl LintGroup {
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
     pub fn merge_from(&mut self, other: LintGroup) {
         self.config.merge_from(other.config);
 
@@ -803,6 +803,7 @@ impl LintGroup {
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
+        insert_expr_rule!(ThriveOn, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(ToAdverb, true);

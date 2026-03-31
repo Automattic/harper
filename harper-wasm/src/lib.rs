@@ -17,7 +17,6 @@ use harper_core::{
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
-use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
@@ -65,7 +64,19 @@ impl Language {
             Language::Plain => Box::new(PlainEnglish),
             // TODO: Have a way to configure the Markdown parser
             Language::Markdown => Box::new(Markdown::default()),
-            Language::Typst => Box::new(Typst),
+            Language::Typst => {
+                #[cfg(feature = "typst")]
+                {
+                    use harper_typst::Typst;
+                    Box::new(Typst)
+                }
+                #[cfg(not(feature = "typst"))]
+                {
+                    panic!(
+                        "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
+                    )
+                }
+            }
         }
     }
 }
@@ -145,6 +156,7 @@ impl Linter {
 
         self.lint_group =
             LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+
         self.lint_group.config.merge_from(lint_config);
     }
 
@@ -247,13 +259,10 @@ impl Linter {
     }
 
     pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
-        let source: Vec<_> = source_text.chars().collect();
+        let source: Lrc<_> = source_text.chars().collect();
 
-        let document = Document::new_from_chars(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        let document =
+            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
     }

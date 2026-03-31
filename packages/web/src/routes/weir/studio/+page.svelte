@@ -373,8 +373,9 @@ onMount(async () => {
 	}
 	checkingStorage = false;
 
-	const [{ LocalLinter, binary }, { AceEditor }] = await Promise.all([
+	const [{ LocalLinter }, { binary }, { AceEditor }] = await Promise.all([
 		import('harper.js'),
+		import('harper.js/binary'),
 		import('svelte-ace'),
 	]);
 
