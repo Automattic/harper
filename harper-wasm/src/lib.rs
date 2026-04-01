@@ -10,11 +10,11 @@ use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
+use harper_core::{DialectFlags, RegexMasker};
 use harper_core::{
     DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry},
 };
-use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
