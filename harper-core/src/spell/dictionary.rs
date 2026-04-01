@@ -242,16 +242,15 @@ impl Dictionary for &dyn Dictionary {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
-        self.get_word_map()
-            .fuzzy_match(word, max_distance, max_results)
+        (*self).fuzzy_match(word, max_distance, max_results)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.get_word_map().find_words_with_prefix(prefix)
+        (*self).find_words_with_prefix(prefix)
     }
 
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.get_word_map().find_words_with_common_prefix(word)
+        (*self).find_words_with_common_prefix(word)
     }
 }
 
@@ -266,15 +265,14 @@ impl Dictionary for Arc<dyn Dictionary> {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
-        self.get_word_map()
-            .fuzzy_match(word, max_distance, max_results)
+        self.as_ref().fuzzy_match(word, max_distance, max_results)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.get_word_map().find_words_with_prefix(prefix)
+        self.as_ref().find_words_with_prefix(prefix)
     }
 
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.get_word_map().find_words_with_common_prefix(word)
+        self.as_ref().find_words_with_common_prefix(word)
     }
 }
