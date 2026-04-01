@@ -3052,16 +3052,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-    2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
-         |                                                              ^~ This word's canonical spelling is all-caps.
-    2007 | circular legend, “Montenegro, Nicolas Rex.”
-Suggest:
-  - Replace with: “DI”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
