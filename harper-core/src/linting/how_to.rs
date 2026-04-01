@@ -2,7 +2,7 @@ use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token, TokenKind, TokenStringExt,
+    Token, TokenKind,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{InflectionOfBe, UPOSSet},
@@ -52,12 +52,31 @@ impl ExprLinter for HowTo {
         &self.expr
     }
 
-    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        let span = toks[2..4].span()?;
-        let fix: Vec<char> = "to ".chars().collect();
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        _src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if let Some((_, post)) = ctx {
+            let mut significant = toks
+                .iter()
+                .skip(3)
+                .chain(post.iter())
+                .filter(|tok| !tok.kind.is_whitespace());
+
+            if let (Some(next), Some(after_next)) = (significant.next(), significant.next())
+                && (next.kind.is_nominal() || next.kind.is_proper_noun())
+                && !after_next.kind.is_determiner()
+            {
+                return None;
+            }
+        }
+
+        let fix: Vec<char> = " to".chars().collect();
 
         Some(Lint {
-            span,
+            span: toks[2].span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::InsertAfter(fix)],
             message: "Insert `to` after `how` (e.g., `how to clone`).".into(),
@@ -292,6 +311,35 @@ mod tests {
     fn dont_flag_false_positives_1492_how_indexes() {
         assert_no_lints(
             "controls how indexes will be added to unwrapped keys of flat array-like objects",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_proper_noun_handles() {
+        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
+    }
+
+    #[test]
+    fn dont_flag_how_work_is_structured() {
+        assert_no_lints(
+            "They need to rethink how work is structured and valued.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_form_submissions_are_delivered() {
+        assert_no_lints(
+            "The Mail tab dictates how form submissions are delivered to you.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_access_to_food_shaped_revolutions() {
+        assert_no_lints(
+            "We analyze how access to food shaped political ideologies.",
             HowTo::default(),
         );
     }
