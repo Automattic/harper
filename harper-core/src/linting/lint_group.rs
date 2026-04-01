@@ -240,6 +240,7 @@ use super::vicious_loop::ViciousCircleOrCycle;
 use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::were_where::WereWhere;
 use super::whereas::Whereas;
@@ -858,6 +859,10 @@ impl LintGroup {
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WebScraping", WebScraping::default());
+        out.config.set_rule_enabled("WebScraping", true);
 
         out
     }

@@ -40,8 +40,8 @@ pub fn lint_group() -> LintGroup {
         "Instead"         => (&["in stead"][..], "instead"),
         "Intact"          => (&["in tact"][..], "intact"),
         "Itself"          => (&["it self"][..], "itself"),
-        "Keystroke"       => (&["key stoke"][..], "keystroke"),
-        "Keystrokes"      => (&["key stokes"][..], "keystrokes"),
+        "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
+        "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
@@ -277,6 +277,13 @@ mod tests {
     fn key_stokes() {
         let test_sentence = "These key stokes are hard to memorize.";
         let expected = "These keystrokes are hard to memorize.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn key_strokes() {
+        let test_sentence = "There may have been a missing key stroke.";
+        let expected = "There may have been a missing keystroke.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
