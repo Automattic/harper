@@ -49,7 +49,7 @@ Some of the open-source projects using Harper include:
 - [Stencila](https://github.com/stencila/stencila)
 - [fixmyspelling](https://github.com/samedwardes/fixmyspelling)
 - [Tally](https://tally.johng.io)
-- [`local-harper`](https://github.com/KraXen72/local-harper)
+- [`local-harper`](https://kraxen72.github.io/local-harper/)
 
 Are you using Harper in your open source work and want to be included in this list?
 If so, please open a PR. 
