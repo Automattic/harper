@@ -54,6 +54,18 @@ impl Default for OrthFlags {
 }
 
 impl OrthFlags {
+    /// An `OrthFlags` which all casing-related flags set.
+    pub(crate) const CASE_FLAGS: OrthFlags = OrthFlags::LOWERCASE
+        .union(OrthFlags::TITLECASE)
+        .union(OrthFlags::ALLCAPS)
+        .union(OrthFlags::LOWER_CAMEL)
+        .union(OrthFlags::UPPER_CAMEL);
+
+    /// Mask out all flags not related to casing.
+    pub(crate) const fn case_flags(self) -> Self {
+        self.intersection(Self::CASE_FLAGS)
+    }
+
     /// Construct orthography flags for a given sequence of letters.
     pub fn from_letters(letters: &[char]) -> Self {
         let mut ortho_flags = Self::default();
