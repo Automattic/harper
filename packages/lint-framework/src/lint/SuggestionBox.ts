@@ -199,7 +199,7 @@ function addToDictionary(
 function suggestions(
 	lintKind: LintKind,
 	suggestions: UnpackedSuggestion[],
-	apply: (s: UnpackedSuggestion) => void,
+	apply: (s: UnpackedSuggestion) => void | Promise<void>,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label =
@@ -501,8 +501,8 @@ export default function SuggestionBox(
 			),
 			body(box.lint.message_html),
 			footer(
-				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
-					box.applySuggestion(v);
+				suggestions(box.lint.lint_kind, box.lint.suggestions, async (v) => {
+					await box.applySuggestion(v);
 					refocusClose();
 				}),
 				[
