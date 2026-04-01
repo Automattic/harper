@@ -427,6 +427,8 @@ mod tests {
         // would be linted for the supposed reason of the canonical spelling being "PR".
         // Since both words are in the curated dictionary, neither should be linted.
         assert_no_lints("Pr PR", OrthographicConsistency::default());
+        assert_no_lints("Apr APR", OrthographicConsistency::default()); // https://github.com/Automattic/harper/issues/3080
+        assert_no_lints("install.md", OrthographicConsistency::default()); // https://github.com/Automattic/harper/issues/3073
     }
 
     #[test]
