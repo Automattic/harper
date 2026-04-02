@@ -20,7 +20,7 @@ impl Default for ToTooAdjectiveEnd {
             .then_kind_is_but_is_not_except(
                 TokenKind::is_adjective,
                 TokenKind::is_verb,
-                &["standard"],
+                &["standard", "only"],
             )
             .then_optional(WhitespacePattern)
             .then_optional(SequenceExpr::any_word())
