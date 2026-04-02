@@ -1,3 +1,5 @@
+mod settings;
+
 use std::collections::BTreeMap;
 use std::hash::Hash;
 use std::hash::{BuildHasher, Hasher};
