@@ -54,7 +54,7 @@ impl Default for OrthFlags {
 }
 
 impl OrthFlags {
-    /// An `OrthFlags` which all casing-related flags set.
+    /// An `OrthFlags` with all casing-related flags set.
     pub(crate) const CASE_FLAGS: OrthFlags = OrthFlags::LOWERCASE
         .union(OrthFlags::TITLECASE)
         .union(OrthFlags::ALLCAPS)
