@@ -1,6 +1,11 @@
 use super::FlatConfig;
 
-/// A general-purpose structure for defining which rules to be enabled or disabled.
+/// A structure for defining which rules to be enabled or disabled in a
+/// [`LintGroup`](super::LintGroup).
+///
+/// So named because it represents a more structured view for organizing rules.
+/// Designed to be something that can be converted _into_ a [`FlatConfig`] at runtime before
+/// being passed to an actual [`LintGroup`](super::LintGroup`)
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct StructuredConfig {
     pub settings: Vec<Setting>,

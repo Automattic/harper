@@ -26,8 +26,9 @@ where
     Ok(ordered.into_iter().collect())
 }
 
-/// The configuration for a [`LintGroup`].
+/// The rule-level configuration for a [`LintGroup`].
 /// Each child linter can be enabled, disabled, or set to a curated value.
+/// So named because it represents the structure of a [`LintGroup`] exactly: it's flat.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
 pub struct FlatConfig {
