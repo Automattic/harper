@@ -262,6 +262,7 @@ use crate::spell::Dictionary;
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 pub use flat_config::FlatConfig;
+pub use structured_config::StructuredConfig;
 
 /// A struct for collecting the output of a number of individual [Linter]s.
 /// Each child can be toggled via the public, mutable `Self::config` object.
@@ -856,10 +857,10 @@ mod tests {
     use std::sync::Arc;
 
     use super::{FlatConfig, LintGroup};
-    use crate::linting::LintKind;
     use crate::linting::tests::assert_no_lints;
+    use crate::linting::LintKind;
     use crate::spell::{FstDictionary, MutableDictionary};
-    use crate::{Dialect, Document, linting::Linter};
+    use crate::{linting::Linter, Dialect, Document};
 
     fn test_group() -> LintGroup {
         LintGroup::new_curated(Arc::new(MutableDictionary::curated()), Dialect::American)
