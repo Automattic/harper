@@ -23,6 +23,10 @@ impl Default for HowTo {
             .then_verb_lemma();
         pattern.add(pos_pattern);
 
+        let noun_led_clause = SequenceExpr::default()
+            .then_kind_either(TokenKind::is_nominal, TokenKind::is_proper_noun)
+            .then_unless(SequenceExpr::whitespace().then_determiner());
+
         let exceptions = SequenceExpr::unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_unless(|tok: &Token, _: &[char]| tok.kind.is_np_member())
@@ -36,7 +40,8 @@ impl Default for HowTo {
                         TokenKind::is_proper_noun,
                     ] as &[_],
                     &["did", "come", "does"],
-                )),
+                ))
+                .or(noun_led_clause),
             );
 
         pattern.add(exceptions);
@@ -52,27 +57,7 @@ impl ExprLinter for HowTo {
         &self.expr
     }
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        _src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        if let Some((_, post)) = ctx {
-            let mut significant = toks
-                .iter()
-                .skip(3)
-                .chain(post.iter())
-                .filter(|tok| !tok.kind.is_whitespace());
-
-            if let (Some(next), Some(after_next)) = (significant.next(), significant.next())
-                && (next.kind.is_nominal() || next.kind.is_proper_noun())
-                && !after_next.kind.is_determiner()
-            {
-                return None;
-            }
-        }
-
+    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         let fix: Vec<char> = " to".chars().collect();
 
         Some(Lint {
