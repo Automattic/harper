@@ -1,0 +1,7 @@
+expr main (eluded to)
+
+let message "Did you mean `alluded to`?"
+let description "Corrects `eluded to` to `alluded to` in contexts referring to indirect references."
+let kind "Malapropism"
+let becomes "alluded to"
+

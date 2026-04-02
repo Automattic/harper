@@ -70,7 +70,6 @@ macro_rules! create_org_test {
 }
 
 create_test!(whack_bullets.md, 1, EnglishDialect::American);
-create_test!(preexisting.md, 0, EnglishDialect::American);
 create_test!(issue_109.md, 0, EnglishDialect::American);
 create_test!(issue_109_ext.md, 0, EnglishDialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, EnglishDialect::American);
@@ -88,16 +87,23 @@ create_test!(pr_452.md, 2, EnglishDialect::American);
 create_test!(hex_basic_clean.md, 0, EnglishDialect::American);
 create_test!(hex_basic_dirty.md, 1, EnglishDialect::American);
 create_test!(misc_closed_compound_clean.md, 0, EnglishDialect::American);
+create_test!(statist_localist.md, 0, EnglishDialect::American);
 create_test!(yogurt_british_clean.md, 0, EnglishDialect::British);
 create_test!(issue_1581.md, 0, EnglishDialect::British);
 create_test!(issue_2054.md, 6, EnglishDialect::British);
 create_test!(issue_2054_clean.md, 0, EnglishDialect::British);
 create_test!(issue_1873.md, 0, EnglishDialect::British);
+create_test!(issue_2246.md, 0, EnglishDialect::American);
+create_test!(title_case_errors.md, 2, EnglishDialect::American);
+create_test!(title_case_clean.md, 0, EnglishDialect::American);
+create_test!(issue_2233.md, 0, EnglishDialect::American);
+create_test!(issue_2240.md, 0, EnglishDialect::American);
+create_test!(allows_domain_extensions.md, 0, EnglishDialect::American);
 // It just matters that it is > 1
 create_test!(issue_2151.md, 4, EnglishDialect::British);
 
 // Make sure it doesn't panic
-create_test!(lukas_homework.md, 3, EnglishDialect::American);
+create_test!(lukas_homework.md, 4, EnglishDialect::American);
 
 // Org mode tests
-create_org_test!(index.org, 40, EnglishDialect::American);
+create_org_test!(index.org, 49, EnglishDialect::American);

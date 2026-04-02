@@ -1,0 +1,7 @@
+expr main (just desserts)
+
+let message "Use the correct phrase for receiving what one deserves."
+let description "Ensures `just deserts` is used correctly, preserving its meaning of receiving an appropriate outcome for one's actions."
+let kind "Spelling"
+let becomes "just deserts"
+

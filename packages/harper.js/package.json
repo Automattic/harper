@@ -1,6 +1,6 @@
 {
 	"name": "harper.js",
-	"version": "0.72.0",
+	"version": "1.12.0",
 	"license": "Apache-2.0",
 	"author": "Elijah Potter",
 	"description": "The grammar checker that respects your privacy.",
@@ -23,25 +23,31 @@
 		"api:documenter": "api-documenter markdown -i temp"
 	},
 	"devDependencies": {
-		"@microsoft/api-documenter": "^7.26.10",
-		"@microsoft/api-extractor": "^7.50.1",
-		"@vitest/browser": "^3.0.6",
+		"@microsoft/api-documenter": "^7.28.1",
+		"@microsoft/api-extractor": "^7.55.1",
+		"@types/node": "catalog:",
+		"@vitest/browser": "^4.0.16",
+		"@vitest/browser-playwright": "^4.0.16",
+		"@vitest/ui": "4.0.16",
 		"harper-wasm": "workspace:*",
 		"marked": "^16.4.1",
 		"p-lazy": "^5.0.0",
 		"p-memoize": "^7.1.1",
-		"playwright": "^1.49.1",
+		"playwright": "^1.58.0",
 		"type-fest": "^4.37.0",
 		"typescript": "catalog:",
 		"vite": "^6.1.0",
 		"vite-plugin-dts": "^4.5.0",
 		"vite-plugin-virtual": "^0.3.0",
-		"vitest": "^3.0.5"
+		"vitest": "^4.0.16"
 	},
 	"main": "dist/harper.js",
 	"types": "dist/harper.d.ts",
 	"sideEffects": false,
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"fflate": "^0.8.2"
+	}
 }

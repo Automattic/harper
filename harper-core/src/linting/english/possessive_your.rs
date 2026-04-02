@@ -1,12 +1,14 @@
-use crate::Token;
-use crate::TokenKind;
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::{
+    Token, TokenKind,
+    expr::{Expr, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, preceded_by_word},
+    },
+};
 
 pub struct PossessiveYour {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for PossessiveYour {
@@ -19,18 +21,27 @@ impl Default for PossessiveYour {
                 &["guys", "what's"],
             );
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for PossessiveYour {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if preceded_by_word(ctx, |pw| pw.kind.is_verb()) {
+            return None;
+        }
+
         let span = matched_tokens.first()?.span;
         let orig_chars = span.get_content(source);
 
@@ -55,14 +66,12 @@ impl ExprLinter for PossessiveYour {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::PossessiveYour;
 
     #[test]
-    #[should_panic] // currently fails because comments is a homographs (verb or noun)
+    #[ignore = "currently fails because comments is a homographs (verb or noun)"]
     fn your_comments() {
         assert_suggestion_result(
             "You comments may end up in the documentation.",
@@ -91,8 +100,8 @@ mod tests {
     }
 
     #[test]
-    fn test_top3_suggestion_your() {
-        assert_top3_suggestion_result(
+    fn test_suggestion_your() {
+        assert_suggestion_result(
             "You combination of artist and teacher.",
             PossessiveYour::default(),
             "Your combination of artist and teacher.",
@@ -101,8 +110,8 @@ mod tests {
     }
 
     #[test]
-    fn test_top3_suggestion_youre_a() {
-        assert_top3_suggestion_result(
+    fn test_suggestion_youre_a() {
+        assert_suggestion_result(
             "You combination of artist and teacher.",
             PossessiveYour::default(),
             "You're a combination of artist and teacher.",
@@ -112,8 +121,8 @@ mod tests {
 
     #[test]
     #[ignore]
-    fn test_top3_suggestion_multiple() {
-        assert_top3_suggestion_result(
+    fn test_suggestion_multiple() {
+        assert_suggestion_result(
             "You knowledge. You imagination. You icosahedron",
             PossessiveYour::default(),
             "Your knowledge. Your imagination. You're an icosahedron",
@@ -135,6 +144,24 @@ mod tests {
         assert_no_lints(
             "Note that in a world with modules everywhere, you almost never need an IIFE",
             PossessiveYour::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_brought_you() {
+        assert_lint_count(
+            "team who also brought you [BloodHound Enterprise](http://specterops.io/bloodhound-verview/).",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_teaches_you() {
+        assert_lint_count(
+            "Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.",
+            PossessiveYour::default(),
+            0,
         );
     }
 }

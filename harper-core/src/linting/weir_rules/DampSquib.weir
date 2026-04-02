@@ -1,0 +1,7 @@
+expr main (damp squid)
+
+let message "Use the correct phrase for a disappointing outcome."
+let description "Corrects the eggcorn `damp squid` to `damp squib`, ensuring the intended meaning of a failed or underwhelming outcome."
+let kind "Eggcorn"
+let becomes "damp squib"
+

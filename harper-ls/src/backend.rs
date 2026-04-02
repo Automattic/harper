@@ -12,6 +12,7 @@ use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
 use futures::future::join;
+use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::languages::Language;
 use harper_core::languages::LanguageFamily;
@@ -27,8 +28,9 @@ use harper_jjdescription::JJDescriptionParser;
 use harper_literate_haskell::LiterateHaskellParser;
 use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
+use harper_tex::TeX;
 use harper_typst::Typst;
-use serde_json::Value;
+use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
 use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
@@ -369,10 +371,11 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "git-commit" | "gitcommit" => {
+            "git-commit" | "gitcommit" | "octo" => {
                 Some(Box::new(GitCommitParser::new_markdown(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
+            "asciidoc" => Some(Box::new(AsciidocParser::default())),
             "ink" => Some(Box::new(InkParser::default())),
             "jj-commit" | "jjdescription" => {
                 Some(Box::new(JJDescriptionParser::new(markdown_options)))
@@ -405,6 +408,7 @@ impl Backend {
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
+            "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
             _ => None,
         };
 
@@ -493,7 +497,7 @@ impl Backend {
                 section: None,
             }])
             .await
-            .unwrap();
+            .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
         if let Some(first) = new_config.pop() {
             self.update_config_from_obj(first).await;

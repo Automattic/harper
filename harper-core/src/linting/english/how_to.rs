@@ -1,5 +1,6 @@
 use harper_brill::UPOS;
 
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
@@ -8,23 +9,21 @@ use crate::{
 };
 
 pub struct HowTo {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for HowTo {
     fn default() -> Self {
         let mut pattern = All::default();
 
-        let pos_pattern = SequenceExpr::default()
-            .then_anything()
+        let pos_pattern = SequenceExpr::anything()
             .then_anything()
             .t_aco("how")
             .then_whitespace()
             .then_verb_lemma();
         pattern.add(pos_pattern);
 
-        let exceptions = SequenceExpr::default()
-            .then_unless(UPOSSet::new(&[UPOS::PART]))
+        let exceptions = SequenceExpr::unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_unless(|tok: &Token, _: &[char]| tok.kind.is_np_member())
             .then_anything()
@@ -42,15 +41,15 @@ impl Default for HowTo {
 
         pattern.add(exceptions);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for HowTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

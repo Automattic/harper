@@ -1,11 +1,12 @@
 use crate::expr::{Expr, FixedPhrase, LongestMatchOf};
-use crate::linting::english::{ExprLinter, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::{Lint, Token, TokenStringExt};
 
 type PlaceNameMappings<'a> = &'a [((i16, &'a str), &'a [&'a str])];
 
 pub struct UpdatePlaceNames<'a> {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     place_name_mappings: PlaceNameMappings<'a>,
 }
 
@@ -28,7 +29,6 @@ impl<'a> Default for UpdatePlaceNames<'a> {
             ((1945, "Taiwan"), &["Formosa"]),
             ((1991, "Ulaanbaatar"), &["Ulan Bator"]),
             // Europe (and nearby)
-            ((2016, "Czechia"), &["Czech Republic"]),
             ((1945, "Gdańsk"), &["Danzig"]), // TODO: Can we recommend Gdansk as well?
             ((1992, "Podgorica"), &["Titograd"]),
             ((1936, "Tbilisi"), &["Tiflis"]),
@@ -83,12 +83,12 @@ impl<'a> Default for UpdatePlaceNames<'a> {
                 .collect(),
         );
 
-        Self::new(Box::new(expr), place_name_mappings)
+        Self::new(expr, place_name_mappings)
     }
 }
 
 impl<'a> UpdatePlaceNames<'a> {
-    pub fn new(expr: Box<dyn Expr>, place_name_mappings: PlaceNameMappings<'a>) -> Self {
+    pub fn new(expr: LongestMatchOf, place_name_mappings: PlaceNameMappings<'a>) -> Self {
         Self {
             expr,
             place_name_mappings,
@@ -97,8 +97,10 @@ impl<'a> UpdatePlaceNames<'a> {
 }
 
 impl<'a> ExprLinter for UpdatePlaceNames<'a> {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -289,8 +291,16 @@ mod tests {
             "Upper Volta is in Africa.",
             UpdatePlaceNames::default(),
             "Burkina Faso is in Africa.",
-            crate::languages::LanguageFamily::English,
         )
+    }
+
+    #[test]
+    fn dont_flag_czech_republic() {
+        assert_lint_count(
+            "The Czech Republic is in Europe.",
+            UpdatePlaceNames::default(),
+            0,
+        );
     }
 
     // NOTE: Can't handle place names with obligatory or compulsory "The" perfectly.

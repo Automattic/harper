@@ -1,0 +1,9 @@
+expr main [(last but not the least), (last, but not the least), (last but, not least), (last but not last)]
+
+let message "Use the more idiomatic phrasing."
+let description "Corrects common errors in the phrase `last but not least`."
+let kind "Usage"
+let becomes "last but not least"
+
+test "Last but not the least, with VS2013 you can use Web Essentials 2013" "Last but not least, with VS2013 you can use Web Essentials 2013"
+test "Last but not last, I'd like to thank my parents." "Last but not least, I'd like to thank my parents."

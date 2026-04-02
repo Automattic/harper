@@ -1,0 +1,7 @@
+expr main (is know for)
+
+let message "Did you mean `is known for`?"
+let description "Typo: `known` is the correct past participle."
+let kind "Typo"
+let becomes "is known for"
+

@@ -5,6 +5,7 @@ ARG NODE_VERSION=24
 
 FROM rust:latest AS wasm-build
 RUN rustup toolchain install
+RUN apt-get update -y && apt-get install clang -y
 
 RUN mkdir -p /usr/build/
 WORKDIR /usr/build/
@@ -15,6 +16,7 @@ COPY . .
 
 WORKDIR /usr/build/harper-wasm
 RUN wasm-pack build --target web
+RUN cargo clean
 
 FROM node:${NODE_VERSION} AS node-build
 
@@ -27,7 +29,11 @@ WORKDIR /usr/build/
 COPY . .
 COPY --from=wasm-build /usr/build/harper-wasm/pkg /usr/build/harper-wasm/pkg
 
-RUN pnpm install --shamefully-hoist
+RUN pnpm install --engine-strict=false --shamefully-hoist
+
+WORKDIR /usr/build/packages/components
+RUN pnpm install --engine-strict=false --shamefully-hoist
+RUN pnpm build
 
 WORKDIR /usr/build/packages/harper.js
 
@@ -37,7 +43,7 @@ WORKDIR /usr/build/packages/lint-framework
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web
-RUN pnpm install --shamefully-hoist
+RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 
 FROM node:${NODE_VERSION}

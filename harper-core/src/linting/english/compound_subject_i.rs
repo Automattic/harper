@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenKind,
     expr::{AnchorStart, Expr, SequenceExpr},
@@ -7,13 +8,12 @@ use crate::{
 const POSSESSIVE_DETERMINERS: &[&str] = &["my", "your", "her", "his", "their", "our"];
 
 pub struct CompoundSubjectI {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for CompoundSubjectI {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .then_optional(
                 SequenceExpr::default()
                     .then_quote()
@@ -34,15 +34,15 @@ impl Default for CompoundSubjectI {
             .t_ws()
             .then_kind_either(TokenKind::is_verb, TokenKind::is_auxiliary_verb);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for CompoundSubjectI {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

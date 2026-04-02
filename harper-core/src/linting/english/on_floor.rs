@@ -2,6 +2,7 @@ use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::LongestMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::WordSet;
 use crate::{
     Lrc, Token, TokenStringExt,
@@ -9,7 +10,7 @@ use crate::{
 };
 
 pub struct OnFloor {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for OnFloor {
@@ -17,8 +18,7 @@ impl Default for OnFloor {
         let preposition = WordSet::new(&["in", "at"]);
 
         let on_the_floor = Lrc::new(
-            SequenceExpr::default()
-                .then(preposition)
+            SequenceExpr::with(preposition)
                 .t_ws()
                 .t_aco("the")
                 .t_ws()
@@ -28,37 +28,35 @@ impl Default for OnFloor {
         );
 
         let look_up_phrase = Lrc::new(
-            SequenceExpr::default()
-                .then(WordSet::new(&["look", "looking", "looks", "looked"]))
+            SequenceExpr::word_set(&["look", "looking", "looks", "looked"])
                 .t_ws()
                 .t_aco("up"),
         );
 
         let stop = Lrc::new(WordSet::new(&["stop", "stopping", "stops", "stopped"]));
         let exceptions = Lrc::new(LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(look_up_phrase.clone())),
-            Box::new(SequenceExpr::default().then(stop.clone())),
+            Box::new(SequenceExpr::with(look_up_phrase.clone())),
+            Box::new(SequenceExpr::with(stop.clone())),
         ]));
 
         let pattern = LongestMatchOf::new(vec![
             Box::new(on_the_floor.clone()),
             Box::new(
-                SequenceExpr::default()
-                    .then(exceptions.clone())
+                SequenceExpr::with(exceptions.clone())
                     .t_ws()
                     .then(on_the_floor.clone()),
             ),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for OnFloor {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

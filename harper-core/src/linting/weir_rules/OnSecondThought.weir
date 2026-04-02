@@ -1,0 +1,10 @@
+expr main <([on, my] second though), (second though)>
+
+let message "Idiomatic expression: use `on second thought` instead of `on second though`"
+let description "Replaces the nonstandard `on second though` with the common idiom `on second thought` to indicate reconsideration."
+let kind "Typo"
+let becomes "second thought"
+
+test "I was going to buy it, but on second though, maybe I'll wait." "I was going to buy it, but on second thought, maybe I'll wait."
+allows "She considered driving home, but on second thought, she decided to walk."
+test "My second though is that I'd prefer something else entirely." "My second thought is that I'd prefer something else entirely."

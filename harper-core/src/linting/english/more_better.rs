@@ -1,16 +1,17 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
 pub struct MoreBetter {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MoreBetter {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::any_of(vec![
+            expr: SequenceExpr::any_of(vec![
                 Box::new(
                     SequenceExpr::default()
                         .t_aco("more")
@@ -23,14 +24,16 @@ impl Default for MoreBetter {
                         .t_ws()
                         .then_superlative_adjective(),
                 ),
-            ])),
+            ]),
         }
     }
 }
 
 impl ExprLinter for MoreBetter {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -71,7 +74,7 @@ impl ExprLinter for MoreBetter {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::MoreBetter;
+    use super::MoreBetter;
     use crate::linting::tests::assert_suggestion_result;
 
     #[test]

@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use crate::TokenKind;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
@@ -8,7 +7,8 @@ use crate::expr::SequenceExpr;
 use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
-use crate::linting::english::{ExprLinter, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -22,20 +22,19 @@ pub struct ShouldContract {
 impl Default for ShouldContract {
     fn default() -> Self {
         let cap = Arc::new(
-            SequenceExpr::default()
-                .then(WordSet::new(&["your", "were"]))
+            SequenceExpr::word_set(&["your", "were"])
                 .then_whitespace()
-                .then_kind_is_but_is_not(
-                    TokenKind::is_non_quantifier_determiner,
-                    TokenKind::is_pronoun,
-                )
+                .then_non_quantifier_determiner()
                 .then_whitespace()
-                .then_adjective(),
+                .then(
+                    SequenceExpr::default()
+                        .then_adjective()
+                        .or(SequenceExpr::word_set(&["man", "boss"])),
+                ),
         );
 
-        let start = SequenceExpr::default().then(AnchorStart).then(cap.clone());
-        let mid = SequenceExpr::default()
-            .then_unless(WordSet::new(&["what"]))
+        let start = SequenceExpr::with(AnchorStart).then(cap.clone());
+        let mid = SequenceExpr::unless(WordSet::new(&["what"]))
             .t_ws()
             .then(cap);
 
@@ -61,6 +60,8 @@ impl ShouldContract {
 }
 
 impl ExprLinter for ShouldContract {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

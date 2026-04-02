@@ -1,3 +1,4 @@
+use crate::parsers::PlainEnglish;
 use crate::patterns::Word;
 use crate::{Document, Span, Token, TokenKind};
 
@@ -24,7 +25,7 @@ impl FixedPhrase {
     /// Creates a [`FixedPhrase`] from a plaintext string.
     /// Uses plain English tokenization rules.
     pub fn from_phrase(text: &str) -> Self {
-        let document = Document::new_plain_english_curated(text);
+        let document = Document::new_basic_tokenize(text, &PlainEnglish);
         Self::from_document(&document)
     }
 
@@ -42,17 +43,13 @@ impl FixedPhrase {
                     phrase = phrase.then_whitespace();
                 }
                 TokenKind::Punctuation(p) => {
-                    phrase = phrase.then(move |t: &Token, _source: &[char]| {
-                        t.kind.as_punctuation().cloned() == Some(p)
-                    })
+                    phrase = phrase
+                        .then_kind_where(move |kind| kind.as_punctuation().cloned() == Some(p));
                 }
                 TokenKind::ParagraphBreak => {
                     phrase = phrase.then_whitespace();
                 }
-                TokenKind::Number(n) => {
-                    phrase = phrase
-                        .then(move |tok: &Token, _source: &[char]| tok.kind == TokenKind::Number(n))
-                }
+                TokenKind::Number(_) => phrase = phrase.then_kind_where(|kind| kind.is_number()),
                 _ => panic!("Fell out of expected document formats."),
             }
         }

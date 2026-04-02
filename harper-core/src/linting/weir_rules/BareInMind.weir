@@ -1,0 +1,7 @@
+expr main (bare in mind)
+
+let message "Did you mean `bear in mind`?"
+let description "Ensures the phrase `bear in mind` is used correctly instead of `bare in mind`."
+let kind "Eggcorn"
+let becomes "bear in mind"
+

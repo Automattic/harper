@@ -1,9 +1,9 @@
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{Word, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct WidelyAccepted {
@@ -13,15 +13,17 @@ pub struct WidelyAccepted {
 impl Default for WidelyAccepted {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(Word::new("wide"))
+            .t_aco("wide")
             .then_whitespace()
-            .then(WordSet::new(&["accepted", "acceptable", "used"]));
+            .then_word_set(&["accepted", "acceptable", "used"]);
 
         Self { expr }
     }
 }
 
 impl ExprLinter for WidelyAccepted {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.expr
     }

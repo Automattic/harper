@@ -1,0 +1,8 @@
+expr main (case and point)
+
+let message "`Case in point` is the correct form of the phrase."
+let description "Corrects `case and point` to `case in point`."
+let kind "Malapropism"
+let becomes "case in point"
+
+test "They are just not as high of a priority as other tasks that user's are requesting for, a case and point is I have never ran into this issue." "They are just not as high of a priority as other tasks that user's are requesting for, a case in point is I have never ran into this issue."

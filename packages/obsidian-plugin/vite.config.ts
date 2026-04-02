@@ -1,3 +1,4 @@
+import { playwright } from '@vitest/browser-playwright';
 import external from 'rollup-plugin-peer-deps-external';
 import svg from 'rollup-plugin-svg-import';
 import { defineConfig } from 'vite';
@@ -22,7 +23,7 @@ export default defineConfig({
 	test: {
 		retry: process.env.CI ? 5 : 0,
 		browser: {
-			provider: 'playwright',
+			provider: playwright(),
 			enabled: true,
 			headless: true,
 			screenshotFailures: false,

@@ -3,7 +3,7 @@ use std::collections::VecDeque;
 use serde::{Deserialize, Serialize};
 
 use super::{Parser, PlainEnglish};
-use crate::{Span, Token, TokenKind, TokenStringExt, VecExt};
+use crate::{Span, Token, TokenKind, TokenStringExt, VecExt, offsets::build_byte_to_char_map};
 
 /// A parser that wraps the [`PlainEnglish`] parser that allows one to parse
 /// CommonMark files.
@@ -161,52 +161,60 @@ impl Parser for Markdown {
 
         let mut tokens = Vec::new();
 
-        let mut traversed_bytes = 0;
-        let mut traversed_chars = 0;
+        // Build a mapping from the inner parser's byte-based indexing to Harper's char-based
+        // indexing.
+        let byte_to_char = build_byte_to_char_map(&source_str);
 
         let mut stack = Vec::new();
 
         // NOTE: the range spits out __byte__ indices, not char indices.
         // This is why we keep track above.
         for (event, range) in md_parser.into_offset_iter() {
-            if range.start > traversed_bytes {
-                traversed_chars += source_str[traversed_bytes..range.start].chars().count();
-                traversed_bytes = range.start;
-            }
+            let span_start = byte_to_char[range.start];
+            let span_end = byte_to_char[range.end];
 
             match event {
                 pulldown_cmark::Event::SoftBreak => {
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, 1),
+                        span: Span::new_with_len(span_start, 1),
                         kind: TokenKind::Newline(1),
                     });
                 }
                 pulldown_cmark::Event::HardBreak => {
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, 1),
+                        span: Span::new_with_len(span_start, 1),
                         kind: TokenKind::Newline(2),
                     });
                 }
                 pulldown_cmark::Event::Start(pulldown_cmark::Tag::List(v)) => {
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, 0),
+                        span: Span::empty(span_start),
                         kind: TokenKind::Newline(2),
                     });
                     stack.push(pulldown_cmark::Tag::List(v));
                 }
-                pulldown_cmark::Event::Start(tag) => stack.push(tag),
+                pulldown_cmark::Event::Start(tag) => {
+                    if matches!(tag, pulldown_cmark::Tag::Heading { .. }) {
+                        tokens.push(Token {
+                            span: Span::empty(span_start),
+                            kind: TokenKind::HeadingStart,
+                        });
+                    }
+
+                    stack.push(tag)
+                }
                 pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Paragraph)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Item)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Heading(_))
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::CodeBlock)
                 | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::TableCell) => {
                     tokens.push(Token {
-                        // We cannot use `traversed_chars` here, as it will still point to the
+                        // We cannot use `span_start` here, as it will still point to the
                         // first character of the `Event` at this point. Instead, we use the
                         // position of the previous token's last character. This ensures the
                         // paragraph break is placed at the end of the content, not its beginning.
                         // For more info, see: https://github.com/Automattic/harper/pull/1239.
-                        span: Span::new_with_len(tokens.last().map_or(0, |last| last.span.end), 0),
+                        span: Span::empty(tokens.last().map_or(0, |last| last.span.end)),
                         kind: TokenKind::ParagraphBreak,
                     });
                     stack.pop();
@@ -214,38 +222,39 @@ impl Parser for Markdown {
                 pulldown_cmark::Event::End(_) => {
                     stack.pop();
                 }
-                pulldown_cmark::Event::InlineMath(code)
-                | pulldown_cmark::Event::DisplayMath(code)
-                | pulldown_cmark::Event::Code(code) => {
-                    let chunk_len = code.chars().count();
+                pulldown_cmark::Event::InlineMath(_)
+                | pulldown_cmark::Event::DisplayMath(_)
+                | pulldown_cmark::Event::Code(_) => {
+                    let chunk_len = span_end - span_start;
 
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, chunk_len),
+                        span: Span::new_with_len(span_start, chunk_len),
                         kind: TokenKind::Unlintable,
                     });
                 }
-                pulldown_cmark::Event::Text(text) => {
-                    let chunk_len = text.chars().count();
+                pulldown_cmark::Event::Text(_text) => {
+                    let chunk_len = span_end - span_start;
 
                     if let Some(tag) = stack.last() {
                         use pulldown_cmark::Tag;
 
                         if matches!(tag, Tag::CodeBlock(..)) {
                             tokens.push(Token {
-                                span: Span::new_with_len(traversed_chars, text.chars().count()),
+                                span: Span::new_with_len(span_start, chunk_len),
+
                                 kind: TokenKind::Unlintable,
                             });
                             continue;
                         }
                         if matches!(tag, Tag::Link { .. }) && self.options.ignore_link_title {
                             tokens.push(Token {
-                                span: Span::new_with_len(traversed_chars, text.chars().count()),
+                                span: Span::new_with_len(span_start, chunk_len),
                                 kind: TokenKind::Unlintable,
                             });
                             continue;
                         }
                         if !(matches!(tag, Tag::Paragraph)
-                            || matches!(tag, Tag::Link { .. }) && !self.options.ignore_link_title
+                            || (matches!(tag, Tag::Link { .. }) && !self.options.ignore_link_title)
                             || matches!(tag, Tag::Heading { .. })
                             || matches!(tag, Tag::Item)
                             || matches!(tag, Tag::TableCell)
@@ -257,21 +266,19 @@ impl Parser for Markdown {
                         }
                     }
 
-                    let mut new_tokens =
-                        english_parser.parse(&source[traversed_chars..traversed_chars + chunk_len]);
+                    let mut new_tokens = english_parser.parse(&source[span_start..span_end]);
 
                     new_tokens
                         .iter_mut()
-                        .for_each(|token| token.span.push_by(traversed_chars));
+                        .for_each(|token| token.span.push_by(span_start));
 
                     tokens.append(&mut new_tokens);
                 }
                 // TODO: Support via `harper-html`
-                pulldown_cmark::Event::Html(_content)
-                | pulldown_cmark::Event::InlineHtml(_content) => {
-                    let size = _content.chars().count();
+                pulldown_cmark::Event::Html(_) | pulldown_cmark::Event::InlineHtml(_) => {
+                    let size = span_end - span_start;
                     tokens.push(Token {
-                        span: Span::new_with_len(traversed_chars, size),
+                        span: Span::new_with_len(span_start, size),
                         kind: TokenKind::Unlintable,
                     });
                 }
@@ -550,5 +557,44 @@ Paragraph.
         let parser = Markdown::new(MarkdownOptions::default());
         let tokens = parser.parse_str(source);
         assert_ne!(tokens.last().unwrap().span.end, 0);
+    }
+
+    #[test]
+    fn hang() {
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let _res = parser.parse_str("[[#|]]:A]");
+    }
+
+    #[test]
+    fn hang2() {
+        // This seems to only be a java specific problem...
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let _res = parser.parse_str("//{@j");
+    }
+
+    #[test]
+    fn simple_headings_are_marked() {
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let tokens = parser.parse_str("# This is a simple heading");
+
+        assert_eq!(tokens.iter_heading_starts().count(), 1);
+        assert_eq!(tokens.iter_headings().count(), 1);
+    }
+
+    #[test]
+    fn multiple_headings_are_marked() {
+        let opts = MarkdownOptions::default();
+        let parser = Markdown::new(opts);
+        let tokens = parser.parse_str(
+            r#"# This is a simple heading
+
+## This is a second simple heading"#,
+        );
+
+        assert_eq!(tokens.iter_heading_starts().count(), 2);
+        assert_eq!(tokens.iter_headings().count(), 2);
     }
 }

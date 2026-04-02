@@ -13,6 +13,11 @@ use crate::{
 use patch::Patch;
 use serde::{Deserialize, Serialize};
 
+/// A [`Chunker`] implementation based on the work by Eric Brill.
+///
+/// Additional reading:
+///
+/// - [Continuations on Transformation-based Learning](https://elijahpotter.dev/articles/more-transformation-based-learning)
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BrillChunker {
     base: UPOSFreqDict,
@@ -186,7 +191,7 @@ impl BrillChunker {
         }
 
         let all_candidates = Patch::generate_candidate_patches(&relevant_words);
-        let mut pruned_candidates: Vec<Patch> = rand::seq::IndexedRandom::choose_multiple(
+        let mut pruned_candidates: Vec<Patch> = rand::seq::IndexedRandom::sample(
             all_candidates.as_slice(),
             &mut rand::rng(),
             (all_candidates.len() as f32 * candidate_selection_chance) as usize,

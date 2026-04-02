@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use super::{ExprLinter, LintGroup};
 use super::{Lint, LintKind, Suggestion};
 use crate::Document;
+use crate::linting::expr_linter::Chunk;
 use crate::parsers::PlainEnglish;
 use crate::spell::Dictionary;
 use crate::{Token, TokenStringExt};
@@ -21,24 +22,9 @@ pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
 }
 
 impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
-    /// Wrapper function around [`Self::new`] that allows construction with Strings.
+    /// Create a linter that corrects the capitalization of phrases provided.
     pub fn new_strs(
         canonical_versions: impl IntoIterator<Item = impl AsRef<str>>,
-        description: impl ToString,
-        dictionary: D,
-    ) -> Self {
-        Self::new(
-            canonical_versions
-                .into_iter()
-                .map(|s| s.as_ref().chars().collect::<Vec<_>>()),
-            description,
-            dictionary,
-        )
-    }
-
-    /// Create a linter that corrects the capitalization of phrases provided.
-    pub fn new(
-        canonical_versions: impl IntoIterator<Item = impl AsRef<[char]>>,
         description: impl ToString,
         dictionary: D,
     ) -> Self {
@@ -47,11 +33,8 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
         let mut expr_map = ExprMap::default();
 
         for can_vers in canonical_versions {
-            let doc = Document::new_from_vec(
-                can_vers.as_ref().to_vec().into(),
-                &PlainEnglish,
-                &dictionary,
-            );
+            let doc = Document::new_basic_tokenize(can_vers.as_ref(), &PlainEnglish);
+
             let expr = FixedPhrase::from_document(&doc);
 
             expr_map.insert(expr, doc);
@@ -66,6 +49,8 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
 }
 
 impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.pattern_map
     }
@@ -117,7 +102,7 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
 
     for (key, rule) in rules.into_iter() {
-        group.add_expr_linter(
+        group.add_chunk_expr_linter(
             key,
             Box::new(ProperNounCapitalizationLinter::new_strs(
                 rule.canonical,

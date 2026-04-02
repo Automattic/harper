@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Button, Card, Checkbox, Input, Label, Radio } from 'flowbite-svelte';
+import { Button, Card, Checkbox, Input, Label, Radio } from 'components';
 import Isolate from '$lib/components/Isolate.svelte';
 </script>
 

@@ -1,0 +1,8 @@
+expr main (point of views)
+
+let message "The correct plural is `points of view`."
+let description "Corrects pluralizing the wrong noun in `point of view`."
+let kind "Grammar"
+let becomes "points of view"
+
+test "This will produce a huge amount of raw data, representing the region in multiple point of views." "This will produce a huge amount of raw data, representing the region in multiple points of view."

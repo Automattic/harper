@@ -1,0 +1,8 @@
+expr main (yeh)
+
+let message "If you mean the informal word for `yes`, the standard spelling is `yeah`."
+let description "Corrects `yeh` to `yeah`."
+let kind "Spelling"
+let becomes "yeah"
+
+test "But yeh, it seems I'm the only one that feels that way" "But yeah, it seems I'm the only one that feels that way"

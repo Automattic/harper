@@ -1,0 +1,8 @@
+expr main (suppose to)
+
+let message "Did you mean `supposed to`?"
+let description "Fixes `suppose to` to the correct `supposed to`."
+let kind "Usage"
+let becomes "supposed to"
+
+test "suppose to" "supposed to"

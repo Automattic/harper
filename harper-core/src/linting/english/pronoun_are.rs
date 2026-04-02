@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -6,31 +7,31 @@ use crate::{
 
 /// Corrects the shorthand `r` after plural first- and second-person pronouns.
 pub struct PronounAre {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for PronounAre {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(|tok: &Token, _src: &[char]| {
-                tok.kind.is_pronoun()
-                    && tok.kind.is_subject_pronoun()
-                    && (tok.kind.is_second_person_pronoun()
-                        || tok.kind.is_first_person_plural_pronoun()
-                        || tok.kind.is_third_person_plural_pronoun())
+            .then_kind_where(|kind| {
+                kind.is_pronoun()
+                    && kind.is_subject_pronoun()
+                    && (kind.is_second_person_pronoun()
+                        || kind.is_first_person_plural_pronoun()
+                        || kind.is_third_person_plural_pronoun())
             })
             .t_ws()
             .t_aco("r");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for PronounAre {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -90,9 +91,7 @@ impl ExprLinter for PronounAre {
 #[cfg(test)]
 mod tests {
     use super::PronounAre;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fixes_you_r() {
@@ -106,12 +105,10 @@ mod tests {
 
     #[test]
     fn offers_contraction_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "You r absolutely right.",
             PronounAre::default(),
             "You're absolutely right.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 

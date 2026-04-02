@@ -3,30 +3,30 @@ use crate::patterns::WordSet;
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct SomethingIs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SomethingIs {
     fn default() -> Self {
         let forms = WordSet::new(&["somethings", "anythings", "everythings", "nothings"]);
 
-        let expr = SequenceExpr::default()
-            .then(forms)
+        let expr = SequenceExpr::with(forms)
             .t_ws()
             .then_optional(SequenceExpr::default().then_one_or_more_adverbs().t_ws())
             .then_kind_any(&[TokenKind::is_verb_progressive_form]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for SomethingIs {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -63,9 +63,7 @@ impl ExprLinter for SomethingIs {
 #[cfg(test)]
 mod tests {
     use super::SomethingIs;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fixes_somethings_going() {
@@ -129,12 +127,10 @@ mod tests {
 
     #[test]
     fn offers_is_expansion() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Somethings going wrong.",
             SomethingIs::default(),
             "Something is going wrong.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 

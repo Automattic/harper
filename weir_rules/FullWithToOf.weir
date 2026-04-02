@@ -1,0 +1,26 @@
+expr main (full with)
+
+let message "Use `of` after `full` in this construction."
+let description "Fixes the nonstandard phrase where `full` is followed by `with`."
+let kind "Usage"
+let becomes "full of"
+
+test "The pantry is full with snacks." "The pantry is full of snacks."
+test "Our inbox is full with alerts again." "Our inbox is full of alerts again."
+test "That thread is full with repeated arguments." "That thread is full of repeated arguments."
+test "Her notebook was full with sketches." "Her notebook was full of sketches."
+test "The comment section is full with bots." "The comment section is full of bots."
+test "A shared folder can be full with duplicate files." "A shared folder can be full of duplicate files."
+test "The cart was full with produce from the market." "The cart was full of produce from the market."
+test "Their feed is FULL WITH memes." "Their feed is FULL OF memes."
+test "By noon, the queue was full with pending jobs." "By noon, the queue was full of pending jobs."
+test "The room felt full with tension before the vote." "The room felt full of tension before the vote."
+
+test "The pantry is full of snacks." "The pantry is full of snacks."
+test "The glass is full." "The glass is full."
+test "The form is full-width on desktop." "The form is full-width on desktop."
+test "This section applies in full with respect to archived records." "This section applies in full of respect to archived records."
+test "Please fill the tank with fuel before sunrise." "Please fill the tank with fuel before sunrise."
+test "His hands were full with gloves on top." "His hands were full of gloves on top."
+test "A suitcase full with souvenirs sat by the door." "A suitcase full of souvenirs sat by the door."
+test "FULL with placeholders, the draft was still useful." "FULL of placeholders, the draft was still useful."

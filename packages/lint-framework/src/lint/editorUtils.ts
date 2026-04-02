@@ -62,6 +62,13 @@ export function getLexicalRoot(el: SourceElement): SourceElement | null {
 	);
 }
 
+export function getCkEditorRoot(el: SourceElement): SourceElement | null {
+	return findAncestor(
+		el,
+		(node: SourceElement) => !isTextNode(node) && node.classList.contains('ck-editor__editable'),
+	);
+}
+
 export function getLexicalEditable(el: SourceElement): SourceElement | null {
 	return findAncestor(
 		el,

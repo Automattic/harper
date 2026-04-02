@@ -1,0 +1,32 @@
+expr main <([first, second, third] person [shooter, shooters, game, games, narrative, narratives, perspective, perspectives, view, voice, voices, pronoun, pronouns, account, accounts, mode, modes]), ( )>
+
+let message "Hyphenate this compound modifier."
+let description "Adds a hyphen to ordinal-person modifiers when they directly describe a following noun."
+let kind "Punctuation"
+let becomes "-"
+let strategy "MatchCase"
+
+# True positives
+
+test "I enjoy first person games." "I enjoy first-person games."
+test "She wrote a first person narrative." "She wrote a first-person narrative."
+test "They published a second person account." "They published a second-person account."
+test "The essay uses third person voice." "The essay uses third-person voice."
+test "We switched to first person mode." "We switched to first-person mode."
+test "FIRST PERSON SHOOTERS dominated the event." "FIRST-PERSON SHOOTERS dominated the event."
+test "This is a Third Person Perspective." "This is a Third-Person Perspective."
+test "He prefers second person pronouns in examples." "He prefers second-person pronouns in examples."
+
+# True negatives / false-positive checks
+
+test "The narrator is in first person." "The narrator is in first person."
+test "Speak in second person." "Speak in second person."
+test "That paragraph is third person." "That paragraph is third person."
+test "I like first-person games." "I like first-person games."
+test "First person, shooter or strategy, both are fun." "First person, shooter or strategy, both are fun."
+test "The first person who arrived signed in." "The first person who arrived signed in."
+
+# Boundary checks
+
+test "A first person view helps in tutorials." "A first-person view helps in tutorials."
+test "The guide explains third person pronouns clearly." "The guide explains third-person pronouns clearly."

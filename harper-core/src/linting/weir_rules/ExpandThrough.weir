@@ -1,0 +1,8 @@
+expr main (thru)
+
+let message "Use `thru` instead of `through`"
+let description "Expands the informal spelling `thru` to the standard word `through`."
+let kind "Style"
+let becomes "through"
+
+test "Switch with coloned value parsed differently when invoking with pass thru args" "Switch with coloned value parsed differently when invoking with pass through args"

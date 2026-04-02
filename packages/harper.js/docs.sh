@@ -29,7 +29,7 @@ else
 	echo "parallel not found, falling back to sequential processing"
 	for file in ./markdown/*.md; do
 		base=$(basename "$file" .md)
-    node renderPage.js "${base#"harper.js."} - Harper" "API reference documentation for harper.js" {} "html/${base}.html"
+    node renderPage.js "${base#"harper.js."} - Harper" "API reference documentation for harper.js" "$file" "html/${base}.html"
 	done
 fi
 mv -f "$html_dir" "${harperjs_docs_dir}/ref"

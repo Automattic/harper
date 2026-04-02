@@ -1,0 +1,10 @@
+expr main [(rod iron), (rot iron), (rod-iron), (rot-iron)]
+
+let message "Prefer the standard term `wrought iron`."
+let description "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
+let kind "Eggcorn"
+let becomes "wrought iron"
+
+test "The gate was crafted from rod iron." "The gate was crafted from wrought iron."
+test "The artisan works in rot iron." "The artisan works in wrought iron."
+allows "She specialized in wrought iron artwork."

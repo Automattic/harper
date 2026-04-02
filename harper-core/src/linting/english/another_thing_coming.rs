@@ -1,30 +1,29 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
-    expr::{Expr, FixedPhrase, SequenceExpr},
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 /// Both `another thing coming` and `another think coming` are correct, but `another think coming` is more common.
 pub struct AnotherThingComing {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AnotherThingComing {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["had", "has", "have", "got"]))
-                    .then(FixedPhrase::from_phrase(" another think coming")),
-            ),
+            expr: SequenceExpr::word_set(&["had", "has", "have", "got"])
+                .then_fixed_phrase(" another think coming"),
         }
     }
 }
 
 impl ExprLinter for AnotherThingComing {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

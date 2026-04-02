@@ -3,12 +3,13 @@ use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::FixedPhrase;
 use crate::expr::LongestMatchOf;
-use crate::linting::english::Suggestion;
+use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseSetLinter<'a> {
     description: String,
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     wrong_forms_to_correct_forms: &'a [(&'a str, &'a str)],
     multi_wrong_forms_to_multi_correct_forms: &'a [(&'a [&'a str], &'a [&'a str])],
     message: String,
@@ -22,7 +23,7 @@ impl<'a> MapPhraseSetLinter<'a> {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let expr = Box::new(LongestMatchOf::new(
+        let expr = LongestMatchOf::new(
             wrong_forms_to_correct_forms
                 .iter()
                 .map(|(wrong_form, _correct_form)| {
@@ -30,7 +31,7 @@ impl<'a> MapPhraseSetLinter<'a> {
                     expr
                 })
                 .collect(),
-        ));
+        );
 
         Self {
             description: description.to_string(),
@@ -54,7 +55,7 @@ impl<'a> MapPhraseSetLinter<'a> {
                 lmo.add(FixedPhrase::from_phrase(wrong_form));
             }
         }
-        let expr = Box::new(lmo);
+        let expr = lmo;
 
         Self {
             description: description.to_string(),
@@ -68,8 +69,10 @@ impl<'a> MapPhraseSetLinter<'a> {
 }
 
 impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

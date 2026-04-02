@@ -1,0 +1,9 @@
+expr main (for most part)
+
+let message "Use `for the most part` instead of `for most part`."
+let description "Corrects `for most part` to `for the most part`."
+let kind "Usage"
+let becomes ["for the most part"]
+
+test "Got bot working for most part but he has trouble with vendor potions" "Got bot working for the most part but he has trouble with vendor potions"
+test "it's unresponsive for most part and the only thing you can do is to restart for most part" "it's unresponsive for the most part and the only thing you can do is to restart for the most part"

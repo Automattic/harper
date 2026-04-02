@@ -18,6 +18,7 @@ mod anchor_end;
 mod anchor_start;
 mod duration_expr;
 mod expr_map;
+mod filter;
 mod first_match_of;
 mod fixed_phrase;
 mod longest_match_of;
@@ -43,6 +44,7 @@ pub use anchor_end::AnchorEnd;
 pub use anchor_start::AnchorStart;
 pub use duration_expr::DurationExpr;
 pub use expr_map::ExprMap;
+pub use filter::Filter;
 pub use first_match_of::FirstMatchOf;
 pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
@@ -84,6 +86,12 @@ impl<E> Expr for Arc<E>
 where
     E: Expr,
 {
+    fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run(cursor, tokens, source)
+    }
+}
+
+impl Expr for Box<dyn Expr> {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
     }
@@ -154,6 +162,8 @@ where
 
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
+    fn and(self, other: impl Expr + 'static) -> All;
+    fn and_not(self, other: impl Expr + 'static) -> All;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
 }
 
@@ -164,6 +174,16 @@ where
     /// Returns an expression that matches either the current one or the expression contained in `other`.
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf {
         FirstMatchOf::new(vec![Box::new(self), Box::new(other)])
+    }
+
+    /// Returns an expression that matches only if both the current one and the expression contained in `other` do.
+    fn and(self, other: impl Expr + 'static) -> All {
+        All::new(vec![Box::new(self), Box::new(other)])
+    }
+
+    /// Returns an expression that matches only if the current one matches and the expression contained in `other` does not.
+    fn and_not(self, other: impl Expr + 'static) -> All {
+        self.and(UnlessStep::new(other, |_tok: &Token, _src: &[char]| true))
     }
 
     /// Returns an expression that matches the longest of the current one or the expression contained in `other`.

@@ -1,13 +1,12 @@
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::SequenceExpr;
-use crate::patterns::ModalVerb;
-use crate::{Lrc, Token, TokenStringExt};
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::{
+    Lrc, Token, TokenStringExt,
+    expr::{Expr, FirstMatchOf, LongestMatchOf, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::{ModalVerb, Word},
+};
 
 pub struct ModalOf {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for ModalOf {
@@ -18,49 +17,58 @@ impl Default for ModalOf {
         // "The code I had of this used to work fine ..."
 
         let modal_of = Lrc::new(
-            SequenceExpr::default()
-                .then(ModalVerb::default())
+            SequenceExpr::with(ModalVerb::default())
+                .then_whitespace()
+                .t_aco("of")
+                .and_not(FirstMatchOf::new(vec![
+                    Box::new(Word::new("can")),
+                    Box::new(Word::new_exact("May")),
+                ])),
+        );
+
+        // "will of" is a false positive if "will" is a noun
+        // "The will of the many"
+        let noun_will_of_naive = Lrc::new(
+            SequenceExpr::word_set(&["the", "a"])
+                .then_whitespace()
+                .t_aco("will")
                 .then_whitespace()
                 .t_aco("of"),
         );
 
-        let ws_course = Lrc::new(SequenceExpr::default().then_whitespace().t_aco("course"));
+        let ws_course = Lrc::new(SequenceExpr::whitespace().t_aco("course"));
 
-        let modal_of_course = Lrc::new(
-            SequenceExpr::default()
-                .then(modal_of.clone())
-                .then(ws_course.clone()),
-        );
+        let modal_of_course =
+            Lrc::new(SequenceExpr::with(modal_of.clone()).then(ws_course.clone()));
 
         let anyword_might_of = Lrc::new(
-            SequenceExpr::default()
-                .then_any_word()
+            SequenceExpr::any_word()
                 .then_whitespace()
                 .t_aco("might")
                 .then_whitespace()
                 .t_aco("of"),
         );
 
-        let anyword_might_of_course = Lrc::new(
-            SequenceExpr::default()
-                .then(anyword_might_of.clone())
-                .then(ws_course.clone()),
-        );
+        let anyword_might_of_course =
+            Lrc::new(SequenceExpr::with(anyword_might_of.clone()).then(ws_course.clone()));
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(anyword_might_of_course),
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
+                Box::new(noun_will_of_naive),
                 Box::new(modal_of),
-            ])),
+            ]),
         }
     }
 }
 
 impl ExprLinter for ModalOf {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {
@@ -123,7 +131,7 @@ impl ExprLinter for ModalOf {
 #[cfg(test)]
 mod tests {
     use super::ModalOf;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     // atomic unit tests
 
@@ -315,5 +323,39 @@ mod tests {
     #[test]
     fn catches_mixed_case_could_of_put() {
         assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
+    }
+
+    #[test]
+    fn doesnt_catch_noun_will_of() {
+        assert_lint_count("the will of the many", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn doesnt_catch_noun_will_of_edgecase() {
+        assert_lint_count("he sent us a will of his", ModalOf::default(), 0);
+    }
+
+    #[test]
+    fn catch_modal_will_of() {
+        assert_lint_count("that will of an impact", ModalOf::default(), 1);
+    }
+
+    #[test]
+    fn catch_may_of() {
+        assert_suggestion_result(
+            "I may of made a mistake",
+            ModalOf::default(),
+            "I may have made a mistake",
+        );
+    }
+
+    #[test]
+    fn dont_flag_in_may_of_last_year_bug_2786() {
+        assert_no_lints("This happened in May of last year.", ModalOf::default());
+    }
+
+    #[test]
+    fn dont_flag_can_of_red_bull_2807() {
+        assert_no_lints("I drank a can of Red Bull.", ModalOf::default());
     }
 }

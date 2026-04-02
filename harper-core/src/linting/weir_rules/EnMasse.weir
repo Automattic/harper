@@ -1,0 +1,8 @@
+expr main [(on mass), (on masse), (in mass)]
+
+let message "Did you mean `en masse`?"
+let description "Detects variants like `on mass` or `in mass` and suggests `en masse`."
+let kind "Eggcorn"
+let becomes "en masse"
+
+test "in mass" "en masse"

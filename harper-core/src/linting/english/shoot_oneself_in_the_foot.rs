@@ -6,9 +6,10 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ShootOneselfInTheFoot {
-    pattern: Box<dyn Expr>,
+    pattern: SequenceExpr,
 }
 
 impl Default for ShootOneselfInTheFoot {
@@ -17,8 +18,7 @@ impl Default for ShootOneselfInTheFoot {
 
         let body_parts = WordSet::new(&["foot", "feet", "leg", "legs"]);
 
-        let pattern = SequenceExpr::default()
-            .then(verb_forms)
+        let pattern = SequenceExpr::with(verb_forms)
             .t_ws()
             .then(ReflexivePronoun::default())
             .t_ws()
@@ -27,15 +27,15 @@ impl Default for ShootOneselfInTheFoot {
             .then_determiner()
             .t_ws()
             .then(body_parts);
-        Self {
-            pattern: Box::new(pattern),
-        }
+        Self { pattern }
     }
 }
 
 impl ExprLinter for ShootOneselfInTheFoot {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.pattern.as_ref()
+        &self.pattern
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -81,7 +81,7 @@ impl ExprLinter for ShootOneselfInTheFoot {
     }
 
     fn description(&self) -> &str {
-        "Corrects non-standard variants of 'shoot oneself in the foot'."
+        "Corrects nonstandard variants of 'shoot oneself in the foot'."
     }
 }
 

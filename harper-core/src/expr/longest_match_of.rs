@@ -18,22 +18,9 @@ impl LongestMatchOf {
 
 impl Expr for LongestMatchOf {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        let mut longest: Option<Span<Token>> = None;
-
-        for expr in self.exprs.iter() {
-            let Some(window) = expr.run(cursor, tokens, source) else {
-                continue;
-            };
-
-            if let Some(longest_window) = longest {
-                if window.len() > longest_window.len() {
-                    longest = Some(window);
-                }
-            } else {
-                longest = Some(window);
-            }
-        }
-
-        longest
+        self.exprs
+            .iter()
+            .filter_map(|expr| expr.run(cursor, tokens, source))
+            .max_by_key(Span::len)
     }
 }

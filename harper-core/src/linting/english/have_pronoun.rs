@@ -2,15 +2,15 @@ use crate::expr::{AnchorStart, Expr, SequenceExpr};
 use crate::{Token, TokenKind};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct HavePronoun {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for HavePronoun {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .t_aco("has")
             .t_ws()
             .then_kind_either(
@@ -18,15 +18,15 @@ impl Default for HavePronoun {
                 TokenKind::is_plural_pronoun,
             );
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for HavePronoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

@@ -15,7 +15,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::one_to_one(
@@ -36,7 +36,7 @@ pub fn lint_group() -> LintGroup {
             $($name:expr => ($input_correction_multi_pairs:expr, $message:expr, $description:expr $(, $lint_kind:expr)?)),+ $(,)?
         }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(
                         MapPhraseSetLinter::many_to_many(
@@ -61,6 +61,27 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "Bollocks" => (
+            &[
+                ("bullocks!", "bollocks!"),
+                ("complete bullocks", "complete bollocks"),
+                ("dogs bullocks", "dogs bollocks"),
+                ("dog's bullocks", "dog's bollocks"),
+                ("is bullocks", "is bollocks"),
+                ("it's bullocks", "it's bollocks"),
+                ("its bullocks", "its bollocks"),
+                ("such bullocks", "such bollocks"),
+                ("that's bullocks", "that's bollocks"),
+                ("thats bullocks", "thats bollocks"),
+                ("total bullocks", "total bollocks"),
+                ("utter bullocks", "utter bollocks"),
+                ("was bullocks", "was bollocks"),
+                ("what bullocks", "what bollocks"),
+            ],
+            "The slang word for `nonsense` is `bollocks`. `Bullocks` are male cattle.",
+            "Corrects `bullocks` to `bollocks` when the meaning is `nonsense`.",
+            LintKind::Spelling
+        ),
         "ChampAtTheBit" => (
             &[
                 ("chomp at the bit", "champ at the bit"),
@@ -80,6 +101,17 @@ pub fn lint_group() -> LintGroup {
             "`Client-side` and `server-side` do not use an apostrophe.",
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
+        ),
+        "CompulseToCompel" => (
+            &[
+                ("compulse", "compel"),
+                ("compulsed", "compelled"),
+                ("compulses", "compels"),
+                ("compulsing", "compelling"),
+            ],
+            "Did you mean `compel` rather than the obsolete or archaic (and non-standard) `compulse`?",
+            "Suggests replacing the obsolete or archaic verb `compulse` with the standard `compel`.",
+            LintKind::Nonstandard
         ),
         "ConfirmThat" => (
             &[
@@ -155,11 +187,38 @@ pub fn lint_group() -> LintGroup {
         ),
         "ExpandDependencies" => (
             &[
-                ("deps", "dependencies"),
                 ("dep", "dependency"),
+                ("deps", "dependencies"),
             ],
             "Use `dependencies` instead of `deps`",
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandDeref" => (
+            &[
+                ("deref", "dereference"),
+                ("derefs", "dereferences"),
+            ],
+            "Use `dereference` instead of `deref`",
+            "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandParameter" => (
+            &[
+                ("param", "parameter"),
+                ("params", "parameters"),
+            ],
+            "Use `parameter` instead of `param`",
+            "Expands the abbreviation `param` to the full word `parameter` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandPointer" => (
+            &[
+                ("ptr", "pointer"),
+                ("ptrs", "pointers"),
+            ],
+            "Use `pointer` instead of `ptr`",
+            "Expands the abbreviation `ptr` to the full word `pointer` for clarity.",
             LintKind::Style
         ),
         "ExpandStandardInputAndOutput" => (
@@ -194,6 +253,41 @@ pub fn lint_group() -> LintGroup {
             // ConfusedPair??
             LintKind::WordChoice
         ),
+        "FlauntForFlout" => (
+            &[
+                ("flaunt the rules", "flout the rules"),
+                ("flaunts the rules", "flouts the rules"),
+                ("flaunted the rules", "flouted the rules"),
+                ("flaunting the rules", "flouting the rules"),
+                ("flaunt the law", "flout the law"),
+                ("flaunts the law", "flouts the law"),
+                ("flaunted the law", "flouted the law"),
+                ("flaunting the law", "flouting the law"),
+                ("flaunt the regulations", "flout the regulations"),
+                ("flaunt authority", "flout authority"),
+                ("flaunts authority", "flouts authority"),
+                ("flaunted authority", "flouted authority"),
+                ("flaunting authority", "flouting authority"),
+                ("flaunt convention", "flout convention"),
+                ("flaunts convention", "flouts convention"),
+                ("flaunted convention", "flouted convention"),
+                ("flaunting convention", "flouting convention"),
+            ],
+            "`Flaunt` means to show off. Use `flout` when you mean to openly disregard rules or conventions.",
+            "Corrects `flaunt` to `flout` when used with rule-like nouns.",
+            LintKind::WordChoice
+        ),
+        "FoamAtTheMouth" => (
+            &[
+                ("foam out the mouth", "foam at the mouth"),
+                ("foamed out the mouth", "foamed at the mouth"),
+                ("foaming out the mouth", "foaming at the mouth"),
+                ("foams out the mouth", "foams at the mouth"),
+            ],
+            "The correct idiom is `foam at the mouth`.",
+            "Corrects the idiom `foam out the mouth` to the standard `foam at the mouth`.",
+            LintKind::Nonstandard
+        ),
         "FootTheBill" => (
             &[
                 ("flip the bill", "foot the bill"),
@@ -203,6 +297,29 @@ pub fn lint_group() -> LintGroup {
             ],
             "The standard expression is `foot the bill`.",
             "Corrects `flip the bill` to `foot the bill`.",
+            LintKind::Nonstandard
+        ),
+        "GetUsedTo" => (
+            &[
+                ("get used of", "get used to"),
+                ("gets used of", "gets used to"),
+                ("getting used of", "getting used to"),
+                ("got used of", "got used to"),
+                ("gotten used of", "gotten used to"),
+            ],
+            "Use `used to` instead of `used of`.",
+            "Corrects `used of` to `used to`.",
+            LintKind::Usage
+        ),
+        "GrindToAHalt" => (
+            &[
+                ("grind to halt", "grind to a halt"),
+                ("grinding to halt", "grinding to a halt"),
+                ("grinds to halt", "grinds to a halt"),
+                ("ground to halt", "ground to a halt"),
+            ],
+            "You are missing the indefinite article `a` before `halt`.",
+            "Corrects the idiom `grind to halt` to the standard `grind to a halt`.",
             LintKind::Nonstandard
         ),
         "HavePassed" => (
@@ -216,6 +333,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests `past` for `passed` in case a verb was intended.",
             // ConfusedPair?
             LintKind::WordChoice
+        ),
+        "HitTheNailOnTheHead" => (
+            &[
+                ("hit the nail in the head", "hit the nail on the head"),
+                ("hits the nail in the head", "hits the nail on the head"),
+                ("hitting the nail in the head", "hitting the nail on the head"),
+                ("hitted the nail in the head", "hitted the nail on the head")
+            ],
+            "The correct preposition in this idiom is `on`.",
+            "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
+            LintKind::Eggcorn
         ),
         "HomeInOn" => (
             &[
@@ -252,52 +380,15 @@ pub fn lint_group() -> LintGroup {
             "`Invest` is traditionally followed by 'in,' not `into.`",
             LintKind::Usage
         ),
-        "MakeDoWith" => (
+        "LayoutVerb" => (
             &[
-                ("make due with", "make do with"),
-                ("made due with", "made do with"),
-                ("makes due with", "makes do with"),
-                ("making due with", "making do with"),
+                ("layouted", "laid out"),
+                ("layouting", "laying out"),
+                // Note "layout" and "layouts" are valid as nouns
             ],
-            "Use `do` instead of `due` when referring to a resource scarcity.",
-            "Corrects `make due` to `make do` when followed by `with`."
-        ),
-        "MootPoint" => (
-            &[
-                ("mute point", "moot point"),
-                ("point is mute", "point is moot"),
-            ],
-            "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
-            "Corrects `mute` to `moot` in the phrase `moot point`.",
-            LintKind::Eggcorn
-        ),
-        "OperatingSystem" => (
-            &[
-                ("operative system", "operating system"),
-                ("operative systems", "operating systems"),
-            ],
-            "Did you mean `operating system`?",
-            "Ensures `operating system` is used correctly instead of `operative system`.",
+            "`layouted` and `layouting` are non-standard verb forms. Use `laid out` and `laying out` instead.",
+            "Flags nonstandard verb forms of `layout` (like `layouted` and `layouting`) and suggests the standard English verb forms (`laid out` and `laying out`).",
             LintKind::Usage
-        ),
-        "PassersBy" => (
-            &[
-                ("passerbys", "passersby"),
-                ("passer-bys", "passers-by"),
-            ],
-            "The correct plural is `passersby` or `passers-by`.",
-            "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
-            LintKind::Grammar
-        ),
-        "Piggyback" => (
-            &[
-                ("piggy bag", "piggyback"),
-                ("piggy bagged", "piggybacked"),
-                ("piggy bagging", "piggybacking"),
-            ],
-            "Did you mean `piggyback`?",
-            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
-            LintKind::Eggcorn
         ),
 
         // General litotes (double negatives) → direct positive suggestions
@@ -326,6 +417,75 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
+        "MakeDoWith" => (
+            &[
+                ("make due with", "make do with"),
+                ("made due with", "made do with"),
+                ("makes due with", "makes do with"),
+                ("making due with", "making do with"),
+            ],
+            "Use `do` instead of `due` when referring to a resource scarcity.",
+            "Corrects `make due` to `make do` when followed by `with`."
+        ),
+        "MakeSense" => (
+            &[
+                ("make senses", "make sense"),
+                ("made senses", "made sense"),
+                ("makes senses", "makes sense"),
+                ("making senses", "making sense")
+            ],
+            "Use `sense` instead of `senses`.",
+            "Corrects `make senses` to `make sense`.",
+            LintKind::Usage
+        ),
+        "MootPoint" => (
+            &[
+                ("mute point", "moot point"),
+                ("point is mute", "point is moot"),
+            ],
+            "Use `moot` instead of `mute` when referring to a debatable or irrelevant point.",
+            "Corrects `mute` to `moot` in the phrase `moot point`.",
+            LintKind::Eggcorn
+        ),
+        "OperatingSystem" => (
+            &[
+                ("operative system", "operating system"),
+                ("operative systems", "operating systems"),
+            ],
+            "Did you mean `operating system`?",
+            "Ensures `operating system` is used correctly instead of `operative system`.",
+            LintKind::Usage
+        ),
+        "PassersBy" => (
+            &[
+                ("passerbys", "passersby"),
+                ("passer-bys", "passers-by"),
+            ],
+            "The correct plural is `passersby` or `passers-by`.",
+            "Corrects `passerbys` and `passer-bys` to `passersby` or `passers-by`.",
+            LintKind::Grammar
+        ),
+        "PeekBehindTheCurtain" => (
+            &[
+                ("peak behind the curtain", "peek behind the curtain"),
+                ("peaked behind the curtain", "peeked behind the curtain"),
+                ("peaking behind the curtain", "peeking behind the curtain"),
+                ("peaks behind the curtain", "peeks behind the curtain"),
+            ],
+            "The correct idiom is `peek behind the curtain`.",
+            "Corrects `peak behind the curtain` to `peek behind the curtain`.",
+            LintKind::Eggcorn
+        ),
+        "Piggyback" => (
+            &[
+                ("piggy bag", "piggyback"),
+                ("piggy bagged", "piggybacked"),
+                ("piggy bagging", "piggybacking"),
+            ],
+            "Did you mean `piggyback`?",
+            "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
+            LintKind::Eggcorn
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -338,9 +498,187 @@ pub fn lint_group() -> LintGroup {
             "Simplifies redundant double positives like `most optimal` to the base form.",
             LintKind::Redundancy
         ),
+        "ResponsibilityFor" => (
+            &[
+                ("take responsibility of", "take responsibility for"),
+                ("took responsibility of", "took responsibility for"),
+                ("taken responsibility of", "taken responsibility for"),
+                ("taking responsibility of", "taking responsibility for"),
+                ("takes responsibility of", "takes responsibility for"),
+                ("assume responsibility of", "assume responsibility for"),
+                ("assumed responsibility of", "assumed responsibility for"),
+                ("assuming responsibility of", "assuming responsibility for"),
+                ("assumes responsibility of", "assumes responsibility for"),
+                ("claim responsibility of", "claim responsibility for"),
+                ("claimed responsibility of", "claimed responsibility for"),
+                ("claiming responsibility of", "claiming responsibility for"),
+                ("claims responsibility of", "claims responsibility for"),
+            ],
+            "The correct preposition is `for`, not `of`.",
+            "Corrects `take/assume/claim responsibility of` to `take/assume/claim responsibility for`.",
+            LintKind::Usage
+        ),
+        "ScapeGoat" => (
+            &[
+                ("an escape goat", "a scapegoat"),
+                ("escape goat", "scapegoat"),
+                ("escape goats", "scapegoats"),
+            ],
+            "If you're referring someone is being blamed unfairly, write it as a single word: `scapegoat`.",
+            "Corrects `scape goat` to `scapegoat`, which is the proper term for a person blamed for others' failures.",
+            LintKind::Eggcorn
+        ),
+        "SeamToSeem" => (
+            &[
+                ("seam to be", "seem to be"),
+                ("seams to be", "seems to be"),
+                ("i seam", "i seem"),
+                ("we seam", "we seem"),
+                ("we all seam", "we all seem"),
+                ("we both seam", "we both seem"),
+                ("you seam", "you seem"),
+                ("you all seam", "you all seem"),
+                ("you both seam", "you both seem"),
+                ("he seams", "he seems"),
+                ("she seams", "she seems"),
+                ("it seams", "it seems"),
+                ("they seam", "they seem"),
+                ("they all seam", "they all seem"),
+                ("they both seam", "they both seem"),
+                ("everything seams", "everything seems"),
+                ("everybody seams", "everybody seems"),
+                ("everyone seams", "everyone seems")
+            ],
+            "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
+            "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
+            LintKind::Spelling
+        ),
+        "SubjunctiveWasToWere" => (
+            &[
+                ("if only there was", "if only there were"),
+                ("if only i was", "if only i were"),
+                ("if only he was", "if only he were"),
+                ("if only she was", "if only she were"),
+                ("if only it was", "if only it were"),
+                ("i wish there was", "i wish there were"),
+                ("i wish i was", "i wish i were"),
+                ("i wish he was", "i wish he were"),
+                ("i wish she was", "i wish she were"),
+                ("i wish it was", "i wish it were")
+            ],
+            "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
+            "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
+            LintKind::Grammar
+        ),
+        "WreakHavoc" => (
+            &[
+                ("wreck havoc", "wreak havoc"),
+                ("wrecked havoc", "wreaked havoc"),
+                ("wrecking havoc", "wreaking havoc"),
+                ("wrecks havoc", "wreaks havoc"),
+            ],
+            "Did you mean `wreak havoc`?",
+            "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
+            LintKind::Eggcorn
+        ),
+        "WroteToRote" => (
+            &[
+                ("by wrote", "by rote"),
+                ("by-wrote", "by-rote"),
+                ("wrote learning", "rote learning"),
+                ("wrote memorisation", "rote memorisation"),
+                ("wrote-memorisation", "rote-memorisation"),
+                ("wrote memorization", "rote memorization"),
+                ("wrote-memorization", "rote-memorization"),
+                ("wrote memorizing", "rote memorizing"),
+            ],
+            "Did you mean `rote` (mechanical memorization) instead of `wrote`?",
+            "Corrects `by wrote` to `by rote`.",
+            LintKind::Eggcorn
+        )
     });
 
     add_many_to_many_mappings!(group, {
+        "AwaitFor" => (
+            &[
+                (&["await for"], &["await", "wait for"]),
+                (&["awaited for"], &["awaited", "waited for"]),
+                (&["awaiting for"], &["awaiting", "waiting for"]),
+                (&["awaits for"], &["awaits", "waits for"])
+            ],
+            "`Await` and `for` are redundant when used together - use one or the other",
+            "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
+            LintKind::Redundancy
+        ),
+        "CommitmentTo" => (
+            &[
+                (&["commitment toward", "commitment towards"], &["commitment to"]),
+                (&["commitments toward", "commitments towards"], &["commitments to"]),
+            ],
+            "The correct preposition to use with `commitment` is `to`, not `toward` or `towards`.",
+            "Corrects `commitment toward/towards` to `commitment to`.",
+            LintKind::Usage
+        ),
+        "Copyright" => (
+            &[
+                (&["copywrite"], &["copyright"]),
+                (&["copywrites"], &["copyrights"]),
+                (&["copywriting"], &["copyrighting"]),
+                (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
+            ],
+            "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
+            "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
+            LintKind::WordChoice
+        ),
+        "DoubleEdgedSword" => (
+            &[
+                (&["double edge sword", "double-edge sword", "double edge-sword", "double-edge-sword",
+                   "double edged sword", "double edged-sword", "double-edged-sword"], &["double-edged sword"]),
+                (&["double edge swords", "double-edge swords", "double edge-swords", "double-edge-swords",
+                   "double edged swords", "double edged-swords", "double-edged-swords"], &["double-edged swords"]),
+            ],
+            "Did you mean `double-edged sword`?",
+            "Corrects variants of `double-edged sword`.",
+            LintKind::Spelling
+        ),
+        "ExpandAlloc" => (
+            &[
+                (&["alloc"], &["allocate", "allocation"]),
+                (&["allocs"], &["allocates", "allocations"]),
+            ],
+            "Use `allocate` or `allocation` instead of `alloc`",
+            "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandDecl" => (
+            &[
+                (&["decl"], &["declaration", "declarator"]),
+                (&["decls"], &["declarations", "declarators"])
+            ],
+            "Use `declaration` or `declarator` instead of `decl`",
+            "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
+        ),
+        "Expat" => (
+            &[
+                (&["ex-pat", "ex pat"], &["expat"]),
+                (&["ex-pats", "ex pats"], &["expats"]),
+                (&["ex-pat's", "ex pat's"], &["expat's"]),
+            ],
+            "The correct spelling is `expat` with no hyphen or space.",
+            "Corrects the mistake of writing `expat` as two words.",
+            LintKind::Spelling
+        ),
+        "Expatriate" => (
+            &[
+                (&["ex-patriot", "expatriot", "ex patriot"], &["expatriate"]),
+                (&["ex-patriots", "expatriots", "ex patriots"], &["expatriates"]),
+                (&["ex-patriot's", "expatriot's", "ex patriot's"], &["expatriate's"]),
+            ],
+            "Use the correct term for someone living abroad.",
+            "Fixes the misinterpretation of `expatriate`, ensuring the correct term is used for individuals residing abroad.",
+            LintKind::Eggcorn
+        ),
         "GetRidOf" => (
             &[
                 (&["get rid off", "get ride of", "get ride off"], &["get rid of"]),
@@ -352,6 +690,15 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
+        ),
+        "HolyWar" => (
+            &[
+                (&["holey war", "holly war"], &["holy war"]),
+                (&["holey wars", "holly wars"], &["holy wars"]),
+            ],
+            "Literally for religious conflicts and metaphorically for tech preference debats, the correct spelling is `holy war`.",
+            "Corrects misspellings of `holy war`.",
+            LintKind::Malapropism
         ),
         "HowItLooksLike" => (
             &[
@@ -383,12 +730,29 @@ pub fn lint_group() -> LintGroup {
             "Suggests using `nervous wreck` when referring to a person's emotional state.",
             LintKind::Eggcorn
         ),
+        "NotOnly" => (
+            &[
+                (&["no only are"], &["not only are"]),
+                (&["no only is"], &["not only is"]),
+                (&["no only was"], &["not only was"]),
+                (&["no only were"], &["not only were"]),
+            ],
+            "Use `not only` instead of `no only` in this expression.",
+            "Corrects `no only` to `not only` before forms of `to be`.",
+            LintKind::Grammar
+        ),
         "RiseTheQuestion" => (
             &[
-                (&["rise the question"], &["raise the question"]),
-                (&["rises the question"], &["raises the question"]),
-                (&["risen the question", "rose the question"], &["raised the question"]),
-                (&["rising the question"], &["raising the question"])
+                (&["rise the question", "arise the question"], &["raise the question"]),
+                (&["rises the question", "arises the question"], &["raises the question"]),
+                (
+                    &[
+                        "risen the question", "rose the question", "rised the question",
+                        "arisen the question", "arose the question", "arised the question"
+                    ],
+                    &["raised the question"]
+                ),
+                (&["rising the question", "arising the question"], &["raising the question"])
             ],
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",

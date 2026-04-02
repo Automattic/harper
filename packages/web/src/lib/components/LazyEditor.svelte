@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Spinner } from 'flowbite-svelte';
+import { Spinner } from 'components';
 export let content: string | undefined = undefined;
 
 let editor = import('./Editor.svelte');
@@ -17,7 +17,8 @@ function onReady() {
 {/await}
 
 {#if loading}
-  <div class="flex flex-row h-full max-w-full items-center justify-center">
+  <div class="flex h-full max-w-full flex-col items-center justify-center gap-2">
     <Spinner color="green" />
+    <p class="text-sm">Loading Harper's grammar engine...</p>
   </div>
 {/if}

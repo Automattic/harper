@@ -22,7 +22,6 @@ jobs:
       - uses: redhat-actions/buildah-build@v2
         with:
           image: web
-          layers: false
           containerfiles: |
             Dockerfile
           build-args: |

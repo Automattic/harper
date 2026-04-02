@@ -1,0 +1,29 @@
+expr helper [AUX, will, would, should, could, can, may, might, must, has, have, had, is, are, was, were, am, do, does, did]
+expr subject [PRON, PROPN, NOUN]
+expr main <([( @helper shutdown), (@helper @subject shutdown), (@helper not shutdown), (@helper @subject not shutdown), (@helper not @subject shutdown)]), shutdown>
+
+let message "Use the verbal phrase `shut down` whenever an auxiliary verb is pulling `shutdown` into a predicate."
+let description "Keeps `shutdown` as a noun when it stands alone but swaps it for the phrasal verb `shut down` whenever an auxiliary precedes it."
+let kind "Grammar"
+let becomes "shut down"
+
+# True positives
+# These are scenarios where `shutdown` is acting like the verb, so the rule should rehydrate it into two words.
+test "I will shutdown the server after work." "I will shut down the server after work."
+test "You can shutdown the old cluster tonight." "You can shut down the old cluster tonight."
+test "He has shutdown the backup process already." "He has shut down the backup process already."
+test "They have not shutdown the service yet." "They have not shut down the service yet."
+test "Should we shutdown the build manually?" "Should we shut down the build manually?"
+test "Would John shutdown the demo if we ask?" "Would John shut down the demo if we ask?"
+test "Could you not shutdown the database until backups finish?" "Could you not shut down the database until backups finish?"
+test "She won't shutdown the fleet until the engineers arrive." "She won't shut down the fleet until the engineers arrive."
+test "Can Alice shutdown this branch for me?" "Can Alice shut down this branch for me?"
+test "I shouldn't shutdown the node without warning." "I shouldn't shut down the node without warning."
+test "Has he shutdown the node yet?" "Has he shut down the node yet?"
+
+# True negatives (these should remain untouched)
+test "The shutdown lasted ten minutes." "The shutdown lasted ten minutes."
+test "Our planned shutdown is scheduled for Friday." "Our planned shutdown is scheduled for Friday."
+test "They shut down the network yesterday." "They shut down the network yesterday."
+test "Shutdown procedures are in the handbook." "Shutdown procedures are in the handbook."
+test "A forced shutdown is rare in this cluster." "A forced shutdown is rare in this cluster."

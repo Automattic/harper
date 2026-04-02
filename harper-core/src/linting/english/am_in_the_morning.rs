@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Span, Token, TokenStringExt,
     expr::{Expr, FixedPhrase, LongestMatchOf, SequenceExpr},
@@ -6,7 +7,7 @@ use crate::{
 };
 
 pub struct AmInTheMorning {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AmInTheMorning {
@@ -15,33 +16,35 @@ impl Default for AmInTheMorning {
         let pm = WordSet::new(&["pm", "p.m."]);
 
         let maybe_ws_am = LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(am.clone())),
-            Box::new(SequenceExpr::default().then_whitespace().then(am)),
+            Box::new(SequenceExpr::with(am.clone())),
+            Box::new(SequenceExpr::whitespace().then(am)),
         ]);
         let maybe_ws_pm = LongestMatchOf::new(vec![
-            Box::new(SequenceExpr::default().then(pm.clone())),
-            Box::new(SequenceExpr::default().then_whitespace().then(pm)),
+            Box::new(SequenceExpr::with(pm.clone())),
+            Box::new(SequenceExpr::whitespace().then(pm)),
         ]);
 
-        let ws_in_periods = SequenceExpr::default()
-            .then(FixedPhrase::from_phrase(" in the "))
-            .then(WordSet::new(&["morning", "afternoon", "evening", "night"]));
+        let ws_in_periods = SequenceExpr::fixed_phrase(" in the ").then_word_set(&[
+            "morning",
+            "afternoon",
+            "evening",
+            "night",
+        ]);
 
         let ws_at_periods = FixedPhrase::from_phrase(" at night");
 
-        let expr = SequenceExpr::default()
-            .then_any_of(vec![Box::new(maybe_ws_am), Box::new(maybe_ws_pm)])
+        let expr = SequenceExpr::any_of(vec![Box::new(maybe_ws_am), Box::new(maybe_ws_pm)])
             .then_any_of(vec![Box::new(ws_in_periods), Box::new(ws_at_periods)]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for AmInTheMorning {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -72,9 +75,7 @@ impl ExprLinter for AmInTheMorning {
 #[cfg(test)]
 mod tests {
     use super::AmInTheMorning;
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn flag_at_4am_in_the_morning() {
@@ -161,12 +162,11 @@ mod tests {
             "I wrote this whole program as a joke, at 1 AM. Nothing else to say.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "I wrote this whole program as a joke, at 1 AM in the morning. Nothing else to say.",
             AmInTheMorning::default(),
             "I wrote this whole program as a joke, at 1 in the morning. Nothing else to say.",
             crate::languages::LanguageFamily::English,
-            1,
         );
     }
 
@@ -178,7 +178,7 @@ mod tests {
             "Luckily I was at home, but it was not fun at 3am.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Luckily I was at home, but it was not fun at 3am in the morning.",
             AmInTheMorning::default(),
             "Luckily I was at home, but it was not fun at 3 in the morning.",
@@ -195,7 +195,7 @@ mod tests {
             "If I want to run my script or some cron job at 3am, it seems to be not possible after macOS is in sleep mode.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "If I want to run my script or some cron job at 3am at night, it seems to be not possible after macOS is in sleep mode.",
             AmInTheMorning::default(),
             "If I want to run my script or some cron job at 3 at night, it seems to be not possible after macOS is in sleep mode.",
@@ -212,7 +212,7 @@ mod tests {
             "The servers stop at 9PM and starts again at 9AM.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "The servers stop at 9PM at night and starts again at 9AM.",
             AmInTheMorning::default(),
             "The servers stop at 9 at night and starts again at 9AM.",
@@ -229,7 +229,7 @@ mod tests {
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 AM in the morning.",
             AmInTheMorning::default(),
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 in the morning.",
@@ -246,7 +246,7 @@ mod tests {
             "Style issues get a blue marker: It's 5 P.M..",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Style issues get a blue marker: It's 5 P.M. in the afternoon.",
             AmInTheMorning::default(),
             "Style issues get a blue marker: It's 5 in the afternoon.",
@@ -263,7 +263,7 @@ mod tests {
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM on Monday, 27 May 2007.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.",
             AmInTheMorning::default(),
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 in the afternoon on Monday, 27 May 2007.",
@@ -280,7 +280,7 @@ mod tests {
             "I am in China and it is six pm.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "I am in China and it is six pm in the evening.",
             AmInTheMorning::default(),
             "I am in China and it is six in the evening.",
@@ -297,7 +297,7 @@ mod tests {
             "On the second application, we normally have the 503 between 1am and 4 am, almost every day.",
             crate::languages::LanguageFamily::English,
         );
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.",
             AmInTheMorning::default(),
             "On the second application, we normally have the 503 between 1am and 4 in the morning, almost every day.",

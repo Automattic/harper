@@ -51,8 +51,8 @@ Message: |
          |                                     ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
       22 | ought to have wondered at this, but at the time it all seemed quite natural);
 Suggest:
-  - Replace with: “afterward”
   - Replace with: “afterwords”
+  - Replace with: “afterward”
   - Replace with: “afterword's”
 
 
@@ -103,7 +103,7 @@ Message: |
          | ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
-  - Replace with: “central”
+  - Replace with: “cent's”
   - Replace with: “censure”
 
 
@@ -171,11 +171,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
       74 | again. “Dinah’ll miss me very much to-night, I should think!” (Dinah was the
-         |         ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
+         |         ^~~~~~~~ Did you mean `Dinah's`?
 Suggest:
   - Replace with: “Dinah's”
-  - Replace with: “Dina's”
-  - Replace with: “Dinah”
 
 
 
@@ -668,9 +666,9 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                   ^~ Did you mean to spell `Où` this way?
 Suggest:
-  - Replace with: “Os”
-  - Replace with: “O”
-  - Replace with: “OD”
+  - Replace with: “Of”
+  - Replace with: “Oh”
+  - Replace with: “Oi”
 
 
 
@@ -699,9 +697,9 @@ Message: |
      320 | she began again: “Où est ma chatte?” which was the first sentence in her French
          |                             ^~~~~~ Did you mean to spell `chatte` this way?
 Suggest:
-  - Replace with: “chatty”
   - Replace with: “chaste”
   - Replace with: “chatted”
+  - Replace with: “chattel”
 
 
 
@@ -761,9 +759,9 @@ Message: |
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
      363 | Eaglet, and several other curious creatures. Alice led the way, and the whole
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -809,9 +807,9 @@ Message: |
          |                                                ^~~~ Did you mean to spell `Lory` this way?
      376 | and would only say, “I am older than you, and must know better;” and this Alice
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -821,9 +819,9 @@ Message: |
          |                                                             ^~~~ Did you mean to spell `Lory` this way?
      378 | refused to tell its age, there was no more to be said.
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -845,8 +843,8 @@ Message: |
          |           ^~~~~~ Did you mean to spell `Morcar` this way?
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Molnar”
-  - Replace with: “Mopar”
+  - Replace with: “Mercer”
+  - Replace with: “Molar”
 
 
 
@@ -862,9 +860,9 @@ Message: |
      392 | “Ugh!” said the Lory, with a shiver.
          |                 ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -873,9 +871,9 @@ Message: |
      397 | “Not I!” said the Lory hastily.
          |                   ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -886,8 +884,8 @@ Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
 Suggest:
   - Replace with: “Mortar”
-  - Replace with: “Molnar”
-  - Replace with: “Mopar”
+  - Replace with: “Mercer”
+  - Replace with: “Molar”
 
 
 
@@ -902,10 +900,12 @@ Message: |
 Lint:    Spelling (63 priority)
 Message: |
      400 | of Mercia and Northumbria, declared for him: and even Stigand, the patriotic
-         |                                                       ^~~~~~~ Did you mean `Brigand`?
+         |                                                       ^~~~~~~ Did you mean to spell `Stigand` this way?
      401 | archbishop of Canterbury, found it advisable—’”
 Suggest:
-  - Replace with: “Brigand”
+  - Replace with: “Stand”
+  - Replace with: “Stipend”
+  - Replace with: “Strand”
 
 
 
@@ -915,8 +915,9 @@ Message: |
      412 | advisable to go with Edgar Atheling to meet William and offer him the crown.
          |                            ^~~~~~~~ Did you mean to spell `Atheling` this way?
 Suggest:
-  - Replace with: “Theming”
-  - Replace with: “Steeling”
+  - Replace with: “Adhering”
+  - Replace with: “Fathering”
+  - Replace with: “Gathering”
 
 
 
@@ -967,9 +968,9 @@ Message: |
          |                                            ^~~~ Did you mean to spell `Lory` this way?
      528 | sight; and an old Crab took the opportunity of saying to her daughter “Ah, my
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -978,9 +979,9 @@ Message: |
      536 | “And who is Dinah, if I might venture to ask the question?” said the Lory.
          |                                                                      ^~~~ Did you mean to spell `Lory` this way?
 Suggest:
-  - Replace with: “Lori”
-  - Replace with: “Gory”
-  - Replace with: “Dory”
+  - Replace with: “Lord”
+  - Replace with: “Lore”
+  - Replace with: “Lorry”
 
 
 
@@ -1035,11 +1036,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      585 | I suppose Dinah’ll be sending me on messages next!” And she began fancying the
-         |           ^~~~~~~~ Did you mean to spell `Dinah’ll` this way?
+         |           ^~~~~~~~ Did you mean `Dinah's`?
 Suggest:
   - Replace with: “Dinah's”
-  - Replace with: “Dina's”
-  - Replace with: “Dinah”
 
 
 
@@ -1152,8 +1151,8 @@ Message: |
          |                                                     ^~~~~ Did you mean to spell `arrum` this way?
 Suggest:
   - Replace with: “arum”
-  - Replace with: “atrium”
-  - Replace with: “argue”
+  - Replace with: “album”
+  - Replace with: “alum”
 
 
 
@@ -1306,6 +1305,16 @@ Message: |
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     713 | flustered to tell you—all I know is, something comes at me like a
+     714 | Jack-in-the-box, and up I goes like a sky-rocket!”
+         |                           ^~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “go”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      723 | minute or two, they began moving about again, and Alice heard the Rabbit say, “A
@@ -1418,6 +1427,15 @@ Message: |
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+     796 | ## CHAPTER V: Advice from a Caterpillar
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER v: Advice from a Caterpillar”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      822 | “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to
@@ -1503,15 +1521,6 @@ Suggest:
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
-         |           ^~~~~~ The canonical dictionary spelling is `head's`.
-Suggest:
-  - Replace with: “head's”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      964 | “Come, my head’s free at last!” said Alice in a tone of delight, which changed
@@ -1524,16 +1533,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      968 | far below her.
          | ~~~~~~~~~~~~~~ This sentence is 58 words long.
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-     971 | to? And oh, my poor hands, how is it I can’t see you?” She was moving them about
-         |                                   ^~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “it”
-  - Replace with: “I”
 
 
 
@@ -1640,6 +1639,15 @@ Suggest:
 
 
 
+Lint:    Capitalization (127 priority)
+Message: |
+    1059 | ## CHAPTER VI: Pig and Pepper
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## CHAPTER Vi: Pig and Pepper”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     1061 | For a minute or two she stood looking at the house, and wondering what to do
@@ -1665,16 +1673,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1081 | the sky.
          | ~~~~~~~~ This sentence is 49 words long.
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    1127 | “Oh, there’s no use in talking to him,” said Alice desperately: “he’s perfectly
-         |                                                                  ^~~~ The canonical dictionary spelling is `he's`.
-    1128 | idiotic!” And she opened the door and went in.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -1819,7 +1817,7 @@ Message: |
 Suggest:
   - Replace with: “nature”
   - Replace with: “natures”
-  - Replace with: “natural”
+  - Replace with: “nature's”
 
 
 
@@ -1968,7 +1966,7 @@ Message: |
 Suggest:
   - Replace with: “Lace”
   - Replace with: “Lacier”
-  - Replace with: “Lacey”
+  - Replace with: “Lac's”
 
 
 
@@ -1977,9 +1975,9 @@ Message: |
     1555 | great hurry; “and their names were Elsie, Lacie, and Tillie; and they lived at
          |                                                      ^~~~~~ Did you mean to spell `Tillie` this way?
 Suggest:
-  - Replace with: “Billie”
-  - Replace with: “Lillie”
-  - Replace with: “Millie”
+  - Replace with: “Till's”
+  - Replace with: “Tile”
+  - Replace with: “Till”
 
 
 
@@ -2365,8 +2363,8 @@ Message: |
          |   ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -2377,8 +2375,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “tic”
   - Replace with: “ti's”
+  - Replace with: “tic”
 
 
 
@@ -2389,8 +2387,8 @@ Message: |
     1986 | love, that makes the world go round!’”
 Suggest:
   - Replace with: “this”
-  - Replace with: “tic”
   - Replace with: “ti's”
+  - Replace with: “tic”
 
 
 
@@ -2551,14 +2549,24 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+    2121 | “This here young lady,” said the Gryphon, “she wants for to know your history,
+    2122 | she do.”
+         |     ^~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “does”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2133 | These words were followed by a very long silence, broken only by an occasional
     2134 | exclamation of “Hjckrrh!” from the Gryphon, and the constant heavy sobbing of
          |                 ^~~~~~~ Did you mean to spell `Hjckrrh` this way?
 Suggest:
+  - Replace with: “Hickory”
   - Replace with: “Hacker”
-  - Replace with: “Hackish”
   - Replace with: “Hackers”
 
 
@@ -2608,16 +2616,6 @@ Message: |
          |      ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “Then”
-
-
-
-Lint:    Repetition (63 priority)
-Message: |
-    2177 | great relief. “Now at ours they had at the end of the bill, ‘French, music, and
-         |                       ^~~~~~~~~ There are too many personal pronouns in sequence here.
-Suggest:
-  - Replace with: “ours”
-  - Replace with: “they”
 
 
 
@@ -2691,9 +2689,9 @@ Message: |
     2206 | his flappers, “—Mystery, ancient and modern, with Seaography: then Drawling—the
          |                                                   ^~~~~~~~~~ Did you mean to spell `Seaography` this way?
 Suggest:
+  - Replace with: “Scenography”
+  - Replace with: “Stenography”
   - Replace with: “Demography”
-  - Replace with: “Geography”
-  - Replace with: “Xerography”
 
 
 
@@ -2896,33 +2894,11 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    2303 | treading on her toes when they passed too close, and waving their forepaws to
-         |                                                                   ^~~~~~~~ Did you mean to spell `forepaws` this way?
-    2304 | mark the time, while the Mock Turtle sang this, very slowly and sadly:—
-Suggest:
-  - Replace with: “foreparts”
-  - Replace with: “forepart”
-  - Replace with: “foresaw”
-
-
-
 Lint:    Formatting (255 priority)
 Message: |
     2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
          |                                                               ^ This quote has no termination.
     2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2306 | > “Will you walk a little faster?” said a whiting to a snail. “There’s a
-    2307 | > porpoise close behind us, and he’s treading on my tail. See how eagerly the
-         |                                 ^~~~ The canonical dictionary spelling is `he's`.
-Suggest:
-  - Replace with: “he's”
 
 
 
@@ -2944,7 +2920,7 @@ Message: |
 Suggest:
   - Replace with: “Din”
   - Replace with: “Dine”
-  - Replace with: “Ding”
+  - Replace with: “Diann”
 
 
 
@@ -3086,8 +3062,8 @@ Message: |
          |                        ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -3113,8 +3089,8 @@ Message: |
          |     ^~~ Did you mean to spell `Tis` this way?
 Suggest:
   - Replace with: “This”
-  - Replace with: “Tic”
   - Replace with: “T's”
+  - Replace with: “Ti's”
 
 
 
@@ -3207,9 +3183,9 @@ Message: |
     2477 | eagerly that the Gryphon said, in a rather offended tone, “Hm! No accounting for
          |                                                            ^~ Did you mean to spell `Hm` this way?
 Suggest:
-  - Replace with: “Him”
-  - Replace with: “Ho”
-  - Replace with: “Am”
+  - Replace with: “Ha”
+  - Replace with: “Ham”
+  - Replace with: “He”
 
 
 
@@ -3237,8 +3213,8 @@ Message: |
          |                                         ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3279,8 +3255,8 @@ Message: |
          |                                                               ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3311,8 +3287,8 @@ Message: |
     2486 | > of the e—e—evening, Beautiful, beautiful Soup!
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3375,8 +3351,8 @@ Message: |
          |                                ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3417,8 +3393,8 @@ Message: |
          |                                                      ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3449,8 +3425,8 @@ Message: |
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3504,9 +3480,9 @@ Message: |
     2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
          |                                  ^~~ Did you mean to spell `FUL` this way?
 Suggest:
-  - Replace with: “FUD”
-  - Replace with: “F's”
-  - Replace with: “UL”
+  - Replace with: “Full”
+  - Replace with: “Flu”
+  - Replace with: “Fol”
 
 
 
@@ -3544,8 +3520,8 @@ Message: |
          |    ^~~ Did you mean to spell `Soo` this way?
 Suggest:
   - Replace with: “So”
-  - Replace with: “Solo”
-  - Replace with: “Son”
+  - Replace with: “Soc”
+  - Replace with: “Sod”
 
 
 
@@ -3764,6 +3740,16 @@ Message: |
 
 
 
+Lint:    Grammar (31 priority)
+Message: |
+    2741 | to see what the next witness would be like, “—for they haven’t got much evidence
+         |                                                   ^~~~ Use `them` when the pronoun follows a preposition or transitive verb.
+    2742 | yet,” she said to herself. Imagine her surprise, when the White Rabbit read out,
+Suggest:
+  - Replace with: “them”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     2747 | “Here!” cried Alice, quite forgetting in the flurry of the moment how large she
@@ -3865,8 +3851,8 @@ Message: |
     2929 | “No, no!” said the Queen. “Sentence first—verdict afterwards.”
          |                                                   ^~~~~~~~~~ Did you mean to spell `afterwards` this way?
 Suggest:
-  - Replace with: “afterward”
   - Replace with: “afterwords”
+  - Replace with: “afterward”
   - Replace with: “afterword's”
 
 

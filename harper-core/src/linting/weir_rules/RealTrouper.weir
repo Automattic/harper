@@ -1,0 +1,7 @@
+expr main (real trooper)
+
+let message "Use the correct phrase for someone who perseveres."
+let description "Ensures the correct use of `real trouper`, distinguishing it from `trooper`, which refers to a soldier or police officer."
+let kind "Eggcorn"
+let becomes "real trouper"
+

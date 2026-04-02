@@ -11,10 +11,7 @@ pub struct QuoteSpacing {
 impl QuoteSpacing {
     pub fn new() -> Self {
         Self {
-            expr: SequenceExpr::default()
-                .then_any_word()
-                .then_quote()
-                .then_any_word(),
+            expr: SequenceExpr::any_word().then_quote().then_any_word(),
         }
     }
 }

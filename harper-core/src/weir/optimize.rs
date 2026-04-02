@@ -1,0 +1,61 @@
+use super::ast::{AstExprNode, AstStmtNode};
+
+/// Optimizes the AST to use fewer nodes.
+/// Returns whether an edit was made.
+pub fn optimize(stmts: &mut Vec<AstStmtNode>) -> bool {
+    let mut edit = false;
+
+    for stmt in stmts {
+        if let AstStmtNode::SetExpr { value, .. } = stmt
+            && optimize_expr(value)
+        {
+            edit = true;
+        }
+    }
+
+    edit
+}
+
+/// Optimizes the AST of the expression to use fewer nodes.
+/// Returns whether an edit was made.
+pub fn optimize_expr(ast: &mut AstExprNode) -> bool {
+    let mut edit = false;
+    match ast {
+        AstExprNode::Not(child) => return optimize_expr(child),
+        AstExprNode::Seq(children) => {
+            if children.len() == 1 {
+                *ast = children.pop().unwrap();
+                edit = true;
+            } else {
+                children.iter_mut().for_each(|child| {
+                    if optimize_expr(child) {
+                        edit = true;
+                    }
+                });
+            }
+        }
+        AstExprNode::Arr(children) => {
+            if children.len() == 1 {
+                *ast = children.pop().unwrap();
+                edit = true;
+            } else if !children.is_empty() && children.iter().all(|n| n.is_upos_set()) {
+                *ast = AstExprNode::UPOSSet(
+                    children
+                        .iter_mut()
+                        .flat_map(|n| n.as_upos_set().unwrap())
+                        .copied()
+                        .collect(),
+                )
+            } else {
+                children.iter_mut().for_each(|child| {
+                    if optimize_expr(child) {
+                        edit = true;
+                    }
+                });
+            }
+        }
+        _ => (),
+    }
+
+    edit
+}

@@ -1,0 +1,8 @@
+expr main (for along time)
+
+let message "Use the standard phrase `for a long time` to indicate an extended duration."
+let description "Eliminates the incorrect merging in `for along time`."
+let kind "Grammar"
+let becomes "for a long time"
+
+test "I was stuck there for along time." "I was stuck there for a long time."

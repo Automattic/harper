@@ -1,9 +1,9 @@
 use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::expr::SpaceOrHyphen;
-use crate::{Token, TokenStringExt, patterns::WordSet};
+use crate::weir::weir_expr_to_expr;
+use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ChockFull {
     expr: Box<dyn Expr>,
@@ -12,17 +12,14 @@ pub struct ChockFull {
 impl Default for ChockFull {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["chalk", "choke"]))
-                    .then(SpaceOrHyphen)
-                    .then_exact_word("full"),
-            ),
+            expr: weir_expr_to_expr("[chalk, choke][( ), -]full").unwrap(),
         }
     }
 }
 
 impl ExprLinter for ChockFull {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

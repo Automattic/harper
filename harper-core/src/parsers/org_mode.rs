@@ -179,7 +179,7 @@ impl Parser for OrgMode {
 
                 // Add paragraph break after header
                 tokens.push(Token {
-                    span: Span::new_with_len(line_end.saturating_sub(1), 0),
+                    span: Span::empty(line_end.saturating_sub(1)),
                     kind: TokenKind::ParagraphBreak,
                 });
 

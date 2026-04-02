@@ -3,27 +3,28 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct DeterminerWithoutNoun {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DeterminerWithoutNoun {
     fn default() -> Self {
         let expr = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| tok.kind.is_determiner())
+            .then_kind_where(|kind| kind.is_determiner())
             .t_ws()
             .then_conjunction();
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for DeterminerWithoutNoun {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

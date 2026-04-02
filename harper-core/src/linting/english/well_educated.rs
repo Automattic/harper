@@ -5,9 +5,10 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct WellEducated {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for WellEducated {
@@ -21,18 +22,17 @@ impl Default for WellEducated {
             .then_optional(WhitespacePattern)
             .t_aco("educated");
 
-        let expr =
-            SequenceExpr::default().then_any_of(vec![Box::new(combined), Box::new(separated)]);
+        let expr = SequenceExpr::any_of(vec![Box::new(combined), Box::new(separated)]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for WellEducated {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

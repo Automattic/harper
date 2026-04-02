@@ -1,0 +1,9 @@
+expr main [(highly-kept), (highly kept)]
+
+let message "`Highly-kept` is not standard. To describe secrets, `well-kept` is the most used phrase."
+let description "Flags `highly-kept` and recommends `well-kept` as an alternative."
+let kind "Usage"
+let becomes "well-kept"
+
+test "I assure you that frequency/angle dependence is a highly kept secret." "I assure you that frequency/angle dependence is a well-kept secret."
+test "Well, Kushina's giving birth was already a highly-kept secret so it makes sense to operate with only the completely necessary personnel." "Well, Kushina's giving birth was already a well-kept secret so it makes sense to operate with only the completely necessary personnel."

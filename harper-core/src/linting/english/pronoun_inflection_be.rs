@@ -2,13 +2,14 @@ use harper_brill::UPOS;
 
 use crate::expr::{All, AnchorStart, Expr, ExprMap, SequenceExpr};
 use crate::patterns::{NominalPhrase, UPOSSet};
-use crate::{Lrc, Token, TokenKind};
+use crate::{Lrc, Token, TokenKind, TokenStringExt};
 
 use super::Suggestion;
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct PronounInflectionBe {
-    expr: Box<dyn Expr>,
+    expr: All,
     map: Lrc<ExprMap<&'static str>>,
 }
 
@@ -31,8 +32,7 @@ impl PronounInflectionBe {
             .then_unless(NominalPhrase);
         map.insert(are, "is");
 
-        let are_at_start = SequenceExpr::default()
-            .then(AnchorStart)
+        let are_at_start = SequenceExpr::with(AnchorStart)
             .then_third_person_singular_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
@@ -51,9 +51,8 @@ impl PronounInflectionBe {
         map.insert(arent, "isn't");
 
         let is = SequenceExpr::default()
-            .then(|tok: &Token, _: &[char]| {
-                tok.kind
-                    .as_word()
+            .then_kind_where(|kind| {
+                kind.as_word()
                     .as_ref()
                     .and_then(|m| m.as_ref().and_then(|m| m.np_member))
                     .unwrap_or_default()
@@ -67,8 +66,7 @@ impl PronounInflectionBe {
             .t_any();
         map.insert(is, "are");
 
-        let is_at_start = SequenceExpr::default()
-            .then(AnchorStart)
+        let is_at_start = SequenceExpr::with(AnchorStart)
             .then_third_person_plural_pronoun()
             .then_optional(mod_term.clone())
             .t_ws()
@@ -96,8 +94,7 @@ impl PronounInflectionBe {
         map.insert(was, "were");
 
         // Special case for second and third-person
-        let was_third = SequenceExpr::default()
-            .then(AnchorStart)
+        let was_third = SequenceExpr::with(AnchorStart)
             .then_kind_either(
                 TokenKind::is_third_person_plural_pronoun,
                 TokenKind::is_second_person_pronoun,
@@ -109,8 +106,7 @@ impl PronounInflectionBe {
             .t_any();
         map.insert(was_third, "were");
 
-        let were = SequenceExpr::default()
-            .then(AnchorStart)
+        let were = SequenceExpr::with(AnchorStart)
             .then_kind_either(
                 TokenKind::is_first_person_singular_pronoun,
                 TokenKind::is_third_person_singular_pronoun,
@@ -129,10 +125,7 @@ impl PronounInflectionBe {
         all.add(map.clone());
         all.add(|tok: &Token, _: &[char]| tok.kind.is_upos(UPOS::PRON));
 
-        Self {
-            expr: Box::new(all),
-            map,
-        }
+        Self { expr: all, map }
     }
 }
 
@@ -143,12 +136,14 @@ impl Default for PronounInflectionBe {
 }
 
 impl ExprLinter for PronounInflectionBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let span = matched_tokens.get(matched_tokens.len() - 3)?.span;
+        let span = matched_tokens.get_rel(-3)?.span;
 
         // Determine the correct inflection of "be".
         let correct = self.map.lookup(0, matched_tokens, source)?;

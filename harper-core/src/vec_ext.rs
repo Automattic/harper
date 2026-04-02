@@ -1,6 +1,13 @@
 use std::collections::VecDeque;
 
-pub trait VecExt {
+mod private {
+    pub trait Sealed {}
+
+    impl<T> Sealed for Vec<T> {}
+}
+
+/// Extensions on top of [`Vec`] that make certain common operations easier.
+pub trait VecExt: private::Sealed {
     /// Removes a list of indices from a Vector.
     /// Assumes that the provided indices are already in sorted order.
     fn remove_indices(&mut self, to_remove: VecDeque<usize>);

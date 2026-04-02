@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooChunkStartComma {
     expr: Box<dyn Expr>,
@@ -13,8 +14,7 @@ pub struct ToTooChunkStartComma {
 
 impl Default for ToTooChunkStartComma {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(AnchorStart)
+        let expr = SequenceExpr::with(AnchorStart)
             .t_aco("to")
             .then_optional(WhitespacePattern)
             .then_comma();
@@ -26,6 +26,8 @@ impl Default for ToTooChunkStartComma {
 }
 
 impl ExprLinter for ToTooChunkStartComma {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

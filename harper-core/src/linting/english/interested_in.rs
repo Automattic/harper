@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, SequenceExpr},
@@ -5,7 +6,7 @@ use crate::{
 };
 
 pub struct InterestedIn {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for InterestedIn {
@@ -18,15 +19,15 @@ impl Default for InterestedIn {
                 &["around", "for", "through", "to", "within"],
             );
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for InterestedIn {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -39,7 +40,7 @@ impl ExprLinter for InterestedIn {
 
         Some(Lint {
             span: prep_span,
-            lint_kind: LintKind::Grammar,
+            lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "in".chars().collect(),
                 prep_chars,

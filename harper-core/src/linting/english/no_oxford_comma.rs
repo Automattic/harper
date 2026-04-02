@@ -1,9 +1,6 @@
 use crate::expr::ExprExt;
 use crate::expr::SequenceExpr;
-use crate::{
-    Document, Token, TokenStringExt,
-    patterns::{NominalPhrase, WordSet},
-};
+use crate::{Document, Token, TokenStringExt, patterns::NominalPhrase};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
@@ -25,7 +22,7 @@ impl NoOxfordComma {
             }
             .then_comma()
             .then_whitespace()
-            .then(WordSet::new(&["and", "or", "nor"])),
+            .then_word_set(&["and", "or", "nor"]),
         }
     }
 

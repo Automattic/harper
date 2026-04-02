@@ -2,11 +2,12 @@ use super::{ExprLinter, Suggestion};
 use crate::Lint;
 use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::linting::LintKind;
-use crate::linting::english::expr_linter::find_the_only_token_matching;
+use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
 
 pub struct Cant {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for Cant {
@@ -21,18 +22,20 @@ impl Default for Cant {
             .then_kind_is_but_is_not(|kind| kind.is_verb_lemma(), |kind| kind.is_noun());
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(nom_cant),
                 Box::new(cant_pron),
                 Box::new(cant_verb),
-            ])),
+            ]),
         }
     }
 }
 
 impl ExprLinter for Cant {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

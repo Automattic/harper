@@ -1,5 +1,6 @@
 /**
- * Represents the summary of linting results.
+ * Represents the summary of linting results and history.
+ * Useful to show linting statistics or insights to the user.
  */
 export default interface Summary {
 	/**

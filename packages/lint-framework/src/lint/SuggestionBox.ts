@@ -1,11 +1,12 @@
 /** biome-ignore-all lint/complexity/useArrowFunction: It cannot be an arrow function for the logic to work. */
 import { type IconDefinition, icon } from '@fortawesome/fontawesome-svg-core';
-import { faBan, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faSliders, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import { SuggestionKind } from 'harper.js';
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import bookDownSvg from '../assets/bookDownSvg';
 import type { IgnorableLintBox, LintBox } from './Box';
-import lintKindColor from './lintKindColor';
+import { type LintKind, lintKindColor, lintKindTextColor } from './lintKindColor';
 // Decoupled: actions passed in by framework consumer
 import type { UnpackedLint, UnpackedSuggestion } from './unpackLint';
 
@@ -13,8 +14,10 @@ function iconSvg(definition: IconDefinition): string {
 	return icon(definition).html.join('');
 }
 
-const settingsIconSvg = iconSvg(faGear);
-const disableIconSvg = iconSvg(faBan);
+const settingsIconSvg = iconSvg(faSliders);
+const disableIconSvg = iconSvg(faToggleOff);
+
+let previouslyActiveElement: null | HTMLElement = null;
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
@@ -23,6 +26,10 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	}
 
 	requestAnimationFrame(() => {
+		if (document.activeElement?.tagName.toLowerCase() != 'harper-render-box') {
+			previouslyActiveElement = document.activeElement as HTMLElement;
+		}
+
 		node.focus();
 		Object.defineProperty(node, '__harperAutofocused', {
 			value: true,
@@ -190,15 +197,34 @@ function addToDictionary(
 }
 
 function suggestions(
+	lintKind: LintKind,
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
-		const label = s.replacement_text !== '' ? s.replacement_text : String(s.kind);
+		const label =
+			s.replacement_text !== '' ? s.replacement_text : String(suggestionKindToLabel(s.kind));
 		const desc = `Replace with "${label}"`;
 		const props = i === 0 ? { hook: new FocusHook() } : {};
-		return button(label, { background: '#2DA44E', color: '#FFFFFF' }, () => apply(s), desc, props);
+		return button(
+			label,
+			{ background: lintKindColor(lintKind), color: lintKindTextColor(lintKind) },
+			() => apply(s),
+			desc,
+			props,
+		);
 	});
+}
+
+function suggestionKindToLabel(s: SuggestionKind): string {
+	switch (s) {
+		case SuggestionKind.Replace:
+			return 'Replace';
+		case SuggestionKind.Remove:
+			return 'Remove';
+		case SuggestionKind.InsertAfter:
+			return 'Insert After';
+	}
 }
 
 function reportProblemButton(reportError?: () => Promise<void>): any {
@@ -221,10 +247,10 @@ function reportProblemButton(reportError?: () => Promise<void>): any {
 	);
 }
 
-function styleTag() {
+function styleTag(lintKind: LintKind) {
 	return h('style', { id: 'harper-suggestion-style' }, [
 		`code{
-      background-color:#e3eccf;
+      text-decoration: underline solid ${lintKindColor(lintKind)} 2px;
       padding:0.125rem;
       border-radius:0.25rem
       }
@@ -351,10 +377,16 @@ function styleTag() {
       animation: fadeIn 100ms ease-in-out forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
       @media (prefers-color-scheme:dark){
       code{background-color:#1f2d3d;color:#c9d1d9}
@@ -437,6 +469,14 @@ export default function SuggestionBox(
 		top: bottom ? '' : `${top}px`,
 		bottom: bottom ? `${bottom}px` : '',
 		left: `${left}px`,
+		transformOrigin: `${bottom ? 'bottom' : 'top'} left`,
+	};
+
+	const ignoreLintCallback = box.ignoreLint;
+
+	const refocusClose = () => {
+		previouslyActiveElement?.focus();
+		close();
 	};
 
 	return h(
@@ -444,29 +484,31 @@ export default function SuggestionBox(
 		{
 			className: 'harper-container fade-in',
 			style: positionStyle,
-			'harper-close-on-escape': new CloseOnEscapeHook(close),
+			'harper-close-on-escape': new CloseOnEscapeHook(refocusClose),
 		},
 		[
-			styleTag(),
+			styleTag(box.lint.lint_kind),
 			header(
 				box.lint.lint_kind_pretty,
 				lintKindColor(box.lint.lint_kind),
-				close,
+				refocusClose,
 				actions.openOptions,
 				box.rule,
 				actions.setRuleEnabled,
 			),
 			body(box.lint.message_html),
 			footer(
-				suggestions(box.lint.suggestions, (v) => {
+				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
 					box.applySuggestion(v);
-					close();
+					refocusClose();
 				}),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
 						: undefined,
-					box.ignoreLint ? ignoreLint(box.ignoreLint) : undefined,
+					ignoreLintCallback
+						? ignoreLint(() => ignoreLintCallback().then(refocusClose))
+						: undefined,
 				],
 			),
 			hintDrawer(hint),

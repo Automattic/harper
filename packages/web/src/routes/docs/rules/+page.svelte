@@ -6,7 +6,7 @@ import {
 	TableBodyRow,
 	TableHead,
 	TableHeadCell,
-} from 'flowbite-svelte';
+} from 'components';
 import { binary, type LintConfig, LocalLinter } from 'harper.js';
 
 export const frontmatter = {

@@ -55,6 +55,33 @@ pub enum LintKind {
 }
 
 impl LintKind {
+    /// The inverse of [`Self::to_string_key`]
+    pub fn from_string_key(s: &str) -> Option<Self> {
+        match s {
+            "Agreement" => Some(LintKind::Agreement),
+            "BoundaryError" => Some(LintKind::BoundaryError),
+            "Capitalization" => Some(LintKind::Capitalization),
+            "Eggcorn" => Some(LintKind::Eggcorn),
+            "Enhancement" => Some(LintKind::Enhancement),
+            "Formatting" => Some(LintKind::Formatting),
+            "Grammar" => Some(LintKind::Grammar),
+            "Malapropism" => Some(LintKind::Malapropism),
+            "Miscellaneous" => Some(LintKind::Miscellaneous),
+            "Nonstandard" => Some(LintKind::Nonstandard),
+            "Punctuation" => Some(LintKind::Punctuation),
+            "Readability" => Some(LintKind::Readability),
+            "Redundancy" => Some(LintKind::Redundancy),
+            "Regionalism" => Some(LintKind::Regionalism),
+            "Repetition" => Some(LintKind::Repetition),
+            "Spelling" => Some(LintKind::Spelling),
+            "Style" => Some(LintKind::Style),
+            "Typo" => Some(LintKind::Typo),
+            "Usage" => Some(LintKind::Usage),
+            "WordChoice" => Some(LintKind::WordChoice),
+            _ => None,
+        }
+    }
+
     /// Produce a string representation, which can be used as keys in a map or CSS variables.
     pub fn to_string_key(&self) -> String {
         match self {

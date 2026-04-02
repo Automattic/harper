@@ -1,0 +1,9 @@
+expr main (as of currently)
+
+let message "Standard equivalents are `currently` or `as of now`."
+let description "Corrects `as of currently` to `currently` or `as of now`."
+let kind "WordChoice"
+let becomes ["currently", "as of now"]
+
+test "Note that, as of currently, selecting a method on the list leaves it highlighted as such, until the script is changed." "Note that, currently, selecting a method on the list leaves it highlighted as such, until the script is changed."
+test "As of currently, Cervo offers a set of inferers, noise generators (for continuous-action/parametrized policies), and a unified asset format." "As of now, Cervo offers a set of inferers, noise generators (for continuous-action/parametrized policies), and a unified asset format."

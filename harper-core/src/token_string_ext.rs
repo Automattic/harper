@@ -47,8 +47,18 @@ macro_rules! create_fns_for {
     };
 }
 
+mod private {
+    use crate::{Document, Token};
+
+    pub trait Sealed {}
+
+    impl Sealed for [Token] {}
+
+    impl Sealed for Document {}
+}
+
 /// Extension methods for [`Token`] sequences that make them easier to wrangle and query.
-pub trait TokenStringExt {
+pub trait TokenStringExt: private::Sealed {
     fn first_sentence_word(&self) -> Option<&Token>;
     fn first_non_whitespace(&self) -> Option<&Token>;
     /// Grab the span that represents the beginning of the first element and the
@@ -78,6 +88,85 @@ pub trait TokenStringExt {
     create_decl_for!(verb);
     create_decl_for!(word);
     create_decl_for!(word_like);
+    create_decl_for!(heading_start);
+
+    /// Get a reference to a token by index, with negative numbers counting from the end.
+    ///
+    /// # Examples
+    /// ```
+    /// # use harper_core::{Token, TokenStringExt, parsers::{Parser, PlainEnglish}};
+    /// # fn main() {
+    /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
+    /// let tokens = PlainEnglish.parse(&source);
+    /// assert_eq!(tokens.get_rel(0).unwrap().span.get_content_string(&source), "The");
+    /// assert_eq!(tokens.get_rel(1).unwrap().kind.is_whitespace(), true);
+    /// assert_eq!(tokens.get_rel(-1).unwrap().kind.is_punctuation(), true);
+    /// assert_eq!(tokens.get_rel(-2).unwrap().span.get_content_string(&source), "mat");
+    /// # }
+    /// ```
+    ///
+    /// # Returns
+    ///
+    /// * `Some(&Token)` - If the index is in bounds
+    /// * `None` - If the index is out of bounds
+    fn get_rel(&self, index: isize) -> Option<&Token>
+    where
+        Self: AsRef<[Token]>,
+    {
+        let slice = self.as_ref();
+        let len = slice.len() as isize;
+
+        if index >= len || -index > len {
+            return None;
+        }
+
+        let idx = if index >= 0 { index } else { len + index } as usize;
+
+        slice.get(idx)
+    }
+
+    /// Get a slice of tokens using relative indices.
+    ///
+    /// # Examples
+    /// ```
+    /// # use harper_core::{Token, TokenStringExt, parsers::{Parser, PlainEnglish}};
+    /// # fn main() {
+    /// let source = "The cat sat on the mat.".chars().collect::<Vec<_>>();
+    /// let tokens = PlainEnglish.parse(&source);
+    /// assert_eq!(tokens.get_rel_slice(0, 2).unwrap().span().unwrap().get_content_string(&source), "The cat");
+    /// assert_eq!(tokens.get_rel_slice(-3, -1).unwrap().span().unwrap().get_content_string(&source), " mat.");
+    /// # }
+    /// ```
+    fn get_rel_slice(&self, rel_start: isize, inclusive_end: isize) -> Option<&[Token]>
+    where
+        Self: AsRef<[Token]>,
+    {
+        let slice = self.as_ref();
+        let len = slice.len() as isize;
+
+        // Convert relative indices to absolute indices
+        let start_idx = if rel_start >= 0 {
+            rel_start
+        } else {
+            len + rel_start
+        } as usize;
+
+        let end_idx_plus_one = if inclusive_end >= 0 {
+            inclusive_end + 1 // +1 to make end exclusive
+        } else {
+            len + inclusive_end + 1
+        } as usize;
+
+        // Check bounds
+        if start_idx >= slice.len()
+            || end_idx_plus_one > slice.len()
+            || start_idx >= end_idx_plus_one
+        {
+            return None;
+        }
+
+        Some(&slice[start_idx..end_idx_plus_one])
+    }
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_;
     fn iter_linking_verbs(&self) -> impl Iterator<Item = &Token> + '_;
@@ -95,6 +184,12 @@ pub trait TokenStringExt {
     /// Get an iterator over token slices that represent the individual
     /// paragraphs in a document.
     fn iter_paragraphs(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
+
+    /// Get an iterator over token slices that represent headings.
+    ///
+    /// A heading begins with a [`TokenKind::HeadingStart`](crate::TokenKind::HeadingStart) token and ends with
+    /// the next [`TokenKind::ParagraphBreak`](crate::TokenKind::ParagraphBreak).
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_;
 
     /// Get an iterator over token slices that represent the individual
     /// sentences in a document.
@@ -129,6 +224,7 @@ impl TokenStringExt for [Token] {
     create_fns_for!(verb);
     create_fns_for!(word_like);
     create_fns_for!(word);
+    create_fns_for!(heading_start);
 
     fn first_non_whitespace(&self) -> Option<&Token> {
         self.iter().find(|t| !t.kind.is_whitespace())
@@ -173,75 +269,26 @@ impl TokenStringExt for [Token] {
     }
 
     fn iter_chunks(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
-        let first_chunk = self
-            .iter_chunk_terminator_indices()
-            .next()
-            .map(|first_term| &self[0..=first_term]);
-
-        let rest = self
-            .iter_chunk_terminator_indices()
-            .tuple_windows()
-            .map(move |(a, b)| &self[a + 1..=b]);
-
-        let last = if let Some(last_i) = self.last_chunk_terminator_index() {
-            if last_i + 1 < self.len() {
-                Some(&self[last_i + 1..])
-            } else {
-                None
-            }
-        } else {
-            Some(self)
-        };
-
-        first_chunk.into_iter().chain(rest).chain(last)
+        self.split_inclusive(|tok| tok.kind.is_chunk_terminator())
     }
 
     fn iter_paragraphs(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
-        let first_pg = self
-            .iter_paragraph_break_indices()
-            .next()
-            .map(|first_term| &self[0..=first_term]);
+        self.split_inclusive(|tok| tok.kind.is_paragraph_break())
+    }
 
-        let rest = self
-            .iter_paragraph_break_indices()
-            .tuple_windows()
-            .map(move |(a, b)| &self[a + 1..=b]);
+    fn iter_headings(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
+        self.iter_heading_start_indices().map(|start| {
+            let end = self[start..]
+                .iter()
+                .position(|t| t.kind.is_paragraph_break())
+                .unwrap_or(self[start..].len() - 1);
 
-        let last_pg = if let Some(last_i) = self.last_paragraph_break_index() {
-            if last_i + 1 < self.len() {
-                Some(&self[last_i + 1..])
-            } else {
-                None
-            }
-        } else {
-            Some(self)
-        };
-
-        first_pg.into_iter().chain(rest).chain(last_pg)
+            &self[start..=start + end]
+        })
     }
 
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
-        let first_sentence = self
-            .iter_sentence_terminator_indices()
-            .next()
-            .map(|first_term| &self[0..=first_term]);
-
-        let rest = self
-            .iter_sentence_terminator_indices()
-            .tuple_windows()
-            .map(move |(a, b)| &self[a + 1..=b]);
-
-        let last_sentence = if let Some(last_i) = self.last_sentence_terminator_index() {
-            if last_i + 1 < self.len() {
-                Some(&self[last_i + 1..])
-            } else {
-                None
-            }
-        } else {
-            Some(self)
-        };
-
-        first_sentence.into_iter().chain(rest).chain(last_sentence)
+        self.split_inclusive(|token| token.kind.is_sentence_terminator())
     }
 
     fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &mut [Token]> + '_ {

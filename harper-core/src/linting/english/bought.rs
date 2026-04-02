@@ -1,31 +1,31 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::Suggestion;
+use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 
 pub struct Bought {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Bought {
     fn default() -> Self {
-        let subject = SequenceExpr::default()
-            .then(Self::is_subject_pronoun_like)
+        let subject = SequenceExpr::with(Self::is_subject_pronoun_like)
             .t_ws()
             .then_optional(SequenceExpr::default().then_adverb().t_ws())
             .then_optional(SequenceExpr::default().then_auxiliary_verb().t_ws())
             .then_optional(SequenceExpr::default().then_adverb().t_ws())
             .then_any_capitalization_of("bough");
 
-        Self {
-            expr: Box::new(subject),
-        }
+        Self { expr: subject }
     }
 }
 
 impl ExprLinter for Bought {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

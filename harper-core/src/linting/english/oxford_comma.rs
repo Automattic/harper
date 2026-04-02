@@ -1,13 +1,12 @@
-use crate::expr::Expr;
 use crate::expr::ExprExt;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, linting::Linter, patterns::WordSet};
+use crate::{Lrc, Token, TokenStringExt, linting::Linter};
 
 use super::{Lint, LintKind, Suggestion};
 
 pub struct OxfordComma {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for OxfordComma {
@@ -20,8 +19,7 @@ impl Default for OxfordComma {
                 .or_longest(SequenceExpr::default().then_nominal()),
         );
 
-        let item_chunk = SequenceExpr::default()
-            .then(item.clone())
+        let item_chunk = SequenceExpr::with(item.clone())
             .then_comma()
             .then_whitespace();
 
@@ -29,13 +27,11 @@ impl Default for OxfordComma {
             .then_one_or_more(item_chunk)
             .then(item.clone())
             .then_whitespace()
-            .then(WordSet::new(&["and", "or", "nor"]))
+            .then_word_set(&["and", "or", "nor"])
             .then_whitespace()
             .then(item.clone());
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 

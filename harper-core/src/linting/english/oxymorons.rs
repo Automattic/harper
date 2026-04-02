@@ -1,12 +1,13 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::FixedPhrase;
-use crate::linting::english::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::{Token, TokenStringExt};
 
 /// A linter that flags oxymoronic phrases.
 pub struct Oxymorons {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Oxymorons {
@@ -38,8 +39,9 @@ impl Oxymorons {
             .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let expr = Box::new(FirstMatchOf::new(exprs));
-        Self { expr }
+        Self {
+            expr: FirstMatchOf::new(exprs),
+        }
     }
 }
 
@@ -50,9 +52,11 @@ impl Default for Oxymorons {
 }
 
 impl ExprLinter for Oxymorons {
+    type Unit = Chunk;
+
     /// Returns the underlying pattern.
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

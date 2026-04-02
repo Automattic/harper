@@ -1,0 +1,30 @@
+expr main (very known)
+
+let message "Replace `very known` with the idiomatic phrasing that mentions recognition explicitly."
+let description "`very well-known` (or `well-known`) is the standard way to describe something widely recognized, so we flag the uncommon `very known` word pair."
+let kind "Usage"
+let becomes ["very well-known", "well-known"]
+let strategy "MatchCase"
+
+test "He is a very known actor." "He is a very well-known actor."
+test "Her work is very known among the local schools." "Her work is very well-known among the local schools."
+test "Our very known product draws new users every month." "Our very well-known product draws new users every month."
+test "The very known landmark draws visitors all year." "The very well-known landmark draws visitors all year."
+test "Very known memes cycle through the forum quickly." "Very well-known memes cycle through the forum quickly."
+test "I saw a very known engineer presenting at yesterday's event." "I saw a very well-known engineer presenting at yesterday's event."
+test "This very known rumor sparked debate on social feeds." "This very well-known rumor sparked debate on social feeds."
+test "They keep very known influencers on the payroll." "They keep very well-known influencers on the payroll."
+test "Is that a very known bug in this app?" "Is that a very well-known bug in this app?"
+test "It's a very known trick in debugging." "It's a very well-known trick in debugging."
+test "Very known incidents are still in the news." "Very well-known incidents are still in the news."
+test "A very known glitch pops up when we run the suite." "A very well-known glitch pops up when we run the suite."
+test "The very known singer clicked with fans again." "The very well-known singer clicked with fans again."
+test "We handle very known customers personally." "We handle very well-known customers personally."
+test "Any very known shortcut is documented." "Any very well-known shortcut is documented."
+
+allows "It is known very well, so we can move on."
+allows "The very knowledge that matters is intangible."
+allows "The very-known cover art is a nice throwback."
+allows "The team is very knowledgeable about the API."
+allows "They are extremely known for their tone."
+allows "Known very well, the trick still surprises people."

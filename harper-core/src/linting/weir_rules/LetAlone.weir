@@ -1,0 +1,8 @@
+expr main (let along)
+
+let message "Did you mean `let alone`?"
+let description "Changes `let along` to `let alone`."
+let kind "Typo"
+let becomes "let alone"
+
+test "let along" "let alone"

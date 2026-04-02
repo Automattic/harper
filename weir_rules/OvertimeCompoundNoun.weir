@@ -1,0 +1,44 @@
+expr overTimePay <(over time pay), ( )>
+expr overTimeRate <(over time rate), ( )>
+expr overTimeRates <(over time rates), ( )>
+expr overTimeWage <(over time wage), ( )>
+expr overTimeWages <(over time wages), ( )>
+expr overTimeHour <(over time hour), ( )>
+expr overTimeHours <(over time hours), ( )>
+expr overTimeShift <(over time shift), ( )>
+expr overTimeShifts <(over time shifts), ( )>
+expr overTimeDetails <(over time details), ( )>
+expr overTimeClaim <(over time claim), ( )>
+expr overTimeClaims <(over time claims), ( )>
+expr overTimeApproval <(over time approval), ( )>
+expr overTimeApprovals <(over time approvals), ( )>
+expr main [@overTimePay, @overTimeRate, @overTimeRates, @overTimeWage, @overTimeWages, @overTimeHour, @overTimeHours, @overTimeShift, @overTimeShifts, @overTimeDetails, @overTimeClaim, @overTimeClaims, @overTimeApproval, @overTimeApprovals]
+
+let message "Use `overtime` as one word when referring to extra paid work hours."
+let description "Finds job-hours contexts where the split form appears and joins it into the standard compound."
+let kind "Style"
+let becomes ""
+
+# True positives
+test "The report includes over time pay details." "The report includes overtime pay details."
+test "HR confirmed over time wages for Sunday." "HR confirmed overtime wages for Sunday."
+test "They filed an over time claim yesterday." "They filed an overtime claim yesterday."
+test "Finance reviewed over time approvals this morning." "Finance reviewed overtime approvals this morning."
+test "We saw over time hours spike in July." "We saw overtime hours spike in July."
+test "The policy covers over time shifts in emergencies." "The policy covers overtime shifts in emergencies."
+test "Our sheet tracks over time rates by region." "Our sheet tracks overtime rates by region."
+test "Please submit over time approval before Friday." "Please submit overtime approval before Friday."
+test "Managers audit over time details weekly." "Managers audit overtime details weekly."
+
+# True negatives / false-positive checks
+test "The metal weakens over time." "The metal weakens over time."
+test "Our process improved over time." "Our process improved over time."
+test "The timeline moves over time zones." "The timeline moves over time zones."
+test "We already approved overtime yesterday." "We already approved overtime yesterday."
+test "They watched trends over time in the dashboard." "They watched trends over time in the dashboard."
+test "I prefer over-time as a stylized heading." "I prefer over-time as a stylized heading."
+
+# Known false negatives (currently out of scope)
+test "They worked over time during the holidays." "They worked over time during the holidays."
+test "She was paid over time for Sunday." "She was paid over time for Sunday."
+test "We log over time whenever call volume spikes." "We log over time whenever call volume spikes."

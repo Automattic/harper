@@ -1,0 +1,34 @@
+expr main <((each others) [NOUN, PROPN, ADJ, DET]), (each others)>
+
+let message "Use the reciprocal possessive form here."
+let description "Rewrites `each others` to `each other's` when it modifies a following noun phrase."
+let kind "Grammar"
+let becomes "each other's"
+let strategy "MatchCase"
+
+# True positives
+
+test "They reviewed each others code before release." "They reviewed each other's code before release."
+test "We checked each others notes after class." "We checked each other's notes after class."
+test "The two teams respected each others traditions." "The two teams respected each other's traditions."
+test "The siblings borrowed each others bikes." "The siblings borrowed each other's bikes."
+test "Please verify each others entries." "Please verify each other's entries."
+test "They corrected each others grammar in chat." "They corrected each other's grammar in chat."
+test "Each others schedules kept drifting." "Each other's schedules kept drifting."
+test "EACH OTHERS PROJECTS WERE MERGED." "EACH OTHER'S PROJECTS WERE MERGED."
+test "Writers should respect each others voices." "Writers should respect each other's voices."
+test "Designers critique each others drafts weekly." "Designers critique each other's drafts weekly."
+
+# False positives / true negatives
+
+test "They reviewed each other's code before release." "They reviewed each other's code before release."
+test "They reviewed each other during rehearsals." "They reviewed each other during rehearsals."
+test "Others' opinions were shared in the thread." "Others' opinions were shared in the thread."
+test "Each other was mentioned in the report." "Each other was mentioned in the report."
+test "They checked others code before release." "They checked others code before release."
+test "They checked others' code before release." "They checked others' code before release."
+
+# False negatives (known limitation: does not target misspelled reciprocal phrases with extra apostrophes)
+
+allows "They reviewed each others' code before release."
+allows "They corrected each others' grammar in chat."

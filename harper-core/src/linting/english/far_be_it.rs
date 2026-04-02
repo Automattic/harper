@@ -1,32 +1,33 @@
 use crate::char_string::CharStringExt;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 
 pub struct FarBeIt {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FarBeIt {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .t_aco("far")
-                    .t_ws()
-                    .t_aco("be")
-                    .t_ws()
-                    .t_aco("it")
-                    .t_ws()
-                    .then_word_except(&["from"]),
-            ),
+            expr: SequenceExpr::default()
+                .t_aco("far")
+                .t_ws()
+                .t_aco("be")
+                .t_ws()
+                .t_aco("it")
+                .t_ws()
+                .then_word_except(&["from"]),
         }
     }
 }
 
 impl ExprLinter for FarBeIt {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -62,7 +63,7 @@ impl ExprLinter for FarBeIt {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::FarBeIt;
+    use super::FarBeIt;
     use crate::linting::tests::{
         assert_no_lints, assert_suggestion_count, assert_suggestion_result,
     };

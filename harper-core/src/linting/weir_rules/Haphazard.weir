@@ -1,0 +1,7 @@
+expr main [(half hazard), (half-hazard), (halfhazard)]
+
+let message "Use `haphazard` for randomness or lack of organization."
+let description "Corrects the eggcorn `half hazard` to `haphazard`, which properly means lacking organization or being random."
+let kind "Eggcorn"
+let becomes "haphazard"
+

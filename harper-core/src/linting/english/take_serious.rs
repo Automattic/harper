@@ -1,8 +1,9 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{NominalPhrase, WordSet},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    patterns::NominalPhrase,
 };
 
 /// Linter that corrects "take X serious" to "take X seriously".
@@ -10,7 +11,7 @@ use crate::{
 /// This linter identifies and corrects the common mistake of using the adjective "serious"
 /// instead of the adverb "seriously" in phrases like "take it serious".
 pub struct TakeSerious {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for TakeSerious {
@@ -21,22 +22,21 @@ impl Default for TakeSerious {
     /// - Followed by a nominal phrase
     /// - Ending with "serious"
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then(WordSet::new(&["take", "taken", "takes", "taking", "took"]))
+        let pattern = SequenceExpr::word_set(&["take", "taken", "takes", "taking", "took"])
             .t_ws()
             .then(NominalPhrase)
             .t_ws()
             .t_aco("serious");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for TakeSerious {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

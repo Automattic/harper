@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
@@ -6,7 +7,7 @@ use crate::{
 };
 
 pub struct RedundantAdditiveAdverbs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for RedundantAdditiveAdverbs {
@@ -19,24 +20,21 @@ impl Default for RedundantAdditiveAdverbs {
             Box::new(as_well),
         ]));
 
-        let multiple_additive_adverbs = SequenceExpr::default()
-            .then(additive_adverb.clone())
-            .then_one_or_more(
-                SequenceExpr::default()
-                    .then_whitespace()
-                    .then(additive_adverb.clone()),
-            )
-            .then_optional(SequenceExpr::default().then_whitespace().t_aco("as"));
+        let multiple_additive_adverbs = SequenceExpr::with(additive_adverb.clone())
+            .then_one_or_more(SequenceExpr::whitespace().then(additive_adverb.clone()))
+            .then_optional(SequenceExpr::whitespace().t_aco("as"));
 
         Self {
-            expr: Box::new(multiple_additive_adverbs),
+            expr: multiple_additive_adverbs,
         }
     }
 }
 
 impl ExprLinter for RedundantAdditiveAdverbs {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -114,14 +112,14 @@ impl ExprLinter for RedundantAdditiveAdverbs {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::RedundantAdditiveAdverbs;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use super::RedundantAdditiveAdverbs;
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // Basic unit tests
 
     #[test]
     fn flag_as_well_too() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well too, specifically.",
             RedundantAdditiveAdverbs::default(),
             "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well, specifically.",
@@ -131,7 +129,7 @@ mod tests {
 
     #[test]
     fn flag_too_also() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The #1 uptime service with many servers and is easy to setup. It is free too also.",
             RedundantAdditiveAdverbs::default(),
             "The #1 uptime service with many servers and is easy to setup. It is free also.",
@@ -168,7 +166,7 @@ mod tests {
 
     #[test]
     fn flag_too_as_well() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Module name itself was changed too as well.",
             RedundantAdditiveAdverbs::default(),
             "Module name itself was changed as well.",

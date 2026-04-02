@@ -26,6 +26,8 @@ pub enum Currency {
     Won,
     // ₭,
     Kip,
+    // ₹
+    Rupee,
 }
 
 impl Currency {
@@ -41,6 +43,7 @@ impl Currency {
             '฿' => Self::Baht,
             '₩' => Self::Won,
             '₭' => Self::Kip,
+            '₹' => Self::Rupee,
             _ => return None,
         };
 
@@ -59,6 +62,7 @@ impl Currency {
             Self::Baht => '฿',
             Self::Won => '₩',
             Self::Kip => '₭',
+            Self::Rupee => '₹',
         }
     }
 
@@ -79,6 +83,7 @@ impl Currency {
             Currency::Baht => format!("{amount} {c}"),
             Currency::Won => format!("{c} {amount}"),
             Currency::Kip => format!("{c}{amount}"),
+            Currency::Rupee => format!("{c}{amount}"),
         }
     }
 }

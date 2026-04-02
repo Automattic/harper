@@ -1,41 +1,14 @@
-use crate::expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr};
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::patterns::Word;
-use crate::{CharStringExt, Lrc, Token, patterns::WordSet};
+use crate::{
+    CharStringExt, Lrc, Token,
+    expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
+    linting::english::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::{ModalVerb, Word, WordSet},
+};
 
 use super::super::NOUN_VERB_PAIRS;
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
-
-/// Adverbs that can come before verbs but not nouns
-/// Note: "Sometimes" can come before a noun.
-const ADVERBS: &[&str] = &["always", "never", "often", "seldom"];
-
-/// Modal verbs that can come before other verbs but not nouns
-const MODAL_VERBS_ETC: &[&str] = &[
-    "can",
-    "cannot",
-    "can't",
-    "could",
-    "couldn't",
-    "may",
-    "might",
-    "mightn't",
-    "must",
-    "mustn't",
-    "shall",
-    "shan't",
-    "should",
-    "shouldn't",
-    "will",
-    "won't",
-    "would",
-    "wouldn't",
-    // not modals per se, but modal-like
-    "do",
-    "don't",
-];
 
 /// Linter that corrects common noun/verb confusions
 pub(super) struct GeneralNounInsteadOfVerb {
@@ -44,10 +17,21 @@ pub(super) struct GeneralNounInsteadOfVerb {
 
 impl Default for GeneralNounInsteadOfVerb {
     fn default() -> Self {
+        // Adverbs that can come before verbs but not nouns
+        // Note: "Sometimes" can come before a noun.
+        let adverb_of_frequency = |tok: &Token, src: &[char]| {
+            tok.kind.is_frequency_adverb()
+                && !tok
+                    .span
+                    .get_content(src)
+                    .eq_ignore_ascii_case_str("sometimes")
+        };
+
         let pre_context = FirstMatchOf::new(vec![
             Box::new(WordSet::new(PRONOUNS)),
-            Box::new(WordSet::new(MODAL_VERBS_ETC)),
-            Box::new(WordSet::new(ADVERBS)),
+            Box::new(ModalVerb::with_common_errors()),
+            Box::new(WordSet::new(&["do", "don't", "dont"])),
+            Box::new(adverb_of_frequency),
             Box::new(Word::new("to")),
         ]);
 
@@ -59,18 +43,15 @@ impl Default for GeneralNounInsteadOfVerb {
         ));
 
         let basic_pattern = Lrc::new(
-            SequenceExpr::default()
-                .then(pre_context)
+            SequenceExpr::with(pre_context)
                 .then_whitespace()
                 .then(nouns.clone()),
         );
 
-        let pattern_followed_by_punctuation = SequenceExpr::default()
-            .then(basic_pattern.clone())
-            .then_punctuation();
+        let pattern_followed_by_punctuation =
+            SequenceExpr::with(basic_pattern.clone()).then_punctuation();
 
-        let pattern_followed_by_word = SequenceExpr::default()
-            .then(basic_pattern.clone())
+        let pattern_followed_by_word = SequenceExpr::with(basic_pattern.clone())
             .then_whitespace()
             .then_any_word();
 
@@ -85,6 +66,8 @@ impl Default for GeneralNounInsteadOfVerb {
 }
 
 impl ExprLinter for GeneralNounInsteadOfVerb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -95,13 +78,15 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
         // If we have the next word token, try to rule out compound nouns
         if toks.len() > 4 {
             let following_tok = &toks[4];
-            if following_tok.kind.is_noun() && !following_tok.kind.is_preposition() {
+            if following_tok.kind.is_noun()
+                && !following_tok.kind.is_proper_noun()
+                && !following_tok.kind.is_preposition()
+            {
                 // But first rule out marginal "nouns"
-                let following_lower = following_tok.span.get_content_string(src).to_lowercase();
-                if following_lower != "it"
-                    && following_lower != "me"
-                    && following_lower != "on"
-                    && following_lower != "that"
+                if !following_tok
+                    .span
+                    .get_content(src)
+                    .eq_any_ignore_ascii_case_str(&["it", "me", "on", "that"])
                 {
                     return None;
                 }

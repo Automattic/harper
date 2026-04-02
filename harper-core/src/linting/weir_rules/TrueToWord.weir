@@ -1,0 +1,26 @@
+expr main <(true to [my, your, his, her, its, our, their, one's] words), words>
+
+let message "Replace the plural `words` with the idiomatic singular form when someone stays true to a promise."
+let description "Normalizes phrasing around `true to <possessive>` so it follows the conventional `true to one's word`."
+let kind "Style"
+let becomes "word"
+
+test "She was true to her words." "She was true to her word."
+test "He stays TRUE to his words daily." "He stays TRUE to his word daily."
+test "We're true to our words even when it's hard." "We're true to our word even when it's hard."
+test "You're true to your words, no matter what." "You're true to your word, no matter what."
+test "I try to be true to my words." "I try to be true to my word."
+test "They remain true to their words after the announcement." "They remain true to their word after the announcement."
+test "True to one's words, the promise held." "True to one's word, the promise held."
+test "True to its words, the contract stands." "True to its word, the contract stands."
+test "He has been true to her words through thick and thin." "He has been true to her word through thick and thin."
+test "They were true to THEIR words, so the customers celebrated." "They were true to THEIR word, so the customers celebrated."
+test "One stays true to one's words while keeping a diary." "One stays true to one's word while keeping a diary."
+test "I'm true to my words." "I'm true to my word."
+test "True to your words, you resumed the pledge." "True to your word, you resumed the pledge."
+
+allows "She was true to her word."
+allows "They were true to the words they heard in class."
+allows "Being true to your word is the goal."
+allows "The article praised her true words."
+allows "Our team is true to the word we said earlier."

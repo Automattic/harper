@@ -1,3 +1,12 @@
+Lint:    Capitalization (127 priority)
+Message: |
+       3 | # The Constitution Of The United States Of America
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “# The Constitution of the United States of America”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
        5 | **We the People** of the United States, in Order to form a more perfect Union,
@@ -13,6 +22,16 @@ Message: |
 
 
 
+Lint:    Style (127 priority)
+Message: |
+       5 | **We the People** of the United States, in Order to form a more perfect Union,
+         |                                                            ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+       6 | establish Justice, insure domestic Tranquility, provide for the common defence,
+Suggest:
+  - Replace with: “perfecter”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
        6 | establish Justice, insure domestic Tranquility, provide for the common defence,
@@ -20,7 +39,7 @@ Message: |
        7 | promote the general Welfare, and secure the Blessings of Liberty to ourselves
 Suggest:
   - Replace with: “defense”
-  - Replace with: “defended”
+  - Replace with: “decency”
   - Replace with: “defect”
 
 
@@ -41,9 +60,9 @@ Message: |
       11 | ## Article. I.
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
-  - Replace with: “In”
+  - Replace with: “I”
   - Replace with: “Id”
-  - Replace with: “IC”
+  - Replace with: “If”
 
 
 
@@ -172,16 +191,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-      63 | one Representative; and until such enumeration shall be made, the State of New
-      64 | Hampshire shall be entitled to chuse three, Massachusetts eight, Rhode-Island
-         |                                ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       72 | The House of Representatives shall chuse their Speaker and other Officers; and
@@ -190,15 +199,6 @@ Suggest:
   - Replace with: “cause”
   - Replace with: “chase”
   - Replace with: “chose”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-      72 | The House of Representatives shall chuse their Speaker and other Officers; and
-         |                                    ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
 
 
 
@@ -225,16 +225,6 @@ Message: |
 
 
 
-Lint:    WordChoice (63 priority)
-Message: |
-      89 | third Class at the Expiration of the sixth Year, so that one third may be
-         |                                                                    ^~~~~~ Did you mean the closed compound noun “maybe”?
-      90 | chosen every second Year; and when vacancies happen in the representation of
-Suggest:
-  - Replace with: “maybe”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       96 | No Person shall be a Senator who shall not have attained to the Age of thirty
@@ -257,15 +247,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-     103 | The Senate shall chuse their other Officers, and also a President pro tempore,
-         |                  ^~~~~ `chuse` should probably be written as `ch use`.
-Suggest:
-  - Replace with: “ch use”
-
-
-
 Lint:    Redundancy (31 priority)
 Message: |
      103 | The Senate shall chuse their other Officers, and also a President pro tempore,
@@ -282,7 +263,7 @@ Message: |
          |                                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      104 | in the Absence of the Vice President, or when he shall exercise the Office of
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -361,9 +342,9 @@ Message: |
      125 | Regulations, except as to the Places of chusing Senators.
          |                                         ^~~~~~~ Did you mean to spell `chusing` this way?
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
-  - Replace with: “casing”
+  - Replace with: “chasing”
+  - Replace with: “cousin”
 
 
 
@@ -396,9 +377,10 @@ Lint:    Spelling (63 priority)
 Message: |
      139 | Each House may determine the Rules of its Proceedings, punish its Members for
      140 | disorderly Behaviour, and, with the Concurrence of two thirds, expel a Member.
-         |            ^~~~~~~~~ Did you mean `Behavior`?
+         |            ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -504,6 +486,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     179 | States; If he approve he shall sign it, but if not he shall return it, with his
+         |               ^~~~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “approves”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      181 | Objections at large on their Journal, and proceed to reconsider it. If after
@@ -593,8 +584,8 @@ Message: |
      204 | general Welfare of the United States; but all Duties, Imposts and Excises shall
 Suggest:
   - Replace with: “Defense”
-  - Replace with: “Terence”
-  - Replace with: “Geofence”
+  - Replace with: “Decency”
+  - Replace with: “Defect”
 
 
 
@@ -622,8 +613,9 @@ Message: |
      229 | 9. To define and punish Piracies and Felonies committed on the high Seas, and
          |                         ^~~~~~~~ Did you mean to spell `Piracies` this way?
 Suggest:
-  - Replace with: “Curacies”
-  - Replace with: “Miracles”
+  - Replace with: “Piracy's”
+  - Replace with: “Papacies”
+  - Replace with: “Pirates”
 
 
 
@@ -634,7 +626,8 @@ Message: |
          | ^~~~~~~~ Did you mean to spell `Offences` this way?
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offenders”
 
 
 
@@ -736,7 +729,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “faith”
+  - Replace with: “facts”
 
 
 
@@ -802,7 +795,7 @@ Message: |
 Suggest:
   - Replace with: “fact”
   - Replace with: “factor”
-  - Replace with: “faith”
+  - Replace with: “facts”
 
 
 
@@ -827,7 +820,7 @@ Lint:    Agreement (31 priority)
 Message: |
      312 | on Imports or Exports, except what may be absolutely necessary for executing
      313 | it's inspection Laws: and the net Produce of all Duties and Imposts, laid by
-         | ^~~~ Prefer the possessive pronoun `its` here to denote ownership.
+         | ^~~~ Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.
 Suggest:
   - Replace with: “its”
 
@@ -836,10 +829,12 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      315 | United States; and all such Laws shall be subject to the Revision and Controul
-         |                                                                       ^~~~~~~~ Did you mean `Control`?
+         |                                                                       ^~~~~~~~ Did you mean to spell `Controul` this way?
      316 | of the Congress.
 Suggest:
   - Replace with: “Control”
+  - Replace with: “Contour”
+  - Replace with: “Contrail”
 
 
 
@@ -960,7 +955,14 @@ Message: |
      367 | and such person shall act accordingly until a President or Vice President shall
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      368 | have qualified.The Congress may by law provide for the case of the death of any
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         | ~~~~~~~~~~~~~~~ This sentence is 101 words long.
+
+
+
+Lint:    Readability (127 priority)
+Message: |
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      369 | of the persons from whom the House of Representatives may choose a President
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      370 | whenever the right of choice shall have devolved upon them, and for the case of
@@ -968,7 +970,7 @@ Message: |
      371 | the death of any of the persons from whom the Senate may choose a Vice
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      372 | President whenever the right of choice shall have devolved upon them.]The
-         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 167 words long.
+         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 68 words long.
 
 
 
@@ -997,9 +999,9 @@ Message: |
          |                                        ^~~~~~~ Did you mean to spell `chusing` this way?
      384 | which they shall give their Votes; which Day shall be the same throughout the
 Suggest:
-  - Replace with: “chasing”
   - Replace with: “causing”
-  - Replace with: “casing”
+  - Replace with: “chasing”
+  - Replace with: “cousin”
 
 
 
@@ -1087,7 +1089,7 @@ Message: |
          |                                                       ^~~~~~~ Did you mean to spell `tempore` this way?
      416 | the Speaker of the House of Representatives his written declaration that he is
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1126,7 +1128,7 @@ Message: |
      423 | transmit to the President pro tempore of the Senate and the Speaker of the
          |                               ^~~~~~~ Did you mean to spell `tempore` this way?
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1169,7 +1171,7 @@ Message: |
          |                                                               ^~~~~~~ Did you mean to spell `tempore` this way?
      429 | Senate and the Speaker of the House of Representatives his written declaration
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1191,7 +1193,7 @@ Message: |
          |                                                ^~~~~~~ Did you mean to spell `tempore` this way?
      434 | Speaker of the House of Representatives their written declaration that the
 Suggest:
-  - Replace with: “temper”
+  - Replace with: “tempo's”
   - Replace with: “temple”
   - Replace with: “tempo”
 
@@ -1277,6 +1279,15 @@ Message: |
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     454 | Before he enter on the Execution of his Office, he shall take the following
+         |           ^~~~~ The form of the verb must agree in grammatical number with the pronoun.
+Suggest:
+  - Replace with: “enters”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
      455 | Oath or Affirmation:-- "I do solemnly swear (or affirm) that I will faithfully
@@ -1353,7 +1364,8 @@ Message: |
      482 | States, except in Cases of Impeachment.
 Suggest:
   - Replace with: “Offenses”
-  - Replace with: “Fences”
+  - Replace with: “Offense's”
+  - Replace with: “Offenders”
 
 
 
@@ -1416,10 +1428,11 @@ Lint:    Spelling (63 priority)
 Message: |
      525 | time ordain and establish. The Judges, both of the supreme and inferior Courts,
      526 | shall hold their Offices during good Behaviour, and shall, at stated Times,
-         |                                      ^~~~~~~~~ Did you mean `Behavior`?
+         |                                      ^~~~~~~~~ Did you mean to spell `Behaviour` this way?
      527 | receive for their Services, a Compensation, which shall not be diminished
 Suggest:
   - Replace with: “Behavior”
+  - Replace with: “Behaviors”
 
 
 
@@ -1618,8 +1631,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1630,8 +1643,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1642,8 +1655,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “About”
-  - Replace with: “Amour”
+  - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1728,8 +1741,8 @@ Message: |
          |             ^~ Did you mean to spell `V.` this way?
 Suggest:
   - Replace with: “Vi”
-  - Replace with: “Va”
-  - Replace with: “Vs.”
+  - Replace with: “VA”
+  - Replace with: “Vb”
 
 
 
@@ -1769,6 +1782,15 @@ Message: |
 Suggest:
   - Replace with: “to all Intents and Purposes”
   - Replace with: “for alL intents anD purposes”
+
+
+
+Lint:    Capitalization (127 priority)
+Message: |
+     677 | ## Article. VI.
+         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
+Suggest:
+  - Replace with: “## Article. Vi.”
 
 
 
@@ -1822,6 +1844,7 @@ Message: |
      715 | fifteenth Line of the first Page. The Words "is tried" being interlined between
 Suggest:
   - Replace with: “Erasure”
+  - Replace with: “Erasures”
   - Replace with: “Azure”
 
 

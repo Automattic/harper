@@ -17,14 +17,13 @@ impl Expr for DurationExpr {
             "months", "year", "years",
         ]);
 
-        let expr = SequenceExpr::default()
-            .then_longest_of(vec![
-                Box::new(SpelledNumberExpr),
-                Box::new(SequenceExpr::default().then_number()),
-                Box::new(IndefiniteArticle::default()),
-            ])
-            .then_whitespace()
-            .then(units);
+        let expr = SequenceExpr::longest_of(vec![
+            Box::new(SpelledNumberExpr),
+            Box::new(SequenceExpr::default().then_number()),
+            Box::new(IndefiniteArticle::default()),
+        ])
+        .then_whitespace()
+        .then(units);
 
         expr.run(cursor, tokens, source)
     }

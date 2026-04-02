@@ -1,6 +1,5 @@
-use crate::expr::Expr;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
+use crate::expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
@@ -8,7 +7,7 @@ use crate::{
 };
 
 pub struct ItWouldBe {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for ItWouldBe {
@@ -32,8 +31,7 @@ impl Default for ItWouldBe {
         ]);
 
         let branch = |has_not: bool, has_adj: bool| {
-            let mut p = SequenceExpr::default()
-                .then(head_verbs.clone())
+            let mut p = SequenceExpr::with(head_verbs.clone())
                 .then_whitespace()
                 .t_aco("i") // the mistaken pronoun
                 .then_whitespace()
@@ -57,15 +55,15 @@ impl Default for ItWouldBe {
             .or(branch(true, false))
             .or(branch(true, true));
 
-        Self {
-            expr: Box::new(combined),
-        }
+        Self { expr: combined }
     }
 }
 
 impl ExprLinter for ItWouldBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {

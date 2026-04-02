@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdjectiveEnd {
     expr: Box<dyn Expr>,
@@ -13,12 +14,7 @@ pub struct ToTooAdjectiveEnd {
 
 impl Default for ToTooAdjectiveEnd {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_optional(
-                SequenceExpr::default()
-                    .then_any_word()
-                    .then(WhitespacePattern),
-            )
+        let expr = SequenceExpr::optional(SequenceExpr::any_word().t_ws())
             .t_aco("to")
             .t_ws()
             .then_kind_is_but_is_not_except(
@@ -27,7 +23,7 @@ impl Default for ToTooAdjectiveEnd {
                 &["standard"],
             )
             .then_optional(WhitespacePattern)
-            .then_optional(SequenceExpr::default().then_any_word())
+            .then_optional(SequenceExpr::any_word())
             .then_optional(WhitespacePattern)
             .then_optional(SequenceExpr::default().then_punctuation());
 
@@ -38,6 +34,8 @@ impl Default for ToTooAdjectiveEnd {
 }
 
 impl ExprLinter for ToTooAdjectiveEnd {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -55,7 +53,10 @@ impl ExprLinter for ToTooAdjectiveEnd {
         while idx < tokens.len() && tokens[idx].kind.is_whitespace() {
             idx += 1;
         }
-        if idx >= tokens.len() || !tokens[idx].kind.is_adjective() {
+        if idx >= tokens.len()
+            || !tokens[idx].kind.is_adjective()
+            || !tokens[idx].kind.is_positive_adjective()
+        {
             return None;
         }
         let prev_non_ws = tokens[..to_index].iter().rfind(|t| !t.kind.is_whitespace());

@@ -1,0 +1,12 @@
+expr main (w/o)
+
+let message "Use `without` instead of `w/o`"
+let description "Expands the abbreviation `w/o` to the full word `without` for clarity."
+let kind "Style"
+let becomes "without"
+
+test "She lacks w/o experience." "She lacks without experience."
+test "He has w/o skills w/o knowledge." "He has without skills without knowledge."
+test "The report includes w/o details." "The report includes without details."
+allows "She works with out effort."
+test "She’s w/o a plan." "She’s without a plan."

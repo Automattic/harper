@@ -1,6 +1,7 @@
 use crate::expr::Expr;
 use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
@@ -18,15 +19,14 @@ impl Default for TheHowWhy {
             .t_aco("the")
             .then_whitespace()
             .t_aco("how")
-            .then_unless(SequenceExpr::default().then_whitespace().t_aco("to"));
+            .then_unless(SequenceExpr::whitespace().t_aco("to"));
 
         let the_who = SequenceExpr::default()
             .t_aco("the")
             .then_whitespace()
             .t_aco("who")
             .then_unless(
-                SequenceExpr::default()
-                    .then_whitespace()
+                SequenceExpr::whitespace()
                     .t_aco("'s")
                     .then_whitespace()
                     .t_aco("who"),
@@ -60,6 +60,8 @@ impl Default for TheHowWhy {
 }
 
 impl ExprLinter for TheHowWhy {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         &self.expr
     }

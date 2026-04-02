@@ -3,7 +3,7 @@ title: Harper for WordPress
 ---
 
 <script>
-    import {Button} from "flowbite-svelte"
+    import {Button} from "components"
 </script>
 
 Harper still works great with WordPress, but the recommended way to use it today is the

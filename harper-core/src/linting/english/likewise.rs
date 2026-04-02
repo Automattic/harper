@@ -4,34 +4,32 @@ use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct Likewise {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 impl Default for Likewise {
     fn default() -> Self {
         let mut expr = All::default();
 
         expr.add(SequenceExpr::aco("like").then_whitespace().t_aco("wise"));
-        expr.add(
-            SequenceExpr::default().then_unless(
-                SequenceExpr::default()
-                    .then_anything()
-                    .then_whitespace()
-                    .then_anything()
-                    .then_whitespace()
-                    .then_noun(),
-            ),
-        );
+        expr.add(SequenceExpr::unless(
+            SequenceExpr::anything()
+                .then_whitespace()
+                .then_anything()
+                .then_whitespace()
+                .then_noun(),
+        ));
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 impl ExprLinter for Likewise {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;

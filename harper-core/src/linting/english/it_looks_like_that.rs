@@ -1,50 +1,50 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 pub struct ItLooksLikeThat {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ItLooksLikeThat {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_fixed_phrase("it looks like that")
-                    .then_whitespace()
-                    .then(|tok: &Token, _: &[char]| {
-                        // Heuristics on the word after "that" which show "that" was used
-                        // as a relative pronoun, which is a mistake
-                        let is_subj = tok.kind.is_subject_pronoun();
-                        let is_ing = tok.kind.is_verb_progressive_form();
-                        let is_definitely_rel_pron = is_subj || is_ing;
+            expr: SequenceExpr::fixed_phrase("it looks like that")
+                .then_whitespace()
+                .then_kind_where(|kind| {
+                    // Heuristics on the word after "that" which show "that" was used
+                    // as a relative pronoun, which is a mistake
+                    let is_subj = kind.is_subject_pronoun();
+                    let is_ing = kind.is_verb_progressive_form();
+                    let is_definitely_rel_pron = is_subj || is_ing;
 
-                        // Heuristics on the word after "that" which show "that"
-                        // could possibly be a legitimate demonstrative pronoun or determiner
-                        // as a demonstrative pronoun or a determiner
-                        // which would not be a mistake.
-                        let is_v3psgpres = tok.kind.is_verb_third_person_singular_present_form();
-                        // NOTE: we don't have .is_modal_verb() but maybe we need it now!
-                        let is_vmodal_or_aux = tok.kind.is_auxiliary_verb();
-                        let is_vpret = tok.kind.is_verb_simple_past_form();
-                        let is_noun = tok.kind.is_noun();
-                        let is_oov = tok.kind.is_oov();
+                    // Heuristics on the word after "that" which show "that"
+                    // could possibly be a legitimate demonstrative pronoun or determiner
+                    // as a demonstrative pronoun or a determiner
+                    // which would not be a mistake.
+                    let is_v3psgpres = kind.is_verb_third_person_singular_present_form();
+                    // NOTE: we don't have .is_modal_verb() but maybe we need it now!
+                    let is_vmodal_or_aux = kind.is_auxiliary_verb();
+                    let is_vpret = kind.is_verb_simple_past_form();
+                    let is_noun = kind.is_noun();
+                    let is_oov = kind.is_oov();
 
-                        let maybe_demonstrative_or_determiner =
-                            is_v3psgpres || is_vmodal_or_aux || is_vpret || is_noun || is_oov;
+                    let maybe_demonstrative_or_determiner =
+                        is_v3psgpres || is_vmodal_or_aux || is_vpret || is_noun || is_oov;
 
-                        is_definitely_rel_pron || !maybe_demonstrative_or_determiner
-                    }),
-            ),
+                    is_definitely_rel_pron || !maybe_demonstrative_or_determiner
+                }),
         }
     }
 }
 
 impl ExprLinter for ItLooksLikeThat {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _: &[char]) -> Option<Lint> {
@@ -182,7 +182,7 @@ mod tests {
         #[test]
         fn fix_that_it_verb_lemma() {
             // "that" is being wrongly used as a relative pronoun
-            // But it's hard to check becuase 'renovate' is a verb but is being used as a noun
+            // But it's hard to check because 'renovate' is a verb but is being used as a noun
             assert_suggestion_result(
                 "It looks like that Renovate decides to not reuse the branch when there are no changes in it",
                 ItLooksLikeThat::default(),

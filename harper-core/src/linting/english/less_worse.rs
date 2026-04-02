@@ -1,29 +1,28 @@
-use crate::expr::{Expr, SequenceExpr, SpaceOrHyphen};
-use crate::patterns::WordSet;
+use crate::expr::{Expr, SequenceExpr};
 use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct LessWorse {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for LessWorse {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(WordSet::new(&["less", "least"]))
-                    .then(SpaceOrHyphen)
-                    .then(WordSet::new(&["worse", "worst"])),
-            ),
+            expr: SequenceExpr::word_set(&["less", "least"])
+                .t_ws_h()
+                .then_word_set(&["worse", "worst"]),
         }
     }
 }
 
 impl ExprLinter for LessWorse {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -101,7 +100,7 @@ impl ExprLinter for LessWorse {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     use super::LessWorse;
 
@@ -134,7 +133,7 @@ mod tests {
 
     #[test]
     fn correct_less_worse() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less worse.",
             LessWorse::default(),
             "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less bad.",

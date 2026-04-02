@@ -2,7 +2,8 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::{Token, TokenStringExt};
 
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 /// See also:
 /// harper-core/src/linting/compound_nouns/implied_ownership_compound_nouns.rs
@@ -24,6 +25,8 @@ impl Default for LetUsRedundancy {
 }
 
 impl ExprLinter for LetUsRedundancy {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

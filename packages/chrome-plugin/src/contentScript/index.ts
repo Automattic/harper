@@ -1,28 +1,42 @@
 import '@webcomponents/custom-elements';
-import { isVisible, LintFramework, leafNodes, type UnpackedLint } from 'lint-framework';
+import {
+	getClosestBlockAncestor,
+	isVisible,
+	LintFramework,
+	leafNodes,
+	type UnpackedLint,
+} from 'lint-framework';
+import isSubstack from '../isSubstack';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
+import { createGoogleDocsBridgeSync, isGoogleDocsPage } from './googleDocs';
 
-if (isWordPress()) {
+if (isWordPress() || isSubstack()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
 }
 
-const fw = new LintFramework((text, domain) => ProtocolClient.lint(text, domain), {
-	ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
-	getActivationKey: () => ProtocolClient.getActivationKey(),
-	openOptions: () => ProtocolClient.openOptions(),
-	addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
-	reportError: (lint: UnpackedLint, ruleId: string) =>
-		ProtocolClient.openReportError(
-			padWithContext(lint.source, lint.span.start, lint.span.end, 15),
-			ruleId,
-			'',
-		),
-	setRuleEnabled: async (ruleId, enabled) => {
-		await ProtocolClient.setRuleEnabled(ruleId, enabled);
-		fw.update();
+const fw = new LintFramework(
+	(text, domain, options) => ProtocolClient.lint(text, domain, options),
+	{
+		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
+		getActivationKey: () => ProtocolClient.getActivationKey(),
+		getHotkey: () => ProtocolClient.getHotkey(),
+		openOptions: () => ProtocolClient.openOptions(),
+		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
+		reportError: (lint: UnpackedLint, ruleId: string) =>
+			ProtocolClient.openReportError(
+				padWithContext(lint.source, lint.span.start, lint.span.end, 15),
+				ruleId,
+				'',
+			),
+		setRuleEnabled: async (ruleId, enabled) => {
+			await ProtocolClient.setRuleEnabled(ruleId, enabled);
+			fw.update();
+		},
 	},
-});
+);
+
+const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
@@ -34,7 +48,8 @@ function padWithContext(source: string, start: number, end: number, contextLengt
 }
 
 const keepAliveCallback = () => {
-	ProtocolClient.lint('', 'example.com');
+	ProtocolClient.lint('', 'example.com', {});
+	void syncGoogleDocsBridge();
 
 	setTimeout(keepAliveCallback, 400);
 };
@@ -42,6 +57,12 @@ const keepAliveCallback = () => {
 keepAliveCallback();
 
 function scan() {
+	void syncGoogleDocsBridge();
+
+	if (isGoogleDocsPage()) {
+		return;
+	}
+
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
 		if (
 			!isVisible(element) ||
@@ -68,41 +89,107 @@ function scan() {
 	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
 		const leafs = leafNodes(element);
 
+		const seenBlockContainers = new Set<Element>();
+
 		for (const leaf of leafs) {
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 
+	document
+		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
+		.forEach((element) => {
+			const isTypstPlayground = window.location.hostname === 'typst.app';
+			const explicitlyTypst = element.getAttribute('data-language') === 'typst';
+
+			if (!isTypstPlayground && !explicitlyTypst) {
+				return;
+			}
+
+			if (element.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+				return;
+			}
+
+			if (!isVisible(element)) {
+				return;
+			}
+
+			element.setAttribute('data-language', 'typst');
+			fw.addTarget(element);
+		});
+
 	document.querySelectorAll('[contenteditable="true"],[contenteditable]').forEach((element) => {
+		if (element.classList.contains('cm-content') && element.closest('.cm-editor') != null) {
+			return;
+		}
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
-			element.getAttribute('spellcheck') === 'false'
+			(element.getAttribute('spellcheck') === 'false' &&
+				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;
 		}
 
+		if (element.classList.contains('ck-editor__editable')) {
+			element.querySelectorAll('p').forEach((paragraph) => {
+				if (paragraph.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
+					return;
+				}
+
+				if (!isVisible(paragraph)) {
+					return;
+				}
+
+				fw.addTarget(paragraph);
+			});
+
+			return;
+		}
+
 		const leafs = leafNodes(element);
+
+		const seenBlockContainers = new Set<Element>();
 
 		for (const leaf of leafs) {
 			if (leaf.parentElement?.closest('[contenteditable="false"],[disabled],[readonly]') != null) {
 				continue;
 			}
 
-			if (!isVisible(leaf)) {
+			const blockContainer = getClosestBlockAncestor(leaf, element);
+
+			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
 				continue;
 			}
 
-			fw.addTarget(leaf);
+			seenBlockContainers.add(blockContainer);
+
+			if (!isVisible(blockContainer)) {
+				continue;
+			}
+
+			fw.addTarget(blockContainer);
 		}
 	});
 }
 
 scan();
-new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+new MutationObserver(scan).observe(document.body, {
+	childList: true,
+	subtree: true,
+});
 
 setTimeout(scan, 1000);

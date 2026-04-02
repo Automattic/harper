@@ -1,0 +1,8 @@
+expr main (as it so happens)
+
+let message "Did you mean `as it happens`?"
+let description "Corrects `as it so happens` to `as it happens`."
+let kind "Usage"
+let becomes "as it happens"
+
+test "As it so happens, we have language currently in review that basically states that a major version break means backwards incompatibility ..." "As it happens, we have language currently in review that basically states that a major version break means backwards incompatibility ..."

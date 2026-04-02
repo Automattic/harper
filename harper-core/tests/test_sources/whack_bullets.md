@@ -1,4 +1,4 @@
-# This is a big heading, with a lot of words
+# This Is a Big Heading, with a Lot of Words
 
 - New here's a list, this part doesn't have as many words
     - But this part does, it has so many words, more words than you could ever dream of

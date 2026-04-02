@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token, TokenKind,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -22,7 +23,7 @@ const ALL_MONTHS: &[&str] = &[
 ];
 
 pub struct Months {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Months {
@@ -53,8 +54,8 @@ impl Default for Months {
             "by", "during", "in", "last", "next", "of", "until",
         ]);
 
-        let year_or_day_of_month = SequenceExpr::default().then(|tok: &Token, _src: &[char]| {
-            if let TokenKind::Number(number) = &tok.kind {
+        let year_or_day_of_month = SequenceExpr::default().then_kind_where(|kind| {
+            if let TokenKind::Number(number) = &kind {
                 let v = number.value.into_inner() as u32;
                 (1500..=2500).contains(&v) || (1..=31).contains(&v)
             } else {
@@ -64,31 +65,29 @@ impl Default for Months {
 
         // An Expr that matches either a plain month
         // Or an ambiguous month after a disambiguating word
-        let month_expr = SequenceExpr::default().then(FirstMatchOf::new(vec![
+        let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
             Box::new(only_months),
             Box::new(
-                SequenceExpr::default()
-                    .then(before_month_sense_only)
+                SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()
                     .then(ambiguous_months.clone()),
             ),
             Box::new(
-                SequenceExpr::default()
-                    .then(ambiguous_months)
+                SequenceExpr::with(ambiguous_months)
                     .then_whitespace()
                     .then(year_or_day_of_month),
             ),
         ]));
 
-        Self {
-            expr: Box::new(month_expr),
-        }
+        Self { expr: month_expr }
     }
 }
 
 impl ExprLinter for Months {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {

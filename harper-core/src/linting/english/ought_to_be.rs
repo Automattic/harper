@@ -1,5 +1,6 @@
 use crate::TokenKind;
-use crate::expr::{AnchorStart, Expr, ExprMap, FixedPhrase, SequenceExpr};
+use crate::expr::{AnchorStart, Expr, ExprMap, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
@@ -10,14 +11,11 @@ use crate::{
 /// Legitimate phrasal-verb uses like `turn out to be`, `work out to be`, or
 /// `make it out to be` are ignored.
 pub struct OughtToBe {
-    expr: Box<dyn Expr>,
-    map: std::sync::Arc<ExprMap<usize>>, // index of the `out` token within the match
+    expr: ExprMap<usize>, // index of the `out` token within the match
 }
 
 impl Default for OughtToBe {
     fn default() -> Self {
-        use std::sync::Arc;
-
         // We’ll construct three branches and record where the `out` token sits in each.
         // 1) non-verb word + pronoun + "out to be"  → index of `out` = 4 tokens after start
         //    [word(!verb)] [ws] [pronoun] [ws] [out] [ws] [to] [ws] [be]
@@ -26,15 +24,14 @@ impl Default for OughtToBe {
             .then_whitespace()
             .then_pronoun()
             .then_whitespace()
-            .then(FixedPhrase::from_phrase("out to be"));
+            .then_fixed_phrase("out to be");
 
         // 2) start-of-sentence + pronoun + "out to be" → index of `out` = 2 tokens after start
         //    [AnchorStart] [pronoun] [ws] [out] [ws] [to] [ws] [be]
-        let branch_anchor_pronoun = SequenceExpr::default()
-            .then(AnchorStart)
+        let branch_anchor_pronoun = SequenceExpr::with(AnchorStart)
             .then_pronoun()
             .then_whitespace()
-            .then(FixedPhrase::from_phrase("out to be"));
+            .then_fixed_phrase("out to be");
 
         // 3) punctuation + pronoun + "out to be" → index of `out` = 4 tokens after start
         //    [punct] [ws] [pronoun] [ws] [out] [ws] [to] [ws] [be]
@@ -43,30 +40,27 @@ impl Default for OughtToBe {
             .then_whitespace()
             .then_pronoun()
             .then_whitespace()
-            .then(FixedPhrase::from_phrase("out to be"));
+            .then_fixed_phrase("out to be");
 
         let mut map = ExprMap::default();
         map.insert(branch_nonverb_pronoun, 4);
         map.insert(branch_anchor_pronoun, 2);
         map.insert(branch_punct_pronoun, 4);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
 impl ExprLinter for OughtToBe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched: &[Token], source: &[char]) -> Option<Lint> {
         // Find which branch matched and where the `out` token sits.
-        let out_index = *self.map.lookup(0, matched, source)?;
+        let out_index = *self.expr.lookup(0, matched, source)?;
         let out_tok = matched.get(out_index)?;
         let replace_span = out_tok.span; // only replace the word `out`
         let original = replace_span.get_content(source);

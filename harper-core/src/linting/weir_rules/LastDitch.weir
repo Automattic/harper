@@ -1,0 +1,9 @@
+expr main [(last ditch), (last ditched), (last-ditched)]
+
+let message "In this idiom, `ditch` is a noun and a hyphen is needed."
+let description "Corrects wrong variations of the idiomatic adjective `last-ditch`."
+let kind "Usage"
+let becomes "last-ditch"
+
+test "I was actually just trying that as a last ditched attempt to get it working, previously those ..." "I was actually just trying that as a last-ditch attempt to get it working, previously those ..."
+test "There are unique use cases and is meant to be a last ditch option." "There are unique use cases and is meant to be a last-ditch option."

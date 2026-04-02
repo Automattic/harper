@@ -1,10 +1,14 @@
-use crate::expr::{Expr, WordExprGroup};
+use itertools::Itertools;
+
+use crate::expr::{Expr, FirstMatchOf, WordExprGroup};
+use crate::thesaurus_helper;
 use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
 
 pub struct BoringWords {
-    expr: Box<dyn Expr>,
+    expr: WordExprGroup<FirstMatchOf>,
 }
 
 impl Default for BoringWords {
@@ -17,15 +21,15 @@ impl Default for BoringWords {
         expr.add_word("most");
         expr.add_word("many");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for BoringWords {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -34,7 +38,12 @@ impl ExprLinter for BoringWords {
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: LintKind::Enhancement,
-            suggestions: vec![],
+            suggestions: thesaurus_helper::get_synonym_replacement_suggestions(
+                &matched_word,
+                &matched_tokens[0].kind,
+            )
+            .take(5)
+            .collect_vec(),
             message: format!(
                 "“{matched_word}” is a boring word. Try something a little more exotic."
             ),

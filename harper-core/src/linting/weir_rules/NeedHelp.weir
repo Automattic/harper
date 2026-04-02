@@ -1,0 +1,7 @@
+expr main (ned help)
+
+let message "Did you mean `need help`?"
+let description "Changes `ned help` to the correct `need help`."
+let kind "Typo"
+let becomes "need help"
+

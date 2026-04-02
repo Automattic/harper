@@ -9,7 +9,7 @@ object hello extends ScalaModule {
     ivy"com.lihaoyi::mainargs:0.6.2"     // for CLI argument parsing
   )
 
-  // Define an test sub-module using a test framework.
+  // Define an test submodule using a test framework.
   object test extends ScalaTests {
     def testFramework = "utest.runner.Framework"
     def ivyDeps = Agg(

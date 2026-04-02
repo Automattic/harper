@@ -22,7 +22,7 @@ impl Expr for Optional {
         let res = self.inner.run(cursor, tokens, source);
 
         if res.is_none() {
-            Some(Span::new_with_len(cursor, 0))
+            Some(Span::empty(cursor))
         } else {
             res
         }

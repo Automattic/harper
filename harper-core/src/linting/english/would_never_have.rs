@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
@@ -6,7 +7,7 @@ use crate::{
 };
 
 pub struct WouldNeverHave {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for WouldNeverHave {
@@ -30,15 +31,15 @@ impl Default for WouldNeverHave {
         // TODO: verb should be perfect form ("done", "happened", etc.) when verb property changes are merged
         let expr = SequenceExpr::any_of(expr).then_whitespace().then_verb();
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for WouldNeverHave {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

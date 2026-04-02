@@ -1,0 +1,27 @@
+expr main <((during ages) ![NUM, :]), (during)>
+
+let message "Use `for ages` instead of `during ages` when referring to a vague stretch of time."
+let description "The idiomatic duration is 'for ages', so swap the initial preposition whenever the words refer to a general span."
+let kind "Usage"
+let becomes "for"
+let strategy "MatchCase"
+
+# True positives
+# Replace `during ages` with `for ages` when the phrase describes a vague stretch of time.
+test "Stories accumulate during ages past." "Stories accumulate for ages past."
+test "During ages of exile, they remained resolute." "For ages of exile, they remained resolute."
+test "She waited during ages for the letter." "She waited for ages for the letter."
+test "We have been friends during ages long." "We have been friends for ages long."
+test "During ages gone by, the valley slept." "For ages gone by, the valley slept."
+test "People argued during ages on behalf of the plan." "People argued for ages on behalf of the plan."
+test "During ages past, kings ruled here." "For ages past, kings ruled here."
+test "I reminisced during ages about the river." "I reminisced for ages about the river."
+test "During ages of waiting he kept faith." "For ages of waiting he kept faith."
+test "Why do you speak during ages like that?" "Why do you speak for ages like that?"
+test "During ages after the fall they rebuilt." "For ages after the fall they rebuilt."
+test "She sang during ages when storms howled." "She sang for ages when storms howled."
+
+# Guardrails
+# Numeric age ranges should remain untouched.
+# Keep the precise age range framing.
+allows "During ages: 35 to 40, we recorded the decline."

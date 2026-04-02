@@ -1,18 +1,26 @@
+import type { Page } from '@playwright/test';
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
 	getTextarea,
 	replaceEditorContent,
-	testBasicSuggestionTextarea,
-	testCanBlockRuleTextareaSuggestion,
-	testCanIgnoreTextareaSuggestion,
+	testBasicSuggestion,
+	testCanBlockRuleSuggestion,
+	testCanIgnoreSuggestion,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/github_textarea.html';
 
-testBasicSuggestionTextarea(TEST_PAGE_URL);
-testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
-testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
+async function textareaSetup(page: Page) {
+	await page.waitForTimeout(2000);
+	await page.reload();
+}
+
+testBasicSuggestion(TEST_PAGE_URL, getTextarea, textareaSetup);
+testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea, textareaSetup);
+testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea, textareaSetup);
 
 test('Wraps correctly', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);

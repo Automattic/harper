@@ -5,6 +5,7 @@ use std::{
 
 use harper_core::Dialect;
 use harper_core::EnglishDialect;
+use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn get_tests_dir() -> PathBuf {
@@ -17,20 +18,13 @@ fn get_text_dir() -> PathBuf {
 /// Tries to find a dialect override from a given file path. Returns `None` if the number of
 /// dialect overrides found is not 1.
 #[must_use]
-fn try_get_dialect_override(path: &Path) -> Option<EnglishDialect> {
-    let file_name = path.file_stem()?;
-    let mut dialect_overrides: Vec<_> = file_name
+fn try_get_dialect_override(path: &Path) -> Option<Dialect> {
+    path.file_stem()?
         .to_string_lossy()
         .split('.')
-        .map(EnglishDialect::try_from_abbr)
-        .filter(Option::is_some)
-        .collect();
-    if dialect_overrides.len() == 1 {
-        dialect_overrides.pop().unwrap()
-    } else {
-        // If we find multiple overrides, it's unlikely that a dialect override is intended.
-        None
-    }
+        .filter_map(Dialect::try_from_abbr)
+        .exactly_one()
+        .ok()
 }
 
 pub fn get_text_files() -> Vec<PathBuf> {

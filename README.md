@@ -40,7 +40,7 @@ We consider long lint times bugs.
 If you encounter any significant performance issues, please create an issue on the topic.
 
 If you find a fix to any performance issue, we would appreciate the contribution.
-Just please make sure to read [our contribution guidelines first.](https://github.com/automattic/harper/blob/master/CONTRIBUTING.md)
+Just please make sure to read [our contribution guidelines first.](https://writewithharper.com/docs/contributors/introduction)
 
 ## Links
 

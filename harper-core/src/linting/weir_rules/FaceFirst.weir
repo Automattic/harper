@@ -1,0 +1,7 @@
+expr main (face first into)
+
+let message "Should this be `face-first`?"
+let description "Ensures `face first` is correctly hyphenated as `face-first` when used before `into`."
+let kind "Punctuation"
+let becomes "face-first into"
+

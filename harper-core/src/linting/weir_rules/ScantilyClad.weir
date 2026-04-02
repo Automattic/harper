@@ -1,0 +1,7 @@
+expr main (scandally clad)
+
+let message "Use the correct phrase for minimal attire."
+let description "Fixes `scandally clad` to `scantily clad`, ensuring clarity in describing minimal attire."
+let kind "Eggcorn"
+let becomes "scantily clad"
+

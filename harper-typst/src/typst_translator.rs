@@ -1,4 +1,4 @@
-use crate::OffsetCursor;
+use crate::offset_cursor::OffsetCursor;
 use harper_core::{
     Punctuation, Token, TokenKind,
     parsers::{PlainEnglish, StrParser},
@@ -48,6 +48,64 @@ pub struct TypstTranslator<'a> {
 impl<'a> TypstTranslator<'a> {
     pub fn new(doc: &'a Source) -> Self {
         Self { doc }
+    }
+
+    pub fn parse_exprs(self, exprs: &[Expr]) -> Vec<Token> {
+        let base_offset = OffsetCursor::new(self.doc);
+        let mut tokens = Vec::new();
+        let mut index = 0;
+
+        while index < exprs.len() {
+            // Treat Text + apostrophe + Text as a single contraction token stream.
+            if let Some((mut parsed, consumed)) = self.parse_contraction(exprs, index) {
+                tokens.append(&mut parsed);
+                index += consumed;
+                continue;
+            }
+
+            if let Some(mut parsed) = self.parse_expr(exprs[index], base_offset) {
+                tokens.append(&mut parsed);
+            }
+            index += 1;
+        }
+
+        tokens
+    }
+
+    fn parse_contraction(self, exprs: &[Expr], index: usize) -> Option<(Vec<Token>, usize)> {
+        let exprs = exprs.get(index..index + 3)?;
+        let [expr1, expr2, expr3] = exprs else {
+            return None;
+        };
+
+        let (Expr::Text(left), Expr::SmartQuote(quote), Expr::Text(right)) =
+            (*expr1, *expr2, *expr3)
+        else {
+            return None;
+        };
+
+        if quote.double() {
+            return None;
+        }
+
+        let left_char = left.get().chars().last()?;
+        let right_char = right.get().chars().next()?;
+        if !left_char.is_alphabetic() || !right_char.is_alphabetic() {
+            return None;
+        }
+
+        let left_range = self.doc.range(left.span())?;
+        let quote_range = self.doc.range(quote.span())?;
+        let right_range = self.doc.range(right.span())?;
+        if left_range.end != quote_range.start || quote_range.end != right_range.start {
+            return None;
+        }
+
+        let joined = self.doc.text().get(left_range.start..right_range.end)?;
+        let offset = OffsetCursor::new(self.doc).push_to_span(left.span())?;
+        let parsed = self.parse_english(joined, offset)?;
+
+        Some((parsed, 3))
     }
 
     /// Use the [`PlainEnglish`] parser to parse plain text from a Typst expression.
@@ -147,6 +205,7 @@ impl<'a> TypstTranslator<'a> {
         macro_rules! get_text {
             ($expr:expr) => {
                 self.doc
+                    .text()
                     .get(self.doc.range($expr.span())?)
                     .expect("Unable to get text from typst document span!")
             };
@@ -284,9 +343,9 @@ impl<'a> TypstTranslator<'a> {
             Expr::Emph(emph) => iter_recurse(&mut emph.body().exprs()),
             Expr::Link(a) => token!(a, TokenKind::Url),
             Expr::Heading(heading) => iter_recurse(&mut heading.body().exprs()),
-            Expr::List(list_item) => iter_recurse(&mut list_item.body().exprs()),
-            Expr::Enum(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
-            Expr::Term(term_item) => iter_recurse(
+            Expr::ListItem(list_item) => iter_recurse(&mut list_item.body().exprs()),
+            Expr::EnumItem(enum_item) => iter_recurse(&mut enum_item.body().exprs()),
+            Expr::TermItem(term_item) => iter_recurse(
                 &mut term_item
                     .term()
                     .exprs()
@@ -307,7 +366,7 @@ impl<'a> TypstTranslator<'a> {
                         .collect_vec(),
                 )
             }
-            Expr::Content(content_block) => {
+            Expr::ContentBlock(content_block) => {
                 isolate(iter_recurse(&mut content_block.body().exprs()))
             }
             Expr::Parenthesized(parenthesized) => recurse!(parenthesized.expr()),
@@ -343,22 +402,22 @@ impl<'a> TypstTranslator<'a> {
                 recurse!(field_access.target()),
                 token!(field_access.field(), TokenKind::Word(None))
             ],
-            Expr::Let(let_binding) => merge![
+            Expr::LetBinding(let_binding) => merge![
                 match let_binding.kind() {
                     LetBindingKind::Normal(pattern) => self.parse_pattern(pattern, offset),
                     LetBindingKind::Closure(ident) => self.parse_ident(ident, offset),
                 },
                 let_binding.init().and_then(|e| recurse!(e))
             ],
-            Expr::DestructAssign(destruct_assignment) => {
+            Expr::DestructAssignment(destruct_assignment) => {
                 recurse!(destruct_assignment.value())
             }
-            Expr::Set(set_rule) => merge![
+            Expr::SetRule(set_rule) => merge![
                 recurse!(set_rule.target()),
                 set_rule.condition().and_then(|expr| recurse!(expr)),
                 parse_args(&mut set_rule.args().items())
             ],
-            Expr::Show(show_rule) => merge![
+            Expr::ShowRule(show_rule) => merge![
                 recurse!(show_rule.transform()),
                 show_rule.selector().and_then(|expr| recurse!(expr))
             ],
@@ -367,9 +426,9 @@ impl<'a> TypstTranslator<'a> {
                 recurse!(conditional.condition(), conditional.if_body()),
                 conditional.else_body().and_then(|expr| recurse!(expr))
             ],
-            Expr::While(while_loop) => recurse!(while_loop.condition(), while_loop.body()),
-            Expr::For(for_loop) => recurse!(for_loop.iterable(), for_loop.body()),
-            Expr::Code(code) => iter_recurse(&mut code.body().exprs()),
+            Expr::WhileLoop(while_loop) => recurse!(while_loop.condition(), while_loop.body()),
+            Expr::ForLoop(for_loop) => recurse!(for_loop.iterable(), for_loop.body()),
+            Expr::CodeBlock(code) => iter_recurse(&mut code.body().exprs()),
             Expr::Closure(closure) => merge![
                 closure
                     .name()

@@ -5,11 +5,12 @@ use crate::patterns::{UPOSSet, WordSet};
 use crate::{Span, Token};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 const AMBIGUOUS_ADVERBS: &[&str] = &["just", "not"];
 
 pub struct ToAdverb {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ToAdverb {
@@ -23,15 +24,15 @@ impl Default for ToAdverb {
             .t_ws()
             .then_verb();
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for ToAdverb {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -72,8 +73,7 @@ impl ExprLinter for ToAdverb {
 mod tests {
     use super::ToAdverb;
     use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_count,
-        assert_suggestion_result,
+        assert_lint_count, assert_suggestion_count, assert_suggestion_result,
     };
 
     #[test]
@@ -88,12 +88,10 @@ mod tests {
 
     #[test]
     fn alternative_moves_adverb() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Tom has decided to never to do that again.",
             ToAdverb::default(),
             "Tom has decided never to do that again.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 

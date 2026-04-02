@@ -1,0 +1,32 @@
+expr cue [think, thinking, thought, know, knows, knew, known]
+expr main <([(@cue off ![hand, the, of]), (@cue ADV off ![hand, the, of])]), off>
+
+let message "This collocation usually takes `of` rather than `off`."
+let description "Fixes the common preposition mix-up after verbs like `know` and `think` in phrases such as `know off` and `thought off` when a following token indicates the intended meaning is `of`."
+let kind "Grammar"
+let becomes "of"
+
+# True positives
+
+test "It's the only part of the stack I know off that still depends on legacy auth." "It's the only part of the stack I know of that still depends on legacy auth."
+test "I can think off three reasons to postpone the migration." "I can think of three reasons to postpone the migration."
+test "She thought off a better fallback before launch." "She thought of a better fallback before launch."
+test "We knew off several vendors with that certification." "We knew of several vendors with that certification."
+test "He knows off one maintainer who can approve this." "He knows of one maintainer who can approve this."
+test "They were thinking off possible names all afternoon." "They were thinking of possible names all afternoon."
+test "KNOWN OFF nobody outside the team." "KNOWN OF nobody outside the team."
+test "Do you know off anyone who still uses that plugin?" "Do you know of anyone who still uses that plugin?"
+
+# True negatives / false positives
+
+test "I know off hand how that API behaves." "I know off hand how that API behaves."
+test "I know off the top of my head what caused it." "I know off the top of my head what caused it."
+test "I know off of one mirror in that region." "I know off of one mirror in that region."
+test "This threat was enough to make them think twice." "This threat was enough to make them think twice."
+test "They know each subsystem by heart." "They know each subsystem by heart."
+
+# False negatives (accepted gaps)
+
+test "I think off, at least in theory, four options remain." "I think off, at least in theory, four options remain."
+test "I know off, maybe two people, who can debug this." "I know off, maybe two people, who can debug this."
+test "I thought off, frankly, a simpler way." "I thought off, frankly, a simpler way."

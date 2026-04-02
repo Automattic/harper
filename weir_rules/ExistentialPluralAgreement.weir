@@ -1,0 +1,38 @@
+expr manyCase <((is there many !a), (is there))>
+expr tooManyCase <((is there too many), (is there))>
+expr fewCase <((is there few), (is there))>
+expr tooFewCase <((is there too few), (is there))>
+expr lotsCase <((is there lots of), (is there))>
+expr main [@manyCase, @tooManyCase, @fewCase, @tooFewCase, @lotsCase]
+
+let message "Use the plural verb form in this existential construction."
+let description "Adjusts `is there` to `are there` when it introduces a plural quantity phrase."
+let kind "Grammar"
+let becomes "are there"
+let strategy "MatchCase"
+
+# True positives
+
+test "Is there many users waiting?" "Are there many users waiting?"
+test "Is there few tickets left?" "Are there few tickets left?"
+test "Is there lots of noise tonight?" "Are there lots of noise tonight?"
+test "Is there too many redirects in this chain?" "Are there too many redirects in this chain?"
+test "Is there too few backups on that node?" "Are there too few backups on that node?"
+test "is there many examples in the guide?" "are there many examples in the guide?"
+test "IS THERE FEW OPTIONS REMAINING?" "ARE THERE FEW OPTIONS REMAINING?"
+test "I asked, is there many reasons to wait?" "I asked, are there many reasons to wait?"
+test "Is there lots of updates this morning?" "Are there lots of updates this morning?"
+
+# True negatives / false positives
+
+allows "Is there a user waiting?"
+allows "Is there an update?"
+allows "Are there many users waiting?"
+allows "There is many users waiting."
+allows "Is there many a reason to pause?"
+allows "Is there lots to do today?"
+
+# Potential false negatives (accepted gaps)
+
+allows "Is there, many users say, no quick fix?"
+allows "Is there really many users waiting?"

@@ -2,10 +2,11 @@ use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::{Lrc, Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 use hashbrown::HashMap;
 
 pub struct OpenCompounds {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     compound_to_phrase: HashMap<String, String>,
 }
 
@@ -14,8 +15,8 @@ impl Default for OpenCompounds {
         let phrases = [
             "a few",
             "a lot",
-            "a while",
             "as well",
+            "at all",
             "at least",
             "each other",
             "in case",
@@ -38,36 +39,33 @@ impl Default for OpenCompounds {
         for compound in compound_to_phrase.keys().cloned().collect::<Vec<_>>() {
             compound_wordset.add(&compound);
         }
-        let compound = Lrc::new(SequenceExpr::default().then(compound_wordset));
+        let compound = Lrc::new(SequenceExpr::with(compound_wordset));
 
-        let with_prev = SequenceExpr::default()
-            .then_anything()
-            .then(compound.clone());
+        let with_prev = SequenceExpr::anything().then(compound.clone());
 
-        let with_next = SequenceExpr::default()
-            .then(compound.clone())
-            .then_anything();
+        let with_next = SequenceExpr::with(compound.clone()).then_anything();
 
-        let with_prev_and_next = SequenceExpr::default()
-            .then_anything()
+        let with_prev_and_next = SequenceExpr::anything()
             .then(compound.clone())
             .then_anything();
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(with_prev_and_next),
                 Box::new(with_prev),
                 Box::new(with_next),
                 Box::new(compound),
-            ])),
+            ]),
             compound_to_phrase,
         }
     }
 }
 
 impl ExprLinter for OpenCompounds {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_toks: &[Token], source_chars: &[char]) -> Option<Lint> {
@@ -268,58 +266,6 @@ mod tests {
         );
     }
 
-    // A while
-
-    #[test]
-    fn correct_awhile_atomic() {
-        assert_suggestion_result(
-            "Awhile",
-            OpenCompounds::default(),
-            "A while",
-            crate::languages::LanguageFamily::English,
-        );
-    }
-
-    #[test]
-    fn test_in_quite_a_while() {
-        assert_suggestion_result(
-            "I haven’t seen him in quite awhile.",
-            OpenCompounds::default(),
-            "I haven’t seen him in quite a while.",
-            crate::languages::LanguageFamily::English,
-        );
-    }
-
-    #[test]
-    fn test_in_a_while() {
-        assert_suggestion_result(
-            "I haven't checked in awhile.",
-            OpenCompounds::default(),
-            "I haven't checked in a while.",
-            crate::languages::LanguageFamily::English,
-        );
-    }
-
-    #[test]
-    fn correct_for_awhile() {
-        assert_suggestion_result(
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
-            OpenCompounds::default(),
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
-            crate::languages::LanguageFamily::English,
-        );
-    }
-
-    #[test]
-    fn correct_after_awhile() {
-        assert_suggestion_result(
-            "Links on portal stop working after awhile, requiring page refresh.",
-            OpenCompounds::default(),
-            "Links on portal stop working after a while, requiring page refresh.",
-            crate::languages::LanguageFamily::English,
-        );
-    }
-
     // As well
 
     #[test]
@@ -368,7 +314,17 @@ mod tests {
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
             OpenCompounds::default(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    // At all
+
+    #[test]
+    fn correct_atall() {
+        assert_suggestion_result(
+            "claude code with vs code extension not working atall",
+            OpenCompounds::default(),
+            "claude code with vs code extension not working at all",
         );
     }
 

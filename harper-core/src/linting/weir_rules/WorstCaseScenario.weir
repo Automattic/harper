@@ -1,0 +1,10 @@
+expr main [(worst case scenario), (worst-case-scenario)]
+
+let message "Hyphenate `worst-case`."
+let description "Corrects `worst-case scenario` when the hyphen is missing or `worse` is used instead of `worst`."
+let kind "Punctuation"
+let becomes "worst-case scenario"
+
+test "The worst case scenario can be calculated without looking at streams of data." "The worst-case scenario can be calculated without looking at streams of data."
+test "CAPD worst-case-scenario cloud simulator for naughty clouds." "CAPD worst-case scenario cloud simulator for naughty clouds."
+allows "Those are now on hold for month."

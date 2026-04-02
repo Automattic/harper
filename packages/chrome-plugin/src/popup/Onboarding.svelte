@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Badge, Button } from 'flowbite-svelte';
+import { Badge, Button } from 'components';
 
 let { onConfirm }: { onConfirm: () => void } = $props();
 
@@ -10,8 +10,8 @@ const steps = [
 ];
 </script>
 
-<main class="p-6 space-y-6 text-gray-900 dark:text-slate-100">
-  <h2 class="text-base font-semibold text-gray-900 dark:text-slate-100">
+<main class="p-6 space-y-6">
+  <h2 class="text-base font-semibold">
     Welcome! Let’s see Harper in action:
   </h2>
 
@@ -26,7 +26,7 @@ const steps = [
     {/each}
   </ul>
 
-  <Button color="primary" outline class="w-full h-10" on:click={onConfirm}>
+  <Button color="primary"  class="w-full h-10" on:click={onConfirm}>
     Let's start writing
   </Button>
 </main>

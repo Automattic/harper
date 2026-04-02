@@ -1,11 +1,9 @@
 use crate::Token;
 use crate::expr::{Expr, SequenceExpr};
-use crate::patterns::WhitespacePattern;
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Sentence};
 
 pub struct BestOfAllTime {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for BestOfAllTime {
@@ -17,28 +15,36 @@ impl Default for BestOfAllTime {
             .t_aco("most")
             .t_ws()
             .then_positive_adjective();
-        // Some resources call this an 'absolute adjective', some consider it a superlative.
-        let fave = SequenceExpr::word_set(&["favorite", "favourite"]);
+        // Some resources call 'favourite' an 'absolute adjective', some consider it a superlative.
+        let fave_or_top = SequenceExpr::word_set(&["favorite", "favourite", "top"]);
 
         // We can't use the noun phrase Expr because it allows determiners before the nouns and "best the thing" wouldn't be right
-        let expr = SequenceExpr::default()
-            .then_any_of(vec![
-                Box::new(inflection_superlative),
-                Box::new(most_superlative),
-                Box::new(fave),
-            ])
-            .then_one_or_more(SequenceExpr::default().then(WhitespacePattern).then_noun())
-            .then_fixed_phrase(" of all times");
+        let expr = SequenceExpr::any_of(vec![
+            Box::new(inflection_superlative),
+            Box::new(most_superlative),
+            Box::new(fave_or_top),
+        ])
+        // There is no non-greedy `Repeating` in Harper, so we have to do match non-noun-oov tokens
+        // rather than matching arbitrary tokens.
+        // We include OOV because novel words not in the dictionary tend to be nouns.
+        .then_zero_or_more(|tok: &Token, _: &[char]| !tok.kind.is_noun() && !tok.kind.is_oov())
+        .then_kind_where(|kind| kind.is_noun() || kind.is_oov())
+        .then_zero_or_more(
+            SequenceExpr::default()
+                .t_ws()
+                .then_kind_where(|kind| kind.is_noun() || kind.is_oov()),
+        )
+        .then_fixed_phrase(" of all times");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for BestOfAllTime {
+    type Unit = Sentence;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -152,6 +158,33 @@ mod tests {
             BestOfAllTime::default(),
             "Just made this website to show you my favourite movies of all time.",
             crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fix_top_out_of_vocabulary() {
+        assert_suggestion_result(
+            "Can I Play the Top 10 Basslines of All Times?",
+            BestOfAllTime::default(),
+            "Can I Play the Top 10 Basslines of All Time?",
+        );
+    }
+
+    #[test]
+    fn fix_compound_noun() {
+        assert_suggestion_result(
+            "Is he the best bass guitarist of all times?",
+            BestOfAllTime::default(),
+            "Is he the best bass guitarist of all time?",
+        );
+    }
+
+    #[test]
+    fn fix_containing_commas() {
+        assert_suggestion_result(
+            "I am the biggest, best, and most humble of all times",
+            BestOfAllTime::default(),
+            "I am the biggest, best, and most humble of all time",
         );
     }
 }

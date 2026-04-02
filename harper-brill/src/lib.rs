@@ -1,35 +1,37 @@
-use harper_pos_utils::{BurnChunkerCpu, CachedChunker};
-use lazy_static::lazy_static;
 use std::num::NonZero;
 use std::rc::Rc;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
-pub use harper_pos_utils::{BrillChunker, BrillTagger, Chunker, FreqDict, Tagger, UPOS};
+pub use harper_pos_utils::{
+    BrillChunker, BrillTagger, BurnChunkerCpu, CachedChunker, Chunker, FreqDict, Tagger, UPOS,
+};
 
 const BRILL_TAGGER_SOURCE: &str = include_str!("../trained_tagger_model.json");
 
-lazy_static! {
-    static ref BRILL_TAGGER: Arc<BrillTagger<FreqDict>> = Arc::new(uncached_brill_tagger());
-}
+static BRILL_TAGGER: LazyLock<Arc<BrillTagger<FreqDict>>> =
+    LazyLock::new(|| Arc::new(uncached_brill_tagger()));
 
 fn uncached_brill_tagger() -> BrillTagger<FreqDict> {
     serde_json::from_str(BRILL_TAGGER_SOURCE).unwrap()
 }
 
+/// Get a copy of a shared, lazily-initialized [`BrillTagger`]. There will be only one instance
+/// per-process.
 pub fn brill_tagger() -> Arc<BrillTagger<FreqDict>> {
     (*BRILL_TAGGER).clone()
 }
 
 const BRILL_CHUNKER_SOURCE: &str = include_str!("../trained_chunker_model.json");
 
-lazy_static! {
-    static ref BRILL_CHUNKER: Arc<BrillChunker> = Arc::new(uncached_brill_chunker());
-}
+static BRILL_CHUNKER: LazyLock<Arc<BrillChunker>> =
+    LazyLock::new(|| Arc::new(uncached_brill_chunker()));
 
 fn uncached_brill_chunker() -> BrillChunker {
     serde_json::from_str(BRILL_CHUNKER_SOURCE).unwrap()
 }
 
+/// Get a copy of a shared, lazily-initialized [`BrillChunker`]. There will be only one instance
+/// per-process.
 pub fn brill_chunker() -> Arc<BrillChunker> {
     (*BRILL_CHUNKER).clone()
 }
@@ -48,6 +50,9 @@ fn uncached_burn_chunker() -> CachedChunker<BurnChunkerCpu> {
     )
 }
 
+/// Get a copy of a shared, lazily-initialized [`BurnChunkerCpu`]. There will be only one instance
+/// per-process. Since neural net inference is extremely expensive, this chunker is memoized as
+/// well.
 pub fn burn_chunker() -> Rc<CachedChunker<BurnChunkerCpu>> {
     (BURN_CHUNKER).with(|c| c.clone())
 }

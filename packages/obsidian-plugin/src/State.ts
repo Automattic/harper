@@ -3,7 +3,14 @@ import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
 import { binaryInlined, type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { minimatch } from 'minimatch';
 import type { MarkdownFileInfo, Workspace } from 'obsidian';
-import { linter } from './lint';
+import {
+	type CustomReplacements,
+	cloneCustomReplacements,
+	getCustomSuggestions,
+	normalizeCustomReplacements,
+} from './customSuggestions';
+import { type Action, linter } from './lint';
+import { lintKindClass } from './lintKindColor';
 
 export type Settings = {
 	ignoredLints?: string;
@@ -14,6 +21,7 @@ export type Settings = {
 	delay?: number;
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
+	regexMask?: string;
 };
 
 const DEFAULT_DELAY = -1;
@@ -29,6 +37,7 @@ export default class State {
 	private ignoredGlobs?: string[];
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
+	private regexMask?: string;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -73,8 +82,10 @@ export default class State {
 			settings.dialect !== oldSettings.dialect
 		) {
 			if (settings.useWebWorker) {
+				this.harper.dispose();
 				this.harper = new WorkerLinter({ binary: binaryInlined, dialect: settings.dialect });
 			} else {
+				this.harper.dispose();
 				this.harper = new LocalLinter({ binary: binaryInlined, dialect: settings.dialect });
 			}
 		} else {
@@ -98,6 +109,7 @@ export default class State {
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
+		this.regexMask = settings.regexMask;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -129,79 +141,107 @@ export default class State {
 				}
 
 				const text = view.state.doc.sliceString(-1);
-				const chars = Array.from(text);
+				const lints = await this.harper.organizedLints(text, { regex_mask: this.regexMask });
 
-				const lints = await this.harper.lint(text);
+				return Object.entries(lints).flatMap(([linterName, lints]) =>
+					lints.map((lint) => {
+						const span = lint.span();
 
-				return lints.map((lint) => {
-					const span = lint.span();
-
-					const actions = lint.suggestions().map((sug) => {
-						return {
-							name:
-								sug.kind() == SuggestionKind.Replace
-									? sug.get_replacement_text()
-									: suggestionToLabel(sug),
-							title: suggestionToLabel(sug),
-							apply: (view) => {
-								if (sug.kind() === SuggestionKind.Remove) {
-									view.dispatch({
-										changes: {
-											from: span.start,
-											to: span.end,
-											insert: '',
-										},
-									});
-								} else if (sug.kind() === SuggestionKind.Replace) {
-									view.dispatch({
-										changes: {
-											from: span.start,
-											to: span.end,
-											insert: sug.get_replacement_text(),
-										},
-									});
-								} else if (sug.kind() === SuggestionKind.InsertAfter) {
-									view.dispatch({
-										changes: {
-											from: span.end,
-											to: span.end,
-											insert: sug.get_replacement_text(),
-										},
-									});
-								}
-							},
-						};
-					});
-
-					if (lint.lint_kind() === 'Spelling') {
-						const word = lint.get_problem_text();
-
-						actions.push({
-							name: '📖',
-							title: `Add “${word}” to your dictionary`,
-							apply: (_view) => {
-								this.harper.importWords([word]);
-								this.reinitialize();
-							},
+						const actions = lint.suggestions().map((sug) => {
+							return {
+								kind: 'suggestion' as const,
+								name:
+									sug.kind() == SuggestionKind.Replace
+										? sug.get_replacement_text()
+										: suggestionToLabel(sug),
+								title: suggestionToLabel(sug),
+								apply: (view, from, to) => {
+									if (sug.kind() === SuggestionKind.Remove) {
+										view.dispatch({
+											changes: {
+												from,
+												to,
+												insert: '',
+											},
+											selection: {
+												anchor: from,
+											},
+										});
+									} else if (sug.kind() === SuggestionKind.Replace) {
+										const replacement = sug.get_replacement_text();
+										view.dispatch({
+											changes: {
+												from,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: from + replacement.length,
+											},
+										});
+									} else if (sug.kind() === SuggestionKind.InsertAfter) {
+										const replacement = sug.get_replacement_text();
+										view.dispatch({
+											changes: {
+												from: to,
+												to,
+												insert: replacement,
+											},
+											selection: {
+												anchor: to + replacement.length,
+											},
+										});
+									}
+								},
+							};
 						});
-					}
 
-					return {
-						from: span.start,
-						to: span.end,
-						severity: 'error',
-						title: lint.lint_kind_pretty(),
-						renderMessage: (_view) => {
-							const node = document.createElement('template');
-							node.innerHTML = lint.message_html();
-							return node.content;
-						},
-						ignore: async () => {
-							await this.ignoreLints(text, [lint]);
-						},
-						actions,
-					};
-				});
+						if (lint.lint_kind() === 'Spelling') {
+							const word = lint.get_problem_text();
+
+							actions.push({
+								kind: 'dictionary',
+								name: '📖',
+								title: `Add “${word}” to your dictionary`,
+								apply: (view, _from, to) => {
+									view.dispatch({
+										selection: {
+											anchor: to,
+										},
+									});
+									this.harper.importWords([word]);
+									this.reinitialize();
+								},
+							});
+						}
+
+						return {
+							from: span.start,
+							to: span.end,
+							source: linterName,
+							severity: 'error',
+							markClass: lintKindClass(lint.lint_kind()),
+							title: lint.lint_kind_pretty(),
+							renderMessage: (_view) => {
+								const node = document.createElement('template');
+								node.innerHTML = lint.message_html();
+								return node.content;
+							},
+							ignore: async () => {
+								await this.ignoreLints(text, [lint]);
+							},
+							disable: async () => {
+								const lintConfig = await this.harper.getLintConfig();
+								lintConfig[linterName] = false;
+								await this.harper.setLintConfig(lintConfig);
+
+								await this.reinitialize();
+							},
+
+							actions,
+						};
+					}),
+				);
 			},
 			{
 				delay: this.delay,
@@ -238,6 +278,7 @@ export default class State {
 			delay: this.delay,
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
+			regexMask: this.regexMask,
 		};
 	}
 

@@ -1,36 +1,33 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct Misspell {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Misspell {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then(WordSet::new(&["miss"]))
-            .t_ws_h()
-            .then(WordSet::new(&[
-                "spell",
-                "spelled",
-                "spelling",
-                "spells",
-                "spellings",
-            ]));
+        let expr = SequenceExpr::word_set(&["miss"]).t_ws_h().then_word_set(&[
+            "spell",
+            "spelled",
+            "spelling",
+            "spells",
+            "spellings",
+        ]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for Misspell {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

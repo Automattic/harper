@@ -1,0 +1,9 @@
+expr main [(rule of thumbs), (rule-of-thumbs)]
+
+let message "The correct plural is `rules of thumb`."
+let description "Corrects pluralizing the wrong noun in `rule of thumb`."
+let kind "Grammar"
+let becomes "rules of thumb"
+
+test "Thanks. 0.2 is just from my rule of thumbs." "Thanks. 0.2 is just from my rules of thumb."
+test "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\"." "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\"."

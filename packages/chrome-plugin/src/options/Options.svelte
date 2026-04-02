@@ -1,8 +1,9 @@
 <script lang="ts">
-import { Button, Input, Select } from 'flowbite-svelte';
+import { Button, Card, Input, Select, Textarea } from 'components';
 import { Dialect, type LintConfig } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
+import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 
 let lintConfig: LintConfig = $state({});
@@ -13,7 +14,12 @@ let dialect = $state(Dialect.American);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
+let modifyHotkeyButton: Button;
+let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
+let weirpacks: WeirpackMeta[] = $state([]);
+let weirpackBusy = $state(false);
+let weirpackError = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
@@ -32,7 +38,6 @@ $effect(() => {
 });
 
 $effect(() => {
-	console.log('hit');
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
@@ -56,8 +61,21 @@ ProtocolClient.getActivationKey().then((d) => {
 	activationKey = d;
 });
 
+ProtocolClient.getHotkey().then((d) => {
+	// Ensure we have a plain object, not a Proxy
+	hotkey = {
+		modifiers: [...d.modifiers],
+		key: d.key,
+	};
+	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
+});
+
 ProtocolClient.getUserDictionary().then((d) => {
 	userDict = dictToString(d.toSorted());
+});
+
+ProtocolClient.getWeirpacks().then((stored) => {
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
 });
 
 function configValueToString(value: boolean | undefined): string {
@@ -145,34 +163,125 @@ async function exportEnabledDomainsCSV() {
 	}
 }
 
+let buttonText = $state('Set Hotkey');
+let isBlue = $state(false); // modify color of hotkey button once it is pressed
+function startHotkeyCapture(_modifyHotkeyButton: Button) {
+	buttonText = 'Press desired hotkey combination now.';
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		event.preventDefault();
+
+		const modifiers: Modifier[] = [];
+		if (event.ctrlKey) modifiers.push('Ctrl');
+		if (event.shiftKey) modifiers.push('Shift');
+		if (event.altKey) modifiers.push('Alt');
+
+		let key = event.key;
+
+		if (key !== 'Control' && key !== 'Shift' && key !== 'Alt') {
+			if (modifiers.length === 0) {
+				return;
+			}
+			buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
+			// Create a plain object to avoid proxy cloning issues
+			const newHotkey = {
+				modifiers: [...modifiers],
+				key: key,
+			};
+
+			hotkey = newHotkey;
+
+			// Call ProtocolClient directly with the plain object to avoid proxy issues
+			ProtocolClient.setHotkey(newHotkey);
+
+			// Remove listener
+			window.removeEventListener('keydown', handleKeydown);
+
+			// change button color
+			isBlue = !isBlue;
+		}
+	};
+
+	// Add temporary key listener
+	window.addEventListener('keydown', handleKeydown);
+}
+
+async function refreshWeirpacks() {
+	const stored = await ProtocolClient.getWeirpacks();
+	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
+}
+
+async function handleWeirpackUpload(event: Event) {
+	const input = event.currentTarget as HTMLInputElement | null;
+	const files = input?.files;
+	if (!files || files.length === 0) {
+		return;
+	}
+
+	weirpackError = '';
+	weirpackBusy = true;
+	try {
+		for (const file of files) {
+			const bytes = new Uint8Array(await file.arrayBuffer());
+			await ProtocolClient.addWeirpack(file.name, bytes);
+		}
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to upload Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+		input.value = '';
+	}
+}
+
+async function removeWeirpack(id: string) {
+	weirpackBusy = true;
+	weirpackError = '';
+	try {
+		await ProtocolClient.removeWeirpack(id);
+		await refreshWeirpacks();
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Failed to remove Weirpack.';
+		weirpackError = message;
+	} finally {
+		weirpackBusy = false;
+	}
+}
+
 // Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
-<div class="mx-auto max-w-screen-md px-4 text-gray-900 dark:text-slate-100">
-  <header class="flex items-center gap-2 px-3 py-2 bg-gray-50/60 border-b border-gray-200 rounded-t-lg text-gray-900 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-100">
-    <img src={logo} alt="Harper logo" class="h-6 w-auto rounded-lg" />
-    <span class="font-semibold text-sm">Harper</span>
-  </header>
+<div class="min-h-screen px-4 py-10">
+  <div class="mx-auto max-w-screen-lg space-y-4">
+    <Card class="flex items-center gap-3">
+      <div class="flex h-9 w-9 items-center justify-center rounded-xl">
+        <img src={logo} alt="Harper logo" class="h-5 w-auto" />
+      </div>
+      <div class="flex flex-col">
+        <h1 class="text-base tracking-wide font-serif">Harper</h1>
+        <p class="text-xs">Settings</p>
+      </div>
+    </Card>
 
-  <main class="p-6 space-y-10 text-sm border border-gray-200 rounded-b-lg shadow-sm bg-white dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100">
     <!-- ── GENERAL ───────────────────────────── -->
-    <section class="space-y-6">
-      <h3 class="pb-1 border-b border-gray-200 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-400">General</h3>
+    <Card class="space-y-6">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">General</h2>
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <span class="font-medium">English Dialect</span>
+          <h3 class="text-sm">English Dialect</h3>
           <Select
             size="sm"
-            color="primary"
-            class="w-44 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
+            class="w-44"
             bind:value={dialect}
           >
             <option value={Dialect.American}>🇺🇸 American</option>
             <option value={Dialect.British}>🇬🇧 British</option>
             <option value={Dialect.Australian}>🇦🇺 Australian</option>
             <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
+            <option value={Dialect.Indian}>🇮🇳 Indian</option>
           </Select>
         </div>
       </div>
@@ -180,35 +289,34 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Enable on New Sites by Default</span>
-            <span class="font-light text-gray-500 dark:text-slate-400">Can make some apps behave abnormally.</span>
+            <h3 class="text-sm">Enable on New Sites by Default</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Can make some apps behave abnormally.</p>
           </div>
-          <input type="checkbox" bind:checked={defaultEnabled}/>
+          <input type="checkbox" bind:checked={defaultEnabled} class="h-5 w-5" />
         </div>
       </div>
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Export Enabled Domains</span>
-            <span class="font-light text-gray-500 dark:text-slate-400">Downloads JSON of domains explicitly enabled.</span>
+            <h3 class="text-sm">Export Enabled Domains</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Downloads JSON of domains explicitly enabled.</p>
           </div>
-          <Button size="sm" color="light" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+          <Button size="sm" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
         </div>
       </div>
-
-      
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">Activation Key</span>
-            <span class="font-light text-gray-500 dark:text-slate-400">If you're finding that you're accidentally triggering Harper.</span>
+            <h3 class="text-sm">Activation Key</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              If you're finding that you're accidentally triggering Harper.
+            </p>
           </div>
           <Select
             size="sm"
-            color="primary"
-            class="w-44 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
+            class="w-44"
             bind:value={activationKey}
           >
             <option value={ActivationKey.Shift}>Double Shift</option>
@@ -221,32 +329,90 @@ async function exportEnabledDomainsCSV() {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">User Dictionary</span>
-            <span class="font-light text-gray-500 dark:text-slate-400">Each word should be on its own line.</span>
+            <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestion to last highlighted word.</p>
           </div>
-          <textarea
-            bind:value={userDict}
-            class="ml-4 min-h-[6rem] w-64 rounded border border-gray-300 bg-white p-2 text-sm text-gray-900 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-          ></textarea>
+          <Textarea readonly bind:value={buttonText} />
+          <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
+
         </div>
       </div>
 
-    </section>
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <h3 class="text-sm">User Dictionary</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
+          </div>
+          <Textarea
+            bind:value={userDict}
+          ></Textarea>
+        </div>
+      </div>
+
+    </Card>
+
+    <Card class="space-y-4">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">Weirpacks</h2>
+
+      <div class="space-y-2 flex flex-row w-full justify-between">
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          Upload one or more <code>.weirpack</code> files to add custom rule packs.
+        </p>
+        <input
+          type="file"
+          accept=".weirpack,application/zip"
+          multiple
+          disabled={weirpackBusy}
+          onchange={handleWeirpackUpload}
+          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white disabled:opacity-50"
+        />
+      </div>
+
+      {#if weirpackError}
+        <p class="text-xs text-red-700 dark:text-red-400">{weirpackError}</p>
+      {/if}
+
+      {#if weirpacks.length === 0}
+        <p class="text-sm text-gray-600 dark:text-gray-400">No Weirpacks installed.</p>
+      {:else}
+        <div class="space-y-3">
+          {#each weirpacks as weirpack}
+            <div class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3">
+              <div class="min-w-0">
+                <p class="truncate text-sm">
+                  {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
+                </p>
+                <p class="truncate text-xs text-gray-600 dark:text-gray-400">{weirpack.filename}</p>
+              </div>
+              <Button
+                size="sm"
+                color="light"
+                disabled={weirpackBusy}
+                on:click={() => removeWeirpack(weirpack.id)}
+              >
+                Remove
+              </Button>
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </Card>
 
     <!-- ── RULES ─────────────────────────────── -->
-    <section class="space-y-4">
+    <Card class="space-y-4">
       <div class="flex items-center justify-between gap-4">
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-400">Rules</h3>
+        <h2 class="text-xs uppercase tracking-wider">Rules</h2>
         <Input
           bind:value={searchQuery}
           placeholder="Search for a rule…"
           size="sm"
-          class="w-60 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
+          class="w-60"
         />
       </div>
       <div class="flex flex-wrap gap-3">
-        <Button size="sm" color="light" on:click={resetRulesToDefaults}>Reset to Default Rules</Button>
-        <Button size="sm" color="light" on:click={toggleAllRules}>
+        <Button size="sm" on:click={resetRulesToDefaults}>Reset to Default Rules</Button>
+        <Button size="sm" on:click={toggleAllRules}>
           {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
         </Button>
       </div>
@@ -256,21 +422,19 @@ async function exportEnabledDomainsCSV() {
           (lintDescriptions[key] ?? '').toLowerCase().includes(searchQueryLower) ||
           key.toLowerCase().includes(searchQueryLower)
       ) as [key, value]}
-        <div class="space-y-4 max-h-80 overflow-y-auto pr-1">
+        <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
           <!-- rule card sample -->
-          <div class="rounded-lg border border-gray-200 p-3 shadow-sm bg-white dark:border-slate-700 dark:bg-slate-900">
             <div class="flex items-start justify-between gap-4">
               <div class="space-y-0.5">
-                <p class="font-medium text-gray-900 dark:text-slate-100">{key}</p>
-                <p class="text-xs text-gray-600 dark:text-slate-400 dark:[&_code]:text-black">{@html lintDescriptions[key]}</p>
+                <h3 class="text-sm">{key}</h3>
+                <p class="text-xs">{@html lintDescriptions[key]}</p>
               </div>
               <Select
-                size="sm"
+                size="md"
                 value={configValueToString(value)}
                 on:change={(e) => {
                   lintConfig[key] = configStringToValue(e.target.value);
                 }}
-                class="max-w-[10rem] dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
               >
                 <option value="default">⚙️ Default</option>
                 <option value="enable">✅ On</option>
@@ -278,9 +442,8 @@ async function exportEnabledDomainsCSV() {
               </Select>
             </div>
           </div>
-        </div>
       {/each}
 
-    </section>
-  </main>
+    </Card>
+  </div>
 </div>

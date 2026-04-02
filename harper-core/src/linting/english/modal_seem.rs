@@ -1,5 +1,4 @@
-use std::sync::Arc;
-
+use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -13,14 +12,12 @@ struct MatchContext {
 }
 
 pub struct ModalSeem {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<MatchContext>>,
+    expr: ExprMap<MatchContext>,
 }
 
 impl ModalSeem {
     fn base_sequence() -> SequenceExpr {
-        SequenceExpr::default()
-            .then(ModalVerb::default())
+        SequenceExpr::with(ModalVerb::default())
             .t_ws()
             .t_aco("seen")
     }
@@ -28,15 +25,15 @@ impl ModalSeem {
     fn adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 
     fn adverb_then_adjective_step() -> SequenceExpr {
         SequenceExpr::default()
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adverb())
+            .then_kind_where(|kind| kind.is_adverb())
             .t_ws()
-            .then(|tok: &Token, _source: &[char]| tok.kind.is_adjective())
+            .then_kind_where(|kind| kind.is_adjective())
     }
 }
 
@@ -58,22 +55,19 @@ impl Default for ModalSeem {
             MatchContext::default(),
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
 impl ExprLinter for ModalSeem {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let context = self.map.lookup(0, matched_tokens, source)?;
+        let context = self.expr.lookup(0, matched_tokens, source)?;
 
         let seen_token = matched_tokens
             .iter()
@@ -108,9 +102,7 @@ impl ExprLinter for ModalSeem {
 #[cfg(test)]
 mod tests {
     use super::ModalSeem;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_basic_case() {
@@ -134,12 +126,10 @@ mod tests {
 
     #[test]
     fn offers_be_option() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "It may seen impossible to finish.",
             ModalSeem::default(),
             "It may be impossible to finish.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 

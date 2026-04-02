@@ -78,6 +78,8 @@ pub enum Punctuation {
     Pipe,
     /// `_`
     Underscore,
+    /// `´`
+    Acute,
 }
 
 impl Punctuation {
@@ -119,6 +121,7 @@ impl Punctuation {
             '+' => Punctuation::Plus,
             '|' => Punctuation::Pipe,
             '_' => Punctuation::Underscore,
+            '´' => Punctuation::Acute,
             _ => Punctuation::Currency(Currency::from_char(c)?),
         };
 

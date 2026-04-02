@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::Token;
 use crate::TokenKind;
 use crate::char_string::CharStringExt;
@@ -7,18 +5,17 @@ use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::WhitespacePattern;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct FreePredicate {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for FreePredicate {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let no_modifier = SequenceExpr::default()
-            .then(linking_like)
+        let no_modifier = SequenceExpr::with(linking_like)
             .t_ws()
             .then(matches_fee)
             .then_optional(WhitespacePattern)
@@ -26,8 +23,7 @@ impl Default for FreePredicate {
 
         map.insert(no_modifier, 2);
 
-        let with_adverb = SequenceExpr::default()
-            .then(linking_like)
+        let with_adverb = SequenceExpr::with(linking_like)
             .t_ws()
             .then_adverb()
             .t_ws()
@@ -37,22 +33,19 @@ impl Default for FreePredicate {
 
         map.insert(with_adverb, 4);
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
 impl ExprLinter for FreePredicate {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let offending_idx = *self.map.lookup(0, matched_tokens, source)?;
+        let offending_idx = *self.expr.lookup(0, matched_tokens, source)?;
         let offending = matched_tokens.get(offending_idx)?;
 
         Some(Lint {

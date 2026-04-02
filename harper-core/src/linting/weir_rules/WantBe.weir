@@ -1,0 +1,6 @@
+expr main (want be)
+
+let message "Did you mean `won't be` or `want to be`?"
+let description "Detects incorrect usage of `want be` and suggests `won't be` or `want to be` based on context."
+let becomes ["won't be", "want to be"]
+

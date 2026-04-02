@@ -1,5 +1,6 @@
 use crate::expr::Expr;
 use crate::expr::FixedPhrase;
+use crate::expr::LongestMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::{
@@ -8,9 +9,10 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct BackInTheDay {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
     // The trailing words that should tell us to ignore the rule.
     exceptions: Lrc<WordSet>,
 }
@@ -20,22 +22,23 @@ impl Default for BackInTheDay {
         let exceptions = Lrc::new(WordSet::new(&["before", "of", "when"]));
         let phrase = Lrc::new(FixedPhrase::from_phrase("back in the days"));
 
-        let pattern = SequenceExpr::default()
-            .then(phrase.clone())
+        let pattern = SequenceExpr::with(phrase.clone())
             .then_whitespace()
             .then(exceptions.clone())
             .or_longest(phrase);
 
         Self {
-            expr: Box::new(pattern),
+            expr: pattern,
             exceptions,
         }
     }
 }
 
 impl ExprLinter for BackInTheDay {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {

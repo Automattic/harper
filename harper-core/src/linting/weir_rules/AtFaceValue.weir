@@ -1,0 +1,8 @@
+expr main (on face value)
+
+let message "`at face value is more idiomatic and more common."
+let description "Corrects `on face value` to the more usual `at face value`."
+let kind "WordChoice"
+let becomes "at face value"
+
+test "Obviously what you want is possible and on face value it's a trivial change on our end." "Obviously what you want is possible and at face value it's a trivial change on our end."

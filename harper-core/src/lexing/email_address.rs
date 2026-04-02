@@ -4,9 +4,28 @@ use super::FoundToken;
 use super::hostname::lex_hostname;
 use crate::TokenKind;
 
+/// The maximum length of an email address, in characters.
+pub(crate) const MAX_EMAIL_LEN: usize = 254;
+
 pub fn lex_email_address(source: &[char]) -> Option<FoundToken> {
+    let source = &source[..usize::min(source.len(), MAX_EMAIL_LEN)];
+
     // Location of the @ sign
-    let (at_loc, _) = source.iter().enumerate().rev().find(|(_, c)| **c == '@')?;
+    let at_loc = {
+        let mut iter = source.iter().enumerate();
+        // Assuming we don't start lexing in the middle of a local-part, i.e. we start unquoted.
+        let mut in_quote = false;
+        // Loop until we find an acceptable '@' or a reason to early-exit.
+        loop {
+            match iter.next()? {
+                (_, '"') => in_quote = !in_quote,
+                // Unquoted space; can't be a valid local-part.
+                (_, ' ') if !in_quote => return None,
+                (i, '@') if !in_quote => break i,
+                _ => {}
+            }
+        }
+    };
 
     let local_part = &source[0..at_loc];
 
@@ -106,7 +125,7 @@ fn valid_unquoted_character(c: char) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use rand::Rng;
+    use rand::RngExt;
 
     use super::super::hostname::tests::example_domain_parts;
     use super::{lex_email_address, validate_local_part};
@@ -175,12 +194,12 @@ mod tests {
     /// situations.
     #[test]
     fn survives_random_chars() {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
 
         let mut buf = [' '; 128];
 
         for _ in 0..1 << 16 {
-            rng.try_fill(&mut buf).unwrap();
+            buf.fill_with(|| rng.random());
 
             lex_email_address(&buf);
         }

@@ -1,13 +1,13 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
-    EnglishDialect, Token,
-    expr::{Expr, FixedPhrase, SequenceExpr},
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    Dialect, Token,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct HaveTakeALook {
-    expr: Box<dyn Expr>,
-    dialect: EnglishDialect,
+    expr: SequenceExpr,
+    dialect: Dialect,
 }
 
 impl HaveTakeALook {
@@ -20,21 +20,19 @@ impl HaveTakeALook {
             _ => &["have", "had", "had", "has", "having"],
         };
 
-        let expr = SequenceExpr::default()
-            .then(WordSet::new(light_verb))
+        let expr = SequenceExpr::word_set(light_verb)
             .t_ws()
-            .then(FixedPhrase::from_phrase("a look"));
+            .then_fixed_phrase("a look");
 
-        Self {
-            expr: Box::new(expr),
-            dialect,
-        }
+        Self { expr, dialect }
     }
 }
 
 impl ExprLinter for HaveTakeALook {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -92,8 +90,8 @@ impl ExprLinter for HaveTakeALook {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
-    use crate::{EnglishDialect, linting::english::HaveTakeALook};
+    use super::HaveTakeALook;
+    use crate::{Dialect, linting::tests::assert_suggestion_result};
 
     #[test]
     fn correct_taking_a_look() {

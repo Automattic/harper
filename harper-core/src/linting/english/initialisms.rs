@@ -8,7 +8,7 @@ pub fn lint_group() -> LintGroup {
     macro_rules! add_initialism_mappings {
         ($group:expr, { $($name:expr => ($initialism:expr, $expanded:expr)),+ $(,)? }) => {
             $(
-                $group.add_expr_linter(
+                $group.add_chunk_expr_linter(
                     $name,
                     Box::new(InitialismLinter::new($initialism, $expanded)),
                 );
@@ -17,18 +17,27 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
-        "ByTheWay"           => ("btw", "by the way"),
-        "ForYourInformation" => ("fyi", "for your information"),
-        "AsSoonAsPossible"   => ("asap", "as soon as possible"),
-        "InMyOpinion"        => ("imo", "in my opinion"),
-        "InMyHumbleOpinion"  => ("imho", "in my humble opinion"),
-        "OhMyGod"            => ("omg", "oh my god"),
-        "BeRightBack"        => ("brb", "be right back"),
-        "TalkToYouLater"     => ("ttyl", "talk to you later"),
-        "NeverMind"          => ("nvm", "never mind"),
-        "ToBeHonest"         => ("tbh", "to be honest"),
-        "AsFarAsIKnow"       => ("afaik", "as far as I know"),
-        "Really"             => ("rly", "really"),
+        "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
+        "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
+        "BeRightBack"            => ("brb", &["be right back"]),
+        "ByTheWay"               => ("btw", &["by the way"]),
+        "ExplainLikeImFive"      => ("eli5", &["explain like i'm five"]),
+        "ForWhatItsWorth"        => ("fwiw", &["for what it's worth"]),
+        "ForYourInformation"     => ("fyi", &["for your information"]),
+        "IDontKnow"              => ("idk", &["I don't know"]),
+        "IfIRecallCorrectly"     => ("iirc", &["if I recall correctly"]),
+        "IfIUnderstandCorrectly" => ("iiuc", &["if I understand correctly"]),
+        "IfYouKnowYouKnow"       => ("iykyk", &["if you know, you know"]),
+        "InCaseYouMissedIt"      => ("icymi", &["in case you missed it"]),
+        "InMyHumbleOpinion"      => ("imho", &["in my humble opinion", "in my honest opinion"]),
+        "InMyOpinion"            => ("imo", &["in my opinion"]),
+        "InRealLife"             => ("irl", &["in real life"]),
+        "NeverMind"              => ("nvm", &["never mind"]),
+        "OhMyGod"                => ("omg", &["oh my god"]),
+        "PleaseTakeALook"        => ("ptal", &["please take a look"]),
+        "Really"                 => ("rly", &["really"]),
+        "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
+        "ToBeHonest"             => ("tbh", &["to be honest"]),
     });
 
     group.set_all_rules_to(Some(true));
@@ -38,7 +47,7 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     use super::lint_group;
 
@@ -139,6 +148,100 @@ mod tests {
             lint_group(),
             "As far as i know, we don't currently have an issue for it.",
             crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn corrects_eli5() {
+        assert_suggestion_result(
+            "Can you eli5 how this works?",
+            lint_group(),
+            "Can you explain like i'm five how this works?",
+        );
+    }
+
+    #[test]
+    fn corrects_fwiw() {
+        assert_suggestion_result(
+            "Fwiw, I think it's a good idea.",
+            lint_group(),
+            "For what it's worth, I think it's a good idea.",
+        );
+    }
+
+    #[test]
+    fn corrects_idk() {
+        assert_suggestion_result(
+            "Idk if I'll make it to the party.",
+            lint_group(),
+            "I don't know if I'll make it to the party.",
+        );
+    }
+
+    #[test]
+    fn corrects_iirc() {
+        assert_suggestion_result(
+            "Iirc, the event starts at 6 PM.",
+            lint_group(),
+            "If i recall correctly, the event starts at 6 PM.",
+        );
+    }
+
+    #[test]
+    fn corrects_iykyk() {
+        assert_suggestion_result(
+            "Iykyk, this place is amazing.",
+            lint_group(),
+            "If you know, you know, this place is amazing.",
+        );
+    }
+
+    #[test]
+    fn corrects_icymi() {
+        assert_suggestion_result(
+            "Icymi, the deadline is tomorrow.",
+            lint_group(),
+            "In case you missed it, the deadline is tomorrow.",
+        );
+    }
+
+    #[test]
+    fn corrects_irl() {
+        assert_suggestion_result(
+            "We should meet irl sometime.",
+            lint_group(),
+            "We should meet in real life sometime.",
+        );
+    }
+
+    #[test]
+    fn corrects_ptal() {
+        assert_suggestion_result(
+            "Ptal at the document I sent.",
+            lint_group(),
+            "Please take a look at the document I sent.",
+        );
+    }
+
+    #[test]
+    fn expands_imho_both_ways() {
+        assert_good_and_bad_suggestions(
+            "Imho, this is a good idea.",
+            lint_group(),
+            &[
+                "In my humble opinion, this is a good idea.",
+                "In my honest opinion, this is a good idea.",
+            ],
+            &["In my horrible opinion, this is a good idea."],
+        );
+    }
+
+    #[test]
+    fn corrects_iiuc() {
+        assert_suggestion_result(
+            "iiuc build caching in hol4 works at the file level",
+            lint_group(),
+            "if i understand correctly build caching in hol4 works at the file level",
         );
     }
 }

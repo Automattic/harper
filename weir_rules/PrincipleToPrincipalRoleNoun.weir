@@ -1,0 +1,36 @@
+expr determiners [my, your, his, her, our, their, the, this, that, these, those, a, an]
+expr roleNouns [job, jobs, role, roles, duty, duties, task, tasks, focus, priority, priorities, concern, concerns, objective, objectives, goal, goals, aim, aims, purpose, purposes, responsibility, responsibilities, motivation, motivations, reason, reasons]
+expr main <([(@determiners principle @roleNouns)]), principle>
+
+let message "Use `principal` for the adjective meaning `main` in this phrase."
+let description "Fixes `principle` to `principal` when it appears as an adjective before common role, goal, and priority nouns (for example, `my principle job`)."
+let kind "Grammar"
+let becomes "principal"
+let strategy "MatchCase"
+
+# True positives
+
+test "My principle job was to keep the release stable." "My principal job was to keep the release stable."
+test "Her principle concern is latency." "Her principal concern is latency."
+test "Our principle objective remains reliability." "Our principal objective remains reliability."
+test "The principle reason we paused was safety." "The principal reason we paused was safety."
+test "Their principle role is mentoring new hires." "Their principal role is mentoring new hires."
+test "This principle focus feels too narrow." "This principal focus feels too narrow."
+test "A principle goal for Q3 is retention." "A principal goal for Q3 is retention."
+test "His principle responsibility is approvals." "His principal responsibility is approvals."
+test "THEIR PRINCIPLE PRIORITY IS UPTIME." "THEIR PRINCIPAL PRIORITY IS UPTIME."
+test "My principle duties include incident response." "My principal duties include incident response."
+
+# False positives / true negatives
+
+allows "My principle was to communicate clearly."
+allows "The first principle is simplicity."
+allows "She explained the governing principle to the team."
+allows "My principal job was to keep the release stable."
+allows "The principal reason we paused was safety."
+
+# False negatives / accepted gaps
+
+allows "My very principle job was to keep the release stable."
+allows "My principle, job was to keep the release stable."
+allows "My principle day job is still support."

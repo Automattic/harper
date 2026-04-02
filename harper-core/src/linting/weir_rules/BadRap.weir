@@ -1,0 +1,8 @@
+expr main [(bed rap), (bad rep)]
+
+let message "Did you mean `bad rap`?"
+let description "Changes `bed rap` to the proper idiom `bad rap`."
+let kind "Eggcorn"
+let becomes "bad rap"
+
+test "bad rep" "bad rap"

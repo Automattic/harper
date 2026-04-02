@@ -1,21 +1,22 @@
-use crate::linting::english::{LintKind, Suggestion};
 use std::sync::Arc;
 
-use crate::expr::Expr;
-use crate::spell::{Dictionary, FstDictionary};
-use crate::{OrthFlags, Token};
+use crate::{
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    spell::{Dictionary, FstDictionary},
+    {OrthFlags, Token},
+};
 
-use super::{ExprLinter, Lint};
 pub struct OrthographicConsistency {
     dict: Arc<FstDictionary>,
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(crate::languages::LanguageFamily::English),
-            expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
+            dict: FstDictionary::curated(),
+            expr: SequenceExpr::any_word(),
         }
     }
 }
@@ -27,15 +28,36 @@ impl Default for OrthographicConsistency {
 }
 
 impl ExprLinter for OrthographicConsistency {
+    type Unit = Chunk;
+
     fn description(&self) -> &str {
         "Ensures word casing matches the dictionary's canonical orthography."
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if let Some((pre, post)) = context {
+            if let Some(pre_tok) = pre.last()
+                && pre_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+
+            if let Some(post_tok) = post.first()
+                && post_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+        }
+
         let word = &matched_tokens[0];
 
         let Some(Some(metadata)) = word.kind.as_word() else {
@@ -48,6 +70,7 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_allcaps()
             && !metadata.is_lowercase()
+            && !metadata.is_upper_camel()
             && !cur_flags.contains(OrthFlags::ALLCAPS)
         {
             return Some(Lint {
@@ -70,9 +93,12 @@ impl ExprLinter for OrthographicConsistency {
         ];
 
         if flags_to_check
-            .iter()
-            .any(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .into_iter()
+            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .count()
+            == 1
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
@@ -89,14 +115,14 @@ impl ExprLinter for OrthographicConsistency {
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
-            && canonical != chars
+            && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
                 span: word.span,
                 lint_kind: LintKind::Capitalization,
                 suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
                 message: format!(
-                    "The canonical dictionary spelling is `{}`.",
+                    "The canonical dictionary spelling is title case: `{}`.",
                     canonical.iter().collect::<String>()
                 ),
                 priority: 127,
@@ -105,6 +131,14 @@ impl ExprLinter for OrthographicConsistency {
 
         None
     }
+}
+
+/// Check if the alphabetic characters in the string differ from one another.
+/// Ignores non-alphabetic characters.
+fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
+    a.iter()
+        .zip(b.iter())
+        .any(|(a, b)| a.is_alphabetic() && b.is_alphabetic() && a != b)
 }
 
 #[cfg(test)]
@@ -374,5 +408,21 @@ mod tests {
         for sentence in sentences {
             assert_no_lints(sentence, OrthographicConsistency::default());
         }
+    }
+
+    #[test]
+    fn allows_news() {
+        assert_no_lints(
+            "This is the best part of the news broadcast.",
+            OrthographicConsistency::default(),
+        );
+    }
+
+    #[test]
+    fn allows_issue_2465() {
+        assert_no_lints(
+            "The post’s problem was not in its complexity.",
+            OrthographicConsistency::default(),
+        );
     }
 }

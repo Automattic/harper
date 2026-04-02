@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
@@ -5,26 +6,26 @@ use crate::{
 };
 
 pub struct FriendOfMe {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FriendOfMe {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["friend", "friends", "enemy", "enemies"])
-                    .then_whitespace()
-                    .t_aco("of")
-                    .t_ws()
-                    .then_object_pronoun(),
-            ),
+            expr: SequenceExpr::word_set(&["friend", "friends", "enemy", "enemies"])
+                .then_whitespace()
+                .t_aco("of")
+                .t_ws()
+                .then_object_pronoun(),
         }
     }
 }
 
 impl ExprLinter for FriendOfMe {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

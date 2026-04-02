@@ -1,19 +1,22 @@
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
+	assertLocatorIsFocused,
 	clickHarperHighlight,
 	getTextarea,
 	replaceEditorContent,
-	testBasicSuggestionTextarea,
-	testCanBlockRuleTextareaSuggestion,
-	testCanIgnoreTextareaSuggestion,
+	testBasicSuggestion,
+	testCanBlockRuleSuggestion,
+	testCanIgnoreSuggestion,
+	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/simple_textarea.html';
 
-testBasicSuggestionTextarea(TEST_PAGE_URL);
-testCanIgnoreTextareaSuggestion(TEST_PAGE_URL);
-testCanBlockRuleTextareaSuggestion(TEST_PAGE_URL);
+testBasicSuggestion(TEST_PAGE_URL, getTextarea);
+testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea);
+testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea);
 
 test('Wraps correctly', async ({ page }, testInfo) => {
 	await page.goto(TEST_PAGE_URL);
@@ -73,4 +76,6 @@ test('Can dismiss with escape key', async ({ page }) => {
 	await page.keyboard.press('Escape');
 
 	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+
+	await assertLocatorIsFocused(page, editor);
 });

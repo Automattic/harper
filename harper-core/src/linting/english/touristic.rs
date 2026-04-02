@@ -1,3 +1,4 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, LongestMatchOf, SequenceExpr},
@@ -18,7 +19,7 @@ pub enum SuggestionPreference {
 use SuggestionPreference::*;
 
 pub struct Touristic {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: LongestMatchOf,
 }
 
 // "touristy" doesn't sound natural with these words
@@ -58,17 +59,13 @@ const WHITELIST: &[&str] = &[
 
 impl Default for Touristic {
     fn default() -> Self {
-        let with_prev_and_next_word = SequenceExpr::default()
-            .then_any_word()
+        let with_prev_and_next_word = SequenceExpr::any_word()
             .t_ws()
             .t_aco("touristic")
             .t_ws()
             .then_any_word();
 
-        let with_prev_word = SequenceExpr::default()
-            .then_any_word()
-            .t_ws()
-            .t_aco("touristic");
+        let with_prev_word = SequenceExpr::any_word().t_ws().t_aco("touristic");
 
         let with_next_word = SequenceExpr::default()
             .t_aco("touristic")
@@ -82,15 +79,15 @@ impl Default for Touristic {
             Box::new(SequenceExpr::default().t_aco("touristic")),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for Touristic {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -387,19 +384,6 @@ mod tests {
                 "Application to promote touristy activities in Valencia.",
             ],
             &[],
-        );
-    }
-
-    #[test]
-    fn fixes_for_t_content() {
-        assert_good_and_bad_suggestions(
-            "Missing languages for published field in APIv2 for Touristic Content",
-            Touristic::default(),
-            &[
-                "Missing languages for published field in APIv2 for Tourist Content",
-                "Missing languages for published field in APIv2 for Tourism Content",
-            ],
-            &["Missing languages for published field in APIv2 for Touristy Content"],
         );
     }
 

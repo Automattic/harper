@@ -3,6 +3,7 @@ use harper_brill::UPOS;
 use crate::CharStringExt;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
+use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
     dict_word_metadata::Person,
@@ -11,7 +12,7 @@ use crate::{
 };
 
 pub struct NominalWants {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NominalWants {
@@ -45,20 +46,19 @@ impl Default for NominalWants {
         }
 
         let miss = WordSet::new(&["wont", "wonts", "want", "wants"]);
-        let pattern = SequenceExpr::default()
-            .then(is_applicable_pronoun)
+        let pattern = SequenceExpr::with(is_applicable_pronoun)
             .then_whitespace()
             .then(miss);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for NominalWants {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {

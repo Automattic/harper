@@ -46,10 +46,14 @@ impl DiscourseMarkers {
         );
 
         Self {
-            expr: SequenceExpr::default()
-                .then(phrases_expr)
+            expr: SequenceExpr::with(phrases_expr)
                 .t_ws()
-                .then_unless(UPOSSet::new(&[UPOS::ADJ, UPOS::ADV, UPOS::ADP])),
+                .then_unless(UPOSSet::new(&[
+                    UPOS::ADJ,
+                    UPOS::ADV,
+                    UPOS::ADP,
+                    UPOS::CCONJ,
+                ])),
         }
     }
 
@@ -306,6 +310,14 @@ mod tests {
     fn no_lint_for_mid_sentence_on_the_other_hand() {
         assert_no_lints(
             "We might postpone, on the other hand this introduces risk.",
+            DiscourseMarkers::default(),
+        );
+    }
+
+    #[test]
+    fn check_2966_is_avoided() {
+        assert_no_lints(
+            "Honestly and graciously convince someone of something.",
             DiscourseMarkers::default(),
         );
     }

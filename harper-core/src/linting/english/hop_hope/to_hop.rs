@@ -1,8 +1,8 @@
 use super::super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::linting::english::Suggestion;
-use crate::patterns::WordSet;
+use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::{CharString, CharStringExt};
 use crate::{Token, char_string::char_string};
 
@@ -12,14 +12,13 @@ pub struct ToHop {
 
 impl Default for ToHop {
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then(WordSet::new(&["hoping", "hoped", "hope"]))
+        let pattern = SequenceExpr::word_set(&["hoping", "hoped", "hope"])
             .then_whitespace()
             .t_aco("on")
             .then_whitespace()
             .then_determiner()
             .then_whitespace()
-            .then(WordSet::new(&["airplane", "plane", "bus", "call", "train"]));
+            .then_word_set(&["airplane", "plane", "bus", "call", "train"]);
 
         Self {
             expr: Box::new(pattern),
@@ -39,6 +38,8 @@ impl ToHop {
 }
 
 impl ExprLinter for ToHop {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

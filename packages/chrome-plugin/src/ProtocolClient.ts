@@ -1,7 +1,7 @@
-import type { Dialect, LintConfig } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey } from './protocol';
+import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -9,16 +9,20 @@ export default class ProtocolClient {
 		ttl: 5_000,
 	});
 
-	private static cacheKey(text: string, domain: string): string {
-		return `${domain}:${text}`;
+	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
+		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
 	}
 
-	public static async lint(text: string, domain: string): Promise<UnpackedLintGroups> {
-		const key = this.cacheKey(text, domain);
+	public static async lint(
+		text: string,
+		domain: string,
+		options?: LintOptions,
+	): Promise<UnpackedLintGroups> {
+		const key = this.cacheKey(text, domain, options);
 		let p = this.lintCache.get(key);
 		if (!p) {
 			p = chrome.runtime
-				.sendMessage({ kind: 'lint', text, domain })
+				.sendMessage({ kind: 'lint', text, domain, options })
 				.then((r) => r.lints as UnpackedLintGroups);
 			this.lintCache.set(key, p);
 		}
@@ -86,6 +90,19 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getActivationKey' })).key;
 	}
 
+	public static async getHotkey(): Promise<Hotkey> {
+		return (await chrome.runtime.sendMessage({ kind: 'getHotkey' })).hotkey;
+	}
+
+	public static async setHotkey(hotkey: Hotkey): Promise<void> {
+		const modifiers = hotkey.modifiers;
+		const hotkeyCopy = {
+			modifiers: [...modifiers], // Create a new array
+			key: hotkey.key,
+		};
+		await chrome.runtime.sendMessage({ kind: 'setHotkey', hotkey: hotkeyCopy });
+	}
+
 	public static async setActivationKey(key: ActivationKey): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setActivationKey', key });
 	}
@@ -102,6 +119,18 @@ export default class ProtocolClient {
 
 	public static async getUserDictionary(): Promise<string[]> {
 		return (await chrome.runtime.sendMessage({ kind: 'getUserDictionary' })).words;
+	}
+
+	public static async getInstalledOn(): Promise<string | null> {
+		return (await chrome.runtime.sendMessage({ kind: 'getInstalledOn' })).installedOn;
+	}
+
+	public static async getReviewed(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getReviewed' })).reviewed;
+	}
+
+	public static async setReviewed(reviewed: boolean): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setReviewed', reviewed });
 	}
 
 	public static async ignoreHash(hash: string): Promise<void> {
@@ -132,5 +161,19 @@ export default class ProtocolClient {
 		formData: Record<string, string>,
 	): Promise<boolean> {
 		return (await chrome.runtime.sendMessage({ kind: 'postFormData', url, formData })).success;
+	}
+
+	public static async getWeirpacks(): Promise<WeirpackMeta[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getWeirpacks' })).weirpacks;
+	}
+
+	public static async addWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'addWeirpack', filename, bytes: Array.from(bytes) });
+	}
+
+	public static async removeWeirpack(id: string): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'removeWeirpack', id });
 	}
 }

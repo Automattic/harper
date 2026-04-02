@@ -1,36 +1,37 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::expr_linter::find_the_only_token_matching;
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::find_the_only_token_matching;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind};
 
 pub struct ThoughThought {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThoughThought {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_kind_is_but_is_not(
-                        TokenKind::is_subject_pronoun,
-                        TokenKind::is_object_pronoun,
-                    )
-                    .t_ws()
-                    .t_aco("though")
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_subject_pronoun()),
-                        Box::new(SequenceExpr::aco("that")),
-                    ]),
-            ),
+            expr: SequenceExpr::default()
+                .then_kind_is_but_is_not(
+                    TokenKind::is_subject_pronoun,
+                    TokenKind::is_object_pronoun,
+                )
+                .t_ws()
+                .t_aco("though")
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_subject_pronoun()),
+                    Box::new(SequenceExpr::aco("that")),
+                ]),
         }
     }
 }
 
 impl ExprLinter for ThoughThought {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -59,7 +60,7 @@ impl ExprLinter for ThoughThought {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::ThoughThought;
+    use super::ThoughThought;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Textarea } from 'flowbite-svelte';
+import { Link, Textarea } from 'components';
 
 let demoText =
 	'Ths is an text box you can type in.\n\nany other site on the web will work the the same!';
@@ -8,7 +8,7 @@ let demoText =
 <div class="fixed left-0 top-0 w-screen h-screen bg-white dark:bg-black z-1000">
   <div class="max-w-6xl mx-auto shadow-md border-gray-300 dark:border-x h-full overflow-y-auto">
     <section class="px-6 sm:px-10 py-16 sm:py-24">
-      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl leading-tight mb-6">
+      <h1 class="text-center font-bold text-primary text-4xl sm:text-6xl mb-6">
         Thanks for Installing Harper!
       </h1>
 
@@ -20,18 +20,36 @@ let demoText =
         Here's How It Works:
       </h2>
 
-      <div class="grid grid-cols-3 gap-4 mb-2">
-        <div class="p-4 border rounded-xl shadow-md">
-          <p class="font-semibold py-0">1. Launch Any Site</p>
+      <div class="w-full max-w-5xl mx-auto flex flex-col gap-4 mb-6">
+        <div class="w-full p-4 sm:p-6 border rounded-xl shadow-md">
+          <h3 class="font-bold text-xl sm:text-2xl text-center py-0 mb-2">Launch Any Site</h3>
           <p>Harper plugs right into the page of any site you visit.</p>
         </div>
-        <div class="p-4 border rounded-xl shadow-md">
-          <p class="font-semibold py-0">2. Type Naturally</p>
-          <p>When Harper notices an error in your work, it'll underline it.</p>
+        <div class="w-full p-4 sm:p-6 border rounded-xl shadow-md">
+          <h3 class="font-bold text-xl sm:text-2xl text-center py-0 mb-2">Type Naturally</h3>
+          <video
+            class="mt-3 w-full rounded-lg border border-gray-200"
+            autoplay
+            muted
+            loop
+            playsinline
+            src="/videos/step-2.mp4"
+          >
+            Your browser does not support embedded videos.
+          </video>
         </div>
-        <div class="p-4 border rounded-xl shadow-md">
-          <p class="font-semibold py-0">3. Review & Accept</p>
-          <p>Tap the underline to fix the problem.</p>
+        <div class="w-full p-4 sm:p-6 border rounded-xl shadow-md">
+          <h3 class="font-bold text-xl sm:text-2xl text-center py-0 mb-2">Review & Accept</h3>
+          <video
+            class="mt-3 w-full rounded-lg border border-gray-200"
+            autoplay
+            muted
+            loop
+            playsinline
+            src="/videos/step-3.mp4"
+          >
+            Your browser does not support embedded videos.
+          </video>
         </div>
       </div>
 
@@ -63,10 +81,10 @@ let demoText =
         Harper will only enable itself automatically on sites we've tested before. 
         <br/>
         <br/>
-        If you work somewhere that isn't on our list of supported sites, you can enable the Chrome extension anyway by opening the Harper extension popup and clicking the power button.
+        If you work somewhere that isn't on our list of supported sites, you can enable the extension anyway by opening the Harper extension popup and clicking the power button.
         <br/>
         <br/>
-        Alternatively, <a href="/request-browser-support">let us know</a> which sites you want us to support and we'll add it as soon as we can.
+        Alternatively, <Link href="/request-browser-support">let us know</Link> which sites you want us to support and we'll add it as soon as we can.
       </p>
 
       <img
@@ -74,7 +92,7 @@ let demoText =
         alt="The Chrome extension’s popup page"
         class="max-w-full h-auto object-contain"
       />
-    <div>
+    </div>
 
     </section>
   </div>

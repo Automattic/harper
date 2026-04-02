@@ -1,0 +1,7 @@
+expr main (case sensitive)
+
+let message "Use the hyphenated form for `case-sensitive`."
+let description "Ensures `case-sensitive` is correctly hyphenated."
+let kind "Punctuation"
+let becomes "case-sensitive"
+

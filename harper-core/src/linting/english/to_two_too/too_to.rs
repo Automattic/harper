@@ -6,6 +6,7 @@ use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct TooTo {
     expr: Box<dyn Expr>,
@@ -27,6 +28,8 @@ impl Default for TooTo {
 }
 
 impl ExprLinter for TooTo {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

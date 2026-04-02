@@ -1,0 +1,18 @@
+expr main [(all of the sudden), (all of sudden), (all the sudden)]
+
+let message "Prefer the standard phrasing `all of a sudden`."
+let description "Guides this expression toward the standard `all of a sudden`."
+let kind "Nonstandard"
+let becomes "all of a sudden"
+
+test "On an app that has been released since December, all of the sudden around February 5th ANRs started going up." "On an app that has been released since December, all of a sudden around February 5th ANRs started going up."
+test "It happened all the sudden when the lights went out." "It happened all of a sudden when the lights went out."
+test "All the sudden the room fell quiet." "All of a sudden the room fell quiet."
+test "The music stopped, all the sudden, during the chorus." "The music stopped, all of a sudden, during the chorus."
+test "Did the power cut all the sudden?" "Did the power cut all of a sudden?"
+test "He whispered, \"all the sudden we were alone.\"" "He whispered, \"all of a sudden we were alone.\""
+test "ALL THE SUDDEN THE ROOM WENT DARK." "ALL OF A SUDDEN THE ROOM WENT DARK."
+test "They were laughing all the sudden." "They were laughing all of a sudden."
+test "It stormed all of sudden after a warm morning." "It stormed all of a sudden after a warm morning."
+allows "Their excitement and suddenness were all the suddenness she remembered."
+test "This all the sudden change surprised everyone." "This all of a sudden change surprised everyone."

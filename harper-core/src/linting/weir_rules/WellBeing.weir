@@ -1,0 +1,7 @@
+expr main (wellbeing)
+
+let message "Use the hyphenated form for `well-being`."
+let description "Ensures `well-being` is correctly hyphenated."
+let kind "Punctuation"
+let becomes "well-being"
+

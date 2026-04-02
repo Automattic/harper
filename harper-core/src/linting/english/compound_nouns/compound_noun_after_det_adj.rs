@@ -1,10 +1,13 @@
 use crate::expr::All;
 use crate::expr::Expr;
 use crate::expr::MergeableWords;
+use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
-use crate::{CharStringExt, TokenStringExt, linting::english::ExprLinter};
+use crate::patterns::InflectionOfBe;
+use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
+use crate::linting::expr_linter::Chunk;
 
 use crate::{Lrc, Token};
 
@@ -21,16 +24,14 @@ pub struct CompoundNounAfterDetAdj {
 //    that is not also an adjective
 impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
-        let context_expr = SequenceExpr::default()
-            .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_determiner()
-                    || (tok.kind.is_adjective()
-                        && *tok.span.get_content(src).to_lower() != ['g', 'o'])
-            })
-            .t_ws()
-            .then(is_content_word)
-            .t_ws()
-            .then(is_content_word);
+        let context_expr = SequenceExpr::with(|tok: &Token, src: &[char]| {
+            tok.kind.is_determiner()
+                || (tok.kind.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
+        })
+        .t_ws()
+        .then(is_content_word)
+        .t_ws()
+        .then(is_content_word.and_not(InflectionOfBe::default()));
 
         let split_expr = Lrc::new(MergeableWords::new(|meta_closed, meta_open| {
             predicate(meta_closed, meta_open)
@@ -38,12 +39,7 @@ impl Default for CompoundNounAfterDetAdj {
 
         let mut expr = All::default();
         expr.add(context_expr);
-        expr.add(
-            SequenceExpr::default()
-                .t_any()
-                .t_any()
-                .then(split_expr.clone()),
-        );
+        expr.add(SequenceExpr::anything().t_any().then(split_expr.clone()));
 
         Self {
             expr: Box::new(expr),
@@ -53,6 +49,8 @@ impl Default for CompoundNounAfterDetAdj {
 }
 
 impl ExprLinter for CompoundNounAfterDetAdj {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }

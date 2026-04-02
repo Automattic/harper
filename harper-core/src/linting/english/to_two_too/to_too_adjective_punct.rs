@@ -6,6 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct ToTooAdjectivePunct {
     expr: Box<dyn Expr>,
@@ -13,12 +14,7 @@ pub struct ToTooAdjectivePunct {
 
 impl Default for ToTooAdjectivePunct {
     fn default() -> Self {
-        let expr = SequenceExpr::default()
-            .then_optional(
-                SequenceExpr::default()
-                    .then_any_word()
-                    .then(WhitespacePattern),
-            )
+        let expr = SequenceExpr::optional(SequenceExpr::any_word().t_ws())
             .t_aco("to")
             .t_ws()
             .then_kind_is_but_is_not_except(
@@ -36,6 +32,8 @@ impl Default for ToTooAdjectivePunct {
 }
 
 impl ExprLinter for ToTooAdjectivePunct {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
         self.expr.as_ref()
     }
@@ -55,7 +53,7 @@ impl ExprLinter for ToTooAdjectivePunct {
             return None;
         }
         let adjective = &tokens[idx];
-        if !adjective.kind.is_adjective() {
+        if !adjective.kind.is_adjective() || !adjective.kind.is_positive_adjective() {
             return None;
         }
         if adjective.kind.is_preposition() {

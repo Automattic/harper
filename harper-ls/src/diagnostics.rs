@@ -5,8 +5,8 @@ use harper_core::{CharStringExt, Document};
 use harper_stats::RecordKind;
 use serde_json::Value;
 use tower_lsp_server::lsp_types::{
-    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, TextEdit, Uri,
-    WorkspaceEdit,
+    CodeAction, CodeActionKind, CodeActionOrCommand, Command, Diagnostic, NumberOrString, TextEdit,
+    Uri, WorkspaceEdit,
 };
 
 use crate::config::{CodeActionConfig, DiagnosticSeverity};
@@ -131,9 +131,9 @@ fn lint_to_diagnostic(
     Diagnostic {
         range,
         severity: Some(severity.to_lsp()),
-        code: None,
         code_description: None,
-        source: Some(format!("Harper ({})", origin_tag)),
+        source: Some("Harper".to_owned()),
+        code: Some(NumberOrString::String(origin_tag.to_string())),
         message: lint.message.clone(),
         related_information: None,
         tags: None,

@@ -1,33 +1,30 @@
+use crate::linting::expr_linter::Chunk;
 use crate::{
-    CharStringExt, Token,
+    Token, TokenKind,
     expr::SequenceExpr,
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct Theres {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Theres {
     fn default() -> Self {
-        let expr = SequenceExpr::aco("their's")
-            .t_ws()
-            .then(|tok: &Token, src: &[char]| {
-                tok.kind.is_determiner()
-                    || tok.kind.is_quantifier()
-                    || tok.span.get_content(src).eq_ignore_ascii_case_str("no")
-                    || tok.span.get_content(src).eq_ignore_ascii_case_str("enough")
-            });
+        let expr = SequenceExpr::aco("their's").t_ws().then_kind_any_or_words(
+            &[TokenKind::is_determiner, TokenKind::is_quantifier] as &[_],
+            &["no", "enough"],
+        );
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
 impl ExprLinter for Theres {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn crate::expr::Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {

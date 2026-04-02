@@ -1,6 +1,7 @@
 use std::fmt::Display;
 
 use is_macro::Is;
+use itertools::Itertools;
 use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 
@@ -60,54 +61,33 @@ impl OrdinalSuffix {
             return Some(Self::Th);
         };
 
-        match integer % 10 {
-            0 => Some(Self::Th),
-            1 => Some(Self::St),
-            2 => Some(Self::Nd),
-            3 => Some(Self::Rd),
-            4 => Some(Self::Th),
-            5 => Some(Self::Th),
-            6 => Some(Self::Th),
-            7 => Some(Self::Th),
-            8 => Some(Self::Th),
-            9 => Some(Self::Th),
-            _ => None,
-        }
+        Some(match integer % 10 {
+            0 | 4..=9 => Self::Th,
+            1 => Self::St,
+            2 => Self::Nd,
+            3 => Self::Rd,
+            _ => unreachable!(),
+        })
     }
 
-    pub fn to_chars(self) -> Vec<char> {
+    pub const fn to_chars(self) -> &'static [char] {
         match self {
-            OrdinalSuffix::Th => vec!['t', 'h'],
-            OrdinalSuffix::St => vec!['s', 't'],
-            OrdinalSuffix::Nd => vec!['n', 'd'],
-            OrdinalSuffix::Rd => vec!['r', 'd'],
+            OrdinalSuffix::Th => &['t', 'h'],
+            OrdinalSuffix::St => &['s', 't'],
+            OrdinalSuffix::Nd => &['n', 'd'],
+            OrdinalSuffix::Rd => &['r', 'd'],
         }
     }
 
-    /// Check the first several characters in a buffer to see if it matches a
-    /// number suffix.
+    /// Check the characters in a buffer to see if it matches a number suffix.
     pub fn from_chars(chars: &[char]) -> Option<Self> {
-        if chars.len() != 2 {
-            return None;
-        }
+        let lower_chars: [char; 2] = chars.iter().map(char::to_ascii_lowercase).collect_array()?;
 
-        match (chars[0], chars[1]) {
-            ('t', 'h') => Some(OrdinalSuffix::Th),
-            ('T', 'h') => Some(OrdinalSuffix::Th),
-            ('t', 'H') => Some(OrdinalSuffix::Th),
-            ('T', 'H') => Some(OrdinalSuffix::Th),
-            ('s', 't') => Some(OrdinalSuffix::St),
-            ('S', 't') => Some(OrdinalSuffix::St),
-            ('s', 'T') => Some(OrdinalSuffix::St),
-            ('S', 'T') => Some(OrdinalSuffix::St),
-            ('n', 'd') => Some(OrdinalSuffix::Nd),
-            ('N', 'd') => Some(OrdinalSuffix::Nd),
-            ('n', 'D') => Some(OrdinalSuffix::Nd),
-            ('N', 'D') => Some(OrdinalSuffix::Nd),
-            ('r', 'd') => Some(OrdinalSuffix::Rd),
-            ('R', 'd') => Some(OrdinalSuffix::Rd),
-            ('r', 'D') => Some(OrdinalSuffix::Rd),
-            ('R', 'D') => Some(OrdinalSuffix::Rd),
+        match lower_chars {
+            ['t', 'h'] => Some(OrdinalSuffix::Th),
+            ['s', 't'] => Some(OrdinalSuffix::St),
+            ['n', 'd'] => Some(OrdinalSuffix::Nd),
+            ['r', 'd'] => Some(OrdinalSuffix::Rd),
             _ => None,
         }
     }

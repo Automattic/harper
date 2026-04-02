@@ -1,0 +1,12 @@
+expr main [(all be it), (al be it), (al beit), (all beit), (allbe it)]
+
+let message "This should be written as a single word with a single `l`: `albeit`."
+let description "Corrects this expression to the standard `albeit`."
+let kind "Spelling"
+let becomes "albeit"
+
+test "If I type in the path to the upstats.html file I do get the page all be it with no data" "If I type in the path to the upstats.html file I do get the page albeit with no data"
+test "only one developer, al be it they have been very responsive to my issues" "only one developer, albeit they have been very responsive to my issues"
+test "I am one of those idiots, al beit I did it when I was young" "I am one of those idiots, albeit I did it when I was young"
+test "the red error mesages display in the console, all beit to quick to read" "the red error mesages display in the console, albeit to quick to read"
+test "i think this persons theory is worng allbe it very impresive" "i think this persons theory is worng albeit very impresive"

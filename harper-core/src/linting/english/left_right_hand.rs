@@ -1,31 +1,31 @@
+use crate::Token;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
-use crate::{Token, patterns::WordSet};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
 
 pub struct LeftRightHand {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for LeftRightHand {
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then(WordSet::new(&["left", "right"]))
+        let pattern = SequenceExpr::word_set(&["left", "right"])
             .then_whitespace()
             .t_aco("hand")
             .then_whitespace()
             .then_noun();
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
 impl ExprLinter for LeftRightHand {
+    type Unit = Chunk;
+
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
