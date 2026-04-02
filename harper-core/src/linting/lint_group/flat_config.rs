@@ -30,20 +30,20 @@ where
 /// Each child linter can be enabled, disabled, or set to a curated value.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
 #[serde(transparent)]
-pub struct LintGroupConfig {
+pub struct FlatConfig {
     /// We do this shenanigans with the [`BTreeMap`] to keep the serialized format consistent.
     #[serde(serialize_with = "ser_ordered", deserialize_with = "de_hashbrown")]
     inner: HashMap<String, Option<bool>>,
 }
 
 #[cached]
-fn curated_config() -> LintGroupConfig {
+fn curated_config() -> FlatConfig {
     // The Dictionary and Dialect do not matter, we're just after the config.
     let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
     group.config
 }
 
-impl LintGroupConfig {
+impl FlatConfig {
     /// Check if a rule exists in the configuration.
     pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
         self.inner.contains_key(key.as_ref())
@@ -77,10 +77,10 @@ impl LintGroupConfig {
         }
     }
 
-    /// Merge the contents of another [`LintGroupConfig`] into this one.
+    /// Merge the contents of another [`FlatConfig`] into this one.
     ///
     /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: LintGroupConfig) {
+    pub fn merge_from(&mut self, other: FlatConfig) {
         for (key, val) in other.inner {
             if val.is_none() {
                 continue;
@@ -102,7 +102,7 @@ impl LintGroupConfig {
     }
 }
 
-impl Hash for LintGroupConfig {
+impl Hash for FlatConfig {
     fn hash<H: Hasher>(&self, hasher: &mut H) {
         for (key, value) in &self.inner {
             hasher.write(key.as_bytes());

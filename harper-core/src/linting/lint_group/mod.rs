@@ -1,5 +1,5 @@
-mod lint_group_config;
-mod settings;
+mod flat_config;
+mod structured_config;
 
 use std::collections::BTreeMap;
 use std::hash::BuildHasher;
@@ -261,12 +261,12 @@ use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir
 use crate::spell::Dictionary;
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
-pub use lint_group_config::LintGroupConfig;
+pub use flat_config::FlatConfig;
 
 /// A struct for collecting the output of a number of individual [Linter]s.
 /// Each child can be toggled via the public, mutable `Self::config` object.
 pub struct LintGroup {
-    pub config: LintGroupConfig,
+    pub config: FlatConfig,
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
@@ -288,7 +288,7 @@ impl LintGroup {
 
     pub fn empty() -> Self {
         Self {
-            config: LintGroupConfig::default(),
+            config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
@@ -419,8 +419,8 @@ impl LintGroup {
             .collect()
     }
 
-    /// Swap out [`Self::config`] with another [`LintGroupConfig`].
-    pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
+    /// Swap out [`Self::config`] with another [`FlatConfig`].
+    pub fn with_lint_config(mut self, config: FlatConfig) -> Self {
         self.config = config;
         self
     }
@@ -855,7 +855,7 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use super::{LintGroup, LintGroupConfig};
+    use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
@@ -925,7 +925,7 @@ mod tests {
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
-        let enforcer_config = LintGroupConfig::new_curated();
+        let enforcer_config = FlatConfig::new_curated();
         let mut lints_to_enforce =
             LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
                 .with_lint_config(enforcer_config);
