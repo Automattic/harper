@@ -241,6 +241,7 @@ mod try_ones_hand_at;
 mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
+mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
