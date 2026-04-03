@@ -2368,8 +2368,8 @@
 # P  NSg/VB NSg/VB/J/P J/P ISg/D$+ NPr+ . .
 >
 #
-> “ Talking of axes         , ” said the Duchess , “ chop    off        her     head      ! ”
-# . Nᴹ/Vg/J P  NPl/V3/Am/Br . . VP/J D   NSg/VB  . . NSg/VB+ NSg/VB/J/P ISg/D$+ NPr/VB/J+ . .
+> “ Talking of axes   , ” said the Duchess , “ chop    off        her     head      ! ”
+# . Nᴹ/Vg/J P  NPl/V3 . . VP/J D   NSg/VB  . . NSg/VB+ NSg/VB/J/P ISg/D$+ NPr/VB/J+ . .
 >
 #
 > Alice glanced rather     anxiously at    the cook    , to see    if    she  meant to take   the
