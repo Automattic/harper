@@ -44,6 +44,7 @@ pub fn lint_group() -> LintGroup {
         "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
+        "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
         "Misunderstood"   => (&["miss understood"][..], "misunderstood"),
         "Misuse"          => (&["miss use"][..], "misuse"),
@@ -132,6 +133,13 @@ mod tests {
     fn mis_used() {
         let test_sentence = "The software was miss used.";
         let expected = "The software was misused.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn mean_while() {
+        let test_sentence = "Mean while, the team kept working.";
+        let expected = "Meanwhile, the team kept working.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 

@@ -23,7 +23,6 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
-use super::and_in::AndIn;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
@@ -33,7 +32,6 @@ use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
-use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -258,7 +256,9 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
+use crate::linting::{
+    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
@@ -598,6 +598,7 @@ impl LintGroup {
         ));
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
+        out.merge_from(be_adjective_confusions::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -614,7 +615,6 @@ impl LintGroup {
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule_with_dialect!(AnA, true);
-        insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
@@ -623,7 +623,6 @@ impl LintGroup {
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
