@@ -16,9 +16,19 @@ impl Token {
         Self { span, kind }
     }
 
+    /// Get the token's content as a slice of characters.
+    pub fn get_ch<'a>(&self, source: &'a [char]) -> &'a [char] {
+        self.span.get_content(source)
+    }
+
+    /// Get the token's content as a string.
+    pub fn get_str(&self, source: &[char]) -> String {
+        self.span.get_content_string(source)
+    }
+
     /// Convert to an allocated [`FatToken`].
     pub fn to_fat(&self, source: &[char]) -> FatToken {
-        let content = self.span.get_content(source).to_vec();
+        let content = self.get_ch(source).to_vec();
 
         FatToken {
             content,

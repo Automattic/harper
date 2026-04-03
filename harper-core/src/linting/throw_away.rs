@@ -29,7 +29,7 @@ impl ExprLinter for ThrowAway {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let typo = matched_tokens.first()?;
-        let original = typo.span.get_content(source);
+        let original = typo.get_ch(source);
 
         Some(Lint {
             span: typo.span,

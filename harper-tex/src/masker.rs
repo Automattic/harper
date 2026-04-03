@@ -127,9 +127,7 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
         curly_content,
     } = deconstruct_command(&source[cursor..])?;
 
-    if name.eq_ignore_ascii_case_str("begin")
-        && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
-    {
+    if name.eq_str("begin") && curly_content.is_some_and(|cc| cc.eq_str("equation")) {
         let mut diff = 1
             + name.len()
             + curly_content.unwrap().len()
@@ -141,8 +139,8 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
                 curly_content,
                 ..
             }) = deconstruct_command(&source[cursor + diff..])
-                && name.eq_ignore_ascii_case_str("end")
-                && curly_content.is_some_and(|cc| cc.eq_ignore_ascii_case_str("equation"))
+                && name.eq_str("end")
+                && curly_content.is_some_and(|cc| cc.eq_str("equation"))
             {
                 break;
             }

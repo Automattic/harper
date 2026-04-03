@@ -8,6 +8,8 @@ If you have a feature request or bug to report, please [create an issue](https:/
 
 If you're interested in making a change to the code, we have documentation on [setting up your environment](./environment) and [getting your changes merged in](./committing).
 
+If you are an autonomous agent or intend to use an agent to contribute to Harper, please read [the policy statement](https://elijahpotter.dev/articles/harper's-policy-on-agent-PRs) first.
+
 ## Other Resources
 
 - [Why you should open a draft pull request as soon as possible.](https://elijahpotter.dev/articles/never_wait)

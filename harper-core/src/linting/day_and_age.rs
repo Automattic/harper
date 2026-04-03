@@ -44,8 +44,7 @@ impl ExprLinter for DayAndAge {
             && last.kind.is_whitespace()
             && (penult.kind.is_preposition()
                 || penult
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['i', 't']]))
         {
             Some(penult.span)
@@ -68,13 +67,13 @@ impl ExprLinter for DayAndAge {
         let bads: Vec<bool> = chars
             .iter()
             .zip(good.iter())
-            .map(|(actual, &good)| !actual.eq_ignore_ascii_case_chars(good))
+            .map(|(actual, &good)| !actual.eq_ch(good))
             .collect();
 
         let good_main = !bads.iter().any(|&b| b);
 
         let (span, replacement): (Span<char>, &str) = if prep_chars
-            .is_some_and(|p| p.eq_ignore_ascii_case_chars(&['s', 'i', 'n', 'c', 'e']))
+            .is_some_and(|p| p.eq_ch(&['s', 'i', 'n', 'c', 'e']))
         {
             // "since" is a preposition but it's also a conjunction, so keep it but add "in" after it
             (main_span, "in this day and age")

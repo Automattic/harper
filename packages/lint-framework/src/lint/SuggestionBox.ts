@@ -331,6 +331,9 @@ function styleTag(lintKind: LintKind) {
       height:18px;
       display:block;
       }
+      .harper-disable-btn{
+        transform: scaleX(-1);
+      }
       .harper-controls{display:flex;align-items:center;gap:3px;}
       .harper-child-cont{
       display:flex;

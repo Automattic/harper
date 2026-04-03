@@ -45,12 +45,11 @@ impl ExprLinter for WhomSubjectOfVerb {
         if let Some((before, _)) = ctx
             && let [.., word, ws1, prep, ws2] = before
             && ws2.kind.is_whitespace()
-            && prep
-                .span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['o', 'f'])
+            && prep.get_ch(src).eq_ch(&['o', 'f'])
             && ws1.kind.is_whitespace()
-            && word.span.get_content(src).eq_ignore_ascii_case_str("many")
+            && word
+                .get_ch(src)
+                .eq_any_ignore_ascii_case_str(&["each", "many"])
         {
             return None;
         }
@@ -147,5 +146,13 @@ mod tests {
             "it's far from straightforward for new users, many of whom will likely have a lot to learn",
             WhomSubjectOfVerb::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_each_of_whom() {
+        assert_no_lints(
+            "Horace Silver (piano), Tyrone Washington (tenor sax), and Roger Humphries (drums), each of whom has a wikipedia article about him.",
+            WhomSubjectOfVerb::default(),
+        )
     }
 }
