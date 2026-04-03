@@ -15465,6 +15465,7 @@ bosom/NSJVU
 bosom's
 bosomy/J
 boss/~NSgVdGJ
+bossa nova/NwgS
 bossily/Ry
 bossiness/Ng
 bossism/Ng
@@ -22516,6 +22517,10 @@ dullness/Nmg
 dully/Ry
 duly/~RyU
 dumb/~JY^>pV
+dumb down/Vb/
+dumbed down/JV/tT
+dumbing down/NmV/6
+dumbs down/V/h
 dumbass/NSgx
 dumbbell/~NSg
 dumbfound/VSdG
@@ -23836,8 +23841,10 @@ eulogizer/Ng
 eulogy/~NSg
 eunuch/~N0gV
 eunuchs/~N9
+euphemize/VdGS!_₹
 euphemism/~NwSg
 euphemistic/JQ
+euphemize/VdGS
 euphonious/JY
 euphony/Nmg
 euphoria/Nmg
@@ -31418,6 +31425,7 @@ kerb/NgSVdG!_₹
 kerbside/N
 kerchief/NSgV
 kerfuffle/NSV
+kern/VdGS
 kernel/~NSgV
 kerosene/~Ng
 kestrel/~NgS
@@ -34412,6 +34420,7 @@ minibus/~NgS
 minicab/NSV
 minicam/NgS
 minicomputer/~NSg
+minification/Nmg
 minifloppies/N
 minify/VGdS
 minim/NSg
@@ -36040,6 +36049,7 @@ nitrous/~Ng
 nitwit/NgS
 nix/~NgSVGd
 no/~PNSgDq
+no-brainer/NgS
 no-code/JNmg
 no-op/NgS           # no operation
 nob/~NSVY
@@ -40240,6 +40250,7 @@ precognition/Ng
 precognitive/JN
 precolonial/JN
 precompile/VGdS
+precompose/VGdS
 precomputability/Ng
 precomputation/NgS
 precomputational/JY
@@ -52819,10 +52830,11 @@ whizzbang/NgS
 whizzed/VtT
 whizzes/NVh
 whizzing/V6NJ
-who/~Ig
+who/~I
 who'd/
 who'll/
 who're/
+who's/
 who've/
 whoa/V
 whodunit/NgS
@@ -53704,6 +53716,7 @@ Anki/Og             # flashcard app
 Anthropic/Og        # AI company
 AppKit/Og           # macOS framework
 Archytas/Sg         # !! please check and comment !! we also have archytas
+Arial/Og            # font
 Atlassian/Og        # Company behind Jira, Confluence, Bitbucket
 AutoGPT/Og
 Automattic/Og       # WordPress company
@@ -53801,6 +53814,7 @@ DeepMind/Og
 DeepSeek/Og         # AI company
 Deno/Og
 DevOps/Sg
+Direct3D/Og         # graphics API
 DirectX/Og
 Docker/Og
 Dockerfile/NgS
@@ -54059,6 +54073,7 @@ OpenID/Og
 OpenMetrics/Sg
 OpenPGP/Sg
 OpenSearch/Sg
+OpenType/Og         # font format
 OpenZFS/Ng          # file system
 P2/Sg
 P2P/ONg
@@ -54192,6 +54207,7 @@ Tree-sitter/Og      # parsing
 Trinitron/NOSg      # CRT
 Trocla/Sg
 TrueNAS/Sg
+TrueType/Og         # font format
 Tumblr/Og
 Typst/Sg
 UAC                 # User Account Control (Windows)
@@ -54267,6 +54283,7 @@ a11n/N
 a12s/9
 a8c/Sg
 ambitransitive/J    # verb which is both transitive and intransitive
+anti-alias/VSdG
 antimalware/Nmg
 arXiv/Og            # research archive
 archytas/Sg         # !! please check and comment !! we also have Archytas
