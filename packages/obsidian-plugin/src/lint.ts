@@ -589,6 +589,7 @@ const baseTheme = EditorView.baseTheme({
 	},
 
 	'.cm-diagnosticText code': {
+		fontFamily: 'var(--font-monospace)',
 		borderRadius: '0.25rem',
 		backgroundColor: 'var(--background-secondary) !important',
 		border:
