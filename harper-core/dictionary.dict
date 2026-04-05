@@ -3364,6 +3364,7 @@ Eur/JO
 Eurasia/Og
 Eurasian/JNgS
 Euripides/Og
+Euro-English/Nmg
 Eurocentrist/NgS
 Eurodollar/NSg
 Europa/Og
@@ -12895,7 +12896,7 @@ apparelled/VtT!@_₹
 apparelling/V6N!@_₹
 apparent/~JY
 apparition/~NSg
-appeal/~NgSVGd
+appeal/~NgSVGdB
 appealing/~JYV6NU
 appear/~VSdGrE
 appearance/~NgSEr
@@ -19490,7 +19491,7 @@ corundum/Nmg
 coruscate/VGdSn
 coruscation/Ng
 corvette/~NSg
-cos/~NgCI
+cos/~NgCI           # I=neopronoun
 cosh/NSVdGJ
 cosign/VGd>SNZ
 cosignatory/NSgJ
@@ -23075,7 +23076,7 @@ elusiveness/Ng
 elver/NSg
 elves/~N9
 elvish/J
-em/~NSI
+em/~NSI             # I=neopronoun
 em's
 emaciate/VGdSJn
 emaciation/Nmg
@@ -44955,6 +44956,7 @@ shoemaker/~NSg
 shoeshine/NSg
 shoestring/NSgJV
 shoetree/NgS
+shogi/Nmg
 shogun/~NgS
 shogunate/~Ng
 shone/~V
@@ -50754,8 +50756,10 @@ unanimity/Ng
 unanimous/~JY
 unanswered/J
 unapparent/J
+unappealable/J
 unappetising/J!_₹
 unappetizing/J
+unapplied/J
 unappreciative/J
 unary/JN
 unashamed/J
@@ -54379,6 +54383,7 @@ memecoin/NgS
 mergesort
 microframework/NgS
 multicast/JVSdG
+neopronoun/NgS
 nonmutating/J
 noosphere/Ng        # the ~ = the sphere of reason
 npm/Og              # node package manager
