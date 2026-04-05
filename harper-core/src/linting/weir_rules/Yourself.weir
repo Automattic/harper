@@ -1,0 +1,25 @@
+expr main <((your self) !-), (your self)>
+
+let message "Did you mean the closed compound `yourself`?"
+let description "Looks for incorrect spacing inside the closed compound `yourself`, while skipping hyphenated `self-...` compounds."
+let kind "Miscellaneous"
+let becomes "yourself"
+let strategy "MatchCase"
+
+test "You can look up the definition your self on Google." "You can look up the definition yourself on Google."
+test "Be honest with your self before the interview." "Be honest with yourself before the interview."
+test "Remind your self to submit the form." "Remind yourself to submit the form."
+test "Ask your self whether the premise holds." "Ask yourself whether the premise holds."
+test "YOUR SELF deserves a break." "YOURSELF deserves a break."
+test "Please pace your self during the first mile." "Please pace yourself during the first mile."
+test "Trust your self a little more here." "Trust yourself a little more here."
+test "You should forgive your self after that mistake." "You should forgive yourself after that mistake."
+
+allows "It's natural to question your self-worth after feedback like that."
+allows "We can reframe your self-care as part of recovery."
+allows "You may notice your self-doubt getting louder."
+allows "The workbook tracks your self-esteem over time."
+allows "A coach can help with your self-image."
+allows "Yourself is the right spelling there."
+allows "Keep your self - worth separate from the result."
+allows "They focused on your self - care plan first."
