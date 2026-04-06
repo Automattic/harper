@@ -164,9 +164,9 @@ function computeGoogleDocsLintBoxes(
 				lint,
 				source: editor,
 				rule,
-				applySuggestion: (sug: UnpackedSuggestion) => {
+				applySuggestion: async (sug: UnpackedSuggestion) => {
 					const replacementText = suggestionToReplacementText(sug, lint.span, source);
-					replaceGoogleDocsValue(lint.span, replacementText, source);
+					await replaceGoogleDocsValue(lint.span, replacementText, source);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
@@ -216,11 +216,11 @@ function replaceValue(
 	el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function replaceGoogleDocsValue(
+async function replaceGoogleDocsValue(
 	span: { start: number; end: number },
 	replacementText: string,
 	source: string,
-) {
+): Promise<void> {
 	try {
 		const safeStart = Math.max(0, Math.min(span.start, source.length));
 		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
@@ -242,7 +242,7 @@ function replaceGoogleDocsValue(
 		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
 			.__harperGoogleDocsBridgeClient;
 		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
-			void Promise.resolve(
+			await Promise.resolve(
 				bridgeClient.replaceText(
 					payload.start,
 					payload.end,
