@@ -1,6 +1,6 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type { BinaryModule } from './BinaryModule';
-import type { LintConfig, LintOptions } from './main';
+import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 import type Summary from './Summary';
 
 export interface WeirpackTestFailure {
@@ -44,6 +44,12 @@ export default interface Linter {
 	/** Get the default (unset) linter configuration.
 	 * This method does not affect the caller's lint configuration, nor does it return the current one. */
 	getDefaultLintConfig(): Promise<LintConfig>;
+
+	/** Get the linter's current structured configuration. */
+	getStructuredLintConfig(): Promise<StructuredLintConfig>;
+
+	/** Get the linter's current structured configuration as JSON. */
+	getStructuredLintConfigJSON(): Promise<string>;
 
 	/** Set the linter's current configuration. */
 	setLintConfig(config: LintConfig): Promise<void>;

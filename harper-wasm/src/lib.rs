@@ -6,6 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
+use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
@@ -222,6 +223,14 @@ impl Linter {
         serde_json::to_string(&self.lint_group.config).unwrap()
     }
 
+    pub fn get_structured_lint_config_as_json(&self) -> String {
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        serde_json::to_string(&human).unwrap()
+    }
+
     pub fn set_lint_config_from_json(&mut self, json: String) -> Result<(), String> {
         self.lint_group.config = serde_json::from_str(&json).map_err(|v| v.to_string())?;
         Ok(())
@@ -249,6 +258,16 @@ impl Linter {
         let serializer = Serializer::json_compatible();
 
         self.lint_group.config.serialize(&serializer).unwrap()
+    }
+
+    pub fn get_structured_lint_config_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        human.serialize(&serializer).unwrap()
     }
 
     pub fn set_lint_config_from_object(&mut self, object: JsValue) -> Result<(), String> {

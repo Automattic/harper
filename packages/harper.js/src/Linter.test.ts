@@ -262,6 +262,43 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} can get structured lint config`, async () => {
+		const linter = new Linter({ binary });
+
+		const structuredConfig = await linter.getStructuredLintConfig();
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+		expect(structuredConfig.settings.length).toBeGreaterThan(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON parses`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const structuredConfig = JSON.parse(json);
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON and object agree`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const object = await linter.getStructuredLintConfig();
+
+		expect(object).toBeTypeOf('object');
+    expect(json).toBeTypeOf('string');
+    expect(object).toEqual(JSON.parse(json))
+
+		await linter.dispose();
+	});
+
 	test(`${linterName} can generate lint context hashes`, async () => {
 		const linter = new Linter({ binary });
 		const source = 'This is an test.';
