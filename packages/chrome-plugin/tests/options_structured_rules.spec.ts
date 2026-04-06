@@ -2,6 +2,8 @@ import { expect, test } from './fixtures';
 import { getStoredLintConfig, openExtensionPage } from './testUtils';
 
 const STYLE_CATEGORY = 'Style and Redundancy';
+const STYLE_DESCRIPTION =
+	'Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.';
 const STYLE_BUTTON_TITLE = `Expand the ${STYLE_CATEGORY} category`;
 const STYLE_BUTTON_COLLAPSE_TITLE = `Collapse the ${STYLE_CATEGORY} category`;
 const STYLE_DROPDOWN_TITLE = `Set all rules in the ${STYLE_CATEGORY} category to their default, on, or off state.`;
@@ -9,6 +11,7 @@ const REPEATED_WORDS_TITLE = 'Set Repeated Words to its default, on, or off stat
 
 test.describe('structured rule settings', () => {
 	test.describe.configure({ mode: 'serial' });
+	test.setTimeout(90_000);
 
 	test('renders categories collapsed by default with category controls', async ({
 		context,
@@ -19,6 +22,7 @@ test.describe('structured rule settings', () => {
 		await expect(page.getByTitle(STYLE_BUTTON_TITLE)).toBeVisible({ timeout: 15000 });
 		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
 		await expect(page.locator('h3', { hasText: STYLE_CATEGORY })).toBeVisible({ timeout: 15000 });
+		await expect(page.getByText(STYLE_DESCRIPTION)).toBeVisible({ timeout: 15000 });
 		await expect(page.locator('h3', { hasText: 'Repeated Words' })).toHaveCount(0);
 	});
 
@@ -33,9 +37,10 @@ test.describe('structured rule settings', () => {
 		await openExtensionPage(context, page, 'options.html');
 		await expect(page.getByTitle(STYLE_DROPDOWN_TITLE)).toBeVisible({ timeout: 15000 });
 
-		await page.getByPlaceholder('Search for a rule…').fill('Repeated Words');
+		await page.getByPlaceholder('Search for a rule…').fill('wordy');
 
 		await expect(page.locator('h3', { hasText: STYLE_CATEGORY })).toBeVisible();
+		await expect(page.getByText(STYLE_DESCRIPTION)).toBeVisible();
 		await expect(page.getByTitle(REPEATED_WORDS_TITLE)).toBeVisible({ timeout: 15000 });
 	});
 

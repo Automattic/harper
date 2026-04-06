@@ -72,10 +72,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 let linter: LocalLinter;
 const WEIRPACKS_KEY = 'weirpacks';
 
-getDialect()
+const linterReady = getDialect()
 	.then(setDialect)
 	.catch((err) => console.error('Failed to initialize linter:', err));
 setInstalledOnIfMissing();
+
+/** Await this function to "wait" for the linter to boot up. */
+async function ensureLinterReady() {
+	await linterReady;
+}
 
 async function enableDefaultDomains() {
 	const defaultEnabledDomains = [
@@ -213,6 +218,8 @@ async function handleLint(
 	req: LintRequest,
 	sender?: chrome.runtime.MessageSender,
 ): Promise<LintResponse> {
+	await ensureLinterReady();
+
 	// Keep the content-script keepalive ping cheap; empty requests should not hit inheritance or linting.
 	if (req.text.length === 0) {
 		return { kind: 'lints', lints: {} };
@@ -267,14 +274,20 @@ function getParentDomain(sender?: chrome.runtime.MessageSender): string | null {
 }
 
 async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
+	await ensureLinterReady();
 	return { kind: 'getConfig', config: await getLintConfig() };
 }
 
 async function handleGetStructuredConfig(): Promise<GetStructuredConfigResponse> {
-	return { kind: 'getStructuredConfig', config: await linter.getStructuredLintConfig() };
+	await ensureLinterReady();
+	return {
+		kind: 'getStructuredConfig',
+		config: JSON.parse(await linter.getStructuredLintConfigJSON()),
+	};
 }
 
 async function handleSetConfig(req: SetConfigRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	await setLintConfig(req.config);
 
 	return createUnitResponse();
@@ -291,6 +304,7 @@ async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResp
 }
 
 async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	await linter.ignoreLintHash(BigInt(req.contextHash));
 	await setIgnoredLints(await linter.exportIgnoredLints());
 
@@ -340,10 +354,12 @@ async function handleSetDefaultStatus(req: SetDefaultStatusRequest): Promise<Uni
 async function handleGetLintDescriptions(
 	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
+	await ensureLinterReady();
 	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
 }
 
 async function handleSetUserDictionary(req: SetUserDictionaryRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	await resetDictionary();
 	await addToDictionary(req.words);
 
@@ -351,6 +367,7 @@ async function handleSetUserDictionary(req: SetUserDictionaryRequest): Promise<U
 }
 
 async function handleAddToUserDictionary(req: AddToUserDictionaryRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	await addToDictionary(req.words);
 
 	return createUnitResponse();
@@ -459,6 +476,7 @@ async function handleGetWeirpacks(): Promise<GetWeirpacksResponse> {
 }
 
 async function handleAddWeirpack(req: AddWeirpackRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	const bytes = Uint8Array.from(req.bytes);
 	const failures = await linter.loadWeirpackFromBytes(bytes);
 	if (failures !== undefined) {
@@ -494,6 +512,7 @@ async function handleAddWeirpack(req: AddWeirpackRequest): Promise<UnitResponse>
 }
 
 async function handleRemoveWeirpack(req: RemoveWeirpackRequest): Promise<UnitResponse> {
+	await ensureLinterReady();
 	const current = await getStoredWeirpacks();
 	const next = current.filter((item) => item.id !== req.id);
 	await setStoredWeirpacks(next);
@@ -563,7 +582,7 @@ async function setHotkey(hotkey: Hotkey) {
 	await chrome.storage.local.set({ hotkey: hotkey });
 }
 
-function initializeLinter(dialect: Dialect) {
+async function initializeLinter(dialect: Dialect) {
 	if (linter != null) {
 		linter.dispose();
 	}
@@ -573,16 +592,19 @@ function initializeLinter(dialect: Dialect) {
 		dialect,
 	});
 
-	getIgnoredLints().then((i) => linter.importIgnoredLints(i));
-	getUserDictionary().then((u) => linter.importWords(u));
-	getLintConfig().then((c) => linter.setLintConfig(c));
-	loadStoredWeirpacksIntoLinter();
-	linter.setup();
+	await Promise.all([
+		getIgnoredLints().then((i) => linter.importIgnoredLints(i)),
+		getUserDictionary().then((u) => linter.importWords(u)),
+		getLintConfig().then((c) => linter.setLintConfig(c)),
+		loadStoredWeirpacksIntoLinter(),
+	]);
+
+	await linter.setup();
 }
 
 async function setDialect(dialect: Dialect) {
 	await chrome.storage.local.set({ dialect });
-	initializeLinter(dialect);
+	await initializeLinter(dialect);
 }
 
 /** Format the key to be used in local storage to store domain status. */

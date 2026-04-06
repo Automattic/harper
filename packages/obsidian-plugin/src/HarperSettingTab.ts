@@ -329,7 +329,9 @@ export class HarperSettingTab extends PluginSettingTab {
 				const groupPath = [...path, setting.Group.label];
 				const groupKey = groupPath.join(' / ');
 				const groupMatches =
-					queryLower !== '' && setting.Group.label.toLowerCase().includes(queryLower);
+					queryLower !== '' &&
+					(setting.Group.label.toLowerCase().includes(queryLower) ||
+						setting.Group.description.toLowerCase().includes(queryLower));
 
 				const childEl = document.createElement('div');
 				childEl.style.marginLeft = '1.5rem';
@@ -353,6 +355,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 				this.renderGroupSetting(
 					setting.Group.label,
+					setting.Group.description,
 					groupKey,
 					groupRules,
 					containerEl,
@@ -408,6 +411,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 	private renderGroupSetting(
 		label: string,
+		description: string,
 		groupKey: string,
 		ruleNames: string[],
 		containerEl: HTMLElement,
@@ -419,6 +423,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName(label)
+			.setDesc(description)
 			.addButton((button) => {
 				this.setButtonHoverText(
 					button,

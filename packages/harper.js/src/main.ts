@@ -44,6 +44,7 @@ export interface StructuredLintOneOfManySetting {
 export interface StructuredLintGroupSetting {
 	Group: {
 		label: string;
+		description: string;
 		child: StructuredLintConfig;
 	};
 }

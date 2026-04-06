@@ -49,16 +49,14 @@ $effect(() => {
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
-ProtocolClient.getLintConfig().then((l) => {
-	lintConfig = l;
-});
-
-ProtocolClient.getStructuredLintConfig().then((config) => {
-	structuredLintConfig = config;
-});
-
-ProtocolClient.getLintDescriptions().then((d) => {
-	lintDescriptions = d;
+Promise.all([
+	ProtocolClient.getLintConfig(),
+	ProtocolClient.getStructuredLintConfig(),
+	ProtocolClient.getLintDescriptions(),
+]).then(([nextLintConfig, nextStructuredConfig, nextLintDescriptions]) => {
+	lintConfig = nextLintConfig;
+	structuredLintConfig = nextStructuredConfig;
+	lintDescriptions = nextLintDescriptions;
 });
 
 ProtocolClient.getDialect().then((d) => {
@@ -74,7 +72,6 @@ ProtocolClient.getActivationKey().then((d) => {
 });
 
 ProtocolClient.getHotkey().then((d) => {
-	// Ensure we have a plain object, not a Proxy
 	hotkey = {
 		modifiers: [...d.modifiers],
 		key: d.key,
@@ -168,6 +165,7 @@ function buildDisplaySettings(
 	settings.push({
 		Group: {
 			label: 'Additional Rules',
+			description: 'Rules present in the flat config but not yet assigned to a curated category.',
 			child: {
 				settings: extraRuleNames.map(
 					(name) =>
@@ -186,7 +184,11 @@ function buildDisplaySettings(
 	return settings;
 }
 
-let displayStructuredSettings = $derived(buildDisplaySettings(structuredLintConfig, lintConfig));
+let displayStructuredSettings: StructuredLintSetting[] = $state([]);
+
+$effect(() => {
+	displayStructuredSettings = buildDisplaySettings(structuredLintConfig, lintConfig);
+});
 
 function updateLintConfig(nextConfig: LintConfig) {
 	lintConfig = nextConfig;
@@ -474,15 +476,17 @@ async function removeWeirpack(id: string) {
       </div>
 
 		<div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
-			<StructuredRuleSettings
-				settings={displayStructuredSettings}
-				{lintConfig}
-				{lintDescriptions}
-				{searchQueryLower}
-				{expandedGroups}
-				handleLintConfigChange={updateLintConfig}
-				handleToggleGroup={toggleGroup}
-			/>
+			{#key displayStructuredSettings.length}
+				<StructuredRuleSettings
+					settings={displayStructuredSettings}
+					{lintConfig}
+					{lintDescriptions}
+					{searchQueryLower}
+					{expandedGroups}
+					handleLintConfigChange={updateLintConfig}
+					handleToggleGroup={toggleGroup}
+				/>
+			{/key}
 		</div>
 
 	    </Card>

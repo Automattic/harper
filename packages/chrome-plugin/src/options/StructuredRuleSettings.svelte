@@ -13,6 +13,7 @@ type RenderNode = GroupRenderNode | BoolRenderNode | OneOfManyRenderNode;
 type GroupRenderNode = {
 	kind: 'group';
 	label: string;
+	description: string;
 	groupKey: string;
 	indent: number;
 	ruleNames: string[];
@@ -255,7 +256,9 @@ function buildRenderNodes(
 
 		const groupKey = [...path, setting.Group.label].join(' / ');
 		const groupMatches =
-			searchQueryLower !== '' && setting.Group.label.toLowerCase().includes(searchQueryLower);
+			searchQueryLower !== '' &&
+			(setting.Group.label.toLowerCase().includes(searchQueryLower) ||
+				setting.Group.description.toLowerCase().includes(searchQueryLower));
 		const child = buildRenderNodes(
 			setting.Group.child.settings,
 			[...path, setting.Group.label],
@@ -272,6 +275,7 @@ function buildRenderNodes(
 		out.push({
 			kind: 'group',
 			label: setting.Group.label,
+			description: setting.Group.description,
 			groupKey,
 			indent: currentIndent,
 			ruleNames: child.ruleNames,
@@ -305,6 +309,7 @@ $: {
 					<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
 						<div class="space-y-0.5">
 							<h3 class="text-sm">{node.label}</h3>
+							<p class="text-xs text-gray-600 dark:text-gray-400">{node.description}</p>
 							<p class="text-xs text-gray-600 dark:text-gray-400">{node.ruleCount} rules</p>
 						</div>
 						<div class="flex items-center gap-2">

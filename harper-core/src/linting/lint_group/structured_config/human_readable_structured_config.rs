@@ -17,7 +17,7 @@ impl HumanReadableStructuredConfig {
 
     /// Convert this human-readable structure into a runtime [`StructuredConfig`].
     ///
-    /// Human-facing metadata such as labels and descriptions are ignored during conversion.
+    /// Human-facing metadata is preserved where the runtime structure supports it.
     pub fn to_structured_config(&self) -> Option<StructuredConfig> {
         if !self.validate() {
             return None;
@@ -64,6 +64,7 @@ pub enum HumanReadableSetting {
     },
     Group {
         label: Option<String>,
+        description: String,
         child: HumanReadableStructuredConfig,
     },
 }
@@ -114,8 +115,13 @@ impl HumanReadableSetting {
                     choice,
                 })
             }
-            Self::Group { label, child } => Some(Setting::Group {
+            Self::Group {
+                label,
+                description,
+                child,
+            } => Some(Setting::Group {
                 label: label.clone().unwrap_or_default(),
+                description: description.clone(),
                 child: child.to_structured_config()?,
             }),
         }
@@ -137,8 +143,13 @@ impl HumanReadableSetting {
                 name: choice.map(|choice| names[choice].clone()),
                 labels: (labels != names).then(|| labels.clone()),
             },
-            Setting::Group { label, child } => Self::Group {
+            Setting::Group {
+                label,
+                description,
+                child,
+            } => Self::Group {
                 label: Some(label.clone()),
+                description: description.clone(),
                 child: HumanReadableStructuredConfig::from_structured_config(child),
             },
         }
@@ -148,8 +159,8 @@ impl HumanReadableSetting {
 #[cfg(test)]
 mod tests {
     use super::{HumanReadableSetting, HumanReadableStructuredConfig};
-    use crate::linting::FlatConfig;
     use crate::linting::lint_group::structured_config::{Setting, StructuredConfig};
+    use crate::linting::FlatConfig;
 
     fn collect_rule_names(config: &HumanReadableStructuredConfig) -> Vec<&str> {
         let mut out = Vec::new();
@@ -183,6 +194,7 @@ mod tests {
                 },
                 HumanReadableSetting::Group {
                     label: Some("Group D".to_owned()),
+                    description: "Description D".to_owned(),
                     child: HumanReadableStructuredConfig {
                         settings: vec![HumanReadableSetting::Bool {
                             name: "D".to_owned(),
@@ -216,6 +228,7 @@ mod tests {
                 },
                 HumanReadableSetting::Group {
                     label: Some("Group D".to_owned()),
+                    description: "Description D".to_owned(),
                     child: HumanReadableStructuredConfig {
                         settings: vec![HumanReadableSetting::Bool {
                             name: "D".to_owned(),
@@ -244,6 +257,7 @@ mod tests {
                     },
                     Setting::Group {
                         label: "Group D".to_owned(),
+                        description: "Description D".to_owned(),
                         child: StructuredConfig {
                             settings: vec![Setting::Bool {
                                 name: "D".to_owned(),
@@ -271,6 +285,7 @@ mod tests {
                 },
                 Setting::Group {
                     label: "Group D".to_owned(),
+                    description: "Description D".to_owned(),
                     child: StructuredConfig {
                         settings: vec![Setting::Bool {
                             name: "D".to_owned(),
@@ -299,6 +314,7 @@ mod tests {
                     },
                     HumanReadableSetting::Group {
                         label: Some("Group D".to_owned()),
+                        description: "Description D".to_owned(),
                         child: HumanReadableStructuredConfig {
                             settings: vec![HumanReadableSetting::Bool {
                                 name: "D".to_owned(),

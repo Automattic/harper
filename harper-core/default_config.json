@@ -3,6 +3,7 @@
 		{
 			"Group": {
 				"label": "Proper Nouns",
+				"description": "Checks names of places, organizations, products, and other proper nouns that should keep their standard capitalization.",
 				"child": {
 					"settings": [
 						{
@@ -194,6 +195,7 @@
 		{
 			"Group": {
 				"label": "Initialisms",
+				"description": "Covers abbreviated forms and initialisms that should use the expected letter casing or punctuation.",
 				"child": {
 					"settings": [
 						{
@@ -350,6 +352,7 @@
 		{
 			"Group": {
 				"label": "Closed Compounds",
+				"description": "Flags compound words that should be written as a single closed form instead of split apart.",
 				"child": {
 					"settings": [
 						{
@@ -772,6 +775,7 @@
 		{
 			"Group": {
 				"label": "Phrase Corrections",
+				"description": "Collects common phrase-level fixes where a standard expression is preferred over a mistaken variant.",
 				"child": {
 					"settings": [
 						{
@@ -1243,6 +1247,7 @@
 		{
 			"Group": {
 				"label": "Capitalization and Case",
+				"description": "Catches capitalization and casing issues in titles, sentences, brands, and other case-sensitive text.",
 				"child": {
 					"settings": [
 						{
@@ -1329,6 +1334,7 @@
 		{
 			"Group": {
 				"label": "Punctuation and Spacing",
+				"description": "Handles punctuation marks, apostrophes, quotation marks, commas, and spacing conventions.",
 				"child": {
 					"settings": [
 						{
@@ -1590,6 +1596,7 @@
 		{
 			"Group": {
 				"label": "Numbers and Units",
+				"description": "Checks how numbers, dates, times, decades, and measurement units are written.",
 				"child": {
 					"settings": [
 						{
@@ -1781,6 +1788,7 @@
 		{
 			"Group": {
 				"label": "Pronouns and Possession",
+				"description": "Focuses on pronouns, contractions, possessives, and related agreement problems.",
 				"child": {
 					"settings": [
 						{
@@ -2042,6 +2050,7 @@
 		{
 			"Group": {
 				"label": "Compounds and Hyphenation",
+				"description": "Covers hyphenation and multi-word compounds that should be open, closed, or hyphenated.",
 				"child": {
 					"settings": [
 						{
@@ -2170,6 +2179,7 @@
 		{
 			"Group": {
 				"label": "Spelling and Orthography",
+				"description": "Flags misspellings, orthographic inconsistencies, and word forms that are spelled the wrong way.",
 				"child": {
 					"settings": [
 						{
@@ -2571,6 +2581,7 @@
 		{
 			"Group": {
 				"label": "Style and Redundancy",
+				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
 						{
@@ -2888,6 +2899,7 @@
 		{
 			"Group": {
 				"label": "Grammar and Agreement",
+				"description": "Catches grammar issues involving agreement, articles, prepositions, verb forms, and sentence structure.",
 				"child": {
 					"settings": [
 						{
@@ -3506,6 +3518,7 @@
 		{
 			"Group": {
 				"label": "Word Choice and Usage",
+				"description": "Suggests more standard or idiomatic wording when a phrase is technically understandable but poorly chosen.",
 				"child": {
 					"settings": [
 						{
@@ -4656,6 +4669,7 @@
 		{
 			"Group": {
 				"label": "Regionalisms and Dialect",
+				"description": "Groups dialect-sensitive wording and regional usage that may not fit the selected audience.",
 				"child": {
 					"settings": [
 						{
@@ -4679,6 +4693,7 @@
 		{
 			"Group": {
 				"label": "Miscellaneous",
+				"description": "A catch-all for rules that do not fit neatly into the other categories but are still useful to surface.",
 				"child": {
 					"settings": [
 						{

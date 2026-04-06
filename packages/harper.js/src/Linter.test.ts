@@ -266,10 +266,17 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const structuredConfig = await linter.getStructuredLintConfig();
+		const firstGroup = structuredConfig.settings.find((setting) => 'Group' in setting);
 
 		expect(structuredConfig).toBeTypeOf('object');
 		expect(structuredConfig.settings).toBeTypeOf('object');
 		expect(structuredConfig.settings.length).toBeGreaterThan(0);
+		expect(firstGroup && 'Group' in firstGroup).toBe(true);
+		if (!firstGroup || !('Group' in firstGroup)) {
+			throw new Error('Expected at least one group in the structured config.');
+		}
+		expect(firstGroup.Group.description).toBeTypeOf('string');
+		expect(firstGroup.Group.description.length).toBeGreaterThan(0);
 
 		await linter.dispose();
 	});
