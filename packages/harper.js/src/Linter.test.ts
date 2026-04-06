@@ -293,8 +293,8 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const object = await linter.getStructuredLintConfig();
 
 		expect(object).toBeTypeOf('object');
-    expect(json).toBeTypeOf('string');
-    expect(object).toEqual(JSON.parse(json))
+		expect(json).toBeTypeOf('string');
+		expect(object).toEqual(JSON.parse(json));
 
 		await linter.dispose();
 	});

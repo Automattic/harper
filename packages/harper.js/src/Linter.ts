@@ -45,10 +45,14 @@ export default interface Linter {
 	 * This method does not affect the caller's lint configuration, nor does it return the current one. */
 	getDefaultLintConfig(): Promise<LintConfig>;
 
-	/** Get the linter's current structured configuration. */
+	/** Get the linter's current structured configuration.
+	 * This is intended for organizing and rendering settings UIs.
+	 * Persisted config changes must still be applied through the flat `setLintConfig` API. */
 	getStructuredLintConfig(): Promise<StructuredLintConfig>;
 
-	/** Get the linter's current structured configuration as JSON. */
+	/** Get the linter's current structured configuration as JSON.
+	 * This is a presentation-oriented view over the underlying flat config.
+	 * Persisted config changes must still be applied through the flat `setLintConfig` API. */
 	getStructuredLintConfigJSON(): Promise<string>;
 
 	/** Set the linter's current configuration. */
