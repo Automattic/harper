@@ -28,6 +28,7 @@ import {
 	type GetLintDescriptionsResponse,
 	type GetReviewedRequest,
 	type GetReviewedResponse,
+	type GetStructuredConfigResponse,
 	type GetUserDictionaryResponse,
 	type GetWeirpacksResponse,
 	type Hotkey,
@@ -149,6 +150,8 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleLint(message, sender);
 		case 'getConfig':
 			return handleGetConfig(message);
+		case 'getStructuredConfig':
+			return handleGetStructuredConfig();
 		case 'setConfig':
 			return handleSetConfig(message);
 		case 'getLintDescriptions':
@@ -265,6 +268,10 @@ function getParentDomain(sender?: chrome.runtime.MessageSender): string | null {
 
 async function handleGetConfig(_req: GetConfigRequest): Promise<GetConfigResponse> {
 	return { kind: 'getConfig', config: await getLintConfig() };
+}
+
+async function handleGetStructuredConfig(): Promise<GetStructuredConfigResponse> {
+	return { kind: 'getStructuredConfig', config: await linter.getStructuredLintConfig() };
 }
 
 async function handleSetConfig(req: SetConfigRequest): Promise<UnitResponse> {
