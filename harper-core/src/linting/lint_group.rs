@@ -69,6 +69,7 @@ use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
+use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
@@ -661,6 +662,7 @@ impl LintGroup {
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
+        insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FascinatedBy, true);
