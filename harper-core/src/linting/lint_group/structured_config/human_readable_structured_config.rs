@@ -62,7 +62,10 @@ pub enum HumanReadableSetting {
         #[serde(default, skip_serializing_if = "Option::is_none")]
         labels: Option<Vec<String>>,
     },
-    Group(HumanReadableStructuredConfig),
+    Group {
+        label: Option<String>,
+        child: HumanReadableStructuredConfig,
+    },
 }
 
 impl HumanReadableSetting {
@@ -84,7 +87,7 @@ impl HumanReadableSetting {
                         .as_ref()
                         .is_none_or(|selected| names.iter().any(|name| name == selected))
             }
-            Self::Group(group) => group.validate(),
+            Self::Group { child, .. } => child.validate(),
         }
     }
 
@@ -111,7 +114,10 @@ impl HumanReadableSetting {
                     choice,
                 })
             }
-            Self::Group(group) => Some(Setting::Group(group.to_structured_config()?)),
+            Self::Group { label, child } => Some(Setting::Group {
+                label: label.clone().unwrap_or_default(),
+                child: child.to_structured_config()?,
+            }),
         }
     }
 
@@ -131,9 +137,10 @@ impl HumanReadableSetting {
                 name: choice.map(|choice| names[choice].clone()),
                 labels: (labels != names).then(|| labels.clone()),
             },
-            Setting::Group(group) => {
-                Self::Group(HumanReadableStructuredConfig::from_structured_config(group))
-            }
+            Setting::Group { label, child } => Self::Group {
+                label: Some(label.clone()),
+                child: HumanReadableStructuredConfig::from_structured_config(child),
+            },
         }
     }
 }
@@ -141,8 +148,8 @@ impl HumanReadableSetting {
 #[cfg(test)]
 mod tests {
     use super::{HumanReadableSetting, HumanReadableStructuredConfig};
-    use crate::linting::FlatConfig;
     use crate::linting::lint_group::structured_config::{Setting, StructuredConfig};
+    use crate::linting::FlatConfig;
 
     fn collect_rule_names(config: &HumanReadableStructuredConfig) -> Vec<&str> {
         let mut out = Vec::new();
@@ -153,7 +160,7 @@ mod tests {
                 HumanReadableSetting::OneOfMany { names, .. } => {
                     out.extend(names.iter().map(|name| name.as_str()));
                 }
-                HumanReadableSetting::Group(group) => out.extend(collect_rule_names(group)),
+                HumanReadableSetting::Group { child, .. } => out.extend(collect_rule_names(child)),
             }
         }
 
@@ -174,13 +181,16 @@ mod tests {
                     name: Some("C".to_owned()),
                     labels: Some(vec!["Rule B".to_owned(), "Rule C".to_owned()]),
                 },
-                HumanReadableSetting::Group(HumanReadableStructuredConfig {
-                    settings: vec![HumanReadableSetting::Bool {
-                        name: "D".to_owned(),
-                        state: false,
-                        label: None,
-                    }],
-                }),
+                HumanReadableSetting::Group {
+                    label: Some("Group D".to_owned()),
+                    child: HumanReadableStructuredConfig {
+                        settings: vec![HumanReadableSetting::Bool {
+                            name: "D".to_owned(),
+                            state: false,
+                            label: None,
+                        }],
+                    },
+                },
             ],
         };
 
@@ -204,13 +214,16 @@ mod tests {
                     name: Some("C".to_owned()),
                     labels: Some(vec!["Rule B".to_owned(), "Rule C".to_owned()]),
                 },
-                HumanReadableSetting::Group(HumanReadableStructuredConfig {
-                    settings: vec![HumanReadableSetting::Bool {
-                        name: "D".to_owned(),
-                        state: false,
-                        label: None,
-                    }],
-                }),
+                HumanReadableSetting::Group {
+                    label: Some("Group D".to_owned()),
+                    child: HumanReadableStructuredConfig {
+                        settings: vec![HumanReadableSetting::Bool {
+                            name: "D".to_owned(),
+                            state: false,
+                            label: None,
+                        }],
+                    },
+                },
             ],
         };
 
@@ -229,12 +242,15 @@ mod tests {
                         labels: vec!["Rule B".to_owned(), "Rule C".to_owned()],
                         choice: Some(1),
                     },
-                    Setting::Group(StructuredConfig {
-                        settings: vec![Setting::Bool {
-                            name: "D".to_owned(),
-                            state: false,
-                        }],
-                    }),
+                    Setting::Group {
+                        label: "Group D".to_owned(),
+                        child: StructuredConfig {
+                            settings: vec![Setting::Bool {
+                                name: "D".to_owned(),
+                                state: false,
+                            }],
+                        },
+                    },
                 ],
             }
         );
@@ -253,12 +269,15 @@ mod tests {
                     labels: vec!["Rule B".to_owned(), "Rule C".to_owned()],
                     choice: Some(1),
                 },
-                Setting::Group(StructuredConfig {
-                    settings: vec![Setting::Bool {
-                        name: "D".to_owned(),
-                        state: false,
-                    }],
-                }),
+                Setting::Group {
+                    label: "Group D".to_owned(),
+                    child: StructuredConfig {
+                        settings: vec![Setting::Bool {
+                            name: "D".to_owned(),
+                            state: false,
+                        }],
+                    },
+                },
             ],
         };
 
@@ -278,13 +297,16 @@ mod tests {
                         name: Some("C".to_owned()),
                         labels: Some(vec!["Rule B".to_owned(), "Rule C".to_owned()]),
                     },
-                    HumanReadableSetting::Group(HumanReadableStructuredConfig {
-                        settings: vec![HumanReadableSetting::Bool {
-                            name: "D".to_owned(),
-                            state: false,
-                            label: None,
-                        }],
-                    }),
+                    HumanReadableSetting::Group {
+                        label: Some("Group D".to_owned()),
+                        child: HumanReadableStructuredConfig {
+                            settings: vec![HumanReadableSetting::Bool {
+                                name: "D".to_owned(),
+                                state: false,
+                                label: None,
+                            }],
+                        },
+                    },
                 ],
             }
         );
@@ -342,18 +364,14 @@ mod tests {
 
     #[test]
     fn default_config_matches_curated_flat_config() {
-        let settings: HumanReadableStructuredConfig = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/default_config.json"
-        )))
-        .unwrap();
-        let structured = settings.to_structured_config().unwrap();
-        let actual = structured.to_flat_config().unwrap();
+        let settings = StructuredConfig::curated();
+        let actual = settings.to_flat_config().unwrap();
         let curated = FlatConfig::new_curated();
 
         assert!(settings.validate());
 
-        let rule_names = collect_rule_names(&settings);
+        let human = HumanReadableStructuredConfig::from_structured_config(&settings);
+        let rule_names = collect_rule_names(&human);
         assert_eq!(rule_names.len(), 696);
 
         for rule_name in rule_names {

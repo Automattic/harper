@@ -1,6 +1,7 @@
 mod human_readable_structured_config;
 
 use super::FlatConfig;
+use serde_json;
 
 pub use human_readable_structured_config::{HumanReadableSetting, HumanReadableStructuredConfig};
 
@@ -16,6 +17,17 @@ pub struct StructuredConfig {
 }
 
 impl StructuredConfig {
+    /// Build the curated structured config, including labels.
+    pub fn curated() -> Self {
+        let human: HumanReadableStructuredConfig = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/default_config.json"
+        )))
+        .unwrap();
+
+        human.to_structured_config().unwrap()
+    }
+
     /// Validate that the structure of the settings is valid.
     /// Returns `true` if it is valid and `false` otherwise.
     pub fn validate(&self) -> bool {
@@ -39,8 +51,8 @@ impl StructuredConfig {
                         config.set_rule_enabled(&names[*choice], true);
                     }
                 }
-                Setting::Group(group) => {
-                    let flat = group.to_flat_config()?;
+                Setting::Group { child, .. } => {
+                    let flat = child.to_flat_config()?;
                     config.merge_from(flat);
                 }
             }
@@ -58,7 +70,7 @@ impl StructuredConfig {
                 Setting::OneOfMany { names, choice, .. } => {
                     *choice = names.iter().position(|n| config.is_rule_enabled(n))
                 }
-                Setting::Group(group) => group.copy_from_flat_config(config),
+                Setting::Group { child, .. } => child.copy_from_flat_config(config),
             }
         }
     }
@@ -79,7 +91,10 @@ pub enum Setting {
         labels: Vec<String>,
         choice: Option<usize>,
     },
-    Group(StructuredConfig),
+    Group {
+        label: String,
+        child: StructuredConfig,
+    },
 }
 
 impl Setting {
@@ -93,7 +108,7 @@ impl Setting {
                 labels,
                 choice,
             } => labels.len() == names.len() && choice.is_none_or(|v| v < names.len()),
-            Setting::Group(config) => config.validate(),
+            Setting::Group { child, .. } => child.validate(),
         }
     }
 }
@@ -106,72 +121,60 @@ mod tests {
 
     #[test]
     fn validates_bool_true() {
-        assert!(
-            Setting::Bool {
-                name: "A".to_owned(),
-                state: true,
-            }
-            .validate()
-        )
+        assert!(Setting::Bool {
+            name: "A".to_owned(),
+            state: true,
+        }
+        .validate())
     }
 
     #[test]
     fn validates_bool_false() {
-        assert!(
-            Setting::Bool {
-                name: "A".to_owned(),
-                state: false,
-            }
-            .validate()
-        )
+        assert!(Setting::Bool {
+            name: "A".to_owned(),
+            state: false,
+        }
+        .validate())
     }
 
     #[test]
     fn validates_valid_one_of_many_some() {
-        assert!(
-            Setting::OneOfMany {
-                names: vec!["A".to_owned(), "B".to_owned()],
-                labels: vec!["C".to_owned(), "D".to_owned()],
-                choice: Some(1)
-            }
-            .validate()
-        )
+        assert!(Setting::OneOfMany {
+            names: vec!["A".to_owned(), "B".to_owned()],
+            labels: vec!["C".to_owned(), "D".to_owned()],
+            choice: Some(1)
+        }
+        .validate())
     }
 
     #[test]
     fn validates_valid_one_of_many_none() {
-        assert!(
-            Setting::OneOfMany {
-                names: vec!["A".to_owned(), "B".to_owned()],
-                labels: vec!["C".to_owned(), "D".to_owned()],
-                choice: None
-            }
-            .validate()
-        )
+        assert!(Setting::OneOfMany {
+            names: vec!["A".to_owned(), "B".to_owned()],
+            labels: vec!["C".to_owned(), "D".to_owned()],
+            choice: None
+        }
+        .validate())
     }
 
     #[test]
     fn validates_invalid_one_of_many_some_too_large() {
-        assert!(
-            !Setting::OneOfMany {
-                names: vec!["A".to_owned(), "B".to_owned()],
-                labels: vec!["C".to_owned(), "D".to_owned()],
-                choice: Some(2)
-            }
-            .validate()
-        )
+        assert!(!Setting::OneOfMany {
+            names: vec!["A".to_owned(), "B".to_owned()],
+            labels: vec!["C".to_owned(), "D".to_owned()],
+            choice: Some(2)
+        }
+        .validate())
     }
 
     #[test]
     fn validates_invalid_one_of_many_inconsistent_len() {
-        assert!(
-            !Setting::OneOfMany {
-                names: vec!["A".to_owned(), "B".to_owned()],
-                labels: vec!["C".to_owned(), "D".to_owned(), "E".to_owned()],
-                choice: None
-            }
-            .validate()
-        )
+        assert!(!Setting::OneOfMany {
+            names: vec!["A".to_owned(), "B".to_owned()],
+            labels: vec!["C".to_owned(), "D".to_owned(), "E".to_owned()],
+            choice: None
+        }
+        .validate())
     }
 
     #[test]
@@ -244,5 +247,24 @@ mod tests {
                 }],
             }
         )
+    }
+
+    #[test]
+    fn validates_group_with_label() {
+        assert!(Setting::Group {
+            label: "Group".to_owned(),
+            child: StructuredConfig {
+                settings: vec![Setting::Bool {
+                    name: "A".to_owned(),
+                    state: true,
+                }],
+            },
+        }
+        .validate());
+    }
+
+    #[test]
+    fn curated_is_valid() {
+        assert!(StructuredConfig::curated().validate());
     }
 }
