@@ -32,7 +32,6 @@ use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
-use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -70,6 +69,7 @@ use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
+use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
@@ -257,7 +257,9 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
+use crate::linting::{
+    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
@@ -597,6 +599,7 @@ impl LintGroup {
         ));
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
+        out.merge_from(be_adjective_confusions::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -621,7 +624,6 @@ impl LintGroup {
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
@@ -659,6 +661,7 @@ impl LintGroup {
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
+        insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FascinatedBy, true);
