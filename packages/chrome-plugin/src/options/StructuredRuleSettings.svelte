@@ -1,13 +1,49 @@
 <script lang="ts">
-import { Button, Select } from 'components';
+import { Select } from 'components';
 import type { LintConfig, StructuredLintSetting } from 'harper.js';
+import { startCase } from 'lodash-es';
 
 type StructuredOneOfManySetting = Extract<
 	StructuredLintSetting,
 	{ OneOfMany: unknown }
 >['OneOfMany'];
 
+type RenderNode = GroupRenderNode | BoolRenderNode | OneOfManyRenderNode;
+
+type GroupRenderNode = {
+	kind: 'group';
+	label: string;
+	groupKey: string;
+	indent: number;
+	ruleNames: string[];
+	ruleCount: number;
+	state: 'default' | 'enable' | 'disable' | 'mixed';
+	expanded: boolean;
+	childNodes: RenderNode[];
+};
+
+type BoolRenderNode = {
+	kind: 'bool';
+	name: string;
+	label: string;
+	description: string;
+	title: string;
+	value: string;
+	indent: number;
+};
+
+type OneOfManyRenderNode = {
+	kind: 'oneOfMany';
+	name: string;
+	title: string;
+	options: { value: string; label: string }[];
+	value: string;
+	setting: StructuredOneOfManySetting;
+	indent: number;
+};
+
 export let settings: StructuredLintSetting[] = [];
+export let nodes: RenderNode[] | undefined = undefined;
 export let lintConfig: LintConfig = {};
 export let lintDescriptions: Record<string, string> = {};
 export let searchQueryLower = '';
@@ -15,8 +51,8 @@ export let expandedGroups: Record<string, boolean> = {};
 export let groupPath: string[] = [];
 export let indent = 0;
 export let forceShow = false;
-export let onLintConfigChange: (next: LintConfig) => void;
-export let onToggleGroup: (groupKey: string) => void;
+export let handleLintConfigChange: (next: LintConfig) => void;
+export let handleToggleGroup: (groupKey: string) => void;
 
 function configValueToString(value: boolean | undefined | null): string {
 	switch (value) {
@@ -47,15 +83,20 @@ function rowStyle(indent: number): string | undefined {
 	return indent > 0 ? `padding-left: ${indent * 1.5}rem` : undefined;
 }
 
+function displayRuleLabel(ruleName: string, label?: string | null): string {
+	return label ?? startCase(ruleName);
+}
+
 function matchesRule(ruleName: string, label?: string | null, forceMatch = false): boolean {
 	if (forceMatch || searchQueryLower === '') {
 		return true;
 	}
 
 	const description = lintDescriptions[ruleName] ?? '';
+	const displayLabel = displayRuleLabel(ruleName, label);
 	return (
 		ruleName.toLowerCase().includes(searchQueryLower) ||
-		(label?.toLowerCase().includes(searchQueryLower) ?? false) ||
+		displayLabel.toLowerCase().includes(searchQueryLower) ||
 		description.toLowerCase().includes(searchQueryLower)
 	);
 }
@@ -134,7 +175,7 @@ function updateGroup(ruleNames: string[], value: string) {
 		nextConfig[ruleName] = configStringToValue(value);
 	}
 
-	onLintConfigChange(nextConfig);
+	handleLintConfigChange(nextConfig);
 }
 
 function oneOfManyValue(setting: StructuredOneOfManySetting): string {
@@ -153,84 +194,175 @@ function updateOneOfMany(setting: StructuredOneOfManySetting, selected: string) 
 		nextConfig[name] = selected === 'default' ? null : name === selected;
 	}
 
-	onLintConfigChange(nextConfig);
+	handleLintConfigChange(nextConfig);
+}
+
+function buildRenderNodes(
+	settings: StructuredLintSetting[],
+	path: string[],
+	forceMatch: boolean,
+	currentIndent: number,
+): { nodes: RenderNode[]; ruleNames: string[] } {
+	const out: RenderNode[] = [];
+	const ruleNames: string[] = [];
+
+	for (const setting of settings) {
+		if ('Bool' in setting) {
+			ruleNames.push(setting.Bool.name);
+
+			if (!matchesRule(setting.Bool.name, setting.Bool.label, forceMatch)) {
+				continue;
+			}
+
+			const label = displayRuleLabel(setting.Bool.name, setting.Bool.label);
+			out.push({
+				kind: 'bool',
+				name: setting.Bool.name,
+				label,
+				description: lintDescriptions[setting.Bool.name] ?? '',
+				title: `Set ${label} to its default, on, or off state.`,
+				value: configValueToString(lintConfig[setting.Bool.name]),
+				indent: currentIndent,
+			});
+			continue;
+		}
+
+		if ('OneOfMany' in setting) {
+			ruleNames.push(...setting.OneOfMany.names);
+
+			if (!settingVisible(setting, forceMatch)) {
+				continue;
+			}
+
+			const name = setting.OneOfMany.name ?? setting.OneOfMany.labels?.join(' / ') ?? 'Choose one';
+			out.push({
+				kind: 'oneOfMany',
+				name,
+				title: `Choose an option for ${name}.`,
+				options: [
+					{ value: 'default', label: '⚙️ Default' },
+					...setting.OneOfMany.names.map((value, index) => ({
+						value,
+						label: setting.OneOfMany.labels?.[index] ?? value,
+					})),
+				],
+				value: oneOfManyValue(setting.OneOfMany),
+				setting: setting.OneOfMany,
+				indent: currentIndent,
+			});
+			continue;
+		}
+
+		const groupKey = [...path, setting.Group.label].join(' / ');
+		const groupMatches =
+			searchQueryLower !== '' && setting.Group.label.toLowerCase().includes(searchQueryLower);
+		const child = buildRenderNodes(
+			setting.Group.child.settings,
+			[...path, setting.Group.label],
+			forceMatch || groupMatches,
+			currentIndent + 1,
+		);
+		ruleNames.push(...child.ruleNames);
+
+		const visible = forceMatch || searchQueryLower === '' || groupMatches || child.nodes.length > 0;
+		if (!visible) {
+			continue;
+		}
+
+		out.push({
+			kind: 'group',
+			label: setting.Group.label,
+			groupKey,
+			indent: currentIndent,
+			ruleNames: child.ruleNames,
+			ruleCount: child.ruleNames.length,
+			state: groupState(child.ruleNames),
+			expanded:
+				Boolean(expandedGroups[groupKey]) ||
+				(searchQueryLower !== '' && (groupMatches || child.nodes.length > 0)),
+			childNodes: child.nodes,
+		});
+	}
+
+	return { nodes: out, ruleNames };
+}
+
+let renderedNodes: RenderNode[] = [];
+
+$: {
+	void searchQueryLower;
+	void expandedGroups;
+	void lintConfig;
+	void lintDescriptions;
+	renderedNodes = nodes ?? buildRenderNodes(settings, groupPath, forceShow, indent).nodes;
 }
 </script>
 
 <div class="space-y-4">
-	{#each settings as setting}
-		{#if 'Group' in setting}
-			{@const visible = settingVisible(setting, forceShow)}
-			{#if visible}
-				{@const groupKey = groupKeyFor(setting.Group.label)}
-				{@const groupMatches = searchQueryLower !== '' && setting.Group.label.toLowerCase().includes(searchQueryLower)}
-				{@const ruleNames = collectRuleNames(setting.Group.child.settings)}
-				{@const state = groupState(ruleNames)}
-				{@const expanded = Boolean(expandedGroups[groupKey]) || groupMatches || (searchQueryLower !== '' && !groupMatches)}
-
+	{#each renderedNodes as node}
+		{#if node.kind === 'group'}
 				<div class="space-y-3">
-					<div class="flex items-start justify-between gap-4" style={rowStyle(indent)}>
+					<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
 						<div class="space-y-0.5">
-							<h3 class="text-sm">{setting.Group.label}</h3>
-							<p class="text-xs text-gray-600 dark:text-gray-400">{ruleNames.length} rules</p>
+							<h3 class="text-sm">{node.label}</h3>
+							<p class="text-xs text-gray-600 dark:text-gray-400">{node.ruleCount} rules</p>
 						</div>
 						<div class="flex items-center gap-2">
-							<Button
-								size="sm"
-								color="light"
-								title={expanded
-									? `Collapse the ${setting.Group.label} category`
-									: `Expand the ${setting.Group.label} category`}
-								on:click={() => onToggleGroup(groupKey)}
+							<button
+								type="button"
+								class="cursor-pointer inline-flex items-center gap-2 justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-center text-gray-900 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+								title={node.expanded
+									? `Collapse the ${node.label} category`
+									: `Expand the ${node.label} category`}
+								onclick={() => handleToggleGroup(node.groupKey)}
 							>
-								{expanded ? 'Collapse' : 'Expand'}
-							</Button>
+								{node.expanded ? 'Collapse' : 'Expand'}
+							</button>
 							<Select
 								size="md"
-								title={`Set all rules in the ${setting.Group.label} category to their default, on, or off state.`}
-								value={state === 'mixed' ? 'default' : state}
-								onchange={(event) => updateGroup(ruleNames, (event.target as HTMLSelectElement).value)}
+								title={`Set all rules in the ${node.label} category to their default, on, or off state.`}
+								value={node.state === 'mixed' ? 'default' : node.state}
+								onchange={(event) => updateGroup(node.ruleNames, (event.target as HTMLSelectElement).value)}
 							>
-								<option value="default">{state === 'mixed' ? '⚙️ Default (mixed)' : '⚙️ Default'}</option>
+								<option value="default">{node.state === 'mixed' ? '⚙️ Default (mixed)' : '⚙️ Default'}</option>
 								<option value="enable">✅ On</option>
 								<option value="disable">🚫 Off</option>
 							</Select>
 						</div>
 					</div>
 
-					{#if expanded}
+					{#if node.expanded}
 						<svelte:self
-							settings={setting.Group.child.settings}
+							nodes={node.childNodes}
+							settings={[]}
 							{lintConfig}
 							{lintDescriptions}
 							{searchQueryLower}
 							{expandedGroups}
-							groupPath={[...groupPath, setting.Group.label]}
-							indent={indent + 1}
-							forceShow={forceShow || groupMatches}
-							{onLintConfigChange}
-							{onToggleGroup}
+							groupPath={[]}
+							indent={indent}
+							forceShow={forceShow}
+							{handleLintConfigChange}
+							{handleToggleGroup}
 						/>
 					{/if}
 				</div>
-			{/if}
-		{:else if 'Bool' in setting}
-			{#if matchesRule(setting.Bool.name, setting.Bool.label, forceShow)}
-				<div class="flex items-start justify-between gap-4" style={rowStyle(indent)}>
+		{:else if node.kind === 'bool'}
+				<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
 					<div class="space-y-0.5">
-						<h3 class="text-sm">{setting.Bool.label ?? setting.Bool.name}</h3>
-						<p class="text-xs">{@html lintDescriptions[setting.Bool.name] ?? ''}</p>
+						<h3 class="text-sm">{node.label}</h3>
+						<p class="text-xs">{@html node.description}</p>
 					</div>
 					<Select
 						size="md"
-						title={`Set ${setting.Bool.label ?? setting.Bool.name} to its default, on, or off state.`}
-						value={configValueToString(lintConfig[setting.Bool.name])}
+						title={node.title}
+						value={node.value}
 						onchange={(event) => {
 							const nextConfig: LintConfig = { ...lintConfig };
-							nextConfig[setting.Bool.name] = configStringToValue(
+							nextConfig[node.name] = configStringToValue(
 								(event.target as HTMLSelectElement).value,
 							);
-							onLintConfigChange(nextConfig);
+							handleLintConfigChange(nextConfig);
 						}}
 					>
 						<option value="default">⚙️ Default</option>
@@ -238,21 +370,19 @@ function updateOneOfMany(setting: StructuredOneOfManySetting, selected: string) 
 						<option value="disable">🚫 Off</option>
 					</Select>
 				</div>
-			{/if}
-		{:else if settingVisible(setting, forceShow)}
-			<div class="flex items-start justify-between gap-4" style={rowStyle(indent)}>
+		{:else if node.kind === 'oneOfMany'}
+			<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
 				<div class="space-y-0.5">
-					<h3 class="text-sm">{setting.OneOfMany.name ?? setting.OneOfMany.labels?.join(' / ') ?? 'Choose one'}</h3>
+					<h3 class="text-sm">{node.name}</h3>
 				</div>
 				<Select
 					size="md"
-					title={`Choose an option for ${setting.OneOfMany.name ?? setting.OneOfMany.labels?.join(' / ') ?? 'this rule group'}.`}
-					value={oneOfManyValue(setting.OneOfMany)}
-					onchange={(event) => updateOneOfMany(setting.OneOfMany, (event.target as HTMLSelectElement).value)}
+					title={node.title}
+					value={node.value}
+					onchange={(event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
 				>
-					<option value="default">⚙️ Default</option>
-					{#each setting.OneOfMany.names as name, index}
-						<option value={name}>{setting.OneOfMany.labels?.[index] ?? name}</option>
+					{#each node.options as option}
+						<option value={option.value}>{option.label}</option>
 					{/each}
 				</Select>
 			</div>

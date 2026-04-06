@@ -480,8 +480,8 @@ async function removeWeirpack(id: string) {
 				{lintDescriptions}
 				{searchQueryLower}
 				{expandedGroups}
-				onLintConfigChange={updateLintConfig}
-				onToggleGroup={toggleGroup}
+				handleLintConfigChange={updateLintConfig}
+				handleToggleGroup={toggleGroup}
 			/>
 		</div>
 
