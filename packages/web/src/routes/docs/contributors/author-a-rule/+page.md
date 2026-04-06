@@ -221,6 +221,21 @@ impl ExprLinter for ThatWhich {
 }
 ```
 
+## Use ExprLinter Skeleton Templates
+
+To make it easier to get started with ExprLinter rules, Harper provides skeleton templates you can copy:
+
+- **[harper-core/expr_linter_skeleton.rs](../../../../../../../harper-core/expr_linter_skeleton.rs)** - A minimal, uncommented skeleton
+- **[harper-core/expr_linter_skeleton_commented.rs](../../../../../../../harper-core/expr_linter_skeleton_commented.rs)** - A heavily commented version with detailed explanations
+
+To use these:
+1. Copy either file to `harper-core/src/linting/my_rule.rs`
+2. Rename the struct from `ExprLinterSkeleton` to your rule name
+3. Follow the `// EDIT` comments to customize the expression and logic
+4. Remove the debug `eprintln!` statement before committing
+
+The commented version is especially helpful for understanding the various components and options available when implementing ExprLinter rules.
+
 ## Test Your Changes
 
 To test your rule, first write out an example of the error it looks for in a test file at the root of the Harper monorepo.

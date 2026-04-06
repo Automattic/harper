@@ -724,8 +724,8 @@
 # HeadingStart J+         N🅪Sg+
 >
 #
-> Artificial intelligence ( AI      ) aims   to or    is  required to synthesize
-# J          N🅪Sg         . NPr🅪Sg+ . NPl/V3 P  NPr/C VL3 VP/J     P  VB
+> Artificial intelligence ( AI    ) aims   to or    is  required to synthesize
+# J          N🅪Sg         . N🅪Sg+ . NPl/V3 P  NPr/C VL3 VP/J     P  VB
 > goal    - orientated processes such  as    problem - solving , decision - making  ,
 # NSg/VB+ . VP/J       NPl/V3    NSg/I R/C/P NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J .
 > environmental adaptation , learning , and  communication found  in        humans and
@@ -738,8 +738,8 @@
 # N🅪Sg/Vg/J J/P NPl   P  Nᴹ/VB+    NSg/I R/C/P VP/J    Nᴹ+         . J        Nᴹ/VB/J+ .
 > semiotics , electrical engineering , philosophy of mind    , neurophysiology , and
 # Nᴹ        . NSg/J      Nᴹ/Vg/J+    . N🅪Sg/VB    P  NSg/VB+ . Nᴹ              . VB/C
-> social intelligence . AI      is  associated in        the popular mind    with robotic
-# NSg/J  N🅪Sg+        . NPr🅪Sg+ VL3 VP/J       NPr/J/R/P D   NSg/J   NSg/VB+ P    J+
+> social intelligence . AI    is  associated in        the popular mind    with robotic
+# NSg/J  N🅪Sg+        . N🅪Sg+ VL3 VP/J       NPr/J/R/P D   NSg/J   NSg/VB+ P    J+
 > development , but     the main     field  of practical application has been     as    an  embedded
 # N🅪Sg+       . NSg/C/P D   NSg/VB/J NSg/VB P  NSg/J+    NSg+        V3  NSg/VLPp R/C/P D/P VP/J
 > component in        areas of software development , which require computational

@@ -433,7 +433,7 @@ async function removeWeirpack(id: string) {
               <Select
                 size="md"
                 value={configValueToString(value)}
-                on:change={(e) => {
+                onchange={(e) => {
                   lintConfig[key] = configStringToValue(e.target.value);
                 }}
               >

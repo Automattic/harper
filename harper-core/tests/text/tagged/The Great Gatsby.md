@@ -849,7 +849,7 @@
 >
 #
 > “ I       love      to see    you    at    my  table   , Nick    . You    remind me       of a   — of a    rose       , an   absolute
-# . ISg/#r+ NPr🅪Sg/VB P  NSg/VB ISgPl+ NSg/P D$+ NSg/VB+ . NPr/VB+ . ISgPl+ NSg/VB NPr/ISg+ P  D/P . P  D/P+ NPr/VPt/J+ . D/P+ NSg/J+
+# . ISg/#r+ NPr🅪Sg/VB P  NSg/VB ISgPl+ NSg/P D$+ NSg/VB+ . NPr/VB+ . ISgPl+ VB     NPr/ISg+ P  D/P . P  D/P+ NPr/VPt/J+ . D/P+ NSg/J+
 > rose       . Doesn’t he       ? ” She  turned to Miss   Baker for   confirmation : “ An   absolute
 # NPr/VPt/J+ . VX3     NPr/ISg+ . . ISg+ VP/J   P  NSg/VB NPr+  R/C/P N🅪Sg+        . . D/P+ NSg/J+
 > rose       ? ”

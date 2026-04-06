@@ -129,7 +129,7 @@ impl ExprLinter for Everyday {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         // Helper functions make the match tables more compact and readable.
-        let norm = |i: usize| toks[i].span.get_content_string(src).to_lowercase();
+        let norm = |i: usize| toks[i].get_str(src).to_lowercase();
         let isws = |i: usize| toks[i].kind.is_whitespace();
         let tokspan = |i: usize| toks[i].span;
         let slicespan = |i: usize| toks[i..i + 3].span().unwrap();

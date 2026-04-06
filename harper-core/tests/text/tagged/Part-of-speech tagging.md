@@ -184,8 +184,8 @@
 # D+  NPr🅪Sg/VB/J+ NSg+   VLPt R             . VP/J   . P    NSg/VB/J+ . P  . N🅪Sg/VB+ NPl/V3  NSg/J/P
 > many        years . A    first  approximation was  done      with a    program by    Greene and  Rubin ,
 # NSg/I/J/Dq+ NPl+  . D/P+ NSg/J+ N🅪Sg+         VLPt NSg/VPp/J P    D/P+ NPr/VB+ NSg/P NPr    VB/C NPr   .
-> which consisted of a   huge handmade list   of what   categories could   co        - occur at
-# I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I/VB+ . VB    NSg/P
+> which consisted of a   huge handmade list   of what   categories could   co     - occur at
+# I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I+ . VB    NSg/P
 > all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
 > cannot  . The program got about 70 % correct  . Its     results were     repeatedly reviewed

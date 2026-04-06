@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { binary } from './binary';
+import { binary } from './binaries/binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 import { packWeirpackFiles } from './weirpack';
@@ -641,6 +641,25 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		lints = await linter.lint(source);
 		expect(lints).toHaveLength(0);
 	}, 30000);
+
+	test(`${linterName} can request a Typst parser with normal binary.`, async () => {
+		const linter = new Linter({ binary });
+
+		const lints = await linter.lint(
+			`
+= Hello, world!
+
+This is a simple Typst document.
+
+- Item one
+- Item two
+- Item three
+      `,
+			{ language: 'typst' },
+		);
+
+		expect(lints).toHaveLength(0);
+	});
 }
 
 // Disabled because it significantly slows down CI

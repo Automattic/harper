@@ -29,7 +29,7 @@ pub fn match_to_lint_four_digits(
     {
         Some(Context {
             sep_is_hyphen: psep.kind.is_hyphen(),
-            word: pw.span.get_content(src),
+            word: pw.get_ch(src),
         })
     } else {
         None
@@ -42,7 +42,7 @@ pub fn match_to_lint_four_digits(
     {
         Some(Context {
             sep_is_hyphen: nsep.kind.is_hyphen(),
-            word: nw.span.get_content(src),
+            word: nw.get_ch(src),
         })
     } else {
         None
@@ -60,12 +60,8 @@ pub fn match_to_lint_four_digits(
         // Hyphen before suggests username, not a mistake
         (Some(before), _) if before.sep_is_hyphen => UsageJudgment::NotMistake,
         // "style" after the decade suggests the apostrophe is a mistake
-        (_, Some(after)) if after.word.eq_ignore_ascii_case_str("style") => {
-            UsageJudgment::IsMistake
-        }
-        (Some(before), _)
-            if !before.sep_is_hyphen && before.word.eq_ignore_ascii_case_str("the") =>
-        {
+        (_, Some(after)) if after.word.eq_str("style") => UsageJudgment::IsMistake,
+        (Some(before), _) if !before.sep_is_hyphen && before.word.eq_str("the") => {
             // Go back one more word and look for "in the" before the decade
             if let [.., ppw, ppsep, _, _] = pre.unwrap()
                 && ppsep.kind.is_whitespace()

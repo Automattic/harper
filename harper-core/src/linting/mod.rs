@@ -14,7 +14,6 @@ mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
-mod and_in;
 mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
@@ -23,8 +22,8 @@ mod ask_no_preposition;
 mod aspire_to;
 mod avoid_curses;
 mod back_in_the_day;
+mod be_adjective_confusions;
 mod be_allowed;
-mod be_worried;
 mod behind_the_scenes;
 mod best_of_all_time;
 mod boring_words;
@@ -66,6 +65,7 @@ mod ever_every;
 mod everyday;
 mod except_of;
 mod expand_memory_shorthands;
+mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
@@ -96,6 +96,7 @@ mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
 mod in_on_the_cards;
+mod in_time_from_now;
 mod inflected_verb_after_to;
 mod initialism_linter;
 mod initialisms;
@@ -202,6 +203,7 @@ mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
+mod sneaked_snuck;
 mod some_without_article;
 mod something_is;
 mod somewhat_something;
@@ -229,6 +231,7 @@ mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
+mod thrive_on;
 mod throw_away;
 mod throw_rubbish;
 mod to_adverb;
@@ -246,6 +249,7 @@ mod vice_versa;
 mod vicious_loop;
 mod was_aloud;
 mod way_too_adjective;
+mod web_scraping;
 mod weir_rules;
 mod well_educated;
 mod were_where;
@@ -325,7 +329,7 @@ pub mod debug {
             tokens
                 .iter()
                 .filter(|t| !t.kind.is_unlintable())
-                .map(|t| t.span.get_content_string(src))
+                .map(|t| t.get_str(src))
                 .collect::<String>()
         };
 
@@ -393,10 +397,7 @@ pub mod tests {
                 // Check if word matches any of the patterns in the map
                 for (errors, fixes) in self.map {
                     // if any of the errors match, add all of the corrections
-                    if errors
-                        .iter()
-                        .any(|&e| word_chars.eq_ignore_ascii_case_str(e))
-                    {
+                    if errors.iter().any(|&e| word_chars.eq_str(e)) {
                         corr.push((wordspan, word_chars, fixes))
                     }
                 }

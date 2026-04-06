@@ -38,7 +38,7 @@ pub fn match_to_lint_two_digits(
             } else if tok.kind.is_plus() {
                 return Some(Tok::Plus);
             } else if tok.kind.is_word() {
-                return Some(Tok::Word(tok.span.get_content(src)));
+                return Some(Tok::Word(tok.get_ch(src)));
             }
         }
         None
@@ -63,7 +63,7 @@ pub fn match_to_lint_two_digits(
                 } else if tok.kind.is_plus() {
                     Tok::Plus
                 } else if tok.kind.is_word() {
-                    Tok::Word(tok.span.get_content(src))
+                    Tok::Word(tok.get_ch(src))
                 } else {
                     return None;
                 },
@@ -79,7 +79,7 @@ pub fn match_to_lint_two_digits(
                 && let Some((tok2, kind2)) = get_tok_with_kind(before, -2)
             {
                 // in the 80's
-                if matches!(tok2, Tok::Word(w) if w.eq_ignore_ascii_case_str("the"))
+                if matches!(tok2, Tok::Word(w) if w.eq_str("the"))
                     && get_kind(before, -3).is_some_and(|k| k.is_whitespace())
                     && get_kind(before, -4).is_some_and(|k| k.is_preposition())
                 {
@@ -90,7 +90,7 @@ pub fn match_to_lint_two_digits(
                     return UsageJudgment::IsMistakeForAgeRange;
                 }
                 // Windows 10's / Xcode 10's
-                if decade.eq_ignore_ascii_case_str("10")
+                if decade.eq_str("10")
                     && matches!(tok2, Tok::Word(w) if w.eq_any_ignore_ascii_case_str(&["windows", "xcode", "android"]))
                 {
                     return UsageJudgment::NotMistake;
@@ -107,10 +107,9 @@ pub fn match_to_lint_two_digits(
             }
             // +10's
             if matches!(tok1, Tok::Plus)
-                && decade.eq_ignore_ascii_case_str("20")
+                && decade.eq_str("20")
                 && get_tok(before, -2).is_some_and(|t| matches!(t, Tok::Plus))
-                && get_tok(before, -3)
-                    .is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_ignore_ascii_case_str("c")))
+                && get_tok(before, -3).is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_str("c")))
             {
                 // C++10's
                 return UsageJudgment::NotMistake;
@@ -118,8 +117,7 @@ pub fn match_to_lint_two_digits(
         }
         // 70's_style / 80's-style
         if get_tok(after, 0).is_some_and(|t| matches!(t, Tok::Whitespace | Tok::Hyphen))
-            && get_tok(after, 1)
-                .is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_ignore_ascii_case_str("style")))
+            && get_tok(after, 1).is_some_and(|t| matches!(t, Tok::Word(w) if w.eq_str("style")))
         {
             return UsageJudgment::IsMistakeForDecade;
         }

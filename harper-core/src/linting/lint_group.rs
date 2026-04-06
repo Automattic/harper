@@ -23,7 +23,6 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
-use super::and_in::AndIn;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
@@ -33,7 +32,6 @@ use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
-use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -71,6 +69,7 @@ use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
+use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
@@ -100,6 +99,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
@@ -193,6 +193,7 @@ use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
+use super::sneaked_snuck::SneakedSnuck;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -218,6 +219,7 @@ use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
+use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
@@ -237,6 +239,7 @@ use super::vicious_loop::ViciousCircleOrCycle;
 use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::were_where::WereWhere;
 use super::whereas::Whereas;
@@ -254,9 +257,11 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
+use crate::linting::{
+    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+};
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Dialect, Document, TokenStringExt};
+use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -326,26 +331,23 @@ impl LintGroupConfig {
     }
 
     /// Merge the contents of another [`LintGroupConfig`] into this one.
-    /// The other config will be left empty after this operation.
     ///
     /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.iter() {
+    pub fn merge_from(&mut self, other: LintGroupConfig) {
+        for (key, val) in other.inner {
             if val.is_none() {
                 continue;
             }
 
-            self.inner.insert(key.to_string(), *val);
+            self.inner.insert(key.to_string(), val);
         }
-
-        other.clear();
     }
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
         let mut temp = Self::new_curated();
         mem::swap(self, &mut temp);
-        self.merge_from(&mut temp);
+        self.merge_from(temp);
     }
 
     pub fn new_curated() -> Self {
@@ -383,7 +385,8 @@ pub struct LintGroup {
     ///
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
+    #[expect(clippy::complexity)]
+    chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -451,12 +454,10 @@ impl LintGroup {
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
-    pub fn merge_from(&mut self, other: &mut LintGroup) {
-        self.config.merge_from(&mut other.config);
+    pub fn merge_from(&mut self, other: LintGroup) {
+        self.config.merge_from(other.config);
 
-        let other_linters = std::mem::take(&mut other.linters);
-        if let Some((conflicting_key, _)) = other_linters.iter().find(|(k, _)| self.contains_key(k))
+        if let Some((conflicting_key, _)) = other.linters.iter().find(|(k, _)| self.contains_key(k))
         {
             if self.clashing_linter_names.is_none() {
                 self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
@@ -464,10 +465,10 @@ impl LintGroup {
                 clashing_names.push(conflicting_key.clone());
             }
         }
-        self.linters.extend(other_linters);
+        self.linters.extend(other.linters);
 
-        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
-        if let Some((conflicting_key, _)) = other_expr_linters
+        if let Some((conflicting_key, _)) = other
+            .chunk_expr_linters
             .iter()
             .find(|(k, _)| self.contains_key(k))
         {
@@ -477,7 +478,7 @@ impl LintGroup {
                 clashing_names.push(conflicting_key.clone());
             }
         }
-        self.chunk_expr_linters.extend(other_expr_linters);
+        self.chunk_expr_linters.extend(other.chunk_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
@@ -591,13 +592,14 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(&mut weir_rules::lint_group());
-        out.merge_from(&mut phrase_set_corrections::lint_group());
-        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
+        out.merge_from(weir_rules::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group(
             dictionary.clone(),
         ));
-        out.merge_from(&mut closed_compounds::lint_group());
-        out.merge_from(&mut initialisms::lint_group());
+        out.merge_from(closed_compounds::lint_group());
+        out.merge_from(initialisms::lint_group());
+        out.merge_from(be_adjective_confusions::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -614,7 +616,6 @@ impl LintGroup {
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule_with_dialect!(AnA, true);
-        insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
@@ -623,7 +624,6 @@ impl LintGroup {
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
@@ -661,6 +661,7 @@ impl LintGroup {
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
+        insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FascinatedBy, true);
@@ -689,6 +690,7 @@ impl LintGroup {
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
+        insert_expr_rule!(InTimeFromNow, true);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
@@ -780,6 +782,7 @@ impl LintGroup {
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SingleBe, true);
+        insert_struct_rule!(SneakedSnuck, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -804,6 +807,7 @@ impl LintGroup {
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
+        insert_expr_rule!(ThriveOn, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(ToAdverb, true);
@@ -859,6 +863,10 @@ impl LintGroup {
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
+        // Uses Sentence rather than Chunk
+        out.add("WebScraping", WebScraping::default());
+        out.config.set_rule_enabled("WebScraping", true);
+
         out
     }
 
@@ -878,7 +886,7 @@ impl LintGroup {
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.insert(key.clone(), linter.lint(document));
+                results.insert(key.to_owned(), linter.lint(document));
             }
         }
 
@@ -890,9 +898,10 @@ impl LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let cache_key = (chunk_chars.into(), config_hash);
+            let char_hash = self.hasher_builder.hash_one(chunk_chars);
+            let cache_key = (char_hash, config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
+            let chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
                 let mut pattern_lints = BTreeMap::new();
@@ -909,19 +918,21 @@ impl LintGroup {
                     }
                 }
 
+                let pattern_lints = Lrc::new(pattern_lints);
+
                 self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
-            // Bring the spans back into document-space
-            for value in chunk_results.values_mut() {
-                for lint in value {
-                    lint.span.push_by(chunk_span.start);
-                }
-            }
-
-            for (key, mut vec) in chunk_results {
-                results.entry(key).or_default().append(&mut vec);
+            for (key, vec) in chunk_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(chunk_span.start);
+                        lint
+                    }));
             }
         }
 

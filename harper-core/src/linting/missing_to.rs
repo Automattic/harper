@@ -257,7 +257,7 @@ impl ExprLinter for MissingTo {
         let controller = &matched_tokens[offending_idx];
         let span = controller.span;
 
-        let controller_text = controller.span.get_content_string(source).to_lowercase();
+        let controller_text = controller.get_str(source).to_lowercase();
         let controller_text = controller_text.as_str();
 
         let is_adjective_controller = matches!(controller_text, "eager" | "inclined" | "ready");
@@ -315,7 +315,7 @@ impl ExprLinter for MissingTo {
             .skip(offending_idx + 1)
             .find(|tok| !tok.kind.is_whitespace())?;
 
-        let next_text = next_token.span.get_content_string(source).to_lowercase();
+        let next_text = next_token.get_str(source).to_lowercase();
 
         if controller_text.starts_with("try") && next_text == "and" {
             return None;
