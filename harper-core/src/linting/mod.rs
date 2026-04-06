@@ -65,6 +65,7 @@ mod ever_every;
 mod everyday;
 mod except_of;
 mod expand_memory_shorthands;
+mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
