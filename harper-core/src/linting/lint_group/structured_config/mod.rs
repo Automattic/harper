@@ -2,6 +2,8 @@ mod human_readable_structured_config;
 
 use super::FlatConfig;
 
+pub use human_readable_structured_config::{HumanReadableSetting, HumanReadableStructuredConfig};
+
 /// A structure for defining which rules to be enabled or disabled in a
 /// [`LintGroup`](super::LintGroup).
 ///

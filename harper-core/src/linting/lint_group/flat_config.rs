@@ -7,8 +7,8 @@ use hashbrown::HashMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::LintGroup;
-use crate::spell::MutableDictionary;
 use crate::Dialect;
+use crate::spell::MutableDictionary;
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
