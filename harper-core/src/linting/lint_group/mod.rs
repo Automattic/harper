@@ -259,7 +259,7 @@ use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
 };
-use crate::spell::{Dictionary, MutableDictionary};
+use crate::spell::Dictionary;
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 pub use flat_config::FlatConfig;
