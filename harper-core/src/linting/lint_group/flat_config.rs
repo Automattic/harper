@@ -45,7 +45,8 @@ impl FlatConfig {
         CURATED
             .get_or_init(|| {
                 // The Dictionary and Dialect do not matter, we're just after the config.
-                let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+                let group =
+                    LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
                 group.config
             })
             .clone()
