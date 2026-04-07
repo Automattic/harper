@@ -101,6 +101,18 @@ export class HarperSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
+			.setName('Use Web-Style Lints')
+			.setDesc(
+				'Use a straight underline with a background color instead of the default squiggly underline.',
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.useWebStyleLints ?? false).onChange(async (value) => {
+					this.settings.useWebStyleLints = value;
+					await this.state.initializeFromSettings(this.settings);
+				}),
+			);
+
+		new Setting(containerEl)
 			.setName('Mask')
 			.setDesc(
 				"Hide certain text from Harper's pedantic gaze with a regular expression. Follows the standard Rust syntax.",
