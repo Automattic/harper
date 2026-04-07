@@ -3558,6 +3558,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArriveTo",
+								"state": true,
+								"label": "Arrive To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AvoidCurses",
 								"state": true,
 								"label": "Avoid Curses"
