@@ -87,7 +87,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 			flattened.push(...value);
 		}
 
-		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(2);
 		expect(flattened.length).toBe(normal.length);
 
 		const item = flattened[0];
