@@ -10,10 +10,6 @@ import type { Settings } from './State.js';
 import { linesToString, stringToLines } from './textUtils';
 
 const LintSettingId = 'HarperLintSettings';
-type StructuredOneOfManySetting = Extract<
-	StructuredLintSetting,
-	{ OneOfMany: unknown }
->['OneOfMany'];
 
 export class HarperSettingTab extends PluginSettingTab {
 	private settings?: Settings;
@@ -541,7 +537,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	private shouldRenderOneOfMany(
-		setting: StructuredOneOfManySetting,
+		setting: Extract<StructuredLintSetting, { OneOfMany: unknown }>['OneOfMany'],
 		queryLower: string,
 		forceShow: boolean,
 	) {
@@ -560,12 +556,11 @@ export class HarperSettingTab extends PluginSettingTab {
 		containerEl: HTMLElement,
 		effectiveConfig: Record<string, boolean>,
 	) {
-		const settings = this.settings;
-		if (!settings) {
+		if (!this.settings) {
 			return;
 		}
 
-		const value = settings.lintSettings[setting];
+		const value = this.settings.lintSettings[setting];
 		const descriptionHTML = this.descriptionsHTML?.[setting] ?? '';
 		const fragment = document.createDocumentFragment();
 		if (descriptionHTML !== '') {
@@ -596,8 +591,8 @@ export class HarperSettingTab extends PluginSettingTab {
 					.onChange(async (v) => {
 						// The structured config only organizes rules for display.
 						// Persist changes through the flat lint config keyed by rule name.
-						settings.lintSettings[setting] = v === 'enable';
-						await this.state.initializeFromSettings(settings);
+						this.settings.lintSettings[setting] = v === 'enable';
+						await this.state.initializeFromSettings(this.settings);
 						this.settings = await this.state.getSettings();
 						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 						this.updateToggleAllRulesButton();
@@ -606,12 +601,11 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	private renderOneOfManySetting(
-		setting: StructuredOneOfManySetting,
+		setting: Extract<StructuredLintSetting, { OneOfMany: unknown }>['OneOfMany'],
 		containerEl: HTMLElement,
 		effectiveConfig: Record<string, boolean>,
 	) {
-		const settings = this.settings;
-		if (!settings) {
+		if (!this.settings) {
 			return;
 		}
 
@@ -631,10 +625,10 @@ export class HarperSettingTab extends PluginSettingTab {
 				// The structured config only organizes rules for display.
 				// Persist changes through the flat lint config keyed by rule name.
 				for (const name of setting.names) {
-					settings.lintSettings[name] = name === selected;
+					this.settings.lintSettings[name] = name === selected;
 				}
 
-				await this.state.initializeFromSettings(settings);
+				await this.state.initializeFromSettings(this.settings);
 				this.settings = await this.state.getSettings();
 				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 				this.updateToggleAllRulesButton();
