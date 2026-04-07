@@ -1,8 +1,11 @@
 use crate::{
-    Lint, Token, TokenStringExt,
+    CharStringExt, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     irregular_verbs::IrregularVerbs,
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, preceded_by_word},
+    },
     spell::Dictionary,
 };
 
@@ -55,9 +58,16 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
         let matched_chars = toks.span()?.get_content(src);
 
         // 'modal' is the 3rd last token, verb is the last token
-        let verb_idx = toks.len() - 1;
-        let verb_tok = &toks[verb_idx];
+        let (fut_idx, verb_idx) = (0, toks.len() - 1);
+        let (fut_tok, verb_tok) = (&toks[fut_idx], &toks[verb_idx]);
         let verb_str = verb_tok.span.get_content_string(src);
+
+        // Disambiguate 'will' noun from 'will' verb: Preceding "a", "the", "my", "your", etc. show it's a noun.
+        if fut_tok.get_ch(src).eq_ch(&['w', 'i', 'l', 'l'])
+            && preceded_by_word(ctx, |tok| tok.kind.is_determiner())
+        {
+            return None;
+        }
 
         let suggest =
             |text: &str| Suggestion::replace_with_match_case(text.chars().collect(), matched_chars);
@@ -258,6 +268,33 @@ mod tests {
     fn ignore_will_was_straightforward_pr_review() {
         assert_lint_count(
             "Vivian’s will was straightforward. The house, all its contents, and her savings were to be left to me.",
+            WillNonLemma::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_will_specifies_equal_responsibility() {
+        assert_lint_count(
+            "I also reminded her that the will specifies equal responsibility",
+            WillNonLemma::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_will_reflected_that() {
+        assert_lint_count(
+            "She meticulously planned everything, and her will reflected that.",
+            WillNonLemma::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
+    fn ignore_will_stipulates_everything() {
+        assert_lint_count(
+            "Now, his will stipulates everything is split 50/50.",
             WillNonLemma::new(FstDictionary::curated()),
             0,
         );
