@@ -21,7 +21,7 @@ export async function getBackground(context: BrowserContext) {
 	return (
 		context.serviceWorkers()[0] ??
 		context.backgroundPages()[0] ??
-		(await context.waitForEvent('serviceworker'))
+		(await context.waitForEvent('serviceworker', { timeout: 90000 }))
 	);
 }
 
