@@ -511,6 +511,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Meanwhile",
+								"state": true,
+								"label": "Meanwhile"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Middleware",
 								"state": true,
 								"label": "Middleware"
@@ -783,6 +790,13 @@
 								"name": "Ado",
 								"state": true,
 								"label": "Ado"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AtAllCosts",
+								"state": true,
+								"label": "At All Costs"
 							}
 						},
 						{
@@ -1636,6 +1650,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandPeople",
+								"state": true,
+								"label": "Expand People"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandTimeShorthands",
 								"state": true,
 								"label": "Expand Time Shorthands"
@@ -2041,6 +2062,13 @@
 								"name": "YourPredicateAdjective",
 								"state": true,
 								"label": "Your Predicate Adjective"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Yourself",
+								"state": true,
+								"label": "Yourself"
 							}
 						}
 					]
@@ -3544,6 +3572,34 @@
 						},
 						{
 							"Bool": {
+								"name": "BeBiased",
+								"state": true,
+								"label": "Be Biased"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BeConcerned",
+								"state": true,
+								"label": "Be Concerned"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BePrejudiced",
+								"state": true,
+								"label": "Be Prejudiced"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BeShocked",
+								"state": true,
+								"label": "Be Shocked"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeWorried",
 								"state": true,
 								"label": "Be Worried"
@@ -3778,6 +3834,13 @@
 								"name": "LookingForwardTo",
 								"state": true,
 								"label": "Looking Forward To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LookForwardTo",
+								"state": true,
+								"label": "Look Forward To"
 							}
 						},
 						{

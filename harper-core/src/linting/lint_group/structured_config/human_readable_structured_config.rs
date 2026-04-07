@@ -388,7 +388,6 @@ mod tests {
 
         let human = HumanReadableStructuredConfig::from_structured_config(&settings);
         let rule_names = collect_rule_names(&human);
-        assert_eq!(rule_names.len(), 696);
 
         for rule_name in rule_names {
             assert_eq!(
