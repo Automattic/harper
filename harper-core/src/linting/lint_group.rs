@@ -12,8 +12,8 @@ use lru::LruCache;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::ExprLinter;
-use super::Lint;
 
+use super::Lint;
 use super::english::a_part::APart;
 use super::english::a_while::AWhile;
 use super::english::addicting::Addicting;
@@ -75,7 +75,6 @@ use super::english::everyday::Everyday;
 use super::english::except_of::ExceptOf;
 use super::english::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::english::expand_time_shorthands::ExpandTimeShorthands;
-use super::english::expr_linter::run_on_chunk;
 use super::english::far_be_it::FarBeIt;
 use super::english::fascinated_by::FascinatedBy;
 use super::english::fed_up_with::FedUpWith;
@@ -250,14 +249,15 @@ use super::english::wordpress_dotcom::WordPressDotcom;
 use super::english::worth_to_do::WorthToDo;
 use super::english::would_never_have::WouldNeverHave;
 use super::english::wrong_apostrophe::WrongApostrophe;
-use super::english::{ExprLinter, Lint};
 use super::english::{HtmlDescriptionLinter, Linter};
-use crate::english::linting::dashes::Dashes;
-use crate::english::linting::expr_linter::Chunk;
-use crate::english::linting::open_compounds::OpenCompounds;
-use crate::english::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
-use crate::english::spell::{Dictionary, MutableDictionary};
-use crate::english::{CharString, Document, EnglishDialect, PortugueseDialect, TokenStringExt};
+use super::expr_linter::run_on_chunk;
+use crate::languages::Language;
+use crate::linting::english::dashes::Dashes;
+use crate::linting::english::open_compounds::OpenCompounds;
+use crate::linting::english::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
+use crate::linting::expr_linter::Chunk;
+use crate::spell::{Dictionary, MutableDictionary};
+use crate::{CharString, Document, EnglishDialect, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -975,10 +975,11 @@ mod tests {
 
     use super::{LintGroup, LintGroupConfig};
     use crate::languages::Language;
+    use crate::linting::EnglishLinter;
     use crate::linting::LintKind;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
-    use crate::{Dialect, Document, linting::Linter};
+    use crate::{Dialect, Document};
 
     fn test_group() -> LintGroup {
         LintGroup::new_curated(

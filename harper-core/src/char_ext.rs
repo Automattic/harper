@@ -20,7 +20,7 @@ pub trait CharExt: private::Sealed {
     ///
     /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
     fn is_vowel(&self) -> bool;
-    fn normalized(&self) -> Self;
+    fn normalized(self) -> Self;
 }
 
 impl CharExt for char {

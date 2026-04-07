@@ -2,15 +2,15 @@ use itertools::Itertools;
 
 use crate::indefinite_article::{InitialSound, starts_with_vowel};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dialect, Document, TokenStringExt};
+use crate::{Document, EnglishDialect, TokenStringExt};
 
 #[derive(Debug)]
 pub struct AnA {
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl AnA {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         Self { dialect }
     }
 }

@@ -1,16 +1,16 @@
 use crate::{
-    Dialect, Token,
+    Dialect, EnglishDialect, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct FedUpWith {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl FedUpWith {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         let expr = SequenceExpr::fixed_phrase("fed up of");
 
         Self { expr, dialect }

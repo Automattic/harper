@@ -45,7 +45,11 @@ fn uncached_inner_new(language: LanguageFamily) -> Arc<MutableDictionary> {
         .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
-static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new);
+pub static DICT: LazyLock<Arc<MutableDictionary>> =
+    LazyLock::new(uncached_inner_new(LanguageFamily::English));
+
+pub static DICT_PORTUGUESE: LazyLock<Arc<MutableDictionary>> =
+    LazyLock::new(uncached_inner_new(LanguageFamily::Portuguese));
 
 impl MutableDictionary {
     pub fn new() -> Self {

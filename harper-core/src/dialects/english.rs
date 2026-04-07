@@ -14,7 +14,6 @@ use crate::{Document, TokenKind, TokenStringExt};
 /// `DialectFlags`. Each value here must have a unique bit index inside
 /// `DialectsUnderlyingType`.
 #[derive(
-    Default,
     Debug,
     Clone,
     Copy,
@@ -29,6 +28,7 @@ use crate::{Document, TokenKind, TokenStringExt};
     EnumIter,
     Display,
     VariantArray,
+    Default,
 )]
 pub enum EnglishDialect {
     #[default]
@@ -36,13 +36,14 @@ pub enum EnglishDialect {
     Canadian = 1 << 1,
     Australian = 1 << 2,
     British = 1 << 3,
+    Indian = 1 << 4,
 }
 impl Dialect for EnglishDialect {
     type Flags = EnglishDialectFlags;
 
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
     /// Returns `None` if it fails to find a single dialect that is used the most.
-    #[allow(refining_impl_trait_internal)]
+    #[must_use]
     fn try_guess_from_document(document: &Document) -> Option<Self> {
         Self::try_from(EnglishDialectFlags::get_most_used_dialects_from_document(
             document,
@@ -59,13 +60,14 @@ impl Dialect for EnglishDialect {
     /// use harper_core::EnglishDialect;
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["US", "CA", "AU", "GB"];
+    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
     /// let mut dialects = abbrs.iter().map(|abbr| EnglishDialect::try_from_abbr(abbr));
     ///
     /// assert_eq!(Some(EnglishDialect::American), dialects.next().unwrap()); // US
     /// assert_eq!(Some(EnglishDialect::Canadian), dialects.next().unwrap()); // CA
     /// assert_eq!(Some(EnglishDialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(EnglishDialect::British), dialects.next().unwrap()); // GB
+    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -74,6 +76,7 @@ impl Dialect for EnglishDialect {
             "CA" => Some(Self::Canadian),
             "AU" => Some(Self::Australian),
             "GB" => Some(Self::British),
+            "IN" => Some(Self::Indian),
             _ => None,
         }
     }
@@ -103,6 +106,9 @@ impl TryFrom<EnglishDialectFlags> for EnglishDialect {
                 df if df.is_dialect_enabled_strict(EnglishDialect::British) => {
                     Ok(EnglishDialect::British)
                 }
+                df if df.is_dialect_enabled_strict(EnglishDialect::Indian) => {
+                    Ok(EnglishDialect::British)
+                }
                 _ => Err(()),
             }
         } else {
@@ -128,6 +134,7 @@ bitflags::bitflags! {
         const CANADIAN = EnglishDialect::Canadian as DialectFlagsUnderlyingType;
         const AUSTRALIAN = EnglishDialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = EnglishDialect::British as DialectFlagsUnderlyingType;
+        const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
@@ -150,6 +157,7 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
     ///
     /// This will panic if `dialect` represents a dialect that is not defined in
     /// `DialectFlags`.
+    #[must_use]
     fn from_dialect(dialect: EnglishDialect) -> Self {
         let Some(out) = Self::from_bits(dialect as DialectFlagsUnderlyingType) else {
             panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
@@ -162,8 +170,7 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
     /// If multiple dialects are used equally often, they will all be enabled in the returned
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
-    /// The second parameter is boilerplate because of the definition of the trait having to
-    /// be compatible with the DialectsEnum's functions
+    #[must_use]
     fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
         let mut dialect_counters: [(EnglishDialect, usize); EnglishDialect::COUNT] =

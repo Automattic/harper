@@ -28,16 +28,13 @@ pub struct FstDictionary {
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
-lazy_static! {
-    static ref DICT: Arc<FstDictionary> = Arc::new((*MutableDictionary::curated()).clone().into());
-}
-lazy_static! {
-    static ref DICT_PORTUGUESE: Arc<FstDictionary> = Arc::new(
-        (*MutableDictionary::curated_select_language(LanguageFamily::Portuguese))
-            .clone()
-            .into()
-    );
-}
+static DICT: LazyLock<Arc<FstDictionary>> =
+    LazyLock::new(|| Arc::new(*MutableDictionary::curated()));
+static DICT_PORTUGUESE: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
+    Arc::new(*MutableDictionary::curated_select_language(
+        LanguageFamily::Portuguese,
+    ))
+});
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a

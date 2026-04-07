@@ -18,7 +18,7 @@ pub enum InitialSound {
 /// It was produced through trial and error.
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
-pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound> {
+pub fn starts_with_vowel(word: &[char], dialect: impl Dialect) -> Option<InitialSound> {
     if word.is_empty() {
         return None;
     }

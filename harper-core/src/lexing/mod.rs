@@ -8,7 +8,6 @@ use url::lex_url;
 
 use self::email_address::lex_email_address;
 use crate::char_ext::CharExt;
-use crate::languages::LanguageFamily;
 use crate::punctuation::{Punctuation, Quote};
 use crate::{Number, Span, Token, TokenKind};
 
@@ -78,6 +77,28 @@ pub fn lex_english_token(source: &[char]) -> FoundToken {
         lex_email_address,
         lex_hostname_token,
         lex_word,
+    ]
+    .into_iter()
+    .find_map(|lexer| lexer(source))
+    .unwrap_or_else(lex_catch)
+}
+
+pub fn lex_portuguese_token(source: &[char]) -> FoundToken {
+    [
+        lex_regexish,
+        lex_punctuation,
+        lex_tabs,
+        lex_spaces,
+        lex_newlines,
+        // lex_plural_digit, // The Portugese language doesn't have this feature
+        lex_hex_number, // Before lex_number, which would match the initial 0
+        // lex_long_decade,  // This works in other ways in Portuguese
+        lex_number,
+        lex_url,
+        lex_email_address,
+        lex_hostname_token,
+        lex_word,
+        lex_catch,
     ]
     .into_iter()
     .find_map(|lexer| lexer(source))

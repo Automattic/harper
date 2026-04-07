@@ -19,7 +19,7 @@ mod irregular_verbs;
 pub mod language_detection;
 pub mod languages;
 mod lexing;
-pub mod linting;
+mod linting;
 mod mask;
 mod number;
 mod offsets;
@@ -39,7 +39,6 @@ mod vec_ext;
 pub mod weir;
 pub mod weirpack;
 
-use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};
 
 pub use case::{Case, CaseIterExt};
@@ -47,11 +46,10 @@ pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
 pub use dialects::dialect_trait::{Dialect, DialectFlags};
-pub use dialects::english::{EnglishDialect, EnglishDialectFlags};
 pub use dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
-    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, EnglishDialect,
+    EnglishDialectFlags, NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -60,7 +58,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
-use linting::Lint;
+pub use linting::{Lint, LintGroup, Linter};
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
@@ -174,12 +172,11 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
-    use crate::linting::Lint;
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
         Document, EnglishDialect,
-        linting::{LintGroup, Linter},
+        linting::{Lint, LintGroup, Linter},
         remove_overlaps,
     };
 
