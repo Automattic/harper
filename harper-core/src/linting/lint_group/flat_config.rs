@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 use std::mem;
+use std::sync::OnceLock;
 
-use cached::proc_macro::cached;
 use hashbrown::HashMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -27,6 +27,7 @@ where
 }
 
 /// The rule-level configuration for a [`LintGroup`].
+/// Previously named `LintGroupConfig`.
 /// Each child linter can be enabled, disabled, or set to a curated value.
 /// So named because it represents the structure of a [`LintGroup`] exactly: it's flat.
 #[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
@@ -37,14 +38,19 @@ pub struct FlatConfig {
     inner: HashMap<String, Option<bool>>,
 }
 
-#[cached]
-fn curated_config() -> FlatConfig {
-    // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
-    group.config
-}
-
 impl FlatConfig {
+    fn curated() -> Self {
+        static CURATED: OnceLock<FlatConfig> = OnceLock::new();
+
+        CURATED
+            .get_or_init(|| {
+                // The Dictionary and Dialect do not matter, we're just after the config.
+                let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
+                group.config
+            })
+            .clone()
+    }
+
     /// Check if a rule exists in the configuration.
     pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
         self.inner.contains_key(key.as_ref())
@@ -99,7 +105,7 @@ impl FlatConfig {
     }
 
     pub fn new_curated() -> Self {
-        curated_config()
+        Self::curated()
     }
 }
 
