@@ -26,6 +26,7 @@ use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
+use super::arrive_to::ArriveTo;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
@@ -516,6 +517,7 @@ impl LintGroup {
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
+        insert_expr_rule!(ArriveTo, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
