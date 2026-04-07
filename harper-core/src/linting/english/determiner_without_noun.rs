@@ -55,18 +55,34 @@ mod tests {
             "The and other options were ignored.",
             DeterminerWithoutNoun::default(),
             1,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn flags_indefinite_article_followed_by_conjunction() {
-        assert_lint_count("A because I said so.", DeterminerWithoutNoun::default(), 1);
-        assert_lint_count("An because I said so.", DeterminerWithoutNoun::default(), 1);
+        assert_lint_count(
+            "A because I said so.",
+            DeterminerWithoutNoun::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "An because I said so.",
+            DeterminerWithoutNoun::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_correct_use_with_noun() {
-        assert_lint_count("The dog barked.", DeterminerWithoutNoun::default(), 0);
+        assert_lint_count(
+            "The dog barked.",
+            DeterminerWithoutNoun::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -75,6 +91,7 @@ mod tests {
             "The dog and the cat played.",
             DeterminerWithoutNoun::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

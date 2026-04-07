@@ -223,26 +223,26 @@ mod tests {
 
     #[test]
     fn dont_flag_multiword_name_with_non_space() {
-        assert_lint_count("The, Olgas", UpdatePlaceNames::default(), 0);
+        assert_lint_count("The, Olgas", UpdatePlaceNames::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_multiword_name_with_hyphen() {
-        assert_lint_count("The-Olgas", UpdatePlaceNames::default(), 0);
+        assert_lint_count("The-Olgas", UpdatePlaceNames::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     // TODO: when both old and new names contain whitespace we don't copy the whitespace
     #[test]
     #[ignore = "tabs not supported as whitespace?"]
     fn flag_multiword_name_with_tabs() {
-        assert_lint_count("The\tOlgas", UpdatePlaceNames::default(), 1);
+        assert_lint_count("The\tOlgas", UpdatePlaceNames::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     // TODO: when both old and new names contain whitespace we don't copy the whitespace
     #[test]
     #[ignore = "newlines not supported as whitespace?"]
     fn flag_multiword_name_with_newline() {
-        assert_lint_count("The\nOlgas", UpdatePlaceNames::default(), 1);
+        assert_lint_count("The\nOlgas", UpdatePlaceNames::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -287,20 +287,12 @@ mod tests {
 
     #[test]
     fn update_two_word_name_with_two_word_name() {
-        assert_suggestion_result(
-            "Upper Volta is in Africa.",
-            UpdatePlaceNames::default(),
-            "Burkina Faso is in Africa.",
-        )
+        assert_suggestion_result("Upper Volta is in Africa.", UpdatePlaceNames::default(), "Burkina Faso is in Africa.", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn dont_flag_czech_republic() {
-        assert_lint_count(
-            "The Czech Republic is in Europe.",
-            UpdatePlaceNames::default(),
-            0,
-        );
+        assert_lint_count("The Czech Republic is in Europe.", UpdatePlaceNames::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     // NOTE: Can't handle place names with obligatory or compulsory "The" perfectly.

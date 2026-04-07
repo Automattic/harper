@@ -168,6 +168,7 @@ mod tests {
             "Between you and me, this stays here.",
             CompoundSubjectI::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -177,6 +178,7 @@ mod tests {
             "My mother and me, as usual, went to the park.",
             CompoundSubjectI::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

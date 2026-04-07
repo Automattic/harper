@@ -102,10 +102,6 @@ mod tests {
 
     #[test]
     fn allows_fast_way_to_test() {
-        assert_lint_count(
-            "Fast way to test daily defence teams?",
-            WayTooAdjective::default(),
-            0,
-        );
+        assert_lint_count("Fast way to test daily defence teams?", WayTooAdjective::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

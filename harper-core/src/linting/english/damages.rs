@@ -173,38 +173,22 @@ mod tests {
 
     #[test]
     fn fix_robust_against_damages_by_prev_preposition() {
-        assert_suggestion_result(
-            "Flow networks robust against damages are simple model networks described in a series of publications by Kaluza et al.",
-            Damages::default(),
-            "Flow networks robust against damage are simple model networks described in a series of publications by Kaluza et al.",
-        );
+        assert_suggestion_result("Flow networks robust against damages are simple model networks described in a series of publications by Kaluza et al.", Damages::default(), "Flow networks robust against damage are simple model networks described in a series of publications by Kaluza et al.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_vehicle_damages_on_a_car_by_fall_through() {
-        assert_suggestion_result(
-            "POC to select vehicle damages on a car and mark the severity - sudheeshcm/vehicle-damage-selector.",
-            Damages::default(),
-            "POC to select vehicle damage on a car and mark the severity - sudheeshcm/vehicle-damage-selector.",
-        );
+        assert_suggestion_result("POC to select vehicle damages on a car and mark the severity - sudheeshcm/vehicle-damage-selector.", Damages::default(), "POC to select vehicle damage on a car and mark the severity - sudheeshcm/vehicle-damage-selector.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_damages_on_mangoes() {
-        assert_suggestion_result(
-            "This is a web application that detects damages on mangoes using a TensorFlow model with Django as the frontend framework",
-            Damages::default(),
-            "This is a web application that detects damage on mangoes using a TensorFlow model with Django as the frontend framework",
-        );
+        assert_suggestion_result("This is a web application that detects damages on mangoes using a TensorFlow model with Django as the frontend framework", Damages::default(), "This is a web application that detects damage on mangoes using a TensorFlow model with Django as the frontend framework", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_types_of_damages_of_roads() {
-        assert_suggestion_result(
-            "Detecting different types of damages of roads like cracks and potholes for the given image/video of the road.",
-            Damages::default(),
-            "Detecting different types of damage of roads like cracks and potholes for the given image/video of the road.",
-        );
+        assert_suggestion_result("Detecting different types of damages of roads like cracks and potholes for the given image/video of the road.", Damages::default(), "Detecting different types of damage of roads like cracks and potholes for the given image/video of the road.", crate::languages::LanguageFamily::English);
     }
 
     // Examples from GitHub where it seems to be used correctly in regard to financial compensation:
@@ -212,56 +196,38 @@ mod tests {
     // TODO: would the word "calculate" before "damages" be a good heuristic?
     #[test]
     fn ignore_damages_in_lost_chance_cases() {
-        assert_no_lints(
-            "Code used for calculating damages in lost chance cases.",
-            Damages::default(),
-        );
+        assert_no_lints("Code used for calculating damages in lost chance cases.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_claim_for_damages() {
-        assert_no_lints(
-            "Where the dispute involves a claim for damages in respect of a motor accident for cost of rental of a replacement vehicle",
-            Damages::default(),
-        );
+        assert_no_lints("Where the dispute involves a claim for damages in respect of a motor accident for cost of rental of a replacement vehicle", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_pay_damages() {
-        assert_no_lints(
-            "Under this section, the Commercial Contributor would have to
+        assert_no_lints("Under this section, the Commercial Contributor would have to
             defend claims against the other Contributors related to those
             performance claims and warranties, and if a court requires any other
             Contributor to pay any damages as a result, the Commercial Contributor
-            must pay those damages.",
-            Damages::default(),
-        );
+            must pay those damages.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     // Examples from GitHub where it's not an error but a verb:
 
     #[test]
     fn ignore_damages_them() {
-        assert_no_lints(
-            "Profiles pb's and damages them when their runtime goes over a set value - sirhamsteralot/HaE-PBLimiter.",
-            Damages::default(),
-        );
+        assert_no_lints("Profiles pb's and damages them when their runtime goes over a set value - sirhamsteralot/HaE-PBLimiter.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_damages_firefox() {
-        assert_no_lints(
-            "Opening Wayland-native terminal damages Firefox",
-            Damages::default(),
-        );
+        assert_no_lints("Opening Wayland-native terminal damages Firefox", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_damages_underlaying_windows() {
-        assert_no_lints(
-            "Open File Requester damages underlaying windows when moved",
-            Damages::default(),
-        );
+        assert_no_lints("Open File Requester damages underlaying windows when moved", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     // Examples from GitHub that are too hard to call - maybe they are talking about financial compensation?
@@ -269,37 +235,25 @@ mod tests {
     #[test]
     #[ignore = "too close to call for now"]
     fn ignore_estimate_the_damages_and_the_damages_result() {
-        assert_no_lints(
-            "The goal is to estimate the damages of each link in the Graph object using the Damages result (estimating the damages for each segment of a Network).",
-            Damages::default(),
-        );
+        assert_no_lints("The goal is to estimate the damages of each link in the Graph object using the Damages result (estimating the damages for each segment of a Network).", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     // https://github.com › dpasmat › cartel-damages-inference
     #[test]
     #[ignore = "too close to call for now"]
     fn ignore_damages_inference() {
-        assert_no_lints(
-            "This repository contains code to conduct statistical inference in cartel damages estimation. It will be updated to include a Stata .do file which approximates the standard error of total damages from a fixed effects panel data model, using the delta method.",
-            Damages::default(),
-        );
+        assert_no_lints("This repository contains code to conduct statistical inference in cartel damages estimation. It will be updated to include a Stata .do file which approximates the standard error of total damages from a fixed effects panel data model, using the delta method.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "too close to call for now"]
     fn ignore_received_errors() {
-        assert_no_lints(
-            "Financial damages caused by received errors $$$$.",
-            Damages::default(),
-        );
+        assert_no_lints("Financial damages caused by received errors $$$$.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "too close to call for now"]
     fn ignore_asset_level_damages() {
-        assert_no_lints(
-            "It would be useful to be able to see asset-level damages after running FDA 2.0.",
-            Damages::default(),
-        );
+        assert_no_lints("It would be useful to be able to see asset-level damages after running FDA 2.0.", Damages::default(), crate::languages::LanguageFamily::English);
     }
 }

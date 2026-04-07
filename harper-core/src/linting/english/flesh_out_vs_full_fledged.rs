@@ -194,58 +194,34 @@ mod tests {
 
     #[test]
     fn full_fledge_hyphen() {
-        assert_suggestion_result(
-            "Or do we want to become a full-fledge out-of-core ml library?",
-            FleshOutVsFullFledged::default(),
-            "Or do we want to become a full-fledged out-of-core ml library?",
-        );
+        assert_suggestion_result("Or do we want to become a full-fledge out-of-core ml library?", FleshOutVsFullFledged::default(), "Or do we want to become a full-fledged out-of-core ml library?", crate::languages::LanguageFamily::English);
     }
 
     // full Vpast
 
     #[test]
     fn full_fleshed_space() {
-        assert_suggestion_result(
-            "Run a full fleshed ubuntu in termux without rooting your android.",
-            FleshOutVsFullFledged::default(),
-            "Run a full fledged ubuntu in termux without rooting your android.",
-        );
+        assert_suggestion_result("Run a full fleshed ubuntu in termux without rooting your android.", FleshOutVsFullFledged::default(), "Run a full fledged ubuntu in termux without rooting your android.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn full_fleshed_webscraper_hyphen() {
-        assert_suggestion_result(
-            "A full-fleshed webscraper web app build on Next.js13 with tracking the prices of different product you want",
-            FleshOutVsFullFledged::default(),
-            "A full-fledged webscraper web app build on Next.js13 with tracking the prices of different product you want",
-        );
+        assert_suggestion_result("A full-fleshed webscraper web app build on Next.js13 with tracking the prices of different product you want", FleshOutVsFullFledged::default(), "A full-fledged webscraper web app build on Next.js13 with tracking the prices of different product you want", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn full_fleshed_implementation_hyphen() {
-        assert_suggestion_result(
-            "almost provides a full-fleshed implementation allowing to read binary files into a tensor in a torchscript-compatible way.",
-            FleshOutVsFullFledged::default(),
-            "almost provides a full-fledged implementation allowing to read binary files into a tensor in a torchscript-compatible way.",
-        );
+        assert_suggestion_result("almost provides a full-fleshed implementation allowing to read binary files into a tensor in a torchscript-compatible way.", FleshOutVsFullFledged::default(), "almost provides a full-fledged implementation allowing to read binary files into a tensor in a torchscript-compatible way.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn full_pledged_space() {
-        assert_suggestion_result(
-            "Any plan to make full pledged php server with swoole?",
-            FleshOutVsFullFledged::default(),
-            "Any plan to make full fledged php server with swoole?",
-        );
+        assert_suggestion_result("Any plan to make full pledged php server with swoole?", FleshOutVsFullFledged::default(), "Any plan to make full fledged php server with swoole?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn full_pledged_hyphen() {
-        assert_suggestion_result(
-            "Not yet, but I am considering the full-pledged snapshotting built-in.",
-            FleshOutVsFullFledged::default(),
-            "Not yet, but I am considering the full-fledged snapshotting built-in.",
-        );
+        assert_suggestion_result("Not yet, but I am considering the full-pledged snapshotting built-in.", FleshOutVsFullFledged::default(), "Not yet, but I am considering the full-fledged snapshotting built-in.", crate::languages::LanguageFamily::English);
     }
 
     // FULLY
@@ -306,32 +282,20 @@ mod tests {
 
     #[test]
     fn fully_pledged_space() {
-        assert_suggestion_result(
-            "Overall, we are already moving closer to having a fully pledged distributed recording and replay.",
-            FleshOutVsFullFledged::default(),
-            "Overall, we are already moving closer to having a fully fledged distributed recording and replay.",
-        );
+        assert_suggestion_result("Overall, we are already moving closer to having a fully pledged distributed recording and replay.", FleshOutVsFullFledged::default(), "Overall, we are already moving closer to having a fully fledged distributed recording and replay.", crate::languages::LanguageFamily::English);
     }
 
     // V.LEMMA - out
 
     #[test]
     fn fledge_out() {
-        assert_suggestion_result(
-            "For this we could fledge out the rule evaluation in a library and link this library to the server.",
-            FleshOutVsFullFledged::default(),
-            "For this we could flesh out the rule evaluation in a library and link this library to the server.",
-        );
+        assert_suggestion_result("For this we could fledge out the rule evaluation in a library and link this library to the server.", FleshOutVsFullFledged::default(), "For this we could flesh out the rule evaluation in a library and link this library to the server.", crate::languages::LanguageFamily::English);
     }
 
     // V.PAST - out
 
     #[test]
     fn fledged_out_space() {
-        assert_suggestion_result(
-            "We will be talking more about this when the technical details a more fledged out.",
-            FleshOutVsFullFledged::default(),
-            "We will be talking more about this when the technical details a more fleshed out.",
-        );
+        assert_suggestion_result("We will be talking more about this when the technical details a more fledged out.", FleshOutVsFullFledged::default(), "We will be talking more about this when the technical details a more fleshed out.", crate::languages::LanguageFamily::English);
     }
 }

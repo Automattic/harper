@@ -77,75 +77,42 @@ mod tests {
 
     #[test]
     fn flag_whom_has() {
-        assert_suggestion_result(
-            "there is no course to whom has opened the most PRs",
-            WhomSubjectOfVerb::default(),
-            "there is no course to who has opened the most PRs",
-        );
+        assert_suggestion_result("there is no course to whom has opened the most PRs", WhomSubjectOfVerb::default(), "there is no course to who has opened the most PRs", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_whomever_wrote() {
-        assert_suggestion_result(
-            "To whomever wrote this course, I truly am not trying to be a jerk or ungrateful",
-            WhomSubjectOfVerb::default(),
-            "To whoever wrote this course, I truly am not trying to be a jerk or ungrateful",
-        );
+        assert_suggestion_result("To whomever wrote this course, I truly am not trying to be a jerk or ungrateful", WhomSubjectOfVerb::default(), "To whoever wrote this course, I truly am not trying to be a jerk or ungrateful", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "wrong kind of error"]
     fn dont_flag_wrong_kind_of_error() {
-        assert_lint_count(
-            "self service ticket view is not showing to whom is the ticket assigned to",
-            //   "self service ticket view is not showing to whom this ticket is assigned"
-            //   "self service ticket view is not showing whom this ticket is assigned to"
-            WhomSubjectOfVerb::default(),
-            0,
-        );
+        assert_lint_count("self service ticket view is not showing to whom is the ticket assigned to", WhomSubjectOfVerb::default(), 0, crate::languages::LanguageFamily::English)//   "self service ticket view is not showing to whom this ticket is assigned"//   "self service ticket view is not showing whom this ticket is assigned to";
     }
 
     #[test]
     fn dont_flag_whom_can() {
-        assert_suggestion_result(
-            "Whom can of course build a helper, but that is only a workaround.",
-            WhomSubjectOfVerb::default(),
-            "Who can of course build a helper, but that is only a workaround.",
-        );
+        assert_suggestion_result("Whom can of course build a helper, but that is only a workaround.", WhomSubjectOfVerb::default(), "Who can of course build a helper, but that is only a workaround.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_whomever_is() {
-        assert_suggestion_result(
-            "Whomever is making those harassing phone calls to me after I post something on Github - consider yourself put on notice.",
-            WhomSubjectOfVerb::default(),
-            "Whoever is making those harassing phone calls to me after I post something on Github - consider yourself put on notice.",
-        );
+        assert_suggestion_result("Whomever is making those harassing phone calls to me after I post something on Github - consider yourself put on notice.", WhomSubjectOfVerb::default(), "Whoever is making those harassing phone calls to me after I post something on Github - consider yourself put on notice.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_whom_is() {
-        assert_suggestion_result(
-            "I thought it might be good idea to address the topic of whom is \"allowed\" to merge.",
-            WhomSubjectOfVerb::default(),
-            "I thought it might be good idea to address the topic of who is \"allowed\" to merge.",
-        );
+        assert_suggestion_result("I thought it might be good idea to address the topic of whom is \"allowed\" to merge.", WhomSubjectOfVerb::default(), "I thought it might be good idea to address the topic of who is \"allowed\" to merge.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_whomsoever_will() {
-        assert_suggestion_result(
-            "This is a quick record of my discoveries and solution for whomsoever will be fixing the issue.",
-            WhomSubjectOfVerb::default(),
-            "This is a quick record of my discoveries and solution for whosoever will be fixing the issue.",
-        );
+        assert_suggestion_result("This is a quick record of my discoveries and solution for whomsoever will be fixing the issue.", WhomSubjectOfVerb::default(), "This is a quick record of my discoveries and solution for whosoever will be fixing the issue.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_many_of_whom() {
-        assert_no_lints(
-            "it's far from straightforward for new users, many of whom will likely have a lot to learn",
-            WhomSubjectOfVerb::default(),
-        );
+        assert_no_lints("it's far from straightforward for new users, many of whom will likely have a lot to learn", WhomSubjectOfVerb::default(), crate::languages::LanguageFamily::English);
     }
 }

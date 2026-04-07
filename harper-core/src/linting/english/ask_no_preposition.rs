@@ -101,6 +101,7 @@ mod tests {
             "She asked her mentor a difficult question.",
             AskNoPreposition::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -190,6 +191,7 @@ mod tests {
             "Ask her the question directly.",
             AskNoPreposition::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -199,12 +201,18 @@ mod tests {
             "He was told to leave immediately.",
             AskNoPreposition::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn ignores_tell_us() {
-        assert_lint_count("Please tell us your name.", AskNoPreposition::default(), 0);
+        assert_lint_count(
+            "Please tell us your name.",
+            AskNoPreposition::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -213,6 +221,7 @@ mod tests {
             "They asked about the schedule.",
             AskNoPreposition::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

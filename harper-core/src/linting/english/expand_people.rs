@@ -54,35 +54,21 @@ mod tests {
 
     #[test]
     fn fix_some_people() {
-        assert_suggestion_result(
-            "some ppl told my this problem from (ImGui_ImplWin32_WndProcHandler) and u need to add (WM_SIZE) but i don't know what should i do now :(",
-            ExpandPeople::default(),
-            "some people told my this problem from (ImGui_ImplWin32_WndProcHandler) and u need to add (WM_SIZE) but i don't know what should i do now :(",
-        );
+        assert_suggestion_result("some ppl told my this problem from (ImGui_ImplWin32_WndProcHandler) and u need to add (WM_SIZE) but i don't know what should i do now :(", ExpandPeople::default(), "some people told my this problem from (ImGui_ImplWin32_WndProcHandler) and u need to add (WM_SIZE) but i don't know what should i do now :(", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_all_people() {
-        assert_suggestion_result(
-            "Hi all, maybe all ppl with some experience on R, would know is not easy to debug or work with a language where there is no checks on types",
-            ExpandPeople::default(),
-            "Hi all, maybe all people with some experience on R, would know is not easy to debug or work with a language where there is no checks on types",
-        );
+        assert_suggestion_result("Hi all, maybe all ppl with some experience on R, would know is not easy to debug or work with a language where there is no checks on types", ExpandPeople::default(), "Hi all, maybe all people with some experience on R, would know is not easy to debug or work with a language where there is no checks on types", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_protected_process_light() {
-        assert_no_lints(
-            "Processes started as an Anti Malware 'Protected Process-Light' (PPL) are restricted in what they can do, can only load signed code, but cannot be debugged",
-            ExpandPeople::default(),
-        );
+        assert_no_lints("Processes started as an Anti Malware 'Protected Process-Light' (PPL) are restricted in what they can do, can only load signed code, but cannot be debugged", ExpandPeople::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_paired_point_lifting() {
-        assert_no_lints(
-            "In this work, we present an alternative lightweight strategy called Paired-Point Lifting (PPL) for constructing 3D line clouds.",
-            ExpandPeople::default(),
-        );
+        assert_no_lints("In this work, we present an alternative lightweight strategy called Paired-Point Lifting (PPL) for constructing 3D line clouds.", ExpandPeople::default(), crate::languages::LanguageFamily::English);
     }
 }

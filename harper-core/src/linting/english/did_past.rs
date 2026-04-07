@@ -129,184 +129,113 @@ mod tests {
 
     #[test]
     fn ed_did_forked() {
-        assert_suggestion_result(
-            "Did they forked the repo?",
-            DidPast::new(FstDictionary::curated()),
-            "Did they fork the repo?",
-        );
+        assert_suggestion_result("Did they forked the repo?", DidPast::new(FstDictionary::curated()), "Did they fork the repo?", crate::languages::LanguageFamily::English);
     }
 
     // Regular verb where past is lemma+d
 
     #[test]
     fn d_did_used() {
-        assert_suggestion_result(
-            "It didn't used a macro.",
-            DidPast::new(FstDictionary::curated()),
-            "It didn't use a macro.",
-        );
+        assert_suggestion_result("It didn't used a macro.", DidPast::new(FstDictionary::curated()), "It didn't use a macro.", crate::languages::LanguageFamily::English);
     }
 
     // Regular verb where past is lemma -y +ied
 
     #[test]
     fn y_did_fried() {
-        assert_suggestion_result(
-            "I hope that didn't fried any chips!",
-            DidPast::new(FstDictionary::curated()),
-            "I hope that didn't fry any chips!",
-        );
+        assert_suggestion_result("I hope that didn't fried any chips!", DidPast::new(FstDictionary::curated()), "I hope that didn't fry any chips!", crate::languages::LanguageFamily::English);
     }
 
     // Regular verb where past doubled the final consonant
 
     #[test]
     fn doubed_consonant_logged() {
-        assert_suggestion_result(
-            "There was a segfault but it did logged the error.",
-            DidPast::new(FstDictionary::curated()),
-            "There was a segfault but it did log the error.",
-        );
+        assert_suggestion_result("There was a segfault but it did logged the error.", DidPast::new(FstDictionary::curated()), "There was a segfault but it did log the error.", crate::languages::LanguageFamily::English);
     }
 
     // Test basic 'true positive' irregular verb cases
 
     #[test]
     fn did_past() {
-        assert_suggestion_result("Did went", DidPast::new(FstDictionary::curated()), "Did go");
+        assert_suggestion_result("Did went", DidPast::new(FstDictionary::curated()), "Did go", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_past_with_apostrophe() {
-        assert_suggestion_result(
-            "Didn't saw",
-            DidPast::new(FstDictionary::curated()),
-            "Didn't see",
-        );
+        assert_suggestion_result("Didn't saw", DidPast::new(FstDictionary::curated()), "Didn't see", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn didnt_past_no_apostrophe() {
-        assert_suggestion_result(
-            "Didnt had",
-            DidPast::new(FstDictionary::curated()),
-            "Didnt have",
-        );
+        assert_suggestion_result("Didnt had", DidPast::new(FstDictionary::curated()), "Didnt have", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_i_heard() {
-        assert_suggestion_result(
-            "Did I heard",
-            DidPast::new(FstDictionary::curated()),
-            "Did I hear",
-        );
+        assert_suggestion_result("Did I heard", DidPast::new(FstDictionary::curated()), "Did I hear", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_i_heard_with_apostrophe() {
-        assert_suggestion_result(
-            "Didn't we heard",
-            DidPast::new(FstDictionary::curated()),
-            "Didn't we hear",
-        );
+        assert_suggestion_result("Didn't we heard", DidPast::new(FstDictionary::curated()), "Didn't we hear", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn didnt_i_forgot_no_apostrophe() {
-        assert_suggestion_result(
-            "Didnt he forgot",
-            DidPast::new(FstDictionary::curated()),
-            "Didnt he forget",
-        );
+        assert_suggestion_result("Didnt he forgot", DidPast::new(FstDictionary::curated()), "Didnt he forget", crate::languages::LanguageFamily::English);
     }
 
     // Test basic 'true negative' cases - verb is valid as both lemma and simple past
 
     #[test]
     fn ignore_lemma_same_as_past_tense() {
-        assert_no_lints("Did read", DidPast::new(FstDictionary::curated()));
+        assert_no_lints("Did read", DidPast::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
     }
 
     // Real-world examples
 
     #[test]
     fn fix_did_you_cmae() {
-        assert_suggestion_result(
-            "How did you came to this",
-            DidPast::new(FstDictionary::curated()),
-            "How did you come to this",
-        );
+        assert_suggestion_result("How did you came to this", DidPast::new(FstDictionary::curated()), "How did you come to this", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_did_you_wrote() {
-        assert_suggestion_result(
-            "I'm very interested in the script, if you did wrote it.",
-            DidPast::new(FstDictionary::curated()),
-            "I'm very interested in the script, if you did write it.",
-        );
+        assert_suggestion_result("I'm very interested in the script, if you did wrote it.", DidPast::new(FstDictionary::curated()), "I'm very interested in the script, if you did write it.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_didnt_had() {
-        assert_suggestion_result(
-            "and i DO know that i didnt had any Terracota",
-            DidPast::new(FstDictionary::curated()),
-            "and i DO know that i didnt have any Terracota",
-        );
+        assert_suggestion_result("and i DO know that i didnt had any Terracota", DidPast::new(FstDictionary::curated()), "and i DO know that i didnt have any Terracota", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_you_went() {
-        assert_suggestion_result(
-            "Did you went out of memory maybe?",
-            DidPast::new(FstDictionary::curated()),
-            "Did you go out of memory maybe?",
-        );
+        assert_suggestion_result("Did you went out of memory maybe?", DidPast::new(FstDictionary::curated()), "Did you go out of memory maybe?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_did_needed() {
-        assert_suggestion_result(
-            "since our CI was broken this did needed to be done",
-            DidPast::new(FstDictionary::curated()),
-            "since our CI was broken this did need to be done",
-        );
+        assert_suggestion_result("since our CI was broken this did needed to be done", DidPast::new(FstDictionary::curated()), "since our CI was broken this did need to be done", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_did_thought() {
-        assert_suggestion_result(
-            "I did thought of adding it as a tooltip on hover",
-            DidPast::new(FstDictionary::curated()),
-            "I did think of adding it as a tooltip on hover",
-        );
+        assert_suggestion_result("I did thought of adding it as a tooltip on hover", DidPast::new(FstDictionary::curated()), "I did think of adding it as a tooltip on hover", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_did_wanted() {
-        assert_suggestion_result(
-            "I did wanted catch all errors in my previous example.",
-            DidPast::new(FstDictionary::curated()),
-            "I did want catch all errors in my previous example.",
-        );
+        assert_suggestion_result("I did wanted catch all errors in my previous example.", DidPast::new(FstDictionary::curated()), "I did want catch all errors in my previous example.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_did_not_changed() {
-        assert_suggestion_result(
-            "freeing space and reboot frequently did not changed anything",
-            DidPast::new(FstDictionary::curated()),
-            "freeing space and reboot frequently did not change anything",
-        );
+        assert_suggestion_result("freeing space and reboot frequently did not changed anything", DidPast::new(FstDictionary::curated()), "freeing space and reboot frequently did not change anything", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_did_you_read() {
-        assert_no_lints(
-            "Did You Read the Instructions?",
-            DidPast::new(FstDictionary::curated()),
-        );
+        assert_no_lints("Did You Read the Instructions?", DidPast::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
     }
 }

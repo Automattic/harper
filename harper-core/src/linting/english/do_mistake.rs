@@ -99,206 +99,118 @@ mod tests {
 
     #[test]
     fn did_a_mistake() {
-        assert_suggestion_result(
-            "Hi, I did a mistake in my NGINX config file and so once the container is launched, it logs the error...",
-            DoMistake::default(),
-            "Hi, I made a mistake in my NGINX config file and so once the container is launched, it logs the error...",
-        );
+        assert_suggestion_result("Hi, I did a mistake in my NGINX config file and so once the container is launched, it logs the error...", DoMistake::default(), "Hi, I made a mistake in my NGINX config file and so once the container is launched, it logs the error...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_my_mistakes() {
-        assert_suggestion_result(
-            "Where i did my mistakes?",
-            DoMistake::default(),
-            "Where i made my mistakes?",
-        );
+        assert_suggestion_result("Where i did my mistakes?", DoMistake::default(), "Where i made my mistakes?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_several_mistakes() {
-        assert_suggestion_result(
-            "Maybe I did several mistakes, but I can only find a message about one?",
-            DoMistake::default(),
-            "Maybe I made several mistakes, but I can only find a message about one?",
-        );
+        assert_suggestion_result("Maybe I did several mistakes, but I can only find a message about one?", DoMistake::default(), "Maybe I made several mistakes, but I can only find a message about one?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_some_mistakes() {
-        assert_suggestion_result(
-            "I made this program to learn goto use. but did some mistakes somewhere",
-            DoMistake::default(),
-            "I made this program to learn goto use. but made some mistakes somewhere",
-        );
+        assert_suggestion_result("I made this program to learn goto use. but did some mistakes somewhere", DoMistake::default(), "I made this program to learn goto use. but made some mistakes somewhere", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_that_mistake() {
-        assert_suggestion_result(
-            "and believe me, I did that mistake too",
-            DoMistake::default(),
-            "and believe me, I made that mistake too",
-        );
+        assert_suggestion_result("and believe me, I did that mistake too", DoMistake::default(), "and believe me, I made that mistake too", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_the_mistake() {
-        assert_suggestion_result(
-            "The issue describe is the person who did the mistake in the past & that same person is NOW correcting other people",
-            DoMistake::default(),
-            "The issue describe is the person who made the mistake in the past & that same person is NOW correcting other people",
-        );
+        assert_suggestion_result("The issue describe is the person who did the mistake in the past & that same person is NOW correcting other people", DoMistake::default(), "The issue describe is the person who made the mistake in the past & that same person is NOW correcting other people", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn did_this_mistake() {
-        assert_suggestion_result(
-            "Are there famous mathematicians who did this mistake?",
-            DoMistake::default(),
-            "Are there famous mathematicians who made this mistake?",
-        );
+        assert_suggestion_result("Are there famous mathematicians who did this mistake?", DoMistake::default(), "Are there famous mathematicians who made this mistake?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_many_mistakes() {
-        assert_suggestion_result(
-            "I observed that my coworkers do many mistakes using the field calculator",
-            DoMistake::default(),
-            "I observed that my coworkers make many mistakes using the field calculator",
-        );
+        assert_suggestion_result("I observed that my coworkers do many mistakes using the field calculator", DoMistake::default(), "I observed that my coworkers make many mistakes using the field calculator", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_mistake() {
-        assert_suggestion_result(
-            "If you do a mistake that causes alot of problems, please use the command to redo",
-            DoMistake::default(),
-            "If you make a mistake that causes alot of problems, please use the command to redo",
-        );
+        assert_suggestion_result("If you do a mistake that causes alot of problems, please use the command to redo", DoMistake::default(), "If you make a mistake that causes alot of problems, please use the command to redo", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_some_mistakes() {
-        assert_suggestion_result(
-            "so probably if my colleagues do some mistakes I tend to learn them as well",
-            DoMistake::default(),
-            "so probably if my colleagues make some mistakes I tend to learn them as well",
-        );
+        assert_suggestion_result("so probably if my colleagues do some mistakes I tend to learn them as well", DoMistake::default(), "so probably if my colleagues make some mistakes I tend to learn them as well", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_the_mistake() {
-        assert_suggestion_result(
-            "do I need to explicitly mention that I did not do the mistake to do not lose the point?",
-            DoMistake::default(),
-            "do I need to explicitly mention that I did not make the mistake to do not lose the point?",
-        );
+        assert_suggestion_result("do I need to explicitly mention that I did not do the mistake to do not lose the point?", DoMistake::default(), "do I need to explicitly mention that I did not make the mistake to do not lose the point?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_this_mistake() {
-        assert_suggestion_result(
-            "I barely remember any frontend developer that wouldn't do this mistake at least once.",
-            DoMistake::default(),
-            "I barely remember any frontend developer that wouldn't make this mistake at least once.",
-        );
+        assert_suggestion_result("I barely remember any frontend developer that wouldn't do this mistake at least once.", DoMistake::default(), "I barely remember any frontend developer that wouldn't make this mistake at least once.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_this_mistakes() {
-        assert_suggestion_result(
-            "I do this mistakes to check the command detekt with type resolution",
-            DoMistake::default(),
-            "I make this mistakes to check the command detekt with type resolution",
-        );
+        assert_suggestion_result("I do this mistakes to check the command detekt with type resolution", DoMistake::default(), "I make this mistakes to check the command detekt with type resolution", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn do_those_mistakes() {
-        assert_suggestion_result(
-            "An experienced developer could do those mistakes as well",
-            DoMistake::default(),
-            "An experienced developer could make those mistakes as well",
-        );
+        assert_suggestion_result("An experienced developer could do those mistakes as well", DoMistake::default(), "An experienced developer could make those mistakes as well", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn doing_a_mistake() {
-        assert_suggestion_result(
-            "Here at work, a colleague asked if we were doing a mistake by using the ReactDOM.renderToStaticMarkup on the client side.",
-            DoMistake::default(),
-            "Here at work, a colleague asked if we were making a mistake by using the ReactDOM.renderToStaticMarkup on the client side.",
-        );
+        assert_suggestion_result("Here at work, a colleague asked if we were doing a mistake by using the ReactDOM.renderToStaticMarkup on the client side.", DoMistake::default(), "Here at work, a colleague asked if we were making a mistake by using the ReactDOM.renderToStaticMarkup on the client side.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn doing_several_mistakes() {
-        assert_suggestion_result(
-            "I realized I was doing several mistakes",
-            DoMistake::default(),
-            "I realized I was making several mistakes",
-        );
+        assert_suggestion_result("I realized I was doing several mistakes", DoMistake::default(), "I realized I was making several mistakes", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn doing_the_mistkae() {
-        assert_suggestion_result(
-            "where am i doing the mistake?",
-            DoMistake::default(),
-            "where am i making the mistake?",
-        );
+        assert_suggestion_result("where am i doing the mistake?", DoMistake::default(), "where am i making the mistake?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn done_some_mistake() {
-        assert_suggestion_result(
-            "Might be I have done some mistake, that I do not know.",
-            DoMistake::default(),
-            "Might be I have made some mistake, that I do not know.",
-        );
+        assert_suggestion_result("Might be I have done some mistake, that I do not know.", DoMistake::default(), "Might be I have made some mistake, that I do not know.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn done_this_mistake() {
-        assert_suggestion_result(
-            "how many more users have done this mistake?",
-            DoMistake::default(),
-            "how many more users have made this mistake?",
-        );
+        assert_suggestion_result("how many more users have done this mistake?", DoMistake::default(), "how many more users have made this mistake?", crate::languages::LanguageFamily::English);
     }
 
     // False positives
 
     #[test]
     fn dont_flag_when_does_a_mistake() {
-        assert_no_lints(
-            "When does a mistake become standard usage? ",
-            DoMistake::default(),
-        );
+        assert_no_lints("When does a mistake become standard usage? ", DoMistake::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_did_that_mistake_verb() {
-        assert_no_lints(
-            "Did that mistake occurred before or after the day 2 backup?",
-            DoMistake::default(),
-        );
+        assert_no_lints("Did that mistake occurred before or after the day 2 backup?", DoMistake::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_does_this_mistake_verb() {
-        assert_no_lints(
-            "Does this mistake invalidate your thesis?",
-            DoMistake::default(),
-        );
+        assert_no_lints("Does this mistake invalidate your thesis?", DoMistake::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_does_the_mistake_verb() {
-        assert_no_lints(
-            "Does the mistake change the meaning of the quotation?",
-            DoMistake::default(),
-        );
+        assert_no_lints("Does the mistake change the meaning of the quotation?", DoMistake::default(), crate::languages::LanguageFamily::English);
     }
 }

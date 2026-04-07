@@ -95,11 +95,7 @@ mod tests {
 
     #[test]
     fn not_lint_with_correct_phrase() {
-        assert_lint_count(
-            "I'm living on the 3rd floor of a building.",
-            OnFloor::default(),
-            0,
-        );
+        assert_lint_count("I'm living on the 3rd floor of a building.", OnFloor::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -144,24 +140,16 @@ mod tests {
 
     #[test]
     fn no_lint_with_look_up_at() {
-        assert_lint_count("She looked up at the third floor.", OnFloor::default(), 0);
+        assert_lint_count("She looked up at the third floor.", OnFloor::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_with_stop_at() {
-        assert_lint_count(
-            "The elevator stops at the 3rd floor of a building.",
-            OnFloor::default(),
-            0,
-        );
+        assert_lint_count("The elevator stops at the 3rd floor of a building.", OnFloor::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_with_looking_up_at() {
-        assert_lint_count(
-            "The workers are looking up at the 3rd floor of a building.",
-            OnFloor::default(),
-            0,
-        );
+        assert_lint_count("The workers are looking up at the 3rd floor of a building.", OnFloor::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

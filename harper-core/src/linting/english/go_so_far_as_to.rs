@@ -80,71 +80,42 @@ mod tests {
 
     #[test]
     fn go_so_far_to() {
-        assert_suggestion_result(
-            "I'd even go so far to say as it's a good way to get started with getting things onto ...",
-            GoSoFarAsTo::default(),
-            "I'd even go so far as to say as it's a good way to get started with getting things onto ...",
-        );
+        assert_suggestion_result("I'd even go so far to say as it's a good way to get started with getting things onto ...", GoSoFarAsTo::default(), "I'd even go so far as to say as it's a good way to get started with getting things onto ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn goes_so_far_to() {
-        assert_suggestion_result(
-            "I believe Java goes so far to even throw a runtime exception.",
-            GoSoFarAsTo::default(),
-            "I believe Java goes so far as to even throw a runtime exception.",
-        );
+        assert_suggestion_result("I believe Java goes so far to even throw a runtime exception.", GoSoFarAsTo::default(), "I believe Java goes so far as to even throw a runtime exception.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn gone_so_far_to() {
-        assert_suggestion_result(
-            "I've gone so far to reinstall Mac OS, which got the runner to finally start",
-            GoSoFarAsTo::default(),
-            "I've gone so far as to reinstall Mac OS, which got the runner to finally start",
-        );
+        assert_suggestion_result("I've gone so far to reinstall Mac OS, which got the runner to finally start", GoSoFarAsTo::default(), "I've gone so far as to reinstall Mac OS, which got the runner to finally start", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn went_so_far_to() {
-        assert_suggestion_result(
-            "I've read these posts but only went so far to conclude that I need to potentially add sql statements into the blocks",
-            GoSoFarAsTo::default(),
-            "I've read these posts but only went so far as to conclude that I need to potentially add sql statements into the blocks",
-        );
+        assert_suggestion_result("I've read these posts but only went so far to conclude that I need to potentially add sql statements into the blocks", GoSoFarAsTo::default(), "I've read these posts but only went so far as to conclude that I need to potentially add sql statements into the blocks", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn went_so_far_to_adverb() {
-        assert_suggestion_result(
-            "I even went so far to manually replace the .AppImage with a different file in the Applications folder",
-            GoSoFarAsTo::default(),
-            "I even went so far as to manually replace the .AppImage with a different file in the Applications folder",
-        );
+        assert_suggestion_result("I even went so far to manually replace the .AppImage with a different file in the Applications folder", GoSoFarAsTo::default(), "I even went so far as to manually replace the .AppImage with a different file in the Applications folder", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "A false positive we can't detect due to the next word being a verb lemma"]
     fn dont_flag_going_so_far_to() {
-        assert_no_lints(
-            "Why dictate that the system must be canonically described through a textual syntax – especially after going so far to make that unnecessary?",
-            GoSoFarAsTo::default(),
-        );
+        assert_no_lints("Why dictate that the system must be canonically described through a textual syntax – especially after going so far to make that unnecessary?", GoSoFarAsTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_goes_so_far_to() {
-        assert_no_lints(
-            "... even so much that one line goes so far to the right",
-            GoSoFarAsTo::default(),
-        );
+        assert_no_lints("... even so much that one line goes so far to the right", GoSoFarAsTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_go_so_far_to() {
-        assert_no_lints(
-            "Unfortunetly, our logs don't go so far to that time, but I found something interesting.",
-            GoSoFarAsTo::default(),
-        );
+        assert_no_lints("Unfortunetly, our logs don't go so far to that time, but I found something interesting.", GoSoFarAsTo::default(), crate::languages::LanguageFamily::English);
     }
 }

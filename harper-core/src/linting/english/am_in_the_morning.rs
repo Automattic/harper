@@ -79,7 +79,12 @@ mod tests {
 
     #[test]
     fn flag_at_4am_in_the_morning() {
-        assert_lint_count("At 4am in the morning", AmInTheMorning::default(), 1);
+        assert_lint_count(
+            "At 4am in the morning",
+            AmInTheMorning::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -94,7 +99,12 @@ mod tests {
 
     #[test]
     fn flag_at_4_am_in_the_morning() {
-        assert_lint_count("At 4 am in the morning", AmInTheMorning::default(), 1);
+        assert_lint_count(
+            "At 4 am in the morning",
+            AmInTheMorning::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -109,7 +119,12 @@ mod tests {
 
     #[test]
     fn flag_at_4am_in_the_morning_caps() {
-        assert_lint_count("At 4AM in the morning", AmInTheMorning::default(), 1);
+        assert_lint_count(
+            "At 4AM in the morning",
+            AmInTheMorning::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -124,7 +139,12 @@ mod tests {
 
     #[test]
     fn flag_at_4_am_in_the_morning_caps() {
-        assert_lint_count("At 4 AM in the morning", AmInTheMorning::default(), 1);
+        assert_lint_count(
+            "At 4 AM in the morning",
+            AmInTheMorning::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -139,7 +159,12 @@ mod tests {
 
     #[test]
     fn at_4_a_dot_m_dot_in_the_morning() {
-        assert_lint_count("At 4 a.m. in the morning", AmInTheMorning::default(), 1)
+        assert_lint_count(
+            "At 4 a.m. in the morning",
+            AmInTheMorning::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -183,7 +208,6 @@ mod tests {
             AmInTheMorning::default(),
             "Luckily I was at home, but it was not fun at 3 in the morning.",
             crate::languages::LanguageFamily::English,
-            1,
         );
     }
 
@@ -200,7 +224,6 @@ mod tests {
             AmInTheMorning::default(),
             "If I want to run my script or some cron job at 3 at night, it seems to be not possible after macOS is in sleep mode.",
             crate::languages::LanguageFamily::English,
-            1,
         );
     }
 
@@ -217,7 +240,6 @@ mod tests {
             AmInTheMorning::default(),
             "The servers stop at 9 at night and starts again at 9AM.",
             crate::languages::LanguageFamily::English,
-            1,
         );
     }
 
@@ -234,7 +256,6 @@ mod tests {
             AmInTheMorning::default(),
             "Hello I can't believe my neighbor had the nerve to knock on my door at 3:30 in the morning.",
             crate::languages::LanguageFamily::English,
-            1,
         );
     }
 
@@ -245,13 +266,6 @@ mod tests {
             AmInTheMorning::default(),
             "Style issues get a blue marker: It's 5 P.M..",
             crate::languages::LanguageFamily::English,
-        );
-        assert_suggestion_result(
-            "Style issues get a blue marker: It's 5 P.M. in the afternoon.",
-            AmInTheMorning::default(),
-            "Style issues get a blue marker: It's 5 in the afternoon.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 

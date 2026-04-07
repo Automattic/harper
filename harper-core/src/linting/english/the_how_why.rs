@@ -116,20 +116,12 @@ mod tests {
 
     #[test]
     fn skip_how_to() {
-        assert_lint_count(
-            "I'd like to explain the how to install this properly.",
-            TheHowWhy::default(),
-            0,
-        );
+        assert_lint_count("I'd like to explain the how to install this properly.", TheHowWhy::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn skip_whos_who() {
-        assert_lint_count(
-            "We covered the who's who of corporate leadership last time.",
-            TheHowWhy::default(),
-            0,
-        );
+        assert_lint_count("We covered the who's who of corporate leadership last time.", TheHowWhy::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -164,10 +156,6 @@ mod tests {
 
     #[test]
     fn no_false_positive() {
-        assert_lint_count(
-            "These tips examine the how to fix your code quickly, plus the what's next.",
-            TheHowWhy::default(),
-            0,
-        );
+        assert_lint_count("These tips examine the how to fix your code quickly, plus the what's next.", TheHowWhy::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

@@ -110,7 +110,12 @@ mod tests {
 
     #[test]
     fn dont_flag_if_cant_is_part_of_noun_phrase() {
-        assert_lint_count("Cant cant be the same as jargon.", Cant::default(), 0);
+        assert_lint_count(
+            "Cant cant be the same as jargon.",
+            Cant::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -119,6 +124,7 @@ mod tests {
             "The CANT project is designed to allow people to screw around with CAN easily at layers 1/2.",
             Cant::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -139,6 +145,7 @@ mod tests {
             "CB Slang Dictionary is the distinctive anti-language, argot or cant which developed amongst users of citizens' band radio (CB), especially truck drivers",
             Cant::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

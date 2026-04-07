@@ -110,10 +110,7 @@ mod tests {
     #[test]
     #[ignore = "No punctuation between '... so far' and 'be it ...'"]
     fn missing_punctuation_false_positive() {
-        assert_no_lints(
-            "but it is failing for master and all the 11.x branches i have tried so far be it 11.0.0, 11.0.1 ...",
-            FarBeIt::default(),
-        );
+        assert_no_lints("but it is failing for master and all the 11.x branches i have tried so far be it 11.0.0, 11.0.1 ...", FarBeIt::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]

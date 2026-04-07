@@ -63,100 +63,56 @@ mod tests {
 
     #[test]
     fn replaces_basic_from() {
-        assert_suggestion_result(
-            "She was jealous from her sister's success.",
-            JealousOf::default(),
-            "She was jealous of her sister's success.",
-        );
+        assert_suggestion_result("She was jealous from her sister's success.", JealousOf::default(), "She was jealous of her sister's success.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_optional_determiner() {
-        assert_suggestion_result(
-            "He grew jealous from the attention.",
-            JealousOf::default(),
-            "He grew jealous of the attention.",
-        );
+        assert_suggestion_result("He grew jealous from the attention.", JealousOf::default(), "He grew jealous of the attention.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_pronoun_object() {
-        assert_suggestion_result(
-            "They became jealous from him.",
-            JealousOf::default(),
-            "They became jealous of him.",
-        );
+        assert_suggestion_result("They became jealous from him.", JealousOf::default(), "They became jealous of him.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_oov_target() {
-        assert_suggestion_result(
-            "I'm jealous from Zybrix.",
-            JealousOf::default(),
-            "I'm jealous of Zybrix.",
-        );
+        assert_suggestion_result("I'm jealous from Zybrix.", JealousOf::default(), "I'm jealous of Zybrix.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_uppercase_preposition() {
-        assert_suggestion_result(
-            "Jealous FROM his fame.",
-            JealousOf::default(),
-            "Jealous OF his fame.",
-        );
+        assert_suggestion_result("Jealous FROM his fame.", JealousOf::default(), "Jealous OF his fame.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_longer_phrase() {
-        assert_suggestion_result(
-            "They felt jealous from the sudden praise she received.",
-            JealousOf::default(),
-            "They felt jealous of the sudden praise she received.",
-        );
+        assert_suggestion_result("They felt jealous from the sudden praise she received.", JealousOf::default(), "They felt jealous of the sudden praise she received.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_minimal_phrase() {
-        assert_suggestion_result(
-            "jealous from success",
-            JealousOf::default(),
-            "jealous of success",
-        );
+        assert_suggestion_result("jealous from success", JealousOf::default(), "jealous of success", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_correct_usage() {
-        assert_lint_count(
-            "She was jealous of her sister's success.",
-            JealousOf::default(),
-            0,
-        );
+        assert_lint_count("She was jealous of her sister's success.", JealousOf::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_other_preposition_sequence() {
-        assert_lint_count(
-            "They stayed jealous from within the fortress.",
-            JealousOf::default(),
-            0,
-        );
+        assert_lint_count("They stayed jealous from within the fortress.", JealousOf::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fixes_following_gerund() {
-        assert_suggestion_result(
-            "He was jealous from being ignored.",
-            JealousOf::default(),
-            "He was jealous of being ignored.",
-        );
+        assert_suggestion_result("He was jealous from being ignored.", JealousOf::default(), "He was jealous of being ignored.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_numbers_after_from() {
-        assert_lint_count(
-            "She remained jealous from 2010 through 2015.",
-            JealousOf::default(),
-            0,
-        );
+        assert_lint_count("She remained jealous from 2010 through 2015.", JealousOf::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

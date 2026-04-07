@@ -157,7 +157,7 @@ mod tests {
 
     #[test]
     fn allows_you_want() {
-        assert_lint_count("What size do you want to be?", NominalWants::default(), 0);
+        assert_lint_count("What size do you want to be?", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -172,163 +172,101 @@ mod tests {
 
     #[test]
     fn ignores_correct_usage_they() {
-        assert_lint_count("They want to help.", NominalWants::default(), 0);
+        assert_lint_count("They want to help.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_he() {
-        assert_lint_count("He wants to help.", NominalWants::default(), 0);
+        assert_lint_count("He wants to help.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_that_1298() {
-        assert_lint_count(
-            "The projects that want to take it seriously are the best.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("The projects that want to take it seriously are the best.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_me() {
-        assert_lint_count(
-            "Take another person code make me want to die.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("Take another person code make me want to die.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_makes_me() {
-        assert_lint_count(
-            "It makes me want to not use GitHub at all.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("It makes me want to not use GitHub at all.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_us() {
-        assert_lint_count(
-            "... try harder to make us want to implement it.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("... try harder to make us want to implement it.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_made_us() {
-        assert_lint_count(
-            "This change made us want to adopt luxon's strict mode",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("This change made us want to adopt luxon's strict mode", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_help_us() {
-        assert_lint_count("... help us want to help you.", NominalWants::default(), 0);
+        assert_lint_count("... help us want to help you.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_you() {
-        assert_lint_count(
-            "I can certainly see why that would make you want to ditch Linux packaging.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("I can certainly see why that would make you want to ditch Linux packaging.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_makes_you() {
-        assert_lint_count(
-            "If something happens that makes you want to scream from the top of your lungs",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("If something happens that makes you want to scream from the top of your lungs", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_made_you() {
-        assert_lint_count(
-            "What made you want to leave the LibFuzzer ...",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("What made you want to leave the LibFuzzer ...", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_him() {
-        assert_lint_count(
-            "make him want to help with your issue",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("make him want to help with your issue", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_her() {
-        assert_lint_count(
-            "... and make her want to get into coding.",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("... and make her want to get into coding.", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_it() {
-        assert_lint_count(
-            "you just make it want to appear as a drama",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("you just make it want to appear as a drama", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_makes_it() {
-        assert_lint_count(
-            "using UHD makes it want to put labels in the corner saying UHD",
-            NominalWants::default(),
-            0,
-        );
+        assert_lint_count("using UHD makes it want to put labels in the corner saying UHD", NominalWants::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage_make_them() {
-        assert_lint_count(
-            "And make them want to believe in it.",
-            NominalWants::default(),
-            0,
-        )
+        assert_lint_count("And make them want to believe in it.", NominalWants::default(), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn ignores_correct_usage_making_them() {
-        assert_lint_count(
-            "you're annoying ALMOST ALL of the users and making them want to switch to another ...",
-            NominalWants::default(),
-            0,
-        )
+        assert_lint_count("you're annoying ALMOST ALL of the users and making them want to switch to another ...", NominalWants::default(), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn ignores_correct_usage_help_them() {
-        assert_lint_count("And help them want to do it.", NominalWants::default(), 0)
+        assert_lint_count("And help them want to do it.", NominalWants::default(), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn allows_want_to() {
-        assert_no_lints(
-            "Harper is a grammar checker for people who want to write fast.",
-            NominalWants::default(),
-        );
+        assert_no_lints("Harper is a grammar checker for people who want to write fast.", NominalWants::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_2007() {
-        assert_no_lints(
-            "### 🙌 **We Want to Hear From You!**",
-            NominalWants::default(),
-        )
+        assert_no_lints("### 🙌 **We Want to Hear From You!**", NominalWants::default(), crate::languages::LanguageFamily::English)
     }
 }

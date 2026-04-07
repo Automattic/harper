@@ -325,25 +325,21 @@ mod tests_context {
 
     #[test]
     fn simple_test_123() {
-        assert_suggestion_result("one two three", TestSimpleLinter::default(), "one 2 three");
+        assert_suggestion_result("one two three", TestSimpleLinter::default(), "one 2 three", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn context_test_123() {
-        assert_suggestion_result("one two three", TestContextLinter::default(), "one > three");
+        assert_suggestion_result("one two three", TestContextLinter::default(), "one > three", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn context_test_321() {
-        assert_suggestion_result("three two one", TestContextLinter::default(), "three < one");
+        assert_suggestion_result("three two one", TestContextLinter::default(), "three < one", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn sentence_test_123() {
-        assert_suggestion_result(
-            "one, two, two, three",
-            TestSentenceLinter::default(),
-            "one, 2&2, three",
-        );
+        assert_suggestion_result("one, two, two, three", TestSentenceLinter::default(), "one, 2&2, three", crate::languages::LanguageFamily::English);
     }
 }

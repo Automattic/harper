@@ -126,11 +126,7 @@ mod tests {
 
     #[test]
     fn offers_be_option() {
-        assert_suggestion_result(
-            "It may seen impossible to finish.",
-            ModalSeem::default(),
-            "It may be impossible to finish.",
-        );
+        assert_suggestion_result("It may seen impossible to finish.", ModalSeem::default(), "It may be impossible to finish.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -165,28 +161,21 @@ mod tests {
 
     #[test]
     fn ignores_correct_seem() {
-        assert_no_lints("It may seem impossible to finish.", ModalSeem::default());
+        assert_no_lints("It may seem impossible to finish.", ModalSeem::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_modal_with_be_seen() {
-        assert_no_lints("It may be seen as unfair.", ModalSeem::default());
+        assert_no_lints("It may be seen as unfair.", ModalSeem::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_modal_seen_noun() {
-        assert_no_lints(
-            "It may seen results sooner than expected.",
-            ModalSeem::default(),
-        );
+        assert_no_lints("It may seen results sooner than expected.", ModalSeem::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_modal_seen_clause() {
-        assert_lint_count(
-            "It may seen that we are improving.",
-            ModalSeem::default(),
-            0,
-        );
+        assert_lint_count("It may seen that we are improving.", ModalSeem::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

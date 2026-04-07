@@ -66,11 +66,7 @@ mod tests {
 
     #[test]
     fn offers_past_tense_option() {
-        assert_suggestion_result(
-            "We through away the old code.",
-            ThrowAway::default(),
-            "We threw away the old code.",
-        );
+        assert_suggestion_result("We through away the old code.", ThrowAway::default(), "We threw away the old code.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -105,35 +101,22 @@ mod tests {
 
     #[test]
     fn does_not_flag_throw_away() {
-        assert_no_lints(
-            "They throw away the packaging every time.",
-            ThrowAway::default(),
-        );
+        assert_no_lints("They throw away the packaging every time.", ThrowAway::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_through_tunnel() {
-        assert_no_lints(
-            "They walked through the tunnel away from danger.",
-            ThrowAway::default(),
-        );
+        assert_no_lints("They walked through the tunnel away from danger.", ThrowAway::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flags_multiple_occurrences() {
-        assert_lint_count(
-            "We through away the forks and through away the spoons.",
-            ThrowAway::default(),
-            2,
-        );
+        assert_lint_count("We through away the forks and through away the spoons.", ThrowAway::default(), 2, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_thorough() {
-        assert_no_lints(
-            "She gave the room a thorough, away-from-home cleaning.",
-            ThrowAway::default(),
-        );
+        assert_no_lints("She gave the room a thorough, away-from-home cleaning.", ThrowAway::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -148,9 +131,6 @@ mod tests {
 
     #[test]
     fn does_not_flag_spread_words() {
-        assert_no_lints(
-            "They pushed through as the crowd moved away.",
-            ThrowAway::default(),
-        );
+        assert_no_lints("They pushed through as the crowd moved away.", ThrowAway::default(), crate::languages::LanguageFamily::English);
     }
 }

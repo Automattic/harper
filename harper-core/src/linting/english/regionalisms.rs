@@ -780,82 +780,46 @@ mod tests {
 
     #[test]
     fn caravan_doesnt_always_mean_trailer() {
-        assert_lint_count(
-            "A caravan (from Persian کاروان kârvân) is a group of people traveling together, often on a trade expedition. Caravans were used mainly in desert areas.",
-            Regionalisms::new(EnglishDialect::British),
-            0,
-        )
+        assert_lint_count("A caravan (from Persian کاروان kârvân) is a group of people traveling together, often on a trade expedition. Caravans were used mainly in desert areas.", Regionalisms::new(EnglishDialect::British), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn uk_to_us_windscreen() {
-        assert_suggestion_result(
-            "Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.",
-            Regionalisms::new(EnglishDialect::American),
-            "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.",
-        )
+        assert_suggestion_result("Detect raindrops on vehicle windscreen by combining various region proposal algorithm with Convolutional Neural Network.", Regionalisms::new(EnglishDialect::American), "Detect raindrops on vehicle windshield by combining various region proposal algorithm with Convolutional Neural Network.", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn au_to_uk_blood_nose() {
-        assert_suggestion_result(
-            "Oh no! I got a blood nose.",
-            Regionalisms::new(Dialect::British),
-            "Oh no! I got a nosebleed.",
-        )
+        assert_suggestion_result("Oh no! I got a blood nose.", Regionalisms::new(Dialect::British), "Oh no! I got a nosebleed.", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn in_to_non_in_updation() {
-        assert_suggestion_result(
-            "Add apps to queue for updation or installation and resize it.",
-            Regionalisms::new(Dialect::American),
-            "Add apps to queue for update or installation and resize it.",
-        )
+        assert_suggestion_result("Add apps to queue for updation or installation and resize it.", Regionalisms::new(Dialect::American), "Add apps to queue for update or installation and resize it.", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn dont_flag_update_or_updation_for_indian() {
-        assert_lint_count(
-            "Hey, the colab notebook which you have provided, required lot of updations, Can you pls update it.",
-            Regionalisms::new(Dialect::Indian),
-            0,
-        )
+        assert_lint_count("Hey, the colab notebook which you have provided, required lot of updations, Can you pls update it.", Regionalisms::new(Dialect::Indian), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn flag_crore_and_lakh_for_non_indian() {
-        assert_lint_count(
-            "There are 100 lakhs in one crore.",
-            Regionalisms::new(Dialect::American),
-            2,
-        )
+        assert_lint_count("There are 100 lakhs in one crore.", Regionalisms::new(Dialect::American), 2, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn dont_flag_lakh_or_crore_for_indian() {
-        assert_lint_count(
-            "There are 100 lakhs in one crore.",
-            Regionalisms::new(Dialect::Indian),
-            0,
-        )
+        assert_lint_count("There are 100 lakhs in one crore.", Regionalisms::new(Dialect::Indian), 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn a_brinjal_is_an_aubergine() {
-        assert_suggestion_result(
-            "Is brinjal used in curries or chutneys?",
-            Regionalisms::new(Dialect::British),
-            "Is aubergine used in curries or chutneys?",
-        );
+        assert_suggestion_result("Is brinjal used in curries or chutneys?", Regionalisms::new(Dialect::British), "Is aubergine used in curries or chutneys?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn a_brinjal_is_an_eggplant() {
-        assert_suggestion_result(
-            "Is brinjal used in curries or chutneys?",
-            Regionalisms::new(Dialect::Australian),
-            "Is eggplant used in curries or chutneys?",
-        );
+        assert_suggestion_result("Is brinjal used in curries or chutneys?", Regionalisms::new(Dialect::Australian), "Is eggplant used in curries or chutneys?", crate::languages::LanguageFamily::English);
     }
 }

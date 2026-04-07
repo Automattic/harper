@@ -93,17 +93,32 @@ mod tests {
 
     #[test]
     fn catches_basic() {
-        assert_lint_count("I wanted the the banana.", RepeatedWords::default(), 1)
+        assert_lint_count(
+            "I wanted the the banana.",
+            RepeatedWords::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn does_not_lint_homographs_address() {
-        assert_lint_count("To address address problems.", RepeatedWords::default(), 0);
+        assert_lint_count(
+            "To address address problems.",
+            RepeatedWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_lint_homographs_record() {
-        assert_lint_count("To record record profits.", RepeatedWords::default(), 0);
+        assert_lint_count(
+            "To record record profits.",
+            RepeatedWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -112,6 +127,7 @@ mod tests {
             "this paper shows that, while the method may be more accurate accurate, the turnout overestimate suggests that self-selection bias is not sufficiently reduced",
             RepeatedWords::default(),
             1,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -171,11 +187,17 @@ mod tests {
             "The driver-facing camera and microphone are only logged if you explicitly opt-in in settings.",
             RepeatedWords::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn dont_flag_hyphenated_either_side() {
-        assert_lint_count("foo-foo foo bar bar-bar", RepeatedWords::default(), 0);
+        assert_lint_count(
+            "foo-foo foo bar bar-bar",
+            RepeatedWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -92,29 +92,17 @@ mod tests {
 
     #[test]
     fn ignore_correct() {
-        assert_lint_count(
-            "Don't shoot yourself in the foot.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("Don't shoot yourself in the foot.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_title_case() {
-        assert_lint_count(
-            "Don't Shoot Yourself In The Foot.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("Don't Shoot Yourself In The Foot.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_all_caps() {
-        assert_lint_count(
-            "DON'T SHOOT YOURSELF IN THE FOOT.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("DON'T SHOOT YOURSELF IN THE FOOT.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -149,20 +137,12 @@ mod tests {
 
     #[test]
     fn ignore_themselves_foot() {
-        assert_lint_count(
-            "Thou shalt not make a rule that prevents C++ programmers from shooting themselves in the foot.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("Thou shalt not make a rule that prevents C++ programmers from shooting themselves in the foot.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_ourselves_feet() {
-        assert_lint_count(
-            "It will help avoiding shooting ourselves in the feet.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("It will help avoiding shooting ourselves in the feet.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -187,11 +167,7 @@ mod tests {
 
     #[test]
     fn ignore_shooting_oneself_in_the_foot() {
-        assert_lint_count(
-            "A historical document of shooting oneself in the foot, if you will.",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("A historical document of shooting oneself in the foot, if you will.", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -226,10 +202,6 @@ mod tests {
 
     #[test]
     fn ignore_oneself_in_the_toes() {
-        assert_lint_count(
-            "Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the toes",
-            ShootOneselfInTheFoot::default(),
-            0,
-        );
+        assert_lint_count("Forgetting to declare some variable local withing a function definition is a common way to shoot oneself in the toes", ShootOneselfInTheFoot::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

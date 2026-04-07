@@ -96,32 +96,58 @@ mod tests {
             "That's not the whole truth, it's just a part.",
             APart::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn allow_normal_use_of_apart() {
-        assert_lint_count("You shouldn't have taken it apart.", APart::default(), 0);
+        assert_lint_count(
+            "You shouldn't have taken it apart.",
+            APart::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_normal_use_of_a_part_of() {
-        assert_lint_count("The elbow is a part of the arm.", APart::default(), 0);
+        assert_lint_count(
+            "The elbow is a part of the arm.",
+            APart::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_normal_use_of_apart_from() {
-        assert_lint_count("Apart from one error, the code works.", APart::default(), 0);
+        assert_lint_count(
+            "Apart from one error, the code works.",
+            APart::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_normal_us_of_fall_apart() {
-        assert_lint_count("The roof fell apart.", APart::default(), 0);
+        assert_lint_count(
+            "The roof fell apart.",
+            APart::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_normal_use_of_far_apart() {
-        assert_lint_count("Okinawa and Hokkaido are far apart.", APart::default(), 0);
+        assert_lint_count(
+            "Okinawa and Hokkaido are far apart.",
+            APart::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

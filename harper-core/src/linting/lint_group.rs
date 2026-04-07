@@ -249,8 +249,8 @@ use super::english::wordpress_dotcom::WordPressDotcom;
 use super::english::worth_to_do::WorthToDo;
 use super::english::would_never_have::WouldNeverHave;
 use super::english::wrong_apostrophe::WrongApostrophe;
-use super::english::{HtmlDescriptionLinter, Linter};
 use super::expr_linter::run_on_chunk;
+use super::{HtmlDescriptionLinter, Linter};
 use crate::languages::Language;
 use crate::linting::english::dashes::Dashes;
 use crate::linting::english::open_compounds::OpenCompounds;
@@ -974,9 +974,11 @@ mod tests {
     use std::sync::Arc;
 
     use super::{LintGroup, LintGroupConfig};
+    use crate::EnglishDialect;
     use crate::languages::Language;
-    use crate::linting::EnglishLinter;
+    use crate::languages::LanguageFamily;
     use crate::linting::LintKind;
+    use crate::linting::Linter;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document};
@@ -993,12 +995,17 @@ mod tests {
         assert_no_lints(
             "Although I only saw the need to interject once, I still saw it.",
             test_group(),
+            LanguageFamily::English,
         );
     }
 
     #[test]
     fn clean_consensus() {
-        assert_no_lints("But there is less consensus on this.", test_group());
+        assert_no_lints(
+            "But there is less consensus on this.",
+            test_group(),
+            LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -1024,6 +1031,7 @@ mod tests {
         assert_no_lints(
             "The standard form is low-hanging fruit with a hyphen and singular form.",
             test_group(),
+            LanguageFamily::English,
         );
     }
 
@@ -1032,6 +1040,7 @@ mod tests {
         assert_no_lints(
             "Corrects nonstandard variants of low-hanging fruit.",
             test_group(),
+            LanguageFamily::English,
         );
     }
 

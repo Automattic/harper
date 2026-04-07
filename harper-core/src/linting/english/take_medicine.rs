@@ -118,118 +118,66 @@ mod tests {
 
     #[test]
     fn swaps_ate_antibiotics() {
-        assert_suggestion_result(
-            "I ate antibiotics for a week.",
-            TakeMedicine::default(),
-            "I took antibiotics for a week.",
-        );
+        assert_suggestion_result("I ate antibiotics for a week.", TakeMedicine::default(), "I took antibiotics for a week.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eat_medicine() {
-        assert_suggestion_result(
-            "You should eat the medicine now.",
-            TakeMedicine::default(),
-            "You should take the medicine now.",
-        );
+        assert_suggestion_result("You should eat the medicine now.", TakeMedicine::default(), "You should take the medicine now.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eats_medication() {
-        assert_suggestion_result(
-            "She eats medication daily.",
-            TakeMedicine::default(),
-            "She takes medication daily.",
-        );
+        assert_suggestion_result("She eats medication daily.", TakeMedicine::default(), "She takes medication daily.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eating_medicines() {
-        assert_suggestion_result(
-            "Are you eating medicines for that illness?",
-            TakeMedicine::default(),
-            "Are you taking medicines for that illness?",
-        );
+        assert_suggestion_result("Are you eating medicines for that illness?", TakeMedicine::default(), "Are you taking medicines for that illness?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eaten_medication() {
-        assert_suggestion_result(
-            "He has eaten medication already.",
-            TakeMedicine::default(),
-            "He has taken medication already.",
-        );
+        assert_suggestion_result("He has eaten medication already.", TakeMedicine::default(), "He has taken medication already.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eat_pills() {
-        assert_suggestion_result(
-            "He ate the pills without water.",
-            TakeMedicine::default(),
-            "He took the pills without water.",
-        );
+        assert_suggestion_result("He ate the pills without water.", TakeMedicine::default(), "He took the pills without water.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn swaps_eating_paracetamol() {
-        assert_suggestion_result(
-            "She is eating paracetamol for her headache.",
-            TakeMedicine::default(),
-            "She is taking paracetamol for her headache.",
-        );
+        assert_suggestion_result("She is eating paracetamol for her headache.", TakeMedicine::default(), "She is taking paracetamol for her headache.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_possessive_modifier() {
-        assert_suggestion_result(
-            "Please eat my antibiotics.",
-            TakeMedicine::default(),
-            "Please take my antibiotics.",
-        );
+        assert_suggestion_result("Please eat my antibiotics.", TakeMedicine::default(), "Please take my antibiotics.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_adjectives() {
-        assert_suggestion_result(
-            "They ate the prescribed antibiotics.",
-            TakeMedicine::default(),
-            "They took the prescribed antibiotics.",
-        );
+        assert_suggestion_result("They ate the prescribed antibiotics.", TakeMedicine::default(), "They took the prescribed antibiotics.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn supports_uppercase() {
-        assert_suggestion_result(
-            "Eat antibiotics with water.",
-            TakeMedicine::default(),
-            "Take antibiotics with water.",
-        );
+        assert_suggestion_result("Eat antibiotics with water.", TakeMedicine::default(), "Take antibiotics with water.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn offers_swallow_alternative() {
-        assert_suggestion_result(
-            "He ate the medication without water.",
-            TakeMedicine::default(),
-            "He swallowed the medication without water.",
-        );
+        assert_suggestion_result("He ate the medication without water.", TakeMedicine::default(), "He swallowed the medication without water.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_usage() {
-        assert_lint_count(
-            "She took antibiotics last winter.",
-            TakeMedicine::default(),
-            0,
-        );
+        assert_lint_count("She took antibiotics last winter.", TakeMedicine::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_unrelated_eat() {
-        assert_lint_count(
-            "They ate dinner after taking medicine.",
-            TakeMedicine::default(),
-            0,
-        );
+        assert_lint_count("They ate dinner after taking medicine.", TakeMedicine::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

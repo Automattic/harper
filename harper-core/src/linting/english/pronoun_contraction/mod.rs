@@ -59,6 +59,7 @@ mod tests {
             "In case you're still not convinced.",
             PronounContraction::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -68,12 +69,19 @@ mod tests {
             "If you're not happy you try again.",
             PronounContraction::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
-        assert_lint_count("No you're not.", PronounContraction::default(), 0);
+        assert_lint_count(
+            "No you're not.",
+            PronounContraction::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
         assert_lint_count(
             "Even if you're not fluent in arm assembly, you surely noticed this.",
             PronounContraction::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

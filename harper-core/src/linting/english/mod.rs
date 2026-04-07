@@ -2,7 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
-pub mod a_part;
+pub(super) mod a_part;
 pub(super) mod a_while;
 pub(super) mod addicting;
 pub(super) mod adjective_double_degree;
@@ -14,6 +14,7 @@ pub(super) mod allow_to;
 pub(super) mod am_in_the_morning;
 pub(super) mod amounts_for;
 pub(super) mod an_a;
+pub(super) mod and_in;
 pub(super) mod and_the_like;
 pub(super) mod another_thing_coming;
 pub(super) mod another_think_coming;
@@ -24,6 +25,7 @@ pub(super) mod avoid_curses;
 pub(super) mod back_in_the_day;
 pub(super) mod be_adjective_confusions;
 pub(super) mod be_allowed;
+pub(super) mod be_worried;
 pub(super) mod behind_the_scenes;
 pub(super) mod best_of_all_time;
 pub(super) mod boring_words;
@@ -258,6 +260,7 @@ pub(super) mod worth_to_do;
 pub(super) mod would_never_have;
 pub(super) mod wrong_apostrophe;
 
+use super::Linter;
 use super::expr_linter::ExprLinter;
 use super::lint::Lint;
 use super::lint_group::LintGroup;
@@ -272,10 +275,12 @@ pub mod tests {
     use crate::languages::LanguageFamily;
     use crate::linting::Linter;
     use crate::{Document, Span};
-    use hashbrown::HashSet;
 
     /// Extension trait for converting spans of tokens back to their original text
-    use crate::linting::tests::{SpanVecExt, assert_no_lints};
+    use crate::linting::tests::{
+        DocumentType, SpanVecExt, assert_lint_count_plain_english as assert_lint_count,
+        assert_no_lints, assert_suggestion_result, search_for_suggestion,
+    };
 
     // Special Linter just for testing
     use super::{LintKind, Suggestion};
@@ -341,34 +346,80 @@ pub mod tests {
 
     // Before the asserts, let's test that the test linter itself has the behaviours we intend
     mod linter_tests {
-        use super::linter_tests::{assert_lint_count, assert_suggestion_result};
+        use crate::linting::english::tests::TestLinter;
+        use crate::linting::tests::assert_suggestion_result;
 
         #[test]
         fn test_1_to_1_error_to_fix() {
-            assert_suggestion_result("bad", TestLinter::new(&[(&["bad"], &["good"])]), "good");
+            assert_suggestion_result(
+                "bad",
+                TestLinter::new(&[(&["bad"], &["good"])]),
+                "good",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn test_1_to_2_error_to_fixes() {
             let linter = TestLinter::new(&[(&["bad"], &["good1", "good2"])]);
-            assert_suggestion_result("bad", linter.clone(), "good1");
-            assert_suggestion_result("bad", linter, "good2");
+            assert_suggestion_result(
+                "bad",
+                linter.clone(),
+                "good1",
+                crate::languages::LanguageFamily::English,
+            );
+            assert_suggestion_result(
+                "bad",
+                linter,
+                "good2",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn test_2_to_1_errors_to_fix() {
             let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good"])]);
-            assert_suggestion_result("bad1", linter.clone(), "good");
-            assert_suggestion_result("bad2", linter, "good");
+            assert_suggestion_result(
+                "bad1",
+                linter.clone(),
+                "good",
+                crate::languages::LanguageFamily::English,
+            );
+            assert_suggestion_result(
+                "bad2",
+                linter,
+                "good",
+                crate::languages::LanguageFamily::English,
+            );
         }
 
         #[test]
         fn test_2_to_2_errors_to_fixes() {
             let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good1", "good2"])]);
-            assert_suggestion_result("bad1", linter.clone(), "good1");
-            assert_suggestion_result("bad2", linter.clone(), "good2");
-            assert_suggestion_result("bad1", linter.clone(), "good2");
-            assert_suggestion_result("bad2", linter, "good1");
+            assert_suggestion_result(
+                "bad1",
+                linter.clone(),
+                "good1",
+                crate::languages::LanguageFamily::English,
+            );
+            assert_suggestion_result(
+                "bad2",
+                linter.clone(),
+                "good2",
+                crate::languages::LanguageFamily::English,
+            );
+            assert_suggestion_result(
+                "bad1",
+                linter.clone(),
+                "good2",
+                crate::languages::LanguageFamily::English,
+            );
+            assert_suggestion_result(
+                "bad2",
+                linter,
+                "good1",
+                crate::languages::LanguageFamily::English,
+            );
         }
     }
 
@@ -440,13 +491,19 @@ pub mod tests {
             "find the misstake and fix it",
             TestLinter::new(&[(&["misstake"], &["mistake"])]),
             "find the mistake and fix it",
+            LanguageFamily::English,
         );
     }
 
     #[test]
     #[should_panic]
     fn verify_unable_to_fix_one_spanish_lint() {
-        assert_suggestion_result("Hay una orrrer", TestLinter::new(&[]), "Hay una error");
+        assert_suggestion_result(
+            "Hay una orrrer",
+            TestLinter::new(&[]),
+            "Hay una error",
+            LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -455,6 +512,7 @@ pub mod tests {
             "find two misstakes and fix theem",
             TestLinter::new(&[(&["misstakes"], &["mistakes"]), (&["theem"], &["them"])]),
             "find two mistakes and fix them",
+            LanguageFamily::English,
         );
     }
 
@@ -474,6 +532,7 @@ pub mod tests {
                 (&["occured"], &["occurred"]),
             ]),
             "Please receive the payment until their authorization occurred",
+            LanguageFamily::English,
         );
     }
 
@@ -521,87 +580,6 @@ pub mod tests {
         );
     }
 
-    // TODO verify many suggestions including the one we want succeeds
-    // TODO verify many suggestions but not the one we want fails
-
-    /// Asserts both that the given text matches the expected good suggestions and that none of the
-    /// suggestions are in the bad suggestions list.
-    /// TODO: Reimplement similar to `search_suggestion_tree`
-    #[track_caller]
-    pub fn assert_good_and_bad_suggestions(
-        text: &str,
-        mut linter: impl Linter,
-        good: &[&str],
-        bad: &[&str],
-    ) {
-        let test = Document::new_plain_english_curated(text);
-        let lints = linter.lint(&test);
-
-        let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
-        let mut found_bad = Vec::new();
-        let mut found_good = Vec::new();
-
-        for (i, lint) in lints.into_iter().enumerate() {
-            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
-                let mut text_chars: Vec<char> = text.chars().collect();
-                suggestion.apply(lint.span, &mut text_chars);
-                let suggestion_text: String = text_chars.into_iter().collect();
-
-                // Check for bad suggestions
-                if bad.contains(&&*suggestion_text) {
-                    found_bad.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                }
-                // Check for good suggestions
-                else if good.contains(&&*suggestion_text) {
-                    found_good.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                    unseen_good.remove(suggestion_text.as_str());
-                }
-            }
-        }
-
-        // Print summary
-        if !found_bad.is_empty() || !unseen_good.is_empty() {
-            eprintln!("\n=== Test Summary ===");
-
-            // In the summary section, change these loops:
-            if !found_bad.is_empty() {
-                eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
-                for (i, j, text) in &found_bad {
-                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
-                }
-            }
-
-            // And for the good suggestions:
-            if !unseen_good.is_empty() {
-                eprintln!(
-                    "\n❌ Missing {} expected good suggestions:",
-                    unseen_good.len()
-                );
-                for text in &unseen_good {
-                    eprintln!("  - \"{text}\"");
-                }
-            }
-
-            eprintln!("\n✅ Found {} good suggestions", found_good.len());
-            eprintln!("==================\n");
-
-            if !found_bad.is_empty() || !unseen_good.is_empty() {
-                panic!("Test failed - see error output above");
-            }
-        } else {
-            eprintln!(
-                "\n✅ All {} good suggestions found, no bad suggestions\n",
-                found_good.len()
-            );
-        }
-    }
-
     // TODO test that having all the good and none of the bad succeeds
     // TODO test that missing one of the good fails
     // TODO test that having one of the bads fails
@@ -613,6 +591,7 @@ pub mod tests {
             "gooder",
             TestLinter::new(&[(&["gooder"], &["more good"])]),
             "better",
+            LanguageFamily::English,
         );
     }
 

@@ -105,65 +105,37 @@ mod tests {
 
     #[test]
     fn flag_if_i_wouldve_done_x() {
-        assert_suggestion_result(
-            "If I would've done X...",
-            IfWouldve::default(),
-            "If I had done X...",
-        );
+        assert_suggestion_result("If I would've done X...", IfWouldve::default(), "If I had done X...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_you_would_have_done_y() {
-        assert_suggestion_result(
-            "If you would have done Y...",
-            IfWouldve::default(),
-            "If you had done Y...",
-        );
+        assert_suggestion_result("If you would have done Y...", IfWouldve::default(), "If you had done Y...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_we_would_of_z() {
-        assert_suggestion_result(
-            "If we would of done Z...",
-            IfWouldve::default(),
-            "If we had done Z...",
-        );
+        assert_suggestion_result("If we would of done Z...", IfWouldve::default(), "If we had done Z...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_he_hadve_done_w() {
-        assert_suggestion_result(
-            "If he hadve done W...",
-            IfWouldve::default(),
-            "If he had done W...",
-        );
+        assert_suggestion_result("If he hadve done W...", IfWouldve::default(), "If he had done W...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_she_hadve_done_x() {
-        assert_suggestion_result(
-            "If she had've done X...",
-            IfWouldve::default(),
-            "If she had done X...",
-        );
+        assert_suggestion_result("If she had've done X...", IfWouldve::default(), "If she had done X...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_it_had_of_done_x() {
-        assert_suggestion_result(
-            "If it had of done X...",
-            IfWouldve::default(),
-            "If it had done X...",
-        );
+        assert_suggestion_result("If it had of done X...", IfWouldve::default(), "If it had done X...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_if_np_wouldve() {
-        assert_suggestion_result(
-            "If that guy would've thought it through...",
-            IfWouldve::default(),
-            "If that guy had thought it through...",
-        );
+        assert_suggestion_result("If that guy would've thought it through...", IfWouldve::default(), "If that guy had thought it through...", crate::languages::LanguageFamily::English);
     }
 
     // The linter cannot yet detect when this pattern is a counterfactual.
@@ -172,27 +144,18 @@ mod tests {
     #[test]
     #[ignore = "Can't detect correct use not in counterfactual"]
     fn dont_flag_non_counterfactual_done() {
-        assert_no_lints(
-            "I don't know if they would have done that for a designer",
-            IfWouldve::default(),
-        );
+        assert_no_lints("I don't know if they would have done that for a designer", IfWouldve::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Can't detect correct use not in counterfactual"]
     fn dont_flag_non_counterfactual_gotten() {
-        assert_no_lints(
-            "I don't know if a normal programmer would have gotten that treatment.",
-            IfWouldve::default(),
-        );
+        assert_no_lints("I don't know if a normal programmer would have gotten that treatment.", IfWouldve::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Can't detect correct use not in counterfactual"]
     fn dont_flag_non_counterfactual_been() {
-        assert_no_lints(
-            "I don't know if they would have been interested anyway",
-            IfWouldve::default(),
-        );
+        assert_no_lints("I don't know if they would have been interested anyway", IfWouldve::default(), crate::languages::LanguageFamily::English);
     }
 }

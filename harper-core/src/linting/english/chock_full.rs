@@ -62,6 +62,7 @@ mod tests {
             "'Chalk full', 'chalk-full', 'choke full', and 'choke-full' are nonstandard forms of 'chock-full'.",
             ChockFull::default(),
             4,
+            crate::languages::LanguageFamily::English,
         );
     }
 

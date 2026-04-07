@@ -48,15 +48,45 @@ mod tests {
 
     #[test]
     fn passes_correct_cases() {
-        assert_lint_count("2nd", CorrectNumberSuffix, 0);
-        assert_lint_count("101st", CorrectNumberSuffix, 0);
-        assert_lint_count("1012th", CorrectNumberSuffix, 0);
+        assert_lint_count(
+            "2nd",
+            CorrectNumberSuffix,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "101st",
+            CorrectNumberSuffix,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "1012th",
+            CorrectNumberSuffix,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_incorrect_cases() {
-        assert_lint_count("2st", CorrectNumberSuffix, 1);
-        assert_lint_count("101nd", CorrectNumberSuffix, 1);
-        assert_lint_count("1012rd", CorrectNumberSuffix, 1);
+        assert_lint_count(
+            "2st",
+            CorrectNumberSuffix,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "101nd",
+            CorrectNumberSuffix,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "1012rd",
+            CorrectNumberSuffix,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

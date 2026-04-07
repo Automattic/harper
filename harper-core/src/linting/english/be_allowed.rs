@@ -175,6 +175,7 @@ mod tests {
             "We will not allow visitors after nine.",
             BeAllowed::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -184,6 +185,7 @@ mod tests {
             "They won't be allowed to park here during events.",
             BeAllowed::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

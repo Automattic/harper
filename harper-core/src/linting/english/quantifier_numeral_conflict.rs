@@ -127,59 +127,36 @@ mod tests {
 
     #[test]
     fn flag_several_two() {
-        assert_lint_count(
-            "A few minutes ago, there was an outage due to several two hosts being down at the same time.",
-            QuantifierNumeralConflict::default(),
-            1,
-        );
+        assert_lint_count("A few minutes ago, there was an outage due to several two hosts being down at the same time.", QuantifierNumeralConflict::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_at_least() {
-        assert_no_lints(
-            "Serving a company that encourages the \"996\" work schedule usually means working for at least 60 hours per week.",
-            QuantifierNumeralConflict::default(),
-        );
+        assert_no_lints("Serving a company that encourages the \"996\" work schedule usually means working for at least 60 hours per week.", QuantifierNumeralConflict::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_at_most() {
-        assert_no_lints(
-            "But don't worry, the second machine takes at most 3 years.",
-            QuantifierNumeralConflict::default(),
-        );
+        assert_no_lints("But don't worry, the second machine takes at most 3 years.", QuantifierNumeralConflict::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_both_32_bit_and_64_bit() {
-        assert_no_lints(
-            "Both 32 bit and 64 bit architectures are supported.",
-            QuantifierNumeralConflict::default(),
-        );
+        assert_no_lints("Both 32 bit and 64 bit architectures are supported.", QuantifierNumeralConflict::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_more_1_click() {
-        assert_no_lints(
-            "For more 1-click cloud deployments, see [Cloud Deployment",
-            QuantifierNumeralConflict::default(),
-        );
+        assert_no_lints("For more 1-click cloud deployments, see [Cloud Deployment", QuantifierNumeralConflict::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_each_2() {
-        assert_suggestion_result(
-            "OSSEC by default run rootkit check each 2 hours.",
-            QuantifierNumeralConflict::default(),
-            "OSSEC by default run rootkit check every 2 hours.",
-        );
+        assert_suggestion_result("OSSEC by default run rootkit check each 2 hours.", QuantifierNumeralConflict::default(), "OSSEC by default run rootkit check every 2 hours.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_no_two_adjacent_characters_2486() {
-        assert_no_lints(
-            "No two adjacent characters are the same.",
-            QuantifierNumeralConflict::default(),
-        );
+        assert_no_lints("No two adjacent characters are the same.", QuantifierNumeralConflict::default(), crate::languages::LanguageFamily::English);
     }
 }

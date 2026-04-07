@@ -68,6 +68,7 @@ mod tests {
             "Despite of the rain, we went for a walk.",
             DespiteOf::default(),
             1,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -77,6 +78,7 @@ mod tests {
             "The team performed well, despite the difficulties they faced. In spite of the rain, we went for a walk.",
             DespiteOf::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

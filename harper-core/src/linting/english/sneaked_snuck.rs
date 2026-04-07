@@ -1,6 +1,6 @@
 use super::merge_linters::merge_linters;
 use crate::{
-    CharStringExt, Lint, Token,
+    Lint, Token,
     expr::Expr,
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::Word,
@@ -115,6 +115,7 @@ mod tests {
             "He sneaked in around the back.",
             PreferSnuck::default(),
             "He snuck in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -124,6 +125,7 @@ mod tests {
             "He Sneaked in around the back.",
             PreferSnuck::default(),
             "He Snuck in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -133,6 +135,7 @@ mod tests {
             "He SNEAKED in around the back.",
             PreferSnuck::default(),
             "He SNUCK in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -142,6 +145,7 @@ mod tests {
             "recycled transitions, lingering inflation, copula swaps that sneaked through",
             PreferSnuck::default(),
             "recycled transitions, lingering inflation, copula swaps that snuck through",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -150,6 +154,7 @@ mod tests {
         assert_no_lints(
             "I'm not sure exactly when this fix snuck in",
             PreferSnuck::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -161,6 +166,7 @@ mod tests {
             "He snuck in around the back.",
             PreferSneaked::default(),
             "He sneaked in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -170,6 +176,7 @@ mod tests {
             "He Snuck in around the back.",
             PreferSneaked::default(),
             "He Sneaked in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -179,6 +186,7 @@ mod tests {
             "He SNUCK in around the back.",
             PreferSneaked::default(),
             "He SNEAKED in around the back.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -188,6 +196,7 @@ mod tests {
             "A few unhandled Errors snuck their way into the code base over time f.ex. here:",
             PreferSneaked::default(),
             "A few unhandled Errors sneaked their way into the code base over time f.ex. here:",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -196,6 +205,7 @@ mod tests {
         assert_no_lints(
             "Something related to recent experiments of WASM support sneaked into the main branch.",
             PreferSneaked::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

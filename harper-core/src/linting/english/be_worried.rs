@@ -90,6 +90,7 @@ mod tests {
             "I guess he is worry about \" * user * \" tag.",
             BeWorried::default(),
             "I guess he is worried about \" * user * \" tag.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -99,6 +100,7 @@ mod tests {
             "So he was worry about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
             BeWorried::default(),
             "So he was worried about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -108,6 +110,7 @@ mod tests {
             "I didn't see any section dedicated to this so I am worry about:",
             BeWorried::default(),
             "I didn't see any section dedicated to this so I am worried about:",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -117,6 +120,7 @@ mod tests {
             "So that's why I was worry.",
             BeWorried::default(),
             "So that's why I was worried.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -126,6 +130,7 @@ mod tests {
             "The only things that I were worry about is the data that could be lost using this deletion.",
             BeWorried::default(),
             "The only things that I were worried about is the data that could be lost using this deletion.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -135,6 +140,7 @@ mod tests {
             "at the same time they are worry about the price for the upgrade each 3 years",
             BeWorried::default(),
             "at the same time they are worried about the price for the upgrade each 3 years",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -144,6 +150,7 @@ mod tests {
             "Because they're worry this link is spam or they scare have to pay more money.",
             BeWorried::default(),
             "Because they're worried this link is spam or they scare have to pay more money.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -153,6 +160,7 @@ mod tests {
             "We are analised this and we are worry because when our platform go to market",
             BeWorried::default(),
             "We are analised this and we are worried because when our platform go to market",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -162,6 +170,7 @@ mod tests {
             "We're worry about all kinds of minority representation in TV.",
             BeWorried::default(),
             "We're worried about all kinds of minority representation in TV.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -171,6 +180,7 @@ mod tests {
             "You are worry because we are not annotating view interface itself, right?",
             BeWorried::default(),
             "You are worried because we are not annotating view interface itself, right?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -180,6 +190,7 @@ mod tests {
             "You're worry about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
             BeWorried::default(),
             "You're worried about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -188,6 +199,7 @@ mod tests {
         assert_no_lints(
             "Part of it is worry that my bosses will get angry and fire me.",
             BeWorried::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -196,12 +208,17 @@ mod tests {
         assert_no_lints(
             "Because what followed wasn't indifference, it was worry.",
             BeWorried::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn dont_flag_she_was_worry_free() {
-        assert_no_lints("textFinally, she was worry-free.", BeWorried::default());
+        assert_no_lints(
+            "textFinally, she was worry-free.",
+            BeWorried::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -209,6 +226,7 @@ mod tests {
         assert_no_lints(
             "They don't pretend they're worry-free.",
             BeWorried::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -217,6 +235,7 @@ mod tests {
         assert_no_lints(
             "Thanks to jQuery, we're worry warts from browser compatibility.",
             BeWorried::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -225,6 +244,7 @@ mod tests {
         assert_no_lints(
             "Thanks to jQuery, we're worry free from browser compatibility.",
             BeWorried::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 

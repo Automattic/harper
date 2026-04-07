@@ -88,11 +88,7 @@ mod tests {
 
     #[test]
     fn alternative_moves_adverb() {
-        assert_suggestion_result(
-            "Tom has decided to never to do that again.",
-            ToAdverb::default(),
-            "Tom has decided never to do that again.",
-        );
+        assert_suggestion_result("Tom has decided to never to do that again.", ToAdverb::default(), "Tom has decided never to do that again.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -146,7 +142,7 @@ mod tests {
 
     #[test]
     fn allows_single_to_with_adverb() {
-        assert_lint_count("He wants to always win the match.", ToAdverb::default(), 0);
+        assert_lint_count("He wants to always win the match.", ToAdverb::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -161,7 +157,7 @@ mod tests {
 
     #[test]
     fn ignores_missing_verb_after_second_to() {
-        assert_lint_count("We tried to eventually to.", ToAdverb::default(), 0);
+        assert_lint_count("We tried to eventually to.", ToAdverb::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

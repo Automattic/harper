@@ -121,75 +121,51 @@ mod tests {
     // Legit phrasal-verb cases that should be ignored
     #[test]
     fn ignores_turned_out_to_be() {
-        assert_lint_count("It turned out to be fine.", OughtToBe::default(), 0);
+        assert_lint_count("It turned out to be fine.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_turns_out_to_be() {
-        assert_lint_count("It turns out to be fine.", OughtToBe::default(), 0);
+        assert_lint_count("It turns out to be fine.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_make_it_out_to_be() {
-        assert_lint_count(
-            "It's not as simple as they make it out to be.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("It's not as simple as they make it out to be.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_makes_it_out_to_be() {
-        assert_lint_count(
-            "I think this rule may not be as smart as its definition makes it out to be.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("I think this rule may not be as smart as its definition makes it out to be.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_worked_out_to_be() {
-        assert_lint_count("It worked out to be $5.", OughtToBe::default(), 0);
+        assert_lint_count("It worked out to be $5.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_figured_it_out_to_be() {
-        assert_lint_count(
-            "I figured it out to be a memory issue.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("I figured it out to be a memory issue.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_try_it_out_to_be() {
-        assert_lint_count("Try it out to be sure.", OughtToBe::default(), 0);
+        assert_lint_count("Try it out to be sure.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_separate_it_out_to_be() {
-        assert_lint_count(
-            "I want to separate it out to be able to process it later.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("I want to separate it out to be able to process it later.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_rotate_it_out_to_be() {
-        assert_lint_count(
-            "We will rotate it out to be eventually deleted.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("We will rotate it out to be eventually deleted.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_flesh_it_out_to_be() {
-        assert_lint_count(
-            "This needs some work to flesh it out to be usable.",
-            OughtToBe::default(),
-            0,
-        );
+        assert_lint_count("This needs some work to flesh it out to be usable.", OughtToBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

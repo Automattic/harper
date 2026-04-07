@@ -509,219 +509,151 @@ mod tests {
 
     #[test]
     fn inserts_to_after_resolved() {
-        assert_suggestion_result(
-            "She resolved solve the case.",
-            MissingTo::default(),
-            "She resolved to solve the case.",
-        );
+        assert_suggestion_result("She resolved solve the case.", MissingTo::default(), "She resolved to solve the case.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_when_to_present() {
-        assert_lint_count("She wants to finish early.", MissingTo::default(), 0);
+        assert_lint_count("She wants to finish early.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_with_noun_after_controller() {
-        assert_lint_count("They arranged a meeting at noon.", MissingTo::default(), 0);
+        assert_lint_count("They arranged a meeting at noon.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_needs_follow_up_appointments() {
-        assert_lint_count(
-            "Gus is recovering well, though he needs follow-up appointments.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("Gus is recovering well, though he needs follow-up appointments.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_delays_meant_decisions() {
-        assert_lint_count(
-            "The delays meant decisions were often made on outdated information, hindering agility and potentially impacting return on investment.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("The delays meant decisions were often made on outdated information, hindering agility and potentially impacting return on investment.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_bouquet_of_roses() {
-        assert_lint_count(
-            "I made a note to request a small bouquet of roses for his room, a simple gesture that I hoped would bring a moment of solace.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("I made a note to request a small bouquet of roses for his room, a simple gesture that I hoped would bring a moment of solace.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_for_intended_word_phrase() {
-        assert_lint_count(
-            "Detects incorrect usage of `peak` when the intended word is `pique`.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("Detects incorrect usage of `peak` when the intended word is `pique`.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_long_passage() {
-        assert_lint_count(
-            "Before her was another long passage illuminated by lamps.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("Before her was another long passage illuminated by lamps.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_long_island_sound() {
-        assert_lint_count(
-            "The sailboat drifted along Long Island Sound at sunrise.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("The sailboat drifted along Long Island Sound at sunrise.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_learn_tag_probabilities() {
-        assert_lint_count(
-            "These models learn tag probabilities from annotated corpora.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("These models learn tag probabilities from annotated corpora.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_standard_feature_nominal_phrase() {
-        assert_lint_count(
-            "This is a standard and expected feature for any e-commerce site selling visually-driven products.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("This is a standard and expected feature for any e-commerce site selling visually-driven products.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_mixing_bowl_nominal_phrase() {
-        assert_lint_count(
-            "This is a 2-quart mixing bowl, ideal for everything from whipping cream to preparing cake batter.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("This is a 2-quart mixing bowl, ideal for everything from whipping cream to preparing cake batter.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_try_and_say() {
-        assert_lint_count(
-            "I'll try and say hello before I leave.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("I'll try and say hello before I leave.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_failed_edit_attempts() {
-        assert_lint_count("failed edit attempts", MissingTo::default(), 0);
+        assert_lint_count("failed edit attempts", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_ready_work() {
-        assert_lint_count("ready work", MissingTo::default(), 0);
+        assert_lint_count("ready work", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_bad_at_managing_side_effects() {
-        assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0);
+        assert_lint_count("Bad at managing side-effects", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_resolved_conflict() {
-        assert_lint_count("a fully resolved conflict", MissingTo::default(), 0);
+        assert_lint_count("a fully resolved conflict", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_resolved_configuration() {
-        assert_lint_count("A resolved configuration", MissingTo::default(), 0);
+        assert_lint_count("A resolved configuration", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_resolved_configuration() {
-        assert_lint_count("A fully resolved configuration", MissingTo::default(), 0);
+        assert_lint_count("A fully resolved configuration", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_resolved_set_of_configuration() {
-        assert_lint_count("A resolved set of configuration", MissingTo::default(), 0);
+        assert_lint_count("A resolved set of configuration", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_resolved_set_of_configuration() {
-        assert_lint_count(
-            "A fully resolved set of configuration",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("A fully resolved set of configuration", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_system_produced_a_fully_resolved_set_of_dependencies() {
-        assert_lint_count(
-            "System produced a fully resolved set of dependencies",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("System produced a fully resolved set of dependencies", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_resolved_list_of_parameters() {
-        assert_lint_count("A resolved list of parameters", MissingTo::default(), 0);
+        assert_lint_count("A resolved list of parameters", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_resolved_list_of_parameters() {
-        assert_lint_count(
-            "A fully resolved list of parameters",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("A fully resolved list of parameters", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_prepared_stranger() {
-        assert_lint_count("A prepared stranger", MissingTo::default(), 0);
+        assert_lint_count("A prepared stranger", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_prepared_stranger() {
-        assert_lint_count("A fully prepared stranger", MissingTo::default(), 0);
+        assert_lint_count("A fully prepared stranger", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_prepared_group_of_strangers() {
-        assert_lint_count("A prepared group of strangers", MissingTo::default(), 0);
+        assert_lint_count("A prepared group of strangers", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_fully_prepared_group_of_strangers() {
-        assert_lint_count(
-            "A fully prepared group of strangers",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("A fully prepared group of strangers", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_nicely_arranged_set_of_flowers() {
-        assert_lint_count(
-            "A nicely arranged bunch of flowers",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("A nicely arranged bunch of flowers", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_a_recently_forgotten_list_of_names() {
-        assert_lint_count(
-            "A recently forgotten list of names",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("A recently forgotten list of names", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

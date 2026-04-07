@@ -406,23 +406,17 @@ mod tests {
         ];
 
         for sentence in sentences {
-            assert_no_lints(sentence, OrthographicConsistency::default());
+            assert_no_lints(sentence, OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
         }
     }
 
     #[test]
     fn allows_news() {
-        assert_no_lints(
-            "This is the best part of the news broadcast.",
-            OrthographicConsistency::default(),
-        );
+        assert_no_lints("This is the best part of the news broadcast.", OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_issue_2465() {
-        assert_no_lints(
-            "The post’s problem was not in its complexity.",
-            OrthographicConsistency::default(),
-        );
+        assert_no_lints("The post’s problem was not in its complexity.", OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
     }
 }

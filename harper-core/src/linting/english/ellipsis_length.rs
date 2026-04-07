@@ -48,12 +48,12 @@ mod tests {
 
     #[test]
     fn allows_correct_ellipsis() {
-        assert_lint_count("...", EllipsisLength, 0);
+        assert_lint_count("...", EllipsisLength, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_long_ellipsis() {
-        assert_lint_count(".....", EllipsisLength, 1);
+        assert_lint_count(".....", EllipsisLength, 1, crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             ".....",
             EllipsisLength,
@@ -64,7 +64,7 @@ mod tests {
 
     #[test]
     fn corrects_short_ellipsis() {
-        assert_lint_count("..", EllipsisLength, 1);
+        assert_lint_count("..", EllipsisLength, 1, crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "..",
             EllipsisLength,

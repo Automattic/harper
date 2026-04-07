@@ -96,6 +96,6 @@ mod tests {
 
     #[test]
     fn ignore_correct() {
-        assert_lint_count("She hit the nail on the head.", NailOnTheHead::default(), 0);
+        assert_lint_count("She hit the nail on the head.", NailOnTheHead::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

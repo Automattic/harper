@@ -129,35 +129,27 @@ mod tests {
 
     #[test]
     fn allows_ive_looked() {
-        assert_lint_count("I've looked into it.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I've looked into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_ive_been_looking() {
-        assert_lint_count(
-            "I've been looking into it.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("I've been looking into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_ive_seen() {
-        assert_lint_count("I've seen the results.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I've seen the results.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_ive_long_been_looking() {
-        assert_lint_count(
-            "I've long been looking into it.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("I've long been looking into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_match_with_punctuation_between() {
-        assert_lint_count("I've, looking into it.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I've, looking into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -215,16 +207,12 @@ mod tests {
 
     #[test]
     fn allows_i_have_been_looking() {
-        assert_lint_count(
-            "I have been looking into it.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("I have been looking into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_i_have_looked() {
-        assert_lint_count("I have looked into it.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I have looked into it.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     // Additional generalized cases
@@ -862,51 +850,31 @@ mod tests {
 
     // Non-match and allowed-form checks
     fn no_match_punctuation_contracted() {
-        assert_lint_count("I've, working today.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I've, working today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn no_match_punctuation_non_contracted() {
-        assert_lint_count("I have, working today.", ProgressiveNeedsBe::default(), 0);
+        assert_lint_count("I have, working today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn no_match_adverb_interruption() {
-        assert_lint_count(
-            "I have quickly working today.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("I have quickly working today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn allowed_contracted_have_been() {
-        assert_lint_count(
-            "You've been studying today.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("You've been studying today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn allowed_non_contracted_have_been() {
-        assert_lint_count(
-            "You have been studying today.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("You have been studying today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn allowed_they_have_been() {
-        assert_lint_count(
-            "They have been testing today.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("They have been testing today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
     #[test]
     fn allowed_theyve_been() {
-        assert_lint_count(
-            "They've been testing today.",
-            ProgressiveNeedsBe::default(),
-            0,
-        );
+        assert_lint_count("They've been testing today.", ProgressiveNeedsBe::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -946,38 +914,22 @@ mod tests {
 
     #[test]
     fn test_ive_doing_no_apostrophe() {
-        assert_suggestion_result(
-            "Ive always seen the variables and debug into it, and thats what ive doing.",
-            ProgressiveNeedsBe::default(),
-            "Ive always seen the variables and debug into it, and thats what i'm doing.",
-        );
+        assert_suggestion_result("Ive always seen the variables and debug into it, and thats what ive doing.", ProgressiveNeedsBe::default(), "Ive always seen the variables and debug into it, and thats what i'm doing.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_ive_looking_no_apostrophe() {
-        assert_suggestion_result(
-            "Ive looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.",
-            ProgressiveNeedsBe::default(),
-            "I'm looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.",
-        );
+        assert_suggestion_result("Ive looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.", ProgressiveNeedsBe::default(), "I'm looking for a way to get temperature and humidity for all of our rooms within for a reasonable price in Germany.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Handling the progressive `being` will need a special case"]
     fn test_youve_being() {
-        assert_suggestion_result(
-            "Thanks for all the work you've being doing for this project btw!",
-            ProgressiveNeedsBe::default(),
-            "Thanks for all the work you're doing for this project btw!",
-        );
+        assert_suggestion_result("Thanks for all the work you've being doing for this project btw!", ProgressiveNeedsBe::default(), "Thanks for all the work you're doing for this project btw!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_theyve_doing() {
-        assert_suggestion_result(
-            "it’s also kind of implied users read the documentation or generally have a sense of what they’ve doing and what could go wrong",
-            ProgressiveNeedsBe::default(),
-            "it’s also kind of implied users read the documentation or generally have a sense of what they're doing and what could go wrong",
-        );
+        assert_suggestion_result("it’s also kind of implied users read the documentation or generally have a sense of what they’ve doing and what could go wrong", ProgressiveNeedsBe::default(), "it’s also kind of implied users read the documentation or generally have a sense of what they're doing and what could go wrong", crate::languages::LanguageFamily::English);
     }
 }

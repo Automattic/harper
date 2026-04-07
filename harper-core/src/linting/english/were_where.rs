@@ -121,87 +121,51 @@ mod tests {
 
     #[test]
     fn fix_they_where() {
-        assert_suggestion_result(
-            "They where going to the store.",
-            WereWhere::default(),
-            "They were going to the store.",
-        );
+        assert_suggestion_result("They where going to the store.", WereWhere::default(), "They were going to the store.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_we_where() {
-        assert_suggestion_result(
-            "We where right about that.",
-            WereWhere::default(),
-            "We were right about that.",
-        );
+        assert_suggestion_result("We where right about that.", WereWhere::default(), "We were right about that.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_they_where_happy() {
-        assert_suggestion_result(
-            "They where happy with the result.",
-            WereWhere::default(),
-            "They were happy with the result.",
-        );
+        assert_suggestion_result("They where happy with the result.", WereWhere::default(), "They were happy with the result.", crate::languages::LanguageFamily::English);
     }
 
     // ── where → were: "you where" with a following verb ─────────────────────
 
     #[test]
     fn fix_you_where_going() {
-        assert_suggestion_result(
-            "you where going in the right direction.",
-            WereWhere::default(),
-            "you were going in the right direction.",
-        );
+        assert_suggestion_result("you where going in the right direction.", WereWhere::default(), "you were going in the right direction.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_you_where_right() {
-        assert_suggestion_result(
-            "you where right about that.",
-            WereWhere::default(),
-            "you were right about that.",
-        );
+        assert_suggestion_result("you where right about that.", WereWhere::default(), "you were right about that.", crate::languages::LanguageFamily::English);
     }
 
     // ── were → where: verb + were + pronoun/determiner ──────────────────────
 
     #[test]
     fn fix_know_were_they() {
-        assert_suggestion_result(
-            "Do you know were they went?",
-            WereWhere::default(),
-            "Do you know where they went?",
-        );
+        assert_suggestion_result("Do you know were they went?", WereWhere::default(), "Do you know where they went?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_forgot_were_i() {
-        assert_suggestion_result(
-            "I forgot were I put my keys.",
-            WereWhere::default(),
-            "I forgot where I put my keys.",
-        );
+        assert_suggestion_result("I forgot were I put my keys.", WereWhere::default(), "I forgot where I put my keys.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_found_were_the() {
-        assert_suggestion_result(
-            "I found were the book was.",
-            WereWhere::default(),
-            "I found where the book was.",
-        );
+        assert_suggestion_result("I found were the book was.", WereWhere::default(), "I found where the book was.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_go_were_they() {
-        assert_suggestion_result(
-            "Go were they tell you.",
-            WereWhere::default(),
-            "Go where they tell you.",
-        );
+        assert_suggestion_result("Go were they tell you.", WereWhere::default(), "Go where they tell you.", crate::languages::LanguageFamily::English);
     }
 
     // ── where → were: more they/we variants ─────────────────────────────────
@@ -209,38 +173,22 @@ mod tests {
     #[test]
     fn fix_we_where_almost_done() {
         // No following-word check needed for "we/they" — the pair alone is enough
-        assert_suggestion_result(
-            "We where almost done with the task.",
-            WereWhere::default(),
-            "We were almost done with the task.",
-        );
+        assert_suggestion_result("We where almost done with the task.", WereWhere::default(), "We were almost done with the task.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_they_where_able() {
-        assert_suggestion_result(
-            "They where able to fix the issue in time.",
-            WereWhere::default(),
-            "They were able to fix the issue in time.",
-        );
+        assert_suggestion_result("They where able to fix the issue in time.", WereWhere::default(), "They were able to fix the issue in time.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_we_where_told() {
-        assert_suggestion_result(
-            "We where told about the change last week.",
-            WereWhere::default(),
-            "We were told about the change last week.",
-        );
+        assert_suggestion_result("We where told about the change last week.", WereWhere::default(), "We were told about the change last week.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_they_where_supposed() {
-        assert_suggestion_result(
-            "They where supposed to be here by now.",
-            WereWhere::default(),
-            "They were supposed to be here by now.",
-        );
+        assert_suggestion_result("They where supposed to be here by now.", WereWhere::default(), "They were supposed to be here by now.", crate::languages::LanguageFamily::English);
     }
 
     // ── where → were: more "you where" variants ──────────────────────────────
@@ -248,126 +196,98 @@ mod tests {
     #[test]
     fn fix_you_where_supposed() {
         // "supposed" is ADJ — confirms verb slot
-        assert_suggestion_result(
-            "You where supposed to call me.",
-            WereWhere::default(),
-            "You were supposed to call me.",
-        );
+        assert_suggestion_result("You where supposed to call me.", WereWhere::default(), "You were supposed to call me.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_you_where_asked() {
         // "asked" past participle used as VERB
-        assert_suggestion_result(
-            "you where asked to leave the room.",
-            WereWhere::default(),
-            "you were asked to leave the room.",
-        );
+        assert_suggestion_result("you where asked to leave the room.", WereWhere::default(), "you were asked to leave the room.", crate::languages::LanguageFamily::English);
     }
 
     // ── were → where: more verbs and pronouns ────────────────────────────────
 
     #[test]
     fn fix_remember_were_i() {
-        assert_suggestion_result(
-            "Do you remember were I left the keys?",
-            WereWhere::default(),
-            "Do you remember where I left the keys?",
-        );
+        assert_suggestion_result("Do you remember were I left the keys?", WereWhere::default(), "Do you remember where I left the keys?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_check_were_the() {
-        assert_suggestion_result(
-            "Check were the error occurred.",
-            WereWhere::default(),
-            "Check where the error occurred.",
-        );
+        assert_suggestion_result("Check were the error occurred.", WereWhere::default(), "Check where the error occurred.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_asked_were_he() {
-        assert_suggestion_result(
-            "She asked were he lived.",
-            WereWhere::default(),
-            "She asked where he lived.",
-        );
+        assert_suggestion_result("She asked were he lived.", WereWhere::default(), "She asked where he lived.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_know_were_the_bug() {
-        assert_suggestion_result(
-            "I know were the bug is.",
-            WereWhere::default(),
-            "I know where the bug is.",
-        );
+        assert_suggestion_result("I know were the bug is.", WereWhere::default(), "I know where the bug is.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_find_were_it() {
-        assert_suggestion_result(
-            "Find were it crashed.",
-            WereWhere::default(),
-            "Find where it crashed.",
-        );
+        assert_suggestion_result("Find were it crashed.", WereWhere::default(), "Find where it crashed.", crate::languages::LanguageFamily::English);
     }
 
     // ── no false positives ───────────────────────────────────────────────────
 
     #[test]
     fn no_flag_where_they_are() {
-        assert_no_lints("Do you know where they are going?", WereWhere::default());
+        assert_no_lints("Do you know where they are going?", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_they_were_going() {
-        assert_no_lints("They were going to the store.", WereWhere::default());
+        assert_no_lints("They were going to the store.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_we_were_right() {
-        assert_no_lints("We were right about that.", WereWhere::default());
+        assert_no_lints("We were right about that.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_show_you_where() {
         // "you" before "where" is legitimate — followed by "to" (PART), not a verb
-        assert_no_lints("I'll show you where to go.", WereWhere::default());
+        assert_no_lints("I'll show you where to go.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_tell_you_where_the() {
         // "you where" followed by DET — not flagged (DET is not VERB/AUX/ADJ)
-        assert_no_lints("I'll tell you where the exit is.", WereWhere::default());
+        assert_no_lints("I'll tell you where the exit is.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_they_were_wrong() {
         // "they" (PRON) precedes "were", so VERB + "were" pattern does not fire
-        assert_no_lints("I think they were wrong.", WereWhere::default());
+        assert_no_lints("I think they were wrong.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_confirmed_they_were() {
         // "they" sits between "confirmed" and "were" — not adjacent, no match
-        assert_no_lints("I confirmed they were correct.", WereWhere::default());
+        assert_no_lints("I confirmed they were correct.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_found_they_were() {
-        assert_no_lints("He found they were missing.", WereWhere::default());
+        assert_no_lints("He found they were missing.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_where_were_they() {
         // "Where" is an adverb or subordinating conjunction here, not VERB — the were→where pattern does not fire
-        assert_no_lints("Where were they going?", WereWhere::default());
+        assert_no_lints("Where were they going?", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_flag_showed_me_where() {
         // Object pronoun "me" sits between "showed" and "where" — no direct adjacency
-        assert_no_lints("He showed me where the exit was.", WereWhere::default());
+        assert_no_lints("He showed me where the exit was.", WereWhere::default(), crate::languages::LanguageFamily::English);
     }
 
     // ── known limitations (documented but not yet handled) ───────────────────
@@ -375,30 +295,18 @@ mod tests {
     #[test]
     #[ignore = "limitation: 'you where' followed by DET is not flagged; would need DET in the following-word set"]
     fn fix_you_where_the_only_one() {
-        assert_suggestion_result(
-            "you where the only one there.",
-            WereWhere::default(),
-            "you were the only one there.",
-        );
+        assert_suggestion_result("you where the only one there.", WereWhere::default(), "you were the only one there.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "limitation: sentence-initial 'Where' as typo for 'Were' is not handled"]
     fn fix_where_they_going_sentence_start() {
-        assert_suggestion_result(
-            "Where they going to the party?",
-            WereWhere::default(),
-            "Were they going to the party?",
-        );
+        assert_suggestion_result("Where they going to the party?", WereWhere::default(), "Were they going to the party?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "limitation: indirect object between verb and 'were' is not detected"]
     fn fix_showed_me_were() {
-        assert_suggestion_result(
-            "He showed me were the exit was.",
-            WereWhere::default(),
-            "He showed me where the exit was.",
-        );
+        assert_suggestion_result("He showed me were the exit was.", WereWhere::default(), "He showed me where the exit was.", crate::languages::LanguageFamily::English);
     }
 }

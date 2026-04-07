@@ -99,7 +99,12 @@ mod tests {
 
     #[test]
     fn correct_the_my_atomic_2nd_suggestion() {
-        assert_suggestion_result("the my", TheMy::default(), "the");
+        assert_suggestion_result(
+            "the my",
+            TheMy::default(),
+            "the",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -124,7 +129,12 @@ mod tests {
 
     #[test]
     fn correct_my_the_atomic_2nd_suggestion() {
-        assert_suggestion_result("my the", TheMy::default(), "the");
+        assert_suggestion_result(
+            "my the",
+            TheMy::default(),
+            "the",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -140,7 +150,7 @@ mod tests {
     #[test]
     fn dont_correct_capitalized_possessive() {
         assert_lint_count("For some time the My Projects personal page was \"sluggish\" or took some time to generate the miniature depicting the project, now it seems completely stuck ...
-", TheMy::default(), 0);
+", TheMy::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -199,6 +209,7 @@ mod tests {
             "What exactly is the sort order of list names on the Your Stars page?",
             TheMy::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -208,6 +219,7 @@ mod tests {
             "My The Frame TV is not pulling information properly",
             TheMy::default(),
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -237,6 +249,7 @@ mod tests {
             "Create an admin role for boba-tan and give her the GoreMaster role only in !gore",
             TheMy::default(),
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 

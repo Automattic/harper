@@ -63,7 +63,10 @@ impl ExprLinter for SomethingIs {
 #[cfg(test)]
 mod tests {
     use super::SomethingIs;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count_plain_english as assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    };
 
     #[test]
     fn fixes_somethings_going() {
@@ -131,12 +134,17 @@ mod tests {
             "Somethings going wrong.",
             SomethingIs::default(),
             "Something is going wrong.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn no_lint_when_contracted() {
-        assert_no_lints("Something's going well today.", SomethingIs::default());
+        assert_no_lints(
+            "Something's going well today.",
+            SomethingIs::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -150,6 +158,10 @@ mod tests {
 
     #[test]
     fn no_lint_at_sentence_end() {
-        assert_no_lints("Somethings.", SomethingIs::default());
+        assert_no_lints(
+            "Somethings.",
+            SomethingIs::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

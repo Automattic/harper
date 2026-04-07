@@ -181,10 +181,7 @@ mod tests {
 
     #[test]
     fn allows_thus_far() {
-        assert_no_lints(
-            "Thus far there have been no problems.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("Thus far there have been no problems.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -219,18 +216,12 @@ mod tests {
 
     #[test]
     fn no_suggestion_if_comma_present() {
-        assert_no_lints(
-            "However, I disagree with your point.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("However, I disagree with your point.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_for_mid_sentence_marker() {
-        assert_no_lints(
-            "I said however I would consider it.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("I said however I would consider it.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -265,7 +256,7 @@ mod tests {
 
     #[test]
     fn allows_single_word_sentence() {
-        assert_no_lints("Thus", DiscourseMarkers::default());
+        assert_no_lints("Thus", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -280,10 +271,7 @@ mod tests {
 
     #[test]
     fn no_suggestion_if_comma_after_for_example() {
-        assert_no_lints(
-            "For example, I recommend updating the configuration.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("For example, I recommend updating the configuration.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -308,17 +296,11 @@ mod tests {
 
     #[test]
     fn no_lint_for_mid_sentence_on_the_other_hand() {
-        assert_no_lints(
-            "We might postpone, on the other hand this introduces risk.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("We might postpone, on the other hand this introduces risk.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn check_2966_is_avoided() {
-        assert_no_lints(
-            "Honestly and graciously convince someone of something.",
-            DiscourseMarkers::default(),
-        );
+        assert_no_lints("Honestly and graciously convince someone of something.", DiscourseMarkers::default(), crate::languages::LanguageFamily::English);
     }
 }

@@ -125,18 +125,12 @@ mod tests {
 
     #[test]
     fn dont_flag_it_though_i() {
-        assert_no_lints(
-            "am including it though i believe it's nto the case because before this",
-            ThoughThought::default(),
-        );
+        assert_no_lints("am including it though i believe it's nto the case because before this", ThoughThought::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_it_though_it() {
-        assert_no_lints(
-            "Prisma works with it though it is not officially supported by Prisma yet.",
-            ThoughThought::default(),
-        );
+        assert_no_lints("Prisma works with it though it is not officially supported by Prisma yet.", ThoughThought::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -153,17 +147,11 @@ mod tests {
     #[test]
     fn dont_flag_you_though_that_1() {
         // Ambiguous: "I can tell you, though, that a project..." vs "I can tell (that) you thought that a project..."
-        assert_no_lints(
-            "I can tell you though that a project not using headers at all will likely be compiling much faster.",
-            ThoughThought::default(),
-        );
+        assert_no_lints("I can tell you though that a project not using headers at all will likely be compiling much faster.", ThoughThought::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_you_though_that_2() {
-        assert_no_lints(
-            "I agree with you though that 2D lat/lon grids are unnecessarily confusing",
-            ThoughThought::default(),
-        );
+        assert_no_lints("I agree with you though that 2D lat/lon grids are unnecessarily confusing", ThoughThought::default(), crate::languages::LanguageFamily::English);
     }
 }

@@ -285,18 +285,12 @@ mod tests {
 
     #[test]
     fn dont_correct_pin_number_lowercase() {
-        assert_no_lints(
-            "GPIO 26 (pin 37) on the Pi4 is mapped to pin nummer GPIO 425 on the pi5",
-            RedundantAcronyms::default(),
-        );
+        assert_no_lints("GPIO 26 (pin 37) on the Pi4 is mapped to pin nummer GPIO 425 on the pi5", RedundantAcronyms::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_correct_pin_number_titlecase() {
-        assert_no_lints(
-            "Pin Number Match Project in Javascript.",
-            RedundantAcronyms::default(),
-        )
+        assert_no_lints("Pin Number Match Project in Javascript.", RedundantAcronyms::default(), crate::languages::LanguageFamily::English)
     }
 
     #[test]

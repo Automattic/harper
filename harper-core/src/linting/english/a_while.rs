@@ -81,58 +81,32 @@ mod tests {
 
     #[test]
     fn allow_issue_2144() {
-        assert_no_lints(
-            "After thinking awhile, I decided to foo a bar.",
-            AWhile::default(),
-        );
-        assert_no_lints(
-            "After thinking for a while, I decided to foo a bar.",
-            AWhile::default(),
-        );
+        assert_no_lints("After thinking awhile, I decided to foo a bar.", AWhile::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints("After thinking for a while, I decided to foo a bar.", AWhile::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_issue_2144() {
-        assert_suggestion_result(
-            "After thinking a while, I decided to foo a bar.",
-            AWhile::default(),
-            "After thinking awhile, I decided to foo a bar.",
-        );
+        assert_suggestion_result("After thinking a while, I decided to foo a bar.", AWhile::default(), "After thinking awhile, I decided to foo a bar.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_in_quite_a_while() {
-        assert_suggestion_result(
-            "I haven't seen him in quite awhile.",
-            AWhile::default(),
-            "I haven't seen him in quite a while.",
-        );
+        assert_suggestion_result("I haven't seen him in quite awhile.", AWhile::default(), "I haven't seen him in quite a while.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_in_a_while() {
-        assert_suggestion_result(
-            "I haven't checked in awhile.",
-            AWhile::default(),
-            "I haven't checked in a while.",
-        );
+        assert_suggestion_result("I haven't checked in awhile.", AWhile::default(), "I haven't checked in a while.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_for_awhile() {
-        assert_suggestion_result(
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
-            AWhile::default(),
-            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
-        );
+        assert_suggestion_result("Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile", AWhile::default(), "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_after_awhile() {
-        assert_suggestion_result(
-            "Links on portal stop working after awhile, requiring page refresh.",
-            AWhile::default(),
-            "Links on portal stop working after a while, requiring page refresh.",
-        );
+        assert_suggestion_result("Links on portal stop working after awhile, requiring page refresh.", AWhile::default(), "Links on portal stop working after a while, requiring page refresh.", crate::languages::LanguageFamily::English);
     }
 }

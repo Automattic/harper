@@ -69,10 +69,7 @@ mod tests {
 
     #[test]
     fn doesnt_lowercase_this_in_github_template_title() {
-        assert_no_lints(
-            "# How Has This Been Tested?",
-            UseTitleCase::new(FstDictionary::curated()),
-        );
+        assert_no_lints("# How Has This Been Tested?", UseTitleCase::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -86,10 +83,7 @@ mod tests {
 
     #[test]
     fn ignores_leading_number_list_marker_in_heading() {
-        assert_no_lints(
-            "### 1. To Do a Thing",
-            UseTitleCase::new(FstDictionary::curated()),
-        );
+        assert_no_lints("### 1. To Do a Thing", UseTitleCase::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
     }
 
     #[test]

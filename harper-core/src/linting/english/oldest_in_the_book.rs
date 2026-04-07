@@ -101,56 +101,32 @@ mod tests {
 
     #[test]
     fn fix_delphi_mistake() {
-        assert_suggestion_result(
-            "This is the oldest Delphi mistake in the books and I'm sure you've made it before (we all have), and I'm sure you recognise it when you see it.",
-            OldestInTheBook::default(),
-            "This is the oldest Delphi mistake in the book and I'm sure you've made it before (we all have), and I'm sure you recognise it when you see it.",
-        );
+        assert_suggestion_result("This is the oldest Delphi mistake in the books and I'm sure you've made it before (we all have), and I'm sure you recognise it when you see it.", OldestInTheBook::default(), "This is the oldest Delphi mistake in the book and I'm sure you've made it before (we all have), and I'm sure you recognise it when you see it.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_trick() {
-        assert_suggestion_result(
-            "... oldest trick in the books, a restart and it works all the times(for now).",
-            OldestInTheBook::default(),
-            "... oldest trick in the book, a restart and it works all the times(for now).",
-        );
+        assert_suggestion_result("... oldest trick in the books, a restart and it works all the times(for now).", OldestInTheBook::default(), "... oldest trick in the book, a restart and it works all the times(for now).", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_virus_trick() {
-        assert_suggestion_result(
-            "Once the OS is started the MBR is typically protected for virus reasons - this is one of the oldest virus tricks in the books - goes back to ...",
-            OldestInTheBook::default(),
-            "Once the OS is started the MBR is typically protected for virus reasons - this is one of the oldest virus tricks in the book - goes back to ...",
-        )
+        assert_suggestion_result("Once the OS is started the MBR is typically protected for virus reasons - this is one of the oldest virus tricks in the books - goes back to ...", OldestInTheBook::default(), "Once the OS is started the MBR is typically protected for virus reasons - this is one of the oldest virus tricks in the book - goes back to ...", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn fix_mistake() {
-        assert_suggestion_result(
-            "Ok, I realized now that I was making the oldest mistake in the books with my code, dividing my v by 2 instead of dividing it by 5.",
-            OldestInTheBook::default(),
-            "Ok, I realized now that I was making the oldest mistake in the book with my code, dividing my v by 2 instead of dividing it by 5.",
-        );
+        assert_suggestion_result("Ok, I realized now that I was making the oldest mistake in the books with my code, dividing my v by 2 instead of dividing it by 5.", OldestInTheBook::default(), "Ok, I realized now that I was making the oldest mistake in the book with my code, dividing my v by 2 instead of dividing it by 5.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_tricks() {
-        assert_suggestion_result(
-            "He enables the oldest tricks in the books, create fear from thing like prosperity (we really don't need Foxconn?)",
-            OldestInTheBook::default(),
-            "He enables the oldest tricks in the book, create fear from thing like prosperity (we really don't need Foxconn?)",
-        );
+        assert_suggestion_result("He enables the oldest tricks in the books, create fear from thing like prosperity (we really don't need Foxconn?)", OldestInTheBook::default(), "He enables the oldest tricks in the book, create fear from thing like prosperity (we really don't need Foxconn?)", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_military_plays() {
-        assert_suggestion_result(
-            "Isnt that like one of the oldest military plays in the books?",
-            OldestInTheBook::default(),
-            "Isnt that like one of the oldest military plays in the book?",
-        );
+        assert_suggestion_result("Isnt that like one of the oldest military plays in the books?", OldestInTheBook::default(), "Isnt that like one of the oldest military plays in the book?", crate::languages::LanguageFamily::English);
     }
 
     // Test messages

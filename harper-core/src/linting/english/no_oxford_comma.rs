@@ -76,11 +76,7 @@ mod tests {
 
     #[test]
     fn fruits() {
-        assert_lint_count(
-            "An apple, a banana, and a pear",
-            NoOxfordComma::default(),
-            1,
-        );
+        assert_lint_count("An apple, a banana, and a pear", NoOxfordComma::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -115,20 +111,12 @@ mod tests {
 
     #[test]
     fn allows_clean_music() {
-        assert_lint_count(
-            "I enjoy listening to pop music, rock, hip-hop, electronic dance and classical music.",
-            NoOxfordComma::default(),
-            0,
-        );
+        assert_lint_count("I enjoy listening to pop music, rock, hip-hop, electronic dance and classical music.", NoOxfordComma::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_clean_nations() {
-        assert_lint_count(
-            "The team consists of players from different countries: France, Germany, Italy and Spain.",
-            NoOxfordComma::default(),
-            0,
-        );
+        assert_lint_count("The team consists of players from different countries: France, Germany, Italy and Spain.", NoOxfordComma::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

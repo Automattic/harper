@@ -85,116 +85,68 @@ mod tests {
 
     #[test]
     fn take_a_look_to_a_new() {
-        assert_suggestion_result(
-            "Hello, I am Drago and in this video we're going to take a look to a new AI CLI and VS Code extension tool",
-            TakeALookTo::default(),
-            "Hello, I am Drago and in this video we're going to take a look at a new AI CLI and VS Code extension tool",
-        );
+        assert_suggestion_result("Hello, I am Drago and in this video we're going to take a look to a new AI CLI and VS Code extension tool", TakeALookTo::default(), "Hello, I am Drago and in this video we're going to take a look at a new AI CLI and VS Code extension tool", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn have_a_look_to_url() {
-        assert_suggestion_result(
-            "If you haven't yet, please have a look to https://docs.conan.io/2/devops/devops_local_recipes_index.html",
-            TakeALookTo::default(),
-            "If you haven't yet, please have a look at https://docs.conan.io/2/devops/devops_local_recipes_index.html",
-        );
+        assert_suggestion_result("If you haven't yet, please have a look to https://docs.conan.io/2/devops/devops_local_recipes_index.html", TakeALookTo::default(), "If you haven't yet, please have a look at https://docs.conan.io/2/devops/devops_local_recipes_index.html", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn having_a_look_to_mode() {
-        assert_suggestion_result(
-            "Having a look to mode and overScaleMode , I see they are scriptable",
-            TakeALookTo::default(),
-            "Having a look at mode and overScaleMode , I see they are scriptable",
-        );
+        assert_suggestion_result("Having a look to mode and overScaleMode , I see they are scriptable", TakeALookTo::default(), "Having a look at mode and overScaleMode , I see they are scriptable", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn taking_a_look_to_this() {
-        assert_suggestion_result(
-            "after taking a look to this issue and making some test I figure out that it likely to be an error",
-            TakeALookTo::default(),
-            "after taking a look at this issue and making some test I figure out that it likely to be an error",
-        );
+        assert_suggestion_result("after taking a look to this issue and making some test I figure out that it likely to be an error", TakeALookTo::default(), "after taking a look at this issue and making some test I figure out that it likely to be an error", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn have_had_a_look_to_your() {
-        assert_suggestion_result(
-            "I have had a look to your conanfile.py and it is strange that it fails.",
-            TakeALookTo::default(),
-            "I have had a look at your conanfile.py and it is strange that it fails.",
-        );
+        assert_suggestion_result("I have had a look to your conanfile.py and it is strange that it fails.", TakeALookTo::default(), "I have had a look at your conanfile.py and it is strange that it fails.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn took_a_look_to_both() {
-        assert_suggestion_result(
-            "Since I have some knowledge in programing I took a look to both codes (LK and XCS)",
-            TakeALookTo::default(),
-            "Since I have some knowledge in programing I took a look at both codes (LK and XCS)",
-        );
+        assert_suggestion_result("Since I have some knowledge in programing I took a look to both codes (LK and XCS)", TakeALookTo::default(), "Since I have some knowledge in programing I took a look at both codes (LK and XCS)", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn taken_a_look_to_that() {
-        assert_suggestion_result(
-            "Yeah I've taken a look to that, but I really need to use classes on this one",
-            TakeALookTo::default(),
-            "Yeah I've taken a look at that, but I really need to use classes on this one",
-        );
+        assert_suggestion_result("Yeah I've taken a look to that, but I really need to use classes on this one", TakeALookTo::default(), "Yeah I've taken a look at that, but I really need to use classes on this one", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn takes_a_look_to_the() {
-        assert_suggestion_result(
-            "basically, it takes a look to the signing request",
-            TakeALookTo::default(),
-            "basically, it takes a look at the signing request",
-        );
+        assert_suggestion_result("basically, it takes a look to the signing request", TakeALookTo::default(), "basically, it takes a look at the signing request", crate::languages::LanguageFamily::English);
     }
 
     // Make sure we avoid potential false positives
 
     #[test]
     fn dont_flag_have_a_look_to_see_if() {
-        assert_no_lints(
-            "@budarin can you have a look to see if it addresses your concerns?",
-            TakeALookTo::default(),
-        );
+        assert_no_lints("@budarin can you have a look to see if it addresses your concerns?", TakeALookTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_taking_a_look_to_decide() {
-        assert_no_lints(
-            "Would be worth taking a look to decide which way to go.",
-            TakeALookTo::default(),
-        );
+        assert_no_lints("Would be worth taking a look to decide which way to go.", TakeALookTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_takes_a_look_to_see() {
-        assert_no_lints(
-            "It attempts to open the URL in a new window and then after 2s it takes a look to see if it can read the location.",
-            TakeALookTo::default(),
-        );
+        assert_no_lints("It attempts to open the URL in a new window and then after 2s it takes a look to see if it can read the location.", TakeALookTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_has_a_look_to_it() {
-        assert_no_lints(
-            "The ecosystem's UI certainly has a look to it but inside of your app you could implement a different look as long as it's consistent.",
-            TakeALookTo::default(),
-        );
+        assert_no_lints("The ecosystem's UI certainly has a look to it but inside of your app you could implement a different look as long as it's consistent.", TakeALookTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn but_dont_ignore_takes_a_look_to_it() {
-        assert_suggestion_result(
-            "When he gets back I hope he takes a look to it",
-            TakeALookTo::default(),
-            "When he gets back I hope he takes a look at it",
-        );
+        assert_suggestion_result("When he gets back I hope he takes a look to it", TakeALookTo::default(), "When he gets back I hope he takes a look at it", crate::languages::LanguageFamily::English);
     }
 }

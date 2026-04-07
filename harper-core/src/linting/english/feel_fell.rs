@@ -158,18 +158,12 @@ mod tests {
 
     #[test]
     fn dont_flag_fell_right_into() {
-        assert_no_lints(
-            "I followed the instructions in the browser, and waited, then it fell right into shape, and the system is working out.",
-            FeelFell::default(),
-        );
+        assert_no_lints("I followed the instructions in the browser, and waited, then it fell right into shape, and the system is working out.", FeelFell::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_fell_right_through() {
-        assert_no_lints(
-            "In this case the whole Piper context menu entry is missing since the uncaught exception fell right through the whole context menu factory.",
-            FeelFell::default(),
-        );
+        assert_no_lints("In this case the whole Piper context menu entry is missing since the uncaught exception fell right through the whole context menu factory.", FeelFell::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -185,10 +179,7 @@ mod tests {
     #[test]
     #[ignore = "Needs more context or better heuristics"]
     fn dont_flag_didnt_fell_for_it() {
-        assert_no_lints(
-            "I even tried to trick someone else to delete and add the device but he didn't fell for it...",
-            FeelFell::default(),
-        );
+        assert_no_lints("I even tried to trick someone else to delete and add the device but he didn't fell for it...", FeelFell::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]

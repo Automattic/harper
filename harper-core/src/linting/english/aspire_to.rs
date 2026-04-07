@@ -88,66 +88,42 @@ mod tests {
 
     #[test]
     fn test_aspire_to() {
-        assert_suggestion_result("aspire for", AspireTo::default(), "aspire to");
+        assert_suggestion_result("aspire for", AspireTo::default(), "aspire to", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_after_using() {
-        assert_no_lints(
-            "I am developing an application on ASP.NET Core 8 using Aspire for infrastructure management.",
-            AspireTo::default(),
-        );
+        assert_no_lints("I am developing an application on ASP.NET Core 8 using Aspire for infrastructure management.", AspireTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_after_all_caps_net() {
-        assert_no_lints(
-            "This repositry contains the integrations with .NET Aspire for AWS.",
-            AspireTo::default(),
-        );
+        assert_no_lints("This repositry contains the integrations with .NET Aspire for AWS.", AspireTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_after_all_caps_net_no_dot() {
         // NOTE the .NET gets tokenized as Unlintable!?
-        assert_no_lints(
-            "This repositry contains the integrations with NET Aspire for AWS.",
-            AspireTo::default(),
-        );
+        assert_no_lints("This repositry contains the integrations with NET Aspire for AWS.", AspireTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_ignore_after_lowercase_net() {
-        assert_suggestion_result(
-            "my net aspires for catch a bug",
-            AspireTo::default(),
-            "my net aspires to catch a bug",
-        );
+        assert_suggestion_result("my net aspires for catch a bug", AspireTo::default(), "my net aspires to catch a bug", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_at_start_of_doc_when_capitalized() {
-        assert_suggestion_result(
-            "Aspire for greatness, even at the start of a sentence.",
-            AspireTo::default(),
-            "Aspire to greatness, even at the start of a sentence.",
-        );
+        assert_suggestion_result("Aspire for greatness, even at the start of a sentence.", AspireTo::default(), "Aspire to greatness, even at the start of a sentence.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_at_the_start_of_a_sentence_mid_document() {
-        assert_suggestion_result(
-            "This is a sentence. Aspire for greatness, even at the start of a mid-document sentence.",
-            AspireTo::default(),
-            "This is a sentence. Aspire to greatness, even at the start of a mid-document sentence.",
-        );
+        assert_suggestion_result("This is a sentence. Aspire for greatness, even at the start of a mid-document sentence.", AspireTo::default(), "This is a sentence. Aspire to greatness, even at the start of a mid-document sentence.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_capitalized_mid_document() {
-        assert_no_lints(
-            "I reccumend Aspire for your next project.",
-            AspireTo::default(),
-        );
+        assert_no_lints("I reccumend Aspire for your next project.", AspireTo::default(), crate::languages::LanguageFamily::English);
     }
 }

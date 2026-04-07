@@ -169,20 +169,12 @@ mod tests {
 
     #[test]
     fn americas_allow_correct() {
-        assert_lint_count(
-            "South America",
-            lint_group(FstDictionary::curated(
+        assert_lint_count("South America", lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )),
-            0,
-        );
-        assert_lint_count(
-            "North America",
-            lint_group(FstDictionary::curated(
+            )), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count("North America", lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )),
-            0,
-        );
+            )), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -223,24 +215,16 @@ mod tests {
 
     #[test]
     fn united_nations_allow_correct() {
-        assert_lint_count(
-            "United Nations",
-            lint_group(FstDictionary::curated(
+        assert_lint_count("United Nations", lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )),
-            0,
-        );
+            )), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn meta_allow_correct() {
-        assert_lint_count(
-            "Meta Quest",
-            lint_group(FstDictionary::curated(
+        assert_lint_count("Meta Quest", lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )),
-            0,
-        );
+            )), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -358,31 +342,31 @@ mod tests {
     #[test]
     fn test_atlantic_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Atlantic Ocean", lint_group(dictionary), 0);
+        assert_lint_count("Atlantic Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_pacific_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Pacific Ocean", lint_group(dictionary), 0);
+        assert_lint_count("Pacific Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_indian_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Indian Ocean", lint_group(dictionary), 0);
+        assert_lint_count("Indian Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_mediterranean_sea_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Mediterranean Sea", lint_group(dictionary), 0);
+        assert_lint_count("Mediterranean Sea", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_south_china_sea_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("South China Sea", lint_group(dictionary), 0);
+        assert_lint_count("South China Sea", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

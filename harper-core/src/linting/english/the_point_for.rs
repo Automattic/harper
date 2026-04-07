@@ -76,56 +76,33 @@ mod tests {
 
     #[test]
     fn fix_is() {
-        assert_suggestion_result(
-            "What is the point for this check?",
-            ThePointFor::default(),
-            "What is the point of this check?",
-        );
+        assert_suggestion_result("What is the point for this check?", ThePointFor::default(), "What is the point of this check?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "'that' is disabled to avoid false positives until the heuristics can be improved"]
     fn fix_thats_the_point_no_apostrophe() {
-        assert_suggestion_result(
-            "You should also keep an eye on the issue list because thats the point for being public",
-            ThePointFor::default(),
-            "You should also keep an eye on the issue list because thats the point of being public",
-        );
+        assert_suggestion_result("You should also keep an eye on the issue list because thats the point for being public", ThePointFor::default(), "You should also keep an eye on the issue list because thats the point of being public", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_was_the_point() {
-        assert_suggestion_result(
-            "But avoiding to learn qraphql to find out the proper query was the point for asking for this convenience command.",
-            ThePointFor::default(),
-            "But avoiding to learn qraphql to find out the proper query was the point of asking for this convenience command.",
-        );
+        assert_suggestion_result("But avoiding to learn qraphql to find out the proper query was the point for asking for this convenience command.", ThePointFor::default(), "But avoiding to learn qraphql to find out the proper query was the point of asking for this convenience command.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_whats_the_point() {
-        assert_suggestion_result(
-            "What's the point for IRepository?",
-            ThePointFor::default(),
-            "What's the point of IRepository?",
-        );
+        assert_suggestion_result("What's the point for IRepository?", ThePointFor::default(), "What's the point of IRepository?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_whats_the_point_no_apostrophe() {
         // Whats the point for using a reader like feedly, if the articles open in their native website
-        assert_suggestion_result(
-            "## I dont get RSS. Whats the point for using a reader like feedly, if the articles open in their native website",
-            ThePointFor::default(),
-            "## I dont get RSS. Whats the point of using a reader like feedly, if the articles open in their native website",
-        );
+        assert_suggestion_result("## I dont get RSS. Whats the point for using a reader like feedly, if the articles open in their native website", ThePointFor::default(), "## I dont get RSS. Whats the point of using a reader like feedly, if the articles open in their native website", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn avoid_flagging_the_point_for_which() {
-        assert_no_lints(
-            "p0 is the point for which we want to find the closest point to the line",
-            ThePointFor::default(),
-        );
+        assert_no_lints("p0 is the point for which we want to find the closest point to the line", ThePointFor::default(), crate::languages::LanguageFamily::English);
     }
 }

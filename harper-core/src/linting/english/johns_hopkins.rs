@@ -59,87 +59,51 @@ mod tests {
 
     #[test]
     fn corrects_university_reference() {
-        assert_suggestion_result(
-            "I applied to John Hopkins University last fall.",
-            JohnsHopkins::default(),
-            "I applied to Johns Hopkins University last fall.",
-        );
+        assert_suggestion_result("I applied to John Hopkins University last fall.", JohnsHopkins::default(), "I applied to Johns Hopkins University last fall.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_hospital_reference() {
-        assert_suggestion_result(
-            "She works at the John Hopkins hospital.",
-            JohnsHopkins::default(),
-            "She works at the Johns Hopkins hospital.",
-        );
+        assert_suggestion_result("She works at the John Hopkins hospital.", JohnsHopkins::default(), "She works at the Johns Hopkins hospital.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_standalone_name() {
-        assert_suggestion_result(
-            "We toured John Hopkins yesterday.",
-            JohnsHopkins::default(),
-            "We toured Johns Hopkins yesterday.",
-        );
+        assert_suggestion_result("We toured John Hopkins yesterday.", JohnsHopkins::default(), "We toured Johns Hopkins yesterday.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_lowercase_usage() {
-        assert_suggestion_result(
-            "I studied at john hopkins online.",
-            JohnsHopkins::default(),
-            "I studied at johns hopkins online.",
-        );
+        assert_suggestion_result("I studied at john hopkins online.", JohnsHopkins::default(), "I studied at johns hopkins online.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_across_newline_whitespace() {
-        assert_suggestion_result(
-            "We met at John\nHopkins for lunch.",
-            JohnsHopkins::default(),
-            "We met at Johns\nHopkins for lunch.",
-        );
+        assert_suggestion_result("We met at John\nHopkins for lunch.", JohnsHopkins::default(), "We met at Johns\nHopkins for lunch.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_with_trailing_punctuation() {
-        assert_suggestion_result(
-            "I toured John Hopkins, and it was great.",
-            JohnsHopkins::default(),
-            "I toured Johns Hopkins, and it was great.",
-        );
+        assert_suggestion_result("I toured John Hopkins, and it was great.", JohnsHopkins::default(), "I toured Johns Hopkins, and it was great.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_before_hyphenated_unit() {
-        assert_suggestion_result(
-            "She joined the John Hopkins-affiliated lab.",
-            JohnsHopkins::default(),
-            "She joined the Johns Hopkins-affiliated lab.",
-        );
+        assert_suggestion_result("She joined the John Hopkins-affiliated lab.", JohnsHopkins::default(), "She joined the Johns Hopkins-affiliated lab.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_correct_spelling() {
-        assert_lint_count(
-            "Johns Hopkins University has a great program.",
-            JohnsHopkins::default(),
-            0,
-        );
+        assert_lint_count("Johns Hopkins University has a great program.", JohnsHopkins::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_apostrophized_form() {
-        assert_lint_count(
-            "John Hopkins's novel won awards.",
-            JohnsHopkins::default(),
-            0,
-        );
+        assert_lint_count("John Hopkins's novel won awards.", JohnsHopkins::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_reversed_name_order() {
-        assert_lint_count("Hopkins, John is a contact.", JohnsHopkins::default(), 0);
+        assert_lint_count("Hopkins, John is a contact.", JohnsHopkins::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

@@ -120,147 +120,87 @@ mod tests {
 
     #[test]
     fn corrects_line_of_codes() {
-        assert_suggestion_result(
-            "desktop application used to estimate the line of codes to certain software application",
-            PluralWrongWordOfPhrase::default(),
-            "desktop application used to estimate the lines of code to certain software application",
-        );
+        assert_suggestion_result("desktop application used to estimate the line of codes to certain software application", PluralWrongWordOfPhrase::default(), "desktop application used to estimate the lines of code to certain software application", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Wrong letters capitalized due to how `Suggstion::replace_with_match_case` works by index."]
     fn corrects_line_of_codes_title_case() {
-        assert_suggestion_result(
-            "A simple tool for Line Of Codes (LOC) calculation.",
-            PluralWrongWordOfPhrase::default(),
-            "A simple tool for Lines Of Code (LOC) calculation.",
-        );
+        assert_suggestion_result("A simple tool for Line Of Codes (LOC) calculation.", PluralWrongWordOfPhrase::default(), "A simple tool for Lines Of Code (LOC) calculation.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_lines_of_codes() {
-        assert_suggestion_result(
-            "I myself don't have something against giving users the ability to show the lines of codes they wrote.",
-            PluralWrongWordOfPhrase::default(),
-            "I myself don't have something against giving users the ability to show the lines of code they wrote.",
-        );
+        assert_suggestion_result("I myself don't have something against giving users the ability to show the lines of codes they wrote.", PluralWrongWordOfPhrase::default(), "I myself don't have something against giving users the ability to show the lines of code they wrote.", crate::languages::LanguageFamily::English);
     }
 
     // PartsOfSpeech
 
     #[test]
     fn corrects_part_of_speeches() {
-        assert_suggestion_result(
-            "The part of speeches (POS) or as follows:",
-            PluralWrongWordOfPhrase::default(),
-            "The parts of speech (POS) or as follows:",
-        )
+        assert_suggestion_result("The part of speeches (POS) or as follows:", PluralWrongWordOfPhrase::default(), "The parts of speech (POS) or as follows:", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_parts_of_speeches() {
-        assert_suggestion_result(
-            "It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.",
-            PluralWrongWordOfPhrase::default(),
-            "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.",
-        )
+        assert_suggestion_result("It can connect different parts of speeches e.g noun to adjective, adjective to adverb, noun to verb etc.", PluralWrongWordOfPhrase::default(), "It can connect different parts of speech e.g noun to adjective, adjective to adverb, noun to verb etc.", crate::languages::LanguageFamily::English)
     }
 
     // PointsOfView
 
     #[test]
     fn corrects_point_of_views() {
-        assert_suggestion_result(
-            "This will produce a huge amount of raw data, representing the region in multiple point of views.",
-            PluralWrongWordOfPhrase::default(),
-            "This will produce a huge amount of raw data, representing the region in multiple points of view.",
-        )
+        assert_suggestion_result("This will produce a huge amount of raw data, representing the region in multiple point of views.", PluralWrongWordOfPhrase::default(), "This will produce a huge amount of raw data, representing the region in multiple points of view.", crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn corrects_points_of_views() {
-        assert_suggestion_result(
-            "log events, places, moods and self-reflect from various points of views",
-            PluralWrongWordOfPhrase::default(),
-            "log events, places, moods and self-reflect from various points of view",
-        )
+        assert_suggestion_result("log events, places, moods and self-reflect from various points of views", PluralWrongWordOfPhrase::default(), "log events, places, moods and self-reflect from various points of view", crate::languages::LanguageFamily::English)
     }
 
     // RulesOfThumb
 
     #[test]
     fn correct_rule_of_thumbs() {
-        assert_suggestion_result(
-            "Thanks. 0.2 is just from my rule of thumbs.",
-            PluralWrongWordOfPhrase::default(),
-            "Thanks. 0.2 is just from my rules of thumb.",
-        );
+        assert_suggestion_result("Thanks. 0.2 is just from my rule of thumbs.", PluralWrongWordOfPhrase::default(), "Thanks. 0.2 is just from my rules of thumb.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_rules_of_thumbs() {
-        assert_suggestion_result(
-            "But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
-            PluralWrongWordOfPhrase::default(),
-            "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.",
-        );
+        assert_suggestion_result("But as rules of thumbs, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.", PluralWrongWordOfPhrase::default(), "But as rules of thumb, what is said in config file should be respected whatever parameter (field or directory) is passed to php-cs-fixer.phar.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_rules_of_thumbs_hyphenated() {
-        assert_suggestion_result(
-            "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
-            PluralWrongWordOfPhrase::default(),
-            "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
-        );
+        assert_suggestion_result("Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".", PluralWrongWordOfPhrase::default(), "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".", crate::languages::LanguageFamily::English);
     }
 
     // BodiesInWhite
 
     #[test]
     fn correct_body_in_whites_1() {
-        assert_suggestion_result(
-            "Normally, when they manufacture these body in whites, they would spot weld a lot of the components on.",
-            PluralWrongWordOfPhrase::default(),
-            "Normally, when they manufacture these bodies in white, they would spot weld a lot of the components on.",
-        );
+        assert_suggestion_result("Normally, when they manufacture these body in whites, they would spot weld a lot of the components on.", PluralWrongWordOfPhrase::default(), "Normally, when they manufacture these bodies in white, they would spot weld a lot of the components on.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_body_in_whites_2() {
-        assert_suggestion_result(
-            "I'm not sure, but just having seen a lot of body in whites, I know normally they try to spot weld it.",
-            PluralWrongWordOfPhrase::default(),
-            "I'm not sure, but just having seen a lot of bodies in white, I know normally they try to spot weld it.",
-        );
+        assert_suggestion_result("I'm not sure, but just having seen a lot of body in whites, I know normally they try to spot weld it.", PluralWrongWordOfPhrase::default(), "I'm not sure, but just having seen a lot of bodies in white, I know normally they try to spot weld it.", crate::languages::LanguageFamily::English);
     }
 
     // FlashesInThePan
 
     #[test]
     fn correct_flash_in_the_pans() {
-        assert_suggestion_result(
-            "I wish they do more flash in the pans, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.",
-            PluralWrongWordOfPhrase::default(),
-            "I wish they do more flashes in the pan, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.",
-        );
+        assert_suggestion_result("I wish they do more flash in the pans, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.", PluralWrongWordOfPhrase::default(), "I wish they do more flashes in the pan, like the suggestions they do on ERB2 could be such a good way to see if these suggestions are worthy.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_flash_in_the_pans_hyphenated() {
-        assert_suggestion_result(
-            "what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here",
-            PluralWrongWordOfPhrase::default(),
-            "what makes 'Super Hexagon' rise above other nostalgic flashes in the pan is that there is a game to be learned here",
-        );
+        assert_suggestion_result("what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here", PluralWrongWordOfPhrase::default(), "what makes 'Super Hexagon' rise above other nostalgic flashes in the pan is that there is a game to be learned here", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_flashes_in_the_pans() {
-        assert_suggestion_result(
-            "Who are some of the biggest flashes in the pans in wrestling history?",
-            PluralWrongWordOfPhrase::default(),
-            "Who are some of the biggest flashes in the pan in wrestling history?",
-        );
+        assert_suggestion_result("Who are some of the biggest flashes in the pans in wrestling history?", PluralWrongWordOfPhrase::default(), "Who are some of the biggest flashes in the pan in wrestling history?", crate::languages::LanguageFamily::English);
     }
 }

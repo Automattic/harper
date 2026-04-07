@@ -64,73 +64,41 @@ mod tests {
 
     #[test]
     fn fix_on_accident() {
-        assert_suggestion_result(
-            "Snapshot revert feature is unintuitive and easy to use on accident.",
-            ByAccident::default(),
-            "Snapshot revert feature is unintuitive and easy to use by accident.",
-        );
+        assert_suggestion_result("Snapshot revert feature is unintuitive and easy to use on accident.", ByAccident::default(), "Snapshot revert feature is unintuitive and easy to use by accident.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_complete_accident() {
-        assert_suggestion_result(
-            "I Came across this comment on complete accident, however, I did notice the same thing with a slowdown in chrome for android",
-            ByAccident::default(),
-            "I Came across this comment by complete accident, however, I did notice the same thing with a slowdown in chrome for android",
-        );
+        assert_suggestion_result("I Came across this comment on complete accident, however, I did notice the same thing with a slowdown in chrome for android", ByAccident::default(), "I Came across this comment by complete accident, however, I did notice the same thing with a slowdown in chrome for android", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_happy_accident() {
-        assert_suggestion_result(
-            "Just did this on happy accident the other day with my partner.",
-            ByAccident::default(),
-            "Just did this by happy accident the other day with my partner.",
-        );
+        assert_suggestion_result("Just did this on happy accident the other day with my partner.", ByAccident::default(), "Just did this by happy accident the other day with my partner.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_literal_accident() {
-        assert_suggestion_result(
-            "I did this on literal accident, trying to prove someone wrong that its not that easy.",
-            ByAccident::default(),
-            "I did this by literal accident, trying to prove someone wrong that its not that easy.",
-        );
+        assert_suggestion_result("I did this on literal accident, trying to prove someone wrong that its not that easy.", ByAccident::default(), "I did this by literal accident, trying to prove someone wrong that its not that easy.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_mere_accident() {
-        assert_suggestion_result(
-            "I hated this challenge and nope I don't I completed it on mere accident.",
-            ByAccident::default(),
-            "I hated this challenge and nope I don't I completed it by mere accident.",
-        );
+        assert_suggestion_result("I hated this challenge and nope I don't I completed it on mere accident.", ByAccident::default(), "I hated this challenge and nope I don't I completed it by mere accident.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_pure_accident() {
-        assert_suggestion_result(
-            "I got this on pure accident after forgetting to enable WebGL on LibreWolf",
-            ByAccident::default(),
-            "I got this by pure accident after forgetting to enable WebGL on LibreWolf",
-        );
+        assert_suggestion_result("I got this on pure accident after forgetting to enable WebGL on LibreWolf", ByAccident::default(), "I got this by pure accident after forgetting to enable WebGL on LibreWolf", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_sheer_accident() {
-        assert_suggestion_result(
-            "I more of think of things that got discovered on sheer accident, something no normal human would just do and expect results.",
-            ByAccident::default(),
-            "I more of think of things that got discovered by sheer accident, something no normal human would just do and expect results.",
-        );
+        assert_suggestion_result("I more of think of things that got discovered on sheer accident, something no normal human would just do and expect results.", ByAccident::default(), "I more of think of things that got discovered by sheer accident, something no normal human would just do and expect results.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_on_total_accident() {
-        assert_suggestion_result(
-            "On Total Accident, I Found Out Yona's True Title.",
-            ByAccident::default(),
-            "By Total Accident, I Found Out Yona's True Title.",
-        );
+        assert_suggestion_result("On Total Accident, I Found Out Yona's True Title.", ByAccident::default(), "By Total Accident, I Found Out Yona's True Title.", crate::languages::LanguageFamily::English);
     }
 }

@@ -84,7 +84,12 @@ mod tests {
 
     #[test]
     fn dont_flag_a_few_minutes_ago() {
-        assert_lint_count("A few minutes ago", FewUnitsOfTimeAgo::default(), 0);
+        assert_lint_count(
+            "A few minutes ago",
+            FewUnitsOfTimeAgo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -99,7 +104,12 @@ mod tests {
 
     #[test]
     fn dont_flag_done_a_few_minutes_ago() {
-        assert_lint_count("Done a few minutes ago", FewUnitsOfTimeAgo::default(), 0);
+        assert_lint_count(
+            "Done a few minutes ago",
+            FewUnitsOfTimeAgo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -234,6 +244,7 @@ mod tests {
             "Would have been useful a few centuries ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -243,6 +254,7 @@ mod tests {
             "A few days ago, I upgraded ComfyUI to the latest version, then the prompt node can't upload prompt list text file in Ubuntu",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -252,6 +264,7 @@ mod tests {
             "With your QA background you may have heard of the IBM black team of testers back a few decades ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -261,6 +274,7 @@ mod tests {
             "It was working well and we could see the installation page a few hours ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -270,6 +284,7 @@ mod tests {
             "It is actually the true motor angle observed a few milliseconds ago (pd latency).",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -279,6 +294,7 @@ mod tests {
             "Example from DoD The following was circulated a few minutes ago on an IDESG/NSTIC list",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -288,6 +304,7 @@ mod tests {
             "Our microservices started failing a few moments ago when creating new...",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -297,6 +314,7 @@ mod tests {
             "A few months ago there was an mixed reality project.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -306,6 +324,7 @@ mod tests {
             "As an example, a few nights ago I was working on my laptop and stuff that had been working stopped working.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -315,6 +334,7 @@ mod tests {
             "0 - 45 seconds, a few seconds ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -324,6 +344,7 @@ mod tests {
             "It was all working perfectly till a few weeks ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -333,6 +354,7 @@ mod tests {
             "Hello, I've been an intensive user of your dada2 pipeline until a few years ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -344,6 +366,7 @@ mod tests {
             "With your QA background you may have heard of the IBM black team of testers back a few decade ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -353,6 +376,7 @@ mod tests {
             "It was working well and we could see the installation page a few hour ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -362,6 +386,7 @@ mod tests {
             "A few millennia ago, there was a civilization here",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -371,6 +396,7 @@ mod tests {
             "Example from DoD The following was circulated a few minute ago on an IDESG/NSTIC list",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -380,6 +406,7 @@ mod tests {
             "No problem should be in the updated version pushed a few moment ago will be live in beta in about 10 min.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -389,6 +416,7 @@ mod tests {
             "I noticed the same thing a few month ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -398,6 +426,7 @@ mod tests {
             "Bug it doesnt even answer me rn, like a few second ago he did",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -407,6 +436,7 @@ mod tests {
             "A few week ago, when logging in the usual way",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -416,6 +446,7 @@ mod tests {
             "Hello, I've been an intensive user of your dada2 pipeline until a few year ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -427,6 +458,7 @@ mod tests {
             "And finally it got released a few day's ago.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -436,6 +468,7 @@ mod tests {
             "I had thought that since I had done this process a few month's ago the database could just be updated.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -445,6 +478,7 @@ mod tests {
             "A few week's ago, I was alerted in Webmin that Webmin was eligible to upgrade to 1.880 which I did through Webmin.",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -454,6 +488,7 @@ mod tests {
             "A few year's ago a spammer registered an unused base url",
             FewUnitsOfTimeAgo::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 

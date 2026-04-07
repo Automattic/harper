@@ -90,38 +90,22 @@ mod tests {
 
     #[test]
     fn second_suggestion_produces_the_same() {
-        assert_suggestion_result(
-            "We kept the some approach from last year.",
-            SomeWithoutArticle::default(),
-            "We kept the same approach from last year.",
-        );
+        assert_suggestion_result("We kept the some approach from last year.", SomeWithoutArticle::default(), "We kept the same approach from last year.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_already_correct_some() {
-        assert_lint_count(
-            "We interviewed some candidates today.",
-            SomeWithoutArticle::default(),
-            0,
-        );
+        assert_lint_count("We interviewed some candidates today.", SomeWithoutArticle::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_the_same() {
-        assert_lint_count(
-            "We kept the same approach from last year.",
-            SomeWithoutArticle::default(),
-            0,
-        );
+        assert_lint_count("We kept the same approach from last year.", SomeWithoutArticle::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_the_something() {
-        assert_lint_count(
-            "We interviewed the something else entirely.",
-            SomeWithoutArticle::default(),
-            0,
-        );
+        assert_lint_count("We interviewed the something else entirely.", SomeWithoutArticle::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn ignores_correct_phrase() {
-        assert_lint_count("Here's how to clone the repository.", HowTo::default(), 0);
+        assert_lint_count("Here's how to clone the repository.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -212,112 +212,74 @@ mod tests {
 
     #[test]
     fn already_correct_install() {
-        assert_lint_count(
-            "See how to install the package with apt.",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("See how to install the package with apt.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn already_correct_fix() {
-        assert_lint_count(
-            "He showed me how to fix the zipper in ten minutes.",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("He showed me how to fix the zipper in ten minutes.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn how_are_you() {
-        assert_lint_count("How are you?", HowTo::default(), 0);
+        assert_lint_count("How are you?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn how_calm_you_are() {
-        assert_lint_count("I like how calm you are.", HowTo::default(), 0);
+        assert_lint_count("I like how calm you are.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn how_will_you_make_up() {
-        assert_lint_count(
-            "How will you make up for your mistakes?",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("How will you make up for your mistakes?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn storytelling_clause() {
-        assert_lint_count(
-            "I will tell about how leaving my husband led to my dog winning a Nobel Prize.",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("I will tell about how leaving my husband led to my dog winning a Nobel Prize.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_how_did_you() {
-        assert_lint_count("How did you get to school every day?", HowTo::default(), 0);
+        assert_lint_count("How did you get to school every day?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_how_come() {
-        assert_lint_count(
-            "How come this has to be a special case?",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("How come this has to be a special case?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_how_has() {
-        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0);
+        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_1492() {
-        assert_no_lints(
-            "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
-            HowTo::default(),
-        );
+        assert_no_lints("I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.", HowTo::default(), crate::languages::LanguageFamily::English);
 
-        assert_no_lints("But how does something like this...", HowTo::default());
+        assert_no_lints("But how does something like this...", HowTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allow_issue_1298() {
-        assert_no_lints(
-            "The story of how and why things came to this point.",
-            HowTo::default(),
-        );
+        assert_no_lints("The story of how and why things came to this point.", HowTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_false_positive_pr_1846() {
-        assert_no_lints(
-            "About how Microsoft, Google, and others are training people in Rust.",
-            HowTo::default(),
-        )
+        assert_no_lints("About how Microsoft, Google, and others are training people in Rust.", HowTo::default(), crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn dont_flag_false_positives_1492_how_indexes() {
-        assert_no_lints(
-            "controls how indexes will be added to unwrapped keys of flat array-like objects",
-            HowTo::default(),
-        );
+        assert_no_lints("controls how indexes will be added to unwrapped keys of flat array-like objects", HowTo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_2124() {
-        assert_no_lints(
-            "I like how discord shows Spotify status on your profile.",
-            HowTo::default(),
-        );
-        assert_no_lints(
-            "To be determined based on how error handling is done in new paradigm.",
-            HowTo::default(),
-        );
+        assert_no_lints("I like how discord shows Spotify status on your profile.", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints("To be determined based on how error handling is done in new paradigm.", HowTo::default(), crate::languages::LanguageFamily::English);
     }
 }

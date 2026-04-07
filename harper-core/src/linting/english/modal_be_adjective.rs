@@ -87,42 +87,27 @@ mod tests {
 
     #[test]
     fn fix_would_nice() {
-        assert_suggestion_result(
-            "It would nice if Harper could detect this.",
-            ModalBeAdjective::default(),
-            "It would be nice if Harper could detect this.",
-        );
+        assert_suggestion_result("It would nice if Harper could detect this.", ModalBeAdjective::default(), "It would be nice if Harper could detect this.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_could_configured() {
-        assert_suggestion_result(
-            "It could configured by parameters and the commands above effectively disable it.",
-            ModalBeAdjective::default(),
-            "It could be configured by parameters and the commands above effectively disable it.",
-        );
+        assert_suggestion_result("It could configured by parameters and the commands above effectively disable it.", ModalBeAdjective::default(), "It could be configured by parameters and the commands above effectively disable it.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_will_accessible() {
-        assert_suggestion_result(
-            "Your WordPress site will accessible at http://localhost",
-            ModalBeAdjective::default(),
-            "Your WordPress site will be accessible at http://localhost",
-        );
+        assert_suggestion_result("Your WordPress site will accessible at http://localhost", ModalBeAdjective::default(), "Your WordPress site will be accessible at http://localhost", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_would_external_traffic() {
-        assert_no_lints(
-            "And why would external traffic be trying to access my server if I don't know who or what it is?",
-            ModalBeAdjective::default(),
-        )
+        assert_no_lints("And why would external traffic be trying to access my server if I don't know who or what it is?", ModalBeAdjective::default(), crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn ignore_could_kind_of() {
-        assert_no_lints("you could kind of see the ...", ModalBeAdjective::default())
+        assert_no_lints("you could kind of see the ...", ModalBeAdjective::default(), crate::languages::LanguageFamily::English)
     }
 
     // Known false positives. You may want to improve the code to handle some of these.
@@ -130,28 +115,19 @@ mod tests {
     #[test]
     #[ignore = "false positive: 'backup' is an adjective but also a spello for the verb 'back up'"]
     fn ignore_you_can_backup() {
-        assert_no_lints("You can backup Userdata.", ModalBeAdjective::default());
+        assert_no_lints("You can backup Userdata.", ModalBeAdjective::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "false positive: 'incorrect' should be 'incorrectly'."]
     fn ignore_would_incorrect() {
-        assert_no_lints(
-            "Bug in versions 4.0 and 4.1 would incorrect list the address module",
-            ModalBeAdjective::default(),
-        );
+        assert_no_lints("Bug in versions 4.0 and 4.1 would incorrect list the address module", ModalBeAdjective::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "false positive: 'upper-bound' is an ad-hoc verb here."]
     fn ignore_should_upper() {
-        assert_no_lints(
-            "we should upper-bound it to the next MAJOR version.",
-            ModalBeAdjective::default(),
-        );
-        assert_no_lints(
-            "some older software (filezilla on debian-stable) cannot passive-mode with TLS",
-            ModalBeAdjective::default(),
-        );
+        assert_no_lints("we should upper-bound it to the next MAJOR version.", ModalBeAdjective::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints("some older software (filezilla on debian-stable) cannot passive-mode with TLS", ModalBeAdjective::default(), crate::languages::LanguageFamily::English);
     }
 }

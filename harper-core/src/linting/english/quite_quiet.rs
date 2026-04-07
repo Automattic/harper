@@ -177,16 +177,12 @@ mod tests {
 
     #[test]
     fn dont_flag_quiet_light() {
-        assert_lint_count("The quiet lights in the houses", QuiteQuiet::default(), 0);
+        assert_lint_count("The quiet lights in the houses", QuiteQuiet::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_quiet_till() {
-        assert_lint_count(
-            "You’d better try and sit quiet till morning.",
-            QuiteQuiet::default(),
-            0,
-        );
+        assert_lint_count("You’d better try and sit quiet till morning.", QuiteQuiet::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -221,22 +217,16 @@ mod tests {
 
     #[test]
     fn fix_but_its_not_quite_clear_1956() {
-        assert_no_lints("But it's not quite clear", QuiteQuiet::default());
+        assert_no_lints("But it's not quite clear", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_adv_quite_1971() {
-        assert_no_lints(
-            "It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_2003() {
-        assert_no_lints(
-            "The namespaces are generally quite short",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("The namespaces are generally quite short", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 }

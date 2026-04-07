@@ -70,6 +70,7 @@ mod tests {
             "She felt confident about her presentation.",
             Confident::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -89,6 +90,7 @@ mod tests {
             "I am confident the test results are accurate.",
             Confident::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -108,6 +110,7 @@ mod tests {
             "He walked to the stage with a confident stride.",
             Confident::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -127,6 +130,7 @@ mod tests {
             "You should sound confident during job interviews.",
             Confident::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -146,6 +150,7 @@ mod tests {
             "Present your argument in a confident, persuasive manner.",
             Confident::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 

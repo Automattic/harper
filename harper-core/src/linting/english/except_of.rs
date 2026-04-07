@@ -81,45 +81,26 @@ mod tests {
 
     #[test]
     fn fix_the_except_of() {
-        assert_suggestion_result(
-            "With the except of one particular sender, all the other senders are sending correctly to the configured smarthost.",
-            ExceptOf::default(),
-            "With the exception of one particular sender, all the other senders are sending correctly to the configured smarthost.",
-        );
+        assert_suggestion_result("With the except of one particular sender, all the other senders are sending correctly to the configured smarthost.", ExceptOf::default(), "With the exception of one particular sender, all the other senders are sending correctly to the configured smarthost.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_possible_except_of() {
-        assert_suggestion_result(
-            "With the possible except of two vertexes with one having one more in-degree than out-degree",
-            ExceptOf::default(),
-            "With the possible exception of two vertexes with one having one more in-degree than out-degree",
-        );
+        assert_suggestion_result("With the possible except of two vertexes with one having one more in-degree than out-degree", ExceptOf::default(), "With the possible exception of two vertexes with one having one more in-degree than out-degree", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_notable_except_of() {
-        assert_suggestion_result(
-            "identical at the end of the day to never logging into it again (with the notable except of potentially identifying info you've left in your profile, of course)",
-            ExceptOf::default(),
-            "identical at the end of the day to never logging into it again (with the notable exception of potentially identifying info you've left in your profile, of course)",
-        );
+        assert_suggestion_result("identical at the end of the day to never logging into it again (with the notable except of potentially identifying info you've left in your profile, of course)", ExceptOf::default(), "identical at the end of the day to never logging into it again (with the notable exception of potentially identifying info you've left in your profile, of course)", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_except_of_course() {
-        assert_no_lints(
-            "much like the existing config option access_log_format, except of course for the error log (option errorlog) output format.",
-            ExceptOf::default(),
-        );
+        assert_no_lints("much like the existing config option access_log_format, except of course for the error log (option errorlog) output format.", ExceptOf::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_except_of() {
-        assert_suggestion_result(
-            "There are no usable way to restart worker except of supervisorctl restart workername",
-            ExceptOf::default(),
-            "There are no usable way to restart worker except for supervisorctl restart workername",
-        );
+        assert_suggestion_result("There are no usable way to restart worker except of supervisorctl restart workername", ExceptOf::default(), "There are no usable way to restart worker except for supervisorctl restart workername", crate::languages::LanguageFamily::English);
     }
 }

@@ -114,11 +114,7 @@ mod tests {
 
     #[test]
     fn dont_correct_most_number_without_context() {
-        assert_lint_count(
-            "The random non-sequential nature should prevent most number gaming/sniping/lunging.",
-            MostNumber::default(),
-            0,
-        );
+        assert_lint_count("The random non-sequential nature should prevent most number gaming/sniping/lunging.", MostNumber::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

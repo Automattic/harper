@@ -131,10 +131,6 @@ mod tests {
 
     #[test]
     fn not_lint_with_non_verb() {
-        assert_lint_count(
-            "She was looking forward to the grandchildren's visit.",
-            LookingForwardTo::default(),
-            0,
-        );
+        assert_lint_count("She was looking forward to the grandchildren's visit.", LookingForwardTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

@@ -87,6 +87,8 @@ pub mod debug {
 }
 
 pub mod tests {
+    use hashbrown::HashSet;
+
     use crate::{Document, Linter, Span, Token, languages::LanguageFamily};
 
     /// Extension trait for converting spans of tokens back to their original text
@@ -121,6 +123,114 @@ pub mod tests {
     }
 
     #[track_caller]
+    pub fn assert_lint_count(
+        text: &str,
+        mut linter: impl Linter,
+        count: usize,
+        language: LanguageFamily,
+    ) {
+        let test = match language {
+            LanguageFamily::English => Document::new_plain_english_curated(text),
+            _ => unimplemented!(),
+        };
+        let lints = linter.lint(&test);
+        // dbg!(&lints);
+        if lints.len() != count {
+            panic!(
+                "Expected \"{text}\" to create {count} lints, but it created {}.",
+                lints.len()
+            );
+        }
+    }
+
+    // TODO verify many suggestions including the one we want succeeds
+    // TODO verify many suggestions but not the one we want fails
+
+    /// Asserts both that the given text matches the expected good suggestions and that none of the
+    /// suggestions are in the bad suggestions list.
+    /// TODO: Reimplement similar to `search_suggestion_tree`
+    // TODO verify many suggestions including the one we want succeeds
+    // TODO verify many suggestions but not the one we want fails
+
+    /// Asserts both that the given text matches the expected good suggestions and that none of the
+    /// suggestions are in the bad suggestions list.
+    /// TODO: Reimplement similar to `search_suggestion_tree`
+    #[track_caller]
+    pub fn assert_good_and_bad_suggestions(
+        text: &str,
+        mut linter: impl Linter,
+        good: &[&str],
+        bad: &[&str],
+    ) {
+        let test = Document::new_plain_english_curated(text);
+        let lints = linter.lint(&test);
+
+        let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
+        let mut found_bad = Vec::new();
+        let mut found_good = Vec::new();
+
+        for (i, lint) in lints.into_iter().enumerate() {
+            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
+                let mut text_chars: Vec<char> = text.chars().collect();
+                suggestion.apply(lint.span, &mut text_chars);
+                let suggestion_text: String = text_chars.into_iter().collect();
+
+                // Check for bad suggestions
+                if bad.contains(&&*suggestion_text) {
+                    found_bad.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
+                }
+                // Check for good suggestions
+                else if good.contains(&&*suggestion_text) {
+                    found_good.push((i, j, suggestion_text.clone()));
+                    eprintln!(
+                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
+                    unseen_good.remove(suggestion_text.as_str());
+                }
+            }
+        }
+
+        // Print summary
+        if !found_bad.is_empty() || !unseen_good.is_empty() {
+            eprintln!("\n=== Test Summary ===");
+
+            // In the summary section, change these loops:
+            if !found_bad.is_empty() {
+                eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
+                for (i, j, text) in &found_bad {
+                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
+                }
+            }
+
+            // And for the good suggestions:
+            if !unseen_good.is_empty() {
+                eprintln!(
+                    "\n❌ Missing {} expected good suggestions:",
+                    unseen_good.len()
+                );
+                for text in &unseen_good {
+                    eprintln!("  - \"{text}\"");
+                }
+            }
+
+            eprintln!("\n✅ Found {} good suggestions", found_good.len());
+            eprintln!("==================\n");
+
+            if !found_bad.is_empty() || !unseen_good.is_empty() {
+                panic!("Test failed - see error output above");
+            }
+        } else {
+            eprintln!(
+                "\n✅ All {} good suggestions found, no bad suggestions\n",
+                found_good.len()
+            );
+        }
+    }
+
+    #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter, language: LanguageFamily) {
         match language {
             LanguageFamily::English => assert_lint_count_plain_english(text, linter, 0),
@@ -130,7 +240,7 @@ pub mod tests {
 
     /// Document types for suggestion search testing
     #[derive(Debug, Clone, Copy)]
-    enum DocumentType {
+    pub enum DocumentType {
         PlainEnglish,
         Markdown,
     }
@@ -188,7 +298,12 @@ pub mod tests {
     ///
     /// See issue #950: https://github.com/Automattic/harper/issues/950
     #[track_caller]
-    pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
+    pub fn assert_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        needle: &str,
+        language: LanguageFamily,
+    ) {
         if search_for_suggestion(DocumentType::PlainEnglish, text, &mut linter, needle, 0) {
             return;
         }
@@ -209,7 +324,7 @@ pub mod tests {
 
     /// Recursively searches all suggestion combinations using depth-first search.
     /// Returns true if any path reaches the expected result, false otherwise.
-    fn search_for_suggestion(
+    pub fn search_for_suggestion(
         doc_type: DocumentType,
         text: &str,
         linter: &mut impl Linter,

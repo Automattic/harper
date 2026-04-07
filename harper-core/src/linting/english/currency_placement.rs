@@ -80,7 +80,7 @@ mod tests {
 
     #[test]
     fn blog_title_allows_correct() {
-        assert_lint_count("The Best $25 I Ever Spent", CurrencyPlacement::default(), 0);
+        assert_lint_count("The Best $25 I Ever Spent", CurrencyPlacement::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -154,6 +154,6 @@ mod tests {
 
     #[test]
     fn seven_even_two_decimal_clean() {
-        assert_lint_count("$7.00", CurrencyPlacement::default(), 0);
+        assert_lint_count("$7.00", CurrencyPlacement::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

@@ -66,91 +66,51 @@ mod tests {
 
     #[test]
     fn alex_ladder() {
-        assert_suggestion_result(
-            "Me and Alex carried the huge ladder.",
-            SubjectPronoun::default(),
-            "Alex and I carried the huge ladder.",
-        );
+        assert_suggestion_result("Me and Alex carried the huge ladder.", SubjectPronoun::default(), "Alex and I carried the huge ladder.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn jordan_lamp() {
-        assert_suggestion_result(
-            "Me and Jordan fixed the broken lamp.",
-            SubjectPronoun::default(),
-            "Jordan and I fixed the broken lamp.",
-        );
+        assert_suggestion_result("Me and Jordan fixed the broken lamp.", SubjectPronoun::default(), "Jordan and I fixed the broken lamp.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn taylor_crate() {
-        assert_suggestion_result(
-            "Me and Taylor opened the dusty crate.",
-            SubjectPronoun::default(),
-            "Taylor and I opened the dusty crate.",
-        );
+        assert_suggestion_result("Me and Taylor opened the dusty crate.", SubjectPronoun::default(), "Taylor and I opened the dusty crate.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn kayla_dog() {
-        assert_suggestion_result(
-            "Me and Kayla chased the noisy dog.",
-            SubjectPronoun::default(),
-            "Kayla and I chased the noisy dog.",
-        );
+        assert_suggestion_result("Me and Kayla chased the noisy dog.", SubjectPronoun::default(), "Kayla and I chased the noisy dog.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn madison_yard() {
-        assert_suggestion_result(
-            "Me and Madison painted the small yard shed.",
-            SubjectPronoun::default(),
-            "Madison and I painted the small yard shed.",
-        );
+        assert_suggestion_result("Me and Madison painted the small yard shed.", SubjectPronoun::default(), "Madison and I painted the small yard shed.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn avery_tree() {
-        assert_suggestion_result(
-            "Me and Avery climbed the old tree.",
-            SubjectPronoun::default(),
-            "Avery and I climbed the old tree.",
-        );
+        assert_suggestion_result("Me and Avery climbed the old tree.", SubjectPronoun::default(), "Avery and I climbed the old tree.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn blake_room() {
-        assert_suggestion_result(
-            "Me and Blake cleaned the crowded room.",
-            SubjectPronoun::default(),
-            "Blake and I cleaned the crowded room.",
-        );
+        assert_suggestion_result("Me and Blake cleaned the crowded room.", SubjectPronoun::default(), "Blake and I cleaned the crowded room.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn riley_train() {
-        assert_suggestion_result(
-            "Me and Riley watched the slow train go by.",
-            SubjectPronoun::default(),
-            "Riley and I watched the slow train go by.",
-        );
+        assert_suggestion_result("Me and Riley watched the slow train go by.", SubjectPronoun::default(), "Riley and I watched the slow train go by.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn cameron_door() {
-        assert_suggestion_result(
-            "Me and Cameron fixed the loose door hinge.",
-            SubjectPronoun::default(),
-            "Cameron and I fixed the loose door hinge.",
-        );
+        assert_suggestion_result("Me and Cameron fixed the loose door hinge.", SubjectPronoun::default(), "Cameron and I fixed the loose door hinge.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn jamie_bag() {
-        assert_suggestion_result(
-            "Me and Jamie carried the heavy shopping bag.",
-            SubjectPronoun::default(),
-            "Jamie and I carried the heavy shopping bag.",
-        );
+        assert_suggestion_result("Me and Jamie carried the heavy shopping bag.", SubjectPronoun::default(), "Jamie and I carried the heavy shopping bag.", crate::languages::LanguageFamily::English);
     }
 }

@@ -102,10 +102,6 @@ mod tests {
 
     #[test]
     fn issue_548() {
-        assert_lint_count(
-            "A simple web app that lets you fetch random issues.",
-            LetsConfusion::default(),
-            0,
-        );
+        assert_lint_count("A simple web app that lets you fetch random issues.", LetsConfusion::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

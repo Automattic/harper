@@ -82,11 +82,7 @@ mod tests {
 
     #[test]
     fn issue_365() {
-        assert_lint_count(
-            "access will succeed, unlike with UDEREF/i386.",
-            CapitalizePersonalPronouns,
-            0,
-        );
+        assert_lint_count("access will succeed, unlike with UDEREF/i386.", CapitalizePersonalPronouns, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

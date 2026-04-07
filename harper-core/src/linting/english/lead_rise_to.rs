@@ -75,55 +75,31 @@ mod tests {
 
     #[test]
     fn fix_led_simple_past() {
-        assert_suggestion_result(
-            "In this way, it led rise to a kind of monotheism in Egypt.",
-            LeadRiseTo::default(),
-            "In this way, it gave rise to a kind of monotheism in Egypt.",
-        );
+        assert_suggestion_result("In this way, it led rise to a kind of monotheism in Egypt.", LeadRiseTo::default(), "In this way, it gave rise to a kind of monotheism in Egypt.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_led_past_participle() {
-        assert_suggestion_result(
-            "This had led rise to some issues, such as #2777 and some over Slack",
-            LeadRiseTo::default(),
-            "This had given rise to some issues, such as #2777 and some over Slack",
-        );
+        assert_suggestion_result("This had led rise to some issues, such as #2777 and some over Slack", LeadRiseTo::default(), "This had given rise to some issues, such as #2777 and some over Slack", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_lead_spello_for_led() {
-        assert_suggestion_result(
-            "This lead rise to a fair number of complaints over image quality which were not down to RPT.",
-            LeadRiseTo::default(),
-            "This gave rise to a fair number of complaints over image quality which were not down to RPT.",
-        );
+        assert_suggestion_result("This lead rise to a fair number of complaints over image quality which were not down to RPT.", LeadRiseTo::default(), "This gave rise to a fair number of complaints over image quality which were not down to RPT.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_lead_not_spello() {
-        assert_suggestion_result(
-            "Philosophy is important because it raises the questions that lead rise to the sciences.",
-            LeadRiseTo::default(),
-            "Philosophy is important because it raises the questions that give rise to the sciences.",
-        );
+        assert_suggestion_result("Philosophy is important because it raises the questions that lead rise to the sciences.", LeadRiseTo::default(), "Philosophy is important because it raises the questions that give rise to the sciences.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_leads() {
-        assert_suggestion_result(
-            "This leads rise to another question of mine",
-            LeadRiseTo::default(),
-            "This gives rise to another question of mine",
-        );
+        assert_suggestion_result("This leads rise to another question of mine", LeadRiseTo::default(), "This gives rise to another question of mine", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_leading() {
-        assert_suggestion_result(
-            "The severe bushfires have also created their own weather, leading rise to a phenomenon known as pyrocumulonimbus (pyroCB) storms.",
-            LeadRiseTo::default(),
-            "The severe bushfires have also created their own weather, giving rise to a phenomenon known as pyrocumulonimbus (pyroCB) storms.",
-        );
+        assert_suggestion_result("The severe bushfires have also created their own weather, leading rise to a phenomenon known as pyrocumulonimbus (pyroCB) storms.", LeadRiseTo::default(), "The severe bushfires have also created their own weather, giving rise to a phenomenon known as pyrocumulonimbus (pyroCB) storms.", crate::languages::LanguageFamily::English);
     }
 }

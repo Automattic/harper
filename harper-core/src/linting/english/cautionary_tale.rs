@@ -111,12 +111,18 @@ mod tests {
             "The dog wagged its tail happily.",
             CautionaryTale::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn allows_different_adjective_with_tail() {
-        assert_lint_count("The cat has a long tail.", CautionaryTale::default(), 0);
+        assert_lint_count(
+            "The cat has a long tail.",
+            CautionaryTale::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -125,6 +131,7 @@ mod tests {
             "It serves as a cautionary tale.",
             CautionaryTale::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +141,7 @@ mod tests {
             "Her story is an inspirational tale.",
             CautionaryTale::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -153,6 +161,7 @@ mod tests {
             "This cautionary tail is also an inspirational tail about overcoming adversity.",
             CautionaryTale::default(),
             2,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -162,6 +171,7 @@ mod tests {
             "The inspirational speaker told the tale of a dog's tail.",
             CautionaryTale::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 

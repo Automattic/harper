@@ -80,21 +80,18 @@ mod tests {
     fn detects_space_before_period() {
         let source = "There is a space at the end of this sentence .";
 
-        assert_lint_count(source, Spaces, 1)
+        assert_lint_count(source, Spaces, 1, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn allows_period_without_space() {
         let source = "There isn't a space at the end of this sentence.";
 
-        assert_lint_count(source, Spaces, 0)
+        assert_lint_count(source, Spaces, 0, crate::languages::LanguageFamily::English)
     }
 
     #[test]
     fn ignores_french_spacing() {
-        assert_no_lints(
-            "This is a short sentence.  This is another short sentence.",
-            Spaces,
-        );
+        assert_no_lints("This is a short sentence.  This is another short sentence.", Spaces, crate::languages::LanguageFamily::English);
     }
 }

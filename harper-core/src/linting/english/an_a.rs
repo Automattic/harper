@@ -95,7 +95,9 @@ impl Linter for AnA {
 mod tests {
     use super::AnA;
     use crate::Dialect;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count_plain_english as assert_lint_count, assert_suggestion_result,
+    };
 
     #[test]
     fn detects_html_as_vowel() {
@@ -313,12 +315,12 @@ mod tests {
 
     #[test]
     fn correct_an_herb_for_australian() {
-        assert_suggestion_result("an herb", AnA::new(Dialect::Australian), "a herb");
+        assert_suggestion_result("an herb", AnA::new(Dialect::Australian), "a herb", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_a_herb_for_canadian() {
-        assert_suggestion_result("a herb", AnA::new(Dialect::Canadian), "an herb");
+        assert_suggestion_result("a herb", AnA::new(Dialect::Canadian), "an herb", crate::languages::LanguageFamily::English);
     }
 
     #[test]

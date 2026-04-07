@@ -54,28 +54,16 @@ mod tests {
 
     #[test]
     fn corrects_locative_ascii_apostrophe() {
-        assert_suggestion_result(
-            "Put the chairs over they're by the window.",
-            OverTheyreToThere::default(),
-            "Put the chairs over there by the window.",
-        );
+        assert_suggestion_result("Put the chairs over they're by the window.", OverTheyreToThere::default(), "Put the chairs over there by the window.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_locative_smart_apostrophe() {
-        assert_suggestion_result(
-            "Is that their car parked over they’re?",
-            OverTheyreToThere::default(),
-            "Is that their car parked over there?",
-        );
+        assert_suggestion_result("Is that their car parked over they’re?", OverTheyreToThere::default(), "Is that their car parked over there?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_correct_form() {
-        assert_lint_count(
-            "Put the chairs over there by the window.",
-            OverTheyreToThere::default(),
-            0,
-        );
+        assert_lint_count("Put the chairs over there by the window.", OverTheyreToThere::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

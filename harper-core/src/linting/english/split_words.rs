@@ -214,26 +214,22 @@ mod tests {
 
     #[test]
     fn ignores_known_compound_words() {
-        assert_no_lints("Someone left early.", SplitWords::default());
+        assert_no_lints("Someone left early.", SplitWords::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_prefix_without_valid_remainder() {
-        assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default());
+        assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_atall_to_at_all() {
-        assert_suggestion_result(
-            "don't seem to support symbolic links atall.",
-            SplitWords::default(),
-            "don't seem to support symbolic links at all.",
-        );
+        assert_suggestion_result("don't seem to support symbolic links atall.", SplitWords::default(), "don't seem to support symbolic links at all.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn test_atall_to_a_tall() {
-        assert_suggestion_result("atall", SplitWords::default(), "a tall");
+        assert_suggestion_result("atall", SplitWords::default(), "a tall", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -243,28 +239,16 @@ mod tests {
 
     #[test]
     fn issue_2763_leaves() {
-        assert_suggestion_result(
-            "I love to eat cornleaves.",
-            SplitWords::default(),
-            "I love to eat corn leaves.",
-        );
+        assert_suggestion_result("I love to eat cornleaves.", SplitWords::default(), "I love to eat corn leaves.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_2763_husks() {
-        assert_suggestion_result(
-            "I love to eat cornhusks.",
-            SplitWords::default(),
-            "I love to eat corn husks.",
-        );
+        assert_suggestion_result("I love to eat cornhusks.", SplitWords::default(), "I love to eat corn husks.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_2763_singular() {
-        assert_suggestion_result(
-            "I would love to eat a cornleaf.",
-            SplitWords::default(),
-            "I would love to eat a corn leaf.",
-        );
+        assert_suggestion_result("I would love to eat a cornleaf.", SplitWords::default(), "I would love to eat a corn leaf.", crate::languages::LanguageFamily::English);
     }
 }

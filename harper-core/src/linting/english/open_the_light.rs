@@ -176,7 +176,7 @@ mod tests {
 
     #[test]
     fn dont_flag_open_the_tv_app() {
-        assert_lint_count("open the TV app", OpenTheLight::default(), 0);
+        assert_lint_count("open the TV app", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -231,124 +231,76 @@ mod tests {
 
     #[test]
     fn dont_flag_open_the_tv_mode() {
-        assert_lint_count("open the TV mode", OpenTheLight::default(), 0);
+        assert_lint_count("open the TV mode", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     // real world examples
 
     #[test]
     fn dont_flag_radio_configuration() {
-        assert_lint_count(
-            "To open the Radio Configuration click on the three dots on the top right side.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("To open the Radio Configuration click on the three dots on the top right side.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires much more complex context parsing"]
     fn dont_flag_open_the_lamp() {
-        assert_lint_count(
-            "Now you will need to open your lamp and solder everything together according to schematics.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("Now you will need to open your lamp and solder everything together according to schematics.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_open_tv_up_to() {
-        assert_lint_count(
-            "it opens the TV up to a massive library of software",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("it opens the TV up to a massive library of software", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires more complex context parsing"]
     fn dont_flag_open_the_light_slash_sound() {
-        assert_lint_count(
-            "To do so, open the light/sound configuration.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("To do so, open the light/sound configuration.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Not common enough"]
     fn dont_flag_cutting_open() {
-        assert_lint_count(
-            "However, instead of cutting open the lights, I opted to 3D print the Minecraft Torch Nightlight",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("However, instead of cutting open the lights, I opted to 3D print the Minecraft Torch Nightlight", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_open_the_light_source() {
-        assert_lint_count(
-            "open the light source light and regulate it to the suitable luminance",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("open the light source light and regulate it to the suitable luminance", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires more complex context parsing"]
     fn dont_flag_opening_lamp() {
-        assert_lint_count(
-            "After opening the lamp, you need to solder 4 wires to the board in order to connect the USB-to-Serial adapter.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("After opening the lamp, you need to solder 4 wires to the board in order to connect the USB-to-Serial adapter.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_fan_control() {
-        assert_lint_count(
-            "It seems like it opens the fan control? ",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("It seems like it opens the fan control? ", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires more complex context parsing"]
     fn dont_flag_open_tv_to_access_eeprom() {
-        assert_lint_count(
-            "Involves opening your TV and directly accessing the an EEPROM IC.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("Involves opening your TV and directly accessing the an EEPROM IC.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_open_tv_viewing_application() {
-        assert_lint_count(
-            "Open your TV viewing application or platform.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("Open your TV viewing application or platform.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires more complex context parsing"]
     fn dont_flag_open_as_noun() {
-        assert_lint_count(
-            "when we press open the lamp will be on",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("when we press open the lamp will be on", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "Requires more complex context parsing"]
     fn dont_flag_opening_as_noun() {
-        assert_lint_count(
-            "and through that opening the light was streaming in",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("and through that opening the light was streaming in", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -374,11 +326,7 @@ mod tests {
     #[test]
     #[ignore = "We don't yet handle hyphenated words"]
     fn dont_flag_opens_fan_like() {
-        assert_lint_count(
-            "Out by the garden fence the high ice plant opens its fan-like petals to the sun.",
-            OpenTheLight::default(),
-            0,
-        );
+        assert_lint_count("Out by the garden fence the high ice plant opens its fan-like petals to the sun.", OpenTheLight::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

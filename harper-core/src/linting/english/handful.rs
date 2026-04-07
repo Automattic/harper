@@ -74,84 +74,51 @@ mod tests {
 
     #[test]
     fn suggests_plain_spacing() {
-        assert_suggestion_result(
-            "Her basket held a hand full of berries.",
-            Handful::default(),
-            "Her basket held a handful of berries.",
-        );
+        assert_suggestion_result("Her basket held a hand full of berries.", Handful::default(), "Her basket held a handful of berries.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_capitalized_form() {
-        assert_suggestion_result(
-            "Hand full of tales lined the shelf.",
-            Handful::default(),
-            "Handful of tales lined the shelf.",
-        );
+        assert_suggestion_result("Hand full of tales lined the shelf.", Handful::default(), "Handful of tales lined the shelf.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_hyphenated_form() {
-        assert_suggestion_result(
-            "A hand-full of marbles scattered across the floor.",
-            Handful::default(),
-            "A handful of marbles scattered across the floor.",
-        );
+        assert_suggestion_result("A hand-full of marbles scattered across the floor.", Handful::default(), "A handful of marbles scattered across the floor.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_space_hyphen_combo() {
-        assert_suggestion_result(
-            "A hand - full of seeds spilled on the workbench.",
-            Handful::default(),
-            "A handful of seeds spilled on the workbench.",
-        );
+        assert_suggestion_result("A hand - full of seeds spilled on the workbench.", Handful::default(), "A handful of seeds spilled on the workbench.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn suggests_initial_hyphen_variants() {
-        assert_suggestion_result(
-            "Hand-Full of furniture, the cart creaked slowly.",
-            Handful::default(),
-            "Handful of furniture, the cart creaked slowly.",
-        );
+        assert_suggestion_result("Hand-Full of furniture, the cart creaked slowly.", Handful::default(), "Handful of furniture, the cart creaked slowly.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flags_multiple_instances() {
-        assert_lint_count(
-            "She carried a hand full of carrots and a hand full of radishes.",
-            Handful::default(),
-            2,
-        );
+        assert_lint_count("She carried a hand full of carrots and a hand full of radishes.", Handful::default(), 2, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_correct_handful() {
-        assert_no_lints(
-            "A handful of volunteers arrived in time.",
-            Handful::default(),
-        );
+        assert_no_lints("A handful of volunteers arrived in time.", Handful::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_parenthetical_hand() {
-        assert_no_lints(
-            "His hand, full of ink, kept writing without pause.",
-            Handful::default(),
-        );
+        assert_no_lints("His hand, full of ink, kept writing without pause.", Handful::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_hand_is_full() {
-        assert_no_lints("The hand is full of water.", Handful::default());
+        assert_no_lints("The hand is full of water.", Handful::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_handfull_typo() {
-        assert_no_lints(
-            "The word handfull is an incorrect spelling.",
-            Handful::default(),
-        );
+        assert_no_lints("The word handfull is an incorrect spelling.", Handful::default(), crate::languages::LanguageFamily::English);
     }
 }

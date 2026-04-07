@@ -74,76 +74,49 @@ mod tests {
 
     #[test]
     fn fixes_issue_1513() {
-        assert_lint_count(
-            "The city is famous its beaches.",
-            MissingPreposition::default(),
-            1,
-        );
-        assert_lint_count(
-            "The students are interested learning.",
-            MissingPreposition::default(),
-            1,
-        );
+        assert_lint_count("The city is famous its beaches.", MissingPreposition::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count("The students are interested learning.", MissingPreposition::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_corrected_issue_1513() {
-        assert_no_lints(
-            "The city is famous for its beaches.",
-            MissingPreposition::default(),
-        );
-        assert_no_lints(
-            "The students are interested in learning.",
-            MissingPreposition::default(),
-        );
+        assert_no_lints("The city is famous for its beaches.", MissingPreposition::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints("The students are interested in learning.", MissingPreposition::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_without_adj_noun_sequence() {
-        assert_lint_count("She is happy.", MissingPreposition::default(), 0);
+        assert_lint_count("She is happy.", MissingPreposition::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_with_preposition_present() {
-        assert_lint_count("They are fond of music.", MissingPreposition::default(), 0);
-        assert_lint_count(
-            "Students are interested in history.",
-            MissingPreposition::default(),
-            0,
-        );
+        assert_lint_count("They are fond of music.", MissingPreposition::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count("Students are interested in history.", MissingPreposition::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn flag_adj_pron_pair() {
-        assert_lint_count("He was angry him.", MissingPreposition::default(), 1);
+        assert_lint_count("He was angry him.", MissingPreposition::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_empty() {
-        assert_lint_count("", MissingPreposition::default(), 0);
+        assert_lint_count("", MissingPreposition::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_tired_herself() {
-        assert_no_lints(
-            "She had tired herself out with trying.",
-            MissingPreposition::default(),
-        );
+        assert_no_lints("She had tired herself out with trying.", MissingPreposition::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_terrible_stuff() {
-        assert_no_lints(
-            "Either it was terrible stuff or the whiskey distorted things.",
-            MissingPreposition::default(),
-        );
+        assert_no_lints("Either it was terrible stuff or the whiskey distorted things.", MissingPreposition::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_issue_1585() {
-        assert_no_lints(
-            "Each agent has specific tools and tasks orchestrated through a crew workflow.",
-            MissingPreposition::default(),
-        );
+        assert_no_lints("Each agent has specific tools and tasks orchestrated through a crew workflow.", MissingPreposition::default(), crate::languages::LanguageFamily::English);
     }
 }

@@ -104,11 +104,7 @@ mod tests {
 
     #[test]
     fn dont_correct_is_on_for_british() {
-        assert_lint_count(
-            "Yes, I think this is on the cards.",
-            InOnTheCards::new(EnglishDialect::British),
-            0,
-        );
+        assert_lint_count("Yes, I think this is on the cards.", InOnTheCards::new(EnglishDialect::British), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -205,11 +201,7 @@ mod tests {
 
     #[test]
     fn dont_correct_is_in_for_american() {
-        assert_lint_count(
-            "Not sure if such a project is in the cards",
-            InOnTheCards::new(EnglishDialect::American),
-            0,
-        );
+        assert_lint_count("Not sure if such a project is in the cards", InOnTheCards::new(EnglishDialect::American), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

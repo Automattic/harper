@@ -113,59 +113,47 @@ mod tests {
 
     #[test]
     fn does_not_flag_without_pronoun() {
-        assert_lint_count("The software is new.", PronounKnew::default(), 0);
+        assert_lint_count("The software is new.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_other_context() {
-        assert_lint_count("They called it \"new\".", PronounKnew::default(), 0);
+        assert_lint_count("They called it \"new\".", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_with_its() {
-        assert_lint_count(
-            "In 2015, the US was paying on average around 2% for its new issuance bonds.",
-            PronounKnew::default(),
-            0,
-        );
+        assert_lint_count("In 2015, the US was paying on average around 2% for its new issuance bonds.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_with_his() {
-        assert_lint_count("His new car is fast.", PronounKnew::default(), 0);
+        assert_lint_count("His new car is fast.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_with_her() {
-        assert_lint_count("Her new car is fast.", PronounKnew::default(), 0);
+        assert_lint_count("Her new car is fast.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_with_nothing_1298() {
-        assert_lint_count("This is nothing new.", PronounKnew::default(), 0);
+        assert_lint_count("This is nothing new.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_1381_tricks() {
-        assert_lint_count("To learn some new tricks.", PronounKnew::default(), 0);
+        assert_lint_count("To learn some new tricks.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_1381_template() {
-        assert_lint_count(
-            "Let's build this new template function.",
-            PronounKnew::default(),
-            0,
-        );
+        assert_lint_count("Let's build this new template function.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn issue_1381_file() {
-        assert_lint_count(
-            "Move the function definition inside of that new file.",
-            PronounKnew::default(),
-            0,
-        );
+        assert_lint_count("Move the function definition inside of that new file.", PronounKnew::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -190,11 +178,11 @@ mod tests {
 
     #[test]
     fn flags_she_new_danger() {
-        assert_lint_count("She new danger lurked nearby.", PronounKnew::default(), 1);
+        assert_lint_count("She new danger lurked nearby.", PronounKnew::default(), 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_issue_1518() {
-        assert_no_lints("If you're new to GitHub, welcome.", PronounKnew::default());
+        assert_no_lints("If you're new to GitHub, welcome.", PronounKnew::default(), crate::languages::LanguageFamily::English);
     }
 }

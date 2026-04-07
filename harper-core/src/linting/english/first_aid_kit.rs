@@ -100,6 +100,7 @@ mod tests {
             "The kid ran through the aid station.",
             FirstAidKit::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

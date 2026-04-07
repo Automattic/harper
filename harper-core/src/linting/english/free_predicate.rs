@@ -167,36 +167,26 @@ mod tests {
 
     #[test]
     fn allows_fee_based() {
-        assert_no_lints("The pricing model is fee-based.", FreePredicate::default());
+        assert_no_lints("The pricing model is fee-based.", FreePredicate::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_fee_paying() {
-        assert_no_lints("The membership is fee-paying.", FreePredicate::default());
+        assert_no_lints("The membership is fee-paying.", FreePredicate::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_fee_schedule_statement() {
-        assert_no_lints(
-            "This plan has a fee for standard support.",
-            FreePredicate::default(),
-        );
+        assert_no_lints("This plan has a fee for standard support.", FreePredicate::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_fee_free_phrase() {
-        assert_no_lints(
-            "Our service is fee-free for students.",
-            FreePredicate::default(),
-        );
+        assert_no_lints("Our service is fee-free for students.", FreePredicate::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn counts_single_lint() {
-        assert_lint_count(
-            "The upgrade is fee for existing users.",
-            FreePredicate::default(),
-            1,
-        );
+        assert_lint_count("The upgrade is fee for existing users.", FreePredicate::default(), 1, crate::languages::LanguageFamily::English);
     }
 }

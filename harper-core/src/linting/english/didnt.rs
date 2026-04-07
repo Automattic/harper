@@ -122,16 +122,16 @@ mod tests {
 
     #[test]
     fn does_not_flag_dint_noun() {
-        assert_no_lints("The blow left a small dint in the metal.", Didnt::default());
+        assert_no_lints("The blow left a small dint in the metal.", Didnt::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_quoted_dint() {
-        assert_no_lints("He muttered 'dint' under his breath.", Didnt::default());
+        assert_no_lints("He muttered 'dint' under his breath.", Didnt::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_past_tense_with_not() {
-        assert_lint_count("I did not lock the gate.", Didnt::default(), 0);
+        assert_lint_count("I did not lock the gate.", Didnt::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

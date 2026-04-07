@@ -104,11 +104,7 @@ mod tests {
 
     #[test]
     fn ignore_correct_prize() {
-        assert_lint_count(
-            "Miranda won the grand prize last year.",
-            WinPrize::default(),
-            0,
-        );
+        assert_lint_count("Miranda won the grand prize last year.", WinPrize::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

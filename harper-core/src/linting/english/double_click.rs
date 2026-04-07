@@ -183,7 +183,12 @@ mod tests {
 
     #[test]
     fn allows_hyphenated_form() {
-        assert_lint_count("Double-click the icon.", DoubleClick::default(), 0);
+        assert_lint_count(
+            "Double-click the icon.",
+            DoubleClick::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -192,6 +197,7 @@ mod tests {
             "She said the double rainbow was beautiful.",
             DoubleClick::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

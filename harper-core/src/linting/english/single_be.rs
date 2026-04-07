@@ -177,102 +177,71 @@ mod tests {
 
     #[test]
     fn removes_double_is() {
-        assert_suggestion_result(
-            "The server is is slow.",
-            SingleBe::default(),
-            "The server is slow.",
-        );
+        assert_suggestion_result("The server is is slow.", SingleBe::default(), "The server is slow.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn removes_is_are() {
-        assert_suggestion_result(
-            "This is are unusual.",
-            SingleBe::default(),
-            "This is unusual.",
-        );
+        assert_suggestion_result("This is are unusual.", SingleBe::default(), "This is unusual.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn removes_are_were_mismatch() {
-        assert_suggestion_result(
-            "They are were excited.",
-            SingleBe::default(),
-            "They are excited.",
-        );
+        assert_suggestion_result("They are were excited.", SingleBe::default(), "They are excited.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn removes_mismatched_pair() {
-        assert_suggestion_result("That is was odd.", SingleBe::default(), "That is odd.");
+        assert_suggestion_result("That is was odd.", SingleBe::default(), "That is odd.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_s_contraction() {
-        assert_suggestion_result(
-            "The error's are gone.",
-            SingleBe::default(),
-            "The error's gone.",
-        );
+        assert_suggestion_result("The error's are gone.", SingleBe::default(), "The error's gone.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_re_contraction() {
-        assert_suggestion_result(
-            "We're are ready to ship.",
-            SingleBe::default(),
-            "We're ready to ship.",
-        );
+        assert_suggestion_result("We're are ready to ship.", SingleBe::default(), "We're ready to ship.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_m_contraction() {
-        assert_suggestion_result("I'm am aware.", SingleBe::default(), "I'm aware.");
+        assert_suggestion_result("I'm am aware.", SingleBe::default(), "I'm aware.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn handles_future_repetition() {
-        assert_suggestion_result(
-            "That will be be an issue.",
-            SingleBe::default(),
-            "That will be an issue.",
-        );
+        assert_suggestion_result("That will be be an issue.", SingleBe::default(), "That will be an issue.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn skips_being_chain() {
-        assert_no_lints("It's been being rebuilt for months.", SingleBe::default());
+        assert_no_lints("It's been being rebuilt for months.", SingleBe::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_simple_be_statement() {
-        assert_no_lints("Let's be honest.", SingleBe::default());
+        assert_no_lints("Let's be honest.", SingleBe::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_possessive_before_are() {
-        assert_no_lints(
-            "Stories like Mateo's are the heart of what we do.",
-            SingleBe::default(),
-        );
+        assert_no_lints("Stories like Mateo's are the heart of what we do.", SingleBe::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn removes_across_newline() {
-        assert_suggestion_result(
-            "That is\nis tricky.",
-            SingleBe::default(),
-            "That is tricky.",
-        );
+        assert_suggestion_result("That is\nis tricky.", SingleBe::default(), "That is tricky.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_separated_forms() {
-        assert_no_lints("The server is not is down.", SingleBe::default());
+        assert_no_lints("The server is not is down.", SingleBe::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_single_be() {
-        assert_no_lints("This is ready.", SingleBe::default());
+        assert_no_lints("This is ready.", SingleBe::default(), crate::languages::LanguageFamily::English);
     }
 }

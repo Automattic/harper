@@ -149,16 +149,16 @@ mod tests {
 
     #[test]
     fn no_lint_for_tree_bough() {
-        assert_no_lints("The heavy bough cracked under the snow.", Bought::default());
+        assert_no_lints("The heavy bough cracked under the snow.", Bought::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_for_he_bought() {
-        assert_no_lints("He bought a laptop yesterday.", Bought::default());
+        assert_no_lints("He bought a laptop yesterday.", Bought::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_for_plural_boughs() {
-        assert_no_lints("Boughs swayed in the evening breeze.", Bought::default());
+        assert_no_lints("Boughs swayed in the evening breeze.", Bought::default(), crate::languages::LanguageFamily::English);
     }
 }

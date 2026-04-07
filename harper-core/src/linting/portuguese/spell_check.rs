@@ -160,6 +160,7 @@ mod tests_portuguese {
                 PortugueseDialect::Brazilian,
             ),
             2,
+            LanguageFamily::English,
         );
     }
 }

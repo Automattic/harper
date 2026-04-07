@@ -76,73 +76,41 @@ mod tests {
 
     #[test]
     fn fix_mean_a_lot_for() {
-        assert_suggestion_result(
-            "It would mean a lot for me and save me a lot of time and effort",
-            MeansALotTo::default(),
-            "It would mean a lot to me and save me a lot of time and effort",
-        );
+        assert_suggestion_result("It would mean a lot for me and save me a lot of time and effort", MeansALotTo::default(), "It would mean a lot to me and save me a lot of time and effort", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_mean_alot_for() {
-        assert_suggestion_result(
-            "Appreciate it! Would mean alot for me!",
-            MeansALotTo::default(),
-            "Appreciate it! Would mean a lot to me!",
-        );
+        assert_suggestion_result("Appreciate it! Would mean alot for me!", MeansALotTo::default(), "Appreciate it! Would mean a lot to me!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_mean_lot_for() {
-        assert_suggestion_result(
-            "It would be very grateful to achieve number of sponsors for me and it mean lot for me.",
-            MeansALotTo::default(),
-            "It would be very grateful to achieve number of sponsors for me and it mean a lot to me.",
-        );
+        assert_suggestion_result("It would be very grateful to achieve number of sponsors for me and it mean lot for me.", MeansALotTo::default(), "It would be very grateful to achieve number of sponsors for me and it mean a lot to me.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_means_a_lot_for() {
-        assert_suggestion_result(
-            "Your star means a lot for us to develop this project!",
-            MeansALotTo::default(),
-            "Your star means a lot to us to develop this project!",
-        );
+        assert_suggestion_result("Your star means a lot for us to develop this project!", MeansALotTo::default(), "Your star means a lot to us to develop this project!", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_means_alot_for() {
-        assert_suggestion_result(
-            "Even a single sponsor means alot for me.",
-            MeansALotTo::default(),
-            "Even a single sponsor means a lot to me.",
-        );
+        assert_suggestion_result("Even a single sponsor means alot for me.", MeansALotTo::default(), "Even a single sponsor means a lot to me.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_means_lot_for() {
-        assert_suggestion_result(
-            "Any help means lot for me.",
-            MeansALotTo::default(),
-            "Any help means a lot to me.",
-        );
+        assert_suggestion_result("Any help means lot for me.", MeansALotTo::default(), "Any help means a lot to me.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_meant_a_lot_for() {
-        assert_suggestion_result(
-            "It meant a lot for me to improve this library further.",
-            MeansALotTo::default(),
-            "It meant a lot to me to improve this library further.",
-        );
+        assert_suggestion_result("It meant a lot for me to improve this library further.", MeansALotTo::default(), "It meant a lot to me to improve this library further.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_meant_alot_for() {
-        assert_suggestion_result(
-            "Thanks a lot by the way. this meant alot for me.",
-            MeansALotTo::default(),
-            "Thanks a lot by the way. this meant a lot to me.",
-        );
+        assert_suggestion_result("Thanks a lot by the way. this meant alot for me.", MeansALotTo::default(), "Thanks a lot by the way. this meant a lot to me.", crate::languages::LanguageFamily::English);
     }
 }

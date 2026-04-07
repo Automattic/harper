@@ -51,43 +51,27 @@ mod tests {
 
     #[test]
     fn dont_flag_an_in_house() {
-        assert_no_lints(
-            "for several years as an in-house engine, used to ...",
-            AndIn::default(),
-        );
+        assert_no_lints("for several years as an in-house engine, used to ...", AndIn::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_an_in_memory() {
-        assert_no_lints(
-            "including an in-memory real-time Vector Index,",
-            AndIn::default(),
-        );
+        assert_no_lints("including an in-memory real-time Vector Index,", AndIn::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_an_in_the_moment() {
-        assert_no_lints(
-            "His words serve as an in-the-moment explanation for what had happened.",
-            AndIn::default(),
-        );
+        assert_no_lints("His words serve as an in-the-moment explanation for what had happened.", AndIn::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_an_in_to_and_in() {
-        assert_suggestion_result(
-            "This is an expensive operation, so try to only do it at startup an in tests.",
-            AndIn::default(),
-            "This is an expensive operation, so try to only do it at startup and in tests.",
-        );
+        assert_suggestion_result("This is an expensive operation, so try to only do it at startup an in tests.", AndIn::default(), "This is an expensive operation, so try to only do it at startup and in tests.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     #[ignore = "This is a known false positive - `an in` can be valid in some contexts"]
     fn dont_flag_an_in_with_company() {
-        assert_no_lints(
-            "His parents got him an in with the company.",
-            AndIn::default(),
-        );
+        assert_no_lints("His parents got him an in with the company.", AndIn::default(), crate::languages::LanguageFamily::English);
     }
 }

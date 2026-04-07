@@ -182,16 +182,28 @@ mod tests {
 
     #[test]
     fn allows_safe_to_verb() {
-        assert_no_lints("It is safe to assume.", SafeToSave::default());
+        assert_no_lints(
+            "It is safe to assume.",
+            SafeToSave::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_safe_noun() {
-        assert_no_lints("Put the money in the safe today.", SafeToSave::default());
+        assert_no_lints(
+            "Put the money in the safe today.",
+            SafeToSave::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_correct_save() {
-        assert_no_lints("You should save your work.", SafeToSave::default());
+        assert_no_lints(
+            "You should save your work.",
+            SafeToSave::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

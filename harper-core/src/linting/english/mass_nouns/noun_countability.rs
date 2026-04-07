@@ -1,7 +1,7 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Span, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
+    expr::{Expr, LongestMatchOf, SequenceExpr},
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{IndefiniteArticle, WordSet},
 };
@@ -334,6 +334,7 @@ mod tests {
             "Additionally, many software development platforms also provide access to a community of developers.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -454,21 +455,25 @@ mod tests {
             "Fill in the blanks following the creation of each Furniture class instance.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
         assert_lint_count(
             "This project is a clothing shop that let users buy and pay for they purchases.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
         assert_lint_count(
             "Yet another software router.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
         assert_lint_count(
             "Calculate a rate for every software component.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -488,6 +493,7 @@ mod tests {
             "Additionally, less traffic leads to fewer traffic jams, resulting in a more fluent, thus more efficient, trip.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -497,6 +503,7 @@ mod tests {
             "Internally, we have a hardware-in-the-loop Jenkins test suite that builds and unit tests the various processes.",
             NounCountability::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 

@@ -1,8 +1,6 @@
 use crate::expr::{ExprExt, SequenceExpr};
-use crate::linting::LintKind;
+use crate::linting::{Lint, LintKind, Linter};
 use crate::{Document, TokenStringExt};
-
-use super::{Lint, Linter};
 
 pub struct QuoteSpacing {
     expr: SequenceExpr,
@@ -57,7 +55,12 @@ mod tests {
 
     #[test]
     fn flags_missing_space_before_quote() {
-        assert_lint_count("He said\"hello\" to me.", QuoteSpacing::default(), 1);
+        assert_lint_count(
+            "He said\"hello\" to me.",
+            QuoteSpacing::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -66,16 +69,25 @@ mod tests {
             "She whispered \"hurry\"and left.",
             QuoteSpacing::default(),
             1,
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn allows_quotes_with_spacing() {
-        assert_no_lints("They shouted \"charge\" together.", QuoteSpacing::default());
+        assert_no_lints(
+            "They shouted \"charge\" together.",
+            QuoteSpacing::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_quotes_at_end_of_sentence() {
-        assert_no_lints("They shouted \"charge.\"", QuoteSpacing::default());
+        assert_no_lints(
+            "They shouted \"charge.\"",
+            QuoteSpacing::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

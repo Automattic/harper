@@ -132,33 +132,33 @@ mod tests {
     // Test correct patterns (should not trigger lint)
     #[test]
     fn allow_throw_away_rubbish() {
-        assert_lint_count("Throw away the rubbish", ThrowRubbish, 0);
+        assert_lint_count("Throw away the rubbish", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allow_throws_garbage_away() {
-        assert_lint_count("He throws garbage away", ThrowRubbish, 0);
+        assert_lint_count("He throws garbage away", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allow_threw_out_trash() {
-        assert_lint_count("I threw out the trash", ThrowRubbish, 0);
+        assert_lint_count("I threw out the trash", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allow_throw_junk_into() {
-        assert_lint_count("Throw that junk into the bin!", ThrowRubbish, 0);
+        assert_lint_count("Throw that junk into the bin!", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     // Test incorrect patterns (should trigger lint)
     #[test]
     fn reject_throw_garbage() {
-        assert_lint_count("You should throw garbage", ThrowRubbish, 1);
+        assert_lint_count("You should throw garbage", ThrowRubbish, 1, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn reject_throwing_rubbish() {
-        assert_lint_count("Throwing rubbish is not a good idea", ThrowRubbish, 1);
+        assert_lint_count("Throwing rubbish is not a good idea", ThrowRubbish, 1, crate::languages::LanguageFamily::English);
     }
 
     // Test suggestions
@@ -185,7 +185,7 @@ mod tests {
     // Test edge cases
     #[test]
     fn ignore_throw_ball() {
-        assert_lint_count("Can you throw the ball?", ThrowRubbish, 0);
+        assert_lint_count("Can you throw the ball?", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     // Sentences from GitHub
@@ -232,11 +232,7 @@ mod tests {
 
     #[test]
     fn allow_at_and_back() {
-        assert_lint_count(
-            "Throw garbage at a program, it will throw garbage back.",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("Throw garbage at a program, it will throw garbage back.", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -252,25 +248,17 @@ mod tests {
     // False positive when "rubbish" is a qualifier for another word
     #[test]
     fn dont_flag_throws_junk_errors() {
-        assert_lint_count(
-            "Experimental init throws junk errors, Ignore.",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("Experimental init throws junk errors, Ignore.", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_throwing_garbage_data() {
-        assert_lint_count(
-            "I can resolve this in various ways, such as by not throwing garbage data at Typesense",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("I can resolve this in various ways, such as by not throwing garbage data at Typesense", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_throwing_garbage_value() {
-        assert_lint_count("Fix Spill tree Throwing garbage value", ThrowRubbish, 0);
+        assert_lint_count("Fix Spill tree Throwing garbage value", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -285,38 +273,22 @@ mod tests {
 
     #[test]
     fn dont_flag_throw_junk_bytes() {
-        assert_lint_count(
-            "the most efficient way to enforce the buffer size and throw junk bytes is to have a local (to the reception function) buffer",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("the most efficient way to enforce the buffer size and throw junk bytes is to have a local (to the reception function) buffer", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_throw_trash_everywhere() {
-        assert_lint_count(
-            "People throw trash everywhere and this tendency is very harmful.",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("People throw trash everywhere and this tendency is very harmful.", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_throws_garbage_comments() {
-        assert_lint_count(
-            "We dont need guys that throws garbage comments based on theyr lack of knowledge.",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("We dont need guys that throws garbage comments based on theyr lack of knowledge.", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_trash_can_be_thrown_into_the_trash() {
-        assert_lint_count(
-            "Trash balls generated during cutting can be thrown into the trash",
-            ThrowRubbish,
-            0,
-        );
+        assert_lint_count("Trash balls generated during cutting can be thrown into the trash", ThrowRubbish, 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -69,87 +69,51 @@ mod tests {
 
     #[test]
     fn hyphenates_basic_command() {
-        assert_suggestion_result(
-            "Right click the icon.",
-            RightClick::default(),
-            "Right-click the icon.",
-        );
+        assert_suggestion_result("Right click the icon.", RightClick::default(), "Right-click the icon.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_with_preposition() {
-        assert_suggestion_result(
-            "Please right click on the link.",
-            RightClick::default(),
-            "Please right-click on the link.",
-        );
+        assert_suggestion_result("Please right click on the link.", RightClick::default(), "Please right-click on the link.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_past_tense() {
-        assert_suggestion_result(
-            "They right clicked the submit button.",
-            RightClick::default(),
-            "They right-clicked the submit button.",
-        );
+        assert_suggestion_result("They right clicked the submit button.", RightClick::default(), "They right-clicked the submit button.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_gerund() {
-        assert_suggestion_result(
-            "Right clicking the item highlights it.",
-            RightClick::default(),
-            "Right-clicking the item highlights it.",
-        );
+        assert_suggestion_result("Right clicking the item highlights it.", RightClick::default(), "Right-clicking the item highlights it.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_plural_noun() {
-        assert_suggestion_result(
-            "Right clicks are tracked in the log.",
-            RightClick::default(),
-            "Right-clicks are tracked in the log.",
-        );
+        assert_suggestion_result("Right clicks are tracked in the log.", RightClick::default(), "Right-clicks are tracked in the log.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_all_caps() {
-        assert_suggestion_result(
-            "He RIGHT CLICKED the file.",
-            RightClick::default(),
-            "He RIGHT-CLICKED the file.",
-        );
+        assert_suggestion_result("He RIGHT CLICKED the file.", RightClick::default(), "He RIGHT-CLICKED the file.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_left_click() {
-        assert_suggestion_result(
-            "Left click the checkbox.",
-            RightClick::default(),
-            "Left-click the checkbox.",
-        );
+        assert_suggestion_result("Left click the checkbox.", RightClick::default(), "Left-click the checkbox.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn hyphenates_middle_click() {
-        assert_suggestion_result(
-            "Middle click to open in a new tab.",
-            RightClick::default(),
-            "Middle-click to open in a new tab.",
-        );
+        assert_suggestion_result("Middle click to open in a new tab.", RightClick::default(), "Middle-click to open in a new tab.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_hyphenated_form() {
-        assert_lint_count("Right-click the icon.", RightClick::default(), 0);
+        assert_lint_count("Right-click the icon.", RightClick::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_unrelated_right_and_click() {
-        assert_lint_count(
-            "Click the right button to continue.",
-            RightClick::default(),
-            0,
-        );
+        assert_lint_count("Click the right button to continue.", RightClick::default(), 0, crate::languages::LanguageFamily::English);
     }
 }

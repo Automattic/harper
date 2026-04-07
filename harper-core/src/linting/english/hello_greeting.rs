@@ -131,20 +131,12 @@ mod tests {
 
     #[test]
     fn no_lint_for_optical_term() {
-        assert_lint_count(
-            "The halo around the moon glowed softly.",
-            HelloGreeting::default(),
-            0,
-        );
+        assert_lint_count("The halo around the moon glowed softly.", HelloGreeting::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_mid_sentence() {
-        assert_lint_count(
-            "They shouted hello, not Halo, during rehearsal.",
-            HelloGreeting::default(),
-            0,
-        );
+        assert_lint_count("They shouted hello, not Halo, during rehearsal.", HelloGreeting::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

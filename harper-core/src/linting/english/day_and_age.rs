@@ -123,163 +123,93 @@ mod tests {
 
     #[test]
     fn allow_in_this_day_and_age() {
-        assert_no_lints(
-            "I do belive in this day and age with the amount of printer on the market ",
-            DayAndAge::default(),
-        );
+        assert_no_lints("I do belive in this day and age with the amount of printer on the market ", DayAndAge::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn for_this_day_and_age_seems_to_be_acceptable() {
-        assert_no_lints(
-            "As for my specs, I understand that my PC is quite underpowered for this day and age, but I'd say it's still within the hardware combos that ...",
-            DayAndAge::default(),
-        );
+        assert_no_lints("As for my specs, I understand that my PC is quite underpowered for this day and age, but I'd say it's still within the hardware combos that ...", DayAndAge::default(), crate::languages::LanguageFamily::English);
     }
 
     // True positives
 
     #[test]
     fn at_this_day_and_age() {
-        assert_suggestion_result(
-            "How would one add diagnostics to the compiler at this day and age?",
-            DayAndAge::default(),
-            "How would one add diagnostics to the compiler in this day and age?",
-        );
+        assert_suggestion_result("How would one add diagnostics to the compiler at this day and age?", DayAndAge::default(), "How would one add diagnostics to the compiler in this day and age?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn by_this_day_in_age() {
-        assert_suggestion_result(
-            "Don't most people by this day in age, just have a spare laptop in their kitchens",
-            DayAndAge::default(),
-            "Don't most people in this day and age, just have a spare laptop in their kitchens",
-        );
+        assert_suggestion_result("Don't most people by this day in age, just have a spare laptop in their kitchens", DayAndAge::default(), "Don't most people in this day and age, just have a spare laptop in their kitchens", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_these_day_and_age() {
-        assert_suggestion_result(
-            "still don't come with load sharing components built in these day and age.",
-            DayAndAge::default(),
-            "still don't come with load sharing components built in this day and age.",
-        );
+        assert_suggestion_result("still don't come with load sharing components built in these day and age.", DayAndAge::default(), "still don't come with load sharing components built in this day and age.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_these_days_and_age() {
-        assert_suggestion_result(
-            "But in these days and age floppies are replaced by USB flash drives.",
-            DayAndAge::default(),
-            "But in this day and age floppies are replaced by USB flash drives.",
-        );
+        assert_suggestion_result("But in these days and age floppies are replaced by USB flash drives.", DayAndAge::default(), "But in this day and age floppies are replaced by USB flash drives.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_these_days_in_age() {
-        assert_suggestion_result(
-            "In these days in age, this is considered as 'heresy'.",
-            DayAndAge::default(),
-            "In this day and age, this is considered as 'heresy'.",
-        );
+        assert_suggestion_result("In these days in age, this is considered as 'heresy'.", DayAndAge::default(), "In this day and age, this is considered as 'heresy'.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_this_day_an_age() {
-        assert_suggestion_result(
-            "but in this day an age things progressed a tad so might it be the time for increasing it?",
-            DayAndAge::default(),
-            "but in this day and age things progressed a tad so might it be the time for increasing it?",
-        );
+        assert_suggestion_result("but in this day an age things progressed a tad so might it be the time for increasing it?", DayAndAge::default(), "but in this day and age things progressed a tad so might it be the time for increasing it?", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_this_day_and_ages() {
-        assert_suggestion_result(
-            "or at least it should be in this day and ages",
-            DayAndAge::default(),
-            "or at least it should be in this day and age",
-        );
+        assert_suggestion_result("or at least it should be in this day and ages", DayAndAge::default(), "or at least it should be in this day and age", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_this_day_in_age() {
-        assert_suggestion_result(
-            "or anything else that in this day in age is useful to have a reminder about",
-            DayAndAge::default(),
-            "or anything else that in this day and age is useful to have a reminder about",
-        );
+        assert_suggestion_result("or anything else that in this day in age is useful to have a reminder about", DayAndAge::default(), "or anything else that in this day and age is useful to have a reminder about", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn in_this_days_and_age() {
-        assert_suggestion_result(
-            "We as a whole realize that in this days and age being on social networking has got a sort of ...",
-            DayAndAge::default(),
-            "We as a whole realize that in this day and age being on social networking has got a sort of ...",
-        );
+        assert_suggestion_result("We as a whole realize that in this days and age being on social networking has got a sort of ...", DayAndAge::default(), "We as a whole realize that in this day and age being on social networking has got a sort of ...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn is_this_day_and_age_typo() {
-        assert_suggestion_result(
-            "Agreed, dark mode is a necessity is this day and age.",
-            DayAndAge::default(),
-            "Agreed, dark mode is a necessity in this day and age.",
-        );
+        assert_suggestion_result("Agreed, dark mode is a necessity is this day and age.", DayAndAge::default(), "Agreed, dark mode is a necessity in this day and age.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn it_this_day_and_age_typo() {
-        assert_suggestion_result(
-            "And it this day and age you really shouldn't but asking people to download random files",
-            DayAndAge::default(),
-            "And in this day and age you really shouldn't but asking people to download random files",
-        );
+        assert_suggestion_result("And it this day and age you really shouldn't but asking people to download random files", DayAndAge::default(), "And in this day and age you really shouldn't but asking people to download random files", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn of_this_day_and_age() {
-        assert_suggestion_result(
-            "it is completely incompatible with Juice Shop of this day and age",
-            DayAndAge::default(),
-            "it is completely incompatible with Juice Shop in this day and age",
-        );
+        assert_suggestion_result("it is completely incompatible with Juice Shop of this day and age", DayAndAge::default(), "it is completely incompatible with Juice Shop in this day and age", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn to_this_day_and_age() {
-        assert_suggestion_result(
-            "Still can't believe this has to be done in Safari to this day and age with responsive images",
-            DayAndAge::default(),
-            "Still can't believe this has to be done in Safari in this day and age with responsive images",
-        );
+        assert_suggestion_result("Still can't believe this has to be done in Safari to this day and age with responsive images", DayAndAge::default(), "Still can't believe this has to be done in Safari in this day and age with responsive images", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_prep_this_day_in_age() {
-        assert_suggestion_result(
-            "if that is how gpu programming is still done this day in age then id have a very hard time seeing valhalla ever run on a gpu",
-            DayAndAge::default(),
-            "if that is how gpu programming is still done in this day and age then id have a very hard time seeing valhalla ever run on a gpu",
-        );
+        assert_suggestion_result("if that is how gpu programming is still done this day in age then id have a very hard time seeing valhalla ever run on a gpu", DayAndAge::default(), "if that is how gpu programming is still done in this day and age then id have a very hard time seeing valhalla ever run on a gpu", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_prep_these_days_and_ages() {
-        assert_suggestion_result(
-            "Btw I think you should write React the React Hooks way these days and ages, where you'll never see this keyword` again",
-            DayAndAge::default(),
-            "Btw I think you should write React the React Hooks way in this day and age, where you'll never see this keyword` again",
-        );
+        assert_suggestion_result("Btw I think you should write React the React Hooks way these days and ages, where you'll never see this keyword` again", DayAndAge::default(), "Btw I think you should write React the React Hooks way in this day and age, where you'll never see this keyword` again", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn since_is_a_preposition_but_also_a_conjunction() {
-        assert_suggestion_result(
-            "and since these days and age storage is usually not a problem, I usually play it safe and just don't bother",
-            DayAndAge::default(),
-            "and since in this day and age storage is usually not a problem, I usually play it safe and just don't bother",
-        );
+        assert_suggestion_result("and since these days and age storage is usually not a problem, I usually play it safe and just don't bother", DayAndAge::default(), "and since in this day and age storage is usually not a problem, I usually play it safe and just don't bother", crate::languages::LanguageFamily::English);
     }
 }

@@ -68,10 +68,7 @@ mod tests {
 
     #[test]
     fn allows_once_or_twice() {
-        assert_no_lints(
-            "He wants to do it once or twice a month.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("He wants to do it once or twice a month.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -276,50 +273,41 @@ mod tests {
 
     #[test]
     fn allows_once_a_time_story() {
-        assert_no_lints("Once a time, in a distant land...", OnceOrTwice::default());
+        assert_no_lints("Once a time, in a distant land...", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_once_a_week_routine() {
-        assert_no_lints("We meet once a week to sync up.", OnceOrTwice::default());
+        assert_no_lints("We meet once a week to sync up.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_once_a_while_phrase() {
-        assert_no_lints(
-            "Check in every once a while to stay updated.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("Check in every once a while to stay updated.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_once_or_twice_uppercase() {
-        assert_no_lints("ONCE OR TWICE, WE MADE IT WORK.", OnceOrTwice::default());
+        assert_no_lints("ONCE OR TWICE, WE MADE IT WORK.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_twice_without_once() {
-        assert_no_lints(
-            "We only managed it twice this year.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("We only managed it twice this year.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_once_and_twice_separated() {
-        assert_no_lints("Once I tried; twice I failed.", OnceOrTwice::default());
+        assert_no_lints("Once I tried; twice I failed.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_oncemisatypo() {
-        assert_no_lints("oncemisatypo appears once a line.", OnceOrTwice::default());
+        assert_no_lints("oncemisatypo appears once a line.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn allows_spaced_words() {
-        assert_no_lints(
-            "We say once at twice distance to be safe.",
-            OnceOrTwice::default(),
-        );
+        assert_no_lints("We say once at twice distance to be safe.", OnceOrTwice::default(), crate::languages::LanguageFamily::English);
     }
 }

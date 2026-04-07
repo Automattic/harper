@@ -105,11 +105,7 @@ mod tests {
 
     #[test]
     fn offers_contraction_option() {
-        assert_suggestion_result(
-            "You r absolutely right.",
-            PronounAre::default(),
-            "You're absolutely right.",
-        );
+        assert_suggestion_result("You r absolutely right.", PronounAre::default(), "You're absolutely right.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -174,16 +170,16 @@ mod tests {
 
     #[test]
     fn does_not_flag_contraction() {
-        assert_lint_count("You're looking great.", PronounAre::default(), 0);
+        assert_lint_count("You're looking great.", PronounAre::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn does_not_flag_full_form() {
-        assert_lint_count("They are excited about it.", PronounAre::default(), 0);
+        assert_lint_count("They are excited about it.", PronounAre::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_similar_word() {
-        assert_lint_count("Your results impressed everyone.", PronounAre::default(), 0);
+        assert_lint_count("Your results impressed everyone.", PronounAre::default(), 0, crate::languages::LanguageFamily::English);
     }
 }
