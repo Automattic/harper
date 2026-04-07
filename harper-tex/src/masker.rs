@@ -120,6 +120,28 @@ fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<Curs
     }
 }
 
+fn is_math_env(env: &[char]) -> bool {
+    let math_envs = [
+        "equation",
+        "equation*",
+        "align",
+        "align*",
+        "gather",
+        "gather*",
+        "multline",
+        "multline*",
+        "flalign",
+        "flalign*",
+        "alignat",
+        "alignat*",
+        "eqnarray",
+        "eqnarray*",
+        "math",
+        "displaymath",
+    ];
+    math_envs.iter().any(|e| env.eq_str(e))
+}
+
 fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     let CommandComponents {
         name,
@@ -127,10 +149,11 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
         curly_content,
     } = deconstruct_command(&source[cursor..])?;
 
-    if name.eq_str("begin") && curly_content.is_some_and(|cc| cc.eq_str("equation")) {
+    if name.eq_str("begin") && curly_content.is_some_and(is_math_env) {
+        let env_content = curly_content.unwrap();
         let mut diff = 1
             + name.len()
-            + curly_content.unwrap().len()
+            + env_content.len()
             + square_content.map(|sc| sc.len()).unwrap_or_default();
 
         loop {
@@ -140,7 +163,7 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
                 ..
             }) = deconstruct_command(&source[cursor + diff..])
                 && name.eq_str("end")
-                && curly_content.is_some_and(|cc| cc.eq_str("equation"))
+                && curly_content.is_some_and(|cc| cc == env_content)
             {
                 break;
             }
@@ -270,6 +293,34 @@ mod tests {
         let mask = Masker::default().create_mask(&source);
 
         assert_eq!(mask.iter_allowed(&source).count(), 2)
+    }
+
+    fn masks_math_env(env: &str) {
+        let source: Vec<_> =
+            format!("This is text. \\begin{{{env}}} x^2 + y^2 \\end{{{env}}} More text.")
+                .chars()
+                .collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for chunk in &allowed {
+            assert!(
+                !chunk.contains("x^2"),
+                "Math content leaked through for env '{env}': {chunk:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn masks_equation_star_env() {
+        masks_math_env("equation*");
+    }
+
+    #[test]
+    fn masks_align_env() {
+        masks_math_env("align");
     }
 
     #[test]

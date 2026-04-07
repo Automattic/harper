@@ -290,6 +290,16 @@ export async function testCanIgnoreSuggestion(
 		await assertEditorText(editor, cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
+
+		// Backspace at position 0 is a no-op; unchanged text means cursor jumped.
+		await page.waitForTimeout(300);
+		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(300);
+		if (await isFormElement(editor)) {
+			await expect(editor).not.toHaveValue(cacheSalt);
+		} else {
+			await expect(editor).not.toHaveText(cacheSalt);
+		}
 	});
 }
 
