@@ -159,8 +159,8 @@ impl HumanReadableSetting {
 #[cfg(test)]
 mod tests {
     use super::{HumanReadableSetting, HumanReadableStructuredConfig};
-    use crate::linting::lint_group::structured_config::{Setting, StructuredConfig};
     use crate::linting::FlatConfig;
+    use crate::linting::lint_group::structured_config::{Setting, StructuredConfig};
 
     fn collect_rule_names(config: &HumanReadableStructuredConfig) -> Vec<&str> {
         let mut out = Vec::new();

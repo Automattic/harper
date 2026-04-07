@@ -122,60 +122,72 @@ mod tests {
 
     #[test]
     fn validates_bool_true() {
-        assert!(Setting::Bool {
-            name: "A".to_owned(),
-            state: true,
-        }
-        .validate())
+        assert!(
+            Setting::Bool {
+                name: "A".to_owned(),
+                state: true,
+            }
+            .validate()
+        )
     }
 
     #[test]
     fn validates_bool_false() {
-        assert!(Setting::Bool {
-            name: "A".to_owned(),
-            state: false,
-        }
-        .validate())
+        assert!(
+            Setting::Bool {
+                name: "A".to_owned(),
+                state: false,
+            }
+            .validate()
+        )
     }
 
     #[test]
     fn validates_valid_one_of_many_some() {
-        assert!(Setting::OneOfMany {
-            names: vec!["A".to_owned(), "B".to_owned()],
-            labels: vec!["C".to_owned(), "D".to_owned()],
-            choice: Some(1)
-        }
-        .validate())
+        assert!(
+            Setting::OneOfMany {
+                names: vec!["A".to_owned(), "B".to_owned()],
+                labels: vec!["C".to_owned(), "D".to_owned()],
+                choice: Some(1)
+            }
+            .validate()
+        )
     }
 
     #[test]
     fn validates_valid_one_of_many_none() {
-        assert!(Setting::OneOfMany {
-            names: vec!["A".to_owned(), "B".to_owned()],
-            labels: vec!["C".to_owned(), "D".to_owned()],
-            choice: None
-        }
-        .validate())
+        assert!(
+            Setting::OneOfMany {
+                names: vec!["A".to_owned(), "B".to_owned()],
+                labels: vec!["C".to_owned(), "D".to_owned()],
+                choice: None
+            }
+            .validate()
+        )
     }
 
     #[test]
     fn validates_invalid_one_of_many_some_too_large() {
-        assert!(!Setting::OneOfMany {
-            names: vec!["A".to_owned(), "B".to_owned()],
-            labels: vec!["C".to_owned(), "D".to_owned()],
-            choice: Some(2)
-        }
-        .validate())
+        assert!(
+            !Setting::OneOfMany {
+                names: vec!["A".to_owned(), "B".to_owned()],
+                labels: vec!["C".to_owned(), "D".to_owned()],
+                choice: Some(2)
+            }
+            .validate()
+        )
     }
 
     #[test]
     fn validates_invalid_one_of_many_inconsistent_len() {
-        assert!(!Setting::OneOfMany {
-            names: vec!["A".to_owned(), "B".to_owned()],
-            labels: vec!["C".to_owned(), "D".to_owned(), "E".to_owned()],
-            choice: None
-        }
-        .validate())
+        assert!(
+            !Setting::OneOfMany {
+                names: vec!["A".to_owned(), "B".to_owned()],
+                labels: vec!["C".to_owned(), "D".to_owned(), "E".to_owned()],
+                choice: None
+            }
+            .validate()
+        )
     }
 
     #[test]
@@ -252,17 +264,19 @@ mod tests {
 
     #[test]
     fn validates_group_with_label() {
-        assert!(Setting::Group {
-            label: "Group".to_owned(),
-            description: "Description".to_owned(),
-            child: StructuredConfig {
-                settings: vec![Setting::Bool {
-                    name: "A".to_owned(),
-                    state: true,
-                }],
-            },
-        }
-        .validate());
+        assert!(
+            Setting::Group {
+                label: "Group".to_owned(),
+                description: "Description".to_owned(),
+                child: StructuredConfig {
+                    settings: vec![Setting::Bool {
+                        name: "A".to_owned(),
+                        state: true,
+                    }],
+                },
+            }
+            .validate()
+        );
     }
 
     #[test]
