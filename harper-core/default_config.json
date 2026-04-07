@@ -1381,6 +1381,13 @@
 						},
 						{
 							"Bool": {
+								"name": "UseEllipsisCharacter",
+								"state": true,
+								"label": "Use Ellipsis Character"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NoFrenchSpaces",
 								"state": true,
 								"label": "No French Spaces"
@@ -3530,6 +3537,13 @@
 								"name": "WillContain",
 								"state": true,
 								"label": "Will Contain"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WillNonLemma",
+								"state": true,
+								"label": "Will Non Lemma"
 							}
 						},
 						{
