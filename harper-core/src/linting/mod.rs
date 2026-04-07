@@ -243,6 +243,7 @@ mod try_ones_hand_at;
 mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
+mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
@@ -257,6 +258,7 @@ mod were_where;
 mod whereas;
 mod whom_subject_of_verb;
 mod widely_accepted;
+mod will_non_lemma;
 mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
@@ -766,7 +768,6 @@ pub mod tests {
         if !found_bad.is_empty() || !unseen_good.is_empty() {
             eprintln!("\n=== Test Summary ===");
 
-            // In the summary section, change these loops:
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
@@ -774,7 +775,6 @@ pub mod tests {
                 }
             }
 
-            // And for the good suggestions:
             if !unseen_good.is_empty() {
                 eprintln!(
                     "\n❌ Missing {} expected good suggestions:",

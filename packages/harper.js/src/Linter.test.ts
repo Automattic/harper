@@ -65,7 +65,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} detects repeated words`, async () => {
 		const linter = new Linter({ binary });
 
-		const lints = await linter.lint('The the problem is...');
+		const lints = await linter.lint('The the problem is');
 
 		expect(lints.length).toBe(1);
 
@@ -87,7 +87,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 			flattened.push(...value);
 		}
 
-		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(2);
 		expect(flattened.length).toBe(normal.length);
 
 		const item = flattened[0];
@@ -100,9 +100,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
@@ -119,9 +119,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
