@@ -139,7 +139,10 @@ function getLongestCommonSubsequenceLength(left: string, right: string): number 
  * Google Docs text can shift between linting and rendering, so this uses the
  * original span text plus nearby context to find the best current match.
  */
-export function resolveGoogleDocsSpan(currentSource: string, lint: UnpackedLint): UnpackedSpan | null {
+export function resolveGoogleDocsSpan(
+	currentSource: string,
+	lint: UnpackedLint,
+): UnpackedSpan | null {
 	const safeStart = Math.max(0, Math.min(lint.span.start, lint.source.length));
 	const safeEnd = Math.max(safeStart, Math.min(lint.span.end, lint.source.length));
 	const expectedText = lint.source.slice(safeStart, safeEnd);

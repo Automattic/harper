@@ -1,12 +1,12 @@
 import { type Span, SuggestionKind } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
-import type SourceElement from './SourceElement';
 import {
 	getGoogleDocsHighlightRects,
 	isGoogleDocsTarget,
 	replaceGoogleDocsValue,
 	resolveGoogleDocsSpan,
 } from './computeLintBoxes/googleDocsUtilities';
+import type SourceElement from './SourceElement';
 import type { UnpackedLint, UnpackedSpan, UnpackedSuggestion } from './unpackLint';
 
 const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
