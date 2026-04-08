@@ -4146,6 +4146,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AtTheBestOfTimes",
+								"state": true,
+								"label": "At The Best Of Times"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AtTheEndOfTheDay",
 								"state": true,
 								"label": "At The End Of The Day"
