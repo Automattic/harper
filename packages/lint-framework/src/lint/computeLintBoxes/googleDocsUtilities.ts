@@ -1,17 +1,6 @@
-import { type Span, SuggestionKind } from 'harper.js';
-import { getRangeForTextSpan, leafNodes } from '../domUtils';
-import type { IgnorableLintBox } from '../Box';
-import {
-	getCkEditorRoot,
-	getCMRoot,
-	getDraftRoot,
-	getLexicalRoot,
-	getSlateRoot,
-	isFormEl,
-} from '../editorUtils';
-import type { UnpackedLint, UnpackedSpan, UnpackedSuggestion } from '../unpackLint';
-
-const GOOGLE_DOCS_EDITOR_SELECTOR = '.kix-appview-editor';
+import type { Span } from 'harper.js';
+import { leafNodes } from '../domUtils';
+import type { UnpackedLint, UnpackedSpan } from '../unpackLint';
 
 type GoogleDocsReplacePayload = {
 	start: number;
@@ -144,6 +133,12 @@ function getLongestCommonSubsequenceLength(left: string, right: string): number 
 	return prev[right.length];
 }
 
+/**
+ * Re-resolves a Google Docs lint span against the bridge's current text.
+ *
+ * Google Docs text can shift between linting and rendering, so this uses the
+ * original span text plus nearby context to find the best current match.
+ */
 export function resolveGoogleDocsSpan(currentSource: string, lint: UnpackedLint): UnpackedSpan | null {
 	const safeStart = Math.max(0, Math.min(lint.span.start, lint.source.length));
 	const safeEnd = Math.max(safeStart, Math.min(lint.span.end, lint.source.length));
@@ -221,10 +216,19 @@ export function resolveGoogleDocsSpan(currentSource: string, lint: UnpackedLint)
 	return { start: hits[0].start, end: hits[0].end };
 }
 
+/**
+ * Identifies Harper's hidden Google Docs bridge target element.
+ */
 export function isGoogleDocsTarget(el: HTMLElement): boolean {
 	return el.getAttribute('data-harper-google-docs-target') === 'true';
 }
 
+/**
+ * Maps a span within the mirrored Google Docs target back to visible client rects.
+ *
+ * This prefers the positioned bridge spans used for Google Docs text slices and
+ * falls back to DOM Range geometry when needed.
+ */
 export function getGoogleDocsHighlightRects(target: HTMLElement, span: Span): DOMRect[] {
 	const children = leafNodes(target);
 	const rects: DOMRect[] = [];
@@ -289,22 +293,12 @@ function getGoogleDocsPositionedLeafHost(child: Node, target: HTMLElement): HTML
 	return null;
 }
 
-/** Transform an arbitrary suggestion to the equivalent replacement text. */
-function suggestionToReplacementText(
-	sug: UnpackedSuggestion,
-	span: UnpackedSpan,
-	source: string,
-): string {
-	switch (sug.kind) {
-		case SuggestionKind.Replace:
-			return sug.replacement_text;
-		case SuggestionKind.Remove:
-			return '';
-		case SuggestionKind.InsertAfter:
-			return source.slice(span.start, span.end) + sug.replacement_text;
-	}
-}
-
+/**
+ * Dispatches a Google Docs replacement through the bridge client exposed on `window`.
+ *
+ * The payload includes nearby context so the bridge can recover when the original
+ * offsets have gone stale by the time the suggestion is applied.
+ */
 export function replaceGoogleDocsValue(
 	span: { start: number; end: number },
 	replacementText: string,

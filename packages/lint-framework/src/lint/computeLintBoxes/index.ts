@@ -1,6 +1,6 @@
 import { type Span, SuggestionKind } from 'harper.js';
-import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from './Box';
-import { getRangeForTextSpan } from './domUtils';
+import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from '../Box';
+import { getRangeForTextSpan } from '../domUtils';
 import {
 	getCkEditorRoot,
 	getCMRoot,
@@ -8,29 +8,32 @@ import {
 	getLexicalRoot,
 	getSlateRoot,
 	isFormEl,
-} from './editorUtils';
-import TextFieldRange from './TextFieldRange';
-import {
-	getGoogleDocsHighlightRects,
-	isGoogleDocsTarget,
-	replaceGoogleDocsValue,
-	resolveGoogleDocsSpan,
-} from './googleDocsUtilities';
+} from '../editorUtils';
+import { maybeComputeGoogleDocsLintBoxes } from '../googleDocsAdapter';
+import TextFieldRange from '../TextFieldRange';
 import {
 	applySuggestion,
 	type UnpackedLint,
 	type UnpackedSpan,
 	type UnpackedSuggestion,
-} from './unpackLint';
+} from '../unpackLint';
 
+/**
+ * Converts a lint span into one or more on-screen boxes for the active editor.
+ *
+ * Most editors use the generic DOM/range-based path. Google Docs is delegated to
+ * the Google Docs adapter, which handles its mirrored bridge target and editor-specific
+ * geometry rules.
+ */
 export default function computeLintBoxes(
 	el: HTMLElement,
 	lint: UnpackedLint,
 	rule: string,
 	opts: { ignoreLint?: (hash: string) => Promise<void> },
 ): IgnorableLintBox[] {
-	if (isGoogleDocsTarget(el)) {
-		return computeGoogleDocsLintBoxes(el, lint, rule, opts);
+	const googleDocsBoxes = maybeComputeGoogleDocsLintBoxes(el, lint, rule, opts);
+	if (googleDocsBoxes != null) {
+		return googleDocsBoxes;
 	}
 
 	try {
@@ -94,56 +97,6 @@ export default function computeLintBoxes(
 		return boxes;
 	} catch (e) {
 		// If there's an error, it's likely because the element no longer exists
-		return [];
-	}
-}
-
-function computeGoogleDocsLintBoxes(
-	target: HTMLElement,
-	lint: UnpackedLint,
-	rule: string,
-	opts: { ignoreLint?: (hash: string) => Promise<void> },
-): IgnorableLintBox[] {
-	try {
-		const editor = document.querySelector('.kix-appview-editor') as HTMLElement | null;
-		const source = target.textContent ?? '';
-		const resolvedSpan = resolveGoogleDocsSpan(source, lint);
-
-		if (!editor || resolvedSpan == null) {
-			return [];
-		}
-
-		const targetRects = getGoogleDocsHighlightRects(target, resolvedSpan as Span);
-		const editorBox = domRectToBox(editor.getBoundingClientRect());
-		if (targetRects.length === 0) {
-			return [];
-		}
-
-		const boxes: IgnorableLintBox[] = [];
-		for (const targetRect of targetRects as DOMRect[]) {
-			if (!isBottomEdgeInBox(targetRect, editorBox)) {
-				continue;
-			}
-
-			const shrunkBox = shrinkBoxToFit(targetRect, editorBox);
-			boxes.push({
-				x: shrunkBox.x,
-				y: shrunkBox.y,
-				width: shrunkBox.width,
-				height: shrunkBox.height,
-				lint,
-				source: editor,
-				rule,
-				applySuggestion: (sug: UnpackedSuggestion) => {
-					const replacementText = suggestionToReplacementText(sug, resolvedSpan, source);
-					replaceGoogleDocsValue(resolvedSpan, replacementText, source);
-				},
-				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
-			});
-		}
-
-		return boxes;
-	} catch {
 		return [];
 	}
 }

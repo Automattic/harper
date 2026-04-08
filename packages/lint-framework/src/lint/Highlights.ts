@@ -16,6 +16,13 @@ import {
 	getSlateRoot,
 	getTrixRoot,
 } from './editorUtils';
+import {
+	applyGoogleDocsRenderHostStyle,
+	getGoogleDocsRenderOffset,
+	getGoogleDocsRenderTarget,
+	isGoogleDocsSource,
+	isGoogleDocsSourceSyncing,
+} from './googleDocsAdapter';
 import { type LintKind, lintKindColor } from './lintKindColor';
 import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
@@ -117,23 +124,10 @@ export default class Highlights {
 
 			const host = renderBox.getShadowHost();
 			host.id = 'harper-highlight-host';
-			const isGoogleDocsSource =
-				source instanceof HTMLElement &&
-				(source.classList.contains('kix-appview-editor') ||
-					source.closest('.kix-appview-editor') != null);
+			const isGoogleDocs = isGoogleDocsSource(source);
 
-			if (isGoogleDocsSource) {
-				const hostStyle = host.style;
-
-				hostStyle.position = 'absolute';
-				hostStyle.top = '0px';
-				hostStyle.left = '0px';
-				hostStyle.pointerEvents = 'none';
-				hostStyle.width = '0px';
-				hostStyle.height = '0px';
-				hostStyle.contain = 'none';
-				hostStyle.transform = 'none';
-				hostStyle.zIndex = '2147483647';
+			if (applyGoogleDocsRenderHostStyle(host, source)) {
+				// The Google Docs adapter owns the host positioning details.
 			} else if (cpa != null) {
 				const hostStyle = host.style;
 
@@ -150,13 +144,10 @@ export default class Highlights {
 				host.removeAttribute('style');
 			}
 
-			const gdocsRenderOffset =
-				isGoogleDocsSource && source instanceof HTMLElement
-					? this.getGoogleDocsRenderOffset(source)
-					: null;
+			const googleDocsRenderOffset = getGoogleDocsRenderOffset(source);
 			const offset =
-				gdocsRenderOffset ?? (isGoogleDocsSource || cpa == null ? null : { x: cpa.x, y: cpa.y });
-			const boxPosition: 'absolute' | 'fixed' = isGoogleDocsSource ? 'absolute' : 'fixed';
+				googleDocsRenderOffset ?? (isGoogleDocs || cpa == null ? null : { x: cpa.x, y: cpa.y });
+			const boxPosition: 'absolute' | 'fixed' = isGoogleDocs ? 'absolute' : 'fixed';
 
 			renderBox.render(this.renderTree(boxes, offset, boxPosition));
 			updated.add(source);
@@ -235,11 +226,9 @@ export default class Highlights {
 	/** Determines which target the render boxes should be attached to.
 	 * Depends on text editor. */
 	private computeRenderTarget(el: SourceElement): HTMLElement {
-		if (
-			el instanceof HTMLElement &&
-			(el.classList.contains('kix-appview-editor') || el.closest('.kix-appview-editor') != null)
-		) {
-			return el;
+		const googleDocsRenderTarget = getGoogleDocsRenderTarget(el);
+		if (googleDocsRenderTarget != null) {
+			return googleDocsRenderTarget;
 		}
 
 		if (el.parentElement?.classList.contains('ProseMirror')) {
@@ -271,15 +260,6 @@ export default class Highlights {
 
 		return el.parentElement!;
 	}
-
-	private getGoogleDocsRenderOffset(source: HTMLElement): { x: number; y: number } {
-		const editorRect = source.getBoundingClientRect();
-
-		return {
-			x: editorRect.x - source.scrollLeft,
-			y: editorRect.y - source.scrollTop,
-		};
-	}
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {
@@ -294,16 +274,6 @@ function getInitialContainingRect(el: HTMLElement): DOMRect | null {
 
 	return null;
 }
-
-function isGoogleDocsSourceSyncing(source: SourceElement): boolean {
-	return (
-		source instanceof HTMLElement &&
-		(source.classList.contains('kix-appview-editor') ||
-			source.closest('.kix-appview-editor') != null) &&
-		source.getAttribute('data-harper-gdocs-syncing') === 'true'
-	);
-}
-
 /**
  * Determines whether a given element would form the containing block
  * for a descendant with `position: fixed`, based on CSS transforms,
