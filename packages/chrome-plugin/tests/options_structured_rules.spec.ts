@@ -12,6 +12,10 @@ const REPEATED_WORDS_TITLE = 'Set Repeated Words to its default, on, or off stat
 test.describe('structured rule settings', () => {
 	test.describe.configure({ mode: 'serial' });
 	test.setTimeout(90_000);
+	test.skip(
+		({ browserName }) => browserName === 'firefox',
+		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+	);
 
 	test('renders categories collapsed by default with category controls', async ({
 		context,
