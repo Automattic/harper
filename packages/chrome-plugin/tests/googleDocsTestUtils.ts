@@ -19,7 +19,7 @@ function normalizeWhitespace(text: string): string {
 }
 
 function normalizeAnnotatedText(text: string): string {
-	return text.replace(/^\u0003/, '').replace(/\n$/, '');
+	return (text.startsWith('\u0003') ? text.slice(1) : text).replace(/\n$/, '');
 }
 
 export function normalizeGoogleDocsBridgeText(text: string): string {
