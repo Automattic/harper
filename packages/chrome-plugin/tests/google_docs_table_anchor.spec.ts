@@ -130,7 +130,7 @@ async function getBridgeSource(page: Page) {
 		.evaluate((node) => node.getAttribute('data-harper-gdocs-source'));
 }
 
-test.describe.skip('Google Docs support', () => {
+test.describe('Google Docs support', () => {
 	test('Google Docs anchors table-cell typo highlights to the right column text', async ({
 		page,
 	}) => {

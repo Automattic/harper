@@ -210,7 +210,7 @@ async function stopHighlightCountSampling(page: Page): Promise<number[]> {
 	});
 }
 
-test.describe.skip('Google Docs support', () => {
+test.describe('Google Docs support', () => {
 	test('Google Docs keeps existing typo highlights stable while unrelated text is appended (#3122)', async ({
 		page,
 	}) => {

@@ -476,7 +476,7 @@ async function getBridgeSource(page: Page) {
 		.evaluate((node) => node.getAttribute('data-harper-gdocs-source'));
 }
 
-test.describe.skip('Google Docs support', () => {
+test.describe('Google Docs support', () => {
 	test('Google Docs restores spaces around formatted inline words', async ({ page }) => {
 		await openMockGoogleDocsPage(page, FORMATTED_WORD_GAP_RECTS, 'not smart enough.');
 
