@@ -40,10 +40,11 @@ pub fn lint_group() -> LintGroup {
         "Instead"         => (&["in stead"][..], "instead"),
         "Intact"          => (&["in tact"][..], "intact"),
         "Itself"          => (&["it self"][..], "itself"),
-        "Keystroke"       => (&["key stoke"][..], "keystroke"),
-        "Keystrokes"      => (&["key stokes"][..], "keystrokes"),
+        "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
+        "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
+        "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
         "Misunderstood"   => (&["miss understood"][..], "misunderstood"),
         "Misuse"          => (&["miss use"][..], "misuse"),
@@ -132,6 +133,13 @@ mod tests {
     fn mis_used() {
         let test_sentence = "The software was miss used.";
         let expected = "The software was misused.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn mean_while() {
+        let test_sentence = "Mean while, the team kept working.";
+        let expected = "Meanwhile, the team kept working.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
@@ -277,6 +285,13 @@ mod tests {
     fn key_stokes() {
         let test_sentence = "These key stokes are hard to memorize.";
         let expected = "These keystrokes are hard to memorize.";
+        assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn key_strokes() {
+        let test_sentence = "There may have been a missing key stroke.";
+        let expected = "There may have been a missing keystroke.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
