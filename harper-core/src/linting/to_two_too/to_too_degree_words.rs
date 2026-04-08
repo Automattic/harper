@@ -167,16 +167,14 @@ impl ExprLinter for ToTooDegreeWords {
             .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         // Suppress when "to" is a preposition, not a typo for "too".
-        if let Some((before, _)) = context {
-            if let Some(prev) = before.iter().rfind(|t| !t.kind.is_whitespace()) {
-                if prepositional_preceder().matches_token(prev, source)
-                    || prev
-                        .get_ch(source)
-                        .eq_any_ignore_ascii_case_str(TO_TAKING_VERBS)
-                {
-                    return None;
-                }
-            }
+        if let Some((before, _)) = context
+            && let Some(prev) = before.iter().rfind(|t| !t.kind.is_whitespace())
+            && (prepositional_preceder().matches_token(prev, source)
+                || prev
+                    .get_ch(source)
+                    .eq_any_ignore_ascii_case_str(TO_TAKING_VERBS))
+        {
+            return None;
         }
 
         Some(Lint {
