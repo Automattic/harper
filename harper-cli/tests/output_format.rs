@@ -166,3 +166,85 @@ fn default_format_unchanged() {
         "default format should include lint count summary"
     );
 }
+
+#[test]
+fn github_format_emits_workflow_commands() {
+    let output = harper_cli()
+        .args(["--no-color", "lint", "--format", "github", BAD_INPUT])
+        .output()
+        .unwrap();
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let lines: Vec<&str> = stdout.lines().collect();
+    assert!(
+        !lines.is_empty(),
+        "github format should have at least one line"
+    );
+
+    for line in &lines {
+        assert!(
+            line.starts_with("::warning ") || line.starts_with("::error "),
+            "each github format line must start with ::warning or ::error, got: {line}"
+        );
+        assert!(
+            line.contains("file="),
+            "github format line must contain file= parameter: {line}"
+        );
+        assert!(
+            line.contains("line="),
+            "github format line must contain line= parameter: {line}"
+        );
+        assert!(
+            line.contains("col="),
+            "github format line must contain col= parameter: {line}"
+        );
+        assert!(
+            line.contains("title="),
+            "github format line must contain title= parameter: {line}"
+        );
+    }
+}
+
+#[test]
+fn github_format_no_ansi() {
+    let output = harper_cli()
+        .args(["lint", "--format", "github", BAD_INPUT])
+        .env_remove("NO_COLOR")
+        .output()
+        .unwrap();
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(
+        !stdout.contains('\x1b'),
+        "github format output must not contain ANSI escapes"
+    );
+}
+
+#[test]
+fn github_directory_paths_no_ansi() {
+    let dir = tempfile::tempdir().unwrap();
+    let file_path = dir.path().join("bad.md");
+    {
+        let mut f = std::fs::File::create(&file_path).unwrap();
+        write!(f, "{BAD_INPUT}").unwrap();
+    }
+
+    let output = harper_cli()
+        .args(["lint", "--format", "github", dir.path().to_str().unwrap()])
+        .env_remove("NO_COLOR")
+        .output()
+        .unwrap();
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(
+        !stdout.contains('\x1b'),
+        "github output for directories must not contain ANSI escapes"
+    );
+
+    for line in stdout.lines() {
+        assert!(
+            line.starts_with("::warning ") || line.starts_with("::error "),
+            "each line must be a workflow command: {line}"
+        );
+    }
+}
