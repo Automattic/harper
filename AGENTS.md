@@ -8,7 +8,7 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
-Importantly, all of the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
 
 ## Read First
 
@@ -141,3 +141,7 @@ ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- 
 ### Output Format
 
 Write a Weir rule to a new file with a name of your choosing, including `expr main`, `let` fields, and tests. Make sure it has the extension `.weir`.
+
+## Tips
+
+Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.

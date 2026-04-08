@@ -14,7 +14,7 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
-use harper_core::linting::{LintGroup, LintGroupConfig};
+use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
@@ -316,7 +316,7 @@ impl Backend {
             parser: impl Parser + 'static,
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
-            lint_config: &LintGroupConfig,
+            lint_config: &FlatConfig,
             dialect: Dialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {

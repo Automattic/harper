@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig, LintOptions } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
@@ -31,6 +31,10 @@ export default class ProtocolClient {
 
 	public static async getLintConfig(): Promise<LintConfig> {
 		return (await chrome.runtime.sendMessage({ kind: 'getConfig' })).config;
+	}
+
+	public static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return (await chrome.runtime.sendMessage({ kind: 'getStructuredConfig' })).config;
 	}
 
 	public static async setLintConfig(lintConfig: LintConfig): Promise<void> {
