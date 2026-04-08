@@ -163,7 +163,9 @@ test.describe('Google Docs live regressions', () => {
 		await replaceGoogleDocsDocumentText(page, source);
 
 		await expect.poll(() => getGoogleDocsAnnotatedText(page), { timeout: 20000 }).toBe(source);
-		await expect.poll(() => getGoogleDocsNormalizedBridgeText(page), { timeout: 20000 }).toBe(source);
+		await expect
+			.poll(() => getGoogleDocsNormalizedBridgeText(page), { timeout: 20000 })
+			.toBe(source);
 		expect(
 			await waitForHarperHighlightCenter(page, LIVE_GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS),
 		).not.toBeNull();
@@ -464,8 +466,7 @@ test.describe('Google Docs live regressions', () => {
 							leftRect == null
 								? []
 								: rects.filter(
-										(rect) =>
-											rect.left > leftRect.left + 100 && rect.top >= leftRect.top - 12,
+										(rect) => rect.left > leftRect.left + 100 && rect.top >= leftRect.top - 12,
 									);
 						if (!leftRect || rightRects.length < 2) {
 							return null;

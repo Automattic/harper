@@ -1,8 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect } from './fixtures';
 
-export const LIVE_GOOGLE_DOCS_URL =
-	'CHANGE_ME';
+export const LIVE_GOOGLE_DOCS_URL = 'CHANGE_ME';
 
 const GOOGLE_DOCS_RESET_SENTINEL = 'Harper reset sentinel';
 

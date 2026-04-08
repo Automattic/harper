@@ -444,7 +444,6 @@ async function installMockGoogleDocsGeometry(
 	);
 }
 
-
 async function openMockGoogleDocsPage(
 	page: Page,
 	rects: MockGoogleDocsRect[],
@@ -478,128 +477,136 @@ async function getBridgeSource(page: Page) {
 }
 
 test.describe.skip('Google Docs support', () => {
-test('Google Docs restores spaces around formatted inline words', async ({ page }) => {
-	await openMockGoogleDocsPage(page, FORMATTED_WORD_GAP_RECTS, 'not smart enough.');
+	test('Google Docs restores spaces around formatted inline words', async ({ page }) => {
+		await openMockGoogleDocsPage(page, FORMATTED_WORD_GAP_RECTS, 'not smart enough.');
 
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe('not smart enough.');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
-});
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toBe('not smart enough.');
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
+	});
 
-test('Google Docs formatted rects stay in the same sentence', async ({ page }) => {
-	await openMockGoogleDocsPage(page, ITALIC_SHIFTED_RECTS);
+	test('Google Docs formatted rects stay in the same sentence', async ({ page }) => {
+		await openMockGoogleDocsPage(page, ITALIC_SHIFTED_RECTS);
 
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe('This is an test.');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
-});
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toBe('This is an test.');
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
+	});
 
-test('Google Docs does not invent spaces around standalone punctuation rects', async ({ page }) => {
-	await openMockGoogleDocsPage(page, PUNCTUATION_BOUNDARY_RECTS, 'not smart enough. But');
-
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe('not smart enough. But');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain(' .');
-});
-
-test('Google Docs superscript-like rects do not create a fake line break', async ({ page }) => {
-	await openMockGoogleDocsPage(page, SUPERSCRIPT_LIKE_RECTS);
-
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe('Testing formatting matters.');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
-});
-
-test('Google Docs keeps soft wraps out of the logical bridge text', async ({ page }) => {
-	await openMockGoogleDocsPage(
+	test('Google Docs does not invent spaces around standalone punctuation rects', async ({
 		page,
-		WRAPPED_LINE_RECTS,
-		'This sentence wraps because the viewport is narrow.',
-	);
+	}) => {
+		await openMockGoogleDocsPage(page, PUNCTUATION_BOUNDARY_RECTS, 'not smart enough. But');
 
-	await expect
-		.poll(() => getRawBridgeText(page), { timeout: 10000 })
-		.toBe('This sentence wraps because the viewport is narrow.');
-});
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toBe('not smart enough. But');
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain(' .');
+	});
 
-test('Google Docs preserves paragraph breaks from annotated text', async ({ page }) => {
-	await openMockGoogleDocsPage(
+	test('Google Docs superscript-like rects do not create a fake line break', async ({ page }) => {
+		await openMockGoogleDocsPage(page, SUPERSCRIPT_LIKE_RECTS);
+
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toBe('Testing formatting matters.');
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('\n');
+	});
+
+	test('Google Docs keeps soft wraps out of the logical bridge text', async ({ page }) => {
+		await openMockGoogleDocsPage(
+			page,
+			WRAPPED_LINE_RECTS,
+			'This sentence wraps because the viewport is narrow.',
+		);
+
+		await expect
+			.poll(() => getRawBridgeText(page), { timeout: 10000 })
+			.toBe('This sentence wraps because the viewport is narrow.');
+	});
+
+	test('Google Docs preserves paragraph breaks from annotated text', async ({ page }) => {
+		await openMockGoogleDocsPage(
+			page,
+			PARAGRAPH_BREAK_RECTS,
+			'First paragraph.\n\nSecond paragraph.',
+		);
+
+		await expect
+			.poll(() => getRawBridgeText(page), { timeout: 10000 })
+			.toBe('First paragraph.\n\nSecond paragraph.');
+	});
+
+	test('Google Docs keeps numbered list markers with closing parentheses on single list lines', async ({
 		page,
-		PARAGRAPH_BREAK_RECTS,
-		'First paragraph.\n\nSecond paragraph.',
-	);
-
-	await expect
-		.poll(() => getRawBridgeText(page), { timeout: 10000 })
-		.toBe('First paragraph.\n\nSecond paragraph.');
-});
-
-test('Google Docs keeps numbered list markers with closing parentheses on single list lines', async ({
-	page,
-}) => {
-	await openMockGoogleDocsPage(
-		page,
-		NUMBERED_PAREN_LIST_RECTS,
-		'This paragraph stays sentence case.\n1) This list item should stay sentence case\n2) Another list item should stay sentence case',
-	);
-
-	await expect
-		.poll(() => getRawBridgeText(page), { timeout: 10000 })
-		.toBe(
+	}) => {
+		await openMockGoogleDocsPage(
+			page,
+			NUMBERED_PAREN_LIST_RECTS,
 			'This paragraph stays sentence case.\n1) This list item should stay sentence case\n2) Another list item should stay sentence case',
 		);
-});
 
-test('Google Docs keeps NBSP-separated formatted inline words in the same sentence', async ({
-	page,
-}) => {
-	await openMockGoogleDocsPage(page, NBSP_FORMATTED_GAP_RECTS, 'not\u00a0smart enough.');
+		await expect
+			.poll(() => getRawBridgeText(page), { timeout: 10000 })
+			.toBe(
+				'This paragraph stays sentence case.\n1) This list item should stay sentence case\n2) Another list item should stay sentence case',
+			);
+	});
 
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe('not smart enough.');
-});
-
-test('Google Docs does not invent spaces around em dash rects in fallback mode', async ({
-	page,
-}) => {
-	await openMockGoogleDocsPage(page, EM_DASH_SPLIT_RECTS, '');
-
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).toBe('word—word');
-});
-
-test('Google Docs keeps wide same-row fallback gaps in a single logical line', async ({ page }) => {
-	await openMockGoogleDocsPage(page, WIDE_SAME_ROW_GAP_RECTS, '');
-
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).toBe('Name Value');
-});
-
-test('Google Docs keeps column-major table rects in logical row order', async ({ page }) => {
-	await openMockGoogleDocsPage(page, COLUMN_MAJOR_TABLE_RECTS, COLUMN_MAJOR_TABLE_TEXT);
-
-	await expect.poll(() => getBridgeSource(page), { timeout: 10000 }).toBe('logical');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).toBe(COLUMN_MAJOR_TABLE_TEXT);
-});
-
-test('Google Docs repairs collapsed wrapped words from malformed logical text', async ({
-	page,
-}) => {
-	await openMockGoogleDocsPage(
+	test('Google Docs keeps NBSP-separated formatted inline words in the same sentence', async ({
 		page,
-		COLUMN_MAJOR_TABLE_RECTS,
-		COLUMN_MAJOR_TABLE_COLLAPSED_WORD_TEXT,
-	);
+	}) => {
+		await openMockGoogleDocsPage(page, NBSP_FORMATTED_GAP_RECTS, 'not\u00a0smart enough.');
 
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toContain('is available in the early morning before 9 and after 3:30.');
-	await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).not.toContain('earlymorning');
-	await expect
-		.poll(async () => await page.locator('#harper-highlight').count(), { timeout: 10000 })
-		.toBe(0);
-});
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toBe('not smart enough.');
+	});
+
+	test('Google Docs does not invent spaces around em dash rects in fallback mode', async ({
+		page,
+	}) => {
+		await openMockGoogleDocsPage(page, EM_DASH_SPLIT_RECTS, '');
+
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).toBe('word—word');
+	});
+
+	test('Google Docs keeps wide same-row fallback gaps in a single logical line', async ({
+		page,
+	}) => {
+		await openMockGoogleDocsPage(page, WIDE_SAME_ROW_GAP_RECTS, '');
+
+		await expect.poll(() => getRawBridgeText(page), { timeout: 10000 }).toBe('Name Value');
+	});
+
+	test('Google Docs keeps column-major table rects in logical row order', async ({ page }) => {
+		await openMockGoogleDocsPage(page, COLUMN_MAJOR_TABLE_RECTS, COLUMN_MAJOR_TABLE_TEXT);
+
+		await expect.poll(() => getBridgeSource(page), { timeout: 10000 }).toBe('logical');
+		await expect
+			.poll(() => getRawBridgeText(page), { timeout: 10000 })
+			.toBe(COLUMN_MAJOR_TABLE_TEXT);
+	});
+
+	test('Google Docs repairs collapsed wrapped words from malformed logical text', async ({
+		page,
+	}) => {
+		await openMockGoogleDocsPage(
+			page,
+			COLUMN_MAJOR_TABLE_RECTS,
+			COLUMN_MAJOR_TABLE_COLLAPSED_WORD_TEXT,
+		);
+
+		await expect
+			.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
+			.toContain('is available in the early morning before 9 and after 3:30.');
+		await expect
+			.poll(() => getRawBridgeText(page), { timeout: 10000 })
+			.not.toContain('earlymorning');
+		await expect
+			.poll(async () => await page.locator('#harper-highlight').count(), { timeout: 10000 })
+			.toBe(0);
+	});
 });

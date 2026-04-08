@@ -87,37 +87,40 @@ async function openMockGoogleDocsPage(
 		});
 	});
 	await page.goto(url);
-	await page.evaluate(({ pageText }) => {
-		(
-			window as Window & {
-				__harperMockGoogleDocsText?: string;
-				_docs_annotate_getAnnotatedText?: () => Promise<{
-					getText: () => string;
-					setSelection: () => void;
-					getSelection: () => Array<{ start: number; end: number }>;
-				}>;
-			}
-		).__harperMockGoogleDocsText = pageText;
-		(
-			window as Window & {
-				__harperMockGoogleDocsText?: string;
-				_docs_annotate_getAnnotatedText?: () => Promise<{
-					getText: () => string;
-					setSelection: () => void;
-					getSelection: () => Array<{ start: number; end: number }>;
-				}>;
-			}
-		)._docs_annotate_getAnnotatedText = async () => ({
-			getText: () =>
-				(
-					window as Window & {
-						__harperMockGoogleDocsText?: string;
-					}
-				).__harperMockGoogleDocsText ?? '',
-			setSelection: () => {},
-			getSelection: () => [{ start: 0, end: 0 }],
-		});
-	}, { pageText: annotatedText });
+	await page.evaluate(
+		({ pageText }) => {
+			(
+				window as Window & {
+					__harperMockGoogleDocsText?: string;
+					_docs_annotate_getAnnotatedText?: () => Promise<{
+						getText: () => string;
+						setSelection: () => void;
+						getSelection: () => Array<{ start: number; end: number }>;
+					}>;
+				}
+			).__harperMockGoogleDocsText = pageText;
+			(
+				window as Window & {
+					__harperMockGoogleDocsText?: string;
+					_docs_annotate_getAnnotatedText?: () => Promise<{
+						getText: () => string;
+						setSelection: () => void;
+						getSelection: () => Array<{ start: number; end: number }>;
+					}>;
+				}
+			)._docs_annotate_getAnnotatedText = async () => ({
+				getText: () =>
+					(
+						window as Window & {
+							__harperMockGoogleDocsText?: string;
+						}
+					).__harperMockGoogleDocsText ?? '',
+				setSelection: () => {},
+				getSelection: () => [{ start: 0, end: 0 }],
+			});
+		},
+		{ pageText: annotatedText },
+	);
 	await page.locator('#harper-google-docs-target').waitFor({ state: 'attached' });
 }
 
@@ -128,63 +131,63 @@ async function getBridgeSource(page: Page) {
 }
 
 test.describe.skip('Google Docs support', () => {
-test('Google Docs anchors table-cell typo highlights to the right column text', async ({
-	page,
-}) => {
-	const testPageUrl = 'CHANGE_ME';
-	const typoRects: MockGoogleDocsRect[] = [
-		{
-			label: 'Dana Mills',
-			left: 48,
-			top: 48,
-			width: 88,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-		{
-			label: 'Emily Stone',
-			left: 48,
-			top: 120,
-			width: 92,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-		{
-			label: 'writes careful notes for the team.',
-			left: 296,
-			top: 48,
-			width: 224,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-		{
-			label: 'This is teh plan.',
-			left: 296,
-			top: 120,
-			width: 120,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-	];
-	const typoText = [
-		'Dana Mills',
-		'writes careful notes for the team.',
-		'Emily Stone',
-		'This is teh plan.',
-	].join('\n');
+	test('Google Docs anchors table-cell typo highlights to the right column text', async ({
+		page,
+	}) => {
+		const testPageUrl = 'CHANGE_ME';
+		const typoRects: MockGoogleDocsRect[] = [
+			{
+				label: 'Dana Mills',
+				left: 48,
+				top: 48,
+				width: 88,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+			{
+				label: 'Emily Stone',
+				left: 48,
+				top: 120,
+				width: 92,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+			{
+				label: 'writes careful notes for the team.',
+				left: 296,
+				top: 48,
+				width: 224,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+			{
+				label: 'This is teh plan.',
+				left: 296,
+				top: 120,
+				width: 120,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+		];
+		const typoText = [
+			'Dana Mills',
+			'writes careful notes for the team.',
+			'Emily Stone',
+			'This is teh plan.',
+		].join('\n');
 
-	await openMockGoogleDocsPage(page, testPageUrl, typoRects, typoText);
+		await openMockGoogleDocsPage(page, testPageUrl, typoRects, typoText);
 
-	await expect.poll(() => getBridgeSource(page), { timeout: 10000 }).toBe('logical');
-	await expect
-		.poll(async () => await page.locator('#harper-highlight').count(), {
-			timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
-		})
-		.toBeGreaterThan(0);
+		await expect.poll(() => getBridgeSource(page), { timeout: 10000 }).toBe('logical');
+		await expect
+			.poll(async () => await page.locator('#harper-highlight').count(), {
+				timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
+			})
+			.toBeGreaterThan(0);
 
-	const center = await waitForHarperHighlightCenter(page, GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS);
-	expect(center).not.toBeNull();
-	expect(center!.x).toBeGreaterThan(260);
-	expect(center!.y).toBeGreaterThan(140);
-});
+		const center = await waitForHarperHighlightCenter(page, GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS);
+		expect(center).not.toBeNull();
+		expect(center!.x).toBeGreaterThan(260);
+		expect(center!.y).toBeGreaterThan(140);
+	});
 });

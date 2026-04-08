@@ -73,41 +73,41 @@ function escapeHtml(text: string): string {
 		.replaceAll('>', '&gt;');
 }
 
-async function installMockGoogleDocsGeometry(
-	page: Page,
-	annotatedText: string,
-) {
-	await page.evaluate(({ pageText }) => {
-		(
-			window as Window & {
-				__harperMockGoogleDocsText?: string;
-				_docs_annotate_getAnnotatedText?: () => Promise<{
-					getText: () => string;
-					setSelection: () => void;
-					getSelection: () => Array<{ start: number; end: number }>;
-				}>;
-			}
-		).__harperMockGoogleDocsText = pageText;
-		(
-			window as Window & {
-				__harperMockGoogleDocsText?: string;
-				_docs_annotate_getAnnotatedText?: () => Promise<{
-					getText: () => string;
-					setSelection: () => void;
-					getSelection: () => Array<{ start: number; end: number }>;
-				}>;
-			}
-		)._docs_annotate_getAnnotatedText = async () => ({
-			getText: () =>
-				(
-					window as Window & {
-						__harperMockGoogleDocsText?: string;
-					}
-				).__harperMockGoogleDocsText ?? '',
-			setSelection: () => {},
-			getSelection: () => [{ start: 0, end: 0 }],
-		});
-	}, { pageText: annotatedText });
+async function installMockGoogleDocsGeometry(page: Page, annotatedText: string) {
+	await page.evaluate(
+		({ pageText }) => {
+			(
+				window as Window & {
+					__harperMockGoogleDocsText?: string;
+					_docs_annotate_getAnnotatedText?: () => Promise<{
+						getText: () => string;
+						setSelection: () => void;
+						getSelection: () => Array<{ start: number; end: number }>;
+					}>;
+				}
+			).__harperMockGoogleDocsText = pageText;
+			(
+				window as Window & {
+					__harperMockGoogleDocsText?: string;
+					_docs_annotate_getAnnotatedText?: () => Promise<{
+						getText: () => string;
+						setSelection: () => void;
+						getSelection: () => Array<{ start: number; end: number }>;
+					}>;
+				}
+			)._docs_annotate_getAnnotatedText = async () => ({
+				getText: () =>
+					(
+						window as Window & {
+							__harperMockGoogleDocsText?: string;
+						}
+					).__harperMockGoogleDocsText ?? '',
+				setSelection: () => {},
+				getSelection: () => [{ start: 0, end: 0 }],
+			});
+		},
+		{ pageText: annotatedText },
+	);
 }
 
 async function openMockGoogleDocsPage(
@@ -132,33 +132,36 @@ async function updateMockGoogleDocsGeometry(
 	rects: MockGoogleDocsRect[],
 	annotatedText: string,
 ) {
-	await page.evaluate(({ nextRects, pageText }) => {
-		const svg = document.querySelector('svg');
-		if (!(svg instanceof SVGElement)) {
-			throw new Error('Missing mock Google Docs SVG');
-		}
-
-		svg.replaceChildren();
-
-		for (const [index, rect] of nextRects.entries()) {
-			const node = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-			node.setAttribute('data-rect-index', String(index));
-			node.setAttribute('x', String(rect.left));
-			node.setAttribute('y', String(rect.top));
-			node.setAttribute('width', String(rect.width));
-			node.setAttribute('height', String(rect.height));
-			node.setAttribute('fill', 'rgba(15, 23, 42, 0.001)');
-			node.setAttribute('aria-label', rect.label);
-			node.setAttribute('data-font-css', rect.fontCss ?? '');
-			svg.appendChild(node);
-		}
-
-		(
-			window as Window & {
-				__harperMockGoogleDocsText?: string;
+	await page.evaluate(
+		({ nextRects, pageText }) => {
+			const svg = document.querySelector('svg');
+			if (!(svg instanceof SVGElement)) {
+				throw new Error('Missing mock Google Docs SVG');
 			}
-		).__harperMockGoogleDocsText = pageText;
-	}, { nextRects: rects, pageText: annotatedText });
+
+			svg.replaceChildren();
+
+			for (const [index, rect] of nextRects.entries()) {
+				const node = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+				node.setAttribute('data-rect-index', String(index));
+				node.setAttribute('x', String(rect.left));
+				node.setAttribute('y', String(rect.top));
+				node.setAttribute('width', String(rect.width));
+				node.setAttribute('height', String(rect.height));
+				node.setAttribute('fill', 'rgba(15, 23, 42, 0.001)');
+				node.setAttribute('aria-label', rect.label);
+				node.setAttribute('data-font-css', rect.fontCss ?? '');
+				svg.appendChild(node);
+			}
+
+			(
+				window as Window & {
+					__harperMockGoogleDocsText?: string;
+				}
+			).__harperMockGoogleDocsText = pageText;
+		},
+		{ nextRects: rects, pageText: annotatedText },
+	);
 }
 
 async function getNormalizedBridgeText(page: Page) {
@@ -179,7 +182,8 @@ async function startHighlightCountSampling(page: Page) {
 
 		const sample = () => {
 			const count = Array.from(document.querySelectorAll<HTMLElement>('harper-render-box')).reduce(
-				(total, host) => total + (host.shadowRoot?.querySelectorAll('#harper-highlight').length ?? 0),
+				(total, host) =>
+					total + (host.shadowRoot?.querySelectorAll('#harper-highlight').length ?? 0),
 				0,
 			);
 			win.__harperHighlightSamples?.push(count);
@@ -207,66 +211,64 @@ async function stopHighlightCountSampling(page: Page): Promise<number[]> {
 }
 
 test.describe.skip('Google Docs support', () => {
-test('Google Docs keeps existing typo highlights stable while unrelated text is appended (#3122)', async ({
-	page,
-}) => {
-	const initialText = 'Stable context. This is teh plan.';
-	const updatedText = `${initialText} More text.`;
-	const testPageUrl = 'CHANGE_ME';
-	const initialRects: MockGoogleDocsRect[] = [
-		{
-			label: 'Stable context. This is ',
-			left: 48,
-			top: 48,
-			width: 168,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-		{
-			label: 'teh plan.',
-			left: 220,
-			top: 48,
-			width: 64,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-	];
-	const updatedRects: MockGoogleDocsRect[] = [
-		...initialRects,
-		{
-			label: ' More text.',
-			left: 292,
-			top: 48,
-			width: 72,
-			height: 18,
-			fontCss: '16px Arial',
-		},
-	];
+	test('Google Docs keeps existing typo highlights stable while unrelated text is appended (#3122)', async ({
+		page,
+	}) => {
+		const initialText = 'Stable context. This is teh plan.';
+		const updatedText = `${initialText} More text.`;
+		const testPageUrl = 'CHANGE_ME';
+		const initialRects: MockGoogleDocsRect[] = [
+			{
+				label: 'Stable context. This is ',
+				left: 48,
+				top: 48,
+				width: 168,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+			{
+				label: 'teh plan.',
+				left: 220,
+				top: 48,
+				width: 64,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+		];
+		const updatedRects: MockGoogleDocsRect[] = [
+			...initialRects,
+			{
+				label: ' More text.',
+				left: 292,
+				top: 48,
+				width: 72,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+		];
 
-	await openMockGoogleDocsPage(page, testPageUrl, initialRects, initialText);
+		await openMockGoogleDocsPage(page, testPageUrl, initialRects, initialText);
 
-	await expect
-		.poll(async () => await page.locator('#harper-highlight').count(), {
-			timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
-		})
-		.toBeGreaterThan(0);
+		await expect
+			.poll(async () => await page.locator('#harper-highlight').count(), {
+				timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
+			})
+			.toBeGreaterThan(0);
 
-	await startHighlightCountSampling(page);
-	await updateMockGoogleDocsGeometry(page, updatedRects, updatedText);
+		await startHighlightCountSampling(page);
+		await updateMockGoogleDocsGeometry(page, updatedRects, updatedText);
 
-	await expect
-		.poll(() => getNormalizedBridgeText(page), { timeout: 10000 })
-		.toBe(updatedText);
-	await expect
-		.poll(async () => await page.locator('#harper-highlight').count(), {
-			timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
-		})
-		.toBeGreaterThan(0);
+		await expect.poll(() => getNormalizedBridgeText(page), { timeout: 10000 }).toBe(updatedText);
+		await expect
+			.poll(async () => await page.locator('#harper-highlight').count(), {
+				timeout: GOOGLE_DOCS_HIGHLIGHT_TIMEOUT_MS,
+			})
+			.toBeGreaterThan(0);
 
-	await page.waitForTimeout(400);
-	const highlightSamples = await stopHighlightCountSampling(page);
+		await page.waitForTimeout(400);
+		const highlightSamples = await stopHighlightCountSampling(page);
 
-	expect(highlightSamples.some((count) => count > 0)).toBe(true);
-	expect(highlightSamples).not.toContain(0);
-});
+		expect(highlightSamples.some((count) => count > 0)).toBe(true);
+		expect(highlightSamples).not.toContain(0);
+	});
 });

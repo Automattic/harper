@@ -185,7 +185,10 @@ function resolveGoogleDocsSpan(currentSource: string, lint: UnpackedLint): Unpac
 
 	const contextRadius = 64;
 	const beforeContext = lint.source.slice(Math.max(0, safeStart - contextRadius), safeStart);
-	const afterContext = lint.source.slice(safeEnd, Math.min(lint.source.length, safeEnd + contextRadius));
+	const afterContext = lint.source.slice(
+		safeEnd,
+		Math.min(lint.source.length, safeEnd + contextRadius),
+	);
 	const beforeWindowLength = Math.max(beforeContext.length * 2, beforeContext.length + 64);
 	const afterWindowLength = Math.max(afterContext.length * 2, afterContext.length + 64);
 	const hits: Array<{ start: number; end: number; score: number }> = [];
