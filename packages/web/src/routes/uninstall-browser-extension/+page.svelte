@@ -24,30 +24,36 @@ function handleFormData(e: FormDataEvent) {
 </script>
 
 <Isolate>
-  <div class="flex flex-row justify-center items-center h-screen"> 
-    <Card> 
-      <h1 class="text-3xl font-semibold">Uninstalling Harper</h1> <p class="text-sm text-gray-600">We’re sorry to see you go. If you have a minute, would you mind telling us why you uninstalled our browser extension?</p>
-      <form method="POST" class="mt-4 space-y-6" action="/api/uninstall-feedback" on:formdata={handleFormData}>
-        <div class="space-y-3">
-          <div class="flex items-baseline gap-2">
-            <Label>Why did you uninstall Harper?</Label>
-          </div>
-      
-          <div class="space-y-3">
-            {#each Object.entries(reasons) as [k, r], i}
-              <Radio value={k} name="feedback">{r}</Radio>
-            {/each}
-      
-            <Radio name="feedback" value="other" bind:group={otherSelected}>Other</Radio>
-            {#if otherSelected}
-              <Input name="other" bind:value={otherText} placeholder="Your answer" />
-            {/if}
-        </div>
-      
-        <div class="flex items-center justify-between pt-2">
-          <Button type="submit">Submit</Button>
-        </div>
-      </form>
-    </Card> 
-  </div>
+	<div class="flex h-screen flex-row items-center justify-center">
+		<Card>
+			<h1 class="text-3xl font-semibold">Uninstalling Harper</h1>
+			<p class="text-sm text-gray-600">
+				We’re sorry to see you go. If you have a minute, would you mind telling us why you
+				uninstalled our browser extension?
+			</p>
+
+			<form method="POST" class="mt-4 space-y-6" action="/api/uninstall-feedback" on:formdata={handleFormData}>
+				<div class="space-y-3">
+					<div class="flex items-baseline gap-2">
+						<Label>Why did you uninstall Harper?</Label>
+					</div>
+
+					<div class="space-y-3">
+						{#each Object.entries(reasons) as [k, r]}
+							<Radio value={k} name="feedback">{r}</Radio>
+						{/each}
+
+						<Radio name="feedback" value="other" bind:group={otherSelected}>Other</Radio>
+						{#if otherSelected}
+							<Input name="other" bind:value={otherText} placeholder="Your answer" />
+						{/if}
+					</div>
+				</div>
+
+				<div class="flex items-center justify-between pt-2">
+					<Button type="submit">Submit</Button>
+				</div>
+			</form>
+		</Card>
+	</div>
 </Isolate>

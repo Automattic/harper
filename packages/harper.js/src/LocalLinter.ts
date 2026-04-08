@@ -4,7 +4,7 @@ import LazyPromise from 'p-lazy';
 import type { SuperBinaryModule } from './BinaryModule';
 import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
-import type { LintConfig, LintOptions } from './main';
+import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
  * See the interface definition for more details. */
@@ -118,6 +118,16 @@ export default class LocalLinter implements Linter {
 
 	async getDefaultLintConfig(): Promise<LintConfig> {
 		return await this.binary.getDefaultLintConfig();
+	}
+
+	async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		const inner = await this.inner;
+		return inner.get_structured_lint_config_as_object();
+	}
+
+	async getStructuredLintConfigJSON(): Promise<string> {
+		const inner = await this.inner;
+		return inner.get_structured_lint_config_as_json();
 	}
 
 	async setLintConfig(config: LintConfig): Promise<void> {

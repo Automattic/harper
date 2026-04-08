@@ -18,6 +18,7 @@ mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
+mod arrive_to;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_curses;
@@ -242,6 +243,7 @@ mod try_ones_hand_at;
 mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
+mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
@@ -256,6 +258,7 @@ mod were_where;
 mod whereas;
 mod whom_subject_of_verb;
 mod widely_accepted;
+mod will_non_lemma;
 mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
@@ -266,7 +269,9 @@ mod wrong_apostrophe;
 pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
-pub use lint_group::{LintGroup, LintGroupConfig};
+pub use lint_group::{
+    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
+};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
@@ -763,7 +768,6 @@ pub mod tests {
         if !found_bad.is_empty() || !unseen_good.is_empty() {
             eprintln!("\n=== Test Summary ===");
 
-            // In the summary section, change these loops:
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
@@ -771,7 +775,6 @@ pub mod tests {
                 }
             }
 
-            // And for the good suggestions:
             if !unseen_good.is_empty() {
                 eprintln!(
                     "\n❌ Missing {} expected good suggestions:",
