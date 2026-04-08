@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import { expect } from './fixtures';
 
 export const LIVE_GOOGLE_DOCS_URL =
-	'https://docs.google.com/document/d/1ybGsBpMShQhXgmAhTmioVeQbDBf1WY_GrWmIODf0wQ4/edit?usp=sharing';
+	'CHANGE_ME';
 
 const GOOGLE_DOCS_RESET_SENTINEL = 'Harper reset sentinel';
 

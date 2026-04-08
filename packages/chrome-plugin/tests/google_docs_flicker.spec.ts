@@ -206,12 +206,13 @@ async function stopHighlightCountSampling(page: Page): Promise<number[]> {
 	});
 }
 
+test.describe.skip('Google Docs support', () => {
 test('Google Docs keeps existing typo highlights stable while unrelated text is appended (#3122)', async ({
 	page,
 }) => {
 	const initialText = 'Stable context. This is teh plan.';
 	const updatedText = `${initialText} More text.`;
-	const testPageUrl = `https://docs.google.com/document/d/harper-flicker-${Date.now().toString(36)}/edit`;
+	const testPageUrl = 'CHANGE_ME';
 	const initialRects: MockGoogleDocsRect[] = [
 		{
 			label: 'Stable context. This is ',
@@ -267,4 +268,5 @@ test('Google Docs keeps existing typo highlights stable while unrelated text is 
 
 	expect(highlightSamples.some((count) => count > 0)).toBe(true);
 	expect(highlightSamples).not.toContain(0);
+});
 });

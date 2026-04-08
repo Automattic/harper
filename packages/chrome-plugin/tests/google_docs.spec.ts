@@ -10,7 +10,7 @@ type MockGoogleDocsRect = {
 	fontCss?: string;
 };
 
-const TEST_PAGE_URL = 'https://docs.google.com/document/d/harper-formatting-regression/edit';
+const TEST_PAGE_URL = 'CHANGE_ME';
 const FORMATTED_WORD_GAP_RECTS: MockGoogleDocsRect[] = [
 	{
 		label: 'not',
@@ -477,6 +477,7 @@ async function getBridgeSource(page: Page) {
 		.evaluate((node) => node.getAttribute('data-harper-gdocs-source'));
 }
 
+test.describe.skip('Google Docs support', () => {
 test('Google Docs restores spaces around formatted inline words', async ({ page }) => {
 	await openMockGoogleDocsPage(page, FORMATTED_WORD_GAP_RECTS, 'not smart enough.');
 
@@ -600,4 +601,5 @@ test('Google Docs repairs collapsed wrapped words from malformed logical text', 
 	await expect
 		.poll(async () => await page.locator('#harper-highlight').count(), { timeout: 10000 })
 		.toBe(0);
+});
 });

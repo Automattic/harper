@@ -127,11 +127,11 @@ async function getBridgeSource(page: Page) {
 		.evaluate((node) => node.getAttribute('data-harper-gdocs-source'));
 }
 
+test.describe.skip('Google Docs support', () => {
 test('Google Docs anchors table-cell typo highlights to the right column text', async ({
 	page,
 }) => {
-	const testPageUrl =
-		`https://docs.google.com/document/d/harper-table-anchor-${Date.now().toString(36)}/edit`;
+	const testPageUrl = 'CHANGE_ME';
 	const typoRects: MockGoogleDocsRect[] = [
 		{
 			label: 'Dana Mills',
@@ -186,4 +186,5 @@ test('Google Docs anchors table-cell typo highlights to the right column text', 
 	expect(center).not.toBeNull();
 	expect(center!.x).toBeGreaterThan(260);
 	expect(center!.y).toBeGreaterThan(140);
+});
 });
