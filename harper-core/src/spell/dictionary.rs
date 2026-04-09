@@ -13,6 +13,12 @@ pub(crate) static ANNOTATIONS_STR: &str = include_str!("../../annotations.json")
 ///
 /// See also: [`super::FstDictionary`] and [`super::MutableDictionary`].
 pub trait Dictionary: Send + Sync {
+    // NOTE: methods with the bound `Self: Sized` bound are not dynamically dispatchable
+    // (i.e. they can't be called through a &dyn Dictionary)
+    //
+    // To get around this, you can call `get_word_map` and then call the desired method on the
+    // resulting word map.
+
     /// Get the underlying [`WordMap`] used by the dictionary.
     fn get_word_map(&self) -> &WordMap;
 
