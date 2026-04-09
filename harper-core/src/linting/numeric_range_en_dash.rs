@@ -79,7 +79,7 @@ impl ExprLinter for NumericRangeEnDash {
             span: matched_tokens[1].span,
             lint_kind: LintKind::Formatting,
             suggestions: vec![Suggestion::ReplaceWith(vec![EN_DASH])],
-            message: "Use an en dash (–) between numbers.".to_owned(),
+            message: "Use an en dash (–) in ranges of numbers. Ignore this if it is math.".to_owned(),
             priority: 63,
         })
     }
