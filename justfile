@@ -1,7 +1,20 @@
+# Clean build artifacts (but keep dependencies) by matching patterns in .gitignore
+alias clean := soft-clean
+soft-clean:
+  cargo clean
+  git clean -fdx --exclude=node_modules --exclude=.env* --exclude=*.log --exclude=secrets.*.js
+
+# Hard clean all build artifacts and dependencies by matching the .gitignore patterns
+hard-clean:
+  cargo clean
+  git clean -fdx --exclude=.env* --exclude=*.log --exclude=secrets.*.js # Remove all untracked files matching .gitignore patterns
+  pnpm store prune
+
+
 # Format entire project
 alias fmt := format
 format:
-  cargo fmt  
+  cargo fmt
   pnpm format
 
 # Build the shared component library
