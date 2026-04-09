@@ -149,7 +149,7 @@ impl ExprLinter for Damages {
                 damage_chars[..6].to_vec(),
                 damage_chars,
             )],
-            message: "Singular `damage` is correct when not refering to a court case.".to_string(),
+            message: "Singular `damage` is correct when not referring to a court case.".to_string(),
             ..Default::default()
         })
     }
