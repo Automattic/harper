@@ -26,7 +26,7 @@ fn is_chained_numeric_form(context: Option<(&[Token], &[Token])>) -> bool {
         return false;
     };
 
-    // Skip multi-part numeric chains like dates (`2026-03-18`) and versions (`1-2-3`).
+    // Skip multipart numeric chains like dates (`2026-03-18`) and versions (`1-2-3`).
     let preceded_by_numeric_dash = matches!(
         before,
         [.., number, dash] if number.kind.is_number() && is_numeric_range_dash(dash)
@@ -48,7 +48,7 @@ impl Default for NumericRangeEnDash {
     fn default() -> Self {
         // Match isolated numeric ranges like `12-14` or `3—5`.
         // The context check below skips dates, version chains, and similar
-        // multi-part numeric forms that should keep their existing separators.
+        // multipart numeric forms that should keep their existing separators.
         let pattern = SequenceExpr::default()
             .then_number()
             .then(is_target_dash as fn(&Token, &[char]) -> bool)
