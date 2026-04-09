@@ -7,7 +7,7 @@ use crate::patterns::InflectionOfBe;
 use crate::{CharStringExt, TokenStringExt, linting::ExprLinter};
 
 use super::{Lint, LintKind, Suggestion, is_content_word, predicate};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, followed_by_word};
 
 use crate::{Lrc, Token};
 
@@ -55,13 +55,25 @@ impl ExprLinter for CompoundNounAfterDetAdj {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         if matched_tokens
             .first()?
             .span
             .get_content(source)
             .eq_str("that")
         {
+            return None;
+        }
+
+        // If the two content words are followed by a preposition, the pair is
+        // almost certainly part of a phrasal verb (e.g. "get away with",
+        // "run out of") and merging them into a compound noun is wrong.
+        if followed_by_word(context, |tok| tok.kind.is_preposition()) {
             return None;
         }
 
