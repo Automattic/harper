@@ -1,15 +1,14 @@
+mod flat_config;
+mod structured_config;
+
 use std::collections::BTreeMap;
-use std::hash::Hash;
-use std::hash::{BuildHasher, Hasher};
-use std::mem;
+use std::hash::BuildHasher;
 use std::num::NonZero;
 use std::sync::Arc;
 
-use cached::proc_macro::cached;
 use foldhash::quality::RandomState;
 use hashbrown::HashMap;
 use lru::LruCache;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
 use super::a_while::AWhile;
@@ -263,121 +262,18 @@ use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
 };
-use crate::spell::{Dictionary, MutableDictionary};
+use crate::spell::Dictionary;
 use crate::{Dialect, Document, Lrc, TokenStringExt};
 
-fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
-where
-    S: Serializer,
-{
-    let ordered: BTreeMap<_, _> = map.iter().map(|(k, v)| (k.clone(), *v)).collect();
-    ordered.serialize(ser)
-}
-
-fn de_hashbrown<'de, D>(de: D) -> Result<HashMap<String, Option<bool>>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let ordered: BTreeMap<String, Option<bool>> = BTreeMap::deserialize(de)?;
-    Ok(ordered.into_iter().collect())
-}
-
-/// The configuration for a [`LintGroup`].
-/// Each child linter can be enabled, disabled, or set to a curated value.
-#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
-#[serde(transparent)]
-pub struct LintGroupConfig {
-    /// We do this shenanigans with the [`BTreeMap`] to keep the serialized format consistent.
-    #[serde(serialize_with = "ser_ordered", deserialize_with = "de_hashbrown")]
-    inner: HashMap<String, Option<bool>>,
-}
-
-#[cached]
-fn curated_config() -> LintGroupConfig {
-    // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
-    group.config
-}
-
-impl LintGroupConfig {
-    /// Check if a rule exists in the configuration.
-    pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
-        self.inner.contains_key(key.as_ref())
-    }
-
-    pub fn set_rule_enabled(&mut self, key: impl ToString, val: bool) {
-        self.inner.insert(key.to_string(), Some(val));
-    }
-
-    /// Remove any configuration attached to a rule.
-    /// This allows it to assume its default (curated) state.
-    pub fn unset_rule_enabled(&mut self, key: impl AsRef<str>) {
-        self.inner.remove(key.as_ref());
-    }
-
-    pub fn set_rule_enabled_if_unset(&mut self, key: impl AsRef<str>, val: bool) {
-        if !self.inner.contains_key(key.as_ref()) {
-            self.set_rule_enabled(key.as_ref().to_string(), val);
-        }
-    }
-
-    pub fn is_rule_enabled(&self, key: &str) -> bool {
-        self.inner.get(key).cloned().flatten().unwrap_or(false)
-    }
-
-    /// Clear all config options.
-    /// This will reset them all to disable them.
-    pub fn clear(&mut self) {
-        for val in self.inner.values_mut() {
-            *val = None
-        }
-    }
-
-    /// Merge the contents of another [`LintGroupConfig`] into this one.
-    ///
-    /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: LintGroupConfig) {
-        for (key, val) in other.inner {
-            if val.is_none() {
-                continue;
-            }
-
-            self.inner.insert(key.to_string(), val);
-        }
-    }
-
-    /// Fill the group with the values for the curated lint group.
-    pub fn fill_with_curated(&mut self) {
-        let mut temp = Self::new_curated();
-        mem::swap(self, &mut temp);
-        self.merge_from(temp);
-    }
-
-    pub fn new_curated() -> Self {
-        curated_config()
-    }
-}
-
-impl Hash for LintGroupConfig {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
-        for (key, value) in &self.inner {
-            hasher.write(key.as_bytes());
-            if let Some(value) = value {
-                hasher.write_u8(1);
-                hasher.write_u8(*value as u8);
-            } else {
-                // Do it twice so we fill the same number of bytes as the other branch.
-                hasher.write_u8(0);
-                hasher.write_u8(0);
-            }
-        }
-    }
-}
+pub use flat_config::FlatConfig;
+pub use structured_config::{
+    HumanReadableSetting, HumanReadableStructuredConfig, StructuredConfig,
+};
 
 /// A struct for collecting the output of a number of individual [Linter]s.
 /// Each child can be toggled via the public, mutable `Self::config` object.
 pub struct LintGroup {
-    pub config: LintGroupConfig,
+    pub config: FlatConfig,
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
@@ -399,7 +295,7 @@ impl LintGroup {
 
     pub fn empty() -> Self {
         Self {
-            config: LintGroupConfig::default(),
+            config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
@@ -530,8 +426,8 @@ impl LintGroup {
             .collect()
     }
 
-    /// Swap out [`Self::config`] with another [`LintGroupConfig`].
-    pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
+    /// Swap out [`Self::config`] with another [`FlatConfig`].
+    pub fn with_lint_config(mut self, config: FlatConfig) -> Self {
         self.config = config;
         self
     }
@@ -597,9 +493,7 @@ impl LintGroup {
 
         out.merge_from(weir_rules::lint_group());
         out.merge_from(phrase_set_corrections::lint_group());
-        out.merge_from(proper_noun_capitalization_linters::lint_group(
-            dictionary.clone(),
-        ));
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
         out.merge_from(closed_compounds::lint_group());
         out.merge_from(initialisms::lint_group());
         out.merge_from(be_adjective_confusions::lint_group());
@@ -969,7 +863,7 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use super::{LintGroup, LintGroupConfig};
+    use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
@@ -1039,7 +933,7 @@ mod tests {
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
-        let enforcer_config = LintGroupConfig::new_curated();
+        let enforcer_config = FlatConfig::new_curated();
         let mut lints_to_enforce =
             LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
                 .with_lint_config(enforcer_config);

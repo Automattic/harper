@@ -1,6 +1,6 @@
 import type { LintOptions } from 'harper.js';
 import { closestBox, type IgnorableLintBox } from './Box';
-import computeLintBoxes from './computeLintBoxes';
+import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';

@@ -2,7 +2,7 @@ import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type { BinaryModule } from '../BinaryModule';
 import type Linter from '../Linter';
 import type { LinterInit, WeirpackTestFailures } from '../Linter';
-import type { LintConfig, LintOptions } from '../main';
+import type { LintConfig, LintOptions, StructuredLintConfig } from '../main';
 import type { DeserializedRequest } from '../Serializer';
 import Serializer from '../Serializer';
 import Worker from './worker.ts?worker&inline';
@@ -132,6 +132,14 @@ export default class WorkerLinter implements Linter {
 
 	async getDefaultLintConfig(): Promise<LintConfig> {
 		return JSON.parse(await this.getDefaultLintConfigAsJSON()) as LintConfig;
+	}
+
+	async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return JSON.parse(await this.getStructuredLintConfigJSON()) as StructuredLintConfig;
+	}
+
+	getStructuredLintConfigJSON(): Promise<string> {
+		return this.rpc('getStructuredLintConfigJSON', []);
 	}
 
 	async dispose(): Promise<void> {

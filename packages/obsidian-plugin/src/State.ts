@@ -1,5 +1,5 @@
 import type { Extension, StateField } from '@codemirror/state';
-import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
+import type { Lint, LintConfig, Linter, StructuredLintConfig, Suggestion } from 'harper.js';
 import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { minimatch } from 'minimatch';
@@ -313,6 +313,12 @@ export default class State {
 
 	public async getDescriptionHTML(): Promise<Record<string, string>> {
 		return await this.harper.getLintDescriptionsHTML();
+	}
+
+	/** Expose the structured lint configuration for UI rendering only.
+	 * Rule state must still be persisted through flat `lintSettings`. */
+	public async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return await this.harper.getStructuredLintConfig();
 	}
 
 	/** Expose the default lint configuration for UI rendering. */

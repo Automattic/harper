@@ -1,9 +1,10 @@
-import type { Dialect, LintConfig, LintOptions } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
 	| LintRequest
 	| GetConfigRequest
+	| GetStructuredConfigRequest
 	| SetConfigRequest
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
@@ -34,6 +35,7 @@ export type Request =
 export type Response =
 	| LintResponse
 	| GetConfigResponse
+	| GetStructuredConfigResponse
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
@@ -67,6 +69,15 @@ export type GetConfigRequest = {
 export type GetConfigResponse = {
 	kind: 'getConfig';
 	config: LintConfig;
+};
+
+export type GetStructuredConfigRequest = {
+	kind: 'getStructuredConfig';
+};
+
+export type GetStructuredConfigResponse = {
+	kind: 'getStructuredConfig';
+	config: StructuredLintConfig;
 };
 
 export type SetConfigRequest = {

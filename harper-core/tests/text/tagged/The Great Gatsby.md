@@ -8028,8 +8028,8 @@
 # . R+    VB     I/R/Dq NPr/I/J/R/Dq . .
 >
 #
-> “ Well       , we’d better     telephone for   an  axe        — — — ”
-# . NSg/VB/J/R . K    NSg/VXB/JC NSg/VB+   R/C/P D/P NSg/VB/Br+ . . . .
+> “ Well       , we’d better     telephone for   an  axe          — — — ”
+# . NSg/VB/J/R . K    NSg/VXB/JC NSg/VB+   R/C/P D/P NSg/VB/Comm+ . . . .
 >
 #
 > “ The thing to do  is  to forget about the heat   , ” said Tom     impatiently . “ You    make
