@@ -190,6 +190,10 @@ fn str_to_chars(word: &str) -> impl AsRef<[char]> {
     word.chars().collect::<Vec<_>>()
 }
 
+// Boilerplate below.
+// Previously, we used `blanket` for this, but it doesn't seem to work with the added `Self: Sized`
+// bound on some of the `Dictionary` functions.
+
 impl<D: Dictionary> Dictionary for Arc<D> {
     fn get_word_map(&self) -> &WordMap {
         self.as_ref().get_word_map()
