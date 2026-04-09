@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::sync::Arc;
 
 use super::FuzzyMatchResult;
 use crate::{
@@ -188,8 +189,6 @@ pub trait Dictionary: Send + Sync {
 fn str_to_chars(word: &str) -> impl AsRef<[char]> {
     word.chars().collect::<Vec<_>>()
 }
-
-use std::sync::Arc;
 
 impl<D: Dictionary> Dictionary for Arc<D> {
     fn get_word_map(&self) -> &WordMap {
