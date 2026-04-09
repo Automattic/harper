@@ -170,6 +170,8 @@ impl Document {
         self.match_quotes();
     }
 
+    /// [`Self::parse`] but with a concrete dictionary type. This is used to reduce
+    /// monomorphization.
     fn _parse(&mut self, dictionary: &MutableDictionary) {
         self.apply_fixups();
 
@@ -221,6 +223,7 @@ impl Document {
     ///
     /// Should be run after every change to the underlying [`Self::source`].
     fn parse(&mut self, dictionary: &(impl Dictionary + ?Sized)) {
+        // Use an inner function to reduce monomorphization.
         self._parse(dictionary.get_word_map());
     }
 
