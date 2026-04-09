@@ -41,19 +41,20 @@ fn is_chained_numeric_form(context: Option<(&[Token], &[Token])>) -> bool {
 }
 
 pub struct NumericRangeEnDash {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NumericRangeEnDash {
     fn default() -> Self {
+        // Match isolated numeric ranges like `12-14` or `3—5`.
+        // The context check below skips dates, version chains, and similar
+        // multi-part numeric forms that should keep their existing separators.
         let pattern = SequenceExpr::default()
             .then_number()
             .then(is_target_dash as fn(&Token, &[char]) -> bool)
             .then_number();
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -61,7 +62,7 @@ impl ExprLinter for NumericRangeEnDash {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
