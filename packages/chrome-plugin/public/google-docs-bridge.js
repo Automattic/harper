@@ -676,11 +676,14 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 
 		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
 		const targetDocument = iframe?.contentDocument;
-		const target = targetDocument?.activeElement;
+		const target =
+			targetDocument?.activeElement ?? targetDocument?.body ?? targetDocument?.documentElement;
 		if (!target) {
 			return { kind: 'replaceText', applied: false };
 		}
 
+		iframe?.focus?.();
+		targetDocument?.defaultView?.focus?.();
 		target.focus?.();
 
 		const expectedNextText =
