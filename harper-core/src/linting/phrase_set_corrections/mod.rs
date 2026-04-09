@@ -417,6 +417,17 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
+        "LookForwardTo" => (
+            &[
+                ("look forward for", "look forward to"),
+                ("looked forward for", "looked forward to"),
+                ("looks forward for", "looks forward to"),
+                ("looking forward for", "looking forward to")
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
+        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),

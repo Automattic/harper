@@ -1,13 +1,13 @@
 use std::{collections::HashMap, fmt::Display};
 
-use harper_core::linting::{LintGroupConfig, LintKind};
+use harper_core::linting::{FlatConfig, LintKind};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Summary {
     pub lint_counts: HashMap<LintKind, u32>,
     pub total_applied: u32,
-    pub final_config: LintGroupConfig,
+    pub final_config: FlatConfig,
     // The most common misspelled words.
     pub misspelled: HashMap<String, u32>,
 }

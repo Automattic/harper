@@ -27,8 +27,12 @@ function suggestionText(s: UnpackedSuggestion): string {
 </script>
 
 <div
-  class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm bg-white dark:bg-[#0d1117]"
-  on:click={() => focusError?.()}
+	class="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm bg-white dark:bg-[#0d1117]"
+	role="button"
+	tabindex="0"
+	aria-label="Focus lint error"
+	on:click={() => focusError?.()}
+	on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), focusError?.())}
 >
   <div
     role="button"

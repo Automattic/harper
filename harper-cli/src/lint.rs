@@ -11,7 +11,7 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
@@ -202,7 +202,7 @@ pub fn lint(
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
-    let mut config = LintGroupConfig::new_curated();
+    let mut config = FlatConfig::new_curated();
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);

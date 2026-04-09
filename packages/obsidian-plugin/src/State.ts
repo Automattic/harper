@@ -1,5 +1,5 @@
 import type { Extension, StateField } from '@codemirror/state';
-import type { Lint, LintConfig, Linter, Suggestion } from 'harper.js';
+import type { Lint, LintConfig, Linter, StructuredLintConfig, Suggestion } from 'harper.js';
 import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { minimatch } from 'minimatch';
@@ -23,6 +23,7 @@ export type Settings = {
 	ignoredGlobs?: string[];
 	lintEnabled?: boolean;
 	regexMask?: string;
+	useWebStyleLints?: boolean;
 };
 
 const DEFAULT_DELAY = -1;
@@ -39,6 +40,7 @@ export default class State {
 	private editorInfoField?: StateField<MarkdownFileInfo>;
 	private lintEnabled?: boolean;
 	private regexMask?: string;
+	private useWebStyleLints = false;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -111,6 +113,7 @@ export default class State {
 		this.ignoredGlobs = settings.ignoredGlobs;
 		this.lintEnabled = settings.lintEnabled;
 		this.regexMask = settings.regexMask;
+		this.useWebStyleLints = settings.useWebStyleLints ?? false;
 
 		// Reinitialize it.
 		if (this.hasEditorLinter()) {
@@ -221,7 +224,7 @@ export default class State {
 							to: span.end,
 							source: linterName,
 							severity: 'error',
-							markClass: lintKindClass(lint.lint_kind()),
+							markClass: `${lintKindClass(lint.lint_kind())} ${this.useWebStyleLints ? 'harper-web-style' : 'harper-squiggly-style'}`,
 							title: lint.lint_kind_pretty(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
@@ -280,6 +283,7 @@ export default class State {
 			ignoredGlobs: this.ignoredGlobs,
 			lintEnabled: this.lintEnabled,
 			regexMask: this.regexMask,
+			useWebStyleLints: this.useWebStyleLints,
 		};
 	}
 
@@ -309,6 +313,12 @@ export default class State {
 
 	public async getDescriptionHTML(): Promise<Record<string, string>> {
 		return await this.harper.getLintDescriptionsHTML();
+	}
+
+	/** Expose the structured lint configuration for UI rendering only.
+	 * Rule state must still be persisted through flat `lintSettings`. */
+	public async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return await this.harper.getStructuredLintConfig();
 	}
 
 	/** Expose the default lint configuration for UI rendering. */
