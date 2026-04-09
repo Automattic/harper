@@ -676,7 +676,6 @@ pub fn lint_group() -> LintGroup {
             &[
                 (&["copywrite"], &["copyright"]),
                 (&["copywrites"], &["copyrights"]),
-                (&["copywriting"], &["copyrighting"]),
                 (&["copywritten", "copywrited", "copywrote"], &["copyrighted"]),
             ],
             "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
