@@ -51,7 +51,7 @@ impl Default for NumericRangeEnDash {
         // multipart numeric forms that should keep their existing separators.
         let pattern = SequenceExpr::default()
             .then_number()
-            .then(is_target_dash as fn(&Token, &[char]) -> bool)
+            .then(is_target_dash)
             .then_number();
 
         Self { expr: pattern }
