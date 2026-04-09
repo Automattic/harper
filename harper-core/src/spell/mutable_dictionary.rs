@@ -46,10 +46,10 @@ fn uncached_inner_new(language: LanguageFamily) -> Arc<MutableDictionary> {
 }
 
 pub static DICT: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(uncached_inner_new(LanguageFamily::English));
+    LazyLock::new(|| uncached_inner_new(LanguageFamily::English));
 
 pub static DICT_PORTUGUESE: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(uncached_inner_new(LanguageFamily::Portuguese));
+    LazyLock::new(|| uncached_inner_new(LanguageFamily::Portuguese));
 
 impl MutableDictionary {
     pub fn new() -> Self {

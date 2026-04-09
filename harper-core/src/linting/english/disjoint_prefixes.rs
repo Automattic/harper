@@ -155,32 +155,56 @@ where
 mod tests {
     use super::DisjointPrefixes;
     use crate::{
+        languages::LanguageFamily,
         linting::tests::{assert_no_lints, assert_suggestion_result},
         spell::FstDictionary,
     };
 
     #[test]
     fn fix_hyphenated_to_joined() {
-        assert_suggestion_result("Download pre-built binaries or build from source.", DisjointPrefixes::new(FstDictionary::curated()), "Download prebuilt binaries or build from source.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Download pre-built binaries or build from source.",
+            DisjointPrefixes::new(FstDictionary::curated(LanguageFamily::English)),
+            "Download prebuilt binaries or build from source.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_open_to_joined() {
-        assert_suggestion_result("Advanced Nginx configuration available for super users", DisjointPrefixes::new(FstDictionary::curated()), "Advanced Nginx configuration available for superusers", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Advanced Nginx configuration available for super users",
+            DisjointPrefixes::new(FstDictionary::curated(LanguageFamily::English)),
+            "Advanced Nginx configuration available for superusers",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_join_open_co_op() {
-        assert_no_lints("They are cheaper at the co op.", DisjointPrefixes::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "They are cheaper at the co op.",
+            DisjointPrefixes::new(FstDictionary::curated(LanguageFamily::English)),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_join_hyphenated_co_op() {
-        assert_no_lints("Almost everything is cheaper at the co-op.", DisjointPrefixes::new(FstDictionary::curated()), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Almost everything is cheaper at the co-op.",
+            DisjointPrefixes::new(FstDictionary::curated(LanguageFamily::English)),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_open_to_hyphenated() {
-        assert_suggestion_result("My hobby is de extinction of the dinosaurs.", DisjointPrefixes::new(FstDictionary::curated()), "My hobby is de-extinction of the dinosaurs.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "My hobby is de extinction of the dinosaurs.",
+            DisjointPrefixes::new(FstDictionary::curated(LanguageFamily::English)),
+            "My hobby is de-extinction of the dinosaurs.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

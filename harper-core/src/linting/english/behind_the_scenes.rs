@@ -60,29 +60,46 @@ impl ExprLinter for BehindTheScenes {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        behind_the_scenes::BehindTheScenes,
-        tests::{assert_no_lints, assert_suggestion_result},
-    };
+    use crate::linting::english::behind_the_scenes::BehindTheScenes;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn pluralize_work_bts() {
-        assert_suggestion_result("How does this tool work behind the scene.", BehindTheScenes::default(), "How does this tool work behind the scenes.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "How does this tool work behind the scene.",
+            BehindTheScenes::default(),
+            "How does this tool work behind the scenes.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Correcting hyphenation is not yet implemented."]
     fn pluralize_and_hyphenate() {
-        assert_suggestion_result("So, to open the 'real' behind the scene menu i need to do these steps:", BehindTheScenes::default(), "So, to open the 'real' behind-the-scenes menu i need to do these steps:", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "So, to open the 'real' behind the scene menu i need to do these steps:",
+            BehindTheScenes::default(),
+            "So, to open the 'real' behind-the-scenes menu i need to do these steps:",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_when_hyphenated_to_previous_word() {
-        assert_no_lints("Contribute to techking11/react-behind-the-scene development by creating an account on GitHub.", BehindTheScenes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Contribute to techking11/react-behind-the-scene development by creating an account on GitHub.",
+            BehindTheScenes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn pluralize_bts_processing() {
-        assert_suggestion_result("Behind-the-scene processing details are printed in the Log window.", BehindTheScenes::default(), "Behind-the-scenes processing details are printed in the Log window.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Behind-the-scene processing details are printed in the Log window.",
+            BehindTheScenes::default(),
+            "Behind-the-scenes processing details are printed in the Log window.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

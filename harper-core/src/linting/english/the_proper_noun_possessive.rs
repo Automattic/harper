@@ -54,49 +54,83 @@ impl ExprLinter for TheProperNounPossessive {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{
-        tests::{assert_no_lints, assert_suggestion_result},
-        the_proper_noun_possessive::TheProperNounPossessive,
-    };
+    use crate::linting::english::the_proper_noun_possessive::TheProperNounPossessive;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fix_the_putins_war() {
-        assert_suggestion_result("The Putin's war", TheProperNounPossessive::default(), "Putin's war", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Putin's war",
+            TheProperNounPossessive::default(),
+            "Putin's war",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_the_londons_population() {
-        assert_suggestion_result("The London's population.", TheProperNounPossessive::default(), "London's population.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "The London's population.",
+            TheProperNounPossessive::default(),
+            "London's population.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_common_noun_in_titlecase() {
-        assert_no_lints("The Dog's Dinner", TheProperNounPossessive::default(), crate::languages::LanguageFamily::English)
+        assert_no_lints(
+            "The Dog's Dinner",
+            TheProperNounPossessive::default(),
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     #[ignore = "Can't currently do this due to issue #???"]
     fn fix_proper_noun_stylized_to_begin_lowercase() {
-        assert_suggestion_result("The macOS's Finder", TheProperNounPossessive::default(), "macOS's Finder", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The macOS's Finder",
+            TheProperNounPossessive::default(),
+            "macOS's Finder",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_even_when_capitalisation_omitted() {
-        assert_suggestion_result("the egypt's pyramids", TheProperNounPossessive::default(), "egypt's pyramids", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "the egypt's pyramids",
+            TheProperNounPossessive::default(),
+            "egypt's pyramids",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_proper_noun_thats_also_common_noun() {
-        assert_no_lints("the china's broken", TheProperNounPossessive::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "the china's broken",
+            TheProperNounPossessive::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_the_internets() {
-        assert_no_lints("The internet's most popular icon toolkit has been redesigned", TheProperNounPossessive::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The internet's most popular icon toolkit has been redesigned",
+            TheProperNounPossessive::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_the_internets_curly_apostrophe() {
-        assert_no_lints("The internet’s most popular icon toolkit has been redesigned", TheProperNounPossessive::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The internet’s most popular icon toolkit has been redesigned",
+            TheProperNounPossessive::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

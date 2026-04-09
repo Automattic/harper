@@ -257,7 +257,7 @@ use crate::linting::english::open_compounds::OpenCompounds;
 use crate::linting::english::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
 use crate::linting::expr_linter::Chunk;
 use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Document, EnglishDialect, TokenStringExt};
+use crate::{CharString, Document, EnglishDialect, PortugueseDialect, TokenStringExt};
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
 where
@@ -883,6 +883,42 @@ impl LintGroup {
         out
     }
 
+    fn new_curated_portuguese(
+        dictionary: Arc<impl Dictionary + 'static>,
+        _dialect: PortugueseDialect,
+    ) -> Self {
+        let mut out = Self::empty();
+
+        // /// Add a `Linter` to the group, setting it to be enabled by default.
+        // macro_rules! insert_struct_rule {
+        //     ($rule:ident, $default_config:expr) => {
+        //         out.add(stringify!($rule), $rule::default());
+        //         out.config
+        //             .set_rule_enabled(stringify!($rule), $default_config);
+        //     };
+        // }
+        //
+        // /// Add an `ExprLinter` to the group, setting it to be enabled by default.
+        // /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
+        // /// will allow it to use more aggressive caching strategies.
+        // macro_rules! insert_expr_rule {
+        //     ($rule:ident, $default_config:expr) => {
+        //         out.add_expr_linter(stringify!($rule), $rule::default());
+        //         out.config
+        //             .set_rule_enabled(stringify!($rule), $default_config);
+        //     };
+        // }
+
+        out.merge_from(&mut phrase_set_corrections::lint_group());
+        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
+            dictionary.clone(),
+        ));
+        out.merge_from(&mut closed_compounds::lint_group());
+        out.merge_from(&mut initialisms::lint_group());
+
+        out
+    }
+
     /// Create a new curated group with all config values cleared out.
     pub fn new_curated_empty_config(
         dictionary: Arc<impl Dictionary + 'static>,
@@ -974,19 +1010,16 @@ mod tests {
     use std::sync::Arc;
 
     use super::{LintGroup, LintGroupConfig};
-    use crate::EnglishDialect;
-    use crate::languages::Language;
-    use crate::languages::LanguageFamily;
+    use crate::languages::{Language, LanguageFamily};
     use crate::linting::LintKind;
-    use crate::linting::Linter;
     use crate::linting::tests::assert_no_lints;
     use crate::spell::{FstDictionary, MutableDictionary};
-    use crate::{Dialect, Document};
+    use crate::{Document, EnglishDialect, linting::Linter};
 
     fn test_group() -> LintGroup {
-        LintGroup::new_curated(
+        LintGroup::new_curated_english(
             Arc::new(MutableDictionary::curated()),
-            Language::English(EnglishDialect::American),
+            EnglishDialect::American,
         )
     }
 
@@ -1060,13 +1093,13 @@ mod tests {
     #[test]
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(
-            FstDictionary::curated(crate::languages::LanguageFamily::English),
+            FstDictionary::curated(LanguageFamily::English),
             Language::English(EnglishDialect::American),
         );
 
         let enforcer_config = LintGroupConfig::new_curated();
         let mut lints_to_enforce = LintGroup::new_curated(
-            FstDictionary::curated(crate::languages::LanguageFamily::English),
+            FstDictionary::curated(LanguageFamily::English),
             Language::English(EnglishDialect::American),
         )
         .with_lint_config(enforcer_config);
@@ -1095,8 +1128,10 @@ mod tests {
 
     #[test]
     fn no_linter_names_clash() {
-        let group =
-            LintGroup::new_curated(Arc::new(MutableDictionary::default()), Dialect::American);
+        let group = LintGroup::new_curated(
+            Arc::new(MutableDictionary::default()),
+            Language::English(EnglishDialect::American),
+        );
 
         if let Some(names) = &group.clashing_linter_names {
             if !names.is_empty() {

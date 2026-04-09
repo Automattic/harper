@@ -1,6 +1,6 @@
 use crate::expr::{Expr, SequenceExpr};
-use crate::linting::english::expr_linter::Chunk;
-use crate::linting::english::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind};
 use crate::token::Token;
 use crate::token_string_ext::TokenStringExt;
 
@@ -54,41 +54,72 @@ impl ExprLinter for AllowTo {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::AllowTo;
+    use super::AllowTo;
     use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
     #[test]
     fn flag_allow_to() {
-        assert_lint_count("Allow to change approval policy during running task # 4394.", AllowTo::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Allow to change approval policy during running task # 4394.",
+            AllowTo::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_allowing_to() {
-        assert_lint_count("Allowing to have multiple views with different filtering # 952.", AllowTo::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Allowing to have multiple views with different filtering # 952.",
+            AllowTo::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_allows_to() {
-        assert_lint_count("It is easily doable for classic IHostBuilder, because its extension allows to pass configure action", AllowTo::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is easily doable for classic IHostBuilder, because its extension allows to pass configure action",
+            AllowTo::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_allowed_to() {
-        assert_no_lints("In C and C++ aliasing has to do with what expression types we are allowed to access stored values through.", AllowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "In C and C++ aliasing has to do with what expression types we are allowed to access stored values through.",
+            AllowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_allow_pronoun_to() {
-        assert_no_lints("It would be really great to allow me to enter body data using multipart form", AllowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "It would be really great to allow me to enter body data using multipart form",
+            AllowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_allow_noun_to() {
-        assert_no_lints("Allows users to export SMART statistics from any connected hard drive", AllowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Allows users to export SMART statistics from any connected hard drive",
+            AllowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_allow_np_to() {
-        assert_no_lints("This vulnerability allows an authenticated attacker to infer data from the database by measuring response times", AllowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "This vulnerability allows an authenticated attacker to infer data from the database by measuring response times",
+            AllowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

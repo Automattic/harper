@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
 use crate::{
+    OrthFlags, Token,
     expr::{Expr, SequenceExpr},
+    languages::LanguageFamily,
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     spell::{Dictionary, FstDictionary},
-    {OrthFlags, Token},
 };
 
 pub struct OrthographicConsistency {
@@ -15,7 +16,7 @@ pub struct OrthographicConsistency {
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(LanguageFamily::English),
             expr: SequenceExpr::any_word(),
         }
     }
@@ -406,17 +407,29 @@ mod tests {
         ];
 
         for sentence in sentences {
-            assert_no_lints(sentence, OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
+            assert_no_lints(
+                sentence,
+                OrthographicConsistency::default(),
+                crate::languages::LanguageFamily::English,
+            );
         }
     }
 
     #[test]
     fn allows_news() {
-        assert_no_lints("This is the best part of the news broadcast.", OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "This is the best part of the news broadcast.",
+            OrthographicConsistency::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_2465() {
-        assert_no_lints("The post’s problem was not in its complexity.", OrthographicConsistency::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The post’s problem was not in its complexity.",
+            OrthographicConsistency::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

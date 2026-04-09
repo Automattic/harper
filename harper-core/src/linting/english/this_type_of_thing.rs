@@ -151,60 +151,117 @@ impl ExprLinter for ThisTypeOfThing {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::{tests::assert_suggestion_result, this_type_of_thing::ThisTypeOfThing};
+    use crate::linting::{
+        english::this_type_of_thing::ThisTypeOfThing, tests::assert_suggestion_result,
+    };
 
     #[test]
     fn fix_that_kind_of_things() {
-        assert_suggestion_result("it's specific to TypeScript and not Go nor Python can do that kind of things", ThisTypeOfThing::default(), "it's specific to TypeScript and not Go nor Python can do that kind of thing", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "it's specific to TypeScript and not Go nor Python can do that kind of things",
+            ThisTypeOfThing::default(),
+            "it's specific to TypeScript and not Go nor Python can do that kind of thing",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_that_sort_of_things() {
-        assert_suggestion_result("there isn't a trivial stb-like ready-to-use C++ library to do that sort of things", ThisTypeOfThing::default(), "there isn't a trivial stb-like ready-to-use C++ library to do that sort of thing", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "there isn't a trivial stb-like ready-to-use C++ library to do that sort of things",
+            ThisTypeOfThing::default(),
+            "there isn't a trivial stb-like ready-to-use C++ library to do that sort of thing",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_these_kind_of_things() {
-        assert_suggestion_result("For these kind of things, I think it would be great to have a user-defined field which can be used to search for files.", ThisTypeOfThing::default(), "For these kinds of things, I think it would be great to have a user-defined field which can be used to search for files.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "For these kind of things, I think it would be great to have a user-defined field which can be used to search for files.",
+            ThisTypeOfThing::default(),
+            "For these kinds of things, I think it would be great to have a user-defined field which can be used to search for files.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_these_sort_of_thing() {
-        assert_suggestion_result("People from npm actually get death threats for these sort of thing", ThisTypeOfThing::default(), "People from npm actually get death threats for this sort of thing", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "People from npm actually get death threats for these sort of thing",
+            ThisTypeOfThing::default(),
+            "People from npm actually get death threats for this sort of thing",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_these_sort_of_things() {
-        assert_suggestion_result("I suppose doing these sort of things should be legal", ThisTypeOfThing::default(), "I suppose doing these sorts of things should be legal", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I suppose doing these sort of things should be legal",
+            ThisTypeOfThing::default(),
+            "I suppose doing these sorts of things should be legal",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_these_sorts_of_thing() {
-        assert_suggestion_result("What I would like to understand is what the syntactic structure is for these sorts of things.", ThisTypeOfThing::default(), "What I would like to understand is what the syntactic structure is for these sorts of things.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "What I would like to understand is what the syntactic structure is for these sorts of things.",
+            ThisTypeOfThing::default(),
+            "What I would like to understand is what the syntactic structure is for these sorts of things.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_these_type_of_things() {
-        assert_suggestion_result("You can use the Symfony validator to validate these type of things easily.", ThisTypeOfThing::default(), "You can use the Symfony validator to validate these types of things easily.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You can use the Symfony validator to validate these type of things easily.",
+            ThisTypeOfThing::default(),
+            "You can use the Symfony validator to validate these types of things easily.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_this_kind_of_things() {
-        assert_suggestion_result("this kind of things could exists in languages like Haskell which supports higher kinded types", ThisTypeOfThing::default(), "this kind of thing could exists in languages like Haskell which supports higher kinded types", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "this kind of things could exists in languages like Haskell which supports higher kinded types",
+            ThisTypeOfThing::default(),
+            "this kind of thing could exists in languages like Haskell which supports higher kinded types",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_this_sort_of_things() {
-        assert_suggestion_result("I have heard this sort of things happening in the movie industry but it's appalling that it happens in the business world too", ThisTypeOfThing::default(), "I have heard this sort of thing happening in the movie industry but it's appalling that it happens in the business world too", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I have heard this sort of things happening in the movie industry but it's appalling that it happens in the business world too",
+            ThisTypeOfThing::default(),
+            "I have heard this sort of thing happening in the movie industry but it's appalling that it happens in the business world too",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_this_type_of_things() {
-        assert_suggestion_result("how to handle this type of things", ThisTypeOfThing::default(), "how to handle this type of thing", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "how to handle this type of things",
+            ThisTypeOfThing::default(),
+            "how to handle this type of thing",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_those_kind_of_things() {
-        assert_suggestion_result("uh, so I was playing both of those kind of things", ThisTypeOfThing::default(), "uh, so I was playing both of those kinds of things", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "uh, so I was playing both of those kind of things",
+            ThisTypeOfThing::default(),
+            "uh, so I was playing both of those kinds of things",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

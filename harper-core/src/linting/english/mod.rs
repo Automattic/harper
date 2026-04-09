@@ -23,7 +23,6 @@ pub(super) mod ask_no_preposition;
 pub(super) mod aspire_to;
 pub(super) mod avoid_curses;
 pub(super) mod back_in_the_day;
-pub(super) mod be_adjective_confusions;
 pub(super) mod be_allowed;
 pub(super) mod be_worried;
 pub(super) mod behind_the_scenes;
@@ -201,7 +200,6 @@ pub(super) mod shoot_oneself_in_the_foot;
 pub(super) mod simple_past_to_past_participle;
 pub(super) mod since_duration;
 pub(super) mod single_be;
-pub(super) mod sneaked_snuck;
 pub(super) mod some_without_article;
 pub(super) mod something_is;
 pub(super) mod somewhat_something;
@@ -246,7 +244,6 @@ pub(super) mod vice_versa;
 pub(super) mod vicious_loop;
 pub(super) mod was_aloud;
 pub(super) mod way_too_adjective;
-pub(super) mod web_scraping;
 pub(super) mod weir_rules;
 pub(super) mod well_educated;
 pub(super) mod were_where;
@@ -278,8 +275,8 @@ pub mod tests {
 
     /// Extension trait for converting spans of tokens back to their original text
     use crate::linting::tests::{
-        DocumentType, SpanVecExt, assert_lint_count_plain_english as assert_lint_count,
-        assert_no_lints, assert_suggestion_result, search_for_suggestion,
+        DocumentType, assert_lint_count_plain_english as assert_lint_count, assert_no_lints,
+        assert_suggestion_result, search_for_suggestion,
     };
 
     // Special Linter just for testing
@@ -593,22 +590,5 @@ pub mod tests {
             "better",
             LanguageFamily::English,
         );
-    }
-
-    /// Asserts that the lint's message matches the expected message.
-    #[track_caller]
-    pub fn assert_lint_message(text: &str, mut linter: impl Linter, expected_message: &str) {
-        let test = Document::new_plain_english_curated(text);
-        let lints = linter.lint(&test);
-
-        // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
-        }
     }
 }

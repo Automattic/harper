@@ -17,6 +17,7 @@ use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
 
 use crate::expr::Expr;
+use crate::languages::LanguageFamily;
 use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
@@ -174,7 +175,7 @@ impl WeirLinter {
                 let doc = Document::new_from_vec(
                     current.chars().collect::<Vec<_>>().into(),
                     &Markdown::default(),
-                    &FstDictionary::curated(),
+                    &FstDictionary::curated(LanguageFamily::English),
                 );
                 let lints = linter.lint(&doc);
 
@@ -200,7 +201,7 @@ impl WeirLinter {
                 let test = Document::new_from_vec(
                     text_chars.clone().into(),
                     &Markdown::default(),
-                    &FstDictionary::curated(),
+                    &FstDictionary::curated(LanguageFamily::English),
                 );
                 let lints = linter.lint(&test);
 
@@ -227,7 +228,7 @@ impl WeirLinter {
             let document = Document::new_from_vec(
                 text.chars().collect::<Vec<_>>().into(),
                 &Markdown::default(),
-                &FstDictionary::curated(),
+                &FstDictionary::curated(LanguageFamily::English),
             );
 
             linter.lint(&document).len()

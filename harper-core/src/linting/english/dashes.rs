@@ -65,6 +65,7 @@ impl ExprLinter for Dashes {
 
 #[cfg(test)]
 mod tests {
+    use crate::languages::LanguageFamily;
     use crate::linting::tests::{assert_suggestion_count, assert_suggestion_result};
 
     use super::Dashes;
@@ -92,11 +93,21 @@ mod tests {
 
     #[test]
     fn no_overlaps() {
-        assert_suggestion_count("'There is no box' --- Scott", Dashes::default(), 1);
+        assert_suggestion_count(
+            "'There is no box' --- Scott",
+            Dashes::default(),
+            1,
+            LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_for_long_hyphen_sequences() {
-        assert_suggestion_count("'There is no box' ------ Scott", Dashes::default(), 0);
+        assert_suggestion_count(
+            "'There is no box' ------ Scott",
+            Dashes::default(),
+            0,
+            LanguageFamily::English,
+        );
     }
 }

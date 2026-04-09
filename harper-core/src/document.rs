@@ -95,7 +95,7 @@ impl Document {
         Self::new_from_vec(
             Lrc::new(source.to_vec()),
             &PlainEnglish,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
     }
 
@@ -144,7 +144,7 @@ impl Document {
         Self::new_from_vec(
             chars.to_vec().into(),
             &Markdown::default(),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
     }
 

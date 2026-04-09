@@ -1,7 +1,7 @@
 use crate::Token;
 use crate::expr::{DurationExpr, Expr, SequenceExpr};
-use crate::linting::english::expr_linter::Chunk;
-use crate::linting::english::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token_string_ext::TokenStringExt;
 
 pub struct AfterLater {
@@ -71,8 +71,8 @@ impl ExprLinter for AfterLater {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::english::AfterLater;
-    use crate::linting::tests::assert_top3_suggestion_result;
+    use super::AfterLater;
+    use crate::{languages::LanguageFamily, linting::tests::assert_suggestion_result};
 
     #[test]
     fn after_90_days_later() {
@@ -80,7 +80,7 @@ mod tests {
             "Try to rename your organization after 90 days later because of GitHub official documentation it said.",
             AfterLater::default(),
             "Try to rename your organization after 90 days because of GitHub official documentation it said.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -90,7 +90,7 @@ mod tests {
             "It plays like 1 minute of the song and then stops, and after about 30 minutes later, the bot disconnects an throws DisTubeError",
             AfterLater::default(),
             "It plays like 1 minute of the song and then stops, and about 30 minutes later, the bot disconnects an throws DisTubeError",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -100,7 +100,7 @@ mod tests {
             "After 14 days later, the cache expired.",
             AfterLater::default(),
             "After 14 days, the cache expired.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -110,7 +110,7 @@ mod tests {
             "After exactly 5 minutes later, they try again and the cluster is formed then.",
             AfterLater::default(),
             "Exactly 5 minutes later, they try again and the cluster is formed then.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -120,7 +120,7 @@ mod tests {
             "Completed YR campaign for 2nd time after 22 years later.",
             AfterLater::default(),
             "Completed YR campaign for 2nd time after 22 years.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -130,7 +130,7 @@ mod tests {
             "This buyer contacted me after almost 2 years later.",
             AfterLater::default(),
             "This buyer contacted me almost 2 years later.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -140,7 +140,7 @@ mod tests {
             "Is Jedi Survivor better now after 2 years later?",
             AfterLater::default(),
             "Is Jedi Survivor better now after 2 years?",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -150,7 +150,7 @@ mod tests {
             "Even after a year later, I don’t know how to get my self-love back.",
             AfterLater::default(),
             "Even a year later, I don’t know how to get my self-love back.",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 
@@ -160,7 +160,7 @@ mod tests {
             "After 22 years later, my top 1 game was Zeroed",
             AfterLater::default(),
             "After 22 years, my top 1 game was Zeroed",
-            crate::languages::LanguageFamily::English,
+            LanguageFamily::English,
         );
     }
 }

@@ -72,8 +72,9 @@ impl ExprLinter for ToAdverb {
 #[cfg(test)]
 mod tests {
     use super::ToAdverb;
-    use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_count, assert_suggestion_result,
+    use crate::{
+        languages::LanguageFamily,
+        linting::tests::{assert_lint_count, assert_suggestion_count, assert_suggestion_result},
     };
 
     #[test]
@@ -88,7 +89,12 @@ mod tests {
 
     #[test]
     fn alternative_moves_adverb() {
-        assert_suggestion_result("Tom has decided to never to do that again.", ToAdverb::default(), "Tom has decided never to do that again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Tom has decided to never to do that again.",
+            ToAdverb::default(),
+            "Tom has decided never to do that again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -137,12 +143,18 @@ mod tests {
             "He agreed to probably to lead the effort.",
             ToAdverb::default(),
             2,
+            LanguageFamily::English,
         );
     }
 
     #[test]
     fn allows_single_to_with_adverb() {
-        assert_lint_count("He wants to always win the match.", ToAdverb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He wants to always win the match.",
+            ToAdverb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -157,7 +169,12 @@ mod tests {
 
     #[test]
     fn ignores_missing_verb_after_second_to() {
-        assert_lint_count("We tried to eventually to.", ToAdverb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We tried to eventually to.",
+            ToAdverb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

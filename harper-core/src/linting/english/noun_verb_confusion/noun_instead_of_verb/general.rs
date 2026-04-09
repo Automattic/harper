@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lrc, Token,
     expr::{Expr, FirstMatchOf, LongestMatchOf, SequenceExpr},
-    linting::english::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{Chunk, ExprLinter, Lint, LintKind, Suggestion},
     patterns::{ModalVerb, Word, WordSet},
 };
 

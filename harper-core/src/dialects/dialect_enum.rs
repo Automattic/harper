@@ -1,4 +1,4 @@
-use std::ops::BitOr;
+use std::ops::{BitOr, BitOrAssign};
 
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, VariantArray};
@@ -68,6 +68,18 @@ pub enum DialectFlagsEnum {
     English(EnglishDialectFlags),
     Portuguese(PortugueseDialectFlags),
 }
+
+impl DialectFlagsEnum {
+    pub fn is_dialect_enabled_strict(&self, dialect: impl Dialect) {
+        match self {
+            DialectFlagsEnum::English(english_dialect_flags) => {
+                let english_dialect: EnglishDialect = dialect.try_into();
+            }
+            DialectFlagsEnum::Portuguese(portuguese_dialect_flags) => todo!(),
+        }
+    }
+}
+
 impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
     fn is_dialect_enabled(&self, dialect: DialectsEnum) -> bool {
         match (self, dialect) {
@@ -188,6 +200,20 @@ impl BitOr for DialectFlagsEnum {
                 DialectFlagsEnum::Portuguese(self_flags | rhs_flags)
             }
             _ => panic!("Trying to BitOr incompatible DialectFlagsEnums"),
+        }
+    }
+}
+
+impl BitOrAssign for DialectFlagsEnum {
+    fn bitor_assign(&mut self, rhs: Self) {
+        match (self, rhs) {
+            (DialectFlagsEnum::English(self_flags), DialectFlagsEnum::English(rhs_flags)) => {
+                *self_flags |= rhs_flags;
+            }
+            (DialectFlagsEnum::Portuguese(self_flags), DialectFlagsEnum::Portuguese(rhs_flags)) => {
+                *self_flags |= rhs_flags;
+            }
+            _ => panic!("Trying to BitOrAssign incompatible DialectFlagsEnums"),
         }
     }
 }

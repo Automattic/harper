@@ -2,10 +2,10 @@ use harper_brill::UPOS;
 
 use crate::char_string::char_string;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::UPOSSet;
 use crate::{CharString, Token, TokenStringExt};
 
-use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct AWhile {
@@ -81,32 +81,65 @@ mod tests {
 
     #[test]
     fn allow_issue_2144() {
-        assert_no_lints("After thinking awhile, I decided to foo a bar.", AWhile::default(), crate::languages::LanguageFamily::English);
-        assert_no_lints("After thinking for a while, I decided to foo a bar.", AWhile::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "After thinking awhile, I decided to foo a bar.",
+            AWhile::default(),
+            crate::languages::LanguageFamily::English,
+        );
+        assert_no_lints(
+            "After thinking for a while, I decided to foo a bar.",
+            AWhile::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_issue_2144() {
-        assert_suggestion_result("After thinking a while, I decided to foo a bar.", AWhile::default(), "After thinking awhile, I decided to foo a bar.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "After thinking a while, I decided to foo a bar.",
+            AWhile::default(),
+            "After thinking awhile, I decided to foo a bar.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_in_quite_a_while() {
-        assert_suggestion_result("I haven't seen him in quite awhile.", AWhile::default(), "I haven't seen him in quite a while.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I haven't seen him in quite awhile.",
+            AWhile::default(),
+            "I haven't seen him in quite a while.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_in_a_while() {
-        assert_suggestion_result("I haven't checked in awhile.", AWhile::default(), "I haven't checked in a while.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I haven't checked in awhile.",
+            AWhile::default(),
+            "I haven't checked in a while.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_for_awhile() {
-        assert_suggestion_result("Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile", AWhile::default(), "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for awhile",
+            AWhile::default(),
+            "Video Element Error: MEDA_ERR_DECODE when chrome is left open for a while",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_after_awhile() {
-        assert_suggestion_result("Links on portal stop working after awhile, requiring page refresh.", AWhile::default(), "Links on portal stop working after a while, requiring page refresh.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Links on portal stop working after awhile, requiring page refresh.",
+            AWhile::default(),
+            "Links on portal stop working after a while, requiring page refresh.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

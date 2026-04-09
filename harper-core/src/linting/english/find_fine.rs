@@ -3,8 +3,8 @@ use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::patterns::InflectionOfBe;
 
-use super::expr_linter::Chunk;
-use super::{ExprLinter, Lint, LintKind, Suggestion};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct FindFine {
     expr: SequenceExpr,
@@ -55,8 +55,23 @@ mod tests {
 
     #[test]
     fn issue_2115() {
-        assert_suggestion_result("I was using oil.nvim from an year and everything was find for me but I was missing a very key feature", FindFine::default(), "I was using oil.nvim from an year and everything was fine for me but I was missing a very key feature", crate::languages::LanguageFamily::English);
-        assert_suggestion_result("I made several observations throughout the evening and everything was find.", FindFine::default(), "I made several observations throughout the evening and everything was fine.", crate::languages::LanguageFamily::English);
-        assert_suggestion_result("I am find not using GPU at all for open3d.", FindFine::default(), "I am fine not using GPU at all for open3d.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I was using oil.nvim from an year and everything was find for me but I was missing a very key feature",
+            FindFine::default(),
+            "I was using oil.nvim from an year and everything was fine for me but I was missing a very key feature",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "I made several observations throughout the evening and everything was find.",
+            FindFine::default(),
+            "I made several observations throughout the evening and everything was fine.",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "I am find not using GPU at all for open3d.",
+            FindFine::default(),
+            "I am fine not using GPU at all for open3d.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -1,5 +1,6 @@
 macro_rules! merge_linters {
     ($name:ident => $($linter:ident),* => $desc:expr) => {
+        #[allow(unused)]
         pub use merge_rule_hidden::$name;
 
         mod merge_rule_hidden {

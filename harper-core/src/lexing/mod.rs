@@ -98,7 +98,6 @@ pub fn lex_portuguese_token(source: &[char]) -> FoundToken {
         lex_email_address,
         lex_hostname_token,
         lex_word,
-        lex_catch,
     ]
     .into_iter()
     .find_map(|lexer| lexer(source))
@@ -377,7 +376,6 @@ fn lex_catch() -> FoundToken {
 mod tests {
     use crate::Punctuation;
     use crate::char_string::char_string;
-    use crate::languages::LanguageFamily;
     use crate::lexing::lex_plural_digit;
 
     use super::lex_english_token;

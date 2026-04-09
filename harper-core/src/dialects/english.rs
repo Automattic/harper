@@ -43,7 +43,6 @@ impl Dialect for EnglishDialect {
 
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
     /// Returns `None` if it fails to find a single dialect that is used the most.
-    #[must_use]
     fn try_guess_from_document(document: &Document) -> Option<Self> {
         Self::try_from(EnglishDialectFlags::get_most_used_dialects_from_document(
             document,
@@ -134,7 +133,7 @@ bitflags::bitflags! {
         const CANADIAN = EnglishDialect::Canadian as DialectFlagsUnderlyingType;
         const AUSTRALIAN = EnglishDialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = EnglishDialect::British as DialectFlagsUnderlyingType;
-        const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+        const INDIAN = EnglishDialect::Indian as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
@@ -157,7 +156,6 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
     ///
     /// This will panic if `dialect` represents a dialect that is not defined in
     /// `DialectFlags`.
-    #[must_use]
     fn from_dialect(dialect: EnglishDialect) -> Self {
         let Some(out) = Self::from_bits(dialect as DialectFlagsUnderlyingType) else {
             panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
@@ -170,7 +168,6 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
     /// If multiple dialects are used equally often, they will all be enabled in the returned
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
-    #[must_use]
     fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
         let mut dialect_counters: [(EnglishDialect, usize); EnglishDialect::COUNT] =

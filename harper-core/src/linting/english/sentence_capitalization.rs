@@ -120,111 +120,182 @@ fn is_full_sentence(toks: &[Token]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::SentenceCapitalization;
+    use crate::languages::LanguageFamily;
     use crate::linting::tests::assert_lint_count;
     use crate::spell::FstDictionary;
 
     #[test]
     fn catches_basic() {
-        assert_lint_count("there is no way she is not guilty.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "there is no way she is not guilty.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn no_period() {
-        assert_lint_count("there is no way she is not guilty", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "there is no way she is not guilty",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn two_sentence() {
-        assert_lint_count("i have complete conviction in this. she is absolutely guilty", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "i have complete conviction in this. she is absolutely guilty",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 2, crate::languages::LanguageFamily::English)
+            )),
+            2,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn start_with_number() {
-        assert_lint_count("53 is the length of the longest word.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "53 is the length of the longest word.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_unlintable() {
-        assert_lint_count("[`misspelled_word`] is assumed to be quite small (n < 100). ", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "[`misspelled_word`] is assumed to be quite small (n < 100). ",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English)
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn unfazed_unlintable() {
-        assert_lint_count("the linter should not be affected by `this` unlintable.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "the linter should not be affected by `this` unlintable.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn unfazed_ellipsis() {
-        assert_lint_count("the linter should not be affected by... that ellipsis.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "the linter should not be affected by... that ellipsis.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn unfazed_comma() {
-        assert_lint_count("the linter should not be affected by, that comma.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "the linter should not be affected by, that comma.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn issue_228_allows_labels() {
-        assert_lint_count("python lsp (fork of pyright)", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "python lsp (fork of pyright)",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English)
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn allow_camel_case_trademarks() {
         // Some words are marked as proper nouns in `dictionary.dict` but are lower camel case.
-        assert_lint_count("macOS 16 could be called something like Redwood or Shasta", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "macOS 16 could be called something like Redwood or Shasta",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English)
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     #[ignore = "This can't work because currently hyphens are not included in tokenized words\nalthough they are now permitted in `dictionary.dict`"]
     fn uppercase_unamerican_at_start() {
-        assert_lint_count("un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "un-American starts with a lowercase letter and contains an uppercase letter, but is not a proper noun or trademark.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English)
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn allow_lowercase_proper_nouns() {
         // A very few words are marked as proper nouns even though they're all lowercase.
         // https://css-tricks.com/start-sentence-npm/
-        assert_lint_count(concat!(
+        assert_lint_count(
+            concat!(
                 "npm is the world's largest software registry. Open source developers from every ",
                 "continent use npm to share and borrow packages, and many organizations use npm to ",
                 "manage private development as well."
-            ), SentenceCapitalization::new(FstDictionary::curated(
+            ),
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English)
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn doesnt_flag_after_esp_issue_2753() {
-        assert_lint_count("I'll go, esp. if it's a free event.", SentenceCapitalization::new(FstDictionary::curated()), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I'll go, esp. if it's a free event.",
+            SentenceCapitalization::new(FstDictionary::curated(LanguageFamily::English)),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_lower_camel_case_non_proper_nouns() {
         // A very few words are not considered proper nouns but still start with a lowercase letter that shouldn't be uppercased at the start of a sentence.
-        assert_lint_count("mRNA is synthesized from the coding sequence of a gene during the transcriptional process.", SentenceCapitalization::new(FstDictionary::curated(
+        assert_lint_count(
+            "mRNA is synthesized from the coding sequence of a gene during the transcriptional process.",
+            SentenceCapitalization::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English)
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

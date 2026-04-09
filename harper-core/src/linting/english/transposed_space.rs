@@ -142,24 +142,46 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 #[cfg(test)]
 mod tests {
     use super::TransposedSpace;
-    use crate::{linting::tests::assert_suggestion_result, spell::FstDictionary};
+    use crate::{
+        languages::LanguageFamily, linting::tests::assert_suggestion_result, spell::FstDictionary,
+    };
 
     #[test]
     fn space_too_early() {
-        assert_suggestion_result("Th ecat sat on the mat.", TransposedSpace::sensitive(FstDictionary::curated()), "The cat sat on the mat.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Th ecat sat on the mat.",
+            TransposedSpace::sensitive(FstDictionary::curated(LanguageFamily::English)),
+            "The cat sat on the mat.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn space_too_late() {
-        assert_suggestion_result("Thec at sat on the mat.", TransposedSpace::sensitive(FstDictionary::curated()), "The cat sat on the mat.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Thec at sat on the mat.",
+            TransposedSpace::sensitive(FstDictionary::curated(LanguageFamily::English)),
+            "The cat sat on the mat.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_early() {
-        assert_suggestion_result("Sometimes the spac eis one character early.", TransposedSpace::new(FstDictionary::curated()), "Sometimes the space is one character early.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Sometimes the spac eis one character early.",
+            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
+            "Sometimes the space is one character early.",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn test_late() {
-        assert_suggestion_result("Ands ometimes the space is a character late.", TransposedSpace::new(FstDictionary::curated()), "And sometimes the space is a character late.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ands ometimes the space is a character late.",
+            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
+            "And sometimes the space is a character late.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

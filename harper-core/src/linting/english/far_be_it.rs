@@ -94,6 +94,7 @@ mod tests {
             "Far be it that I get in the middle of this thread (and the complexity WebAuthn has spawned)",
             FarBeIt::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -110,7 +111,11 @@ mod tests {
     #[test]
     #[ignore = "No punctuation between '... so far' and 'be it ...'"]
     fn missing_punctuation_false_positive() {
-        assert_no_lints("but it is failing for master and all the 11.x branches i have tried so far be it 11.0.0, 11.0.1 ...", FarBeIt::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "but it is failing for master and all the 11.x branches i have tried so far be it 11.0.0, 11.0.1 ...",
+            FarBeIt::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -119,6 +124,7 @@ mod tests {
             "I'm not a marketing guy, so far be it to second guess that.",
             FarBeIt::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

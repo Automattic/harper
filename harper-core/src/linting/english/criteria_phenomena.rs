@@ -1,9 +1,9 @@
 use super::Suggestion;
-use super::expr_linter::ExprLinter;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
 use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::ExprLinter;
 use crate::patterns::WordSet;
 use crate::{Lint, Lrc, Token, TokenStringExt};
 
@@ -79,21 +79,41 @@ mod tests {
 
     #[test]
     fn can_detect_incorrect_criteria() {
-        assert_lint_count("...One criteria is essential...", CriteriaPhenomena::new(), 1, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...One criteria is essential...",
+            CriteriaPhenomena::new(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn can_detect_incorrect_phenomena() {
-        assert_lint_count("...I would like to see that phenomena.", CriteriaPhenomena::new(), 1, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...I would like to see that phenomena.",
+            CriteriaPhenomena::new(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn allows_correct_criteria() {
-        assert_lint_count("...She disagrees with those criteria.", CriteriaPhenomena::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...She disagrees with those criteria.",
+            CriteriaPhenomena::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn allows_correct_phenomena() {
-        assert_lint_count("...Many phenomena were on display.", CriteriaPhenomena::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...Many phenomena were on display.",
+            CriteriaPhenomena::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 use crate::case::Case::Upper;
 use crate::char_ext::CharExt;
-use crate::{CaseIterExt, Dialect};
+use crate::{CaseIterExt, EnglishDialect};
 
 #[derive(PartialEq)]
 pub enum InitialSound {
@@ -18,7 +18,7 @@ pub enum InitialSound {
 /// It was produced through trial and error.
 /// Matches with 99.71% and 99.77% of vowels and non-vowels in the
 /// Carnegie-Mellon University word -> pronunciation dataset.
-pub fn starts_with_vowel(word: &[char], dialect: impl Dialect) -> Option<InitialSound> {
+pub fn starts_with_vowel(word: &[char], dialect: EnglishDialect) -> Option<InitialSound> {
     if word.is_empty() {
         return None;
     }
@@ -95,7 +95,7 @@ pub fn starts_with_vowel(word: &[char], dialect: impl Dialect) -> Option<Initial
         return Some(InitialSound::Vowel);
     }
 
-    if matches!(word, ['h', 'e', 'r', 'b', ..] if dialect == Dialect::American || dialect == Dialect::Canadian)
+    if matches!(word, ['h', 'e', 'r', 'b', ..] if dialect == EnglishDialect::American || dialect == EnglishDialect::Canadian)
     {
         return Some(InitialSound::Vowel);
     }

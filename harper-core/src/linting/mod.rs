@@ -6,11 +6,12 @@ pub mod lint_kind;
 pub mod portuguese;
 pub mod suggestion;
 
+pub use expr_linter::Chunk;
 pub use expr_linter::ExprLinter;
 pub use lint::Lint;
 pub use lint_group::LintGroup;
 pub use lint_kind::LintKind;
-pub use suggestion::Suggestion;
+pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown::render_markdown};
 
@@ -238,6 +239,23 @@ pub mod tests {
         }
     }
 
+    /// Asserts that the lint's message matches the expected message.
+    #[track_caller]
+    pub fn assert_lint_message(text: &str, mut linter: impl Linter, expected_message: &str) {
+        let test = Document::new_plain_english_curated(text);
+        let lints = linter.lint(&test);
+
+        // Just check the first lint for now - TODO
+        if let Some(lint) = lints.first()
+            && lint.message != expected_message
+        {
+            panic!(
+                "Expected lint message \"{expected_message}\", but got \"{}\"",
+                lint.message
+            );
+        }
+    }
+
     /// Document types for suggestion search testing
     #[derive(Debug, Clone, Copy)]
     pub enum DocumentType {
@@ -304,7 +322,11 @@ pub mod tests {
         needle: &str,
         language: LanguageFamily,
     ) {
-        if search_for_suggestion(DocumentType::PlainEnglish, text, &mut linter, needle, 0) {
+        let doctype = match language {
+            LanguageFamily::English => DocumentType::PlainEnglish,
+            LanguageFamily::Portuguese => unimplemented!(),
+        };
+        if search_for_suggestion(doctype, text, &mut linter, needle, 0) {
             return;
         }
 

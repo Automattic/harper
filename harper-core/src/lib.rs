@@ -19,7 +19,7 @@ mod irregular_verbs;
 pub mod language_detection;
 pub mod languages;
 mod lexing;
-mod linting;
+pub mod linting;
 mod mask;
 mod number;
 mod offsets;

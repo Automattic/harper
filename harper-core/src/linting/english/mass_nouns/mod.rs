@@ -51,6 +51,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
+        languages::LanguageFamily,
         linting::tests::{assert_lint_count, assert_suggestion_result},
         spell::FstDictionary,
     };
@@ -59,16 +60,31 @@ mod tests {
 
     #[test]
     fn flag_advices_and_an_advice() {
-        assert_lint_count("I asked for an advice and he gave me two advices!", MassNouns::new(FstDictionary::curated()), 2, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I asked for an advice and he gave me two advices!",
+            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            2,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_a_luggage() {
-        assert_suggestion_result("I managed to pack all my clothing into one luggage.", MassNouns::new(FstDictionary::curated()), "I managed to pack all my clothing into one suitcase.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I managed to pack all my clothing into one luggage.",
+            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            "I managed to pack all my clothing into one suitcase.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_clothings() {
-        assert_suggestion_result("I managed to pack all my clothings into one suitcase.", MassNouns::new(FstDictionary::curated()), "I managed to pack all my clothing into one suitcase.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I managed to pack all my clothings into one suitcase.",
+            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            "I managed to pack all my clothing into one suitcase.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

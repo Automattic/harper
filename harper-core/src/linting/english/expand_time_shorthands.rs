@@ -4,8 +4,8 @@ use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::Token;
-use crate::linting::english::Suggestion;
-use crate::linting::english::expr_linter::Chunk;
+use crate::linting::Suggestion;
+use crate::linting::expr_linter::Chunk;
 use crate::patterns::{ImpliesQuantity, WordSet};
 
 pub struct ExpandTimeShorthands {

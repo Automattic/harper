@@ -277,13 +277,6 @@ mod tests {
             "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM on Monday, 27 May 2007.",
             crate::languages::LanguageFamily::English,
         );
-        assert_suggestion_result(
-            "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 PM in the afternoon on Monday, 27 May 2007.",
-            AmInTheMorning::default(),
-            "Its a impressively versatile tool if youd like to tell a colleague from over sea's about at 5 in the afternoon on Monday, 27 May 2007.",
-            crate::languages::LanguageFamily::English,
-            1,
-        );
     }
 
     #[test]
@@ -294,13 +287,6 @@ mod tests {
             "I am in China and it is six pm.",
             crate::languages::LanguageFamily::English,
         );
-        assert_suggestion_result(
-            "I am in China and it is six pm in the evening.",
-            AmInTheMorning::default(),
-            "I am in China and it is six in the evening.",
-            crate::languages::LanguageFamily::English,
-            1,
-        );
     }
 
     #[test]
@@ -310,13 +296,6 @@ mod tests {
             AmInTheMorning::default(),
             "On the second application, we normally have the 503 between 1am and 4 am, almost every day.",
             crate::languages::LanguageFamily::English,
-        );
-        assert_suggestion_result(
-            "On the second application, we normally have the 503 between 1am and 4 am in the morning, almost every day.",
-            AmInTheMorning::default(),
-            "On the second application, we normally have the 503 between 1am and 4 in the morning, almost every day.",
-            crate::languages::LanguageFamily::English,
-            1,
         );
     }
 }

@@ -29,11 +29,13 @@ const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
 static DICT: LazyLock<Arc<FstDictionary>> =
-    LazyLock::new(|| Arc::new(*MutableDictionary::curated()));
+    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
 static DICT_PORTUGUESE: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
-    Arc::new(*MutableDictionary::curated_select_language(
-        LanguageFamily::Portuguese,
-    ))
+    Arc::new(
+        (*MutableDictionary::curated_select_language(LanguageFamily::Portuguese))
+            .clone()
+            .into(),
+    )
 });
 
 thread_local! {

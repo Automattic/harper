@@ -1,13 +1,14 @@
+use crate::EnglishDialect;
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Dialect, Token,
+    Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct HaveTakeALook {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl HaveTakeALook {
@@ -91,7 +92,7 @@ impl ExprLinter for HaveTakeALook {
 #[cfg(test)]
 mod tests {
     use super::HaveTakeALook;
-    use crate::{Dialect, linting::tests::assert_suggestion_result};
+    use crate::{EnglishDialect, linting::tests::assert_suggestion_result};
 
     #[test]
     fn correct_taking_a_look() {

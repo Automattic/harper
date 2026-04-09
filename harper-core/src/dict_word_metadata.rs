@@ -2,6 +2,7 @@
 pub use super::dialects::english::{EnglishDialect, EnglishDialectFlags};
 use harper_brill::UPOS;
 use is_macro::Is;
+use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;

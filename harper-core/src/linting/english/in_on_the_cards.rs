@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Dialect, Token,
+    CharStringExt, EnglishDialect, Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{LintKind, Suggestion},
     patterns::{InflectionOfBe, WordSet},
@@ -10,7 +10,7 @@ use crate::linting::expr_linter::Chunk;
 
 pub struct InOnTheCards {
     expr: SequenceExpr,
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl InOnTheCards {
@@ -86,7 +86,7 @@ impl ExprLinter for InOnTheCards {
 mod tests {
     use super::InOnTheCards;
     use crate::{
-        Dialect,
+        EnglishDialect,
         linting::tests::{assert_lint_count, assert_suggestion_result},
     };
 
@@ -104,7 +104,12 @@ mod tests {
 
     #[test]
     fn dont_correct_is_on_for_british() {
-        assert_lint_count("Yes, I think this is on the cards.", InOnTheCards::new(EnglishDialect::British), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Yes, I think this is on the cards.",
+            InOnTheCards::new(EnglishDialect::British),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -201,7 +206,12 @@ mod tests {
 
     #[test]
     fn dont_correct_is_in_for_american() {
-        assert_lint_count("Not sure if such a project is in the cards", InOnTheCards::new(EnglishDialect::American), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Not sure if such a project is in the cards",
+            InOnTheCards::new(EnglishDialect::American),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
