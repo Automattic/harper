@@ -161,10 +161,13 @@ function scan() {
 			return;
 		}
 
+		const isLexicalEditor = element.getAttribute('data-lexical-editor') === 'true';
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
 			(element.getAttribute('spellcheck') === 'false' &&
+				!isLexicalEditor &&
 				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;
