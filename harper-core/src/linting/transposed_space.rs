@@ -6,27 +6,27 @@ use crate::{
 };
 
 pub struct TransposedSpace<D: Dictionary + 'static> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
 impl<D: Dictionary + 'static> TransposedSpace<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![Box::new(
+            expr: FirstMatchOf::new(vec![Box::new(
                 SequenceExpr::default().then_oov().t_ws().then_oov(),
-            )])),
+            )]),
             dict,
         }
     }
 
     pub fn sensitive(dict: D) -> Self {
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(SequenceExpr::default().then_oov().t_ws().then_any_word()),
                 Box::new(SequenceExpr::any_word().t_ws().then_oov()),
                 Box::new(SequenceExpr::default().then_oov().t_ws().then_oov()),
-            ])),
+            ]),
             dict,
         }
     }
@@ -47,15 +47,15 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let toks_span = toks.span()?;
 
         // "thec" "at" / "th ecat"
-        let word1 = toks.first()?.span.get_content(src);
-        let word2 = toks.last()?.span.get_content(src);
+        let word1 = toks.first()?.get_ch(src);
+        let word2 = toks.last()?.get_ch(src);
 
         // "thec" -> "the c"
         let w1_start = &word1[..word1.len() - 1];

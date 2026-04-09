@@ -1,10 +1,6 @@
 use crate::Token;
 use crate::char_string::char_string;
-use crate::expr::Expr;
-use crate::expr::LongestMatchOf;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::expr::UnlessStep;
+use crate::expr::{All, Expr, LongestMatchOf, OwnedExprExt, SequenceExpr, UnlessStep};
 use crate::patterns::DerivedFrom;
 use crate::patterns::WordSet;
 
@@ -12,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct NeedToNoun {
-    expr: Box<dyn Expr>,
+    expr: All,
 }
 
 impl Default for NeedToNoun {
@@ -52,7 +48,7 @@ impl Default for NeedToNoun {
             .then(a.or(b));
 
         Self {
-            expr: Box::new(expr.and(UnlessStep::new(exceptions, |_: &Token, _: &[char]| true))),
+            expr: expr.and(UnlessStep::new(exceptions, |_: &Token, _: &[char]| true)),
         }
     }
 }
@@ -61,7 +57,7 @@ impl ExprLinter for NeedToNoun {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -71,7 +67,7 @@ impl ExprLinter for NeedToNoun {
         let noun_idx = 4;
         let noun_token = &matched_tokens[noun_idx];
 
-        let noun_text = noun_token.span.get_content_string(source);
+        let noun_text = noun_token.get_str(source);
         let span = to_token.span;
 
         Some(Lint {
@@ -514,6 +510,54 @@ mod tests {
     fn allows_need_to_model_healthy_habits_fuzz() {
         assert_no_lints(
             "Leaders need to model healthy work habits and create a safe space for employees.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_start_2320() {
+        assert_no_lints(
+            "You need to start the server before running tests.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_have_2320() {
+        assert_no_lints(
+            "You need to have a valid license to use this software.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_configure_2320() {
+        assert_no_lints(
+            "You need to configure the database connection first.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_set_2320() {
+        assert_no_lints(
+            "You need to set the environment variable before deploying.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_send_2320() {
+        assert_no_lints(
+            "You need to send the request with the correct headers.",
+            NeedToNoun::default(),
+        );
+    }
+
+    #[test]
+    fn allows_need_to_receive_2320() {
+        assert_no_lints(
+            "You need to receive confirmation before proceeding.",
             NeedToNoun::default(),
         );
     }

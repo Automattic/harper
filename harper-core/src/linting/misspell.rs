@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct Misspell {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Misspell {
@@ -19,9 +19,7 @@ impl Default for Misspell {
             "spellings",
         ]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -29,14 +27,14 @@ impl ExprLinter for Misspell {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;
         let misspell_variant = matched_tokens.last()?;
 
-        let variant_chars = misspell_variant.span.get_content(source);
+        let variant_chars = misspell_variant.get_ch(source);
         let variant_lower = variant_chars
             .iter()
             .map(|c| c.to_ascii_lowercase())

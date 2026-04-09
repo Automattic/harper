@@ -8,7 +8,7 @@ use crate::{
 const POSSESSIVE_DETERMINERS: &[&str] = &["my", "your", "her", "his", "their", "our"];
 
 pub struct CompoundSubjectI {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for CompoundSubjectI {
@@ -34,9 +34,7 @@ impl Default for CompoundSubjectI {
             .t_ws()
             .then_kind_either(TokenKind::is_verb, TokenKind::is_auxiliary_verb);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -44,17 +42,13 @@ impl ExprLinter for CompoundSubjectI {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let pronoun = matched_tokens.iter().find(|tok| {
-            tok.kind.is_word()
-                && tok
-                    .span
-                    .get_content_string(source)
-                    .eq_ignore_ascii_case("me")
-        })?;
+        let pronoun = matched_tokens
+            .iter()
+            .find(|tok| tok.kind.is_word() && tok.get_str(source).eq_ignore_ascii_case("me"))?;
         Some(Lint {
             span: pronoun.span,
             lint_kind: LintKind::Grammar,

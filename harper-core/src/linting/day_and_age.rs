@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct DayAndAge {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DayAndAge {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["this", "these"])
-                    .t_ws()
-                    .then_word_set(&["day", "days"])
-                    .t_ws()
-                    .then_word_set(&["and", "in", "an", "on"])
-                    .t_ws()
-                    .then_word_set(&["age", "ages"]),
-            ),
+            expr: SequenceExpr::word_set(&["this", "these"])
+                .t_ws()
+                .then_word_set(&["day", "days"])
+                .t_ws()
+                .then_word_set(&["and", "in", "an", "on"])
+                .t_ws()
+                .then_word_set(&["age", "ages"]),
         }
     }
 }
@@ -32,7 +30,7 @@ impl ExprLinter for DayAndAge {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -46,8 +44,7 @@ impl ExprLinter for DayAndAge {
             && last.kind.is_whitespace()
             && (penult.kind.is_preposition()
                 || penult
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['i', 't']]))
         {
             Some(penult.span)
@@ -70,13 +67,13 @@ impl ExprLinter for DayAndAge {
         let bads: Vec<bool> = chars
             .iter()
             .zip(good.iter())
-            .map(|(actual, &good)| !actual.eq_ignore_ascii_case_chars(good))
+            .map(|(actual, &good)| !actual.eq_ch(good))
             .collect();
 
         let good_main = !bads.iter().any(|&b| b);
 
         let (span, replacement): (Span<char>, &str) = if prep_chars
-            .is_some_and(|p| p.eq_ignore_ascii_case_chars(&['s', 'i', 'n', 'c', 'e']))
+            .is_some_and(|p| p.eq_ch(&['s', 'i', 'n', 'c', 'e']))
         {
             // "since" is a preposition but it's also a conjunction, so keep it but add "in" after it
             (main_span, "in this day and age")

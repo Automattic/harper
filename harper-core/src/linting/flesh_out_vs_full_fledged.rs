@@ -5,21 +5,19 @@ use crate::{
 };
 
 pub struct FleshOutVsFullFledged {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FleshOutVsFullFledged {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
-                    .then_word_set(&[
-                        "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
-                        "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged",
-                        "pledges", "pledging",
-                    ])
-                    .then_optional(SequenceExpr::default().t_ws_h().t_aco("out")),
-            ),
+            expr: SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
+                .then_word_set(&[
+                    "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
+                    "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged", "pledges",
+                    "pledging",
+                ])
+                .then_optional(SequenceExpr::default().t_ws_h().t_aco("out")),
         }
     }
 }
@@ -28,7 +26,7 @@ impl ExprLinter for FleshOutVsFullFledged {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -41,8 +39,7 @@ impl ExprLinter for FleshOutVsFullFledged {
         let has_full_y = toks
             .first()
             .map(|t| {
-                t.span
-                    .get_content(src)
+                t.get_ch(src)
                     .eq_any_ignore_ascii_case_str(&["full", "fully"])
             })
             .unwrap_or(false);
@@ -50,7 +47,7 @@ impl ExprLinter for FleshOutVsFullFledged {
         // Is the last word is "out"?
         let mut has_out = toks
             .last()
-            .map(|t| t.span.get_content(src).eq_ignore_ascii_case_str("out"))
+            .map(|t| t.get_ch(src).eq_str("out"))
             .unwrap_or(false);
 
         // Adjust tokens to exclude "out" when it's part of a hyphenated compound
@@ -75,7 +72,7 @@ impl ExprLinter for FleshOutVsFullFledged {
 
         let vtok_idx = if has_full_y { 2 } else { 0 };
         let vtok = &toks[vtok_idx];
-        let vtok_chars = vtok.span.get_content(src);
+        let vtok_chars = vtok.get_ch(src);
 
         let form = match vtok_chars.last() {
             Some('d') => Form::Past,

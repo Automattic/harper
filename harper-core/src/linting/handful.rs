@@ -5,7 +5,7 @@ use crate::{Token, TokenStringExt};
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Handful {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Handful {
@@ -16,9 +16,7 @@ impl Default for Handful {
             .then_one_or_more(SpaceOrHyphen)
             .then_any_capitalization_of("of");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for Handful {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -50,7 +48,7 @@ impl ExprLinter for Handful {
 
         let replacement = &matched_tokens[..highlight_end];
         let span = replacement.span()?;
-        let template = matched_tokens.first()?.span.get_content(source);
+        let template = matched_tokens.first()?.get_ch(source);
 
         Some(Lint {
             span,

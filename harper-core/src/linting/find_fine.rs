@@ -7,7 +7,7 @@ use super::expr_linter::Chunk;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct FindFine {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FindFine {
@@ -16,9 +16,7 @@ impl Default for FindFine {
             .t_ws()
             .t_aco("find");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -26,7 +24,7 @@ impl ExprLinter for FindFine {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -37,7 +35,7 @@ impl ExprLinter for FindFine {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "fine",
-                offending_word.span.get_content(source),
+                offending_word.get_ch(source),
             )],
             message: "Did you mean `fine`?".to_owned(),
             priority: 63,

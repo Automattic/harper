@@ -1,5 +1,5 @@
-use crate::expr::SequenceExpr;
 use crate::expr::{Expr, OwnedExprExt};
+use crate::expr::{LongestMatchOf, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token,
@@ -8,7 +8,7 @@ use crate::{
 };
 
 pub struct WinPrize {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for WinPrize {
@@ -23,9 +23,7 @@ impl Default for WinPrize {
             .then(miss.clone())
             .or_longest(SequenceExpr::with(verbs).then_whitespace().then(miss));
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -33,12 +31,12 @@ impl ExprLinter for WinPrize {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let candidate = toks.last()?;
-        let raw = candidate.span.get_content_string(src).to_lowercase();
+        let raw = candidate.get_str(src).to_lowercase();
         let repl = match raw.as_str() {
             "price" | "prise" => "prize",
             "prices" | "prises" => "prizes",
@@ -62,9 +60,7 @@ impl ExprLinter for WinPrize {
 #[cfg(test)]
 mod tests {
     use super::WinPrize;
-    use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn fix_price_singular() {
@@ -77,7 +73,7 @@ mod tests {
 
     #[test]
     fn fix_price_plural() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Our team won the prices announced yesterday.",
             WinPrize::default(),
             "Our team won the prizes announced yesterday.",

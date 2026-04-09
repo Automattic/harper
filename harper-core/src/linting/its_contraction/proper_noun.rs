@@ -1,18 +1,16 @@
 use std::ops::Range;
-use std::sync::Arc;
 
 use harper_brill::UPOS;
 
 use crate::{
     Document, Token, TokenStringExt,
-    expr::{Expr, ExprExt, ExprMap, OwnedExprExt, SequenceExpr},
+    expr::{ExprExt, ExprMap, OwnedExprExt, SequenceExpr},
     linting::{Lint, LintKind, Linter, Suggestion},
     patterns::{DerivedFrom, UPOSSet},
 };
 
 pub struct ProperNoun {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<Range<usize>>>,
+    expr: ExprMap<Range<usize>>,
 }
 
 impl Default for ProperNoun {
@@ -28,8 +26,7 @@ impl Default for ProperNoun {
         let capitalized_word = |tok: &Token, src: &[char]| {
             tok.kind.is_word()
                 && tok
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .first()
                     .map(|c| c.is_uppercase())
                     .unwrap_or(false)
@@ -49,12 +46,7 @@ impl Default for ProperNoun {
             2..3,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -88,8 +80,7 @@ impl ProperNoun {
             && let Some(next_word) = matched_tokens.get(6)
         {
             let is_lowercase = next_word
-                .span
-                .get_content(source)
+                .get_ch(source)
                 .first()
                 .map(|c| c.is_lowercase())
                 .unwrap_or(false);
@@ -101,9 +92,9 @@ impl ProperNoun {
             }
         }
 
-        let range = self.map.lookup(0, matched_tokens, source)?.clone();
+        let range = self.expr.lookup(0, matched_tokens, source)?.clone();
         let offending = matched_tokens.get(range.start)?;
-        let offender_text = offending.span.get_content(source);
+        let offender_text = offending.get_ch(source);
 
         Some(Lint {
             span: offending.span,

@@ -1,6 +1,6 @@
 {
 	"name": "harper.js",
-	"version": "1.10.0",
+	"version": "2.0.0",
 	"license": "Apache-2.0",
 	"author": "Elijah Potter",
 	"description": "The grammar checker that respects your privacy.",
@@ -40,6 +40,28 @@
 		"vite-plugin-dts": "^4.5.0",
 		"vite-plugin-virtual": "^0.3.0",
 		"vitest": "^4.0.16"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./binary": {
+			"types": "./dist/binary.d.ts",
+			"import": "./dist/binary.js"
+		},
+		"./slimBinary": {
+			"types": "./dist/slimBinary.d.ts",
+			"import": "./dist/slimBinary.js"
+		},
+		"./binaryInlined": {
+			"types": "./dist/binaryInlined.d.ts",
+			"import": "./dist/binaryInlined.js"
+		},
+		"./slimBinaryInlined": {
+			"types": "./dist/slimBinaryInlined.d.ts",
+			"import": "./dist/slimBinaryInlined.js"
+		}
 	},
 	"main": "dist/harper.js",
 	"types": "dist/harper.d.ts",

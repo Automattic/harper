@@ -8,7 +8,7 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
-Importantly, all of the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
 
 ## Read First
 
@@ -89,7 +89,7 @@ Importantly, all of the tools available in this repository are available via `ju
 - `harper-core`: The core grammar checking engine. This is a dependency to pretty much everything related to Harper.
 - `harper-ls`: A Language Server compatible with a number of text editors, including Neovim, Zed, and Helix. See above linked documentation for more details.
 - `harper-cli`: A command-line binary for debugging Harper's core engine and markup language support.
-- `harper-comments`: Provides parsers for a number of programming langauges to support linting their comments.
+- `harper-comments`: Provides parsers for a number of programming languages to support linting their comments.
 - `harper-wasm`: The WebAssembly build target that powers browser and JavaScript integrations such as `harper.js`.
 - `packages/lint-framework`: A package containing the tooling necessary to read/write/highlight text on the web for the purpose of linting.
 - `packages/components`: Shared Svelte component package used by web-facing packages.
@@ -141,3 +141,7 @@ ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- 
 ### Output Format
 
 Write a Weir rule to a new file with a name of your choosing, including `expr main`, `let` fields, and tests. Make sure it has the extension `.weir`.
+
+## Tips
+
+Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.

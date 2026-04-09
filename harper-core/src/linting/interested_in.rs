@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct InterestedIn {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for InterestedIn {
@@ -19,9 +19,7 @@ impl Default for InterestedIn {
                 &["around", "for", "through", "to", "within"],
             );
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -29,14 +27,14 @@ impl ExprLinter for InterestedIn {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
         let prep_span = tokens.last().unwrap().span;
         let prep_chars = prep_span.get_content(source);
 
-        if prep_chars.eq_ignore_ascii_case_chars(&['i', 'n']) {
+        if prep_chars.eq_ch(&['i', 'n']) {
             return None;
         }
 

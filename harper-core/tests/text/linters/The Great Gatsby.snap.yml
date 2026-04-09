@@ -173,8 +173,8 @@ Message: |
       52 | founder of my line was my grandfather’s brother, who came here in fifty-one,
 Suggest:
   - Replace with: “Buckley's”
-  - Replace with: “Bleach”
-  - Replace with: “Buckle”
+  - Replace with: “Buckle's”
+  - Replace with: “Buckler's”
 
 
 
@@ -185,8 +185,8 @@ Message: |
       62 | seemed like the ragged edge of the universe—so I decided to go East and learn
 Suggest:
   - Replace with: “center”
+  - Replace with: “cent's”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -447,8 +447,8 @@ Message: |
          |                 ^~~~~~~ Did you mean to spell `Demaine` this way?
 Suggest:
   - Replace with: “Decline”
-  - Replace with: “Define”
   - Replace with: “Demand”
+  - Replace with: “Demise”
 
 
 
@@ -709,6 +709,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+     628 | Already it was deep summer on roadhouse roofs and in front of wayside garages,
+     629 | where new red gaspumps sat out in pools of light, and when I reached my estate
+         |               ^~~~~~~~ `gaspumps` should probably be written as `gas pumps`.
+Suggest:
+  - Replace with: “gas pumps”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      633 | of the earth blew the frogs full of life. The silhouette of a moving cat wavered
@@ -803,8 +813,8 @@ Message: |
          |                                                            ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
-  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
+  - Replace with: “Heckler”
 
 
 
@@ -837,8 +847,8 @@ Message: |
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
-  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
+  - Replace with: “Heckler”
 
 
 
@@ -862,6 +872,16 @@ Suggest:
   - Replace with: “asthma's”
   - Replace with: “airheads”
   - Replace with: “ashcans”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+     683 | up to New York with Tom on the train one afternoon, and when we stopped by the
+     684 | ashheaps he jumped to his feet and, taking hold of my elbow, literally forced me
+         | ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
+Suggest:
+  - Replace with: “ash heaps”
 
 
 
@@ -945,8 +965,8 @@ Message: |
          |                                                                      ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
-  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
+  - Replace with: “Heckler”
 
 
 
@@ -1349,8 +1369,8 @@ Message: |
     1180 | spiced baked hams crowded against salads of harlequin designs and pastry pigs
 Suggest:
   - Replace with: “hours”
-  - Replace with: “hers”
   - Replace with: “ho's”
+  - Replace with: “hers”
 
 
 
@@ -1472,8 +1492,8 @@ Message: |
     1204 | triumph, glide on through the sea-change of faces and voices and color under the
 Suggest:
   - Replace with: “center”
+  - Replace with: “cent's”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -1700,6 +1720,15 @@ Suggest:
   - Replace with: “banjo's”
   - Replace with: “banjos”
   - Replace with: “bandies”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
+         |                                                    ^~~~~~~ `banjoes` should probably be written as `banjo es`.
+Suggest:
+  - Replace with: “banjo es”
 
 
 
@@ -1951,7 +1980,7 @@ Message: |
 Suggest:
   - Replace with: “out”
   - Replace with: “outta”
-  - Replace with: “oath”
+  - Replace with: “outs”
 
 
 
@@ -2038,8 +2067,8 @@ Message: |
     1766 | heart. Forms leaned together in the taxis as they waited, and voices sang, and
 Suggest:
   - Replace with: “theater”
-  - Replace with: “there”
   - Replace with: “they're”
+  - Replace with: “there”
 
 
 
@@ -2248,8 +2277,8 @@ Message: |
     1857 | knickerbockers, and had a fight with a bum named Etty in the garden. From
          |                                                  ^~~~ Did you mean to spell `Etty` this way?
 Suggest:
-  - Replace with: “Ethyl”
   - Replace with: “Etta”
+  - Replace with: “Ethyl”
   - Replace with: “Jetty”
 
 
@@ -2486,7 +2515,7 @@ Message: |
 Suggest:
   - Replace with: “Cali's”
   - Replace with: “Catnip's”
-  - Replace with: “Caliph”
+  - Replace with: “Caliphs”
 
 
 
@@ -3016,7 +3045,7 @@ Message: |
 Suggest:
   - Replace with: “Order”
   - Replace with: “Orders”
-  - Replace with: “Ordeal”
+  - Replace with: “Order's”
 
 
 
@@ -3095,7 +3124,7 @@ Message: |
 Suggest:
   - Replace with: “undeserved”
   - Replace with: “undefeated”
-  - Replace with: “undesired”
+  - Replace with: “underserved”
 
 
 
@@ -3513,8 +3542,8 @@ Message: |
          |  ^~~~~~ Did you mean to spell `How’ve` this way?
 Suggest:
   - Replace with: “How're”
-  - Replace with: “Hove”
   - Replace with: “How'd”
+  - Replace with: “How's”
 
 
 
@@ -3561,8 +3590,8 @@ Message: |
     2330 | armistice, and in February she was presumably engaged to a man from New Orleans.
 Suggest:
   - Replace with: “debut”
-  - Replace with: “debit”
   - Replace with: “debt”
+  - Replace with: “doubt”
 
 
 
@@ -3621,7 +3650,16 @@ Message: |
 Suggest:
   - Replace with: “dear's”
   - Replace with: “dares”
-  - Replace with: “dearest”
+  - Replace with: “dearies”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
+         |        ^~~~~~ `deares` should probably be written as `dear es`.
+Suggest:
+  - Replace with: “dear es”
 
 
 
@@ -3692,8 +3730,8 @@ Message: |
          |                               ^~~~~~~~ Did you mean to spell `victoria` this way?
 Suggest:
   - Replace with: “Victoria”
-  - Replace with: “victor”
   - Replace with: “victor's”
+  - Replace with: “victor”
 
 
 
@@ -3703,8 +3741,8 @@ Message: |
          |            ^~~~~ Did you mean to spell `Sheik` this way?
 Suggest:
   - Replace with: “Sheikh”
-  - Replace with: “Seek”
-  - Replace with: “Shack”
+  - Replace with: “She'd”
+  - Replace with: “She's”
 
 
 
@@ -3767,9 +3805,9 @@ Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Convey”
   - Replace with: “Conley”
+  - Replace with: “Corey”
 
 
 
@@ -3816,9 +3854,9 @@ Message: |
     2562 | Coney Island, or for how many hours he “glanced into rooms” while his house
          | ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
-  - Replace with: “Cone”
   - Replace with: “Convey”
   - Replace with: “Conley”
+  - Replace with: “Corey”
 
 
 
@@ -3862,6 +3900,16 @@ Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
   - Replace with: “beard”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
+    2608 | and peering toward the bleared windows from time to time as if a series of
+         |                        ^~~~~~~ `bleared` should probably be written as `bl eared`.
+Suggest:
+  - Replace with: “bl eared”
 
 
 
@@ -4001,8 +4049,8 @@ Message: |
     2827 | entered by the big postern. With enchanting murmurs Daisy admired this aspect or
          |                    ^~~~~~~ Did you mean to spell `postern` this way?
 Suggest:
-  - Replace with: “poster”
   - Replace with: “pastern”
+  - Replace with: “poster”
   - Replace with: “posters”
 
 
@@ -4390,8 +4438,8 @@ Message: |
     3090 | knew what lavish doings Dan Cody drunk might soon be about, and he provided for
 Suggest:
   - Replace with: “jailer”
+  - Replace with: “jail's”
   - Replace with: “sailor”
-  - Replace with: “tailor”
 
 
 
@@ -4583,7 +4631,7 @@ Message: |
 Suggest:
   - Replace with: “defense”
   - Replace with: “decency”
-  - Replace with: “deface”
+  - Replace with: “defect”
 
 
 
@@ -4879,8 +4927,8 @@ Message: |
          |                     ^~~~~~ Did you mean to spell `centre` this way?
 Suggest:
   - Replace with: “center”
+  - Replace with: “cent's”
   - Replace with: “censure”
-  - Replace with: “cent”
 
 
 
@@ -4941,9 +4989,9 @@ Message: |
     3640 | “Bles-sed pre-cious,” she crooned, holding out her arms. “Come to your own
          |               ^~~~~ Did you mean to spell `cious` this way?
 Suggest:
+  - Replace with: “coo's”
   - Replace with: “pious”
   - Replace with: “chorus”
-  - Replace with: “circus”
 
 
 
@@ -4958,14 +5006,23 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
+         |      ^~~~ `bles` should probably be written as `bl es`.
+Suggest:
+  - Replace with: “bl es”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
          |                   ^~~~~ Did you mean to spell `cious` this way?
 Suggest:
+  - Replace with: “coo's”
   - Replace with: “pious”
   - Replace with: “chorus”
-  - Replace with: “circus”
 
 
 
@@ -5158,6 +5215,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
+         |                  ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
+Suggest:
+  - Replace with: “ash heaps”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
@@ -5187,8 +5253,8 @@ Message: |
     3949 | vigil, but I perceived, after a moment, that other eyes were regarding us with
 Suggest:
   - Replace with: “Excalibur”
-  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
+  - Replace with: “Heckler”
 
 
 
@@ -5627,6 +5693,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    4391 | The young Greek, Michaelis, who ran the coffee joint beside the ashheaps was the
+         |                                                                 ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
+    4392 | principal witness at the inquest. He had slept through the heat until after
+Suggest:
+  - Replace with: “ash heaps”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4394 | office—really sick, pale as his own pale hair and shaking all over. Michaelis
@@ -5792,6 +5868,16 @@ Suggest:
   - Replace with: “glamorously”
   - Replace with: “clamorous”
   - Replace with: “clangorously”
+
+
+
+Lint:    Typo (31 priority)
+Message: |
+    4470 | a little book. At first I couldn’t find the source of the high, groaning words
+    4471 | that echoed clamorously through the bare garage—then I saw Wilson standing on
+         |             ^~~~~~~~~~~ `clamorously` should probably be written as `cl amorously`.
+Suggest:
+  - Replace with: “cl amorously”
 
 
 
@@ -5966,8 +6052,8 @@ Message: |
          |              ^~~ Did you mean to spell `ina` this way?
 Suggest:
   - Replace with: “in”
-  - Replace with: “inc”
   - Replace with: “ind”
+  - Replace with: “inf”
 
 
 
@@ -6031,7 +6117,7 @@ Message: |
 Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
-  - Replace with: “going”
+  - Replace with: “goon”
 
 
 
@@ -6051,7 +6137,7 @@ Message: |
 Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
-  - Replace with: “going”
+  - Replace with: “goon”
 
 
 
@@ -6123,7 +6209,7 @@ Message: |
 Suggest:
   - Replace with: “gain”
   - Replace with: “gin”
-  - Replace with: “going”
+  - Replace with: “goon”
 
 
 
@@ -6423,6 +6509,15 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    5015 | When I passed the ashheaps on the train that morning I had crossed deliberately
+         |                   ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
+Suggest:
+  - Replace with: “ash heaps”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
     5016 | to the other side of the car. I supposed there’d be a curious crowd around there
@@ -6669,6 +6764,16 @@ Suggest:
 
 
 
+Lint:    Typo (31 priority)
+Message: |
+    5146 | Wilson’s glazed eyes turned out to the ashheaps, where small gray clouds took on
+         |                                        ^~~~~~~~ `ashheaps` should probably be written as `ash heaps`.
+    5147 | fantastic shapes and scurried here and there in the faint dawn wind.
+Suggest:
+  - Replace with: “ash heaps”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     5151 | and walked to the rear window and leaned with his face pressed against it—“and I
@@ -6724,8 +6829,8 @@ Message: |
          |                 ^~~~~~~~~ Did you mean to spell `Eckleburg` this way?
 Suggest:
   - Replace with: “Excalibur”
-  - Replace with: “Heckler”
   - Replace with: “Vicksburg”
+  - Replace with: “Heckler”
 
 
 
@@ -7028,7 +7133,7 @@ Message: |
 Suggest:
   - Replace with: “eta”
   - Replace with: “etc.”
-  - Replace with: “ethic”
+  - Replace with: “enc”
 
 
 
@@ -7037,9 +7142,9 @@ Message: |
     5333 | “This is Slagle speaking . . .”
          |          ^~~~~~ Did you mean to spell `Slagle` this way?
 Suggest:
+  - Replace with: “Slag's”
   - Replace with: “Sable”
   - Replace with: “Sage”
-  - Replace with: “Sale”
 
 
 
@@ -8009,8 +8114,8 @@ Message: |
     5818 | contemplation he neither understood nor desired, face to face for the last time
 Suggest:
   - Replace with: “aesthetic”
-  - Replace with: “aesthetics”
   - Replace with: “pathetic”
+  - Replace with: “aesthetics”
 
 
 

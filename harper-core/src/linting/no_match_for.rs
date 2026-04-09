@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct NoMatchFor {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NoMatchFor {
@@ -28,9 +28,7 @@ impl Default for NoMatchFor {
             .then_whitespace()
             .then_preposition();
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -38,13 +36,13 @@ impl ExprLinter for NoMatchFor {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let prep_tok = toks.last()?;
-        let prep_chars = prep_tok.span.get_content(src);
-        if prep_chars.eq_ignore_ascii_case_chars(&['f', 'o', 'r']) {
+        let prep_chars = prep_tok.get_ch(src);
+        if prep_chars.eq_ch(&['f', 'o', 'r']) {
             return None;
         }
 

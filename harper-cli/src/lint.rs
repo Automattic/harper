@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
+use std::fs;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use std::{fs, process};
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
@@ -11,7 +11,7 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
@@ -202,7 +202,7 @@ pub fn lint(
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
-    let mut config = LintGroupConfig::new_curated();
+    let mut config = FlatConfig::new_curated();
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);
@@ -341,6 +341,8 @@ pub fn lint(
         }
     }
 
+    let has_lints = !all_lint_kinds.is_empty();
+
     match report_mode {
         ReportStyle::Json => {
             println!("{}", serde_json::to_string_pretty(&json_results)?);
@@ -359,7 +361,11 @@ pub fn lint(
         }
     }
 
-    process::exit(1);
+    if has_lints {
+        anyhow::bail!("Lints were found");
+    }
+
+    Ok(())
 }
 
 struct LintOneResult {
@@ -442,8 +448,8 @@ fn lint_one_input(
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 for pack in weirpacks {
-                    let mut pack_group = pack.to_lint_group()?;
-                    lint_group.merge_from(&mut pack_group);
+                    let pack_group = pack.to_lint_group()?;
+                    lint_group.merge_from(pack_group);
                 }
 
                 // Turn specified rules on or off
@@ -474,7 +480,7 @@ fn lint_one_input(
                         for lint in rule_lints {
                             let (line, column) =
                                 char_index_to_line_col(source_chars, lint.span.start);
-                            let matched_text = lint.span.get_content_string(source_chars);
+                            let matched_text = lint.get_str(source_chars);
                             let suggestions: Vec<String> =
                                 lint.suggestions.iter().map(|s| format!("{s}")).collect();
                             lints.push(JsonLint {
@@ -605,7 +611,7 @@ fn collect_spellos(
         .get("SpellCheck")
         .into_iter()
         .flatten()
-        .map(|lint| lint.span.get_content_string(source))
+        .map(|lint| lint.get_str(source))
         .fold(HashMap::new(), |mut acc, spello| {
             *acc.entry(spello).or_insert(0) += 1;
             acc
@@ -762,7 +768,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
             curr_len_chars = 0;
             current_line_start_tok_idx = idx + 1;
         } else if matches!(tok.kind, TokenKind::Unlintable) {
-            // TODO would be more accurate to scan for \n in the tok.span.get_content(src)
+            // TODO would be more accurate to scan for \n in the tok.get_ch(src)
         } else {
             curr_len_chars += tok.span.len();
         }

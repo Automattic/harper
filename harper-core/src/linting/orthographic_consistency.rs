@@ -1,23 +1,22 @@
-use crate::linting::{LintKind, Suggestion};
 use std::sync::Arc;
 
-use crate::expr::Expr;
-use crate::spell::{Dictionary, FstDictionary};
-use crate::{OrthFlags, Token};
-
-use super::{ExprLinter, Lint};
-use crate::linting::expr_linter::Chunk;
+use crate::{
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    spell::{Dictionary, FstDictionary},
+    {OrthFlags, Token},
+};
 
 pub struct OrthographicConsistency {
     dict: Arc<FstDictionary>,
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
             dict: FstDictionary::curated(),
-            expr: Box::new(|tok: &Token, _: &[char]| tok.kind.is_word()),
+            expr: SequenceExpr::any_word(),
         }
     }
 }
@@ -36,7 +35,7 @@ impl ExprLinter for OrthographicConsistency {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -65,7 +64,7 @@ impl ExprLinter for OrthographicConsistency {
             return None;
         };
 
-        let chars = word.span.get_content(source);
+        let chars = word.get_ch(source);
 
         let cur_flags = OrthFlags::from_letters(chars);
 

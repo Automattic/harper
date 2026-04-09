@@ -7,7 +7,7 @@ use crate::{Token, TokenStringExt};
 
 /// A linter that detects hedging language.
 pub struct Hedging {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for Hedging {
@@ -19,8 +19,9 @@ impl Default for Hedging {
             .map(|s| Box::new(FixedPhrase::from_phrase(s)) as Box<dyn Expr>)
             .collect();
 
-        let expr = Box::new(FirstMatchOf::new(patterns));
-        Self { expr }
+        Self {
+            expr: FirstMatchOf::new(patterns),
+        }
     }
 }
 
@@ -28,7 +29,7 @@ impl ExprLinter for Hedging {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {

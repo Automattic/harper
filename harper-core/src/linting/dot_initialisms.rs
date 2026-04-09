@@ -1,4 +1,5 @@
 use crate::expr::Expr;
+use crate::expr::FirstMatchOf;
 use crate::expr::SequenceExpr;
 use crate::expr::WordExprGroup;
 use hashbrown::HashMap;
@@ -8,7 +9,7 @@ use crate::linting::expr_linter::Chunk;
 use crate::{Token, TokenStringExt};
 
 pub struct DotInitialisms {
-    expr: Box<dyn Expr>,
+    expr: WordExprGroup<FirstMatchOf>,
     corrections: HashMap<&'static str, &'static str>,
 }
 
@@ -29,7 +30,7 @@ impl Default for DotInitialisms {
         }
 
         Self {
-            expr: Box::new(patterns),
+            expr: patterns,
             corrections,
         }
     }
@@ -39,12 +40,12 @@ impl ExprLinter for DotInitialisms {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let found_word_tok = matched_tokens.first()?;
-        let found_word = found_word_tok.span.get_content_string(source);
+        let found_word = found_word_tok.get_str(source);
 
         let correction = self.corrections.get(found_word.as_str())?;
 

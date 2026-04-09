@@ -31,7 +31,7 @@ static DITRANSITIVE: &[&str] = &[
 ];
 
 pub struct PronounVerbAgreement<D> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
@@ -77,11 +77,11 @@ where
                 && !t.kind.is_conjunction() // "and"
                 && (!t.kind.is_auxiliary_verb() // "I go"≠"he goes" but "I can"="he can"
                 // We don't want modals because they don't inflect, but we want the other auxiliaries.
-                || t.span.get_content(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
+                || t.get_ch(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
         };
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 // One Expr for the "I walks" type:
                 Box::new(non_3p_sing_pres_pron_with_3p_sing_pres_verb),
                 // Two Expr's for the "he walk" type:
@@ -91,7 +91,7 @@ where
                         .then(verb_lemma),
                 ),
                 Box::new(SequenceExpr::aco("it").t_ws().t_aco("don't")),
-            ])),
+            ]),
             dict,
         }
     }
@@ -118,10 +118,7 @@ where
             }
         }
 
-        if let Some((lemma, _)) = IRREGULAR
-            .iter()
-            .find(|(_, f)| form.eq_ignore_ascii_case_str(f))
-        {
+        if let Some((lemma, _)) = IRREGULAR.iter().find(|(_, f)| form.eq_str(f)) {
             words.push(lemma.chars().collect::<Vec<char>>());
         }
 
@@ -176,7 +173,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -188,20 +185,27 @@ where
         let pron_tok = &toks[0];
         let is_3psg = pron_tok.kind.is_third_person_singular_pronoun();
 
+        // Skip when the pronoun is part of a hyphenated compound (e.g. "co-founded").
+        // The tokenizer splits "co-founded" into separate tokens, but "co" as a prefix
+        // is not acting as a pronoun.
+        if pron_tok.span.end < src.len() && src[pron_tok.span.end] == '-' {
+            return None;
+        }
+
         let verb_tok = toks.last()?;
 
         if let Some((before, _)) = ctx
             && let [.., prev_word_tok, ws_tok] = before
             && ws_tok.kind.is_whitespace()
         {
-            let prev_word = prev_word_tok.span.get_content(src);
+            let prev_word = prev_word_tok.get_ch(src);
             let is_exempt = if is_3psg {
                 prev_word_tok.kind.is_auxiliary_verb()
                     || prev_word.eq_any_ignore_ascii_case_str(SUBJUNCTIVE)
             } else if pron_tok.kind.is_subject_pronoun() {
                 // Clause structure: (... in you) is ... ≠ you is
                 // Look for "true" prepositions, not ones that are more like adverbial particles
-                prev_word_tok.kind.is_preposition() && !prev_word.eq_ignore_ascii_case_str("up")
+                prev_word_tok.kind.is_preposition() && !prev_word.eq_str("up")
                     // When the verb is ditransitive, the pronoun is object case, the verb position is actually a noun
                     || (prev_word.eq_any_ignore_ascii_case_str(DITRANSITIVE) && verb_tok.kind.is_noun())
             } else {
@@ -214,8 +218,8 @@ where
         }
 
         let verb_span = verb_tok.span;
-        let verb_chars = verb_tok.span.get_content(src);
-        let verb_str = verb_tok.span.get_content_string(src);
+        let verb_chars = verb_tok.get_ch(src);
+        let verb_str = verb_tok.get_str(src);
 
         let suggs = if is_3psg {
             self.lemma_to_third_person_singular_present(&verb_str)
@@ -246,9 +250,7 @@ where
 #[cfg(test)]
 mod lints {
     use super::PronounVerbAgreement;
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
 
     // Expected to be fixed, but there are exceptions
@@ -291,7 +293,7 @@ mod lints {
 
     #[test]
     fn issue_233_2_reverse() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "She sit under the AC.",
             PronounVerbAgreement::new(FstDictionary::curated()),
             "She sits under the AC.",

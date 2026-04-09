@@ -1,13 +1,10 @@
-use std::sync::Arc;
-
 use crate::Token;
 use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct Respond {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for Respond {
@@ -23,7 +20,7 @@ impl Default for Respond {
                 return false;
             }
 
-            let lower = tok.span.get_content_string(src).to_lowercase();
+            let lower = tok.get_str(src).to_lowercase();
             matches!(
                 lower.as_str(),
                 "do" | "did" | "does" | "won't" | "don't" | "didn't" | "doesn't"
@@ -52,12 +49,7 @@ impl Default for Respond {
             6,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -65,11 +57,11 @@ impl ExprLinter for Respond {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let response_index = *self.map.lookup(0, matched_tokens, source)?;
+        let response_index = *self.expr.lookup(0, matched_tokens, source)?;
         let response_token = matched_tokens.get(response_index)?;
 
         Some(Lint {
@@ -77,7 +69,7 @@ impl ExprLinter for Respond {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "respond",
-                response_token.span.get_content(source),
+                response_token.get_ch(source),
             )],
             message: "Use the verb `respond` here.".to_owned(),
             priority: 40,

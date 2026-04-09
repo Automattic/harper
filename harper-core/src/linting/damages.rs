@@ -20,13 +20,13 @@ static KEYWORDS: &[&str] = &[
 ];
 
 pub struct Damages {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Damages {
     fn default() -> Self {
         Self {
-            expr: Box::new(SequenceExpr::word_set(&["damages", "damage"])),
+            expr: SequenceExpr::word_set(&["damages", "damage"]),
         }
     }
 }
@@ -35,7 +35,7 @@ impl ExprLinter for Damages {
     type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -52,7 +52,7 @@ impl ExprLinter for Damages {
 
         // Singular noun/verb lemma is not an error but during development we'll print uses of it
         //  to observe its context.
-        if damage_chars.eq_ignore_ascii_case_chars(&['d', 'a', 'm', 'a', 'g', 'e']) {
+        if damage_chars.eq_ch(&['d', 'a', 'm', 'a', 'g', 'e']) {
             return None;
         }
 
@@ -88,10 +88,7 @@ impl ExprLinter for Damages {
             if (prev_word.kind.is_adjective()
                 || prev_word.kind.is_determiner()
                 || prev_word.kind.is_preposition())
-                && !prev_word
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_chars(&['t', 'o'])
+                && !prev_word.get_ch(src).eq_ch(&['t', 'o'])
             {
                 can = CanPrecede::Noun;
             }
@@ -135,15 +132,13 @@ impl ExprLinter for Damages {
         // 1. "If you encounter any issues, errors, or damages resulting from the use of these templates,
         //     the repository author assumes no responsibility or liability."
         // 2. "The author will not be liable for any losses and/or damages in connection with the use of our website"
-        if pretoks.iter().any(|t| {
-            t.span
-                .get_content(src)
-                .eq_any_ignore_ascii_case_str(KEYWORDS)
-        }) || postoks.iter().any(|t| {
-            t.span
-                .get_content(src)
-                .eq_any_ignore_ascii_case_str(KEYWORDS)
-        }) {
+        if pretoks
+            .iter()
+            .any(|t| t.get_ch(src).eq_any_ignore_ascii_case_str(KEYWORDS))
+            || postoks
+                .iter()
+                .any(|t| t.get_ch(src).eq_any_ignore_ascii_case_str(KEYWORDS))
+        {
             return None;
         }
 

@@ -7,7 +7,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct PiqueInterest {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for PiqueInterest {
@@ -22,9 +22,7 @@ impl Default for PiqueInterest {
                 .then_whitespace()
                 .t_aco("interest");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -46,7 +44,7 @@ impl ExprLinter for PiqueInterest {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -59,7 +57,7 @@ impl ExprLinter for PiqueInterest {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 correct.to_vec(),
-                matched_tokens[0].span.get_content(source),
+                matched_tokens[0].get_ch(source),
             )],
             message: format!(
                 "Did you mean `{}` instead of `{}`?",

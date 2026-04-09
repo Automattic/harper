@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct JealousOf {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for JealousOf {
@@ -25,9 +25,7 @@ impl Default for JealousOf {
             .then_optional(SequenceExpr::default().then_determiner().t_ws())
             .then(valid_object);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -35,7 +33,7 @@ impl ExprLinter for JealousOf {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -46,7 +44,7 @@ impl ExprLinter for JealousOf {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "of",
-                from_token.span.get_content(source),
+                from_token.get_ch(source),
             )],
             message: "Use `of` after `jealous`.".to_owned(),
             ..Default::default()

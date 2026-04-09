@@ -9,7 +9,7 @@ use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
 pub struct ShootOneselfInTheFoot {
-    pattern: Box<dyn Expr>,
+    pattern: SequenceExpr,
 }
 
 impl Default for ShootOneselfInTheFoot {
@@ -27,9 +27,7 @@ impl Default for ShootOneselfInTheFoot {
             .then_determiner()
             .t_ws()
             .then(body_parts);
-        Self {
-            pattern: Box::new(pattern),
-        }
+        Self { pattern }
     }
 }
 
@@ -37,21 +35,21 @@ impl ExprLinter for ShootOneselfInTheFoot {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.pattern.as_ref()
+        &self.pattern
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let pron = &toks.get(2)?.span.get_content(src);
-        let prep = &toks.get(4)?.span.get_content(src);
-        let det = &toks.get(6)?.span.get_content(src);
-        let body_part = &toks.get(8)?.span.get_content(src);
+        let pron = &toks.get(2)?.get_ch(src);
+        let prep = &toks.get(4)?.get_ch(src);
+        let det = &toks.get(6)?.get_ch(src);
+        let body_part = &toks.get(8)?.get_ch(src);
 
         let plural_pron = pron.ends_with_ignore_ascii_case_str("elves");
         let plural_foot = toks.get(8)?.kind.is_plural_noun();
 
-        let is_in = prep.eq_ignore_ascii_case_str("in");
-        let is_the = det.eq_ignore_ascii_case_str("the");
-        let is_foot = body_part.eq_ignore_ascii_case_str("foot");
+        let is_in = prep.eq_str("in");
+        let is_the = det.eq_str("the");
+        let is_foot = body_part.eq_str("foot");
 
         let foot_ok = is_foot || (plural_pron && plural_foot);
 

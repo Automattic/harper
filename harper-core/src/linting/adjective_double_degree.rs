@@ -6,19 +6,17 @@ use crate::{
 };
 
 pub struct AdjectiveDoubleDegree {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for AdjectiveDoubleDegree {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["more", "most"])
-                    .t_ws()
-                    .then_kind_where(|kind| {
-                        kind.is_comparative_adjective() || kind.is_superlative_adjective()
-                    }),
-            ),
+            expr: SequenceExpr::word_set(&["more", "most"])
+                .t_ws()
+                .then_kind_where(|kind| {
+                    kind.is_comparative_adjective() || kind.is_superlative_adjective()
+                }),
         }
     }
 }
@@ -27,17 +25,17 @@ impl ExprLinter for AdjectiveDoubleDegree {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let phrase_span = toks.span()?;
         let phrase_chars = phrase_span.get_content(src);
 
-        let adj_chars = toks.last()?.span.get_content(src);
+        let adj_chars = toks.last()?.get_ch(src);
 
         let (lint_kind, message, suggestions) = match (
-            &toks.first()?.span.get_content(src).to_lower().as_ref(),
+            &toks.first()?.get_ch(src).to_lower().as_ref(),
             toks.last()?.kind.is_comparative_adjective(),
             toks.last()?.kind.is_superlative_adjective(),
         ) {

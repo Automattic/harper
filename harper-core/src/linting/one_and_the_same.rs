@@ -8,7 +8,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OneAndTheSame {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for OneAndTheSame {
@@ -16,7 +16,7 @@ impl Default for OneAndTheSame {
         let one_in_the_same = Lrc::new(FixedPhrase::from_phrase("one in the same"));
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(
                     SequenceExpr::word_set(&["are", "were"])
                         .t_ws()
@@ -27,7 +27,7 @@ impl Default for OneAndTheSame {
                         .t_ws()
                         .t_aco("as"),
                 ),
-            ])),
+            ]),
         }
     }
 }
@@ -40,11 +40,11 @@ impl ExprLinter for OneAndTheSame {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let phrase = if matched_tokens.last()?.span.get_content(source) == ['a', 's'] {
+        let phrase = if matched_tokens.last()?.get_ch(source) == ['a', 's'] {
             matched_tokens[0..matched_tokens.len() - 2].span()?
         } else {
             matched_tokens[2..].span()?

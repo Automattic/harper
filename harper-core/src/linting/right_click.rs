@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -9,8 +7,7 @@ use crate::{
 };
 
 pub struct RightClick {
-    expr: Box<dyn Expr>,
-    map: Arc<ExprMap<usize>>,
+    expr: ExprMap<usize>,
 }
 
 impl Default for RightClick {
@@ -24,12 +21,7 @@ impl Default for RightClick {
             0,
         );
 
-        let map = Arc::new(map);
-
-        Self {
-            expr: Box::new(map.clone()),
-            map,
-        }
+        Self { expr: map }
     }
 }
 
@@ -37,17 +29,17 @@ impl ExprLinter for RightClick {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let start_idx = *self.map.lookup(0, matched_tokens, source)?;
+        let start_idx = *self.expr.lookup(0, matched_tokens, source)?;
         let click_idx = matched_tokens.len().checked_sub(1)?;
         let span = matched_tokens.get(start_idx..=click_idx)?.span()?;
         let template = span.get_content(source);
 
-        let direction = matched_tokens.get(start_idx)?.span.get_content(source);
-        let click = matched_tokens.get(click_idx)?.span.get_content(source);
+        let direction = matched_tokens.get(start_idx)?.get_ch(source);
+        let click = matched_tokens.get(click_idx)?.get_ch(source);
 
         let replacement: Vec<char> = direction
             .iter()

@@ -19,7 +19,7 @@ const ACRONYMS: &[(&str, &[&str], &str)] = &[
 ];
 
 pub struct RedundantAcronyms {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl Default for RedundantAcronyms {
@@ -31,16 +31,14 @@ impl Default for RedundantAcronyms {
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
                     Box::new(Word::new(last_str)),
                     Box::new(move |t: &Token, src: &[char]| {
-                        t.span
-                            .get_content(src)
-                            .eq_ignore_ascii_case_str(&format!("{last_string}s"))
+                        t.get_ch(src).eq_str(&format!("{last_string}s"))
                     }),
                 ])) as Box<dyn Expr>
             })
             .collect();
 
         Self {
-            expr: Box::new(FirstMatchOf::new(exprs)),
+            expr: FirstMatchOf::new(exprs),
         }
     }
 }
@@ -49,13 +47,13 @@ impl ExprLinter for RedundantAcronyms {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let last_word_span = toks.last()?.span;
         let last_word_chars = last_word_span.get_content(src);
-        let acronym_str = toks.first()?.span.get_content_string(src);
+        let acronym_str = toks.first()?.get_str(src);
 
         // "pin number" (lowercase) is used to refer to the pins on microchips, etc.
         if acronym_str.eq_ignore_ascii_case("PIN") && acronym_str != "PIN" {

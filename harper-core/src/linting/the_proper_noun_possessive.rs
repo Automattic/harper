@@ -5,27 +5,24 @@ use crate::{
 };
 
 pub struct TheProperNounPossessive {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for TheProperNounPossessive {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("the")
-                    .t_ws()
-                    .then(|t: &Token, s: &[char]| {
-                        // TODO: should use `k.is_proper_noun()` when #2327 is fixed
-                        // TODO: should use `k.is_common_noun()` which doesn't exist yet
-                        t.kind.is_possessive_noun()
-                            && t.kind.is_titlecase()
-                            && !t.kind.is_lowercase()
-                            && !t
-                                .span
-                                .get_content(s)
-                                .eq_any_ignore_ascii_case_str(&["internet's", "internet’s"])
-                    }),
-            ),
+            expr: SequenceExpr::aco("the")
+                .t_ws()
+                .then(|t: &Token, s: &[char]| {
+                    // TODO: should use `k.is_proper_noun()` when #2327 is fixed
+                    // TODO: should use `k.is_common_noun()` which doesn't exist yet
+                    t.kind.is_possessive_noun()
+                        && t.kind.is_titlecase()
+                        && !t.kind.is_lowercase()
+                        && !t
+                            .get_ch(s)
+                            .eq_any_ignore_ascii_case_str(&["internet's", "internet’s"])
+                }),
         }
     }
 }
@@ -34,7 +31,7 @@ impl ExprLinter for TheProperNounPossessive {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], _: &[char]) -> Option<Lint> {

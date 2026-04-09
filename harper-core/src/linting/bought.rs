@@ -5,7 +5,7 @@ use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
 
 pub struct Bought {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Bought {
@@ -17,9 +17,7 @@ impl Default for Bought {
             .then_optional(SequenceExpr::default().then_adverb().t_ws())
             .then_any_capitalization_of("bough");
 
-        Self {
-            expr: Box::new(subject),
-        }
+        Self { expr: subject }
     }
 }
 
@@ -27,7 +25,7 @@ impl ExprLinter for Bought {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -38,7 +36,7 @@ impl ExprLinter for Bought {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "bought".chars().collect(),
-                typo.span.get_content(source),
+                typo.get_ch(source),
             )],
             message: "Prefer the past-tense form `bought` here.".to_owned(),
             priority: 31,
@@ -60,7 +58,7 @@ impl Bought {
             return false;
         }
 
-        let text = token.span.get_content_string(source);
+        let text = token.get_str(source);
         let lower = text.to_ascii_lowercase();
 
         let Some((stem, suffix)) = lower.split_once('\'') else {

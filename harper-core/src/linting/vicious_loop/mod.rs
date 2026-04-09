@@ -56,23 +56,20 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
     let (adjtok, nountok) = (toks.first()?, toks.last()?);
 
     let badadj = adjtok
-        .span
-        .get_content(src)
-        .eq_ignore_ascii_case_chars(&['v', 'i', 's', 'c', 'o', 'u', 's']);
+        .get_ch(src)
+        .eq_ch(&['v', 'i', 's', 'c', 'o', 'u', 's']);
 
     let badnoun = match pref {
         Prefer::Circle => nountok
-            .span
-            .get_content(src)
+            .get_ch(src)
             .starts_with_ignore_ascii_case_str("cycle"),
         Prefer::Cycle => nountok
-            .span
-            .get_content(src)
+            .get_ch(src)
             .starts_with_ignore_ascii_case_str("circle"),
         Prefer::DontCare => false,
     };
 
-    let is_plural = matches!(nountok.span.get_content(src).last(), Some('s' | 'S'));
+    let is_plural = matches!(nountok.get_ch(src).last(), Some('s' | 'S'));
 
     // The noun doesn't match the user's preferred word.
     if badnoun && !badadj {
@@ -87,7 +84,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                     (Prefer::Cycle, true) => "cycles",
                     _ => unreachable!(),
                 },
-                nountok.span.get_content(src),
+                nountok.get_ch(src),
             )],
             message: if pref == Prefer::Circle {
                 "This idiom originally used `circle`, not `cycle`".to_string()
@@ -138,7 +135,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "vicious",
-                adjtok.span.get_content(src),
+                adjtok.get_ch(src),
             )],
             message:
                 "The idiom uses the word `vicious`, not `viscous`, which describes thick liquids."
@@ -199,9 +196,7 @@ impl_expr_linter!(
 #[cfg(test)]
 mod tests {
     use super::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
-    use crate::linting::tests::{
-        assert_no_lints, assert_suggestion_result, assert_top3_suggestion_result,
-    };
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // Prefer "circle" -  Made up, simple examples
 
@@ -243,7 +238,7 @@ mod tests {
 
     #[test]
     fn fix_singular_and_plural_nouns() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The file Vicious Cycle Dataset.ods contains 33 vicious cycles from 13 open source systems studied in our paper.",
             ViciousCircle::default(),
             "The file Vicious Circle Dataset.ods contains 33 vicious circles from 13 open source systems studied in our paper.",

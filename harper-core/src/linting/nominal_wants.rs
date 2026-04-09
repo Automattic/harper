@@ -12,14 +12,14 @@ use crate::{
 };
 
 pub struct NominalWants {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NominalWants {
     fn default() -> Self {
         fn is_applicable_pronoun(tok: &Token, src: &[char]) -> bool {
             if tok.kind.is_pronoun() && tok.kind.is_upos(UPOS::PRON) {
-                let pron = tok.span.get_content(src);
+                let pron = tok.get_ch(src);
                 !pron.eq_any_ignore_ascii_case_chars(&[
                     // "That" can act as two kinds of pronoun: demonstrative and relative.
                     // As a demonstrative pronoun, it's third person singular.
@@ -50,9 +50,7 @@ impl Default for NominalWants {
             .then_whitespace()
             .then(miss);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -60,7 +58,7 @@ impl ExprLinter for NominalWants {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
@@ -90,7 +88,7 @@ impl ExprLinter for NominalWants {
         let offender_span = offender.span;
         let offender_chars = offender_span.get_content(source);
 
-        if offender_chars.eq_ignore_ascii_case_chars(&replacement_chars) {
+        if offender_chars.eq_ch(&replacement_chars) {
             return None;
         }
 

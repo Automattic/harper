@@ -7,7 +7,7 @@ use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::{CharStringExt, Token};
 
 pub struct Cant {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for Cant {
@@ -22,11 +22,11 @@ impl Default for Cant {
             .then_kind_is_but_is_not(|kind| kind.is_verb_lemma(), |kind| kind.is_noun());
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
+            expr: LongestMatchOf::new(vec![
                 Box::new(nom_cant),
                 Box::new(cant_pron),
                 Box::new(cant_verb),
-            ])),
+            ]),
         }
     }
 }
@@ -35,17 +35,15 @@ impl ExprLinter for Cant {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let token = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['c', 'a', 'n', 't'])
+            tok.get_ch(src).eq_ch(&['c', 'a', 'n', 't'])
         })?;
 
-        let jargon = token.span.get_content(src);
+        let jargon = token.get_ch(src);
         let cannot = "can't";
 
         Some(Lint {

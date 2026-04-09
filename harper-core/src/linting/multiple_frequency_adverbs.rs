@@ -5,27 +5,21 @@ use crate::{
 };
 
 pub struct MultipleFrequencyAdverbs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for MultipleFrequencyAdverbs {
     fn default() -> Self {
         let adverb_of_frequency = |t: &Token, s: &[char]| {
-            t.kind.is_frequency_adverb()
-                && !t
-                    .span
-                    .get_content(s)
-                    .eq_ignore_ascii_case_chars(&['o', 'n', 'l', 'y'])
+            t.kind.is_frequency_adverb() && !t.get_ch(s).eq_ch(&['o', 'n', 'l', 'y'])
         };
 
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then(adverb_of_frequency)
-                    .then_optional_comma()
-                    .t_ws()
-                    .then(adverb_of_frequency),
-            ),
+            expr: SequenceExpr::default()
+                .then(adverb_of_frequency)
+                .then_optional_comma()
+                .t_ws()
+                .then(adverb_of_frequency),
         }
     }
 }
@@ -39,7 +33,7 @@ impl ExprLinter for MultipleFrequencyAdverbs {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -47,7 +41,7 @@ impl ExprLinter for MultipleFrequencyAdverbs {
         let (adv1span, adv2span) = (adv1tok.span, adv2tok.span);
         let (adv1ch, adv2ch) = (adv1span.get_content(src), adv2span.get_content(src));
 
-        if !adv1ch.eq_ignore_ascii_case_chars(adv2ch) {
+        if !adv1ch.eq_ch(adv2ch) {
             Some(Lint {
                 span: toks.span()?,
                 lint_kind: LintKind::Usage,

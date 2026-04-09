@@ -5,17 +5,15 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct LessWorse {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for LessWorse {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::word_set(&["less", "least"])
-                    .t_ws_h()
-                    .then_word_set(&["worse", "worst"]),
-            ),
+            expr: SequenceExpr::word_set(&["less", "least"])
+                .t_ws_h()
+                .then_word_set(&["worse", "worst"]),
         }
     }
 }
@@ -24,7 +22,7 @@ impl ExprLinter for LessWorse {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -34,9 +32,9 @@ impl ExprLinter for LessWorse {
 
         let span = toks.span()?;
 
-        let how_little = toks[0].span.get_content(src).to_lower();
+        let how_little = toks[0].get_ch(src).to_lower();
         let space_or_hyphen = &toks[1];
-        let how_bad = toks[2].span.get_content(src).to_lower();
+        let how_bad = toks[2].get_ch(src).to_lower();
 
         let (suggestions, message): (&[&[char]], &str) = match (
             how_little.as_ref(),
@@ -102,7 +100,7 @@ impl ExprLinter for LessWorse {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
 
     use super::LessWorse;
 
@@ -135,7 +133,7 @@ mod tests {
 
     #[test]
     fn correct_less_worse() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less worse.",
             LessWorse::default(),
             "Professionally I've convinced the team at @Roave to pay me for making their PHP code marginally less bad.",

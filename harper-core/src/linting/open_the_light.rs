@@ -10,7 +10,7 @@ use super::{ExprLinter, Lint};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OpenTheLight {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for OpenTheLight {
@@ -46,10 +46,10 @@ impl Default for OpenTheLight {
             .t_ws()
             .then_noun();
 
-        let expr = Box::new(LongestMatchOf::new(vec![
+        let expr = LongestMatchOf::new(vec![
             Box::new(open_the_device),
             Box::new(open_the_device_then_noun),
-        ]));
+        ]);
 
         Self { expr }
     }
@@ -59,7 +59,7 @@ impl ExprLinter for OpenTheLight {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -77,7 +77,7 @@ impl ExprLinter for OpenTheLight {
         const ES: &[char] = &['e', 's'];
         const LEMMA: &[char] = &[];
 
-        let verb: &[char] = toks.first()?.span.get_content(src);
+        let verb: &[char] = toks.first()?.get_ch(src);
 
         let (e, n, d) = (
             verb[verb.len() - 3],

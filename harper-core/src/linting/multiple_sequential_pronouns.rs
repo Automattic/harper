@@ -7,7 +7,7 @@ use crate::{
 /// Linter that checks if multiple pronouns are being used right after each
 /// other. This is a common mistake to make during the revision process.
 pub struct MultipleSequentialPronouns {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl MultipleSequentialPronouns {
@@ -20,10 +20,8 @@ impl MultipleSequentialPronouns {
         });
 
         Self {
-            expr: Box::new(
-                SequenceExpr::with(pronouns.clone())
-                    .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
-            ),
+            expr: SequenceExpr::with(pronouns.clone())
+                .then_one_or_more(SequenceExpr::whitespace().then(pronouns.clone())),
         }
     }
 }
@@ -32,7 +30,7 @@ impl ExprLinter for MultipleSequentialPronouns {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -42,8 +40,8 @@ impl ExprLinter for MultipleSequentialPronouns {
             let first_word_tok = &matched_tokens[0];
             let second_word_tok = &matched_tokens[2];
 
-            let first_word_raw = first_word_tok.span.get_content(source);
-            let second_word_raw = second_word_tok.span.get_content(source);
+            let first_word_raw = first_word_tok.get_ch(source);
+            let second_word_raw = second_word_tok.get_ch(source);
             // Bug 578: "I can lend you my car" - if 1st is object and second is possessive adjective, don't lint
             if first_word_tok.kind.is_object_pronoun()
                 && second_word_tok.kind.is_possessive_determiner()
@@ -70,10 +68,10 @@ impl ExprLinter for MultipleSequentialPronouns {
             }
 
             suggestions.push(Suggestion::ReplaceWith(
-                matched_tokens[0].span.get_content(source).to_vec(),
+                matched_tokens[0].get_ch(source).to_vec(),
             ));
             suggestions.push(Suggestion::ReplaceWith(
-                matched_tokens[2].span.get_content(source).to_vec(),
+                matched_tokens[2].get_ch(source).to_vec(),
             ));
         }
 

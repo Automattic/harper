@@ -23,7 +23,7 @@ const ALL_MONTHS: &[&str] = &[
 ];
 
 pub struct Months {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for Months {
@@ -79,9 +79,7 @@ impl Default for Months {
             ),
         ]));
 
-        Self {
-            expr: Box::new(month_expr),
-        }
+        Self { expr: month_expr }
     }
 }
 
@@ -89,18 +87,18 @@ impl ExprLinter for Months {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {
         // `find` which token is the month by seeing which tok's content (lowercased) is in ALL_MONTHS
         let month_tok = tokens.iter().find(|token| {
-            let token_str = token.span.get_content_string(src);
+            let token_str = token.get_str(src);
             ALL_MONTHS.iter().any(|&m| m == token_str.to_lowercase())
         })?; // Return None if no month token found
 
         // let month_tok = tokens.last().unwrap();
-        let month_ch = month_tok.span.get_content(src);
+        let month_ch = month_tok.get_ch(src);
 
         if month_ch[0].is_uppercase() {
             return None;

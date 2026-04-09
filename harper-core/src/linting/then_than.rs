@@ -7,7 +7,7 @@ use crate::{CharStringExt, Token, TokenKind};
 
 /// Corrects the misuse of `then` to `than`.
 pub struct ThenThan {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
 }
 
 impl ThenThan {
@@ -40,7 +40,7 @@ impl ThenThan {
         ]);
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(comparison),
                 Box::new(FixedPhrase::from_phrase("easier said then done")),
                 Box::new(FixedPhrase::from_phrase("now and than")),
@@ -48,7 +48,7 @@ impl ThenThan {
                 Box::new(FixedPhrase::from_phrase("rather then")),
                 Box::new(FixedPhrase::from_phrase("than again")),
                 Box::new(FixedPhrase::from_phrase("until than")),
-            ])),
+            ]),
         }
     }
 }
@@ -56,8 +56,7 @@ impl ThenThan {
 fn is_comparative(tok: &Token, source: &[char]) -> bool {
     tok.kind.is_comparative_adjective()
         || tok
-            .span
-            .get_content(source)
+            .get_ch(source)
             .eq_any_ignore_ascii_case_chars(&[&['l', 'e', 's', 's'], &['m', 'o', 'r', 'e']])
 }
 
@@ -71,13 +70,12 @@ impl ExprLinter for ThenThan {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let mut thans_and_thens = matched_tokens.iter().filter(|tok| {
-            tok.span
-                .get_content(source)
+            tok.get_ch(source)
                 .eq_any_ignore_ascii_case_chars(&[&['t', 'h', 'a', 'n'], &['t', 'h', 'e', 'n']])
         });
 
@@ -89,7 +87,7 @@ impl ExprLinter for ThenThan {
 
         let offending_text = span.get_content(source);
 
-        let new_text = if offending_text.eq_ignore_ascii_case_chars(&['t', 'h', 'e', 'n']) {
+        let new_text = if offending_text.eq_ch(&['t', 'h', 'e', 'n']) {
             "than"
         } else {
             "then"

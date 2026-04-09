@@ -1,6 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::expr::Expr;
+use crate::expr::LongestMatchOf;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::linting::expr_linter::Chunk;
@@ -11,7 +12,7 @@ use crate::{
 };
 
 pub struct SafeToSave {
-    expr: Box<dyn Expr>,
+    expr: LongestMatchOf,
 }
 
 impl Default for SafeToSave {
@@ -32,9 +33,7 @@ impl Default for SafeToSave {
 
         let pattern = with_adv.or_longest(without_adv);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -42,13 +41,13 @@ impl ExprLinter for SafeToSave {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let safe_idx = toks
             .iter()
-            .position(|t| t.span.get_content_string(src).to_lowercase() == "safe")?;
+            .position(|t| t.get_str(src).to_lowercase() == "safe")?;
 
         let safe_tok = &toks[safe_idx];
 

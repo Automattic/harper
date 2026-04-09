@@ -7,7 +7,7 @@ use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
 
 pub struct WasAloud {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for WasAloud {
@@ -16,9 +16,7 @@ impl Default for WasAloud {
             .then_whitespace()
             .then_exact_word("aloud");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -26,18 +24,18 @@ impl ExprLinter for WasAloud {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let verb = matched_tokens[0].span.get_content_string(source);
+        let verb = matched_tokens[0].get_str(source);
 
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 format!("{verb} allowed").chars().collect(),
-                matched_tokens[0].span.get_content(source),
+                matched_tokens[0].get_ch(source),
             )],
             message: format!("Did you mean `{verb} allowed`?"),
             priority: 31,

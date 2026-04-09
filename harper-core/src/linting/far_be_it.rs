@@ -5,22 +5,20 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::token::Token;
 
 pub struct FarBeIt {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for FarBeIt {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .t_aco("far")
-                    .t_ws()
-                    .t_aco("be")
-                    .t_ws()
-                    .t_aco("it")
-                    .t_ws()
-                    .then_word_except(&["from"]),
-            ),
+            expr: SequenceExpr::default()
+                .t_aco("far")
+                .t_ws()
+                .t_aco("be")
+                .t_ws()
+                .t_aco("it")
+                .t_ws()
+                .then_word_except(&["from"]),
         }
     }
 }
@@ -29,7 +27,7 @@ impl ExprLinter for FarBeIt {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -37,7 +35,7 @@ impl ExprLinter for FarBeIt {
         let content = span.get_content(src);
 
         // We can only correct using `far be it for`, otherwise we recommend rephrasing the sentence.
-        let (suggestions, message) = if span.get_content(src).eq_ignore_ascii_case_str("for") {
+        let (suggestions, message) = if span.get_content(src).eq_str("for") {
             (
                 vec![Suggestion::replace_with_match_case(
                     vec!['f', 'r', 'o', 'm'],

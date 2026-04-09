@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct RedundantAdditiveAdverbs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for RedundantAdditiveAdverbs {
@@ -25,7 +25,7 @@ impl Default for RedundantAdditiveAdverbs {
             .then_optional(SequenceExpr::whitespace().t_aco("as"));
 
         Self {
-            expr: Box::new(multiple_additive_adverbs),
+            expr: multiple_additive_adverbs,
         }
     }
 }
@@ -34,7 +34,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -60,7 +60,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
         for word in toks
             .iter()
             .filter(|tok| tok.kind.is_word())
-            .map(|tok| tok.span.get_content(src))
+            .map(|tok| tok.get_ch(src))
             .collect::<Vec<_>>()
         {
             let term: &[char] = match word {
@@ -113,13 +113,13 @@ impl ExprLinter for RedundantAdditiveAdverbs {
 #[cfg(test)]
 mod tests {
     use super::RedundantAdditiveAdverbs;
-    use crate::linting::tests::{assert_lint_count, assert_top3_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     // Basic unit tests
 
     #[test]
     fn flag_as_well_too() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well too, specifically.",
             RedundantAdditiveAdverbs::default(),
             "Yeah, we definitely miss him on this episode here, but you could probably get him on a podcast that's more focused on what Equinix is doing as well, specifically.",
@@ -128,7 +128,7 @@ mod tests {
 
     #[test]
     fn flag_too_also() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "The #1 uptime service with many servers and is easy to setup. It is free too also.",
             RedundantAdditiveAdverbs::default(),
             "The #1 uptime service with many servers and is easy to setup. It is free also.",
@@ -164,7 +164,7 @@ mod tests {
 
     #[test]
     fn flag_too_as_well() {
-        assert_top3_suggestion_result(
+        assert_suggestion_result(
             "Module name itself was changed too as well.",
             RedundantAdditiveAdverbs::default(),
             "Module name itself was changed as well.",

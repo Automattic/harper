@@ -19,7 +19,7 @@ pub enum SuggestionPreference {
 use SuggestionPreference::*;
 
 pub struct Touristic {
-    expr: Box<dyn crate::expr::Expr>,
+    expr: LongestMatchOf,
 }
 
 // "touristy" doesn't sound natural with these words
@@ -79,9 +79,7 @@ impl Default for Touristic {
             Box::new(SequenceExpr::default().t_aco("touristic")),
         ]);
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -89,7 +87,7 @@ impl ExprLinter for Touristic {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -110,7 +108,7 @@ impl ExprLinter for Touristic {
                 0
             }
             (3, true, false) => {
-                let next_word = toks[2].span.get_content_string(src);
+                let next_word = toks[2].get_str(src);
                 let next_kind = &toks[2].kind;
 
                 if next_kind.is_noun() {
@@ -133,9 +131,9 @@ impl ExprLinter for Touristic {
                 2
             }
             (5, _, _) => {
-                let _prev_word = toks[0].span.get_content_string(src).to_lowercase();
+                let _prev_word = toks[0].get_str(src).to_lowercase();
                 let prev_kind = &toks[0].kind;
-                let next_word = toks[4].span.get_content_string(src).to_lowercase();
+                let next_word = toks[4].get_str(src).to_lowercase();
                 let next_kind = &toks[4].kind;
 
                 if prev_kind.is_adverb() {

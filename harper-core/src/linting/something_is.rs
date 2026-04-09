@@ -6,7 +6,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct SomethingIs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SomethingIs {
@@ -18,9 +18,7 @@ impl Default for SomethingIs {
             .then_optional(SequenceExpr::default().then_one_or_more_adverbs().t_ws())
             .then_kind_any(&[TokenKind::is_verb_progressive_form]);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -28,12 +26,12 @@ impl ExprLinter for SomethingIs {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offender = matched_tokens.first()?;
-        let original = offender.span.get_content(source);
+        let original = offender.get_ch(source);
         let stem_len = original.len().checked_sub(1)?;
         let stem = original[..stem_len].to_vec();
 
@@ -65,9 +63,7 @@ impl ExprLinter for SomethingIs {
 #[cfg(test)]
 mod tests {
     use super::SomethingIs;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fixes_somethings_going() {
@@ -125,11 +121,10 @@ mod tests {
 
     #[test]
     fn offers_is_expansion() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "Somethings going wrong.",
             SomethingIs::default(),
             "Something is going wrong.",
-            1,
         );
     }
 

@@ -690,24 +690,25 @@ checksum = "1e748733b7cbc798e1434b6ac524f0c1ff2ab456fe201501e6497c8417a4fc33"
 
 [[package]]
 name = "cached"
-version = "0.56.0"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "801927ee168e17809ab8901d9f01f700cd7d8d6a6527997fee44e4b0327a253c"
+checksum = "53b6f5d101f0f6322c8646a45b7c581a673e476329040d97565815c2461dd0c4"
 dependencies = [
  "ahash",
  "cached_proc_macro",
  "cached_proc_macro_types",
- "hashbrown 0.15.5",
+ "hashbrown 0.16.1",
  "once_cell",
+ "parking_lot",
  "thiserror 2.0.18",
  "web-time",
 ]
 
 [[package]]
 name = "cached_proc_macro"
-version = "0.25.0"
+version = "0.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9225bdcf4e4a9a4c08bf16607908eb2fbf746828d5e0b5e019726dbf6571f201"
+checksum = "8ebcf9c75f17a17d55d11afc98e46167d4790a263f428891b8705ab2f793eca3"
 dependencies = [
  "darling 0.20.11",
  "proc-macro2",
@@ -873,6 +874,15 @@ dependencies = [
  "anstyle",
  "clap_lex",
  "strsim",
+]
+
+[[package]]
+name = "clap_complete"
+version = "4.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "19c9f1dde76b736e3681f28cec9d5a61299cbaae0fce80a68e43724ad56031eb"
+dependencies = [
+ "clap",
 ]
 
 [[package]]
@@ -2725,7 +2735,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2736,7 +2746,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2749,6 +2759,7 @@ dependencies = [
  "anyhow",
  "ariadne",
  "clap",
+ "clap_complete",
  "dirs 6.0.0",
  "enum_dispatch",
  "harper-asciidoc",
@@ -2773,7 +2784,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2810,7 +2821,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -2826,7 +2837,7 @@ dependencies = [
  "itertools 0.14.0",
  "levenshtein_automata",
  "lru",
- "ordered-float 5.1.0",
+ "ordered-float 5.3.0",
  "paste",
  "pulldown-cmark",
  "quickcheck",
@@ -2844,12 +2855,12 @@ dependencies = [
  "unicode-blocks",
  "unicode-script",
  "unicode-width",
- "zip 8.1.0",
+ "zip 8.5.0",
 ]
 
 [[package]]
 name = "harper-html"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2860,7 +2871,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2871,7 +2882,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2882,7 +2893,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2893,7 +2904,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2924,7 +2935,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2942,7 +2953,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2953,7 +2964,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2964,7 +2975,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2972,7 +2983,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2983,7 +2994,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -3002,11 +3013,11 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "1.10.0"
+version = "2.0.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
- "ordered-float 5.1.0",
+ "ordered-float 5.3.0",
  "paste",
  "typst-syntax",
 ]
@@ -3347,9 +3358,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.13.0"
+version = "2.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7714e70437a7dc3ac8eb7e6f8df75fd8eb422675fc7678aff7364301092b1017"
+checksum = "45a8a2b9cb3e0b0c1803dbb0758ffac5de2f425b23c28f518faabd9d805342ff"
 dependencies = [
  "equivalent",
  "hashbrown 0.16.1",
@@ -3500,9 +3511,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.183"
+version = "0.2.184"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b5b646652bf6661599e1da8901b3b9522896f01e736bad5f723fe7a3a27f899d"
+checksum = "48f5d2a454e16a5ea0f4ced81bd44e4cfc7bd3a507b61887c99fd3538b28e4af"
 
 [[package]]
 name = "libfuzzer-sys"
@@ -4088,9 +4099,9 @@ dependencies = [
 
 [[package]]
 name = "ordered-float"
-version = "5.1.0"
+version = "5.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f4779c6901a562440c3786d08192c6fbda7c1c2060edd10006b05ee35d10f2d"
+checksum = "b7d950ca161dc355eaf28f82b11345ed76c6e1f6eb1f4f4479e0323b9e2fbd0e"
 dependencies = [
  "num-traits",
  "rand 0.8.5",
@@ -4334,9 +4345,9 @@ checksum = "3eb8486b569e12e2c32ad3e204dbaba5e4b5b216e9367044f25f1dba42341773"
 
 [[package]]
 name = "pulldown-cmark"
-version = "0.13.1"
+version = "0.13.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83c41efbf8f90ac44de7f3a868f0867851d261b56291732d0cbf7cceaaeb55a6"
+checksum = "7c3a14896dfa883796f1cb410461aef38810ea05f2b2c33c5aded3649095fdad"
 dependencies = [
  "bitflags 2.11.0",
  "getopts",
@@ -4865,9 +4876,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.103.8"
+version = "0.103.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ffdfa2f5286e2247234e03f680868ac2815974dc39e00ea15adc445d0aafe52"
+checksum = "df33b2b81ac578cabaf06b89b0631153a3f416b0a886e8a7a1707fb51abbd1ef"
 dependencies = [
  "ring",
  "rustls-pki-types",
@@ -5350,9 +5361,9 @@ dependencies = [
 
 [[package]]
 name = "tar"
-version = "0.4.44"
+version = "0.4.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d863878d212c87a19c1a610eb53bb01fe12951c0501cf5a0d65f724914a667a"
+checksum = "22692a6476a21fa75fdfc11d452fda482af402c008cdbaf3476414e122040973"
 dependencies = [
  "filetime",
  "libc",
@@ -5873,9 +5884,9 @@ dependencies = [
 
 [[package]]
 name = "tracing-subscriber"
-version = "0.3.22"
+version = "0.3.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f30143827ddab0d256fd843b7a66d164e9f271cfa0dde49142c5ca0ca291f1e"
+checksum = "cb7f578e5945fb242538965c2d0b04418d38ec25c79d160cd279bf0731c8d319"
 dependencies = [
  "nu-ansi-term",
  "sharded-slab",
@@ -6023,9 +6034,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-ink-lbz"
-version = "0.0.1"
+version = "0.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a44bf578477077d12eb671fd67fc47ab71516a1f3913a5dac96346a8faa33210"
+checksum = "d57e430493707c89d223ca6c9743a12915a20d3b97c5f8fea16065c2e823747e"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -6139,9 +6150,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-rust"
-version = "0.24.0"
+version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4b9b18034c684a2420722be8b2a91c9c44f2546b631c039edf575ccba8c61be1"
+checksum = "439e577dbe07423ec2582ac62c7531120dbfccfa6e5f92406f93dd271a120e45"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -6149,9 +6160,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-scala"
-version = "0.24.0"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7516aeb3d1f40ede8e3045b163e86993b3434514dd06c34c0b75e782d9a0b251"
+checksum = "83079f50ea7d03e0faf6be6260ed97538e6df7349ec3cbcbf5771f7b38e3c8b7"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -6439,9 +6450,9 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "uuid"
-version = "1.22.0"
+version = "1.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a68d3c8f01c0cfa54a75291d83601161799e4a89a39e0929f4b0354d88757a37"
+checksum = "5ac8b6f42ead25368cf5b098aeb3dc8a1a2c05a3eee8a9a1a68c640edbfc79d9"
 dependencies = [
  "getrandom 0.4.1",
  "js-sys",
@@ -7538,9 +7549,9 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "8.1.0"
+version = "8.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e499faf5c6b97a0d086f4a8733de6d47aee2252b8127962439d8d4311a73f72"
+checksum = "2726508a48f38dceb22b35ecbbd2430efe34ff05c62bd3285f965d7911b33464"
 dependencies = [
  "crc32fast",
  "flate2",

@@ -5,26 +5,24 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind};
 
 pub struct ThoughThought {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for ThoughThought {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::default()
-                    .then_kind_is_but_is_not(
-                        TokenKind::is_subject_pronoun,
-                        TokenKind::is_object_pronoun,
-                    )
-                    .t_ws()
-                    .t_aco("though")
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(SequenceExpr::default().then_subject_pronoun()),
-                        Box::new(SequenceExpr::aco("that")),
-                    ]),
-            ),
+            expr: SequenceExpr::default()
+                .then_kind_is_but_is_not(
+                    TokenKind::is_subject_pronoun,
+                    TokenKind::is_object_pronoun,
+                )
+                .t_ws()
+                .t_aco("though")
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(SequenceExpr::default().then_subject_pronoun()),
+                    Box::new(SequenceExpr::aco("that")),
+                ]),
         }
     }
 }
@@ -33,14 +31,12 @@ impl ExprLinter for ThoughThought {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let tok = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['t', 'h', 'o', 'u', 'g', 'h'])
+            tok.get_ch(src).eq_ch(&['t', 'h', 'o', 'u', 'g', 'h'])
         })?;
 
         Some(Lint {
@@ -48,7 +44,7 @@ impl ExprLinter for ThoughThought {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "thought",
-                tok.span.get_content(src),
+                tok.get_ch(src),
             )],
             message: "Is this a typo for `thought`?".to_string(),
             ..Default::default()

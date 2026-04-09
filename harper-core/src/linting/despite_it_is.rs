@@ -19,7 +19,7 @@ use crate::{
 /// - "despite it is" -> "despite it being" or "despite its being"
 /// - "despite I am" -> "despite me being" or "despite my being"
 pub struct DespiteItIs {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for DespiteItIs {
@@ -33,9 +33,7 @@ impl Default for DespiteItIs {
             .t_ws()
             .then(be);
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -47,7 +45,7 @@ impl ExprLinter for DespiteItIs {
     }
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint_with_context(
@@ -68,8 +66,8 @@ impl ExprLinter for DespiteItIs {
             return None;
         }
 
-        let subj_chars = subj.span.get_content(src);
-        let be_chars = be.span.get_content(src);
+        let subj_chars = subj.get_ch(src);
+        let be_chars = be.get_ch(src);
         let pron_be_toks = &toks[2..5];
 
         let subj_pers = subj_kind.get_pronoun_person()?;
@@ -92,9 +90,9 @@ impl ExprLinter for DespiteItIs {
             (Person::Second, true, true) => ("you", "your"),
             (Person::Third, false, true) => ("them", "their"),
             (Person::Third, true, false) => match subj_chars {
-                chs if chs.eq_ignore_ascii_case_chars(&['h', 'e']) => ("him", "his"),
-                chs if chs.eq_ignore_ascii_case_chars(&['s', 'h', 'e']) => ("her", "her"),
-                chs if chs.eq_ignore_ascii_case_chars(&['i', 't']) => ("it", "its"),
+                chs if chs.eq_ch(&['h', 'e']) => ("him", "his"),
+                chs if chs.eq_ch(&['s', 'h', 'e']) => ("her", "her"),
+                chs if chs.eq_ch(&['i', 't']) => ("it", "its"),
                 _ => return None,
             },
             _ => return None,

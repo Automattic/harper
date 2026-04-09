@@ -6,7 +6,7 @@ use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
 pub struct OnceOrTwice {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for OnceOrTwice {
@@ -17,9 +17,7 @@ impl Default for OnceOrTwice {
             .then_whitespace()
             .t_aco("twice");
 
-        Self {
-            expr: Box::new(pattern),
-        }
+        Self { expr: pattern }
     }
 }
 
@@ -27,13 +25,13 @@ impl ExprLinter for OnceOrTwice {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let article = matched_tokens.iter().find(|token| {
-            token.kind.is_word() && token.span.get_content(source).eq_ignore_ascii_case_str("a")
-        })?;
+        let article = matched_tokens
+            .iter()
+            .find(|token| token.kind.is_word() && token.get_ch(source).eq_str("a"))?;
 
         let span = article.span;
         let original = span.get_content(source);

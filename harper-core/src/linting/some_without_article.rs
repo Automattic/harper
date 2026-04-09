@@ -6,7 +6,7 @@ use crate::{
 };
 
 pub struct SomeWithoutArticle {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for SomeWithoutArticle {
@@ -15,9 +15,7 @@ impl Default for SomeWithoutArticle {
             .t_ws()
             .then_any_capitalization_of("some");
 
-        Self {
-            expr: Box::new(expr),
-        }
+        Self { expr }
     }
 }
 
@@ -25,13 +23,13 @@ impl ExprLinter for SomeWithoutArticle {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens.span()?;
         let template = span.get_content(source);
-        let some_chars = matched_tokens.last()?.span.get_content(source);
+        let some_chars = matched_tokens.last()?.get_ch(source);
 
         let suggestions = vec![
             Suggestion::ReplaceWith(some_chars.to_vec()),
@@ -56,9 +54,7 @@ impl ExprLinter for SomeWithoutArticle {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
-        assert_lint_count, assert_nth_suggestion_result, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     use super::SomeWithoutArticle;
 
@@ -91,11 +87,10 @@ mod tests {
 
     #[test]
     fn second_suggestion_produces_the_same() {
-        assert_nth_suggestion_result(
+        assert_suggestion_result(
             "We kept the some approach from last year.",
             SomeWithoutArticle::default(),
             "We kept the same approach from last year.",
-            1,
         );
     }
 

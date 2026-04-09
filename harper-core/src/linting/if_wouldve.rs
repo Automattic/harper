@@ -6,28 +6,26 @@ use crate::token_string_ext::TokenStringExt;
 use crate::{CharStringExt, Lint, Token};
 
 pub struct IfWouldve {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for IfWouldve {
     fn default() -> Self {
         Self {
-            expr: Box::new(
-                SequenceExpr::aco("if")
-                    .t_ws()
-                    .then(NominalPhrase)
-                    .t_ws()
-                    .then_any_of(vec![
-                        Box::new(
-                            SequenceExpr::word_set(&["would", "had"])
-                                .t_ws()
-                                .then_word_set(&["have", "of"]),
-                        ),
-                        Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
-                    ])
-                    .t_ws()
-                    .then_verb_past_participle_form(),
-            ),
+            expr: SequenceExpr::aco("if")
+                .t_ws()
+                .then(NominalPhrase)
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(
+                        SequenceExpr::word_set(&["would", "had"])
+                            .t_ws()
+                            .then_word_set(&["have", "of"]),
+                    ),
+                    Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
+                ])
+                .t_ws()
+                .then_verb_past_participle_form(),
         }
     }
 }
@@ -36,7 +34,7 @@ impl ExprLinter for IfWouldve {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     /// Identifies and corrects incorrect conditional phrases like "would've", "would have", "would of", etc.
@@ -51,8 +49,8 @@ impl ExprLinter for IfWouldve {
             .rev()
             .step_by(2) // Check every other token since we're looking at pairs
             .find_map(|i| {
-                let prev = toks[i - 2].span.get_content(src);
-                let curr = toks[i].span.get_content(src);
+                let prev = toks[i - 2].get_ch(src);
+                let curr = toks[i].get_ch(src);
 
                 let would_had = &["would", "had"];
 

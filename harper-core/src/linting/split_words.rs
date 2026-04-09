@@ -46,7 +46,7 @@ impl ExprLinter for SplitWords {
             return None;
         }
 
-        let chars = &word.span.get_content(source);
+        let chars = &word.get_ch(source);
 
         // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);
@@ -147,7 +147,6 @@ impl ExprLinter for SplitWords {
 mod tests {
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
-        assert_top3_suggestion_result,
     };
 
     use super::SplitWords;
@@ -228,11 +227,38 @@ mod tests {
 
     #[test]
     fn test_atall_to_a_tall() {
-        assert_top3_suggestion_result("atall", SplitWords::default(), "a tall");
+        assert_suggestion_result("atall", SplitWords::default(), "a tall");
     }
 
     #[test]
     fn atall_should_split_to_a_tall_and_at_all() {
         assert_good_and_bad_suggestions("atall", SplitWords::default(), &["a tall", "at all"], &[]);
+    }
+
+    #[test]
+    fn issue_2763_leaves() {
+        assert_suggestion_result(
+            "I love to eat cornleaves.",
+            SplitWords::default(),
+            "I love to eat corn leaves.",
+        );
+    }
+
+    #[test]
+    fn issue_2763_husks() {
+        assert_suggestion_result(
+            "I love to eat cornhusks.",
+            SplitWords::default(),
+            "I love to eat corn husks.",
+        );
+    }
+
+    #[test]
+    fn issue_2763_singular() {
+        assert_suggestion_result(
+            "I would love to eat a cornleaf.",
+            SplitWords::default(),
+            "I would love to eat a corn leaf.",
+        );
     }
 }

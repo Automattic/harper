@@ -152,6 +152,23 @@ pub fn followed_by_word(
     false
 }
 
+pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
+    context
+        .and_then(|(_, after)| after.first())
+        .is_some_and(|hy| hy.kind.is_hyphen())
+}
+
+/// Counterintuitively, a sentence includes the whitespace after
+/// the sentence-final punctuation.
+pub fn at_start_of_sentence(context: Option<(&[Token], &[Token])>) -> bool {
+    if let Some((before, _)) = context
+        && (before.is_empty() || (before.len() == 1 && before[0].kind.is_whitespace()))
+    {
+        return true;
+    }
+    false
+}
+
 pub fn preceded_by_word(
     context: Option<(&[Token], &[Token])>,
     predicate: impl Fn(&Token) -> bool,
