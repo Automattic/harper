@@ -70,12 +70,17 @@ pub enum DialectFlagsEnum {
 }
 
 impl DialectFlagsEnum {
-    pub fn is_dialect_enabled_strict(&self, dialect: impl Dialect) {
-        match self {
-            DialectFlagsEnum::English(english_dialect_flags) => {
-                let english_dialect: EnglishDialect = dialect.try_into();
-            }
-            DialectFlagsEnum::Portuguese(portuguese_dialect_flags) => todo!(),
+    pub fn is_dialect_enabled_strict(&self, dialect: DialectsEnum) -> bool {
+        match (self, dialect) {
+            (
+                DialectFlagsEnum::English(english_dialect_flags),
+                DialectsEnum::English(english_dialect),
+            ) => english_dialect_flags.is_dialect_enabled_strict(english_dialect),
+            (
+                DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
+                DialectsEnum::Portuguese(portuguese_dialect),
+            ) => portuguese_dialect_flags.is_dialect_enabled_strict(portuguese_dialect),
+            _ => panic!("is_dialect_enabled_strict checking for wrong dialect variant"),
         }
     }
 }

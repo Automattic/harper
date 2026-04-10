@@ -10,11 +10,6 @@ use harper_core::{
 
 use harper_core::languages::LanguageFamily;
 use harper_core::parsers::{Parser, PlainPortuguese};
-use harper_core::spell::Dictionary;
-use harper_core::{
-    Document,
-    parsers::{MarkdownOptions, PlainEnglish},
-};
 
 /// The general trait implemented by all input types.
 pub(crate) trait InputTrait {

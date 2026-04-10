@@ -3,8 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use harper_core::Dialect;
-use harper_core::EnglishDialect;
+use harper_core::{Dialect, DialectsEnum};
 use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
@@ -18,12 +17,12 @@ fn get_text_dir() -> PathBuf {
 /// Tries to find a dialect override from a given file path. Returns `None` if the number of
 /// dialect overrides found is not 1.
 #[must_use]
-fn try_get_dialect_override(path: &Path) -> Option<Dialect> {
+fn try_get_dialect_override(path: &Path) -> Option<DialectsEnum> {
     path.file_stem()?
         .to_string_lossy()
         .split('.')
         .filter_map(Dialect::try_from_abbr)
-        .exactly_one()
+        .exactly_one() // If we find multiple overrides, it's unlikely that a dialect override is intended.
         .ok()
 }
 
@@ -49,7 +48,7 @@ pub fn get_text_files() -> Vec<PathBuf> {
 fn tag_file(
     text_file: &Path,
     snapshot_file: &Path,
-    create_snapshot: impl Fn(&str, Option<EnglishDialect>) -> String,
+    create_snapshot: impl Fn(&str, Option<DialectsEnum>) -> String,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let source = std::fs::read_to_string(text_file)?.replace("\r\n", "\n");
     let dialect_override = try_get_dialect_override(text_file);
@@ -81,7 +80,7 @@ fn get_snapshot_file(text_file: &Path, snapshot_dir: &Path, ext: &str) -> PathBu
 pub fn snapshot_all_text_files(
     out_dir: &str,
     snapshot_ext: &str,
-    create_snapshot: impl Copy + Fn(&str, Option<EnglishDialect>) -> String + 'static + Sync,
+    create_snapshot: impl Copy + Fn(&str, Option<DialectsEnum>) -> String + 'static + Sync,
 ) {
     let snapshot_dir = get_text_dir().join(out_dir);
     std::fs::create_dir_all(&snapshot_dir).expect("Failed to create snapshot directory");

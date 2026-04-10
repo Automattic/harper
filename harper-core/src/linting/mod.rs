@@ -9,7 +9,7 @@ pub mod suggestion;
 pub use expr_linter::Chunk;
 pub use expr_linter::ExprLinter;
 pub use lint::Lint;
-pub use lint_group::LintGroup;
+pub use lint_group::{LintGroup, LintGroupConfig};
 pub use lint_kind::LintKind;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 

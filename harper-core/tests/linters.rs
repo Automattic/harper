@@ -9,11 +9,12 @@
 //! Note: This test will fail if the snapshot files are not up to date. This
 //! ensures that CI will fail if linters change their behavior.
 
+use harper_core::DialectsEnum;
 use harper_core::languages::Language;
 use harper_core::languages::LanguageFamily;
 use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document, EnglishDialect,
+    Document, EnglishDialect,
     linting::{LintGroup, Linter},
 };
 
@@ -196,13 +197,13 @@ fn test_most_lints() {
         let dict = FstDictionary::curated(LanguageFamily::English);
         let document = Document::new_markdown_default(source, &dict);
 
-        let mut linter = LintGroup::new_curated(
-            dict,
-            Language::English(dialect_override.unwrap_or_else(|| {
-                EnglishDialect::try_guess_from_document(&document)
-                    .unwrap_or(EnglishDialect::American)
-            })),
-        );
+        let dialect_override = if let Some(DialectsEnum::English(dialect)) = dialect_override {
+            dialect
+        } else {
+            EnglishDialect::American
+        };
+
+        let mut linter = LintGroup::new_curated(dict, Language::English(dialect_override));
 
         let mut lints = linter.lint(&document);
         lints.sort_by(|a, b| {

@@ -84,7 +84,7 @@ pub enum Dialect {
 impl From<Dialect> for harper_core::EnglishDialect {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => harper_core::EnglsihDialect::American,
+            Dialect::American => harper_core::EnglishDialect::American,
             Dialect::Canadian => harper_core::EnglishDialect::Canadian,
             Dialect::Australian => harper_core::EnglishDialect::Australian,
             Dialect::British => harper_core::EnglishDialect::British,
@@ -412,7 +412,7 @@ impl Linter {
                 (
                     word.chars().collect::<CharString>(),
                     DictWordMetadata {
-                        dialects: DialectFlags::from_dialect(self.dialect.into()),
+                        dialects: DialectFlags::from_dialect(self.dialect),
                         ..Default::default()
                     },
                 )
