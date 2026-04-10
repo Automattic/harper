@@ -21,6 +21,7 @@ impl Linter for CapitalizePersonalPronouns {
                         | ['i', '\'', 'l', 'l']
                         | ['i', '\'', 'm']
                         | ['i', '\'', 'v', 'e']
+                        | ['i', 'v', 'e']
                 ) {
                     let mut replacement = span_content.to_vec();
                     replacement[0] = 'I';
