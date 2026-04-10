@@ -276,6 +276,16 @@ mod tests {
     }
 
     #[test]
+    fn corrects_doesthe() {
+        assert_suggestion_result("doesthe", SplitWords::default(), "does the");
+    }
+
+    #[test]
+    fn corrects_splitwords() {
+        assert_suggestion_result("splitwords", SplitWords::default(), "split words");
+    }
+
+    #[test]
     fn test_atall_to_at_all() {
         assert_suggestion_result(
             "don't seem to support symbolic links atall.",
