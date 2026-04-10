@@ -1,15 +1,34 @@
-# Clean build artifacts (but keep dependencies) by matching patterns in .gitignore
+# Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
-  cargo clean
-  git clean -fdx --exclude=node_modules --exclude=.env* --exclude=*.log --exclude=secrets.*.js
+  #!/usr/bin/env bash
+  set -eo pipefail
 
-# Hard clean all build artifacts and dependencies by matching the .gitignore patterns
-hard-clean:
+  # Clean all harper-* directories as they all have a rust backend and build into target
   cargo clean
-  git clean -fdx --exclude=.env* --exclude=*.log --exclude=secrets.*.js # Remove all untracked files matching .gitignore patterns
+
+  # Handle packages/*
+
+  # The path stem is not combined into one file expansion because if they pop up into
+  # another directory, there is a chance they should not be removed.
+  rm -rf packages/chrome-plugin/{build,package}
+  rm -rf packages/components/{.svelte-kit,dist}
+  rm -rf packages/harper.js/{dist,markdown,temp}
+  rm -rf packages/lint-framework/{dist}
+  rm -rf packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
+  rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
+  rm -rf packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf packages/wordpress-plugin/{build,harper.zip}
+
+# Hard clean all build artifacts and dependencies
+hard-clean: soft-clean
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  # Remove all node dependencies
+  rm -rf **/node_modules 
+  # Prune node cache
   pnpm store prune
-
 
 # Format entire project
 alias fmt := format
