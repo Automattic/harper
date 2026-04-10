@@ -217,6 +217,14 @@ where
             }
         }
 
+        // When a non-3p-singular pronoun is followed by a word that is both a
+        // plural noun and a verb form (e.g. "you guys", "they colors"), the noun
+        // reading is far more likely than the verb reading.  Skip the lint to
+        // avoid false positives on common constructions like "you guys".
+        if !is_3psg && verb_tok.kind.is_plural_noun() {
+            return None;
+        }
+
         let verb_span = verb_tok.span;
         let verb_chars = verb_tok.get_ch(src);
         let verb_str = verb_tok.get_str(src);
