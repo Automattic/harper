@@ -93,7 +93,7 @@ impl ExprLinter for Damages {
                 can = CanPrecede::Noun;
             }
 
-            if prev_word.kind.is_auxiliary_verb() {
+            if prev_word.kind.is_auxiliary_verb() || prev_word.kind.is_subject_pronoun() {
                 can = if can == CanPrecede::Noun {
                     CanPrecede::EitherNounOrVerb
                 } else {
@@ -296,5 +296,13 @@ mod tests {
             "It would be useful to be able to see asset-level damages after running FDA 2.0.",
             Damages::default(),
         );
+    }
+
+    // Issues reported on GitHub or Discord
+
+    // https://discord.com/channels/1335035237213671495/1491949288060751952/1491949288060751952
+    #[test]
+    fn ignore_it_damages_the_environment() {
+        assert_no_lints("it damages the environment", Damages::default());
     }
 }
