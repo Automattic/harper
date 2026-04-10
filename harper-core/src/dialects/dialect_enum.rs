@@ -91,23 +91,11 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             (
                 DialectFlagsEnum::English(english_dialect_flags),
                 DialectsEnum::English(english_dialect),
-            ) => {
-                // panic!(
-                //     "comparing dialects {:#?} and {:#?}",
-                //     english_dialect_flags, english_dialect
-                // );
-                english_dialect_flags.is_dialect_enabled(english_dialect)
-            }
+            ) => english_dialect_flags.is_dialect_enabled(english_dialect),
             (
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
-            ) => {
-                // panic!(
-                //     "comparing dialects {:#?} and {:#?}",
-                //     portuguese_dialect_flags, portuguese_dialect
-                // );
-                portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect)
-            }
+            ) => portuguese_dialect_flags.is_dialect_enabled(portuguese_dialect),
 
             (a, b) => panic!(
                 "Trying to get dialect from wrong dialect flags enum. Comparing dialects {:#?} and {:#?}",
@@ -261,3 +249,42 @@ macro_rules! impl_from_x_for_dialect_enum {
 
 impl_from_x_for_dialect_enum!(EnglishDialect, EnglishDialectFlags, English);
 impl_from_x_for_dialect_enum!(PortugueseDialect, PortugueseDialectFlags, Portuguese);
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        DialectFlags, DialectFlagsEnum, DialectsEnum, EnglishDialect, EnglishDialectFlags,
+    };
+
+    #[test]
+    fn test_bit_or_assign_dialect_flags() {
+        let dialect_flags_a = EnglishDialectFlags::from_dialect(EnglishDialect::American);
+        let dialect_flags_b = EnglishDialectFlags::from_dialect(EnglishDialect::Indian);
+
+        let mut dialect_a = DialectFlagsEnum::English(dialect_flags_a);
+        let dialect_b = DialectFlagsEnum::English(dialect_flags_b);
+
+        dialect_a |= dialect_b;
+
+        assert_eq!(
+            dialect_a.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American)),
+            true
+        );
+        assert_eq!(
+            dialect_a.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::Indian)),
+            true
+        );
+        assert_eq!(
+            dialect_a.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::Canadian)),
+            false
+        );
+        assert_eq!(
+            dialect_a.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British)),
+            false
+        );
+        assert_eq!(
+            dialect_a.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::Australian)),
+            false
+        );
+    }
+}

@@ -51,9 +51,6 @@ impl AttributeList {
         human_readable
             .map_err(Error::from)
             .map(|mut parsed| {
-                for property in parsed.properties.values_mut() {
-                    property.metadata.dialects = dialect;
-                }
                 for expansion in parsed.affixes.values_mut() {
                     for metadata_expansion in expansion.target.as_mut_slice() {
                         metadata_expansion.metadata.dialects = dialect;
@@ -86,7 +83,6 @@ impl AttributeList {
         word_map: &mut WordMap,
         language: LanguageFamily,
     ) {
-        println!("Word is {}", annotated_word.letters.to_string());
         // Pre-allocate space in the destination map for better performance
         word_map.reserve(annotated_word.annotations.len() + 1);
 
@@ -148,7 +144,6 @@ impl AttributeList {
                     for target in &expansion.target {
                         if let Some(condition) = &target.if_base {
                             // Store conditional metadata to be applied later
-                            println!("Target metadata is {:#?}", target.metadata.dialects);
                             conditional_expansion_metadata.push((
                                 replaced.clone(),
                                 target.metadata.clone(),
@@ -246,7 +241,6 @@ impl AttributeList {
             }
 
             // Apply the conditional metadata
-            println!("Aqui 7?");
             word_map
                 .get_metadata_mut_chars(&letters)
                 .unwrap()
