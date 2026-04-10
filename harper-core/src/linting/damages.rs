@@ -93,7 +93,10 @@ impl ExprLinter for Damages {
                 can = CanPrecede::Noun;
             }
 
-            if prev_word.kind.is_auxiliary_verb() || prev_word.kind.is_subject_pronoun() {
+            if prev_word.kind.is_auxiliary_verb()
+                || (prev_word.kind.is_subject_pronoun()
+                    && prev_word.kind.is_third_person_singular_pronoun())
+            {
                 can = if can == CanPrecede::Noun {
                     CanPrecede::EitherNounOrVerb
                 } else {
