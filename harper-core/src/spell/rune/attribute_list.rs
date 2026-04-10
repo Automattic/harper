@@ -41,24 +41,28 @@ impl AttributeList {
 
     pub fn parse(source: &str, language: LanguageFamily) -> Result<Self, Error> {
         let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
-        let dialect = match language {
+        let dialects = match language {
             LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::empty()),
             LanguageFamily::Portuguese => {
                 DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
             }
         };
 
+        println!("dialects is {:#?}", dialects);
+
+        // This whole part is so that the DialectFlags are correct in the properties as
+        // well as in the expansions
         human_readable
             .map_err(Error::from)
             .map(|mut parsed| {
                 for expansion in parsed.affixes.values_mut() {
                     for metadata_expansion in expansion.target.as_mut_slice() {
-                        metadata_expansion.metadata.dialects = dialect;
+                        metadata_expansion.metadata.dialects = dialects;
                         if let Some(base) = metadata_expansion.if_base.as_mut() {
-                            base.dialects = dialect;
+                            base.dialects = dialects;
                         }
                     }
-                    expansion.base_metadata.dialects = dialect;
+                    expansion.base_metadata.dialects = dialects;
                 }
 
                 parsed
@@ -110,6 +114,10 @@ impl AttributeList {
             let Some(property) = self.properties.get(attr) else {
                 continue;
             };
+            println!(
+                "base_metadata: {:#?}\nproperty.metadata: {:#?}",
+                base_metadata.dialects, property.metadata.dialects
+            );
             base_metadata.merge(&property.metadata);
         }
 
