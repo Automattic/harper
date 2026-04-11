@@ -1,4 +1,6 @@
 //! Counts heap allocations made by `fuzzy_match` across the benchmark word lists.
+//! Allocation churn dominates WASM cost, so reducing allocs/word directly
+//! improves spell-check latency on lower-end devices.
 //!
 //! Run with: `cargo run --example alloc_profile -p harper-core --release`
 
