@@ -109,9 +109,6 @@ impl ExprLinter for SplitWords {
             };
             if !rem_meta.common {
                 continue;
-            };
-            if !rem_meta.common {
-                continue;
             }
 
             if is_anchor_split(cand_meta, candidate) || is_anchor_split(rem_meta, remainder) {
