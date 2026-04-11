@@ -114,7 +114,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+            if is_anchor_split(cand_meta, candidate) || is_anchor_split(rem_meta, remainder) {
                 has_anchor_split = true;
             }
 
