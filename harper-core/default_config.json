@@ -2247,6 +2247,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OkToOkay",
+								"state": true,
+								"label": "Ok To Okay"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SpellCheck",
 								"state": true,
 								"label": "Spell Check"

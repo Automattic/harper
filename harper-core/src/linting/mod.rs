@@ -615,7 +615,8 @@ pub mod tests {
         // Lint current text and try each suggestion branch
         let chars: Vec<char> = text.chars().collect();
         let document = create_document(&chars, doc_type);
-        let lints = linter.lint(&document);
+        let mut lints = linter.lint(&document);
+        lints.sort_by_key(|l| l.priority);
 
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {

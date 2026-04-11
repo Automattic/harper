@@ -1,7 +1,39 @@
+# Clean build artifacts (but keep dependencies)
+alias clean := soft-clean
+soft-clean:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  # Clean all harper-* directories as they all have a rust backend and build into target
+  cargo clean
+
+  # Handle packages/*
+
+  # The path stem is not combined into one file expansion because if they pop up into
+  # another directory, there is a chance they should not be removed.
+  rm -rf packages/chrome-plugin/{build,package}
+  rm -rf packages/components/{.svelte-kit,dist}
+  rm -rf packages/harper.js/{dist,markdown,temp}
+  rm -rf packages/lint-framework/{dist}
+  rm -rf packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
+  rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
+  rm -rf packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf packages/wordpress-plugin/{build,harper.zip}
+
+# Hard clean all build artifacts and dependencies
+hard-clean: soft-clean
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  # Remove all node dependencies
+  rm -rf **/node_modules 
+  # Prune node cache
+  pnpm store prune
+
 # Format entire project
 alias fmt := format
 format:
-  cargo fmt  
+  cargo fmt
   pnpm format
 
 # Build the shared component library
@@ -746,3 +778,75 @@ run-snapshots:
 
   cd harper-core
   cargo test -- test_pos_tagger test_most_lints
+
+# list configuration groups by label and description, with settings if mode is verbose
+ls-config mode="brief":
+  #! /usr/bin/env node
+  const verbose = '{{mode}}' === 'verbose';
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  const formatLine = (items, maxLen = 120) => {
+    const lines = [];
+    let line = '  ';
+    items.forEach((item, i) => {
+      const comma = i < items.length - 1 ? ', ' : '';
+      const wouldExceed = line.length + item.length + comma.length > maxLen;
+      if (wouldExceed && line !== '  ') {
+        lines.push(line);
+        line = '  ';
+      }
+      line += item + comma;
+    });
+    lines.push(line);
+    return lines.join('\n');
+  };
+  
+  config.forEach(g => {
+    console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`);
+    if (verbose) {
+      const names = g.Group.child.settings.map(s => s.Bool.name);
+      console.log(formatLine(names));
+    }
+  });
+
+# Search configuration groups for substring in label or description
+grep-config query:
+  #! /usr/bin/env node
+  const q = '{{query}}'.toLowerCase();
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
+        .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
+
+# search configuration group settings for substring in name
+grep-config-settings query:
+  #! /usr/bin/env node
+  const q = '{{query}}'.toLowerCase();
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  const formatLine = (items, maxLen = 120) => {
+    const lines = [];
+    let line = '  ';
+    items.forEach((item, i) => {
+      const comma = i < items.length - 1 ? ', ' : '';
+      const wouldExceed = line.length + item.length + comma.length > maxLen;
+      if (wouldExceed && line !== '  ') {
+        lines.push(line);
+        line = '  ';
+      }
+      line += item + comma;
+    });
+    lines.push(line);
+    return lines.join('\n');
+  };
+  
+  config.forEach(g => {
+    const matches = g.Group.child.settings
+      .filter(s => s.Bool.name.toLowerCase().includes(q))
+      .map(s => s.Bool.name);
+    
+    if (matches.length) {
+      console.log(`\x1b[1m${g.Group.label}\x1b[0m:`);
+      console.log(`\x1b[36m${formatLine(matches)}\x1b[0m`);
+    }
+  });

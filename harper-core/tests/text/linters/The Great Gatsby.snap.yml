@@ -213,16 +213,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-      72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
-         |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
-      73 | bungalow at eighty a month, but at the last minute the firm ordered him to
-Suggest:
-  - Replace with: “weather beaten”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       74 | Washington, and I went out to the country alone. I had a dog—at least I had him
@@ -635,16 +625,6 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     529 | the whole evening had been a trick of some sort to exact a contributary emotion
-         |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
-     530 | from me. I waited, and sure enough, in a moment she looked at me with an
-Suggest:
-  - Replace with: “con tributary”
 
 
 
