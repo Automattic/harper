@@ -89,7 +89,10 @@ impl Config {
         let workspace_root = workspace_root.as_path();
 
         let Value::Object(value) = value else {
-            bail!("Settings must be an object.");
+            // Some editors (e.g. Kate) send null or a non-object value on
+            // workspace/didChangeConfiguration.  Treat this the same as
+            // an empty settings object — return defaults rather than erroring.
+            return Ok(base);
         };
 
         let Some(Value::Object(value)) = value.get("harper-ls") else {
