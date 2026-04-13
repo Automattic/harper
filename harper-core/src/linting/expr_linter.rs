@@ -77,8 +77,26 @@ pub trait ExprLinter: LSend {
 
 /// Helper function to find the only occurrence of a token matching a predicate
 ///
-/// Returns `Some(token)` if exactly one token matches the predicate, `None` otherwise.
+/// Returns `Some` if exactly one token matches the predicate, `None` otherwise.
 /// TODO: This can be used in the [`ThenThan`] linter when #1819 is merged.
+pub fn find_the_only_token_idx_matching<F>(
+    tokens: &[Token],
+    source: &[char],
+    predicate: F,
+) -> Option<usize>
+where
+    F: Fn(&Token, &[char]) -> bool,
+{
+    let mut matches = tokens
+        .iter()
+        .enumerate()
+        .filter(|(_, tok)| predicate(tok, source));
+    match (matches.next(), matches.next()) {
+        (Some((idx, _)), None) => Some(idx),
+        _ => None,
+    }
+}
+
 pub fn find_the_only_token_matching<'a, F>(
     tokens: &'a [Token],
     source: &[char],
@@ -87,11 +105,7 @@ pub fn find_the_only_token_matching<'a, F>(
 where
     F: Fn(&Token, &[char]) -> bool,
 {
-    let mut matches = tokens.iter().filter(|&tok| predicate(tok, source));
-    match (matches.next(), matches.next()) {
-        (Some(tok), None) => Some(tok),
-        _ => None,
-    }
+    find_the_only_token_idx_matching(tokens, source, predicate).map(|i| &tokens[i])
 }
 
 impl<L, U> Linter for L
@@ -153,9 +167,19 @@ pub fn followed_by_word(
 }
 
 pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
-    context
-        .and_then(|(_, after)| after.first())
-        .is_some_and(|hy| hy.kind.is_hyphen())
+    matches!(context, Some((_, after)) if after.first().is_some_and(|t| t.kind.is_hyphen()))
+}
+
+pub fn followed_by_token(
+    context: Option<(&[Token], &[Token])>,
+    predicate: impl Fn(&Token) -> bool,
+) -> bool {
+    if let Some((_, after)) = context
+        && let [nt, ..] = after
+    {
+        return predicate(nt);
+    }
+    false
 }
 
 /// Counterintuitively, a sentence includes the whitespace after

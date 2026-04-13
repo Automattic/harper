@@ -2632,6 +2632,17 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+    1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were
+         |                                                                            ^~~~~
+    1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
+         | ~~~ There is disagreement in number between the verb and the noun.
+Suggest:
+  - Replace with: “was a Gus”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were

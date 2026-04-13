@@ -43,6 +43,10 @@ pub trait CharStringExt: private::Sealed {
     /// Only normalizes the left side to lowercase and avoids allocations.
     fn eq_any_ignore_ascii_case_chars(&self, others: &[&[char]]) -> bool;
 
+    /// Case-insensitive check if the string starts with the given character prefix.
+    /// The prefix is assumed to be lowercase.
+    fn starts_with_ignore_ascii_case_chars(&self, prefix: &[char]) -> bool;
+
     /// Case-insensitive check if the string starts with the given ASCII prefix.
     /// The prefix is assumed to be lowercase.
     fn starts_with_ignore_ascii_case_str(&self, prefix: &str) -> bool;
@@ -143,6 +147,17 @@ impl CharStringExt for [char] {
             .take(prefix_len)
             .zip(prefix.chars())
             .all(|(a, b)| a.to_ascii_lowercase() == b)
+    }
+
+    fn starts_with_ignore_ascii_case_chars(&self, prefix: &[char]) -> bool {
+        let prefix_len = prefix.len();
+        if self.len() < prefix_len {
+            return false;
+        }
+        self.iter()
+            .take(prefix_len)
+            .zip(prefix.iter())
+            .all(|(a, b)| a.to_ascii_lowercase() == *b)
     }
 
     fn starts_with_any_ignore_ascii_case_str(&self, prefixes: &[&str]) -> bool {

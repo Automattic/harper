@@ -64,6 +64,10 @@ pub trait TokenStringExt: private::Sealed {
     /// Grab the span that represents the beginning of the first element and the
     /// end of the last element.
     fn span(&self) -> Option<Span<char>>;
+    /// Get the content of the span as a slice of the source text.
+    fn get_ch<'a>(&self, src: &'a [char]) -> Option<&'a [char]>;
+    /// Get the content of the span as a string.
+    fn get_str(&self, src: &[char]) -> Option<String>;
 
     create_decl_for!(adjective);
     create_decl_for!(apostrophe);
@@ -251,6 +255,15 @@ impl TokenStringExt for [Token] {
             itertools::MinMaxResult::OneElement(min) => Some(Span::new(min, min)),
             itertools::MinMaxResult::MinMax(min, max) => Some(Span::new(min, max)),
         }
+    }
+
+    // delegate to span
+    fn get_ch<'a>(&self, src: &'a [char]) -> Option<&'a [char]> {
+        self.span().map(|s| s.get_content(src))
+    }
+
+    fn get_str(&self, src: &[char]) -> Option<String> {
+        self.span().map(|s| s.get_content_string(src))
     }
 
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_ {

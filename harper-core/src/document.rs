@@ -1018,6 +1018,16 @@ impl TokenStringExt for Document {
     fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_ {
         self.tokens.iter_sentences_mut()
     }
+
+    // Needed on `Document` because it implements `TokenStringExt`
+    fn get_ch<'a>(&self, src: &'a [char]) -> Option<&'a [char]> {
+        self.tokens.get_ch(src)
+    }
+
+    // Needed on `Document` because it implements `TokenStringExt`
+    fn get_str(&self, src: &[char]) -> Option<String> {
+        self.tokens.get_str(src)
+    }
 }
 
 impl Display for Document {
