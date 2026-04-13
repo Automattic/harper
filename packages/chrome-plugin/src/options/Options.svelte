@@ -371,10 +371,10 @@ async function removeWeirpack(id: string) {
       <div class="space-y-5">
         <div class="flex items-center justify-between gap-4">
           <div class="flex flex-col">
-            <h3 class="text-sm">Lint Delay</h3>
+            <h3 class="text-sm">Delay</h3>
             <p class="text-xs text-gray-600 dark:text-gray-400">
               Wait this many milliseconds after typing stops before refreshing
-              rendered lints.
+              highlights.
             </p>
           </div>
           <input
