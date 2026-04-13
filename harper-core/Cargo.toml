@@ -39,7 +39,7 @@ regex = "1.12.3"
 
 [dev-dependencies]
 criterion = { version = "0.8.2", default-features = false }
-rand = "0.10.0"
+rand = "0.10.1"
 quickcheck = "1.1.0"
 quickcheck_macros = "1.2.0"
 rayon = "1.11.0"
