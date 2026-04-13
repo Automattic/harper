@@ -10,6 +10,11 @@ type GoogleDocsRect = {
 	height: number;
 };
 
+type GoogleDocsPoint = {
+	x: number;
+	y: number;
+};
+
 type GoogleDocsRequest =
 	| {
 			kind: 'getRects';
@@ -44,6 +49,9 @@ type GoogleDocsPrepareReplaceTextResponse = {
 	kind: 'prepareReplaceText';
 	ready: boolean;
 	expectedNextText?: string;
+	selectionStart?: GoogleDocsPoint;
+	selectionEnd?: GoogleDocsPoint;
+	editStart?: GoogleDocsPoint;
 };
 
 type GoogleDocsResponse =
@@ -170,12 +178,6 @@ export default class GoogleDocsBridgeClient {
 		beforeContext?: string,
 		afterContext?: string,
 	): Promise<boolean> {
-		console.log('[gdocs replace] start', {
-			start,
-			end,
-			replacementText,
-			expectedText,
-		});
 		const response = (await this.request({
 			kind: 'prepareReplaceText',
 			start,
@@ -185,29 +187,27 @@ export default class GoogleDocsBridgeClient {
 			beforeContext,
 			afterContext,
 		})) as GoogleDocsPrepareReplaceTextResponse;
-		console.log('[gdocs replace] prepared', response);
 
 		if (!response.ready || !response.expectedNextText) {
-			console.warn('[gdocs replace] prepare not ready');
 			return false;
 		}
 
 		const injected = await chrome.runtime.sendMessage({
 			kind: 'googleDocsInsertText',
 			text: replacementText,
+			expectedText: response.expectedNextText,
+			selectedText: expectedText ?? '',
+			deleteSelection: Boolean(expectedText && expectedText.length > 0),
+			selectionStart: response.selectionStart ?? null,
+			selectionEnd: response.selectionEnd ?? null,
+			selectionLength: Array.from(expectedText ?? '').length,
+			editStart: response.editStart ?? null,
 		});
-		console.log('[gdocs replace] injected response', injected);
 		if (injected?.kind !== 'googleDocsInsertText' || !injected.inserted) {
-			console.warn('[gdocs replace] injection failed');
 			return false;
 		}
 
-		const matched = await this.waitForText(response.expectedNextText);
-		console.log('[gdocs replace] final match', {
-			matched,
-			expectedNextText: response.expectedNextText,
-		});
-		return matched;
+		return await this.waitForText(response.expectedNextText);
 	}
 
 	public onTextUpdated(listener: (length: number) => void): () => void {
@@ -287,9 +287,7 @@ export default class GoogleDocsBridgeClient {
 
 	private handleRequestEvent(event: Event) {
 		const detail = (event as CustomEvent).detail;
-		console.log('[gdocs replace] request event seen', detail);
 		if (!isRecord(detail) || detail.protocol !== PROTOCOL_VERSION || !isRecord(detail.request)) {
-			console.warn('[gdocs replace] request event ignored');
 			return;
 		}
 
@@ -306,7 +304,6 @@ export default class GoogleDocsBridgeClient {
 		request: Extract<GoogleDocsRequest, { kind: 'replaceText' }>,
 	) {
 		let applied = false;
-		console.log('[gdocs replace] external request', { requestId, request });
 
 		try {
 			applied = await this.replaceText(
@@ -317,9 +314,7 @@ export default class GoogleDocsBridgeClient {
 				request.beforeContext,
 				request.afterContext,
 			);
-		} catch (error) {
-			console.error('[gdocs replace] external request failed', error);
-		}
+		} catch {}
 
 		const response: GoogleDocsResponseMessage = {
 			protocol: PROTOCOL_VERSION,
@@ -335,7 +330,6 @@ export default class GoogleDocsBridgeClient {
 	private async waitForText(expectedText: string): Promise<boolean> {
 		const target = this.documentRef.getElementById('harper-google-docs-target');
 		if (!(target instanceof HTMLElement)) {
-			console.warn('[gdocs replace] missing bridge target');
 			return false;
 		}
 

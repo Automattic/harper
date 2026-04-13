@@ -17,6 +17,13 @@
  */
 
 /**
+ * A point in viewport coordinates.
+ * @typedef {object} GoogleDocsPoint
+ * @property {number} x Horizontal coordinate in CSS pixels.
+ * @property {number} y Vertical coordinate in CSS pixels.
+ */
+
+/**
  * Request to resolve rects for a text span.
  * @typedef {object} GoogleDocsGetRectsRequest
  * @property {'getRects'} kind Request kind.
@@ -66,6 +73,9 @@
  * @property {'prepareReplaceText'} kind Response kind.
  * @property {boolean} ready Whether the live range was selected and focused.
  * @property {string=} expectedNextText Expected normalized bridge text after the trusted input lands.
+ * @property {GoogleDocsPoint=} selectionStart Viewport point for the start caret.
+ * @property {GoogleDocsPoint=} selectionEnd Viewport point for the end caret.
+ * @property {GoogleDocsPoint=} editStart Viewport point after the shared replacement prefix.
  */
 
 /**

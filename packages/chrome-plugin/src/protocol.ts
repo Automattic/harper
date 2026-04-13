@@ -301,6 +301,13 @@ export type RemoveWeirpackRequest = {
 export type GoogleDocsInsertTextRequest = {
 	kind: 'googleDocsInsertText';
 	text: string;
+	expectedText: string;
+	selectedText: string;
+	deleteSelection: boolean;
+	selectionStart: { x: number; y: number } | null;
+	selectionEnd: { x: number; y: number } | null;
+	selectionLength: number;
+	editStart: { x: number; y: number } | null;
 };
 
 export type GoogleDocsInsertTextResponse = {

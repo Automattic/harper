@@ -255,53 +255,402 @@ function debuggerSendCommand<T = unknown>(
 	});
 }
 
+type RuntimeEvaluateResult<T> = {
+	result?: {
+		value?: T;
+	};
+};
+
+async function focusGoogleDocsTextTarget(target: chrome.debugger.Debuggee): Promise<void> {
+	await debuggerSendCommand(target, 'Runtime.evaluate', {
+		expression: `(() => {
+			const iframe = document.querySelector('.docs-texteventtarget-iframe');
+			const targetDocument = iframe?.contentDocument;
+			const target =
+				targetDocument?.querySelector('[contenteditable="true"]') ??
+				targetDocument?.activeElement ??
+				targetDocument?.body ??
+				targetDocument?.documentElement;
+			iframe?.focus?.();
+			targetDocument?.defaultView?.focus?.();
+			target?.focus?.();
+			return true;
+		})()`,
+		returnByValue: true,
+		userGesture: true,
+	});
+}
+
+async function getNormalizedGoogleDocsText(
+	target: chrome.debugger.Debuggee,
+): Promise<string | null> {
+	const result = await debuggerSendCommand<RuntimeEvaluateResult<string | null>>(
+		target,
+		'Runtime.evaluate',
+		{
+			expression: `(() => {
+				const normalize = (text) => {
+					const raw = String(text ?? '');
+					const withoutSentinel = raw.startsWith('\\u0003') ? raw.slice(1) : raw;
+					return withoutSentinel.endsWith('\\n')
+						? withoutSentinel.slice(0, -1)
+						: withoutSentinel;
+				};
+				if (typeof window._docs_annotate_getAnnotatedText !== 'function') {
+					return null;
+				}
+				return window._docs_annotate_getAnnotatedText()
+					.then((annotated) => normalize(annotated?.getText?.()))
+					.catch(() => null);
+			})()`,
+			awaitPromise: true,
+			returnByValue: true,
+			userGesture: true,
+		},
+	);
+
+	return result.result?.value ?? null;
+}
+
+async function waitForGoogleDocsText(
+	target: chrome.debugger.Debuggee,
+	expectedText: string,
+	timeoutMs = 2500,
+): Promise<boolean> {
+	const deadline = Date.now() + timeoutMs;
+
+	while (Date.now() < deadline) {
+		const currentText = await getNormalizedGoogleDocsText(target);
+		if (currentText === expectedText) {
+			return true;
+		}
+
+		await new Promise((resolve) => setTimeout(resolve, 100));
+	}
+
+	return (await getNormalizedGoogleDocsText(target)) === expectedText;
+}
+
+async function dispatchBackspace(target: chrome.debugger.Debuggee): Promise<void> {
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'keyDown',
+		key: 'Backspace',
+		code: 'Backspace',
+		windowsVirtualKeyCode: 8,
+		nativeVirtualKeyCode: 8,
+	});
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'keyUp',
+		key: 'Backspace',
+		code: 'Backspace',
+		windowsVirtualKeyCode: 8,
+		nativeVirtualKeyCode: 8,
+	});
+}
+
+async function dispatchDelete(target: chrome.debugger.Debuggee): Promise<void> {
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'keyDown',
+		key: 'Delete',
+		code: 'Delete',
+		windowsVirtualKeyCode: 46,
+		nativeVirtualKeyCode: 46,
+	});
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'keyUp',
+		key: 'Delete',
+		code: 'Delete',
+		windowsVirtualKeyCode: 46,
+		nativeVirtualKeyCode: 46,
+	});
+}
+
+async function clickGoogleDocsPoint(
+	target: chrome.debugger.Debuggee,
+	point: { x: number; y: number },
+): Promise<void> {
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mouseMoved',
+		x: point.x,
+		y: point.y,
+		button: 'none',
+	});
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mousePressed',
+		x: point.x,
+		y: point.y,
+		button: 'left',
+		buttons: 1,
+		clickCount: 1,
+	});
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mouseReleased',
+		x: point.x,
+		y: point.y,
+		button: 'left',
+		buttons: 1,
+		clickCount: 1,
+	});
+}
+
+async function selectGoogleDocsRangeByKeyboard(
+	target: chrome.debugger.Debuggee,
+	start: { x: number; y: number },
+	length: number,
+): Promise<void> {
+	if (length <= 0) {
+		return;
+	}
+
+	await clickGoogleDocsPoint(target, start);
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'rawKeyDown',
+		key: 'Shift',
+		code: 'ShiftLeft',
+		windowsVirtualKeyCode: 16,
+		nativeVirtualKeyCode: 16,
+		modifiers: 8,
+	});
+
+	for (let index = 0; index < length; index += 1) {
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyDown',
+			key: 'ArrowRight',
+			code: 'ArrowRight',
+			windowsVirtualKeyCode: 39,
+			nativeVirtualKeyCode: 39,
+			modifiers: 8,
+		});
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyUp',
+			key: 'ArrowRight',
+			code: 'ArrowRight',
+			windowsVirtualKeyCode: 39,
+			nativeVirtualKeyCode: 39,
+			modifiers: 8,
+		});
+	}
+
+	await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+		type: 'keyUp',
+		key: 'Shift',
+		code: 'ShiftLeft',
+		windowsVirtualKeyCode: 16,
+		nativeVirtualKeyCode: 16,
+	});
+}
+
+async function dragGoogleDocsRange(
+	target: chrome.debugger.Debuggee,
+	start: { x: number; y: number },
+	end: { x: number; y: number },
+): Promise<void> {
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mouseMoved',
+		x: start.x,
+		y: start.y,
+		button: 'none',
+	});
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mousePressed',
+		x: start.x,
+		y: start.y,
+		button: 'left',
+		buttons: 1,
+		clickCount: 1,
+	});
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mouseMoved',
+		x: end.x,
+		y: end.y,
+		button: 'left',
+		buttons: 1,
+	});
+	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
+		type: 'mouseReleased',
+		x: end.x,
+		y: end.y,
+		button: 'left',
+		buttons: 1,
+		clickCount: 1,
+	});
+}
+
+function getCommonPrefixLength(left: string, right: string): number {
+	let index = 0;
+	const maxLength = Math.min(left.length, right.length);
+	while (index < maxLength && left[index] === right[index]) {
+		index += 1;
+	}
+	return index;
+}
+
+function getCommonSuffixLength(left: string, right: string, prefixLength: number): number {
+	let index = 0;
+	const leftMax = left.length - prefixLength;
+	const rightMax = right.length - prefixLength;
+	const maxLength = Math.min(leftMax, rightMax);
+	while (
+		index < maxLength &&
+		left[left.length - 1 - index] === right[right.length - 1 - index]
+	) {
+		index += 1;
+	}
+	return index;
+}
+
+async function moveCaretRight(target: chrome.debugger.Debuggee, count: number): Promise<void> {
+	for (let index = 0; index < count; index += 1) {
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyDown',
+			key: 'ArrowRight',
+			code: 'ArrowRight',
+			windowsVirtualKeyCode: 39,
+			nativeVirtualKeyCode: 39,
+		});
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyUp',
+			key: 'ArrowRight',
+			code: 'ArrowRight',
+			windowsVirtualKeyCode: 39,
+			nativeVirtualKeyCode: 39,
+		});
+	}
+}
+
+async function moveCaretLeft(target: chrome.debugger.Debuggee, count: number): Promise<void> {
+	for (let index = 0; index < count; index += 1) {
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyDown',
+			key: 'ArrowLeft',
+			code: 'ArrowLeft',
+			windowsVirtualKeyCode: 37,
+			nativeVirtualKeyCode: 37,
+		});
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'keyUp',
+			key: 'ArrowLeft',
+			code: 'ArrowLeft',
+			windowsVirtualKeyCode: 37,
+			nativeVirtualKeyCode: 37,
+		});
+	}
+}
+
+async function typeTextWithKeyEvents(
+	target: chrome.debugger.Debuggee,
+	text: string,
+): Promise<void> {
+	for (const char of text) {
+		const codePoint = char.codePointAt(0) ?? 0;
+		await debuggerSendCommand(target, 'Input.dispatchKeyEvent', {
+			type: 'char',
+			text: char,
+			unmodifiedText: char,
+			key: char,
+			windowsVirtualKeyCode: codePoint,
+			nativeVirtualKeyCode: codePoint,
+		});
+	}
+}
+
 async function handleGoogleDocsInsertText(
 	req: GoogleDocsInsertTextRequest,
 	sender?: chrome.runtime.MessageSender,
 ): Promise<GoogleDocsInsertTextResponse> {
 	const tabId = sender?.tab?.id;
-	console.log('googleDocsInsertText request', {
-		tabId,
-		text: req.text,
-		length: req.text.length,
-	});
 	if (tabId == null) {
-		console.warn('googleDocsInsertText missing tab id');
 		return { kind: 'googleDocsInsertText', inserted: false };
 	}
 
 	const debuggee: chrome.debugger.Debuggee = { tabId };
 
 	try {
-		console.log('googleDocsInsertText attaching debugger', { tabId });
 		await debuggerAttach(debuggee);
-		console.log('googleDocsInsertText attached debugger', { tabId });
+		await focusGoogleDocsTextTarget(debuggee);
 
-		if (req.text.length === 0) {
-			console.log('googleDocsInsertText sending backspace');
-			await debuggerSendCommand(debuggee, 'Input.dispatchKeyEvent', {
-				type: 'keyDown',
-				key: 'Backspace',
-				code: 'Backspace',
-				windowsVirtualKeyCode: 8,
-				nativeVirtualKeyCode: 8,
-			});
-			await debuggerSendCommand(debuggee, 'Input.dispatchKeyEvent', {
-				type: 'keyUp',
-				key: 'Backspace',
-				code: 'Backspace',
-				windowsVirtualKeyCode: 8,
-				nativeVirtualKeyCode: 8,
-			});
-		} else {
-			console.log('googleDocsInsertText inserting text', { text: req.text });
-			await debuggerSendCommand(debuggee, 'Input.insertText', {
-				text: req.text,
-			});
+		const oldText = req.selectedText;
+		const newText = req.text;
+		const prefixLength = getCommonPrefixLength(oldText, newText);
+		const suffixLength = getCommonSuffixLength(oldText, newText, prefixLength);
+		const deleteCount = Math.max(0, oldText.length - prefixLength - suffixLength);
+		const insertText = newText.slice(prefixLength, newText.length - suffixLength);
+
+		if (oldText.length > 0 && req.selectionStart && req.selectionLength > 0) {
+			await selectGoogleDocsRangeByKeyboard(
+				debuggee,
+				req.selectionStart,
+				req.selectionLength,
+			);
+
+			if (newText.length > 0) {
+				await debuggerSendCommand(debuggee, 'Input.insertText', {
+					text: newText,
+				});
+			} else {
+				await dispatchBackspace(debuggee);
+			}
+
+			if (await waitForGoogleDocsText(debuggee, req.expectedText)) {
+				return {
+					kind: 'googleDocsInsertText',
+					inserted: true,
+				};
+			}
 		}
 
-		console.log('googleDocsInsertText succeeded', { tabId });
-		return { kind: 'googleDocsInsertText', inserted: true };
+		if (oldText.length > 0 && req.selectionStart && req.selectionEnd) {
+			await dragGoogleDocsRange(debuggee, req.selectionStart, req.selectionEnd);
+
+			if (newText.length > 0) {
+				await debuggerSendCommand(debuggee, 'Input.insertText', {
+					text: newText,
+				});
+			} else {
+				await dispatchBackspace(debuggee);
+			}
+
+			if (await waitForGoogleDocsText(debuggee, req.expectedText)) {
+				return {
+					kind: 'googleDocsInsertText',
+					inserted: true,
+				};
+			}
+		}
+
+		if (req.selectionEnd) {
+			await clickGoogleDocsPoint(debuggee, req.selectionEnd);
+			await focusGoogleDocsTextTarget(debuggee);
+			if (suffixLength > 0) {
+				await moveCaretLeft(debuggee, suffixLength);
+			}
+		} else if (req.selectionStart) {
+			await clickGoogleDocsPoint(debuggee, req.selectionStart);
+			await focusGoogleDocsTextTarget(debuggee);
+			if (prefixLength > 0) {
+				await moveCaretRight(debuggee, prefixLength);
+			}
+		}
+
+		for (let index = 0; index < deleteCount; index += 1) {
+			await dispatchBackspace(debuggee);
+		}
+
+		if (insertText.length > 0) {
+			await debuggerSendCommand(debuggee, 'Input.insertText', {
+				text: insertText,
+			});
+
+			if (!(await waitForGoogleDocsText(debuggee, req.expectedText))) {
+				await focusGoogleDocsTextTarget(debuggee);
+				await typeTextWithKeyEvents(debuggee, insertText);
+			}
+		}
+
+		return {
+			kind: 'googleDocsInsertText',
+			inserted: await waitForGoogleDocsText(debuggee, req.expectedText),
+		};
 	} catch (err) {
 		console.error('Failed to inject Google Docs text:', err);
 		return { kind: 'googleDocsInsertText', inserted: false };

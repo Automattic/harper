@@ -471,6 +471,17 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		return index;
 	}
 
+	function getReplacementCommonPrefixLength(currentText, replacementText) {
+		const maxLength = Math.min(currentText.length, replacementText.length);
+		let index = 0;
+
+		while (index < maxLength && currentText.charCodeAt(index) === replacementText.charCodeAt(index)) {
+			index += 1;
+		}
+
+		return index;
+	}
+
 	function getLongestCommonSubsequenceLength(left, right) {
 		if (!left || !right) {
 			return 0;
@@ -645,7 +656,6 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 	}
 
 	async function handleReplaceTextRequest(request) {
-		console.log('[gdocs bridge] prepare replace request', request);
 		const getAnnotatedText = getAnnotatedTextApi();
 		if (!getAnnotatedText) {
 			return { kind: 'prepareReplaceText', ready: false };
@@ -672,8 +682,26 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		);
 		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
 		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
+		const selectionOffset = rawText.startsWith('\u0003') ? 1 : 0;
+		const caretStart = Math.max(0, rawStart - selectionOffset);
+		const caretEnd = Math.max(caretStart, rawEnd - selectionOffset);
+		const scrollSnapshots = snapshotScroll();
+		const currentSpanText = currentText.slice(resolvedRange.start, resolvedRange.end);
+		const replacementPrefixLength = getReplacementCommonPrefixLength(
+			currentSpanText,
+			replacementText,
+		);
+		const editStartRectPosition = Math.max(caretStart, caretStart + replacementPrefixLength);
+		const { startRect, endRect, editStartRect } = withSuppressedScrolling(() => ({
+			startRect: getCaretRect(annotated, caretStart),
+			endRect: getCaretRect(annotated, caretEnd),
+			editStartRect: getCaretRect(annotated, editStartRectPosition),
+		}));
 
-		annotated.setSelection(rawStart, rawEnd);
+		restoreScroll(scrollSnapshots);
+		requestAnimationFrame(() => restoreScroll(scrollSnapshots));
+
+		annotated.setSelection(caretStart, caretEnd);
 
 		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
 		const targetDocument = iframe?.contentDocument;
@@ -694,8 +722,17 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 
 		return {
 			kind: 'prepareReplaceText',
-			ready: true,
+			ready: Boolean(startRect && endRect),
 			expectedNextText,
+			selectionStart: startRect
+				? { x: startRect.x + 1, y: startRect.y + startRect.height / 2 }
+				: undefined,
+			selectionEnd: endRect
+				? { x: endRect.x + 1, y: endRect.y + endRect.height / 2 }
+				: undefined,
+			editStart: editStartRect
+				? { x: editStartRect.x + 1, y: editStartRect.y + editStartRect.height / 2 }
+				: undefined,
 		};
 	}
 
