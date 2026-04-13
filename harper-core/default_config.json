@@ -4978,6 +4978,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FindOut",
+								"state": true,
+								"label": "Find Out"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoSoFarAsTo",
 								"state": true,
 								"label": "Go So Far As To"
