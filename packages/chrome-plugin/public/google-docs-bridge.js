@@ -645,6 +645,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 	}
 
 	async function handleReplaceTextRequest(request) {
+		console.log('[gdocs bridge] prepare replace request', request);
 		const getAnnotatedText = getAnnotatedTextApi();
 		if (!getAnnotatedText) {
 			return { kind: 'prepareReplaceText', ready: false };

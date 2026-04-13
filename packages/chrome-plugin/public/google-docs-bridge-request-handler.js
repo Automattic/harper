@@ -59,6 +59,7 @@ export class GoogleDocsBridgeRequestHandler {
 
 		const requestMessage = /** @type {GoogleDocsRequestMessage} */ (detail);
 		const { request } = requestMessage;
+		console.log('[gdocs bridge request handler] request', request.kind, requestMessage.requestId);
 		try {
 			if (request.kind === 'getRects') {
 				const response = await this.handlers.onGetRectsRequest(request);

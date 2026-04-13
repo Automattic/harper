@@ -260,16 +260,25 @@ async function handleGoogleDocsInsertText(
 	sender?: chrome.runtime.MessageSender,
 ): Promise<GoogleDocsInsertTextResponse> {
 	const tabId = sender?.tab?.id;
+	console.log('googleDocsInsertText request', {
+		tabId,
+		text: req.text,
+		length: req.text.length,
+	});
 	if (tabId == null) {
+		console.warn('googleDocsInsertText missing tab id');
 		return { kind: 'googleDocsInsertText', inserted: false };
 	}
 
 	const debuggee: chrome.debugger.Debuggee = { tabId };
 
 	try {
+		console.log('googleDocsInsertText attaching debugger', { tabId });
 		await debuggerAttach(debuggee);
+		console.log('googleDocsInsertText attached debugger', { tabId });
 
 		if (req.text.length === 0) {
+			console.log('googleDocsInsertText sending backspace');
 			await debuggerSendCommand(debuggee, 'Input.dispatchKeyEvent', {
 				type: 'keyDown',
 				key: 'Backspace',
@@ -285,11 +294,13 @@ async function handleGoogleDocsInsertText(
 				nativeVirtualKeyCode: 8,
 			});
 		} else {
+			console.log('googleDocsInsertText inserting text', { text: req.text });
 			await debuggerSendCommand(debuggee, 'Input.insertText', {
 				text: req.text,
 			});
 		}
 
+		console.log('googleDocsInsertText succeeded', { tabId });
 		return { kind: 'googleDocsInsertText', inserted: true };
 	} catch (err) {
 		console.error('Failed to inject Google Docs text:', err);
