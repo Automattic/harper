@@ -1,7 +1,13 @@
 import type { Page } from '@playwright/test';
 import { expect } from './fixtures';
 
-export const LIVE_GOOGLE_DOCS_URL = 'CHANGE_ME';
+const LIVE_GOOGLE_DOCS_ID = '1ybGsBpMShQhXgmAhTmioVeQbDBf1WY_GrWmIODf0wQ4';
+const LIVE_GOOGLE_DOCS_TAB = 't.0';
+
+export const LIVE_GOOGLE_DOCS_URL =
+	process.env.HARPER_LIVE_GOOGLE_DOCS_URL ??
+	`https://docs.google.com/document/d/${LIVE_GOOGLE_DOCS_ID}/edit?tab=${LIVE_GOOGLE_DOCS_TAB}`;
+export const MOCK_GOOGLE_DOCS_URL = 'https://docs.google.com/document/d/mock-google-docs-test/edit';
 
 const GOOGLE_DOCS_RESET_SENTINEL = 'Harper reset sentinel';
 
@@ -190,7 +196,8 @@ async function typeGoogleDocsText(page: Page, text: string) {
 
 	for (let i = 0; i < lines.length; i += 1) {
 		if (lines[i].length > 0) {
-			await page.keyboard.type(lines[i], { delay: 20 });
+			await page.keyboard.insertText(lines[i]);
+			await page.waitForTimeout(100);
 		}
 
 		if (i < lines.length - 1) {
@@ -200,6 +207,12 @@ async function typeGoogleDocsText(page: Page, text: string) {
 	}
 
 	await page.waitForTimeout(1500);
+}
+
+export async function appendGoogleDocsText(page: Page, text: string) {
+	await moveGoogleDocsCursorToEnd(page);
+	await focusGoogleDocsEditor(page);
+	await typeGoogleDocsText(page, text);
 }
 
 async function openGoogleDocsInsertTablePicker(page: Page) {
@@ -243,7 +256,8 @@ export async function typeGoogleDocsTableCells(page: Page, rows: string[][]) {
 	const cells = rows.flat();
 	for (let cellIndex = 0; cellIndex < cells.length; cellIndex += 1) {
 		if (cells[cellIndex].length > 0) {
-			await page.keyboard.type(cells[cellIndex], { delay: 20 });
+			await page.keyboard.insertText(cells[cellIndex]);
+			await page.waitForTimeout(100);
 		}
 
 		if (cellIndex < cells.length - 1) {

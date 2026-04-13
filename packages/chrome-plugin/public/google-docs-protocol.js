@@ -25,7 +25,19 @@
  */
 
 /**
- * Request to replace text in Google Docs.
+ * Request to resolve and select the live Google Docs range for a replacement.
+ * @typedef {object} GoogleDocsPrepareReplaceTextRequest
+ * @property {'prepareReplaceText'} kind Request kind.
+ * @property {number} start Start offset in bridge text.
+ * @property {number} end End offset in bridge text.
+ * @property {string} replacementText Replacement text.
+ * @property {string=} expectedText Optional expected source text for defensive re-alignment.
+ * @property {string=} beforeContext Optional context before the span for re-alignment scoring.
+ * @property {string=} afterContext Optional context after the span for re-alignment scoring.
+ */
+
+/**
+ * External request to replace text in Google Docs through the extension content script.
  * @typedef {object} GoogleDocsReplaceTextRequest
  * @property {'replaceText'} kind Request kind.
  * @property {number} start Start offset in bridge text.
@@ -38,7 +50,7 @@
 
 /**
  * All supported bridge requests.
- * @typedef {GoogleDocsGetRectsRequest | GoogleDocsReplaceTextRequest} GoogleDocsRequest
+ * @typedef {GoogleDocsGetRectsRequest | GoogleDocsPrepareReplaceTextRequest | GoogleDocsReplaceTextRequest} GoogleDocsRequest
  */
 
 /**
@@ -49,10 +61,18 @@
  */
 
 /**
+ * Successful response for `prepareReplaceText`.
+ * @typedef {object} GoogleDocsPrepareReplaceTextResponse
+ * @property {'prepareReplaceText'} kind Response kind.
+ * @property {boolean} ready Whether the live range was selected and focused.
+ * @property {string=} expectedNextText Expected normalized bridge text after the trusted input lands.
+ */
+
+/**
  * Successful response for `replaceText`.
  * @typedef {object} GoogleDocsReplaceTextResponse
  * @property {'replaceText'} kind Response kind.
- * @property {boolean} applied Whether the bridge dispatched the edit operation to Docs.
+ * @property {boolean} applied Whether the full replacement path completed.
  */
 
 /**
@@ -66,7 +86,7 @@
 
 /**
  * All bridge responses.
- * @typedef {GoogleDocsGetRectsResponse | GoogleDocsReplaceTextResponse | GoogleDocsErrorResponse} GoogleDocsResponse
+ * @typedef {GoogleDocsGetRectsResponse | GoogleDocsPrepareReplaceTextResponse | GoogleDocsReplaceTextResponse | GoogleDocsErrorResponse} GoogleDocsResponse
  */
 
 /**

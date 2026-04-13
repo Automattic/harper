@@ -30,7 +30,8 @@ export type Request =
 	| PostFormDataRequest
 	| GetWeirpacksRequest
 	| AddWeirpackRequest
-	| RemoveWeirpackRequest;
+	| RemoveWeirpackRequest
+	| GoogleDocsInsertTextRequest;
 
 export type Response =
 	| LintResponse
@@ -48,7 +49,8 @@ export type Response =
 	| GetInstalledOnResponse
 	| GetReviewedResponse
 	| PostFormDataResponse
-	| GetWeirpacksResponse;
+	| GetWeirpacksResponse
+	| GoogleDocsInsertTextResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -294,4 +296,14 @@ export type AddWeirpackRequest = {
 export type RemoveWeirpackRequest = {
 	kind: 'removeWeirpack';
 	id: string;
+};
+
+export type GoogleDocsInsertTextRequest = {
+	kind: 'googleDocsInsertText';
+	text: string;
+};
+
+export type GoogleDocsInsertTextResponse = {
+	kind: 'googleDocsInsertText';
+	inserted: boolean;
 };

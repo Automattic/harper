@@ -31,6 +31,8 @@ import {
 	type GetStructuredConfigResponse,
 	type GetUserDictionaryResponse,
 	type GetWeirpacksResponse,
+	type GoogleDocsInsertTextRequest,
+	type GoogleDocsInsertTextResponse,
 	type Hotkey,
 	type IgnoreLintRequest,
 	type LintRequest,
@@ -210,6 +212,92 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleAddWeirpack(message);
 		case 'removeWeirpack':
 			return handleRemoveWeirpack(message);
+		case 'googleDocsInsertText':
+			return handleGoogleDocsInsertText(message, sender);
+	}
+}
+
+function debuggerAttach(target: chrome.debugger.Debuggee): Promise<void> {
+	return new Promise((resolve, reject) => {
+		chrome.debugger.attach(target, '1.3', () => {
+			const err = chrome.runtime.lastError;
+			if (err) {
+				reject(new Error(err.message));
+				return;
+			}
+
+			resolve();
+		});
+	});
+}
+
+function debuggerDetach(target: chrome.debugger.Debuggee): Promise<void> {
+	return new Promise((resolve) => {
+		chrome.debugger.detach(target, () => resolve());
+	});
+}
+
+function debuggerSendCommand<T = unknown>(
+	target: chrome.debugger.Debuggee,
+	method: string,
+	commandParams?: object,
+): Promise<T> {
+	return new Promise((resolve, reject) => {
+		chrome.debugger.sendCommand(target, method, commandParams, (result) => {
+			const err = chrome.runtime.lastError;
+			if (err) {
+				reject(new Error(err.message));
+				return;
+			}
+
+			resolve(result as T);
+		});
+	});
+}
+
+async function handleGoogleDocsInsertText(
+	req: GoogleDocsInsertTextRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<GoogleDocsInsertTextResponse> {
+	const tabId = sender?.tab?.id;
+	if (tabId == null) {
+		return { kind: 'googleDocsInsertText', inserted: false };
+	}
+
+	const debuggee: chrome.debugger.Debuggee = { tabId };
+
+	try {
+		await debuggerAttach(debuggee);
+
+		if (req.text.length === 0) {
+			await debuggerSendCommand(debuggee, 'Input.dispatchKeyEvent', {
+				type: 'keyDown',
+				key: 'Backspace',
+				code: 'Backspace',
+				windowsVirtualKeyCode: 8,
+				nativeVirtualKeyCode: 8,
+			});
+			await debuggerSendCommand(debuggee, 'Input.dispatchKeyEvent', {
+				type: 'keyUp',
+				key: 'Backspace',
+				code: 'Backspace',
+				windowsVirtualKeyCode: 8,
+				nativeVirtualKeyCode: 8,
+			});
+		} else {
+			await debuggerSendCommand(debuggee, 'Input.insertText', {
+				text: req.text,
+			});
+		}
+
+		return { kind: 'googleDocsInsertText', inserted: true };
+	} catch (err) {
+		console.error('Failed to inject Google Docs text:', err);
+		return { kind: 'googleDocsInsertText', inserted: false };
+	} finally {
+		try {
+			await debuggerDetach(debuggee);
+		} catch {}
 	}
 }
 

@@ -128,6 +128,10 @@ async function getHarperHighlightBoxes(page: Page): Promise<ScreenRect[]> {
 test.describe('Google Docs live regressions', () => {
 	test.describe.configure({ mode: 'serial' });
 	test.setTimeout(180000);
+	test.skip(
+		({ browserName }) => browserName !== 'chromium',
+		'Live Google Docs runs only on Chromium',
+	);
 
 	test.beforeEach(async ({ page }) => {
 		await openLiveGoogleDoc(page);

@@ -88,7 +88,7 @@ export default defineManifest({
 	icons: {
 		'512': 'logo.png',
 	},
-	permissions: ['storage', 'tabs'],
+	permissions: ['storage', 'tabs', 'debugger'],
 	content_security_policy: {
 		extension_pages: makeExtensionCSP(isDev),
 	},

@@ -647,12 +647,12 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 	async function handleReplaceTextRequest(request) {
 		const getAnnotatedText = getAnnotatedTextApi();
 		if (!getAnnotatedText) {
-			return { kind: 'replaceText', applied: false };
+			return { kind: 'prepareReplaceText', ready: false };
 		}
 
 		const annotated = await getAnnotatedText();
 		if (!annotated || typeof annotated.setSelection !== 'function') {
-			return { kind: 'replaceText', applied: false };
+			return { kind: 'prepareReplaceText', ready: false };
 		}
 
 		currentAnnotated = annotated;
@@ -679,7 +679,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		const target =
 			targetDocument?.activeElement ?? targetDocument?.body ?? targetDocument?.documentElement;
 		if (!target) {
-			return { kind: 'replaceText', applied: false };
+			return { kind: 'prepareReplaceText', ready: false };
 		}
 
 		iframe?.focus?.();
@@ -691,42 +691,10 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 			replacementText +
 			currentText.slice(resolvedRange.end);
 
-		const didApplyReplacement = async () => {
-			const nextAnnotated = await getAnnotatedText();
-			return normalizeGoogleDocsText(nextAnnotated?.getText?.()) === expectedNextText;
-		};
-
-		if (targetDocument?.execCommand?.('insertText', false, replacementText)) {
-			await new Promise((resolve) => setTimeout(resolve, 0));
-			if (await didApplyReplacement()) {
-				queueMicrotask(() => {
-					void syncText();
-				});
-				return { kind: 'replaceText', applied: true };
-			}
-		}
-
-		const dataTransfer = new DataTransfer();
-		dataTransfer.setData('text/plain', replacementText);
-		target.dispatchEvent(
-			new ClipboardEvent('paste', {
-				clipboardData: dataTransfer,
-				cancelable: true,
-				bubbles: true,
-			}),
-		);
-
-		await new Promise((resolve) => setTimeout(resolve, 0));
-		const applied = await didApplyReplacement();
-		if (applied) {
-			queueMicrotask(() => {
-				void syncText();
-			});
-		}
-
 		return {
-			kind: 'replaceText',
-			applied,
+			kind: 'prepareReplaceText',
+			ready: true,
+			expectedNextText,
 		};
 	}
 

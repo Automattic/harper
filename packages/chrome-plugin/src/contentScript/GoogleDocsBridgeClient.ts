@@ -17,6 +17,15 @@ type GoogleDocsRequest =
 			end: number;
 	  }
 	| {
+			kind: 'prepareReplaceText';
+			start: number;
+			end: number;
+			replacementText: string;
+			expectedText?: string;
+			beforeContext?: string;
+			afterContext?: string;
+	  }
+	| {
 			kind: 'replaceText';
 			start: number;
 			end: number;
@@ -31,8 +40,15 @@ type GoogleDocsGetRectsResponse = {
 	rects: GoogleDocsRect[];
 };
 
+type GoogleDocsPrepareReplaceTextResponse = {
+	kind: 'prepareReplaceText';
+	ready: boolean;
+	expectedNextText?: string;
+};
+
 type GoogleDocsResponse =
 	| GoogleDocsGetRectsResponse
+	| GoogleDocsPrepareReplaceTextResponse
 	| {
 			kind: 'replaceText';
 			applied: boolean;
@@ -107,19 +123,23 @@ export default class GoogleDocsBridgeClient {
 	private readonly requestTimeoutMs: number;
 	private readonly pending = new Map<string, PendingRequest>();
 	private readonly notificationListeners = new Set<BridgeNotificationListener>();
+	private readonly onRequestBound: EventListener;
 	private readonly onResponseBound: EventListener;
 	private readonly onNotificationBound: EventListener;
 
-	public constructor(documentRef: Document = document, requestTimeoutMs = 2000) {
+	public constructor(documentRef: Document = document, requestTimeoutMs = 5000) {
 		this.documentRef = documentRef;
 		this.requestTimeoutMs = requestTimeoutMs;
+		this.onRequestBound = this.handleRequestEvent.bind(this);
 		this.onResponseBound = this.onResponse.bind(this);
 		this.onNotificationBound = this.handleNotificationEvent.bind(this);
+		this.documentRef.addEventListener(EVENT_REQUEST, this.onRequestBound);
 		this.documentRef.addEventListener(EVENT_RESPONSE, this.onResponseBound);
 		this.documentRef.addEventListener(EVENT_NOTIFICATION, this.onNotificationBound);
 	}
 
 	public dispose() {
+		this.documentRef.removeEventListener(EVENT_REQUEST, this.onRequestBound);
 		this.documentRef.removeEventListener(EVENT_RESPONSE, this.onResponseBound);
 		this.documentRef.removeEventListener(EVENT_NOTIFICATION, this.onNotificationBound);
 
@@ -150,17 +170,29 @@ export default class GoogleDocsBridgeClient {
 		beforeContext?: string,
 		afterContext?: string,
 	): Promise<boolean> {
-		const response = await this.request({
-			kind: 'replaceText',
+		const response = (await this.request({
+			kind: 'prepareReplaceText',
 			start,
 			end,
 			replacementText,
 			expectedText,
 			beforeContext,
 			afterContext,
-		});
+		})) as GoogleDocsPrepareReplaceTextResponse;
 
-		return response.kind === 'replaceText' ? response.applied : false;
+		if (!response.ready || !response.expectedNextText) {
+			return false;
+		}
+
+		const injected = await chrome.runtime.sendMessage({
+			kind: 'googleDocsInsertText',
+			text: replacementText,
+		});
+		if (injected?.kind !== 'googleDocsInsertText' || !injected.inserted) {
+			return false;
+		}
+
+		return await this.waitForText(response.expectedNextText);
 	}
 
 	public onTextUpdated(listener: (length: number) => void): () => void {
@@ -236,6 +268,92 @@ export default class GoogleDocsBridgeClient {
 		for (const listener of this.notificationListeners) {
 			listener(detail.notification);
 		}
+	}
+
+	private handleRequestEvent(event: Event) {
+		const detail = (event as CustomEvent).detail;
+		if (!isRecord(detail) || detail.protocol !== PROTOCOL_VERSION || !isRecord(detail.request)) {
+			return;
+		}
+
+		const request = detail.request;
+		if (request.kind !== 'replaceText' || typeof detail.requestId !== 'string') {
+			return;
+		}
+
+		void this.respondToExternalReplaceText(detail.requestId, request);
+	}
+
+	private async respondToExternalReplaceText(
+		requestId: string,
+		request: Extract<GoogleDocsRequest, { kind: 'replaceText' }>,
+	) {
+		let applied = false;
+
+		try {
+			applied = await this.replaceText(
+				request.start,
+				request.end,
+				request.replacementText,
+				request.expectedText,
+				request.beforeContext,
+				request.afterContext,
+			);
+		} catch {}
+
+		const response: GoogleDocsResponseMessage = {
+			protocol: PROTOCOL_VERSION,
+			requestId,
+			response: {
+				kind: 'replaceText',
+				applied,
+			},
+		};
+		this.documentRef.dispatchEvent(new CustomEvent(EVENT_RESPONSE, { detail: response }));
+	}
+
+	private async waitForText(expectedText: string): Promise<boolean> {
+		const target = this.documentRef.getElementById('harper-google-docs-target');
+		if (!(target instanceof HTMLElement)) {
+			return false;
+		}
+
+		const normalize = (value: string) => value.replace(/\u00a0/g, ' ').trimEnd();
+		const expected = normalize(expectedText);
+		if (normalize(target.textContent ?? '') === expected) {
+			return true;
+		}
+
+		return await new Promise<boolean>((resolve) => {
+			let settled = false;
+			let observer: MutationObserver | null = null;
+
+			const finish = (matched: boolean) => {
+				if (settled) {
+					return;
+				}
+
+				settled = true;
+				window.clearTimeout(timeoutId);
+				observer?.disconnect();
+				resolve(matched);
+			};
+
+			const check = () => {
+				if (normalize(target.textContent ?? '') === expected) {
+					finish(true);
+				}
+			};
+
+			const timeoutId = window.setTimeout(() => finish(false), this.requestTimeoutMs);
+			observer = new MutationObserver(check);
+			observer.observe(target, {
+				childList: true,
+				characterData: true,
+				subtree: true,
+			});
+			check();
+		});
 	}
 
 	private createRequestId(): string {

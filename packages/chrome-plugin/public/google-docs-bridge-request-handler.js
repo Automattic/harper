@@ -1,7 +1,7 @@
 /**
  * LSP type-import marker for shared protocol typedefs.
  * @typedef {import('./google-docs-protocol.js').GoogleDocsGetRectsRequest} GoogleDocsGetRectsRequest
- * @typedef {import('./google-docs-protocol.js').GoogleDocsReplaceTextRequest} GoogleDocsReplaceTextRequest
+ * @typedef {import('./google-docs-protocol.js').GoogleDocsPrepareReplaceTextRequest} GoogleDocsPrepareReplaceTextRequest
  * @typedef {import('./google-docs-protocol.js').GoogleDocsRequest} GoogleDocsRequest
  * @typedef {import('./google-docs-protocol.js').GoogleDocsRequestMessage} GoogleDocsRequestMessage
  * @typedef {import('./google-docs-protocol.js').GoogleDocsResponse} GoogleDocsResponse
@@ -19,8 +19,8 @@ const EVENT_RESPONSE = 'harper:gdocs:response';
  */
 
 /**
- * @callback GoogleDocsReplaceTextRequestHandler
- * @param {GoogleDocsReplaceTextRequest} request
+ * @callback GoogleDocsPrepareReplaceTextRequestHandler
+ * @param {GoogleDocsPrepareReplaceTextRequest} request
  * @returns {Promise<GoogleDocsResponse>|GoogleDocsResponse}
  */
 
@@ -32,7 +32,7 @@ export class GoogleDocsBridgeRequestHandler {
 	/**
 	 * @param {{
 	 *   onGetRectsRequest: GoogleDocsGetRectsRequestHandler,
-	 *   onReplaceTextRequest: GoogleDocsReplaceTextRequestHandler
+	 *   onReplaceTextRequest: GoogleDocsPrepareReplaceTextRequestHandler
 	 * }} handlers
 	 */
 	constructor(handlers) {
@@ -66,9 +66,13 @@ export class GoogleDocsBridgeRequestHandler {
 				return;
 			}
 
-			if (request.kind === 'replaceText') {
+			if (request.kind === 'prepareReplaceText') {
 				const response = await this.handlers.onReplaceTextRequest(request);
 				this.sendResponse(requestMessage.requestId, response);
+				return;
+			}
+
+			if (request.kind === 'replaceText') {
 				return;
 			}
 
