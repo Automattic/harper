@@ -16,6 +16,8 @@ import {
 	type GetConfigRequest,
 	type GetConfigResponse,
 	type GetDefaultStatusResponse,
+	type GetDelayRequest,
+	type GetDelayResponse,
 	type GetDialectRequest,
 	type GetDialectResponse,
 	type GetDomainStatusRequest,
@@ -44,6 +46,7 @@ import {
 	type SetActivationKeyRequest,
 	type SetConfigRequest,
 	type SetDefaultStatusRequest,
+	type SetDelayRequest,
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
@@ -59,7 +62,9 @@ console.log('background is running');
 chrome.runtime.onInstalled.addListener((details) => {
 	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
 		chrome.runtime.setUninstallURL('https://writewithharper.com/uninstall-browser-extension');
-		chrome.tabs.create({ url: 'https://writewithharper.com/install-browser-extension' });
+		chrome.tabs.create({
+			url: 'https://writewithharper.com/install-browser-extension',
+		});
 	}
 });
 
@@ -165,6 +170,10 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getDelay':
+			return handleGetDelay(message);
+		case 'setDelay':
+			return handleSetDelay(message);
 		case 'getDomainStatus':
 			return handleGetDomainStatus(message);
 		case 'setDomainStatus':
@@ -303,6 +312,16 @@ async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResp
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
+async function handleGetDelay(_req: GetDelayRequest): Promise<GetDelayResponse> {
+	return { kind: 'getDelay', delay: await getDelay() };
+}
+
+async function handleSetDelay(req: SetDelayRequest): Promise<UnitResponse> {
+	await setDelay(req.delay);
+
+	return createUnitResponse();
+}
+
 async function handleIgnoreLint(req: IgnoreLintRequest): Promise<UnitResponse> {
 	await ensureLinterReady();
 	await linter.ignoreLintHash(BigInt(req.contextHash));
@@ -355,7 +374,10 @@ async function handleGetLintDescriptions(
 	_req: GetLintDescriptionsRequest,
 ): Promise<GetLintDescriptionsResponse> {
 	await ensureLinterReady();
-	return { kind: 'getLintDescriptions', descriptions: await linter.getLintDescriptionsHTML() };
+	return {
+		kind: 'getLintDescriptions',
+		descriptions: await linter.getLintDescriptionsHTML(),
+	};
 }
 
 async function handleSetUserDictionary(req: SetUserDictionaryRequest): Promise<UnitResponse> {
@@ -565,12 +587,16 @@ async function getDialect(): Promise<Dialect> {
 }
 
 async function getActivationKey(): Promise<ActivationKey> {
-	const resp = await chrome.storage.local.get({ activationKey: ActivationKey.Off });
+	const resp = await chrome.storage.local.get({
+		activationKey: ActivationKey.Off,
+	});
 	return resp.activationKey;
 }
 
 async function getHotkey(): Promise<Hotkey> {
-	const resp = await chrome.storage.local.get({ hotkey: { modifiers: ['Ctrl'], key: 'e' } });
+	const resp = await chrome.storage.local.get({
+		hotkey: { modifiers: ['Ctrl'], key: 'e' },
+	});
 	return resp.hotkey;
 }
 
@@ -605,6 +631,18 @@ async function initializeLinter(dialect: Dialect) {
 async function setDialect(dialect: Dialect) {
 	await chrome.storage.local.set({ dialect });
 	await initializeLinter(dialect);
+}
+
+async function setDelay(delay: number) {
+	const normalizedDelay = Number.isFinite(delay) ? Math.max(0, Math.trunc(delay)) : 0;
+	await chrome.storage.local.set({ delay: normalizedDelay });
+}
+
+async function getDelay(): Promise<number> {
+	const resp = await chrome.storage.local.get({ delay: 300 });
+	const { delay } = resp;
+
+	return typeof delay === 'number' && Number.isFinite(delay) && delay >= 0 ? delay : 0;
 }
 
 /** Format the key to be used in local storage to store domain status. */
@@ -758,7 +796,9 @@ async function setStoredWeirpacks(weirpacks: StoredWeirpack[]): Promise<void> {
 }
 
 async function getStoredWeirpacks(): Promise<StoredWeirpack[]> {
-	const response = await chrome.storage.local.get({ [WEIRPACKS_KEY]: [] as StoredWeirpack[] });
+	const response = await chrome.storage.local.get({
+		[WEIRPACKS_KEY]: [] as StoredWeirpack[],
+	});
 	const value = response[WEIRPACKS_KEY];
 	return Array.isArray(value) ? value : [];
 }

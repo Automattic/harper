@@ -3901,6 +3901,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NumericRangeEnDash",
+								"state": true,
+								"label": "Numeric Range En Dash"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Nobody",
 								"state": true,
 								"label": "Nobody"

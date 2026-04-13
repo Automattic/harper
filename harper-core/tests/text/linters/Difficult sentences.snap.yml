@@ -318,6 +318,15 @@ Suggest:
 
 
 
+Lint:    Formatting (63 priority)
+Message: |
+     440 | The match result was 10-5, with John scoring three goals.
+         |                        ^ Use an en dash (–) in ranges of numbers. Ignore this if it is math.
+Suggest:
+  - Replace with: “–”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
      449 | slain with robbers.
