@@ -173,6 +173,7 @@ mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
 mod plural_decades;
+mod plural_gerunds;
 mod plural_wrong_word_of_phrase;
 mod possessive_noun;
 mod possessive_your;
@@ -829,6 +830,24 @@ pub mod tests {
                 "Expected lint message \"{expected_message}\", but got \"{}\"",
                 lint.message
             );
+        }
+    }
+
+    /// Asserts that the lint's span's text exactly matches the expected text.
+    #[track_caller]
+    pub fn assert_lint_text(text: &str, mut linter: impl Linter, expected_text: &str) {
+        let test = Document::new_plain_english_curated(text);
+        let lints = linter.lint(&test);
+
+        // Just check the first lint for now - TODO
+        if let Some(lint) = lints.first() {
+            let lint_text = lint.get_str(test.get_source());
+            if lint_text != expected_text {
+                panic!(
+                    "Expected lint text to be exactly \"{expected_text}\", but got \"{}\"",
+                    lint_text
+                );
+            }
         }
     }
 }

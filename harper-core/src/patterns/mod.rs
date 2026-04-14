@@ -9,6 +9,7 @@ use crate::{Document, LSend, Span, Token};
 
 mod any_pattern;
 mod derived_from;
+mod dictionary_token;
 mod implies_quantity;
 mod indefinite_article;
 mod inflection_of_be;
@@ -24,6 +25,7 @@ mod word_set;
 
 pub use any_pattern::AnyPattern;
 pub use derived_from::DerivedFrom;
+pub use dictionary_token::DictionaryToken;
 pub use implies_quantity::ImpliesQuantity;
 pub use indefinite_article::IndefiniteArticle;
 pub use inflection_of_be::InflectionOfBe;
