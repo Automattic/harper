@@ -1221,6 +1221,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Payed",
+								"state": true,
+								"label": "Payed"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RiseTheQuestion",
 								"state": true,
 								"label": "Rise The Question"
