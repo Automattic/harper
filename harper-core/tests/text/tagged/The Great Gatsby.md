@@ -6695,7 +6695,7 @@
 >
 #
 > But     the rest    offended her     — and  inarguably , because it       wasn’t a   gesture but     an
-# NSg/C/P D+  NSg/VB+ VP/J     ISg/D$+ . VB/C ?          . C/P     NPr/ISg+ VPt    D/P NSg/VB+ NSg/C/P D/P
+# NSg/C/P D+  NSg/VB+ VP/J     ISg/D$+ . VB/C R          . C/P     NPr/ISg+ VPt    D/P NSg/VB+ NSg/C/P D/P
 > emotion . She  was  appalled by    West      Egg      , this   unprecedented “ place   ” that     Broadway
 # N🅪Sg+   . ISg+ VLPt VP/J     NSg/P NPr/VB/J+ N🅪Sg/VB+ . I/Ddem J             . N🅪Sg/VB . I/C/Ddem NPr/J+
 > had begotten upon a   Long     Island  fishing  village — appalled by    its     raw      vigor that
@@ -6979,7 +6979,7 @@
 > them     than a   wisp   of startled air      . But     they made no        sound      , and  what   I       had almost
 # NSg/IPl+ C/P  D/P NSg/VB P  VP/J     N🅪Sg/VB+ . NSg/C/P IPl+ VP   NSg/Dq/P+ N🅪Sg/VB/J+ . VB/C NSg/I+ ISg/#r+ VP  R
 > remembered was  uncommunicable forever .
-# VP/J       VLPt ?              NSg/J   .
+# VP/J       VLPt J              NSg/J   .
 >
 #
 >              CHAPTER VII
