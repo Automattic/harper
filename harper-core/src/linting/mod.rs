@@ -38,6 +38,7 @@ mod cautionary_tale;
 mod change_tack;
 mod chock_full;
 mod closed_compounds;
+mod code_in_write_in;
 mod comma_fixes;
 mod compound_nouns;
 mod compound_subject_i;

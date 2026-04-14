@@ -3559,6 +3559,13 @@
 								"state": true,
 								"label": "Aspire To"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CodeInWriteIn",
+								"state": true,
+								"label": "Code In Write In"
+							}
 						}
 					]
 				}
