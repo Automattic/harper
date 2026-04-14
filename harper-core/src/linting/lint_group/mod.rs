@@ -195,6 +195,7 @@ use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
 use super::sneaked_snuck::SneakedSnuck;
+use super::solve_for::SolveFor;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -683,6 +684,7 @@ impl LintGroup {
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SingleBe, true);
         insert_struct_rule!(SneakedSnuck, true);
+        insert_expr_rule!(SolveFor, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);

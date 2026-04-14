@@ -206,6 +206,7 @@ mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
 mod sneaked_snuck;
+mod solve_for;
 mod some_without_article;
 mod something_is;
 mod somewhat_something;
