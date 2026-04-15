@@ -166,7 +166,6 @@ mod tests {
 
     #[test]
     fn issue_613_solve_for_this_issue() {
-        // "How can i solve for this issue with the logical flow"
         assert_suggestion_result(
             "How can I solve for this issue with the logical flow?",
             SolveFor::default(),
@@ -176,7 +175,6 @@ mod tests {
 
     #[test]
     fn issue_613_solve_for_the_problem_email() {
-        // "Can you help me solve for the problem email message"
         assert_suggestion_result(
             "Can you help me solve for the problem email message?",
             SolveFor::default(),
@@ -186,7 +184,6 @@ mod tests {
 
     #[test]
     fn issue_613_solve_for_the_wrong_problem() {
-        // "when you solve for the wrong problem not only do you not get the solution"
         assert_suggestion_result(
             "When you solve for the wrong problem you miss the solution.",
             SolveFor::default(),
@@ -196,7 +193,6 @@ mod tests {
 
     #[test]
     fn issue_613_solve_for_this_git_problem() {
-        // "this is a how to solve for this git problem: fatal: unable ..."
         assert_suggestion_result(
             "This is how to solve for this git problem.",
             SolveFor::default(),
@@ -205,9 +201,8 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // "solved for because" — no determiner after "for", linter doesn't match this pattern
+    #[ignore = "\"solved for because\" — no determiner after \"for\", linter doesn't match this pattern"]
     fn issue_613_solved_for_because() {
-        // "this has already been solved for because the ad520 also has its own ways"
         assert_suggestion_result(
             "This has already been solved for because the ad520 has its own ways.",
             SolveFor::default(),
@@ -216,9 +211,8 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // "solve for" at end of clause — no determiner follows, linter can't detect this
+    #[ignore = "\"solve for\" at end of clause — no determiner follows, linter can't detect this"]
     fn issue_613_solve_for_end_of_clause() {
-        // "the actual word that you couldn't solve for"
         assert_suggestion_result(
             "The word that you couldn't solve for.",
             SolveFor::default(),
