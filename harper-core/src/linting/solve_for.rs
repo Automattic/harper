@@ -120,4 +120,45 @@ mod tests {
     fn no_lint_solve_for_y() {
         assert_no_lints("Solve for y when x equals zero.", SolveFor::default());
     }
+
+    #[test]
+    fn fix_solve_for_a_better_solution() {
+        assert_suggestion_result(
+            "We need to solve for a better solution.",
+            SolveFor::default(),
+            "We need to solve a better solution.",
+        );
+    }
+
+    #[test]
+    fn fix_solve_for_the_missing_variable() {
+        assert_suggestion_result(
+            "I will solve for the missing variable.",
+            SolveFor::default(),
+            "I will solve the missing variable.",
+        );
+    }
+
+    #[test]
+    fn fix_solved_for_the_unknown() {
+        assert_suggestion_result(
+            "They solved for the unknown.",
+            SolveFor::default(),
+            "They solved the unknown.",
+        );
+    }
+
+    #[test]
+    fn fix_solves_for_this_challenge() {
+        assert_suggestion_result(
+            "Our team solves for this challenge every day.",
+            SolveFor::default(),
+            "Our team solves this challenge every day.",
+        );
+    }
+
+    #[test]
+    fn no_lint_solve_for_x_in_equation() {
+        assert_no_lints("Can you solve for x in this equation?", SolveFor::default());
+    }
 }
