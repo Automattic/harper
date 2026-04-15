@@ -32,7 +32,7 @@ impl ExprLinter for SolveFor {
             span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::Remove],
-            message: "Use `solve` instead of `solve for` when followed by a determiner or article. Reserve `solve for` for mathematical equations (e.g., \"solve for x\").".to_string(),
+            message: "\"Solve for\" is typically used in math or science contexts (e.g., \"solve for x\"). In general writing, \"solve\" alone is usually correct here.".to_string(),
             ..Default::default()
         })
     }
@@ -42,7 +42,7 @@ impl ExprLinter for SolveFor {
     }
 
     fn description(&self) -> &str {
-        "Flags incorrect use of `solve for` followed by a determiner, suggesting removal of `for`."
+        "Flags incorrect use of `solve for` when `solve` is correct."
     }
 }
 
@@ -160,5 +160,69 @@ mod tests {
     #[test]
     fn no_lint_solve_for_x_in_equation() {
         assert_no_lints("Can you solve for x in this equation?", SolveFor::default());
+    }
+
+    // Real-world examples from issue #613
+
+    #[test]
+    fn issue_613_solve_for_this_issue() {
+        // "How can i solve for this issue with the logical flow"
+        assert_suggestion_result(
+            "How can I solve for this issue with the logical flow?",
+            SolveFor::default(),
+            "How can I solve this issue with the logical flow?",
+        );
+    }
+
+    #[test]
+    fn issue_613_solve_for_the_problem_email() {
+        // "Can you help me solve for the problem email message"
+        assert_suggestion_result(
+            "Can you help me solve for the problem email message?",
+            SolveFor::default(),
+            "Can you help me solve the problem email message?",
+        );
+    }
+
+    #[test]
+    fn issue_613_solve_for_the_wrong_problem() {
+        // "when you solve for the wrong problem not only do you not get the solution"
+        assert_suggestion_result(
+            "When you solve for the wrong problem you miss the solution.",
+            SolveFor::default(),
+            "When you solve the wrong problem you miss the solution.",
+        );
+    }
+
+    #[test]
+    fn issue_613_solve_for_this_git_problem() {
+        // "this is a how to solve for this git problem: fatal: unable ..."
+        assert_suggestion_result(
+            "This is how to solve for this git problem.",
+            SolveFor::default(),
+            "This is how to solve this git problem.",
+        );
+    }
+
+    #[test]
+    #[ignore] // "solved for because" — no determiner after "for", linter doesn't match this pattern
+    fn issue_613_solved_for_because() {
+        // "this has already been solved for because the ad520 also has its own ways"
+        assert_suggestion_result(
+            "This has already been solved for because the ad520 has its own ways.",
+            SolveFor::default(),
+            "This has already been solved because the ad520 has its own ways.",
+        );
+    }
+
+    #[test]
+    #[ignore] // "solve for" at end of clause — no determiner follows, linter can't detect this
+    fn issue_613_solve_for_end_of_clause() {
+        // "the actual word that you couldn't solve for"
+        assert_suggestion_result(
+            "The word that you couldn't solve for.",
+            SolveFor::default(),
+            "The word that you couldn't solve.",
+        );
     }
 }
