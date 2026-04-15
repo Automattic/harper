@@ -204,8 +204,12 @@ async function changeDialect(): Promise<void> {
 		label: name,
 	}));
 
+	const currentDialect = workspace.getConfiguration('harper').get<string>('dialect', 'American');
+	const currentItem = dialects.find((d) => d.label === currentDialect);
+
 	const selected = await window.showQuickPick(dialects, {
 		placeHolder: 'Select Harper dialect',
+		activeItems: currentItem ? [currentItem] : [],
 	});
 
 	if (selected && typeof selected !== 'string') {
