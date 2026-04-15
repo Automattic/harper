@@ -1,9 +1,8 @@
 use std::collections::HashSet;
 
-use tree_sitter::{Language, Node, Tree, TreeCursor};
-
 use harper_core::spell::{MutableDictionary, WordMapEntry};
 use harper_core::{Mask, Masker, Span};
+use tree_sitter::{Language, Node, Tree, TreeCursor};
 
 /// A Harper [`Masker`] that wraps a given tree-sitter language and a condition,
 /// allowing you to selectively parse only specific tree-sitter nodes.

@@ -1,13 +1,12 @@
 use std::path::Path;
 
-use itertools::Itertools;
-use tokio::fs::{self, File};
-use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
-
 use harper_core::{
     Dialect, DialectFlags, DictWordMetadata,
     spell::{Dictionary, MutableDictionary, WordMapEntry},
 };
+use itertools::Itertools;
+use tokio::fs::{self, File};
+use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 
 /// Save the contents of a dictionary to a file.
 /// Ensures that the path to the destination exists.

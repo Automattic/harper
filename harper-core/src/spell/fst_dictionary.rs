@@ -18,13 +18,16 @@ use crate::CharStringExt;
 /// [`MutableDictionary`].
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    word_map: MutableDictionary,
+    mutable_dict: MutableDictionary,
     /// Used for fuzzy-finding the index of words or metadata
     fst_map: FstMap<Vec<u8>>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
+
+static DICT: LazyLock<Arc<FstDictionary>> =
+    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().to_fst()));
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a
@@ -39,7 +42,7 @@ thread_local! {
 
 impl PartialEq for FstDictionary {
     fn eq(&self, other: &Self) -> bool {
-        self.word_map == other.word_map
+        self.mutable_dict == other.mutable_dict
     }
 }
 
@@ -47,14 +50,11 @@ impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     pub fn curated() -> Arc<Self> {
-        static DICT: LazyLock<Arc<FstDictionary>> =
-            LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().to_fst()));
-
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a word map as a source.
-    /// This can be expensive, so only use this if fast fuzzy searches are worth it.
+    /// Construct a new [`FstDictionary`] using a [`WordMap`] (or [`MutableDictionary`]) as
+    /// a source. This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(word_map: WordMap) -> Self {
         let mut words = word_map.into_iter().collect_vec();
 
@@ -68,12 +68,15 @@ impl FstDictionary {
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let word_map = WordMap::from_iter(words);
+        let mutable_dict = MutableDictionary::from_iter(words);
 
         let fst_bytes = builder.into_inner().unwrap();
         let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
-        FstDictionary { word_map, fst_map }
+        FstDictionary {
+            mutable_dict,
+            fst_map,
+        }
     }
 }
 
@@ -122,7 +125,7 @@ fn merge_best_distances(
 
 impl Dictionary for FstDictionary {
     fn get_word_map(&self) -> &WordMap {
-        &self.word_map
+        &self.mutable_dict
     }
 
     fn fuzzy_match(
@@ -161,7 +164,7 @@ impl Dictionary for FstDictionary {
 
         let mut merged = Vec::with_capacity(best_distances.len());
         for (index, edit_distance) in best_distances {
-            let wme = &self.word_map[index as usize];
+            let wme = &self.mutable_dict[index as usize];
             merged.push(FuzzyMatchResult {
                 word: &wme.canonical_spelling,
                 edit_distance,
@@ -182,11 +185,11 @@ impl Dictionary for FstDictionary {
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_prefix(prefix)
+        self.mutable_dict.find_words_with_prefix(prefix)
     }
 
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_common_prefix(word)
+        self.mutable_dict.find_words_with_common_prefix(word)
     }
 }
 
@@ -305,7 +308,7 @@ mod tests {
         let dict = FstDictionary::curated();
 
         assert!(
-            dict.word_map
+            dict.mutable_dict
                 .iter()
                 .map(|wme| &wme.canonical_spelling)
                 .all_unique()
