@@ -15,10 +15,7 @@ impl Default for SolveFor {
                 .t_ws()
                 .t_aco("for")
                 .t_ws()
-                .then_word_set(&[
-                    "the", "a", "an", "this", "that", "my", "your", "his", "her", "its", "our",
-                    "their", "these", "those", "any", "some",
-                ]),
+                .then_determiner(),
         }
     }
 }
@@ -92,6 +89,24 @@ mod tests {
     }
 
     #[test]
+    fn fix_solve_for_our_customers() {
+        assert_suggestion_result(
+            "We want to solve for our customers' needs.",
+            SolveFor::default(),
+            "We want to solve our customers' needs.",
+        );
+    }
+
+    #[test]
+    fn fix_solves_for_every_edge_case() {
+        assert_suggestion_result(
+            "This approach solves for every edge case.",
+            SolveFor::default(),
+            "This approach solves every edge case.",
+        );
+    }
+
+    #[test]
     fn no_lint_solve_for_x() {
         assert_no_lints("Solve for x in the equation.", SolveFor::default());
     }
@@ -99,5 +114,10 @@ mod tests {
     #[test]
     fn no_lint_solve_for_n() {
         assert_no_lints("We need to solve for n.", SolveFor::default());
+    }
+
+    #[test]
+    fn no_lint_solve_for_y() {
+        assert_no_lints("Solve for y when x equals zero.", SolveFor::default());
     }
 }
