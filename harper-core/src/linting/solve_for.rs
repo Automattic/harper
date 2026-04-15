@@ -24,15 +24,13 @@ impl ExprLinter for SolveFor {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        // toks: [solve(0), ws(1), "for"(2), ws(3), article(4)]
-        // Remove "for " (toks[2..4]) to turn "solve for the X" into "solve the X"
         let span = toks[2..4].span()?;
 
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::Remove],
-            message: "\"Solve for\" is typically used in math or science contexts (e.g., \"solve for x\"). In general writing, \"solve\" alone is usually correct here.".to_string(),
+            message: "\"Solve for\" is a math term used to find the value of a variable (e.g., \"solve for x\"). When referring to fixing or resolving something, use \"solve\" without \"for\".".to_string(),
             ..Default::default()
         })
     }
