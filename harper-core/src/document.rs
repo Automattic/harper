@@ -425,6 +425,8 @@ impl Document {
                             | Some(Punctuation::OpenRound)
                             | Some(Punctuation::OpenSquare)
                             | Some(Punctuation::OpenCurly)
+                            | Some(Punctuation::EmDash)
+                            | Some(Punctuation::EnDash)
                             | Some(Punctuation::Apostrophe)
                     );
 

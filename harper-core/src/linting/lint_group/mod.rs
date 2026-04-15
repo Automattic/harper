@@ -43,6 +43,7 @@ use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
+use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
@@ -533,6 +534,7 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -728,7 +730,6 @@ impl LintGroup {
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
-        insert_expr_rule!(WereWhere, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WhomSubjectOfVerb, true);
         insert_expr_rule!(WidelyAccepted, true);
@@ -759,6 +760,10 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
 
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
