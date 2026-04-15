@@ -23,7 +23,7 @@ impl Default for SolveFor {
 impl ExprLinter for SolveFor {
     type Unit = Chunk;
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         // toks: [solve(0), ws(1), "for"(2), ws(3), article(4)]
         // Remove "for " (toks[2..4]) to turn "solve for the X" into "solve the X"
         let span = toks[2..4].span()?;
