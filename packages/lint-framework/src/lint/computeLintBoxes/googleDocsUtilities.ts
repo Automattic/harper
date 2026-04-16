@@ -11,21 +11,6 @@ type GoogleDocsReplacePayload = {
 	afterContext: string;
 };
 
-type GoogleDocsBridgeClientLike = {
-	replaceText: (
-		start: number,
-		end: number,
-		replacementText: string,
-		expectedText?: string,
-		beforeContext?: string,
-		afterContext?: string,
-	) => Promise<unknown> | unknown;
-};
-
-type WindowWithGoogleDocsBridgeClient = Window & {
-	__harperGoogleDocsBridgeClient?: GoogleDocsBridgeClientLike;
-};
-
 let googleDocsMeasurementContext: CanvasRenderingContext2D | null | undefined;
 
 function getGoogleDocsMeasurementContext(): CanvasRenderingContext2D | null {
