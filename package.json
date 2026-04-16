@@ -13,6 +13,8 @@
   },
   "license": "MIT",
   "dependencies": {
+		"harper-editor": "file:./harper/packages/harper-editor",
+		"harper.js": "file:./harper/packages/harper.js",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2"
   },

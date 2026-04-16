@@ -14,6 +14,12 @@ importers:
       '@tauri-apps/plugin-opener':
         specifier: ^2
         version: 2.5.3
+      harper-editor:
+        specifier: file:./harper/packages/harper-editor
+        version: file:harper/packages/harper-editor(harper.js@file:harper/packages/harper.js)(svelte@5.55.4)
+      harper.js:
+        specifier: file:./harper/packages/harper.js
+        version: file:harper/packages/harper.js
     devDependencies:
       '@sveltejs/adapter-static':
         specifier: ^3.0.6
@@ -556,10 +562,22 @@ packages:
       picomatch:
         optional: true
 
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  harper-editor@file:harper/packages/harper-editor:
+    resolution: {directory: harper/packages/harper-editor, type: directory}
+    peerDependencies:
+      harper.js: ^2.0.0
+      svelte: ^5.0.0
+
+  harper.js@file:harper/packages/harper.js:
+    resolution: {directory: harper/packages/harper.js, type: directory}
 
   is-reference@3.0.3:
     resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
@@ -1049,8 +1067,19 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.4
 
+  fflate@0.8.2: {}
+
   fsevents@2.3.3:
     optional: true
+
+  harper-editor@file:harper/packages/harper-editor(harper.js@file:harper/packages/harper.js)(svelte@5.55.4):
+    dependencies:
+      harper.js: file:harper/packages/harper.js
+      svelte: 5.55.4
+
+  harper.js@file:harper/packages/harper.js:
+    dependencies:
+      fflate: 0.8.2
 
   is-reference@3.0.3:
     dependencies:
