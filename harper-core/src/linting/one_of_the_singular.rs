@@ -80,6 +80,18 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
         {
             return None;
         }
+
+        // Skip if the next word-like token is a pronoun, which starts a
+        // new clause modifying the matched tail — e.g. "one of the best
+        // I've found", "one of the best that he saw". In those cases the
+        // matched adj (here "best") is used as a substantive adjective,
+        // not an out-of-agreement singular noun.
+        let after = ctx?.1;
+        if let Some(next_word) = after.iter().find(|t| t.kind.is_word_like())
+            && next_word.kind.is_pronoun()
+        {
+            return None;
+        }
         let nounspan = nountok.span;
         let singular = nounspan.get_content(src);
         let mut plural_s = singular.to_vec();
