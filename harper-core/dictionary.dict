@@ -282,6 +282,7 @@ Alexandria/Og
 Alexandrian/JN
 Alexei/Og
 Alexis/Og
+Alf/Og
 Alfonso/Og
 Alfonzo/Og
 Alford/Og
@@ -9207,6 +9208,7 @@ Scottie/ONSg
 Scottish/JNg
 Scottsdale/Og
 Scotty/Og
+Scoville/Og
 Scrabble/OgS
 Scranton/Og
 Scriabin/g
@@ -10372,6 +10374,7 @@ U/                  # Uranium; removed `1`noun `5`adj. `2`proper noun `+`prep., 
 U-turn/NgSVdG
 U.K./Og
 U.S./Og             # United States
+U.S.A./Og
 UAE/Og              # United Arab Emirates
 UAR/O
 UART/NgS            # electronics
@@ -11695,6 +11698,7 @@ administrative/~JY
 administrator/~NgS
 admirably/Ry
 admiral/~NgS
+admiralship/NwgS
 admiralty/~Ng
 admiration/~Ng
 admire/~VGd>SBZ
@@ -12003,6 +12007,8 @@ aha/~
 ahchoo/
 ahead/~R
 ahem/V
+ahistoric/J
+ahistorical/J
 ahoy/VN
 aid/~NwSgVdG
 aide/~NSg
@@ -13650,6 +13656,7 @@ autostereogram/NgS
 autosuggestion/N
 autotagging/NmgS
 autothysis/Nmg
+autotune/NmgVGdS
 autoworker/NgS
 autumn/~NwSgV
 autumnal/J
@@ -14793,6 +14800,7 @@ bindery/NSg
 binding/~JNgSV
 bindweed/Ng
 binge/~NgSVd
+bingeing/V6
 bingo/~NgJV
 binman/N
 binmen/9
@@ -20228,6 +20236,7 @@ curbstone/NSg
 curd/~NgSV
 curdle/VdSG
 cure/~NSVGd>KZB
+cure-all/NwgS
 cure's
 cured/~VtTU
 curer/NgK
@@ -26055,6 +26064,8 @@ frontierswoman/N0
 frontierswomen/N9
 frontispiece/NgSV
 frontline/NSg
+frontman/N0g
+frontmen/N9
 frontside/J
 frontward/JS
 frosh/NgV
@@ -29917,7 +29928,7 @@ incisiveness/Ng
 incisor/~NgS
 incitement/NgS
 inciter/NgS
-incl/~P
+incl./~P
 inclement/J
 inclination/~N0wgE
 inclinations/~N9
@@ -30991,6 +31002,7 @@ jackass/NgSV
 jackboot/NSgVd
 jackdaw/NgS
 jacket/~NSgVd
+jackfruit/NwSg      # tropical fruit
 jackhammer/NgSV
 jackknife/NgSVGd
 jackknives/9
@@ -39082,6 +39094,7 @@ phlegmatic/JNQ
 phloem/Nmg
 phlogiston/Nmg
 phlox/Ng
+pho/Nmg
 phobia/NgS
 phobic/JNgS
 phoebe/~NgS
@@ -40638,6 +40651,7 @@ prizefighting/Ng
 prizewinner/NgS
 prizewinning/J
 pro/~NSgPJ(
+pro bono/RJ
 pro-democracy/J
 pro rata/R
 probabilistic/~J
@@ -53728,6 +53742,8 @@ Archytas/Sg         # !! please check and comment !! we also have archytas
 Arial/Og            # font
 Atlassian/Og        # Company behind Jira, Confluence, Bitbucket
 AutoGPT/Og
+AutoTune/Og         # the company uses hyphenated and camelcase spellings
+Auto-Tune/Og        # the company uses hyphenated and camelcase spellings
 Automattic/Og       # WordPress company
 Automattician/Sg
 B&B/Ng
