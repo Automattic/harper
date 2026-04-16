@@ -15,3 +15,6 @@ pull-dep-source:
 # Build the necessary dependenceies from the Harper monorepo
 build-harper-deps:
   cd harper && just build-harperjs build-harper-editor
+
+dev:
+  cargo-tauri dev
