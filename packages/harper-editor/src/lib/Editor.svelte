@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Card } from 'components';
-import { type WorkerLinter } from 'harper.js';
+import type Linter from 'harper.js';
 import {
 	type IgnorableLintBox,
 	LintFramework,
@@ -10,10 +10,11 @@ import {
 import LintSidebar from './LintSidebar.svelte';
 
 export let content = '';
+export let linter: Linter;
 export let onReady: () => void = () => null;
 
 let editor: HTMLDivElement | null;
-let linter: WorkerLinter;
+let linterVersion = 0;
 let quill: any;
 let lintBoxes: IgnorableLintBox[] = [];
 
@@ -23,8 +24,6 @@ $: if (linter != null && quill != null) {
 
 let lfw = new LintFramework(
 	async (text) => {
-		if (!linter) return {};
-
 		const raw = await linter.organizedLints(text);
 		// The framework expects grouped lints keyed by source
 		const entries = await Promise.all(
@@ -42,7 +41,6 @@ let lfw = new LintFramework(
 	},
 	{
 		ignoreLint: async (hash: string) => {
-			if (!linter) return;
 			try {
 				await linter.ignoreLintHash(BigInt(hash));
 				console.log(`Ignored ${hash}`);
@@ -55,15 +53,29 @@ let lfw = new LintFramework(
 	},
 );
 
-(async () => {
-	let { WorkerLinter } = await import('harper.js');
-	let { slimBinary } = await import('harper.js/slimBinary');
-	let newLinter = new WorkerLinter({ binary: slimBinary });
+$: {
+	const version = ++linterVersion;
+	const activeLinter = linter;
 
-	newLinter.setup();
-	await newLinter.lint(content);
-	linter = newLinter;
-})();
+	lintBoxes = [];
+
+	void (async () => {
+		try {
+			await activeLinter.setup();
+			await activeLinter.lint(content);
+		} catch (error) {
+			console.error('Failed to initialize linter', error);
+		}
+
+		if (version !== linterVersion) {
+			return;
+		}
+
+		if (editor != null) {
+			lfw.update();
+		}
+	})();
+}
 
 async function updateLintFrameworkElements() {
 	if (editor == null) {

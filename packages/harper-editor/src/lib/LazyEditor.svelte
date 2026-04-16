@@ -1,7 +1,9 @@
 <script lang="ts">
 import { Spinner } from 'components';
+import type Linter from 'harper.js';
 
 export let content = '';
+export let linter: Linter;
 
 let editor = import('./Editor.svelte');
 let loading = true;
@@ -13,7 +15,7 @@ function onReady() {
 
 {#await editor then { default: Editor}}
 	<div class={`flex-row h-full w-full ${loading ? 'hidden' : 'flex'}`}>
-		<Editor content={content} {onReady} />
+		<Editor content={content} {linter} {onReady} />
 	</div>
 {/await}
 

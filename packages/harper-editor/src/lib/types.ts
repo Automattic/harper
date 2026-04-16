@@ -1,4 +1,6 @@
-import type { SuggestionKind } from 'harper.js';
+import type { Linter, SuggestionKind } from 'harper.js';
+
+export type EditorLinter = Linter;
 
 export type LintKind =
 	| 'Agreement'

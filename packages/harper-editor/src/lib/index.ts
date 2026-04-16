@@ -4,6 +4,7 @@ export { default as LintCard } from './LintCard.svelte';
 export { default as LintSidebar } from './LintSidebar.svelte';
 export type {
 	Box,
+	EditorLinter,
 	IgnorableLintBox,
 	LintBox,
 	LintKind,

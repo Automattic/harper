@@ -25,6 +25,9 @@ import EdgeLogo from '$lib/components/EdgeLogo.svelte';
 import { Card, Collapsible, Link } from 'components';
 import { browser } from '$app/environment';
 import demoText from '../../../../demo.md?raw';
+import type { Linter } from 'harper.js';
+import { onMount } from 'svelte';
+import { createEditorLinter } from '$lib/createEditorLinter';
 
 /**
  * @param {string} keyword
@@ -97,6 +100,13 @@ const testimonials = [
 ];
 
 const editorContent = demoText.trim();
+let linter: Linter | null = null;
+
+onMount(() => {
+	(async () => {
+		linter = await createEditorLinter();
+	})();
+});
 </script>
 
 <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 py-12">
@@ -157,8 +167,8 @@ const editorContent = demoText.trim();
 		</div>
 
 		<div class="h-[800px] w-full">
-      {#if browser}
-			  <LazyEditor content={editorContent} />
+      {#if browser && linter}
+			  <LazyEditor content={editorContent} {linter} />
       {/if}
 		</div>
 	</div>
