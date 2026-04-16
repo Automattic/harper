@@ -2,7 +2,7 @@
 import { Select, Textarea } from 'components';
 import { WorkerLinter } from 'harper.js';
 import { binary } from 'harper.js/binary';
-import demoText from '../../../../../demo.md?raw';
+import demoText from '../../../../demo.md?raw';
 
 let isEnglish: boolean | null = null;
 let text = '';

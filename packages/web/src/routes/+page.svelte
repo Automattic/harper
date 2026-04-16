@@ -7,7 +7,7 @@ export const frontmatter = {
 <script lang="ts">
 import ChromeLogo from '$lib/components/ChromeLogo.svelte';
 import CodeLogo from '$lib/components/CodeLogo.svelte';
-import LazyEditor from '$lib/components/LazyEditor.svelte';
+import { LazyEditor } from 'harper-editor';
 import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
 import GitHubLogo from '$lib/components/GitHubLogo.svelte';
 import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
@@ -24,6 +24,7 @@ import ZedLogo from '$lib/components/ZedLogo.svelte';
 import EdgeLogo from '$lib/components/EdgeLogo.svelte';
 import { Card, Collapsible, Link } from 'components';
 import { browser } from '$app/environment';
+import demoText from '../../../../demo.md?raw';
 
 /**
  * @param {string} keyword
@@ -94,6 +95,8 @@ const testimonials = [
     source: "https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews"
   },
 ];
+
+const editorContent = demoText.trim();
 </script>
 
 <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 py-12">
@@ -155,7 +158,7 @@ const testimonials = [
 
 		<div class="h-[800px] w-full">
       {#if browser}
-			  <LazyEditor />
+			  <LazyEditor content={editorContent} />
       {/if}
 		</div>
 	</div>

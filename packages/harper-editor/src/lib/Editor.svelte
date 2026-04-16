@@ -7,10 +7,9 @@ import {
 	type UnpackedLintGroups,
 	unpackLint,
 } from 'lint-framework';
-import LintSidebar from '$lib/components/LintSidebar.svelte';
-import demo from '../../../../../demo.md?raw';
+import LintSidebar from './LintSidebar.svelte';
 
-export let content = demo.trim();
+export let content = '';
 export let onReady: () => void = () => null;
 
 let editor: HTMLDivElement | null;
@@ -122,9 +121,9 @@ function jumpTo(lintBox: IgnorableLintBox) {
 
 <div class="flex flex-row h-full w-full [&_*]:outline-none">
 	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5 bg-white dark:bg-black overflow-auto">
-    <div bind:this={editor} spellcheck="false">
-    {@html content.replace(/\n\n/g, '<br>')}
-    </div>
+		<div bind:this={editor} spellcheck="false">
+			{@html content.replace(/\n\n/g, '<br>')}
+		</div>
 	</Card>
 
 	<LintSidebar

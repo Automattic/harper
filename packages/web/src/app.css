@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "components/components.css";
+@import "harper-editor/style.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
