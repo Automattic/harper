@@ -48,7 +48,7 @@ build-components:
   pnpm build
 
 # Build the shared Harper editor library
-build-harper-editor: build-components build-lint-framework
+build-harper-editor: build-lint-framework build-components   
   #!/usr/bin/env bash
   set -eo pipefail
 
