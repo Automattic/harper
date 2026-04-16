@@ -176,19 +176,6 @@ importers:
         version: 7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
 
   packages/harper-editor:
-    dependencies:
-      components:
-        specifier: workspace:*
-        version: link:../components
-      harper.js:
-        specifier: workspace:*
-        version: link:../harper.js
-      lint-framework:
-        specifier: workspace:*
-        version: link:../lint-framework
-      quill:
-        specifier: ^2.0.3
-        version: 2.0.3
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^7.0.0
@@ -208,9 +195,21 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.14
         version: 4.1.17(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      components:
+        specifier: workspace:*
+        version: link:../components
+      harper.js:
+        specifier: workspace:*
+        version: link:../harper.js
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
       publint:
         specifier: ^0.3.14
         version: 0.3.15
+      quill:
+        specifier: ^2.0.3
+        version: 2.0.3
       svelte:
         specifier: ^5.41.0
         version: 5.43.12

@@ -1,12 +1,8 @@
 <script lang="ts">
 import { Button } from 'components';
-import {
-	lintKindColor,
-	lintKindTextColor,
-	type UnpackedLint,
-	type UnpackedSuggestion,
-} from 'lint-framework';
+import { lintKindColor, lintKindTextColor } from 'lint-framework';
 import { slide } from 'svelte/transition';
+import type { UnpackedLint, UnpackedSuggestion } from './types';
 
 export let lint: UnpackedLint;
 export let open = false;

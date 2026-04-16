@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Button, Card } from 'components';
-import { type IgnorableLintBox, type LintBox } from 'lint-framework';
 import LintCard from './LintCard.svelte';
+import type { IgnorableLintBox, LintBox } from './types';
 
 export let lintBoxes: IgnorableLintBox[] = [];
 export let focusLint: (lintBox: IgnorableLintBox) => void = () => {};
