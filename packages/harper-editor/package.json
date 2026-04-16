@@ -37,12 +37,12 @@
 		"svelte": "^5.0.0"
 	},
 	"dependencies": {
-		"components": "workspace:*",
-		"harper.js": "workspace:*",
-		"lint-framework": "workspace:*",
 		"quill": "^2.0.3"
 	},
 	"devDependencies": {
+		"components": "workspace:*",
+		"harper.js": "workspace:*",
+		"lint-framework": "workspace:*",
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/kit": "^2.47.1",
 		"@sveltejs/package": "^2.5.4",
