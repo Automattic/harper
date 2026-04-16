@@ -368,12 +368,14 @@ async function dispatchDelete(target: chrome.debugger.Debuggee): Promise<void> {
 async function clickGoogleDocsPoint(
 	target: chrome.debugger.Debuggee,
 	point: { x: number; y: number },
+	modifiers = 0,
 ): Promise<void> {
 	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
 		type: 'mouseMoved',
 		x: point.x,
 		y: point.y,
 		button: 'none',
+		modifiers,
 	});
 	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
 		type: 'mousePressed',
@@ -382,6 +384,7 @@ async function clickGoogleDocsPoint(
 		button: 'left',
 		buttons: 1,
 		clickCount: 1,
+		modifiers,
 	});
 	await debuggerSendCommand(target, 'Input.dispatchMouseEvent', {
 		type: 'mouseReleased',
@@ -390,7 +393,17 @@ async function clickGoogleDocsPoint(
 		button: 'left',
 		buttons: 1,
 		clickCount: 1,
+		modifiers,
 	});
+}
+
+async function shiftClickGoogleDocsRange(
+	target: chrome.debugger.Debuggee,
+	start: { x: number; y: number },
+	end: { x: number; y: number },
+): Promise<void> {
+	await clickGoogleDocsPoint(target, start);
+	await clickGoogleDocsPoint(target, end, 8);
 }
 
 async function selectGoogleDocsRangeByKeyboard(
@@ -564,17 +577,53 @@ async function handleGoogleDocsInsertText(
 	}
 
 	const debuggee: chrome.debugger.Debuggee = { tabId };
+	const oldText = req.selectedText;
+	const newText = req.text;
 
 	try {
 		await debuggerAttach(debuggee);
 		await focusGoogleDocsTextTarget(debuggee);
 
-		const oldText = req.selectedText;
-		const newText = req.text;
 		const prefixLength = getCommonPrefixLength(oldText, newText);
 		const suffixLength = getCommonSuffixLength(oldText, newText, prefixLength);
 		const deleteCount = Math.max(0, oldText.length - prefixLength - suffixLength);
 		const insertText = newText.slice(prefixLength, newText.length - suffixLength);
+
+		if (oldText.length > 0 && req.selectionStart && req.selectionEnd) {
+			await shiftClickGoogleDocsRange(debuggee, req.selectionStart, req.selectionEnd);
+
+			if (newText.length > 0) {
+				await debuggerSendCommand(debuggee, 'Input.insertText', {
+					text: newText,
+				});
+			} else {
+				await dispatchBackspace(debuggee);
+			}
+
+			if (await waitForGoogleDocsText(debuggee, req.expectedText, 1200)) {
+				return {
+					kind: 'googleDocsInsertText',
+					inserted: true,
+				};
+			}
+
+			await dragGoogleDocsRange(debuggee, req.selectionStart, req.selectionEnd);
+
+			if (newText.length > 0) {
+				await debuggerSendCommand(debuggee, 'Input.insertText', {
+					text: newText,
+				});
+			} else {
+				await dispatchBackspace(debuggee);
+			}
+
+			if (await waitForGoogleDocsText(debuggee, req.expectedText, 1200)) {
+				return {
+					kind: 'googleDocsInsertText',
+					inserted: true,
+				};
+			}
+		}
 
 		if (oldText.length > 0 && req.selectionStart && req.selectionLength > 0) {
 			await selectGoogleDocsRangeByKeyboard(
@@ -591,26 +640,7 @@ async function handleGoogleDocsInsertText(
 				await dispatchBackspace(debuggee);
 			}
 
-			if (await waitForGoogleDocsText(debuggee, req.expectedText)) {
-				return {
-					kind: 'googleDocsInsertText',
-					inserted: true,
-				};
-			}
-		}
-
-		if (oldText.length > 0 && req.selectionStart && req.selectionEnd) {
-			await dragGoogleDocsRange(debuggee, req.selectionStart, req.selectionEnd);
-
-			if (newText.length > 0) {
-				await debuggerSendCommand(debuggee, 'Input.insertText', {
-					text: newText,
-				});
-			} else {
-				await dispatchBackspace(debuggee);
-			}
-
-			if (await waitForGoogleDocsText(debuggee, req.expectedText)) {
+			if (await waitForGoogleDocsText(debuggee, req.expectedText, 1200)) {
 				return {
 					kind: 'googleDocsInsertText',
 					inserted: true,

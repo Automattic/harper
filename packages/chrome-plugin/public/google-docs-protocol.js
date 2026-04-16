@@ -73,6 +73,9 @@
  * @property {'prepareReplaceText'} kind Response kind.
  * @property {boolean} ready Whether the live range was selected and focused.
  * @property {string=} expectedNextText Expected normalized bridge text after the trusted input lands.
+ * @property {number=} resolvedStart Resolved normalized start offset after stale-span recovery.
+ * @property {number=} resolvedEnd Resolved normalized end offset after stale-span recovery.
+ * @property {string=} selectedText Current normalized text inside the resolved span.
  * @property {GoogleDocsPoint=} selectionStart Viewport point for the start caret.
  * @property {GoogleDocsPoint=} selectionEnd Viewport point for the end caret.
  * @property {GoogleDocsPoint=} editStart Viewport point after the shared replacement prefix.

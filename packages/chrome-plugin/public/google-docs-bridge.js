@@ -62,6 +62,40 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		} catch {}
 	}
 
+	function leafNodes(node) {
+		const children = Array.from(node.childNodes);
+		if (children.length === 0) {
+			return [node];
+		}
+
+		return children.flatMap((child) => leafNodes(child));
+	}
+
+	function getRangeForTextSpan(target, start, end) {
+		const children = leafNodes(target);
+		const range = document.createRange();
+		let traversed = 0;
+		let startFound = false;
+
+		for (const child of children) {
+			const childText = child.textContent ?? '';
+
+			if (!startFound && traversed + childText.length > start) {
+				range.setStart(child, Math.max(0, start - traversed));
+				startFound = true;
+			}
+
+			if (startFound && traversed + childText.length >= end) {
+				range.setEnd(child, Math.max(0, end - traversed));
+				return range;
+			}
+
+			traversed += childText.length;
+		}
+
+		return null;
+	}
+
 	function dispatchNotification(kind, detail) {
 		dispatchEvent(EVENT_NOTIFICATION, {
 			protocol: PROTOCOL_VERSION,
@@ -424,6 +458,55 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		} catch {}
 	}
 
+	function dispatchPasteToDocs(text) {
+		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
+		const targetDocument = iframe?.contentDocument;
+		if (!targetDocument) {
+			return false;
+		}
+
+		iframe?.focus?.();
+		targetDocument.defaultView?.focus?.();
+		const target =
+			targetDocument.querySelector('[contenteditable="true"]') ??
+			targetDocument.activeElement ??
+			targetDocument.body ??
+			targetDocument.documentElement;
+		if (!(target instanceof HTMLElement)) {
+			return false;
+		}
+
+		target.focus?.();
+
+		const dataTransfer = new DataTransfer();
+		dataTransfer.items.add(text, 'text/plain');
+		const event = new ClipboardEvent('paste', {
+			clipboardData: dataTransfer,
+			cancelable: true,
+			bubbles: true,
+		});
+
+		return target.dispatchEvent(event);
+	}
+
+	async function waitForExpectedText(expectedText, timeoutMs = 2000) {
+		const deadline = Date.now() + timeoutMs;
+
+		while (Date.now() < deadline) {
+			await syncText();
+			const bridge = ensureBridgeNode();
+			if (normalizeGoogleDocsText(bridge.textContent ?? '') === expectedText) {
+				return true;
+			}
+
+			await new Promise((resolve) => window.setTimeout(resolve, 50));
+		}
+
+		await syncText();
+		const bridge = ensureBridgeNode();
+		return normalizeGoogleDocsText(bridge.textContent ?? '') === expectedText;
+	}
+
 	function isSpanNearSelection(start, end, selection) {
 		if (!selection) {
 			return false;
@@ -593,6 +676,52 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		};
 	}
 
+	async function resolvePreparedReplacement(request) {
+		const getAnnotatedText = getAnnotatedTextApi();
+		if (!getAnnotatedText) {
+			return null;
+		}
+
+		const annotated = await getAnnotatedText();
+		if (!annotated || typeof annotated.setSelection !== 'function') {
+			return null;
+		}
+
+		currentAnnotated = annotated;
+		window.__harperGoogleDocsAnnotatedText = annotated;
+
+		const replacementText = String(request.replacementText ?? '');
+		const rawText = annotated.getText?.() ?? '';
+		const currentText = normalizeGoogleDocsText(rawText);
+		const resolvedRange = resolveReplacementRange(
+			currentText,
+			Number(request.start),
+			Number(request.end),
+			String(request.expectedText ?? ''),
+			String(request.beforeContext ?? ''),
+			String(request.afterContext ?? ''),
+		);
+		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
+		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
+		const currentSpanText = currentText.slice(resolvedRange.start, resolvedRange.end);
+		const expectedNextText =
+			currentText.slice(0, resolvedRange.start) +
+			replacementText +
+			currentText.slice(resolvedRange.end);
+
+		return {
+			annotated,
+			replacementText,
+			rawText,
+			currentText,
+			resolvedRange,
+			rawStart,
+			rawEnd,
+			currentSpanText,
+			expectedNextText,
+		};
+	}
+
 	async function handleGetRectsRequest(request) {
 		const annotated = currentAnnotated;
 		if (!annotated || typeof annotated.setSelection !== 'function') {
@@ -655,75 +784,38 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		}
 	}
 
-	async function handleReplaceTextRequest(request) {
-		const getAnnotatedText = getAnnotatedTextApi();
-		if (!getAnnotatedText) {
+	async function handlePrepareReplaceTextRequest(request) {
+		const prepared = await resolvePreparedReplacement(request);
+		if (!prepared) {
 			return { kind: 'prepareReplaceText', ready: false };
 		}
 
-		const annotated = await getAnnotatedText();
-		if (!annotated || typeof annotated.setSelection !== 'function') {
-			return { kind: 'prepareReplaceText', ready: false };
-		}
-
-		currentAnnotated = annotated;
-		window.__harperGoogleDocsAnnotatedText = annotated;
-
-		const replacementText = String(request.replacementText ?? '');
-		const rawText = annotated.getText?.() ?? '';
-		const currentText = normalizeGoogleDocsText(rawText);
-		const resolvedRange = resolveReplacementRange(
-			currentText,
-			Number(request.start),
-			Number(request.end),
-			String(request.expectedText ?? ''),
-			String(request.beforeContext ?? ''),
-			String(request.afterContext ?? ''),
-		);
-		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
-		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
-		const selectionOffset = rawText.startsWith('\u0003') ? 1 : 0;
-		const caretStart = Math.max(0, rawStart - selectionOffset);
-		const caretEnd = Math.max(caretStart, rawEnd - selectionOffset);
+		const { annotated, replacementText, rawText, currentText, resolvedRange, rawStart, rawEnd, currentSpanText, expectedNextText } =
+			prepared;
 		const scrollSnapshots = snapshotScroll();
-		const currentSpanText = currentText.slice(resolvedRange.start, resolvedRange.end);
 		const replacementPrefixLength = getReplacementCommonPrefixLength(
 			currentSpanText,
 			replacementText,
 		);
-		const editStartRectPosition = Math.max(caretStart, caretStart + replacementPrefixLength);
+		const editStartRectPosition = Math.min(rawEnd, Math.max(rawStart, rawStart + replacementPrefixLength));
 		const { startRect, endRect, editStartRect } = withSuppressedScrolling(() => ({
-			startRect: getCaretRect(annotated, caretStart),
-			endRect: getCaretRect(annotated, caretEnd),
+			startRect: getCaretRect(annotated, rawStart),
+			endRect: getCaretRect(annotated, rawEnd),
 			editStartRect: getCaretRect(annotated, editStartRectPosition),
 		}));
 
 		restoreScroll(scrollSnapshots);
 		requestAnimationFrame(() => restoreScroll(scrollSnapshots));
 
-		annotated.setSelection(caretStart, caretEnd);
-
-		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
-		const targetDocument = iframe?.contentDocument;
-		const target =
-			targetDocument?.activeElement ?? targetDocument?.body ?? targetDocument?.documentElement;
-		if (!target) {
-			return { kind: 'prepareReplaceText', ready: false };
-		}
-
-		iframe?.focus?.();
-		targetDocument?.defaultView?.focus?.();
-		target.focus?.();
-
-		const expectedNextText =
-			currentText.slice(0, resolvedRange.start) +
-			replacementText +
-			currentText.slice(resolvedRange.end);
+		annotated.setSelection(rawStart, rawEnd);
 
 		return {
 			kind: 'prepareReplaceText',
 			ready: Boolean(startRect && endRect),
 			expectedNextText,
+			resolvedStart: resolvedRange.start,
+			resolvedEnd: resolvedRange.end,
+			selectedText: currentSpanText,
 			selectionStart: startRect
 				? { x: startRect.x + 1, y: startRect.y + startRect.height / 2 }
 				: undefined,
@@ -736,10 +828,37 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		};
 	}
 
+	async function handleReplaceTextRequest(request) {
+		const prepared = await resolvePreparedReplacement(request);
+		if (!prepared) {
+			return {
+				kind: 'replaceText',
+				applied: false,
+			};
+		}
+
+		prepared.annotated.setSelection(prepared.rawStart, prepared.rawEnd);
+
+		const replacementPayload =
+			prepared.replacementText.length === 0 ? '   ' : prepared.replacementText;
+		if (!dispatchPasteToDocs(replacementPayload)) {
+			return {
+				kind: 'replaceText',
+				applied: false,
+			};
+		}
+
+		return {
+			kind: 'replaceText',
+			applied: true,
+		};
+	}
+
 	ensureBridgeNode();
 
 	const requestHandler = new GoogleDocsBridgeRequestHandler({
 		onGetRectsRequest: handleGetRectsRequest,
+		onPrepareReplaceTextRequest: handlePrepareReplaceTextRequest,
 		onReplaceTextRequest: handleReplaceTextRequest,
 	});
 	requestHandler.start();

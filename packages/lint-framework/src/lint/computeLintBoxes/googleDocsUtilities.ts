@@ -323,22 +323,152 @@ export function replaceGoogleDocsValue(
 			beforeContext,
 			afterContext,
 		};
-		// This looks awkward because lint-framework cannot import chrome-plugin code directly.
-		// The content script puts the bridge client on window so this shared package can call it.
-		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
-			.__harperGoogleDocsBridgeClient;
-		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
-			void Promise.resolve(
-				bridgeClient.replaceText(
-					payload.start,
-					payload.end,
-					payload.replacementText,
-					payload.expectedText,
-					payload.beforeContext,
-					payload.afterContext,
-				),
-			);
-		}
+		const script = document.createElement('script');
+		script.textContent = `(() => {
+			const payload = ${JSON.stringify(payload)};
+			const normalizeGoogleDocsText = (text) => {
+				const raw = String(text ?? '');
+				const withoutSentinel = raw.startsWith('\\u0003') ? raw.slice(1) : raw;
+				return withoutSentinel.endsWith('\\n') ? withoutSentinel.slice(0, -1) : withoutSentinel;
+			};
+			const normalizedToRawOffset = (rawText, normalizedOffset) => {
+				const raw = String(rawText ?? '');
+				const leadingOffset = raw.startsWith('\\u0003') ? 1 : 0;
+				const trailingOffset = raw.endsWith('\\n') ? 1 : 0;
+				const rawEnd = Math.max(leadingOffset, raw.length - trailingOffset);
+				const safeOffset = Math.max(0, Number.isFinite(normalizedOffset) ? normalizedOffset : 0);
+				return Math.max(leadingOffset, Math.min(rawEnd, safeOffset + leadingOffset));
+			};
+			const getCommonPrefixLength = (left, right) => {
+				const max = Math.min(left.length, right.length);
+				let length = 0;
+				while (length < max && left.charCodeAt(length) === right.charCodeAt(length)) {
+					length += 1;
+				}
+				return length;
+			};
+			const getCommonSuffixLength = (left, right) => {
+				const max = Math.min(left.length, right.length);
+				let length = 0;
+				while (
+					length < max &&
+					left.charCodeAt(left.length - 1 - length) === right.charCodeAt(right.length - 1 - length)
+				) {
+					length += 1;
+				}
+				return length;
+			};
+			const getLongestCommonSubsequenceLength = (left, right) => {
+				if (!left || !right) return 0;
+				const previous = new Array(right.length + 1).fill(0);
+				const current = new Array(right.length + 1).fill(0);
+				for (let i = 1; i <= left.length; i += 1) {
+					current[0] = 0;
+					for (let j = 1; j <= right.length; j += 1) {
+						if (left.charCodeAt(i - 1) === right.charCodeAt(j - 1)) {
+							current[j] = previous[j - 1] + 1;
+						} else {
+							current[j] = Math.max(previous[j], current[j - 1]);
+						}
+					}
+					for (let j = 0; j <= right.length; j += 1) {
+						previous[j] = current[j];
+					}
+				}
+				return previous[right.length];
+			};
+			const resolveReplacementRange = (currentText, start, end, expectedText, beforeContext, afterContext) => {
+				const normalizedStart = Math.max(0, Math.min(start, currentText.length));
+				const normalizedEnd = Math.max(normalizedStart, Math.min(end, currentText.length));
+				const directText = currentText.slice(normalizedStart, normalizedEnd);
+				if (!expectedText || directText === expectedText) {
+					return { start: normalizedStart, end: normalizedEnd };
+				}
+				const spanLength = normalizedEnd - normalizedStart;
+				for (let delta = -12; delta <= 12; delta += 1) {
+					const candidateStart = normalizedStart + delta;
+					if (candidateStart < 0) continue;
+					const candidateEnd = candidateStart + spanLength;
+					if (candidateEnd > currentText.length) continue;
+					if (currentText.slice(candidateStart, candidateEnd) === expectedText) {
+						return { start: candidateStart, end: candidateEnd };
+					}
+				}
+				const beforeWindowLength = Math.max(beforeContext.length * 2, beforeContext.length + 64);
+				const afterWindowLength = Math.max(afterContext.length * 2, afterContext.length + 64);
+				const hits = [];
+				let cursor = 0;
+				while (cursor <= currentText.length) {
+					const index = currentText.indexOf(expectedText, cursor);
+					if (index < 0) break;
+					const indexEnd = index + expectedText.length;
+					const candidateBefore = currentText.slice(Math.max(0, index - beforeWindowLength), index);
+					const candidateAfter = currentText.slice(indexEnd, Math.min(currentText.length, indexEnd + afterWindowLength));
+					let score = 0;
+					score += getLongestCommonSubsequenceLength(beforeContext, candidateBefore) * 8;
+					score += getLongestCommonSubsequenceLength(afterContext, candidateAfter) * 8;
+					score += getCommonPrefixLength(beforeContext, candidateBefore) * 4;
+					score += getCommonSuffixLength(beforeContext, candidateBefore) * 4;
+					score += getCommonPrefixLength(afterContext, candidateAfter) * 4;
+					score += getCommonSuffixLength(afterContext, candidateAfter) * 4;
+					score -= Math.abs(index - normalizedStart) / 1000;
+					hits.push({ start: index, end: indexEnd, score });
+					cursor = index + 1;
+				}
+				if (hits.length === 0) {
+					return { start: normalizedStart, end: normalizedEnd };
+				}
+				hits.sort((left, right) => right.score - left.score);
+				return { start: hits[0].start, end: hits[0].end };
+			};
+			void window._docs_annotate_getAnnotatedText?.().then((annotated) => {
+				if (!annotated || typeof annotated.setSelection !== 'function') {
+					return;
+				}
+				const rawText = String(annotated.getText?.() ?? '');
+				const currentText = normalizeGoogleDocsText(rawText);
+				const resolvedRange = resolveReplacementRange(
+					currentText,
+					Number(payload.start),
+					Number(payload.end),
+					String(payload.expectedText ?? ''),
+					String(payload.beforeContext ?? ''),
+					String(payload.afterContext ?? ''),
+				);
+				const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
+				const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
+				annotated.setSelection(rawStart, rawEnd);
+				const iframe = document.querySelector('.docs-texteventtarget-iframe');
+				const targetDocument = iframe?.contentDocument;
+				if (!targetDocument) {
+					return;
+				}
+				iframe?.focus?.();
+				targetDocument.defaultView?.focus?.();
+				const target =
+					targetDocument.querySelector('[contenteditable="true"]') ??
+					targetDocument.activeElement ??
+					targetDocument.body ??
+					targetDocument.documentElement;
+				if (!(target instanceof HTMLElement)) {
+					return;
+				}
+				target.focus?.();
+				const dataTransfer = new DataTransfer();
+				dataTransfer.items.add(
+					payload.replacementText.length === 0 ? '   ' : payload.replacementText,
+					'text/plain',
+				);
+				const pasteEvent = new ClipboardEvent('paste', {
+					clipboardData: dataTransfer,
+					cancelable: true,
+					bubbles: true,
+				});
+				target.dispatchEvent(pasteEvent);
+			}).catch(() => {});
+		})();`;
+		(document.head || document.documentElement).appendChild(script);
+		script.remove();
 	} catch {
 		// Ignore bridge dispatch failures.
 	}

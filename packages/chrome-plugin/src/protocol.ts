@@ -303,6 +303,7 @@ export type GoogleDocsInsertTextRequest = {
 	text: string;
 	expectedText: string;
 	selectedText: string;
+	selectionPrepared?: boolean;
 	deleteSelection: boolean;
 	selectionStart: { x: number; y: number } | null;
 	selectionEnd: { x: number; y: number } | null;
