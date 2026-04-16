@@ -20,6 +20,7 @@ soft-clean:
   rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
   rm -rf packages/web/{.svelte-kit,.sveltepress,build}
   rm -rf packages/wordpress-plugin/{build,harper.zip}
+  rm -rf harper-wasm/pkg
 
 # Hard clean all build artifacts and dependencies
 hard-clean: soft-clean
