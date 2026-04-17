@@ -119,7 +119,13 @@ fn bench_suggest_correct_spelling(
     let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
-        black_box(suggest_correct_spelling(word, MAX_RESULTS, MAX_EDIT_DISTANCE, &*dict)).len()
+        black_box(suggest_correct_spelling(
+            word,
+            MAX_RESULTS,
+            MAX_EDIT_DISTANCE,
+            &*dict,
+        ))
+        .len()
     });
 }
 
