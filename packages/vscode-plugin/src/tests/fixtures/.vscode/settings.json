@@ -4,6 +4,8 @@
 	},
 	"harper.linters.SpellCheck": true,
 	"harper.linters.RepeatedWords": true,
-	"harper.dialect": "American",
-	"harper.excludePatterns": []
+	"harper.dialect": "British",
+	"harper.excludePatterns": [
+		"*.md"
+	]
 }
