@@ -7,7 +7,7 @@
 
 import { readFileSync } from "node:fs";
 import { performance } from "node:perf_hooks";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -21,30 +21,37 @@ const wordsDir = join(
   "misspelled_words",
 );
 
-// Load the wasm-pack generated JS glue and raw wasm bytes.
-const wasmModule = await import(join(pkgDir, "harper_wasm.js"));
+// Node lacks the fetch-based init that --target web expects, so load the
+// wasm bytes manually and pass them to initSync.
+const wasmModule = await import(pathToFileURL(join(pkgDir, "harper_wasm.js")).href);
 const wasmBytes = readFileSync(join(pkgDir, "harper_wasm_bg.wasm"));
 wasmModule.initSync({ module: wasmBytes });
 
 const MAX_EDIT_DISTANCE = 3;
 const MAX_RESULTS = 200;
-const WARMUP_ITERS = 2;
-const BENCH_ITERS = 10;
+// Warmup lets V8 tier wasm up to TurboFan before measurement. min is the most
+// useful single number for microbenches because it's least affected by GC or
+// scheduler jitter; avg is printed alongside so the spread is visible.
+const WARMUP_ITERS = 5;
+const BENCH_ITERS = 50;
 
 function bench(name, fn) {
-  // Warmup.
   for (let i = 0; i < WARMUP_ITERS; i++) fn();
 
-  const start = performance.now();
+  const times = [];
   let result;
   for (let i = 0; i < BENCH_ITERS; i++) {
+    const start = performance.now();
     result = fn();
+    times.push(performance.now() - start);
   }
-  const elapsed = performance.now() - start;
 
-  const avgMs = elapsed / BENCH_ITERS;
+  const min = Math.min(...times);
+  const avg = times.reduce((a, b) => a + b, 0) / times.length;
+
   console.log(`${name}:`);
-  console.log(`  avg:     ${avgMs.toFixed(2)} ms/iter  (${BENCH_ITERS} iters)`);
+  console.log(`  min:     ${min.toFixed(2)} ms`);
+  console.log(`  avg:     ${avg.toFixed(2)} ms  (${BENCH_ITERS} iters)`);
   console.log(`  results: ${result}`);
   console.log();
 }
@@ -74,5 +81,7 @@ for (const [name, words] of cases) {
   bench(`fuzzy_match/${name} (${wordCount} words)`, () =>
     prepared.bench_fuzzy_match(MAX_EDIT_DISTANCE, MAX_RESULTS),
   );
+  // wasm-bindgen needs explicit free() — wasm-pack --target web doesn't
+  // enable FinalizationRegistry auto-cleanup.
   prepared.free();
 }
