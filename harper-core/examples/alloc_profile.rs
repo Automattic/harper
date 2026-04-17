@@ -53,6 +53,7 @@ static ALLOC: CountingAllocator = CountingAllocator {
 const MAX_EDIT_DISTANCE: u8 = 3;
 const RESULT_LIMIT: usize = 200;
 
+// Shared with the criterion bench (../benches/spellcheck.rs) to keep numbers comparable.
 static MISSPELLED_MIXED: &str = include_str!("../benches/misspelled_words/mixed.md");
 static MISSPELLED_LOWERCASE: &str = include_str!("../benches/misspelled_words/lowercase.md");
 static MISSPELLED_CAPITALIZED: &str = include_str!("../benches/misspelled_words/capitalized.md");
@@ -65,7 +66,7 @@ fn load_word_list(source: &str) -> Vec<Vec<char>> {
         .collect()
 }
 
-fn profile_word_list(name: &str, words: &[Vec<char>], dict: &dyn Dictionary) {
+fn profile_word_list(name: &str, words: &[Vec<char>], dict: &FstDictionary) {
     ALLOC.reset();
 
     for word in words {
@@ -89,8 +90,8 @@ fn profile_word_list(name: &str, words: &[Vec<char>], dict: &dyn Dictionary) {
 fn main() {
     // Initialize dictionary before resetting counters so startup allocs are excluded.
     let dict = FstDictionary::curated();
-    // Warm AUTOMATON_BUILDERS thread_local (built lazily on first fuzzy_match) so
-    // the first measured case does not absorb its one-time init cost.
+    // Warm the AUTOMATON_BUILDERS thread_local so its init allocs aren't counted
+    // against the first measured case.
     let _ = black_box(dict.fuzzy_match(&['w', 'a', 'r', 'm'], MAX_EDIT_DISTANCE, RESULT_LIMIT));
 
     let mixed = load_word_list(MISSPELLED_MIXED);
