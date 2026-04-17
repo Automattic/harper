@@ -22,9 +22,10 @@ const wordsDir = join(
 );
 
 // Node lacks the fetch-based init that --target web expects, so load the
-// wasm bytes manually and pass them to initSync.
-const wasmModule = await import(pathToFileURL(join(pkgDir, "harper_wasm.js")).href);
-const wasmBytes = readFileSync(join(pkgDir, "harper_wasm_bg.wasm"));
+// wasm bytes manually and pass them to initSync. We read the bench-specific
+// build (harper_wasm_bench.*) so the shipping pkg/harper_wasm.* stays clean.
+const wasmModule = await import(pathToFileURL(join(pkgDir, "harper_wasm_bench.js")).href);
+const wasmBytes = readFileSync(join(pkgDir, "harper_wasm_bench_bg.wasm"));
 wasmModule.initSync({ module: wasmBytes });
 
 const MAX_EDIT_DISTANCE = 3;

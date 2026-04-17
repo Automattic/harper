@@ -832,9 +832,9 @@ bench-wasm:
 
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt --out-name harper_wasm --features bench
+    wasm-pack build --target web --no-opt --out-name harper_wasm_bench --features bench
   else
-    wasm-pack build --target web --out-name harper_wasm --features bench
+    wasm-pack build --target web --out-name harper_wasm_bench --features bench
   fi
   node benches/wasm_bench.js
 
