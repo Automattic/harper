@@ -824,12 +824,18 @@ alloc-profile:
   cargo run --example alloc_profile -p harper-core --release
 
 # Build harper-wasm with bench support and run the WASM benchmark harness.
+# Runs wasm-opt by default to match the shipping build; set DISABLE_WASM_OPT=1
+# to skip it (faster rebuilds, non-shipping numbers).
 bench-wasm:
   #!/usr/bin/env bash
   set -eo pipefail
 
   cd "{{justfile_directory()}}/harper-wasm"
-  wasm-pack build --target web --no-opt --out-name harper_wasm --features bench
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt --out-name harper_wasm --features bench
+  else
+    wasm-pack build --target web --out-name harper_wasm --features bench
+  fi
   node benches/wasm_bench.js
 
 # search configuration group settings for substring in name
