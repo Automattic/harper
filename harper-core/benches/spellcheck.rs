@@ -16,6 +16,11 @@ static MISSPELLED_MIXED: &str = include_str!("./misspelled_words/mixed.md");
 static MISSPELLED_LOWERCASE: &str = include_str!("./misspelled_words/lowercase.md");
 static MISSPELLED_CAPITALIZED: &str = include_str!("./misspelled_words/capitalized.md");
 
+// Shared with alloc_profile.rs (../examples/) and the WASM harness
+// (../../harper-wasm/benches/wasm_bench.js) so numbers stay comparable across tools.
+const MAX_EDIT_DISTANCE: u8 = 3;
+const MAX_RESULTS: usize = 200;
+
 type WordList = Vec<Vec<char>>;
 type WordCase<'a> = (&'static str, &'a [Vec<char>]);
 
@@ -97,7 +102,7 @@ fn bench_fuzzy_match(group: &mut BenchmarkGroup<'_, WallTime>, name: &str, words
     let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
-        black_box(dict.fuzzy_match(word, 3, 200)).len()
+        black_box(dict.fuzzy_match(word, MAX_EDIT_DISTANCE, MAX_RESULTS)).len()
     });
 }
 
@@ -114,7 +119,7 @@ fn bench_suggest_correct_spelling(
     let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
-        black_box(suggest_correct_spelling(word, 200, 3, &*dict)).len()
+        black_box(suggest_correct_spelling(word, MAX_RESULTS, MAX_EDIT_DISTANCE, &*dict)).len()
     });
 }
 
@@ -133,7 +138,7 @@ fn bench_fuzzy_match_merged_dict_single_child(
     merged.add_dictionary(dict);
 
     bench_word_list(group, name, words, |word| {
-        black_box(merged.fuzzy_match(word, 3, 200)).len()
+        black_box(merged.fuzzy_match(word, MAX_EDIT_DISTANCE, MAX_RESULTS)).len()
     });
 }
 

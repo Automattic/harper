@@ -48,10 +48,10 @@ static ALLOC: CountingAllocator = CountingAllocator {
     dealloc_count: AtomicUsize::new(0),
 };
 
-// Must match the WASM harness (harper-wasm/benches/wasm_bench.js) and the
-// criterion bench (benches/spellcheck.rs) so numbers stay comparable across tools.
+// Values duplicated across the WASM harness (harper-wasm/benches/wasm_bench.js)
+// and the criterion bench (benches/spellcheck.rs) so numbers stay comparable.
 const MAX_EDIT_DISTANCE: u8 = 3;
-const RESULT_LIMIT: usize = 200;
+const MAX_RESULTS: usize = 200;
 
 // Shared with the criterion bench (../benches/spellcheck.rs) to keep numbers comparable.
 static MISSPELLED_MIXED: &str = include_str!("../benches/misspelled_words/mixed.md");
@@ -70,7 +70,7 @@ fn profile_word_list(name: &str, words: &[Vec<char>], dict: &FstDictionary) {
     ALLOC.reset();
 
     for word in words {
-        black_box(dict.fuzzy_match(black_box(word.as_slice()), MAX_EDIT_DISTANCE, RESULT_LIMIT));
+        black_box(dict.fuzzy_match(black_box(word.as_slice()), MAX_EDIT_DISTANCE, MAX_RESULTS));
     }
 
     let allocs = ALLOC.alloc_count();
@@ -92,7 +92,7 @@ fn main() {
     let dict = FstDictionary::curated();
     // Warm the AUTOMATON_BUILDERS thread_local so its init allocs aren't counted
     // against the first measured case.
-    let _ = black_box(dict.fuzzy_match(&['w', 'a', 'r', 'm'], MAX_EDIT_DISTANCE, RESULT_LIMIT));
+    let _ = black_box(dict.fuzzy_match(&['w', 'a', 'r', 'm'], MAX_EDIT_DISTANCE, MAX_RESULTS));
 
     let mixed = load_word_list(MISSPELLED_MIXED);
     let lowercase = load_word_list(MISSPELLED_LOWERCASE);
@@ -105,7 +105,7 @@ fn main() {
     ];
 
     println!("--- fuzzy_match allocation profile ---");
-    println!("max_edit_distance: {MAX_EDIT_DISTANCE}, result_limit: {RESULT_LIMIT}");
+    println!("max_edit_distance: {MAX_EDIT_DISTANCE}, max_results: {MAX_RESULTS}");
     println!();
 
     for (name, words) in cases {
