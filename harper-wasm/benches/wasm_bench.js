@@ -3,9 +3,7 @@
 // Measures time and throughput for fuzzy_match
 // across the same word lists used by the native Criterion benchmarks.
 //
-// Usage:
-//   wasm-pack build --target web --no-opt --out-name harper_wasm --features bench
-//   node harper-wasm/benches/wasm_bench.js
+// Run via `just bench-wasm`.
 
 import { readFileSync } from "node:fs";
 import { performance } from "node:perf_hooks";
@@ -69,7 +67,12 @@ for (const [name, words] of cases) {
     .split("\n")
     .filter((l) => l.length > 0).length;
 
+  // Pre-parse outside the timed region so we measure fuzzy_match, not parse +
+  // JS->WASM string encoding.
+  const prepared = new wasmModule.PreparedWords(words);
+
   bench(`fuzzy_match/${name} (${wordCount} words)`, () =>
-    wasmModule.bench_fuzzy_match(words, MAX_EDIT_DISTANCE, MAX_RESULTS),
+    prepared.bench_fuzzy_match(MAX_EDIT_DISTANCE, MAX_RESULTS),
   );
+  prepared.free();
 }
