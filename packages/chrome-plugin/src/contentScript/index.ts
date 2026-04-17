@@ -21,6 +21,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		getHotkey: () => ProtocolClient.getHotkey(),
+		getDelay: () => ProtocolClient.getDelay(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>

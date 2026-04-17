@@ -1,0 +1,28 @@
+expr phrase (find out)
+expr main <(@phrase ![about, by, from, how, if, more, that, what, when, where, whether, who, whom, whose, why, through, via, ., ?, :, ;, -, –, —, (,)]), @phrase>
+
+let message "Use `find` instead of `find out` when you mean to discover something directly."
+let description "Flags `find out` when a plain `find` is the better choice."
+let kind "WordChoice"
+let becomes "find"
+let strategy "MatchCase"
+
+# True positives
+test "I need to find out ways to do the work that I want to do while walking." "I need to find ways to do the work that I want to do while walking."
+test "We should find out the answer." "We should find the answer."
+test "They will find out latest supported hugo version." "They will find latest supported hugo version."
+test "Can you find out plain text of given cipher text?" "Can you find plain text of given cipher text?"
+test "Please find out number of bits read from a file." "Please find number of bits read from a file."
+test "I wanted to find out branch coverage." "I wanted to find branch coverage."
+test "She tried to find out the proper query." "She tried to find the proper query."
+test "Find out latest supported version?" "Find latest supported version?"
+
+# True negatives
+allows "I need to find out what time the meeting starts."
+allows "We need to find out whether it works."
+allows "She found out that the server was down."
+allows "Can you find out if the build passed?"
+allows "We find out about the surprise party."
+allows "I need to find out more about the topic."
+allows "They were able to find out from the logs."
+allows "I asked them to find out why it failed."

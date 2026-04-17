@@ -9,6 +9,8 @@ export type Request =
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetDelayRequest
+	| SetDelayRequest
 	| SetDomainStatusRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
@@ -39,6 +41,7 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
@@ -88,6 +91,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetDelayRequest = {
+	kind: 'getDelay';
+};
+
+export type GetDelayResponse = {
+	kind: 'getDelay';
+	delay: number;
+};
+
+export type SetDelayRequest = {
+	kind: 'setDelay';
+	delay: number;
 };
 
 export type GetLintDescriptionsRequest = {

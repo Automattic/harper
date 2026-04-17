@@ -683,6 +683,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
         "DateBackFrom" => (
             &[
                 (&["date back from"], &["date from", "date back to"]),

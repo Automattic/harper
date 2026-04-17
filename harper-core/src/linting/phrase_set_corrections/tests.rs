@@ -2199,6 +2199,26 @@ fn copywrote() {
     );
 }
 
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        lint_group(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        lint_group(),
+        "He overpaid in part to have the specification met.",
+    );
+}
+
 // DateBackFrom
 
 #[test]

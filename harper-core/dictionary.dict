@@ -38465,7 +38465,6 @@ pay's
 payback/NmSg
 paycheck/~NgS
 payday/NgS
-payed/V
 payee/NSg
 payer/NSg
 payload/~NSg
@@ -53842,7 +53841,6 @@ ESP32/Og            # microcontroller family
 ESP8266/Og          # microcontroller family
 EV/NSg              # electric vehicle
 EXIF                # metadata
-ElasticSearch/Sg
 Electron/Og         # web-tech framework for desktop apps
 Elon/Og
 Erdoğan/Og          # surname, Turkish politician
