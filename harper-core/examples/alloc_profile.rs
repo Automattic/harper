@@ -1,6 +1,6 @@
 //! Counts heap allocations made by `fuzzy_match` across the benchmark word lists.
-//! Allocation churn dominates WASM cost, so reducing allocs/word directly
-//! improves spell-check latency on lower-end devices.
+//! Allocation is relatively more expensive in WASM than on native, so reducing
+//! allocs/word helps spell-check latency on lower-end devices.
 //!
 //! Run with: `cargo run --example alloc_profile -p harper-core --release`
 
@@ -74,12 +74,14 @@ fn profile_word_list(name: &str, words: &[Vec<char>], dict: &dyn Dictionary) {
 
     let allocs = ALLOC.alloc_count();
     let deallocs = ALLOC.dealloc_count();
+    let net = allocs as i64 - deallocs as i64;
     let word_count = words.len();
 
     println!("{name}:");
     println!("  words:          {word_count}");
     println!("  allocs:         {allocs}");
     println!("  deallocs:       {deallocs}");
+    println!("  net:            {net:+}");
     println!("  allocs/word:    {:.1}", allocs as f64 / word_count as f64);
     println!();
 }
