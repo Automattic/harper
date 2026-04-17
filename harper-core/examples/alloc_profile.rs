@@ -48,6 +48,8 @@ static ALLOC: CountingAllocator = CountingAllocator {
     dealloc_count: AtomicUsize::new(0),
 };
 
+// Must match the WASM harness (harper-wasm/benches/wasm_bench.js) and the
+// criterion bench (benches/spellcheck.rs) so numbers stay comparable across tools.
 const MAX_EDIT_DISTANCE: u8 = 3;
 const RESULT_LIMIT: usize = 200;
 
@@ -85,6 +87,9 @@ fn profile_word_list(name: &str, words: &[Vec<char>], dict: &dyn Dictionary) {
 fn main() {
     // Initialize dictionary before resetting counters so startup allocs are excluded.
     let dict = FstDictionary::curated();
+    // Warm AUTOMATON_BUILDERS thread_local (built lazily on first fuzzy_match) so
+    // the first measured case does not absorb its one-time init cost.
+    let _ = black_box(dict.fuzzy_match(&['w', 'a', 'r', 'm'], MAX_EDIT_DISTANCE, RESULT_LIMIT));
 
     let mixed = load_word_list(MISSPELLED_MIXED);
     let lowercase = load_word_list(MISSPELLED_LOWERCASE);
