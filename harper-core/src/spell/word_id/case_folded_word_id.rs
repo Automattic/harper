@@ -9,7 +9,7 @@ use crate::{CharString, CharStringExt, spell::CanonicalWordId};
 ///
 /// This does not usually point to a specific word, but rather a group of words that are identical
 /// when lowercased.
-#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
+#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize)]
 pub struct CaseFoldedWordId {
     pub(super) hash: u64,
 }

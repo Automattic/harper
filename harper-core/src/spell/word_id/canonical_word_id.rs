@@ -7,7 +7,7 @@ use super::CaseFoldedWordId;
 use crate::CharString;
 
 /// An identifier for a particular word with canonical casing.
-#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
+#[derive(Hash, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Serialize, Deserialize)]
 pub struct CanonicalWordId {
     pub(super) hash: u64,
 }
