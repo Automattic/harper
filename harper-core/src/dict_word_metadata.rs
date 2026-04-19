@@ -1034,7 +1034,6 @@ impl AffixData {
     Clone,
     Copy,
     Serialize,
-    Deserialize,
     PartialEq,
     PartialOrd,
     Eq,
@@ -1122,6 +1121,64 @@ impl TryFrom<DialectFlags> for Dialect {
             // More than one dialect enabled; can't soundly convert.
             Err(())
         }
+    }
+}
+
+// Custom Deserialize implementation for Dialect to support both string and number inputs
+impl<'de> Deserialize<'de> for Dialect {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::Error;
+
+        // Try to deserialize as a string first
+        struct StringOrNumberVisitor;
+
+        impl serde::de::Visitor<'_> for StringOrNumberVisitor {
+            type Value = Dialect;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("a dialect string (e.g., 'German', 'American') or number")
+            }
+
+            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
+            where
+                E: Error,
+            {
+                match value.to_lowercase().as_str() {
+                    "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
+                    "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
+                    "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
+                    "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
+                    "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+                    "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(Dialect::German),
+                    "at" | "austria" | "austrian" | "de-at" | "de_at" => Ok(Dialect::GermanAustrian),
+                    "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Ok(Dialect::GermanSwiss),
+                    _ => Err(Error::custom(format!("Unknown dialect: {}", value))),
+                }
+            }
+
+            fn visit_u64<E>(self, value: u64) -> Result<Self::Value, E>
+            where
+                E: Error,
+            {
+                // Handle numeric values (existing behavior)
+                match value {
+                    1 => Ok(Dialect::American),
+                    2 => Ok(Dialect::Canadian),
+                    4 => Ok(Dialect::Australian),
+                    8 => Ok(Dialect::British),
+                    16 => Ok(Dialect::Indian),
+                    32 => Ok(Dialect::German),
+                    64 => Ok(Dialect::GermanAustrian),
+                    128 => Ok(Dialect::GermanSwiss),
+                    _ => Err(Error::custom(format!("Unknown dialect value: {}", value))),
+                }
+            }
+        }
+
+        deserializer.deserialize_any(StringOrNumberVisitor)
     }
 }
 

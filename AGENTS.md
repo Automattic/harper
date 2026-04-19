@@ -1,6 +1,6 @@
 # Harper Docs Map for Agents
 
-This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
+T hsdfis repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
 
 Use `packages/web/vite.config.ts` as the source of truth for documentation scope:
 - Sidebar and important doc routes are defined in `packages/web/vite.config.ts`.
