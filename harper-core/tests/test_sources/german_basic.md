@@ -1,6 +1,5 @@
 # Einfache deutsche Beispiele
 
-
 ## Einleitung
 
 Dies ist eine einfache deutsche Testdatei für Harper.

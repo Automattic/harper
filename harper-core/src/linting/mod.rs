@@ -87,6 +87,7 @@ mod friend_of_me;
 mod german_noun_capitalization;
 mod german_sentence_capitalization;
 mod german_spell_check;
+pub(crate) mod german_weir_rules;
 mod go_so_far_as_to;
 mod go_to_war;
 mod good_at;

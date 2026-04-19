@@ -105,3 +105,41 @@ fn test_german_lint_errors() {
         lints.len()
     );
 }
+
+/// Simulate exactly what harper-ls does: Markdown parser + German dict + organized_lints
+#[test]
+fn test_german_ls_simulation() {
+    use harper_core::linting::LintGroup;
+    use harper_core::parsers::{Markdown, MarkdownOptions};
+    use harper_core::spell::curated_german_dictionary;
+    use harper_core::{Dialect, Document};
+    use std::sync::Arc;
+
+    let dict = Arc::new(curated_german_dictionary());
+    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
+
+    let text =
+        std::fs::read_to_string("tests/test_sources/german_basic.md").expect("test file missing");
+    let parser = Markdown::new(MarkdownOptions::default());
+    let doc = Document::new(&text, &parser, &dict);
+
+    // Simulate what document_state::generate_diagnostics does
+    let temp = linter.config.clone();
+    linter.config.fill_with_curated();
+    let lints_map = linter.organized_lints(&doc);
+    linter.config = temp;
+
+    let total: usize = lints_map.values().map(|v| v.len()).sum();
+    println!("organized_lints found: {} total lints", total);
+    for (origin, lints) in &lints_map {
+        for lint in lints {
+            println!("  [{}] {:?}: {}", origin, lint.lint_kind, lint.message);
+        }
+    }
+
+    assert!(
+        total >= 3,
+        "Should find at least 3 issues (1 cap + 2 spelling), got {}",
+        total
+    );
+}

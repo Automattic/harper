@@ -327,9 +327,20 @@ impl Backend {
             uri, language_id
         );
 
+        // When language_id is None (e.g. on did_change), look up the stored language_id.
+        let stored_language_id: Option<String> = if language_id.is_none() {
+            let doc_lock = self.doc_state.lock().await;
+            doc_lock
+                .get(uri)
+                .and_then(|state| state.language_id.clone())
+        } else {
+            None
+        };
+        let effective_language_id: Option<&str> = language_id.or(stored_language_id.as_deref());
+
         // Auto-detect language for prose-oriented documents.
         // Covers markdown, plaintext, org, tex, mail, and similar formats.
-        let is_prose = language_id
+        let is_prose = effective_language_id
             .map(|s| {
                 s.contains("markdown")
                     || s.contains("md")
@@ -347,7 +358,10 @@ impl Backend {
             })
             .unwrap_or(false);
 
-        info!("Is prose: {} for language_id: {:?}", is_prose, language_id);
+        info!(
+            "Is prose: {} for effective_language_id: {:?}",
+            is_prose, effective_language_id
+        );
 
         let detected_dialect: Dialect = if is_prose {
             let word_count = text.split_whitespace().count();
@@ -359,34 +373,34 @@ impl Backend {
             };
 
             if word_count >= 20 {
-                // Always re-run detection when we have enough content.
-                // This handles the case where a user starts writing in a different language.
+                // Re-run detection when we have enough content so that e.g. an
+                // empty-then-typed document can switch from English to German.
                 let dict = FstDictionary::curated();
                 let detected = self
                     .lang_detect
                     .detect_language(text, &dict, Dialect::American);
-                info!(
-                    "Auto-detected dialect: {:?} for {:?} ({} words)",
+                warn!(
+                    "harper-ls dialect detect: {:?} for {:?} ({} words)",
                     detected, uri, word_count
                 );
 
-                // If dialect changed, invalidate cache and force linter rebuild.
+                // If the dialect changed for an existing document, force the linter
+                // to be rebuilt by clearing the cached dict.
                 if cached_dialect != Some(detected) {
                     info!(
-                        "Dialect changed from {:?} to {:?}, rebuilding linter",
+                        "Dialect changed from {:?} to {:?}, will rebuild linter",
                         cached_dialect, detected
                     );
                     let mut doc_lock = self.doc_state.lock().await;
                     if let Some(state) = doc_lock.get_mut(uri) {
-                        state.cached_dialect = Some(detected);
-                        // Force dict mismatch so the linter is rebuilt below.
+                        // Force a dict mismatch so the linter rebuild is triggered.
                         state.dict = Arc::new(MergedDictionary::new());
                     }
                 }
 
                 detected
             } else if let Some(cached) = cached_dialect {
-                // Not enough words yet but we had a previous detection — keep it.
+                // Not enough words yet — keep previous detection.
                 info!("Using cached dialect: {:?} ({} words)", cached, word_count);
                 cached
             } else {
@@ -397,7 +411,7 @@ impl Backend {
                 Dialect::American
             }
         } else {
-            // Use configured dialect for non-markdown files
+            // For non-prose files (code, etc.) use the configured dialect.
             let config = self.config.read().await;
             config.dialect
         };
@@ -447,20 +461,38 @@ impl Backend {
 
             DocumentState {
                 ignored_lints,
-                linter: LintGroup::new_curated(dict.clone(), detected_dialect)
-                    .with_lint_config(lint_config.clone()),
-                language_id: language_id.map(|v| v.to_string()),
+                linter: {
+                    let mut l = LintGroup::new_curated(dict.clone(), detected_dialect);
+                    l.config.merge_from(lint_config.clone());
+                    l
+                },
+                // Prefer the provided language_id; fall back to what was already stored
+                // (effective_language_id already resolved both but we need an owned String).
+                language_id: effective_language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
                 uri: uri.clone(),
+                // Store the detected dialect so did_change can use it via stored_language_id
+                // and so future cache lookups find the right value.
+                cached_dialect: if is_prose {
+                    Some(detected_dialect)
+                } else {
+                    None
+                },
                 ..Default::default()
             }
         });
 
+        // On subsequent updates, also keep cached_dialect in sync.
+        if is_prose {
+            doc_state.cached_dialect = Some(detected_dialect);
+        }
+
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            doc_state.linter = LintGroup::new_curated(dict.clone(), detected_dialect)
-                .with_lint_config(lint_config.clone());
+            let mut l = LintGroup::new_curated(dict.clone(), detected_dialect);
+            l.config.merge_from(lint_config.clone());
+            doc_state.linter = l;
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -485,8 +517,11 @@ impl Backend {
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
-                doc_state.linter = LintGroup::new_curated(merged.clone(), dialect)
-                    .with_lint_config(lint_config.clone());
+                doc_state.linter = {
+                    let mut l = LintGroup::new_curated(merged.clone(), dialect);
+                    l.config.merge_from(lint_config.clone());
+                    l
+                };
                 doc_state.dict = merged.clone();
             }
 
@@ -625,6 +660,12 @@ impl Backend {
 
     async fn publish_diagnostics(&self, uri: &Uri) {
         let diagnostics = self.generate_diagnostics(uri).await;
+
+        warn!(
+            "harper-ls publish_diagnostics: {} lints for {:?}",
+            diagnostics.len(),
+            uri
+        );
 
         let result = PublishDiagnosticsParams {
             uri: uri.clone(),
@@ -1014,8 +1055,10 @@ impl LanguageServer for Backend {
 
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
-                    .with_lint_config(config_lock.lint_config.clone());
+                let doc_dialect = doc.cached_dialect.unwrap_or(config_lock.dialect);
+                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_dialect);
+                l.config.merge_from(config_lock.lint_config.clone());
+                doc.linter = l;
             }
 
             doc_lock.keys().cloned().collect()
