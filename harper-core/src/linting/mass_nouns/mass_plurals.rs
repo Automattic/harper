@@ -1,15 +1,14 @@
 use hashbrown::HashSet;
 
-use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
 pub struct MassPlurals<D> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
@@ -31,10 +30,10 @@ where
         ]);
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(oov_looks_plural),
-                Box::new(phrases),
-            ])),
+                Box::new(phrases) as Box<dyn Expr>,
+            ]),
             dict,
         }
     }
@@ -59,7 +58,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
