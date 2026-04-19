@@ -1,6 +1,7 @@
 # Harper Docs Map for Agents
 
-T hsdfis repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
+joplin 
+This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
 
 Use `packages/web/vite.config.ts` as the source of truth for documentation scope:
 - Sidebar and important doc routes are defined in `packages/web/vite.config.ts`.
@@ -82,7 +83,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/about/+page.ts`: Route behavior helper (`ssr = false`) for the About page.
 - `packages/web/src/routes/docs/harperjs/CDN/example/+server.ts`: Serves the HTML example used by the `harper.js` CDN documentation page.
 
-## External Sidebar Targets (No Local Source File)
+## External Sidebar Targets (no Local Source File)
 
 - `https://docs.rs/harper-core/latest/harper_core/`
 - `/docs/harperjs/ref/index.html` (generated API reference target)

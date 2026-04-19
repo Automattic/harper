@@ -9,6 +9,7 @@ use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
+use crate::language_detection::LanguageDetectionRegistry;
 use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_asciidoc::AsciidocParser;
@@ -56,6 +57,7 @@ pub struct Backend {
     config: RwLock<Config>,
     stats: RwLock<Stats>,
     doc_state: Mutex<HashMap<Uri, DocumentState>>,
+    lang_detect: LanguageDetectionRegistry,
 }
 
 impl Backend {
@@ -66,6 +68,7 @@ impl Backend {
             stats: RwLock::new(Stats::new()),
             config: RwLock::new(config),
             doc_state: Mutex::new(HashMap::new()),
+            lang_detect: LanguageDetectionRegistry::new(),
         }
     }
 
@@ -244,12 +247,24 @@ impl Backend {
     ) -> Result<()> {
         self.pull_config().await;
 
+        // Auto-detect language for markdown documents
+        let detected_dialect = if language_id == Some("markdown") || language_id == Some("md") {
+            let dict = FstDictionary::curated();
+            let detected = self.lang_detect.detect_language(text, &dict, Dialect::American);
+            info!("Auto-detected dialect: {:?} for {:?}", detected, uri);
+            detected
+        } else {
+            // Use configured dialect for non-markdown files
+            let config = self.config.read().await;
+            config.dialect
+        };
+
         // Copy necessary configuration to avoid holding lock.
         let (
             lint_config,
             markdown_options,
             isolate_english,
-            dialect,
+            dialect, // Configured dialect (used as fallback)
             max_file_length,
             exclude_patterns,
         ) = {
@@ -289,7 +304,7 @@ impl Backend {
 
             DocumentState {
                 ignored_lints,
-                linter: LintGroup::new_curated(dict.clone(), dialect)
+                linter: LintGroup::new_curated(dict.clone(), detected_dialect)
                     .with_lint_config(lint_config.clone()),
                 language_id: language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
@@ -302,7 +317,7 @@ impl Backend {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
             doc_state.linter =
-                LintGroup::new_curated(dict.clone(), dialect).with_lint_config(lint_config.clone());
+                LintGroup::new_curated(dict.clone(), detected_dialect).with_lint_config(lint_config.clone());
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -353,7 +368,7 @@ impl Backend {
                             uri,
                             doc_state,
                             &lint_config,
-                            dialect,
+                            detected_dialect,
                         )
                         .await?,
                     )
