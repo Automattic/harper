@@ -247,12 +247,40 @@ impl Backend {
     ) -> Result<()> {
         self.pull_config().await;
 
-        // Auto-detect language for markdown documents
-        let detected_dialect = if language_id == Some("markdown") || language_id == Some("md") {
-            let dict = FstDictionary::curated();
-            let detected = self.lang_detect.detect_language(text, &dict, Dialect::American);
-            info!("Auto-detected dialect: {:?} for {:?}", detected, uri);
-            detected
+        // Auto-detect language for markdown documents (with caching)
+        let detected_dialect: Dialect = if language_id == Some("markdown") || language_id == Some("md") {
+            // Check if we have enough content to reliably detect language
+            let word_count = text.split_whitespace().count();
+
+            // Get cached dialect if available
+            let cached_dialect = {
+                let doc_lock = self.doc_state.lock().await;
+                doc_lock.get(uri).and_then(|state| state.cached_dialect)
+            };
+
+            if let Some(cached) = cached_dialect {
+                // Use cached dialect (fast path)
+                cached
+            } else if word_count >= 20 {
+                // Only run expensive detection if we have enough content
+                let dict = FstDictionary::curated();
+                let detected = self.lang_detect.detect_language(text, &dict, Dialect::American);
+                info!("Auto-detected dialect: {:?} for {:?} ({} words)", detected, uri, word_count);
+
+                // Cache the detected dialect for this document
+                {
+                    let mut doc_lock = self.doc_state.lock().await;
+                    if let Some(state) = doc_lock.get_mut(uri) {
+                        state.cached_dialect = Some(detected);
+                    }
+                }
+
+                detected
+            } else {
+                // Not enough content for reliable detection - use default
+                info!("Insufficient content for detection ({} words), using default dialect", word_count);
+                Dialect::American
+            }
         } else {
             // Use configured dialect for non-markdown files
             let config = self.config.read().await;
@@ -486,7 +514,30 @@ impl Backend {
     /// Update the configuration of the server and publish document updates that
     /// match it.
     async fn update_config_from_obj(&self, json_obj: Value) {
-        if let Ok(new_config) = Config::from_lsp_config(&self.root.read().await, json_obj)
+        // Handle different configuration formats from different editors
+        let processed_json = match json_obj {
+            Value::Object(mut obj) => {
+                // If the object doesn't have a "harper-ls" key, add one
+                if !obj.contains_key("harper-ls") {
+                    obj.insert("harper-ls".to_string(), Value::Object(serde_json::Map::new()));
+                }
+                Value::Object(obj)
+            },
+            Value::Null => {
+                // Handle null configuration by using default empty object
+                json!({ "harper-ls": {} })
+            },
+            Value::String(_) | Value::Bool(_) | Value::Number(_) => {
+                // Some editors send configuration as primitives, convert to proper format
+                json!({ "harper-ls": {} })
+            },
+            Value::Array(_) => {
+                // Arrays are not valid configuration format
+                json!({ "harper-ls": {} })
+            },
+        };
+
+        if let Ok(new_config) = Config::from_lsp_config(&self.root.read().await, processed_json)
             .map_err(|err| error!("{err}"))
         {
             let mut config = self.config.write().await;

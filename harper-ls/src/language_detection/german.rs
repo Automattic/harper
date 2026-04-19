@@ -73,7 +73,7 @@ impl LanguageDetector for GermanDetector {
         }
 
         // Need minimum words for reliable detection
-        if total_words < 10 {
+        if total_words < 5 {
             return None;
         }
 
@@ -92,14 +92,19 @@ impl LanguageDetector for GermanDetector {
             return Some(Dialect::German);
         }
 
+        // Check if English is clearly dominant (more than 65% English words)
+        if english_match_ratio >= 0.65 {
+            return None; // English is clearly dominant
+        }
+
         // Strong indicator: Many common German words
-        if german_word_ratio >= 0.12 {
-            // 12%+ words are common German words
+        if german_word_ratio >= 0.20 {
+            // 20%+ words are common German words
             return Some(Dialect::German);
         }
 
-        // Medium confidence: Low English match but common German words
-        if english_match_ratio < 0.4 && german_word_ratio >= 0.06 {
+        // Medium confidence: Low English match but some German words
+        if english_match_ratio < 0.4 && german_word_ratio >= 0.08 {
             return Some(Dialect::German);
         }
 

@@ -1,6 +1,5 @@
 # Harper Docs Map for Agents
 
-joplin 
 This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
 
 Use `packages/web/vite.config.ts` as the source of truth for documentation scope:
