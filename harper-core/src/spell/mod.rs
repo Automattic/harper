@@ -7,7 +7,7 @@ use crate::{CharString, CharStringExt, DictWordMetadata};
 
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
-pub use self::german_dict::GermanDictionary;
+pub use self::german_dict::curated_german_dictionary;
 pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;

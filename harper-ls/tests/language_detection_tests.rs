@@ -3,8 +3,8 @@
 //! These tests verify that the language detection system works correctly
 //! for various real-world scenarios.
 
-use harper_core::{Document, Dialect};
 use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Document};
 use harper_ls::language_detection::LanguageDetectionRegistry;
 
 /// Test helper to run detection and assert result
@@ -34,7 +34,7 @@ fn test_very_short_text_defaults_to_english() {
 fn test_pure_german_with_special_chars() {
     test_detection(
         "Der Hund spielt im Garten mit Äpfeln und Ölkannen.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -42,7 +42,7 @@ fn test_pure_german_with_special_chars() {
 fn test_german_sentence_capitalization() {
     test_detection(
         "Der Hund spielt im Garten. Die Katze schläft auf dem Sofa.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -53,7 +53,7 @@ fn test_german_paragraph() {
          Der Hund spielt im Garten und die Katze schläft auf dem Sofa. \
          Das Auto ist sehr schnell und der Vogel singt im Baum. \
          Wir gehen heute ins Kino und essen danach im Restaurant.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -62,7 +62,7 @@ fn test_german_with_common_verbs() {
     test_detection(
         "Der Mann geht zur Arbeit. Die Frau bleibt zu Hause. \
          Die Kinder spielen im Park. Wir essen jetzt zu Mittag.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -71,7 +71,7 @@ fn test_pure_english() {
     test_detection(
         "The dog plays in the garden. The cat sleeps on the sofa. \
          The car is very fast and the bird sings in the tree.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -81,7 +81,7 @@ fn test_english_sentence_structure() {
         "This is a comprehensive guide to using the new machine. \
          We have been working on this project for several months. \
          The results have been excellent and we are very pleased.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -90,7 +90,7 @@ fn test_english_with_common_words() {
     test_detection(
         "The man goes to work. The woman stays at home. \
          The children play in the park. We are eating lunch now.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -100,7 +100,7 @@ fn test_mixed_german_dominant() {
     test_detection(
         "Der Hund plays im Garten. die Katze sleeps auf dem Sofa. \
          Das Auto is very schnell.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -111,7 +111,7 @@ fn test_mixed_english_dominant() {
     test_detection(
         "The dog spielt im garden. The cat schläft on the sofa. \
          The car ist very fast.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -121,7 +121,7 @@ fn test_code_blocks_should_not_confuse_detection() {
     // This test shows the current behavior: English title + bash commands outweigh short German prose
     test_detection(
         "# German Guide\n\n```bash\ncd /home/user\nmkdir test\n```\n\nDer Hund spielt im Garten.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -132,7 +132,7 @@ fn test_german_with_umlauts_high_confidence() {
         "Äpfel und Ölkannen sind im Garten. \
          Die Schüler üben die Vokabeln. \
          Das Frühstück war großartig.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -141,7 +141,7 @@ fn test_german_pronouns_and_articles() {
     test_detection(
         "Ich gehe zur Schule. Du bist mein Freund. \
          Er ist zu Hause. Wir sind zusammen.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -150,7 +150,7 @@ fn test_english_pronouns_and_articles() {
     test_detection(
         "I go to school. You are my friend. \
          He is at home. We are together.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -291,13 +291,17 @@ fn test_performance_long_document() {
     let duration = start.elapsed();
 
     assert_eq!(detected, Dialect::German);
-    assert!(duration.as_millis() < 100, "Detection took too long: {:?}", duration);
+    assert!(
+        duration.as_millis() < 100,
+        "Detection took too long: {:?}",
+        duration
+    );
 }
 
 #[test]
 fn test_edge_case_single_word() {
     test_detection("Hund", Dialect::American); // Too short
-    test_detection("Dog", Dialect::American);  // Too short
+    test_detection("Dog", Dialect::American); // Too short
 }
 
 #[test]
@@ -310,7 +314,7 @@ fn test_edge_case_numbers_and_punctuation() {
 fn test_german_common_phrases() {
     test_detection(
         "Guten Tag! Wie geht es Ihnen? Danke, mir geht es gut.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -318,7 +322,7 @@ fn test_german_common_phrases() {
 fn test_english_common_phrases() {
     test_detection(
         "Good morning! How are you? Thank you, I'm fine.",
-        Dialect::American
+        Dialect::American,
     );
 }
 
@@ -327,7 +331,7 @@ fn test_german_prepositions() {
     test_detection(
         "Das Buch liegt auf dem Tisch. Der Vogel sitzt auf dem Baum. \
          Wir gehen ins Kino und fahren in die Stadt.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -336,7 +340,7 @@ fn test_german_modal_verbs() {
     test_detection(
         "Ich kann das machen. Du musst gehen. Wir wollen lernen. \
          Sie dürfen hier sein. Er soll das tun.",
-        Dialect::German
+        Dialect::German,
     );
 }
 
@@ -345,6 +349,6 @@ fn test_german_separable_prefixes() {
     test_detection(
         "Der Hund kommt an. Die Katze schläft ein. \
          Wir stehen auf. Sie rufen an.",
-        Dialect::German
+        Dialect::German,
     );
 }

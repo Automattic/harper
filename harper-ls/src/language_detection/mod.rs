@@ -1,7 +1,7 @@
 //! Extensible language detection system for Harper LSP.
 
-use harper_core::{Dialect, Token};
 use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Token};
 use std::fmt::Debug;
 
 /// Core trait for language detectors.
@@ -18,18 +18,28 @@ pub struct LanguageDetectionRegistry {
 
 impl LanguageDetectionRegistry {
     pub fn new() -> Self {
-        let mut registry = Self { detectors: Vec::new() };
+        let mut registry = Self {
+            detectors: Vec::new(),
+        };
         registry.register_detector(Box::new(crate::language_detection::german::GermanDetector));
-        registry.register_detector(Box::new(crate::language_detection::english::EnglishDetector));
+        registry.register_detector(Box::new(
+            crate::language_detection::english::EnglishDetector,
+        ));
         registry
     }
 
     pub fn register_detector(&mut self, detector: Box<dyn LanguageDetector>) {
         self.detectors.push(detector);
-        self.detectors.sort_by(|a, b| b.confidence().partial_cmp(&a.confidence()).unwrap());
+        self.detectors
+            .sort_by(|a, b| b.confidence().partial_cmp(&a.confidence()).unwrap());
     }
 
-    pub fn detect_language(&self, source: &str, dict: &FstDictionary, default_dialect: Dialect) -> Dialect {
+    pub fn detect_language(
+        &self,
+        source: &str,
+        dict: &FstDictionary,
+        default_dialect: Dialect,
+    ) -> Dialect {
         use harper_core::Document;
         let doc = Document::new_plain_english_curated(source);
         let toks = doc.get_tokens();
@@ -40,7 +50,11 @@ impl LanguageDetectionRegistry {
 
         for detector in &self.detectors {
             if let Some(dialect) = detector.detect(toks, doc.get_source(), dict) {
-                tracing::debug!("Detected language: {} using {} detector", detector.name(), detector.name());
+                tracing::debug!(
+                    "Detected language: {} using {} detector",
+                    detector.name(),
+                    detector.name()
+                );
                 return dialect;
             }
         }
@@ -61,5 +75,5 @@ impl Default for LanguageDetectionRegistry {
 }
 
 // Public modules for each language detector
-pub mod german;
 pub mod english;
+pub mod german;

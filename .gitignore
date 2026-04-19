@@ -12,3 +12,4 @@ mariadb_data
 
 # Ignore local documentation files
 .local-docs/
+harper-core/german_dictionary.dict

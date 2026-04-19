@@ -5,9 +5,9 @@
 //! - Common German words and articles
 //! - Low English word match rate
 
-use harper_core::{Dialect, Token, TokenKind};
-use harper_core::spell::{Dictionary, FstDictionary};
 use crate::language_detection::LanguageDetector;
+use harper_core::spell::{Dictionary, FstDictionary};
+use harper_core::{Dialect, Token, TokenKind};
 
 /// German language detector with high confidence due to unique characters.
 #[derive(Debug)]
@@ -27,21 +27,99 @@ impl LanguageDetector for GermanDetector {
         // High-confidence German indicators (articles, pronouns, common verbs)
         let german_indicators = [
             // Definite articles
-            "der", "die", "das", "den", "dem", "des",
+            "der",
+            "die",
+            "das",
+            "den",
+            "dem",
+            "des",
             // Indefinite articles
-            "ein", "eine", "einer", "einen", "einem", "einen",
+            "ein",
+            "eine",
+            "einer",
+            "einen",
+            "einem",
+            "einen",
             // Personal pronouns
-            "ich", "du", "er", "sie", "es", "wir", "ihr", "sie", "mich", "dich", "ihn", "sie", "es", "uns", "euch",
+            "ich",
+            "du",
+            "er",
+            "sie",
+            "es",
+            "wir",
+            "ihr",
+            "sie",
+            "mich",
+            "dich",
+            "ihn",
+            "sie",
+            "es",
+            "uns",
+            "euch",
             // Verb forms
-            "ist", "sind", "war", "waren", "hat", "habe", "haben", "hatte", "hatten",
-            "werden", "wird", "wurde", "worden", "kann", "kannst", "kann", "können", "könnte",
-            "machen", "macht", "machte", "machen", "gehen", "geht", "ging", "gingen",
+            "ist",
+            "sind",
+            "war",
+            "waren",
+            "hat",
+            "habe",
+            "haben",
+            "hatte",
+            "hatten",
+            "werden",
+            "wird",
+            "wurde",
+            "worden",
+            "kann",
+            "kannst",
+            "kann",
+            "können",
+            "könnte",
+            "machen",
+            "macht",
+            "machte",
+            "machen",
+            "gehen",
+            "geht",
+            "ging",
+            "gingen",
             // Prepositions
-            "im", "am", "um", "für", "durch", "während", "seit", "von", "zu", "bei",
+            "im",
+            "am",
+            "um",
+            "für",
+            "durch",
+            "während",
+            "seit",
+            "von",
+            "zu",
+            "bei",
             // Common words
-            "das", "dass", "dies", "diese", "dieser", "dieses", "jener", "jene", "jenes",
-            "nicht", "nichts", "kein", "keine", "keiner", "keinen", "nirgendwo",
-            "auch", "noch", "schon", "nur", "doch", "ja", "nein", "oder", "und",
+            "das",
+            "dass",
+            "dies",
+            "diese",
+            "dieser",
+            "dieses",
+            "jener",
+            "jene",
+            "jenes",
+            "nicht",
+            "nichts",
+            "kein",
+            "keine",
+            "keiner",
+            "keinen",
+            "nirgendwo",
+            "auch",
+            "noch",
+            "schon",
+            "nur",
+            "doch",
+            "ja",
+            "nein",
+            "oder",
+            "und",
         ];
 
         for token in toks {
@@ -51,8 +129,11 @@ impl LanguageDetector for GermanDetector {
                     let word_content: String = token.get_ch(source).iter().collect();
 
                     // Check for German special characters (very high confidence)
-                    if word_content.contains('ä') || word_content.contains('ö') ||
-                       word_content.contains('ü') || word_content.contains('ß') {
+                    if word_content.contains('ä')
+                        || word_content.contains('ö')
+                        || word_content.contains('ü')
+                        || word_content.contains('ß')
+                    {
                         german_char_count += 1;
                     }
 
@@ -144,7 +225,7 @@ mod tests {
     fn detects_common_german_words() {
         test_detection(
             "Der Hund ist im Garten. Die Katze schläft auf dem Sofa. Das Auto ist sehr schnell.",
-            true
+            true,
         );
     }
 
@@ -152,7 +233,7 @@ mod tests {
     fn detects_mixed_german_english() {
         test_detection(
             "Der Hund plays im Garten. die Katze sleeps auf dem Sofa.",
-            true
+            true,
         );
     }
 
@@ -160,7 +241,7 @@ mod tests {
     fn rejects_english() {
         test_detection(
             "The dog plays in the garden. The cat sleeps on the sofa. The car is very fast.",
-            false
+            false,
         );
     }
 
@@ -176,7 +257,7 @@ mod tests {
              Der Hund spielt im Garten und die Katze schläft auf dem Sofa. \
              Das Auto ist sehr schnell und der Vogel singt im Baum. \
              Wir gehen heute ins Kino und essen danach im Restaurant.",
-            true
+            true,
         );
     }
 }

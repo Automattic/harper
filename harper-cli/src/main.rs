@@ -1,12 +1,14 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
+use harper_core::spell::{
+    Dictionary, FstDictionary, MutableDictionary, WordId, curated_german_dictionary,
+};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -255,9 +257,15 @@ fn main() -> anyhow::Result<()> {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
+            let dict: Arc<dyn Dictionary> = if dialect.is_german() {
+                curated_german_dictionary()
+            } else {
+                curated_dictionary.clone()
+            };
+
             lint(
                 markdown_options,
-                curated_dictionary,
+                dict,
                 inputs,
                 LintOptions {
                     count,

@@ -1,12 +1,15 @@
 # Einfache deutsche Beispiele
 
+
 ## Einleitung
 
 Dies ist eine einfache deutsche Testdatei für Harper.
 
 ## Beispiele
 
-Der Hund spielt im Garten. Die Katze schläft auf dem Sofa. Das Auto ist sehr schnell.
+Der Hund spielt im Garten. Die Katze schläft auf dem Sofa. Das Auto ist sehr schnell. dieser Satz sollte mit einem Großbuchstaben beginnen.
+
+Dieses Worrt ist flasch geschrieben.
 
 ## Besondere Zeichen
 

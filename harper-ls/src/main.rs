@@ -8,10 +8,10 @@ mod backend;
 mod config;
 mod diagnostics;
 mod document_state;
-mod language_detection;
 mod git_commit_parser;
 mod ignored_lints_io;
 mod io_utils;
+mod language_detection;
 mod pos_conv;
 
 use backend::Backend;

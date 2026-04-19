@@ -1062,6 +1062,31 @@ impl Dialect {
         Self::try_from(DialectFlags::get_most_used_dialects_from_document(document)).ok()
     }
 
+    /// Returns `true` if this dialect is a German variant.
+    #[must_use]
+    pub fn is_german(self) -> bool {
+        matches!(
+            self,
+            Self::German | Self::GermanAustrian | Self::GermanSwiss
+        )
+    }
+
+    /// Returns a suffix to append to dictionary file paths for this dialect.
+    /// English dialects return `""` (default). German dialects return `"-de"`.
+    #[must_use]
+    pub fn dict_suffix(self) -> &'static str {
+        if self.is_german() { "-de" } else { "" }
+    }
+
+    /// Returns `true` if this dialect is an English variant.
+    #[must_use]
+    pub fn is_english(self) -> bool {
+        matches!(
+            self,
+            Self::American | Self::Canadian | Self::Australian | Self::British | Self::Indian
+        )
+    }
+
     /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
     /// recognized.
     ///
@@ -1113,8 +1138,12 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
                 df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
                 df if df.is_dialect_enabled_strict(Dialect::German) => Ok(Dialect::German),
-                df if df.is_dialect_enabled_strict(Dialect::GermanAustrian) => Ok(Dialect::GermanAustrian),
-                df if df.is_dialect_enabled_strict(Dialect::GermanSwiss) => Ok(Dialect::GermanSwiss),
+                df if df.is_dialect_enabled_strict(Dialect::GermanAustrian) => {
+                    Ok(Dialect::GermanAustrian)
+                }
+                df if df.is_dialect_enabled_strict(Dialect::GermanSwiss) => {
+                    Ok(Dialect::GermanSwiss)
+                }
                 _ => Err(()),
             }
         } else {
@@ -1147,13 +1176,19 @@ impl<'de> Deserialize<'de> for Dialect {
                 E: Error,
             {
                 match value.to_lowercase().as_str() {
-                    "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
+                    "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
+                        Ok(Dialect::American)
+                    }
                     "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
-                    "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
+                    "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
+                        Ok(Dialect::Australian)
+                    }
                     "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
                     "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
                     "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(Dialect::German),
-                    "at" | "austria" | "austrian" | "de-at" | "de_at" => Ok(Dialect::GermanAustrian),
+                    "at" | "austria" | "austrian" | "de-at" | "de_at" => {
+                        Ok(Dialect::GermanAustrian)
+                    }
                     "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Ok(Dialect::GermanSwiss),
                     _ => Err(Error::custom(format!("Unknown dialect: {}", value))),
                 }

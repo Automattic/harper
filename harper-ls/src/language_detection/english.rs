@@ -3,9 +3,9 @@
 //! This serves as the default/fallback detector and has lower confidence
 //! than language-specific detectors. It uses Harper's built-in English detection.
 
-use harper_core::{Dialect, Token};
-use harper_core::spell::FstDictionary;
 use crate::language_detection::LanguageDetector;
+use harper_core::spell::FstDictionary;
+use harper_core::{Dialect, Token};
 
 /// English language detector with lower confidence (fallback).
 #[derive(Debug)]

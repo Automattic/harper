@@ -1,8 +1,8 @@
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
+use crate::TokenStringExt;
 use crate::document::Document;
 use crate::spell::Dictionary;
-use crate::TokenStringExt;
 
 /// A linter that checks to make sure German nouns are capitalized.
 /// In German, all nouns must be capitalized (not just proper nouns like in English).
@@ -11,22 +11,202 @@ where
     T: Dictionary,
 {
     dictionary: T,
-    // Common German noun suffixes to identify potential nouns
-    noun_suffixes: Vec<Vec<char>>,
+    /// Suffixes that strongly indicate a noun, paired with minimum word length
+    /// to avoid false positives on short function words.
+    noun_suffixes: Vec<(Vec<char>, usize)>,
 }
+
+/// Common German function words that should never be flagged as nouns.
+const GERMAN_NON_NOUNS: &[&str] = &[
+    // Articles (all cases)
+    "der",
+    "die",
+    "das",
+    "dem",
+    "den",
+    "des",
+    "ein",
+    "eine",
+    "einen",
+    "einem",
+    "einer",
+    "eines",
+    // Pronouns
+    "er",
+    "sie",
+    "es",
+    "wir",
+    "ihr",
+    "ich",
+    "du",
+    "mich",
+    "mir",
+    "dich",
+    "dir",
+    "sich",
+    "uns",
+    "euch",
+    "ihnen",
+    "ihm",
+    // Possessives
+    "mein",
+    "dein",
+    "sein",
+    "unser",
+    "euer",
+    // Demonstratives / relative
+    "dieser",
+    "diese",
+    "dieses",
+    "jener",
+    "jene",
+    "jenes",
+    "welcher",
+    "welche",
+    "welches",
+    "jeder",
+    "jede",
+    "jedes",
+    // Prepositions
+    "in",
+    "im",
+    "an",
+    "am",
+    "auf",
+    "aus",
+    "bei",
+    "mit",
+    "nach",
+    "von",
+    "vor",
+    "zu",
+    "zum",
+    "zur",
+    "um",
+    "für",
+    "über",
+    "unter",
+    "zwischen",
+    "neben",
+    "hinter",
+    "durch",
+    "ohne",
+    "gegen",
+    "bis",
+    "seit",
+    "während",
+    "wegen",
+    "trotz",
+    "statt",
+    "außer",
+    "ab",
+    "ob",
+    // Conjunctions
+    "und",
+    "oder",
+    "aber",
+    "denn",
+    "weil",
+    "dass",
+    "wenn",
+    "als",
+    "ob",
+    "sondern",
+    "doch",
+    "jedoch",
+    "falls",
+    "damit",
+    "bevor",
+    "nachdem",
+    "obwohl",
+    "während",
+    "sobald",
+    "solange",
+    // Adverbs
+    "nicht",
+    "auch",
+    "noch",
+    "schon",
+    "nur",
+    "sehr",
+    "hier",
+    "dort",
+    "da",
+    "immer",
+    "nie",
+    "oft",
+    "manchmal",
+    "vielleicht",
+    "wahrscheinlich",
+    "heute",
+    "morgen",
+    "gestern",
+    "jetzt",
+    "dann",
+    "so",
+    "ganz",
+    "gar",
+    // Common verbs (incl. conjugated forms often lowercase in text)
+    "ist",
+    "sind",
+    "war",
+    "waren",
+    "hat",
+    "haben",
+    "hatte",
+    "hatten",
+    "wird",
+    "werden",
+    "wurde",
+    "wurden",
+    "kann",
+    "können",
+    "konnte",
+    "soll",
+    "sollen",
+    "sollte",
+    "muss",
+    "müssen",
+    "musste",
+    "darf",
+    "dürfen",
+    "durfte",
+    "mag",
+    "mögen",
+    "möchte",
+    "will",
+    "wollen",
+    "wollte",
+    "sein",
+    "gewesen",
+    // Adjectives
+    "gut",
+    "groß",
+    "klein",
+    "alt",
+    "neu",
+    "lang",
+    "kurz",
+    "schnell",
+    "langsam",
+    "viel",
+    "wenig",
+    "alle",
+    "keine",
+];
 
 impl<T: Dictionary> GermanNounCapitalization<T> {
     pub fn new(dictionary: T) -> Self {
-        // Common German noun suffixes (from LanguageTool and linguistic resources)
         let noun_suffixes = vec![
-            vec!['h', 'e', 'i', 't'],     // -heit
-            vec!['k', 'e', 'i', 't'],     // -keit
-            vec!['u', 'n', 'g'],          // -ung
-            vec!['i', 'e'],               // -ie (abstract nouns)
-            vec!['i', 'k'],               // -ik
-            vec!['i', 'o', 'n'],          // -ion
-            vec!['t', 'ä', 't'],          // -tät
-            vec!['s', 'c', 'h', 'a', 'f', 't'], // -schaft
+            (vec!['h', 'e', 'i', 't'], 5),           // -heit (min 5 chars)
+            (vec!['k', 'e', 'i', 't'], 5),           // -keit
+            (vec!['u', 'n', 'g'], 5),                // -ung
+            (vec!['n', 'i', 's'], 5),                // -nis
+            (vec!['t', 'u', 'm'], 5),                // -tum
+            (vec!['l', 'i', 'n', 'g'], 6),           // -ling
+            (vec!['i', 'o', 'n'], 5),                // -ion
+            (vec!['t', 'ä', 't'], 5),                // -tät
+            (vec!['s', 'c', 'h', 'a', 'f', 't'], 8), // -schaft
         ];
 
         Self {
@@ -35,19 +215,41 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
     }
 
-    /// Check if a word is likely a German noun based on various heuristics
+    fn is_non_noun(word_lower: &[char]) -> bool {
+        let s: String = word_lower.iter().collect();
+        GERMAN_NON_NOUNS.contains(&s.as_str())
+    }
+
+    /// Check if a word is likely a German noun based on dictionary metadata
+    /// and suffix heuristics, while excluding known function words.
     fn is_likely_noun(&self, word: &[char], _document: &Document) -> bool {
-        // Check if word is in dictionary and marked as noun
+        let lower: Vec<char> = word
+            .iter()
+            .map(|c| c.to_lowercase().next().unwrap_or(*c))
+            .collect();
+
+        // Never flag known function words
+        if Self::is_non_noun(&lower) {
+            return false;
+        }
+
+        // Check if word is in dictionary and explicitly marked as noun
         if let Some(metadata) = self.dictionary.get_word_metadata(word) {
             if metadata.noun.is_some() {
                 return true;
             }
         }
+        // Also check the lowercase form
+        if let Some(metadata) = self.dictionary.get_word_metadata(&lower) {
+            if metadata.noun.is_some() {
+                return true;
+            }
+        }
 
-        // Check for common noun suffixes
-        for suffix in &self.noun_suffixes {
-            if word.len() > suffix.len() {
-                let word_suffix = &word[word.len() - suffix.len()..];
+        // Check for common noun suffixes (with minimum length guards)
+        for (suffix, min_len) in &self.noun_suffixes {
+            if lower.len() >= *min_len {
+                let word_suffix = &lower[lower.len() - suffix.len()..];
                 if word_suffix == *suffix {
                     return true;
                 }
@@ -90,7 +292,8 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         if self.is_likely_noun(&word_chars, document) {
                             let mut replacement: Vec<char> = word_chars.to_vec();
                             if let Some(first_char) = replacement.first_mut() {
-                                *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
+                                *first_char =
+                                    first_char.to_uppercase().next().unwrap_or(*first_char);
                             }
 
                             lints.push(Lint {

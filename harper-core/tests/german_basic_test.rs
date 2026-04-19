@@ -1,7 +1,7 @@
 // Basic test for German language support
 // This demonstrates that the German parser works
 
-use harper_core::parsers::{PlainGerman, Parser};
+use harper_core::parsers::{Parser, PlainGerman};
 
 #[test]
 fn test_german_parser() {
@@ -30,7 +30,10 @@ fn test_german_special_characters() {
     let tokens = parser.parse(&chars);
 
     // Should handle German special characters
-    assert!(!tokens.is_empty(), "Parser should handle German special characters");
+    assert!(
+        !tokens.is_empty(),
+        "Parser should handle German special characters"
+    );
 
     println!("✅ German special characters handled!");
     println!("Text: \"{}\"", text);

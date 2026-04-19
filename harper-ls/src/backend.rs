@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use crate::config::Config;
@@ -72,8 +72,13 @@ impl Backend {
         }
     }
 
-    /// Load a specific file's dictionary
-    async fn load_file_dictionary(&self, uri: &Uri) -> anyhow::Result<MutableDictionary> {
+    /// Load a specific file's dictionary, using the given dialect to determine
+    /// the dictionary path suffix.
+    async fn load_file_dictionary(
+        &self,
+        uri: &Uri,
+        dialect: Dialect,
+    ) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
         if uri
             .scheme()
@@ -83,11 +88,11 @@ impl Backend {
         }
 
         let path = self
-            .get_file_dict_path(uri)
+            .get_file_dict_path(uri, dialect)
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path, self.config.read().await.dialect)
+        load_dict(path, dialect)
             .await
             .map_err(|err| info!("{err}"))
             .or(Ok(MutableDictionary::new()))
@@ -130,16 +135,37 @@ impl Backend {
         .unwrap_or(IgnoredLints::new()))
     }
 
-    /// Compute the location of the file's specific dictionary
-    async fn get_file_dict_path(&self, uri: &Uri) -> anyhow::Result<PathBuf> {
+    /// Compute the location of the file's specific dictionary.
+    /// For non-English dialects, files are stored in a dialect-suffixed directory
+    /// (e.g. `file_dictionaries-de/`).
+    async fn get_file_dict_path(&self, uri: &Uri, dialect: Dialect) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
+        let suffix = dialect.dict_suffix();
 
-        Ok(config.file_dict_path.join(fileify_path(uri)?))
+        if suffix.is_empty() {
+            Ok(config.file_dict_path.join(fileify_path(uri)?))
+        } else {
+            // Append suffix to the directory name, e.g. "file_dictionaries" -> "file_dictionaries-de"
+            let base = &config.file_dict_path;
+            let mut dir_name = base
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .to_string();
+            dir_name.push_str(suffix);
+            let suffixed = base.with_file_name(dir_name);
+            Ok(suffixed.join(fileify_path(uri)?))
+        }
     }
 
-    async fn save_file_dictionary(&self, uri: &Uri, dict: impl Dictionary) -> Result<()> {
+    async fn save_file_dictionary(
+        &self,
+        uri: &Uri,
+        dict: impl Dictionary,
+        dialect: Dialect,
+    ) -> Result<()> {
         save_dict(
-            self.get_file_dict_path(uri)
+            self.get_file_dict_path(uri, dialect)
                 .await
                 .context("Unable to get the file path.")?,
             dict,
@@ -148,39 +174,72 @@ impl Backend {
         .context("Unable to save the dictionary to path.")
     }
 
-    async fn load_user_dictionary(&self) -> MutableDictionary {
+    async fn load_user_dictionary(&self, dialect: Dialect) -> MutableDictionary {
         let config = self.config.read().await;
+        let path = Self::dialect_path(&config.user_dict_path, dialect);
 
-        load_dict(&config.user_dict_path, self.config.read().await.dialect)
+        load_dict(path, dialect)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: impl Dictionary, dialect: Dialect) -> Result<()> {
         let config = self.config.read().await;
+        let path = Self::dialect_path(&config.user_dict_path, dialect);
 
-        save_dict(&config.user_dict_path, dict)
+        save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
-    async fn load_workspace_dictionary(&self) -> MutableDictionary {
+    async fn load_workspace_dictionary(&self, dialect: Dialect) -> MutableDictionary {
         let config = self.config.read().await;
-        load_dict(
-            &config.workspace_dict_path,
-            self.config.read().await.dialect,
-        )
-        .await
-        .map_err(|err| info!("{err}"))
-        .unwrap_or(MutableDictionary::new())
+        let path = Self::dialect_path(&config.workspace_dict_path, dialect);
+
+        load_dict(path, dialect)
+            .await
+            .map_err(|err| info!("{err}"))
+            .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_workspace_dictionary(
+        &self,
+        dict: impl Dictionary,
+        dialect: Dialect,
+    ) -> Result<()> {
         let config = self.config.read().await;
-        save_dict(&config.workspace_dict_path, dict)
+        let path = Self::dialect_path(&config.workspace_dict_path, dialect);
+
+        save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
+    }
+
+    /// Computes a dialect-aware path from a base path.
+    /// For English (default), returns the path unchanged.
+    /// For German, inserts a suffix before the extension (or appends it for dirs).
+    /// E.g. `dictionary.txt` -> `dictionary-de.txt`,
+    ///      `.harper-dictionary.txt` -> `.harper-dictionary-de.txt`.
+    fn dialect_path(base: &Path, dialect: Dialect) -> PathBuf {
+        let suffix = dialect.dict_suffix();
+        if suffix.is_empty() {
+            return base.to_path_buf();
+        }
+
+        if let Some(ext) = base.extension() {
+            let stem = base.file_stem().unwrap_or_default().to_string_lossy();
+            let new_name = format!("{}{}.{}", stem, suffix, ext.to_string_lossy());
+            base.with_file_name(new_name)
+        } else {
+            // No extension (directory-like path): just append suffix
+            let name = base
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .to_string();
+            base.with_file_name(format!("{}{}", name, suffix))
+        }
     }
 
     async fn save_stats(&self) -> Result<()> {
@@ -203,20 +262,36 @@ impl Backend {
         Ok(())
     }
 
-    async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
+    async fn generate_global_dictionary(&self, dialect: Dialect) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
-        dict.add_dictionary(FstDictionary::curated());
-        let user_dict = self.load_user_dictionary().await;
+
+        // Load appropriate dictionary based on dialect
+        match dialect {
+            d if d.is_german() => {
+                dict.add_dictionary(harper_core::spell::curated_german_dictionary());
+                info!("Loaded German dictionary for dialect: {:?}", dialect);
+            }
+            _ => {
+                dict.add_dictionary(FstDictionary::curated());
+                info!("Loaded English dictionary for dialect: {:?}", dialect);
+            }
+        }
+
+        let user_dict = self.load_user_dictionary(dialect).await;
         dict.add_dictionary(Arc::new(user_dict));
-        let ws_dict = self.load_workspace_dictionary().await;
+        let ws_dict = self.load_workspace_dictionary(dialect).await;
         dict.add_dictionary(Arc::new(ws_dict));
         Ok(dict)
     }
 
-    async fn generate_file_dictionary(&self, uri: &Uri) -> Result<MergedDictionary> {
+    async fn generate_file_dictionary(
+        &self,
+        uri: &Uri,
+        dialect: Dialect,
+    ) -> Result<MergedDictionary> {
         let (global_dictionary, file_dictionary) = tokio::join!(
-            self.generate_global_dictionary(),
-            self.load_file_dictionary(uri)
+            self.generate_global_dictionary(dialect),
+            self.load_file_dictionary(uri, dialect)
         );
 
         let mut global_dictionary =
@@ -247,38 +322,78 @@ impl Backend {
     ) -> Result<()> {
         self.pull_config().await;
 
-        // Auto-detect language for markdown documents (with caching)
-        let detected_dialect: Dialect = if language_id == Some("markdown") || language_id == Some("md") {
-            // Check if we have enough content to reliably detect language
-            let word_count = text.split_whitespace().count();
+        info!(
+            "Opening document: {:?} with language_id: {:?}",
+            uri, language_id
+        );
 
-            // Get cached dialect if available
+        // Auto-detect language for prose-oriented documents.
+        // Covers markdown, plaintext, org, tex, mail, and similar formats.
+        let is_prose = language_id
+            .map(|s| {
+                s.contains("markdown")
+                    || s.contains("md")
+                    || s == "source.md"
+                    || s == "plaintext"
+                    || s == "text"
+                    || s == "org"
+                    || s == "tex"
+                    || s == "latex"
+                    || s == "plaintex"
+                    || s == "mail"
+                    || s == "quarto"
+                    || s == "asciidoc"
+                    || s == "typst"
+            })
+            .unwrap_or(false);
+
+        info!("Is prose: {} for language_id: {:?}", is_prose, language_id);
+
+        let detected_dialect: Dialect = if is_prose {
+            let word_count = text.split_whitespace().count();
+            info!("Word count: {}", word_count);
+
             let cached_dialect = {
                 let doc_lock = self.doc_state.lock().await;
                 doc_lock.get(uri).and_then(|state| state.cached_dialect)
             };
 
-            if let Some(cached) = cached_dialect {
-                // Use cached dialect (fast path)
-                cached
-            } else if word_count >= 20 {
-                // Only run expensive detection if we have enough content
+            if word_count >= 20 {
+                // Always re-run detection when we have enough content.
+                // This handles the case where a user starts writing in a different language.
                 let dict = FstDictionary::curated();
-                let detected = self.lang_detect.detect_language(text, &dict, Dialect::American);
-                info!("Auto-detected dialect: {:?} for {:?} ({} words)", detected, uri, word_count);
+                let detected = self
+                    .lang_detect
+                    .detect_language(text, &dict, Dialect::American);
+                info!(
+                    "Auto-detected dialect: {:?} for {:?} ({} words)",
+                    detected, uri, word_count
+                );
 
-                // Cache the detected dialect for this document
-                {
+                // If dialect changed, invalidate cache and force linter rebuild.
+                if cached_dialect != Some(detected) {
+                    info!(
+                        "Dialect changed from {:?} to {:?}, rebuilding linter",
+                        cached_dialect, detected
+                    );
                     let mut doc_lock = self.doc_state.lock().await;
                     if let Some(state) = doc_lock.get_mut(uri) {
                         state.cached_dialect = Some(detected);
+                        // Force dict mismatch so the linter is rebuilt below.
+                        state.dict = Arc::new(MergedDictionary::new());
                     }
                 }
 
                 detected
+            } else if let Some(cached) = cached_dialect {
+                // Not enough words yet but we had a previous detection — keep it.
+                info!("Using cached dialect: {:?} ({} words)", cached, word_count);
+                cached
             } else {
-                // Not enough content for reliable detection - use default
-                info!("Insufficient content for detection ({} words), using default dialect", word_count);
+                info!(
+                    "Insufficient content for detection ({} words), using default dialect",
+                    word_count
+                );
                 Dialect::American
             }
         } else {
@@ -322,7 +437,7 @@ impl Backend {
         let ignored_lints = self.load_ignored_lints(uri).await.unwrap_or_default();
 
         let dict = Arc::new(
-            self.generate_file_dictionary(uri)
+            self.generate_file_dictionary(uri, detected_dialect)
                 .await
                 .context("Unable to generate the file dictionary.")?,
         );
@@ -344,8 +459,8 @@ impl Backend {
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            doc_state.linter =
-                LintGroup::new_curated(dict.clone(), detected_dialect).with_lint_config(lint_config.clone());
+            doc_state.linter = LintGroup::new_curated(dict.clone(), detected_dialect)
+                .with_lint_config(lint_config.clone());
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -366,7 +481,7 @@ impl Backend {
                 info!("Constructing new linter because of modified ident dictionary.");
                 doc_state.ident_dict = new_dict.clone();
 
-                let mut merged = backend.generate_file_dictionary(uri).await?;
+                let mut merged = backend.generate_file_dictionary(uri, dialect).await?;
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
@@ -469,6 +584,17 @@ impl Backend {
         Ok(())
     }
 
+    /// Returns the detected dialect for a document, falling back to configured default.
+    async fn get_document_dialect(&self, uri: &Uri) -> Dialect {
+        let doc_lock = self.doc_state.lock().await;
+        if let Some(state) = doc_lock.get(uri) {
+            if let Some(d) = state.cached_dialect {
+                return d;
+            }
+        }
+        self.config.read().await.dialect
+    }
+
     async fn generate_code_actions(
         &self,
         uri: &Uri,
@@ -519,22 +645,25 @@ impl Backend {
             Value::Object(mut obj) => {
                 // If the object doesn't have a "harper-ls" key, add one
                 if !obj.contains_key("harper-ls") {
-                    obj.insert("harper-ls".to_string(), Value::Object(serde_json::Map::new()));
+                    obj.insert(
+                        "harper-ls".to_string(),
+                        Value::Object(serde_json::Map::new()),
+                    );
                 }
                 Value::Object(obj)
-            },
+            }
             Value::Null => {
                 // Handle null configuration by using default empty object
                 json!({ "harper-ls": {} })
-            },
+            }
             Value::String(_) | Value::Bool(_) | Value::Number(_) => {
                 // Some editors send configuration as primitives, convert to proper format
                 json!({ "harper-ls": {} })
-            },
+            }
             Value::Array(_) => {
                 // Arrays are not valid configuration format
                 json!({ "harper-ls": {} })
-            },
+            }
         };
 
         if let Ok(new_config) = Config::from_lsp_config(&self.root.read().await, processed_json)
@@ -751,11 +880,12 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let dialect = self.get_document_dialect(&file_uri).await;
 
-                let mut dict = self.load_user_dictionary().await;
+                let mut dict = self.load_user_dictionary(dialect).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict)
+                self.save_user_dictionary(dict, dialect)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -772,11 +902,12 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let dialect = self.get_document_dialect(&file_uri).await;
 
-                let mut dict = self.load_workspace_dictionary().await;
+                let mut dict = self.load_workspace_dictionary(dialect).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict)
+                self.save_workspace_dictionary(dict, dialect)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -793,10 +924,11 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let dialect = self.get_document_dialect(&file_uri).await;
 
                 let mut dict = match self
-                    .load_file_dictionary(&file_uri)
+                    .load_file_dictionary(&file_uri, dialect)
                     .await
                     .map_err(|err| error!("{err}"))
                 {
@@ -807,7 +939,7 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, DictWordMetadata::default());
 
-                self.save_file_dictionary(&file_uri, dict)
+                self.save_file_dictionary(&file_uri, dict, dialect)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();

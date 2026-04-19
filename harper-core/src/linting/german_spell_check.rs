@@ -1,8 +1,8 @@
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
+use crate::TokenStringExt;
 use crate::document::Document;
 use crate::spell::Dictionary;
-use crate::TokenStringExt;
 
 /// A spell checker for German text with compound word handling.
 pub struct GermanSpellCheck<T>
@@ -17,37 +17,58 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         Self { dictionary }
     }
 
-    /// Try to check if a word is a valid German compound word
+    /// Try to check if a word is a valid German compound word.
+    /// German freely combines nouns: "Haustür" = "Haus" + "Tür".
+    /// Also handles Fugen-s: "Frühstücksspeck" = "Frühstück" + "s" + "Speck".
     fn try_compound_word_check(&self, word: &[char]) -> bool {
-        // German compound words can be very long
-        // Try splitting at common boundaries
-
-        if word.len() < 10 {
+        if word.len() < 6 {
             return false;
         }
 
-        // Try various split positions
-        for split_pos in 5..word.len() - 4 {
+        for split_pos in 3..word.len() - 2 {
             let first_part = &word[..split_pos];
             let second_part = &word[split_pos..];
 
-            if self.dictionary.contains_word(first_part) &&
-               self.dictionary.contains_word(second_part) {
-                // It's a valid compound word
+            // Direct split: "Haustür" → "Haus" + "Tür"
+            if self.dictionary.contains_word(first_part)
+                && self.dictionary.contains_word(second_part)
+            {
                 return true;
+            }
+
+            // Fugen-s: "Arbeitsstelle" → "Arbeit" + "s" + "Stelle"
+            if second_part.first() == Some(&'s') && second_part.len() > 3 {
+                let after_s = &second_part[1..];
+                if self.dictionary.contains_word(first_part)
+                    && self.dictionary.contains_word(after_s)
+                {
+                    return true;
+                }
+            }
+
+            // Fugen-n: "Straßenrand" → "Straße" + "n" + "Rand"
+            if second_part.first() == Some(&'n') && second_part.len() > 3 {
+                let after_n = &second_part[1..];
+                if self.dictionary.contains_word(first_part)
+                    && self.dictionary.contains_word(after_n)
+                {
+                    return true;
+                }
             }
         }
 
         false
     }
 
-    /// Get spelling suggestions for a word
+    /// Get spelling suggestions for a word using fuzzy matching.
     fn get_suggestions(&self, word: &[char]) -> Vec<Vec<char>> {
-        let mut suggestions = Vec::new();
+        // Use the dictionary's fuzzy matching (FST-based Levenshtein)
+        let results = self.dictionary.fuzzy_match(word, 2, 5);
+        let mut suggestions: Vec<Vec<char>> =
+            results.into_iter().map(|r| r.word.to_vec()).collect();
 
-        // For MVP, try simple variations
-        // 1. Capitalize first letter (common error in German)
-        if word.len() > 1 {
+        // Also try simple capitalization fix (common German error)
+        if suggestions.is_empty() && word.len() > 1 {
             let mut capitalized = word.to_vec();
             if let Some(first_char) = capitalized.first_mut() {
                 *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
@@ -57,21 +78,7 @@ impl<T: Dictionary> GermanSpellCheck<T> {
             }
         }
 
-        // 2. Lowercase first letter (if all caps)
-        if word.len() > 1 && word.iter().all(|c| c.is_uppercase()) {
-            let mut lowercase = word.to_vec();
-            for c in &mut lowercase {
-                if let Some(l) = c.to_lowercase().next() {
-                    *c = l;
-                }
-            }
-            if self.dictionary.contains_word(&lowercase) {
-                suggestions.push(lowercase);
-            }
-        }
-
-        // Limit suggestions
-        suggestions.truncate(3);
+        suggestions.truncate(5);
         suggestions
     }
 }
@@ -97,27 +104,32 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
                     // Get spelling suggestions
                     let suggestions = self.get_suggestions(word_chars);
+                    let word_str: String = word_chars.iter().collect();
 
-                    if !suggestions.is_empty() {
-                        let word_str: String = word_chars.iter().collect();
-                        let suggestions_str: Vec<String> = suggestions.iter()
+                    let message = if !suggestions.is_empty() {
+                        let suggestions_str: Vec<String> = suggestions
+                            .iter()
                             .map(|s| s.iter().collect::<String>())
                             .collect();
+                        format!(
+                            "Possible spelling error: \"{}\". Did you mean: {}?",
+                            word_str,
+                            suggestions_str.join(", ")
+                        )
+                    } else {
+                        format!("Unknown word: \"{}\".", word_str)
+                    };
 
-                        lints.push(Lint {
-                            span: word.span,
-                            lint_kind: LintKind::Spelling,
-                            suggestions: suggestions.into_iter()
-                                .map(|s| Suggestion::ReplaceWith(s))
-                                .collect(),
-                            priority: 20,
-                            message: format!(
-                                "Possible spelling error: \"{}\". Did you mean: {}?",
-                                word_str,
-                                suggestions_str.join(", ")
-                            ),
-                        });
-                    }
+                    lints.push(Lint {
+                        span: word.span,
+                        lint_kind: LintKind::Spelling,
+                        suggestions: suggestions
+                            .into_iter()
+                            .map(|s| Suggestion::ReplaceWith(s))
+                            .collect(),
+                        priority: 20,
+                        message,
+                    });
                 }
             }
         }
