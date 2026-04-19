@@ -1008,6 +1008,9 @@ fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
         "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
         "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
         "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+        "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(Dialect::German),
+        "at" | "austria" | "austrian" | "de-at" | "de_at" => Ok(Dialect::GermanAustrian),
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Ok(Dialect::GermanSwiss),
         _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }

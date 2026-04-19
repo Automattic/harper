@@ -1088,6 +1088,9 @@ impl Dialect {
             "AU" => Some(Self::Australian),
             "GB" => Some(Self::British),
             "IN" => Some(Self::Indian),
+            "DE" => Some(Self::German),
+            "AT" => Some(Self::GermanAustrian),
+            "CH" => Some(Self::GermanSwiss),
             _ => None,
         }
     }
@@ -1110,6 +1113,9 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
                 df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
+                df if df.is_dialect_enabled_strict(Dialect::German) => Ok(Dialect::German),
+                df if df.is_dialect_enabled_strict(Dialect::GermanAustrian) => Ok(Dialect::GermanAustrian),
+                df if df.is_dialect_enabled_strict(Dialect::GermanSwiss) => Ok(Dialect::GermanSwiss),
                 _ => Err(()),
             }
         } else {
@@ -1136,6 +1142,9 @@ bitflags::bitflags! {
         const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
         const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+        const GERMAN = Dialect::German as DialectFlagsUnderlyingType;
+        const GERMAN_AUSTRIAN = Dialect::GermanAustrian as DialectFlagsUnderlyingType;
+        const GERMAN_SWISS = Dialect::GermanSwiss as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags {
