@@ -47,6 +47,14 @@ export async function getStoredLintConfig(context: BrowserContext): Promise<Lint
 	});
 }
 
+export async function getStoredDelay(context: BrowserContext): Promise<number> {
+	const background = await getBackground(context);
+	return await background.evaluate(async () => {
+		const value = await chrome.storage.local.get({ delay: 0 });
+		return typeof value.delay === 'number' ? value.delay : 0;
+	});
+}
+
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
 export function getSlateEditor(page: Page): Locator {
 	return page.locator('[data-slate-editor="true"]');

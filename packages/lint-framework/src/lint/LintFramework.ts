@@ -16,6 +16,17 @@ type Hotkey = {
 	key: string;
 };
 
+type FrameworkActions = {
+	ignoreLint?: (hash: string) => Promise<void>;
+	getActivationKey?: () => Promise<ActivationKey>;
+	getHotkey?: () => Promise<Hotkey>;
+	getDelay?: () => Promise<number>;
+	openOptions?: () => Promise<void>;
+	addToUserDictionary?: (words: string[]) => Promise<void>;
+	reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+	setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
+};
+
 /** Events on an input (any kind) that can trigger a re-render. */
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
 /** Events on the window that can trigger a re-render. */
@@ -29,6 +40,7 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
+	private lastInputAt = 0;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
@@ -43,15 +55,7 @@ export default class LintFramework {
 		options?: LintOptions,
 	) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
-	private actions: {
-		ignoreLint?: (hash: string) => Promise<void>;
-		getActivationKey?: () => Promise<ActivationKey>;
-		getHotkey?: () => Promise<Hotkey>;
-		openOptions?: () => Promise<void>;
-		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-	};
+	private actions: FrameworkActions;
 
 	constructor(
 		lintProvider: (
@@ -59,15 +63,7 @@ export default class LintFramework {
 			domain: string,
 			options?: LintOptions,
 		) => Promise<UnpackedLintGroups>,
-		actions: {
-			ignoreLint?: (hash: string) => Promise<void>;
-			getActivationKey?: () => Promise<ActivationKey>;
-			getHotkey?: () => Promise<Hotkey>;
-			openOptions?: () => Promise<void>;
-			addToUserDictionary?: (words: string[]) => Promise<void>;
-			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-		},
+		actions: FrameworkActions,
 	) {
 		this.lintProvider = lintProvider;
 		this.actions = actions;
@@ -84,6 +80,7 @@ export default class LintFramework {
 		this.lastLints = [];
 
 		this.updateEventCallback = () => {
+			this.lastInputAt = Date.now();
 			this.update();
 		};
 
@@ -118,6 +115,11 @@ export default class LintFramework {
 
 	async requestLintUpdate() {
 		if (this.lintRequested) {
+			return;
+		}
+
+		const delay = (await this.actions.getDelay?.()) ?? 0;
+		if (delay > 0 && Date.now() - this.lastInputAt < delay) {
 			return;
 		}
 
