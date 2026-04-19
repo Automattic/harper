@@ -9,3 +9,6 @@ mariadb_data
 
 # Ignore direnv files
 .direnv/*
+
+# Ignore local documentation files
+.local-docs/
