@@ -1051,6 +1051,9 @@ pub enum Dialect {
     Australian = 1 << 2,
     British = 1 << 3,
     Indian = 1 << 4,
+    German = 1 << 5,
+    GermanAustrian = 1 << 6,
+    GermanSwiss = 1 << 7,
 }
 impl Dialect {
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
