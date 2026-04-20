@@ -16,7 +16,7 @@ pull-dep-source:
 build-harper-deps:
   #! /bin/bash
 
-  if [ ! -d "my_folder" ]; then
+  if [ ! -d "harper" ]; then
     just pull-dep-source
   fi
 
