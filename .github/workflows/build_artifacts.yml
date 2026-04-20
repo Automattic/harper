@@ -23,11 +23,11 @@ jobs:
             artifact_paths: |
               src-tauri/target/release/bundle/deb
               src-tauri/target/release/bundle/rpm
-          - platform: 'windows-latest'
+          - platform: 'ubuntu-latest'
             task: build-windows
             artifact_name: windows-bundles
             artifact_paths: |
-              src-tauri/target/release/bundle/msi
+              src-tauri/target/release/bundle/nsis
           - platform: 'macos-latest'
             task: build-macos
             artifact_name: macos-bundles
@@ -51,7 +51,7 @@ jobs:
       - uses: cargo-bins/cargo-binstall@main
       - name: Install APT packages
         if: matrix.platform == 'ubuntu-latest'
-        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev -y
+        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev nsis -y
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo tauri`

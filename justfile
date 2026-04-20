@@ -36,4 +36,4 @@ build-macos: prebuild
   cargo tauri build -b app,dmg
 
 build-windows: prebuild
-  cargo tauri build -b msi
+  cargo tauri build -b nsis
