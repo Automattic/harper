@@ -63,6 +63,7 @@ mod double_click;
 mod double_modal;
 mod ellipsis_length;
 mod else_possessive;
+mod emigrate_immigrate;
 mod ever_every;
 mod everyday;
 mod except_of;

@@ -4780,6 +4780,13 @@
 								"state": true,
 								"label": "Web Scraping"
 							}
+						},
+						{
+							"Bool": {
+								"name": "EmigrateImmigrate",
+								"state": true,
+								"label": "Emigrate Immigrate"
+							}
 						}
 					]
 				}
