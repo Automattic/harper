@@ -214,6 +214,7 @@ mod soon_to_be;
 mod sought_after;
 mod spaces;
 mod spell_check;
+mod spell_check_with_usernames;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;

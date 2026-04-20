@@ -140,15 +140,19 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::dict_word_metadata::DialectFlags;
-    use crate::linting::Linter;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
-    use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+
     use crate::{
-        Dialect,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        Dialect, DictWordMetadata, Document,
+        dict_word_metadata::DialectFlags,
+        linting::{
+            Linter,
+            tests::{
+                assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+                assert_suggestion_result,
+            },
+        },
+        spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
     };
-    use crate::{DictWordMetadata, Document};
 
     // Capitalization tests
 
@@ -527,6 +531,15 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             &["macOS"],
             &["MacOS"],
+        );
+    }
+
+    #[test]
+    fn flag_username_mention_2403() {
+        assert_lint_count(
+            "@asafm this looks great",
+            SpellCheck::new(FstDictionary::curated(), crate::Dialect::American),
+            1,
         );
     }
 

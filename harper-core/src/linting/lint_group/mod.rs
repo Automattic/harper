@@ -203,6 +203,7 @@ use super::soon_to_be::SoonToBe;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
+use super::spell_check_with_usernames::SpellCheckWithUsernames;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
@@ -761,17 +762,27 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
+        // `SpellCheck` and `SpellCheckWithUsernames` are mutually exclusive
+        // `SpellCheckWithUsernames` is disabled by default
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
+        // Uses Dictionary and Dialect
+        out.add(
+            "SpellCheckWithUsernames",
+            SpellCheckWithUsernames::new(dictionary.clone(), dialect),
+        );
+        out.config
+            .set_rule_enabled("SpellCheckWithUsernames", false);
+
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
 
         out
     }

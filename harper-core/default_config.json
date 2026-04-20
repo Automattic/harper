@@ -2622,6 +2622,13 @@
 								"state": true,
 								"label": "Without Out"
 							}
+						},
+						{
+							"Bool": {
+								"name": "SpellCheckWithUsernames",
+								"state": false,
+								"label": "Spell Check With Usernames"
+							}
 						}
 					]
 				}
