@@ -1,4 +1,4 @@
-name: Just Checks
+name: Build Artifacts
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  just-checks:
+  build-artifacts:
     runs-on: ${{ matrix.platform }}
     name: ${{ matrix.platform }} - just ${{ matrix.task }}
     strategy:
