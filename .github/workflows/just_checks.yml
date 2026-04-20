@@ -12,7 +12,7 @@ env:
 
 jobs:
   just-checks:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: just ${{ matrix.task }}
     strategy:
       matrix:
