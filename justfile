@@ -23,4 +23,9 @@ build-harper-deps:
   cd harper && just build-harperjs build-harper-editor
 
 dev:
-  cargo-tauri dev
+  cargo tauri dev
+
+build: build-harper-deps
+  cargo tauri info
+  pnpm install
+  cargo tauri build -b deb,rpm

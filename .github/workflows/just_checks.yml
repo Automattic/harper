@@ -18,7 +18,7 @@ jobs:
       matrix:
         task:
           [
-            build-harper-deps
+            build
           ]
     steps:
       - uses: actions/checkout@v4
