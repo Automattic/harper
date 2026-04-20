@@ -19,10 +19,21 @@ jobs:
         include:
           - platform: 'ubuntu-latest'
             task: build-linux
+            artifact_name: linux-bundles
+            artifact_paths: |
+              src-tauri/target/release/bundle/deb
+              src-tauri/target/release/bundle/rpm
           - platform: 'windows-latest'
             task: build-windows
+            artifact_name: windows-bundles
+            artifact_paths: |
+              src-tauri/target/release/bundle/msi
           - platform: 'macos-latest'
             task: build-macos
+            artifact_name: macos-bundles
+            artifact_paths: |
+              src-tauri/target/release/bundle/app
+              src-tauri/target/release/bundle/dmg
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
@@ -49,3 +60,9 @@ jobs:
         run: cargo binstall cargo-hack --force --no-confirm
       - name: Run `${{ matrix.task }}`
         run: just ${{ matrix.task }}
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_paths }}
+          if-no-files-found: error
