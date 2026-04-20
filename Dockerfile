@@ -43,6 +43,9 @@ RUN pnpm build && ./docs.sh
 WORKDIR /usr/build/packages/lint-framework
 RUN pnpm build
 
+WORKDIR /usr/build/packages/harper-editor
+RUN pnpm build
+
 WORKDIR /usr/build/packages/web
 RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
