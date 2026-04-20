@@ -730,6 +730,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
             LintKind::Style
         ),
+        "ExpandGovt" => (
+            &[
+                (&["govt", "govt."], &["government"]),
+                (&["govts"], &["governments"])
+            ],
+            "Use `government` instead of `govt` or `govt.`",
+            "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity.",
+            LintKind::Style
+        ),
         "Expat" => (
             &[
                 (&["ex-pat", "ex pat"], &["expat"]),
