@@ -12,7 +12,7 @@ env:
 
 jobs:
   just-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: just ${{ matrix.task }}
     strategy:
       matrix:
@@ -35,10 +35,12 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2.7.8
       - uses: cargo-bins/cargo-binstall@main
+      - name: Install APT packages
+        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev -y
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo tauri`
-        run: cargo binstall cargo-tauri --force --no-confirm
+        run: cargo binstall tauri-cli --force --no-confirm
       - name: Install `cargo hack`
         run: cargo binstall cargo-hack --force --no-confirm
       - name: Run `${{ matrix.task }}`
