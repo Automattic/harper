@@ -1,4 +1,4 @@
-54500
+54600
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -2182,6 +2182,7 @@ Circe/Og
 Cisco/Og
 Citibank/Og
 Citigroup/Og
+Citroën/Og
 Citroen/Og
 Cl/                 # Chlorine
 Claiborne/Og
@@ -27158,6 +27159,7 @@ governmentwide/J
 governor/~NSg
 governorship/~Nmg
 govt/~N
+govt./N             # AHD, Britannica, Longman, OED
 gown/~NgSVdG
 gr/~N
 grab/~VSNg
@@ -29600,6 +29602,7 @@ immigrate/VdSGn
 immigration/~NgS
 imminence/Ng
 imminent/~JY
+immiserate/VGdS
 immobile/~JN
 immobilisation/Ng!_₹
 immobilise/VGd>SZ!_₹
@@ -35364,6 +35367,7 @@ mum/~NgSJV          # "mother" sense is UK/AU, "silent" sense is universal
 mumble/~VGd>SNgZ
 mumbler/NgS
 mumbletypeg/Ng
+mumbling/V6NgS
 mummer/NgSV
 mummery/Ng
 mummification/Nmg
@@ -37556,6 +37560,7 @@ overcoat/NgSV
 overcome/~VGS
 overcompensate/VdSGn
 overcompensation/Nmg
+overcomplicate/VdSGn
 overconfidence/Nmg
 overconfident/J
 overconscientious/J
@@ -39577,6 +39582,7 @@ playbook/NgS
 playboy/~NSg
 player/~NSg
 playfellow/NSg
+playfield/NSg
 playful/~JYp
 playfulness/Ng
 playgirl/NgS
@@ -42409,7 +42415,7 @@ remembered/~VtTU
 remembrance/~NgSV
 remilitarize/VGdS
 remind/VGdS
-reminder/~Ng
+reminder/~NgS
 reminisce/VGdSN
 reminiscence/NgS
 reminiscent/~JYN
@@ -43158,6 +43164,9 @@ roll over/V/
 rollback/~NSgV
 roller/~NgV
 rollerblading/NmV6
+rollercoaster/NgS   # AHD, Cambridge, OED
+roller-coaster/NgS  # Collins, Merriam-Webster
+roller coaster/NgS  # Britannica, Longman, Oxford Learner's
 rollerskating/NmgV6
 rollick/VSdG
 rollicking/V6NgJ
@@ -47963,6 +47972,7 @@ superposition/~Ng
 superpower/~NSgV
 supersaturate/VGdSn
 supersaturation/Ng
+superscalar/J
 superscribe/VGdS
 superscript/NgSJV
 superscription/Ng
@@ -53961,6 +53971,7 @@ Indo-Iranian/NmgJ   # linguistics
 IntelliJ/Sg
 IntelliSense/Og
 IoT/Ng              # internet of things
+Itanium/OgS         # cpu
 JNI/Og              # Java Native Interface
 JS/Ng               # JavaScript
 JSDoc/Sg
@@ -54099,6 +54110,7 @@ OpenPGP/Sg
 OpenSearch/Sg
 OpenType/Og         # font format
 OpenZFS/Ng          # file system
+Opteron/OgS         # cpu
 P2/Sg
 P2P/ONg
 PCH/Og              # highway
@@ -54247,6 +54259,7 @@ VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
 VFD/NgS             # vacuum fluorescent display
+VLIW                # very long instruction word (cpu architecture)
 VMware/ONSg
 VPN/NSg             # virtual private network
 VR/Og
@@ -54338,6 +54351,7 @@ datetime/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+devlog/NSg
 diahcronic/JQ       # linguistics
 diarization/NmgS    # used in voice recognition
 docstring/NSg
