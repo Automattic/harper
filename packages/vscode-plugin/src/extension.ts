@@ -224,10 +224,9 @@ async function changeDialect(): Promise<void> {
  */
 
 function getCurrentDialect(): string {
-    const activeDocumentUri = window.activeTextEditor?.document.uri;
-    return workspace.getConfiguration('harper', activeDocumentUri).get<string>('dialect', '');
+	const activeDocumentUri = window.activeTextEditor?.document.uri;
+	return workspace.getConfiguration('harper', activeDocumentUri).get<string>('dialect', '');
 }
-
 
 /**
 
@@ -247,38 +246,37 @@ function getCurrentDialect(): string {
  or `undefined` if the user cancels.
  */
 async function showDialectQuickPick(
-    dialects: QuickPickItem[],
-    currentDialect: string,
+	dialects: QuickPickItem[],
+	currentDialect: string,
 ): Promise<QuickPickItem | undefined> {
-    const quickPick = window.createQuickPick<QuickPickItem>();
-    quickPick.items = dialects;
-    quickPick.placeholder = 'Select Harper dialect';
+	const quickPick = window.createQuickPick<QuickPickItem>();
+	quickPick.items = dialects;
+	quickPick.placeholder = 'Select Harper dialect';
 
-    const activeDialect = dialects.find((dialect) => dialect.label === currentDialect);
-    if (activeDialect) {
-        quickPick.activeItems = [activeDialect];
-    }
+	const activeDialect = dialects.find((dialect) => dialect.label === currentDialect);
+	if (activeDialect) {
+		quickPick.activeItems = [activeDialect];
+	}
 
-    return await new Promise((resolve) => {
-        let accepted = false;
+	return await new Promise((resolve) => {
+		let accepted = false;
 
-        quickPick.onDidAccept(() => {
-            accepted = true;
-            resolve(quickPick.selectedItems[0]);
-            quickPick.hide();
-        });
+		quickPick.onDidAccept(() => {
+			accepted = true;
+			resolve(quickPick.selectedItems[0]);
+			quickPick.hide();
+		});
 
-        quickPick.onDidHide(() => {
-            quickPick.dispose();
-            if (!accepted) {
-                resolve(undefined);
-            }
-        });
+		quickPick.onDidHide(() => {
+			quickPick.dispose();
+			if (!accepted) {
+				resolve(undefined);
+			}
+		});
 
-        quickPick.show();
-    });
+		quickPick.show();
+	});
 }
-
 
 export function deactivate(): Thenable<void> | undefined {
 	if (!client) {
