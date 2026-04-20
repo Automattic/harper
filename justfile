@@ -25,7 +25,15 @@ build-harper-deps:
 dev:
   cargo tauri dev
 
-build: build-harper-deps
+prebuild: build-harper-deps
   cargo tauri info
   pnpm install
+
+build-linux: prebuild
   cargo tauri build -b deb,rpm
+
+build-macos: prebuild
+  cargo tauri build -b app,dmg
+
+build-windows: prebuild
+  cargo tauri build -b msi

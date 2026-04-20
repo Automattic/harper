@@ -12,14 +12,17 @@ env:
 
 jobs:
   just-checks:
-    runs-on: ubuntu-latest
-    name: just ${{ matrix.task }}
+    runs-on: ${{ matrix.platform }}
+    name: ${{ matrix.platform }} - just ${{ matrix.task }}
     strategy:
       matrix:
-        task:
-          [
-            build
-          ]
+        include:
+          - platform: 'ubuntu-latest'
+            task: build-linux
+          - platform: 'windows-latest'
+            task: build-windows
+          - platform: 'macos-latest'
+            task: build-macos
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
@@ -36,6 +39,7 @@ jobs:
         uses: Swatinem/rust-cache@v2.7.8
       - uses: cargo-bins/cargo-binstall@main
       - name: Install APT packages
+        if: matrix.platform == 'ubuntu-latest'
         run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev -y
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
