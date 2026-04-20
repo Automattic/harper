@@ -14,6 +14,12 @@ pull-dep-source:
 
 # Build the necessary dependenceies from the Harper monorepo
 build-harper-deps:
+  #! /bin/bash
+
+  if [ ! -d "my_folder" ]; then
+    just pull-dep-source
+  fi
+
   cd harper && just build-harperjs build-harper-editor
 
 dev:
