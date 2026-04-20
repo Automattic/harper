@@ -43,6 +43,7 @@ use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
+use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
@@ -534,6 +535,7 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(CloseTightKnit, true);
         insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);

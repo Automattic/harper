@@ -2326,6 +2326,35 @@ fn expand_alloc() {
     );
 }
 
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
+    );
+}
+
 // Expat
 
 #[test]

@@ -1260,6 +1260,13 @@
 								"state": true,
 								"label": "Worse Or Worst"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandGovt",
+								"state": true,
+								"label": "Expand Govt"
+							}
 						}
 					]
 				}
@@ -2621,6 +2628,13 @@
 								"name": "WithoutOut",
 								"state": true,
 								"label": "Without Out"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CloseTightKnit",
+								"state": true,
+								"label": "Close Tight Knit"
 							}
 						}
 					]
