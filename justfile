@@ -13,9 +13,9 @@ pull-dep-source:
   git switch editor-package
 
 # Build the necessary dependenceies from the Harper monorepo
-build-harper-deps:
-  #! /bin/bash
-
+build-harper-deps:just
+  #! /bin/bashjust
+just
   if [ ! -d "harper" ]; then
     just pull-dep-source
   fi
@@ -30,7 +30,7 @@ prebuild: build-harper-deps
   pnpm install
 
 build-linux: prebuild
-  cargo tauri build -b deb,rpm
+  cargo tauri build -b deb,rpm,appimage
 
 build-macos: prebuild
   cargo tauri build -b app,dmg
