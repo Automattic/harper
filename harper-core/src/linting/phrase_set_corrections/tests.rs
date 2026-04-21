@@ -2199,6 +2199,26 @@ fn copywrote() {
     );
 }
 
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        lint_group(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        lint_group(),
+        "He overpaid in part to have the specification met.",
+    );
+}
+
 // DateBackFrom
 
 #[test]
@@ -2303,6 +2323,35 @@ fn expand_alloc() {
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
+    );
+}
+
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
     );
 }
 
