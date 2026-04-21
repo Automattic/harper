@@ -365,6 +365,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InflectionPoint" => (
+            &[
+                ("infliction point", "inflection point"),
+                ("infliction points", "inflection points"),
+            ],
+            "To refer to a significant change in a trend, `inflection point` is the correct term.",
+            "Corrects `infliction point` to `inflection point`.",
+            LintKind::Malapropism
+        ),
         "InvestIn" => (
             &[
                 // Verb

@@ -1267,6 +1267,13 @@
 								"state": true,
 								"label": "Expand Govt"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InflectionPoint",
+								"state": true,
+								"label": "Inflection Point"
+							}
 						}
 					]
 				}
