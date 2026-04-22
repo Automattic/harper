@@ -51,9 +51,11 @@ jobs:
       - uses: cargo-bins/cargo-binstall@main
       - name: Install APT packages
         if: matrix.platform == 'ubuntu-latest'
-        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev nsis -y
+        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev nsis lld llvm -y
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
+      - name: Install `cargo xwin`
+        run: cargo binstall cargo-xwin --force --no-confirm
       - name: Install `cargo tauri`
         run: cargo binstall tauri-cli --force --no-confirm
       - name: Install `cargo hack`
