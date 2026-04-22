@@ -23,11 +23,11 @@ jobs:
             artifact_paths: |
               src-tauri/target/release/bundle/deb
               src-tauri/target/release/bundle/rpm
-          - platform: 'ubuntu-latest'
-            task: build-windows
-            artifact_name: windows-bundles
-            artifact_paths: |
-              src-tauri/target/release/bundle/nsis
+          # - platform: 'ubuntu-latest'
+          #   task: build-windows
+          #   artifact_name: windows-bundles
+          #   artifact_paths: |
+          #     src-tauri/target/release/bundle/nsis
           - platform: 'macos-latest'
             task: build-macos
             artifact_name: macos-bundles
