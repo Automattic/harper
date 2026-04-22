@@ -13,9 +13,8 @@ pull-dep-source:
   git switch editor-package
 
 # Build the necessary dependenceies from the Harper monorepo
-build-harper-deps:just
-  #! /bin/bashjust
-just
+build-harper-deps:
+  #! /bin/bash
   if [ ! -d "harper" ]; then
     just pull-dep-source
   fi
