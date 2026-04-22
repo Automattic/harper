@@ -49,6 +49,7 @@ use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
+use super::convenient_store::ConvenientStore;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
@@ -746,6 +747,10 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
         out.config.set_rule_enabled("AspireTo", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("ConvenientStore", ConvenientStore::default());
+        out.config.set_rule_enabled("ConvenientStore", true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

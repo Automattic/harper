@@ -44,6 +44,7 @@ mod comma_fixes;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
+mod convenient_store;
 mod correct_number_suffix;
 mod criteria_phenomena;
 mod cure_for;
