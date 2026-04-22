@@ -760,7 +760,7 @@ Aubrey/Og
 Auburn/Og
 Auckland/Og
 Auden/Og
-Audi/ONg
+Audi/ONgS
 Audion/g
 Audra/Og
 Audrey/Og
@@ -853,6 +853,7 @@ BLT/NSg
 BM/NOgV
 BMW/ONSgV
 BMX/NgS
+BNC/NgS             # connector
 BO/NOV
 BP/ONgJ
 BPOE/O
@@ -8174,6 +8175,7 @@ Pitts/Og
 Pittsburgh/Og
 Pittsfield/Og
 Pius/g              # pope
+Pixar/Og
 Pizarro/Og
 Pkwy/N
 Pl/                 # platinum
@@ -11618,6 +11620,7 @@ acyclovir/Nmg
 acyl/N
 ad/~NSgP
 ad-free/J
+ad hominem
 ad nauseam/R
 adage/NgS
 adagio/NgSJ
@@ -12576,7 +12579,7 @@ angular/~JN
 angularity/NSg
 angulation/N
 anhydrous/~J
-aniline/Ng
+aniline/Nmg
 anilingus/N
 animadversion/NgS
 animadvert/VGSd
@@ -13103,6 +13106,8 @@ argument/~NwgSV
 argumentation/~Nmg
 argumentative/JYp
 argumentativeness/Ng
+argumentum ab auctoritate/N
+argumentum ad verecundiam/N
 argyle/~NgS
 aria/~NSg
 arid/~JY
@@ -23771,6 +23776,8 @@ essayer/Ng
 essayist/~NSg
 essence/~NwSg
 essential/~JNgSi
+essentialism/Nmg
+essentialist/JNgS
 essentially/~R%
 establish/~VSdGrEL
 establishment/~N0grE
@@ -28825,9 +28832,12 @@ homographs/N
 homologous/~J
 homology/~N
 homonym/NSg
+homophily/Nmg       # Britannica, Collins, OED
 homophobia/~Ng
 homophobic/~JN
 homophone/NgS
+homophylic/J
+homophyly/Nmg       # Merriam-Webster
 homosexual/~JNSg
 homosexuality/~Ng
 hon/~NSg^Gd>Z
@@ -54389,6 +54399,7 @@ hoster/NgS
 hostname/NSg
 hotwire/VGB         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+iCloud/Og
 iPadOS/Og
 iTerm2/Og           # macOS terminal emulator
 idiolect/NSg        # linguistics
