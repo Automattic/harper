@@ -1260,6 +1260,20 @@
 								"state": true,
 								"label": "Worse Or Worst"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandGovt",
+								"state": true,
+								"label": "Expand Govt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InflectionPoint",
+								"state": true,
+								"label": "Inflection Point"
+							}
 						}
 					]
 				}
@@ -2621,6 +2635,13 @@
 								"name": "WithoutOut",
 								"state": true,
 								"label": "Without Out"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CloseTightKnit",
+								"state": true,
+								"label": "Close Tight Knit"
 							}
 						}
 					]
@@ -4779,6 +4800,13 @@
 								"name": "WebScraping",
 								"state": true,
 								"label": "Web Scraping"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MoreThanMeetsTheEye",
+								"state": true,
+								"label": "More Than Meets The Eye"
 							}
 						}
 					]

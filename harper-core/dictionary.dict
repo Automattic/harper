@@ -1,4 +1,4 @@
-54500
+54600
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -282,6 +282,7 @@ Alexandria/Og
 Alexandrian/JN
 Alexei/Og
 Alexis/Og
+Alf/Og
 Alfonso/Og
 Alfonzo/Og
 Alford/Og
@@ -402,7 +403,7 @@ Amgen/g
 Amharic/Og
 Amherst/ONg
 Amie/Og
-Amiga/g
+Amiga/ONgS
 Amish/NgJ
 Amman/Og
 Amoco/g
@@ -759,7 +760,7 @@ Aubrey/Og
 Auburn/Og
 Auckland/Og
 Auden/Og
-Audi/ONg
+Audi/ONgS
 Audion/g
 Audra/Og
 Audrey/Og
@@ -852,6 +853,7 @@ BLT/NSg
 BM/NOgV
 BMW/ONSgV
 BMX/NgS
+BNC/NgS             # connector
 BO/NOV
 BP/ONgJ
 BPOE/O
@@ -1956,6 +1958,7 @@ Cedric/Og
 Celeste/Og
 Celgene/g
 Celia/Og
+Celica/OgS
 Celina/Og
 Cellini/Og
 Celsius/Jg
@@ -2180,6 +2183,7 @@ Circe/Og
 Cisco/Og
 Citibank/Og
 Citigroup/Og
+Citroën/Og
 Citroen/Og
 Cl/                 # Chlorine
 Claiborne/Og
@@ -8171,6 +8175,7 @@ Pitts/Og
 Pittsburgh/Og
 Pittsfield/Og
 Pius/g              # pope
+Pixar/Og
 Pizarro/Og
 Pkwy/N
 Pl/                 # platinum
@@ -9207,6 +9212,7 @@ Scottie/ONSg
 Scottish/JNg
 Scottsdale/Og
 Scotty/Og
+Scoville/Og
 Scrabble/OgS
 Scranton/Og
 Scriabin/g
@@ -10372,6 +10378,7 @@ U/                  # Uranium; removed `1`noun `5`adj. `2`proper noun `+`prep., 
 U-turn/NgSVdG
 U.K./Og
 U.S./Og             # United States
+U.S.A./Og
 UAE/Og              # United Arab Emirates
 UAR/O
 UART/NgS            # electronics
@@ -11613,6 +11620,7 @@ acyclovir/Nmg
 acyl/N
 ad/~NSgP
 ad-free/J
+ad hominem
 ad nauseam/R
 adage/NgS
 adagio/NgSJ
@@ -11695,6 +11703,7 @@ administrative/~JY
 administrator/~NgS
 admirably/Ry
 admiral/~NgS
+admiralship/NwgS
 admiralty/~Ng
 admiration/~Ng
 admire/~VGd>SBZ
@@ -12003,6 +12012,8 @@ aha/~
 ahchoo/
 ahead/~R
 ahem/V
+ahistoric/J
+ahistorical/J
 ahoy/VN
 aid/~NwSgVdG
 aide/~NSg
@@ -12568,7 +12579,7 @@ angular/~JN
 angularity/NSg
 angulation/N
 anhydrous/~J
-aniline/Ng
+aniline/Nmg
 anilingus/N
 animadversion/NgS
 animadvert/VGSd
@@ -13095,6 +13106,8 @@ argument/~NwgSV
 argumentation/~Nmg
 argumentative/JYp
 argumentativeness/Ng
+argumentum ab auctoritate/N
+argumentum ad verecundiam/N
 argyle/~NgS
 aria/~NSg
 arid/~JY
@@ -13650,6 +13663,7 @@ autostereogram/NgS
 autosuggestion/N
 autotagging/NmgS
 autothysis/Nmg
+autotune/NmgVGdS
 autoworker/NgS
 autumn/~NwSgV
 autumnal/J
@@ -14793,6 +14807,7 @@ bindery/NSg
 binding/~JNgSV
 bindweed/Ng
 binge/~NgSVd
+bingeing/V6
 bingo/~NgJV
 binman/N
 binmen/9
@@ -20228,6 +20243,7 @@ curbstone/NSg
 curd/~NgSV
 curdle/VdSG
 cure/~NSVGd>KZB
+cure-all/NwgS
 cure's
 cured/~VtTU
 curer/NgK
@@ -21713,7 +21729,7 @@ disfranchisement/Nmg
 disgorgement/Nmg
 disgruntle/VGdSL
 disgruntlement/Nmg
-disguise/~NwSVGd
+disguise/~NwSVGd>Z
 disguised/~VJU
 disgust/NmgSVdG
 disgustedly/Ry
@@ -22356,7 +22372,7 @@ dressmaker/NSg
 dressmaking/Nmg
 dressy/J^>p
 drew/~Vtr
-dribble/VGd>SNmgZ
+dribble/VGd>SNwgZ
 dribbler/Ng
 driblet/NgS
 drier/~NgJ
@@ -22575,6 +22591,7 @@ durably/Ry
 durance/Ng
 duration/~NwgS
 duress/~NgV
+durian/NgS          # tropical fruit
 during/~PV
 durometer/NgS
 durst/V
@@ -23759,6 +23776,8 @@ essayer/Ng
 essayist/~NSg
 essence/~NwSg
 essential/~JNgSi
+essentialism/Nmg
+essentialist/JNgS
 essentially/~R%
 establish/~VSdGrEL
 establishment/~N0grE
@@ -26054,6 +26073,8 @@ frontierswoman/N0
 frontierswomen/N9
 frontispiece/NgSV
 frontline/NSg
+frontman/N0g
+frontmen/N9
 frontside/J
 frontward/JS
 frosh/NgV
@@ -27145,6 +27166,7 @@ governmentwide/J
 governor/~NSg
 governorship/~Nmg
 govt/~N
+govt./N             # AHD, Britannica, Longman, OED
 gown/~NgSVdG
 gr/~N
 grab/~VSNg
@@ -28810,9 +28832,12 @@ homographs/N
 homologous/~J
 homology/~N
 homonym/NSg
+homophily/Nmg       # Britannica, Collins, OED
 homophobia/~Ng
 homophobic/~JN
 homophone/NgS
+homophylic/J
+homophyly/Nmg       # Merriam-Webster
 homosexual/~JNSg
 homosexuality/~Ng
 hon/~NSg^Gd>Z
@@ -29587,6 +29612,7 @@ immigrate/VdSGn
 immigration/~NgS
 imminence/Ng
 imminent/~JY
+immiserate/VGdS
 immobile/~JN
 immobilisation/Ng!_₹
 immobilise/VGd>SZ!_₹
@@ -29916,7 +29942,7 @@ incisiveness/Ng
 incisor/~NgS
 incitement/NgS
 inciter/NgS
-incl/~P
+incl./~P
 inclement/J
 inclination/~N0wgE
 inclinations/~N9
@@ -30990,6 +31016,7 @@ jackass/NgSV
 jackboot/NSgVd
 jackdaw/NgS
 jacket/~NSgVd
+jackfruit/NwSg      # tropical fruit
 jackhammer/NgSV
 jackknife/NgSVGd
 jackknives/9
@@ -32638,7 +32665,7 @@ liverymen/9e
 livestock/~Nmg
 liveware/Nmg
 livid/JY
-living/~VSJNg
+living/~VSJNwg
 lix/K
 lizard/~NgS
 ll/N
@@ -35350,6 +35377,7 @@ mum/~NgSJV          # "mother" sense is UK/AU, "silent" sense is universal
 mumble/~VGd>SNgZ
 mumbler/NgS
 mumbletypeg/Ng
+mumbling/V6NgS
 mummer/NgSV
 mummery/Ng
 mummification/Nmg
@@ -37542,6 +37570,7 @@ overcoat/NgSV
 overcome/~VGS
 overcompensate/VdSGn
 overcompensation/Nmg
+overcomplicate/VdSGn
 overconfidence/Nmg
 overconfident/J
 overconscientious/J
@@ -39080,6 +39109,7 @@ phlegmatic/JNQ
 phloem/Nmg
 phlogiston/Nmg
 phlox/Ng
+pho/Nmg
 phobia/NgS
 phobic/JNgS
 phoebe/~NgS
@@ -39562,6 +39592,7 @@ playbook/NgS
 playboy/~NSg
 player/~NSg
 playfellow/NSg
+playfield/NSg
 playful/~JYp
 playfulness/Ng
 playgirl/NgS
@@ -40211,6 +40242,7 @@ preachy/J>^
 preadolescence/NSg
 preadolescent/JN
 preamble/~NgSVGd
+preamp/NSg
 preamplifier/NSg
 prearrange/VGdSL
 prearrangement/Ng
@@ -40635,6 +40667,7 @@ prizefighting/Ng
 prizewinner/NgS
 prizewinning/J
 pro/~NSgPJ(
+pro bono/RJ
 pro-democracy/J
 pro rata/R
 probabilistic/~J
@@ -42392,7 +42425,7 @@ remembered/~VtTU
 remembrance/~NgSV
 remilitarize/VGdS
 remind/VGdS
-reminder/~Ng
+reminder/~NgS
 reminisce/VGdSN
 reminiscence/NgS
 reminiscent/~JYN
@@ -43141,6 +43174,9 @@ roll over/V/
 rollback/~NSgV
 roller/~NgV
 rollerblading/NmV6
+rollercoaster/NgS   # AHD, Cambridge, OED
+roller-coaster/NgS  # Collins, Merriam-Webster
+roller coaster/NgS  # Britannica, Longman, Oxford Learner's
 rollerskating/NmgV6
 rollick/VSdG
 rollicking/V6NgJ
@@ -47946,6 +47982,7 @@ superposition/~Ng
 superpower/~NSgV
 supersaturate/VGdSn
 supersaturation/Ng
+superscalar/J
 superscribe/VGdS
 superscript/NgSJV
 superscription/Ng
@@ -53725,6 +53762,8 @@ Archytas/Sg         # !! please check and comment !! we also have archytas
 Arial/Og            # font
 Atlassian/Og        # Company behind Jira, Confluence, Bitbucket
 AutoGPT/Og
+AutoTune/Og         # the company uses hyphenated and camelcase spellings
+Auto-Tune/Og        # the company uses hyphenated and camelcase spellings
 Automattic/Og       # WordPress company
 Automattician/Sg
 B&B/Ng
@@ -53942,6 +53981,7 @@ Indo-Iranian/NmgJ   # linguistics
 IntelliJ/Sg
 IntelliSense/Og
 IoT/Ng              # internet of things
+Itanium/OgS         # cpu
 JNI/Og              # Java Native Interface
 JS/Ng               # JavaScript
 JSDoc/Sg
@@ -54080,6 +54120,7 @@ OpenPGP/Sg
 OpenSearch/Sg
 OpenType/Og         # font format
 OpenZFS/Ng          # file system
+Opteron/OgS         # cpu
 P2/Sg
 P2P/ONg
 PCH/Og              # highway
@@ -54228,6 +54269,7 @@ VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
 VFD/NgS             # vacuum fluorescent display
+VLIW                # very long instruction word (cpu architecture)
 VMware/ONSg
 VPN/NSg             # virtual private network
 VR/Og
@@ -54319,6 +54361,7 @@ datetime/NgS
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
+devlog/NSg
 diahcronic/JQ       # linguistics
 diarization/NmgS    # used in voice recognition
 docstring/NSg
@@ -54356,6 +54399,7 @@ hoster/NgS
 hostname/NSg
 hotwire/VGB         # dictionaries prefer: hot-wire
 i18n/Nm             # internationalization
+iCloud/Og
 iPadOS/Og
 iTerm2/Og           # macOS terminal emulator
 idiolect/NSg        # linguistics

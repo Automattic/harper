@@ -1112,6 +1112,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InflectionPoint
+
+#[test]
+fn corrects_infliction_point() {
+    assert_suggestion_result(
+        "You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        lint_group(),
+        "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+    );
+}
+
+#[test]
+fn corrects_infliction_points() {
+    assert_suggestion_result(
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".",
+        lint_group(),
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".",
+    );
+}
+
 // InvestIn
 
 #[test]
@@ -1226,7 +1246,6 @@ fn litotes_more_preferable() {
 
 #[test]
 fn fix_look_forward_for() {
-    // I will mark this issue as an enhancement and will look forward for enrolling it.
     assert_suggestion_result(
         "I will mark this issue as an enhancement and will look forward for enrolling it.",
         lint_group(),
@@ -2323,6 +2342,35 @@ fn expand_alloc() {
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
+    );
+}
+
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
     );
 }
 
