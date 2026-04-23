@@ -75,10 +75,10 @@ fn test_german_real_world() {
 #[test]
 fn test_german_lint_correct_text() {
     let dict = curated_german_dictionary();
-    let mut linter = LintGroup::new_curated(dict, Dialect::German);
+    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
 
     let text = "Der Hund ist im Garten. Die Katze schläft auf dem Sofa.";
-    let document = Document::new_plain_english_curated(text);
+    let document = Document::new(text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     assert!(
@@ -92,11 +92,11 @@ fn test_german_lint_correct_text() {
 #[test]
 fn test_german_lint_errors() {
     let dict = curated_german_dictionary();
-    let mut linter = LintGroup::new_curated(dict, Dialect::German);
+    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
 
     // lowercase sentence start + two misspellings
     let text = "Der Hund ist da. dieser Satz ist klein. Worrt und flasch.";
-    let document = Document::new_plain_english_curated(text);
+    let document = Document::new(text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     assert!(

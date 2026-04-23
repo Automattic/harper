@@ -45,7 +45,8 @@ fn test_german_sentence_capitalization() {
     let mut linter = german_lint_group();
 
     let text = "der Hund ist im Garten. das Auto ist schnell.";
-    let document = Document::new_plain_english_curated(text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     let cap_lints: Vec<_> = lints
@@ -66,7 +67,8 @@ fn test_german_spell_check() {
     let mut linter = german_lint_group();
 
     let text = "Der Hunte ist im Gartens.";
-    let document = Document::new_plain_english_curated(text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     let spelling_lints: Vec<_> = lints
@@ -87,7 +89,8 @@ fn test_german_proper_grammar() {
 
     let proper_text =
         "Der Hund ist im Garten. Das Auto ist schnell. Die Katze schläft auf dem Sofa.";
-    let document = Document::new_plain_english_curated(proper_text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(proper_text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     assert!(
@@ -104,7 +107,8 @@ fn test_german_mvp_comprehensive() {
 
     // "dieser" starts a sentence lowercase, "Worrt" and "flasch" are misspelled
     let test_text = "Der Hund spielt im Garten. dieser Satz beginnt klein. Worrt ist flasch.";
-    let document = Document::new_plain_english_curated(test_text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(test_text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     assert!(
@@ -121,7 +125,8 @@ fn test_german_performance() {
 
     let text = "Der Hund ist im Garten. Die Katze schläft auf dem Sofa. \
                 Das Auto ist sehr schnell. Die Kinder spielen im Park.";
-    let document = Document::new_plain_english_curated(text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(text, &PlainGerman, &dict);
 
     let start = std::time::Instant::now();
     let _lints = linter.lint(&document);
@@ -140,7 +145,8 @@ fn test_german_compound_words() {
     let mut linter = german_lint_group();
 
     let text = "Das Gartenhaus ist groß. Das Haus ist klein.";
-    let document = Document::new_plain_english_curated(text);
+    let dict = curated_german_dictionary();
+    let document = Document::new(text, &PlainGerman, &dict);
     let lints = linter.lint(&document);
 
     // "Haus" and "Gartenhaus" should both be recognized
