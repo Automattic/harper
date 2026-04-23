@@ -74,6 +74,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+	const result = await chrome.storage.local.get(['popupState', 'reportTabId']);
+	if (result.popupState?.page === 'report-error' && result.reportTabId !== tabId) {
+		await chrome.storage.local.set({ popupState: { page: 'main' } });
+	}
+});
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+	if (!changeInfo.url) return;
+	const result = await chrome.storage.local.get(['popupState', 'reportTabId']);
+	if (result.popupState?.page === 'report-error' && result.reportTabId === tabId) {
+		await chrome.storage.local.set({ popupState: { page: 'main' } });
+	}
+});
+
 let linter: LocalLinter;
 const WEIRPACKS_KEY = 'weirpacks';
 
@@ -201,7 +216,7 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 		case 'setHotkey':
 			return handleSetHotkey(message);
 		case 'openReportError':
-			return handleOpenReportError(message);
+			return handleOpenReportError(message, sender);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
 			return Promise.resolve(createUnitResponse());
@@ -431,7 +446,10 @@ async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
 	await setHotkey(hotkey);
 }
 
-async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
+async function handleOpenReportError(
+	req: OpenReportErrorRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
 		example: req.example,
@@ -439,7 +457,7 @@ async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitR
 		feedback: req.feedback,
 	};
 
-	await chrome.storage.local.set({ popupState });
+	await chrome.storage.local.set({ popupState, reportTabId: sender?.tab?.id });
 
 	if (chrome.action?.openPopup) {
 		try {
