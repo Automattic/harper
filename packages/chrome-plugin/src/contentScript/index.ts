@@ -21,6 +21,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		getHotkey: () => ProtocolClient.getHotkey(),
+		getDelay: () => ProtocolClient.getDelay(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
@@ -161,10 +162,13 @@ function scan() {
 			return;
 		}
 
+		const isLexicalEditor = element.getAttribute('data-lexical-editor') === 'true';
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
 			(element.getAttribute('spellcheck') === 'false' &&
+				!isLexicalEditor &&
 				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;

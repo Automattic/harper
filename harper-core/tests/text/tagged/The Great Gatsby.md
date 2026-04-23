@@ -1678,10 +1678,10 @@
 # NSg/VB+  . . VB/C . P  NSg/VB+ . ISg/#r+ VP  P  NSg/VB NSg/VB/J/P D$+ NSg/VB+ . R   . .
 >
 #
-> The apartment was  on  the top       floor   — a   small    living   - room      , a   small    dining   - room      , a
-# D+  NSg+      VLPt J/P D   NSg/VB/J+ NSg/VB+ . D/P NPr/VB/J Nᴹ/Vg/J+ . N🅪Sg/VB/J . D/P NPr/VB/J Nᴹ/Vg/J+ . N🅪Sg/VB/J . D/P+
-> small     bedroom , and  a    bath    . The living   - room       was  crowded to the doors  with a   set
-# NPr/VB/J+ NSg+    . VB/C D/P+ NSg/VB+ . D+  Nᴹ/Vg/J+ . N🅪Sg/VB/J+ VLPt VP/J    P  D   NPl/V3 P    D/P NPr/VBP/J
+> The apartment was  on  the top       floor   — a   small    living     - room      , a   small    dining   - room      , a
+# D+  NSg+      VLPt J/P D   NSg/VB/J+ NSg/VB+ . D/P NPr/VB/J N🅪Sg/Vg/J+ . N🅪Sg/VB/J . D/P NPr/VB/J Nᴹ/Vg/J+ . N🅪Sg/VB/J . D/P+
+> small     bedroom , and  a    bath    . The living     - room       was  crowded to the doors  with a   set
+# NPr/VB/J+ NSg+    . VB/C D/P+ NSg/VB+ . D+  N🅪Sg/Vg/J+ . N🅪Sg/VB/J+ VLPt VP/J    P  D   NPl/V3 P    D/P NPr/VBP/J
 > of tapestried furniture entirely too large for   it       , so          that      to move   about was  to
 # P  J          Nᴹ+       R        R   NSg/J R/C/P NPr/ISg+ . NSg/I/J/R/C I/C/Ddem+ P  NSg/VB J/P   VLPt P
 > stumble continually over    scenes of ladies  swinging in        the gardens of Versailles .
@@ -1718,8 +1718,8 @@
 # NPr+   VP/J   NSg/VB/J/P J/Dq    NPl/VB+ J/P D+  NSg/VB+   . NSg/J/R/C R+    NSg/VLPt NSg/Dq/P+ NPl/V3+    .
 > and  I       went    out          to buy    some     at    the drugstore on  the corner  . When    I       came      back     they
 # VB/C ISg/#r+ NSg/VPt NSg/VB/J/R/P P  NSg/VB I/J/R/Dq NSg/P D   NSg       J/P D   NSg/VB+ . NSg/I/C ISg/#r+ NSg/VPt/P NSg/VB/J IPl+
-> had both   disappeared , so          I       sat      down        discreetly in        the living   - room       and  read    a
-# VP  I/C/Dq VP/J        . NSg/I/J/R/C ISg/#r+ NSg/VP/J N🅪Sg/VB/J/P R          NPr/J/R/P D   Nᴹ/Vg/J+ . N🅪Sg/VB/J+ VB/C NSg/VBP D/P
+> had both   disappeared , so          I       sat      down        discreetly in        the living     - room       and  read    a
+# VP  I/C/Dq VP/J        . NSg/I/J/R/C ISg/#r+ NSg/VP/J N🅪Sg/VB/J/P R          NPr/J/R/P D   N🅪Sg/Vg/J+ . N🅪Sg/VB/J+ VB/C NSg/VBP D/P
 > chapter of “ Simon Called Peter      ” — either it       was  terrible stuff  or    the whiskey
 # NSg/VB  P  . NPr+  VP/J   NPr/VB/JC+ . . I/C    NPr/ISg+ VLPt J        Nᴹ/VB+ NPr/C D   N🅪Sg
 > distorted things , because it       didn’t make   any    sense    to me       .
@@ -1994,8 +1994,8 @@
 #
 > “ Can’t stand  them     . ” She  looked at    Myrtle and  then      at    Tom     . “ What   I       say    is  , why    go
 # . VXB   NSg/VB NSg/IPl+ . . ISg+ VP/J   NSg/P NPr    VB/C NSg/J/R/C NSg/P NPr/VB+ . . NSg/I+ ISg/#r+ NSg/VB VL3 . NSg/VB NSg/VB/J
-> on  living  with them     if    they can’t stand  them     ? If    I       was  them     I’d get    a   divorce
-# J/P Nᴹ/Vg/J P    NSg/IPl+ NSg/C IPl+ VXB   NSg/VB NSg/IPl+ . NSg/C ISg/#r+ VLPt NSg/IPl+ K   NSg/VB D/P NSg/VB+
+> on  living    with them     if    they can’t stand  them     ? If    I       was  them     I’d get    a   divorce
+# J/P N🅪Sg/Vg/J P    NSg/IPl+ NSg/C IPl+ VXB   NSg/VB NSg/IPl+ . NSg/C ISg/#r+ VLPt NSg/IPl+ K   NSg/VB D/P NSg/VB+
 > and  get    married  to each other    right    away . ”
 # VB/C NSg/VB NSg/VP/J P  Dq   NSg/VB/J NPr/VB/J VB/J . .
 >
@@ -2140,8 +2140,8 @@
 #
 > “ She  really ought     to get    away from him  , ” resumed Catherine to me       . “ They’ve been
 # . ISg+ R      NSg/I/VXB P  NSg/VB VB/J P    ISg+ . . VP/J    NPr+      P  NPr/ISg+ . . K       NSg/VLPp
-> living  over    that     garage  for   eleven years . And  Tom’s the first sweetie she  ever
-# Nᴹ/Vg/J NSg/J/P I/C/Ddem NSg/VB+ R/C/P NSg    NPl+  . VB/C NPr$  D   NSg/J NSg     ISg+ J/R
+> living    over    that     garage  for   eleven years . And  Tom’s the first sweetie she  ever
+# N🅪Sg/Vg/J NSg/J/P I/C/Ddem NSg/VB+ R/C/P NSg    NPl+  . VB/C NPr$  D   NSg/J NSg     ISg+ J/R
 > had . ”
 # VP  . .
 >
@@ -5290,8 +5290,8 @@
 # . ISg/#r+ VXB   NSg/VB NSg/I/J/R/C . . ISg+ VP/J R          . . NSg/VB . .
 >
 #
-> We   went    in        . To my  overwhelming surprise the living   - room       was  deserted .
-# IPl+ NSg/VPt NPr/J/R/P . P  D$+ Nᴹ/Vg/J+     NSg/VB+  D+  Nᴹ/Vg/J+ . N🅪Sg/VB/J+ VLPt VP/J     .
+> We   went    in        . To my  overwhelming surprise the living     - room       was  deserted .
+# IPl+ NSg/VPt NPr/J/R/P . P  D$+ Nᴹ/Vg/J+     NSg/VB+  D+  N🅪Sg/Vg/J+ . N🅪Sg/VB/J+ VLPt VP/J     .
 >
 #
 > “ Well       , that’s funny , ” I       exclaimed .
@@ -5314,16 +5314,16 @@
 #
 > With his     hands   still      in        his     coat    pockets he       stalked by    me       into the hall , turned
 # P    ISg/D$+ NPl/V3+ NSg/VB/J/R NPr/J/R/P ISg/D$+ NSg/VB+ NPl/V3+ NPr/ISg+ VP/J    NSg/P NPr/ISg+ P    D+  NPr+ . VP/J
-> sharply as    if    he       were     on  a    wire     , and  disappeared into the living   - room       . It       wasn’t
-# R       R/C/P NSg/C NPr/ISg+ NSg/VLPt J/P D/P+ N🅪Sg/VB+ . VB/C VP/J        P    D+  Nᴹ/Vg/J+ . N🅪Sg/VB/J+ . NPr/ISg+ VPt
+> sharply as    if    he       were     on  a    wire     , and  disappeared into the living     - room       . It       wasn’t
+# R       R/C/P NSg/C NPr/ISg+ NSg/VLPt J/P D/P+ N🅪Sg/VB+ . VB/C VP/J        P    D+  N🅪Sg/Vg/J+ . N🅪Sg/VB/J+ . NPr/ISg+ VPt
 > a   bit      funny . Aware of the loud  beating of my  own       heart    I       pulled the door    to
 # D/P NSg/VPt+ NSg/J . VB/J  P  D   NSg/J Nᴹ/Vg/J P  D$+ NSg/VB/J+ N🅪Sg/VB+ ISg/#r+ VP/J   D+  NSg/VB+ P
 > against the increasing rain     .
 # C/P     D+  Nᴹ/Vg/J    N🅪Sg/VB+ .
 >
 #
-> For   half      a    minute    there wasn’t a    sound      . Then      from the living   - room       I       heard a   sort
-# R/C/P N🅪Sg/J/P+ D/P+ NSg/VB/J+ R+    VPt    D/P+ N🅪Sg/VB/J+ . NSg/J/R/C P    D+  Nᴹ/Vg/J+ . N🅪Sg/VB/J+ ISg/#r+ VP/J  D/P NSg/VB
+> For   half      a    minute    there wasn’t a    sound      . Then      from the living     - room       I       heard a   sort
+# R/C/P N🅪Sg/J/P+ D/P+ NSg/VB/J+ R+    VPt    D/P+ N🅪Sg/VB/J+ . NSg/J/R/C P    D+  N🅪Sg/Vg/J+ . N🅪Sg/VB/J+ ISg/#r+ VP/J  D/P NSg/VB
 > of choking murmur and  part     of a   laugh   , followed by    Daisy’s voice   on  a   clear
 # P  Nᴹ/Vg/J NSg/VB VB/C NSg/VB/J P  D/P NSg/VB+ . VP/J     NSg/P NPr$    NSg/VB+ J/P D/P NSg/VB/J
 > artificial note    :
@@ -8028,8 +8028,8 @@
 # . R+    VB     I/R/Dq NPr/I/J/R/Dq . .
 >
 #
-> “ Well       , we’d better     telephone for   an  axe        — — — ”
-# . NSg/VB/J/R . K    NSg/VXB/JC NSg/VB+   R/C/P D/P NSg/VB/Br+ . . . .
+> “ Well       , we’d better     telephone for   an  axe          — — — ”
+# . NSg/VB/J/R . K    NSg/VXB/JC NSg/VB+   R/C/P D/P NSg/VB/Comm+ . . . .
 >
 #
 > “ The thing to do  is  to forget about the heat   , ” said Tom     impatiently . “ You    make
@@ -10396,8 +10396,8 @@
 # NSg/VPt/P . ISg/#r+ NSg/VXB D/P+ NSg+ I/C/Ddem+ NPr    ISg+    VXPt   VB      NPr/ISg+ VXB   NSg/VBPp/P . VB/C
 > perhaps he       no       longer cared . If    that      was  true     he       must    have    felt      that     he       had lost
 # NSg/R   NPr/ISg+ NSg/Dq/P NSg/JC VP    . NSg/C I/C/Ddem+ VLPt NSg/VB/J NPr/ISg+ NSg/VXB NSg/VXB N🅪Sg/VP/J I/C/Ddem NPr/ISg+ VP  VP/J
-> the old    warm      world   , paid a    high        price      for   living  too long     with a    single    dream     .
-# D+  NSg/J+ NSg/VB/J+ NSg/VB+ . VP/J D/P+ NSg/VB/J/R+ NPr🅪Sg/VB+ R/C/P Nᴹ/Vg/J R   NPr/VB/J P    D/P+ NSg/VB/J+ NSg/VB/J+ .
+> the old    warm      world   , paid a    high        price      for   living    too long     with a    single    dream     .
+# D+  NSg/J+ NSg/VB/J+ NSg/VB+ . VP/J D/P+ NSg/VB/J/R+ NPr🅪Sg/VB+ R/C/P N🅪Sg/Vg/J R   NPr/VB/J P    D/P+ NSg/VB/J+ NSg/VB/J+ .
 > He       must    have    looked up         at    an   unfamiliar sky      through frightening leaves  and
 # NPr/ISg+ NSg/VXB NSg/VXB VP/J   NSg/VB/J/P NSg/P D/P+ NSg/J+     N🅪Sg/VB+ NSg/J/P Nᴹ/Vg/J+    NPl/V3+ VB/C
 > shivered as    he       found  what   a    grotesque thing a    rose       is  and  how   raw      the sunlight

@@ -93,7 +93,10 @@ impl ExprLinter for Damages {
                 can = CanPrecede::Noun;
             }
 
-            if prev_word.kind.is_auxiliary_verb() {
+            if prev_word.kind.is_auxiliary_verb()
+                || (prev_word.kind.is_subject_pronoun()
+                    && prev_word.kind.is_third_person_singular_pronoun())
+            {
                 can = if can == CanPrecede::Noun {
                     CanPrecede::EitherNounOrVerb
                 } else {
@@ -149,7 +152,7 @@ impl ExprLinter for Damages {
                 damage_chars[..6].to_vec(),
                 damage_chars,
             )],
-            message: "Singular `damage` is correct when not refering to a court case.".to_string(),
+            message: "Singular `damage` is correct when not referring to a court case.".to_string(),
             ..Default::default()
         })
     }
@@ -296,5 +299,13 @@ mod tests {
             "It would be useful to be able to see asset-level damages after running FDA 2.0.",
             Damages::default(),
         );
+    }
+
+    // Issues reported on GitHub or Discord
+
+    // https://discord.com/channels/1335035237213671495/1491949288060751952/1491949288060751952
+    #[test]
+    fn ignore_it_damages_the_environment() {
+        assert_no_lints("it damages the environment", Damages::default());
     }
 }

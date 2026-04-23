@@ -1221,6 +1221,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Payed",
+								"state": true,
+								"label": "Payed"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RiseTheQuestion",
 								"state": true,
 								"label": "Rise The Question"
@@ -1252,6 +1259,20 @@
 								"name": "WorseOrWorst",
 								"state": true,
 								"label": "Worse Or Worst"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandGovt",
+								"state": true,
+								"label": "Expand Govt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InflectionPoint",
+								"state": true,
+								"label": "Inflection Point"
 							}
 						}
 					]
@@ -2247,6 +2268,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OkToOkay",
+								"state": true,
+								"label": "Ok To Okay"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SpellCheck",
 								"state": true,
 								"label": "Spell Check"
@@ -2607,6 +2635,13 @@
 								"name": "WithoutOut",
 								"state": true,
 								"label": "Without Out"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CloseTightKnit",
+								"state": true,
+								"label": "Close Tight Knit"
 							}
 						}
 					]
@@ -3552,6 +3587,13 @@
 								"state": true,
 								"label": "Aspire To"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CodeInWriteIn",
+								"state": true,
+								"label": "Code In Write In"
+							}
 						}
 					]
 				}
@@ -3890,6 +3932,13 @@
 								"name": "NoMatchFor",
 								"state": true,
 								"label": "No Match For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NumericRangeEnDash",
+								"state": true,
+								"label": "Numeric Range En Dash"
 							}
 						},
 						{
@@ -4752,6 +4801,13 @@
 								"state": true,
 								"label": "Web Scraping"
 							}
+						},
+						{
+							"Bool": {
+								"name": "MoreThanMeetsTheEye",
+								"state": true,
+								"label": "More Than Meets The Eye"
+							}
 						}
 					]
 				}
@@ -4960,6 +5016,13 @@
 								"name": "FindFine",
 								"state": true,
 								"label": "Find Fine"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FindOut",
+								"state": true,
+								"label": "Find Out"
 							}
 						},
 						{

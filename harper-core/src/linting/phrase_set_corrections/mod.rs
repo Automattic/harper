@@ -365,6 +365,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InflectionPoint" => (
+            &[
+                ("infliction point", "inflection point"),
+                ("infliction points", "inflection points"),
+            ],
+            "To refer to a significant change in a trend, `inflection point` is the correct term.",
+            "Corrects `infliction point` to `inflection point`.",
+            LintKind::Malapropism
+        ),
         "InvestIn" => (
             &[
                 // Verb
@@ -683,6 +692,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
         "DateBackFrom" => (
             &[
                 (&["date back from"], &["date from", "date back to"]),
@@ -719,6 +737,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `declaration` or `declarator` instead of `decl`",
             "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandGovt" => (
+            &[
+                (&["govt", "govt."], &["government"]),
+                (&["govts"], &["governments"])
+            ],
+            "Use `government` instead of `govt` or `govt.`",
+            "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity.",
             LintKind::Style
         ),
         "Expat" => (

@@ -48,7 +48,7 @@ impl ExprLinter for TooTo {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Typo,
+            lint_kind: LintKind::WordChoice,
             suggestions: vec![
                 Suggestion::replace_with_match_case("to".chars().collect(), text)
             ],

@@ -37,7 +37,9 @@ mod capitalize_personal_pronouns;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
+mod close_tight_knit;
 mod closed_compounds;
+mod code_in_write_in;
 mod comma_fixes;
 mod compound_nouns;
 mod compound_subject_i;
@@ -154,6 +156,7 @@ mod nor_modal_pronoun;
 mod not_only_inversion;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
+mod numeric_range_en_dash;
 mod obsess_preposition;
 mod of_course;
 mod oldest_in_the_book;
@@ -615,7 +618,8 @@ pub mod tests {
         // Lint current text and try each suggestion branch
         let chars: Vec<char> = text.chars().collect();
         let document = create_document(&chars, doc_type);
-        let lints = linter.lint(&document);
+        let mut lints = linter.lint(&document);
+        lints.sort_by_key(|l| l.priority);
 
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {
