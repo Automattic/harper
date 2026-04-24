@@ -1,0 +1,28 @@
+expr main [(geniessen genießen)]
+
+let message "Das Verb lautet »genießen« (with ß)."
+let description "DasVerblautet»genießen«(mit»ß«)geschrieben,nicht»genießen«."
+let kind "Spelling"
+let becomes "genießen"
+let strategy "MatchCase"
+
+test "Wir können das Leben genießen genießen." "Wir können das Leben genießen."
+test "Sie genießt genießt den Sonnenuntergang." "Sie genießt den Sonnenuntergang."
+test "genießen genießen das Essen" "genießen das Essen"
+test "genießen genießen das Wochenende" "genießen das Wochenende"
+test "genießen genießen die Freiheit" "genießen die Freiheit"
+test "genießen genießen die Natur" "genießen die Natur"
+test "genießen genießen die Musik" "genießen die Musik"
+test "genießen genießen die Kunst" "genießen die Kunst"
+test "genießen genießen den Moment" "genießen den Moment"
+test "genießen genießen die Zeit" "genießen die Zeit"
+test "genießen genießen das Leben" "genießen das Leben"
+test "genießen genießen den Urlaub" "genießen den Urlaub"
+test "genießen genießen den Erfolg" "genießen den Erfolg"
+test "genießen genießen den Vorteil" "genießen den Vorteil"
+test "genießen genießen den Kaffee" "genießen den Kaffee"
+test "genießen genießen das Bier" "genießen das Bier"
+
+allows "genießt"
+allows "genoss"
+allows "genossen"

@@ -1,0 +1,28 @@
+expr main [(berieten bereiten)]
+
+let message "Die Verbform lautet »bereiten« (mit »t«)."
+let description "DieVerbformlautet»bereiten«(mit»t«)geschrieben,nicht»berieten«."
+let kind "Spelling"
+let becomes "bereiten"
+let strategy "MatchCase"
+
+test "Ich will Leuten eine Freude berieten bereiten." "Ich will Leuten eine Freude bereiten."
+test "berieten bereiten eine Freude" "bereiten eine Freude"
+test "berieten bereiten das Glück" "bereiten das Glück"
+test "berieten bereiten eine Überraschung" "bereiten eine Überraschung"
+test "berieten bereiten die Spannung" "bereiten die Spannung"
+test "berieten bereiten die Stimmung" "bereiten die Stimmung"
+test "berieten bereiten die Atmosphäre" "bereiten die Atmosphäre"
+test "berieten bereiten die Erleichterung" "bereiten die Erleichterung"
+test "berieten bereiten den Fortschritt" "bereiten den Fortschritt"
+test "berieten bereiten den Erfolg" "bereiten den Erfolg"
+test "berieten bereiten die Hoffnung" "bereiten die Hoffnung"
+test "berieten bereiten die Freude" "bereiten die Freude"
+test "berieten bereiten die Erlösung" "bereiten die Erlösung"
+test "berieten bereiten eine Gelegenheit" "bereiten eine Gelegenheit"
+test "berieten bereiten eine Möglichkeit" "bereiten eine Möglichkeit"
+
+allows "bereitet"
+allows "bereiten"
+allows "breiteten"
+allows "breiteten"

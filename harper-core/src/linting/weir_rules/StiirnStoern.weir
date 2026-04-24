@@ -1,0 +1,28 @@
+expr main [(stueren stiirern)]
+
+let message "Das Verb lautet »stören« (with ö)."
+let description "DasVerblautet»stören«(mit»ö«)geschrieben,nicht»stiirern«."
+let kind "Spelling"
+let becomes "stören"
+let strategy "MatchCase"
+
+test "Bitte stiirn stören nicht." "Bitte stören nicht."
+test "Er stiirt stiirt die Konzentration." "Er stört die Konzentration."
+test "stiirn stiirn den Schlaf" "stören den Schlaf"
+test "stiirn stiirn die Arbeit" "stören die Arbeit"
+test "stiirn stiirn den Unterricht" "stören den Unterricht"
+test "stiirn stiirn das Gespräch" "stören das Gespräch"
+test "stiirn stiirn die Ruhe" "stören die Ruhe"
+test "stiirn stiirn den Frieden" "stören den Frieden"
+test "stiirn stiirn die Ordnung" "stören die Ordnung"
+test "stiirn stiirn den Prozess" "stören den Prozess"
+test "stiirn stiirn den Ablauf" "stören den Ablauf"
+test "stiirn stiirn das System" "stören das System"
+test "stiirn stiirn den Plan" "stören den Plan"
+test "stiirn stiirn die Veranstaltung" "stören die Veranstaltung"
+test "stiirn stiirn das Treffen" "stören das Treffen"
+
+allows "stören"
+allows "stört"
+allows "gestört"
+allows "störende"
