@@ -45,8 +45,25 @@ impl ExprLinter for MissingPreposition {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
+            return None;
+        }
+
+        // Skip when the AUX slot is a form of "have" acting as a main verb
+        // taking a direct object (e.g. "children has dual citizenship",
+        // "she has big dreams"). The AUX tagger can't disambiguate main
+        // "have" from auxiliary "have", so we do it here lexically.
+        let aux_tok = matched_tokens.get(matched_tokens.len().checked_sub(5)?)?;
+        let aux_text: String = aux_tok
+            .get_ch(source)
+            .iter()
+            .collect::<String>()
+            .to_ascii_lowercase();
+        if matches!(
+            aux_text.as_str(),
+            "has" | "have" | "had" | "having" | "hasn't" | "haven't" | "hadn't"
+        ) {
             return None;
         }
 
