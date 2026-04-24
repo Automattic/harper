@@ -120,6 +120,7 @@ mod likewise;
 mod lint;
 mod lint_group;
 mod lint_kind;
+mod lint_kind_colors;
 mod long_sentences;
 mod look_down_ones_nose;
 mod looking_forward_to;
@@ -276,6 +277,7 @@ pub use lint_group::{
     FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
 };
 pub use lint_kind::LintKind;
+pub use lint_kind_colors::{LintKindColor, hex_for_lint_kind, lint_kind_colors, rgb_for_lint_kind};
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};

@@ -5,7 +5,7 @@ import {
 	LocalLinter,
 	unpackWeirpackBytes,
 } from 'harper.js';
-import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
+import { initializeLintKindColors, type UnpackedLintGroups, unpackLint } from 'lint-framework';
 import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
@@ -58,6 +58,11 @@ import {
 import { detectBrowserDialect } from './detectDialect';
 
 console.log('background is running');
+
+// Initialize lint kind colors from the WASM module
+initializeLintKindColors().catch((error) => {
+	console.error('Failed to initialize lint kind colors:', error);
+});
 
 chrome.runtime.onInstalled.addListener((details) => {
 	if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
