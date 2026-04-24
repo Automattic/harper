@@ -1,0 +1,28 @@
+expr main [(dein dein), (dein DEIN), (DEIN dein)]
+
+let message "Das Possessivpronomen »dein« sollte nicht doppelt verwendet werden."
+let description "Das Possessivpronomen »dein« wird nicht doppelt geschrieben."
+let kind "Grammar"
+let becomes "dein"
+let strategy "MatchCase"
+
+test "Wo ist dein dein Vater?" "Wo ist dein Vater?"
+test "Das ist dein dein Buch." "Das ist dein Buch."
+test "Ist das dein dein Haus?" "Ist das dein Haus?"
+test "dein dein Auto" "dein Auto"
+test "dein dein Zimmer" "dein Zimmer"
+test "dein dein Schreibtisch" "dein Schreibtisch"
+test "dein dein Stuhl" "dein Stuhl"
+test "dein dein Computer" "dein Computer"
+test "dein dein Handy" "dein Handy"
+test "dein dein Fahrrad" "dein Fahrrad"
+test "dein dein Hund" "dein Hund"
+test "dein dein Kater" "dein Kater"
+test "dein dein Vater" "dein Vater"
+test "dein dein Bruder" "dein Bruder"
+test "dein dein Kind" "dein Kind"
+
+allows "deine Mutter"
+allows "deine Schwester"
+allows "deine Eltern"
+allows "dein Vater"
