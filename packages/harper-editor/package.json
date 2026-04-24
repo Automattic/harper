@@ -1,0 +1,63 @@
+{
+	"name": "harper-editor",
+	"version": "0.0.1",
+	"license": "Apache-2.0",
+	"description": "Reusable Svelte editor components powered by Harper.",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "pnpm run prepack",
+		"build:bundle": "svelte-kit sync && vite build",
+		"build:types": "svelte-package -i src/lib -o .svelte-package-tmp --types && node ./scripts/copy-package-types.mjs",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "pnpm run build:bundle && pnpm run build:types && publint",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"style": "./dist/harper-editor.css",
+	"sideEffects": [
+		"**/*.css"
+	],
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./harper-editor.css": "./dist/harper-editor.css",
+		"./style.css": "./dist/harper-editor.css"
+	},
+	"peerDependencies": {
+		"harper.js": "^2.0.0",
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/kit": "^2.47.1",
+		"@sveltejs/package": "^2.5.4",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@tailwindcss/cli": "^4.1.16",
+		"@tailwindcss/vite": "^4.1.14",
+		"components": "workspace:*",
+		"harper.js": "workspace:*",
+		"lint-framework": "workspace:*",
+		"publint": "^0.3.14",
+		"quill": "^2.0.3",
+		"svelte": "^5.41.0",
+		"svelte-check": "^4.3.3",
+		"tailwindcss": "^4.1.14",
+		"typescript": "catalog:",
+		"vite": "^7.1.10"
+	},
+	"keywords": [
+		"svelte"
+	]
+}

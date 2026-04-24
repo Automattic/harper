@@ -175,6 +175,57 @@ importers:
         specifier: ^7.1.10
         version: 7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
 
+  packages/harper-editor:
+    devDependencies:
+      '@sveltejs/adapter-auto':
+        specifier: ^7.0.0
+        version: 7.0.0(@sveltejs/kit@2.48.5(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))
+      '@sveltejs/kit':
+        specifier: ^2.47.1
+        version: 2.48.5(@sveltejs/vite-plugin-svelte@6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)))(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      '@sveltejs/package':
+        specifier: ^2.5.4
+        version: 2.5.4(svelte@5.43.12)(typescript@5.9.3)
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^6.2.1
+        version: 6.2.1(svelte@5.43.12)(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      '@tailwindcss/cli':
+        specifier: ^4.1.16
+        version: 4.1.17
+      '@tailwindcss/vite':
+        specifier: ^4.1.14
+        version: 4.1.17(vite@7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))
+      components:
+        specifier: workspace:*
+        version: link:../components
+      harper.js:
+        specifier: workspace:*
+        version: link:../harper.js
+      lint-framework:
+        specifier: workspace:*
+        version: link:../lint-framework
+      publint:
+        specifier: ^0.3.14
+        version: 0.3.15
+      quill:
+        specifier: ^2.0.3
+        version: 2.0.3
+      svelte:
+        specifier: ^5.41.0
+        version: 5.43.12
+      svelte-check:
+        specifier: ^4.3.3
+        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.9.3)
+      tailwindcss:
+        specifier: ^4.1.14
+        version: 4.1.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: ^7.1.10
+        version: 7.2.2(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
+
   packages/harper.js:
     dependencies:
       fflate:
@@ -412,6 +463,9 @@ importers:
       drizzle-zod:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.44.6(@libsql/client@0.15.15)(mysql2@3.15.2))(zod@4.1.12)
+      harper-editor:
+        specifier: workspace:*
+        version: link:../harper-editor
       harper.js:
         specifier: workspace:*
         version: link:../harper.js
@@ -427,9 +481,6 @@ importers:
       posthog-js:
         specifier: ^1.245.1
         version: 1.245.1
-      quill:
-        specifier: ^2.0.3
-        version: 2.0.3
       reveal.js:
         specifier: ^5.1.0
         version: 5.1.0

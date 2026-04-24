@@ -6,11 +6,29 @@ Harper is a grammar checker designed to run anywhere there is text (so really, a
 Most Harper users are catching their mistakes in [Neovim](./integrations/neovim), [Obsidian](./integrations/obsidian), or [Visual Studio Code](./integrations/visual-studio-code).
 
 <script>
-    import Editor from "$lib/components/Editor.svelte"
+    import { Editor } from "harper-editor"
+    import { onMount } from "svelte"
+
+    let linter = null
+
+    onMount(async () => {
+        const [{ WorkerLinter }, { slimBinary }] = await Promise.all([
+            import("harper.js"),
+            import("harper.js/slimBinary"),
+        ])
+
+        linter = new WorkerLinter({ binary: slimBinary })
+        await linter.setup()
+    })
 </script>
 
 <div class="h-96">
-    <Editor content={`You can try out a editor that uses\nHarper under the hood here.\n\nIt is rnning in your browser right now. \n\nNo server required!`}/>
+    {#if linter}
+        <Editor
+            content={`You can try out a editor that uses\nHarper under the hood here.\n\nIt is rnning in your browser right now. \n\nNo server required!`}
+            {linter}
+        />
+    {/if}
 </div>
 
 ## How Does It Work?
