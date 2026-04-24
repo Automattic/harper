@@ -92,6 +92,7 @@ use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
+use super::have_the_nerve::HaveTheNerve;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::hereby::Hereby;
@@ -558,7 +559,6 @@ impl LintGroup {
         insert_expr_rule!(DoubleClick, true);
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
-        insert_struct_rule!(UseEllipsisCharacter, true);
         insert_expr_rule!(ElsePossessive, true);
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
@@ -584,6 +584,7 @@ impl LintGroup {
         insert_expr_rule!(Handful, true);
         insert_expr_rule!(HavePronoun, true);
         insert_struct_rule_with_dialect!(HaveTakeALook, true);
+        insert_expr_rule!(HaveTheNerve, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
         insert_expr_rule!(Hereby, true);
@@ -722,6 +723,7 @@ impl LintGroup {
         insert_expr_rule!(TryOnesLuck, true);
         insert_struct_rule!(UnclosedQuotes, true);
         insert_expr_rule!(UpdatePlaceNames, true);
+        insert_struct_rule!(UseEllipsisCharacter, true);
         insert_struct_rule_with_dict!(UseTitleCase, true);
         insert_expr_rule!(VerbToAdjective, true);
         insert_expr_rule!(VeryUnique, true);

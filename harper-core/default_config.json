@@ -4426,6 +4426,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HaveTheNerve",
+								"state": true,
+								"label": "Have The Nerve"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HiddenIn",
 								"state": true,
 								"label": "Hidden In"
