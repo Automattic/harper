@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Lint, Token,
+    Lint, Token,
     expr::{Expr, FixedPhrase, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
@@ -52,7 +52,7 @@ impl ExprLinter for DoMistake {
     ) -> Option<Lint> {
         let tok = toks.first()?;
         let span = tok.span;
-        let chars = span.get_content(src);
+        let chars = tok.get(src);
 
         if followed_by_word(ctx, |nw| {
             nw.kind.is_verb() && !nw.kind.is_verb_progressive_form()
@@ -60,13 +60,13 @@ impl ExprLinter for DoMistake {
             return None;
         }
 
-        let make = if chars.eq_str("do") {
+        let make = if chars == "do" {
             "make"
-        } else if chars.eq_str("did") || chars.eq_str("done") {
+        } else if chars == "did" || chars == "done" {
             "made"
-        } else if chars.eq_str("does") {
+        } else if chars == "does" {
             "makes"
-        } else if chars.eq_str("doing") {
+        } else if chars == "doing" {
             "making"
         } else {
             return None;
@@ -77,7 +77,7 @@ impl ExprLinter for DoMistake {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(make, chars)],
+            suggestions: vec![Suggestion::replace_with_match_case(make, chars.as_slice())],
             message: "In English we `make` mistakes, not `do` them".to_string(),
             ..Default::default()
         })

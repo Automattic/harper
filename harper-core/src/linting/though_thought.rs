@@ -2,7 +2,7 @@ use crate::expr::{Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::{CharStringExt, Token, TokenKind};
+use crate::{Token, TokenKind};
 
 pub struct ThoughThought {
     expr: SequenceExpr,
@@ -36,7 +36,7 @@ impl ExprLinter for ThoughThought {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let tok = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.get_ch(src).eq_ch(&['t', 'h', 'o', 'u', 'g', 'h'])
+            tok.get(src) == ['t', 'h', 'o', 'u', 'g', 'h']
         })?;
 
         Some(Lint {

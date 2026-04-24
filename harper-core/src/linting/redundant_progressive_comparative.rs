@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Span, Token, TokenKind,
+    Span, Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{Chunk, ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -33,12 +33,12 @@ impl ExprLinter for RedundantProgressiveComparative {
         let first = matched_tokens.first()?;
         let second = matched_tokens.get(2)?;
 
-        let (replacement, message) = if second.get_ch(src).eq_str("more") {
+        let (replacement, message) = if second.get(src) == "more" {
             (
                 "more and more",
                 "This phrasing is redundant; use a direct comparative like `more and more`.",
             )
-        } else if second.get_ch(src).eq_str("less") {
+        } else if second.get(src) == "less" {
             (
                 "less and less",
                 "This phrasing is redundant; use a direct comparative like `less and less`.",

@@ -12,9 +12,7 @@ impl Default for OldestInTheBook {
     fn default() -> Self {
         let adj = |t: &Token, s: &[char]| {
             let k = &t.kind;
-            (k.is_np_member() || k.is_adjective())
-                && !k.is_noun()
-                && !t.get_ch(s).eq_ch(&['i', 'n'])
+            (k.is_np_member() || k.is_adjective()) && !k.is_noun() && t.get(s) != ['i', 'n']
         };
 
         // Zero or more adjectives
@@ -22,7 +20,7 @@ impl Default for OldestInTheBook {
 
         let noun = |t: &Token, s: &[char]| {
             let k = &t.kind;
-            (k.is_np_member() || k.is_noun() || k.is_oov()) && !t.get_ch(s).eq_ch(&['i', 'n'])
+            (k.is_np_member() || k.is_noun() || k.is_oov()) && t.get(s) != ['i', 'n']
         };
 
         // One or more nouns

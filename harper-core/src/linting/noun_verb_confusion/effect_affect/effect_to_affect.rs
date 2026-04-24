@@ -160,7 +160,7 @@ fn is_effect_word(token: &Token, source: &[char]) -> bool {
 }
 
 fn is_token_to(token: &Token, source: &[char]) -> bool {
-    token.get_ch(source).eq_ch(&['t', 'o'])
+    token.get(source) == ['t', 'o']
 }
 
 fn is_change_like(token: &Token, source: &[char]) -> bool {

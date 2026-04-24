@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Token,
+    Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::Word,
@@ -31,7 +31,7 @@ impl Default for RedundantAcronyms {
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
                     Box::new(Word::new(last_str)),
                     Box::new(move |t: &Token, src: &[char]| {
-                        t.get_ch(src).eq_str(&format!("{last_string}s"))
+                        t.get(src) == format!("{last_string}s").as_str()
                     }),
                 ])) as Box<dyn Expr>
             })

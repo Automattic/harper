@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Lint, Token,
+    Lint, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::WordSet,
@@ -47,7 +47,7 @@ impl ExprLinter for ThePointFor {
         if let Some((_, after)) = ctx
             && after.len() >= 2
             && after[0].kind.is_whitespace()
-            && after[1].get_ch(src).eq_str("which")
+            && after[1].get(src) == "which"
         {
             return None;
         }

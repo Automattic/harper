@@ -1,6 +1,5 @@
 use crate::{
     Token, TokenKind,
-    char_string::CharStringExt,
     expr::{AnchorEnd, AnchorStart, Expr, SequenceExpr},
     patterns::WhitespacePattern,
 };
@@ -54,9 +53,7 @@ impl ExprLinter for ToTooPronounEnd {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let to_tok = tokens
-            .iter()
-            .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
+        let to_tok = tokens.iter().find(|t| t.get(source) == ['t', 'o'])?;
 
         Some(Lint {
             span: to_tok.span,

@@ -1,6 +1,5 @@
 use crate::{
     Token, TokenKind,
-    char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
     patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
 };
@@ -42,9 +41,7 @@ impl ExprLinter for ToTooAdjectiveEnd {
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
         // Find the `to` token
-        let to_index = tokens
-            .iter()
-            .position(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
+        let to_index = tokens.iter().position(|t| t.get(source) == ['t', 'o'])?;
 
         // First non-whitespace after `to` should be the adjective
         let mut idx = to_index + 1;

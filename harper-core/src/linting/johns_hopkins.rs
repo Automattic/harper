@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Token,
+    Token,
     expr::{Expr, SequenceExpr},
     linting::expr_linter::Chunk,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
@@ -12,12 +12,10 @@ pub struct JohnsHopkins {
 impl Default for JohnsHopkins {
     fn default() -> Self {
         let expr = SequenceExpr::with(|tok: &Token, src: &[char]| {
-            tok.kind.is_proper_noun() && tok.get_ch(src).eq_str("john")
+            tok.kind.is_proper_noun() && tok.get(src) == "john"
         })
         .t_ws()
-        .then(|tok: &Token, src: &[char]| {
-            tok.kind.is_proper_noun() && tok.get_ch(src).eq_str("hopkins")
-        });
+        .then(|tok: &Token, src: &[char]| tok.kind.is_proper_noun() && tok.get(src) == "hopkins");
 
         Self { expr }
     }

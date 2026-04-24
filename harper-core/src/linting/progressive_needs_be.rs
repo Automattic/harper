@@ -45,10 +45,7 @@ impl ExprLinter for ProgressiveNeedsBe {
         let first_word = *word_toks.first()?; // contraction or pronoun
 
         // If this is the non-contracted pattern, extend the replacement span to include "have"
-        let have_tok_opt = word_toks
-            .iter()
-            .find(|t| t.get_ch(src).eq_str("have"))
-            .copied();
+        let have_tok_opt = word_toks.iter().find(|t| t.get(src) == "have").copied();
 
         let span = if let Some(have_tok) = have_tok_opt {
             crate::Span::new(first_word.span.start, have_tok.span.end)

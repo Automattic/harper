@@ -1,6 +1,6 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    CharStringExt, Token,
+    Token,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::ModalVerb,
@@ -72,7 +72,7 @@ impl ExprLinter for ModalSeem {
         let seen_token = matched_tokens
             .iter()
             .skip(context.modal_index)
-            .find(|tok| tok.get_ch(source).eq_str("seen"))?;
+            .find(|tok| tok.get(source) == "seen")?;
 
         let span = seen_token.span;
         let original = span.get_content(source);
