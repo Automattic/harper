@@ -1,0 +1,26 @@
+expr main [(seihe siehe)]
+
+let message "Das Wort wird »siehe« geschrieben."
+let description "DasWortwirdsiehegeschrieben."
+let kind "Spelling"
+let becomes "siehe"
+let strategy "MatchCase"
+
+test "Er sagte: Seihe siehe unten." "Er sagte: Siehe unten."
+test "Seihe siehe oben im Text." "Siehe oben im Text."
+test "Seihe siehe Kapitel 5." "Siehe Kapitel 5."
+test "Seihe siehe Folge 10." "Siehe Folge 10."
+test "Seihe siehe Absatz 3." "Siehe Absatz 3."
+test "Seihe siehe Abschnitt 2." "Siehe Abschnitt 2."
+test "Seihe siehe Anhang A." "Siehe Anhang A."
+test "Seihe siehe Seite 10." "Siehe Seite 10."
+test "Seihe siehe nächste Woche." "Siehe nächste Woche."
+test "Seihe siehe nächsten Monat." "Siehe nächsten Monat."
+test "Seihe siehe folgendes Kapitel." "Siehe folgendes Kapitel."
+test "Seihe siehe folgenden Abschnitt." "Siehe folgenden Abschnitt."
+test "Seihe siehe nächste Seite." "Siehe nächste Seite."
+test "Seihe siehe dort oben." "Siehe dort oben."
+test "Seihe siehe im Text." "Siehe im Text."
+
+allows "siehe"
+allows "sehe"
