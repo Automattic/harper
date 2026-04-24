@@ -70,4 +70,8 @@ where
             .iter()
             .find_map(|row| row.key.run(cursor, tokens, source))
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 EXPR MAP");
+        None // Not implemented
+    }
 }

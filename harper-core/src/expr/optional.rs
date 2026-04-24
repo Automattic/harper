@@ -27,4 +27,8 @@ impl Expr for Optional {
             res
         }
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 OPTIONAL");
+        None // Not implemented
+    }
 }

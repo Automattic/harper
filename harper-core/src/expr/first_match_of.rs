@@ -30,4 +30,8 @@ impl Expr for FirstMatchOf {
             .iter()
             .find_map(|p| p.run(cursor, tokens, source))
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 FIRST MATCH OF");
+        None // Not implemented
+    }
 }

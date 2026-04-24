@@ -78,4 +78,8 @@ impl Expr for TimeUnitExpr {
 
         units.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 TIME UNIT");
+        None // Not implemented
+    }
 }

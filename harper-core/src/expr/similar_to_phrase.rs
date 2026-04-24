@@ -64,4 +64,8 @@ impl Expr for SimilarToPhrase {
         }
         self.fuzzy_phrase.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 SIMILAR TO PHRASE");
+        None // Not implemented
+    }
 }

@@ -38,4 +38,8 @@ impl Expr for All {
 
         longest
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 ALL");
+        None // Not implemented
+    }
 }

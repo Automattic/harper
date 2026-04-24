@@ -75,6 +75,26 @@ impl Expr for SequenceExpr {
 
         Some(window)
     }
+    fn run_rev(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        let mut window = Span::empty(cursor);
+
+        // Go backwards through the subexpressions so we can still express it forward
+        for cur_expr in self.exprs.iter().rev() {
+            let out = cur_expr.run_rev(cursor, tokens, source)?;
+            if out.end > out.start {
+                window.expand_to_include(out.start);
+                window.expand_to_include(out.end);
+            }
+            // Only retard cursor if we actually matched something
+            if out.start < cursor {
+                cursor = out.start;
+            } else if out.end > cursor {
+                cursor = out.end;
+            }
+        }
+
+        Some(window)
+    }
 }
 
 impl SequenceExpr {
@@ -634,36 +654,75 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        Document, TokenKind,
-        expr::{ExprExt, SequenceExpr},
-        linting::tests::SpanVecExt,
-    };
+    mod run_and_run_rev {
+        use crate::{
+            Document,
+            expr::{Expr, SequenceExpr},
+        };
 
-    #[test]
-    fn test_kind_both() {
-        let noun_and_verb =
-            SequenceExpr::default().then_kind_both(TokenKind::is_noun, TokenKind::is_verb);
-        let doc = Document::new_plain_english_curated("Use a good example.");
-        let matches = noun_and_verb.iter_matches_in_doc(&doc).collect::<Vec<_>>();
-        assert_eq!(matches.to_strings(&doc), vec!["Use", "good", "example"]);
+        #[test]
+        fn test_run() {
+            let seq = SequenceExpr::default().t_aco("hello").t_ws().t_aco("world");
+            let doc = Document::new_plain_english_curated("hello world");
+            let tok = doc.get_tokens();
+
+            let res = seq.run(0, &tok, doc.get_source());
+            assert!(res.is_some());
+            let span = res.unwrap();
+            assert_eq!(
+                span.to_char_span(&tok).get_content_string(doc.get_source()),
+                "hello world"
+            );
+        }
+
+        #[test]
+        fn test_run_rev() {
+            let seq = SequenceExpr::default().t_aco("hello").t_ws().t_aco("world");
+            let doc = Document::new_plain_english_curated("hello world");
+            let tok = doc.get_tokens();
+
+            let res = seq.run_rev(2, &tok, doc.get_source());
+            assert!(res.is_some());
+            let span = res.unwrap();
+            assert_eq!(
+                span.to_char_span(&tok).get_content_string(doc.get_source()),
+                "hello world"
+            );
+        }
     }
 
-    #[test]
-    fn test_adjective_or_determiner() {
-        let expr = SequenceExpr::default()
-            .then_kind_either(TokenKind::is_adjective, TokenKind::is_determiner);
-        let doc = Document::new_plain_english_curated("Use a good example.");
-        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
-        assert_eq!(matches.to_strings(&doc), vec!["a", "good"]);
-    }
+    mod then_kind {
+        use crate::{
+            Document, TokenKind,
+            expr::{ExprExt, SequenceExpr},
+            linting::tests::SpanVecExt,
+        };
 
-    #[test]
-    fn test_noun_but_not_adjective() {
-        let expr = SequenceExpr::default()
-            .then_kind_is_but_is_not(TokenKind::is_noun, TokenKind::is_adjective);
-        let doc = Document::new_plain_english_curated("Use a good example.");
-        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
-        assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
+        #[test]
+        fn test_kind_both() {
+            let noun_and_verb =
+                SequenceExpr::default().then_kind_both(TokenKind::is_noun, TokenKind::is_verb);
+            let doc = Document::new_plain_english_curated("Use a good example.");
+            let matches = noun_and_verb.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+            assert_eq!(matches.to_strings(&doc), vec!["Use", "good", "example"]);
+        }
+
+        #[test]
+        fn test_adjective_or_determiner() {
+            let expr = SequenceExpr::default()
+                .then_kind_either(TokenKind::is_adjective, TokenKind::is_determiner);
+            let doc = Document::new_plain_english_curated("Use a good example.");
+            let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+            assert_eq!(matches.to_strings(&doc), vec!["a", "good"]);
+        }
+
+        #[test]
+        fn test_noun_but_not_adjective() {
+            let expr = SequenceExpr::default()
+                .then_kind_is_but_is_not(TokenKind::is_noun, TokenKind::is_adjective);
+            let doc = Document::new_plain_english_curated("Use a good example.");
+            let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+            assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
+        }
     }
 }

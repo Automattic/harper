@@ -60,4 +60,8 @@ impl Expr for Filter {
 
         Some(result)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 FILTER");
+        None // Not implemented
+    }
 }

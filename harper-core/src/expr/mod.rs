@@ -67,6 +67,7 @@ use crate::{Document, LSend, Span, Token};
 
 pub trait Expr: LSend {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>>;
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>>;
 }
 
 impl<S> Expr for S
@@ -74,13 +75,13 @@ where
     S: Step + ?Sized,
 {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        self.step(tokens, cursor, source).map(|s| {
-            if s >= 0 {
-                Span::new_with_len(cursor, s as usize)
-            } else {
-                Span::new(add(cursor, s).unwrap(), cursor)
-            }
-        })
+        self.step(tokens, cursor, source)
+            .map(|s| Span::new_with_len(cursor, s as usize))
+    }
+
+    fn run_rev(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.step_rev(tokens, cursor, source)
+            .map(|s| Span::new(add(cursor, -s).unwrap_or(cursor), cursor))
     }
 }
 
@@ -91,11 +92,19 @@ where
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
     }
+
+    fn run_rev(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run_rev(cursor, tokens, source)
+    }
 }
 
 impl Expr for Box<dyn Expr> {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
+    }
+
+    fn run_rev(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run_rev(cursor, tokens, source)
     }
 }
 
@@ -106,6 +115,10 @@ where
 {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.as_ref().run(cursor, tokens, source)
+    }
+
+    fn run_rev(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
+        self.as_ref().run_rev(cursor, tokens, source)
     }
 }
 
