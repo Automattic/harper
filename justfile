@@ -818,6 +818,26 @@ grep-config query:
   config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
         .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
 
+# Run the native allocation profiler for spell-check operations.
+alias alloc-prof := alloc-profile
+alloc-profile:
+  cargo run --example alloc_profile -p harper-core --release
+
+# Build harper-wasm with bench support and run the WASM benchmark harness.
+# Runs wasm-opt by default to match the shipping build; set DISABLE_WASM_OPT=1
+# to skip it (faster rebuilds, non-shipping numbers).
+bench-wasm:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-wasm"
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt --out-dir pkg-bench --features bench
+  else
+    wasm-pack build --target web --out-dir pkg-bench --features bench
+  fi
+  node benches/wasm_bench.js
+
 # search configuration group settings for substring in name
 grep-config-settings query:
   #! /usr/bin/env node
