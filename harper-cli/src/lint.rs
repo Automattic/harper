@@ -11,11 +11,12 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
+    Dialect, Document, Token, TokenKind,
     linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
-    spell::{Dictionary, MergedDictionary, MutableDictionary},
+    remove_overlaps_map,
+    spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -29,10 +30,7 @@ fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
-        str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
-    );
+    dict.extend(str.lines().map(WordMapEntry::new_str));
 
     Ok(dict)
 }

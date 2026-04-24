@@ -5,6 +5,7 @@ use crate::Lrc;
 use crate::Token;
 use crate::TokenKind;
 use hashbrown::HashSet;
+use itertools::Itertools;
 
 use crate::Punctuation;
 use crate::spell::Dictionary;
@@ -69,7 +70,7 @@ pub fn try_make_title_case(
             // Replace it with the dictionary entry verbatim.
             let orig_text = word.get_ch(source);
 
-            if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
+            if let Ok(correct_caps) = dict.get_correct_capitalizations_of(orig_text).exactly_one() {
                 // It should match the dictionary verbatim
                 for (i, c) in correct_caps.iter().enumerate() {
                     if c.is_alphabetic() {

@@ -126,7 +126,7 @@ where
             .iter()
             .filter(|&w| {
                 self.dict
-                    .get_word_metadata(w)
+                    .get_word_metadata_exact(w)
                     .is_some_and(|md| md.is_verb_lemma())
             })
             .map(|w| w.to_vec())
@@ -158,7 +158,7 @@ where
             .iter()
             .filter(|&w| {
                 self.dict
-                    .get_word_metadata(w)
+                    .get_word_metadata_exact(w)
                     .is_some_and(|md| md.is_verb_third_person_singular_present_form())
             })
             .map(|w| w.to_vec())

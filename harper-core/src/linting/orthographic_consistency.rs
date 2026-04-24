@@ -1,21 +1,23 @@
 use std::sync::Arc;
 
+use itertools::Itertools;
+
 use crate::{
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{Dictionary, FstDictionary},
+    spell::{MutableDictionary, WordIdPair},
     {OrthFlags, Token},
 };
 
 pub struct OrthographicConsistency {
-    dict: Arc<FstDictionary>,
+    dict: Arc<MutableDictionary>,
     expr: SequenceExpr,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(),
+            dict: MutableDictionary::curated(),
             expr: SequenceExpr::any_word(),
         }
     }
@@ -66,12 +68,19 @@ impl ExprLinter for OrthographicConsistency {
 
         let chars = word.get_ch(source);
 
+        // Cache the ID so we don't have to recalculate it.
+        let word_ids = WordIdPair::from_word_chars(chars);
+
+        if self.dict.contains_canonical(word_ids.canonical()) {
+            // Exit if the dictionary contains the exact word.
+            return None;
+        }
+
         let cur_flags = OrthFlags::from_letters(chars);
 
         if metadata.is_allcaps()
-            && !metadata.is_lowercase()
-            && !metadata.is_upper_camel()
             && !cur_flags.contains(OrthFlags::ALLCAPS)
+            && metadata.orth_info.case_flags().bits().count_ones() == 1
         {
             return Some(Lint {
                 span: word.span,
@@ -85,19 +94,19 @@ impl ExprLinter for OrthographicConsistency {
         }
 
         let canonical_flags = metadata.orth_info;
-        let flags_to_check = [
-            OrthFlags::LOWER_CAMEL,
-            OrthFlags::UPPER_CAMEL,
-            OrthFlags::APOSTROPHE,
-            OrthFlags::HYPHENATED,
-        ];
+        let flags_to_check = OrthFlags::LOWER_CAMEL
+            | OrthFlags::UPPER_CAMEL
+            | OrthFlags::APOSTROPHE
+            | OrthFlags::HYPHENATED;
 
-        if flags_to_check
-            .into_iter()
-            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
-            .count()
-            == 1
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+        // If any of the flags specified by flags_to_check differ between cur_flags and
+        // canonical_flags.
+        if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
+            && let Ok(canonical) = self
+                .dict
+                .get_case_folded(word_ids.case_folded())
+                .exactly_one()
+                .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -114,7 +123,11 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
-            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && let Ok(canonical) = self
+                .dict
+                .get_case_folded(word_ids.case_folded())
+                .exactly_one()
+                .map(|wme| &wme.canonical_spelling)
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
@@ -143,7 +156,10 @@ fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    };
 
     use super::OrthographicConsistency;
 
@@ -162,15 +178,6 @@ mod tests {
             "Ikea operates a vast retail network.",
             OrthographicConsistency::default(),
             "IKEA operates a vast retail network.",
-        );
-    }
-
-    #[test]
-    fn lego_should_be_all_caps() {
-        assert_suggestion_result(
-            "Lego bricks encourage creativity.",
-            OrthographicConsistency::default(),
-            "LEGO bricks encourage creativity.",
         );
     }
 
@@ -401,5 +408,32 @@ mod tests {
             "The post’s problem was not in its complexity.",
             OrthographicConsistency::default(),
         );
+    }
+
+    #[test]
+    fn no_improper_suggestion_for_macos() {
+        assert_good_and_bad_suggestions(
+            "MacOS",
+            OrthographicConsistency::default(),
+            &["macOS"],
+            &["MacOS"],
+        );
+    }
+
+    #[test]
+    fn accept_case_variants() {
+        // At the time of writing this test, "Pr" (despite being a word in the curated dictionary)
+        // would be linted for the supposed reason of the canonical spelling being "PR".
+        // Since both words are in the curated dictionary, neither should be linted.
+        assert_no_lints("Pr PR", OrthographicConsistency::default());
+        assert_no_lints("Apr APR", OrthographicConsistency::default()); // https://github.com/Automattic/harper/issues/3080
+        assert_no_lints("install.md", OrthographicConsistency::default()); // https://github.com/Automattic/harper/issues/3073
+    }
+
+    #[test]
+    #[ignore = "Words with multiple known orthographic variants are not currently supported"]
+    fn dont_accept_undefined_case_variants() {
+        // "pr" isn't defined in the dictionary, so it should be linted.
+        assert_lint_count("pr", OrthographicConsistency::default(), 1);
     }
 }

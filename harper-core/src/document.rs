@@ -8,7 +8,7 @@ use itertools::Itertools;
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::punctuation::Punctuation;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{Dictionary, FstDictionary, MutableDictionary};
 use crate::vec_ext::VecExt;
 use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
@@ -70,7 +70,7 @@ impl Document {
     pub fn new_from_chars(
         source: Lrc<[char]>,
         parser: &impl Parser,
-        dictionary: &impl Dictionary,
+        dictionary: &(impl Dictionary + ?Sized),
     ) -> Self {
         let tokens = parser.parse(&source);
 
@@ -169,10 +169,9 @@ impl Document {
         self.match_quotes();
     }
 
-    /// Re-parse important language constructs.
-    ///
-    /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    /// [`Self::parse`] but with a concrete dictionary type. This is used to reduce
+    /// monomorphization.
+    fn _parse(&mut self, dictionary: &MutableDictionary) {
         self.apply_fixups();
 
         let chunker = burn_chunker();
@@ -217,6 +216,14 @@ impl Document {
                 }
             }
         }
+    }
+
+    /// Re-parse important language constructs.
+    ///
+    /// Should be run after every change to the underlying [`Self::source`].
+    fn parse(&mut self, dictionary: &(impl Dictionary + ?Sized)) {
+        // Use an inner function to reduce monomorphization.
+        self._parse(dictionary.get_word_map());
     }
 
     /// Convert all sets of newlines greater than 2 to paragraph breaks.

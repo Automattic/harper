@@ -97,21 +97,21 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            let Some(cand_meta) = self.dict.get_word_metadata(candidate) else {
+            let Some(cand_meta) = self.dict.get_word_metadata_exact(candidate) else {
                 continue;
             };
             if !cand_meta.common {
                 continue;
             }
 
-            let Some(rem_meta) = self.dict.get_word_metadata(remainder) else {
+            let Some(rem_meta) = self.dict.get_word_metadata_exact(remainder) else {
                 continue;
             };
             if !rem_meta.common {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+            if is_anchor_split(cand_meta, candidate) || is_anchor_split(rem_meta, remainder) {
                 has_anchor_split = true;
             }
 

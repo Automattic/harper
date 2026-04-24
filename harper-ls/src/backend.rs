@@ -18,8 +18,10 @@ use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
-use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::spell::{
+    Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
+};
+use harper_core::{Dialect, Document, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -679,7 +681,7 @@ impl LanguageServer for Backend {
                 stats.records.push(record);
             }
             "HarperAddToUserDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -688,8 +690,8 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict)
+                dict.insert(WordMapEntry::new(word));
+                self.save_user_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -700,7 +702,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToWSDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -709,8 +711,8 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict)
+                dict.insert(WordMapEntry::new(word));
+                self.save_workspace_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -721,7 +723,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToFileDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -739,9 +741,9 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.append_word(word, DictWordMetadata::default());
+                dict.insert(WordMapEntry::new(word));
 
-                self.save_file_dictionary(&file_uri, dict)
+                self.save_file_dictionary(&file_uri, &dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
