@@ -2772,7 +2772,7 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.0",
  "rayon",
  "serde",
  "serde_json",
@@ -2832,7 +2832,7 @@ dependencies = [
  "fst",
  "harper-brill",
  "harper-thesaurus",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.0",
  "is-macro",
  "itertools 0.14.0",
  "levenshtein_automata",
@@ -2939,7 +2939,7 @@ version = "2.1.0"
 dependencies = [
  "burn",
  "burn-ndarray",
- "hashbrown 0.16.1",
+ "hashbrown 0.17.0",
  "is-macro",
  "lru",
  "rand 0.10.1",
@@ -2985,7 +2985,7 @@ dependencies = [
 name = "harper-thesaurus"
 version = "2.1.0"
 dependencies = [
- "hashbrown 0.16.1",
+ "hashbrown 0.17.0",
  "indexmap",
  "itertools 0.14.0",
  "ruzstd",
@@ -3073,6 +3073,17 @@ name = "hashbrown"
 version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
+]
+
+[[package]]
+name = "hashbrown"
+version = "0.17.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4f467dd6dccf739c208452f8014c75c18bb8301b050ad1cfb27153803edb0f51"
 dependencies = [
  "allocator-api2",
  "equivalent",

@@ -7,7 +7,7 @@ license = "Apache-2.0"
 repository = "https://github.com/automattic/harper"
 
 [dependencies]
-hashbrown = "0.16.0"
+hashbrown = "0.17.0"
 indexmap = "2.13.1"
 itertools = "0.14.0"
 ruzstd = "0.8.2"
