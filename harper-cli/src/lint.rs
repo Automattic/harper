@@ -81,6 +81,8 @@ pub enum OutputFormat {
     Json,
     /// One line per lint, no source context.
     Compact,
+    /// GitHub Actions workflow commands (::warning / ::error annotations).
+    Github,
 }
 
 pub struct LintOptions {
@@ -99,6 +101,7 @@ enum ReportStyle {
     BriefCountsOnly,
     Json,
     Compact,
+    Github,
 }
 
 #[derive(Serialize)]
@@ -255,6 +258,7 @@ pub fn lint(
     let report_mode = match (lint_options.format, count) {
         (OutputFormat::Json, _) => ReportStyle::Json,
         (OutputFormat::Compact, _) => ReportStyle::Compact,
+        (OutputFormat::Github, _) => ReportStyle::Github,
         (OutputFormat::Default, true) => ReportStyle::BriefCountsOnly,
         (OutputFormat::Default, false) => ReportStyle::FullAriadne,
     };
@@ -347,7 +351,7 @@ pub fn lint(
         ReportStyle::Json => {
             println!("{}", serde_json::to_string_pretty(&json_results)?);
         }
-        ReportStyle::Compact => {}
+        ReportStyle::Compact | ReportStyle::Github => {}
         _ => {
             final_report(
                 dialect,
@@ -652,6 +656,31 @@ fn single_input_report(
                     lint.lint_kind,
                     rule_name,
                     lint.message
+                );
+            }
+        }
+        return;
+    }
+
+    // GitHub Actions workflow command format
+    // See: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-a-warning-message
+    if matches!(report_mode, ReportStyle::Github) {
+        let source_chars = doc.get_source();
+        for (rule_name, lints) in named_lints {
+            for lint in lints {
+                let (line, col) = char_index_to_line_col(source_chars, lint.span.start);
+                let (end_line, end_col) = char_index_to_line_col(source_chars, lint.span.end);
+                let file = input.plain_path();
+                let title = format!("{}::{}", lint.lint_kind, rule_name);
+                // Escape special characters in the message per GitHub Actions spec:
+                // '%' -> '%25', '\r' -> '%0D', '\n' -> '%0A'
+                let message = lint
+                    .message
+                    .replace('%', "%25")
+                    .replace('\r', "%0D")
+                    .replace('\n', "%0A");
+                println!(
+                    "::warning file={file},line={line},col={col},endLine={end_line},endColumn={end_col},title={title}::{message}",
                 );
             }
         }
