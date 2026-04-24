@@ -1,0 +1,26 @@
+expr main [(olles alles)]
+
+let message "Meinten Sie »alles«?"
+let description "MeintenSiealles"
+let kind "Spelling"
+let becomes "alles"
+let strategy "MatchCase"
+
+test "Das ist mir olles alles zu viel." "Das ist mir alles zu viel."
+test "Das ist dir olles alles klar." "Das ist dir alles klar."
+test "Das ist olles alles egal." "Das ist alles egal."
+test "Ist dir olles alles klar?" "Ist dir alles klar?"
+test "Ist mir olles alles einerlei?" "Ist mir alles einerlei?"
+test "Das war olles alles ein Traum." "Das war alles ein Traum."
+test "Das ist olles alles vorbei." "Das ist alles vorbei."
+test "Ist dir olles alles recht?" "Ist dir alles recht?"
+test "Ist mir olles alles schnurz." "Ist mir alles schnurz."
+test "Das ist olles alles falsch." "Das ist alles falsch."
+test "Ist dir olles alles bekannt?" "Ist dir alles bekannt?"
+test "Das war olles alles nicht geplant." "Das war alles nicht geplant."
+test "Ist mir olles alles egal." "Ist mir alles egal."
+test "Das ist olles alles möglich." "Das ist alles möglich."
+test "Ist dir olles alles bewusst?" "Ist dir alles bewusst?"
+
+allows "alles"
+allows "olles"
