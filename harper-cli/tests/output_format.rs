@@ -155,7 +155,7 @@ fn compact_format_one_line_per_lint() {
 #[test]
 fn default_format_unchanged() {
     let output = harper_cli()
-        .args(["--no-color", "lint", "--format", "default", BAD_INPUT])
+        .args(["--no-color", "lint", "--format", "rich", BAD_INPUT])
         .output()
         .unwrap();
 

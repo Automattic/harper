@@ -1,3 +1,4 @@
+pub mod rich_format;
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::fs;
@@ -5,7 +6,6 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 
 use anyhow::Context;
-use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
 use rayon::prelude::*;
 use serde::Serialize;
@@ -15,13 +15,17 @@ use harper_core::{
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
+    {Dialect, DictWordMetadata, Document, remove_overlaps_map},
 };
 
 use crate::input::{
     AnyInput, InputTrait,
     multi_input::MultiInput,
     single_input::{SingleInput, SingleInputTrait, StdinInput},
+};
+
+use crate::lint::rich_format::{
+    build_rich_report, final_report, print_formatted_items, rgb_for_lint_kind,
 };
 
 /// Sync version of harper-ls/src/dictionary_io@load_dict
@@ -76,10 +80,13 @@ fn file_dict_name(path: &Path) -> PathBuf {
 pub enum OutputFormat {
     /// Rich output with source context (Ariadne reports).
     #[default]
-    Default,
+    #[clap(name = "rich")]
+    Rich,
     /// Structured JSON output.
+    #[clap(name = "json")]
     Json,
     /// One line per lint, no source context.
+    #[clap(name = "compact")]
     Compact,
 }
 
@@ -95,7 +102,7 @@ pub struct LintOptions {
 }
 
 enum ReportStyle {
-    FullAriadne,
+    RichStyle,
     BriefCountsOnly,
     Json,
     Compact,
@@ -255,8 +262,8 @@ pub fn lint(
     let report_mode = match (lint_options.format, count) {
         (OutputFormat::Json, _) => ReportStyle::Json,
         (OutputFormat::Compact, _) => ReportStyle::Compact,
-        (OutputFormat::Default, true) => ReportStyle::BriefCountsOnly,
-        (OutputFormat::Default, false) => ReportStyle::FullAriadne,
+        (OutputFormat::Rich, true) => ReportStyle::BriefCountsOnly,
+        (OutputFormat::Rich, false) => ReportStyle::RichStyle,
     };
 
     let mut input_jobs = Vec::new();
@@ -658,20 +665,6 @@ fn single_input_report(
         return;
     }
 
-    // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
-    const MAX_LINE_LEN: usize = 150;
-
-    let mut report_mode = report_mode;
-    let longest = find_longest_doc_line(doc.get_tokens());
-
-    if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
-        report_mode = &ReportStyle::BriefCountsOnly;
-        println!(
-            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-            input.format_path()
-        );
-    }
-
     // Report the number of lints no matter what report mode we are in
     println!(
         "{}: {}",
@@ -684,39 +677,16 @@ fn single_input_report(
         }
     );
 
-    // If we are in Ariadne mode, print the report
-    if matches!(report_mode, ReportStyle::FullAriadne) {
-        let primary_color = Color::Magenta;
-
-        let input_identifier = input.input.get_identifier();
-
-        if lint_count_after != 0 {
-            let mut report_builder = Report::build(ReportKind::Advice, (&input_identifier, 0..0));
-
-            for (rule_name, lints) in named_lints {
-                for lint in lints {
-                    let (r, g, b) = rgb_for_lint_kind(Some(&lint.lint_kind));
-                    report_builder = report_builder.with_label(
-                        Label::new((&input_identifier, lint.span.into()))
-                            .with_message(format!(
-                                "{} {}: {}",
-                                format_args!("[{}::{}]", lint.lint_kind, rule_name)
-                                    .fg(ariadne::Color::Rgb(r, g, b)),
-                                format_args!("(pri {})", lint.priority).fg(ariadne::Color::Rgb(
-                                    (r as f32 * 0.66) as u8,
-                                    (g as f32 * 0.66) as u8,
-                                    (b as f32 * 0.66) as u8
-                                )),
-                                lint.message
-                            ))
-                            .with_color(primary_color),
-                    );
-                }
-            }
-
-            let report = report_builder.finish();
-            report.print((&input_identifier, Source::from(source))).ok();
-        }
+    // If we are in rich mode, print report
+    if matches!(report_mode, ReportStyle::RichStyle) {
+        build_rich_report(
+            &input.input.get_identifier(),
+            named_lints,
+            source,
+            lint_count_after,
+            doc,
+            batch_mode,
+        );
     }
 
     // Print the more detailed counts for the lint kinds and then for the rules
@@ -751,235 +721,4 @@ fn single_input_report(
         println!("rules:");
         print_formatted_items(r_vec, input.color);
     }
-}
-
-fn find_longest_doc_line(toks: &[Token]) -> usize {
-    let mut longest_len_chars = 0;
-    let mut curr_len_chars = 0;
-    let mut current_line_start_tok_idx = 0;
-
-    for (idx, tok) in toks.iter().enumerate() {
-        if matches!(tok.kind, TokenKind::Newline(_))
-            || matches!(tok.kind, TokenKind::ParagraphBreak)
-        {
-            if curr_len_chars > longest_len_chars {
-                longest_len_chars = curr_len_chars;
-            }
-            curr_len_chars = 0;
-            current_line_start_tok_idx = idx + 1;
-        } else if matches!(tok.kind, TokenKind::Unlintable) {
-            // TODO would be more accurate to scan for \n in the tok.get_ch(src)
-        } else {
-            curr_len_chars += tok.span.len();
-        }
-    }
-
-    if curr_len_chars > longest_len_chars
-        && !toks.is_empty()
-        && current_line_start_tok_idx < toks.len()
-    {
-        longest_len_chars = curr_len_chars;
-    }
-
-    longest_len_chars
-}
-
-fn final_report(
-    dialect: Dialect,
-    batch_mode: bool,
-    all_lint_kinds: HashMap<LintKind, usize>,
-    all_rules: HashMap<String, usize>,
-    all_lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
-    all_spellos: HashMap<String, usize>,
-    color: bool,
-) {
-    // The stats summary of all inputs that we only do when there are multiple inputs.
-    if batch_mode {
-        let mut all_files_lint_kind_counts_vec: Vec<(LintKind, _)> =
-            all_lint_kinds.into_iter().collect();
-        all_files_lint_kind_counts_vec
-            .sort_by_key(|(lk, count)| (std::cmp::Reverse(*count), lk.to_string()));
-
-        let lint_kind_counts: Vec<(Option<String>, String)> = all_files_lint_kind_counts_vec
-            .into_iter()
-            .map(|(lint_kind, c)| {
-                let (r, g, b) = rgb_for_lint_kind(Some(&lint_kind));
-                (
-                    Some(format!("\x1b[38;2;{r};{g};{b}m")),
-                    format!("[{lint_kind}: {c}]"),
-                )
-            })
-            .collect();
-
-        if !lint_kind_counts.is_empty() {
-            println!("All files lint kinds:");
-            print_formatted_items(lint_kind_counts, color);
-        }
-
-        let mut all_files_rule_name_counts_vec: Vec<_> = all_rules.into_iter().collect();
-        all_files_rule_name_counts_vec
-            .sort_by_key(|(rule_name, count)| (std::cmp::Reverse(*count), rule_name.to_string()));
-
-        let rule_name_counts: Vec<(Option<String>, String)> = all_files_rule_name_counts_vec
-            .into_iter()
-            .map(|(rule_name, count)| (None, format!("({rule_name}: {count})")))
-            .collect();
-
-        if !rule_name_counts.is_empty() {
-            println!("All files rule names:");
-            print_formatted_items(rule_name_counts, color);
-        }
-    }
-
-    // The stats summary of all pairs of lint kind + rule name, whether there is only one input or multiple.
-    let mut lint_kind_rule_pairs: Vec<_> = all_lint_kind_rule_pairs.into_iter().collect();
-    lint_kind_rule_pairs.sort_by(|a, b| {
-        let (a, b) = ((&a.0, &a.1), (&b.0, &b.1));
-        b.1.cmp(a.1)
-            .then_with(|| a.0.0.to_string().cmp(&b.0.0.to_string()))
-            .then_with(|| a.0.1.cmp(&b.0.1))
-    });
-
-    // Format them using their colours
-    let formatted_lint_kind_rule_pairs: Vec<(Option<String>, String)> = lint_kind_rule_pairs
-        .into_iter()
-        .map(|ele| {
-            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0.0));
-            let ansi_prefix = format!("\x1b[38;2;{r};{g};{b}m");
-            (
-                Some(ansi_prefix),
-                format!("«« {} {}·{} »»", ele.1, ele.0.0, ele.0.1),
-            )
-        })
-        .collect();
-
-    if !formatted_lint_kind_rule_pairs.is_empty() {
-        // Print them with line wrapping
-        print_formatted_items(formatted_lint_kind_rule_pairs, color);
-    }
-
-    if !all_spellos.is_empty() {
-        // Group by lowercase spelling while preserving original case and counts
-        let mut grouped: HashMap<String, Vec<(String, usize)>> = HashMap::new();
-        for (spelling, count) in all_spellos {
-            grouped
-                .entry(spelling.to_lowercase())
-                .or_default()
-                .push((spelling, count));
-        }
-
-        // Create a vector of (lowercase_spelling, variants, total_count)
-        let mut grouped_vec: Vec<_> = grouped
-            .into_iter()
-            .map(|(lower, variants)| {
-                let total: usize = variants.iter().map(|(_, c)| c).sum();
-                (lower, variants, total)
-            })
-            .collect();
-
-        // Sort by total count (descending), then by lowercase spelling
-        grouped_vec.sort_by(|a, b| b.2.cmp(&a.2).then_with(|| a.0.cmp(&b.0)));
-
-        // Flatten the variants back out, but keep track of the group index for coloring
-        let spelling_vec: Vec<(Option<String>, String)> = grouped_vec
-            .into_iter()
-            .enumerate()
-            .flat_map(|(i, (_, variants, _))| {
-                // Sort variants by count (descending) then by original spelling
-                let mut variants = variants;
-                variants.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
-
-                // Choose colour based on group index (rotating through three colours)
-                let (r, g, b) = match i % 3 {
-                    0 => (180, 90, 150), // Magenta
-                    1 => (90, 180, 90),  // Green
-                    _ => (90, 150, 180), // Cyan
-                };
-                let ansi_color = format!("\x1b[38;2;{};{};{}m", r, g, b);
-
-                variants.into_iter().map(move |(spelling, c)| {
-                    (
-                        Some(ansi_color.clone()),
-                        format!("(\u{201c}{spelling}\u{201d}: {c})"),
-                    )
-                })
-            })
-            .collect();
-
-        println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
-        print_formatted_items(spelling_vec, color);
-    }
-}
-
-// Note: This must be kept synchronized with:
-// packages/lint-framework/src/lint/lintKindColor.ts
-// packages/web/src/lib/lintKindColor.ts
-// This can be removed when issue #1991 is resolved.
-fn lint_kind_to_rgb() -> &'static [(LintKind, (u8, u8, u8))] {
-    &[
-        (LintKind::Agreement, (0x22, 0x8B, 0x22)),
-        (LintKind::BoundaryError, (0x8B, 0x45, 0x13)),
-        (LintKind::Capitalization, (0x54, 0x0D, 0x6E)),
-        (LintKind::Eggcorn, (0xFF, 0x8C, 0x00)),
-        (LintKind::Enhancement, (0x0E, 0xAD, 0x69)),
-        (LintKind::Formatting, (0x7D, 0x3C, 0x98)),
-        (LintKind::Grammar, (0x9B, 0x59, 0xB6)),
-        (LintKind::Malapropism, (0xC7, 0x15, 0x85)),
-        (LintKind::Miscellaneous, (0x3B, 0xCE, 0xAC)),
-        (LintKind::Nonstandard, (0x00, 0x8B, 0x8B)),
-        (LintKind::Punctuation, (0xD4, 0x85, 0x0F)),
-        (LintKind::Readability, (0x2E, 0x8B, 0x57)),
-        (LintKind::Redundancy, (0x46, 0x82, 0xB4)),
-        (LintKind::Regionalism, (0xC0, 0x61, 0xCB)),
-        (LintKind::Repetition, (0x00, 0xA6, 0x7C)),
-        (LintKind::Spelling, (0xEE, 0x42, 0x66)),
-        (LintKind::Style, (0xFF, 0xD2, 0x3F)),
-        (LintKind::Typo, (0xFF, 0x6B, 0x35)),
-        (LintKind::Usage, (0x1E, 0x90, 0xFF)),
-        (LintKind::WordChoice, (0x22, 0x8B, 0x22)),
-    ]
-}
-
-fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
-    olk.and_then(|lk| {
-        lint_kind_to_rgb()
-            .iter()
-            .find(|(k, _)| k == lk)
-            .map(|(_, color)| *color)
-    })
-    .unwrap_or((0, 0, 0))
-}
-
-fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>, color: bool) {
-    let mut first_on_line = true;
-    let mut len_so_far = 0;
-
-    for (ansi, text) in items {
-        let text_len = text.len();
-
-        let mut len_to_add = !first_on_line as usize + text_len;
-
-        let mut before = "";
-        if len_so_far + len_to_add > 120 {
-            before = "\n";
-            len_to_add -= 1; // no space before the first item
-            len_so_far = 0;
-        } else if !first_on_line {
-            before = " ";
-        }
-
-        let (set, reset): (&str, &str) = if color {
-            if let Some(prefix) = ansi.as_ref() {
-                (prefix.as_str(), "\x1b[0m")
-            } else {
-                ("", "")
-            }
-        } else {
-            ("", "")
-        };
-        print!("{}{}{}{}", before, set, text, reset);
-        len_so_far += len_to_add;
-        first_on_line = false;
-    }
-    println!();
 }
