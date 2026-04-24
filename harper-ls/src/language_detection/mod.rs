@@ -63,9 +63,6 @@ impl LanguageDetectionRegistry {
         default_dialect
     }
 
-    pub fn detector_names(&self) -> Vec<&str> {
-        self.detectors.iter().map(|d| d.name()).collect()
-    }
 }
 
 impl Default for LanguageDetectionRegistry {

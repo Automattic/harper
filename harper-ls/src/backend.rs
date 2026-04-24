@@ -44,7 +44,7 @@ use tower_lsp_server::lsp_types::{
     TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
-use tracing::{error, info, warn};
+use tracing::{debug, error, info, warn};
 
 /// Return harper-ls version
 pub fn ls_version() -> &'static str {
@@ -661,7 +661,7 @@ impl Backend {
     async fn publish_diagnostics(&self, uri: &Uri) {
         let diagnostics = self.generate_diagnostics(uri).await;
 
-        warn!(
+        debug!(
             "harper-ls publish_diagnostics: {} lints for {:?}",
             diagnostics.len(),
             uri
@@ -1085,10 +1085,11 @@ impl LanguageServer for Backend {
     }
 
     async fn shutdown(&self) -> JsonResult<()> {
-        let doc_states = self.doc_state.lock().await;
+        // Collect URIs while holding the lock, then drop it
+        let uris: Vec<Uri> = self.doc_state.lock().await.keys().cloned().collect();
 
-        // Clears the diagnostics for open buffers.
-        for uri in doc_states.keys() {
+        // Clears the diagnostics for open buffers (without holding lock)
+        for uri in &uris {
             let result = PublishDiagnosticsParams {
                 uri: uri.clone(),
                 diagnostics: vec![],
