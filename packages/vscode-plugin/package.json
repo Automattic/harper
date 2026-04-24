@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -875,6 +875,18 @@
 					"default": true,
 					"description": "Corrects extraneous apostrophe in `client's side` and `server's side`."
 				},
+				"harper.linters.CloseTightKnit": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `close-nit` and `tight-nit` to `close-knit` and `tight-knit`."
+				},
+				"harper.linters.CodeInWriteIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the wrong preposition `on` to `in` when referring to writing code."
+				},
 				"harper.linters.ColdModalTypo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1379,6 +1391,12 @@
 					"default": true,
 					"description": "Expands the abbreviation `fwd` to the full word `forward` for clarity."
 				},
+				"harper.linters.ExpandGovt": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity."
+				},
 				"harper.linters.ExpandMemoryShorthands": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1552,6 +1570,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes the common typo where writers write `find` when they mean `fine`."
+				},
+				"harper.linters.FindOut": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags `find out` when a plain `find` is the better choice."
 				},
 				"harper.linters.FirstAidKit": {
 					"scope": "resource",
@@ -2044,6 +2068,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "This rule looks for `to verb` where `verb` is not in the infinitive form."
+				},
+				"harper.linters.InflectionPoint": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `infliction point` to `inflection point`."
 				},
 				"harper.linters.Initiatively": {
 					"scope": "resource",
@@ -2585,6 +2615,12 @@
 					"default": true,
 					"description": "Finds redundant paring of `more` or `most` with adjectives already in the comparative or superlative form."
 				},
+				"harper.linters.MoreThanMeetsTheEye": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects nonstandard and less idiomatic variants of `more than meets the eye`."
+				},
 				"harper.linters.MoreThatLikely": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2813,6 +2849,12 @@
 					"default": true,
 					"description": "You should never capitalize number suffixes."
 				},
+				"harper.linters.NumericRangeEnDash": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Replaces hyphens and em dashes with en dashes in isolated numeric ranges such as `12–14`."
+				},
 				"harper.linters.ObsessPreposition": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2842,6 +2884,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands an initialism."
+				},
+				"harper.linters.OkToOkay": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `ok` to `okay`."
 				},
 				"harper.linters.OldWivesTale": {
 					"scope": "resource",
@@ -3022,6 +3070,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Keeps the compound adjective together before nouns like folders, files, or web pages so the dependency between them is clear."
+				},
+				"harper.linters.Payed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `payed` to `paid` and `overpayed` to `overpaid`."
 				},
 				"harper.linters.PeaceOfMind": {
 					"scope": "resource",
