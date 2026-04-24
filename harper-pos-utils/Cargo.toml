@@ -8,7 +8,7 @@ repository = "https://github.com/automattic/harper"
 
 [dependencies]
 rs-conllu = "0.3.0"
-hashbrown = { version = "0.16.1", features = ["serde"] }
+hashbrown = { version = "0.17.0", features = ["serde"] }
 strum = "0.28.0"
 strum_macros = "0.28.0"
 serde = { version = "1.0.228", features = ["derive"] }
