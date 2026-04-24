@@ -1274,6 +1274,13 @@
 								"state": true,
 								"label": "Inflection Point"
 							}
+						},
+						{
+							"Bool": {
+								"name": "HandfulOfMore",
+								"state": true,
+								"label": "Handful Of More"
+							}
 						}
 					]
 				}
