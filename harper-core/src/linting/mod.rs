@@ -566,6 +566,28 @@ pub mod tests {
         }
     }
 
+    /// Helper function to format error messages for suggestion assertion failures
+    fn format_suggestion_error(result: &SuggestionSearchResult, needle: &str) -> String {
+        if !result.matches_found {
+            format!(
+                "❌ No matches found by the linter.\n\
+                🎯 Expected: \"{needle}\""
+            )
+        } else {
+            format!(
+                "❌ No suggestion sequence produced the expected result.\n\
+                🎯 Expected:  \"{needle}\"\n\
+                🔍 But found: \"{}\"{}",
+                result.first_failed.as_deref().unwrap_or("<none>"),
+                if result.sequences_explored > 1 {
+                    format!(" and {} others", result.sequences_explored - 1)
+                } else {
+                    String::new()
+                }
+            )
+        }
+    }
+
     /// Applies suggestions iteratively until any combination produces the expected result.
     ///
     /// Explores all possible suggestion branches (depth-first search) until finding a path
@@ -577,42 +599,80 @@ pub mod tests {
     /// See issue #950: https://github.com/Automattic/harper/issues/950
     #[track_caller]
     pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if search_for_suggestion(DocumentType::PlainEnglish, text, &mut linter, needle, 0) {
+        let mut sequences_explored = 0;
+        let result = search_for_suggestion(
+            DocumentType::PlainEnglish,
+            text,
+            &mut linter,
+            needle,
+            0,
+            &mut sequences_explored,
+        );
+
+        if result.found {
             return;
         }
 
-        panic!(
-            "No suggestion sequence produced the expected result.\n\
-            Expected: \"{needle}\""
-        );
+        panic!("{}", format_suggestion_error(&result, needle));
     }
 
     /// DFS implementation using markdown instead of plain English
     #[track_caller]
     pub fn assert_markdown_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if !search_for_suggestion(DocumentType::Markdown, text, &mut linter, needle, 0) {
-            panic!("No suggestion sequence produced the expected result.\nExpected: {needle}");
+        let mut sequences_explored = 0;
+        let result = search_for_suggestion(
+            DocumentType::Markdown,
+            text,
+            &mut linter,
+            needle,
+            0,
+            &mut sequences_explored,
+        );
+
+        if result.found {
+            return;
         }
+
+        panic!("{}", format_suggestion_error(&result, needle));
+    }
+
+    #[derive(Debug)]
+    struct SuggestionSearchResult {
+        found: bool,
+        sequences_explored: usize,
+        matches_found: bool,
+        first_failed: Option<String>,
     }
 
     /// Recursively searches all suggestion combinations using depth-first search.
-    /// Returns true if any path reaches the expected result, false otherwise.
+    /// Returns detailed search statistics and results.
     fn search_for_suggestion(
         doc_type: DocumentType,
         text: &str,
         linter: &mut impl Linter,
         needle: &str,
         depth: usize,
-    ) -> bool {
+        sequences_explored: &mut usize,
+    ) -> SuggestionSearchResult {
         // Prevent infinite recursion (e.g. cycles in suggestions)
         if depth > 100 {
             eprintln!("⚠️  Reached depth limit (100)");
-            return false;
+            return SuggestionSearchResult {
+                found: false,
+                sequences_explored: *sequences_explored,
+                matches_found: false,
+                first_failed: Some(text.to_string()),
+            };
         }
 
         // Check if we've reached the expected result
         if text == needle {
-            return true;
+            return SuggestionSearchResult {
+                found: true,
+                sequences_explored: *sequences_explored,
+                matches_found: true,
+                first_failed: None,
+            };
         }
 
         // Lint current text and try each suggestion branch
@@ -621,20 +681,93 @@ pub mod tests {
         let mut lints = linter.lint(&document);
         lints.sort_by_key(|l| l.priority);
 
+        let matches_found = lints.first().is_some();
+        let mut total_sequences = *sequences_explored;
+        let mut first_failed = None;
+
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {
+                *sequences_explored += 1;
                 let mut chars_copy = chars.clone();
                 sug.apply(lint.span, &mut chars_copy);
                 let next: String = chars_copy.iter().collect();
 
+                // Store the first failed suggestion
+                if first_failed.is_none() {
+                    first_failed = Some(next.clone());
+                }
+
                 // Recursively search this branch
-                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1) {
-                    return true;
+                let result = search_for_suggestion(
+                    doc_type,
+                    &next,
+                    linter,
+                    needle,
+                    depth + 1,
+                    sequences_explored,
+                );
+                if result.found {
+                    return result;
+                }
+
+                total_sequences = result.sequences_explored;
+                // Keep the first failed from the current level if deeper levels didn't find one
+                if result.first_failed.is_some() && first_failed.is_none() {
+                    first_failed = result.first_failed;
                 }
             }
         }
 
-        false
+        SuggestionSearchResult {
+            found: false,
+            sequences_explored: total_sequences,
+            matches_found,
+            first_failed,
+        }
+    }
+
+    // Test cases to demonstrate enhanced error reporting using existing TestLinter
+
+    #[test]
+    fn test_single_suggestion_success() {
+        assert_suggestion_result(
+            "fix this erorr",
+            TestLinter::new(&[(&["erorr"], &["error"])]),
+            "fix this error",
+        );
+    }
+
+    #[test]
+    #[ignore]
+    fn test_single_suggestion_failure() {
+        // Demonstrates: "Single suggestion did not produce the expected result"
+        assert_suggestion_result(
+            "fix this erorr",
+            TestLinter::new(&[(&["erorr"], &["error"])]),
+            "fix this ERROR", // Wrong case - will fail
+        );
+    }
+
+    #[test]
+    #[ignore]
+    fn test_multiple_suggestions_failure() {
+        // Demonstrates: "No suggestion sequence produced the expected result" with multiple sequences
+        assert_suggestion_result(
+            "choose the ambiguous option",
+            TestLinter::new(&[(&["ambiguous"], &["clear", "specific", "precise"])]),
+            "choose the wrong option",
+        );
+    }
+
+    #[test]
+    #[ignore]
+    fn test_no_matches_failure() {
+        // Demonstrates: "No matches found by the linter"
+        assert_suggestion_result(
+            "this text has no matching patterns",
+            TestLinter::new(&[(&["erorr"], &["error"])]),
+            "this text has no matching patterns",
+        );
     }
 
     #[test]
@@ -687,13 +820,17 @@ pub mod tests {
         mut linter: impl Linter,
         bad_suggestion: &str,
     ) {
+        let mut sequences_explored = 0;
         if !search_for_suggestion(
             DocumentType::PlainEnglish,
             text,
             &mut linter,
             bad_suggestion,
             0,
-        ) {
+            &mut sequences_explored,
+        )
+        .found
+        {
             return;
         }
 
