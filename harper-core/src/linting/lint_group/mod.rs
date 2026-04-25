@@ -226,7 +226,10 @@ use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
-use super::to_two_too::ToTwoToo;
+use super::to_two_too::{
+    ToTooAdjVerbEdPunct, ToTooAdjectiveEnd, ToTooAdjectivePunct, ToTooAdverb, ToTooChunkStartComma,
+    ToTooDegreeWords, ToTooEos, ToTooPronounEnd, ToTwoToo, TooTo,
+};
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
@@ -715,6 +718,15 @@ impl LintGroup {
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(ToAdverb, true);
+        insert_expr_rule!(TooTo, false);
+        insert_expr_rule!(ToTooAdjectiveEnd, false);
+        insert_expr_rule!(ToTooAdjectivePunct, false);
+        insert_expr_rule!(ToTooAdjVerbEdPunct, false);
+        insert_struct_rule!(ToTooAdverb, false);
+        insert_expr_rule!(ToTooChunkStartComma, false);
+        insert_expr_rule!(ToTooDegreeWords, false);
+        insert_struct_rule!(ToTooEos, false);
+        insert_expr_rule!(ToTooPronounEnd, false);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
         insert_expr_rule_with_dict!(TransposedSpace, true);
