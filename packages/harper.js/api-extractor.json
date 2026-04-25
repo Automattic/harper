@@ -1,5 +1,5 @@
 {
-	"mainEntryPointFilePath": "./dist/harper.d.ts",
+	"mainEntryPointFilePath": "./dist/index.d.ts",
 	"apiReport": {
 		"enabled": false
 	},

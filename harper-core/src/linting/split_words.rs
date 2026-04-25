@@ -3,7 +3,10 @@ use std::sync::Arc;
 use hashbrown::HashSet;
 
 use crate::expr::Expr;
-use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
+use crate::linting::{
+    ExprLinter, LintKind, Suggestion,
+    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+};
 use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
@@ -38,7 +41,12 @@ impl ExprLinter for SplitWords {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let word = &matched_tokens[0];
 
         // If it's a recognized word, we don't care about it.
@@ -46,7 +54,7 @@ impl ExprLinter for SplitWords {
             return None;
         }
 
-        let chars = &word.span.get_content(source);
+        let chars = &word.get_ch(source);
 
         // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);
@@ -76,6 +84,7 @@ impl ExprLinter for SplitWords {
         }
 
         let mut suggestions = Vec::new();
+        let mut has_anchor_split = false;
         let mut message: Option<String> = None;
 
         // Check positions in middle-outward order
@@ -88,20 +97,22 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            if let Some(cand_meta) = self.dict.get_word_metadata(candidate) {
-                if !cand_meta.common {
-                    continue;
-                }
-            } else {
+            let Some(cand_meta) = self.dict.get_word_metadata(candidate) else {
+                continue;
+            };
+            if !cand_meta.common {
                 continue;
             }
 
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder) {
-                if !rem_meta.common {
-                    continue;
-                }
-            } else {
+            let Some(rem_meta) = self.dict.get_word_metadata(remainder) else {
                 continue;
+            };
+            if !rem_meta.common {
+                continue;
+            }
+
+            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+                has_anchor_split = true;
             }
 
             // Valid split found
@@ -124,6 +135,10 @@ impl ExprLinter for SplitWords {
         if !suggestions.is_empty() {
             let original_word: String = chars.iter().collect();
 
+            if should_defer_to_spellcheck(&self.dict, chars, has_anchor_split, context) {
+                return None;
+            }
+
             if suggestions.len() != 1 {
                 message = Some(format!(
                     "`{original_word}` has a missing space between words."
@@ -141,6 +156,45 @@ impl ExprLinter for SplitWords {
 
         None
     }
+}
+
+fn is_anchor_split(meta: &crate::DictWordMetadata, word: &[char]) -> bool {
+    meta.preposition
+        || meta.is_determiner()
+        || meta.is_conjunction()
+        || meta.is_pronoun()
+        || meta.is_adverb()
+        || word.len() <= 2
+}
+
+fn should_defer_to_spellcheck(
+    dict: &TrieDictionary<Arc<FstDictionary>>,
+    chars: &[char],
+    has_anchor_split: bool,
+    context: Option<(&[Token], &[Token])>,
+) -> bool {
+    if has_anchor_split {
+        return false;
+    }
+
+    let nounish_context = context.is_some_and(|_| {
+        at_start_of_sentence(context)
+            || preceded_by_word(context, |tok| {
+                tok.kind.is_determiner()
+                    || tok.kind.is_pronoun()
+                    || tok.kind.is_adjective()
+                    || tok.kind.is_possessive_determiner()
+            })
+    });
+
+    if !nounish_context {
+        return false;
+    }
+
+    // If the whole word has a strong one-word correction, prefer that over a content-word split.
+    dict.fuzzy_match(chars, 1, 1)
+        .first()
+        .is_some_and(|suggestion| suggestion.edit_distance == 1)
 }
 
 #[cfg(test)]
@@ -214,6 +268,21 @@ mod tests {
     #[test]
     fn ignores_prefix_without_valid_remainder() {
         assert_no_lints("The monkeyxyz escaped unnoticed.", SplitWords::default());
+    }
+
+    #[test]
+    fn ignores_single_word_misspelling_with_split_like_halves() {
+        assert_no_lints("I love this extention!", SplitWords::default());
+    }
+
+    #[test]
+    fn corrects_doesthe() {
+        assert_suggestion_result("doesthe", SplitWords::default(), "does the");
+    }
+
+    #[test]
+    fn corrects_splitwords() {
+        assert_suggestion_result("splitwords", SplitWords::default(), "split words");
     }
 
     #[test]

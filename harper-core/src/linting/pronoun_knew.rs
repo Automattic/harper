@@ -31,7 +31,7 @@ impl Default for PronounKnew {
                 return false;
             }
 
-            let pronorm = tok.span.get_content_string(source).to_lowercase();
+            let pronorm = tok.get_str(source).to_lowercase();
             let excluded = ["every", "something", "nothing"];
             !excluded.contains(&&*pronorm)
         };

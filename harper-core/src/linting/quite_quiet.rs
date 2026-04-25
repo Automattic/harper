@@ -9,25 +9,29 @@ pub struct QuiteQuiet {
 
 impl Default for QuiteQuiet {
     fn default() -> Self {
-        let quiet_word = SequenceExpr::default()
-            .t_aco("quiet")
-            .t_ws()
-            .then_kind_any_but_not_except(
-                &[
-                    TokenKind::is_adjective,
-                    TokenKind::is_adverb,
-                    TokenKind::is_verb,
-                ] as &[_],
-                TokenKind::is_noun,
-                &["here", "up"],
-            );
+        // "quiet" + adj/adv/verb likely means "quite" was intended.
+        // Exclude nouns, prepositions, conjunctions, and select adverbs
+        // that legitimately follow predicate "quiet".
+        let quiet_word =
+            SequenceExpr::default()
+                .t_aco("quiet")
+                .t_ws()
+                .then(|tok: &Token, src: &[char]| {
+                    let k = &tok.kind;
+                    (k.is_adjective() || k.is_adverb() || k.is_verb())
+                        && !k.is_noun()
+                        && !k.is_preposition()
+                        && !k.is_conjunction()
+                        && !tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
+                            "here", "there", "too", "already", "lately",
+                        ])
+                });
 
         let negative_contraction_quiet = SequenceExpr::with(|tok: &Token, src: &[char]| {
             if !tok.kind.is_verb() || !tok.kind.is_apostrophized() {
                 return false;
             }
-            tok.span
-                .get_content(src)
+            tok.get_ch(src)
                 .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
         })
         .t_ws()
@@ -220,6 +224,119 @@ mod tests {
         assert_no_lints(
             "The namespaces are generally quite short",
             QuiteQuiet::default(),
+        );
+    }
+
+    // --- Predicate adjective: change-of-state verbs + prepositions ---
+
+    #[test]
+    fn dont_flag_go_quiet_for() {
+        assert_no_lints(
+            "If I go quiet for a week… yeah I'm dead.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_went_quiet_about() {
+        assert_no_lints(
+            "He went quiet about the whole thing.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_keep_quiet_about() {
+        assert_no_lints("She kept quiet about what happened.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_stay_quiet_during() {
+        assert_no_lints(
+            "Please stay quiet during the presentation.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_fell_quiet_after() {
+        assert_no_lints(
+            "The room fell quiet after the announcement.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_remained_quiet_in() {
+        assert_no_lints("She remained quiet in meetings.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_grew_quiet_on() {
+        assert_no_lints("He grew quiet on the matter.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_be_quiet_for() {
+        assert_no_lints("Be quiet for a moment.", QuiteQuiet::default());
+    }
+
+    // --- Predicate adjective: conjunctions ---
+
+    #[test]
+    fn dont_flag_quiet_and() {
+        assert_no_lints("Stay quiet and listen.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quiet_but() {
+        assert_no_lints("She was quiet but firm.", QuiteQuiet::default());
+    }
+
+    // --- Predicate adjective: temporal/locative adverbs ---
+
+    #[test]
+    fn dont_flag_quiet_now() {
+        assert_no_lints("Be quiet now.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quiet_there() {
+        assert_no_lints("It's quiet there.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quiet_down() {
+        assert_no_lints("Quiet down, everyone.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quiet_enough() {
+        assert_no_lints("The room was quiet enough.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quiet_lately() {
+        assert_no_lints("It's been quiet lately.", QuiteQuiet::default());
+    }
+
+    // --- Still catches genuine typos ---
+
+    #[test]
+    fn still_catches_quiet_remarkable() {
+        assert_suggestion_result(
+            "That was quiet remarkable.",
+            QuiteQuiet::default(),
+            "That was quite remarkable.",
+        );
+    }
+
+    #[test]
+    fn still_catches_quiet_impressive() {
+        assert_suggestion_result(
+            "That was quiet impressive.",
+            QuiteQuiet::default(),
+            "That was quite impressive.",
         );
     }
 }

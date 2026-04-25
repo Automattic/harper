@@ -96,8 +96,8 @@
 # D   NSg     VL3 NSg/P D   NSg/VB+ NSg/VB .
 > The stream  runs   by    our back     door    .
 # D+  NSg/VB+ NPl/V3 NSg/P D$+ NSg/VB/J NSg/VB+ .
-> He       ran     straight   by    me       .
-# NPr/ISg+ NSg/VPt NSg/VB/J/R NSg/P NPr/ISg+ .
+> He       ran straight   by    me       .
+# NPr/ISg+ VPt NSg/VB/J/R NSg/P NPr/ISg+ .
 > Be       back     by    ten o'clock ! .
 # NSg/VLXB NSg/VB/J NSg/P NSg R       . .
 > We'll find   someone by    the end    of March   .
@@ -378,8 +378,8 @@
 # D+  NSg/VB/J+ VL3 NPr/J/R/P D   NSg/VB .
 > There were     three pickles in        a    jar     .
 # R+    NSg/VLPt NSg   NPl/V3  NPr/J/R/P D/P+ NSg/VB+ .
-> I       like         living  in        the city .
-# ISg/#r+ NSg/VB/J/C/P Nᴹ/Vg/J NPr/J/R/P D+  NSg+ .
+> I       like         living    in        the city .
+# ISg/#r+ NSg/VB/J/C/P N🅪Sg/Vg/J NPr/J/R/P D+  NSg+ .
 > There are lots   of trees   in        the park    .
 # R+    VLB NPl/V3 P  NPl/V3+ NPr/J/R/P D+  NPr/VB+ .
 > We   are in        the enemy   camp      .
@@ -466,8 +466,8 @@
 # R        D/P+ NSg/VB/J+ NPr/VB+ VP/J   NPr/J/R/P .
 > Would you    like         that      to take   away or    eat in        ?
 # VXB   ISgPl+ NSg/VB/J/C/P I/C/Ddem+ P  NSg/VB VB/J NPr/C VB  NPr/J/R/P .
-> He       ran     to the edge   of the swimming pool    and  dived in        .
-# NPr/ISg+ NSg/VPt P  D   NSg/VB P  D+  NSg/Vg   NSg/VB+ VB/C VP/J  NPr/J/R/P .
+> He       ran to the edge   of the swimming pool    and  dived in        .
+# NPr/ISg+ VPt P  D   NSg/VB P  D+  NSg/Vg   NSg/VB+ VB/C VP/J  NPr/J/R/P .
 > They flew      in        from London last      night    .
 # IPl+ NSg/VPt/J NPr/J/R/P P    NPr+   NSg/VB/J+ N🅪Sg/VB+ .
 > For   six  hours the tide    flows  in        , then      for   another six  hours it       flows  out          .

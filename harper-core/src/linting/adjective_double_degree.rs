@@ -32,10 +32,10 @@ impl ExprLinter for AdjectiveDoubleDegree {
         let phrase_span = toks.span()?;
         let phrase_chars = phrase_span.get_content(src);
 
-        let adj_chars = toks.last()?.span.get_content(src);
+        let adj_chars = toks.last()?.get_ch(src);
 
         let (lint_kind, message, suggestions) = match (
-            &toks.first()?.span.get_content(src).to_lower().as_ref(),
+            &toks.first()?.get_ch(src).to_lower().as_ref(),
             toks.last()?.kind.is_comparative_adjective(),
             toks.last()?.kind.is_superlative_adjective(),
         ) {

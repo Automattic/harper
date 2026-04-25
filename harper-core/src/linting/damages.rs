@@ -52,7 +52,7 @@ impl ExprLinter for Damages {
 
         // Singular noun/verb lemma is not an error but during development we'll print uses of it
         //  to observe its context.
-        if damage_chars.eq_ignore_ascii_case_chars(&['d', 'a', 'm', 'a', 'g', 'e']) {
+        if damage_chars.eq_ch(&['d', 'a', 'm', 'a', 'g', 'e']) {
             return None;
         }
 
@@ -88,15 +88,15 @@ impl ExprLinter for Damages {
             if (prev_word.kind.is_adjective()
                 || prev_word.kind.is_determiner()
                 || prev_word.kind.is_preposition())
-                && !prev_word
-                    .span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_chars(&['t', 'o'])
+                && !prev_word.get_ch(src).eq_ch(&['t', 'o'])
             {
                 can = CanPrecede::Noun;
             }
 
-            if prev_word.kind.is_auxiliary_verb() {
+            if prev_word.kind.is_auxiliary_verb()
+                || (prev_word.kind.is_subject_pronoun()
+                    && prev_word.kind.is_third_person_singular_pronoun())
+            {
                 can = if can == CanPrecede::Noun {
                     CanPrecede::EitherNounOrVerb
                 } else {
@@ -135,15 +135,13 @@ impl ExprLinter for Damages {
         // 1. "If you encounter any issues, errors, or damages resulting from the use of these templates,
         //     the repository author assumes no responsibility or liability."
         // 2. "The author will not be liable for any losses and/or damages in connection with the use of our website"
-        if pretoks.iter().any(|t| {
-            t.span
-                .get_content(src)
-                .eq_any_ignore_ascii_case_str(KEYWORDS)
-        }) || postoks.iter().any(|t| {
-            t.span
-                .get_content(src)
-                .eq_any_ignore_ascii_case_str(KEYWORDS)
-        }) {
+        if pretoks
+            .iter()
+            .any(|t| t.get_ch(src).eq_any_ignore_ascii_case_str(KEYWORDS))
+            || postoks
+                .iter()
+                .any(|t| t.get_ch(src).eq_any_ignore_ascii_case_str(KEYWORDS))
+        {
             return None;
         }
 
@@ -154,7 +152,7 @@ impl ExprLinter for Damages {
                 damage_chars[..6].to_vec(),
                 damage_chars,
             )],
-            message: "Singular `damage` is correct when not refering to a court case.".to_string(),
+            message: "Singular `damage` is correct when not referring to a court case.".to_string(),
             ..Default::default()
         })
     }
@@ -301,5 +299,13 @@ mod tests {
             "It would be useful to be able to see asset-level damages after running FDA 2.0.",
             Damages::default(),
         );
+    }
+
+    // Issues reported on GitHub or Discord
+
+    // https://discord.com/channels/1335035237213671495/1491949288060751952/1491949288060751952
+    #[test]
+    fn ignore_it_damages_the_environment() {
+        assert_no_lints("it damages the environment", Damages::default());
     }
 }

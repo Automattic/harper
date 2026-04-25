@@ -13,8 +13,8 @@ impl Expr for DurationExpr {
         }
 
         let units = WordSet::new(&[
-            "minute", "minutes", "hour", "hours", "day", "days", "week", "weeks", "month",
-            "months", "year", "years",
+            "second", "seconds", "minute", "minutes", "hour", "hours", "day", "days", "week",
+            "weeks", "month", "months", "year", "years",
         ]);
 
         let expr = SequenceExpr::longest_of(vec![

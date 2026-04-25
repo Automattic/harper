@@ -1,6 +1,6 @@
 import { Span } from 'harper-wasm';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { binary } from './binary';
+import { binary } from './binaries/binary';
 import LocalLinter from './LocalLinter';
 import Serializer from './Serializer';
 

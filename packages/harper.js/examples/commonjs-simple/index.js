@@ -1,9 +1,10 @@
 async function main() {
 	const harper = await import('harper.js');
+	const { binary } = await import('harper.js/binary');
 	// We cannot use `WorkerLinter` on Node.js since it relies on web-specific APIs.
 	// This constructs the linter to consume American English.
 	const linter = new harper.LocalLinter({
-		binary: harper.binary,
+		binary,
 		dialect: harper.Dialect.American,
 	});
 

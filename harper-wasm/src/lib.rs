@@ -6,6 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
+use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
@@ -16,7 +17,6 @@ use harper_core::{
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
-use harper_typst::Typst;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
 use wasm_bindgen::JsValue;
@@ -64,7 +64,19 @@ impl Language {
             Language::Plain => Box::new(PlainEnglish),
             // TODO: Have a way to configure the Markdown parser
             Language::Markdown => Box::new(Markdown::default()),
-            Language::Typst => Box::new(Typst),
+            Language::Typst => {
+                #[cfg(feature = "typst")]
+                {
+                    use harper_typst::Typst;
+                    Box::new(Typst)
+                }
+                #[cfg(not(feature = "typst"))]
+                {
+                    panic!(
+                        "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
+                    )
+                }
+            }
         }
     }
 }
@@ -135,7 +147,7 @@ impl Linter {
     /// Update the dictionary inside [`Self::lint_group`] to include [`Self::user_dictionary`].
     /// This clears any linter caches, so use it sparingly.
     fn synchronize_lint_dict(&mut self) {
-        let mut lint_config = self.lint_group.config.clone();
+        let lint_config = self.lint_group.config.clone();
 
         let mut constituent_dictionaries = vec![Arc::new(self.user_dictionary.clone())];
         constituent_dictionaries.extend(self.weirpack_dictionaries.iter().cloned());
@@ -145,7 +157,7 @@ impl Linter {
         self.lint_group =
             LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
 
-        self.lint_group.config.merge_from(&mut lint_config);
+        self.lint_group.config.merge_from(lint_config);
     }
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
@@ -211,6 +223,14 @@ impl Linter {
         serde_json::to_string(&self.lint_group.config).unwrap()
     }
 
+    pub fn get_structured_lint_config_as_json(&self) -> String {
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        serde_json::to_string(&human).unwrap()
+    }
+
     pub fn set_lint_config_from_json(&mut self, json: String) -> Result<(), String> {
         self.lint_group.config = serde_json::from_str(&json).map_err(|v| v.to_string())?;
         Ok(())
@@ -240,6 +260,16 @@ impl Linter {
         self.lint_group.config.serialize(&serializer).unwrap()
     }
 
+    pub fn get_structured_lint_config_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        human.serialize(&serializer).unwrap()
+    }
+
     pub fn set_lint_config_from_object(&mut self, object: JsValue) -> Result<(), String> {
         self.lint_group.config =
             serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?;
@@ -247,13 +277,10 @@ impl Linter {
     }
 
     pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
-        let source: Vec<_> = source_text.chars().collect();
+        let source: Lrc<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        let document =
+            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
 
         self.ignored_lints.ignore_lint(&lint.inner, &document);
     }
@@ -267,7 +294,7 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_vec(
+        let document = Document::new_from_chars(
             source.into(),
             &lint.language.create_parser(),
             &self.dictionary,
@@ -284,8 +311,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<OrganizedGroup> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -302,7 +328,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -324,8 +350,8 @@ impl Linter {
                 lints: ls
                     .into_iter()
                     .map(|l| {
-                        let problem_text = l.span.get_content_string(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                        let problem_text = l.get_str(&source);
+                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
 
                         Lint::new(l, span, problem_text, language)
                     })
@@ -344,8 +370,7 @@ impl Linter {
         all_headings: bool,
         regex_mask: Option<String>,
     ) -> Vec<Lint> {
-        let source: Vec<_> = text.chars().collect();
-        let source = Lrc::new(source);
+        let source: Lrc<_> = text.chars().collect();
 
         let mut parser = language.create_parser();
 
@@ -362,7 +387,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_vec(source.clone(), &parser, &self.dictionary);
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
         let temp = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
@@ -377,8 +402,8 @@ impl Linter {
         lints
             .into_iter()
             .map(|l| {
-                let problem_text = l.span.get_content_string(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(source.as_slice());
+                let problem_text = l.get_str(&source);
+                let span = Into::<Span>::into(l.span).to_js_indices(&source);
                 Lint::new(l, span, problem_text, language)
             })
             .collect()
@@ -453,7 +478,7 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_vec(
+        let doc = Document::new_from_chars(
             source.clone().into(),
             &lint.language.create_parser(),
             &self.dictionary,
@@ -518,8 +543,8 @@ impl Linter {
             self.synchronize_lint_dict();
         }
 
-        let mut group = pack.to_lint_group().map_err(|err| err.to_string())?;
-        self.lint_group.merge_from(&mut group);
+        let group = pack.to_lint_group().map_err(|err| err.to_string())?;
+        self.lint_group.merge_from(group);
         Ok(JsValue::UNDEFINED)
     }
 }

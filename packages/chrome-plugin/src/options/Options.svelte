@@ -1,16 +1,26 @@
 <script lang="ts">
 import { Button, Card, Input, Select, Textarea } from 'components';
-import { Dialect, type LintConfig } from 'harper.js';
+import {
+	Dialect,
+	type LintConfig,
+	type StructuredLintConfig,
+	type StructuredLintSetting,
+} from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
 import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
+import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
 let lintConfig: LintConfig = $state({});
+let structuredLintConfig: StructuredLintConfig = $state({ settings: [] });
 let lintDescriptions: Record<string, string> = $state({});
 let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
+let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
+let delay = $state(0);
+let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
@@ -30,6 +40,12 @@ $effect(() => {
 });
 
 $effect(() => {
+	if (delayLoaded) {
+		ProtocolClient.setDelay(delay);
+	}
+});
+
+$effect(() => {
 	ProtocolClient.setDefaultEnabled(defaultEnabled);
 });
 
@@ -41,16 +57,23 @@ $effect(() => {
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
-ProtocolClient.getLintConfig().then((l) => {
-	lintConfig = l;
-});
-
-ProtocolClient.getLintDescriptions().then((d) => {
-	lintDescriptions = d;
+Promise.all([
+	ProtocolClient.getLintConfig(),
+	ProtocolClient.getStructuredLintConfig(),
+	ProtocolClient.getLintDescriptions(),
+]).then(([nextLintConfig, nextStructuredConfig, nextLintDescriptions]) => {
+	lintConfig = nextLintConfig;
+	structuredLintConfig = nextStructuredConfig;
+	lintDescriptions = nextLintDescriptions;
 });
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getDelay().then((value) => {
+	delay = value;
+	delayLoaded = true;
 });
 
 ProtocolClient.getDefaultEnabled().then((d) => {
@@ -62,7 +85,6 @@ ProtocolClient.getActivationKey().then((d) => {
 });
 
 ProtocolClient.getHotkey().then((d) => {
-	// Ensure we have a plain object, not a Proxy
 	hotkey = {
 		modifiers: [...d.modifiers],
 		key: d.key,
@@ -77,31 +99,6 @@ ProtocolClient.getUserDictionary().then((d) => {
 ProtocolClient.getWeirpacks().then((stored) => {
 	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
 });
-
-function configValueToString(value: boolean | undefined): string {
-	switch (value) {
-		case true:
-			return 'enable';
-		case false:
-			return 'disable';
-		case undefined:
-		case null:
-			return 'default';
-	}
-}
-
-function configStringToValue(str: string): boolean | undefined | null {
-	switch (str) {
-		case 'enable':
-			return true;
-		case 'disable':
-			return false;
-		case 'default':
-			return null;
-	}
-
-	throw 'Fell through case';
-}
 
 /** Converts the content of a text area to viable dictionary values. */
 export function stringToDict(s: string): string[] {
@@ -142,6 +139,79 @@ function updateAllRules(enabled: boolean): void {
 
 function toggleAllRules(): void {
 	updateAllRules(!anyRulesEnabled);
+}
+
+function collectStructuredRuleNames(settings: StructuredLintSetting[]): string[] {
+	const out: string[] = [];
+
+	for (const setting of settings) {
+		if ('Bool' in setting) {
+			out.push(setting.Bool.name);
+			continue;
+		}
+
+		if ('OneOfMany' in setting) {
+			out.push(...setting.OneOfMany.names);
+			continue;
+		}
+
+		out.push(...collectStructuredRuleNames(setting.Group.child.settings));
+	}
+
+	return out;
+}
+
+function buildDisplaySettings(
+	structured: StructuredLintConfig,
+	flat: LintConfig,
+): StructuredLintSetting[] {
+	const settings = [...(structured.settings ?? [])];
+	const knownRules = new Set(collectStructuredRuleNames(settings));
+	const extraRuleNames = Object.keys(flat)
+		.filter((name) => !knownRules.has(name))
+		.sort();
+
+	if (extraRuleNames.length === 0) {
+		return settings;
+	}
+
+	settings.push({
+		Group: {
+			label: 'Additional Rules',
+			description: 'Rules present in the flat config but not yet assigned to a curated category.',
+			child: {
+				settings: extraRuleNames.map(
+					(name) =>
+						({
+							Bool: {
+								name,
+								state: flat[name] ?? false,
+								label: name,
+							},
+						}) as StructuredLintSetting,
+				),
+			},
+		},
+	});
+
+	return settings;
+}
+
+let displayStructuredSettings: StructuredLintSetting[] = $state([]);
+
+$effect(() => {
+	displayStructuredSettings = buildDisplaySettings(structuredLintConfig, lintConfig);
+});
+
+function updateLintConfig(nextConfig: LintConfig) {
+	lintConfig = nextConfig;
+}
+
+function toggleGroup(groupKey: string) {
+	expandedGroups = {
+		...expandedGroups,
+		[groupKey]: !expandedGroups[groupKey],
+	};
 }
 
 async function exportEnabledDomainsCSV() {
@@ -272,11 +342,7 @@ async function removeWeirpack(id: string) {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <h3 class="text-sm">English Dialect</h3>
-          <Select
-            size="sm"
-            class="w-44"
-            bind:value={dialect}
-          >
+          <Select size="sm" class="w-44" bind:value={dialect}>
             <option value={Dialect.American}>🇺🇸 American</option>
             <option value={Dialect.British}>🇬🇧 British</option>
             <option value={Dialect.Australian}>🇦🇺 Australian</option>
@@ -290,9 +356,34 @@ async function removeWeirpack(id: string) {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <h3 class="text-sm">Enable on New Sites by Default</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">Can make some apps behave abnormally.</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Can make some apps behave abnormally.
+            </p>
           </div>
-          <input type="checkbox" bind:checked={defaultEnabled} class="h-5 w-5" />
+          <input
+            type="checkbox"
+            bind:checked={defaultEnabled}
+            class="h-5 w-5"
+          />
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Delay</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Wait this many milliseconds after typing stops before refreshing
+              highlights.
+            </p>
+          </div>
+          <input
+            type="number"
+            min="0"
+            step="50"
+            bind:value={delay}
+            class="w-44 rounded-lg border border-cream-200 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cream-300 focus:ring-2 focus:ring-primary-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:focus:border-cream-600 dark:focus:ring-primary-600"
+          />
         </div>
       </div>
 
@@ -300,9 +391,13 @@ async function removeWeirpack(id: string) {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <h3 class="text-sm">Export Enabled Domains</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">Downloads JSON of domains explicitly enabled.</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Downloads JSON of domains explicitly enabled.
+            </p>
           </div>
-          <Button size="sm" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+          <Button size="sm" on:click={exportEnabledDomainsCSV}
+            >Export JSON</Button
+          >
         </div>
       </div>
 
@@ -314,11 +409,7 @@ async function removeWeirpack(id: string) {
               If you're finding that you're accidentally triggering Harper.
             </p>
           </div>
-          <Select
-            size="sm"
-            class="w-44"
-            bind:value={activationKey}
-          >
+          <Select size="sm" class="w-44" bind:value={activationKey}>
             <option value={ActivationKey.Shift}>Double Shift</option>
             <option value={ActivationKey.Control}>Double Control</option>
             <option value={ActivationKey.Off}>Off</option>
@@ -330,11 +421,21 @@ async function removeWeirpack(id: string) {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestion to last highlighted word.</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Applies suggestion to last highlighted word.
+            </p>
           </div>
           <Textarea readonly bind:value={buttonText} />
-          <Button size="sm" color="light" style="background-color: {isBlue ? 'blue' : ''}" bind:this={modifyHotkeyButton} on:click={() => {startHotkeyCapture(modifyHotkeyButton); isBlue = !isBlue}}>Modify Hotkey</Button>
-
+          <Button
+            size="sm"
+            color="light"
+            style="background-color: {isBlue ? 'blue' : ''}"
+            bind:this={modifyHotkeyButton}
+            on:click={() => {
+              startHotkeyCapture(modifyHotkeyButton);
+              isBlue = !isBlue;
+            }}>Modify Hotkey</Button
+          >
         </div>
       </div>
 
@@ -342,14 +443,13 @@ async function removeWeirpack(id: string) {
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
             <h3 class="text-sm">User Dictionary</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">Each word should be on its own line.</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Each word should be on its own line.
+            </p>
           </div>
-          <Textarea
-            bind:value={userDict}
-          ></Textarea>
+          <Textarea bind:value={userDict}></Textarea>
         </div>
       </div>
-
     </Card>
 
     <Card class="space-y-4">
@@ -357,8 +457,11 @@ async function removeWeirpack(id: string) {
 
       <div class="space-y-2 flex flex-row w-full justify-between">
         <p class="text-xs text-gray-600 dark:text-gray-400">
-          Upload one or more <code>.weirpack</code> files to add custom rule packs.
-          <a href="https://writewithharper.com/docs/weir#Weirpacks">What is a Weirpack?</a>
+          Upload one or more <code>.weirpack</code> files to add custom rule
+          packs.
+          <a href="https://writewithharper.com/docs/weir#Weirpacks"
+            >What is a Weirpack?</a
+          >
         </p>
         <input
           type="file"
@@ -375,16 +478,24 @@ async function removeWeirpack(id: string) {
       {/if}
 
       {#if weirpacks.length === 0}
-        <p class="text-sm text-gray-600 dark:text-gray-400">No Weirpacks installed.</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          No Weirpacks installed.
+        </p>
       {:else}
         <div class="space-y-3">
           {#each weirpacks as weirpack}
-            <div class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3">
+            <div
+              class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3"
+            >
               <div class="min-w-0">
                 <p class="truncate text-sm">
-                  {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
+                  {weirpack.name}{weirpack.version
+                    ? ` v${weirpack.version}`
+                    : ""}
                 </p>
-                <p class="truncate text-xs text-gray-600 dark:text-gray-400">{weirpack.filename}</p>
+                <p class="truncate text-xs text-gray-600 dark:text-gray-400">
+                  {weirpack.filename}
+                </p>
               </div>
               <Button
                 size="sm"
@@ -412,39 +523,27 @@ async function removeWeirpack(id: string) {
         />
       </div>
       <div class="flex flex-wrap gap-3">
-        <Button size="sm" on:click={resetRulesToDefaults}>Reset to Default Rules</Button>
+        <Button size="sm" on:click={resetRulesToDefaults}
+          >Reset to Default Rules</Button
+        >
         <Button size="sm" on:click={toggleAllRules}>
-          {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
+          {anyRulesEnabled ? "Disable All Rules" : "Enable All Rules"}
         </Button>
       </div>
 
-      {#each Object.entries(lintConfig).filter(
-        ([key]) =>
-          (lintDescriptions[key] ?? '').toLowerCase().includes(searchQueryLower) ||
-          key.toLowerCase().includes(searchQueryLower)
-      ) as [key, value]}
-        <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
-          <!-- rule card sample -->
-            <div class="flex items-start justify-between gap-4">
-              <div class="space-y-0.5">
-                <h3 class="text-sm">{key}</h3>
-                <p class="text-xs">{@html lintDescriptions[key]}</p>
-              </div>
-              <Select
-                size="md"
-                value={configValueToString(value)}
-                on:change={(e) => {
-                  lintConfig[key] = configStringToValue(e.target.value);
-                }}
-              >
-                <option value="default">⚙️ Default</option>
-                <option value="enable">✅ On</option>
-                <option value="disable">🚫 Off</option>
-              </Select>
-            </div>
-          </div>
-      {/each}
-
+      <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
+        {#key displayStructuredSettings.length}
+          <StructuredRuleSettings
+            settings={displayStructuredSettings}
+            {lintConfig}
+            {lintDescriptions}
+            {searchQueryLower}
+            {expandedGroups}
+            handleLintConfigChange={updateLintConfig}
+            handleToggleGroup={toggleGroup}
+          />
+        {/key}
+      </div>
     </Card>
   </div>
 </div>

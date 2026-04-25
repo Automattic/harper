@@ -1112,6 +1112,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InflectionPoint
+
+#[test]
+fn corrects_infliction_point() {
+    assert_suggestion_result(
+        "You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        lint_group(),
+        "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+    );
+}
+
+#[test]
+fn corrects_infliction_points() {
+    assert_suggestion_result(
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".",
+        lint_group(),
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".",
+    );
+}
+
 // InvestIn
 
 #[test]
@@ -1219,6 +1239,44 @@ fn litotes_more_preferable() {
         "Is it more preferable to use process.env.variable or env.parsed.variable?",
         lint_group(),
         "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
+// LookForwardTo
+
+#[test]
+fn fix_look_forward_for() {
+    assert_suggestion_result(
+        "I will mark this issue as an enhancement and will look forward for enrolling it.",
+        lint_group(),
+        "I will mark this issue as an enhancement and will look forward to enrolling it.",
+    );
+}
+
+#[test]
+fn fix_looked_forward_for() {
+    assert_suggestion_result(
+        "Looked forward for standalone components so much, please fix this.",
+        lint_group(),
+        "Looked forward to standalone components so much, please fix this.",
+    );
+}
+
+#[test]
+fn fix_looking_forward_for() {
+    assert_suggestion_result(
+        "Looking forward for Typed version of this stack navigation",
+        lint_group(),
+        "Looking forward to Typed version of this stack navigation",
+    );
+}
+
+#[test]
+fn fix_looks_forward_for() {
+    assert_suggestion_result(
+        "Please take this words as from one of your fans who looks forward for a great and interesting project :)",
+        lint_group(),
+        "Please take this words as from one of your fans who looks forward to a great and interesting project :)",
     );
 }
 
@@ -2160,6 +2218,26 @@ fn copywrote() {
     );
 }
 
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        lint_group(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        lint_group(),
+        "He overpaid in part to have the specification met.",
+    );
+}
+
 // DateBackFrom
 
 #[test]
@@ -2264,6 +2342,35 @@ fn expand_alloc() {
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
+    );
+}
+
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
     );
 }
 

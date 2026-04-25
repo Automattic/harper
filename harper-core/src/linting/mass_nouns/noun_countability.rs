@@ -1,8 +1,10 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Lrc, Span, Token, TokenStringExt,
-    expr::{Expr, LongestMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    CharStringExt, Span, Token, TokenStringExt,
+    expr::{Expr, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
+    },
     patterns::{IndefiniteArticle, WordSet},
 };
 
@@ -21,7 +23,7 @@ pub enum Correction {
 use Correction::*;
 
 pub struct NounCountability {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NounCountability {
@@ -31,32 +33,13 @@ impl Default for NounCountability {
             "several",
         ]);
 
-        // A determiner or quantifier followed by a mass noun
-        let detquant_mass = Lrc::new(
-            SequenceExpr::any_of(vec![
+        Self {
+            expr: SequenceExpr::any_of(vec![
                 Box::new(IndefiniteArticle::default()),
-                Box::new(quantifier),
+                Box::new(quantifier) as Box<dyn Expr>,
             ])
             .then_whitespace()
             .then_mass_noun_only(),
-        );
-
-        let detauant_mass_then_hyphen =
-            Lrc::new(SequenceExpr::with(detquant_mass.clone()).then_hyphen());
-
-        let detquant_mass_following_context = Lrc::new(
-            SequenceExpr::with(detquant_mass.clone())
-                .then_whitespace()
-                // If we don't get the word, this won't be the longest match
-                .then_any_word(),
-        );
-
-        Self {
-            expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(detquant_mass),
-                Box::new(detauant_mass_then_hyphen),
-                Box::new(detquant_mass_following_context),
-            ])),
         }
     }
 }
@@ -65,29 +48,31 @@ impl ExprLinter for NounCountability {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let toks_chars = toks.span()?.get_content(src);
 
-        // 4 tokens means the phrase was followed by a hyphen
-        if toks.len() == 4 {
-            return None;
-        }
-        // 3 tokens means the phrase was at the end of a chunk/sentence.
-        // 5 tokens means the phrase was in the middle of a chunk/sentence.
-        // If it's in the middle then we check if the next word token is a noun or OOV.
-        // Since the last token of our phrase is the mass noun, this would make it part of a compound noun.
-        if toks.len() == 5 && (toks.last()?.kind.is_noun() || toks.last()?.kind.is_oov()) {
+        if toks.len() != 3
+            || followed_by_hyphen(ctx)
+            || followed_by_word(ctx, |t| {
+                t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
+            })
+        {
             return None;
         }
 
         // the determiner or quantifier
-        let dq = toks[0].span.get_content_string(src).to_lowercase();
+        let dq = toks[0].get_str(src).to_lowercase();
 
         // the mass noun
-        let noun = toks[2].span.get_content_string(src).to_lowercase();
+        let noun = toks[2].get_str(src).to_lowercase();
 
         let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
             ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[

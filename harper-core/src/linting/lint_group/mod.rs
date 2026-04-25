@@ -1,15 +1,14 @@
+mod flat_config;
+mod structured_config;
+
 use std::collections::BTreeMap;
-use std::hash::Hash;
-use std::hash::{BuildHasher, Hasher};
-use std::mem;
+use std::hash::BuildHasher;
 use std::num::NonZero;
 use std::sync::Arc;
 
-use cached::proc_macro::cached;
 use foldhash::quality::RandomState;
 use hashbrown::HashMap;
 use lru::LruCache;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::a_part::APart;
 use super::a_while::AWhile;
@@ -23,17 +22,16 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
-use super::and_in::AndIn;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
+use super::arrive_to::ArriveTo;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
-use super::be_worried::BeWorried;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
 use super::boring_words::BoringWords;
@@ -45,6 +43,8 @@ use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
+use super::close_tight_knit::CloseTightKnit;
+use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
@@ -71,6 +71,7 @@ use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
+use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
 use super::far_be_it::FarBeIt;
@@ -100,6 +101,7 @@ use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
@@ -145,6 +147,7 @@ use super::nor_modal_pronoun::NorModalPronoun;
 use super::not_only_inversion::NotOnlyInversion;
 use super::noun_verb_confusion::NounVerbConfusion;
 use super::number_suffix_capitalization::NumberSuffixCapitalization;
+use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
 use super::oldest_in_the_book::OldestInTheBook;
@@ -193,6 +196,7 @@ use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
+use super::sneaked_snuck::SneakedSnuck;
 use super::some_without_article::SomeWithoutArticle;
 use super::something_is::SomethingIs;
 use super::somewhat_something::SomewhatSomething;
@@ -218,6 +222,7 @@ use super::theyre_confusions::TheyreConfusions;
 use super::thing_think::ThingThink;
 use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
+use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
 use super::to_adverb::ToAdverb;
@@ -231,6 +236,7 @@ use super::try_ones_hand_at::TryOnesHandAt;
 use super::try_ones_luck::TryOnesLuck;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
+use super::use_ellipsis_character::UseEllipsisCharacter;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
 use super::very_unique::VeryUnique;
@@ -240,11 +246,13 @@ use super::vicious_loop::ViciousCircleOrCycle;
 use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::were_where::WereWhere;
 use super::whereas::Whereas;
 use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
+use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
@@ -257,136 +265,33 @@ use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
-use crate::spell::{Dictionary, MutableDictionary};
-use crate::{CharString, Dialect, Document, TokenStringExt};
+use crate::linting::{
+    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+};
+use crate::spell::Dictionary;
+use crate::{Dialect, Document, Lrc, TokenStringExt};
 
-fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
-where
-    S: Serializer,
-{
-    let ordered: BTreeMap<_, _> = map.iter().map(|(k, v)| (k.clone(), *v)).collect();
-    ordered.serialize(ser)
-}
-
-fn de_hashbrown<'de, D>(de: D) -> Result<HashMap<String, Option<bool>>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let ordered: BTreeMap<String, Option<bool>> = BTreeMap::deserialize(de)?;
-    Ok(ordered.into_iter().collect())
-}
-
-/// The configuration for a [`LintGroup`].
-/// Each child linter can be enabled, disabled, or set to a curated value.
-#[derive(Debug, Serialize, Deserialize, Default, Clone, PartialEq, Eq)]
-#[serde(transparent)]
-pub struct LintGroupConfig {
-    /// We do this shenanigans with the [`BTreeMap`] to keep the serialized format consistent.
-    #[serde(serialize_with = "ser_ordered", deserialize_with = "de_hashbrown")]
-    inner: HashMap<String, Option<bool>>,
-}
-
-#[cached]
-fn curated_config() -> LintGroupConfig {
-    // The Dictionary and Dialect do not matter, we're just after the config.
-    let group = LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American);
-    group.config
-}
-
-impl LintGroupConfig {
-    /// Check if a rule exists in the configuration.
-    pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
-        self.inner.contains_key(key.as_ref())
-    }
-
-    pub fn set_rule_enabled(&mut self, key: impl ToString, val: bool) {
-        self.inner.insert(key.to_string(), Some(val));
-    }
-
-    /// Remove any configuration attached to a rule.
-    /// This allows it to assume its default (curated) state.
-    pub fn unset_rule_enabled(&mut self, key: impl AsRef<str>) {
-        self.inner.remove(key.as_ref());
-    }
-
-    pub fn set_rule_enabled_if_unset(&mut self, key: impl AsRef<str>, val: bool) {
-        if !self.inner.contains_key(key.as_ref()) {
-            self.set_rule_enabled(key.as_ref().to_string(), val);
-        }
-    }
-
-    pub fn is_rule_enabled(&self, key: &str) -> bool {
-        self.inner.get(key).cloned().flatten().unwrap_or(false)
-    }
-
-    /// Clear all config options.
-    /// This will reset them all to disable them.
-    pub fn clear(&mut self) {
-        for val in self.inner.values_mut() {
-            *val = None
-        }
-    }
-
-    /// Merge the contents of another [`LintGroupConfig`] into this one.
-    /// The other config will be left empty after this operation.
-    ///
-    /// Conflicting keys will be overridden by the value in the other group.
-    pub fn merge_from(&mut self, other: &mut LintGroupConfig) {
-        for (key, val) in other.inner.iter() {
-            if val.is_none() {
-                continue;
-            }
-
-            self.inner.insert(key.to_string(), *val);
-        }
-
-        other.clear();
-    }
-
-    /// Fill the group with the values for the curated lint group.
-    pub fn fill_with_curated(&mut self) {
-        let mut temp = Self::new_curated();
-        mem::swap(self, &mut temp);
-        self.merge_from(&mut temp);
-    }
-
-    pub fn new_curated() -> Self {
-        curated_config()
-    }
-}
-
-impl Hash for LintGroupConfig {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
-        for (key, value) in &self.inner {
-            hasher.write(key.as_bytes());
-            if let Some(value) = value {
-                hasher.write_u8(1);
-                hasher.write_u8(*value as u8);
-            } else {
-                // Do it twice so we fill the same number of bytes as the other branch.
-                hasher.write_u8(0);
-                hasher.write_u8(0);
-            }
-        }
-    }
-}
+pub use flat_config::FlatConfig;
+pub use structured_config::{
+    HumanReadableSetting, HumanReadableStructuredConfig, StructuredConfig,
+};
 
 /// A struct for collecting the output of a number of individual [Linter]s.
 /// Each child can be toggled via the public, mutable `Self::config` object.
 pub struct LintGroup {
-    pub config: LintGroupConfig,
+    pub config: FlatConfig,
     /// We use a binary map here so the ordering is stable.
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
     chunk_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
-    /// mapping of `Chunk -> Lint` and only re-run the expr linters
+    /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
     ///
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    chunk_expr_cache: LruCache<(CharString, u64), BTreeMap<String, Vec<Lint>>>,
+    #[expect(clippy::complexity)]
+    chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -396,7 +301,7 @@ impl LintGroup {
 
     pub fn empty() -> Self {
         Self {
-            config: LintGroupConfig::default(),
+            config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
@@ -436,7 +341,6 @@ impl LintGroup {
     pub fn add_chunk_expr_linter(
         &mut self,
         name: impl AsRef<str>,
-        // linter: impl ExprLinter + 'static,
         linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
         if self.contains_key(&name) {
@@ -454,12 +358,10 @@ impl LintGroup {
     }
 
     /// Merge the contents of another [`LintGroup`] into this one.
-    /// The other lint group will be left empty after this operation.
-    pub fn merge_from(&mut self, other: &mut LintGroup) {
-        self.config.merge_from(&mut other.config);
+    pub fn merge_from(&mut self, other: LintGroup) {
+        self.config.merge_from(other.config);
 
-        let other_linters = std::mem::take(&mut other.linters);
-        if let Some((conflicting_key, _)) = other_linters.iter().find(|(k, _)| self.contains_key(k))
+        if let Some((conflicting_key, _)) = other.linters.iter().find(|(k, _)| self.contains_key(k))
         {
             if self.clashing_linter_names.is_none() {
                 self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
@@ -467,10 +369,10 @@ impl LintGroup {
                 clashing_names.push(conflicting_key.clone());
             }
         }
-        self.linters.extend(other_linters);
+        self.linters.extend(other.linters);
 
-        let other_expr_linters = std::mem::take(&mut other.chunk_expr_linters);
-        if let Some((conflicting_key, _)) = other_expr_linters
+        if let Some((conflicting_key, _)) = other
+            .chunk_expr_linters
             .iter()
             .find(|(k, _)| self.contains_key(k))
         {
@@ -480,7 +382,7 @@ impl LintGroup {
                 clashing_names.push(conflicting_key.clone());
             }
         }
-        self.chunk_expr_linters.extend(other_expr_linters);
+        self.chunk_expr_linters.extend(other.chunk_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
@@ -529,8 +431,8 @@ impl LintGroup {
             .collect()
     }
 
-    /// Swap out [`Self::config`] with another [`LintGroupConfig`].
-    pub fn with_lint_config(mut self, config: LintGroupConfig) -> Self {
+    /// Swap out [`Self::config`] with another [`FlatConfig`].
+    pub fn with_lint_config(mut self, config: FlatConfig) -> Self {
         self.config = config;
         self
     }
@@ -594,13 +496,12 @@ impl LintGroup {
             };
         }
 
-        out.merge_from(&mut weir_rules::lint_group());
-        out.merge_from(&mut phrase_set_corrections::lint_group());
-        out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
-            dictionary.clone(),
-        ));
-        out.merge_from(&mut closed_compounds::lint_group());
-        out.merge_from(&mut initialisms::lint_group());
+        out.merge_from(weir_rules::lint_group());
+        out.merge_from(phrase_set_corrections::lint_group());
+        out.merge_from(proper_noun_capitalization_linters::lint_group());
+        out.merge_from(closed_compounds::lint_group());
+        out.merge_from(initialisms::lint_group());
+        out.merge_from(be_adjective_confusions::lint_group());
 
         // Add all the more complex rules to the group.
         // Please maintain alphabetical order.
@@ -617,16 +518,15 @@ impl LintGroup {
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule_with_dialect!(AnA, true);
-        insert_expr_rule!(AndIn, true);
         insert_expr_rule!(AndTheLike, true);
         insert_expr_rule!(AnotherThingComing, true);
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
+        insert_expr_rule!(ArriveTo, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
-        insert_expr_rule!(BeWorried, true);
         insert_expr_rule!(BehindTheScenes, true);
         insert_struct_rule!(BestOfAllTime, true);
         insert_expr_rule!(BoringWords, false);
@@ -638,6 +538,8 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
+        insert_expr_rule!(CloseTightKnit, true);
+        insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
@@ -659,11 +561,13 @@ impl LintGroup {
         insert_expr_rule!(DoubleClick, true);
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
+        insert_struct_rule!(UseEllipsisCharacter, true);
         insert_expr_rule!(ElsePossessive, true);
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
+        insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FascinatedBy, true);
@@ -692,6 +596,7 @@ impl LintGroup {
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
+        insert_expr_rule!(InTimeFromNow, true);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
         insert_expr_rule!(InterestedIn, true);
         insert_expr_rule!(ItLooksLikeThat, true);
@@ -736,6 +641,7 @@ impl LintGroup {
         insert_expr_rule!(NotOnlyInversion, true);
         insert_struct_rule!(NounVerbConfusion, true);
         insert_struct_rule!(NumberSuffixCapitalization, true);
+        insert_expr_rule!(NumericRangeEnDash, true);
         insert_expr_rule!(ObsessPreposition, true);
         insert_expr_rule!(OfCourse, true);
         insert_expr_rule!(OldestInTheBook, true);
@@ -783,6 +689,7 @@ impl LintGroup {
         insert_expr_rule!(SimplePastToPastParticiple, true);
         insert_expr_rule!(SinceDuration, true);
         insert_expr_rule!(SingleBe, true);
+        insert_struct_rule!(SneakedSnuck, true);
         insert_expr_rule!(SomeWithoutArticle, true);
         insert_expr_rule!(SomethingIs, true);
         insert_expr_rule!(SomewhatSomething, true);
@@ -807,6 +714,7 @@ impl LintGroup {
         insert_expr_rule!(ThingThink, true);
         insert_expr_rule!(ThisTypeOfThing, true);
         insert_expr_rule!(ThoughThought, true);
+        insert_expr_rule!(ThriveOn, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
         insert_expr_rule!(ToAdverb, true);
@@ -836,10 +744,10 @@ impl LintGroup {
         insert_expr_rule!(WasAloud, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
-        insert_expr_rule!(WereWhere, true);
         insert_expr_rule!(Whereas, true);
         insert_expr_rule!(WhomSubjectOfVerb, true);
         insert_expr_rule!(WidelyAccepted, true);
+        insert_expr_rule_with_dict!(WillNonLemma, true);
         insert_expr_rule!(WinPrize, true);
         insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
@@ -867,9 +775,17 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WebScraping", WebScraping::default());
+        out.config.set_rule_enabled("WebScraping", true);
 
         out
     }
@@ -890,7 +806,7 @@ impl LintGroup {
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                results.insert(key.clone(), linter.lint(document));
+                results.insert(key.to_owned(), linter.lint(document));
             }
         }
 
@@ -902,9 +818,10 @@ impl LintGroup {
 
             let chunk_chars = document.get_span_content(&chunk_span);
             let config_hash = self.hasher_builder.hash_one(&self.config);
-            let cache_key = (chunk_chars.into(), config_hash);
+            let char_hash = self.hasher_builder.hash_one(chunk_chars);
+            let cache_key = (char_hash, config_hash);
 
-            let mut chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
+            let chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
                 hit.clone()
             } else {
                 let mut pattern_lints = BTreeMap::new();
@@ -921,19 +838,21 @@ impl LintGroup {
                     }
                 }
 
+                let pattern_lints = Lrc::new(pattern_lints);
+
                 self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
                 pattern_lints
             };
 
-            // Bring the spans back into document-space
-            for value in chunk_results.values_mut() {
-                for lint in value {
-                    lint.span.push_by(chunk_span.start);
-                }
-            }
-
-            for (key, mut vec) in chunk_results {
-                results.entry(key).or_default().append(&mut vec);
+            for (key, vec) in chunk_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(chunk_span.start);
+                        lint
+                    }));
             }
         }
 
@@ -964,9 +883,9 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use super::{LintGroup, LintGroupConfig};
+    use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
-    use crate::linting::tests::assert_no_lints;
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::{Dialect, Document, linting::Linter};
 
@@ -985,6 +904,54 @@ mod tests {
     #[test]
     fn clean_consensus() {
         assert_no_lints("But there is less consensus on this.", test_group());
+    }
+
+    #[test]
+    fn ive_corrects_to_single_word() {
+        assert_suggestion_result(
+            "ive never seen that before",
+            test_group(),
+            "I've never seen that before",
+        );
+    }
+
+    #[test]
+    fn worthchecking_is_split() {
+        assert_suggestion_result("It is worthchecking", test_group(), "It is worth checking");
+    }
+
+    #[test]
+    fn its_not_perfect_keeps_apostrophe() {
+        assert_no_lints("It's not perfect", test_group());
+    }
+
+    #[test]
+    fn corrects_extention() {
+        let mut group = test_group();
+        let document = Document::new_plain_english_curated("I love this extention!");
+        let organized = group.organized_lints(&document);
+
+        let spellcheck_lints = organized
+            .get("SpellCheck")
+            .expect("SpellCheck should produce a lint for extention");
+        assert_eq!(spellcheck_lints.len(), 1);
+        assert!(
+            spellcheck_lints[0]
+                .suggestions
+                .iter()
+                .any(|suggestion| suggestion.to_string() == "Replace with: “extension”")
+        );
+
+        assert!(
+            organized.get("SplitWords").is_none_or(Vec::is_empty),
+            "expected no lints from SplitWords, but found {:?}",
+            organized.get("SplitWords")
+        );
+    }
+
+    #[test]
+    fn ok_becomes_okay() {
+        assert_suggestion_result("This is ok.", test_group(), "This is okay.");
     }
 
     #[test]
@@ -1034,7 +1001,7 @@ mod tests {
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
-        let enforcer_config = LintGroupConfig::new_curated();
+        let enforcer_config = FlatConfig::new_curated();
         let mut lints_to_enforce =
             LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
                 .with_lint_config(enforcer_config);

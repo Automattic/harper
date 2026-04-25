@@ -21,6 +21,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		getHotkey: () => ProtocolClient.getHotkey(),
+		getDelay: () => ProtocolClient.getDelay(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
@@ -56,6 +57,41 @@ const keepAliveCallback = () => {
 
 keepAliveCallback();
 
+/**
+ * Returns the reasons Harper should skip this textarea while scanning for targets.
+ * An empty array means the textarea is eligible to be added.
+ */
+function getTextareaReasons(element: HTMLTextAreaElement, requireVisible: boolean): string[] {
+	const reasons = [];
+
+	if (requireVisible && !isVisible(element)) {
+		reasons.push('not-visible');
+	}
+
+	if (element.getAttribute('data-enable-grammarly') === 'false') {
+		reasons.push('grammarly-disabled');
+	}
+
+	if (element.disabled) {
+		reasons.push('disabled');
+	}
+
+	if (element.readOnly) {
+		reasons.push('readonly');
+	}
+
+	return reasons;
+}
+
+function maybeAddTextareaTarget(element: HTMLTextAreaElement, requireVisible: boolean) {
+	const reasons = getTextareaReasons(element, requireVisible);
+	if (reasons.length > 0) {
+		return;
+	}
+
+	fw.addTarget(element);
+}
+
 function scan() {
 	void syncGoogleDocsBridge();
 
@@ -64,16 +100,7 @@ function scan() {
 	}
 
 	document.querySelectorAll<HTMLTextAreaElement>('textarea').forEach((element) => {
-		if (
-			!isVisible(element) ||
-			element.getAttribute('data-enable-grammarly') === 'false' ||
-			element.disabled ||
-			element.readOnly
-		) {
-			return;
-		}
-
-		fw.addTarget(element);
+		maybeAddTextareaTarget(element, true);
 	});
 
 	document
@@ -135,10 +162,13 @@ function scan() {
 			return;
 		}
 
+		const isLexicalEditor = element.getAttribute('data-lexical-editor') === 'true';
+
 		if (
 			element.matches('[role="combobox"]') ||
 			element.getAttribute('data-enable-grammarly') === 'false' ||
 			(element.getAttribute('spellcheck') === 'false' &&
+				!isLexicalEditor &&
 				element.getAttribute('data-language') !== 'markdown')
 		) {
 			return;
@@ -191,5 +221,18 @@ new MutationObserver(scan).observe(document.body, {
 	childList: true,
 	subtree: true,
 });
+
+document.addEventListener(
+	'focusin',
+	(event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLTextAreaElement)) {
+			return;
+		}
+
+		maybeAddTextareaTarget(target, false);
+	},
+	{ capture: true },
+);
 
 setTimeout(scan, 1000);

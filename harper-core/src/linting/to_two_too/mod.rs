@@ -464,4 +464,17 @@ mod tests {
     fn still_lints_positive_adjective_end() {
         assert_lint_count("The room felt to cold.", ToTwoToo::default(), 1);
     }
+
+    #[test]
+    fn no_lint_to_only() {
+        assert_no_lints(
+            "The dog was restricted to only one can of food.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_to_only_at_end() {
+        assert_no_lints("limited to only", ToTwoToo::default());
+    }
 }

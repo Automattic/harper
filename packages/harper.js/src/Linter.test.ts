@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { binary } from './binary';
+import { binary } from './binaries/binary';
 import LocalLinter from './LocalLinter';
 import WorkerLinter from './WorkerLinter';
 import { packWeirpackFiles } from './weirpack';
@@ -65,7 +65,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} detects repeated words`, async () => {
 		const linter = new Linter({ binary });
 
-		const lints = await linter.lint('The the problem is...');
+		const lints = await linter.lint('The the problem is');
 
 		expect(lints.length).toBe(1);
 
@@ -87,7 +87,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 			flattened.push(...value);
 		}
 
-		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(2);
 		expect(flattened.length).toBe(normal.length);
 
 		const item = flattened[0];
@@ -100,9 +100,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
@@ -119,9 +119,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
@@ -258,6 +258,50 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		for (const value of Object.values(lintConfig)) {
 			expect(value).not.toBeNull();
 		}
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can get structured lint config`, async () => {
+		const linter = new Linter({ binary });
+
+		const structuredConfig = await linter.getStructuredLintConfig();
+		const firstGroup = structuredConfig.settings.find((setting) => 'Group' in setting);
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+		expect(structuredConfig.settings.length).toBeGreaterThan(0);
+		expect(firstGroup && 'Group' in firstGroup).toBe(true);
+		if (!firstGroup || !('Group' in firstGroup)) {
+			throw new Error('Expected at least one group in the structured config.');
+		}
+		expect(firstGroup.Group.description).toBeTypeOf('string');
+		expect(firstGroup.Group.description.length).toBeGreaterThan(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON parses`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const structuredConfig = JSON.parse(json);
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON and object agree`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const object = await linter.getStructuredLintConfig();
+
+		expect(object).toBeTypeOf('object');
+		expect(json).toBeTypeOf('string');
+		expect(object).toEqual(JSON.parse(json));
 
 		await linter.dispose();
 	});
@@ -641,6 +685,25 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		lints = await linter.lint(source);
 		expect(lints).toHaveLength(0);
 	}, 30000);
+
+	test(`${linterName} can request a Typst parser with normal binary.`, async () => {
+		const linter = new Linter({ binary });
+
+		const lints = await linter.lint(
+			`
+= Hello, world!
+
+This is a simple Typst document.
+
+- Item one
+- Item two
+- Item three
+      `,
+			{ language: 'typst' },
+		);
+
+		expect(lints).toHaveLength(0);
+	});
 }
 
 // Disabled because it significantly slows down CI

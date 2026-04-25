@@ -14,10 +14,7 @@ impl Default for OldestInTheBook {
             let k = &t.kind;
             (k.is_np_member() || k.is_adjective())
                 && !k.is_noun()
-                && !t
-                    .span
-                    .get_content(s)
-                    .eq_ignore_ascii_case_chars(&['i', 'n'])
+                && !t.get_ch(s).eq_ch(&['i', 'n'])
         };
 
         // Zero or more adjectives
@@ -25,11 +22,7 @@ impl Default for OldestInTheBook {
 
         let noun = |t: &Token, s: &[char]| {
             let k = &t.kind;
-            (k.is_np_member() || k.is_noun() || k.is_oov())
-                && !t
-                    .span
-                    .get_content(s)
-                    .eq_ignore_ascii_case_chars(&['i', 'n'])
+            (k.is_np_member() || k.is_noun() || k.is_oov()) && !t.get_ch(s).eq_ch(&['i', 'n'])
         };
 
         // One or more nouns
@@ -63,8 +56,7 @@ impl ExprLinter for OldestInTheBook {
     ) -> Option<Lint> {
         let np = &toks[2..toks.len() - 4];
         let tricky = np.iter().any(|n| {
-            n.span
-                .get_content(src)
+            n.get_ch(src)
                 .eq_any_ignore_ascii_case_str(&["trick", "tricks"])
         });
 
@@ -80,7 +72,7 @@ impl ExprLinter for OldestInTheBook {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "book",
-                toks.last()?.span.get_content(src),
+                toks.last()?.get_ch(src),
             )],
             message,
             ..Default::default()

@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-plugin",
 	"private": true,
-	"version": "1.12.0",
+	"version": "2.1.0",
 	"main": "main.js",
 	"devDependencies": {
 		"@playwright/test": "^1.58.0",

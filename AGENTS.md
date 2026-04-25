@@ -8,7 +8,7 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
-Importantly, all of the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
 
 ## Read First
 
@@ -109,6 +109,7 @@ When asked to write a new rule, keep these guidelines in mind:
 - The user is almost always expecting you to write it to a file. Which file and where is up to you to find out.
 - You should include at least 15 total tests, covering a wide variety of cases. Cover false-positives, false negatives, true positives, and if relevant, true negatives.
 - You should run any and all tests to ensure that you do no break existing behavior and that your new rule runs the way you expect.
+- After adding a new rule, update `harper-core/default_config.json` so it is enabled in the curated default config.
 - If the rule is related to a closed compound noun, see if you can just add an entry to the existing closed compound linter.
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.
@@ -141,3 +142,7 @@ ALWAYS run extensive bullet tests with `cargo run --bin harper-cli --release -- 
 ### Output Format
 
 Write a Weir rule to a new file with a name of your choosing, including `expr main`, `let` fields, and tests. Make sure it has the extension `.weir`.
+
+## Tips
+
+Before finishing your turn, run `just format` or `cargo fmt` if you have made any changes. This can help diffs if a human decides to make a commit.
