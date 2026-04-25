@@ -1,7 +1,8 @@
-// Integration tests for German language support
-// Tests full workflow: detect → lint → suggest, and mixed-language documents
+// Component-level workflow tests for German language support.
+// These cover detection + parsing + linting combinations, while backend-level
+// LSP open/change/command flows are tested in backend.rs.
 
-use harper_core::spell::{curated_german_dictionary, FstDictionary};
+use harper_core::spell::{FstDictionary, curated_german_dictionary};
 use harper_core::{Dialect, Document};
 use harper_ls::language_detection::LanguageDetectionRegistry;
 
@@ -15,11 +16,7 @@ fn test_full_workflow_german_document() {
     let german_text = "der Hund spielt im Garten. das Auto ist schnell.";
     let detected = registry.detect_language(german_text, &dict, Dialect::American);
 
-    assert_eq!(
-        detected,
-        Dialect::German,
-        "Should auto-detect German text"
-    );
+    assert_eq!(detected, Dialect::German, "Should auto-detect German text");
 
     // Step 2: Parse document with correct parser
     let document = Document::new(
@@ -51,10 +48,8 @@ fn test_full_workflow_german_document() {
     );
 
     // Verify at least one lint has a suggestion
-    let lints_with_suggestions: Vec<_> = lints
-        .iter()
-        .filter(|l| !l.suggestions.is_empty())
-        .collect();
+    let lints_with_suggestions: Vec<_> =
+        lints.iter().filter(|l| !l.suggestions.is_empty()).collect();
 
     assert!(
         !lints_with_suggestions.is_empty(),
@@ -134,7 +129,10 @@ fn test_mixed_language_german_english_quotes() {
 
     // Should not crash on mixed content
     let lints = linter.lint(&document);
-    assert!(lints.len() < 20, "Mixed language should not generate excessive lints");
+    assert!(
+        lints.len() < 20,
+        "Mixed language should not generate excessive lints"
+    );
 }
 
 /// Test mixed-language document: English with German technical terms
@@ -161,7 +159,10 @@ fn test_mixed_language_english_german_terms() {
     let mut linter = LintGroup::new_curated(dict, Dialect::American);
     let lints = linter.lint(&document);
 
-    assert!(lints.len() < 10, "Loanwords should not generate excessive lints");
+    assert!(
+        lints.len() < 10,
+        "Loanwords should not generate excessive lints"
+    );
 }
 
 /// Test language detection with code-switching (mid-sentence language change)
@@ -204,7 +205,10 @@ fn test_code_switching_mid_sentence() {
 
     let lints = linter.lint(&document);
     // Should handle code-switching gracefully
-    assert!(lints.len() < 50, "Code-switching should not cause explosion of lints");
+    assert!(
+        lints.len() < 50,
+        "Code-switching should not cause explosion of lints"
+    );
 }
 
 /// Test edge case: empty document

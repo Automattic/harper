@@ -41,3 +41,6 @@ path = "src/lib.rs"
 [features]
 default = []
 thesaurus = ["harper-core/thesaurus"]
+
+[dev-dependencies]
+tempfile = "3"

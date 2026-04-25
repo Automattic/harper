@@ -1,5 +1,6 @@
-// Test to verify build.rs generates correct Weir rule files
-// This ensures the build script properly discovers and processes Weir rules
+// Source-tree checks for Weir-rule build inputs.
+// These validate the expected rule layout and file structure; they do not
+// exercise Cargo's generated output directly.
 
 use std::fs;
 use std::path::Path;

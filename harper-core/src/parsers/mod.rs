@@ -64,7 +64,7 @@ mod tests {
     }
 
     fn assert_tokens_eq_org(test_str: impl AsRef<str>, expected: &[TokenKind]) {
-        assert_tokens_eq(test_str, expected, &OrgMode)
+        assert_tokens_eq(test_str, expected, &OrgMode::default())
     }
 
     #[test]

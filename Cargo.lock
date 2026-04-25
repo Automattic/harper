@@ -4360,6 +4360,7 @@ dependencies = [
  "resolve-path",
  "serde",
  "serde_json",
+ "tempfile",
  "tokio",
  "tower-lsp-server",
  "tracing",

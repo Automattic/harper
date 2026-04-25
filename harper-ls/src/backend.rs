@@ -16,7 +16,7 @@ use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
-    CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
+    CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish, PlainGerman,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
@@ -74,6 +74,36 @@ impl Backend {
 
     /// Load a specific file's dictionary, using the given dialect to determine
     /// the dictionary path suffix.
+    fn parser_for_prose(
+        language_id: &str,
+        dialect: Dialect,
+        markdown_options: harper_core::parsers::MarkdownOptions,
+    ) -> Option<Box<dyn Parser>> {
+        match language_id {
+            "mail" => Some(if dialect.is_german() {
+                Box::new(PlainGerman)
+            } else {
+                Box::new(PlainEnglish)
+            }),
+            "markdown" | "quarto" => Some(if dialect.is_german() {
+                Box::new(Markdown::new_german(markdown_options))
+            } else {
+                Box::new(Markdown::new(markdown_options))
+            }),
+            "org" => Some(if dialect.is_german() {
+                Box::new(OrgMode::new_german())
+            } else {
+                Box::new(OrgMode::default())
+            }),
+            "plaintext" | "text" => Some(if dialect.is_german() {
+                Box::new(PlainGerman)
+            } else {
+                Box::new(PlainEnglish)
+            }),
+            _ => None,
+        }
+    }
+
     async fn load_file_dictionary(
         &self,
         uri: &Uri,
@@ -379,7 +409,7 @@ impl Backend {
                 let detected = self
                     .lang_detect
                     .detect_language(text, &dict, Dialect::American);
-                warn!(
+                debug!(
                     "harper-ls dialect detect: {:?} for {:?} ({} words)",
                     detected, uri, word_count
                 );
@@ -585,10 +615,9 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
-            "mail" => Some(Box::new(PlainEnglish)),
-            "markdown" | "quarto" => Some(Box::new(Markdown::new(markdown_options))),
-            "org" => Some(Box::new(OrgMode)),
-            "plaintext" | "text" => Some(Box::new(PlainEnglish)),
+            "mail" | "markdown" | "quarto" | "org" | "plaintext" | "text" => {
+                Self::parser_for_prose(language_id, detected_dialect, markdown_options)
+            }
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
             "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
@@ -1106,5 +1135,319 @@ impl LanguageServer for Backend {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use futures::{SinkExt, StreamExt};
+    use serde_json::json;
+    use tempfile::TempDir;
+    use tokio::task::JoinHandle;
+    use tower_lsp_server::LspService;
+    use tower_lsp_server::jsonrpc::Response;
+    use tower_lsp_server::lsp_types::{
+        DidChangeTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandParams,
+        TextDocumentContentChangeEvent, TextDocumentItem, VersionedTextDocumentIdentifier,
+    };
+
+    struct TestHarness {
+        _service: LspService<Backend>,
+        tempdir: TempDir,
+        test_config: Config,
+        responder: JoinHandle<()>,
+    }
+
+    impl TestHarness {
+        async fn new() -> Self {
+            let tempdir = TempDir::new().unwrap();
+            let root = tempdir.path();
+            let user_dict_path = root.join("dictionary.txt");
+            let file_dict_path = root.join("file_dictionaries");
+            let workspace_dict_path = root.join(".harper-dictionary.txt");
+            let ignored_lints_path = root.join("ignored_lints");
+
+            let config = Config {
+                user_dict_path: user_dict_path.clone(),
+                file_dict_path: file_dict_path.clone(),
+                workspace_dict_path: workspace_dict_path.clone(),
+                ignored_lints_path: ignored_lints_path.clone(),
+                ..Config::default()
+            };
+
+            let lsp_config = json!({
+                "harper-ls": {
+                    "userDictPath": user_dict_path.to_string_lossy(),
+                    "fileDictPath": file_dict_path.to_string_lossy(),
+                    "workspaceDictPath": workspace_dict_path.to_string_lossy(),
+                    "ignoredLintsPath": ignored_lints_path.to_string_lossy(),
+                }
+            });
+
+            let (service, socket) = LspService::new(|client| Backend::new(client, config.clone()));
+            let backend = service.inner();
+            *backend.root.write().await = root.to_path_buf();
+
+            let (mut request_stream, mut response_sink) = socket.split();
+            let responder_config = lsp_config.clone();
+            let responder = tokio::spawn(async move {
+                while let Some(request) = request_stream.next().await {
+                    if request.method() == "workspace/configuration" {
+                        let response = Response::from_ok(
+                            request.id().unwrap().clone(),
+                            json!([responder_config.clone()]),
+                        );
+                        response_sink.send(response).await.unwrap();
+                    }
+                }
+            });
+
+            Self {
+                _service: service,
+                tempdir,
+                test_config: config,
+                responder,
+            }
+        }
+
+        fn backend(&self) -> &Backend {
+            self._service.inner()
+        }
+
+        fn file_uri(&self, relative: &str) -> Uri {
+            let path = self.tempdir.path().join(relative);
+            Uri::from_file_path(path).unwrap()
+        }
+
+        async fn write_document(&self, uri: &Uri, text: &str) {
+            tokio::fs::write(uri.to_file_path().unwrap(), text)
+                .await
+                .unwrap();
+        }
+
+        async fn open_document(&self, uri: &Uri, language_id: &str, text: &str) {
+            self.write_document(uri, text).await;
+            self.backend()
+                .did_open(DidOpenTextDocumentParams {
+                    text_document: TextDocumentItem {
+                        uri: uri.clone(),
+                        language_id: language_id.to_string(),
+                        version: 1,
+                        text: text.to_string(),
+                    },
+                })
+                .await;
+        }
+
+        async fn change_document(&self, uri: &Uri, version: i32, text: &str) {
+            self.write_document(uri, text).await;
+            self.backend()
+                .did_change(DidChangeTextDocumentParams {
+                    text_document: VersionedTextDocumentIdentifier {
+                        uri: uri.clone(),
+                        version,
+                    },
+                    content_changes: vec![TextDocumentContentChangeEvent {
+                        range: None,
+                        range_length: None,
+                        text: text.to_string(),
+                    }],
+                })
+                .await;
+        }
+
+        async fn execute_command(&self, command: &str, word: &str, uri: &Uri) {
+            self.backend()
+                .execute_command(ExecuteCommandParams {
+                    command: command.to_string(),
+                    arguments: vec![json!(word), json!(uri.to_string())],
+                    work_done_progress_params: Default::default(),
+                })
+                .await
+                .unwrap();
+        }
+
+        async fn install_temp_config(&self) {
+            *self.backend().config.write().await = self.test_config.clone();
+        }
+    }
+
+    impl Drop for TestHarness {
+        fn drop(&mut self) {
+            self.responder.abort();
+        }
+    }
+
+    fn german_text_with_errors() -> &'static str {
+        "Das ist ein deutscher Beispielsatz mit ausreichend vielen Woertern, damit die Sprache erkannt wird. dieser Satz enthaelt Worrt und flasch geschriebene Begriffe."
+    }
+
+    fn german_text_without_errors() -> &'static str {
+        "Das ist ein deutscher Beispielsatz mit ausreichend vielen Wörtern, damit die Sprache erkannt wird. Dieser Satz enthält ansonsten nur normale deutsche Formulierungen."
+    }
+
+    fn english_text_with_error() -> &'static str {
+        "This is an English sample sentence with enough words for detection to stay on the default dialect. this sentence starts with a lowercase word."
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn german_markdown_open_uses_german_dialect_and_emits_diagnostics() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("german.md");
+
+        harness
+            .open_document(&uri, "markdown", german_text_with_errors())
+            .await;
+
+        assert_eq!(
+            harness.backend().get_document_dialect(&uri).await,
+            Dialect::German
+        );
+
+        let diagnostics = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            !diagnostics.is_empty(),
+            "expected German diagnostics for intentionally broken German text"
+        );
+        assert!(
+            diagnostics.len() < 12,
+            "German text should not be flooded with English-oriented diagnostics: {:?}",
+            diagnostics
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn empty_markdown_document_switches_to_german_after_edit() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("empty-then-german.md");
+
+        harness.open_document(&uri, "markdown", "").await;
+        assert_eq!(
+            harness.backend().get_document_dialect(&uri).await,
+            Dialect::American
+        );
+
+        harness
+            .change_document(&uri, 2, german_text_with_errors())
+            .await;
+
+        assert_eq!(
+            harness.backend().get_document_dialect(&uri).await,
+            Dialect::German
+        );
+
+        let diagnostics = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            !diagnostics.is_empty(),
+            "expected diagnostics after switching to German text"
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn german_dictionary_commands_write_to_dialect_specific_paths() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("german-dicts.md");
+
+        harness
+            .open_document(&uri, "markdown", german_text_without_errors())
+            .await;
+        assert_eq!(
+            harness.backend().get_document_dialect(&uri).await,
+            Dialect::German
+        );
+        harness.install_temp_config().await;
+
+        harness
+            .execute_command("HarperAddToUserDict", "Ölkannen", &uri)
+            .await;
+        harness
+            .execute_command("HarperAddToWSDict", "Werkstattwort", &uri)
+            .await;
+        harness
+            .execute_command("HarperAddToFileDict", "Dateiwort", &uri)
+            .await;
+
+        let german_user_dict =
+            Backend::dialect_path(&harness.test_config.user_dict_path, Dialect::German);
+        let german_workspace_dict =
+            Backend::dialect_path(&harness.test_config.workspace_dict_path, Dialect::German);
+        let german_file_dict = harness
+            .backend()
+            .get_file_dict_path(&uri, Dialect::German)
+            .await
+            .unwrap();
+
+        assert!(
+            tokio::fs::read_to_string(&german_user_dict)
+                .await
+                .unwrap()
+                .contains("Ölkannen")
+        );
+        assert!(
+            tokio::fs::read_to_string(&german_workspace_dict)
+                .await
+                .unwrap()
+                .contains("Werkstattwort")
+        );
+        assert!(
+            tokio::fs::read_to_string(&german_file_dict)
+                .await
+                .unwrap()
+                .contains("Dateiwort")
+        );
+
+        if harness.test_config.user_dict_path.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&harness.test_config.user_dict_path)
+                    .await
+                    .unwrap()
+                    .contains("Ölkannen")
+            );
+        }
+        if harness.test_config.workspace_dict_path.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&harness.test_config.workspace_dict_path)
+                    .await
+                    .unwrap()
+                    .contains("Werkstattwort")
+            );
+        }
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn english_user_dictionary_command_keeps_default_path() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("english.md");
+
+        harness
+            .open_document(&uri, "markdown", english_text_with_error())
+            .await;
+        assert_eq!(
+            harness.backend().get_document_dialect(&uri).await,
+            Dialect::American
+        );
+        harness.install_temp_config().await;
+
+        harness
+            .execute_command("HarperAddToUserDict", "HarperWord", &uri)
+            .await;
+
+        let english_user_dict = tokio::fs::read_to_string(&harness.test_config.user_dict_path)
+            .await
+            .unwrap();
+        assert!(english_user_dict.contains("HarperWord"));
+
+        let german_user_dict =
+            Backend::dialect_path(&harness.test_config.user_dict_path, Dialect::German);
+        if german_user_dict.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&german_user_dict)
+                    .await
+                    .unwrap()
+                    .contains("HarperWord")
+            );
+        }
     }
 }

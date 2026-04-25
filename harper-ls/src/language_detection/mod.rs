@@ -1,5 +1,6 @@
 //! Extensible language detection system for Harper LSP.
 
+use harper_core::parsers::{Parser, PlainEnglish};
 use harper_core::spell::FstDictionary;
 use harper_core::{Dialect, Token};
 use std::fmt::Debug;
@@ -40,16 +41,18 @@ impl LanguageDetectionRegistry {
         dict: &FstDictionary,
         default_dialect: Dialect,
     ) -> Dialect {
-        use harper_core::Document;
-        let doc = Document::new_plain_english_curated(source);
-        let toks = doc.get_tokens();
+        let source_chars: Vec<char> = source.chars().collect();
+        // The current shared plain-text lexer is sufficient for the supported
+        // Latin-script dialects. If a future language needs a different
+        // tokenizer for detection, this is the seam to extend.
+        let tokens = PlainEnglish.parse(&source_chars);
 
-        if toks.is_empty() {
+        if tokens.is_empty() {
             return default_dialect;
         }
 
         for detector in &self.detectors {
-            if let Some(dialect) = detector.detect(toks, doc.get_source(), dict) {
+            if let Some(dialect) = detector.detect(&tokens, &source_chars, dict) {
                 tracing::debug!(
                     "Detected language: {} using {} detector",
                     detector.name(),
@@ -62,7 +65,6 @@ impl LanguageDetectionRegistry {
         tracing::debug!("No language detected, using default dialect");
         default_dialect
     }
-
 }
 
 impl Default for LanguageDetectionRegistry {

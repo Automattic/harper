@@ -3,8 +3,8 @@
 //! These tests verify that the language detection system works correctly
 //! for various real-world scenarios.
 
-use harper_core::spell::FstDictionary;
 use harper_core::Dialect;
+use harper_core::spell::FstDictionary;
 use harper_ls::language_detection::LanguageDetectionRegistry;
 
 /// Test helper to run detection and assert result

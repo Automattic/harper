@@ -12,7 +12,11 @@ fn test_basic_compound_word() {
     let mut linter = LintGroup::new_curated(dict, Dialect::German);
 
     let text = "Das Gartenhaus ist groß.";
-    let document = Document::new(text, &harper_core::parsers::PlainGerman, &curated_german_dictionary());
+    let document = Document::new(
+        text,
+        &harper_core::parsers::PlainGerman,
+        &curated_german_dictionary(),
+    );
     let lints = linter.lint(&document);
 
     // "Gartenhaus" should be recognized as valid compound (Garten + Haus)
@@ -34,10 +38,10 @@ fn test_fugen_s_compounds() {
 
     // Test various Fugen-s compounds
     let test_cases = vec![
-        "Arbeitsstelle", // Arbeit + s + Stelle
+        "Arbeitsstelle",   // Arbeit + s + Stelle
         "Frühstücksspeck", // Frühstück + s + Speck
-        "Regenbogen", // Regen + bogen (no s, but still compound)
-        "Liebesbrief", // Liebe + s + Brief
+        "Regenbogen",      // Regen + bogen (no s, but still compound)
+        "Liebesbrief",     // Liebe + s + Brief
     ];
 
     for word in test_cases {
@@ -67,7 +71,7 @@ fn test_fugen_n_compounds() {
     // Test Fugen-n compounds
     let test_cases = vec![
         "Straßenrand", // Straße + n + Rand
-        "Hofläufer", // Hof + läufer (e→ä umlaut in compounds)
+        "Hofläufer",   // Hof + läufer (e→ä umlaut in compounds)
     ];
 
     for word in test_cases {
@@ -97,7 +101,7 @@ fn test_three_part_compounds() {
     // Three-part compounds: Word1 + Fugen + Word2 + Word3
     let test_cases = vec![
         "Donaudampfschifffahrt", // Donau + dampf + schiff + fahrt
-        "Schwarzweißfilm", // Schwarz + weiß + Film
+        "Schwarzweißfilm",       // Schwarz + weiß + Film
     ];
 
     for word in test_cases {
@@ -128,7 +132,7 @@ fn test_misspelled_compounds() {
 
     // Intentional misspellings
     let test_cases = vec![
-        ("Gartenhaus", "Gartenhous"), // Wrong vowel
+        ("Gartenhaus", "Gartenhous"),    // Wrong vowel
         ("Arbeitsplatz", "Arbeitsplaz"), // z instead of tz
     ];
 
@@ -177,10 +181,10 @@ fn test_compounds_with_umlauts() {
 
     // Compounds with special German characters
     let test_cases = vec![
-        "Größe", // Contains ß
+        "Größe",       // Contains ß
         "Ärztekammer", // Starts with Ä
-        "Ölpreis", // Starts with Ö
-        "Überfluss", // Starts with Ü
+        "Ölpreis",     // Starts with Ö
+        "Überfluss",   // Starts with Ü
     ];
 
     for word in test_cases {

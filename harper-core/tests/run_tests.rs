@@ -50,7 +50,7 @@ macro_rules! create_org_test {
                 );
 
                 let dict = FstDictionary::curated();
-                let document = Document::new(&source, &OrgMode, &dict);
+                let document = Document::new(&source, &OrgMode::default(), &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
                 let lints = linter.lint(&document);
