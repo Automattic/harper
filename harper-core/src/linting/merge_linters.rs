@@ -34,6 +34,10 @@ macro_rules! merge_linters {
                     fn description(&self) -> &'static str {
                         $desc
                     }
+
+                    fn merged_linter_child_names(&self) -> &'static [&'static str] {
+                        &[$(stringify!($linter)),*]
+                    }
                 }
             }
         }

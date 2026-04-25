@@ -294,6 +294,13 @@ pub trait Linter: LSend {
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
+
+    /// Get the names of child linters for clash detection.
+    /// Non-merged linters should return an empty array.
+    /// This is used by LintGroup to detect name conflicts.
+    fn merged_linter_child_names(&self) -> &'static [&'static str] {
+        &[]
+    }
 }
 
 /// A blanket-implemented trait that renders the Markdown description field of a linter to HTML.

@@ -316,18 +316,34 @@ impl LintGroup {
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
+        // Check if the main linter name clashes
         if self.contains_key(&name) {
+            let clash = name.as_ref().to_string();
             if self.clashing_linter_names.is_none() {
-                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+                self.clashing_linter_names = Some(vec![clash]);
             } else if let Some(clashing_names) = &mut self.clashing_linter_names {
-                clashing_names.push(name.as_ref().to_string());
+                clashing_names.push(clash);
             }
-            false
-        } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
-            true
+            return false;
         }
+
+        // Check if any child linter names clash with existing linters
+        for child_name in linter.merged_linter_child_names() {
+            if self.contains_key(child_name) {
+                let clash = format!("{} (part of: {})", child_name, name.as_ref());
+                if self.clashing_linter_names.is_none() {
+                    self.clashing_linter_names = Some(vec![clash]);
+                } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                    clashing_names.push(clash);
+                }
+                return false;
+            }
+        }
+
+        // No clashes found, add the linter
+        self.linters
+            .insert(name.as_ref().to_string(), Box::new(linter));
+        true
     }
 
     /// Add a chunk-based [`ExprLinter`] to the group, returning whether the operation was successful.
