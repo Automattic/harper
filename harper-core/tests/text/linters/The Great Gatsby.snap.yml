@@ -213,16 +213,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-      72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
-         |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
-      73 | bungalow at eighty a month, but at the last minute the firm ordered him to
-Suggest:
-  - Replace with: “weather beaten”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
       74 | Washington, and I went out to the country alone. I had a dog—at least I had him
@@ -514,6 +504,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     392 | “This idea is that we’re Nordics. I am, and you are, and you are, and—” After an
+         | ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
      394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
@@ -521,13 +518,6 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-     395 | science and art, and all that. Do you see?”
-         |                                           ^ This quote has no termination.
 
 
 
@@ -568,7 +558,7 @@ Suggest:
 Lint:    Formatting (255 priority)
 Message: |
      452 | “Why—” she said hesitantly, ‘‘Tom’s got some woman in New York.”
-         |                                                                ^ This quote has no termination.
+         | ^ This quote has no termination.
 
 
 
@@ -635,16 +625,6 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     529 | the whole evening had been a trick of some sort to exact a contributary emotion
-         |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
-     530 | from me. I waited, and sure enough, in a moment she looked at me with an
-Suggest:
-  - Replace with: “con tributary”
 
 
 
@@ -5537,21 +5517,6 @@ Message: |
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t
-         |                                                  ^ This quote has no termination.
-    4202 | know.”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    4202 | know.”
-         |      ^ This quote has no termination.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4241 | “Not at Kapiolani?” demanded Tom suddenly.
@@ -6150,14 +6115,6 @@ Suggest:
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
-    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
-         |                               ^ This quote has no termination.
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
@@ -6220,13 +6177,6 @@ Message: |
          |                       ^~~~ `goin` should probably be written as `go in`.
 Suggest:
   - Replace with: “go in”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    4511 | knock right into her, goin’ thirty or forty miles an hour.”
-         |                                                           ^ This quote has no termination.
 
 
 
@@ -6396,6 +6346,15 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4818 | hot struggles of the poor.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 53 words long.
+
+
+
+Lint:    WordChoice (31 priority)
+Message: |
+    4820 | “I can’t describe to you how surprised I was to find out I loved her, old sport.
+         |                                                 ^~~~~~~~ Use `find` instead of `find out` when you mean to discover something directly.
+Suggest:
+  - Replace with: “find”
 
 
 
@@ -6771,21 +6730,6 @@ Message: |
     5147 | fantastic shapes and scurried here and there in the faint dawn wind.
 Suggest:
   - Replace with: “ash heaps”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5151 | and walked to the rear window and leaned with his face pressed against it—“and I
-         |                                                                           ^ This quote has no termination.
-    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5153 | fool me, but you can’t fool God!’”
-         |                                  ^ This quote has no termination.
 
 
 
@@ -7489,21 +7433,6 @@ Suggest:
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
-    5523 | bulbous fingers—“always together.”
-         |                 ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5523 | bulbous fingers—“always together.”
-         |                                  ^ This quote has no termination.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7960,20 +7889,6 @@ Lint:    Formatting (255 priority)
 Message: |
     5723 | for me, and I felt a little dizzy for a while.”
          |                                               ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5727 | “Oh, and do you remember”—she added—“a conversation we had once about driving a
-         |                                     ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5728 | car?”
-         |     ^ This quote has no termination.
 
 
 

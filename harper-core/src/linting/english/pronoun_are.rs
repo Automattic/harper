@@ -40,9 +40,9 @@ impl ExprLinter for PronounAre {
         let gap = tokens.get(1)?;
         let letter = tokens.get(2)?;
 
-        let pronoun_chars = pronoun.span.get_content(source);
-        let gap_chars = gap.span.get_content(source);
-        let letter_chars = letter.span.get_content(source);
+        let pronoun_chars = pronoun.get_ch(source);
+        let gap_chars = gap.get_ch(source);
+        let letter_chars = letter.get_ch(source);
 
         let all_pronoun_letters_uppercase = pronoun_chars
             .iter()

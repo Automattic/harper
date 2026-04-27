@@ -1,4 +1,4 @@
-import type { Dialect, LintConfig, LintOptions } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
@@ -33,6 +33,10 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getConfig' })).config;
 	}
 
+	public static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		return (await chrome.runtime.sendMessage({ kind: 'getStructuredConfig' })).config;
+	}
+
 	public static async setLintConfig(lintConfig: LintConfig): Promise<void> {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setConfig', config: lintConfig });
@@ -56,6 +60,14 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
 	}
 
+	public static async getDelay(): Promise<number> {
+		return (await chrome.runtime.sendMessage({ kind: 'getDelay' })).delay;
+	}
+
+	public static async setDelay(delay: number): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDelay', delay });
+	}
+
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
 		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
@@ -70,7 +82,12 @@ export default class ProtocolClient {
 		enabled: boolean,
 		overrideValue = true,
 	): Promise<void> {
-		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain, overrideValue });
+		await chrome.runtime.sendMessage({
+			kind: 'setDomainStatus',
+			enabled,
+			domain,
+			overrideValue,
+		});
 	}
 
 	public static async getDefaultEnabled(): Promise<boolean> {
@@ -169,7 +186,11 @@ export default class ProtocolClient {
 
 	public static async addWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
 		this.lintCache.clear();
-		await chrome.runtime.sendMessage({ kind: 'addWeirpack', filename, bytes: Array.from(bytes) });
+		await chrome.runtime.sendMessage({
+			kind: 'addWeirpack',
+			filename,
+			bytes: Array.from(bytes),
+		});
 	}
 
 	public static async removeWeirpack(id: string): Promise<void> {

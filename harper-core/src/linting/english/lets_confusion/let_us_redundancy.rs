@@ -33,7 +33,7 @@ impl ExprLinter for LetUsRedundancy {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let template = matched_tokens.span()?.get_content(source);
-        let pronoun = matched_tokens.last()?.span.get_content_string(source);
+        let pronoun = matched_tokens.last()?.get_str(source);
 
         Some(Lint {
             span: matched_tokens.span()?,

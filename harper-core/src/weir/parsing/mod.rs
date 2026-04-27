@@ -131,9 +131,7 @@ fn expected_space(cursor: usize, tokens: &[Token], source: &[char]) -> Result<()
     let expected_space = &tokens[cursor];
 
     if !expected_space.kind.is_space() {
-        return Err(Error::UnexpectedToken(
-            expected_space.span.get_content_string(source),
-        ));
+        return Err(Error::UnexpectedToken(expected_space.get_str(source)));
     }
 
     Ok(())

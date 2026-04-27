@@ -42,8 +42,8 @@ impl ExprLinter for TheMy {
         let span = matched_tokens.span().unwrap();
         let span_content = span.get_content(source);
 
-        let first_word = matched_tokens[0].span.get_content(source);
-        let second_word = matched_tokens[2].span.get_content(source);
+        let first_word = matched_tokens[0].get_ch(source);
+        let second_word = matched_tokens[2].get_ch(source);
 
         let first_word_string: String = first_word.to_string();
 

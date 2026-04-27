@@ -1,4 +1,4 @@
-import type { BinaryModule, SuperBinaryModule } from './binary';
+import type { BinaryModule, SuperBinaryModule } from './BinaryModule';
 import { assert } from './utils';
 
 export type SerializableTypes =

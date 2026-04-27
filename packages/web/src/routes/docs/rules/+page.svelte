@@ -7,7 +7,8 @@ import {
 	TableHead,
 	TableHeadCell,
 } from 'components';
-import { binary, type LintConfig, LocalLinter } from 'harper.js';
+import { type LintConfig, LocalLinter } from 'harper.js';
+import { slimBinary } from 'harper.js/slimBinary';
 
 export const frontmatter = {
 	title: 'Rules',
@@ -16,7 +17,7 @@ export const frontmatter = {
 let descriptions: Record<string, string> = $state({});
 let default_config: LintConfig = $state({});
 
-let linter = new LocalLinter({ binary });
+let linter = new LocalLinter({ binary: slimBinary });
 linter.getLintDescriptionsHTML().then(async (v) => {
 	descriptions = v;
 });

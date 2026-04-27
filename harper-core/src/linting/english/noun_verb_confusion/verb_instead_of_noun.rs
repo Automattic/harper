@@ -42,8 +42,8 @@ impl ExprLinter for VerbInsteadOfNoun {
         let adj_tok = &toks.first()?;
         let verb_tok = &toks.last()?;
 
-        let adj_text = adj_tok.span.get_content_string(src);
-        let verb_text = verb_tok.span.get_content_string(src);
+        let adj_text = adj_tok.get_str(src);
+        let verb_text = verb_tok.get_str(src);
         let verb_lower = verb_text.to_lowercase();
 
         if adj_tok.kind.is_auxiliary_verb() || adj_tok.kind.is_upos(UPOS::AUX) {
@@ -71,7 +71,7 @@ impl ExprLinter for VerbInsteadOfNoun {
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 noun.chars().collect(),
-                verb_tok.span.get_content(src),
+                verb_tok.get_ch(src),
             )],
             message: format!("`{verb_text}` is a verb, the noun should be `{noun}`."),
             priority: 63,

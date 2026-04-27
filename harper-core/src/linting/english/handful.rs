@@ -48,7 +48,7 @@ impl ExprLinter for Handful {
 
         let replacement = &matched_tokens[..highlight_end];
         let span = replacement.span()?;
-        let template = matched_tokens.first()?.span.get_content(source);
+        let template = matched_tokens.first()?.get_ch(source);
 
         Some(Lint {
             span,

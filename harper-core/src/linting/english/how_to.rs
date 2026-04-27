@@ -2,10 +2,10 @@ use harper_brill::UPOS;
 
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token, TokenKind, TokenStringExt,
+    Token, TokenKind,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::english::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::{InflectionOfBe, UPOSSet},
+    patterns::{InflectionOfBe, NominalPhrase, UPOSSet},
 };
 
 pub struct HowTo {
@@ -23,20 +23,57 @@ impl Default for HowTo {
             .then_verb_lemma();
         pattern.add(pos_pattern);
 
+        let finite_clause_verb = SequenceExpr::whitespace().then_kind_any(&[
+            TokenKind::is_auxiliary_verb,
+            TokenKind::is_verb_third_person_singular_present_form,
+            TokenKind::is_verb_simple_past_form,
+        ] as &[_]);
+
+        let noun_led_clause = SequenceExpr::default()
+            .then_kind_either(TokenKind::is_nominal, TokenKind::is_proper_noun)
+            .then_any_of(vec![
+                Box::new(finite_clause_verb),
+                Box::new(
+                    SequenceExpr::whitespace()
+                        .then_kind_any(&[
+                            TokenKind::is_noun,
+                            TokenKind::is_proper_noun,
+                            TokenKind::is_verb_progressive_form,
+                        ] as &[_])
+                        .then_seq(SequenceExpr::whitespace().then(
+                            InflectionOfBe::new().or(SequenceExpr::default().then_auxiliary_verb()),
+                        )),
+                ),
+                Box::new(
+                    SequenceExpr::whitespace()
+                        .t_aco("to")
+                        .then_whitespace()
+                        .then(NominalPhrase)
+                        .then_seq(SequenceExpr::whitespace().then_kind_any(&[
+                            TokenKind::is_auxiliary_verb,
+                            TokenKind::is_verb_third_person_singular_present_form,
+                            TokenKind::is_verb_simple_past_form,
+                        ]
+                            as &[_])),
+                ),
+            ]);
+
         let exceptions = SequenceExpr::unless(UPOSSet::new(&[UPOS::PART]))
             .then_anything()
             .then_unless(|tok: &Token, _: &[char]| tok.kind.is_np_member())
             .then_anything()
             .then_unless(
-                InflectionOfBe::new().or(SequenceExpr::default().then_kind_any_or_words(
-                    &[
-                        TokenKind::is_auxiliary_verb,
-                        TokenKind::is_adjective,
-                        TokenKind::is_conjunction,
-                        TokenKind::is_proper_noun,
-                    ] as &[_],
-                    &["did", "come", "does"],
-                )),
+                InflectionOfBe::new()
+                    .or(SequenceExpr::default().then_kind_any_or_words(
+                        &[
+                            TokenKind::is_auxiliary_verb,
+                            TokenKind::is_adjective,
+                            TokenKind::is_conjunction,
+                            TokenKind::is_proper_noun,
+                        ] as &[_],
+                        &["did", "come", "does"],
+                    ))
+                    .or(noun_led_clause),
             );
 
         pattern.add(exceptions);
@@ -53,11 +90,10 @@ impl ExprLinter for HowTo {
     }
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        let span = toks[2..4].span()?;
-        let fix: Vec<char> = "to ".chars().collect();
+        let fix: Vec<char> = " to".chars().collect();
 
         Some(Lint {
-            span,
+            span: toks[2].span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::InsertAfter(fix)],
             message: "Insert `to` after `how` (e.g., `how to clone`).".into(),
@@ -87,7 +123,12 @@ mod tests {
 
     #[test]
     fn ignores_correct_phrase() {
-        assert_lint_count("Here's how to clone the repository.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Here's how to clone the repository.",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -212,74 +253,203 @@ mod tests {
 
     #[test]
     fn already_correct_install() {
-        assert_lint_count("See how to install the package with apt.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "See how to install the package with apt.",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn already_correct_fix() {
-        assert_lint_count("He showed me how to fix the zipper in ten minutes.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He showed me how to fix the zipper in ten minutes.",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn how_are_you() {
-        assert_lint_count("How are you?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "How are you?",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn how_calm_you_are() {
-        assert_lint_count("I like how calm you are.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I like how calm you are.",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn how_will_you_make_up() {
-        assert_lint_count("How will you make up for your mistakes?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "How will you make up for your mistakes?",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn storytelling_clause() {
-        assert_lint_count("I will tell about how leaving my husband led to my dog winning a Nobel Prize.", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I will tell about how leaving my husband led to my dog winning a Nobel Prize.",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_how_did_you() {
-        assert_lint_count("How did you get to school every day?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "How did you get to school every day?",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_how_come() {
-        assert_lint_count("How come this has to be a special case?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "How come this has to be a special case?",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_how_has() {
-        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "How Has This Been Tested?",
+            HowTo::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_1492() {
-        assert_no_lints("I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
 
-        assert_no_lints("But how does something like this...", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "But how does something like this...",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_1298() {
-        assert_no_lints("The story of how and why things came to this point.", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The story of how and why things came to this point.",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_false_positive_pr_1846() {
-        assert_no_lints("About how Microsoft, Google, and others are training people in Rust.", HowTo::default(), crate::languages::LanguageFamily::English)
+        assert_no_lints(
+            "About how Microsoft, Google, and others are training people in Rust.",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_false_positives_1492_how_indexes() {
-        assert_no_lints("controls how indexes will be added to unwrapped keys of flat array-like objects", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "controls how indexes will be added to unwrapped keys of flat array-like objects",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_proper_noun_handles() {
+        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
+    }
+
+    #[test]
+    fn dont_flag_how_work_is_structured() {
+        assert_no_lints(
+            "They need to rethink how work is structured and valued.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_form_submissions_are_delivered() {
+        assert_no_lints(
+            "The Mail tab dictates how form submissions are delivered to you.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_access_to_food_shaped_revolutions() {
+        assert_no_lints(
+            "We analyze how access to food shaped political ideologies.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_proper_noun_handles() {
+        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
+    }
+
+    #[test]
+    fn dont_flag_how_work_is_structured() {
+        assert_no_lints(
+            "They need to rethink how work is structured and valued.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_form_submissions_are_delivered() {
+        assert_no_lints(
+            "The Mail tab dictates how form submissions are delivered to you.",
+            HowTo::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_how_access_to_food_shaped_revolutions() {
+        assert_no_lints(
+            "We analyze how access to food shaped political ideologies.",
+            HowTo::default(),
+        );
     }
 
     #[test]
     fn issue_2124() {
-        assert_no_lints("I like how discord shows Spotify status on your profile.", HowTo::default(), crate::languages::LanguageFamily::English);
-        assert_no_lints("To be determined based on how error handling is done in new paradigm.", HowTo::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I like how discord shows Spotify status on your profile.",
+            HowTo::default(),
+        );
+        assert_no_lints(
+            "To be determined based on how error handling is done in new paradigm.",
+            HowTo::default(),
+        );
     }
 }

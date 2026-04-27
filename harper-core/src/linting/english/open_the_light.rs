@@ -77,7 +77,7 @@ impl ExprLinter for OpenTheLight {
         const ES: &[char] = &['e', 's'];
         const LEMMA: &[char] = &[];
 
-        let verb: &[char] = toks.first()?.span.get_content(src);
+        let verb: &[char] = toks.first()?.get_ch(src);
 
         let (e, n, d) = (
             verb[verb.len() - 3],

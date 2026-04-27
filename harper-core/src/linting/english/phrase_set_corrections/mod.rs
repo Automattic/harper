@@ -365,6 +365,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InflectionPoint" => (
+            &[
+                ("infliction point", "inflection point"),
+                ("infliction points", "inflection points"),
+            ],
+            "To refer to a significant change in a trend, `inflection point` is the correct term.",
+            "Corrects `infliction point` to `inflection point`.",
+            LintKind::Malapropism
+        ),
         "InvestIn" => (
             &[
                 // Verb
@@ -417,6 +426,17 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
+        "LookForwardTo" => (
+            &[
+                ("look forward for", "look forward to"),
+                ("looked forward for", "looked forward to"),
+                ("looks forward for", "looks forward to"),
+                ("looking forward for", "looking forward to")
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
+        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -570,6 +590,32 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "UseToUsedTo" => (
+            &[
+                // "be" verbs + "use to" -> "used to" (accustomed to)
+                ("am use to", "am used to"),
+                ("are use to", "are used to"),
+                ("is use to", "is used to"),
+                ("was use to", "was used to"),
+                ("were use to", "were used to"),
+                ("be use to", "be used to"),
+                // contractions of "be"
+                ("i'm use to", "i'm used to"),
+                ("we're use to", "we're used to"),
+                ("you're use to", "you're used to"),
+                ("they're use to", "they're used to"),
+                ("he's use to", "he's used to"),
+                ("she's use to", "she's used to"),
+                ("it's use to", "it's used to"),
+                // "get" forms + "use to" -> "used to" (becoming accustomed)
+                ("getting use to", "getting used to"),
+                ("get use to", "get used to"),
+                ("got use to", "got used to"),
+            ],
+            "The correct form is `used to`, not `use to`.",
+            "Corrects `use to` to `used to` when meaning accustomed to (after forms of `be` or `get`).",
+            LintKind::Grammar
+        ),
         "WreakHavoc" => (
             &[
                 ("wreck havoc", "wreak havoc"),
@@ -580,6 +626,22 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `wreak havoc`?",
             "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
             LintKind::Eggcorn
+        ),
+        "VerseAsVerb" => (
+            &[
+                ("verse against", "play against"),
+                ("versed against", "played against"),
+                ("versing against", "playing against"),
+                ("verses against", "plays against"),
+                ("verse me", "play me"),
+                ("verse him", "play him"),
+                ("verse her", "play her"),
+                ("verse them", "play them"),
+                ("verse you", "play you"),
+            ],
+            "`Verse` is not a verb meaning to compete. Use `play against` or `compete against` instead.",
+            "Corrects the nonstandard use of `verse` as a verb (from `versus`) to standard alternatives.",
+            LintKind::Nonstandard
         ),
         "WroteToRote" => (
             &[
@@ -630,6 +692,24 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
+        "DateBackFrom" => (
+            &[
+                (&["date back from"], &["date from", "date back to"]),
+                (&["dates back from"], &["dates from", "dates back to"]),
+            ],
+            "Use `date from` or `date back to`, not `date back from`.",
+            "Corrects the blend of `date from` and `date back to` into the nonstandard `date back from`.",
+            LintKind::Usage
+        ),
         "DoubleEdgedSword" => (
             &[
                 (&["double edge sword", "double-edge sword", "double edge-sword", "double-edge-sword",
@@ -657,6 +737,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `declaration` or `declarator` instead of `decl`",
             "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandGovt" => (
+            &[
+                (&["govt", "govt."], &["government"]),
+                (&["govts"], &["governments"])
+            ],
+            "Use `government` instead of `govt` or `govt.`",
+            "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity.",
             LintKind::Style
         ),
         "Expat" => (

@@ -47,7 +47,7 @@ impl ExprLinter for ProgressiveNeedsBe {
         // If this is the non-contracted pattern, extend the replacement span to include "have"
         let have_tok_opt = word_toks
             .iter()
-            .find(|t| t.span.get_content(src).eq_ignore_ascii_case_str("have"))
+            .find(|t| t.get_ch(src).eq_str("have"))
             .copied();
 
         let span = if let Some(have_tok) = have_tok_opt {
@@ -57,7 +57,7 @@ impl ExprLinter for ProgressiveNeedsBe {
         };
 
         // Choose the correct "be" contraction based on the pronoun
-        let pronoun = first_word.span.get_content(src);
+        let pronoun = first_word.get_ch(src);
         let progressive_replacement = if pronoun.starts_with_ignore_ascii_case_str("i") {
             "I'm"
         } else if pronoun.starts_with_ignore_ascii_case_str("we") {

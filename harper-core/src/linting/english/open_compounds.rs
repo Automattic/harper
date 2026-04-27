@@ -137,8 +137,7 @@ fn get_compound_idx(toks: &[Token], src: &[char], compound: &str) -> Option<usiz
             } else {
                 Some(
                     !tok0
-                        .span
-                        .get_content(src)
+                        .get_ch(src)
                         .iter()
                         .collect::<String>()
                         .eq_ignore_ascii_case(compound) as usize,

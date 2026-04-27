@@ -45,13 +45,13 @@ impl ExprLinter for AndTheLike {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let (conj, ws) = (&toks[0], &toks[1]);
 
-        let conj = if conj.span.get_content(src)[0] == 'a' {
+        let conj = if conj.get_ch(src)[0] == 'a' {
             "and"
         } else {
             "or"
         };
 
-        let corrected = format!("{}{}the like", conj, ws.span.get_content_string(src));
+        let corrected = format!("{}{}the like", conj, ws.get_str(src));
 
         Some(Lint {
             span: toks.span()?,

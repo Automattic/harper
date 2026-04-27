@@ -30,7 +30,7 @@ fn looks_like_be_contraction(token: &Token, source: &[char]) -> bool {
         return false;
     }
 
-    let content = token.span.get_content(source);
+    let content = token.get_ch(source);
     let Some(apostrophe_idx) = content.iter().rposition(|c| matches!(*c, '\'' | '’')) else {
         return false;
     };
@@ -94,8 +94,7 @@ impl ExprLinter for SingleBe {
         }
         if first.kind.is_possessive_nominal()
             && first
-                .span
-                .get_content(source)
+                .get_ch(source)
                 .first()
                 .is_some_and(|c| c.is_uppercase())
         {
@@ -121,7 +120,7 @@ impl ExprLinter for SingleBe {
             .map(is_past_flag)
             .unwrap_or_else(|| second.kind.is_verb_past_form());
 
-        let first_chars = first.span.get_content(source);
+        let first_chars = first.get_ch(source);
         let base_before_apostrophe = first_chars
             .iter()
             .rposition(|c| matches!(*c, '\'' | '’'))

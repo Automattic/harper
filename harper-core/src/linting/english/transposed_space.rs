@@ -54,8 +54,8 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
         let toks_span = toks.span()?;
 
         // "thec" "at" / "th ecat"
-        let word1 = toks.first()?.span.get_content(src);
-        let word2 = toks.last()?.span.get_content(src);
+        let word1 = toks.first()?.get_ch(src);
+        let word2 = toks.last()?.get_ch(src);
 
         // "thec" -> "the c"
         let w1_start = &word1[..word1.len() - 1];

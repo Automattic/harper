@@ -11,7 +11,10 @@ let titlecaseRun = 0;
 onMount(() => {
 	(async () => {
 		if (typeof Worker !== 'undefined') {
-			const { WorkerLinter, binary } = await import('harper.js');
+			const [{ WorkerLinter }, { binary }] = await Promise.all([
+				import('harper.js'),
+				import('harper.js/binary'),
+			]);
 			const newLinter = new WorkerLinter({ binary });
 
 			newLinter.setup();

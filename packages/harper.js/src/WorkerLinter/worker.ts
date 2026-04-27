@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 import './shims';
-import { SuperBinaryModule } from '../binary';
+import { SuperBinaryModule } from '../BinaryModule';
 import LocalLinter from '../LocalLinter';
 import Serializer, { isSerializedRequest, type SerializedRequest } from '../Serializer';
 

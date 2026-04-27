@@ -50,21 +50,21 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
         // The expr ref notation
         TokenKind::Punctuation(Punctuation::At) => {
             let name_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
-            let name = name_tok.span.get_content(source);
+            let name = name_tok.get_ch(source);
             Ok(FoundNode::new(AstExprNode::ExprRef(name.into()), 2))
         }
         // The derivation notation.
         TokenKind::Punctuation(Punctuation::Currency(Currency::Dollar)) => {
             let word_tok = tokens.get(1).ok_or(Error::EndOfInput)?;
 
-            let word = word_tok.span.get_content(source);
+            let word = word_tok.get_ch(source);
             Ok(FoundNode::new(AstExprNode::DerivativeOf(word.into()), 2))
         }
         TokenKind::Punctuation(Punctuation::Star) => {
             Ok(FoundNode::new(AstExprNode::Anything, 1))
         }
         TokenKind::Word(_) => {
-            let text = tok.span.get_content_string(source);
+            let text = tok.get_str(source);
 
             if let Ok(upos) = UPOS::from_str(&text){
                 Ok(FoundNode::new(
@@ -126,7 +126,7 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
         }
 
         TokenKind::Punctuation(p) => Ok(FoundNode::new(AstExprNode::Punctuation(p), 1)),
-        _ => Err(Error::UnsupportedToken(tok.span.get_content_string(source))),
+        _ => Err(Error::UnsupportedToken(tok.get_str(source))),
     }
 }
 

@@ -1,4 +1,5 @@
-import type { Locator, Page } from '@playwright/test';
+import type { BrowserContext, Locator, Page } from '@playwright/test';
+import type { LintConfig } from 'harper.js';
 import type { Box } from 'lint-framework';
 import { expect, test } from './fixtures';
 
@@ -14,6 +15,44 @@ export function randomString(length: number): string {
 		result += chars.charAt(Math.floor(Math.random() * chars.length));
 	}
 	return result;
+}
+
+export async function getBackground(context: BrowserContext) {
+	return (
+		context.serviceWorkers()[0] ??
+		context.backgroundPages()[0] ??
+		(await context.waitForEvent('serviceworker', { timeout: 90000 }))
+	);
+}
+
+export async function getExtensionId(context: BrowserContext): Promise<string> {
+	const background = await getBackground(context);
+	return background.url().split('/')[2];
+}
+
+export async function openExtensionPage(
+	context: BrowserContext,
+	page: Page,
+	path: 'popup.html' | 'options.html',
+) {
+	const extensionId = await getExtensionId(context);
+	await page.goto(`chrome-extension://${extensionId}/${path}`);
+}
+
+export async function getStoredLintConfig(context: BrowserContext): Promise<LintConfig> {
+	const background = await getBackground(context);
+	return await background.evaluate(async () => {
+		const value = await chrome.storage.local.get('lintConfig');
+		return JSON.parse(value.lintConfig ?? '{}');
+	});
+}
+
+export async function getStoredDelay(context: BrowserContext): Promise<number> {
+	const background = await getBackground(context);
+	return await background.evaluate(async () => {
+		const value = await chrome.storage.local.get({ delay: 0 });
+		return typeof value.delay === 'number' ? value.delay : 0;
+	});
 }
 
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
@@ -259,6 +298,16 @@ export async function testCanIgnoreSuggestion(
 		await assertEditorText(editor, cacheSalt);
 		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
+
+		// Backspace at position 0 is a no-op; unchanged text means cursor jumped.
+		await page.waitForTimeout(300);
+		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(300);
+		if (await isFormElement(editor)) {
+			await expect(editor).not.toHaveValue(cacheSalt);
+		} else {
+			await expect(editor).not.toHaveText(cacheSalt);
+		}
 	});
 }
 

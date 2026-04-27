@@ -41,7 +41,7 @@ impl ExprLinter for AskNoPreposition {
             return None;
         }
 
-        let verb = toks[0].span.get_content_string(src).to_lowercase();
+        let verb = toks[0].get_str(src).to_lowercase();
         let span = Span::new(toks[2].span.start, toks[3].span.end);
 
         Some(Lint {

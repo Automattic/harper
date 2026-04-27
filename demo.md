@@ -9,7 +9,7 @@ Harper can be an lifesaver when writing technical documents,
 emails or other formal forms of communication.
 
 Harper works everywhere, even when you're not online. Since your data
-never leaves your device, you don't ned too worry aout us
+never leaves your device, you don't ned too worry abuot us
 selling it or using it to train large language models.
 
 The best part: Harper can give you feedback instantly.

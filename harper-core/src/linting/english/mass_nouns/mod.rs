@@ -87,4 +87,14 @@ mod tests {
             crate::languages::LanguageFamily::English,
         );
     }
+
+    #[test]
+    fn ignore_a_fun_and_fantastic() {
+        assert_lint_count(
+            "It was such a fun and fantastic adventure together that ...",
+            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            0,
+            LanguageFamily::English,
+        );
+    }
 }

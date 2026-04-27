@@ -7,29 +7,23 @@ use super::{Lint, LintKind, Suggestion};
 use crate::Document;
 use crate::linting::expr_linter::Chunk;
 use crate::parsers::PlainEnglish;
-use crate::spell::Dictionary;
 use crate::{Token, TokenStringExt};
-use std::sync::Arc;
 
 /// A linter that corrects the capitalization of multi-word proper nouns.
 /// They are corrected to a "canonical capitalization" provided at construction.
 ///
 /// If you would like to add a proper noun to Harper, see `proper_noun_rules.json`.
-pub struct ProperNounCapitalizationLinter<D: Dictionary + 'static> {
+pub struct ProperNounCapitalizationLinter {
     pattern_map: ExprMap<Document>,
     description: String,
-    dictionary: Arc<D>,
 }
 
-impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
+impl ProperNounCapitalizationLinter {
     /// Create a linter that corrects the capitalization of phrases provided.
     pub fn new_strs(
         canonical_versions: impl IntoIterator<Item = impl AsRef<str>>,
         description: impl ToString,
-        dictionary: D,
     ) -> Self {
-        let dictionary = Arc::new(dictionary);
-
         let mut expr_map = ExprMap::default();
 
         for can_vers in canonical_versions {
@@ -42,13 +36,12 @@ impl<D: Dictionary + 'static> ProperNounCapitalizationLinter<D> {
 
         Self {
             pattern_map: expr_map,
-            dictionary: dictionary.clone(),
             description: description.to_string(),
         }
     }
 }
 
-impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
+impl ExprLinter for ProperNounCapitalizationLinter {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -61,7 +54,7 @@ impl<D: Dictionary + 'static> ExprLinter for ProperNounCapitalizationLinter<D> {
         let mut broken = false;
 
         for (err_token, correct_token) in matched_tokens.iter().zip(canonical_case.fat_tokens()) {
-            let err_chars = err_token.span.get_content(source);
+            let err_chars = err_token.get_ch(source);
             if err_chars != correct_token.content {
                 broken = true;
                 break;
@@ -96,7 +89,7 @@ struct RuleEntry {
 
 /// For the time being, this panics on invalid JSON.
 /// Do not use with user provided JSON.
-fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+fn lint_group_from_json(json: &str) -> LintGroup {
     let mut group = LintGroup::empty();
 
     let rules: HashMap<String, RuleEntry> = serde_json::from_str(json).unwrap();
@@ -107,7 +100,6 @@ fn lint_group_from_json(json: &str, dictionary: Arc<impl Dictionary + 'static>) 
             Box::new(ProperNounCapitalizationLinter::new_strs(
                 rule.canonical,
                 rule.description,
-                dictionary.clone(),
             )),
         );
     }
@@ -125,7 +117,6 @@ pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
 mod tests {
     use super::lint_group;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
-    use crate::spell::FstDictionary;
 
     #[test]
     fn americas_lowercase() {
@@ -169,12 +160,22 @@ mod tests {
 
     #[test]
     fn americas_allow_correct() {
-        assert_lint_count("South America", lint_group(FstDictionary::curated(
+        assert_lint_count(
+            "South America",
+            lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("North America", lint_group(FstDictionary::curated(
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "North America",
+            lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -215,16 +216,26 @@ mod tests {
 
     #[test]
     fn united_nations_allow_correct() {
-        assert_lint_count("United Nations", lint_group(FstDictionary::curated(
+        assert_lint_count(
+            "United Nations",
+            lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn meta_allow_correct() {
-        assert_lint_count("Meta Quest", lint_group(FstDictionary::curated(
+        assert_lint_count(
+            "Meta Quest",
+            lint_group(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -342,31 +353,56 @@ mod tests {
     #[test]
     fn test_atlantic_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Atlantic Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Atlantic Ocean",
+            lint_group(dictionary),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_pacific_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Pacific Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Pacific Ocean",
+            lint_group(dictionary),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_indian_ocean_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Indian Ocean", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Indian Ocean",
+            lint_group(dictionary),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_mediterranean_sea_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("Mediterranean Sea", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Mediterranean Sea",
+            lint_group(dictionary),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_south_china_sea_correct() {
         let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
-        assert_lint_count("South China Sea", lint_group(dictionary), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "South China Sea",
+            lint_group(dictionary),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

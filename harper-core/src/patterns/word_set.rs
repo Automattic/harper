@@ -49,7 +49,7 @@ impl SingleTokenPattern for WordSet {
             return false;
         }
 
-        let tok_chars = token.span.get_content(source);
+        let tok_chars = token.get_ch(source);
 
         for word in &self.words {
             if tok_chars.len() != word.len() {

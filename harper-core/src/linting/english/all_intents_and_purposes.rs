@@ -60,12 +60,12 @@ impl ExprLinter for AllIntentsAndPurposes {
             return None;
         }
 
-        let prep_text = toks.first().unwrap().span.get_content(src);
+        let prep_text = toks.first().unwrap().get_ch(src);
 
         let mut suggs = LEGIT.to_vec();
 
         // Suggest "to" first if the text uses "to", otherwise "for" first
-        if prep_text.eq_ignore_ascii_case_chars(&['t', 'o']) {
+        if prep_text.eq_ch(&['t', 'o']) {
             suggs.swap(0, 1);
         }
 

@@ -69,7 +69,7 @@ impl ExprLinter for SimplePastToPastParticiple {
 
         let verb_tok = &toks[2];
 
-        let simple_past = verb_tok.span.get_content_string(src);
+        let simple_past = verb_tok.get_str(src);
 
         if let Some(past_participle) = IrregularVerbs::curated()
             .get_past_participle_for_preterite(&simple_past)
@@ -77,7 +77,7 @@ impl ExprLinter for SimplePastToPastParticiple {
         {
             let suggestions = vec![Suggestion::replace_with_match_case(
                 past_participle.chars().collect(),
-                verb_tok.span.get_content(src),
+                verb_tok.get_ch(src),
             )];
 
             let message = format!(

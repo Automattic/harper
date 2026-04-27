@@ -40,12 +40,10 @@ impl ExprLinter for Cant {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let token = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['c', 'a', 'n', 't'])
+            tok.get_ch(src).eq_ch(&['c', 'a', 'n', 't'])
         })?;
 
-        let jargon = token.span.get_content(src);
+        let jargon = token.get_ch(src);
         let cannot = "can't";
 
         Some(Lint {

@@ -26,7 +26,7 @@ impl Default for CompoundNounAfterDetAdj {
     fn default() -> Self {
         let context_expr = SequenceExpr::with(|tok: &Token, src: &[char]| {
             tok.kind.is_determiner()
-                || (tok.kind.is_adjective() && *tok.span.get_content(src).to_lower() != ['g', 'o'])
+                || (tok.kind.is_adjective() && *tok.get_ch(src).to_lower() != ['g', 'o'])
         })
         .t_ws()
         .then(is_content_word)
@@ -60,7 +60,7 @@ impl ExprLinter for CompoundNounAfterDetAdj {
             .first()?
             .span
             .get_content(source)
-            .eq_ignore_ascii_case_str("that")
+            .eq_str("that")
         {
             return None;
         }

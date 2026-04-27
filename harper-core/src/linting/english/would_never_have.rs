@@ -44,8 +44,8 @@ impl ExprLinter for WouldNeverHave {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let modal_have_toks = toks.first()?;
-        let modal_have_chars = modal_have_toks.span.get_content(src);
-        let modal_have_str = modal_have_toks.span.get_content_string(src).to_lowercase();
+        let modal_have_chars = modal_have_toks.get_ch(src);
+        let modal_have_str = modal_have_toks.get_str(src).to_lowercase();
 
         let modal = if modal_have_str.starts_with("could") {
             "could"

@@ -29,8 +29,8 @@ impl ExprLinter for DoubleModal {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let first_chars = matched_tokens.first()?.span.get_content(source);
-        let second_chars = matched_tokens.last()?.span.get_content(source);
+        let first_chars = matched_tokens.first()?.get_ch(source);
+        let second_chars = matched_tokens.last()?.get_ch(source);
 
         Some(Lint {
             span: matched_tokens.span()?,

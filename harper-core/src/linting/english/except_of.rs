@@ -28,15 +28,12 @@ impl ExprLinter for ExceptOf {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if followed_by_word(ctx, |t| {
-            t.span.get_content(src).eq_ignore_ascii_case_str("course")
-        }) {
+        if followed_by_word(ctx, |t| t.get_ch(src).eq_str("course")) {
             return None;
         }
 
         let (span, replacement, msg) = if preceded_by_word(ctx, |t| {
-            t.span
-                .get_content(src)
+            t.get_ch(src)
                 .eq_any_ignore_ascii_case_str(&["the", "notable", "possible"])
         }) {
             (

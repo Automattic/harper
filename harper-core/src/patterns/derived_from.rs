@@ -33,7 +33,7 @@ impl Pattern for DerivedFrom {
             return Some(1);
         }
 
-        let chars = tok.span.get_content(source);
+        let chars = tok.get_ch(source);
         let word_id = WordId::from_word_chars(chars);
 
         if word_id == self.word_id {

@@ -14,11 +14,7 @@ fn token_is_theyre(token: &Token, source: &[char]) -> bool {
         return false;
     }
 
-    token
-        .span
-        .get_content(source)
-        .normalized()
-        .eq_ignore_ascii_case_str("they're")
+    token.get_ch(source).normalized().eq_str("they're")
 }
 
 fn token_is_typographic_theyre(token: &Token, source: &[char]) -> bool {
@@ -26,9 +22,8 @@ fn token_is_typographic_theyre(token: &Token, source: &[char]) -> bool {
         return false;
     }
 
-    let content = token.span.get_content(source);
-    content.iter().any(|c| c.normalized() != *c)
-        && content.normalized().eq_ignore_ascii_case_str("they're")
+    let content = token.get_ch(source);
+    content.iter().any(|c| c.normalized() != *c) && content.normalized().eq_str("they're")
 }
 
 fn token_is_likely_their_possession(token: &Token, source: &[char]) -> bool {
@@ -36,7 +31,7 @@ fn token_is_likely_their_possession(token: &Token, source: &[char]) -> bool {
         return false;
     }
 
-    let normalized = token.span.get_content(source).normalized();
+    let normalized = token.get_ch(source).normalized();
     matches!(
         normalized.as_ref(),
         ['b', 'a', 'c', 'k', 'p', 'a', 'c', 'k', 's']

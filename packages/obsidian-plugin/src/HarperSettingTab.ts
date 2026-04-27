@@ -1,4 +1,5 @@
 import './index.js';
+import type { StructuredLintConfig, StructuredLintSetting } from 'harper.js';
 import { Dialect } from 'harper.js';
 import { startCase } from 'lodash-es';
 import type { ButtonComponent } from 'obsidian';
@@ -11,12 +12,14 @@ import { linesToString, stringToLines } from './textUtils';
 const LintSettingId = 'HarperLintSettings';
 
 export class HarperSettingTab extends PluginSettingTab {
-	private settings: Settings;
-	private descriptionsHTML: Record<string, string>;
-	private defaultLintConfig: Record<string, boolean>;
+	private settings?: Settings;
+	private descriptionsHTML: Record<string, string> = {};
+	private defaultLintConfig: Record<string, boolean> = {};
+	private structuredLintConfig?: StructuredLintConfig;
 	private currentRuleSearchQuery = '';
 	private plugin: HarperPlugin;
 	private toggleAllButton?: ButtonComponent;
+	private expandedGroups = new Set<string>();
 
 	private get state() {
 		return this.plugin.state;
@@ -31,18 +34,26 @@ export class HarperSettingTab extends PluginSettingTab {
 		this.updateDescriptions();
 		this.updateSettings();
 		this.updateDefaults();
+		this.updateStructuredConfig();
 	}
 
 	updateSettings() {
 		this.state.getSettings().then((v) => {
+			const shouldRedrawWholeTab = this.settings == null;
 			this.settings = v;
 			this.updateToggleAllRulesButton();
+			if (shouldRedrawWholeTab) {
+				this.display(false);
+				return;
+			}
+			this.rerenderLintSettings();
 		});
 	}
 
 	updateDescriptions() {
 		this.state.getDescriptionHTML().then((v) => {
 			this.descriptionsHTML = v;
+			this.rerenderLintSettings();
 		});
 	}
 
@@ -50,6 +61,14 @@ export class HarperSettingTab extends PluginSettingTab {
 		this.state.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
 			this.updateToggleAllRulesButton();
+			this.rerenderLintSettings();
+		});
+	}
+
+	updateStructuredConfig() {
+		this.state.getStructuredLintConfig().then((v) => {
+			this.structuredLintConfig = v;
+			this.rerenderLintSettings();
 		});
 	}
 
@@ -62,15 +81,24 @@ export class HarperSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
+		if (!this.settings) {
+			const loading = document.createElement('p');
+			loading.textContent = 'Loading Harper settings...';
+			containerEl.appendChild(loading);
+			return;
+		}
+
+		const settings = this.settings;
+
 		new Setting(containerEl)
 			.setName('Use Web Worker')
 			.setDesc(
 				'Whether to run the Harper engine in a separate thread. Improves stability and speed at the cost of memory.',
 			)
 			.addToggle((toggle) =>
-				toggle.setValue(this.settings.useWebWorker).onChange(async (value) => {
-					this.settings.useWebWorker = value;
-					await this.state.initializeFromSettings(this.settings);
+				toggle.setValue(settings.useWebWorker).onChange(async (value) => {
+					settings.useWebWorker = value;
+					await this.state.initializeFromSettings(settings);
 				}),
 			);
 
@@ -81,11 +109,11 @@ export class HarperSettingTab extends PluginSettingTab {
 				.addOption(Dialect.British.toString(), 'British')
 				.addOption(Dialect.Australian.toString(), 'Australian')
 				.addOption(Dialect.Indian.toString(), 'Indian')
-				.setValue((this.settings.dialect ?? Dialect.American).toString())
+				.setValue((settings.dialect ?? Dialect.American).toString())
 				.onChange(async (value) => {
 					const dialect = Number.parseInt(value, 10);
-					this.settings.dialect = dialect;
-					await this.state.initializeFromSettings(this.settings);
+					settings.dialect = dialect;
+					await this.state.initializeFromSettings(settings);
 					this.plugin.updateStatusBar(dialect);
 				});
 		});
@@ -94,9 +122,21 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setName('Activate Harper')
 			.setDesc('Enable or disable Harper with this option.')
 			.addToggle((toggle) =>
-				toggle.setValue(this.settings.lintEnabled).onChange(async (_value) => {
+				toggle.setValue(settings.lintEnabled ?? true).onChange(async (_value) => {
 					this.state.toggleAutoLint();
 					this.plugin.updateStatusBar();
+				}),
+			);
+
+		new Setting(containerEl)
+			.setName('Use Web-Style Lints')
+			.setDesc(
+				'Use a straight underline with a background color instead of the default squiggly underline.',
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.useWebStyleLints ?? false).onChange(async (value) => {
+					this.settings.useWebStyleLints = value;
+					await this.state.initializeFromSettings(this.settings);
 				}),
 			);
 
@@ -106,9 +146,9 @@ export class HarperSettingTab extends PluginSettingTab {
 				"Hide certain text from Harper's pedantic gaze with a regular expression. Follows the standard Rust syntax.",
 			)
 			.addTextArea((ta) =>
-				ta.setValue(this.settings.regexMask ?? '').onChange(async (value) => {
-					this.settings.regexMask = value;
-					await this.state.initializeFromSettings(this.settings);
+				ta.setValue(settings.regexMask ?? '').onChange(async (value) => {
+					settings.regexMask = value;
+					await this.state.initializeFromSettings(settings);
 				}),
 			);
 
@@ -119,10 +159,11 @@ export class HarperSettingTab extends PluginSettingTab {
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;
-				ta.setValue(linesToString(this.settings.userDictionary ?? [''])).onChange(async (v) => {
+				ta.inputEl.rows = 10;
+				ta.setValue(linesToString(settings.userDictionary ?? [''])).onChange(async (v) => {
 					const dict = stringToLines(v);
-					this.settings.userDictionary = dict;
-					await this.state.initializeFromSettings(this.settings);
+					settings.userDictionary = dict;
+					await this.state.initializeFromSettings(settings);
 				});
 			});
 
@@ -133,10 +174,10 @@ export class HarperSettingTab extends PluginSettingTab {
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;
-				ta.setValue(linesToString(this.settings.ignoredGlobs ?? [''])).onChange(async (v) => {
+				ta.setValue(linesToString(settings.ignoredGlobs ?? [''])).onChange(async (v) => {
 					const lines = stringToLines(v);
-					this.settings.ignoredGlobs = lines;
-					await this.state.initializeFromSettings(this.settings);
+					settings.ignoredGlobs = lines;
+					await this.state.initializeFromSettings(settings);
 				});
 			});
 
@@ -149,10 +190,10 @@ export class HarperSettingTab extends PluginSettingTab {
 				slider
 					.setDynamicTooltip()
 					.setLimits(-1, 10000, 50)
-					.setValue(this.settings.delay ?? -1)
+					.setValue(settings.delay ?? -1)
 					.onChange(async (value) => {
-						this.settings.delay = value;
-						await this.state.initializeFromSettings(this.settings);
+						settings.delay = value;
+						await this.state.initializeFromSettings(settings);
 					});
 			});
 
@@ -160,8 +201,8 @@ export class HarperSettingTab extends PluginSettingTab {
 			button
 				.setButtonText('Forget Ignored Suggestions')
 				.onClick(() => {
-					this.settings.ignoredLints = undefined;
-					this.state.initializeFromSettings(this.settings);
+					settings.ignoredLints = undefined;
+					this.state.initializeFromSettings(settings);
 				})
 				.setWarning();
 		});
@@ -226,11 +267,17 @@ export class HarperSettingTab extends PluginSettingTab {
 		lintSettings.id = LintSettingId;
 		containerEl.appendChild(lintSettings);
 
-		// Ensure default config is loaded before initial render so values reflect defaults.
-		this.state.getDefaultLintConfig().then((v) => {
-			this.defaultLintConfig = v as unknown as Record<string, boolean>;
-			this.renderLintSettingsToId(this.currentRuleSearchQuery, lintSettings.id);
-		});
+		Promise.all([this.state.getDefaultLintConfig(), this.state.getStructuredLintConfig()]).then(
+			([defaults, structured]) => {
+				this.defaultLintConfig = defaults as unknown as Record<string, boolean>;
+				this.structuredLintConfig = structured;
+				this.renderLintSettingsToId(this.currentRuleSearchQuery, lintSettings.id);
+			},
+		);
+	}
+
+	private rerenderLintSettings() {
+		this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 	}
 
 	private async updateToggleAllRulesButton() {
@@ -255,49 +302,339 @@ export class HarperSettingTab extends PluginSettingTab {
 
 		const queryLower = searchQuery.toLowerCase();
 
-		for (const setting of Object.keys(this.settings.lintSettings)) {
-			const value = this.settings.lintSettings[setting];
-			const descriptionHTML = this.descriptionsHTML[setting];
+		if (!this.structuredLintConfig) {
+			return;
+		}
 
-			if (
-				searchQuery !== '' &&
-				!(
-					descriptionHTML?.toLowerCase().contains(queryLower) ||
-					setting.toLowerCase().contains(queryLower)
-				)
-			) {
+		const rendered = this.renderStructuredSettings(
+			this.structuredLintConfig.settings,
+			containerEl,
+			effectiveConfig,
+			queryLower,
+			0,
+			false,
+		);
+
+		if (rendered === 0) {
+			const empty = document.createElement('p');
+			empty.textContent = 'No rules match your search.';
+			containerEl.appendChild(empty);
+		}
+	}
+
+	private renderStructuredSettings(
+		settings: StructuredLintSetting[],
+		containerEl: HTMLElement,
+		effectiveConfig: Record<string, boolean>,
+		queryLower: string,
+		depth: number,
+		forceShow: boolean,
+		path: string[] = [],
+	): number {
+		let rendered = 0;
+
+		for (const setting of settings) {
+			if ('Group' in setting) {
+				const groupPath = [...path, setting.Group.label];
+				const groupKey = groupPath.join(' / ');
+				const groupMatches =
+					queryLower !== '' &&
+					(setting.Group.label.toLowerCase().includes(queryLower) ||
+						setting.Group.description.toLowerCase().includes(queryLower));
+
+				const childEl = document.createElement('div');
+				childEl.style.marginLeft = '1.5rem';
+
+				const childCount = this.renderStructuredSettings(
+					setting.Group.child.settings,
+					childEl,
+					effectiveConfig,
+					queryLower,
+					depth + 1,
+					forceShow || groupMatches,
+					groupPath,
+				);
+
+				if (childCount === 0) {
+					continue;
+				}
+
+				const groupRules = this.collectRuleNames(setting.Group.child.settings);
+				const isExpanded = queryLower !== '' || this.expandedGroups.has(groupKey);
+
+				this.renderGroupSetting(
+					setting.Group.label,
+					setting.Group.description,
+					groupKey,
+					groupRules,
+					containerEl,
+					childEl,
+					isExpanded,
+				);
+				rendered += childCount;
 				continue;
 			}
 
-			const fragment = document.createDocumentFragment();
+			if ('Bool' in setting) {
+				if (!this.shouldRenderRule(setting.Bool.name, setting.Bool.label, queryLower, forceShow)) {
+					continue;
+				}
+
+				this.renderBoolSetting(setting.Bool.name, setting.Bool.label, containerEl, effectiveConfig);
+				rendered += 1;
+				continue;
+			}
+
+			if ('OneOfMany' in setting) {
+				if (!this.shouldRenderOneOfMany(setting.OneOfMany, queryLower, forceShow)) {
+					continue;
+				}
+
+				this.renderOneOfManySetting(setting.OneOfMany, containerEl, effectiveConfig);
+				rendered += 1;
+			}
+		}
+
+		return rendered;
+	}
+
+	private collectRuleNames(settings: StructuredLintSetting[]): string[] {
+		const out: string[] = [];
+
+		for (const setting of settings) {
+			if ('Bool' in setting) {
+				out.push(setting.Bool.name);
+				continue;
+			}
+
+			if ('OneOfMany' in setting) {
+				out.push(...setting.OneOfMany.names);
+				continue;
+			}
+
+			out.push(...this.collectRuleNames(setting.Group.child.settings));
+		}
+
+		return out;
+	}
+
+	private renderGroupSetting(
+		label: string,
+		description: string,
+		groupKey: string,
+		ruleNames: string[],
+		containerEl: HTMLElement,
+		childEl: HTMLElement,
+		isExpanded: boolean,
+	) {
+		const state = this.getGroupState(ruleNames);
+		const defaultLabel = state === 'mixed' ? 'Default (mixed)' : 'Default';
+
+		new Setting(containerEl)
+			.setName(label)
+			.setDesc(description)
+			.addButton((button) => {
+				this.setButtonHoverText(
+					button,
+					isExpanded ? `Collapse the ${label} category` : `Expand the ${label} category`,
+				);
+
+				button.setButtonText(isExpanded ? 'Collapse' : 'Expand').onClick(() => {
+					if (this.expandedGroups.has(groupKey)) {
+						this.expandedGroups.delete(groupKey);
+					} else {
+						this.expandedGroups.add(groupKey);
+					}
+
+					this.rerenderLintSettings();
+				});
+			})
+			.addDropdown((dropdown) => {
+				this.setDropdownHoverText(
+					dropdown,
+					`Set all rules in the ${label} category to their default, on, or off state.`,
+				);
+
+				dropdown
+					.addOption('default', defaultLabel)
+					.addOption('enable', 'On')
+					.addOption('disable', 'Off')
+					.setValue(state === 'mixed' ? 'default' : state)
+					.onChange(async (value) => {
+						const settings = this.settings;
+						if (!settings) {
+							return;
+						}
+
+						for (const ruleName of ruleNames) {
+							settings.lintSettings[ruleName] = value === 'default' ? null : value === 'enable';
+						}
+
+						await this.state.initializeFromSettings(settings);
+						this.settings = await this.state.getSettings();
+						this.rerenderLintSettings();
+						this.updateToggleAllRulesButton();
+					});
+			});
+
+		if (isExpanded) {
+			containerEl.appendChild(childEl);
+		}
+	}
+
+	private setButtonHoverText(button: ButtonComponent, text: string) {
+		const maybeTooltipButton = button as ButtonComponent & {
+			setTooltip?: (text: string) => ButtonComponent;
+			buttonEl?: HTMLButtonElement;
+		};
+
+		maybeTooltipButton.setTooltip?.(text);
+		maybeTooltipButton.buttonEl?.setAttribute('title', text);
+	}
+
+	private setDropdownHoverText(dropdown: { selectEl?: HTMLSelectElement }, text: string) {
+		dropdown.selectEl?.setAttribute('title', text);
+	}
+
+	private getGroupState(ruleNames: string[]): 'default' | 'enable' | 'disable' | 'mixed' {
+		const settings = this.settings;
+		if (!settings) {
+			return 'default';
+		}
+
+		const values = ruleNames.map((ruleName) => settings.lintSettings[ruleName] ?? null);
+
+		if (values.every((value) => value === null)) {
+			return 'default';
+		}
+
+		if (values.every((value) => value === true)) {
+			return 'enable';
+		}
+
+		if (values.every((value) => value === false)) {
+			return 'disable';
+		}
+
+		return 'mixed';
+	}
+
+	private shouldRenderRule(
+		ruleName: string,
+		label: string | null | undefined,
+		queryLower: string,
+		forceShow: boolean,
+	) {
+		if (forceShow || queryLower === '') {
+			return true;
+		}
+
+		const descriptionHTML = this.descriptionsHTML?.[ruleName] ?? '';
+		return (
+			ruleName.toLowerCase().includes(queryLower) ||
+			(label?.toLowerCase().includes(queryLower) ?? false) ||
+			descriptionHTML.toLowerCase().includes(queryLower)
+		);
+	}
+
+	private shouldRenderOneOfMany(
+		setting: Extract<StructuredLintSetting, { OneOfMany: unknown }>['OneOfMany'],
+		queryLower: string,
+		forceShow: boolean,
+	) {
+		if (forceShow || queryLower === '') {
+			return true;
+		}
+
+		return setting.names.some((name, index) =>
+			this.shouldRenderRule(name, setting.labels?.[index], queryLower, false),
+		);
+	}
+
+	private renderBoolSetting(
+		setting: string,
+		label: string | null | undefined,
+		containerEl: HTMLElement,
+		effectiveConfig: Record<string, boolean>,
+	) {
+		if (!this.settings) {
+			return;
+		}
+
+		const value = this.settings.lintSettings[setting];
+		const descriptionHTML = this.descriptionsHTML?.[setting] ?? '';
+		const fragment = document.createDocumentFragment();
+		if (descriptionHTML !== '') {
 			const template = document.createElement('template');
 			template.innerHTML = descriptionHTML;
 			fragment.appendChild(template.content);
-
-			// Determine default for this rule (if available)
-			const defaultVal = this.defaultLintConfig?.[setting];
-
-			new Setting(containerEl)
-				.setName(startCase(setting))
-				.setDesc(fragment)
-				.addDropdown((dropdown) => {
-					const effective: boolean | undefined = effectiveConfig[setting];
-					const usingDefault = value === null;
-					const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
-					const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
-					dropdown
-						.addOption('enable', onLabel)
-						.addOption('disable', offLabel)
-						.setValue(effective ? 'enable' : 'disable')
-						.onChange(async (v) => {
-							this.settings.lintSettings[setting] = v === 'enable';
-							await this.state.initializeFromSettings(this.settings);
-							// Re-render to update labels (remove "(default)" once overridden)
-							this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
-							this.updateToggleAllRulesButton();
-						});
-				});
 		}
+
+		const defaultVal = this.defaultLintConfig?.[setting];
+
+		new Setting(containerEl)
+			.setName(label ?? startCase(setting))
+			.setDesc(fragment)
+			.addDropdown((dropdown) => {
+				this.setDropdownHoverText(
+					dropdown,
+					`Set ${label ?? startCase(setting)} to on or off. Labels marked default reflect the current default behavior.`,
+				);
+
+				const effective: boolean | undefined = effectiveConfig[setting];
+				const usingDefault = value === null;
+				const onLabel = usingDefault && defaultVal === true ? 'On (default)' : 'On';
+				const offLabel = usingDefault && defaultVal === false ? 'Off (default)' : 'Off';
+				dropdown
+					.addOption('enable', onLabel)
+					.addOption('disable', offLabel)
+					.setValue(effective ? 'enable' : 'disable')
+					.onChange(async (v) => {
+						// The structured config only organizes rules for display.
+						// Persist changes through the flat lint config keyed by rule name.
+						this.settings.lintSettings[setting] = v === 'enable';
+						await this.state.initializeFromSettings(this.settings);
+						this.settings = await this.state.getSettings();
+						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+						this.updateToggleAllRulesButton();
+					});
+			});
+	}
+
+	private renderOneOfManySetting(
+		setting: Extract<StructuredLintSetting, { OneOfMany: unknown }>['OneOfMany'],
+		containerEl: HTMLElement,
+		effectiveConfig: Record<string, boolean>,
+	) {
+		if (!this.settings) {
+			return;
+		}
+
+		const currentName =
+			setting.names.find((name) => effectiveConfig[name]) ?? setting.name ?? setting.names[0];
+		const label =
+			setting.labels?.join(' / ') ?? setting.names.map((name) => startCase(name)).join(' / ');
+
+		new Setting(containerEl).setName(label).addDropdown((dropdown) => {
+			this.setDropdownHoverText(dropdown, `Choose an option for ${label}.`);
+
+			for (const [index, name] of setting.names.entries()) {
+				dropdown.addOption(name, setting.labels?.[index] ?? startCase(name));
+			}
+
+			dropdown.setValue(currentName).onChange(async (selected) => {
+				// The structured config only organizes rules for display.
+				// Persist changes through the flat lint config keyed by rule name.
+				for (const name of setting.names) {
+					this.settings.lintSettings[name] = name === selected;
+				}
+
+				await this.state.initializeFromSettings(this.settings);
+				this.settings = await this.state.getSettings();
+				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
+				this.updateToggleAllRulesButton();
+			});
+		});
 	}
 }
 

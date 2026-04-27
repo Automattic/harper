@@ -12,20 +12,20 @@ use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
 pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &impl Dictionary) -> String {
-    let source: Vec<char> = source.chars().collect();
+    let source: Lrc<_> = source.chars().collect();
 
-    make_title_case_chars(Lrc::new(source), parser, dict).to_string()
+    make_title_case_chars(source, parser, dict).to_string()
 }
 
 // Make a given string [title case](https://en.wikipedia.org/wiki/Title_case) following the Chicago Manual of Style.
 pub fn make_title_case_chars(
-    source: Lrc<Vec<char>>,
+    source: Lrc<[char]>,
     parser: &impl Parser,
     dict: &impl Dictionary,
 ) -> Vec<char> {
-    let document = Document::new_from_vec(source.clone(), parser, dict);
+    let document = Document::new_from_chars(source.clone(), parser, dict);
 
-    make_title_case(document.get_tokens(), source.as_slice(), dict)
+    make_title_case(document.get_tokens(), &source, dict)
 }
 
 pub fn try_make_title_case(
@@ -61,17 +61,13 @@ pub fn try_make_title_case(
 
     while let Some(word_idx) = word_likes.next() {
         let word = &toks[word_idx];
-        let is_alphabetic_word = word
-            .span
-            .get_content(source)
-            .iter()
-            .any(|c| c.is_alphabetic());
+        let is_alphabetic_word = word.get_ch(source).iter().any(|c| c.is_alphabetic());
 
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
             // Replace it with the dictionary entry verbatim.
-            let orig_text = word.span.get_content(source);
+            let orig_text = word.get_ch(source);
 
             if let Some(correct_caps) = dict.get_correct_capitalization_of(orig_text) {
                 // It should match the dictionary verbatim
@@ -149,7 +145,7 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
                     .collect()
             });
 
-            let chars = tok.span.get_content(source);
+            let chars = tok.get_ch(source);
             let chars_lower = chars.to_lower();
 
             let metadata = Cow::Borrowed(metadata);

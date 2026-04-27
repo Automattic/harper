@@ -20,8 +20,7 @@ impl Default for TheProperNounPossessive {
                         && t.kind.is_titlecase()
                         && !t.kind.is_lowercase()
                         && !t
-                            .span
-                            .get_content(s)
+                            .get_ch(s)
                             .eq_any_ignore_ascii_case_str(&["internet's", "internet’s"])
                 }),
         }
