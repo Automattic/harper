@@ -40,31 +40,43 @@ impl AttributeList {
     }
 
     pub fn parse(source: &str, language: LanguageFamily) -> Result<Self, Error> {
-        let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
-        let dialects = match language {
-            LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::empty()),
-            LanguageFamily::Portuguese => {
-                DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
+        fn apply_dialects(parsed: &mut HumanReadableAttributeList, language: LanguageFamily) {
+            let dialects = match language {
+                LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::empty()),
+                LanguageFamily::Portuguese => {
+                    DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
+                }
+            };
+
+            for property in parsed.properties.values_mut() {
+                property.metadata.dialects = match (language, property.metadata.dialects) {
+                    (LanguageFamily::English, DialectFlagsEnum::English(_)) => {
+                        property.metadata.dialects
+                    }
+                    (LanguageFamily::English, DialectFlagsEnum::Portuguese(_)) => {
+                        unreachable!("Os property.metadata.dialects are created in English")
+                    }
+                    (LanguageFamily::Portuguese, DialectFlagsEnum::English(_)) => dialects,
+                    (LanguageFamily::Portuguese, DialectFlagsEnum::Portuguese(_)) => {
+                        property.metadata.dialects
+                    }
+                };
             }
-        };
 
-        println!("dialects is {:#?}", dialects);
-
-        // This whole part is so that the DialectFlags are correct in the properties as
-        // well as in the expansions
-        human_readable
+            for expansion in parsed.affixes.values_mut() {
+                for metadata_expansion in expansion.target.as_mut_slice() {
+                    metadata_expansion.metadata.dialects = dialects;
+                    if let Some(base) = metadata_expansion.if_base.as_mut() {
+                        base.dialects = dialects;
+                    }
+                }
+                expansion.base_metadata.dialects = dialects;
+            }
+        }
+        serde_json::from_str::<HumanReadableAttributeList>(source)
             .map_err(Error::from)
             .map(|mut parsed| {
-                for expansion in parsed.affixes.values_mut() {
-                    for metadata_expansion in expansion.target.as_mut_slice() {
-                        metadata_expansion.metadata.dialects = dialects;
-                        if let Some(base) = metadata_expansion.if_base.as_mut() {
-                            base.dialects = dialects;
-                        }
-                    }
-                    expansion.base_metadata.dialects = dialects;
-                }
-
+                apply_dialects(&mut parsed, language);
                 parsed
             })
             .and_then(|parsed| parsed.into_normal())
@@ -114,10 +126,10 @@ impl AttributeList {
             let Some(property) = self.properties.get(attr) else {
                 continue;
             };
-            println!(
-                "base_metadata: {:#?}\nproperty.metadata: {:#?}",
-                base_metadata.dialects, property.metadata.dialects
-            );
+            // println!(
+            //     "base_metadata: {:#?}\nproperty.metadata: {:#?}",
+            //     base_metadata.dialects, property.metadata.dialects
+            // );
             base_metadata.merge(&property.metadata);
         }
 
