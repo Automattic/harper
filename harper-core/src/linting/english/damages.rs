@@ -260,6 +260,6 @@ mod tests {
     // https://discord.com/channels/1335035237213671495/1491949288060751952/1491949288060751952
     #[test]
     fn ignore_it_damages_the_environment() {
-        assert_no_lints("it damages the environment", Damages::default());
+        assert_no_lints("it damages the environment", Damages::default(), crate::languages::LanguageFamily::English);
     }
 }

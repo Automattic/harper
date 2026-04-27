@@ -38,14 +38,11 @@ mod tests {
 
     #[test]
     fn allows_dialogue_with_em_dash_interruption() {
-        assert_no_lints(
-            "\"It'll be our\"—she leaned to his ear—\"shared secret.\"",
-            UnclosedQuotes::default(),
-        );
+        assert_no_lints("\"It'll be our\"—she leaned to his ear—\"shared secret.\"", UnclosedQuotes::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn still_flags_unclosed_quotes() {
-        assert_lint_count("\"It'll be our", UnclosedQuotes::default(), 1);
+        assert_lint_count("\"It'll be our", UnclosedQuotes::default(), 1, crate::languages::LanguageFamily::English);
     }
 }

@@ -278,17 +278,17 @@ mod tests {
 
     #[test]
     fn ignores_single_word_misspelling_with_split_like_halves() {
-        assert_no_lints("I love this extention!", SplitWords::default());
+        assert_no_lints("I love this extention!", SplitWords::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_doesthe() {
-        assert_suggestion_result("doesthe", SplitWords::default(), "does the");
+        assert_suggestion_result("doesthe", SplitWords::default(), "does the", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_splitwords() {
-        assert_suggestion_result("splitwords", SplitWords::default(), "split words");
+        assert_suggestion_result("splitwords", SplitWords::default(), "split words", crate::languages::LanguageFamily::English);
     }
 
     #[test]

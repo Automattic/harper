@@ -116,12 +116,12 @@ impl Setting {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::BTreeSet;
-
-    use crate::Dialect;
+    use crate::EnglishDialect;
+    use crate::languages::Language;
     use crate::linting::FlatConfig;
     use crate::linting::LintGroup;
     use crate::spell::MutableDictionary;
+    use std::collections::BTreeSet;
 
     use super::{Setting, StructuredConfig};
 
@@ -314,11 +314,13 @@ mod tests {
         let curated = StructuredConfig::curated();
         let curated_rule_names = collect_rule_names(&curated);
 
-        let runtime_rule_names =
-            LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American)
-                .iter_keys()
-                .map(str::to_owned)
-                .collect::<BTreeSet<_>>();
+        let runtime_rule_names = LintGroup::new_curated(
+            MutableDictionary::new().into(),
+            Language::English(EnglishDialect::American),
+        )
+        .iter_keys()
+        .map(str::to_owned)
+        .collect::<BTreeSet<_>>();
 
         let missing_from_default_config = runtime_rule_names
             .difference(&curated_rule_names)

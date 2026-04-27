@@ -109,8 +109,8 @@ fn lint_group_from_json(json: &str) -> LintGroup {
     group
 }
 
-pub fn lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
-    lint_group_from_json(include_str!("../../../proper_noun_rules.json"), dictionary)
+pub fn lint_group() -> LintGroup {
+    lint_group_from_json(include_str!("../../../proper_noun_rules.json"))
 }
 
 #[cfg(test)]
@@ -122,17 +122,13 @@ mod tests {
     fn americas_lowercase() {
         assert_suggestion_result(
             "south america",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "South America",
             crate::languages::LanguageFamily::English,
         );
         assert_suggestion_result(
             "north america",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "North America",
             crate::languages::LanguageFamily::English,
         );
@@ -142,17 +138,13 @@ mod tests {
     fn americas_uppercase() {
         assert_suggestion_result(
             "SOUTH AMERICA",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "South America",
             crate::languages::LanguageFamily::English,
         );
         assert_suggestion_result(
             "NORTH AMERICA",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "North America",
             crate::languages::LanguageFamily::English,
         );
@@ -162,17 +154,13 @@ mod tests {
     fn americas_allow_correct() {
         assert_lint_count(
             "South America",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
         assert_lint_count(
             "North America",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -182,9 +170,7 @@ mod tests {
     fn issue_798() {
         assert_suggestion_result(
             "The United states is a big country.",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "The United States is a big country.",
             crate::languages::LanguageFamily::English,
         );
@@ -194,9 +180,7 @@ mod tests {
     fn united_nations_uppercase() {
         assert_suggestion_result(
             "UNITED NATIONS",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "United Nations",
             crate::languages::LanguageFamily::English,
         );
@@ -206,9 +190,7 @@ mod tests {
     fn united_arab_emirates_lowercase() {
         assert_suggestion_result(
             "UNITED ARAB EMIRATES",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "United Arab Emirates",
             crate::languages::LanguageFamily::English,
         );
@@ -218,9 +200,7 @@ mod tests {
     fn united_nations_allow_correct() {
         assert_lint_count(
             "United Nations",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -230,9 +210,7 @@ mod tests {
     fn meta_allow_correct() {
         assert_lint_count(
             "Meta Quest",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -242,9 +220,7 @@ mod tests {
     fn microsoft_lowercase() {
         assert_suggestion_result(
             "microsoft visual studio",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "Microsoft Visual Studio",
             crate::languages::LanguageFamily::English,
         );
@@ -254,9 +230,7 @@ mod tests {
     fn microsoft_first_word_is_correct() {
         assert_suggestion_result(
             "Microsoft visual studio",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "Microsoft Visual Studio",
             crate::languages::LanguageFamily::English,
         );
@@ -264,10 +238,9 @@ mod tests {
 
     #[test]
     fn test_atlantic_ocean_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "atlantic ocean",
-            lint_group(dictionary),
+            lint_group(),
             "Atlantic Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -275,10 +248,9 @@ mod tests {
 
     #[test]
     fn test_pacific_ocean_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "pacific ocean",
-            lint_group(dictionary),
+            lint_group(),
             "Pacific Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -286,10 +258,9 @@ mod tests {
 
     #[test]
     fn test_indian_ocean_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "indian ocean",
-            lint_group(dictionary),
+            lint_group(),
             "Indian Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -297,10 +268,9 @@ mod tests {
 
     #[test]
     fn test_southern_ocean_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "southern ocean",
-            lint_group(dictionary),
+            lint_group(),
             "Southern Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -308,10 +278,9 @@ mod tests {
 
     #[test]
     fn test_arctic_ocean_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "arctic ocean",
-            lint_group(dictionary),
+            lint_group(),
             "Arctic Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -319,10 +288,9 @@ mod tests {
 
     #[test]
     fn test_mediterranean_sea_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "mediterranean sea",
-            lint_group(dictionary),
+            lint_group(),
             "Mediterranean Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -330,10 +298,9 @@ mod tests {
 
     #[test]
     fn test_caribbean_sea_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "caribbean sea",
-            lint_group(dictionary),
+            lint_group(),
             "Caribbean Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -341,10 +308,9 @@ mod tests {
 
     #[test]
     fn test_south_china_sea_lowercase() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_suggestion_result(
             "south china sea",
-            lint_group(dictionary),
+            lint_group(),
             "South China Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -352,10 +318,9 @@ mod tests {
 
     #[test]
     fn test_atlantic_ocean_correct() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_lint_count(
             "Atlantic Ocean",
-            lint_group(dictionary),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -363,10 +328,9 @@ mod tests {
 
     #[test]
     fn test_pacific_ocean_correct() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_lint_count(
             "Pacific Ocean",
-            lint_group(dictionary),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -374,10 +338,9 @@ mod tests {
 
     #[test]
     fn test_indian_ocean_correct() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_lint_count(
             "Indian Ocean",
-            lint_group(dictionary),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -385,10 +348,9 @@ mod tests {
 
     #[test]
     fn test_mediterranean_sea_correct() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_lint_count(
             "Mediterranean Sea",
-            lint_group(dictionary),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -396,10 +358,9 @@ mod tests {
 
     #[test]
     fn test_south_china_sea_correct() {
-        let dictionary = FstDictionary::curated(crate::languages::LanguageFamily::English);
         assert_lint_count(
             "South China Sea",
-            lint_group(dictionary),
+            lint_group(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -409,9 +370,7 @@ mod tests {
     fn day_one_in_sentence() {
         assert_suggestion_result(
             "I love day one. It is the best journaling app.",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "I love Day One. It is the best journaling app.",
             crate::languages::LanguageFamily::English,
         );
@@ -421,10 +380,158 @@ mod tests {
     fn gilded_age_in_sentence() {
         assert_suggestion_result(
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
-            lint_group(FstDictionary::curated(
-                crate::languages::LanguageFamily::English,
-            )),
+            lint_group(),
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_lowercase() {
+        assert_suggestion_result(
+            "chrome extension",
+            lint_group(),
+            "Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_uppercase() {
+        assert_suggestion_result(
+            "CHROME EXTENSION",
+            lint_group(),
+            "Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_mixed_case() {
+        assert_suggestion_result(
+            "cHrOmE eXtEnSiOn",
+            lint_group(),
+            "Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_second_word_lowercase() {
+        assert_suggestion_result(
+            "Chrome extension",
+            lint_group(),
+            "Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_first_word_lowercase() {
+        assert_suggestion_result(
+            "chrome Extension",
+            lint_group(),
+            "Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_in_sentence() {
+        assert_suggestion_result(
+            "Install the chrome extension from the store.",
+            lint_group(),
+            "Install the Chrome Extension from the store.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_leading_article() {
+        assert_suggestion_result(
+            "The chrome extension is ready.",
+            lint_group(),
+            "The Chrome Extension is ready.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_period() {
+        assert_suggestion_result(
+            "We shipped the chrome extension.",
+            lint_group(),
+            "We shipped the Chrome Extension.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_comma() {
+        assert_suggestion_result(
+            "The chrome extension, not the app, needs review.",
+            lint_group(),
+            "The Chrome Extension, not the app, needs review.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_colon() {
+        assert_suggestion_result(
+            "Preferred install target: chrome extension",
+            lint_group(),
+            "Preferred install target: Chrome Extension",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_inside_quotes() {
+        assert_suggestion_result(
+            "They called it the \"chrome extension\" build.",
+            lint_group(),
+            "They called it the \"Chrome Extension\" build.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_across_sentence_boundary_not_present() {
+        assert_lint_count(
+            "Chrome. Extension",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_allows_correct_case() {
+        assert_lint_count(
+            "Chrome Extension",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn chrome_extension_allows_correct_case_in_sentence() {
+        assert_lint_count(
+            "The Chrome Extension is ready.",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn browser_extension_not_flagged() {
+        assert_lint_count(
+            "browser extension",
+            lint_group(),
+            0,
             crate::languages::LanguageFamily::English,
         );
     }

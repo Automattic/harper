@@ -47,18 +47,14 @@ impl ExprLinter for ReasonForDoing {
         const OF: usize = 2;
         // let reasontok = &toks[REASON];
         // let reasonspan = reasontok.span;
-        let reasonchars = toks[REASON].span.get_content(src);
+        let reasonchars = toks[REASON].get_ch(src);
         // let oftok = &toks[OF];
         let ofspan = toks[OF].span;
         // let ofchars = ofspan.get_content(src);
 
         // "for reasons of doing" is a legit construction. TODO: Usually, but not always!
         if reasonchars.last()? == &'s'
-            && preceded_by_word(ctx, |t| {
-                t.span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_chars(&['f', 'o', 'r'])
-            })
+            && preceded_by_word(ctx, |t| t.get_ch(src).eq_ch(&['f', 'o', 'r']))
         {
             return None;
         }
@@ -88,6 +84,7 @@ mod tests {
             "However i could not find any valid reason of doing this in one project, it's still possible.",
             ReasonForDoing::default(),
             "However i could not find any valid reason for doing this in one project, it's still possible.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -97,6 +94,7 @@ mod tests {
             "It actually helped me a lot understanding what is your recommended way of implementing safe-listing and your reasons of doing it this way.",
             ReasonForDoing::default(),
             "It actually helped me a lot understanding what is your recommended way of implementing safe-listing and your reasons for doing it this way.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -106,6 +104,7 @@ mod tests {
             "what's the reason of having USE_INTERPOLATION_TABLES in UserParams then?",
             ReasonForDoing::default(),
             "what's the reason for having USE_INTERPOLATION_TABLES in UserParams then?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -115,6 +114,7 @@ mod tests {
             "Any reasons of having other implementation than specified in docs?",
             ReasonForDoing::default(),
             "Any reasons for having other implementation than specified in docs?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -123,6 +123,7 @@ mod tests {
         assert_no_lints(
             "whether for reasons of logging, monitoring, etc.",
             ReasonForDoing::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -132,6 +133,7 @@ mod tests {
             "The fact is that I am seeing where is it being used and I cannot understand the reason of making it boolean.",
             ReasonForDoing::default(),
             "The fact is that I am seeing where is it being used and I cannot understand the reason for making it boolean.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -141,6 +143,7 @@ mod tests {
             "So for the reasons of making it self describable as much as possible, I think it is important to express version there.",
             ReasonForDoing::default(),
             "So for the reasons for making it self describable as much as possible, I think it is important to express version there.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -149,6 +152,7 @@ mod tests {
         assert_no_lints(
             "That said, and just for reasons of making the simple-openai code more robust, one could verify that it is not null and throw the appropriate exceptions",
             ReasonForDoing::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -159,6 +163,7 @@ mod tests {
             "For reasons of doing this, it is because I have some ops that need to carefully sort their execution orders in not only forward pass",
             ReasonForDoing::default(),
             "For reasons for doing this, it is because I have some ops that need to carefully sort their execution orders in not only forward pass",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -168,6 +173,7 @@ mod tests {
             "I just came to the same conclusion for the same reason of needing a scoped dependency in my DbContext to support global query filtering.",
             ReasonForDoing::default(),
             "I just came to the same conclusion for the same reason for needing a scoped dependency in my DbContext to support global query filtering.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -177,6 +183,7 @@ mod tests {
             "Hi, What is reason of opening DB exception \"UnknownError: Internal error opening backing store for indexedDB\"?",
             ReasonForDoing::default(),
             "Hi, What is reason for opening DB exception \"UnknownError: Internal error opening backing store for indexedDB\"?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -186,6 +193,7 @@ mod tests {
             "be notified about document save events with source/reason of saving",
             ReasonForDoing::default(),
             "be notified about document save events with source/reason for saving",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -195,6 +203,7 @@ mod tests {
             "How do you use Severity and what is the impact/reason of wanting to having different values to you (i.e. what difference does it make to you)?",
             ReasonForDoing::default(),
             "How do you use Severity and what is the impact/reason for wanting to having different values to you (i.e. what difference does it make to you)?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -204,6 +213,7 @@ mod tests {
         assert_no_lints(
             "Ideally we don't want to reduce the idleTimeout (currently set to 120s) for the standard reasons of wanting to be able to handle bursty traffic.",
             ReasonForDoing::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

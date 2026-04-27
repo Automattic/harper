@@ -37,7 +37,7 @@ impl ExprLinter for GoToWar {
         let prep_span = prep_tok.span;
         let prep_chars = prep_span.get_content(src);
 
-        if prep_chars.eq_ignore_ascii_case_chars(&['t', 'o']) {
+        if prep_chars.eq_ch(&['t', 'o']) {
             return None;
         }
 
@@ -62,6 +62,7 @@ pub mod tests {
             "specialization makes you vulnerable if you go at war with your trading partners",
             GoToWar::default(),
             "specialization makes you vulnerable if you go to war with your trading partners",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -71,6 +72,7 @@ pub mod tests {
             "for whatever reason, it would go in war with another town",
             GoToWar::default(),
             "for whatever reason, it would go to war with another town",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -80,6 +82,7 @@ pub mod tests {
             "How much time do we have before Youtube starts to go on war with Revanced?",
             GoToWar::default(),
             "How much time do we have before Youtube starts to go to war with Revanced?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -89,6 +92,7 @@ pub mod tests {
             "It would be the same case if USA goes on war with Canada and Mexico.",
             GoToWar::default(),
             "It would be the same case if USA goes to war with Canada and Mexico.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -98,6 +102,7 @@ pub mod tests {
             "So instead of going at war with technology, let's be friends and work better.",
             GoToWar::default(),
             "So instead of going to war with technology, let's be friends and work better.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -107,6 +112,7 @@ pub mod tests {
             "How consequences of India going on war with Pakistan after the recent Uri Terror attack?",
             GoToWar::default(),
             "How consequences of India going to war with Pakistan after the recent Uri Terror attack?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +122,7 @@ pub mod tests {
             "the magic energy released since the colleges went at war with each others",
             GoToWar::default(),
             "the magic energy released since the colleges went to war with each others",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +132,7 @@ pub mod tests {
             "even America wanted to expand its territories and they went in War with Mexico",
             GoToWar::default(),
             "even America wanted to expand its territories and they went to War with Mexico",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +142,7 @@ pub mod tests {
             "I used to skip clubman and make as many vills as i can and then went on war with ai",
             GoToWar::default(),
             "I used to skip clubman and make as many vills as i can and then went to war with ai",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

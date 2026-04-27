@@ -97,125 +97,81 @@ mod tests {
 
     #[test]
     fn corrects_basic_page_range() {
-        assert_suggestion_result(
-            "See pages 12-14 for the full table.",
-            NumericRangeEnDash::default(),
-            "See pages 12–14 for the full table.",
-        );
+        assert_suggestion_result("See pages 12-14 for the full table.", NumericRangeEnDash::default(), "See pages 12–14 for the full table.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_basic_em_dash_range() {
-        assert_suggestion_result(
-            "Read chapters 3—5 before class.",
-            NumericRangeEnDash::default(),
-            "Read chapters 3–5 before class.",
-        );
+        assert_suggestion_result("Read chapters 3—5 before class.", NumericRangeEnDash::default(), "Read chapters 3–5 before class.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_score_range() {
-        assert_suggestion_result(
-            "The final score was 10-8 after overtime.",
-            NumericRangeEnDash::default(),
-            "The final score was 10–8 after overtime.",
-        );
+        assert_suggestion_result("The final score was 10-8 after overtime.", NumericRangeEnDash::default(), "The final score was 10–8 after overtime.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_decimal_range() {
-        assert_suggestion_result(
-            "Keep the ratio between 1.5-2.5 during calibration.",
-            NumericRangeEnDash::default(),
-            "Keep the ratio between 1.5–2.5 during calibration.",
-        );
+        assert_suggestion_result("Keep the ratio between 1.5-2.5 during calibration.", NumericRangeEnDash::default(), "Keep the ratio between 1.5–2.5 during calibration.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_percent_range() {
-        assert_suggestion_result(
-            "Expect a 5-10% improvement after tuning.",
-            NumericRangeEnDash::default(),
-            "Expect a 5–10% improvement after tuning.",
-        );
+        assert_suggestion_result("Expect a 5-10% improvement after tuning.", NumericRangeEnDash::default(), "Expect a 5–10% improvement after tuning.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_year_span() {
-        assert_suggestion_result(
-            "The archive covers 1990-1995.",
-            NumericRangeEnDash::default(),
-            "The archive covers 1990–1995.",
-        );
+        assert_suggestion_result("The archive covers 1990-1995.", NumericRangeEnDash::default(), "The archive covers 1990–1995.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_zero_padded_range() {
-        assert_suggestion_result(
-            "Use files 01-03 for the demo.",
-            NumericRangeEnDash::default(),
-            "Use files 01–03 for the demo.",
-        );
+        assert_suggestion_result("Use files 01-03 for the demo.", NumericRangeEnDash::default(), "Use files 01–03 for the demo.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn corrects_sentence_final_range() {
-        assert_suggestion_result(
-            "Valid values are 2-4.",
-            NumericRangeEnDash::default(),
-            "Valid values are 2–4.",
-        );
+        assert_suggestion_result("Valid values are 2-4.", NumericRangeEnDash::default(), "Valid values are 2–4.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_existing_en_dash() {
-        assert_no_lints(
-            "See pages 12–14 for the full table.",
-            NumericRangeEnDash::default(),
-        );
+        assert_no_lints("See pages 12–14 for the full table.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_spaced_hyphen_range() {
-        assert_no_lints(
-            "See pages 12 - 14 for the full table.",
-            NumericRangeEnDash::default(),
-        );
+        assert_no_lints("See pages 12 - 14 for the full table.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_spaced_em_dash_range() {
-        assert_no_lints(
-            "See pages 12 — 14 for the full table.",
-            NumericRangeEnDash::default(),
-        );
+        assert_no_lints("See pages 12 — 14 for the full table.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_hyphenated_date_chain() {
-        assert_no_lints("Today is 2026-03-18.", NumericRangeEnDash::default());
+        assert_no_lints("Today is 2026-03-18.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_em_dash_date_chain() {
-        assert_no_lints("Today is 2026—03—18.", NumericRangeEnDash::default());
+        assert_no_lints("Today is 2026—03—18.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_three_part_version_chain() {
-        assert_no_lints("The build number is 1-2-3.", NumericRangeEnDash::default());
+        assert_no_lints("The build number is 1-2-3.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_mixed_dash_chain() {
-        assert_no_lints("The timeline reads 1-2—3.", NumericRangeEnDash::default());
+        assert_no_lints("The timeline reads 1-2—3.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignores_longer_numeric_chain() {
-        assert_no_lints(
-            "The code spans 12-14-16 in the export.",
-            NumericRangeEnDash::default(),
-        );
+        assert_no_lints("The code spans 12-14-16 in the export.", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 }

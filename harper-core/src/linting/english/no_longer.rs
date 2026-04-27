@@ -68,7 +68,11 @@ mod tests {
 
     #[test]
     fn ignore_than() {
-        assert_no_lints("My arm is not longer than my leg.", NoLonger::default())
+        assert_no_lints(
+            "My arm is not longer than my leg.",
+            NoLonger::default(),
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     // Flag not longer <verb>
@@ -80,6 +84,7 @@ mod tests {
             "and I've found out that I not longer can launch Kitty from the menus",
             NoLonger::default(),
             "and I've found out that I no longer can launch Kitty from the menus",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -89,6 +94,7 @@ mod tests {
             "I've noticed that the ML stuff is not longer done on the more recent photos.",
             NoLonger::default(),
             "I've noticed that the ML stuff is no longer done on the more recent photos.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -98,6 +104,7 @@ mod tests {
             "Vendoring means that the transitive dependencies do not longer exist from the point of view of the consumer.",
             NoLonger::default(),
             "Vendoring means that the transitive dependencies do no longer exist from the point of view of the consumer.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -107,6 +114,7 @@ mod tests {
             "this script is mentioned in the RF3 Readme but the script not longer exists",
             NoLonger::default(),
             "this script is mentioned in the RF3 Readme but the script no longer exists",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +124,7 @@ mod tests {
             "auto comments will not longer render annotations in such a way as to make them valid annotation links",
             NoLonger::default(),
             "auto comments will no longer render annotations in such a way as to make them valid annotation links",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +134,7 @@ mod tests {
             "edit notes are not longer saved on mobile",
             NoLonger::default(),
             "edit notes are no longer saved on mobile",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +144,7 @@ mod tests {
             "After Updating to 4.3.2 from 4.2.1 the JSON Editor is not longer saving the metadata.",
             NoLonger::default(),
             "After Updating to 4.3.2 from 4.2.1 the JSON Editor is no longer saving the metadata.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -143,6 +154,7 @@ mod tests {
             "I get this error and the fasta file is not longer written",
             NoLonger::default(),
             "I get this error and the fasta file is no longer written",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -154,6 +166,7 @@ mod tests {
             "I am not longer able to set multi-cursors in Zed 0.190.6.",
             NoLonger::default(),
             "I am no longer able to set multi-cursors in Zed 0.190.6.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -163,6 +176,7 @@ mod tests {
             "No not Oakland, it's not longer affordable.",
             NoLonger::default(),
             "No not Oakland, it's no longer affordable.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -172,6 +186,7 @@ mod tests {
             "How many times does this have to happen before its not longer bad luck?",
             NoLonger::default(),
             "How many times does this have to happen before its no longer bad luck?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -181,6 +196,7 @@ mod tests {
             "AWS Java V1 is not longer best practice as specified in this Github page",
             NoLonger::default(),
             "AWS Java V1 is no longer best practice as specified in this Github page",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -190,6 +206,7 @@ mod tests {
             "when you delete those keys from the dict, it is not longer effective",
             NoLonger::default(),
             "when you delete those keys from the dict, it is no longer effective",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -199,6 +216,7 @@ mod tests {
             "not only set as username, it sets common name as well and is not longer empty",
             NoLonger::default(),
             "not only set as username, it sets common name as well and is no longer empty",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -208,6 +226,7 @@ mod tests {
             "the message body is not longer enough",
             NoLonger::default(),
             "the message body is no longer enough",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -217,6 +236,7 @@ mod tests {
             "once the size of the current batch is not longer equal to batch_size , I used the temporary batch",
             NoLonger::default(),
             "once the size of the current batch is no longer equal to batch_size , I used the temporary batch",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -226,6 +246,7 @@ mod tests {
             "the lambda is not longer equivalent to how std::isspace would behave as a unary predicate",
             NoLonger::default(),
             "the lambda is no longer equivalent to how std::isspace would behave as a unary predicate",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -235,6 +256,7 @@ mod tests {
             "so if i understand it correct, myteslamate is not longer free? ",
             NoLonger::default(),
             "so if i understand it correct, myteslamate is no longer free? ",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -244,6 +266,7 @@ mod tests {
             "Just in case that link is not longer good I'll reproduce the code here.",
             NoLonger::default(),
             "Just in case that link is no longer good I'll reproduce the code here.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -253,6 +276,7 @@ mod tests {
             "reminder that they are not longer near each other",
             NoLonger::default(),
             "reminder that they are no longer near each other",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -262,6 +286,7 @@ mod tests {
             "removing old breakpoints from a project which was not longer open",
             NoLonger::default(),
             "removing old breakpoints from a project which was no longer open",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -271,6 +296,7 @@ mod tests {
             "As far as I can set tell it is not longer possible to set these programmatically.",
             NoLonger::default(),
             "As far as I can set tell it is no longer possible to set these programmatically.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -280,6 +306,7 @@ mod tests {
             "individual remuneration is not longer relevant as we can produce enough",
             NoLonger::default(),
             "individual remuneration is no longer relevant as we can produce enough",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -289,6 +316,7 @@ mod tests {
             "the fichier.close() command is not longer sufficient to close the file",
             NoLonger::default(),
             "the fichier.close() command is no longer sufficient to close the file",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

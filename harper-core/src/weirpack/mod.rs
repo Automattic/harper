@@ -7,6 +7,7 @@ use hashbrown::HashMap;
 use zip::write::FileOptions;
 use zip::{CompressionMethod, ZipArchive, ZipWriter};
 
+use crate::languages::LanguageFamily;
 use crate::linting::LintGroup;
 use crate::spell::MutableDictionary;
 use crate::weir::{TestResult, WeirLinter};
@@ -104,7 +105,7 @@ impl Weirpack {
             && let Some(annot) = &self.annotations
         {
             Ok(Some(
-                MutableDictionary::from_rune_files(dict, annot)
+                MutableDictionary::from_rune_files(dict, annot, LanguageFamily::English)
                     .map_err(|_| Error::InvalidDictionaryFormat)?,
             ))
         } else {

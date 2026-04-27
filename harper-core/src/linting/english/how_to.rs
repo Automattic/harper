@@ -385,7 +385,11 @@ mod tests {
 
     #[test]
     fn dont_flag_how_proper_noun_handles() {
-        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
+        assert_no_lints(
+            "rewrites how Wine handles file locking",
+            HowTo::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -393,6 +397,7 @@ mod tests {
         assert_no_lints(
             "They need to rethink how work is structured and valued.",
             HowTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -401,6 +406,7 @@ mod tests {
         assert_no_lints(
             "The Mail tab dictates how form submissions are delivered to you.",
             HowTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -409,35 +415,7 @@ mod tests {
         assert_no_lints(
             "We analyze how access to food shaped political ideologies.",
             HowTo::default(),
-        );
-    }
-
-    #[test]
-    fn dont_flag_how_proper_noun_handles() {
-        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
-    }
-
-    #[test]
-    fn dont_flag_how_work_is_structured() {
-        assert_no_lints(
-            "They need to rethink how work is structured and valued.",
-            HowTo::default(),
-        );
-    }
-
-    #[test]
-    fn dont_flag_how_form_submissions_are_delivered() {
-        assert_no_lints(
-            "The Mail tab dictates how form submissions are delivered to you.",
-            HowTo::default(),
-        );
-    }
-
-    #[test]
-    fn dont_flag_how_access_to_food_shaped_revolutions() {
-        assert_no_lints(
-            "We analyze how access to food shaped political ideologies.",
-            HowTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -446,10 +424,12 @@ mod tests {
         assert_no_lints(
             "I like how discord shows Spotify status on your profile.",
             HowTo::default(),
+            crate::languages::LanguageFamily::English,
         );
         assert_no_lints(
             "To be determined based on how error handling is done in new paradigm.",
             HowTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

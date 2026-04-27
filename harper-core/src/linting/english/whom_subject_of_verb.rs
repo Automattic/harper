@@ -117,9 +117,6 @@ mod tests {
 
     #[test]
     fn dont_flag_each_of_whom() {
-        assert_no_lints(
-            "Horace Silver (piano), Tyrone Washington (tenor sax), and Roger Humphries (drums), each of whom has a wikipedia article about him.",
-            WhomSubjectOfVerb::default(),
-        )
+        assert_no_lints("Horace Silver (piano), Tyrone Washington (tenor sax), and Roger Humphries (drums), each of whom has a wikipedia article about him.", WhomSubjectOfVerb::default(), crate::languages::LanguageFamily::English)
     }
 }

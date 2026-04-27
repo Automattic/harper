@@ -598,14 +598,11 @@ mod tests {
 
     #[test]
     fn no_lint_to_only() {
-        assert_no_lints(
-            "The dog was restricted to only one can of food.",
-            ToTwoToo::default(),
-        );
+        assert_no_lints("The dog was restricted to only one can of food.", ToTwoToo::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn no_lint_to_only_at_end() {
-        assert_no_lints("limited to only", ToTwoToo::default());
+        assert_no_lints("limited to only", ToTwoToo::default(), crate::languages::LanguageFamily::English);
     }
 }

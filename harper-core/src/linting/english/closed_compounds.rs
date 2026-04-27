@@ -170,7 +170,7 @@ mod tests {
     fn mean_while() {
         let test_sentence = "Mean while, the team kept working.";
         let expected = "Meanwhile, the team kept working.";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
+        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -392,7 +392,7 @@ mod tests {
     fn key_strokes() {
         let test_sentence = "There may have been a missing key stroke.";
         let expected = "There may have been a missing keystroke.";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
+        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
     }
 
     #[test]
@@ -429,13 +429,13 @@ mod tests {
             "It's worth while documenting all the clientside events that the eventsService emits?";
         let expected =
             "It's worthwhile documenting all the clientside events that the eventsService emits?";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
+        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn worth_hyphen_while() {
         let test_sentence = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worth-while.";
         let expected = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worthwhile.";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
+        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
     }
 }

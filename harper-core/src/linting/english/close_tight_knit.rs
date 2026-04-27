@@ -59,73 +59,41 @@ mod tests {
 
     #[test]
     fn fix_tight_nit_space() {
-        assert_suggestion_result(
-            "To keep components theme-able and tight nit, an ideal scenario",
-            CloseTightKnit::default(),
-            "To keep components theme-able and tight knit, an ideal scenario",
-        );
+        assert_suggestion_result("To keep components theme-able and tight nit, an ideal scenario", CloseTightKnit::default(), "To keep components theme-able and tight knit, an ideal scenario", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_tight_nit_hyphenated() {
-        assert_suggestion_result(
-            "We're a small, tight-nit, experienced team from Google, Optimizely, Uber, & DraftKings",
-            CloseTightKnit::default(),
-            "We're a small, tight-knit, experienced team from Google, Optimizely, Uber, & DraftKings",
-        );
+        assert_suggestion_result("We're a small, tight-nit, experienced team from Google, Optimizely, Uber, & DraftKings", CloseTightKnit::default(), "We're a small, tight-knit, experienced team from Google, Optimizely, Uber, & DraftKings", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_close_nit_space() {
-        assert_suggestion_result(
-            "I get its all a close nit set of Github folks driving both projects but...",
-            CloseTightKnit::default(),
-            "I get its all a close knit set of Github folks driving both projects but...",
-        );
+        assert_suggestion_result("I get its all a close nit set of Github folks driving both projects but...", CloseTightKnit::default(), "I get its all a close knit set of Github folks driving both projects but...", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_close_nit_hyphen() {
-        assert_suggestion_result(
-            "Within a group of more senior engineers working on close-nit teams (like MX) there's a lot of trust in the author during the review process.",
-            CloseTightKnit::default(),
-            "Within a group of more senior engineers working on close-knit teams (like MX) there's a lot of trust in the author during the review process.",
-        );
+        assert_suggestion_result("Within a group of more senior engineers working on close-nit teams (like MX) there's a lot of trust in the author during the review process.", CloseTightKnit::default(), "Within a group of more senior engineers working on close-knit teams (like MX) there's a lot of trust in the author during the review process.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_tightly_nit_space() {
-        assert_suggestion_result(
-            "Initially public keys and aliases are tightly nit, changes in key values break expectations of EVM authorization checks",
-            CloseTightKnit::default(),
-            "Initially public keys and aliases are tightly knit, changes in key values break expectations of EVM authorization checks",
-        );
+        assert_suggestion_result("Initially public keys and aliases are tightly nit, changes in key values break expectations of EVM authorization checks", CloseTightKnit::default(), "Initially public keys and aliases are tightly knit, changes in key values break expectations of EVM authorization checks", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_tightly_nit_hyphen() {
-        assert_suggestion_result(
-            "... will result, in my opinion and from what I have witnessed, in a more tightly-nit community",
-            CloseTightKnit::default(),
-            "... will result, in my opinion and from what I have witnessed, in a more tightly-knit community",
-        );
+        assert_suggestion_result("... will result, in my opinion and from what I have witnessed, in a more tightly-nit community", CloseTightKnit::default(), "... will result, in my opinion and from what I have witnessed, in a more tightly-knit community", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_closely_nit_space() {
-        assert_suggestion_result(
-            "For a small family, the boys have a nice network of closely nit family members.",
-            CloseTightKnit::default(),
-            "For a small family, the boys have a nice network of closely knit family members.",
-        );
+        assert_suggestion_result("For a small family, the boys have a nice network of closely nit family members.", CloseTightKnit::default(), "For a small family, the boys have a nice network of closely knit family members.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_closely_nit_hyphen() {
-        assert_suggestion_result(
-            "However this time around we are aiming for a much smaller more \"closely-nit\" town.",
-            CloseTightKnit::default(),
-            "However this time around we are aiming for a much smaller more \"closely-knit\" town.",
-        );
+        assert_suggestion_result("However this time around we are aiming for a much smaller more \"closely-nit\" town.", CloseTightKnit::default(), "However this time around we are aiming for a much smaller more \"closely-knit\" town.", crate::languages::LanguageFamily::English);
     }
 }

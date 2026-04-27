@@ -52,11 +52,10 @@ impl ExprLinter for TakeALookTo {
         if followed_by_word(ctx, |nw| {
             nw.kind.is_verb_lemma()
                 // Exception 1. Have/take a look to see if everything is ok
-                || (nw.span.get_content(src).eq_ignore_ascii_case_str("it")
+                || (nw.get_ch(src).eq_str("it")
                     // Exception 2. It has a look to it that I don't like
                     && toks.first().is_some_and(|tok| {
-                        tok.span
-                            .get_content(src)
+                        tok.get_ch(src)
                             .eq_any_ignore_ascii_case_str(HAVE_FORMS)
                     }))
         }) {
@@ -89,6 +88,7 @@ mod tests {
             "Hello, I am Drago and in this video we're going to take a look to a new AI CLI and VS Code extension tool",
             TakeALookTo::default(),
             "Hello, I am Drago and in this video we're going to take a look at a new AI CLI and VS Code extension tool",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -98,6 +98,7 @@ mod tests {
             "If you haven't yet, please have a look to https://docs.conan.io/2/devops/devops_local_recipes_index.html",
             TakeALookTo::default(),
             "If you haven't yet, please have a look at https://docs.conan.io/2/devops/devops_local_recipes_index.html",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -107,6 +108,7 @@ mod tests {
             "Having a look to mode and overScaleMode , I see they are scriptable",
             TakeALookTo::default(),
             "Having a look at mode and overScaleMode , I see they are scriptable",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +118,7 @@ mod tests {
             "after taking a look to this issue and making some test I figure out that it likely to be an error",
             TakeALookTo::default(),
             "after taking a look at this issue and making some test I figure out that it likely to be an error",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +128,7 @@ mod tests {
             "I have had a look to your conanfile.py and it is strange that it fails.",
             TakeALookTo::default(),
             "I have had a look at your conanfile.py and it is strange that it fails.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +138,7 @@ mod tests {
             "Since I have some knowledge in programing I took a look to both codes (LK and XCS)",
             TakeALookTo::default(),
             "Since I have some knowledge in programing I took a look at both codes (LK and XCS)",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -143,6 +148,7 @@ mod tests {
             "Yeah I've taken a look to that, but I really need to use classes on this one",
             TakeALookTo::default(),
             "Yeah I've taken a look at that, but I really need to use classes on this one",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -152,6 +158,7 @@ mod tests {
             "basically, it takes a look to the signing request",
             TakeALookTo::default(),
             "basically, it takes a look at the signing request",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -162,6 +169,7 @@ mod tests {
         assert_no_lints(
             "@budarin can you have a look to see if it addresses your concerns?",
             TakeALookTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -170,6 +178,7 @@ mod tests {
         assert_no_lints(
             "Would be worth taking a look to decide which way to go.",
             TakeALookTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -178,6 +187,7 @@ mod tests {
         assert_no_lints(
             "It attempts to open the URL in a new window and then after 2s it takes a look to see if it can read the location.",
             TakeALookTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -186,6 +196,7 @@ mod tests {
         assert_no_lints(
             "The ecosystem's UI certainly has a look to it but inside of your app you could implement a different look as long as it's consistent.",
             TakeALookTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -195,6 +206,7 @@ mod tests {
             "When he gets back I hope he takes a look to it",
             TakeALookTo::default(),
             "When he gets back I hope he takes a look at it",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

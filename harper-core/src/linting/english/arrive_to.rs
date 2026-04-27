@@ -69,12 +69,18 @@ mod tests {
             "arrive to the destination",
             ArriveTo::default(),
             "arrive at the destination",
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn fix_without_destination() {
-        assert_suggestion_result("arrive to", ArriveTo::default(), "arrive at");
+        assert_suggestion_result(
+            "arrive to",
+            ArriveTo::default(),
+            "arrive at",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -82,6 +88,7 @@ mod tests {
         assert_no_lints(
             "I arrived to find something was wrong.",
             ArriveTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
     // Tests using real-world sentences from the Internt.
@@ -92,6 +99,7 @@ mod tests {
             "Number of flights departing from and arriving to every airport.",
             ArriveTo::default(),
             "Number of flights departing from and arriving at every airport.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -101,6 +109,7 @@ mod tests {
             "We had several days vacation in Vancouver prior to arriving to Seattle",
             ArriveTo::default(),
             "We had several days vacation in Vancouver prior to arriving in Seattle",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -110,6 +119,7 @@ mod tests {
             "The packet arrives to the client socket correctly as well, according to Wireshark.",
             ArriveTo::default(),
             "The packet arrives at the client socket correctly as well, according to Wireshark.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -119,6 +129,7 @@ mod tests {
             "Okay, so, add whatever email address the emails arrive to originally as a System Email under Admin Panel",
             ArriveTo::default(),
             "Okay, so, add whatever email address the emails arrive at originally as a System Email under Admin Panel",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -128,6 +139,7 @@ mod tests {
             "God Of War Collection: White screen before arrive to the game menu",
             ArriveTo::default(),
             "God Of War Collection: White screen before arrive at the game menu",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -136,6 +148,7 @@ mod tests {
         assert_no_lints(
             "whenever a new customer arrives to determine which set they will belong to",
             ArriveTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -144,6 +157,7 @@ mod tests {
         assert_no_lints(
             "Another luxury bus has arrived to collect arrested protesters chilling on the guardrail.",
             ArriveTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -152,6 +166,7 @@ mod tests {
         assert_no_lints(
             "On the morning of 28 December Soviet paratroopers arrived to protect the hotel where he was staying.",
             ArriveTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -160,6 +175,7 @@ mod tests {
         assert_no_lints(
             "US negotiator with North Korea arrives to begin talks.",
             ArriveTo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

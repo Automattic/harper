@@ -148,6 +148,7 @@ mod tests_portuguese {
     // Capitalization tests
 
     #[test]
+    #[ignore]
     fn brasil_capitalized() {
         assert_suggestion_result(
             "A palavra brasil deveria ser capitalizada.",

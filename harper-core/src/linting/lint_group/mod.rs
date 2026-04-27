@@ -25,7 +25,6 @@ use super::english::allow_to::AllowTo;
 use super::english::am_in_the_morning::AmInTheMorning;
 use super::english::amounts_for::AmountsFor;
 use super::english::an_a::AnA;
-use super::english::and_in::AndIn;
 use super::english::and_the_like::AndTheLike;
 use super::english::another_thing_coming::AnotherThingComing;
 use super::english::another_think_coming::AnotherThinkComing;
@@ -251,6 +250,7 @@ use super::english::were_where::WereWhere;
 use super::english::whereas::Whereas;
 use super::english::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::english::widely_accepted::WidelyAccepted;
+use super::english::will_non_lemma::WillNonLemma;
 use super::english::win_prize::WinPrize;
 use super::english::wish_could::WishCould;
 use super::english::wordpress_dotcom::WordPressDotcom;
@@ -259,17 +259,18 @@ use super::english::would_never_have::WouldNeverHave;
 use super::english::wrong_apostrophe::WrongApostrophe;
 use super::expr_linter::run_on_chunk;
 use super::{HtmlDescriptionLinter, Linter};
+use crate::EnglishDialect;
+use crate::PortugueseDialect;
 use crate::languages::Language;
 use crate::linting::english::dashes::Dashes;
 use crate::linting::english::open_compounds::OpenCompounds;
-use crate::linting::english::{closed_compounds, initialisms, phrase_set_corrections, weir_rules};
-use crate::linting::expr_linter::Chunk;
-use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{
+use crate::linting::english::web_scraping::WebScraping;
+use crate::linting::english::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
 };
+use crate::linting::expr_linter::Chunk;
 use crate::spell::Dictionary;
-use crate::{Dialect, Document, Lrc, TokenStringExt};
+use crate::{Document, Lrc, TokenStringExt};
 
 pub use flat_config::FlatConfig;
 pub use structured_config::{
@@ -447,6 +448,7 @@ impl LintGroup {
             }
         }
     }
+
     pub fn new_curated_english(
         dictionary: Arc<impl Dictionary + 'static>,
         dialect: EnglishDialect,
@@ -784,10 +786,7 @@ impl LintGroup {
         out.config.set_rule_enabled("WereWhere", true);
 
         // Uses Dictionary and Dialect
-        out.add(
-            "SpellCheck",
-            SpellCheck::new(dictionary.clone(), dialect.into()),
-        );
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
 
         // Uses Sentence rather than Chunk
@@ -798,10 +797,12 @@ impl LintGroup {
     }
 
     fn new_curated_portuguese(
-        dictionary: Arc<impl Dictionary + 'static>,
-        _dialect: PortugueseDialect,
+        #[allow(unused_variables)] dictionary: Arc<impl Dictionary + 'static>,
+        #[allow(unused_variables)] dialect: PortugueseDialect,
     ) -> Self {
-        let mut out = Self::empty();
+        todo!();
+        #[allow(unreachable_code)]
+        let out = Self::empty();
 
         // /// Add a `Linter` to the group, setting it to be enabled by default.
         // macro_rules! insert_struct_rule {
@@ -964,65 +965,23 @@ mod tests {
             "ive never seen that before",
             test_group(),
             "I've never seen that before",
+            LanguageFamily::English,
         );
     }
 
     #[test]
     fn worthchecking_is_split() {
-        assert_suggestion_result("It is worthchecking", test_group(), "It is worth checking");
-    }
-
-    #[test]
-    fn its_not_perfect_keeps_apostrophe() {
-        assert_no_lints("It's not perfect", test_group());
-    }
-
-    #[test]
-    fn corrects_extention() {
-        let mut group = test_group();
-        let document = Document::new_plain_english_curated("I love this extention!");
-        let organized = group.organized_lints(&document);
-
-        let spellcheck_lints = organized
-            .get("SpellCheck")
-            .expect("SpellCheck should produce a lint for extention");
-        assert_eq!(spellcheck_lints.len(), 1);
-        assert!(
-            spellcheck_lints[0]
-                .suggestions
-                .iter()
-                .any(|suggestion| suggestion.to_string() == "Replace with: “extension”")
-        );
-
-        assert!(
-            organized.get("SplitWords").is_none_or(Vec::is_empty),
-            "expected no lints from SplitWords, but found {:?}",
-            organized.get("SplitWords")
-        );
-    }
-
-    #[test]
-    fn ok_becomes_okay() {
-        assert_suggestion_result("This is ok.", test_group(), "This is okay.");
-    }
-
-    #[test]
-    fn ive_corrects_to_single_word() {
         assert_suggestion_result(
-            "ive never seen that before",
+            "It is worthchecking",
             test_group(),
-            "I've never seen that before",
+            "It is worth checking",
+            LanguageFamily::English,
         );
     }
 
     #[test]
-    fn worthchecking_is_split() {
-        assert_suggestion_result("It is worthchecking", test_group(), "It is worth checking");
-    }
-
-    #[test]
     fn its_not_perfect_keeps_apostrophe() {
-        assert_no_lints("It's not perfect", test_group());
+        assert_no_lints("It's not perfect", test_group(), LanguageFamily::English);
     }
 
     #[test]
@@ -1051,7 +1010,12 @@ mod tests {
 
     #[test]
     fn ok_becomes_okay() {
-        assert_suggestion_result("This is ok.", test_group(), "This is okay.");
+        assert_suggestion_result(
+            "This is ok.",
+            test_group(),
+            "This is okay.",
+            LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -60,13 +60,13 @@ impl ExprLinter for DoMistake {
             return None;
         }
 
-        let make = if chars.eq_ignore_ascii_case_str("do") {
+        let make = if chars.eq_str("do") {
             "make"
-        } else if chars.eq_ignore_ascii_case_str("did") || chars.eq_ignore_ascii_case_str("done") {
+        } else if chars.eq_str("did") || chars.eq_str("done") {
             "made"
-        } else if chars.eq_ignore_ascii_case_str("does") {
+        } else if chars.eq_str("does") {
             "makes"
-        } else if chars.eq_ignore_ascii_case_str("doing") {
+        } else if chars.eq_str("doing") {
             "making"
         } else {
             return None;
@@ -103,6 +103,7 @@ mod tests {
             "Hi, I did a mistake in my NGINX config file and so once the container is launched, it logs the error...",
             DoMistake::default(),
             "Hi, I made a mistake in my NGINX config file and so once the container is launched, it logs the error...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -112,6 +113,7 @@ mod tests {
             "Where i did my mistakes?",
             DoMistake::default(),
             "Where i made my mistakes?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -121,6 +123,7 @@ mod tests {
             "Maybe I did several mistakes, but I can only find a message about one?",
             DoMistake::default(),
             "Maybe I made several mistakes, but I can only find a message about one?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -130,6 +133,7 @@ mod tests {
             "I made this program to learn goto use. but did some mistakes somewhere",
             DoMistake::default(),
             "I made this program to learn goto use. but made some mistakes somewhere",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -139,6 +143,7 @@ mod tests {
             "and believe me, I did that mistake too",
             DoMistake::default(),
             "and believe me, I made that mistake too",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -148,6 +153,7 @@ mod tests {
             "The issue describe is the person who did the mistake in the past & that same person is NOW correcting other people",
             DoMistake::default(),
             "The issue describe is the person who made the mistake in the past & that same person is NOW correcting other people",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -157,6 +163,7 @@ mod tests {
             "Are there famous mathematicians who did this mistake?",
             DoMistake::default(),
             "Are there famous mathematicians who made this mistake?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -166,6 +173,7 @@ mod tests {
             "I observed that my coworkers do many mistakes using the field calculator",
             DoMistake::default(),
             "I observed that my coworkers make many mistakes using the field calculator",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -175,6 +183,7 @@ mod tests {
             "If you do a mistake that causes alot of problems, please use the command to redo",
             DoMistake::default(),
             "If you make a mistake that causes alot of problems, please use the command to redo",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -184,6 +193,7 @@ mod tests {
             "so probably if my colleagues do some mistakes I tend to learn them as well",
             DoMistake::default(),
             "so probably if my colleagues make some mistakes I tend to learn them as well",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -193,6 +203,7 @@ mod tests {
             "do I need to explicitly mention that I did not do the mistake to do not lose the point?",
             DoMistake::default(),
             "do I need to explicitly mention that I did not make the mistake to do not lose the point?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -202,6 +213,7 @@ mod tests {
             "I barely remember any frontend developer that wouldn't do this mistake at least once.",
             DoMistake::default(),
             "I barely remember any frontend developer that wouldn't make this mistake at least once.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -211,6 +223,7 @@ mod tests {
             "I do this mistakes to check the command detekt with type resolution",
             DoMistake::default(),
             "I make this mistakes to check the command detekt with type resolution",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -220,6 +233,7 @@ mod tests {
             "An experienced developer could do those mistakes as well",
             DoMistake::default(),
             "An experienced developer could make those mistakes as well",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -229,6 +243,7 @@ mod tests {
             "Here at work, a colleague asked if we were doing a mistake by using the ReactDOM.renderToStaticMarkup on the client side.",
             DoMistake::default(),
             "Here at work, a colleague asked if we were making a mistake by using the ReactDOM.renderToStaticMarkup on the client side.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -238,6 +253,7 @@ mod tests {
             "I realized I was doing several mistakes",
             DoMistake::default(),
             "I realized I was making several mistakes",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -247,6 +263,7 @@ mod tests {
             "where am i doing the mistake?",
             DoMistake::default(),
             "where am i making the mistake?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -256,6 +273,7 @@ mod tests {
             "Might be I have done some mistake, that I do not know.",
             DoMistake::default(),
             "Might be I have made some mistake, that I do not know.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -265,6 +283,7 @@ mod tests {
             "how many more users have done this mistake?",
             DoMistake::default(),
             "how many more users have made this mistake?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -275,6 +294,7 @@ mod tests {
         assert_no_lints(
             "When does a mistake become standard usage? ",
             DoMistake::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -283,6 +303,7 @@ mod tests {
         assert_no_lints(
             "Did that mistake occurred before or after the day 2 backup?",
             DoMistake::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -291,6 +312,7 @@ mod tests {
         assert_no_lints(
             "Does this mistake invalidate your thesis?",
             DoMistake::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -299,6 +321,7 @@ mod tests {
         assert_no_lints(
             "Does the mistake change the meaning of the quotation?",
             DoMistake::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

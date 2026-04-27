@@ -56,72 +56,40 @@ mod tests {
 
     #[test]
     fn ignore_thrive_off() {
-        assert_suggestion_result(
-            "I thrive off open source projects.",
-            ThriveOn::default(),
-            "I thrive on open source projects.",
-        );
+        assert_suggestion_result("I thrive off open source projects.", ThriveOn::default(), "I thrive on open source projects.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_thrive_off_of() {
-        assert_suggestion_result(
-            "I thrive off of criticism and constructive feedback.",
-            ThriveOn::default(),
-            "I thrive on criticism and constructive feedback.",
-        );
+        assert_suggestion_result("I thrive off of criticism and constructive feedback.", ThriveOn::default(), "I thrive on criticism and constructive feedback.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_thrived_off() {
-        assert_suggestion_result(
-            "The decision hurt the emulator community who thrived off AVX512 chips at the low to medium end, not for the large registers, but for the masking capabilities.",
-            ThriveOn::default(),
-            "The decision hurt the emulator community who thrived on AVX512 chips at the low to medium end, not for the large registers, but for the masking capabilities.",
-        );
+        assert_suggestion_result("The decision hurt the emulator community who thrived off AVX512 chips at the low to medium end, not for the large registers, but for the masking capabilities.", ThriveOn::default(), "The decision hurt the emulator community who thrived on AVX512 chips at the low to medium end, not for the large registers, but for the masking capabilities.", crate::languages::LanguageFamily::English);
     }
     #[test]
     fn ignore_thrived_off_of() {
-        assert_suggestion_result(
-            "All my life I have been determined to succeed in my education and have thrived off of an overwhelming amount of creativity.",
-            ThriveOn::default(),
-            "All my life I have been determined to succeed in my education and have thrived on an overwhelming amount of creativity.",
-        );
+        assert_suggestion_result("All my life I have been determined to succeed in my education and have thrived off of an overwhelming amount of creativity.", ThriveOn::default(), "All my life I have been determined to succeed in my education and have thrived on an overwhelming amount of creativity.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_thrives_off_collaboration() {
-        assert_suggestion_result(
-            "Open source thrives off collaboration.",
-            ThriveOn::default(),
-            "Open source thrives on collaboration.",
-        );
+        assert_suggestion_result("Open source thrives off collaboration.", ThriveOn::default(), "Open source thrives on collaboration.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn ignore_thrives_off_of_community() {
-        assert_suggestion_result(
-            "An all-in-one technical interview prep platform which fosters and thrives off of community engagement.",
-            ThriveOn::default(),
-            "An all-in-one technical interview prep platform which fosters and thrives on community engagement.",
-        );
+        assert_suggestion_result("An all-in-one technical interview prep platform which fosters and thrives off of community engagement.", ThriveOn::default(), "An all-in-one technical interview prep platform which fosters and thrives on community engagement.", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn fix_thriving_off() {
-        assert_suggestion_result(
-            "So the government granted monopolies to those companies willing to risk the investment, and our teleco's have been thriving off it ever since.",
-            ThriveOn::default(),
-            "So the government granted monopolies to those companies willing to risk the investment, and our teleco's have been thriving on it ever since.",
-        );
+        assert_suggestion_result("So the government granted monopolies to those companies willing to risk the investment, and our teleco's have been thriving off it ever since.", ThriveOn::default(), "So the government granted monopolies to those companies willing to risk the investment, and our teleco's have been thriving on it ever since.", crate::languages::LanguageFamily::English);
     }
 
     fn fix_thriving_off_of() {
-        assert_suggestion_result(
-            "Thriving off of solving problems on the wall AND in front of my computer screen",
-            ThriveOn::default(),
-            "Thriving on solving problems on the wall AND in front of my computer screen",
-        );
+        assert_suggestion_result("Thriving off of solving problems on the wall AND in front of my computer screen", ThriveOn::default(), "Thriving on solving problems on the wall AND in front of my computer screen", crate::languages::LanguageFamily::English);
     }
 
     // changing to "thrive on" isn't always a definite win when "thrive off" seems to mix with "live off"
@@ -129,20 +97,13 @@ mod tests {
     // Obviously confusing "live off the land" with "thrive on". The phrase "thrive on the land" gets no Google hits.
     #[test]
     fn ignore_thrive_off_the_land() {
-        assert_suggestion_result(
-            "A great collection of resources to thrive off the land.",
-            ThriveOn::default(),
-            "A great collection of resources to thrive off the land.",
-        );
+        assert_suggestion_result("A great collection of resources to thrive off the land.", ThriveOn::default(), "A great collection of resources to thrive off the land.", crate::languages::LanguageFamily::English);
     }
 
     // This one definitely doesn't sound right with "thrive on his back" - but is it common enough to check for?
     #[test]
     #[ignore = "Analogy with 'live off his back'"]
     fn ignore_thriving_off_of_his_back() {
-        assert_no_lints(
-            "We're getting free software, that we ALL use, and the person who has worked tirelessly on it is struggling financially, while we are all thriving off of his back.",
-            ThriveOn::default(),
-        );
+        assert_no_lints("We're getting free software, that we ALL use, and the person who has worked tirelessly on it is struggling financially, while we are all thriving off of his back.", ThriveOn::default(), crate::languages::LanguageFamily::English);
     }
 }

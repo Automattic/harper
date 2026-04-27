@@ -549,11 +549,7 @@ mod tests {
 
     #[test]
     fn no_lint_reduced_relative_clause_after_participle() {
-        assert_lint_count(
-            "The techniques learned would probably not change much with resolution so 480i would seem almost as usable for educational use as 8K video.",
-            MissingTo::default(),
-            0,
-        );
+        assert_lint_count("The techniques learned would probably not change much with resolution so 480i would seem almost as usable for educational use as 8K video.", MissingTo::default(), 0, crate::languages::LanguageFamily::English);
     }
 
     #[test]

@@ -181,7 +181,9 @@ mod tests {
         // singular + will + irregular preterite
         assert_good_and_bad_suggestions(
             "The brown fox will ran thru the meadow.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             &[
                 "The brown fox will run thru the meadow.",
                 "The brown fox ran thru the meadow.",
@@ -195,7 +197,9 @@ mod tests {
         // plural + will + 3rd person singular present
         assert_good_and_bad_suggestions(
             "there is a good chance duplicate Rule IDs will exists.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             &[
                 "there is a good chance duplicate Rule IDs will exist.",
                 "there is a good chance duplicate Rule IDs exists.",
@@ -210,8 +214,11 @@ mod tests {
         // "nor" + shall + (3rd person singular present == plural noun)
         assert_lint_count(
             "No Preference shall be given by any Regulation of Commerce or Revenue to the Ports of one State over those of another; nor shall Vessels bound to, or from, one State, be obliged to enter, clear, or pay Duties in another.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -220,8 +227,11 @@ mod tests {
         // "free will" + (3rd person singular present == plural noun)
         assert_lint_count(
             "Give your AI free will tools.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -230,7 +240,9 @@ mod tests {
         // plural + will + progressive
         assert_good_and_bad_suggestions(
             "More advanced features will coming soon, so stay tuned!",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             &[
                 "More advanced features will come soon, so stay tuned!",
                 "More advanced features coming soon, so stay tuned!",
@@ -245,7 +257,9 @@ mod tests {
         // singular + will + progressive
         assert_good_and_bad_suggestions(
             "on CPU and GPU (NPU support will coming next)",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             &[
                 "on CPU and GPU (NPU support will come next)",
                 "on CPU and GPU (NPU support coming next)",
@@ -259,8 +273,11 @@ mod tests {
     fn ignore_will_was_read_pr_review() {
         assert_lint_count(
             "Around November 2023, shortly after the will was read, Eleanor started asking about using the cottage.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -268,8 +285,11 @@ mod tests {
     fn ignore_will_was_straightforward_pr_review() {
         assert_lint_count(
             "Vivian’s will was straightforward. The house, all its contents, and her savings were to be left to me.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -277,8 +297,11 @@ mod tests {
     fn ignore_will_specifies_equal_responsibility() {
         assert_lint_count(
             "I also reminded her that the will specifies equal responsibility",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -286,8 +309,11 @@ mod tests {
     fn ignore_will_reflected_that() {
         assert_lint_count(
             "She meticulously planned everything, and her will reflected that.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -295,8 +321,11 @@ mod tests {
     fn ignore_will_stipulates_everything() {
         assert_lint_count(
             "Now, his will stipulates everything is split 50/50.",
-            WillNonLemma::new(FstDictionary::curated()),
+            WillNonLemma::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

@@ -31,9 +31,7 @@ merge_linters! {
 #[cfg(test)]
 mod tests {
     use super::NounVerbConfusion;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_good_advise() {
@@ -57,7 +55,12 @@ mod tests {
 
     #[test]
     fn dont_flag_correct_better_advise() {
-        assert_lint_count("Hello! I am an engineer at Plexon and am conducting tests with Kilosort4 so we can better advise our clients.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Hello! I am an engineer at Plexon and am conducting tests with Kilosort4 so we can better advise our clients.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -73,7 +76,12 @@ mod tests {
 
     #[test]
     fn dont_flag_correct_better_believe() {
-        assert_lint_count("You'd better believe this is bbedit-gist-maker.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You'd better believe this is bbedit-gist-maker.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -129,12 +137,22 @@ mod tests {
 
     #[test]
     fn does_not_flag_correct_believe() {
-        assert_lint_count("I believe in you.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I believe in you.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_correct_breath() {
-        assert_lint_count("Take a deep breath.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Take a deep breath.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // real-world example unit tests
@@ -293,7 +311,12 @@ mod tests {
     #[test]
     #[ignore = "`You` is an object pronoun in this example. `It` is also both subject and object."]
     fn dont_fix_advice_on_that() {
-        assert_lint_count("I don't do table returning functions in my code so can't offer you advice on that.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I don't do table returning functions in my code so can't offer you advice on that.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -358,7 +381,12 @@ mod tests {
 
     #[test]
     fn dont_flag_intent_records() {
-        assert_lint_count("there are always intent records associated to the txns", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "there are always intent records associated to the txns",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -405,12 +433,22 @@ mod tests {
 
     #[test]
     fn allow_to_emphasis_at_end() {
-        assert_lint_count("Changes literal underscores to emphasis", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Changes literal underscores to emphasis",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_to_intent_adjective() {
-        assert_lint_count("Cleanup passing statistics to intent aware iterator", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Cleanup passing statistics to intent aware iterator",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -719,47 +757,92 @@ mod tests {
 
     #[test]
     fn ignores_effect_change_idiom() {
-        assert_lint_count("Leaders work to effect change in their communities.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Leaders work to effect change in their communities.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_effect_noun_phrase() {
-        assert_lint_count("The effect your plan had was dramatic.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The effect your plan had was dramatic.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_effect_as_result_noun() {
-        assert_lint_count("The effect was immediate and obvious.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The effect was immediate and obvious.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_to_effect_substitutions() {
-        assert_lint_count("or it may be desired to effect substitutions", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "or it may be desired to effect substitutions",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_effect_followed_by_of_phrase() {
-        assert_lint_count("We measured the effect of caffeine on sleep.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We measured the effect of caffeine on sleep.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_side_effects_usage() {
-        assert_lint_count("Side effects may include mild nausea.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Side effects may include mild nausea.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_special_effects_phrase() {
-        assert_lint_count("She admired the special effects in the film.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "She admired the special effects in the film.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_effect_in_cause_and_effect() {
-        assert_lint_count("The diagram explains cause and effect relationships.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The diagram explains cause and effect relationships.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_effects_with_pronoun_subject() {
-        assert_lint_count("Those effects were less severe than expected.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Those effects were less severe than expected.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -1085,7 +1168,12 @@ mod tests {
 
     #[test]
     fn ignores_psychology_usage() {
-        assert_lint_count("The patient's affect is flat.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The patient's affect is flat.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -1134,6 +1222,7 @@ mod tests {
             "I forgot to test the side effect that users are deleted when clearing data.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1349,12 +1438,22 @@ mod tests {
 
     #[test]
     fn does_not_flag_best_affect() {
-        assert_lint_count("Using linear regression to predict and understand what factors best affect house price", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Using linear regression to predict and understand what factors best affect house price",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_sound_affect() {
-        assert_lint_count("The goal of this study was to learn what properties of sound affect human focus the most.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The goal of this study was to learn what properties of sound affect human focus the most.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -1369,57 +1468,109 @@ mod tests {
 
     #[test]
     fn does_not_flag_affect_as_verb() {
-        assert_lint_count("The change will affect our revenue significantly.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The change will affect our revenue significantly.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_affects_as_verb() {
-        assert_lint_count("This policy directly affects remote workers.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This policy directly affects remote workers.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_correct_effect_noun() {
-        assert_lint_count("The placebo effect can be powerful.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The placebo effect can be powerful.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_sound_effects() {
-        assert_lint_count("Sound effects were added in post.", NounVerbConfusion::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Sound effects were added in post.",
+            NounVerbConfusion::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_1997() {
-        assert_no_lints("It depends on which sources it affects, what parameters it uses, etc.", NounVerbConfusion::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "It depends on which sources it affects, what parameters it uses, etc.",
+            NounVerbConfusion::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_1996() {
-        assert_no_lints("Avoid effects outside of functions.", NounVerbConfusion::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Avoid effects outside of functions.",
+            NounVerbConfusion::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_2008() {
-        assert_no_lints("Changes that only affect static types, without breaking runtime behavior.", NounVerbConfusion::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Changes that only affect static types, without breaking runtime behavior.",
+            NounVerbConfusion::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_2041() {
-        assert_suggestion_result("Let me give you a piece of advise.", NounVerbConfusion::default(), "Let me give you a piece of advice.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Let me give you a piece of advise.",
+            NounVerbConfusion::default(),
+            "Let me give you a piece of advice.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_helps_you_weight() {
-        assert_suggestion_result("An iOS app that helps you weight small things on the screen of your iPhone / iPad.", NounVerbConfusion::default(), "An iOS app that helps you weigh small things on the screen of your iPhone / iPad.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "An iOS app that helps you weight small things on the screen of your iPhone / iPad.",
+            NounVerbConfusion::default(),
+            "An iOS app that helps you weigh small things on the screen of your iPhone / iPad.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_do_you_weight() {
-        assert_suggestion_result("How much do you weight?", NounVerbConfusion::default(), "How much do you weigh?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "How much do you weight?",
+            NounVerbConfusion::default(),
+            "How much do you weigh?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_more_than_you_weight() {
-        assert_suggestion_result("contributed more than you weight", NounVerbConfusion::default(), "contributed more than you weigh", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "contributed more than you weight",
+            NounVerbConfusion::default(),
+            "contributed more than you weigh",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Tests for issue #2958: "side effect" must not be flagged.
@@ -1431,6 +1582,7 @@ mod tests {
             "There were no side effects from the medication.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1440,6 +1592,7 @@ mod tests {
             "Avoid side effects in your functions.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1449,6 +1602,7 @@ mod tests {
             "This change has no side effects.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1459,6 +1613,7 @@ mod tests {
             "I am still not clear how padding side affects the results.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1469,6 +1624,7 @@ mod tests {
             "Move that to the top level so you don't need to worry about what side affects the import machinery.",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -1479,6 +1635,7 @@ mod tests {
             "Would an unfreed reference in the script side affect the other side somehow?",
             NounVerbConfusion::default(),
             0,
+            crate::languages::LanguageFamily::English,
         );
     }
 }

@@ -42,76 +42,141 @@ mod tests {
 
     #[test]
     fn corrects_basic_ellipsis() {
-        assert_suggestion_result("...", UseEllipsisCharacter, "…");
+        assert_suggestion_result(
+            "...",
+            UseEllipsisCharacter,
+            "…",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_sentence_final_ellipsis() {
-        assert_suggestion_result("Wait...", UseEllipsisCharacter, "Wait…");
+        assert_suggestion_result(
+            "Wait...",
+            UseEllipsisCharacter,
+            "Wait…",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ellipsis_with_trailing_space() {
-        assert_suggestion_result("Wait... now", UseEllipsisCharacter, "Wait… now");
+        assert_suggestion_result(
+            "Wait... now",
+            UseEllipsisCharacter,
+            "Wait… now",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ellipsis_in_quotes() {
-        assert_suggestion_result("\"...\"", UseEllipsisCharacter, "\"…\"");
+        assert_suggestion_result(
+            "\"...\"",
+            UseEllipsisCharacter,
+            "\"…\"",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ellipsis_after_word() {
-        assert_suggestion_result("maybe...", UseEllipsisCharacter, "maybe…");
+        assert_suggestion_result(
+            "maybe...",
+            UseEllipsisCharacter,
+            "maybe…",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ellipsis_before_word() {
-        assert_suggestion_result("...maybe", UseEllipsisCharacter, "…maybe");
+        assert_suggestion_result(
+            "...maybe",
+            UseEllipsisCharacter,
+            "…maybe",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_multiple_ellipses() {
-        assert_suggestion_result("... and ...", UseEllipsisCharacter, "… and …");
+        assert_suggestion_result(
+            "... and ...",
+            UseEllipsisCharacter,
+            "… and …",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_adjacent_to_punctuation() {
-        assert_suggestion_result("Wait...!", UseEllipsisCharacter, "Wait…!");
+        assert_suggestion_result(
+            "Wait...!",
+            UseEllipsisCharacter,
+            "Wait…!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_parenthetical_ellipsis() {
-        assert_suggestion_result("(...) ", UseEllipsisCharacter, "(…) ");
+        assert_suggestion_result(
+            "(...) ",
+            UseEllipsisCharacter,
+            "(…) ",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_unicode_ellipsis() {
-        assert_no_lints("…", UseEllipsisCharacter);
+        assert_no_lints(
+            "…",
+            UseEllipsisCharacter,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_unicode_ellipsis_in_sentence() {
-        assert_no_lints("Wait…", UseEllipsisCharacter);
+        assert_no_lints(
+            "Wait…",
+            UseEllipsisCharacter,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_four_periods() {
-        assert_no_lints("....", UseEllipsisCharacter);
+        assert_no_lints(
+            "....",
+            UseEllipsisCharacter,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_two_periods() {
-        assert_no_lints("..", UseEllipsisCharacter);
+        assert_no_lints(
+            "..",
+            UseEllipsisCharacter,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_long_period_run() {
-        assert_no_lints(".....", UseEllipsisCharacter);
+        assert_no_lints(
+            ".....",
+            UseEllipsisCharacter,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_single_three_period_ellipsis_once() {
-        assert_lint_count("Wait... now", UseEllipsisCharacter, 1);
+        assert_lint_count("Wait... now", UseEllipsisCharacter, 1, crate::languages::LanguageFamily::English);
     }
 }
