@@ -14,7 +14,9 @@ pub fn run() {
         struct Printing;
         impl TreeVisitor for Printing {
             fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-                dbg!(element.value());
+                if let Ok(value) = element.value() {
+                    dbg!(value);
+                }
 
                 TreeWalkerFlow::Continue
             }
