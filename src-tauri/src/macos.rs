@@ -23,7 +23,7 @@ pub fn main() {
 
 fn is_textarea(el: &AXUIElement) -> bool {
     if let Ok(role) = el.role() && role == "AXTextArea"{
-       true 
+       return true ;
     }
 
     false
