@@ -11,8 +11,14 @@ pub fn main() {
     struct Printing;
     impl TreeVisitor for Printing {
         fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-            if let Ok(value) = element.value() && is_textarea(element){
+            if let Ok(value) = element.value()
+                && is_textarea(element)
+            {
                 dbg!(value);
+
+                let pos_attr =
+                    AXAttribute::<CFType>::new(&CFString::from_static_string("AXPosition"));
+                dbg!(element.attribute(&pos_attr));
             }
 
             TreeWalkerFlow::Continue
@@ -22,8 +28,10 @@ pub fn main() {
 }
 
 fn is_textarea(el: &AXUIElement) -> bool {
-    if let Ok(role) = el.role() && role == "AXTextArea"{
-       return true ;
+    if let Ok(role) = el.role()
+        && role == "AXTextArea"
+    {
+        return true;
     }
 
     false
