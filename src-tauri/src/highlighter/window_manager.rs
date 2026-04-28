@@ -8,17 +8,19 @@ use super::window::Window;
 
 pub(super) struct WindowManager {
     event_loop: EventLoop<()>,
+    context: egui::Context,
 }
 
 impl WindowManager {
-    pub(super) fn new() -> Result<Self, Error> {
+    pub(super) fn new(context: egui::Context) -> Result<Self, Error> {
         Ok(Self {
             event_loop: EventLoop::new()?,
+            context,
         })
     }
 
     pub(super) fn run_window_for_each_monitor(self) -> Result<(), Error> {
-        let mut app = WindowManagerApp::default();
+        let mut app = WindowManagerApp::new(self.context);
 
         self.event_loop.set_control_flow(ControlFlow::Wait);
         let result = self.event_loop.run_app(&mut app);
@@ -31,10 +33,20 @@ impl WindowManager {
     }
 }
 
-#[derive(Default)]
 struct WindowManagerApp {
+    context: egui::Context,
     windows: Vec<Window>,
     error: Option<Error>,
+}
+
+impl WindowManagerApp {
+    fn new(context: egui::Context) -> Self {
+        Self {
+            context,
+            windows: Vec::new(),
+            error: None,
+        }
+    }
 }
 
 impl ApplicationHandler for WindowManagerApp {
@@ -44,7 +56,7 @@ impl ApplicationHandler for WindowManagerApp {
         }
 
         for monitor in event_loop.available_monitors() {
-            match Window::new(event_loop, monitor) {
+            match pollster::block_on(Window::new(event_loop, monitor, self.context.clone())) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
                     self.error = Some(error);
@@ -58,9 +70,20 @@ impl ApplicationHandler for WindowManagerApp {
     fn window_event(
         &mut self,
         event_loop: &ActiveEventLoop,
-        _window_id: WindowId,
+        window_id: WindowId,
         event: WindowEvent,
     ) {
+        if let Some(window) = self
+            .windows
+            .iter_mut()
+            .find(|window| window.id() == window_id)
+        {
+            window.handle_event(&event);
+            if matches!(event, WindowEvent::RedrawRequested) {
+                window.render();
+            }
+        }
+
         if matches!(event, WindowEvent::CloseRequested) {
             event_loop.exit();
         }

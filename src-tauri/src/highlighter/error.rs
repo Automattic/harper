@@ -9,4 +9,6 @@ pub enum Error {
     External(#[from] ExternalError),
     #[error("highlighter window creation failed: {0}")]
     Window(#[from] OsError),
+    #[error("highlighter renderer failed: {0}")]
+    Renderer(#[from] egui_wgpu::WgpuError),
 }
