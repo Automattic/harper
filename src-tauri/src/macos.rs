@@ -11,11 +11,7 @@ pub fn main() {
     struct Printing;
     impl TreeVisitor for Printing {
         fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-            if let Ok(value) = element.value() {
-                dbg!(value);
-            }
-
-            if let Ok(value) = element.role() {
+            if let Ok(value) = element.value() && is_textarea(element){
                 dbg!(value);
             }
 
@@ -25,4 +21,10 @@ pub fn main() {
     }
 }
 
-fn is_textarea(el: &AXUIElement) -> bool {}
+fn is_textarea(el: &AXUIElement) -> bool {
+    if let Ok(role) = el.role() && role == "AXTextArea"{
+       true 
+    }
+
+    false
+}
