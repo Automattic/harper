@@ -1,3 +1,4 @@
+use harper_core::DialectsEnum;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Result, bail};

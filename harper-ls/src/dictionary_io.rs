@@ -1,4 +1,3 @@
-use harper_core::dict_word_metadata::EnglishDialectFlags;
 use itertools::Itertools;
 use std::path::Path;
 
