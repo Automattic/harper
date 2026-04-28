@@ -8,7 +8,7 @@ use accessibility_sys::{
     AXValueGetValue, AXValueRef, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCGPoint,
     kAXValueTypeCGSize,
 };
-use cocoa::foundation::{NSPoint, NSSize};
+use cocoa_foundation::{NSPoint, NSSize};
 use core::ffi::c_void;
 use core::mem::MaybeUninit;
 
@@ -54,7 +54,7 @@ pub struct AxRect {
 }
 
 fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Option<T>, Error> {
-    let attr = AXAttribute::<CFType>::new(&CFString::from_static_string(name));
+    let attr = AXAttribute::<CFType>::new(&CFString::new(name));
     let value = element.attribute(&attr)?;
     let mut out = MaybeUninit::<T>::uninit();
 
