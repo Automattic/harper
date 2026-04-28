@@ -1,10 +1,5 @@
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
-        .plugin(tauri_plugin_opener::init())
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
-
     #[cfg(target_os = "macos")]
     {
         use accessibility::attribute::AXUIElementAttributes;
@@ -19,11 +14,16 @@ pub fn run() {
         struct Printing;
         impl TreeVisitor for Printing {
             fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-                dbg!(element.value().unwrap());
+                dbg!(element.value());
 
                 TreeWalkerFlow::Continue
             }
             fn exit_element(&self, element: &AXUIElement) {}
         }
     }
+
+    tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
