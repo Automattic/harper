@@ -795,7 +795,6 @@ impl LintGroup {
 
         out
     }
-
     fn new_curated_portuguese(
         #[allow(unused_variables)] dictionary: Arc<impl Dictionary + 'static>,
         #[allow(unused_variables)] dialect: PortugueseDialect,

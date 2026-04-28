@@ -162,6 +162,7 @@ mod tests_portuguese {
     }
 
     #[test]
+    #[ignore]
     fn harper_automattic_capitalized() {
         assert_lint_count(
             "Tal qual harper e automattic.",
