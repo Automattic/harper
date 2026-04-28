@@ -18,6 +18,10 @@ pub fn run() {
                     dbg!(value);
                 }
 
+                if let Ok(value) = element.role() {
+                    dbg!(value);
+                }
+
                 TreeWalkerFlow::Continue
             }
             fn exit_element(&self, element: &AXUIElement) {}
