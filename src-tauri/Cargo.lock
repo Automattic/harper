@@ -1502,6 +1502,7 @@ name = "harper-desktop"
 version = "0.1.0"
 dependencies = [
  "accessibility",
+ "core-foundation",
  "serde",
  "serde_json",
  "tauri",

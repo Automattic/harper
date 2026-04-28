@@ -1,6 +1,8 @@
-use accessibility::attribute::AXUIElementAttributes;
+use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{TreeVisitor, TreeWalker, TreeWalkerFlow};
+use core_foundation::base::{CFType, TCFType};
+use core_foundation::string::CFString;
 
 pub fn main() {
     let el = AXUIElement::application(57046);
