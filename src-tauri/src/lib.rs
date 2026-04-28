@@ -1,3 +1,5 @@
+mod highlighter;
+
 #[cfg(target_os = "macos")]
 mod macos;
 
@@ -7,6 +9,8 @@ pub fn run() {
     {
         macos::main();
     }
+
+    highlighter::Highlighter::run_window_for_each_monitor();
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())

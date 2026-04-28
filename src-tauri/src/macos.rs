@@ -8,9 +8,9 @@ use accessibility_sys::{
     AXValueGetValue, AXValueRef, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCGPoint,
     kAXValueTypeCGSize,
 };
-use objc2_foundation::{NSPoint, NSSize};
 use core::ffi::c_void;
 use core::mem::MaybeUninit;
+use objc2_foundation::{NSPoint, NSSize};
 
 pub fn main() {
     let el = AXUIElement::application(57046);
