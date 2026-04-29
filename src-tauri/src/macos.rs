@@ -2,11 +2,12 @@ use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
-    AXUIElementCopyParameterizedAttributeValue, AXValueCreate, AXValueGetType, AXValueGetValue,
-    AXValueRef, kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
+    AXIsProcessTrusted, AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid,
+    AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
+    kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
     kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess, kAXPositionAttribute,
     kAXSizeAttribute, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
-    kAXValueTypeCGSize,
+    kAXValueTypeCGSize, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
@@ -17,13 +18,21 @@ use harper_core::{
     spell::FstDictionary,
 };
 use objc2_foundation::{NSPoint, NSRect, NSSize};
-use std::{cell::RefCell, ptr};
+use std::{cell::RefCell, error::Error as StdError, ptr};
 
 use crate::lint_kind_color::lint_kind_color;
 use crate::rect::{ColoredRect, Rect};
 
 pub fn get_boxes() -> Vec<ColoredRect> {
-    let el = AXUIElement::application(57046);
+    let pid = match focused_window_pid() {
+        Ok(pid) => pid,
+        Err(err) => {
+            println!("Unable to identify focused window: {err}");
+            return Vec::new();
+        }
+    };
+
+    let el = AXUIElement::application(pid);
 
     let walker = TreeWalker::new();
     let collector = RectCollector::new();
@@ -31,6 +40,26 @@ pub fn get_boxes() -> Vec<ColoredRect> {
     walker.walk(&el, &collector);
 
     collector.unwrap_rects()
+}
+
+fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
+    let trusted = unsafe { AXIsProcessTrusted() };
+
+    if !trusted {
+        return Err("Accessibility permission is not granted".into());
+    }
+
+    let system = AXUIElement::system_wide();
+    let window = system.focused_window()?;
+
+    let mut pid: pid_t = 0;
+    let err = unsafe { AXUIElementGetPid(window.as_concrete_TypeRef(), &mut pid) };
+
+    if err != kAXErrorSuccess {
+        return Err(format!("AXUIElementGetPid failed: {}", error_string(err)).into());
+    }
+
+    Ok(pid)
 }
 
 struct RectCollector {
