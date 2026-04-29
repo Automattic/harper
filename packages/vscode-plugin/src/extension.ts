@@ -199,7 +199,7 @@ function updateDialectStatusBar(): void {
 }
 
 async function changeDialect(): Promise<void> {
-	const dialectNames = ['American', 'British', 'Australian', 'Canadian', 'Indian'];
+	const dialectNames = ['American', 'British', 'Australian', 'Canadian', 'Indian', 'Singaporean', 'Malaysian'];
 	const dialects: QuickPickItem[] = dialectNames.map((name) => ({
 		label: name,
 	}));
@@ -293,5 +293,7 @@ function getFlagAndCode(dialect: string): string[] | undefined {
 		British: ['🇬🇧', 'GB'],
 		Canadian: ['🇨🇦', 'CA'],
 		Indian: ['🇮🇳', 'IN'],
+		Singaporean: ['🇸🇬', 'SG'],
+		Malaysian: ['🇲🇾', 'MY'],
 	}[dialect];
 }

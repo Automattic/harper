@@ -1581,6 +1581,7 @@ Bugatti/ONg
 Bugzilla/Og
 Buick/ONSg
 Bujumbura/Og
+Bukit/Oʒ㎳           # Malay 'hill' in place names
 Bukhara/Og
 Bukharin/Og
 Bulawayo/Og
@@ -4212,6 +4213,7 @@ Gullah/ONgJ
 Gulliver/Og
 Gumbel/g
 Gunther/Og
+Gunung/Oʒ㎳          # Malay 'mountain' in place names
 Guofeng/g
 Gupta/Og
 Gurkha/NgJ
@@ -5348,7 +5350,9 @@ Kamasutra           # American Heritage, Chambers
 Kamchatka/Og
 Kamehameha/Og
 Kampala/Og
+Kampong/Oʒ㎳         # Malay 'village' in place names
 Kampuchea/Og        # old name of Cambodia
+Kampung/Oʒ㎳         # Malay 'village' in place names
 Kan/OgS
 Kanchenjunga/Og
 Kandahar/Og
@@ -5617,6 +5621,7 @@ Kosciusko/Og
 Kosovo/Og
 Kossuth/Og
 Kosygin/g
+Kota/Oʒ㎳            # Malay 'fort' in place names
 Kotlin/Og
 Koufax/g
 Kowloon/Og
@@ -5655,6 +5660,7 @@ Krugerrand/Ng
 Krupp/Og
 Krystal/Og
 Kshatriya/Ng
+Kuala/Oʒ㎳           # Malay 'estuary' etc. in place names
 Kublai/g
 Kubrick/Og
 Kuhn/Og
@@ -7954,6 +7960,7 @@ Parsons/Og
 Parthenon/Og
 Parthia/Og
 Pasadena/Og
+Pasar/Oʒ㎳           # Malay 'market' in place names
 Pascagoula/Og
 Pascal/OgS          # cf. pascal, PASCAL
 Pascal case/Nmg
@@ -8379,6 +8386,7 @@ Puerto/O
 Puget/Og            # - Sound
 Pugh/Og
 Pulaski/Og
+Pulau/Oʒ㎳           # Malay 'island' in place names
 Pulitzer/NOg
 Pullman/NOSg
 Punch/ONg
@@ -9225,6 +9233,7 @@ Sculley/Og
 Scylla/Og
 Scythia/Og
 Scythian/JNOg
+Sdn. Bhd./㎳         # Pty Ltd
 Se/                 # Selenium
 Seaborg/Og
 Seagate/Og          # hard drive company
@@ -9781,6 +9790,8 @@ Sundanese/NOgJ
 Sundas/Og
 Sunday/NgSV
 Sung/Og
+Sungai/Oʒ㎳          # Malay 'river' in place names
+Sungei/Oʒ㎳          # Malay 'river' in place names
 Sunkist/g
 Sunni/JNOSg
 Sunnite/JNgS
@@ -9948,6 +9959,8 @@ Tangier/OgS
 Tangshan/Og
 Tania/Og
 Tanisha/Og
+Tanjong/Oʒ㎳         # Malay 'cape/promontory' in place names
+Tanjung/Oʒ㎳         # Malay 'cape/promontory' in place names
 Tanner/Og
 Tannhauser/g
 Tantalus/Og
@@ -10000,7 +10013,9 @@ Telemann/g
 Teletype
 Tell/Og>
 Teller/Og
+Telok/Oʒ㎳           # Malay 'bay' in place names
 Telugu/ONg
+Teluk/Oʒ㎳           # Malay 'bay' in place names
 Temecula/Og
 Tempe/O
 Templar/NgS
@@ -10438,6 +10453,7 @@ Ukrainian/JNOSg
 Ulaanbaatar/Og
 Ulster/ONg
 Ultrasuede/Ng
+Ulu/Oʒ㎳             # Malay word used in place names
 Uluru/Og
 Ulyanovsk/Og
 Ulysses/Og
@@ -17032,6 +17048,7 @@ cement/~NwgSVd>GZ
 cementer/Ng
 cementum/Ng
 cemetery/~NSg
+cendol/Nmg㎳         # a dessert
 cenobite/NgS
 cenobitic/J
 cenotaph/~Ng
@@ -17168,6 +17185,7 @@ challenge/~NwSgVd>GZ
 challenged/~JVtTU
 challenger/~NgS
 challis/Ng
+cham/Nmgʒ㎳          # mix of coffee and tea
 chamber/~NSgVdG
 chamberlain/~NgS
 chambermaid/NgS
@@ -17387,6 +17405,7 @@ chemo/NmgV
 chemotherapeutic/JN
 chemotherapy/~Ng
 chemurgy/Ng
+chendol/Nmgʒ        # a dessert
 chenille/Ng
 cheque/NgSJ>GdZ!@_₹
 chequebook/NgS!@_₹
@@ -31420,6 +31439,7 @@ karmic/J
 kart/~NgSV
 katakana/~N
 katydid/NSg
+kaya/Nmgʒ㎳          # coconut jam
 kayak/NSgVdG
 kayaker/NgS
 kayaking/~NgV
@@ -31709,6 +31729,7 @@ kookaburra/NSg
 kookiness/Nmg
 kooky/J^>pN
 kopeck/NgS
+kopitiam/NSgʒ㎳      # traditional coffee shop
 korma/Nmg
 kosher/~JVdSG
 kowtow/VGdSNg
@@ -31820,6 +31841,7 @@ lakefront/JNS
 lakeside/~NJ
 lakh/N0g₹
 lakhs/N9₹
+laksa/Nmgʒ㎳         # a noodle soup dish
 lam/~VSNg
 lama/~NgS
 lamasery/NSg
@@ -32803,6 +32825,7 @@ loincloths/N9
 loiter/VGd>SNZ
 loiterer/Ng
 loitering/V6Ng
+lok-lok/Nmgʒ㎳       # a food
 lolcat/NSg
 loll/VdSG
 lollipop/NSg
@@ -32878,6 +32901,7 @@ lopsidedness/Nmg
 loquacious/JYp
 loquaciousness/Nmg
 loquacity/Nmg
+lor mee/Nmgʒ㎳       # noodle dish
 lord/~NgSVdGY
 lordliness/Nmg
 lordly/J^>p
@@ -33364,6 +33388,7 @@ malty/J^>
 malware/~Nmg
 mam/~NS
 mama/~NgS
+mamak/ngSʒ㎳         # Indian muslim
 mamba/~NSg
 mambo/~NSgVGd
 mamma/Ng
@@ -33875,6 +33900,7 @@ medley/~NgSV
 medulla/NSg
 medusa/~N
 medusae/9
+mee/Nmgʒ㎳           # noodles
 meed/NgV
 meek/~JY^>pV
 meekness/Ng
@@ -48803,6 +48829,7 @@ teetotal/J>NVZ
 teetotaler/Ng
 teetotalism/Ng
 teetotaller/NgS!@_₹
+teh tarik/NmgS      # 'pulled tea'
 tektite/NSg
 tel/~N
 # tele              # prefixes that are not also words in their own right don't belong in the dictionary
@@ -53998,6 +54025,7 @@ JSONP/Og
 JVM/Sg              # Java virtual machine
 JWT/Ng              # JSON Web Token
 Jacoco/Sg
+Jalan/Oʒ㎳           # Malay 'road/street' in place names
 Japonic/OmgJ        # linguistics
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
