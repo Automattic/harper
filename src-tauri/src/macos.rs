@@ -3,7 +3,7 @@ use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use core_foundation::base::{CFType, TCFType};
 use core_foundation::string::CFString;
-use std::cell::Cell;
+use std::cell::RefCell;
 
 use accessibility_sys::{
     AXValueGetValue, AXValueRef, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCGPoint,
@@ -27,7 +27,7 @@ pub fn get_boxes() -> Vec<Rect> {
 }
 
 struct RectCollector {
-    rects: Cell<Vec<Rect>>,
+    rects: RefCell<Vec<Rect>>,
 }
 
 impl TreeVisitor for RectCollector {
@@ -39,7 +39,8 @@ impl TreeVisitor for RectCollector {
 
             if let Ok(Some(rect)) = element_rect(&element) {
                 dbg!(rect);
-                self.rects.update(|i| i.push(rect));
+                let mut rects = self.rects.borrow_mut();
+                rects.push(rect);
             }
         }
 
@@ -51,7 +52,7 @@ impl TreeVisitor for RectCollector {
 impl RectCollector {
     pub fn new() -> Self {
         Self {
-            rects: Cell::new(Vec::new()),
+            rects: RefCell::new(Vec::new()),
         }
     }
 

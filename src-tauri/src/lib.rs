@@ -41,7 +41,7 @@ pub fn run_tauri() {
 pub fn run_highlighter() {
     if let Err(error) = Highlighter::new(|| {
         #[cfg(target_os = "macos")]
-        return macos::get_boxes();
+        return Some(macos::get_boxes());
 
         None
     })
