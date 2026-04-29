@@ -28,6 +28,7 @@ egui = "0.34.1"
 egui-winit = "0.34.1"
 egui-wgpu = { version = "0.34.1", features = ["winit"] }
 pollster = "0.4.0"
+clap = { version = "4.6.1", features = ["derive"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
