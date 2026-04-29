@@ -88,6 +88,10 @@ impl Window {
         self.inner.id()
     }
 
+    pub fn request_redraw(&self) {
+        self.inner.request_redraw();
+    }
+
     pub fn handle_event(&mut self, event: &WindowEvent) {
         let response = self.egui_state.on_window_event(&self.inner, event);
 
