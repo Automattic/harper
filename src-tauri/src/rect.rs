@@ -1,3 +1,5 @@
+use crate::color::Color;
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rect {
     pub x: f64,
@@ -13,6 +15,27 @@ impl Rect {
             y,
             width,
             height,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct ColoredRect {
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64,
+    pub color: Color,
+}
+
+impl ColoredRect {
+    pub fn new(x: f64, y: f64, width: f64, height: f64, color: Color) -> Self {
+        Self {
+            x,
+            y,
+            width,
+            height,
+            color,
         }
     }
 }

@@ -2,6 +2,10 @@ use self::highlighter::Highlighter;
 use clap::{Parser, Subcommand};
 use std::time::Duration;
 
+use crate::color::Color;
+use crate::rect::{ColoredRect, Rect};
+
+pub mod color;
 pub mod highlighter;
 pub mod rect;
 
@@ -38,10 +42,32 @@ pub fn run_tauri() {
 
 pub fn run_highlighter() {
     if let Err(error) = Highlighter::new(|| {
-        #[cfg(target_os = "macos")]
-        return Some(macos::get_boxes());
+        let rects: Vec<Rect> = {
+            #[cfg(target_os = "macos")]
+            {
+                macos::get_boxes()
+            }
 
-        None
+            #[cfg(not(target_os = "macos"))]
+            {
+                Vec::new()
+            }
+        };
+
+        Some(
+            rects
+                .into_iter()
+                .map(|rect| {
+                    ColoredRect::new(
+                        rect.x,
+                        rect.y,
+                        rect.width,
+                        rect.height,
+                        Color::new(255, 255, 0),
+                    )
+                })
+                .collect::<Vec<_>>(),
+        )
     })
     .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)

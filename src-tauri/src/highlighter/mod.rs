@@ -8,11 +8,11 @@ use std::time::Duration;
 pub use error::Error;
 use window_manager::WindowManager;
 
-use crate::rect::Rect;
+use crate::rect::ColoredRect;
 
 const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
 
-pub type ReadRects = Box<dyn FnMut() -> Option<Vec<Rect>>>;
+pub type ReadRects = Box<dyn FnMut() -> Option<Vec<ColoredRect>>>;
 
 /// Public entry point for the screen highlighter system.
 ///
@@ -25,7 +25,9 @@ pub struct Highlighter {
 }
 
 impl Highlighter {
-    pub fn new(read_rects: impl FnMut() -> Option<Vec<Rect>> + 'static) -> Result<Self, Error> {
+    pub fn new(
+        read_rects: impl FnMut() -> Option<Vec<ColoredRect>> + 'static,
+    ) -> Result<Self, Error> {
         let context = egui::Context::default();
 
         Ok(Self {
@@ -54,7 +56,7 @@ impl Highlighter {
         window_manager.run_window_for_each_monitor()
     }
 
-    pub fn set_rects(&mut self, rects: Vec<Rect>) {
+    pub fn set_rects(&mut self, rects: Vec<ColoredRect>) {
         self.window_manager.set_rects(rects);
     }
 }

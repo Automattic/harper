@@ -1,4 +1,4 @@
-use crate::rect::Rect;
+use crate::rect::ColoredRect;
 
 /// Stores highlighter-specific drawing state and renders it into an egui frame.
 ///
@@ -6,17 +6,17 @@ use crate::rect::Rect;
 /// into that plumbing. This keeps future highlight rectangles, styling, and animation state out of
 /// the platform/rendering infrastructure.
 pub struct RenderState {
-    rects: Vec<Rect>,
+    rects: Vec<ColoredRect>,
 }
 
 impl RenderState {
-    pub fn new(rects: Vec<Rect>) -> Self {
+    pub fn new(rects: Vec<ColoredRect>) -> Self {
         let mut state = Self { rects: Vec::new() };
         state.set_rects(rects);
         state
     }
 
-    pub fn set_rects(&mut self, rects: Vec<Rect>) {
+    pub fn set_rects(&mut self, rects: Vec<ColoredRect>) {
         self.rects = rects;
     }
 
@@ -28,7 +28,12 @@ impl RenderState {
                     egui::vec2(rect.width as f32, rect.height as f32),
                 ),
                 0.0,
-                egui::Color32::from_rgba_premultiplied(255, 255, 0, 96),
+                egui::Color32::from_rgba_premultiplied(
+                    rect.color.r,
+                    rect.color.g,
+                    rect.color.b,
+                    48,
+                ),
             );
         }
     }
