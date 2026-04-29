@@ -4810,9 +4810,11 @@
 							}
 						},
 						{
-							"Bool": "TheLastDays",
-							"state": true,
-							"label": "The Last Days"
+							"Bool": {
+								"name": "TheLastDays",
+								"state": true,
+								"label": "The Last Days"
+							}
 						}
 					]
 				}
