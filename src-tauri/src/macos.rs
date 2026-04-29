@@ -23,7 +23,7 @@ pub fn get_boxes() -> Vec<Rect> {
 
     walker.walk(&el, &collector);
 
-    collector.unwrap_rects();
+    collector.unwrap_rects()
 }
 
 struct RectCollector {

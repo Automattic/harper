@@ -41,9 +41,9 @@ pub fn run_tauri() {
 pub fn run_highlighter() {
     if let Err(error) = Highlighter::new(|| {
         #[cfg(target_os = "macos")]
-        return macos::get_boxes().unwrap();
+        return macos::get_boxes();
 
-        vec![]
+        None
     })
     .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(100)))
     .and_then(Highlighter::run_window_for_each_monitor)
