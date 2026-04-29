@@ -199,7 +199,15 @@ function updateDialectStatusBar(): void {
 }
 
 async function changeDialect(): Promise<void> {
-	const dialectNames = ['American', 'British', 'Australian', 'Canadian', 'Indian', 'Singaporean', 'Malaysian'];
+	const dialectNames = [
+		'American',
+		'British',
+		'Australian',
+		'Canadian',
+		'Indian',
+		'Singaporean',
+		'Malaysian',
+	];
 	const dialects: QuickPickItem[] = dialectNames.map((name) => ({
 		label: name,
 	}));
