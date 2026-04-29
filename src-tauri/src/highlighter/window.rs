@@ -10,8 +10,14 @@ use winit::monitor::MonitorHandle;
 use winit::window::{Window as WinitWindow, WindowButtons, WindowId, WindowLevel};
 
 use super::Error;
+use super::render_state::RenderState;
 
-pub(super) struct Window {
+/// A transparent click-through overlay window for one monitor.
+///
+/// `Window` owns the native winit window plus egui/wgpu integration required to render into it. It
+/// deliberately does not own highlighter drawing decisions; those are supplied by `RenderState`
+/// during each redraw.
+pub struct Window {
     inner: Arc<WinitWindow>,
     egui_state: egui_winit::State,
     painter: Painter,
@@ -19,7 +25,7 @@ pub(super) struct Window {
 }
 
 impl Window {
-    pub(super) async fn new(
+    pub async fn new(
         event_loop: &ActiveEventLoop,
         monitor: MonitorHandle,
         context: egui::Context,
@@ -78,11 +84,11 @@ impl Window {
         })
     }
 
-    pub(super) fn id(&self) -> WindowId {
+    pub fn id(&self) -> WindowId {
         self.inner.id()
     }
 
-    pub(super) fn handle_event(&mut self, event: &WindowEvent) {
+    pub fn handle_event(&mut self, event: &WindowEvent) {
         let response = self.egui_state.on_window_event(&self.inner, event);
 
         if response.repaint {
@@ -99,15 +105,11 @@ impl Window {
         }
     }
 
-    pub(super) fn render(&mut self) {
+    pub fn render(&mut self, render_state: &mut RenderState) {
         let context = self.egui_state.egui_ctx().clone();
         let input = self.egui_state.take_egui_input(&self.inner);
         let output = context.run_ui(input, |ui| {
-            ui.painter().rect_filled(
-                egui::Rect::from_min_size(egui::pos2(150.0, 150.0), egui::vec2(200.0, 200.0)),
-                0.0,
-                egui::Color32::from_rgba_premultiplied(255, 255, 0, 96),
-            );
+            render_state.render(ui);
         });
 
         self.egui_state

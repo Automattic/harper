@@ -12,6 +12,8 @@ use core::ffi::c_void;
 use core::mem::MaybeUninit;
 use objc2_foundation::{NSPoint, NSSize};
 
+use crate::rect::Rect;
+
 pub fn main() {
     let el = AXUIElement::application(57046);
 
@@ -45,14 +47,6 @@ fn is_textarea(el: &AXUIElement) -> bool {
     false
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct AxRect {
-    pub x: f64,
-    pub y: f64,
-    pub width: f64,
-    pub height: f64,
-}
-
 fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Option<T>, Error> {
     let attr = AXAttribute::<CFType>::new(&CFString::new(name));
     let value = element.attribute(&attr)?;
@@ -69,7 +63,7 @@ fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Opt
     Ok(ok.then(|| unsafe { out.assume_init() }))
 }
 
-pub fn element_rect(element: &AXUIElement) -> Result<Option<AxRect>, Error> {
+pub fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
     let Some(position) = ax_value::<NSPoint>(element, kAXPositionAttribute, kAXValueTypeCGPoint)?
     else {
         return Ok(None);
@@ -79,7 +73,7 @@ pub fn element_rect(element: &AXUIElement) -> Result<Option<AxRect>, Error> {
         return Ok(None);
     };
 
-    Ok(Some(AxRect {
+    Ok(Some(Rect {
         x: position.x,
         y: position.y,
         width: size.width,

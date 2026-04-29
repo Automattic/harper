@@ -4,23 +4,36 @@ use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
 use super::Error;
+use super::render_state::RenderState;
 use super::window::Window;
+use crate::rect::Rect;
 
-pub(super) struct WindowManager {
+/// Owns the winit event loop and the overlay windows created for each monitor.
+///
+/// `WindowManager` is intentionally separate from `Highlighter` because winit event-loop ownership
+/// is a process-level concern. It also keeps monitor enumeration, native window lifecycle, and event
+/// dispatch out of the public highlighter API.
+pub struct WindowManager {
     event_loop: EventLoop<()>,
     context: egui::Context,
+    rects: Vec<Rect>,
 }
 
 impl WindowManager {
-    pub(super) fn new(context: egui::Context) -> Result<Self, Error> {
+    pub fn new(context: egui::Context) -> Result<Self, Error> {
         Ok(Self {
             event_loop: EventLoop::new()?,
             context,
+            rects: Vec::new(),
         })
     }
 
-    pub(super) fn run_window_for_each_monitor(self) -> Result<(), Error> {
-        let mut app = WindowManagerApp::new(self.context);
+    pub fn set_rects(&mut self, rects: Vec<Rect>) {
+        self.rects = rects;
+    }
+
+    pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
+        let mut app = WindowManagerApp::new(self.context, self.rects);
 
         self.event_loop.set_control_flow(ControlFlow::Wait);
         let result = self.event_loop.run_app(&mut app);
@@ -36,14 +49,16 @@ impl WindowManager {
 struct WindowManagerApp {
     context: egui::Context,
     windows: Vec<Window>,
+    render_state: RenderState,
     error: Option<Error>,
 }
 
 impl WindowManagerApp {
-    fn new(context: egui::Context) -> Self {
+    fn new(context: egui::Context, rects: Vec<Rect>) -> Self {
         Self {
             context,
             windows: Vec::new(),
+            render_state: RenderState::new(rects),
             error: None,
         }
     }
@@ -80,7 +95,7 @@ impl ApplicationHandler for WindowManagerApp {
         {
             window.handle_event(&event);
             if matches!(event, WindowEvent::RedrawRequested) {
-                window.render();
+                window.render(&mut self.render_state);
             }
         }
 

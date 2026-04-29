@@ -1,4 +1,9 @@
+use self::highlighter::Highlighter;
+
 pub mod highlighter;
+pub mod rect;
+
+use rect::Rect;
 
 #[cfg(target_os = "macos")]
 mod macos;
@@ -10,9 +15,10 @@ pub fn run() {
         macos::main();
     }
 
-    if let Err(error) = highlighter::Highlighter::new()
-        .and_then(highlighter::Highlighter::run_window_for_each_monitor)
-    {
+    if let Err(error) = Highlighter::new().and_then(|mut h| {
+        h.set_rects(vec![Rect::new(100., 100., 100., 100.)]);
+        h.run_window_for_each_monitor()
+    }) {
         eprintln!("failed to run highlighter: {error}");
     }
 
