@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Span, Token, TokenStringExt,
+    Span, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     linting::{
         ExprLinter, Lint, LintKind, Suggestion,
@@ -62,7 +62,7 @@ impl ExprLinter for NounCountability {
         if toks.len() != 3
             || followed_by_hyphen(ctx)
             || followed_by_word(ctx, |t| {
-                t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
+                t.kind.is_noun() || t.kind.is_oov() || t.eq_str(src, "and")
             })
         {
             return None;
