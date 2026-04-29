@@ -2,12 +2,11 @@ use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
-    AXIsProcessTrusted, AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid,
-    AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
-    kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
-    kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess, kAXPositionAttribute,
-    kAXSizeAttribute, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
-    kAXValueTypeCGSize, pid_t,
+    AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
+    AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
+    kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
+    kAXErrorSuccess, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCFRange,
+    kAXValueTypeCGPoint, kAXValueTypeCGRect, kAXValueTypeCGSize, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
@@ -43,12 +42,6 @@ pub fn get_boxes() -> Vec<ColoredRect> {
 }
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
-    let trusted = unsafe { AXIsProcessTrusted() };
-
-    if !trusted {
-        return Err("Accessibility permission is not granted".into());
-    }
-
     let system = AXUIElement::system_wide();
     let window = system.focused_window()?;
 
