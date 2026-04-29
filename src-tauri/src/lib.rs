@@ -45,7 +45,7 @@ pub fn run_highlighter() {
 
         None
     })
-    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(100)))
+    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
