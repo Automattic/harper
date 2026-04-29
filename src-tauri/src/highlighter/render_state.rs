@@ -32,6 +32,7 @@ impl RenderState {
                 rect.color.b,
                 24,
             );
+
             let underline_color = egui::Color32::from_rgba_premultiplied(
                 rect.color.r,
                 rect.color.g,

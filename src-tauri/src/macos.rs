@@ -19,9 +19,10 @@ use harper_core::{
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, ptr};
 
-use crate::rect::Rect;
+use crate::lint_kind_color::lint_kind_color;
+use crate::rect::{ColoredRect, Rect};
 
-pub fn get_boxes() -> Vec<Rect> {
+pub fn get_boxes() -> Vec<ColoredRect> {
     let el = AXUIElement::application(57046);
 
     let walker = TreeWalker::new();
@@ -33,7 +34,7 @@ pub fn get_boxes() -> Vec<Rect> {
 }
 
 struct RectCollector {
-    rects: RefCell<Vec<Rect>>,
+    rects: RefCell<Vec<ColoredRect>>,
     linter: RefCell<LintGroup>,
 }
 
@@ -60,7 +61,13 @@ impl TreeVisitor for RectCollector {
                     lint.span.len() as isize,
                 ) {
                     dbg!(rect);
-                    rects.push(rect);
+                    rects.push(ColoredRect::new(
+                        rect.x,
+                        rect.y,
+                        rect.width,
+                        rect.height,
+                        lint_kind_color(lint.lint_kind),
+                    ));
                 }
             }
         }
@@ -81,7 +88,7 @@ impl RectCollector {
         }
     }
 
-    pub fn unwrap_rects(self) -> Vec<Rect> {
+    pub fn unwrap_rects(self) -> Vec<ColoredRect> {
         self.rects.into_inner()
     }
 }
