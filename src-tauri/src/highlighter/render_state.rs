@@ -26,14 +26,10 @@ impl RenderState {
                 egui::pos2(rect.x as f32, rect.y as f32),
                 egui::vec2(rect.width as f32, rect.height as f32),
             );
-            let fill_color = egui::Color32::from_rgba_premultiplied(
-                rect.color.r,
-                rect.color.g,
-                rect.color.b,
-                24,
-            );
+            let fill_color =
+                egui::Color32::from_rgba_unmultiplied(rect.color.r, rect.color.g, rect.color.b, 24);
 
-            let underline_color = egui::Color32::from_rgba_premultiplied(
+            let underline_color = egui::Color32::from_rgba_unmultiplied(
                 rect.color.r,
                 rect.color.g,
                 rect.color.b,
