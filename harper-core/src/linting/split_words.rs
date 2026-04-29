@@ -205,7 +205,8 @@ fn should_defer_to_spellcheck(
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints, assert_suggestion_result,
+        assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints,
+        assert_suggestion_result,
     };
 
     use super::SplitWords;
