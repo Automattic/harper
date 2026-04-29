@@ -39,9 +39,14 @@ pub fn run_tauri() {
 }
 
 pub fn run_highlighter() {
-    if let Err(error) = Highlighter::new(|| Some(vec![Rect::new(100., 100., 100., 100.)]))
-        .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(100)))
-        .and_then(Highlighter::run_window_for_each_monitor)
+    if let Err(error) = Highlighter::new(|| {
+        #[cfg(target_os = "macos")]
+        return macos::get_boxes().unwrap();
+
+        vec![]
+    })
+    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(100)))
+    .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
     }

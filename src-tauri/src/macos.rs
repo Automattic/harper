@@ -3,6 +3,7 @@ use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use core_foundation::base::{CFType, TCFType};
 use core_foundation::string::CFString;
+use std::cell::Cell;
 
 use accessibility_sys::{
     AXValueGetValue, AXValueRef, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCGPoint,
@@ -14,26 +15,54 @@ use objc2_foundation::{NSPoint, NSSize};
 
 use crate::rect::Rect;
 
-pub fn main() {
+pub fn get_boxes() -> Vec<Rect> {
     let el = AXUIElement::application(57046);
 
     let walker = TreeWalker::new();
-    walker.walk(&el, &Printing);
+    let collector = RectCollector::new();
 
-    struct Printing;
-    impl TreeVisitor for Printing {
-        fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-            if let Ok(value) = element.value()
-                && is_textarea(element)
-            {
-                dbg!(value);
+    walker.walk(&el, &collector);
 
-                dbg!(element_rect(&element));
+    collector.unwrap_rects();
+}
+
+struct RectCollector {
+    rects: Cell<Vec<Rect>>,
+}
+
+impl TreeVisitor for RectCollector {
+    fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
+        if let Ok(value) = element.value()
+            && is_textarea(element)
+        {
+            dbg!(value);
+
+            if let Ok(Some(rect)) = element_rect(&element) {
+                dbg!(rect);
+                self.rects.update(|i| i.push(rect));
             }
-
-            TreeWalkerFlow::Continue
         }
-        fn exit_element(&self, element: &AXUIElement) {}
+
+        TreeWalkerFlow::Continue
+    }
+    fn exit_element(&self, element: &AXUIElement) {}
+}
+
+impl RectCollector {
+    pub fn new() -> Self {
+        Self {
+            rects: Cell::new(Vec::new()),
+        }
+    }
+
+    pub fn unwrap_rects(self) -> Vec<Rect> {
+        self.rects.into_inner()
+    }
+}
+
+impl Default for RectCollector {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
