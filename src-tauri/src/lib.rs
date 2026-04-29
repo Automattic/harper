@@ -5,8 +5,6 @@ use std::time::Duration;
 pub mod highlighter;
 pub mod rect;
 
-use rect::Rect;
-
 #[cfg(target_os = "macos")]
 mod macos;
 

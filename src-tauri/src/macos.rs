@@ -1,17 +1,23 @@
 use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
-use core_foundation::base::{CFType, TCFType};
-use core_foundation::string::CFString;
-use std::cell::RefCell;
-
 use accessibility_sys::{
-    AXValueGetValue, AXValueRef, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCGPoint,
+    AXUIElementCopyParameterizedAttributeValue, AXValueCreate, AXValueGetType, AXValueGetValue,
+    AXValueRef, kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
+    kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess, kAXPositionAttribute,
+    kAXSizeAttribute, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
     kAXValueTypeCGSize,
 };
-use core::ffi::c_void;
-use core::mem::MaybeUninit;
-use objc2_foundation::{NSPoint, NSSize};
+use core::{ffi::c_void, mem::MaybeUninit};
+use core_foundation::base::{CFRange, CFType, TCFType};
+use core_foundation::string::CFString;
+use harper_core::{
+    Dialect, Document,
+    linting::{LintGroup, Linter},
+    spell::FstDictionary,
+};
+use objc2_foundation::{NSPoint, NSRect, NSSize};
+use std::{cell::RefCell, ptr};
 
 use crate::rect::Rect;
 
@@ -28,6 +34,7 @@ pub fn get_boxes() -> Vec<Rect> {
 
 struct RectCollector {
     rects: RefCell<Vec<Rect>>,
+    linter: RefCell<LintGroup>,
 }
 
 impl TreeVisitor for RectCollector {
@@ -35,12 +42,26 @@ impl TreeVisitor for RectCollector {
         if let Ok(value) = element.value()
             && is_textarea(element)
         {
-            dbg!(value);
+            dbg!(&value);
 
-            if let Ok(Some(rect)) = element_rect(&element) {
-                dbg!(rect);
-                let mut rects = self.rects.borrow_mut();
-                rects.push(rect);
+            let string =
+                unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
+
+            let mut linter = self.linter.borrow_mut();
+            let mut rects = self.rects.borrow_mut();
+
+            let doc = Document::new_markdown_default_curated(&string);
+            let lints = linter.lint(&doc);
+
+            for lint in &lints {
+                if let Ok(Some(rect)) = element_rect_for_text_range(
+                    &element,
+                    lint.span.start as isize,
+                    lint.span.len() as isize,
+                ) {
+                    dbg!(rect);
+                    rects.push(rect);
+                }
             }
         }
 
@@ -53,6 +74,10 @@ impl RectCollector {
     pub fn new() -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
+            linter: RefCell::new(LintGroup::new_curated(
+                FstDictionary::curated(),
+                Dialect::American,
+            )),
         }
     }
 
@@ -108,5 +133,80 @@ pub fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
         y: position.y,
         width: size.width,
         height: size.height,
+    }))
+}
+
+pub fn element_rect_for_text_range(
+    element: &AXUIElement,
+    start_index: isize,
+    length: isize,
+) -> Result<Option<Rect>, Error> {
+    let range = CFRange {
+        location: start_index,
+        length,
+    };
+
+    let range_value_ref = unsafe {
+        AXValueCreate(
+            kAXValueTypeCFRange,
+            &range as *const CFRange as *const c_void,
+        )
+    };
+
+    if range_value_ref.is_null() {
+        return Err(Error::Ax(kAXErrorIllegalArgument));
+    }
+
+    let range_value = unsafe { CFType::wrap_under_create_rule(range_value_ref as _) };
+    let attr = CFString::new(kAXBoundsForRangeParameterizedAttribute);
+    let mut value = ptr::null();
+
+    let error = unsafe {
+        AXUIElementCopyParameterizedAttributeValue(
+            element.as_concrete_TypeRef(),
+            attr.as_concrete_TypeRef(),
+            range_value.as_CFTypeRef(),
+            &mut value,
+        )
+    };
+
+    match error {
+        kAXErrorSuccess => {}
+        kAXErrorNoValue | kAXErrorParameterizedAttributeUnsupported => return Ok(None),
+        error => return Err(Error::Ax(error)),
+    }
+
+    if value.is_null() {
+        return Ok(None);
+    }
+
+    let value = unsafe { CFType::wrap_under_create_rule(value) };
+    let ax_value = value.as_CFTypeRef() as AXValueRef;
+
+    if unsafe { AXValueGetType(ax_value) } != kAXValueTypeCGRect {
+        return Ok(None);
+    }
+
+    let mut rect = MaybeUninit::<NSRect>::uninit();
+
+    let ok = unsafe {
+        AXValueGetValue(
+            ax_value,
+            kAXValueTypeCGRect,
+            rect.as_mut_ptr() as *mut c_void,
+        )
+    };
+
+    if !ok {
+        return Ok(None);
+    }
+
+    let rect = unsafe { rect.assume_init() };
+
+    Ok(Some(Rect {
+        x: rect.origin.x,
+        y: rect.origin.y,
+        width: rect.size.width,
+        height: rect.size.height,
     }))
 }
