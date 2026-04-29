@@ -4239,6 +4239,7 @@ Gypsy/NOSgJ
 H-1B/NgS
 HBO/Og
 HBase/g
+HDB/ONgSʒ           # singapore public housing
 HDD/N
 HDMI/O
 HDTV/N
@@ -5020,6 +5021,7 @@ Izmir/Og
 Izod/g
 Izvestia/g
 J/NOgd
+JB/Ogʒ㎳             # Johor Bahru
 JCS/O
 JD/NO
 JDM
@@ -5324,6 +5326,8 @@ KFC/Og              # company
 KGB/Og              # Soviet intelligence agency
 KIA/NJ              # killed in action
 KKK/Og
+KL/Ogʒ㎳            # Kuala Lumpur
+KLCC/Ogʒ㎳          # Kuala Lumpur city centre
 KO/NgV
 KP/N
 KS/ONV              # US state (Kansas)
@@ -5722,6 +5726,7 @@ LOGO
 LP/NOg
 LPG/N
 LPN/NSg
+LRT/Ogʒ㎳            # light rail transit
 LSAT
 LSD/Ng
 LVN/N
@@ -6267,6 +6272,7 @@ MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
 MRI/NgV             # magnetic resonance imaging
+MRT/Ogʒ㎳            # mass rapid transit
 MS/NOg              # US state (Mississippi)
 MSG/NOg             # flavour enhancer
 MSRP/NSg
@@ -32917,7 +32923,7 @@ lorebook/NgS
 lorgnette/NSg
 loris/NgS
 lorn/JV
-lorry/~NSgV
+lorry/~NSgV!ʒ㎳
 lose/~VbG>SZz
 loser/~NgS
 losing/~VJNmg
