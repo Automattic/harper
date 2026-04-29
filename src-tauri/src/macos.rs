@@ -2,11 +2,12 @@ use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
-    AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
-    AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
-    kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
-    kAXErrorSuccess, kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCFRange,
-    kAXValueTypeCGPoint, kAXValueTypeCGRect, kAXValueTypeCGSize, pid_t,
+    AXUIElementCopyAttributeValue, AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid,
+    AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
+    kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
+    kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess, kAXFocusedApplicationAttribute,
+    kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCFRange, kAXValueTypeCGPoint,
+    kAXValueTypeCGRect, kAXValueTypeCGSize, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
@@ -43,16 +44,46 @@ pub fn get_boxes() -> Vec<ColoredRect> {
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     let system = AXUIElement::system_wide();
-    let window = system.focused_window()?;
+    let app = ax_element_attribute(&system, kAXFocusedApplicationAttribute)?;
 
     let mut pid: pid_t = 0;
-    let err = unsafe { AXUIElementGetPid(window.as_concrete_TypeRef(), &mut pid) };
+    let err = unsafe { AXUIElementGetPid(app.as_concrete_TypeRef(), &mut pid) };
 
     if err != kAXErrorSuccess {
         return Err(format!("AXUIElementGetPid failed: {}", error_string(err)).into());
     }
 
     Ok(pid)
+}
+
+fn ax_element_attribute(
+    element: &AXUIElement,
+    name: &str,
+) -> Result<AXUIElement, Box<dyn StdError>> {
+    let attr = CFString::new(name);
+    let mut value = ptr::null();
+
+    let err = unsafe {
+        AXUIElementCopyAttributeValue(
+            element.as_concrete_TypeRef(),
+            attr.as_concrete_TypeRef(),
+            &mut value,
+        )
+    };
+
+    if err != kAXErrorSuccess {
+        return Err(format!(
+            "AXUIElementCopyAttributeValue failed: {}",
+            error_string(err)
+        )
+        .into());
+    }
+
+    if value.is_null() {
+        return Err(format!("AXUIElementCopyAttributeValue returned null for {name}").into());
+    }
+
+    Ok(unsafe { AXUIElement::wrap_under_create_rule(value as _) })
 }
 
 struct RectCollector {
