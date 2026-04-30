@@ -3,3 +3,71 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source "./**/*.{svelte,ts}";
+
+.harper-editor {
+	--harper-editor-font-size: inherit;
+}
+
+.harper-editor *,
+.harper-editor *::before,
+.harper-editor *::after {
+	box-sizing: border-box;
+}
+
+.harper-editor button,
+.harper-editor input,
+.harper-editor select {
+	font: inherit;
+}
+
+.harper-editor button {
+	cursor: default;
+}
+
+.harper-editor button:focus-visible,
+.harper-editor select:focus-visible {
+	outline: 2px solid var(--color-blue-600);
+	outline-offset: 2px;
+}
+
+.harper-editor-quill-container {
+	display: flex;
+	flex: 1;
+	width: 100%;
+	min-height: 100%;
+}
+
+.harper-editor-surface {
+	flex: 1;
+	min-height: 100%;
+}
+
+.harper-editor-surface,
+.harper-editor-surface.ql-editor {
+	padding: 0;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: inherit;
+	font-family: var(--harper-editor-font-family);
+	font-size: var(--harper-editor-font-size);
+	line-height: 1.5;
+	letter-spacing: 0;
+	white-space: pre-wrap;
+}
+
+.harper-editor-surface:focus,
+.harper-editor-surface:focus-visible {
+	outline: 0;
+}
+
+.harper-editor-surface p,
+.harper-editor-surface.ql-editor p {
+	margin: 0;
+	line-height: inherit;
+}
+
+.harper-editor-surface p:last-child,
+.harper-editor-surface.ql-editor p:last-child {
+	margin-bottom: 0;
+}
