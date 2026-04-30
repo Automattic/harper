@@ -8,6 +8,7 @@ use crate::{
 const CARD_WIDTH: f32 = 340.0;
 const CARD_HEIGHT: f32 = 105.0;
 const CARD_OFFSET_Y: f32 = 8.0;
+const CARD_PADDING: i8 = 12;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum HitTarget {
@@ -148,7 +149,7 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
                     egui::Color32::from_rgba_unmultiplied(255, 255, 255, 34),
                 ))
                 .corner_radius(egui::CornerRadius::same(14))
-                .inner_margin(egui::Margin::same(12))
+                .inner_margin(egui::Margin::same(CARD_PADDING))
                 .shadow(egui::Shadow {
                     offset: [0, 10],
                     blur: 22,
@@ -156,9 +157,11 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
                     color: egui::Color32::from_rgba_unmultiplied(0, 0, 0, 90),
                 })
                 .show(ui, |ui| {
-                    ui.set_width(CARD_WIDTH);
-                    ui.set_min_height(CARD_HEIGHT);
-                    ui.set_max_height(CARD_HEIGHT);
+                    let content_size = card_content_size();
+
+                    ui.set_width(content_size.x);
+                    ui.set_min_height(content_size.y);
+                    ui.set_max_height(content_size.y);
                     ui.spacing_mut().item_spacing = egui::vec2(8.0, 10.0);
 
                     ui.horizontal(|ui| {
@@ -289,6 +292,14 @@ fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
         ),
         egui::vec2(CARD_WIDTH, CARD_HEIGHT),
     )
+}
+
+/// Converts the outer popup size into the space available after frame padding so painted bounds and
+/// hit-test bounds stay aligned.
+fn card_content_size() -> egui::Vec2 {
+    let padding = f32::from(CARD_PADDING) * 2.0;
+
+    egui::vec2(CARD_WIDTH - padding, CARD_HEIGHT - padding)
 }
 
 /// Maps Harper lint kinds to egui colors at the drawing boundary so shared color data stays UI-toolkit
