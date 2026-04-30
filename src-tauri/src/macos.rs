@@ -13,6 +13,7 @@ use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
+use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::{
     Dialect, Document,
     linting::{LintGroup, Linter},
@@ -24,7 +25,8 @@ use std::{cell::RefCell, error::Error as StdError, ptr};
 use crate::rect::{PositionedLint, Rect};
 
 pub fn cursor_position() -> Option<egui::Pos2> {
-    let event = CGEvent::new(None).ok()?;
+    let source = CGEventSource::new(CGEventSourceStateID::CombinedSessionState).ok()?;
+    let event = CGEvent::new(source).ok()?;
     let location = event.location();
 
     Some(egui::pos2(location.x as f32, location.y as f32))
