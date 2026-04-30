@@ -268,7 +268,7 @@ fn render_popover_body(
                     ui.spacing_mut().item_spacing = egui::vec2(8.0, 8.0);
 
                     for (index, suggestion) in lint.suggestions.iter().enumerate() {
-                        if suggestion_option(ui, suggestion, index == 0).clicked() {
+                        if suggestion_option(ui, lint.lint_kind, suggestion, index == 0).clicked() {
                             *action = Some(LintCardAction::ApplySuggestion(suggestion.clone()));
                         }
                     }
@@ -340,11 +340,17 @@ fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint, style: PopupStyle) {
 }
 
 /// Renders a suggestion as a compact button so later replacement behavior can attach to one place.
-fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion, primary: bool) -> egui::Response {
+fn suggestion_option(
+    ui: &mut egui::Ui,
+    lint_kind: LintKind,
+    suggestion: &Suggestion,
+    primary: bool,
+) -> egui::Response {
+    let lint_color = lint_kind_color32(lint_kind);
     let fill = if primary {
-        primary_color()
+        lint_color
     } else {
-        hex(0xfa, 0xf6, 0xee)
+        blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.88)
     };
     let text_color = if primary {
         hex(0xff, 0xfd, 0xfa)
@@ -354,7 +360,7 @@ fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion, primary: bool) 
     let stroke = if primary {
         egui::Stroke::NONE
     } else {
-        egui::Stroke::new(1.0, hex(0xf3, 0xe9, 0xd3))
+        egui::Stroke::new(1.0, blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.64))
     };
 
     let button = egui::Button::new(
@@ -595,10 +601,6 @@ fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
 
 fn hex(r: u8, g: u8, b: u8) -> egui::Color32 {
     egui::Color32::from_rgb(r, g, b)
-}
-
-fn primary_color() -> egui::Color32 {
-    hex(0xf1, 0x92, 0x0e)
 }
 
 fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color32 {
