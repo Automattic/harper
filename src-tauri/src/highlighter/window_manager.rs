@@ -9,7 +9,7 @@ use super::Error;
 use super::ReadRects;
 use super::render_state::RenderState;
 use super::window::Window;
-use crate::rect::ColoredRect;
+use crate::rect::PositionedLint;
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
 ///
@@ -19,7 +19,7 @@ use crate::rect::ColoredRect;
 pub struct WindowManager {
     event_loop: EventLoop<()>,
     context: egui::Context,
-    rects: Vec<ColoredRect>,
+    rects: Vec<PositionedLint>,
     read_rects: ReadRects,
     read_interval: Duration,
 }
@@ -39,7 +39,7 @@ impl WindowManager {
         })
     }
 
-    pub fn set_rects(&mut self, rects: Vec<ColoredRect>) {
+    pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
         self.rects = rects;
     }
 
@@ -80,7 +80,7 @@ struct WindowManagerApp {
 impl WindowManagerApp {
     fn new(
         context: egui::Context,
-        rects: Vec<ColoredRect>,
+        rects: Vec<PositionedLint>,
         read_rects: ReadRects,
         read_interval: Duration,
     ) -> Self {

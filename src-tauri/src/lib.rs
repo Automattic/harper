@@ -2,7 +2,7 @@ use self::highlighter::Highlighter;
 use clap::{Parser, Subcommand};
 use std::time::Duration;
 
-use crate::rect::ColoredRect;
+use crate::rect::PositionedLint;
 
 pub mod color;
 pub mod highlighter;
@@ -42,7 +42,7 @@ pub fn run_tauri() {
 
 pub fn run_highlighter() {
     if let Err(error) = Highlighter::new(|| {
-        let rects: Vec<ColoredRect> = {
+        let rects: Vec<PositionedLint> = {
             #[cfg(target_os = "macos")]
             {
                 macos::get_boxes()

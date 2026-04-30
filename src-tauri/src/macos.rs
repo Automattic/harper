@@ -20,10 +20,9 @@ use harper_core::{
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, error::Error as StdError, ptr};
 
-use crate::lint_kind_color::lint_kind_color;
-use crate::rect::{ColoredRect, Rect};
+use crate::rect::{PositionedLint, Rect};
 
-pub fn get_boxes() -> Vec<ColoredRect> {
+pub fn get_boxes() -> Vec<PositionedLint> {
     let pid = match focused_window_pid() {
         Ok(pid) => pid,
         Err(err) => {
@@ -87,7 +86,7 @@ fn ax_element_attribute(
 }
 
 struct RectCollector {
-    rects: RefCell<Vec<ColoredRect>>,
+    rects: RefCell<Vec<PositionedLint>>,
     linter: RefCell<LintGroup>,
 }
 
@@ -111,13 +110,7 @@ impl TreeVisitor for RectCollector {
                     lint.span.start as isize,
                     lint.span.len() as isize,
                 ) {
-                    rects.push(ColoredRect::new(
-                        rect.x,
-                        rect.y,
-                        rect.width,
-                        rect.height,
-                        lint_kind_color(lint.lint_kind),
-                    ));
+                    rects.push(PositionedLint::new(rect, lint.clone()));
                 }
             }
         }
@@ -138,7 +131,7 @@ impl RectCollector {
         }
     }
 
-    pub fn unwrap_rects(self) -> Vec<ColoredRect> {
+    pub fn unwrap_rects(self) -> Vec<PositionedLint> {
         self.rects.into_inner()
     }
 }
