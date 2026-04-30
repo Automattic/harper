@@ -6,7 +6,7 @@ use crate::{
 };
 
 const CARD_WIDTH: f32 = 340.0;
-const CARD_HEIGHT: f32 = 150.0;
+const CARD_HEIGHT: f32 = 105.0;
 const CARD_OFFSET_Y: f32 = 8.0;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
