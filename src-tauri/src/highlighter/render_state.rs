@@ -13,18 +13,62 @@ const CARD_WIDTH: f32 = 340.0;
 /// into that plumbing. This keeps future highlight rectangles, styling, and animation state out of
 /// the platform/rendering infrastructure.
 pub struct RenderState {
+    /// Lints with their screen-space bounds, used to draw all highlights and resolve hit tests.
     rects: Vec<PositionedLint>,
+
+    /// Index of the lint whose suggestion popup is currently visible.
+    ///
+    /// `None` means no popup should be rendered.
+    highlighted_lint: Option<usize>,
 }
 
 impl RenderState {
     pub fn new(rects: Vec<PositionedLint>) -> Self {
-        let mut state = Self { rects: Vec::new() };
+        let mut state = Self {
+            rects: Vec::new(),
+            highlighted_lint: None,
+        };
         state.set_rects(rects);
         state
     }
 
     pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
         self.rects = rects;
+
+        if self
+            .highlighted_lint
+            .is_some_and(|index| index >= self.rects.len())
+        {
+            self.highlighted_lint = None;
+        }
+    }
+
+    /// Updates which lint owns the suggestion popup without exposing render-state internals.
+    ///
+    /// Window/input code decides what the user interacted with, while `RenderState` owns the popup
+    /// selection. Filtering invalid indexes here keeps stale cursor state from selecting a lint that
+    /// disappeared after the latest accessibility read.
+    pub fn set_highlighted_lint(&mut self, highlighted_lint: Option<usize>) {
+        self.highlighted_lint = highlighted_lint.filter(|index| *index < self.rects.len());
+    }
+
+    /// Reports whether a popup is open so window hit-testing can stay enabled for interaction.
+    ///
+    /// The overlay is normally click-through. Once a popup is visible, the window manager needs a
+    /// simple render-state query to avoid making the window click-through while the user is moving
+    /// from a highlight into the popup.
+    pub fn has_highlighted_lint(&self) -> bool {
+        self.highlighted_lint.is_some()
+    }
+
+    /// Finds the lint under a screen-space cursor position for hover and click routing.
+    ///
+    /// Cursor polling lives outside the renderer, but hit-testing belongs next to the rectangles
+    /// being rendered so both paths use the same geometry.
+    pub fn find_lint_at_pos(&self, pos: egui::Pos2) -> Option<usize> {
+        self.rects
+            .iter()
+            .position(|positioned_lint| rect_bounds(&positioned_lint.rect).contains(pos))
     }
 
     pub fn render(&mut self, ui: &mut egui::Ui) {
@@ -32,7 +76,10 @@ impl RenderState {
             draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
         }
 
-        if let Some(positioned_lint) = self.rects.first() {
+        if let Some(positioned_lint) = self
+            .highlighted_lint
+            .and_then(|index| self.rects.get(index))
+        {
             render_lint_card(ui, &positioned_lint.rect, &positioned_lint.lint);
         }
     }

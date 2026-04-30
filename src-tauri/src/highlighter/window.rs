@@ -92,6 +92,17 @@ impl Window {
         self.inner.request_redraw();
     }
 
+    /// Controls whether the transparent overlay can receive pointer events.
+    ///
+    /// Highlight windows are click-through by default so the underlying app remains usable. The
+    /// window manager temporarily enables hit-testing when global cursor polling shows the pointer
+    /// is over an interactive highlight or popup.
+    pub fn set_cursor_hittest(&self, enabled: bool) -> Result<(), Error> {
+        self.inner.set_cursor_hittest(enabled)?;
+
+        Ok(())
+    }
+
     pub fn handle_event(&mut self, event: &WindowEvent) {
         let response = self.egui_state.on_window_event(&self.inner, event);
 

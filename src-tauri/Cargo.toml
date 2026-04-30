@@ -40,3 +40,4 @@ objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "objc2-core-foundation",
 ] }
 accessibility-sys = "0.2.0"
+core-graphics = "0.25.0"

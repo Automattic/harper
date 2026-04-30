@@ -3676,6 +3676,7 @@ dependencies = [
  "accessibility-sys",
  "clap",
  "core-foundation 0.10.1",
+ "core-graphics 0.25.0",
  "egui",
  "egui-wgpu",
  "egui-winit",

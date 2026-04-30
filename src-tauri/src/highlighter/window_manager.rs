@@ -1,7 +1,7 @@
 use std::time::{Duration, Instant};
 
 use winit::application::ApplicationHandler;
-use winit::event::WindowEvent;
+use winit::event::{ElementState, MouseButton, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
@@ -74,6 +74,8 @@ struct WindowManagerApp {
     read_rects: ReadRects,
     read_interval: Duration,
     last_read: Instant,
+    hovered_lint: Option<usize>,
+    cursor_hittest_enabled: bool,
     error: Option<Error>,
 }
 
@@ -91,6 +93,8 @@ impl WindowManagerApp {
             read_rects,
             read_interval,
             last_read: Instant::now() - read_interval,
+            hovered_lint: None,
+            cursor_hittest_enabled: false,
             error: None,
         }
     }
@@ -104,6 +108,39 @@ impl WindowManagerApp {
             }
         }
     }
+
+    fn update_cursor_hittest(&mut self, event_loop: &ActiveEventLoop) {
+        let Some(cursor_pos) = cursor_position() else {
+            return;
+        };
+
+        self.hovered_lint = self.render_state.find_lint_at_pos(cursor_pos);
+
+        let should_enable_hittest =
+            self.hovered_lint.is_some() || self.render_state.has_highlighted_lint();
+
+        if self.cursor_hittest_enabled == should_enable_hittest {
+            return;
+        }
+
+        for window in &self.windows {
+            if let Err(error) = window.set_cursor_hittest(should_enable_hittest) {
+                self.error = Some(error);
+                event_loop.exit();
+                return;
+            }
+        }
+
+        self.cursor_hittest_enabled = should_enable_hittest;
+    }
+
+    fn select_hovered_lint(&mut self) {
+        self.render_state.set_highlighted_lint(self.hovered_lint);
+
+        for window in &self.windows {
+            window.request_redraw();
+        }
+    }
 }
 
 impl ApplicationHandler for WindowManagerApp {
@@ -114,6 +151,8 @@ impl ApplicationHandler for WindowManagerApp {
             self.read_rect_updates();
             self.last_read = now;
         }
+
+        self.update_cursor_hittest(event_loop);
 
         event_loop.set_control_flow(ControlFlow::WaitUntil(self.last_read + self.read_interval));
     }
@@ -141,19 +180,44 @@ impl ApplicationHandler for WindowManagerApp {
         window_id: WindowId,
         event: WindowEvent,
     ) {
+        let should_select_hovered_lint = matches!(
+            &event,
+            WindowEvent::MouseInput {
+                state: ElementState::Pressed,
+                button: MouseButton::Left,
+                ..
+            }
+        );
+        let should_render = matches!(&event, WindowEvent::RedrawRequested);
+
         if let Some(window) = self
             .windows
             .iter_mut()
             .find(|window| window.id() == window_id)
         {
             window.handle_event(&event);
-            if matches!(event, WindowEvent::RedrawRequested) {
+
+            if should_render {
                 window.render(&mut self.render_state);
             }
         }
 
-        if matches!(event, WindowEvent::CloseRequested) {
+        if should_select_hovered_lint {
+            self.select_hovered_lint();
+        }
+
+        if matches!(&event, WindowEvent::CloseRequested) {
             event_loop.exit();
         }
     }
+}
+
+#[cfg(target_os = "macos")]
+fn cursor_position() -> Option<egui::Pos2> {
+    crate::macos::cursor_position()
+}
+
+#[cfg(not(target_os = "macos"))]
+fn cursor_position() -> Option<egui::Pos2> {
+    None
 }
