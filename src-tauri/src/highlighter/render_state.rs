@@ -363,17 +363,29 @@ fn suggestion_option(
         egui::Stroke::new(1.0, blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.64))
     };
 
-    let button = egui::Button::new(
-        egui::RichText::new(suggestion_text(suggestion))
-            .size(13.5)
-            .color(text_color),
-    )
-    .fill(fill)
-    .stroke(stroke)
-    .corner_radius(egui::CornerRadius::same(8))
-    .min_size(egui::vec2(0.0, 34.0));
+    ui.scope(|ui| {
+        ui.spacing_mut().button_padding = egui::vec2(16.0, 10.0);
+        let stroke_width = stroke.width;
+        ui.visuals_mut().widgets.inactive.expansion = 0.0;
+        ui.visuals_mut().widgets.hovered.expansion = 0.0;
+        ui.visuals_mut().widgets.active.expansion = 0.0;
+        ui.visuals_mut().widgets.inactive.bg_stroke.width = stroke_width;
+        ui.visuals_mut().widgets.hovered.bg_stroke.width = stroke_width;
+        ui.visuals_mut().widgets.active.bg_stroke.width = stroke_width;
 
-    ui.add(button)
+        let button = egui::Button::new(
+            egui::RichText::new(suggestion_text(suggestion))
+                .size(13.5)
+                .color(text_color),
+        )
+        .fill(fill)
+        .stroke(stroke)
+        .corner_radius(egui::CornerRadius::same(8))
+        .min_size(egui::vec2(0.0, 38.0));
+
+        ui.add(button)
+    })
+    .inner
 }
 
 /// Renders the prototype's square icon-only controls without coupling their visual treatment to any
