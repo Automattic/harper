@@ -314,42 +314,39 @@ impl LintGroup {
     }
 
     /// Check for clashes between a new linter and existing linters
+    /// Returns detailed clash information with counts for debugging
     fn check_clashes(&self, name: &str, child_names: &[&str]) -> Option<Vec<String>> {
-        use hashbrown::HashSet;
-        let mut clashes = HashSet::new();
+        use hashbrown::HashMap;
+        let mut clash_counts = HashMap::new();
 
         // Check direct name clash with existing `Linter`s or `ExprLinter`s
         if self.contains_key(name) {
-            clashes.insert(name.to_string());
-        }
-        if self.chunk_expr_linters.contains_key(name) {
-            clashes.insert(name.to_string());
+            *clash_counts.entry(name.to_string()).or_insert(0) += 1;
         }
 
         // Check if new linter's name clashes with child names of existing linters
-        clashes.extend(
-            self.linters
-                .iter()
-                .filter(|(_, existing_linter)| {
-                    existing_linter.merged_linter_child_names().contains(&name)
-                })
-                .map(|_| name.to_string()),
-        );
-
-        // Check if child names clash with existing [`Linter`]s
-        for child_name in child_names {
-            if self.contains_key(child_name) {
-                clashes.insert(child_name.to_string());
-            }
-            if self.chunk_expr_linters.contains_key(*child_name) {
-                clashes.insert(child_name.to_string());
+        for existing_linter in self.linters.values() {
+            if existing_linter.merged_linter_child_names().contains(&name) {
+                *clash_counts.entry(name.to_string()).or_insert(0) += 1;
             }
         }
 
-        if clashes.is_empty() {
+        // Check if child names clash with existing linters
+        for &child_name in child_names {
+            if self.contains_key(child_name) {
+                *clash_counts.entry(child_name.to_string()).or_insert(0) += 1;
+            }
+        }
+
+        if clash_counts.is_empty() {
             None
         } else {
-            Some(clashes.into_iter().collect())
+            Some(
+                clash_counts
+                    .into_iter()
+                    .map(|(name, count)| format!("{name} (used {} times)", count + 1))
+                    .collect(),
+            )
         }
     }
 
