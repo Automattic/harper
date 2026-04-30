@@ -509,10 +509,12 @@ fn is_spelling_kind(lint_kind: LintKind) -> bool {
 }
 
 fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
+    let color = lint_kind_color32(lint_kind);
+
     match lint_kind {
         LintKind::Eggcorn | LintKind::Malapropism | LintKind::Spelling | LintKind::Typo => {
             PopupStyle {
-                color: accent_color(),
+                color,
                 background: hex(0xff, 0xee, 0xf2),
                 foreground: hex(0xbe, 0x12, 0x3c),
             }
@@ -521,17 +523,17 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
         | LintKind::BoundaryError
         | LintKind::Grammar
         | LintKind::Repetition => PopupStyle {
-            color: primary_color(),
+            color,
             background: hex(0xff, 0xf7, 0xed),
             foreground: hex(0xc2, 0x41, 0x0c),
         },
         LintKind::Capitalization => PopupStyle {
-            color: hex(0x7c, 0x3a, 0xed),
+            color,
             background: hex(0xf3, 0xee, 0xff),
             foreground: hex(0x5b, 0x21, 0xb6),
         },
         LintKind::Formatting | LintKind::Punctuation | LintKind::Readability => PopupStyle {
-            color: hex(0x25, 0x63, 0xeb),
+            color,
             background: hex(0xef, 0xf6, 0xff),
             foreground: hex(0x1d, 0x4e, 0xd8),
         },
@@ -543,7 +545,7 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
         | LintKind::Style
         | LintKind::Usage
         | LintKind::WordChoice => PopupStyle {
-            color: hex(0x6b, 0x72, 0x80),
+            color,
             background: hex(0xf3, 0xf4, 0xf6),
             foreground: hex(0x37, 0x41, 0x51),
         },
@@ -582,7 +584,11 @@ fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
 /// Maps Harper lint kinds to egui colors at the drawing boundary so shared color data stays UI-toolkit
 /// agnostic.
 fn lint_color(lint: &Lint) -> egui::Color32 {
-    let color = lint_kind_color(lint.lint_kind);
+    lint_kind_color32(lint.lint_kind)
+}
+
+fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
+    let color = lint_kind_color(lint_kind);
 
     egui::Color32::from_rgb(color.r, color.g, color.b)
 }
@@ -593,10 +599,6 @@ fn hex(r: u8, g: u8, b: u8) -> egui::Color32 {
 
 fn primary_color() -> egui::Color32 {
     hex(0xf1, 0x92, 0x0e)
-}
-
-fn accent_color() -> egui::Color32 {
-    hex(0xee, 0x42, 0x66)
 }
 
 fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color32 {
