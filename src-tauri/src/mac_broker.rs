@@ -14,11 +14,7 @@ use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
-use harper_core::{
-    Dialect, Document,
-    linting::{LintGroup, Linter},
-    spell::FstDictionary,
-};
+use harper_core::linting::Lint;
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, error::Error as StdError, ptr};
 
@@ -59,7 +55,7 @@ impl Default for MacBroker {
 }
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self) -> Vec<PositionedLint> {
+    fn get_boxes(&mut self, lint_text: &mut dyn FnMut(&str) -> Vec<Lint>) -> Vec<PositionedLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => return Vec::new(),
@@ -72,7 +68,7 @@ impl OsBroker for MacBroker {
         let el = AXUIElement::application(pid);
 
         let walker = TreeWalker::new();
-        let collector = RectCollector::new();
+        let collector = RectCollector::new(lint_text);
 
         walker.walk(&el, &collector);
 
@@ -132,12 +128,12 @@ fn ax_element_attribute(
     Ok(unsafe { AXUIElement::wrap_under_create_rule(value as _) })
 }
 
-struct RectCollector {
+struct RectCollector<'a> {
     rects: RefCell<Vec<PositionedLint>>,
-    linter: RefCell<LintGroup>,
+    lint_text: RefCell<&'a mut dyn FnMut(&str) -> Vec<Lint>>,
 }
 
-impl TreeVisitor for RectCollector {
+impl TreeVisitor for RectCollector<'_> {
     fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
         if let Ok(value) = element.value()
             && is_textarea(element)
@@ -145,11 +141,8 @@ impl TreeVisitor for RectCollector {
             let string =
                 unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
 
-            let mut linter = self.linter.borrow_mut();
             let mut rects = self.rects.borrow_mut();
-
-            let doc = Document::new_markdown_default_curated(&string);
-            let lints = linter.lint(&doc);
+            let lints = (self.lint_text.borrow_mut())(&string);
 
             for lint in &lints {
                 if let Ok(Some(rect)) = element_rect_for_text_range(
@@ -167,25 +160,16 @@ impl TreeVisitor for RectCollector {
     fn exit_element(&self, element: &AXUIElement) {}
 }
 
-impl RectCollector {
-    fn new() -> Self {
+impl<'a> RectCollector<'a> {
+    fn new(lint_text: &'a mut dyn FnMut(&str) -> Vec<Lint>) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
-            linter: RefCell::new(LintGroup::new_curated(
-                FstDictionary::curated(),
-                Dialect::American,
-            )),
+            lint_text: RefCell::new(lint_text),
         }
     }
 
     fn unwrap_rects(self) -> Vec<PositionedLint> {
         self.rects.into_inner()
-    }
-}
-
-impl Default for RectCollector {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

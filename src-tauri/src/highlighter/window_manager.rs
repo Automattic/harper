@@ -8,7 +8,7 @@ use winit::window::WindowId;
 use super::Error;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
-use crate::os_broker::OsBroker;
+use crate::os_broker::{LintText, OsBroker};
 use crate::rect::PositionedLint;
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
@@ -21,6 +21,7 @@ pub struct WindowManager {
     context: egui::Context,
     rects: Vec<PositionedLint>,
     os_broker: Box<dyn OsBroker>,
+    lint_text: LintText,
     read_interval: Duration,
 }
 
@@ -30,6 +31,7 @@ impl WindowManager {
     pub fn new(
         context: egui::Context,
         os_broker: Box<dyn OsBroker>,
+        lint_text: LintText,
         read_interval: Duration,
     ) -> Result<Self, Error> {
         Ok(Self {
@@ -37,6 +39,7 @@ impl WindowManager {
             context,
             rects: Vec::new(),
             os_broker,
+            lint_text,
             read_interval,
         })
     }
@@ -54,8 +57,13 @@ impl WindowManager {
     /// Transfers ownership into winit's application handler because `run_app` owns the process-level
     /// event loop until the overlay exits.
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
-        let mut app =
-            WindowManagerApp::new(self.context, self.rects, self.os_broker, self.read_interval);
+        let mut app = WindowManagerApp::new(
+            self.context,
+            self.rects,
+            self.os_broker,
+            self.lint_text,
+            self.read_interval,
+        );
 
         self.event_loop
             .set_control_flow(ControlFlow::WaitUntil(Instant::now() + self.read_interval));
@@ -74,6 +82,7 @@ struct WindowManagerApp {
     windows: Vec<Window>,
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
+    lint_text: LintText,
     read_interval: Duration,
     last_read: Instant,
     hovered_lint: Option<usize>,
@@ -88,6 +97,7 @@ impl WindowManagerApp {
         context: egui::Context,
         rects: Vec<PositionedLint>,
         os_broker: Box<dyn OsBroker>,
+        lint_text: LintText,
         read_interval: Duration,
     ) -> Self {
         Self {
@@ -95,6 +105,7 @@ impl WindowManagerApp {
             windows: Vec::new(),
             render_state: RenderState::new(rects),
             os_broker,
+            lint_text,
             read_interval,
             last_read: Instant::now() - read_interval,
             hovered_lint: None,
@@ -106,7 +117,7 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
-        let rects = self.os_broker.get_boxes();
+        let rects = self.os_broker.get_boxes(self.lint_text.as_mut());
         self.render_state.set_rects(rects);
 
         for window in &self.windows {

@@ -1,5 +1,10 @@
 use self::highlighter::Highlighter;
 use clap::{Parser, Subcommand};
+use harper_core::{
+    Dialect, Document,
+    linting::{LintGroup, Linter},
+    spell::FstDictionary,
+};
 use std::time::Duration;
 
 pub mod color;
@@ -46,7 +51,14 @@ pub fn run_highlighter() {
     #[cfg(not(target_os = "macos"))]
     let broker = os_broker::NoopBroker;
 
-    if let Err(error) = Highlighter::new(broker)
+    let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+    let lint_text = move |text: &str| {
+        let doc = Document::new_markdown_default_curated(text);
+
+        linter.lint(&doc)
+    };
+
+    if let Err(error) = Highlighter::new(broker, lint_text)
         .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
         .and_then(Highlighter::run_window_for_each_monitor)
     {

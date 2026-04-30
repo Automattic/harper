@@ -8,7 +8,9 @@ use std::time::Duration;
 pub use error::Error;
 use window_manager::WindowManager;
 
-use crate::os_broker::OsBroker;
+use harper_core::linting::Lint;
+
+use crate::os_broker::{LintText, OsBroker};
 use crate::rect::PositionedLint;
 
 const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
@@ -24,13 +26,18 @@ pub struct Highlighter {
 }
 
 impl Highlighter {
-    pub fn new(os_broker: impl OsBroker + 'static) -> Result<Self, Error> {
+    pub fn new(
+        os_broker: impl OsBroker + 'static,
+        lint_text: impl FnMut(&str) -> Vec<Lint> + 'static,
+    ) -> Result<Self, Error> {
         let context = egui::Context::default();
+        let lint_text: LintText = Box::new(lint_text);
 
         Ok(Self {
             window_manager: WindowManager::new(
                 context.clone(),
                 Box::new(os_broker),
+                lint_text,
                 DEFAULT_READ_INTERVAL,
             )?,
             context,
