@@ -11,7 +11,7 @@ use window_manager::WindowManager;
 use harper_core::linting::Lint;
 
 use crate::os_broker::{LintText, OsBroker};
-use crate::rect::PositionedLint;
+use crate::rect::ActionableLint;
 
 const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
 
@@ -60,7 +60,7 @@ impl Highlighter {
         window_manager.run_window_for_each_monitor()
     }
 
-    pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
+    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
         self.window_manager.set_rects(rects);
     }
 }

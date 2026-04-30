@@ -9,7 +9,7 @@ use super::Error;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
-use crate::rect::PositionedLint;
+use crate::rect::ActionableLint;
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
 ///
@@ -19,7 +19,7 @@ use crate::rect::PositionedLint;
 pub struct WindowManager {
     event_loop: EventLoop<()>,
     context: egui::Context,
-    rects: Vec<PositionedLint>,
+    rects: Vec<ActionableLint>,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
     read_interval: Duration,
@@ -45,7 +45,7 @@ impl WindowManager {
     }
 
     /// Seeds externally supplied lint rectangles before the event loop takes ownership of rendering.
-    pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
+    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
         self.rects = rects;
     }
 
@@ -95,7 +95,7 @@ impl WindowManagerApp {
     /// up direct control of the event loop.
     fn new(
         context: egui::Context,
-        rects: Vec<PositionedLint>,
+        rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
         lint_text: LintText,
         read_interval: Duration,

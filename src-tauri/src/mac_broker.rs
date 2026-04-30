@@ -14,12 +14,12 @@ use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
-use harper_core::linting::Lint;
+use harper_core::linting::{Lint, Suggestion};
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, error::Error as StdError, ptr};
 
 use crate::os_broker::OsBroker;
-use crate::rect::{PositionedLint, Rect};
+use crate::rect::{ActionableLint, Rect};
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -55,7 +55,7 @@ impl Default for MacBroker {
 }
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut dyn FnMut(&str) -> Vec<Lint>) -> Vec<PositionedLint> {
+    fn get_boxes(&mut self, lint_text: &mut dyn FnMut(&str) -> Vec<Lint>) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => return Vec::new(),
@@ -129,7 +129,7 @@ fn ax_element_attribute(
 }
 
 struct RectCollector<'a> {
-    rects: RefCell<Vec<PositionedLint>>,
+    rects: RefCell<Vec<ActionableLint>>,
     lint_text: RefCell<&'a mut dyn FnMut(&str) -> Vec<Lint>>,
 }
 
@@ -150,7 +150,13 @@ impl TreeVisitor for RectCollector<'_> {
                     lint.span.start as isize,
                     lint.span.len() as isize,
                 ) {
-                    rects.push(PositionedLint::new(rect, lint.clone()));
+                    let element = element.clone();
+                    let source_text = string.clone();
+                    let lint = lint.clone();
+
+                    rects.push(ActionableLint::new(rect, lint.clone(), move |suggestion| {
+                        apply_suggestion_to_element(element, source_text, lint, suggestion);
+                    }));
                 }
             }
         }
@@ -168,8 +174,24 @@ impl<'a> RectCollector<'a> {
         }
     }
 
-    fn unwrap_rects(self) -> Vec<PositionedLint> {
+    fn unwrap_rects(self) -> Vec<ActionableLint> {
         self.rects.into_inner()
+    }
+}
+
+fn apply_suggestion_to_element(
+    element: AXUIElement,
+    source_text: String,
+    lint: Lint,
+    suggestion: Suggestion,
+) {
+    let mut chars = source_text.chars().collect::<Vec<_>>();
+    suggestion.apply(lint.span, &mut chars);
+    let updated = chars.into_iter().collect::<String>();
+    let value = CFString::new(&updated);
+
+    if let Err(error) = element.set_value(value.as_CFType()) {
+        println!("Unable to apply suggestion: {error}");
     }
 }
 

@@ -3,7 +3,7 @@ use harper_core::linting::{Lint, Suggestion};
 
 use crate::{
     lint_kind_color::lint_kind_color,
-    rect::{PositionedLint, Rect},
+    rect::{ActionableLint, Rect},
 };
 
 const CARD_WIDTH: f32 = 340.0;
@@ -18,6 +18,11 @@ pub enum HitTarget {
     None,
 }
 
+enum LintCardAction {
+    Close,
+    ApplySuggestion(Suggestion),
+}
+
 /// Stores highlighter-specific drawing state and renders it into an egui frame.
 ///
 /// `Window` owns the native window and GPU plumbing; `RenderState` owns the content we want to draw
@@ -25,7 +30,7 @@ pub enum HitTarget {
 /// the platform/rendering infrastructure.
 pub struct RenderState {
     /// Lints with their screen-space bounds, used to draw all highlights and resolve hit tests.
-    rects: Vec<PositionedLint>,
+    rects: Vec<ActionableLint>,
 
     /// Index of the lint whose suggestion popup is currently visible.
     ///
@@ -40,7 +45,7 @@ pub struct RenderState {
 impl RenderState {
     /// Creates render state through `set_rects` so initial lint data gets the same stale-popup guard
     /// used by later accessibility refreshes.
-    pub fn new(rects: Vec<PositionedLint>) -> Self {
+    pub fn new(rects: Vec<ActionableLint>) -> Self {
         let mut state = Self {
             rects: Vec::new(),
             highlighted_lint: None,
@@ -52,7 +57,7 @@ impl RenderState {
 
     /// Replaces the accessibility-derived lint geometry while preventing a popup from pointing at a
     /// lint index that no longer exists after the latest read.
-    pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
+    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
         self.rects = rects;
 
         if self
@@ -113,8 +118,16 @@ impl RenderState {
             let rect = positioned_lint.rect;
             let lint = positioned_lint.lint.clone();
 
-            if render_lint_card(ui, &rect, &lint, &mut self.markdown_cache) {
-                self.close_popup();
+            match render_lint_card(ui, &rect, &lint, &mut self.markdown_cache) {
+                Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::ApplySuggestion(suggestion)) => {
+                    if let Some(actionable_lint) = self.rects.get_mut(index) {
+                        actionable_lint.apply_suggestion(suggestion);
+                    }
+
+                    self.close_popup();
+                }
+                None => {}
             }
         }
     }
@@ -146,14 +159,14 @@ fn render_lint_card(
     rect: &Rect,
     lint: &Lint,
     markdown_cache: &mut CommonMarkCache,
-) -> bool {
+) -> Option<LintCardAction> {
     let popup_rect = popup_rect_for_lint(rect);
 
     egui::Area::new(egui::Id::new("harper-lint-card"))
         .order(egui::Order::Foreground)
         .fixed_pos(popup_rect.min)
         .show(ui.ctx(), |ui| {
-            let mut should_close = false;
+            let mut action = None;
 
             egui::Frame::new()
                 .fill(egui::Color32::from_rgba_unmultiplied(30, 32, 38, 244))
@@ -181,7 +194,7 @@ fn render_lint_card(
                         lint_kind_badge(ui, lint);
                         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                             if close_button(ui).clicked() {
-                                should_close = true;
+                                action = Some(LintCardAction::Close);
                             }
                         });
                     });
@@ -193,11 +206,13 @@ fn render_lint_card(
                         ui.spacing_mut().item_spacing = egui::vec2(8.0, 8.0);
 
                         for suggestion in &lint.suggestions {
-                            suggestion_option(ui, suggestion);
+                            if suggestion_option(ui, suggestion).clicked() {
+                                action = Some(LintCardAction::ApplySuggestion(suggestion.clone()));
+                            }
                         }
                     });
                 });
-            should_close
+            action
         })
         .inner
 }
@@ -231,7 +246,7 @@ fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint) {
 }
 
 /// Renders a suggestion as a compact button so later replacement behavior can attach to one place.
-fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) {
+fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) -> egui::Response {
     let button = egui::Button::new(
         egui::RichText::new(suggestion_text(suggestion))
             .size(13.0)
@@ -244,7 +259,7 @@ fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) {
     ))
     .corner_radius(egui::CornerRadius::same(9));
 
-    ui.add(button);
+    ui.add(button)
 }
 
 /// Provides the only user-facing popup close affordance; outside clicks stay click-through to the

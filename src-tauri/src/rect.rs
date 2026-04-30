@@ -1,5 +1,5 @@
 use crate::color::Color;
-use harper_core::linting::Lint;
+use harper_core::linting::{Lint, Suggestion};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Rect {
@@ -39,9 +39,40 @@ pub struct PositionedLint {
     pub lint: Lint,
 }
 
+/// A Harper lint paired with geometry and an OS-specific way to apply a chosen suggestion.
+///
+/// The highlighter owns rendering and interaction, but the OS broker is the only layer that knows how
+/// to mutate the underlying text element. Storing a one-shot callback here keeps those responsibilities
+/// connected without teaching rendering code about Accessibility APIs.
+pub struct ActionableLint {
+    pub rect: Rect,
+    pub lint: Lint,
+    apply_suggestion: Option<Box<dyn FnOnce(Suggestion)>>,
+}
+
 impl PositionedLint {
     pub fn new(rect: Rect, lint: Lint) -> Self {
         Self { rect, lint }
+    }
+}
+
+impl ActionableLint {
+    pub fn new(
+        rect: Rect,
+        lint: Lint,
+        apply_suggestion: impl FnOnce(Suggestion) + 'static,
+    ) -> Self {
+        Self {
+            rect,
+            lint,
+            apply_suggestion: Some(Box::new(apply_suggestion)),
+        }
+    }
+
+    pub fn apply_suggestion(&mut self, suggestion: Suggestion) {
+        if let Some(apply_suggestion) = self.apply_suggestion.take() {
+            apply_suggestion(suggestion);
+        }
     }
 }
 
