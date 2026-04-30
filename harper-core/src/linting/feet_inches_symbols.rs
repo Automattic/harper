@@ -75,7 +75,7 @@ impl ExprLinter for FeetInchesSymbols {
     }
 
     fn description(&self) -> &str {
-        "Corrects the use of apostrophes/quotes (' and \") for feet and inches to use the prime and double prime symbols (′ and ″)."
+        "Corrects the use of ASCII apostrophes and quotes for feet and inches to Unicode prime and double prime symbols."
     }
 }
 

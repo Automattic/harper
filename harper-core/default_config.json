@@ -1829,6 +1829,13 @@
 								"state": true,
 								"label": "To Some Degree"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FeetInchesSymbols",
+								"state": true,
+								"label": "Feet and Inches Symbols"
+							}
 						}
 					]
 				}
