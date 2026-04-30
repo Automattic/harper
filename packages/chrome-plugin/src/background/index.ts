@@ -74,18 +74,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
-chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+/** Read the current popup state and the tab that triggered it from storage. */
+async function getReportTabState() {
 	const result = await chrome.storage.local.get(['popupState', 'reportTabId']);
-	if (result.popupState?.page === 'report-error' && result.reportTabId !== tabId) {
-		await chrome.storage.local.set({ popupState: { page: 'main' } });
+	return {
+		popupPage: result.popupState?.page as string | undefined,
+		reportTabId: result.reportTabId as number | undefined,
+	};
+}
+
+/** Reset the popup back to the main page, clearing any in-progress report. */
+async function clearReportState(): Promise<void> {
+	await chrome.storage.local.set({ popupState: { page: 'main' } });
+}
+
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+	const { popupPage, reportTabId } = await getReportTabState();
+	if (popupPage === 'report-error' && reportTabId !== tabId) {
+		await clearReportState();
 	}
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
 	if (!changeInfo.url) return;
-	const result = await chrome.storage.local.get(['popupState', 'reportTabId']);
-	if (result.popupState?.page === 'report-error' && result.reportTabId === tabId) {
-		await chrome.storage.local.set({ popupState: { page: 'main' } });
+	const { popupPage, reportTabId } = await getReportTabState();
+	if (popupPage === 'report-error' && reportTabId === tabId) {
+		await clearReportState();
 	}
 });
 
