@@ -37,7 +37,6 @@ enum Glyph {
     Settings,
     Disable,
     Plus,
-    Book,
 }
 
 /// Stores highlighter-specific drawing state and renders it into an egui frame.
@@ -223,6 +222,12 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
             1.0,
             egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15),
         ))
+        .corner_radius(egui::CornerRadius {
+            nw: 12,
+            ne: 12,
+            sw: 0,
+            se: 0,
+        })
         .inner_margin(egui::Margin::symmetric(10, 10))
         .show(ui, |ui| {
             ui.set_width(CARD_WIDTH - 20.0);
@@ -289,7 +294,6 @@ fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint) {
                 if is_spelling_kind(lint.lint_kind) {
                     ghost_button(ui, Some(Glyph::Plus), "Add to dictionary");
                 }
-                ghost_button(ui, Some(Glyph::Book), "Learn more");
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     ghost_button(ui, None, "Dismiss");
                 });
@@ -301,7 +305,10 @@ fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint) {
 /// markers to the user.
 fn render_lint_message(ui: &mut egui::Ui, cache: &mut CommonMarkCache, message: &str) {
     ui.scope(|ui| {
+        ui.visuals_mut().code_bg_color = hex(0xf3, 0xf4, 0xf6);
+        ui.visuals_mut().extreme_bg_color = hex(0xf8, 0xfa, 0xfc);
         ui.visuals_mut().override_text_color = Some(hex(0x37, 0x41, 0x51));
+        ui.visuals_mut().text_edit_bg_color = Some(hex(0xf8, 0xfa, 0xfc));
         CommonMarkViewer::new()
             .default_width(Some(ui.available_width() as usize))
             .show(ui, cache, message);
@@ -416,7 +423,6 @@ fn draw_glyph(ui: &egui::Ui, rect: egui::Rect, glyph: Glyph, color: egui::Color3
         Glyph::Settings => draw_settings_icon(ui, rect, color),
         Glyph::Disable => draw_disable_icon(ui, rect, color),
         Glyph::Plus => draw_plus_icon(ui, rect, color),
-        Glyph::Book => draw_book_icon(ui, rect, color),
     }
 }
 
@@ -475,21 +481,6 @@ fn draw_plus_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
         [
             egui::pos2(rect.left(), rect.center().y),
             egui::pos2(rect.right(), rect.center().y),
-        ],
-        stroke,
-    );
-}
-
-fn draw_book_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.4, color);
-    let cover = rect.shrink2(egui::vec2(2.0, 1.0));
-
-    ui.painter()
-        .rect_stroke(cover, 1.5, stroke, egui::StrokeKind::Middle);
-    ui.painter().line_segment(
-        [
-            egui::pos2(cover.left() + 3.0, cover.top()),
-            egui::pos2(cover.left() + 3.0, cover.bottom()),
         ],
         stroke,
     );
