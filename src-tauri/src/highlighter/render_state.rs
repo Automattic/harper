@@ -1,3 +1,4 @@
+use egui_commonmark::{CommonMarkCache, CommonMarkViewer};
 use harper_core::linting::{Lint, Suggestion};
 
 use crate::{
@@ -30,6 +31,10 @@ pub struct RenderState {
     ///
     /// `None` means no popup should be rendered.
     highlighted_lint: Option<usize>,
+
+    /// Cache for markdown-rendered lint messages so popup redraws do not repeatedly rebuild markdown
+    /// resources from scratch.
+    markdown_cache: CommonMarkCache,
 }
 
 impl RenderState {
@@ -39,6 +44,7 @@ impl RenderState {
         let mut state = Self {
             rects: Vec::new(),
             highlighted_lint: None,
+            markdown_cache: CommonMarkCache::default(),
         };
         state.set_rects(rects);
         state
@@ -101,11 +107,13 @@ impl RenderState {
             draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
         }
 
-        if let Some(positioned_lint) = self
-            .highlighted_lint
-            .and_then(|index| self.rects.get(index))
+        if let Some(index) = self.highlighted_lint
+            && let Some(positioned_lint) = self.rects.get(index)
         {
-            if render_lint_card(ui, &positioned_lint.rect, &positioned_lint.lint) {
+            let rect = positioned_lint.rect;
+            let lint = positioned_lint.lint.clone();
+
+            if render_lint_card(ui, &rect, &lint, &mut self.markdown_cache) {
                 self.close_popup();
             }
         }
@@ -133,7 +141,12 @@ fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
 }
 
 /// Renders the suggestion popup and returns whether the explicit close control was clicked.
-fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
+fn render_lint_card(
+    ui: &mut egui::Ui,
+    rect: &Rect,
+    lint: &Lint,
+    markdown_cache: &mut CommonMarkCache,
+) -> bool {
     let popup_rect = popup_rect_for_lint(rect);
 
     egui::Area::new(egui::Id::new("harper-lint-card"))
@@ -173,11 +186,7 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
                         });
                     });
 
-                    ui.label(
-                        egui::RichText::new(&lint.message)
-                            .color(egui::Color32::from_rgb(238, 241, 247))
-                            .size(14.0),
-                    );
+                    render_lint_message(ui, markdown_cache, &lint.message);
 
                     ui.add_space(2.0);
                     ui.horizontal_wrapped(|ui| {
@@ -191,6 +200,17 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
             should_close
         })
         .inner
+}
+
+/// Renders Harper's markdown-formatted lint message in the popup instead of showing raw markdown
+/// markers to the user.
+fn render_lint_message(ui: &mut egui::Ui, cache: &mut CommonMarkCache, message: &str) {
+    ui.scope(|ui| {
+        ui.visuals_mut().override_text_color = Some(egui::Color32::from_rgb(238, 241, 247));
+        CommonMarkViewer::new()
+            .default_width(Some(ui.available_width() as usize))
+            .show(ui, cache, message);
+    });
 }
 
 /// Keeps the lint type visually attached to the popup without duplicating lint-kind formatting in
