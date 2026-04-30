@@ -132,8 +132,16 @@ impl WindowManagerApp {
         self.cursor_hittest_enabled = should_enable_hittest;
     }
 
-    fn select_hovered_lint(&mut self) {
-        self.render_state.set_highlighted_lint(self.hovered_lint);
+    fn select_hit_lint(&mut self) {
+        let Some(cursor_pos) = self.os_broker.cursor_position() else {
+            return;
+        };
+
+        let HitTarget::Lint(index) = self.render_state.hit_target_at_pos(cursor_pos) else {
+            return;
+        };
+
+        self.render_state.set_highlighted_lint(Some(index));
 
         for window in &self.windows {
             window.request_redraw();
@@ -178,7 +186,7 @@ impl ApplicationHandler for WindowManagerApp {
         window_id: WindowId,
         event: WindowEvent,
     ) {
-        let should_select_hovered_lint = matches!(
+        let should_select_hit_lint = matches!(
             &event,
             WindowEvent::MouseInput {
                 state: ElementState::Pressed,
@@ -200,8 +208,8 @@ impl ApplicationHandler for WindowManagerApp {
             }
         }
 
-        if should_select_hovered_lint {
-            self.select_hovered_lint();
+        if should_select_hit_lint {
+            self.select_hit_lint();
         }
 
         if matches!(&event, WindowEvent::CloseRequested) {
