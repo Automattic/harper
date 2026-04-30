@@ -295,11 +295,12 @@ pub trait Linter: LSend {
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
 
-    /// Get the names of child linters for clash detection.
+    /// Get the names of all component linters.
+    /// For merged linters, this includes children, grandchildren, etc.
     /// Non-merged linters should return an empty array.
     /// This is used by LintGroup to detect name conflicts.
-    fn merged_linter_child_names(&self) -> &'static [&'static str] {
-        &[]
+    fn merged_linter_child_names(&self) -> Vec<&'static str> {
+        vec![]
     }
 }
 
