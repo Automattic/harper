@@ -8,11 +8,10 @@ use std::time::Duration;
 pub use error::Error;
 use window_manager::WindowManager;
 
+use crate::os_broker::OsBroker;
 use crate::rect::PositionedLint;
 
 const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
-
-pub type ReadRects = Box<dyn FnMut() -> Option<Vec<PositionedLint>>>;
 
 /// Public entry point for the screen highlighter system.
 ///
@@ -25,15 +24,13 @@ pub struct Highlighter {
 }
 
 impl Highlighter {
-    pub fn new(
-        read_rects: impl FnMut() -> Option<Vec<PositionedLint>> + 'static,
-    ) -> Result<Self, Error> {
+    pub fn new(os_broker: impl OsBroker + 'static) -> Result<Self, Error> {
         let context = egui::Context::default();
 
         Ok(Self {
             window_manager: WindowManager::new(
                 context.clone(),
-                Box::new(read_rects),
+                Box::new(os_broker),
                 DEFAULT_READ_INTERVAL,
             )?,
             context,

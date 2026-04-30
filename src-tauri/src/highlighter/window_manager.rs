@@ -6,9 +6,9 @@ use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
 use super::Error;
-use super::ReadRects;
 use super::render_state::RenderState;
 use super::window::Window;
+use crate::os_broker::OsBroker;
 use crate::rect::PositionedLint;
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
@@ -20,21 +20,21 @@ pub struct WindowManager {
     event_loop: EventLoop<()>,
     context: egui::Context,
     rects: Vec<PositionedLint>,
-    read_rects: ReadRects,
+    os_broker: Box<dyn OsBroker>,
     read_interval: Duration,
 }
 
 impl WindowManager {
     pub fn new(
         context: egui::Context,
-        read_rects: ReadRects,
+        os_broker: Box<dyn OsBroker>,
         read_interval: Duration,
     ) -> Result<Self, Error> {
         Ok(Self {
             event_loop: EventLoop::new()?,
             context,
             rects: Vec::new(),
-            read_rects,
+            os_broker,
             read_interval,
         })
     }
@@ -48,12 +48,8 @@ impl WindowManager {
     }
 
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
-        let mut app = WindowManagerApp::new(
-            self.context,
-            self.rects,
-            self.read_rects,
-            self.read_interval,
-        );
+        let mut app =
+            WindowManagerApp::new(self.context, self.rects, self.os_broker, self.read_interval);
 
         self.event_loop
             .set_control_flow(ControlFlow::WaitUntil(Instant::now() + self.read_interval));
@@ -71,7 +67,7 @@ struct WindowManagerApp {
     context: egui::Context,
     windows: Vec<Window>,
     render_state: RenderState,
-    read_rects: ReadRects,
+    os_broker: Box<dyn OsBroker>,
     read_interval: Duration,
     last_read: Instant,
     hovered_lint: Option<usize>,
@@ -83,14 +79,14 @@ impl WindowManagerApp {
     fn new(
         context: egui::Context,
         rects: Vec<PositionedLint>,
-        read_rects: ReadRects,
+        os_broker: Box<dyn OsBroker>,
         read_interval: Duration,
     ) -> Self {
         Self {
             context,
             windows: Vec::new(),
             render_state: RenderState::new(rects),
-            read_rects,
+            os_broker,
             read_interval,
             last_read: Instant::now() - read_interval,
             hovered_lint: None,
@@ -100,17 +96,16 @@ impl WindowManagerApp {
     }
 
     fn read_rect_updates(&mut self) {
-        if let Some(rects) = (self.read_rects)() {
-            self.render_state.set_rects(rects);
+        let rects = self.os_broker.get_boxes();
+        self.render_state.set_rects(rects);
 
-            for window in &self.windows {
-                window.request_redraw();
-            }
+        for window in &self.windows {
+            window.request_redraw();
         }
     }
 
     fn update_cursor_hittest(&mut self, event_loop: &ActiveEventLoop) {
-        let Some(cursor_pos) = cursor_position() else {
+        let Some(cursor_pos) = self.os_broker.cursor_position() else {
             return;
         };
 
@@ -210,14 +205,4 @@ impl ApplicationHandler for WindowManagerApp {
             event_loop.exit();
         }
     }
-}
-
-#[cfg(target_os = "macos")]
-fn cursor_position() -> Option<egui::Pos2> {
-    crate::macos::cursor_position()
-}
-
-#[cfg(not(target_os = "macos"))]
-fn cursor_position() -> Option<egui::Pos2> {
-    None
 }

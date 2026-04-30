@@ -22,33 +22,70 @@ use harper_core::{
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, error::Error as StdError, ptr};
 
+use crate::os_broker::OsBroker;
 use crate::rect::{PositionedLint, Rect};
 
-pub fn cursor_position() -> Option<egui::Pos2> {
-    let source = CGEventSource::new(CGEventSourceStateID::CombinedSessionState).ok()?;
-    let event = CGEvent::new(source).ok()?;
-    let location = event.location();
-
-    Some(egui::pos2(location.x as f32, location.y as f32))
+/// macOS implementation of the OS data the highlighter needs.
+///
+/// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
+/// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
+/// targeting the app the user was reviewing.
+pub struct MacBroker {
+    last_focused: Option<pid_t>,
 }
 
-pub fn get_boxes() -> Vec<PositionedLint> {
-    let pid = match focused_window_pid() {
-        Ok(pid) => pid,
-        Err(err) => {
-            println!("Unable to identify focused window: {err}");
-            return Vec::new();
+impl MacBroker {
+    pub fn new() -> Self {
+        Self { last_focused: None }
+    }
+
+    fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
+        let focused_pid = focused_window_pid()?;
+        let current_pid = std::process::id() as pid_t;
+
+        if focused_pid == current_pid {
+            Ok(self.last_focused)
+        } else {
+            self.last_focused = Some(focused_pid);
+            Ok(Some(focused_pid))
         }
-    };
+    }
+}
 
-    let el = AXUIElement::application(pid);
+impl Default for MacBroker {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
-    let walker = TreeWalker::new();
-    let collector = RectCollector::new();
+impl OsBroker for MacBroker {
+    fn get_boxes(&mut self) -> Vec<PositionedLint> {
+        let pid = match self.target_pid() {
+            Ok(Some(pid)) => pid,
+            Ok(None) => return Vec::new(),
+            Err(err) => {
+                println!("Unable to identify focused window: {err}");
+                return Vec::new();
+            }
+        };
 
-    walker.walk(&el, &collector);
+        let el = AXUIElement::application(pid);
 
-    collector.unwrap_rects()
+        let walker = TreeWalker::new();
+        let collector = RectCollector::new();
+
+        walker.walk(&el, &collector);
+
+        collector.unwrap_rects()
+    }
+
+    fn cursor_position(&self) -> Option<egui::Pos2> {
+        let source = CGEventSource::new(CGEventSourceStateID::CombinedSessionState).ok()?;
+        let event = CGEvent::new(source).ok()?;
+        let location = event.location();
+
+        Some(egui::pos2(location.x as f32, location.y as f32))
+    }
 }
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
@@ -116,7 +153,7 @@ impl TreeVisitor for RectCollector {
 
             for lint in &lints {
                 if let Ok(Some(rect)) = element_rect_for_text_range(
-                    &element,
+                    element,
                     lint.span.start as isize,
                     lint.span.len() as isize,
                 ) {
@@ -131,7 +168,7 @@ impl TreeVisitor for RectCollector {
 }
 
 impl RectCollector {
-    pub fn new() -> Self {
+    fn new() -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
             linter: RefCell::new(LintGroup::new_curated(
@@ -141,7 +178,7 @@ impl RectCollector {
         }
     }
 
-    pub fn unwrap_rects(self) -> Vec<PositionedLint> {
+    fn unwrap_rects(self) -> Vec<PositionedLint> {
         self.rects.into_inner()
     }
 }
@@ -178,7 +215,7 @@ fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Opt
     Ok(ok.then(|| unsafe { out.assume_init() }))
 }
 
-pub fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
+fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
     let Some(position) = ax_value::<NSPoint>(element, kAXPositionAttribute, kAXValueTypeCGPoint)?
     else {
         return Ok(None);
@@ -196,7 +233,7 @@ pub fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
     }))
 }
 
-pub fn element_rect_for_text_range(
+fn element_rect_for_text_range(
     element: &AXUIElement,
     start_index: isize,
     length: isize,
