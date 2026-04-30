@@ -25,6 +25,8 @@ pub struct WindowManager {
 }
 
 impl WindowManager {
+    /// Creates the event loop before windows exist because winit requires window creation to happen
+    /// from inside that loop's lifecycle callbacks.
     pub fn new(
         context: egui::Context,
         os_broker: Box<dyn OsBroker>,
@@ -39,14 +41,18 @@ impl WindowManager {
         })
     }
 
+    /// Seeds externally supplied lint rectangles before the event loop takes ownership of rendering.
     pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
         self.rects = rects;
     }
 
+    /// Lets callers tune OS polling without exposing the window-manager internals that schedule it.
     pub fn set_read_interval(&mut self, read_interval: Duration) {
         self.read_interval = read_interval;
     }
 
+    /// Transfers ownership into winit's application handler because `run_app` owns the process-level
+    /// event loop until the overlay exits.
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
         let mut app =
             WindowManagerApp::new(self.context, self.rects, self.os_broker, self.read_interval);
@@ -76,6 +82,8 @@ struct WindowManagerApp {
 }
 
 impl WindowManagerApp {
+    /// Builds the mutable application state consumed by winit callbacks after `WindowManager` gives
+    /// up direct control of the event loop.
     fn new(
         context: egui::Context,
         rects: Vec<PositionedLint>,
@@ -95,6 +103,8 @@ impl WindowManagerApp {
         }
     }
 
+    /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
+    /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
         let rects = self.os_broker.get_boxes();
         self.render_state.set_rects(rects);
@@ -104,6 +114,8 @@ impl WindowManagerApp {
         }
     }
 
+    /// Toggles native click-through behavior based on the cursor's current interactive Harper target,
+    /// keeping editor clicks from being swallowed when the pointer is outside highlights and popups.
     fn update_cursor_hittest(&mut self, event_loop: &ActiveEventLoop) {
         let Some(cursor_pos) = self.os_broker.cursor_position() else {
             return;
@@ -132,6 +144,8 @@ impl WindowManagerApp {
         self.cursor_hittest_enabled = should_enable_hittest;
     }
 
+    /// Opens or replaces the popup only when the actual click target is a lint, leaving popup clicks
+    /// for egui controls such as the close button.
     fn select_hit_lint(&mut self) {
         let Some(cursor_pos) = self.os_broker.cursor_position() else {
             return;

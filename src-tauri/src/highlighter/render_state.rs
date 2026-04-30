@@ -32,6 +32,8 @@ pub struct RenderState {
 }
 
 impl RenderState {
+    /// Creates render state through `set_rects` so initial lint data gets the same stale-popup guard
+    /// used by later accessibility refreshes.
     pub fn new(rects: Vec<PositionedLint>) -> Self {
         let mut state = Self {
             rects: Vec::new(),
@@ -41,6 +43,8 @@ impl RenderState {
         state
     }
 
+    /// Replaces the accessibility-derived lint geometry while preventing a popup from pointing at a
+    /// lint index that no longer exists after the latest read.
     pub fn set_rects(&mut self, rects: Vec<PositionedLint>) {
         self.rects = rects;
 
@@ -61,6 +65,7 @@ impl RenderState {
         self.highlighted_lint = highlighted_lint.filter(|index| *index < self.rects.len());
     }
 
+    /// Centralizes the close behavior so the popup close button only has to clear the selected lint.
     pub fn close_popup(&mut self) {
         self.highlighted_lint = None;
     }
@@ -80,12 +85,16 @@ impl RenderState {
             .map_or(HitTarget::None, HitTarget::Lint)
     }
 
+    /// Computes popup hit-test bounds from our layout contract instead of waiting for egui to report
+    /// rendered bounds, which keeps hit-testing available before the next render pass completes.
     pub fn popup_rect(&self) -> Option<egui::Rect> {
         self.highlighted_lint
             .and_then(|index| self.rects.get(index))
             .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
     }
 
+    /// Draws highlights and the active popup from the same state used by hit-testing so visible
+    /// regions and clickable regions do not drift apart.
     pub fn render(&mut self, ui: &mut egui::Ui) {
         for positioned_lint in &self.rects {
             draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
@@ -102,6 +111,7 @@ impl RenderState {
     }
 }
 
+/// Draws the always-visible lint marker without making the renderer responsible for popup state.
 fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
     let rect_bounds = rect_bounds(rect);
     let color = lint_color(lint);
@@ -121,6 +131,7 @@ fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
     );
 }
 
+/// Renders the suggestion popup and returns whether the explicit close control was clicked.
 fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
     let popup_rect = popup_rect_for_lint(rect);
 
@@ -179,6 +190,8 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
         .inner
 }
 
+/// Keeps the lint type visually attached to the popup without duplicating lint-kind formatting in
+/// the window manager.
 fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint) {
     egui::Frame::new()
         .fill(lint_color(lint))
@@ -194,6 +207,7 @@ fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint) {
         });
 }
 
+/// Renders a suggestion as a compact button so later replacement behavior can attach to one place.
 fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) {
     let button = egui::Button::new(
         egui::RichText::new(suggestion_text(suggestion))
@@ -210,22 +224,45 @@ fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) {
     ui.add(button);
 }
 
+/// Provides the only user-facing popup close affordance; outside clicks stay click-through to the
+/// underlying editor instead of dismissing Harper UI.
 fn close_button(ui: &mut egui::Ui) -> egui::Response {
-    ui.add(
-        egui::Button::new(
-            egui::RichText::new("x")
-                .size(13.0)
-                .color(egui::Color32::from_rgb(246, 248, 252)),
-        )
-        .fill(egui::Color32::from_rgba_unmultiplied(255, 255, 255, 16))
-        .stroke(egui::Stroke::new(
-            1.0,
-            egui::Color32::from_rgba_unmultiplied(255, 255, 255, 26),
-        ))
-        .corner_radius(egui::CornerRadius::same(9)),
-    )
+    let (rect, response) = ui.allocate_exact_size(egui::vec2(24.0, 24.0), egui::Sense::click());
+    let background = if response.hovered() {
+        egui::Color32::from_rgba_unmultiplied(255, 255, 255, 28)
+    } else {
+        egui::Color32::from_rgba_unmultiplied(255, 255, 255, 14)
+    };
+
+    ui.painter().rect_filled(rect, 9.0, background);
+    draw_close_icon(ui, rect);
+
+    response
 }
 
+/// Draws the close glyph separately from button behavior so icon styling can change without touching
+/// the popup's interaction contract.
+fn draw_close_icon(ui: &egui::Ui, rect: egui::Rect) {
+    let stroke = egui::Stroke::new(1.5, egui::Color32::from_rgb(246, 248, 252));
+    let inset = 7.5;
+
+    ui.painter().line_segment(
+        [
+            rect.left_top() + egui::vec2(inset, inset),
+            rect.right_bottom() - egui::vec2(inset, inset),
+        ],
+        stroke,
+    );
+    ui.painter().line_segment(
+        [
+            rect.right_top() + egui::vec2(-inset, inset),
+            rect.left_bottom() + egui::vec2(inset, -inset),
+        ],
+        stroke,
+    );
+}
+
+/// Converts Harper suggestion variants into button text.
 fn suggestion_text(suggestion: &Suggestion) -> String {
     match suggestion {
         Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => chars.iter().collect(),
@@ -233,6 +270,8 @@ fn suggestion_text(suggestion: &Suggestion) -> String {
     }
 }
 
+/// Converts accessibility rectangles into egui rectangles so rendering and hit-testing use the same
+/// screen-space geometry.
 fn rect_bounds(rect: &Rect) -> egui::Rect {
     egui::Rect::from_min_size(
         egui::pos2(rect.x as f32, rect.y as f32),
@@ -240,6 +279,8 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
     )
 }
 
+/// Defines popup geometry ahead of rendering so the transparent overlay can enable or disable native
+/// hit-testing based on our intended layout, not a previous frame's measured egui output.
 fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
     egui::Rect::from_min_size(
         egui::pos2(
@@ -250,6 +291,8 @@ fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
     )
 }
 
+/// Maps Harper lint kinds to egui colors at the drawing boundary so shared color data stays UI-toolkit
+/// agnostic.
 fn lint_color(lint: &Lint) -> egui::Color32 {
     let color = lint_kind_color(lint.lint_kind);
 
