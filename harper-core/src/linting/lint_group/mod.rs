@@ -315,7 +315,7 @@ impl LintGroup {
 
     /// Check for clashes between a new linter and existing linters
     fn check_clashes(&self, name: &str, child_names: &[&str]) -> Option<Vec<String>> {
-        use std::collections::HashSet;
+        use hashbrown::HashSet;
         let mut clashes = HashSet::new();
 
         // Check direct name clash with existing `Linter`s or `ExprLinter`s

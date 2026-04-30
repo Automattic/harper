@@ -36,12 +36,7 @@ macro_rules! merge_linters {
                     }
 
                     fn merged_linter_child_names(&self) -> Vec<&'static str> {
-                        let mut all_names = Vec::new();
-
-                        // Add immediate children from tuple names
-                        $(
-                            all_names.push(stringify!($linter));
-                        )*
+                        let mut all_names = vec![$(stringify!($linter)),*];
 
                         // Recursively collect from each child linter instance
                         $(
