@@ -96,8 +96,6 @@ impl TreeVisitor for RectCollector {
         if let Ok(value) = element.value()
             && is_textarea(element)
         {
-            dbg!(&value);
-
             let string =
                 unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
 
@@ -113,7 +111,6 @@ impl TreeVisitor for RectCollector {
                     lint.span.start as isize,
                     lint.span.len() as isize,
                 ) {
-                    dbg!(rect);
                     rects.push(ColoredRect::new(
                         rect.x,
                         rect.y,
