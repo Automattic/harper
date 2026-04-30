@@ -6,7 +6,7 @@ use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
 use super::Error;
-use super::render_state::RenderState;
+use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::OsBroker;
 use crate::rect::PositionedLint;
@@ -109,10 +109,13 @@ impl WindowManagerApp {
             return;
         };
 
-        self.hovered_lint = self.render_state.find_lint_at_pos(cursor_pos);
+        let hit_target = self.render_state.hit_target_at_pos(cursor_pos);
+        self.hovered_lint = match hit_target {
+            HitTarget::Lint(index) => Some(index),
+            HitTarget::Popup | HitTarget::None => None,
+        };
 
-        let should_enable_hittest =
-            self.hovered_lint.is_some() || self.render_state.has_highlighted_lint();
+        let should_enable_hittest = !matches!(hit_target, HitTarget::None);
 
         if self.cursor_hittest_enabled == should_enable_hittest {
             return;

@@ -6,6 +6,15 @@ use crate::{
 };
 
 const CARD_WIDTH: f32 = 340.0;
+const CARD_HEIGHT: f32 = 150.0;
+const CARD_OFFSET_Y: f32 = 8.0;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HitTarget {
+    Lint(usize),
+    Popup,
+    None,
+}
 
 /// Stores highlighter-specific drawing state and renders it into an egui frame.
 ///
@@ -52,23 +61,29 @@ impl RenderState {
         self.highlighted_lint = highlighted_lint.filter(|index| *index < self.rects.len());
     }
 
-    /// Reports whether a popup is open so window hit-testing can stay enabled for interaction.
-    ///
-    /// The overlay is normally click-through. Once a popup is visible, the window manager needs a
-    /// simple render-state query to avoid making the window click-through while the user is moving
-    /// from a highlight into the popup.
-    pub fn has_highlighted_lint(&self) -> bool {
-        self.highlighted_lint.is_some()
+    pub fn close_popup(&mut self) {
+        self.highlighted_lint = None;
     }
 
-    /// Finds the lint under a screen-space cursor position for hover and click routing.
+    /// Finds the interactive highlighter region under a screen-space cursor position.
     ///
-    /// Cursor polling lives outside the renderer, but hit-testing belongs next to the rectangles
-    /// being rendered so both paths use the same geometry.
-    pub fn find_lint_at_pos(&self, pos: egui::Pos2) -> Option<usize> {
+    /// Cursor polling lives outside the renderer, but hit-testing belongs next to the rectangles and
+    /// popup geometry being rendered so both paths use the same layout contract.
+    pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
+        if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
+            return HitTarget::Popup;
+        }
+
         self.rects
             .iter()
             .position(|positioned_lint| rect_bounds(&positioned_lint.rect).contains(pos))
+            .map_or(HitTarget::None, HitTarget::Lint)
+    }
+
+    pub fn popup_rect(&self) -> Option<egui::Rect> {
+        self.highlighted_lint
+            .and_then(|index| self.rects.get(index))
+            .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
     }
 
     pub fn render(&mut self, ui: &mut egui::Ui) {
@@ -80,7 +95,9 @@ impl RenderState {
             .highlighted_lint
             .and_then(|index| self.rects.get(index))
         {
-            render_lint_card(ui, &positioned_lint.rect, &positioned_lint.lint);
+            if render_lint_card(ui, &positioned_lint.rect, &positioned_lint.lint) {
+                self.close_popup();
+            }
         }
     }
 }
@@ -104,14 +121,15 @@ fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
     );
 }
 
-fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
+fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) -> bool {
+    let popup_rect = popup_rect_for_lint(rect);
+
     egui::Area::new(egui::Id::new("harper-lint-card"))
         .order(egui::Order::Foreground)
-        .fixed_pos(egui::pos2(
-            rect.x as f32,
-            rect.y as f32 + rect.height as f32 + 8.0,
-        ))
+        .fixed_pos(popup_rect.min)
         .show(ui.ctx(), |ui| {
+            let mut should_close = false;
+
             egui::Frame::new()
                 .fill(egui::Color32::from_rgba_unmultiplied(30, 32, 38, 244))
                 .stroke(egui::Stroke::new(
@@ -128,9 +146,18 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
                 })
                 .show(ui, |ui| {
                     ui.set_width(CARD_WIDTH);
+                    ui.set_min_height(CARD_HEIGHT);
+                    ui.set_max_height(CARD_HEIGHT);
                     ui.spacing_mut().item_spacing = egui::vec2(8.0, 10.0);
 
-                    lint_kind_badge(ui, lint);
+                    ui.horizontal(|ui| {
+                        lint_kind_badge(ui, lint);
+                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                            if close_button(ui).clicked() {
+                                should_close = true;
+                            }
+                        });
+                    });
 
                     ui.label(
                         egui::RichText::new(&lint.message)
@@ -147,7 +174,9 @@ fn render_lint_card(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
                         }
                     });
                 });
-        });
+            should_close
+        })
+        .inner
 }
 
 fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint) {
@@ -181,6 +210,22 @@ fn suggestion_option(ui: &mut egui::Ui, suggestion: &Suggestion) {
     ui.add(button);
 }
 
+fn close_button(ui: &mut egui::Ui) -> egui::Response {
+    ui.add(
+        egui::Button::new(
+            egui::RichText::new("x")
+                .size(13.0)
+                .color(egui::Color32::from_rgb(246, 248, 252)),
+        )
+        .fill(egui::Color32::from_rgba_unmultiplied(255, 255, 255, 16))
+        .stroke(egui::Stroke::new(
+            1.0,
+            egui::Color32::from_rgba_unmultiplied(255, 255, 255, 26),
+        ))
+        .corner_radius(egui::CornerRadius::same(9)),
+    )
+}
+
 fn suggestion_text(suggestion: &Suggestion) -> String {
     match suggestion {
         Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => chars.iter().collect(),
@@ -192,6 +237,16 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
     egui::Rect::from_min_size(
         egui::pos2(rect.x as f32, rect.y as f32),
         egui::vec2(rect.width as f32, rect.height as f32),
+    )
+}
+
+fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
+    egui::Rect::from_min_size(
+        egui::pos2(
+            rect.x as f32,
+            rect.y as f32 + rect.height as f32 + CARD_OFFSET_Y,
+        ),
+        egui::vec2(CARD_WIDTH, CARD_HEIGHT),
     )
 }
 
