@@ -20,9 +20,7 @@ pub struct WorstComesToWorst {
 impl WorstComesToWorst {
     pub fn new(dialect: Dialect) -> Self {
         Self {
-            expr: SequenceExpr::aco("if")
-                .t_ws()
-                .then_optional(SequenceExpr::aco("the").t_ws())
+            expr: SequenceExpr::optional(SequenceExpr::aco("the").t_ws())
                 .t_set(&["worse", "worst"])
                 .t_ws()
                 .t_set(&["come", "comes"])
@@ -44,7 +42,6 @@ impl ExprLinter for WorstComesToWorst {
         let is_valid_variant = VALID_VARIANTS.iter().any(|variant| {
             let mut matched_words_iter = toks
                 .iter()
-                .skip(2) // Skip "if" and following whitespace
                 .enumerate()
                 .filter(|(i, _)| *i % 2 == 0) // Even indices (words)
                 .map(|(_, token)| token.get_ch(source));
@@ -67,10 +64,8 @@ impl ExprLinter for WorstComesToWorst {
         let suggestions = VALID_VARIANTS
             .iter()
             .map(|words| {
-                let word_iter = std::iter::once("if").chain(words.iter().copied());
-
                 let mut replacement = Vec::new();
-                for (i, word) in word_iter.enumerate() {
+                for (i, word) in words.iter().enumerate() {
                     if i > 0 {
                         replacement.push(' ');
                     }
@@ -160,7 +155,7 @@ mod tests {
         );
     }
 
-    // Real-world tests from GitHub
+    // Real-world tests from GitHub, beginning with "if"
 
     #[test]
     fn fix_worst_the_worst() {
@@ -213,6 +208,24 @@ mod tests {
             "If worse comes to the worse, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
             WorstComesToWorst::new(Dialect::American),
             "If worse comes to worst, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
+        );
+    }
+
+    // Real-world tests from GitHub, not beginning with "if"
+
+    fn when_worse_worse() {
+        assert_suggestion_result(
+            "When worse comes to worse just log in again.",
+            WorstComesToWorst::new(Dialect::Canadian),
+            "When worst comes to worst just log in again.",
+        );
+    }
+
+    fn just_worse_worse() {
+        assert_suggestion_result(
+            "Worse comes to worse, I could even run maybe 40 samples on our local cluster.",
+            WorstComesToWorst::new(Dialect::Australian),
+            "Worst comes to worst, I could even run maybe 40 samples on our local cluster.",
         );
     }
 }
