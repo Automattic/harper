@@ -1,4 +1,5 @@
 use self::highlighter::Highlighter;
+use self::highlighter_process::HighlighterProcess;
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, Document,
@@ -9,6 +10,7 @@ use std::time::Duration;
 
 pub mod color;
 pub mod highlighter;
+mod highlighter_process;
 pub mod lint_kind_color;
 mod os_broker;
 pub mod rect;
@@ -38,6 +40,9 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
+    let _highlighter_process =
+        HighlighterProcess::spawn().expect("failed to spawn highlighter process");
+
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .run(tauri::generate_context!())
