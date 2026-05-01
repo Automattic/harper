@@ -503,8 +503,8 @@ impl Backend {
             .await
             .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
-        for (i, config_item) in new_config.iter().enumerate() {
-            self.update_config_from_obj(config_item.clone()).await;
+        for config_item in new_config {
+            self.update_config_from_obj(config_item).await;
         }
     }
 }
@@ -613,11 +613,8 @@ impl LanguageServer for Backend {
         };
 
         let uri = params.text_document.uri.clone();
-        
-        if let Err(err) = self
-            .update_document(&uri, &last.text, None)
-            .await
-        {
+
+        if let Err(err) = self.update_document(&uri, &last.text, None).await {
             error!("{err}")
         }
 
@@ -625,39 +622,38 @@ impl LanguageServer for Backend {
         let config = self.config.read().await;
         let delay_ms = config.diagnostic_delay_ms;
         drop(config); // Release the lock early
-        
+
         if delay_ms > 0 {
             // Cancel any pending diagnostic publication for this document
             let mut pending = self.pending_diagnostics.lock().await;
             if let Some(handle) = pending.remove(&uri) {
                 handle.abort();
             }
-            
+
             // Update last change time
             let mut last_changes = self.last_change_time.lock().await;
             last_changes.insert(uri.clone(), Instant::now());
             drop(last_changes);
-            
+
             // Schedule diagnostics to be published after the delay
             let uri_clone = uri.clone();
             let last_change_time = self.last_change_time.clone();
             let backend = self.clone();
-            
+
             let handle = tokio::spawn(async move {
                 tokio::time::sleep(Duration::from_millis(delay_ms)).await;
-                
+
                 // Check if this is still the most recent change
                 let last_changes = last_change_time.lock().await;
-                if let Some(last_time) = last_changes.get(&uri_clone) {
-                    if last_time.elapsed() >= Duration::from_millis(delay_ms) {
-                        // This is still the most recent change, publish diagnostics
-                        backend.publish_diagnostics(&uri_clone).await;
-                    } else {
-                    }
-                    // Otherwise, a newer change has occurred and will handle diagnostics
+                if let Some(last_time) = last_changes.get(&uri_clone)
+                    && last_time.elapsed() >= Duration::from_millis(delay_ms)
+                {
+                    // This is still the most recent change, publish diagnostics
+                    backend.publish_diagnostics(&uri_clone).await;
                 }
+                // Otherwise, a newer change has occurred and will handle diagnostics
             });
-            
+
             pending.insert(uri, handle);
         } else {
             // No delay configured, publish immediately
