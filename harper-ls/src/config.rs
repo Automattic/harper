@@ -79,6 +79,10 @@ pub struct Config {
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
     pub exclude_patterns: GlobSet,
+    /// Delay in milliseconds after typing stops before diagnostics are published.
+    /// Set to 0 to publish diagnostics immediately (default behavior).
+    /// Set to a positive value to delay diagnostics until typing stops.
+    pub diagnostic_delay_ms: u64,
 }
 
 impl Config {
@@ -187,6 +191,10 @@ impl Config {
             base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
         }
 
+        if let Some(v) = value.get("diagnosticDelayMs") {
+            base.diagnostic_delay_ms = serde_json::from_value(v.clone())?;
+        }
+
         if let Some(v) = value.get("excludePatterns") {
             let Some(a) = v.as_array() else {
                 bail!("excludePatterns must be an array.");
@@ -226,6 +234,7 @@ impl Default for Config {
             dialect: Dialect::American,
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
+            diagnostic_delay_ms: 0,
         }
     }
 }
