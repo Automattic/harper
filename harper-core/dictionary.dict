@@ -7591,7 +7591,7 @@ OCR/ONV             # optical character recognition
 OD/NSgV
 OE/ONJV
 OECD/Og             # organization
-OED/O               # dictionary
+OED/Og              # dictionary
 OEM/JNgS            # original equipment manufacturer
 OH/ON               # US state (Ohio)
 OHSA/g              # law
@@ -15933,6 +15933,7 @@ bu/~N
 bub/NSgV
 bubble/~NSgVdG>
 bubble tea/NwgS
+bubble wrap/Nmg
 bubblegum/~NmgJ
 bubbly/J>^Nmg
 bubo/N0g
@@ -49384,6 +49385,7 @@ thwack/VGd>SNgZ
 thwacker/Ng
 thwart/~JPVGdSNg
 thy/~D
+thylacine/NgS
 thyme/~Ng
 thymine/Ng
 thymus/NgS
@@ -53925,6 +53927,7 @@ Famicom/NOSg        # game console
 Figma/Og
 FireWire/Sg         # trademark
 Firestore/Og
+Flatpak/Og          # package management
 Foddy/Sg
 Forgejo/Og          # programming forge / git host
 Frankl/Sg
