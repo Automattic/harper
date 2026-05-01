@@ -1,0 +1,25 @@
+expr main [(letztes Endes letzten Endes)]
+
+let message "Möglicher Tippfehler: Meinten Sie »letzten Endes«?"
+let description "MöglicherTippfehlerMeintenSieletztenEndes"
+let kind "Grammar"
+let becomes "letzten Endes"
+let strategy "MatchCase"
+
+test "Das ist letztes Endes letzten Endes egal." "Das ist letzten Endes egal."
+test "Letztes Endes letzten Endes kommt es nicht darauf an." "Letzten Endes kommt es nicht darauf an."
+test "Das ist letztes Endes letzten Endes wichtig." "Das ist letzten Endes wichtig."
+test "Letztes Endes letzten Endes hat es funktioniert." "Letzten Endes hat es funktioniert."
+test "Das ist letztes Endes letzten Endes geschafft." "Das ist letzten Endes geschafft."
+test "Letztes Endes letzten Endes ist es egal." "Letzten Endes ist es egal."
+test "Das ist letztes Endes letzten Endes vorbei." "Das ist letzten Endes vorbei."
+test "Letztes Endes letzten Endes habe ich es geschafft." "Letzten Endes habe ich es geschafft."
+test "Das ist letztes Endes letzten Endes gelungen." "Das ist letzten Endes gelungen."
+test "Letztes Endes letzten Endes war es einfach." "Letzten Endes war es einfach."
+test "Das ist letztes Endes letzten Endes passiert." "Das ist letzten Endes passiert."
+test "Letztes Endes letzten Endes haben wir gewonnen." "Letzten Endes haben wir gewonnen."
+test "Das ist letztes Endes letzten Endes entschieden." "Das ist letzten Endes entschieden."
+test "Letztes Endes letzten Endes gibt es keine Alternative." "Letzten Endes gibt es keine Alternative."
+test "Das ist letztes Endes letzten Endes das Ende." "Das ist letzten Endes das Ende."
+
+allows "letzten Endes"

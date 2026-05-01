@@ -10,3 +10,8 @@ pr-drafts/
 
 # Ignore direnv files
 .direnv/*
+
+# Ignore local documentation files
+.local-docs/
+harper-core/german_dictionary.dict
+docs/

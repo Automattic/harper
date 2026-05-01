@@ -1,0 +1,28 @@
+expr main [(in dem im), (in dem Im), (IN DEM im)]
+
+let message "»in dem« kann zu »im« verkürzt werden."
+let description "Die Präposition »in« mit Artikel »dem« wird oft zu »im« verkürzt."
+let kind "Style"
+let becomes "im"
+let strategy "MatchCase"
+
+test "Er ist in dem im Büro." "Er ist im Büro."
+test "Sie wohnt in dem im Haus." "Sie wohnt im Haus."
+test "Das Buch liegt in dem im Regal." "Das Buch liegt im Regal."
+test "Wir arbeiten in dem im Garten." "Wir arbeiten im Garten."
+test "in dem im Sommer" "im Sommer"
+test "in dem im Winter" "im Winter"
+test "in dem im Freien" "im Freien"
+test "in dem im Norden" "im Norden"
+test "in dem im Süden" "im Süden"
+test "in dem im Osten" "im Osten"
+test "in dem im Westen" "im Westen"
+test "in dem im Zentrum" "im Zentrum"
+test "in dem im Hintergrund" "im Hintergrund"
+test "in dem im Vordergrund" "im Vordergrund"
+test "in dem im Grunde" "im Grunde"
+
+allows "in dem Moment"
+allows "in dem gleichen"
+allows "in dem folgenden"
+allows "in dem letzten"

@@ -1,0 +1,27 @@
+expr main [(geschehen geschehen), (geschehen Geschehen)]
+
+let message "Das Verb lautet »geschehen« (with e)."
+let description "DasVerblautet»geschehen«(mit»e«)geschrieben,nicht»geschehen«."
+let kind "Spelling"
+let becomes "geschehen"
+let strategy "MatchCase"
+
+test "Was ist geschehen geschehen?" "Was ist geschehen?"
+test "Es ist etwas geschehen geschehen." "Es ist etwas geschehen."
+test "geschehen geschehen ein Unfall" "geschehen ein Unfall"
+test "geschehen geschehen ein Fehler" "geschehen ein Fehler"
+test "geschehen geschehen ein Problem" "geschehen ein Problem"
+test "geschehen geschehen eine Veränderung" "geschehen eine Veränderung"
+test "geschehen geschehen ein Wandel" "geschehen ein Wandel"
+test "geschehen geschehen ein Ereignis" "geschehen ein Ereignis"
+test "geschehen geschehen eine Überraschung" "geschehen eine Überraschung"
+test "geschehen geschehen ein Erfolg" "geschehen ein Erfolg"
+test "geschehen geschehen ein Misserfolg" "geschehen ein Misserfolg"
+test "geschehen geschehen ein Bruch" "geschehen ein Bruch"
+test "geschehen geschehen eine Entdeckung" "geschehen eine Entdeckung"
+test "geschehen geschehen eine Erfindung" "geschehen eine Erfindung"
+
+allows "geschehen"
+allows "passiert"
+allows "passierte"
+allows "stattgefunden"

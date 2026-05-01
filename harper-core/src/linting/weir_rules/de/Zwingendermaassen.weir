@@ -1,0 +1,27 @@
+expr main [(zwingendermaßen zwingendermaßen)]
+
+let message "Dieses Wort wird mit »e« und »ß« geschrieben."
+let description "Das Adverb wird mit »e« und »ß« (nicht »ue«) geschrieben."
+let kind "Spelling"
+let becomes "gezwungenermaßen"
+let strategy "MatchCase"
+
+test "Das passiert zwingendermaßen zwingendermaßen." "Das passiert gezwungenermaßen."
+test "Er wurde zwingendermaßen zwingendermaßen entlassen." "Er wurde gezwungenermaßen entlassen."
+test "zwingendermaßen zwingendermaßen verfahren" "gezwungenermaßen verfahren"
+test "zwingendermaßen zwingendermaßen übertragen" "gezwungenermaßen übertragen"
+test "zwingendermaßen zwingendermaßen gekündigt" "gezwungenermaßen gekündigt"
+test "wurde zwingendermaßen zwingendermaßen beendet" "wurde gezwungenermaßen beendet"
+test "zwingendermaßen zwingendermaßen gestoppt" "gezwungenermaßen gestoppt"
+test "zwingendermaßen zwingendermaßen unterbrochen" "gezwungenermaßen unterbrochen"
+test "zwingendermaßen zwingendermaßen durchgeführt" "gezwungenermaßen durchgeführt"
+test "wurden zwingendermaßen zwingendermaßen umgesetzt" "wurden gezwungenermaßen umgesetzt"
+test "zwingendermaßen zwingendermaßen hingenommen" "gezwungenermaßen hingenommen"
+test "wurde zwingendermaßen zwingendermaßen ergriffen" "wurde gezwungenermaßen ergriffen"
+test "zwingendermaßen zwingendermaßen kontrolliert" "gezwungenermaßen kontrolliert"
+test "zwingendermaßen zwingendermaßen reguliert" "gezwungenermaßen reguliert"
+test "zwingendermaßen zwingendermaßen überwachen" "gezwungenermaßen überwachen"
+
+allows "gezwungen"
+allows "zwangsläufig"
+allows "erzwungen"

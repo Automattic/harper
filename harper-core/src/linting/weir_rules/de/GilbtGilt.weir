@@ -1,0 +1,26 @@
+expr main [(gilbt gilt)]
+
+let message "Das Wort wird »gilt« oder »gibt« geschrieben."
+let description "DasWortwirdgiltodergibgeschrieben."
+let kind "Spelling"
+let becomes "gilt"
+let strategy "MatchCase"
+
+test "Er gilbt gilt viel Geld." "Er gilt viel Geld."
+test "Es gilbt gilt viele Probleme." "Es gilt viele Probleme."
+test "Das gilbt gilt als sicher." "Das gilt als sicher."
+test "Was gilbt gilt hier?" "Was gilt hier?"
+test "Es gilbt gilt zu beachten." "Es gilt zu beachten."
+test "Das gilbt gilt für alle." "Das gilt für alle."
+test "Es gilbt gilt als fertig." "Es gilt als fertig."
+test "Nur das gilbt gilt." "Nur das gilt."
+test "Alles gilbt gilt als gut." "Alles gilt als gut."
+test "Nichts gilbt gilt mehr." "Nichts gilt mehr."
+test "Es gilbt gilt zu viel." "Es gilt zu viel."
+test "Das gilbt gilt als Ergebnis." "Das gilt als Ergebnis."
+test "Es gilbt gilt drei Möglichkeiten." "Es gilt drei Möglichkeiten."
+test "Er gilbt gilt mir viel." "Er gilt mir viel."
+test "Das gilbt gilt für dich." "Das gilt für dich."
+
+allows "gibt"
+allows "gilt"

@@ -1,0 +1,26 @@
+expr main [(genant genannt)]
+
+let message "Das Wort wird »genannt« geschrieben."
+let description "DasWortwirdgenanntgeschrieben."
+let kind "Spelling"
+let becomes "genannt"
+let strategy "MatchCase"
+
+test "Er wurde genant genannt." "Er wurde genannt."
+test "Sie wurde genant genannt." "Sie wurde genannt."
+test "Das wurde genant genannt." "Das wurde genannt."
+test "werde genant genannt." "werde genannt."
+test "wurde genant genannt." "wurde genannt."
+test "ist genant genannt." "ist genannt."
+test "sind genant genannt." "sind genannt."
+test "wurden genant genannt." "wurden genannt."
+test "worden genant genannt." "worden genannt."
+test "Der genant genannt." "Der genannt."
+test "Die genant genannt." "Die genannt."
+test "Das genant genannt." "Das genannt."
+test "Eine genant genannt." "Eine genannt."
+test "Keine genant genannt." "Keine genannt."
+
+allows "genannt"
+allows "nennen"
+allows "erklärt"

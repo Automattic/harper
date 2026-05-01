@@ -34,6 +34,13 @@ serde = { version = "1.0.228", features = ["derive"] }
 globset = "0.4.18"
 harper-ink = { version = "2.0.0", path = "../harper-ink" }
 
+[lib]
+name = "harper_ls"
+path = "src/lib.rs"
+
 [features]
 default = []
 thesaurus = ["harper-core/thesaurus"]
+
+[dev-dependencies]
+tempfile = "3"
