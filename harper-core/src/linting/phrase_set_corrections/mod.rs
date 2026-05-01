@@ -810,6 +810,15 @@ pub fn lint_group() -> LintGroup {
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
         ),
+        "Monumentous" => (
+            &[
+                (&["monumentous"], &["momentous", "monumental"]),
+                (&["monumentously"], &["momentously", "monumentally"]),
+            ],
+            "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
+            "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
+            LintKind::Nonstandard
+        ),
         "NervousWreck" => (
             &[
                 (&["nerve wreck", "nerve-wreck"], &["nervous wreck"]),

@@ -1967,7 +1967,7 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
-         |                                                 ^~~~ `outa` should probably be written as `out a`.
+         |                                                 ^~~~ `outa` should possibly be written as `out a`.
 Suggest:
   - Replace with: “out a”
 
