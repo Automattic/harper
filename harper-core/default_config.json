@@ -4822,6 +4822,13 @@
 								"state": true,
 								"label": "More Than Meets The Eye"
 							}
+						},
+						{
+							"Bool": {
+								"name": "WorstComesToWorst",
+								"state": true,
+								"label": "Worst Comes To Worst"
+							}
 						}
 					]
 				}
