@@ -108,6 +108,8 @@ mod tests {
 
     use super::WorstComesToWorst;
 
+    // Contrived basic tests
+
     #[test]
     fn fix_main_us_variant() {
         assert_suggestion_result(
@@ -155,6 +157,62 @@ mod tests {
         assert_no_lints(
             "if worst comes to worst",
             WorstComesToWorst::new(Dialect::Indian),
+        );
+    }
+
+    // Real-world tests from GitHub
+
+    #[test]
+    fn fix_worst_the_worst() {
+        assert_suggestion_result(
+            "and if worst comes to the worst I can probably modify the data before I load it to avoid this",
+            WorstComesToWorst::new(Dialect::American),
+            "and if worst comes to worst I can probably modify the data before I load it to avoid this",
+        );
+    }
+
+    #[test]
+    fn fix_worse_worse() {
+        assert_suggestion_result(
+            "Then if worse comes to worse, there are plenty of frameworks out there.",
+            WorstComesToWorst::new(Dialect::American),
+            "Then if worse comes to worst, there are plenty of frameworks out there.",
+        );
+    }
+
+    #[test]
+    fn fix_worse_the_worst() {
+        assert_suggestion_result(
+            "If worse comes to the worst, I guess we can disable WASAPI by default again until we can sort this out.",
+            WorstComesToWorst::new(Dialect::American),
+            "If worse comes to worst, I guess we can disable WASAPI by default again until we can sort this out.",
+        );
+    }
+
+    #[test]
+    fn fix_worst_worse() {
+        assert_suggestion_result(
+            "if worst comes to worse, you can always have multiple describe blocks.",
+            WorstComesToWorst::new(Dialect::American),
+            "if worst comes to worst, you can always have multiple describe blocks.",
+        );
+    }
+
+    #[test]
+    fn fix_worse_come_to_worse() {
+        assert_suggestion_result(
+            "If worse come to worse I can always make scenes that will only be those tile collection",
+            WorstComesToWorst::new(Dialect::American),
+            "If worst come to worst I can always make scenes that will only be those tile collection",
+        );
+    }
+
+    #[test]
+    fn fix_worse_come_to_the_worse() {
+        assert_suggestion_result(
+            "If worse comes to the worse, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
+            WorstComesToWorst::new(Dialect::American),
+            "If worse comes to worst, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
         );
     }
 }
