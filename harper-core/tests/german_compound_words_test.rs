@@ -102,6 +102,7 @@ fn test_three_part_compounds() {
     let test_cases = vec![
         "Donaudampfschifffahrt", // Donau + dampf + schiff + fahrt
         "Schwarzweißfilm",       // Schwarz + weiß + Film
+        "Festplattenspeicher",   // Fest + Platten + Speicher
     ];
 
     for word in test_cases {
@@ -113,13 +114,11 @@ fn test_three_part_compounds() {
         );
         let lints = linter.lint(&document);
 
-        // These are very long compounds - may not be in dictionary
-        // But we should at least not crash on them
+        let word_lints: Vec<_> = lints.iter().filter(|l| l.message.contains(word)).collect();
         assert!(
-            lints.len() < 10,
-            "{} should not generate excessive lints, got {}",
-            word,
-            lints.len()
+            word_lints.is_empty(),
+            "{} should be recognized as a valid multi-part compound",
+            word
         );
     }
 }

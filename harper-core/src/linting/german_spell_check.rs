@@ -1,8 +1,27 @@
+use std::collections::HashMap;
+
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
 use crate::TokenStringExt;
 use crate::document::Document;
 use crate::spell::Dictionary;
+
+const MIN_COMPOUND_PART_LEN: usize = 3;
+const MAX_COMPOUND_PARTS: usize = 5;
+const EMPTY_INTERFIX: &[char] = &[];
+const S_INTERFIX: &[char] = &['s'];
+const N_INTERFIX: &[char] = &['n'];
+const EN_INTERFIX: &[char] = &['e', 'n'];
+const ER_INTERFIX: &[char] = &['e', 'r'];
+const ES_INTERFIX: &[char] = &['e', 's'];
+const GERMAN_COMPOUND_INTERFIXES: &[&[char]] = &[
+    EMPTY_INTERFIX,
+    S_INTERFIX,
+    N_INTERFIX,
+    EN_INTERFIX,
+    ER_INTERFIX,
+    ES_INTERFIX,
+];
 
 /// A spell checker for German text with compound word handling.
 pub struct GermanSpellCheck<T>
@@ -17,47 +36,83 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         Self { dictionary }
     }
 
-    /// Try to check if a word is a valid German compound word.
-    /// German freely combines nouns: "Haustür" = "Haus" + "Tür".
-    /// Also handles Fugen-s: "Frühstücksspeck" = "Frühstück" + "s" + "Speck".
-    fn try_compound_word_check(&self, word: &[char]) -> bool {
-        if word.len() < 6 {
+    fn strip_compound_interfix<'a>(
+        &self,
+        remainder: &'a [char],
+        interfix: &[char],
+    ) -> Option<&'a [char]> {
+        remainder.strip_prefix(interfix)
+    }
+
+    fn is_valid_compound_segment(
+        &self,
+        word: &[char],
+        depth: usize,
+        memo: &mut HashMap<Vec<char>, bool>,
+    ) -> bool {
+        if word.len() < MIN_COMPOUND_PART_LEN {
             return false;
         }
 
-        for split_pos in 3..word.len() - 2 {
+        if depth >= MAX_COMPOUND_PARTS {
+            return false;
+        }
+
+        if depth > 0 && self.dictionary.contains_word(word) {
+            return true;
+        }
+
+        if let Some(cached) = memo.get(word) {
+            return *cached;
+        }
+
+        let mut valid = false;
+
+        for split_pos in MIN_COMPOUND_PART_LEN..=word.len() - MIN_COMPOUND_PART_LEN {
             let first_part = &word[..split_pos];
-            let second_part = &word[split_pos..];
 
-            // Direct split: "Haustür" → "Haus" + "Tür"
-            if self.dictionary.contains_word(first_part)
-                && self.dictionary.contains_word(second_part)
-            {
-                return true;
+            if !self.dictionary.contains_word(first_part) {
+                continue;
             }
 
-            // Fugen-s: "Arbeitsstelle" → "Arbeit" + "s" + "Stelle"
-            if second_part.first() == Some(&'s') && second_part.len() > 3 {
-                let after_s = &second_part[1..];
-                if self.dictionary.contains_word(first_part)
-                    && self.dictionary.contains_word(after_s)
+            let remainder = &word[split_pos..];
+
+            for interfix in GERMAN_COMPOUND_INTERFIXES {
+                let Some(next_part) = self.strip_compound_interfix(remainder, interfix) else {
+                    continue;
+                };
+
+                if next_part.len() < MIN_COMPOUND_PART_LEN {
+                    continue;
+                }
+
+                if self.dictionary.contains_word(next_part)
+                    || self.is_valid_compound_segment(next_part, depth + 1, memo)
                 {
-                    return true;
+                    valid = true;
+                    break;
                 }
             }
 
-            // Fugen-n: "Straßenrand" → "Straße" + "n" + "Rand"
-            if second_part.first() == Some(&'n') && second_part.len() > 3 {
-                let after_n = &second_part[1..];
-                if self.dictionary.contains_word(first_part)
-                    && self.dictionary.contains_word(after_n)
-                {
-                    return true;
-                }
+            if valid {
+                break;
             }
         }
 
-        false
+        memo.insert(word.to_vec(), valid);
+        valid
+    }
+
+    /// Check if a word is a valid German compound.
+    /// German freely combines nouns and often inserts linking morphemes such as
+    /// `s`, `n`, `en`, `er`, `e`, or `es` between parts.
+    fn try_compound_word_check(&self, word: &[char]) -> bool {
+        if word.len() < MIN_COMPOUND_PART_LEN * 2 {
+            return false;
+        }
+
+        let mut memo = HashMap::new();
+        self.is_valid_compound_segment(word, 0, &mut memo)
     }
 
     /// Get spelling suggestions for a word using fuzzy matching.
@@ -139,5 +194,84 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
     fn description(&self) -> &str {
         "Checks for spelling errors in German text"
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::GermanSpellCheck;
+    use crate::linting::{LintGroup, Linter};
+    use crate::parsers::PlainGerman;
+    use crate::spell::curated_german_dictionary;
+    use crate::{Dialect, Document};
+
+    fn lint_text(text: &str) -> Vec<String> {
+        let dict = curated_german_dictionary();
+        let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
+        let document = Document::new(text, &PlainGerman, &dict);
+
+        linter
+            .lint(&document)
+            .into_iter()
+            .map(|lint| lint.message)
+            .collect()
+    }
+
+    fn recognizes_compound(word: &str) -> bool {
+        let dict = curated_german_dictionary();
+        let spellcheck = GermanSpellCheck::new(dict);
+        let chars: Vec<char> = word.chars().collect();
+
+        spellcheck.try_compound_word_check(&chars)
+    }
+
+    #[test]
+    fn recognizes_recursive_compounds() {
+        for word in [
+            "Gartenhaus",
+            "Arbeitsstelle",
+            "Frühstücksspeck",
+            "Straßenrand",
+            "Festplattenspeicher",
+        ] {
+            assert!(
+                recognizes_compound(word),
+                "{word} should be treated as a valid compound"
+            );
+        }
+    }
+
+    #[test]
+    fn does_not_accept_misspelled_compounds() {
+        for word in ["Festplattenspeicer", "Arbeitsplaz", "Straßenrant"] {
+            assert!(
+                !recognizes_compound(word),
+                "{word} should not be treated as a valid compound"
+            );
+        }
+    }
+
+    #[test]
+    fn lint_allows_festplattenspeicher() {
+        let messages = lint_text("Der Festplattenspeicher ist fast voll.");
+
+        assert!(
+            messages
+                .iter()
+                .all(|message| !message.contains("Festplattenspeicher")),
+            "Festplattenspeicher should not be flagged: {messages:?}"
+        );
+    }
+
+    #[test]
+    fn lint_flags_misspelled_storage_compounds() {
+        let messages = lint_text("Der Festplattenspeicer ist fast voll.");
+
+        assert!(
+            messages
+                .iter()
+                .any(|message| message.contains("Festplattenspeicer")),
+            "Misspelled compound should still be flagged: {messages:?}"
+        );
     }
 }

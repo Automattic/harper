@@ -9,7 +9,7 @@ Für die Installation benötigen Sie:
 
 ## Konfiguration
 
-Die Konfigurationsdatei befindet sich im Ordner /etc/harper.
+Die Konfigurationsdatei befindet sich im Ordner `/etc/harper`.
 Sie können die Einstellungen mit einem Texteditor bearbeiten.
 
 ## Fehlerbehebung

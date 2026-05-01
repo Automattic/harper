@@ -2,7 +2,7 @@
 // via the public LintGroup API.
 
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{Parser, PlainGerman};
+use harper_core::parsers::{Markdown, MarkdownOptions, Parser, PlainGerman};
 use harper_core::spell::curated_german_dictionary;
 use harper_core::{Dialect, Document};
 
@@ -109,10 +109,6 @@ fn test_german_lint_errors() {
 /// Simulate exactly what harper-ls does: Markdown parser + German dict + organized_lints
 #[test]
 fn test_german_ls_simulation() {
-    use harper_core::linting::LintGroup;
-    use harper_core::parsers::{Markdown, MarkdownOptions};
-    use harper_core::spell::curated_german_dictionary;
-    use harper_core::{Dialect, Document};
     use std::sync::Arc;
 
     let dict = Arc::new(curated_german_dictionary());
@@ -141,5 +137,55 @@ fn test_german_ls_simulation() {
         total >= 3,
         "Should find at least 3 issues (1 cap + 2 spelling), got {}",
         total
+    );
+}
+
+fn lint_markdown_fixture(path: &str) -> Vec<String> {
+    let dict = curated_german_dictionary();
+    let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
+    let text = std::fs::read_to_string(path).expect("test file missing");
+    let parser = Markdown::new(MarkdownOptions::default());
+    let document = Document::new(&text, &parser, &dict);
+
+    linter
+        .lint(&document)
+        .into_iter()
+        .map(|lint| lint.message)
+        .collect()
+}
+
+#[test]
+fn test_german_storage_fixture_stays_clean() {
+    let messages = lint_markdown_fixture("tests/test_sources/german_storage_guide.md");
+
+    assert!(
+        messages.is_empty(),
+        "Storage guide should lint cleanly, got {messages:?}"
+    );
+}
+
+#[test]
+fn test_german_release_notes_fixture_stays_clean() {
+    let messages = lint_markdown_fixture("tests/test_sources/german_release_notes.md");
+
+    assert!(
+        messages.is_empty(),
+        "Release notes should lint cleanly, got {messages:?}"
+    );
+}
+
+#[test]
+fn test_german_support_fixture_surfaces_expected_issues() {
+    let messages = lint_markdown_fixture("tests/test_sources/german_support_ticket.md");
+
+    assert!(
+        messages
+            .iter()
+            .any(|message| message.contains("Festplattenspeicer")),
+        "Support fixture should flag the misspelled compound, got {messages:?}"
+    );
+    assert!(
+        messages.len() >= 3,
+        "Support fixture should surface several issues, got {messages:?}"
     );
 }
