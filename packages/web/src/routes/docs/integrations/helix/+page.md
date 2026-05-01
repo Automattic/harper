@@ -49,6 +49,7 @@ dialect = "American"
 maxFileLength = 120000
 ignoredLintsPath = ""
 excludePatterns = []
+diagnosticDelayMs = 0
 
 [language-server.harper-ls.config.harper-ls.linters]
 SpellCheck = true

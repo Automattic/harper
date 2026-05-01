@@ -3,6 +3,7 @@ use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 
 use crate::config::Config;
 use crate::document_state::DocumentState;
@@ -50,22 +51,29 @@ pub fn ls_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
+#[derive(Clone)]
 pub struct Backend {
     client: Client,
-    root: RwLock<PathBuf>,
-    config: RwLock<Config>,
-    stats: RwLock<Stats>,
-    doc_state: Mutex<HashMap<Uri, DocumentState>>,
+    root: Arc<RwLock<PathBuf>>,
+    config: Arc<RwLock<Config>>,
+    stats: Arc<RwLock<Stats>>,
+    doc_state: Arc<Mutex<HashMap<Uri, DocumentState>>>,
+    /// Tracks the last time each document was changed for diagnostic delay
+    last_change_time: Arc<Mutex<HashMap<Uri, Instant>>>,
+    /// Tracks pending diagnostic publications that are waiting for the delay
+    pending_diagnostics: Arc<Mutex<HashMap<Uri, tokio::task::JoinHandle<()>>>>,
 }
 
 impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
             client,
-            root: RwLock::new(".".into()),
-            stats: RwLock::new(Stats::new()),
-            config: RwLock::new(config),
-            doc_state: Mutex::new(HashMap::new()),
+            root: Arc::new(RwLock::new(".".into())),
+            stats: Arc::new(RwLock::new(Stats::new())),
+            config: Arc::new(RwLock::new(config)),
+            doc_state: Arc::new(Mutex::new(HashMap::new())),
+            last_change_time: Arc::new(Mutex::new(HashMap::new())),
+            pending_diagnostics: Arc::new(Mutex::new(HashMap::new())),
         }
     }
 
@@ -480,17 +488,23 @@ impl Backend {
     }
 
     async fn pull_config(&self) {
-        let mut new_config = self
+        let new_config = self
             .client
-            .configuration(vec![ConfigurationItem {
-                scope_uri: None,
-                section: None,
-            }])
+            .configuration(vec![
+                ConfigurationItem {
+                    scope_uri: None,
+                    section: Some("harper-ls".to_string()),
+                },
+                ConfigurationItem {
+                    scope_uri: None,
+                    section: None,
+                },
+            ])
             .await
             .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
-        if let Some(first) = new_config.pop() {
-            self.update_config_from_obj(first).await;
+        for (i, config_item) in new_config.iter().enumerate() {
+            self.update_config_from_obj(config_item.clone()).await;
         }
     }
 }
@@ -598,14 +612,57 @@ impl LanguageServer for Backend {
             return;
         };
 
+        let uri = params.text_document.uri.clone();
+        
         if let Err(err) = self
-            .update_document(&params.text_document.uri, &last.text, None)
+            .update_document(&uri, &last.text, None)
             .await
         {
             error!("{err}")
         }
 
-        self.publish_diagnostics(&params.text_document.uri).await;
+        // Check if diagnostic delay is configured
+        let config = self.config.read().await;
+        let delay_ms = config.diagnostic_delay_ms;
+        drop(config); // Release the lock early
+        
+        if delay_ms > 0 {
+            // Cancel any pending diagnostic publication for this document
+            let mut pending = self.pending_diagnostics.lock().await;
+            if let Some(handle) = pending.remove(&uri) {
+                handle.abort();
+            }
+            
+            // Update last change time
+            let mut last_changes = self.last_change_time.lock().await;
+            last_changes.insert(uri.clone(), Instant::now());
+            drop(last_changes);
+            
+            // Schedule diagnostics to be published after the delay
+            let uri_clone = uri.clone();
+            let last_change_time = self.last_change_time.clone();
+            let backend = self.clone();
+            
+            let handle = tokio::spawn(async move {
+                tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+                
+                // Check if this is still the most recent change
+                let last_changes = last_change_time.lock().await;
+                if let Some(last_time) = last_changes.get(&uri_clone) {
+                    if last_time.elapsed() >= Duration::from_millis(delay_ms) {
+                        // This is still the most recent change, publish diagnostics
+                        backend.publish_diagnostics(&uri_clone).await;
+                    } else {
+                    }
+                    // Otherwise, a newer change has occurred and will handle diagnostics
+                }
+            });
+            
+            pending.insert(uri, handle);
+        } else {
+            // No delay configured, publish immediately
+            self.publish_diagnostics(&uri).await;
+        }
     }
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {
