@@ -488,23 +488,17 @@ impl Backend {
     }
 
     async fn pull_config(&self) {
-        let new_config = self
+        let mut new_config = self
             .client
-            .configuration(vec![
-                ConfigurationItem {
-                    scope_uri: None,
-                    section: Some("harper-ls".to_string()),
-                },
-                ConfigurationItem {
-                    scope_uri: None,
-                    section: None,
-                },
-            ])
+            .configuration(vec![ConfigurationItem {
+                scope_uri: None,
+                section: None,
+            }])
             .await
             .unwrap_or(vec![json!({ "harper-ls": {} })]);
 
-        for config_item in new_config {
-            self.update_config_from_obj(config_item).await;
+        if let Some(first) = new_config.pop() {
+            self.update_config_from_obj(first).await;
         }
     }
 }
