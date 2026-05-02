@@ -11036,6 +11036,7 @@ Xerxes/Og
 Xhosa/Ng
 Xi'an/Og
 Xian/ONSgJ
+Xiamen/Og           # city in china
 Xiaomi/Og
 Xiaoping/g
 Ximenes/g
@@ -28802,6 +28803,9 @@ homely/J>^p
 homemade/~J
 homemaker/NSg
 homemaking/Nmg
+homeomorphic/J
+homeomorphism/
+homeomorphous/J
 homeopath/N0g
 homeopathic/JN
 homeopaths/N9
@@ -43873,6 +43877,7 @@ scale/~NwSVGde
 scale's
 scaleless/J
 scalene/JN
+scaler/NgS
 scaliness/Ng
 scallion/NgS
 scallop/NSgVGd
@@ -45414,6 +45419,7 @@ sinuosity/Ng
 sinuous/JY
 sinus/~NgS
 sinusitis/Ng
+sinusoid/NSg
 sinusoidal/~JN
 sip/~NSgV
 siphon/~NgSVGd
@@ -53826,6 +53832,7 @@ Brembo/OgS          # brake company
 Btrfs/Ng            # file system
 BurpSuite/ONSg
 C++/OgS             # programming language
+CAN bus/NSg         # communication protocol
 CAPTCHA/NgS
 CCP/OS              # Chinese Communist Party
 CDMA/NSg
@@ -53900,6 +53907,7 @@ DuckDuckGo/Og       # search engine
 Duolingo/Og         # language app
 EBITDA/N            # earnings before interest, taxes, depreciation, and amortization
 ECMA/Og             # European Computer Manufacturers Association
+ECU/NgS             # engine/electronic control unit
 EEA/O               # European Economic Area
 EFI/Og              # Extensible Firmware Interface
 EGR/                # exhaust gas recirculation
