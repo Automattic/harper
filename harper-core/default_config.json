@@ -1281,6 +1281,13 @@
 								"state": true,
 								"label": "Formative Years"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoord",
+								"state": true,
+								"label": "Expand Coors"
+							}
 						}
 					]
 				}

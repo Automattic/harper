@@ -585,6 +585,24 @@ fn corrects_args() {
     );
 }
 
+#[test]
+fn corrects_coord() {
+    assert_suggestion_result(
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coord systems that do not support them",
+        lint_group(),
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coordinate systems that do not support them",
+    );
+}
+
+#[test]
+fn corrects_coords() {
+    assert_suggestion_result(
+        "Here is how you can extract the list of coords from any geometry:",
+        lint_group(),
+        "Here is how you can extract the list of coordinates from any geometry:",
+    );
+}
+
 // ExpandDecl
 
 #[test]

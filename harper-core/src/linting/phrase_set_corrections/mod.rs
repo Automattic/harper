@@ -730,6 +730,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
             LintKind::Style
         ),
+        "ExpandCoord" => (
+            &[
+                (&["coord"], &["coordinate"]),
+                (&["coords"], &["coordinates"]),
+            ],
+            "Use `coordinate` instead of `coord`",
+            "Expands the abbreviation `coord` to the full word `coordinate` for clarity.",
+            LintKind::Style
+        ),
         "ExpandDecl" => (
             &[
                 (&["decl"], &["declaration", "declarator"]),
