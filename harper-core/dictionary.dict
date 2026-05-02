@@ -1,4 +1,4 @@
-54600
+54700
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -664,6 +664,7 @@ Aron/Og
 Arrhenius/Og
 Arron/Og
 Art/Og
+Art Deco/Omg
 Artaxerxes/Og
 Artemis/Og
 Arthur/ONg
@@ -2495,6 +2496,7 @@ Crosby/Og
 Cross/Og
 Crow/NOSg
 Crowley/Og
+Croydon/Og
 Crucifixion/OgS
 Cruikshank/Og
 Cruise/Og
@@ -21733,6 +21735,7 @@ discussion/~NwSg
 disdain/~NmSgVdG
 disdainful/JY
 disease/NwSg
+diseased/J
 disembowel/VSdGL
 disembowelled/VtT!@_₹
 disembowelling/V6N!@_₹
@@ -41929,6 +41932,7 @@ rcpt/N
 rd/~N
 re/PNSg(vz
 re-enable/VdSG
+re-enslave/VdSG
 reach/~VdGSNgB
 reachable/~JNU
 reacquire/VdSG
@@ -45154,6 +45158,9 @@ shrilly/JRy
 shrimp/~NwgS09Vd>GZ # singular and plural, also has a plural in -s
 shrine/~NgSV
 shrink/~VGSNgB
+shrink-wrap/VSNg
+shrink-wrapped/VtTJ
+shrink-wrapping/V6
 shrinkage/Nmg
 shrinker/NgS
 shrinkflation/Nmg
@@ -54016,6 +54023,7 @@ IPv4/OgS
 IPv6/OgS
 ISA/NOSg            # instruction set architecture; industry standard architecture
 ISSN/NgS            # International Standard Serial Number
+ImageMagick/Og
 Indo-Aryan/OmgSJ    # linguistics
 Indo-European/OmSgJ # linguistics
 Indo-Iranian/NmgJ   # linguistics
@@ -54235,6 +54243,7 @@ SMSes/N9Vh
 SMSing/V6
 SMTP                # Simple Mail Transfer Protocol
 SNL/Og              # Saturday Night Live
+SPARC/OgS
 SQLAlchemy/N
 SSID/NgS
 SSL/Og              # Secure Sockets Layer
