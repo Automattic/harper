@@ -18270,6 +18270,8 @@ cohesive/~JYpN
 cohesiveness/Ng
 coho/NgS
 cohort/~NSgV
+cohost/NgSVdG
+co-host/NgS
 coif/NgSV
 coiffed/VtT
 coiffing/V6
@@ -32605,6 +32607,7 @@ lisper/Ng
 lissom/J!_₹
 lissome/J
 list/~NgSVdGnzX
+list box/NgS
 listed/~VJU
 listeme/NgS
 listen/~Vd>GNgBZ
@@ -39704,6 +39707,7 @@ pluckiness/Ng
 plucky/J>^p
 plug/~NSVU
 plug in/V/
+plug-in/JNgS
 plug's
 pluggable/J
 plugged/~VtTU
@@ -54430,6 +54434,7 @@ iPadOS/Og
 iTerm2/Og           # macOS terminal emulator
 idiolect/NSg        # linguistics
 iframe/NgS
+infobox/NgS         # mainly used on wikis, not in dictionaries
 infosec/NmG         # information security
 inpaint/VGdS
 interop/NmgS        # interoperability - see also FFI
@@ -54461,6 +54466,7 @@ nullish/J
 olds/~              # common in phrasing such as "twenty year olds"
 optional/NgS        # a polymorphic type also called "option" and "maybe"
 pandoc/Sg           # !! please check and comment !! elsewhere we have Pandoc
+pastable/J
 pastebin/NgS
 paywall/VSdG        # unlike the noun sense, the verb sense has not made it to dictionaries
 pdfTeX/Og           # Program, extension for TeX engine
