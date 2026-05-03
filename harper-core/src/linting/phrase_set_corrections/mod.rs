@@ -856,6 +856,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
         ),
+        "SideTangent" => (
+            &[
+                (&["a side tangent"], &["a tangent", "an aside"]),
+                (&["side tangent"], &["tangent", "aside"]),
+                (&["side tangents"], &["tangents", "aside"])
+            ],
+            "The word `side` is redundant in this phrase.",
+            "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
+            LintKind::Redundancy
+        ),
         "ToTooIdioms" => (
             &[
                 (&["a bridge to far"], &["a bridge too far"]),
