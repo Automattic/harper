@@ -6153,7 +6153,7 @@ Loyd/Og
 Loyola/Og
 Lr/                 # Lawrencium
 Lt/N
-Ltd/JN
+Ltd/JN              # Limited
 Lu/                 # Lutetium
 Luanda/Og
 Luann/Og
@@ -9249,6 +9249,7 @@ Scylla/Og
 Scythia/Og
 Scythian/JNOg
 Sdn. Bhd./㎳         # Pty Ltd
+Sdn Bhd/㎳           # Pty Ltd
 Se/                 # Selenium
 Seaborg/Og
 Seagate/Og          # hard drive company
@@ -33014,7 +33015,7 @@ loyalist/~NSg
 loyalties/~N9
 loyalty/~N0wgE
 lozenge/~NSgV
-ltd/~J
+ltd/~J              # limited
 luau/NgS
 lubber/NgSY
 lube/NwgSVGdJ
@@ -53860,6 +53861,7 @@ CDN/NSg             # content delivery network
 CEO/NSg             # chief executive officer
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
+CIMB/Og             # bank
 CISC/Ng             # cpu architecture
 CLR/Og              # common language runtime
 CMOS/N              # microchip process
@@ -54115,11 +54117,13 @@ MSNBC/Og            # media company
 MSVC                # Microsoft Visual C++
 MTA/NSg
 MVC                 # model-view-controller
+MYR                 # malaysian ringgit
 MacBook/OgS         # Apple product
 Manilas/N
 Manilla/Og
 MapReduce/N
 Marchus/Sg
+Maybank/Og          # bank
 Mbps                # megabits per second
 MediaWiki/Og        # the software Wikimedia runs on
 #Metal/Og           # 3D graphics API - not working yet due to canonical spelling bug
@@ -54242,7 +54246,7 @@ Ryzen/ONgS
 SCM/Ng              # source code management
 SDK/NSg             # software development kit
 SDL/Og              # Simple DirectMedia Layer
-SGD/Nmg             # stochastic gradient descent
+SGD/Nmg             # stochastic gradient descent; singapore dollar
 SHA/ONg             # Secure Hash Algorithm
 SIGINT/Nmg          # signals intelligence
 SIMD/NSg            # single instruction, multiple data
@@ -54528,6 +54532,7 @@ scatterplot/NSgVG   # dictionaries prefer: scatter plot
 screencast/VdSG
 scrollbar/NSg       # dictionaries prefer: scroll bar
 sed/Og              # *nix tool / language
+sen/N09g            # subunit of ringgit, plural same as singular
 sigil/NgS
 singleplayer/J
 sioyek/Sg           # !! please check and comment !!
@@ -54608,6 +54613,7 @@ orthopractic/J
 orthopraxy/Nwg
 piebaldism/Nmg      # medicine
 praxis/Nmg
+Pte Ltd/ʒ           # Private Limited
 queenship/Nwg
 resolutive/J
 sortition/Nmg       # Political science: a method of appointment to office by random draw
