@@ -4248,6 +4248,7 @@ HIMARS/N
 HIV/Ng
 HM/NO
 HMO/Ng
+HMRC/Og!
 HMS/N
 HOV/N
 HP/ONg
@@ -7249,6 +7250,7 @@ NFL/ONg             # sports organization
 NGO/NgS             # non-government organization
 NH/ONVJ             # US state (New Hampshire)
 NHL/NOg             # sports organization
+NHS/Og
 NIH/OJ              # National Institutes of Health
 NIMBY/NJ            # not in my backyard
 NJ/OJ               # US state (New Jersey)
@@ -8788,7 +8790,8 @@ Roku/g
 Rolaids/g
 Roland/Og
 Rolando/g
-Rolex/Ng
+Rolex/OgS
+Rolf/Og
 Rolland/Og
 Rollerblade/g
 Rollins/Og
@@ -11142,6 +11145,7 @@ Yvette/ONg
 Yvonne/Og
 Z/NSg^nX
 Z80/NOSg
+Zach/Og
 Zachariah/Og
 Zachary/Og
 Zachery/Og
@@ -11232,6 +11236,7 @@ Zyuganov/g
 Zzz
 a/~DP(
 a lot
+a.k.a./
 a.m./
 aah/NV
 aardvark/~NSg
@@ -12144,6 +12149,7 @@ algae/~N9S
 algal/~JN
 algebra/~NwSg
 algebraic/~JQ
+algo/NgS†
 algorithm/~NSg
 algorithmic/JQ
 alias/~NgSVGd
@@ -20338,7 +20344,7 @@ customizability/Nmg
 customizable/J
 customization/~NwgS
 customize/VdSG
-cut/~VbtT>SJ^Ng
+cut/~VbtT>SJNg
 cut back/V/
 cut off/V/
 cut over/V/
@@ -20346,7 +20352,7 @@ cut scene/NgS
 cutaneous/~J
 cutaway/JNgS
 cutback/NgS
-cute/~JYp
+cute/~JYp>^
 cuteness/~Nmg
 cutesy/J^>
 cutey/NS
@@ -25008,6 +25014,7 @@ film/~NwgSVdG
 filminess/NgM
 filmmaker/~NSg
 filmmaking/NgM
+filmography/NwgS
 filmstrip/NgS
 filmy/J^>p
 filo/N
@@ -28147,6 +28154,7 @@ hawkishness/Nmg
 hawser/NSg
 hawthorn/~NwgS
 hay/~NmSgVGd
+hay fever/Nmg
 haycock/NSg
 hayloft/NSg
 haymaker/NS
@@ -31254,7 +31262,8 @@ jointly/~RyW
 joist/NSgV
 jojoba/~N
 joke/~NgSVGd>Z
-joker/~Ng
+joker/~NgS
+jokestar/NgS
 jokey/J
 jokier/Jc
 jokiest/Ju
