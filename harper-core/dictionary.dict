@@ -5316,6 +5316,7 @@ Justinian/OgJ
 Jutland/Og
 Juvenal/Og
 K/                  # Potassium
+K-pop/Nmg
 KB/NOg              # kilobyte, cf. Kb
 KC/ON
 KFC/Og              # company
@@ -41933,6 +41934,7 @@ rd/~N
 re/PNSg(vz
 re-enable/VdSG
 re-enslave/VdSG
+re-enslavement/Nmg
 reach/~VdGSNgB
 reachable/~JNU
 reacquire/VdSG
@@ -54031,6 +54033,7 @@ IntelliJ/Sg
 IntelliSense/Og
 IoT/Ng              # internet of things
 Itanium/OgS         # cpu
+J-pop/Nmg
 JNI/Og              # Java Native Interface
 JS/Ng               # JavaScript
 JSDoc/Sg
