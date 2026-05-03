@@ -47,11 +47,17 @@ use tower_lsp_server::lsp_types::{
 use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{debug, error, info, warn};
 
+/// Type alias for pending diagnostic task with its generation
+/// The generation is used to ensure delayed diagnostics don't overwrite
+/// immediate ones when code actions trigger instant feedback.
+type PendingDiagnosticTask = (tokio::task::JoinHandle<()>, u64);
+
 /// Return harper-ls version
 pub fn ls_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
+#[derive(Clone)]
 pub struct Backend {
     client: Client,
     root: Arc<RwLock<PathBuf>>,
@@ -59,25 +65,13 @@ pub struct Backend {
     stats: Arc<RwLock<Stats>>,
     doc_state: Arc<Mutex<HashMap<Uri, DocumentState>>>,
     lang_detect: Arc<LanguageDetectionRegistry>,
-    /// Tracks the last time each document was changed for diagnostic delay
+    /// Tracks the last change time and generation for each document for diagnostic delay
+    /// The generation is incremented on each change, and pending tasks check if their
+    /// generation still matches before publishing.
     last_change_time: Arc<Mutex<HashMap<Uri, Instant>>>,
+    last_change_generation: Arc<Mutex<HashMap<Uri, u64>>>,
     /// Tracks pending diagnostic publications that are waiting for the delay
-    pending_diagnostics: Arc<Mutex<HashMap<Uri, tokio::task::JoinHandle<()>>>>,
-}
-
-impl Clone for Backend {
-    fn clone(&self) -> Self {
-        Self {
-            client: self.client.clone(),
-            root: self.root.clone(),
-            config: self.config.clone(),
-            stats: self.stats.clone(),
-            doc_state: self.doc_state.clone(),
-            lang_detect: self.lang_detect.clone(),
-            last_change_time: self.last_change_time.clone(),
-            pending_diagnostics: self.pending_diagnostics.clone(),
-        }
-    }
+    pending_diagnostics: Arc<Mutex<HashMap<Uri, PendingDiagnosticTask>>>,
 }
 
 impl Backend {
@@ -90,6 +84,7 @@ impl Backend {
             doc_state: Arc::new(Mutex::new(HashMap::new())),
             lang_detect: Arc::new(LanguageDetectionRegistry::new()),
             last_change_time: Arc::new(Mutex::new(HashMap::new())),
+            last_change_generation: Arc::new(Mutex::new(HashMap::new())),
             pending_diagnostics: Arc::new(Mutex::new(HashMap::new())),
         }
     }
@@ -729,6 +724,33 @@ impl Backend {
             .await;
     }
 
+    /// Publish diagnostics immediately, canceling any pending delayed diagnostics for the document.
+    /// This is used for code actions where we want instant feedback.
+    async fn publish_diagnostics_immediately(&self, uri: &Uri) {
+        debug!("Publishing diagnostics immediately for {:?}", uri);
+
+        // Increment the generation to invalidate any pending delayed diagnostics
+        {
+            let mut generations = self.last_change_generation.lock().await;
+            *generations.entry(uri.clone()).or_insert(0) += 1;
+        }
+
+        // Cancel any pending delayed diagnostics for this document
+        let mut pending = self.pending_diagnostics.lock().await;
+        if let Some((handle, _old_generation)) = pending.remove(uri) {
+            handle.abort();
+        }
+        drop(pending);
+
+        // Update last change time to now
+        let mut last_changes = self.last_change_time.lock().await;
+        last_changes.insert(uri.clone(), Instant::now());
+        drop(last_changes);
+
+        // Publish diagnostics immediately
+        self.publish_diagnostics(uri).await;
+    }
+
     /// Update the configuration of the server and publish document updates that
     /// match it.
     async fn update_config_from_obj(&self, json_obj: Value) {
@@ -816,6 +838,7 @@ impl LanguageServer for Backend {
                 execute_command_provider: Some(ExecuteCommandOptions {
                     commands: vec![
                         "HarperRecordLint".to_owned(),
+                        "HarperRecordLintAndUpdate".to_owned(),
                         "HarperAddToUserDict".to_owned(),
                         "HarperAddToWSDict".to_owned(),
                         "HarperAddToFileDict".to_owned(),
@@ -897,9 +920,16 @@ impl LanguageServer for Backend {
         drop(config); // Release the lock early
 
         if delay_ms > 0 {
+            // Get the current generation for this document
+            let current_generation = {
+                let mut generations = self.last_change_generation.lock().await;
+                *generations.entry(uri.clone()).or_insert(0) += 1;
+                generations[&uri]
+            };
+
             // Cancel any pending diagnostic publication for this document
             let mut pending = self.pending_diagnostics.lock().await;
-            if let Some(handle) = pending.remove(&uri) {
+            if let Some((handle, _old_generation)) = pending.remove(&uri) {
                 handle.abort();
             }
 
@@ -910,24 +940,25 @@ impl LanguageServer for Backend {
 
             // Schedule diagnostics to be published after the delay
             let uri_clone = uri.clone();
-            let last_change_time = self.last_change_time.clone();
+            let last_change_generation = self.last_change_generation.clone();
             let backend = self.clone();
+            let scheduled_generation = current_generation;
 
             let handle = tokio::spawn(async move {
                 tokio::time::sleep(Duration::from_millis(delay_ms)).await;
 
-                // Check if this is still the most recent change
-                let last_changes = last_change_time.lock().await;
-                if let Some(last_time) = last_changes.get(&uri_clone)
-                    && last_time.elapsed() >= Duration::from_millis(delay_ms)
-                {
+                // Check if this is still the most recent change by comparing generations
+                let generations = last_change_generation.lock().await;
+                let current_gen = generations.get(&uri_clone).copied().unwrap_or(0);
+
+                if current_gen == scheduled_generation {
                     // This is still the most recent change, publish diagnostics
                     backend.publish_diagnostics(&uri_clone).await;
                 }
                 // Otherwise, a newer change has occurred and will handle diagnostics
             });
 
-            pending.insert(uri, handle);
+            pending.insert(uri, (handle, scheduled_generation));
         } else {
             // No delay configured, publish immediately
             self.publish_diagnostics(&uri).await;
@@ -1004,6 +1035,36 @@ impl LanguageServer for Backend {
                 let mut stats = self.stats.write().await;
                 stats.records.push(record);
             }
+            "HarperRecordLintAndUpdate" => {
+                let Ok(uri) = first.parse::<Uri>() else {
+                    error!("Unable to parse URI for HarperRecordLintAndUpdate");
+                    return Ok(None);
+                };
+
+                let Some(second) = string_args.next() else {
+                    error!("Missing RecordKind argument for HarperRecordLintAndUpdate");
+                    return Ok(None);
+                };
+
+                let Ok(kind) = serde_json::from_str(&second) else {
+                    error!("Unable to deserialize RecordKind.");
+                    return Ok(None);
+                };
+
+                let record = Record::now(kind);
+                let mut stats = self.stats.write().await;
+                stats.records.push(record);
+
+                // This command is called after a suggestion code action is applied.
+                // The suggestion's WorkspaceEdit has already been applied by the client,
+                // but the client might send executeCommand before textDocument/didChange.
+                // We need to wait briefly to ensure the document state is updated.
+
+                // Wait a short time to allow did_change to arrive
+                tokio::time::sleep(Duration::from_millis(50)).await;
+
+                self.publish_diagnostics_immediately(&uri).await;
+            }
             "HarperAddToUserDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
 
@@ -1024,7 +1085,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToWSDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -1046,7 +1107,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToFileDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -1078,7 +1139,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
@@ -1128,7 +1189,7 @@ impl LanguageServer for Backend {
 
                 drop(doc_lock);
 
-                self.publish_diagnostics(&uri).await;
+                self.publish_diagnostics_immediately(&uri).await;
             }
             _ => (),
         }
@@ -1159,7 +1220,7 @@ impl LanguageServer for Backend {
                 .await
                 .map_err(|err| error!("{err}"))
                 .err();
-            self.publish_diagnostics(&uri).await;
+            self.publish_diagnostics_immediately(&uri).await;
         }
     }
 
