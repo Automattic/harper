@@ -1832,9 +1832,9 @@
 						},
 						{
 							"Bool": {
-								"name": "FeetInchesSymbols",
+								"name": "FootInchMinuteSecondSymbols",
 								"state": true,
-								"label": "Feet and Inches Symbols"
+								"label": "Foot, Inch, Minute, and Second Symbols"
 							}
 						}
 					]

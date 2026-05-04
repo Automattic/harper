@@ -213,7 +213,7 @@ impl SequenceExpr {
         self.then_whitespace()
     }
 
-    /// Match against one or more whitespace tokens.
+    /// Match against whitespace tokens or a hyphen.
     pub fn then_whitespace_or_hyphen(self) -> Self {
         self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
     }
@@ -221,6 +221,16 @@ impl SequenceExpr {
     /// Shorthand for [`Self::then_whitespace_or_hyphen`].
     pub fn t_ws_h(self) -> Self {
         self.then_whitespace_or_hyphen()
+    }
+
+    /// Match against zero or more whitespace tokens.
+    pub fn then_optional_whitespace(self) -> Self {
+        self.then_optional(WhitespacePattern)
+    }
+
+    /// Shorthand for [`Self::then_optional_whitespace`].
+    pub fn t_ows(self) -> Self {
+        self.then_optional_whitespace()
     }
 
     /// Match against zero or more occurrences of the given expression. Like `*` in regex.
@@ -613,6 +623,10 @@ impl SequenceExpr {
     gen_then_from_is!(backslash);
     gen_then_from_is!(slash);
     gen_then_from_is!(percent);
+    gen_then_from_is!(degree);
+    gen_then_from_is!(open_single);
+    gen_then_from_is!(single_prime);
+    gen_then_from_is!(double_prime);
 
     // Other
 
