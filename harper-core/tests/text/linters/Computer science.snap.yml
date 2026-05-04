@@ -431,7 +431,7 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
      131 | expression "automatic information" (e.g. "informazione automatica" in Italian)
-         |                                                        ^~~~~~~~~~ `automatica` should probably be written as `automatic a`.
+         |                                                        ^~~~~~~~~~ `automatica` should possibly be written as `automatic a`.
      132 | or "information and mathematics" are often used, e.g. informatique (French),
 Suggest:
   - Replace with: “automatic a”

@@ -2578,6 +2578,7 @@ DMD/Ng
 DMV/Ng
 DMZ/N               # demilitarized zone
 DNA/NOgV
+DNC/Og              # Democratic National Committee
 DOA/J               # dead on arrival
 DOB/NO
 DOD/N
@@ -3424,7 +3425,7 @@ FCC/ONJ
 FD/N
 FDA/O
 FDIC/Og
-FDR/ONg
+FDR/ONg             # Franklin Delano Roosevelt
 FEMA/Og
 FFT/NgS             # fast Fourier transform
 FHA/Og
@@ -5180,6 +5181,7 @@ Jilin/Og
 Jill/ONg
 Jillian/Og
 Jim/Og
+Jim Crow/Omg
 Jimenez/Og
 Jimmie/Og
 Jimmy/ONg
@@ -7425,6 +7427,7 @@ Newport/Og
 Newsweek/g
 Newton/Og
 Newtonian/JNg
+New Zealand/Og
 Nexis/g
 Ngaliema/g
 Nguyen/Og
@@ -18466,7 +18469,7 @@ combustible/~JNgS
 combustion/~Nmg
 come/~VbTG>SNgPiZ
 come back/V/
-comeback/~NgSV
+comeback/~NgS
 comedian/~NgS
 comedic/~J
 comedienne/NgS
@@ -19826,6 +19829,8 @@ crappy/J
 craps/NgVh
 crapshooter/NgS
 crash/~NgSJVdG
+crash out/V/
+crashout/NgS
 crass/J>Y^p
 crassness/Ng
 crate/~NSgVd>GZ
@@ -21233,6 +21238,7 @@ destine/VdSG
 destiny/~NwSg
 destitute/~JVn
 destitution/Nmg
+de-stress/VdSG
 destroy/~VSGd>Z
 destroyer/~NgS
 destruct/~VGdSvg
@@ -24386,9 +24392,11 @@ eyestrain/Ng
 eyeteeth/N9
 eyetooth/N0g
 eyewash/NgV
+eyewatering/J       # main: Longman, OED; also: Cambridge
+eye-watering/JY     # main: Cambridge, Collins, Oxford Learner's
 eyewear/Nmg
 eyewitness/~NgSV
-#f/~N^>eirv          # N:noun ^:fest >:fer e:def i:inf r:ref v:five
+#f/~N^>eirv         # N:noun ^:fest >:fer e:def i:inf r:ref v:five
 fMRI/N
 fa/~NgP
 fab/~JNgSV
@@ -33908,6 +33916,7 @@ megametre/NS!@_₹
 megapascal/NS
 megaphone/NSgVdG
 megapixel/~NSgJ
+megaproject/NSg
 megastar/NS
 megaton/NSg
 megawatt/NgS
@@ -39107,6 +39116,8 @@ philtre/NgSV!@_₹
 phish/~VGd>NZ
 phisher/Ng
 phlebitis/Nmg
+phlebotomy/NgS
+phlebotomist/NgS
 phlegm/Nmg
 phlegmatic/JNQ
 phloem/Nmg
@@ -42083,7 +42094,7 @@ recorder/~NgS
 recording/~V6NwgS
 recordkeeping/Ng
 recoup/VdG
-recourse/~NgV
+recourse/~NgS
 recoverability/Nmg
 recoverable/JNU
 recovery/~NwSg
@@ -43178,7 +43189,7 @@ roll/~Vd>GSNgZzr
 roll back/V/
 roll out/V/
 roll over/V/
-rollback/~NSgV
+rollback/~NSg
 roller/~NgV
 rollerblading/NmV6
 rollercoaster/NgS   # AHD, Cambridge, OED
@@ -45109,7 +45120,7 @@ showtime/~Nmg
 showy/~J^>p
 shpt/N
 shrank/~VN
-shrapnel/~Ng
+shrapnel/~Nmg
 shred/NgSVJ
 shredded/~VtTJ
 shredder/NgS
@@ -51236,6 +51247,7 @@ unpersuasive/J
 unpick/VGdS
 unpin/VS
 unpleasing/J
+unpledged/J
 unpolitical/J
 unpolymerised/J!_₹
 unpolymerized/J
@@ -54247,6 +54259,7 @@ Tauri/Og            # web-tech framework for desktop apps
 TeX/Og              # Typesetting engine; must come after Tex!
 TeXes
 TechCrunch/g
+TempleOS/Og
 Temu/Og
 Tencent/Og
 TensorFlow/Og
@@ -54470,6 +54483,7 @@ royale/~NSgJ        # !! please check and comment !! dictionaries only list noun
 runahead/NgS
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
+sanewashing/Nmg
 scatterplot/NSgVG   # dictionaries prefer: scatter plot
 screencast/VdSG
 scrollbar/NSg       # dictionaries prefer: scroll bar
@@ -54491,6 +54505,7 @@ subkey/NgS
 subreddit/NgS       # see Reddit
 supersequence/NgS
 synchronic/JQ       # linguistics
+systemd/Og          # Linux software
 tagset/NgS
 terraform/VGdS
 timespan/NgS
@@ -54509,6 +54524,7 @@ watchOS/Og
 webpack/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+xkcd/Og
 z-buffer/NgS
 
 # New entries may be added below this line
@@ -54532,6 +54548,11 @@ fae/Nmg             # fantasy alternative for "fey"
 iaido/Nmg           # martial art
 kalimba/NSg
 licensor/NSg
+live stream/NSgVdG  # main: Cambridge (n only), Merriam-Webster, Oxford Learner's (n only)
+live-stream/NSgVdG  # main: Oxford Learner's (v only); also: Cambridge (n only), Merriam-Webster
+livestream/NSgVdG   # main: Cambridge (v only), Collins, OED; also: Cambridge (n only), Merriam-Webster
+livestreamer/NSg    # main: OED, Oxford Learner's; also: Cambridge
+live streamer/NSg   # Cambridge
 menarche/Nmg        # medicine
 micronutrient/NSg
 monolatrous/J
@@ -54552,7 +54573,7 @@ trimetre/NgS!@_₹    # poetry
 trimetric/J
 unminted/J
 vicomital/J         # Adjective version of "viscount/viscountess"
-vicontiel/J         #  As above, alternative version
+vicontiel/J         # As above, alternative version
 viscomital/J        # As above, alternative version
 WordCamp/Og
 worldbuild/V>G
