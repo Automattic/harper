@@ -10,7 +10,7 @@ pull-dep-source:
 
   git clone https://github.com/automattic/harper
   cd harper
-  git switch editor-package
+  git switch master
 
 # Build the necessary dependenceies from the Harper monorepo
 build-harper-deps:
