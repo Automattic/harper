@@ -3682,9 +3682,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a731101fcae8c947d191c23b33eb60e10eba0af680d22dc1501285f8d3d91ad5"
+version = "2.1.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -3692,9 +3690,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0d35c9854dddb400d12f05978ceb371d2e9eba73d251acf9411874aa711a718d"
+version = "2.1.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.1",
@@ -3754,9 +3750,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2a8985773484108d430f76966f02b6d387d30c4e1b91d8969614e9e20e1d0679"
+version = "2.1.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -3772,9 +3766,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b89cc67949d648d8cb0fa774e7b3d2eb3dc1586b7f97faeb5a301af55e8cc6c"
+version = "2.1.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.14.0",

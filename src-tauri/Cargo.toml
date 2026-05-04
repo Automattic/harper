@@ -29,7 +29,7 @@ egui-winit = "0.34.1"
 egui-wgpu = { version = "0.34.1", features = ["winit"] }
 pollster = "0.4.0"
 clap = { version = "4.6.1", features = ["derive"] }
-harper-core = "2.0.0"
+harper-core = { path = "../harper/harper-core" }
 egui_commonmark = "0.23.0"
 tokio = { version = "1.52.2", features = ["full"] }
 

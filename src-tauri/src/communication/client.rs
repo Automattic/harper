@@ -1,4 +1,4 @@
-use harper_core::linting::FlatConfig;
+use harper_core::{IgnoredLints, linting::FlatConfig};
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout};
 
 use super::error::ProtocolError;
@@ -26,6 +26,23 @@ where
     pub async fn get_lint_config(&mut self) -> Result<FlatConfig, ProtocolError> {
         match self.send_request(Request::GetLintConfig).await? {
             Response::GetLintConfig { config } => Ok(config),
+            Response::Ack => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetLintConfig",
+            }),
+        }
+    }
+
+    pub async fn ignore_lint(&mut self, ignored_lints: &IgnoredLints) -> Result<(), ProtocolError> {
+        match self
+            .send_request(Request::IgnoreLint {
+                ignored_lints: ignored_lints.clone(),
+            })
+            .await?
+        {
+            Response::Ack => Ok(()),
+            Response::GetLintConfig { .. } => {
+                Err(ProtocolError::UnexpectedResponse { expected: "Ack" })
+            }
         }
     }
 
