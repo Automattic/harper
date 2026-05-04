@@ -2721,6 +2721,26 @@ fn corrects_made_it_seemed() {
     );
 }
 
+// Monumentous
+
+#[test]
+fn corrects_monumentous() {
+    assert_suggestion_result(
+        "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+        lint_group(),
+        "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+    );
+}
+
+#[test]
+fn corrects_monumentously() {
+    assert_suggestion_result(
+        "the most impressive thing out of all of this is that GitHub created such a monumentously good name",
+        lint_group(),
+        "the most impressive thing out of all of this is that GitHub created such a monumentally good name",
+    );
+}
+
 // NervousWreck
 
 #[test]
