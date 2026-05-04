@@ -14,7 +14,7 @@ macro_rules! merge_linters {
                 #[derive(Default)]
                 pub struct $name {
                     $(
-                        [< $linter:snake >]: ($linter, &'static str),
+                        [< $linter:snake >]: $linter,
                     )*
                 }
 
@@ -23,7 +23,7 @@ macro_rules! merge_linters {
                         let mut lints = Vec::new();
 
                         $(
-                            lints.extend(self.[< $linter:snake >].0.lint(document));
+                            lints.extend(self.[< $linter:snake >].lint(document));
                         )*
 
                         remove_overlaps(&mut lints);
@@ -36,14 +36,14 @@ macro_rules! merge_linters {
                     }
 
                     fn merged_linter_child_names(&self) -> Vec<&'static str> {
-                        let mut all_names = vec![$(stringify!($linter)),*];
+                        let mut names = Vec::new();
 
-                        // Recursively collect from each child linter instance
                         $(
-                            all_names.extend(self.[< $linter:snake >].0.merged_linter_child_names());
+                            names.push(stringify!($linter));
+                            names.extend(self.[< $linter:snake >].merged_linter_child_names());
                         )*
 
-                        all_names
+                        names
                     }
                 }
             }

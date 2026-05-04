@@ -1068,8 +1068,9 @@ mod tests {
         if let Some(names) = &group.clashing_linter_names {
             if !names.is_empty() {
                 panic!(
-                    "⚠️ Found {} linter name clashes: {}",
+                    "⚠️ Found {} linter name clash{}: {}",
                     names.len(),
+                    if names.len() == 1 { "" } else { "es" },
                     names.join(", ")
                 );
             }
