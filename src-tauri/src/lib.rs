@@ -1,16 +1,22 @@
 use self::highlighter::Highlighter;
 use self::highlighter_process::HighlighterProcess;
+use crate::config::Config;
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, Document,
     linting::{LintGroup, Linter},
     spell::FstDictionary,
 };
-use std::{thread, time::Duration};
+use std::{
+    sync::{Arc, Mutex},
+    thread,
+    time::Duration,
+};
 use tokio::runtime::Builder;
 
 pub mod color;
 pub mod communication;
+pub mod config;
 pub mod highlighter;
 pub mod highlighter_process;
 pub mod lint_kind_color;
@@ -42,6 +48,9 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
+    let config = Arc::new(Mutex::new(Config::new()));
+    let server_config = config.clone();
+
     thread::spawn(move || {
         let rt = Builder::new_current_thread().enable_all().build().unwrap();
         rt.block_on((async move || {
@@ -49,7 +58,7 @@ pub fn run_tauri() {
                 HighlighterProcess::spawn().expect("failed to spawn highlighter process");
 
             let mut server = highlighter_process
-                .create_server()
+                .create_server(server_config)
                 .expect("failed to create server");
 
             loop {

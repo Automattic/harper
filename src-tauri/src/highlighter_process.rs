@@ -1,6 +1,8 @@
 use crate::communication::Server;
+use crate::config::Config;
 use std::io;
 use std::process::Stdio;
+use std::sync::{Arc, Mutex};
 use tokio::process::{Child, ChildStdin, ChildStdout, Command};
 
 /// Owns the highlighter child process while the Tauri app is running.
@@ -26,7 +28,10 @@ impl HighlighterProcess {
     /// Builds the Tauri-side protocol server from the highlighter process stdio handles.
     ///
     /// This consumes the child stdio handles and can only succeed once per process.
-    pub fn create_server(&mut self) -> io::Result<Server<ChildStdout, ChildStdin>> {
+    pub fn create_server(
+        &mut self,
+        config: Arc<Mutex<Config>>,
+    ) -> io::Result<Server<ChildStdout, ChildStdin>> {
         let stdout = self.child.stdout.take().ok_or_else(|| {
             io::Error::new(
                 io::ErrorKind::BrokenPipe,
@@ -40,7 +45,7 @@ impl HighlighterProcess {
             )
         })?;
 
-        Ok(Server::new(stdout, stdin))
+        Ok(Server::new(stdout, stdin, config))
     }
 }
 

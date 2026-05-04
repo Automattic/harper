@@ -1,4 +1,5 @@
-use harper_core::linting::FlatConfig;
+use crate::config::Config;
+use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader};
 
 use super::error::ProtocolError;
@@ -9,7 +10,7 @@ use super::message::{Request, Response};
 pub struct Server<R, W> {
     reader: BufReader<R>,
     writer: W,
-    lint_config: FlatConfig,
+    config: Arc<Mutex<Config>>,
 }
 
 impl<R, W> Server<R, W>
@@ -17,15 +18,11 @@ where
     R: AsyncRead + Unpin,
     W: AsyncWrite + Unpin,
 {
-    pub fn new(reader: R, writer: W) -> Self {
-        Self::with_lint_config(reader, writer, FlatConfig::new_curated())
-    }
-
-    pub fn with_lint_config(reader: R, writer: W, lint_config: FlatConfig) -> Self {
+    pub fn new(reader: R, writer: W, config: Arc<Mutex<Config>>) -> Self {
         Self {
             reader: BufReader::new(reader),
             writer,
-            lint_config,
+            config,
         }
     }
 
@@ -45,7 +42,12 @@ where
     fn handle_request(&self, request: &Request) -> Response {
         match request {
             Request::GetLintConfig => Response::GetLintConfig {
-                config: self.lint_config.clone(),
+                config: self
+                    .config
+                    .lock()
+                    .expect("config mutex poisoned")
+                    .lint_config
+                    .clone(),
             },
         }
     }

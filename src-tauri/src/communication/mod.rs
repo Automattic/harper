@@ -12,7 +12,9 @@ pub use server::Server;
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::config::Config;
     use harper_core::linting::FlatConfig;
+    use std::sync::{Arc, Mutex};
     use tokio::io::{duplex, empty, sink};
 
     #[tokio::test]
@@ -20,12 +22,11 @@ mod tests {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
         let expected = FlatConfig::new_curated();
+        let mut config = Config::new();
+        config.lint_config = expected.clone();
+        let config = Arc::new(Mutex::new(config));
         let mut client = Client::new(client_response_reader, client_request_writer);
-        let mut server = Server::with_lint_config(
-            server_request_reader,
-            server_response_writer,
-            expected.clone(),
-        );
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
 
         let (config, request) = tokio::join!(client.get_lint_config(), server.receive_request());
 
@@ -35,7 +36,8 @@ mod tests {
 
     #[tokio::test]
     async fn server_returns_none_on_eof() {
-        let mut server = Server::new(empty(), sink());
+        let config = Arc::new(Mutex::new(Config::new()));
+        let mut server = Server::new(empty(), sink(), config);
 
         assert_eq!(server.receive_request().await.unwrap(), None);
     }
