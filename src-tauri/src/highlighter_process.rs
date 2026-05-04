@@ -1,5 +1,7 @@
+use crate::communication::Server;
 use std::io;
-use std::process::{Child, Command};
+use std::process::Stdio;
+use tokio::process::{Child, ChildStdin, ChildStdout, Command};
 
 /// Owns the highlighter child process while the Tauri app is running.
 ///
@@ -13,15 +15,36 @@ impl HighlighterProcess {
     pub fn spawn() -> io::Result<Self> {
         let child = Command::new(std::env::current_exe()?)
             .arg("highlighter")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
             .spawn()?;
 
         Ok(Self { child })
+    }
+
+    /// Builds the Tauri-side protocol server from the highlighter process stdio handles.
+    ///
+    /// This consumes the child stdio handles and can only succeed once per process.
+    pub fn create_server(&mut self) -> io::Result<Server<ChildStdout, ChildStdin>> {
+        let stdout = self.child.stdout.take().ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::BrokenPipe,
+                "highlighter stdout is unavailable",
+            )
+        })?;
+        let stdin = self.child.stdin.take().ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::BrokenPipe,
+                "highlighter stdin is unavailable",
+            )
+        })?;
+
+        Ok(Server::new(stdout, stdin))
     }
 }
 
 impl Drop for HighlighterProcess {
     fn drop(&mut self) {
-        let _ = self.child.kill();
-        let _ = self.child.wait();
+        let _ = self.child.start_kill();
     }
 }

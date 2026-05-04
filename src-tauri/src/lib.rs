@@ -6,11 +6,13 @@ use harper_core::{
     linting::{LintGroup, Linter},
     spell::FstDictionary,
 };
-use std::time::Duration;
+use std::{thread, time::Duration};
+use tokio::runtime::Builder;
 
 pub mod color;
+pub mod communication;
 pub mod highlighter;
-mod highlighter_process;
+pub mod highlighter_process;
 pub mod lint_kind_color;
 mod os_broker;
 pub mod rect;
@@ -40,8 +42,22 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let _highlighter_process =
+    let mut highlighter_process =
         HighlighterProcess::spawn().expect("failed to spawn highlighter process");
+
+    let mut server = highlighter_process
+        .create_server()
+        .expect("failed to create server");
+
+    thread::spawn(move || {
+        let rt = Builder::new_current_thread().enable_all().build().unwrap();
+
+        rt.block_on((async move || {
+            loop {
+                server.receive_request().await.unwrap();
+            }
+        })())
+    });
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
