@@ -1,6 +1,10 @@
 use egui_commonmark::{CommonMarkCache, CommonMarkViewer};
-use harper_core::linting::{Lint, LintKind, Suggestion};
+use harper_core::{
+    Document,
+    linting::{Lint, LintKind, Suggestion},
+};
 
+use super::IgnoreLint;
 use crate::{
     lint_kind_color::lint_kind_color,
     rect::{ActionableLint, Rect},
@@ -22,6 +26,7 @@ pub enum HitTarget {
 enum LintCardAction {
     Close,
     ApplySuggestion(Suggestion),
+    IgnoreLint,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -56,16 +61,20 @@ pub struct RenderState {
     /// Cache for markdown-rendered lint messages so popup redraws do not repeatedly rebuild markdown
     /// resources from scratch.
     markdown_cache: CommonMarkCache,
+
+    /// Called when the user dismisses a lint so app-level ignored-lint state can be updated.
+    ignore_lint: IgnoreLint,
 }
 
 impl RenderState {
     /// Creates render state through `set_rects` so initial lint data gets the same stale-popup guard
     /// used by later accessibility refreshes.
-    pub fn new(rects: Vec<ActionableLint>) -> Self {
+    pub fn new(rects: Vec<ActionableLint>, ignore_lint: IgnoreLint) -> Self {
         let mut state = Self {
             rects: Vec::new(),
             highlighted_lint: None,
             markdown_cache: CommonMarkCache::default(),
+            ignore_lint,
         };
         state.set_rects(rects);
         state
@@ -143,6 +152,21 @@ impl RenderState {
 
                     self.close_popup();
                 }
+                Some(LintCardAction::IgnoreLint) => {
+                    if let Some((lint, source_text)) =
+                        self.rects.get(index).map(|actionable_lint| {
+                            (
+                                actionable_lint.lint.clone(),
+                                actionable_lint.source_text.clone(),
+                            )
+                        })
+                    {
+                        let document = Document::new_markdown_default_curated(&source_text);
+                        (self.ignore_lint)(&lint, &document);
+                    }
+
+                    self.close_popup();
+                }
                 None => {}
             }
         }
@@ -205,7 +229,7 @@ fn render_lint_card(
 
                     render_popover_header(ui, lint, &mut action);
                     render_popover_body(ui, lint, markdown_cache, &mut action);
-                    render_popover_footer(ui, lint);
+                    render_popover_footer(ui, lint, &mut action);
                 });
             action
         })
@@ -279,7 +303,7 @@ fn render_popover_body(
 
 /// Renders the footer controls as visual stubs so the popup matches the target component before those
 /// actions have real behavior.
-fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint) {
+fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<LintCardAction>) {
     egui::Frame::new()
         .fill(egui::Color32::from_rgba_unmultiplied(0, 0, 0, 5))
         .stroke(egui::Stroke::new(
@@ -295,7 +319,9 @@ fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint) {
                     ghost_button(ui, Some(Glyph::Plus), "Add to dictionary");
                 }
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    ghost_button(ui, None, "Dismiss");
+                    if ghost_button(ui, None, "Dismiss").clicked() {
+                        *action = Some(LintCardAction::IgnoreLint);
+                    }
                 });
             });
         });
@@ -410,28 +436,27 @@ fn icon_button(ui: &mut egui::Ui, glyph: Glyph) -> egui::Response {
 }
 
 /// Renders footer controls as no-op buttons so future actions can be wired without changing layout.
-fn ghost_button(ui: &mut egui::Ui, glyph: Option<Glyph>, label: &str) {
-    egui::Frame::new()
-        .fill(egui::Color32::TRANSPARENT)
-        .corner_radius(egui::CornerRadius::same(6))
-        .inner_margin(egui::Margin::symmetric(8, 6))
-        .show(ui, |ui| {
-            ui.horizontal(|ui| {
-                ui.spacing_mut().item_spacing = egui::vec2(6.0, 0.0);
+fn ghost_button(ui: &mut egui::Ui, glyph: Option<Glyph>, label: &str) -> egui::Response {
+    let label = if glyph.is_some() {
+        format!("+ {label}")
+    } else {
+        label.to_string()
+    };
 
-                if let Some(glyph) = glyph {
-                    let (icon_rect, _) =
-                        ui.allocate_exact_size(egui::vec2(14.0, 14.0), egui::Sense::hover());
-                    draw_glyph(ui, icon_rect, glyph, hex(0x4b, 0x55, 0x63));
-                }
-
-                ui.label(
-                    egui::RichText::new(label)
-                        .size(12.0)
-                        .color(hex(0x4b, 0x55, 0x63)),
-                );
-            });
-        });
+    ui.scope(|ui| {
+        ui.spacing_mut().button_padding = egui::vec2(8.0, 6.0);
+        ui.add(
+            egui::Button::new(
+                egui::RichText::new(label)
+                    .size(12.0)
+                    .color(hex(0x4b, 0x55, 0x63)),
+            )
+            .fill(egui::Color32::TRANSPARENT)
+            .stroke(egui::Stroke::NONE)
+            .corner_radius(egui::CornerRadius::same(6)),
+        )
+    })
+    .inner
 }
 
 /// Draws the small SVG-inspired line icons from the prototype using egui painter primitives.

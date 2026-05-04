@@ -152,11 +152,23 @@ impl TreeVisitor for RectCollector<'_> {
                 ) {
                     let element = element.clone();
                     let source_text = string.clone();
+                    let suggestion_source_text = string.clone();
                     let lint = lint.clone();
+                    let suggestion_lint = lint.clone();
 
-                    rects.push(ActionableLint::new(rect, lint.clone(), move |suggestion| {
-                        apply_suggestion_to_element(element, source_text, lint, suggestion);
-                    }));
+                    rects.push(ActionableLint::new(
+                        rect,
+                        lint,
+                        source_text,
+                        move |suggestion| {
+                            apply_suggestion_to_element(
+                                element,
+                                suggestion_source_text,
+                                suggestion_lint,
+                                suggestion,
+                            );
+                        },
+                    ));
                 }
             }
         }

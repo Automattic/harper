@@ -8,12 +8,14 @@ use std::time::Duration;
 pub use error::Error;
 use window_manager::WindowManager;
 
-use harper_core::linting::Lint;
+use harper_core::{Document, linting::Lint};
 
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
 
 const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
+
+type IgnoreLint = Box<dyn FnMut(&Lint, &Document)>;
 
 /// Public entry point for the screen highlighter system.
 ///
@@ -29,15 +31,18 @@ impl Highlighter {
     pub fn new(
         os_broker: impl OsBroker + 'static,
         lint_text: impl FnMut(&str) -> Vec<Lint> + 'static,
+        ignore_lint: impl FnMut(&Lint, &Document) + 'static,
     ) -> Result<Self, Error> {
         let context = egui::Context::default();
         let lint_text: LintText = Box::new(lint_text);
+        let ignore_lint: IgnoreLint = Box::new(ignore_lint);
 
         Ok(Self {
             window_manager: WindowManager::new(
                 context.clone(),
                 Box::new(os_broker),
                 lint_text,
+                ignore_lint,
                 DEFAULT_READ_INTERVAL,
             )?,
             context,

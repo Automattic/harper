@@ -6,6 +6,7 @@ use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
 use super::Error;
+use super::IgnoreLint;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
@@ -22,6 +23,7 @@ pub struct WindowManager {
     rects: Vec<ActionableLint>,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
+    ignore_lint: IgnoreLint,
     read_interval: Duration,
 }
 
@@ -32,6 +34,7 @@ impl WindowManager {
         context: egui::Context,
         os_broker: Box<dyn OsBroker>,
         lint_text: LintText,
+        ignore_lint: IgnoreLint,
         read_interval: Duration,
     ) -> Result<Self, Error> {
         Ok(Self {
@@ -40,6 +43,7 @@ impl WindowManager {
             rects: Vec::new(),
             os_broker,
             lint_text,
+            ignore_lint,
             read_interval,
         })
     }
@@ -62,6 +66,7 @@ impl WindowManager {
             self.rects,
             self.os_broker,
             self.lint_text,
+            self.ignore_lint,
             self.read_interval,
         );
 
@@ -98,12 +103,13 @@ impl WindowManagerApp {
         rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
         lint_text: LintText,
+        ignore_lint: IgnoreLint,
         read_interval: Duration,
     ) -> Self {
         Self {
             context,
             windows: Vec::new(),
-            render_state: RenderState::new(rects),
+            render_state: RenderState::new(rects, ignore_lint),
             os_broker,
             lint_text,
             read_interval,

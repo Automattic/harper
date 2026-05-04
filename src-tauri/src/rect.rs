@@ -39,7 +39,7 @@ pub struct PositionedLint {
     pub lint: Lint,
 }
 
-/// A Harper lint paired with geometry and an OS-specific way to apply a chosen suggestion.
+/// A Harper lint paired with geometry, source context, and an OS-specific suggestion action.
 ///
 /// The highlighter owns rendering and interaction, but the OS broker is the only layer that knows how
 /// to mutate the underlying text element. Storing a one-shot callback here keeps those responsibilities
@@ -47,6 +47,7 @@ pub struct PositionedLint {
 pub struct ActionableLint {
     pub rect: Rect,
     pub lint: Lint,
+    pub source_text: String,
     apply_suggestion: Option<Box<dyn FnOnce(Suggestion)>>,
 }
 
@@ -60,11 +61,13 @@ impl ActionableLint {
     pub fn new(
         rect: Rect,
         lint: Lint,
+        source_text: String,
         apply_suggestion: impl FnOnce(Suggestion) + 'static,
     ) -> Self {
         Self {
             rect,
             lint,
+            source_text,
             apply_suggestion: Some(Box::new(apply_suggestion)),
         }
     }

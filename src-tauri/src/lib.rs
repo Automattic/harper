@@ -1,13 +1,16 @@
 use self::highlighter::Highlighter;
 use self::highlighter_process::HighlighterProcess;
+use crate::communication::Client;
 use crate::config::Config;
 use clap::{Parser, Subcommand};
 use harper_core::{
-    Dialect, Document,
-    linting::{LintGroup, Linter},
+    Dialect, Document, IgnoredLints,
+    linting::{Lint, LintGroup, Linter},
     spell::FstDictionary,
 };
 use std::{
+    cell::RefCell,
+    rc::Rc,
     sync::{Arc, Mutex},
     thread,
     time::Duration,
@@ -80,14 +83,39 @@ pub fn run_highlighter() {
     #[cfg(not(target_os = "macos"))]
     let broker = os_broker::NoopBroker;
 
+    let mut client = Client::current_process();
+    let sync_runtime = Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .expect("failed to build highlighter protocol runtime");
+    let ignored_lints = Rc::new(RefCell::new(IgnoredLints::new()));
+    let lint_ignored_lints = ignored_lints.clone();
+    let ignore_ignored_lints = ignored_lints.clone();
+
     let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
     let lint_text = move |text: &str| {
         let doc = Document::new_markdown_default_curated(text);
+        let mut lints = linter.lint(&doc);
 
-        linter.lint(&doc)
+        lint_ignored_lints.borrow().remove_ignored(&mut lints, &doc);
+
+        lints
     };
 
-    if let Err(error) = Highlighter::new(broker, lint_text)
+    let ignore_lint = move |lint: &Lint, document: &Document| {
+        {
+            ignore_ignored_lints
+                .borrow_mut()
+                .ignore_lint(lint, document);
+        }
+
+        let snapshot = ignore_ignored_lints.borrow().clone();
+        if let Err(error) = sync_runtime.block_on(client.ignore_lint(&snapshot)) {
+            eprintln!("failed to sync ignored lints: {error}");
+        }
+    };
+
+    if let Err(error) = Highlighter::new(broker, lint_text, ignore_lint)
         .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
         .and_then(Highlighter::run_window_for_each_monitor)
     {
