@@ -12,6 +12,7 @@ pub struct HighlighterProcess {
 }
 
 impl HighlighterProcess {
+    /// Must be called from within a Tokio runtime
     pub fn spawn() -> io::Result<Self> {
         let child = Command::new(std::env::current_exe()?)
             .arg("highlighter")

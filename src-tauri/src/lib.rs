@@ -42,17 +42,16 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let mut highlighter_process =
-        HighlighterProcess::spawn().expect("failed to spawn highlighter process");
-
-    let mut server = highlighter_process
-        .create_server()
-        .expect("failed to create server");
-
     thread::spawn(move || {
         let rt = Builder::new_current_thread().enable_all().build().unwrap();
-
         rt.block_on((async move || {
+            let mut highlighter_process =
+                HighlighterProcess::spawn().expect("failed to spawn highlighter process");
+
+            let mut server = highlighter_process
+                .create_server()
+                .expect("failed to create server");
+
             loop {
                 server.receive_request().await.unwrap();
             }
