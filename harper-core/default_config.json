@@ -1291,6 +1291,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandVuln",
 								"state": true,
 								"label": "Expand Vuln"

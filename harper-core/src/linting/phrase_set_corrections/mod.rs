@@ -203,6 +203,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
             LintKind::Style
         ),
+        "ExpandNotification" => (
+            &[
+                ("notif", "notification"),
+                ("notifs", "notifications"),
+            ],
+            "Use `notification` instead of `notif`",
+            "Expands the abbreviation `notif` to the full word `notification` for clarity.",
+            LintKind::Style
+        ),
         "ExpandParameter" => (
             &[
                 ("param", "parameter"),

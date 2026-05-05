@@ -585,6 +585,8 @@ fn corrects_args() {
     );
 }
 
+// ExpandCoord
+
 #[test]
 fn corrects_coord() {
     assert_suggestion_result(
@@ -643,6 +645,26 @@ fn corrects_derefs() {
         "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
         lint_group(),
         "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
+// ExpandNotification
+
+#[test]
+fn corrects_notif() {
+    assert_suggestion_result(
+        "Amazing to see the notif of this on my phone!",
+        lint_group(),
+        "Amazing to see the notification of this on my phone!",
+    );
+}
+
+#[test]
+fn corrects_notifs() {
+    assert_suggestion_result(
+        "I don't encourage you spending all your time on social media or keeping the notifs on if you're working on something serious.",
+        lint_group(),
+        "I don't encourage you spending all your time on social media or keeping the notifications on if you're working on something serious.",
     );
 }
 
