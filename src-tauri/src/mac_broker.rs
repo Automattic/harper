@@ -16,7 +16,7 @@ use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::{Lint, Suggestion};
 use objc2_foundation::{NSPoint, NSRect, NSSize};
-use std::{cell::RefCell, error::Error as StdError, ptr};
+use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr};
 
 use crate::os_broker::OsBroker;
 use crate::rect::{ActionableLint, Rect};
@@ -55,7 +55,10 @@ impl Default for MacBroker {
 }
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut dyn FnMut(&str) -> Vec<Lint>) -> Vec<ActionableLint> {
+    fn get_boxes(
+        &mut self,
+        lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
+    ) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => return Vec::new(),
@@ -130,7 +133,7 @@ fn ax_element_attribute(
 
 struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
-    lint_text: RefCell<&'a mut dyn FnMut(&str) -> Vec<Lint>>,
+    lint_text: RefCell<&'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>>,
 }
 
 impl TreeVisitor for RectCollector<'_> {
@@ -142,33 +145,35 @@ impl TreeVisitor for RectCollector<'_> {
                 unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
 
             let mut rects = self.rects.borrow_mut();
-            let lints = (self.lint_text.borrow_mut())(&string);
+            let organized_lints = (self.lint_text.borrow_mut())(&string);
 
-            for lint in &lints {
-                if let Ok(Some(rect)) = element_rect_for_text_range(
-                    element,
-                    lint.span.start as isize,
-                    lint.span.len() as isize,
-                ) {
-                    let element = element.clone();
-                    let source_text = string.clone();
-                    let suggestion_source_text = string.clone();
-                    let lint = lint.clone();
-                    let suggestion_lint = lint.clone();
+            for (rule_name, lints) in organized_lints {
+                for lint in lints {
+                    if let Ok(Some(rect)) = element_rect_for_text_range(
+                        element,
+                        lint.span.start as isize,
+                        lint.span.len() as isize,
+                    ) {
+                        let element = element.clone();
+                        let source_text = string.clone();
+                        let suggestion_source_text = string.clone();
+                        let suggestion_lint = lint.clone();
 
-                    rects.push(ActionableLint::new(
-                        rect,
-                        lint,
-                        source_text,
-                        move |suggestion| {
-                            apply_suggestion_to_element(
-                                element,
-                                suggestion_source_text,
-                                suggestion_lint,
-                                suggestion,
-                            );
-                        },
-                    ));
+                        rects.push(ActionableLint::new(
+                            rect,
+                            rule_name.clone(),
+                            lint,
+                            source_text,
+                            move |suggestion| {
+                                apply_suggestion_to_element(
+                                    element,
+                                    suggestion_source_text,
+                                    suggestion_lint,
+                                    suggestion,
+                                );
+                            },
+                        ));
+                    }
                 }
             }
         }
@@ -179,7 +184,7 @@ impl TreeVisitor for RectCollector<'_> {
 }
 
 impl<'a> RectCollector<'a> {
-    fn new(lint_text: &'a mut dyn FnMut(&str) -> Vec<Lint>) -> Self {
+    fn new(lint_text: &'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
             lint_text: RefCell::new(lint_text),

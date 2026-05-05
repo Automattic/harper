@@ -5,7 +5,7 @@ use crate::config::Config;
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
-    linting::{FlatConfig, Lint, LintGroup, Linter},
+    linting::{FlatConfig, Lint, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
 use std::{
@@ -48,6 +48,19 @@ fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, 
         .map_err(|error| error.to_string())?
         .lint_config
         .clone())
+}
+
+#[tauri::command]
+fn set_lint_config(
+    lint_config: FlatConfig,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    config
+        .lock()
+        .map_err(|error| error.to_string())?
+        .lint_config = lint_config;
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -114,6 +127,7 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
+            set_lint_config,
             ignore_lint,
             add_to_dictionary,
         ])
@@ -154,14 +168,20 @@ pub fn run_highlighter() {
     let dictionary_user_dictionary = user_dictionary.clone();
     let dictionary_linter = linter.clone();
 
+    let disable_client = client.clone();
+    let disable_runtime = sync_runtime.clone();
+    let disable_linter = linter.clone();
+
     let lint_text = move |text: &str| {
         let dictionary = create_dictionary(lint_user_dictionary.borrow().clone());
         let doc = Document::new_markdown_default(text, &dictionary);
-        let mut lints = lint_linter.borrow_mut().lint(&doc);
+        let mut organized_lints = lint_linter.borrow_mut().organized_lints(&doc);
 
-        lint_ignored_lints.borrow().remove_ignored(&mut lints, &doc);
+        for lints in organized_lints.values_mut() {
+            lint_ignored_lints.borrow().remove_ignored(lints, &doc);
+        }
 
-        lints
+        organized_lints
     };
 
     let ignore_lint = move |lint: &Lint, document: &Document| {
@@ -184,9 +204,11 @@ pub fn run_highlighter() {
             .borrow_mut()
             .append_word_str(word, DictWordMetadata::default());
 
+        let lint_config = dictionary_linter.borrow().config.clone();
         *dictionary_linter.borrow_mut() = create_linter(create_dictionary(
             dictionary_user_dictionary.borrow().clone(),
-        ));
+        ))
+        .with_lint_config(lint_config);
 
         if let Err(error) =
             dictionary_runtime.block_on(dictionary_client.borrow_mut().add_to_dictionary(word))
@@ -195,9 +217,22 @@ pub fn run_highlighter() {
         }
     };
 
-    if let Err(error) = Highlighter::new(broker, lint_text, ignore_lint, add_to_dictionary)
-        .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
-        .and_then(Highlighter::run_window_for_each_monitor)
+    let disable_rule = move |rule_name: &str| match disable_runtime
+        .block_on(disable_client.borrow_mut().disable_rule(rule_name))
+    {
+        Ok(config) => disable_linter.borrow_mut().config = config,
+        Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
+    };
+
+    if let Err(error) = Highlighter::new(
+        broker,
+        lint_text,
+        ignore_lint,
+        add_to_dictionary,
+        disable_rule,
+    )
+    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
+    .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
     }

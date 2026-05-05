@@ -3,6 +3,7 @@ mod render_state;
 mod window;
 mod window_manager;
 
+use std::collections::BTreeMap;
 use std::time::Duration;
 
 pub use error::Error;
@@ -17,6 +18,7 @@ const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
 
 type IgnoreLint = Box<dyn FnMut(&Lint, &Document)>;
 type AddToDictionary = Box<dyn FnMut(&str)>;
+type DisableRule = Box<dyn FnMut(&str)>;
 
 /// Public entry point for the screen highlighter system.
 ///
@@ -31,14 +33,16 @@ pub struct Highlighter {
 impl Highlighter {
     pub fn new(
         os_broker: impl OsBroker + 'static,
-        lint_text: impl FnMut(&str) -> Vec<Lint> + 'static,
+        lint_text: impl FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'static,
         ignore_lint: impl FnMut(&Lint, &Document) + 'static,
         add_to_dictionary: impl FnMut(&str) + 'static,
+        disable_rule: impl FnMut(&str) + 'static,
     ) -> Result<Self, Error> {
         let context = egui::Context::default();
         let lint_text: LintText = Box::new(lint_text);
         let ignore_lint: IgnoreLint = Box::new(ignore_lint);
         let add_to_dictionary: AddToDictionary = Box::new(add_to_dictionary);
+        let disable_rule: DisableRule = Box::new(disable_rule);
 
         Ok(Self {
             window_manager: WindowManager::new(
@@ -47,6 +51,7 @@ impl Highlighter {
                 lint_text,
                 ignore_lint,
                 add_to_dictionary,
+                disable_rule,
                 DEFAULT_READ_INTERVAL,
             )?,
             context,

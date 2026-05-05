@@ -46,6 +46,7 @@ pub struct PositionedLint {
 /// connected without teaching rendering code about Accessibility APIs.
 pub struct ActionableLint {
     pub rect: Rect,
+    pub rule_name: String,
     pub lint: Lint,
     pub source_text: String,
     apply_suggestion: Option<Box<dyn FnOnce(Suggestion)>>,
@@ -60,12 +61,14 @@ impl PositionedLint {
 impl ActionableLint {
     pub fn new(
         rect: Rect,
+        rule_name: String,
         lint: Lint,
         source_text: String,
         apply_suggestion: impl FnOnce(Suggestion) + 'static,
     ) -> Self {
         Self {
             rect,
+            rule_name,
             lint,
             source_text,
             apply_suggestion: Some(Box::new(apply_suggestion)),

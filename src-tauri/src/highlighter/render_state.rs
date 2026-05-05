@@ -4,7 +4,7 @@ use harper_core::{
     linting::{Lint, LintKind, Suggestion},
 };
 
-use super::{AddToDictionary, IgnoreLint};
+use super::{AddToDictionary, DisableRule, IgnoreLint};
 use crate::{
     lint_kind_color::lint_kind_color,
     rect::{ActionableLint, Rect},
@@ -28,6 +28,7 @@ enum LintCardAction {
     ApplySuggestion(Suggestion),
     IgnoreLint,
     AddToDictionary,
+    DisableRule,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -68,6 +69,9 @@ pub struct RenderState {
 
     /// Called when the user adds a spelling lint's source text to the local dictionary.
     add_to_dictionary: AddToDictionary,
+
+    /// Called when the user disables the rule that produced the selected lint.
+    disable_rule: DisableRule,
 }
 
 impl RenderState {
@@ -77,6 +81,7 @@ impl RenderState {
         rects: Vec<ActionableLint>,
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
+        disable_rule: DisableRule,
     ) -> Self {
         let mut state = Self {
             rects: Vec::new(),
@@ -84,6 +89,7 @@ impl RenderState {
             markdown_cache: CommonMarkCache::default(),
             ignore_lint,
             add_to_dictionary,
+            disable_rule,
         };
         state.set_rects(rects);
         state
@@ -193,6 +199,17 @@ impl RenderState {
 
                     self.close_popup();
                 }
+                Some(LintCardAction::DisableRule) => {
+                    if let Some(rule_name) = self
+                        .rects
+                        .get(index)
+                        .map(|actionable_lint| actionable_lint.rule_name.clone())
+                    {
+                        (self.disable_rule)(&rule_name);
+                    }
+
+                    self.close_popup();
+                }
                 None => {}
             }
         }
@@ -290,7 +307,9 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
                         *action = Some(LintCardAction::Close);
                     }
                     icon_button(ui, Glyph::Settings, "Open Harper settings.");
-                    icon_button(ui, Glyph::Disable, "Disable this rule.");
+                    if icon_button(ui, Glyph::Disable, "Disable this rule.").clicked() {
+                        *action = Some(LintCardAction::DisableRule);
+                    }
                 });
             });
         });

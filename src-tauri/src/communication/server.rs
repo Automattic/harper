@@ -50,6 +50,14 @@ where
                     .lint_config
                     .clone(),
             },
+            Request::SetLintConfig { config } => {
+                self.config
+                    .lock()
+                    .expect("config mutex poisoned")
+                    .lint_config = config.clone();
+
+                Response::Ack
+            }
             Request::IgnoreLint { ignored_lints } => {
                 self.config
                     .lock()

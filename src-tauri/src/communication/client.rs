@@ -39,6 +39,21 @@ where
         .await
     }
 
+    pub async fn set_lint_config(&mut self, config: &FlatConfig) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::SetLintConfig {
+            config: config.clone(),
+        })
+        .await
+    }
+
+    pub async fn disable_rule(&mut self, rule_name: &str) -> Result<FlatConfig, ProtocolError> {
+        let mut config = self.get_lint_config().await?;
+        config.set_rule_enabled(rule_name, false);
+        self.set_lint_config(&config).await?;
+
+        Ok(config)
+    }
+
     pub async fn add_to_dictionary(&mut self, word: &str) -> Result<(), ProtocolError> {
         self.send_ack_request(Request::AddToDictionary {
             word: word.to_string(),

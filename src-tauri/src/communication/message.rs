@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Request {
     GetLintConfig,
+    SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
 }
@@ -37,6 +38,17 @@ mod tests {
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(decoded, Request::IgnoreLint { .. }));
+    }
+
+    #[test]
+    fn set_lint_config_request_serializes_as_json() {
+        let request = Request::SetLintConfig {
+            config: FlatConfig::new_curated(),
+        };
+        let encoded = serde_json::to_string(&request).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::SetLintConfig { .. }));
     }
 
     #[test]

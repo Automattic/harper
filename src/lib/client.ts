@@ -6,6 +6,19 @@ export class Client {
     return await invoke<LintConfig>("get_lint_config");
   }
 
+  static async setLintConfig(lintConfig: LintConfig): Promise<void> {
+    await invoke("set_lint_config", { lintConfig });
+  }
+
+  static async disableRule(ruleName: string): Promise<LintConfig> {
+    const lintConfig = await Client.getLintConfig();
+    lintConfig[ruleName] = false;
+
+    await Client.setLintConfig(lintConfig);
+
+    return lintConfig;
+  }
+
   static async ignoreLint(linter: Linter, source: string, lint: Lint): Promise<void> {
     await linter.ignoreLint(source, lint);
     const ignoredLints = await linter.exportIgnoredLints();

@@ -67,6 +67,71 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn client_can_set_lint_config_on_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let config = Arc::new(Mutex::new(Config::new()));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+        let mut expected = FlatConfig::new_curated();
+        expected.set_rule_enabled("SpellCheck", false);
+
+        let (ack, request) =
+            tokio::join!(client.set_lint_config(&expected), server.receive_request());
+
+        assert!(ack.is_ok());
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::SetLintConfig { .. })
+        ));
+        assert_eq!(config.lock().unwrap().lint_config, expected);
+    }
+
+    #[tokio::test]
+    async fn client_can_disable_rule_on_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let config = Arc::new(Mutex::new(Config::new()));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+
+        let disable = client.disable_rule("SpellCheck");
+        let receive_requests = async {
+            let first = server.receive_request().await;
+            let second = server.receive_request().await;
+
+            (first, second)
+        };
+        let (disable, (first_request, second_request)) = tokio::join!(disable, receive_requests);
+
+        let updated = disable.unwrap();
+        assert!(!updated.is_rule_enabled("SpellCheck"));
+        assert!(matches!(
+            first_request.unwrap(),
+            Some(Request::GetLintConfig)
+        ));
+        assert!(matches!(
+            second_request.unwrap(),
+            Some(Request::SetLintConfig { .. })
+        ));
+        assert!(
+            !config
+                .lock()
+                .unwrap()
+                .lint_config
+                .is_rule_enabled("SpellCheck")
+        );
+    }
+
+    #[tokio::test]
     async fn client_can_add_word_to_server_dictionary() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);

@@ -6,6 +6,7 @@ use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::window::WindowId;
 
 use super::AddToDictionary;
+use super::DisableRule;
 use super::Error;
 use super::IgnoreLint;
 use super::render_state::{HitTarget, RenderState};
@@ -26,6 +27,7 @@ pub struct WindowManager {
     lint_text: LintText,
     ignore_lint: IgnoreLint,
     add_to_dictionary: AddToDictionary,
+    disable_rule: DisableRule,
     read_interval: Duration,
 }
 
@@ -38,6 +40,7 @@ impl WindowManager {
         lint_text: LintText,
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
+        disable_rule: DisableRule,
         read_interval: Duration,
     ) -> Result<Self, Error> {
         Ok(Self {
@@ -48,6 +51,7 @@ impl WindowManager {
             lint_text,
             ignore_lint,
             add_to_dictionary,
+            disable_rule,
             read_interval,
         })
     }
@@ -72,6 +76,7 @@ impl WindowManager {
             self.lint_text,
             self.ignore_lint,
             self.add_to_dictionary,
+            self.disable_rule,
             self.read_interval,
         );
 
@@ -110,12 +115,13 @@ impl WindowManagerApp {
         lint_text: LintText,
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
+        disable_rule: DisableRule,
         read_interval: Duration,
     ) -> Self {
         Self {
             context,
             windows: Vec::new(),
-            render_state: RenderState::new(rects, ignore_lint, add_to_dictionary),
+            render_state: RenderState::new(rects, ignore_lint, add_to_dictionary, disable_rule),
             os_broker,
             lint_text,
             read_interval,
