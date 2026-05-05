@@ -4,7 +4,7 @@ use harper_core::{
     linting::{Lint, LintKind, Suggestion},
 };
 
-use super::IgnoreLint;
+use super::{AddToDictionary, IgnoreLint};
 use crate::{
     lint_kind_color::lint_kind_color,
     rect::{ActionableLint, Rect},
@@ -27,6 +27,7 @@ enum LintCardAction {
     Close,
     ApplySuggestion(Suggestion),
     IgnoreLint,
+    AddToDictionary,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -64,17 +65,25 @@ pub struct RenderState {
 
     /// Called when the user dismisses a lint so app-level ignored-lint state can be updated.
     ignore_lint: IgnoreLint,
+
+    /// Called when the user adds a spelling lint's source text to the local dictionary.
+    add_to_dictionary: AddToDictionary,
 }
 
 impl RenderState {
     /// Creates render state through `set_rects` so initial lint data gets the same stale-popup guard
     /// used by later accessibility refreshes.
-    pub fn new(rects: Vec<ActionableLint>, ignore_lint: IgnoreLint) -> Self {
+    pub fn new(
+        rects: Vec<ActionableLint>,
+        ignore_lint: IgnoreLint,
+        add_to_dictionary: AddToDictionary,
+    ) -> Self {
         let mut state = Self {
             rects: Vec::new(),
             highlighted_lint: None,
             markdown_cache: CommonMarkCache::default(),
             ignore_lint,
+            add_to_dictionary,
         };
         state.set_rects(rects);
         state
@@ -163,6 +172,22 @@ impl RenderState {
                     {
                         let document = Document::new_markdown_default_curated(&source_text);
                         (self.ignore_lint)(&lint, &document);
+                    }
+
+                    self.close_popup();
+                }
+                Some(LintCardAction::AddToDictionary) => {
+                    if let Some((lint, source_text)) =
+                        self.rects.get(index).map(|actionable_lint| {
+                            (
+                                actionable_lint.lint.clone(),
+                                actionable_lint.source_text.clone(),
+                            )
+                        })
+                    {
+                        let document = Document::new_markdown_default_curated(&source_text);
+                        let word = lint.get_str(document.get_source());
+                        (self.add_to_dictionary)(&word);
                     }
 
                     self.close_popup();
@@ -316,7 +341,9 @@ fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
             ui.set_height(FOOTER_HEIGHT - 16.0);
             ui.horizontal(|ui| {
                 if is_spelling_kind(lint.lint_kind) {
-                    ghost_button(ui, Some(Glyph::Plus), "Add to dictionary");
+                    if ghost_button(ui, Some(Glyph::Plus), "Add to dictionary").clicked() {
+                        *action = Some(LintCardAction::AddToDictionary);
+                    }
                 }
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     if ghost_button(ui, None, "Dismiss").clicked() {

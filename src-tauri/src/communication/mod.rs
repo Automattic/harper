@@ -13,7 +13,9 @@ pub use server::Server;
 mod tests {
     use super::*;
     use crate::config::Config;
-    use harper_core::{Document, IgnoredLints, linting::FlatConfig, linting::Lint};
+    use harper_core::{
+        Document, IgnoredLints, linting::FlatConfig, linting::Lint, spell::Dictionary,
+    };
     use std::sync::{Arc, Mutex};
     use tokio::io::{duplex, empty, sink};
 
@@ -61,6 +63,37 @@ mod tests {
                 .unwrap()
                 .ignored_lints
                 .is_ignored(&lint, &document)
+        );
+    }
+
+    #[tokio::test]
+    async fn client_can_add_word_to_server_dictionary() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let config = Arc::new(Mutex::new(Config::new()));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+
+        let (ack, request) = tokio::join!(
+            client.add_to_dictionary("blorple"),
+            server.receive_request()
+        );
+
+        assert!(ack.is_ok());
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::AddToDictionary { word }) if word == "blorple"
+        ));
+        assert!(
+            config
+                .lock()
+                .unwrap()
+                .mutable_dictionary
+                .contains_word_str("blorple")
         );
     }
 

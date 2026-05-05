@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 pub enum Request {
     GetLintConfig,
     IgnoreLint { ignored_lints: IgnoredLints },
+    AddToDictionary { word: String },
 }
 
 /// Canonical server-to-client protocol message sent by the Tauri app.
@@ -36,6 +37,20 @@ mod tests {
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(decoded, Request::IgnoreLint { .. }));
+    }
+
+    #[test]
+    fn add_to_dictionary_request_serializes_as_json() {
+        let request = Request::AddToDictionary {
+            word: "blorple".to_string(),
+        };
+        let encoded = serde_json::to_string(&request).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Request::AddToDictionary { word } if word == "blorple"
+        ));
     }
 
     #[test]

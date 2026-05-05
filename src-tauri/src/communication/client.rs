@@ -33,12 +33,21 @@ where
     }
 
     pub async fn ignore_lint(&mut self, ignored_lints: &IgnoredLints) -> Result<(), ProtocolError> {
-        match self
-            .send_request(Request::IgnoreLint {
-                ignored_lints: ignored_lints.clone(),
-            })
-            .await?
-        {
+        self.send_ack_request(Request::IgnoreLint {
+            ignored_lints: ignored_lints.clone(),
+        })
+        .await
+    }
+
+    pub async fn add_to_dictionary(&mut self, word: &str) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::AddToDictionary {
+            word: word.to_string(),
+        })
+        .await
+    }
+
+    async fn send_ack_request(&mut self, request: Request) -> Result<(), ProtocolError> {
+        match self.send_request(request).await? {
             Response::Ack => Ok(()),
             Response::GetLintConfig { .. } => {
                 Err(ProtocolError::UnexpectedResponse { expected: "Ack" })

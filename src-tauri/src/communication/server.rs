@@ -1,4 +1,5 @@
 use crate::config::Config;
+use harper_core::DictWordMetadata;
 use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader};
 
@@ -55,6 +56,15 @@ where
                     .expect("config mutex poisoned")
                     .ignored_lints
                     .append(ignored_lints.clone());
+
+                Response::Ack
+            }
+            Request::AddToDictionary { word } => {
+                self.config
+                    .lock()
+                    .expect("config mutex poisoned")
+                    .mutable_dictionary
+                    .append_word_str(word, DictWordMetadata::default());
 
                 Response::Ack
             }
