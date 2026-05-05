@@ -176,6 +176,15 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "ExpandAlgorithm" => (
+            &[
+                ("algo", "algorithm"),
+                ("algos", "algorithms"),
+            ],
+            "Use `algorithm` instead of `algo`",
+            "Expands the abbreviation `algo` to the full word `algorithm` for clarity.",
+            LintKind::Style
+        ),
         "ExpandArgument" => (
             &[
                 ("arg", "argument"),
@@ -240,7 +249,7 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity.",
             LintKind::Style
         ),
-        "ExpandVuln" => (
+        "ExpandVulnerability" => (
             &[
                 ("vuln", "vulnerability"),
                 ("vulns", "vulnerabilities"),
@@ -748,7 +757,7 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
             LintKind::Style
         ),
-        "ExpandCoord" => (
+        "ExpandCoordinate" => (
             &[
                 (&["coord"], &["coordinate"]),
                 (&["coords"], &["coordinates"]),

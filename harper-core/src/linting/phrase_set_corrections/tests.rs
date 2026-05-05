@@ -565,6 +565,26 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandAlgorithm
+
+#[test]
+fn corrects_algo() {
+    assert_suggestion_result(
+        "Always glad when the algo feeds me a new dissident.",
+        lint_group(),
+        "Always glad when the algorithm feeds me a new dissident.",
+    );
+}
+
+#[test]
+fn corrects_algos() {
+    assert_suggestion_result(
+        "I moved algos development to a private repository.",
+        lint_group(),
+        "I moved algorithms development to a private repository.",
+    );
+}
+
 // ExpandArgument
 
 #[test]
@@ -585,7 +605,7 @@ fn corrects_args() {
     );
 }
 
-// ExpandCoord
+// ExpandCoordinate
 
 #[test]
 fn corrects_coord() {
@@ -714,7 +734,7 @@ fn correct_ptrs() {
 // ExpandStandardOutput
 // -none-
 
-// ExpandVuln
+// ExpandVulnerability
 
 #[test]
 fn corrects_vuln() {
@@ -730,7 +750,9 @@ fn corrects_vulns() {
     // Fix just this lint
     let mut only_expand_vuln = lint_group();
     only_expand_vuln.set_all_rules_to(None); // Disable all linters
-    only_expand_vuln.config.set_rule_enabled("ExpandVuln", true); // Enable only ExpandVuln
+    only_expand_vuln
+        .config
+        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
 
     assert_suggestion_result(
         "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",

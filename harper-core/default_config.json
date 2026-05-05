@@ -1284,9 +1284,16 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandCoord",
+								"name": "ExpandAlgorithm",
 								"state": true,
-								"label": "Expand Coord"
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
 							}
 						},
 						{
@@ -1298,9 +1305,9 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandVuln",
+								"name": "ExpandVulnerability",
 								"state": true,
-								"label": "Expand Vuln"
+								"label": "Expand Vulnerability"
 							}
 						}
 					]
