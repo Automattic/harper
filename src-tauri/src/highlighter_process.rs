@@ -2,8 +2,9 @@ use crate::communication::Server;
 use crate::config::Config;
 use std::io;
 use std::process::Stdio;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use tokio::process::{Child, ChildStdin, ChildStdout, Command};
+use tokio::sync::Mutex;
 
 /// Owns the highlighter child process while the Tauri app is running.
 ///

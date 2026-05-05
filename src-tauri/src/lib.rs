@@ -8,15 +8,9 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
-use std::{
-    cell::RefCell,
-    rc::Rc,
-    sync::{Arc, Mutex},
-    thread,
-    time::Duration,
-};
+use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
 use tauri::State;
-use tokio::runtime::Builder;
+use tokio::{runtime::Builder, sync::Mutex};
 
 pub mod color;
 pub mod communication;
@@ -42,48 +36,56 @@ enum Command {
 }
 
 #[tauri::command]
-fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
-    Ok(config
-        .lock()
-        .map_err(|error| error.to_string())?
-        .lint_config
-        .clone())
+async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
+    Ok(config.lock().await.lint_config.clone())
 }
 
 #[tauri::command]
-fn set_lint_config(
+async fn set_lint_config(
     lint_config: FlatConfig,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.lint_config = lint_config;
     config
-        .lock()
-        .map_err(|error| error.to_string())?
-        .lint_config = lint_config;
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
 
     Ok(())
 }
 
 #[tauri::command]
-fn ignore_lint(ignored_lints: String, config: State<'_, Arc<Mutex<Config>>>) -> Result<(), String> {
+async fn ignore_lint(
+    ignored_lints: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
     let ignored_lints =
         serde_json::from_str::<IgnoredLints>(&ignored_lints).map_err(|error| error.to_string())?;
 
+    let mut config = config.lock().await;
+    config.ignored_lints.append(ignored_lints);
     config
-        .lock()
-        .map_err(|error| error.to_string())?
-        .ignored_lints
-        .append(ignored_lints);
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
 
     Ok(())
 }
 
 #[tauri::command]
-fn add_to_dictionary(word: String, config: State<'_, Arc<Mutex<Config>>>) -> Result<(), String> {
+async fn add_to_dictionary(
+    word: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
     config
-        .lock()
-        .map_err(|error| error.to_string())?
         .mutable_dictionary
         .append_word_str(&word, DictWordMetadata::default());
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
 
     Ok(())
 }
@@ -99,7 +101,18 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let config = Arc::new(Mutex::new(Config::new()));
+    let config_runtime = Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .expect("failed to build config runtime");
+    let config = match config_runtime.block_on(Config::load_from_system()) {
+        Ok(config) => config,
+        Err(error) => {
+            eprintln!("failed to load config, using defaults: {error}");
+            Config::new()
+        }
+    };
+    let config = Arc::new(Mutex::new(config));
     let server_config = config.clone();
 
     thread::spawn(move || {

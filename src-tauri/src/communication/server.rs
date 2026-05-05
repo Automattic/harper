@@ -1,7 +1,8 @@
 use crate::config::Config;
 use harper_core::DictWordMetadata;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader};
+use tokio::sync::Mutex;
 
 use super::error::ProtocolError;
 use super::framing::write_message;
@@ -34,45 +35,46 @@ where
         }
 
         let request = serde_json::from_str(&line)?;
-        let response = self.handle_request(&request);
+        let response = self.handle_request(&request).await;
         write_message(&mut self.writer, &response).await?;
 
         Ok(Some(request))
     }
 
-    fn handle_request(&self, request: &Request) -> Response {
+    async fn handle_request(&self, request: &Request) -> Response {
         match request {
             Request::GetLintConfig => Response::GetLintConfig {
-                config: self
-                    .config
-                    .lock()
-                    .expect("config mutex poisoned")
-                    .lint_config
-                    .clone(),
+                config: self.config.lock().await.lint_config.clone(),
             },
             Request::SetLintConfig { config } => {
-                self.config
-                    .lock()
-                    .expect("config mutex poisoned")
-                    .lint_config = config.clone();
+                let mut stored_config = self.config.lock().await;
+                stored_config.lint_config = config.clone();
+
+                if let Err(error) = stored_config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
 
                 Response::Ack
             }
             Request::IgnoreLint { ignored_lints } => {
-                self.config
-                    .lock()
-                    .expect("config mutex poisoned")
-                    .ignored_lints
-                    .append(ignored_lints.clone());
+                let mut config = self.config.lock().await;
+                config.ignored_lints.append(ignored_lints.clone());
+
+                if let Err(error) = config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
 
                 Response::Ack
             }
             Request::AddToDictionary { word } => {
-                self.config
-                    .lock()
-                    .expect("config mutex poisoned")
+                let mut config = self.config.lock().await;
+                config
                     .mutable_dictionary
                     .append_word_str(word, DictWordMetadata::default());
+
+                if let Err(error) = config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
 
                 Response::Ack
             }

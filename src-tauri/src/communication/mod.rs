@@ -16,8 +16,9 @@ mod tests {
     use harper_core::{
         Document, IgnoredLints, linting::FlatConfig, linting::Lint, spell::Dictionary,
     };
-    use std::sync::{Arc, Mutex};
+    use std::sync::Arc;
     use tokio::io::{duplex, empty, sink};
+    use tokio::sync::Mutex;
 
     #[tokio::test]
     async fn client_receives_lint_config_from_server() {
@@ -60,7 +61,7 @@ mod tests {
         assert!(
             config
                 .lock()
-                .unwrap()
+                .await
                 .ignored_lints
                 .is_ignored(&lint, &document)
         );
@@ -88,7 +89,7 @@ mod tests {
             request.unwrap(),
             Some(Request::SetLintConfig { .. })
         ));
-        assert_eq!(config.lock().unwrap().lint_config, expected);
+        assert_eq!(config.lock().await.lint_config, expected);
     }
 
     #[tokio::test]
@@ -125,7 +126,7 @@ mod tests {
         assert!(
             !config
                 .lock()
-                .unwrap()
+                .await
                 .lint_config
                 .is_rule_enabled("SpellCheck")
         );
@@ -156,7 +157,7 @@ mod tests {
         assert!(
             config
                 .lock()
-                .unwrap()
+                .await
                 .mutable_dictionary
                 .contains_word_str("blorple")
         );
