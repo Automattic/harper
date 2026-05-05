@@ -60,7 +60,7 @@ impl OsBroker for MacBroker {
             Ok(Some(pid)) => pid,
             Ok(None) => return Vec::new(),
             Err(err) => {
-                println!("Unable to identify focused window: {err}");
+                eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
         };
@@ -203,7 +203,7 @@ fn apply_suggestion_to_element(
     let value = CFString::new(&updated);
 
     if let Err(error) = element.set_value(value.as_CFType()) {
-        println!("Unable to apply suggestion: {error}");
+        eprintln!("Unable to apply suggestion: {error}");
     }
 }
 

@@ -100,7 +100,11 @@ pub fn run_tauri() {
                 .expect("failed to create server");
 
             loop {
-                server.receive_request().await.unwrap();
+                match server.receive_request().await {
+                    Ok(Some(_)) => {}
+                    Ok(None) => break,
+                    Err(error) => eprintln!("failed to receive highlighter request: {error}"),
+                }
             }
         })())
     });
