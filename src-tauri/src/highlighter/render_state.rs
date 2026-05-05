@@ -151,8 +151,9 @@ impl RenderState {
         {
             let rect = positioned_lint.rect;
             let lint = positioned_lint.lint.clone();
+            let source_text = positioned_lint.source_text.clone();
 
-            match render_lint_card(ui, &rect, &lint, &mut self.markdown_cache) {
+            match render_lint_card(ui, &rect, &lint, &source_text, &mut self.markdown_cache) {
                 Some(LintCardAction::Close) => self.close_popup(),
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
                     if let Some(actionable_lint) = self.rects.get_mut(index) {
@@ -223,6 +224,7 @@ fn render_lint_card(
     ui: &mut egui::Ui,
     rect: &Rect,
     lint: &Lint,
+    source_text: &str,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
     let popup_rect = popup_rect_for_lint(rect);
@@ -254,7 +256,7 @@ fn render_lint_card(
 
                     render_popover_header(ui, lint, &mut action);
                     render_popover_body(ui, lint, markdown_cache, &mut action);
-                    render_popover_footer(ui, lint, &mut action);
+                    render_popover_footer(ui, lint, source_text, &mut action);
                 });
             action
         })
@@ -284,11 +286,11 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
             ui.horizontal(|ui| {
                 lint_kind_badge(ui, lint, style);
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if icon_button(ui, Glyph::Close).clicked() {
+                    if icon_button(ui, Glyph::Close, "Close this suggestion popup.").clicked() {
                         *action = Some(LintCardAction::Close);
                     }
-                    icon_button(ui, Glyph::Settings);
-                    icon_button(ui, Glyph::Disable);
+                    icon_button(ui, Glyph::Settings, "Open Harper settings.");
+                    icon_button(ui, Glyph::Disable, "Disable this rule.");
                 });
             });
         });
@@ -328,7 +330,12 @@ fn render_popover_body(
 
 /// Renders the footer controls as visual stubs so the popup matches the target component before those
 /// actions have real behavior.
-fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<LintCardAction>) {
+fn render_popover_footer(
+    ui: &mut egui::Ui,
+    lint: &Lint,
+    source_text: &str,
+    action: &mut Option<LintCardAction>,
+) {
     egui::Frame::new()
         .fill(egui::Color32::from_rgba_unmultiplied(0, 0, 0, 5))
         .stroke(egui::Stroke::new(
@@ -341,12 +348,21 @@ fn render_popover_footer(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
             ui.set_height(FOOTER_HEIGHT - 16.0);
             ui.horizontal(|ui| {
                 if is_spelling_kind(lint.lint_kind) {
-                    if ghost_button(ui, Some(Glyph::Plus), "Add to dictionary").clicked() {
+                    let source_chars = source_text.chars().collect::<Vec<_>>();
+                    let word = lint.get_str(&source_chars);
+                    if ghost_button(
+                        ui,
+                        Some(Glyph::Plus),
+                        "Add to dictionary",
+                        format!("Add \"{word}\" to your personal dictionary."),
+                    )
+                    .clicked()
+                    {
                         *action = Some(LintCardAction::AddToDictionary);
                     }
                 }
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ghost_button(ui, None, "Dismiss").clicked() {
+                    if ghost_button(ui, None, "Dismiss", "Ignore this suggestion").clicked() {
                         *action = Some(LintCardAction::IgnoreLint);
                     }
                 });
@@ -437,13 +453,14 @@ fn suggestion_option(
         .min_size(egui::vec2(0.0, 38.0));
 
         ui.add(button)
+            .on_hover_text(suggestion_hover_text(suggestion))
     })
     .inner
 }
 
 /// Renders the prototype's square icon-only controls without coupling their visual treatment to any
 /// behavior beyond the response returned to the caller.
-fn icon_button(ui: &mut egui::Ui, glyph: Glyph) -> egui::Response {
+fn icon_button(ui: &mut egui::Ui, glyph: Glyph, hover_text: &str) -> egui::Response {
     let (rect, response) = ui.allocate_exact_size(egui::vec2(26.0, 26.0), egui::Sense::click());
     let background = if response.hovered() {
         egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15)
@@ -459,11 +476,16 @@ fn icon_button(ui: &mut egui::Ui, glyph: Glyph) -> egui::Response {
     ui.painter().rect_filled(rect, 6.0, background);
     draw_glyph(ui, rect.shrink(6.0), glyph, color);
 
-    response
+    response.on_hover_text(hover_text)
 }
 
 /// Renders footer controls as no-op buttons so future actions can be wired without changing layout.
-fn ghost_button(ui: &mut egui::Ui, glyph: Option<Glyph>, label: &str) -> egui::Response {
+fn ghost_button(
+    ui: &mut egui::Ui,
+    glyph: Option<Glyph>,
+    label: &str,
+    hover_text: impl Into<egui::WidgetText>,
+) -> egui::Response {
     let label = if glyph.is_some() {
         format!("+ {label}")
     } else {
@@ -482,6 +504,7 @@ fn ghost_button(ui: &mut egui::Ui, glyph: Option<Glyph>, label: &str) -> egui::R
             .stroke(egui::Stroke::NONE)
             .corner_radius(egui::CornerRadius::same(6)),
         )
+        .on_hover_text(hover_text)
     })
     .inner
 }
@@ -627,6 +650,15 @@ fn suggestion_text(suggestion: &Suggestion) -> String {
     match suggestion {
         Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => chars.iter().collect(),
         Suggestion::Remove => "Remove".to_owned(),
+    }
+}
+
+fn suggestion_hover_text(suggestion: &Suggestion) -> String {
+    match suggestion {
+        Suggestion::Remove => "Remove".to_owned(),
+        Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => {
+            format!("Replace with \"{}\"", chars.iter().collect::<String>())
+        }
     }
 }
 
