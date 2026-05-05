@@ -705,6 +705,17 @@ fn corrects_vuln() {
 
 #[test]
 fn corrects_vulns() {
+    // Fix just this lint
+    let mut only_expand_vuln = lint_group();
+    only_expand_vuln.set_all_rules_to(None); // Disable all linters
+    only_expand_vuln.config.set_rule_enabled("ExpandVuln", true); // Enable only ExpandVuln
+
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        only_expand_vuln,
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
+    );
+    // Fix all lints in the `LintGroup`
     assert_suggestion_result(
         "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
         lint_group(),
