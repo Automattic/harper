@@ -5698,8 +5698,8 @@
 # ISg/D$+ NPr/VB+ Nᴹ/Vg/J   P  D   NSg/VB  P  NSg+     NPr/ISg+ NPr/VPt P    ISg/D$+ NSg/VB/J/R . VP/J  NPl/V3+ .
 > Sometimes , too , he       stared around at    his     possessions in        a    dazed way    , as    though in
 # R         . R   . NPr/ISg+ VP/J   J/P    NSg/P ISg/D$+ NPl/V3+     NPr/J/R/P D/P+ VP/J+ NSg/J+ . R/C/P C      NPr/J/R/P
-> her     actual and  astounding presence none  of it       was  any    longer real  . Once  he
-# ISg/D$+ NSg/J  VB/C Nᴹ/Vg/J    N🅪Sg/VB+ NSg/I P  NPr/ISg+ VLPt I/R/Dq NSg/JC NSg/J . NSg/C NPr/ISg+
+> her     actual and  astounding presence none of it       was  any    longer real  . Once  he
+# ISg/D$+ NSg/J  VB/C Nᴹ/Vg/J    N🅪Sg/VB+ I    P  NPr/ISg+ VLPt I/R/Dq NSg/JC NSg/J . NSg/C NPr/ISg+
 > nearly toppled down        a   flight    of stairs .
 # R      VP/J    N🅪Sg/VB/J/P D/P N🅪Sg/VB/J P  NPl+   .
 >
@@ -6142,8 +6142,8 @@
 # N🅪Sg/VB/J+ I/C/Ddem+ VP   ISg+ NSg/I/J/Dq+ NPl/V3+ D/P NSg         NSg/VP ISg+ R          J      NSg/C/P J/P
 > the verge  of soft  - mindedness , and  , suspecting this    , an  infinite number     of women
 # D   NSg/VB P  NSg/J . Nᴹ+        . VB/C . Nᴹ/Vg/J    I/Ddem+ . D/P NSg/J    N🅪Sg/VB/JC P  NPl+
-> tried to separate him  from his     money   . The none   too savory ramifications by    which
-# VP/J  P  NSg/VB/J ISg+ P    ISg/D$+ N🅪Sg/J+ . D+  NSg/I+ R   NSg/J  +             NSg/P I/C+
+> tried to separate him  from his     money   . The none too savory ramifications by    which
+# VP/J  P  NSg/VB/J ISg+ P    ISg/D$+ N🅪Sg/J+ . D+  I+   R   NSg/J  +             NSg/P I/C+
 > Ella Kaye , the newspaper woman   , played Madame de   Maintenon to his     weakness and
 # NPr  NPr  . D   N🅪Sg/VB+  NSg/VB+ . VP/J   NSg+   NPr+ ?         P  ISg/D$+ N🅪Sg+    VB/C
 > sent   him  to sea in        a   yacht   , were     common   property of the turgid journalism
