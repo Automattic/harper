@@ -1,4 +1,6 @@
 <script lang="ts">
+import { cubicOut } from 'svelte/easing';
+import { fade, fly } from 'svelte/transition';
 import {
 	createEmptyCategoryCounts,
 	displayCategoryFor,
@@ -14,15 +16,25 @@ export let focusLint: (lintBox: IgnorableLintBox) => void = () => {};
 export let onActivate: (lintBox: IgnorableLintBox | null) => void = () => {};
 export let onApplied: () => void = () => {};
 export let onIgnored: () => void = () => {};
+export let onIgnoreAll: (() => void | Promise<void>) | null = null;
+export let onHideSidebar: () => void = () => {};
 
 let openSet: Set<string> = new Set();
+let menuRoot: HTMLDivElement | null = null;
 let previousSignature = '';
 let showCategoryCounts = true;
+let menuOpen = false;
+let showIgnoreConfirm = false;
 
-const headerButtonClass =
-	'inline-flex h-[24px] items-center justify-center whitespace-nowrap rounded-md border-[0.5px] border-stone-300 bg-linear-to-b from-white to-stone-50 px-2.5 text-[12.5px] font-medium text-stone-950 shadow-sm shadow-stone-950/5 disabled:opacity-50';
+const iconButtonClass =
+	'inline-flex h-7 w-7 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 disabled:opacity-50';
+const menuItemClass =
+	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-stone-700 shadow-none hover:bg-stone-100 disabled:text-stone-300 disabled:hover:bg-transparent';
+const dangerMenuItemClass =
+	'm-0 flex h-8 w-full items-center border-0 bg-transparent px-3 text-left text-[13px] font-medium text-red-700 shadow-none hover:bg-red-50 disabled:text-stone-300 disabled:hover:bg-transparent';
 
 $: allOpen = lintBoxes.length > 0 && openSet.size === lintBoxes.length;
+$: problemCountLabel = `${lintBoxes.length} ${lintBoxes.length === 1 ? 'problem' : 'problems'}`;
 $: counts = lintBoxes.reduce((acc, lintBox) => {
 	acc[displayCategoryFor(lintBox.lint.lint_kind)] += 1;
 	return acc;
@@ -42,9 +54,80 @@ $: if (signature !== previousSignature) {
 }
 
 async function ignoreAll() {
-	await Promise.all(lintBoxes.map((b) => (b.ignoreLint ? b.ignoreLint() : Promise.resolve())));
+	if (onIgnoreAll != null) {
+		await onIgnoreAll();
+	} else {
+		const boxesToIgnore = [...lintBoxes];
+		for (const lintBox of boxesToIgnore) {
+			await lintBox.ignoreLint?.();
+		}
+	}
+
 	openSet = new Set();
 	onIgnored();
+}
+
+function hideSidebar() {
+	menuOpen = false;
+	showIgnoreConfirm = false;
+	onHideSidebar();
+}
+
+function openAllCards() {
+	openSet = new Set(lintBoxes.map(lintBoxId));
+	menuOpen = false;
+}
+
+function closeAllCards() {
+	openSet = new Set();
+	menuOpen = false;
+}
+
+function requestIgnoreAll() {
+	menuOpen = false;
+	showIgnoreConfirm = true;
+}
+
+async function confirmIgnoreAll() {
+	showIgnoreConfirm = false;
+	await ignoreAll();
+}
+
+function cancelIgnoreAll() {
+	showIgnoreConfirm = false;
+}
+
+function handleIgnoreBackdropClick(event: MouseEvent) {
+	if (event.target === event.currentTarget) {
+		cancelIgnoreAll();
+	}
+}
+
+function handleWindowClick(event: MouseEvent) {
+	if (!menuOpen || menuRoot == null || event.target == null) {
+		return;
+	}
+
+	if (!menuRoot.contains(event.target as Node)) {
+		menuOpen = false;
+	}
+}
+
+function handleWindowKeydown(event: KeyboardEvent) {
+	if (event.key !== 'Escape') {
+		return;
+	}
+
+	if (showIgnoreConfirm) {
+		event.preventDefault();
+		showIgnoreConfirm = false;
+		return;
+	}
+
+	if (menuOpen) {
+		event.preventDefault();
+		menuOpen = false;
+	}
 }
 
 function toggleCard(id: string) {
@@ -55,15 +138,6 @@ function toggleCard(id: string) {
 		next.add(id);
 	}
 	openSet = next;
-}
-
-function toggleAll() {
-	if (allOpen) {
-		openSet = new Set();
-		return;
-	}
-
-	openSet = new Set(lintBoxes.map(lintBoxId));
 }
 
 function collapse(contents: string) {
@@ -95,21 +169,25 @@ function createSnippetFor(lintBox: LintBox) {
 }
 </script>
 
+<svelte:window on:click={handleWindowClick} on:keydown={handleWindowKeydown} />
+
 <aside
-	class="flex min-h-0 w-[320px] flex-[0_0_320px] flex-col border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] [font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF_Pro_Text','Helvetica_Neue',sans-serif] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
+	class="flex min-h-0 w-[320px] flex-[0_0_320px] overflow-hidden border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] [font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF_Pro_Text','Helvetica_Neue',sans-serif] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
 	aria-label="Problems"
+	transition:fly={{ x: 320, duration: 250, easing: cubicOut }}
 >
-	<header class="flex items-center gap-1.5 px-3.5 pt-2.5 pb-2">
-		<h2
-			class="!m-0 flex min-w-0 flex-1 items-center !p-0 !text-[15px] !leading-none !font-bold text-stone-950 ![font-family:inherit]"
-		>
-			<button
-				type="button"
-				class="!m-0 inline-flex min-w-0 items-center gap-1.5 border-0 bg-transparent !p-0 text-left !text-[15px] !leading-none font-[inherit] text-inherit"
-				aria-expanded={showCategoryCounts}
-				on:click={() => (showCategoryCounts = !showCategoryCounts)}
+	<div class="flex min-h-0 flex-1 flex-col" transition:fade={{ duration: 250 }}>
+		<header class="flex items-center gap-1.5 px-3.5 pt-2.5 pb-2">
+			<h2
+				class="!m-0 flex min-w-0 flex-1 items-center !p-0 !text-[15px] !leading-none !font-bold text-stone-950 ![font-family:inherit]"
 			>
-				Problems
+				<button
+					type="button"
+					class="!m-0 inline-flex min-w-0 items-center gap-1.5 border-0 bg-transparent !p-0 text-left !text-[15px] !leading-none font-[inherit] text-inherit"
+					aria-expanded={showCategoryCounts}
+					on:click={() => (showCategoryCounts = !showCategoryCounts)}
+				>
+					Problems
 					<span
 						class="inline-flex h-[18px] min-w-5 items-center justify-center rounded-full bg-amber-700 px-1.5 text-[11px] font-semibold text-white tabular-nums"
 					>
@@ -120,33 +198,90 @@ function createSnippetFor(lintBox: LintBox) {
 							showCategoryCounts ? 'rotate-180' : ''
 						}`}
 					>
+						<svg
+							viewBox="0 0 16 16"
+							aria-hidden="true"
+							class="h-3.5 w-3.5 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]"
+						>
+							<path d="M4 6 8 10 12 6" />
+						</svg>
+					</span>
+				</button>
+			</h2>
+
+			<div bind:this={menuRoot} class="relative flex shrink-0 items-center gap-1.5">
+				<button
+					type="button"
+					class={iconButtonClass}
+					aria-label="Hide problems sidebar"
+					title="Hide problems sidebar"
+					on:click={hideSidebar}
+				>
 					<svg
-						viewBox="0 0 16 16"
+						viewBox="0 0 20 20"
 						aria-hidden="true"
-						class="h-3.5 w-3.5 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]"
+						class="h-[18px] w-[18px] fill-none stroke-current stroke-[1.5] [stroke-linecap:round] [stroke-linejoin:round]"
 					>
-						<path d="M4 6 8 10 12 6" />
+						<rect x="3.5" y="3" width="13" height="14" rx="3" />
+						<path d="M13.25 5.5v9" />
 					</svg>
-				</span>
-			</button>
-		</h2>
-		<div class="flex shrink-0 items-center gap-1.5">
-			<button
-				type="button"
-				class={headerButtonClass}
-				on:click={toggleAll}
-				disabled={lintBoxes.length === 0}
-			>
-				{allOpen ? 'Collapse all' : 'Open all'}
-			</button>
-			<button
-				type="button"
-				class={headerButtonClass}
-				on:click={ignoreAll}
-				disabled={lintBoxes.length === 0}>Ignore all</button
-			>
-		</div>
-	</header>
+				</button>
+
+				<button
+					type="button"
+					class={iconButtonClass}
+					aria-label="More problem actions"
+					aria-haspopup="menu"
+					aria-expanded={menuOpen}
+					title="More problem actions"
+					on:click={() => (menuOpen = !menuOpen)}
+				>
+					<svg viewBox="0 0 16 16" aria-hidden="true" class="h-4 w-4 fill-current">
+						<circle cx="8" cy="4" r="1.15" />
+						<circle cx="8" cy="8" r="1.15" />
+						<circle cx="8" cy="12" r="1.15" />
+					</svg>
+				</button>
+
+				{#if menuOpen}
+					<div
+						id="problem-actions-menu"
+						role="menu"
+						class="absolute top-[calc(100%+6px)] right-0 z-30 w-36 overflow-hidden rounded-lg border-[0.5px] border-[rgba(28,26,22,0.16)] bg-white py-1 shadow-lg shadow-stone-950/10"
+						transition:fade={{ duration: 100 }}
+					>
+						<button
+							type="button"
+							role="menuitem"
+							class={menuItemClass}
+							disabled={lintBoxes.length === 0 || allOpen}
+							on:click={openAllCards}
+						>
+							Open All
+						</button>
+						<button
+							type="button"
+							role="menuitem"
+							class={menuItemClass}
+							disabled={lintBoxes.length === 0 || openSet.size === 0}
+							on:click={closeAllCards}
+						>
+							Close All
+						</button>
+						<div class="my-1 h-px bg-[rgba(28,26,22,0.09)]"></div>
+						<button
+							type="button"
+							role="menuitem"
+							class={dangerMenuItemClass}
+							disabled={lintBoxes.length === 0}
+							on:click={requestIgnoreAll}
+						>
+							Ignore All
+						</button>
+					</div>
+				{/if}
+			</div>
+		</header>
 
 		{#if showCategoryCounts && visibleCategoryEntries.length > 0}
 			<div
@@ -167,7 +302,7 @@ function createSnippetFor(lintBox: LintBox) {
 					</div>
 				{/each}
 			</div>
-	{/if}
+		{/if}
 
 		<div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto px-3.5 pt-3.5 pb-6" data-problems-scroller>
 			{#if lintBoxes.length === 0}
@@ -178,40 +313,82 @@ function createSnippetFor(lintBox: LintBox) {
 						aria-hidden="true"
 						class="mb-2.5 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-b from-emerald-400 to-emerald-600 text-white shadow-sm shadow-emerald-900/20"
 					>
-					<svg
-						viewBox="0 0 16 16"
-						class="h-4 w-4 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]"
-					>
-						<path d="M3.5 8.5 6.5 11.5 12.5 5" />
-					</svg>
+						<svg
+							viewBox="0 0 16 16"
+							class="h-4 w-4 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]"
+						>
+							<path d="M3.5 8.5 6.5 11.5 12.5 5" />
+						</svg>
+					</div>
+					<strong class="mb-0.5 block font-semibold text-stone-950">All clear</strong>
+					<p class="m-0">Harper has no suggestions for this document.</p>
 				</div>
-				<strong class="mb-0.5 block font-semibold text-stone-950">All clear</strong>
-				<p class="m-0">Harper has no suggestions for this document.</p>
-			</div>
-		{:else}
-			{#each lintBoxes as lintBox}
-				{@const id = lintBoxId(lintBox)}
-				<LintCard
-					lint={lintBox.lint}
-					snippet={createSnippetFor(lintBox)}
-					open={openSet.has(id)}
-					active={activeLintId === id}
-					onToggleOpen={() => toggleCard(id)}
-					focusError={() => focusLint(lintBox)}
-					onActivate={() => onActivate(lintBox)}
-					onApply={(suggestion) => {
-						lintBox.applySuggestion(suggestion);
-						onApplied();
-					}}
-					onIgnore={async () => {
-						await lintBox.ignoreLint?.();
-						onIgnored();
-					}}
-				/>
-			{/each}
-		{/if}
+			{:else}
+				{#each lintBoxes as lintBox}
+					{@const id = lintBoxId(lintBox)}
+					<LintCard
+						lint={lintBox.lint}
+						snippet={createSnippetFor(lintBox)}
+						open={openSet.has(id)}
+						active={activeLintId === id}
+						onToggleOpen={() => toggleCard(id)}
+						focusError={() => focusLint(lintBox)}
+						onActivate={() => onActivate(lintBox)}
+						onApply={(suggestion) => {
+							lintBox.applySuggestion(suggestion);
+							onApplied();
+						}}
+						onIgnore={async () => {
+							await lintBox.ignoreLint?.();
+							onIgnored();
+						}}
+					/>
+				{/each}
+			{/if}
+		</div>
 	</div>
 </aside>
+
+{#if showIgnoreConfirm}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/35 px-4"
+		role="presentation"
+		transition:fade={{ duration: 120 }}
+		on:click={handleIgnoreBackdropClick}
+	>
+		<div
+			class="w-full max-w-[340px] rounded-lg border-[0.5px] border-[rgba(28,26,22,0.16)] bg-white p-4 text-stone-950 shadow-2xl shadow-stone-950/20"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="ignore-all-title"
+			tabindex="-1"
+		>
+			<h3 id="ignore-all-title" class="!m-0 !p-0 text-[15px] leading-5 font-semibold">
+				Ignore all problems?
+			</h3>
+			<p class="mt-2 mb-4 text-[13px] leading-5 text-stone-600">
+				This will ignore {problemCountLabel} in the current document.
+			</p>
+			<div class="flex justify-end gap-2">
+				<button
+					type="button"
+					class="h-8 rounded-md border-[0.5px] border-stone-300 bg-linear-to-b from-white to-stone-50 px-3 text-[13px] font-medium text-stone-700 shadow-sm shadow-stone-950/5"
+					on:click={cancelIgnoreAll}
+				>
+					Cancel
+				</button>
+				<button
+					type="button"
+					class="h-8 rounded-md border-[0.5px] border-red-700 bg-red-700 px-3 text-[13px] font-medium text-white shadow-sm shadow-red-950/10 disabled:opacity-50"
+					disabled={lintBoxes.length === 0}
+					on:click={confirmIgnoreAll}
+				>
+					Ignore All
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	aside :global(code) {

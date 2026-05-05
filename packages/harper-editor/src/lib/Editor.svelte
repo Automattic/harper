@@ -6,6 +6,8 @@ import {
 	type UnpackedLintGroups,
 	unpackLint,
 } from 'lint-framework';
+import { tick } from 'svelte';
+import { fade } from 'svelte/transition';
 import {
 	type EditorFontFamily,
 	type EditorFontSize,
@@ -34,7 +36,13 @@ let fontFamily = normalizeFontFamily(defaultFontFamily);
 let fontSize = normalizeFontSize(defaultFontSize);
 let lastExternalContent = content;
 let readySent = false;
+let restoreButtonTimeout: ReturnType<typeof setTimeout> | null = null;
+let restoreButtonVisible = false;
+let sidebarVisible = true;
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const sidebarTransitionDuration = 250;
+const restoreButtonDelay = sidebarTransitionDuration + 40;
 
 $: fontStack = fontStackFor(fontFamily);
 $: editorStyle =
@@ -239,6 +247,52 @@ function handleProblemAction() {
 	syncDocumentText(true);
 	scheduleLintFrameworkUpdate();
 }
+
+async function ignoreAllProblems() {
+	syncDocumentText(false);
+
+	const text = documentText;
+	const activeLinter = linter;
+
+	for (let i = 0; i < 25; i++) {
+		const groupedLints = await activeLinter.organizedLints(text);
+		const lints = Object.values(groupedLints).flat();
+		if (lints.length === 0) {
+			return;
+		}
+
+		for (const lint of lints) {
+			await activeLinter.ignoreLint(text, lint);
+		}
+	}
+}
+
+async function showSidebar() {
+	if (restoreButtonTimeout != null) {
+		clearTimeout(restoreButtonTimeout);
+		restoreButtonTimeout = null;
+	}
+
+	restoreButtonVisible = false;
+	await tick();
+	sidebarVisible = true;
+}
+
+function hideSidebar() {
+	sidebarVisible = false;
+	restoreButtonVisible = false;
+
+	if (restoreButtonTimeout != null) {
+		clearTimeout(restoreButtonTimeout);
+	}
+
+	restoreButtonTimeout = setTimeout(() => {
+		if (!sidebarVisible) {
+			restoreButtonVisible = true;
+		}
+		restoreButtonTimeout = null;
+	}, restoreButtonDelay);
+}
 </script>
 
 <div
@@ -246,22 +300,46 @@ function handleProblemAction() {
 	style={editorStyle}
 >
 	<div class="flex min-h-0 min-w-0 flex-1 @max-[760px]:flex-col">
-		<section class="min-w-0 flex-1 bg-[#fbfaf6]" aria-label="Document editor">
+		<section class="relative min-w-0 flex-1 bg-[#fbfaf6]" aria-label="Document editor">
 			<div class="h-full overflow-auto p-[34px_40px_56px] @max-[760px]:p-[28px_24px_42px]">
 				<div class="mx-auto flex min-h-full max-w-[640px]">
 					<div bind:this={editor} class="flex min-h-full w-full flex-1" spellcheck="false"></div>
 				</div>
 			</div>
+
+			{#if !sidebarVisible && restoreButtonVisible}
+				<button
+					type="button"
+					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+					aria-label="Show problems sidebar"
+					title="Show problems sidebar"
+					in:fade={{ duration: 120 }}
+					on:click={showSidebar}
+				>
+					<svg
+						viewBox="0 0 20 20"
+						aria-hidden="true"
+						class="h-[18px] w-[18px] fill-none stroke-current stroke-[1.5] [stroke-linecap:round] [stroke-linejoin:round]"
+					>
+						<rect x="3.5" y="3" width="13" height="14" rx="3" />
+						<path d="M12.5 3v14" />
+					</svg>
+				</button>
+			{/if}
 		</section>
 
-		<LintSidebar
-			{lintBoxes}
-			{activeLintId}
-			focusLint={jumpTo}
-			onActivate={(lintBox) => (activeLintId = lintBox == null ? null : lintBoxId(lintBox))}
-			onApplied={handleProblemAction}
-			onIgnored={handleProblemAction}
-		/>
+		{#if sidebarVisible}
+			<LintSidebar
+				{lintBoxes}
+				{activeLintId}
+				focusLint={jumpTo}
+				onActivate={(lintBox) => (activeLintId = lintBox == null ? null : lintBoxId(lintBox))}
+				onApplied={handleProblemAction}
+				onIgnored={handleProblemAction}
+				onIgnoreAll={ignoreAllProblems}
+				onHideSidebar={hideSidebar}
+			/>
+		{/if}
 	</div>
 
 	<StatusBar
