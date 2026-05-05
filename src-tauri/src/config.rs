@@ -33,13 +33,11 @@ impl Config {
     }
 
     pub async fn save_to_system(&self) -> Result<(), ConfigError> {
+        let folder_path = Self::folder_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
 
-        if let Some(parent) = main_path.parent() {
-            fs::create_dir_all(parent)?;
-        }
-
+        fs::create_dir_all(folder_path)?;
         fs::write(main_path, self.serialize_main()?)?;
         save_dict(dictionary_path, &self.mutable_dictionary).await?;
 
@@ -57,13 +55,18 @@ impl Config {
     }
 
     #[allow(dead_code)]
+    fn folder_path() -> Option<PathBuf> {
+        dirs::config_dir().map(|path| path.join("harper-desktop"))
+    }
+
+    #[allow(dead_code)]
     fn main_path() -> Option<PathBuf> {
-        dirs::config_dir().map(|path| path.join("harper-desktop").join("config.json"))
+        Self::folder_path().map(|path| path.join("config.json"))
     }
 
     #[allow(dead_code)]
     fn dictionary_path() -> Option<PathBuf> {
-        dirs::config_dir().map(|path| path.join("harper-desktop").join("dictionary.txt"))
+        Self::folder_path().map(|path| path.join("dictionary.txt"))
     }
 
     #[allow(dead_code)]
