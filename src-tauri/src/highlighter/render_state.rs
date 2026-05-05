@@ -452,15 +452,14 @@ fn suggestion_option(
         .corner_radius(egui::CornerRadius::same(8))
         .min_size(egui::vec2(0.0, 38.0));
 
-        ui.add(button)
-            .on_hover_text(suggestion_hover_text(suggestion))
+        hover_text(ui.add(button), suggestion_hover_text(suggestion))
     })
     .inner
 }
 
 /// Renders the prototype's square icon-only controls without coupling their visual treatment to any
 /// behavior beyond the response returned to the caller.
-fn icon_button(ui: &mut egui::Ui, glyph: Glyph, hover_text: &str) -> egui::Response {
+fn icon_button(ui: &mut egui::Ui, glyph: Glyph, text: &str) -> egui::Response {
     let (rect, response) = ui.allocate_exact_size(egui::vec2(26.0, 26.0), egui::Sense::click());
     let background = if response.hovered() {
         egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15)
@@ -476,7 +475,7 @@ fn icon_button(ui: &mut egui::Ui, glyph: Glyph, hover_text: &str) -> egui::Respo
     ui.painter().rect_filled(rect, 6.0, background);
     draw_glyph(ui, rect.shrink(6.0), glyph, color);
 
-    response.on_hover_text(hover_text)
+    hover_text(response, text)
 }
 
 /// Renders footer controls as no-op buttons so future actions can be wired without changing layout.
@@ -484,7 +483,7 @@ fn ghost_button(
     ui: &mut egui::Ui,
     glyph: Option<Glyph>,
     label: &str,
-    hover_text: impl Into<egui::WidgetText>,
+    text: impl Into<String>,
 ) -> egui::Response {
     let label = if glyph.is_some() {
         format!("+ {label}")
@@ -494,7 +493,7 @@ fn ghost_button(
 
     ui.scope(|ui| {
         ui.spacing_mut().button_padding = egui::vec2(8.0, 6.0);
-        ui.add(
+        let response = ui.add(
             egui::Button::new(
                 egui::RichText::new(label)
                     .size(12.0)
@@ -503,10 +502,44 @@ fn ghost_button(
             .fill(egui::Color32::TRANSPARENT)
             .stroke(egui::Stroke::NONE)
             .corner_radius(egui::CornerRadius::same(6)),
-        )
-        .on_hover_text(hover_text)
+        );
+
+        hover_text(response, text)
     })
     .inner
+}
+
+/// Applies tooltip styling that visually belongs with the suggestion popup instead of egui defaults.
+fn hover_text(response: egui::Response, hover_text: impl Into<String>) -> egui::Response {
+    let hover_text = hover_text.into();
+
+    let mut tooltip = egui::Tooltip::for_enabled(&response);
+    tooltip.popup = tooltip.popup.frame(
+        egui::Frame::new()
+            .fill(hex(0xff, 0xfd, 0xfa))
+            .stroke(egui::Stroke::new(
+                1.0,
+                egui::Color32::from_rgba_unmultiplied(0, 0, 0, 20),
+            ))
+            .corner_radius(egui::CornerRadius::same(8))
+            .inner_margin(egui::Margin::symmetric(8, 6))
+            .shadow(egui::Shadow {
+                offset: [0, 8],
+                blur: 18,
+                spread: 0,
+                color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 42),
+            }),
+    );
+    tooltip.show(|ui| {
+        ui.set_max_width(260.0);
+        ui.label(
+            egui::RichText::new(hover_text)
+                .size(12.0)
+                .color(hex(0x4b, 0x55, 0x63)),
+        );
+    });
+
+    response
 }
 
 /// Draws the small SVG-inspired line icons from the prototype using egui painter primitives.
