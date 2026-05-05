@@ -24,7 +24,7 @@ let cardEl: HTMLDivElement | null = null;
 const iconClass =
 	'h-3.5 w-3.5 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]';
 const baseSuggestionClass =
-	'h-[26px] max-w-full overflow-hidden text-ellipsis rounded-full px-[11px] text-[12.5px] font-semibold [font-family:var(--harper-editor-font-family)]';
+	'h-[26px] max-w-full overflow-hidden text-ellipsis rounded-full px-[11px] text-[12.5px] font-semibold';
 
 $: category = displayCategoryFor(lint.lint_kind);
 $: categoryConfig = LINT_CATEGORIES[category];
@@ -99,7 +99,7 @@ function handleFocus() {
 
 			<button
 				type="button"
-				class="m-0 block max-h-[84px] w-full overflow-hidden rounded-[7px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fbfaf6] px-3 py-2.5 text-left text-xs leading-[1.45] text-stone-700 [font-family:var(--harper-editor-font-family)]"
+				class="m-0 block max-h-[84px] w-full overflow-hidden rounded-[7px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fbfaf6] px-3 py-2.5 text-left text-xs leading-[1.45] text-stone-700"
 				on:click={handleFocus}
 				aria-label="Focus problem in editor"
 			>

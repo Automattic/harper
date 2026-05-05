@@ -96,7 +96,7 @@ function createSnippetFor(lintBox: LintBox) {
 </script>
 
 <aside
-	class="flex min-h-0 w-[320px] flex-[0_0_320px] flex-col border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
+	class="flex min-h-0 w-[320px] flex-[0_0_320px] flex-col border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] [font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF_Pro_Text','Helvetica_Neue',sans-serif] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
 	aria-label="Problems"
 >
 	<header class="flex items-center gap-1.5 px-3.5 pt-2.5 pb-2">
@@ -212,3 +212,10 @@ function createSnippetFor(lintBox: LintBox) {
 		{/if}
 	</div>
 </aside>
+
+<style>
+	aside :global(code) {
+		font-family: inherit;
+		font-size: inherit;
+	}
+</style>

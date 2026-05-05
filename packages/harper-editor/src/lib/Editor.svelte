@@ -242,7 +242,7 @@ function handleProblemAction() {
 </script>
 
 <div
-	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 shadow-2xl shadow-stone-950/5 [font-family:var(--harper-editor-font-family)] [font-size:var(--harper-editor-font-size)]"
+	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 shadow-2xl shadow-stone-950/5"
 	style={editorStyle}
 >
 	<div class="flex min-h-0 min-w-0 flex-1 @max-[760px]:flex-col">
