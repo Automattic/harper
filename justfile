@@ -24,6 +24,11 @@ build-harper-deps:
 dev:
   cargo tauri dev
 
+dev-highlighter:
+  #! /bin/bash
+  cd src-tauri
+  cargo run -- highlighter
+
 prebuild: build-harper-deps
   cargo tauri info
   pnpm install
