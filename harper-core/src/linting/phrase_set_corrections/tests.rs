@@ -565,6 +565,26 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandAlgorithm
+
+#[test]
+fn corrects_algo() {
+    assert_suggestion_result(
+        "Always glad when the algo feeds me a new dissident.",
+        lint_group(),
+        "Always glad when the algorithm feeds me a new dissident.",
+    );
+}
+
+#[test]
+fn corrects_algos() {
+    assert_suggestion_result(
+        "I moved algos development to a private repository.",
+        lint_group(),
+        "I moved algorithms development to a private repository.",
+    );
+}
+
 // ExpandArgument
 
 #[test]
@@ -582,6 +602,26 @@ fn corrects_args() {
         "but every test I've done shows args as being about 65% faster",
         lint_group(),
         "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandCoordinate
+
+#[test]
+fn corrects_coord() {
+    assert_suggestion_result(
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coord systems that do not support them",
+        lint_group(),
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coordinate systems that do not support them",
+    );
+}
+
+#[test]
+fn corrects_coords() {
+    assert_suggestion_result(
+        "Here is how you can extract the list of coords from any geometry:",
+        lint_group(),
+        "Here is how you can extract the list of coordinates from any geometry:",
     );
 }
 
@@ -625,6 +665,26 @@ fn corrects_derefs() {
         "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
         lint_group(),
         "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
+// ExpandNotification
+
+#[test]
+fn corrects_notif() {
+    assert_suggestion_result(
+        "Amazing to see the notif of this on my phone!",
+        lint_group(),
+        "Amazing to see the notification of this on my phone!",
+    );
+}
+
+#[test]
+fn corrects_notifs() {
+    assert_suggestion_result(
+        "I don't encourage you spending all your time on social media or keeping the notifs on if you're working on something serious.",
+        lint_group(),
+        "I don't encourage you spending all your time on social media or keeping the notifications on if you're working on something serious.",
     );
 }
 
@@ -673,6 +733,39 @@ fn correct_ptrs() {
 
 // ExpandStandardOutput
 // -none-
+
+// ExpandVulnerability
+
+#[test]
+fn corrects_vuln() {
+    assert_suggestion_result(
+        "I did not understand this vuln in first place now I do not understand in 2nd place as well😢",
+        lint_group(),
+        "I did not understand this vulnerability in first place now I do not understand in 2nd place as well😢",
+    );
+}
+
+#[test]
+fn corrects_vulns() {
+    // Fix just this lint
+    let mut only_expand_vuln = lint_group();
+    only_expand_vuln.set_all_rules_to(None); // Disable all linters
+    only_expand_vuln
+        .config
+        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
+
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        only_expand_vuln,
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
+    );
+    // Fix all lints in the `LintGroup`
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        lint_group(),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive parameters, and auth endpoints.",
+    );
+}
 
 // ExplanationMark
 #[test]
@@ -1112,6 +1205,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InflectionPoint
+
+#[test]
+fn corrects_infliction_point() {
+    assert_suggestion_result(
+        "You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        lint_group(),
+        "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+    );
+}
+
+#[test]
+fn corrects_infliction_points() {
+    assert_suggestion_result(
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".",
+        lint_group(),
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".",
+    );
+}
+
 // InvestIn
 
 #[test]
@@ -1226,7 +1339,6 @@ fn litotes_more_preferable() {
 
 #[test]
 fn fix_look_forward_for() {
-    // I will mark this issue as an enhancement and will look forward for enrolling it.
     assert_suggestion_result(
         "I will mark this issue as an enhancement and will look forward for enrolling it.",
         lint_group(),
@@ -2326,6 +2438,35 @@ fn expand_alloc() {
     );
 }
 
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
+    );
+}
+
 // Expat
 
 #[test]
@@ -2626,6 +2767,53 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// InHindsight
+
+#[test]
+fn corrects_on_hindsight() {
+    assert_suggestion_result(
+        "On hindsight, the tip to \"try launching your terminal\" would've been useful",
+        lint_group(),
+        "In hindsight, the tip to \"try launching your terminal\" would've been useful",
+    );
+}
+
+#[test]
+fn corrects_in_hind_sight_hyphenated() {
+    assert_suggestion_result(
+        "It probably could have been better to fake an OSS project name in hind-sight, but anyway we can still fix this.",
+        lint_group(),
+        "It probably could have been better to fake an OSS project name in hindsight, but anyway we can still fix this.",
+    );
+}
+
+#[test]
+fn corrects_in_hind_sight() {
+    assert_suggestion_result(
+        "In hind sight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
+        lint_group(),
+        "In hindsight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
+    )
+}
+
+#[test]
+fn corrects_on_hind_sight() {
+    assert_suggestion_result(
+        "Yes, on hind sight I've used tasks that don't respond well to kills.",
+        lint_group(),
+        "Yes, in hindsight I've used tasks that don't respond well to kills.",
+    )
+}
+
+#[test]
+fn corrects_on_hind_sight_hyphenated() {
+    assert_suggestion_result(
+        "On hind-sight the likely root cause was not force cleaning helm config.",
+        lint_group(),
+        "In hindsight the likely root cause was not force cleaning helm config.",
+    )
+}
+
 // MakeItSeem
 
 #[test]
@@ -2670,6 +2858,26 @@ fn corrects_made_it_seemed() {
         "The path made it seemed a bit \"internal\".",
         lint_group(),
         "The path made it seem a bit \"internal\".",
+    );
+}
+
+// Monumentous
+
+#[test]
+fn corrects_monumentous() {
+    assert_suggestion_result(
+        "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+        lint_group(),
+        "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+    );
+}
+
+#[test]
+fn corrects_monumentously() {
+    assert_suggestion_result(
+        "the most impressive thing out of all of this is that GitHub created such a monumentously good name",
+        lint_group(),
+        "the most impressive thing out of all of this is that GitHub created such a monumentally good name",
     );
 }
 
