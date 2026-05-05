@@ -692,6 +692,26 @@ fn correct_ptrs() {
 // ExpandStandardOutput
 // -none-
 
+// ExpandVuln
+
+#[test]
+fn corrects_vuln() {
+    assert_suggestion_result(
+        "I did not understand this vuln in first place now I do not understand in 2nd place as well😢",
+        lint_group(),
+        "I did not understand this vulnerability in first place now I do not understand in 2nd place as well😢",
+    );
+}
+
+#[test]
+fn corrects_vulns() {
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        lint_group(),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive parameters, and auth endpoints.",
+    );
+}
+
 // ExplanationMark
 #[test]
 fn detect_explanation_mark_atomic() {

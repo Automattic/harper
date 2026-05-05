@@ -1288,6 +1288,13 @@
 								"state": true,
 								"label": "Expand Coord"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVuln",
+								"state": true,
+								"label": "Expand Vuln"
+							}
 						}
 					]
 				}

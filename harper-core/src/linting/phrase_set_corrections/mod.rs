@@ -231,6 +231,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity.",
             LintKind::Style
         ),
+        "ExpandVuln" => (
+            &[
+                ("vuln", "vulnerability"),
+                ("vulns", "vulnerabilities"),
+            ],
+            "Use `vulnerability` instead of `vuln`",
+            "Expands the abbreviation `vuln` to the full word `vulnerability` for clarity.",
+            LintKind::Style
+        ),
         "ExplanationMark" => (
             &[
                 ("explanation mark", "exclamation mark"),
