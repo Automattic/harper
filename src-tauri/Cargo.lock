@@ -3731,11 +3731,13 @@ dependencies = [
  "clap",
  "core-foundation 0.10.1",
  "core-graphics 0.25.0",
+ "dirs",
  "egui",
  "egui-wgpu",
  "egui-winit",
  "egui_commonmark",
  "harper-core",
+ "harper-dictionary-wordlist",
  "objc2-foundation 0.3.2",
  "pollster",
  "serde",
@@ -3746,6 +3748,15 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "winit",
+]
+
+[[package]]
+name = "harper-dictionary-wordlist"
+version = "2.1.0"
+dependencies = [
+ "harper-core",
+ "itertools 0.14.0",
+ "tokio",
 ]
 
 [[package]]
