@@ -800,6 +800,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "InHindsight" => (
+            &[
+                (&["in hind sight", "in hind-sight", "on hindsight", "on hind sight", "on hind-sight"], &["in hindsight"]),
+            ],
+            "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
+            "Corrects incorrect variants of `in hindsight` to the standard phrase.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
