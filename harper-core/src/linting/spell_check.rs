@@ -48,9 +48,9 @@ impl<T: Dictionary> SpellCheck<T> {
                         // Ignore entries outside the configured dialect
                         self.dictionary
                             .get_word_metadata(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .is_some_and(|word_meta| {
+                                word_meta.dialects.is_dialect_enabled(self.dialect)
+                            })
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -76,7 +76,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().as_ref())
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().to_lower().as_ref()))
             {
                 continue;
             };
@@ -142,8 +147,10 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
-    use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+    use crate::linting::tests::assert_no_lints;
+    use crate::spell::{
+        Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
+    };
     use crate::{
         Dialect,
         linting::tests::{assert_lint_count, assert_suggestion_result},
@@ -424,13 +431,10 @@ mod tests {
 
         // Create a user dictionary with a word normally of another dialect in it.
         let mut user_dict = MutableDictionary::new();
-        user_dict.append_word_str(
-            "Calibre",
-            DictWordMetadata {
-                dialects: DialectFlags::from_dialect(user_dialect),
-                ..Default::default()
-            },
-        );
+        user_dict.insert(WordMapEntry::new_str("Calibre").with_md(DictWordMetadata {
+            dialects: DialectFlags::from_dialect(user_dialect),
+            ..Default::default()
+        }));
 
         // Create a merged dictionary, using curated first.
         let mut merged_dict = MergedDictionary::new();
@@ -513,21 +517,12 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_pr() {
-        assert_no_lints(
-            "PR",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
+    fn dont_flag_certain_entries_with_multiple_case_variants_in_dict() {
+        let dict = FstDictionary::curated();
 
-    #[test]
-    fn no_improper_suggestion_for_macos() {
-        assert_good_and_bad_suggestions(
-            "MacOS",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            &["macOS"],
-            &["MacOS"],
-        );
+        assert_no_lints("PR", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("MB", SpellCheck::new(&dict, Dialect::American));
+        assert_no_lints("OS", SpellCheck::new(&dict, Dialect::American)); // Issue #2585
     }
 
     // Tests that were previously in `spell/mod.rs`

@@ -811,7 +811,7 @@
 >
 #
 > “ Well       , he       wasn’t always a   butler ; he       used to be       the silver   polisher for   some
-# . NSg/VB/J/R . NPr/ISg+ VPt    R      D/P NPr/VB . NPr/ISg+ VP/J P  NSg/VLXB D   Nᴹ/VB/J+ NSg/JC   R/C/P I/J/R/Dq
+# . NSg/VB/J/R . NPr/ISg+ VPt    R      D/P NPr/VB . NPr/ISg+ VP/J P  NSg/VLXB D   Nᴹ/VB/J+ NSg      R/C/P I/J/R/Dq
 > people  in        New   York that      had a   silver   service for   two hundred people  . He       had to
 # NPl/VB+ NPr/J/R/P NSg/J NPr+ I/C/Ddem+ VP  D/P Nᴹ/VB/J+ NSg/VB+ R/C/P NSg NSg     NPl/VB+ . NPr/ISg+ VP  P
 > polish   it       from morning    till       night    , until finally it       began to affect his     nose    — — — ”
@@ -3653,7 +3653,7 @@
 > Every one     suspects himself of at    least    one     of the cardinal virtues , and  this    is
 # Dq    NSg/I/J NPl/V3   ISg+    P  NSg/P NSg/J/Dq NSg/I/J P  D+  NSg/J+   NPl+    . VB/C I/Ddem+ VL3
 > mine      : I       am        one     of the few       honest people  that      I       have    ever known .
-# NSg/I/VB+ . ISg/#r+ NPr/VLB/J NSg/I/J P  D+  NSg/I/Dq+ VB/JS+ NPl/VB+ I/C/Ddem+ ISg/#r+ NSg/VXB J/R  VPp/J .
+# NSg/I/VB+ . ISg/#r+ NPr/VLB/J NSg/I/J P  D+  NSg/I/Dq+ VB/J+  NPl/VB+ I/C/Ddem+ ISg/#r+ NSg/VXB J/R  VPp/J .
 >
 #
 >              CHAPTER IV
@@ -11463,7 +11463,7 @@
 > met another bad       driver , didn’t I       ? I       mean     it       was  careless of me       to make   such  a
 # VP  I/D+    NSg/VB/J+ NSg+   . VXPt   ISg/#r+ . ISg/#r+ NSg/VB/J NPr/ISg+ VLPt J        P  NPr/ISg+ P  NSg/VB NSg/I D/P
 > wrong      guess   . I       thought you    were     rather     an  honest , straightforward person  . I
-# NSg/VB/J/R NSg/VB+ . ISg/#r+ N🅪Sg/VP ISgPl+ NSg/VLPt NPr/VB/J/R D/P VB/JS  . J+              NSg/VB+ . ISg/#r+
+# NSg/VB/J/R NSg/VB+ . ISg/#r+ N🅪Sg/VP ISgPl+ NSg/VLPt NPr/VB/J/R D/P VB/J   . J+              NSg/VB+ . ISg/#r+
 > thought it       was  your secret    pride  . ”
 # N🅪Sg/VP NPr/ISg+ VLPt D$+  NSg/VB/J+ Nᴹ/VB+ . .
 >

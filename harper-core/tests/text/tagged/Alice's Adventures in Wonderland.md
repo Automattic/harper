@@ -1161,7 +1161,7 @@
 > RABBIT  , ” engraved upon it       . She  went    in        without knocking , and  hurried upstairs ,
 # NSg/VB+ . . VP/J     P    NPr/ISg+ . ISg+ NSg/VPt NPr/J/R/P C/P     Nᴹ/Vg/J  . VB/C VP/J    NSg/J    .
 > in        great  fear     lest she  should meet     the real   Mary Ann    , and  be       turned out          of the
-# NPr/J/R/P NSg/J+ N🅪Sg/VB+ JS   ISg+ VXB    NSg/VB/J D+  NSg/J+ NPr+ NPr/J+ . VB/C NSg/VLXB VP/J   NSg/VB/J/R/P P  D+
+# NPr/J/R/P NSg/J+ N🅪Sg/VB+ W?   ISg+ VXB    NSg/VB/J D+  NSg/J+ NPr+ NPr/J+ . VB/C NSg/VLXB VP/J   NSg/VB/J/R/P P  D+
 > house   before she  had found  the fan    and  gloves  .
 # NPr/VB+ C/P    ISg+ VP  NSg/VP D   NSg/VB VB/C NPl/V3+ .
 >
@@ -5699,7 +5699,7 @@
 > must    have    meant some      mischief , or    else    you’d have    signed your name    like         an
 # NSg/VXB NSg/VXB VP    I/J/R/Dq+ NSg/VB+  . NPr/C NSg/J/C K     NSg/VXB VP/J   D$+  NSg/VB+ NSg/VB/J/C/P D/P
 > honest man     . ”
-# VB/JS  NPr/VB+ . .
+# VB/J   NPr/VB+ . .
 >
 #
 > There was  a   general  clapping of hands   at    this    : it       was  the first really clever
