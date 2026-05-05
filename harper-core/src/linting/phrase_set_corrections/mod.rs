@@ -806,7 +806,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
             "Corrects incorrect variants of `in hindsight` to the standard phrase.",
-            LintKind::Spelling
+            LintKind::Usage
         ),
         "MakeItSeem" => (
             &[
