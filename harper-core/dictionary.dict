@@ -1662,10 +1662,10 @@ CD-ROM/NgS
 CDC/ON
 CDMX/Og             # Mexico City, see also DF
 CDT/N
-CEO/NgS             # chief executive officer
+CEO/NOgS            # chief executive officer
 CF/NOJ
 CFC/ONg
-CFO/NO              # financial officer
+CFO/NOgS            # chief financial officer
 CGI/NOV             # computer graphics interface; common gateway interface
 CIA/ONgJ            # agency
 CID/NO
@@ -1683,6 +1683,7 @@ COD/ON
 COFF/ONg            # common object file format
 COL/ON
 COLA/NO
+COO/NOgS            # chief operating officer
 COVID/N             # virus
 CO₂/N
 CPA/Ng
@@ -1695,6 +1696,7 @@ CSS/NOg
 CST/ONg
 CSV/Ng              # data file format
 CT/ONgVJ            # US state (Connecticut)
+CTO/NOgS            # chief technology officer
 CUDA/ONg            # computing architecture
 CV/NOSJ             # curriculum vitae
 CVS/NOg             # version control
@@ -20533,6 +20535,7 @@ darken/~VGd>Z
 darkener/Ng
 darkie/NS
 darkness/~Nmg
+darknet/NgS
 darkroom/NgS
 darling/~NgSJ
 darn/~J>VGdSNgZ
@@ -25374,6 +25377,8 @@ flipper/NgSJc
 flippest/Ju
 flipping/~V6JN
 flippy/JNS
+flipside/NgS        # main spelling in several dictionaries
+flip-side/NgS       # 'also' spelling in several dictionaries
 flirt/NSgVGdJ
 flirtation/NgS
 flirtatious/JYp
@@ -45017,6 +45022,9 @@ shithead/NSx
 shitless/Jx
 shitload/NSx
 shitpost/NgSdGx
+shit show/NgS       # main entry in: MW
+shitshow/NgS        # 'also' in: MW
+shit-show/NgS       # 'also' in: MW
 shitted/VtTx
 shitting/NV6Jx
 shitty/J>^x
@@ -53855,7 +53863,6 @@ CAPTCHA/NgS
 CCP/OS              # Chinese Communist Party
 CDMA/NSg
 CDN/NSg             # content delivery network
-CEO/NSg             # chief executive officer
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
 CISC/Ng             # cpu architecture
