@@ -2859,6 +2859,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-dictionary-wordlist"
+version = "2.1.0"
+dependencies = [
+ "harper-core",
+ "itertools 0.14.0",
+ "tokio",
+]
+
+[[package]]
 name = "harper-html"
 version = "2.1.0"
 dependencies = [
@@ -2914,6 +2923,7 @@ dependencies = [
  "harper-asciidoc",
  "harper-comments",
  "harper-core",
+ "harper-dictionary-wordlist",
  "harper-html",
  "harper-ink",
  "harper-jjdescription",
@@ -2922,7 +2932,6 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
- "itertools 0.14.0",
  "open",
  "resolve-path",
  "serde",

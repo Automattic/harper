@@ -5,7 +5,6 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use crate::config::Config;
-use crate::dictionary_io::{load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
@@ -20,6 +19,7 @@ use harper_core::parsers::{
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
