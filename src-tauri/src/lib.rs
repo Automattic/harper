@@ -137,12 +137,13 @@ pub fn run_highlighter() {
     );
     let ignored_lints = Rc::new(RefCell::new(IgnoredLints::new()));
     let user_dictionary = Rc::new(RefCell::new(MutableDictionary::new()));
-    let linter = Rc::new(RefCell::new(build_highlighter_linter(
-        &user_dictionary.borrow(),
-    )));
+    let linter = Rc::new(RefCell::new(create_linter(create_dictionary(
+        user_dictionary.borrow().clone(),
+    ))));
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
+    let lint_user_dictionary = user_dictionary.clone();
 
     let ignore_client = client.clone();
     let ignore_runtime = sync_runtime.clone();
@@ -154,7 +155,8 @@ pub fn run_highlighter() {
     let dictionary_linter = linter.clone();
 
     let lint_text = move |text: &str| {
-        let doc = Document::new_markdown_default_curated(text);
+        let dictionary = create_dictionary(lint_user_dictionary.borrow().clone());
+        let doc = Document::new_markdown_default(text, &dictionary);
         let mut lints = lint_linter.borrow_mut().lint(&doc);
 
         lint_ignored_lints.borrow().remove_ignored(&mut lints, &doc);
@@ -182,8 +184,9 @@ pub fn run_highlighter() {
             .borrow_mut()
             .append_word_str(word, DictWordMetadata::default());
 
-        *dictionary_linter.borrow_mut() =
-            build_highlighter_linter(&dictionary_user_dictionary.borrow());
+        *dictionary_linter.borrow_mut() = create_linter(create_dictionary(
+            dictionary_user_dictionary.borrow().clone(),
+        ));
 
         if let Err(error) =
             dictionary_runtime.block_on(dictionary_client.borrow_mut().add_to_dictionary(word))
@@ -200,10 +203,14 @@ pub fn run_highlighter() {
     }
 }
 
-fn build_highlighter_linter(user_dictionary: &MutableDictionary) -> LintGroup {
+fn create_dictionary(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
     let mut dictionary = MergedDictionary::new();
     dictionary.add_dictionary(FstDictionary::curated());
-    dictionary.add_dictionary(Arc::new(user_dictionary.clone()));
+    dictionary.add_dictionary(Arc::new(user_dictionary));
 
-    LintGroup::new_curated(Arc::new(dictionary), Dialect::American)
+    Arc::new(dictionary)
+}
+
+fn create_linter(dictionary: Arc<MergedDictionary>) -> LintGroup {
+    LintGroup::new_curated(dictionary, Dialect::American)
 }
