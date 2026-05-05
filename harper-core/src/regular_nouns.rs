@@ -1,13 +1,9 @@
-use crate::{
-    CharStringExt,
-    spell::{Dictionary, FstDictionary},
-};
+use crate::{CharStringExt, spell::Dictionary};
 
 /// Get all valid plural forms using regular patterns, validated against dictionary
 /// Returns vector of suggestions that are confirmed to be plural nouns
-pub fn get_plurals(singular: &[char]) -> Vec<Vec<char>> {
+pub fn get_plurals(dict: &impl Dictionary, singular: &[char]) -> Vec<Vec<char>> {
     // Filter candidates by dictionary validation
-    let dict = FstDictionary::curated();
     get_plural_candidates(singular)
         .into_iter()
         .filter(|candidate| {
@@ -19,8 +15,7 @@ pub fn get_plurals(singular: &[char]) -> Vec<Vec<char>> {
 
 /// Get all valid singular forms using regular patterns, validated against dictionary
 /// Returns vector of suggestions that are confirmed to be singular nouns
-pub fn get_singulars(plural: &[char]) -> Vec<Vec<char>> {
-    let dict = FstDictionary::curated();
+pub fn get_singulars(dict: &impl Dictionary, plural: &[char]) -> Vec<Vec<char>> {
     // Filter candidates by dictionary validation
     get_singular_candidates(plural)
         .into_iter()
@@ -116,129 +111,136 @@ fn get_singular_candidates(plural: &[char]) -> Vec<Vec<char>> {
 #[cfg(test)]
 mod tests {
     use super::{get_plurals, get_singulars};
+    use crate::spell::FstDictionary;
 
     #[test]
     fn test_regular_plurals_add_s() {
-        let plurals = get_plurals(&['c', 'a', 't']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['c', 'a', 't']);
         assert!(plurals.contains(&['c', 'a', 't', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_y_to_ies() {
-        let plurals = get_plurals(&['c', 'i', 't', 'y']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['c', 'i', 't', 'y']);
         assert!(plurals.contains(&['c', 'i', 't', 'i', 'e', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_vowel_y_adds_s() {
-        let plurals = get_plurals(&['b', 'o', 'y']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['b', 'o', 'y']);
         assert!(plurals.contains(&['b', 'o', 'y', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_fe_to_ves() {
-        let plurals = get_plurals(&['w', 'i', 'f', 'e']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['w', 'i', 'f', 'e']);
         assert!(plurals.contains(&['w', 'i', 'v', 'e', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_f_to_ves() {
-        let plurals = get_plurals(&['w', 'o', 'l', 'f']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['w', 'o', 'l', 'f']);
         assert!(plurals.contains(&['w', 'o', 'l', 'v', 'e', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_es_endings() {
-        let plurals = get_plurals(&['b', 'u', 's']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['b', 'u', 's']);
         assert!(plurals.contains(&['b', 'u', 's', 'e', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_o_to_oes() {
-        let plurals = get_plurals(&['p', 'o', 't', 'a', 't', 'o']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['p', 'o', 't', 'a', 't', 'o']);
         assert!(plurals.contains(&['p', 'o', 't', 'a', 't', 'o', 'e', 's'].to_vec()));
     }
 
     #[test]
     fn test_regular_plurals_vowel_o_adds_s() {
-        let plurals = get_plurals(&['r', 'a', 'd', 'i', 'o']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['r', 'a', 'd', 'i', 'o']);
         assert!(plurals.contains(&['r', 'a', 'd', 'i', 'o', 's'].to_vec()));
     }
 
     #[test]
     fn test_single_letter_words() {
         // Single letters won't generate valid plurals in the dictionary
-        let plurals = get_plurals(&['a']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['a']);
         assert!(plurals.is_empty());
 
-        let singulars = get_singulars(&['s']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['s']);
         // Single 's' will be treated as a plural and try to remove the 's', leaving empty
         assert!(singulars.is_empty());
     }
 
     #[test]
     fn test_empty_string() {
-        let plurals = get_plurals(&[]);
+        let plurals = get_plurals(&FstDictionary::curated(), &[]);
         assert!(plurals.is_empty());
 
-        let singulars = get_singulars(&[]);
+        let singulars = get_singulars(&FstDictionary::curated(), &[]);
         assert!(singulars.is_empty());
     }
 
     #[test]
     fn test_chars_versions() {
-        let plurals = get_plurals(&['c', 'i', 't', 'y']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['c', 'i', 't', 'y']);
         assert!(plurals.contains(&['c', 'i', 't', 'i', 'e', 's'].to_vec()));
 
-        let singulars = get_singulars(&['c', 'i', 't', 'i', 'e', 's']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['c', 'i', 't', 'i', 'e', 's']);
         assert!(singulars.contains(&['c', 'i', 't', 'y'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_remove_s() {
-        let singulars = get_singulars(&['c', 'a', 't', 's']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['c', 'a', 't', 's']);
         assert!(singulars.contains(&['c', 'a', 't'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_ies_to_y() {
-        let singulars = get_singulars(&['c', 'i', 't', 'i', 'e', 's']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['c', 'i', 't', 'i', 'e', 's']);
         assert!(singulars.contains(&['c', 'i', 't', 'y'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_ves_to_fe() {
-        let singulars = get_singulars(&['w', 'i', 'v', 'e', 's']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['w', 'i', 'v', 'e', 's']);
         assert!(singulars.contains(&['w', 'i', 'f', 'e'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_ves_to_f() {
-        let singulars = get_singulars(&['w', 'o', 'l', 'v', 'e', 's']);
+        let singulars = get_singulars(&FstDictionary::curated(), &['w', 'o', 'l', 'v', 'e', 's']);
         assert!(singulars.contains(&['w', 'o', 'l', 'f'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_es_removal() {
-        let singulars = get_singulars(&['c', 'l', 'a', 's', 's', 'e', 's']);
+        let singulars = get_singulars(
+            &FstDictionary::curated(),
+            &['c', 'l', 'a', 's', 's', 'e', 's'],
+        );
         assert!(singulars.contains(&['c', 'l', 'a', 's', 's'].to_vec()));
     }
 
     #[test]
     fn test_singular_from_plural_oes_to_o() {
-        let singulars = get_singulars(&['p', 'o', 't', 'a', 't', 'o', 'e', 's']);
+        let singulars = get_singulars(
+            &FstDictionary::curated(),
+            &['p', 'o', 't', 'a', 't', 'o', 'e', 's'],
+        );
         assert!(singulars.contains(&['p', 'o', 't', 'a', 't', 'o'].to_vec()));
     }
 
     #[test]
     fn test_empty_string_plural() {
-        let plurals = get_plurals(&[]);
+        let plurals = get_plurals(&FstDictionary::curated(), &[]);
         assert!(plurals.is_empty());
     }
 
     #[test]
     fn test_empty_string_singular() {
-        let singulars = get_singulars(&[]);
+        let singulars = get_singulars(&FstDictionary::curated(), &[]);
         assert!(singulars.is_empty());
     }
 
@@ -246,12 +248,12 @@ mod tests {
     fn test_case_insensitive_plurals() {
         // Lowercase input produces lowercase output
         let lowercase_city: Vec<char> = "city".chars().collect();
-        let plurals = get_plurals(&lowercase_city);
+        let plurals = get_plurals(&FstDictionary::curated(), &lowercase_city);
         assert!(plurals.contains(&['c', 'i', 't', 'i', 'e', 's'].to_vec()));
 
         // Mixed case input: stem case preserved, suffix lowercase
         let mixed_city: Vec<char> = "City".chars().collect();
-        let plurals = get_plurals(&mixed_city);
+        let plurals = get_plurals(&FstDictionary::curated(), &mixed_city);
         assert!(plurals.contains(&['C', 'i', 't', 'i', 'e', 's'].to_vec()));
     }
 
@@ -259,23 +261,23 @@ mod tests {
     fn test_case_insensitive_singulars() {
         // Lowercase input produces lowercase output
         let lowercase_cities: Vec<char> = "cities".chars().collect();
-        let singulars = get_singulars(&lowercase_cities);
+        let singulars = get_singulars(&FstDictionary::curated(), &lowercase_cities);
         assert!(singulars.contains(&['c', 'i', 't', 'y'].to_vec()));
 
         // Mixed case input: case preserved from stem
         let mixed_cities: Vec<char> = "Cities".chars().collect();
-        let singulars = get_singulars(&mixed_cities);
+        let singulars = get_singulars(&FstDictionary::curated(), &mixed_cities);
         assert!(singulars.contains(&['C', 'i', 't', 'y'].to_vec()));
     }
 
     #[test]
     fn test_generated_candidates_must_validate() {
-        let plurals = get_plurals(&['a', 'n', 't']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['a', 'n', 't']);
         // "ants" should be in the dictionary as a plural noun
         assert!(plurals.contains(&['a', 'n', 't', 's'].to_vec()));
 
         // "buses" should be in the dictionary as a plural noun
-        let plurals = get_plurals(&['b', 'u', 's']);
+        let plurals = get_plurals(&FstDictionary::curated(), &['b', 'u', 's']);
         assert!(plurals.contains(&['b', 'u', 's', 'e', 's'].to_vec()));
     }
 }

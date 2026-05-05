@@ -7,6 +7,7 @@ use crate::{
         expr_linter::{Sentence, followed_by_hyphen, followed_by_word},
     },
     regular_nouns,
+    spell::Dictionary,
 };
 
 #[derive(PartialEq, Debug)]
@@ -40,12 +41,13 @@ enum Tense {
 }
 use Tense::*;
 
-pub struct ThereIsAgreement {
+pub struct ThereIsAgreement<D> {
     expr: FirstMatchOf,
+    dict: D,
 }
 
-impl Default for ThereIsAgreement {
-    fn default() -> Self {
+impl<D: Dictionary> ThereIsAgreement<D> {
+    pub fn new(dict: D) -> Self {
         let plural_noun = Lrc::new(|t: &Token, _: &[char]| t.kind.is_plural_noun());
 
         // reject singular nouns that are also: adjectives, "no", spelled numbers
@@ -99,11 +101,12 @@ impl Default for ThereIsAgreement {
 
         Self {
             expr: FirstMatchOf::new(first_match_of),
+            dict,
         }
     }
 }
 
-impl ExprLinter for ThereIsAgreement {
+impl<D: Dictionary> ExprLinter for ThereIsAgreement<D> {
     type Unit = Sentence;
 
     fn match_to_lint_with_context(
@@ -112,7 +115,7 @@ impl ExprLinter for ThereIsAgreement {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<super::Lint> {
-        match_to_lint(toks, src, ctx)
+        match_to_lint(&self.dict, toks, src, ctx)
     }
 
     fn expr(&self) -> &dyn Expr {
@@ -124,7 +127,8 @@ impl ExprLinter for ThereIsAgreement {
     }
 }
 
-fn match_to_lint(
+fn match_to_lint<D: Dictionary>(
+    dict: &D,
     toks: &[Token],
     src: &[char],
     ctx: Option<(&[Token], &[Token])>,
@@ -138,9 +142,9 @@ fn match_to_lint(
         first.starts_with_ignore_ascii_case_str("there"),
         first.last(),
     ) {
-        (false, _) if second.eq_str("there") => handle_question(toks, src, ctx),
-        (true, Some(&'s')) => handle_theres(toks, src, ctx),
-        (true, _) => handle_statement(toks, src, ctx),
+        (false, _) if second.eq_str("there") => handle_question(toks, src, ctx, dict),
+        (true, Some(&'s')) => handle_theres(toks, src, ctx, dict),
+        (true, _) => handle_statement(toks, src, ctx, dict),
         _ => None, // unreachable
     }
 }
@@ -162,24 +166,25 @@ fn get_new_be(orig_be: &[char]) -> &[char] {
     }
 }
 
-type NounFormGetters = (
+type NounFormGetters<D> = (
     fn(&[char]) -> Option<Vec<char>>,
-    fn(&[char]) -> Vec<Vec<char>>,
+    fn(&D, &[char]) -> Vec<Vec<char>>,
 );
 
 // Returns zero or more noun forms.
 // Needs to allocate a vec for each noun and for the array of nouns.
 // Each noun will be accompanied by an appropriate indefinite article.
 // TODO does not yet handle words which take either/both "a"/"an"
-fn get_new_nouns<'a>(
+fn get_new_nouns<'a, D: Dictionary>(
+    dict: &D,
     orig_noun: &'a [char],
     mismatch_type: &Mismatch,
 ) -> Vec<(Vec<char>, &'a [char])> {
-    let (irreg_func, reg_func): NounFormGetters = match mismatch_type {
+    let (irreg_func, reg_func): NounFormGetters<D> = match mismatch_type {
         PluralBeSingularNoun => (get_irregular_plural, regular_nouns::get_plurals),
         SingularBePluralNoun => (get_irregular_singular, regular_nouns::get_singulars),
     };
-    let (irregular, regulars) = (irreg_func(orig_noun), reg_func(orig_noun));
+    let (irregular, regulars) = (irreg_func(orig_noun), reg_func(dict, orig_noun));
 
     irregular
         .into_iter()
@@ -210,10 +215,11 @@ fn get_irregular_singular(plural: &[char]) -> Option<Vec<char>> {
         .map(|s| s.chars().collect())
 }
 
-fn handle_statement(
+fn handle_statement<D: Dictionary>(
     toks: &[Token],
     src: &[char],
     ctx: Option<(&[Token], &[Token])>,
+    dict: &D,
 ) -> Option<Lint> {
     // Don't proceed if the next token is a hyphen, indicating a compound.
     // e.g. "function-like macros"
@@ -278,7 +284,7 @@ fn handle_statement(
     // fix 2 = change noun to match the form of "be"
     //         - could be multiple
     //         - don't need a/an here because nouns are plural
-    let new_nouns = get_new_nouns(orig_noun, &mismatch_type);
+    let new_nouns = get_new_nouns(dict, orig_noun, &mismatch_type);
 
     let article_noun_pairs = new_nouns
         .iter()
@@ -313,7 +319,12 @@ fn handle_statement(
     })
 }
 
-fn handle_theres(toks: &[Token], src: &[char], _ctx: Option<(&[Token], &[Token])>) -> Option<Lint> {
+fn handle_theres<D: Dictionary>(
+    toks: &[Token],
+    src: &[char],
+    _ctx: Option<(&[Token], &[Token])>,
+    dict: &D,
+) -> Option<Lint> {
     // NOTE - for there's we only need to replace two words.
     // NOTE - "there's men" -> there's a man
     //                      -> there are men
@@ -342,7 +353,7 @@ fn handle_theres(toks: &[Token], src: &[char], _ctx: Option<(&[Token], &[Token])
         Suggestion::replace_with_match_case(replacement_value, replacement_template);
 
     // fix 2
-    let new_nouns = get_new_nouns(orig_noun, &mismatch_type);
+    let new_nouns = get_new_nouns(dict, orig_noun, &mismatch_type);
 
     let article_noun_pairs = new_nouns
         .iter()
@@ -376,10 +387,11 @@ fn handle_theres(toks: &[Token], src: &[char], _ctx: Option<(&[Token], &[Token])
     })
 }
 
-fn handle_question(
+fn handle_question<D: Dictionary>(
     toks: &[Token],
     src: &[char],
     ctx: Option<(&[Token], &[Token])>,
+    dict: &D,
 ) -> Option<Lint> {
     // Don't proceed if the next token is a noun, indicating a compound:
     // e.g. "there are config errors"
@@ -433,7 +445,7 @@ fn handle_question(
         Suggestion::replace_with_match_case(replacement_value, replacement_template);
 
     // fix 2
-    let new_nouns = get_new_nouns(orig_noun, &mismatch_type);
+    let new_nouns = get_new_nouns(dict, orig_noun, &mismatch_type);
     let article_noun_pairs = new_nouns
         .iter()
         .map(|(noun, article)| {
@@ -474,8 +486,11 @@ fn handle_question(
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+    use crate::{
+        linting::tests::{
+            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        },
+        spell::FstDictionary,
     };
 
     use super::ThereIsAgreement;
@@ -486,7 +501,7 @@ mod tests {
     fn statement_present_pl_regular() {
         assert_good_and_bad_suggestions(
             "there is things",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["there are things", "there is a thing"],
             &[],
         );
@@ -496,7 +511,7 @@ mod tests {
     fn statement_present_sg_irregular() {
         assert_good_and_bad_suggestions(
             "there are person",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["there are people", "there is a person"],
             &[],
         );
@@ -506,7 +521,7 @@ mod tests {
     fn statement_present_theres_pl() {
         assert_good_and_bad_suggestions(
             "there's secrets",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["there are secrets", "there's a secret"],
             &[],
         );
@@ -516,7 +531,7 @@ mod tests {
     fn statement_past_pl_vowel() {
         assert_good_and_bad_suggestions(
             "there was ideas",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["there were ideas", "there was an idea"],
             &[],
         );
@@ -526,7 +541,7 @@ mod tests {
     fn statement_past_sg() {
         assert_good_and_bad_suggestions(
             "there were child",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["there were children", "there was a child"],
             &[],
         );
@@ -537,7 +552,7 @@ mod tests {
     fn question_pres_sg() {
         assert_good_and_bad_suggestions(
             "are there man",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["are there men", "is there a man"],
             &[],
         );
@@ -547,7 +562,7 @@ mod tests {
     fn question_pres_pl() {
         assert_good_and_bad_suggestions(
             "is there women",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["are there women", "is there a woman"],
             &[],
         );
@@ -557,7 +572,7 @@ mod tests {
     fn question_past_sg() {
         assert_good_and_bad_suggestions(
             "were there cow",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["were there cows", "was there a cow"],
             &[],
         );
@@ -567,7 +582,7 @@ mod tests {
     fn question_past_pl() {
         assert_good_and_bad_suggestions(
             "were there elephant",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &["were there elephants", "was there an elephant"],
             &[],
         );
@@ -577,20 +592,23 @@ mod tests {
     fn dont_flag_there_are_hyphenated_compound_starts_singular() {
         assert_no_lints(
             "there are function-like macros",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
     #[test]
     fn dont_flag_there_are_open_compound_starts_singular() {
-        assert_no_lints("there are config errors", ThereIsAgreement::default());
+        assert_no_lints(
+            "there are config errors",
+            ThereIsAgreement::new(FstDictionary::curated()),
+        );
     }
 
     #[test]
     fn a_or_an_depends_on_dialect_herb() {
         assert_good_and_bad_suggestions(
             "there's herbs.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there are herbs.",
                 // "there'ss a herb.", // TODO: This module does not yet accept a `Dialect`, `American` is hard-coded for now.
@@ -604,7 +622,7 @@ mod tests {
     fn a_or_an_depends_on_dialect_hotel() {
         assert_good_and_bad_suggestions(
             "There are hotel.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "There are hotels.",
                 "There is a hotel.",
@@ -622,7 +640,7 @@ mod tests {
     fn fix_there_is_errors() {
         assert_good_and_bad_suggestions(
             "Hi， when I make the code, there is errors",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Hi， when I make the code, there are errors",
                 "Hi， when I make the code, there is an error",
@@ -635,7 +653,7 @@ mod tests {
     fn fix_there_is_warnings() {
         assert_good_and_bad_suggestions(
             "There is warnings from kotlin and dart, as reference: Elvis operator (?:) always returns the left operand of non-nullable type String.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "There are warnings from kotlin and dart, as reference: Elvis operator (?:) always returns the left operand of non-nullable type String.",
                 "There is a warning from kotlin and dart, as reference: Elvis operator (?:) always returns the left operand of non-nullable type String.",
@@ -648,7 +666,7 @@ mod tests {
     fn fix_there_is_problems() {
         assert_good_and_bad_suggestions(
             "Problem is that if there is a project that has a csproj file, then there is problems with the history folder.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Problem is that if there is a project that has a csproj file, then there are problems with the history folder.",
                 "Problem is that if there is a project that has a csproj file, then there is a problem with the history folder.",
@@ -662,7 +680,7 @@ mod tests {
     fn fix_there_is_commands() {
         assert_good_and_bad_suggestions(
             "Additionally if there is Commands that can be used on multiple Resources at the same time.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Additionally if there are Commands that can be used on multiple Resources at the same time.",
                 "Additionally if there is a Command that can be used on multiple Resources at the same time.",
@@ -675,7 +693,7 @@ mod tests {
     fn fix_there_is_values() {
         assert_suggestion_result(
             "This mean there would not be a single cache, but as many caches as there is values for the second argument.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "This mean there would not be a single cache, but as many caches as there are values for the second argument.",
         );
     }
@@ -684,7 +702,7 @@ mod tests {
     fn fix_there_is_strings() {
         assert_good_and_bad_suggestions(
             "I can image other cases (tools different from SPSS) in which there is strings in both sides of the dictionary",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I can image other cases (tools different from SPSS) in which there are strings in both sides of the dictionary",
                 "I can image other cases (tools different from SPSS) in which there is a string in both sides of the dictionary",
@@ -697,7 +715,7 @@ mod tests {
     fn fix_there_is_things() {
         assert_good_and_bad_suggestions(
             "even though we can check whether there is things running in Node, we can not do it for Chromium's message loops",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "even though we can check whether there are things running in Node, we can not do it for Chromium's message loops",
                 "even though we can check whether there is a thing running in Node, we can not do it for Chromium's message loops",
@@ -712,7 +730,7 @@ mod tests {
         // TODO it hasn't been converted to the new logic in `assert_suggestion_result`
         // assert_good_and_bad_suggestions(
         //     "there is people making projects, there is people doing tutorials",
-        //     ThereIsAgreement::default(),
+        //     ThereIsAgreement::new(FstDictionary::curated(),
         //     &[
         //         "there are people making projects, there are people doing tutorials",
         //         "there is a person making projects, there is a person doing tutorials",
@@ -721,12 +739,12 @@ mod tests {
         // );
         assert_suggestion_result(
             "there is people making projects, there is people doing tutorials",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "there are people making projects, there are people doing tutorials",
         );
         assert_suggestion_result(
             "there is people making projects, there is people doing tutorials",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "there is a person making projects, there is a person doing tutorials",
         );
     }
@@ -735,7 +753,7 @@ mod tests {
     fn fix_there_is_instructions() {
         assert_good_and_bad_suggestions(
             "I am just wondering if there is instructions somewhere for handling deep linking while using Redux.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I am just wondering if there are instructions somewhere for handling deep linking while using Redux.",
                 "I am just wondering if there is an instruction somewhere for handling deep linking while using Redux.",
@@ -748,7 +766,7 @@ mod tests {
     fn fix_there_is_packages() {
         assert_suggestion_result(
             "if there is packages that handle such protocols installed",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "if there are packages that handle such protocols installed",
         );
     }
@@ -762,7 +780,7 @@ mod tests {
     fn dont_flag_there_is_people_who_have_done_xyz() {
         assert_no_lints(
             "The main expectation there is people who have a deprecated app installed will then get an error if it's disabled",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -771,7 +789,7 @@ mod tests {
     fn dont_flag_there_is_packages_part_of_dir() {
         assert_no_lints(
             "For example there is packages/vite/src/node , but no packages/vite/src/deno",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -781,7 +799,7 @@ mod tests {
     fn fix_there_are_bug() {
         assert_good_and_bad_suggestions(
             "there are bug in svelte 3.0 that axios from 0.22.0 version undefined",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there is a bug in svelte 3.0 that axios from 0.22.0 version undefined",
                 "there are bugs in svelte 3.0 that axios from 0.22.0 version undefined",
@@ -794,7 +812,7 @@ mod tests {
     fn fix_there_are_description() {
         assert_good_and_bad_suggestions(
             "there are description regarding thread safety in zmq document.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there is a description regarding thread safety in zmq document.",
                 "there are descriptions regarding thread safety in zmq document.",
@@ -807,7 +825,7 @@ mod tests {
     fn fix_there_are_issue() {
         assert_good_and_bad_suggestions(
             "Seems like if there are issue with OpenAI, it is still trying to call chat completion and giving type error.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Seems like if there are issues with OpenAI, it is still trying to call chat completion and giving type error.",
                 "Seems like if there is an issue with OpenAI, it is still trying to call chat completion and giving type error.",
@@ -821,7 +839,7 @@ mod tests {
     fn fix_there_are_problem() {
         assert_good_and_bad_suggestions(
             "There are problem with official serving docker image gpu version",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "There is a problem with official serving docker image gpu version",
                 "There are problems with official serving docker image gpu version",
@@ -836,7 +854,7 @@ mod tests {
     fn dont_flag_there_are_dep_conflicts() {
         assert_no_lints(
             "Wrong advice when there are dependency conflicts",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -844,7 +862,7 @@ mod tests {
     fn dont_flag_there_are_dep_errs() {
         assert_no_lints(
             "If there are dependency errors they will be immediately logged out to you.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -853,7 +871,7 @@ mod tests {
     fn dont_flag_there_are_def_syntax_errs() {
         assert_no_lints(
             "New Campaign Properties dialog loses changes if there are definition syntax errors",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -861,7 +879,7 @@ mod tests {
     fn dont_flag_there_are_description_and_instruction_keys() {
         assert_no_lints(
             "There are description and instruction keys for the classes.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -869,7 +887,7 @@ mod tests {
     fn dont_flag_there_are_function_like() {
         assert_no_lints(
             "clang-format indents class member functions oddly if there are function-like macro invocations",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -879,7 +897,7 @@ mod tests {
     fn fix_there_was_configs() {
         assert_good_and_bad_suggestions(
             "I did see that there was configs for it before but it isn't in the configs anymore.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I did see that there were configs for it before but it isn't in the configs anymore.",
                 "I did see that there was a config for it before but it isn't in the configs anymore.",
@@ -892,7 +910,7 @@ mod tests {
     fn fix_there_was_examples() {
         assert_good_and_bad_suggestions(
             "It would be awesome if there was examples on how to include inline citations",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "It would be awesome if there were examples on how to include inline citations",
                 "It would be awesome if there was an example on how to include inline citations",
@@ -905,7 +923,7 @@ mod tests {
     fn fix_there_was_functions() {
         assert_good_and_bad_suggestions(
             "I noticed in the AXP2101_Class for the unified library that there was functions like \"isPekeyShortPressIrq()\"",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I noticed in the AXP2101_Class for the unified library that there were functions like \"isPekeyShortPressIrq()\"",
                 "I noticed in the AXP2101_Class for the unified library that there was a function like \"isPekeyShortPressIrq()\"",
@@ -918,7 +936,7 @@ mod tests {
     fn fix_there_was_issues() {
         assert_good_and_bad_suggestions(
             "Restored to a Snapshot, but there was issues with Hyprland.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Restored to a Snapshot, but there were issues with Hyprland.",
                 "Restored to a Snapshot, but there was an issue with Hyprland.",
@@ -931,7 +949,7 @@ mod tests {
     fn fix_there_was_settings() {
         assert_good_and_bad_suggestions(
             "I also tried creating a fresh page on the same site, and there was settings but only 2 pages of settings",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I also tried creating a fresh page on the same site, and there were settings but only 2 pages of settings",
                 "I also tried creating a fresh page on the same site, and there was a setting but only 2 pages of settings",
@@ -946,7 +964,7 @@ mod tests {
     fn fix_there_were_function() {
         assert_good_and_bad_suggestions(
             "Instead, it would be helpful if there were function in the autoloader capable of taking the a list of names of packages to enable.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Instead, it would be helpful if there were functions in the autoloader capable of taking the a list of names of packages to enable.",
                 "Instead, it would be helpful if there was a function in the autoloader capable of taking the a list of names of packages to enable.",
@@ -961,7 +979,7 @@ mod tests {
     fn fix_there_were_hint() {
         assert_good_and_bad_suggestions(
             "there were hint that this could break the build",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there were hints that this could break the build",
                 "there was a hint that this could break the build",
@@ -974,7 +992,7 @@ mod tests {
     fn fix_there_were_issue() {
         assert_good_and_bad_suggestions(
             "there were issue with using venv and it was pulled",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there were issues with using venv and it was pulled",
                 "there was an issue with using venv and it was pulled",
@@ -988,7 +1006,7 @@ mod tests {
     fn fix_there_were_problem_about() {
         assert_good_and_bad_suggestions(
             "there were problem about version but this error is solved by correcting version in these files",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there were problems about version but this error is solved by correcting version in these files",
                 "there was a problem about version but this error is solved by correcting version in these files",
@@ -1002,7 +1020,7 @@ mod tests {
     fn fix_there_were_problem_with() {
         assert_good_and_bad_suggestions(
             "there were problem with page alignment crossing",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there were problems with page alignment crossing",
                 "there was a problem with page alignment crossing",
@@ -1018,7 +1036,7 @@ mod tests {
     fn dont_flag_alice_there_were_two() {
         assert_no_lints(
             "This time there were two little shrieks, and more sounds of broken glass.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1026,7 +1044,7 @@ mod tests {
     fn dont_flag_gatsby_there_were_twinkle_bells() {
         assert_no_lints(
             "When he realized what I was talking about, that there were twinkle-bells of sunshine in the room, he smiled like a weather man",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1035,7 +1053,7 @@ mod tests {
     fn dont_flag_gatsby_there_were_a_and_b() {
         assert_no_lints(
             "Of theatrical people there were Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1045,7 +1063,7 @@ mod tests {
     fn fix_is_there_apps() {
         assert_good_and_bad_suggestions(
             "Ok, but is there apps that actually do that?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Ok, but are there apps that actually do that?",
                 "Ok, but is there an app that actually do that?",
@@ -1058,7 +1076,7 @@ mod tests {
     fn fix_is_there_ideas() {
         assert_suggestion_result(
             "Is there ideas to make regular page to listen for api (POST/PUT/.. etc requests)",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "Are there ideas to make regular page to listen for api (POST/PUT/.. etc requests)",
         );
     }
@@ -1067,7 +1085,7 @@ mod tests {
     fn fix_is_there_people() {
         assert_suggestion_result(
             "please guys tell me, is there people really making money with bot?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "please guys tell me, are there people really making money with bot?",
         );
     }
@@ -1076,7 +1094,7 @@ mod tests {
     fn fix_is_there_solutions() {
         assert_good_and_bad_suggestions(
             "Run-as binary without the suid bit set, is there solutions?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Run-as binary without the suid bit set, are there solutions?",
                 "Run-as binary without the suid bit set, is there a solution?",
@@ -1089,7 +1107,7 @@ mod tests {
     fn fix_is_there_things() {
         assert_suggestion_result(
             "is there things you could change to make it a more general product",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             "are there things you could change to make it a more general product",
         );
     }
@@ -1098,7 +1116,7 @@ mod tests {
     fn fix_is_there_tools() {
         assert_good_and_bad_suggestions(
             "Is there tools or documentation how to recover / rebuild /run fsck on the failed replicas.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Are there tools or documentation how to recover / rebuild /run fsck on the failed replicas.",
                 "Is there a tool or documentation how to recover / rebuild /run fsck on the failed replicas.",
@@ -1114,7 +1132,7 @@ mod tests {
     fn fix_are_there_problem() {
         assert_good_and_bad_suggestions(
             "Is it just the namespace or are there problem in the use statements as well?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Is it just the namespace or are there problems in the use statements as well?",
                 "Is it just the namespace or is there a problem in the use statements as well?",
@@ -1127,7 +1145,7 @@ mod tests {
     fn fix_are_there_solution() {
         assert_good_and_bad_suggestions(
             "Are there solution for making lsws using h2 protocol in client browsers?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Are there solutions for making lsws using h2 protocol in client browsers?",
                 "Is there a solution for making lsws using h2 protocol in client browsers?",
@@ -1140,7 +1158,7 @@ mod tests {
     fn fix_are_there_solution_slash_workaround() {
         assert_good_and_bad_suggestions(
             "are there solution/workaround ?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 // TODO the ideal fix pluralizes each word separated by `/`
                 // "are there solutions/workarounds ?",
@@ -1155,7 +1173,7 @@ mod tests {
     fn fix_are_there_concept() {
         assert_good_and_bad_suggestions(
             "So, what is a external interface in C++? are there concept of interface in C++?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "So, what is a external interface in C++? are there concepts of interface in C++?",
                 "So, what is a external interface in C++? is there a concept of interface in C++?",
@@ -1168,7 +1186,7 @@ mod tests {
     fn fix_are_there_object() {
         assert_good_and_bad_suggestions(
             "He check are there object with same id, if there is no object with same id he creates new and add to array",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "He check are there objects with same id, if there is no object with same id he creates new and add to array",
                 "He check is there an object with same id, if there is no object with same id he creates new and add to array",
@@ -1182,7 +1200,7 @@ mod tests {
     fn fix_are_there_variable() {
         assert_good_and_bad_suggestions(
             "Are there variable in side it or is it some sort of dataset?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Are there variables in side it or is it some sort of dataset?",
                 "Is there a variable in side it or is it some sort of dataset?",
@@ -1197,7 +1215,7 @@ mod tests {
     fn ignore_are_there_answer_generation_errors() {
         assert_no_lints(
             "Are there Answer Generation Errors?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1205,7 +1223,7 @@ mod tests {
     fn ignore_are_there_application_objects() {
         assert_no_lints(
             "Are there application objects assigned to non-existent sites",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1213,7 +1231,7 @@ mod tests {
     fn ignore_are_there_code_files() {
         assert_no_lints(
             "Why are there code files more than 10k lines long?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1221,7 +1239,7 @@ mod tests {
     fn ignore_are_there_error_logs() {
         assert_no_lints(
             "Are there error logs in your worker when flows fail?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1229,7 +1247,7 @@ mod tests {
     fn ignore_are_there_tool_specific() {
         assert_no_lints(
             "Are there tool specific constraints for RM tool exchange for EA?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1239,7 +1257,7 @@ mod tests {
     fn fix_was_there_bugs() {
         assert_good_and_bad_suggestions(
             "Was there bugs, and goofed-up quests?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Were there bugs, and goofed-up quests?",
                 "Was there a bug, and goofed-up quests?",
@@ -1252,7 +1270,7 @@ mod tests {
     fn fix_was_there_hints() {
         assert_good_and_bad_suggestions(
             "Was there hints in the game that points you to it?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Were there hints in the game that points you to it?",
                 "Was there a hint in the game that points you to it?",
@@ -1265,7 +1283,7 @@ mod tests {
     fn fix_was_there_issues() {
         assert_good_and_bad_suggestions(
             "I saw you closed that PR, was there issues getting it merged upstream?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "I saw you closed that PR, were there issues getting it merged upstream?",
                 "I saw you closed that PR, was there an issue getting it merged upstream?",
@@ -1278,7 +1296,7 @@ mod tests {
     fn fix_was_there_problems() {
         assert_good_and_bad_suggestions(
             "Was there problems with other files that you had written to the SD card (PRG/CRT)?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Were there problems with other files that you had written to the SD card (PRG/CRT)?",
                 "Was there a problem with other files that you had written to the SD card (PRG/CRT)?",
@@ -1293,7 +1311,7 @@ mod tests {
     fn dont_flag_last_time_i_was_there() {
         assert_no_lints(
             "Last time I was there flags were on almost every house or fence.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1302,7 +1320,7 @@ mod tests {
     fn dont_flag_the_grate_was_there() {
         assert_no_lints(
             "Saying the grate was there helps him avoid a lawsuit.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1310,7 +1328,7 @@ mod tests {
     fn dont_flag_when_he_was_there() {
         assert_no_lints(
             "When he was there tips were going way, way up.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1320,7 +1338,7 @@ mod tests {
     fn were_there_description() {
         assert_good_and_bad_suggestions(
             "Were there pictures of the Primarchs around before then? Were there description?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Were there pictures of the Primarchs around before then? Were there descriptions?",
                 "Were there pictures of the Primarchs around before then? Was there a description?",
@@ -1335,7 +1353,7 @@ mod tests {
     fn font_flag_were_there_bomb_drills() {
         assert_no_lints(
             "Were there bomb drills in school?",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1343,7 +1361,7 @@ mod tests {
     fn dont_flag_were_there_set_rules() {
         assert_no_lints(
             "For instance, were there set rules as to the funds that candidates would have to have acquired",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1351,7 +1369,7 @@ mod tests {
     fn dont_flag_were_there_tour_buses() {
         assert_no_lints(
             "Were there tour buses and different hotels and parties each night? Yep.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
@@ -1361,7 +1379,7 @@ mod tests {
     fn fix_theres_children() {
         assert_good_and_bad_suggestions(
             "now, check whether there's children",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "now, check whether there's a child",
                 "now, check whether there are children",
@@ -1374,7 +1392,7 @@ mod tests {
     fn fix_theres_ideas() {
         assert_good_and_bad_suggestions(
             "there's ideas how it should behave for some media etc.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there's an idea how it should behave for some media etc.",
                 "there are ideas how it should behave for some media etc.",
@@ -1387,7 +1405,7 @@ mod tests {
     fn fix_theres_people() {
         assert_good_and_bad_suggestions(
             "Currently there's people helping out, and it's fairly easy to find someone if you need something.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "Currently there are people helping out, and it's fairly easy to find someone if you need something.",
                 "Currently there's a person helping out, and it's fairly easy to find someone if you need something.",
@@ -1400,7 +1418,7 @@ mod tests {
     fn fix_theres_problems() {
         assert_good_and_bad_suggestions(
             "there's problems when using WSL::Ubuntu",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "there are problems when using WSL::Ubuntu",
                 "there's a problem when using WSL::Ubuntu",
@@ -1413,7 +1431,7 @@ mod tests {
     fn fix_theres_things() {
         assert_good_and_bad_suggestions(
             "If there's things you love/hate about Vidstack please let us know",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "If there are things you love/hate about Vidstack please let us know",
                 "If there's a thing you love/hate about Vidstack please let us know",
@@ -1426,7 +1444,7 @@ mod tests {
     fn fix_theres_urls() {
         assert_good_and_bad_suggestions(
             "so you're not suprised if there's urls missing or your data isn't being refreshed daily",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
             &[
                 "so you're not suprised if there are urls missing or your data isn't being refreshed daily",
                 "so you're not suprised if there's a url missing or your data isn't being refreshed daily",
@@ -1440,20 +1458,23 @@ mod tests {
     fn fix_browser_console_3066() {
         assert_no_lints(
             "Finally, I’ve checked the browser’s developer console for any JavaScript errors, but there are none.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 
     #[test]
     fn fix_there_was_none_3066() {
-        assert_no_lints("There were none.", ThereIsAgreement::default());
+        assert_no_lints(
+            "There were none.",
+            ThereIsAgreement::new(FstDictionary::curated()),
+        );
     }
 
     #[test]
     fn fix_none_related_to_3066() {
         assert_no_lints(
             "I’ve inspected the browser console for JavaScript errors, and there are none related to WooCommerce or the product variation functionality.",
-            ThereIsAgreement::default(),
+            ThereIsAgreement::new(FstDictionary::curated()),
         );
     }
 }
