@@ -1281,6 +1281,34 @@
 								"state": true,
 								"label": "Formative Years"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandAlgorithm",
+								"state": true,
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVulnerability",
+								"state": true,
+								"label": "Expand Vulnerability"
+							}
 						}
 					]
 				}
