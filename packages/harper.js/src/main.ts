@@ -57,4 +57,7 @@ export interface LintOptions {
 
 	/** Force the entirety of the document to be composed of headings. An undefined value is assumed to be false.*/
 	forceAllHeadings?: boolean;
+
+	/** Remove overlapping lints. An undefined value is assumed to be true. */
+	dedup?: boolean;
 }
