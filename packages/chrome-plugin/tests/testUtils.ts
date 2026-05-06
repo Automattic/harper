@@ -75,16 +75,18 @@ export function getDraftEditor(page: Page): Locator {
 	return page.locator('#rich-example .public-DraftEditor-content');
 }
 
-/** Replace the content of a text editor. Handles newlines by pressing Enter. */
-export async function replaceEditorContent(editorEl: Locator, text: string) {
+/** Replace the content of a text editor. */
+export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
 
 	const lines = text.split('\n');
+	const breakKey = softBreaks ? 'Shift+Enter' : 'Enter';
+
 	for (let i = 0; i < lines.length; i++) {
 		await editorEl.pressSequentially(lines[i]);
 		if (i < lines.length - 1) {
-			await editorEl.press('Enter');
+			await editorEl.press(breakKey);
 		}
 	}
 }
@@ -372,12 +374,19 @@ export async function testMultipleSuggestionsAndUndo(
 		if (setup) {
 			await setup(page, editor);
 		}
+
+		// Soft breaks: no false positives from concatenation + correct span alignment.
+		await replaceEditorContent(editor, 'Valid words\ntset here.', true);
+		await page.waitForTimeout(4000);
+		await expect(getHarperHighlights(page)).toHaveCount(1);
+		expect(await clickHarperHighlight(page)).toBe(true);
+		await page.getByTitle('Replace with "test"').click();
+		await page.waitForTimeout(500);
+		await assertEditorContains(editor, 'test here');
+
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
-
 		await page.waitForTimeout(6000);
-
-		const highlights = getHarperHighlights(page);
-		await expect(highlights).toHaveCount(3);
+		await expect(getHarperHighlights(page)).toHaveCount(3);
 
 		// Get highlights sorted by visual position and click on the middle one
 		const sortedBoxes = await getSortedHighlightBoxes(page);
