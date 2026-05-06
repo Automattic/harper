@@ -878,9 +878,9 @@ dependencies = [
 
 [[package]]
 name = "clap_complete"
-version = "4.6.0"
+version = "4.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "19c9f1dde76b736e3681f28cec9d5a61299cbaae0fce80a68e43724ad56031eb"
+checksum = "660c0520455b1013b9bcb0393d5f643d7e4454fb69c915b8d6d2aa0e9a45acc3"
 dependencies = [
  "clap",
 ]
@@ -2735,7 +2735,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2746,7 +2746,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2784,7 +2784,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2821,7 +2821,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -2859,8 +2859,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-dictionary-wordlist"
+version = "2.1.0"
+dependencies = [
+ "harper-core",
+ "itertools 0.14.0",
+ "tokio",
+]
+
+[[package]]
 name = "harper-html"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2871,7 +2880,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2882,7 +2891,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2893,7 +2902,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2904,7 +2913,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2914,6 +2923,7 @@ dependencies = [
  "harper-asciidoc",
  "harper-comments",
  "harper-core",
+ "harper-dictionary-wordlist",
  "harper-html",
  "harper-ink",
  "harper-jjdescription",
@@ -2922,7 +2932,6 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
- "itertools 0.14.0",
  "open",
  "resolve-path",
  "serde",
@@ -2935,7 +2944,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2953,7 +2962,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2964,7 +2973,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2975,7 +2984,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2983,7 +2992,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2994,7 +3003,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -3013,7 +3022,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -5416,9 +5425,9 @@ dependencies = [
 
 [[package]]
 name = "thin-vec"
-version = "0.2.14"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "144f754d318415ac792f9d69fc87abbbfc043ce2ef041c60f16ad828f638717d"
+checksum = "259cdf8ed4e4aca6f1e9d011e10bd53f524a2d0637d7b28450f6c64ac298c4c6"
 
 [[package]]
 name = "thiserror"
@@ -5555,9 +5564,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.51.1"
+version = "1.52.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f66bf9585cda4b724d3e78ab34b73fb2bbaba9011b9bfdf69dc836382ea13b8c"
+checksum = "b67dee974fe86fd92cc45b7a95fdd2f99a36a6d7b0d431a231178d3d670bbcc6"
 dependencies = [
  "bytes",
  "libc",
@@ -6160,9 +6169,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-scala"
-version = "0.25.0"
+version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83079f50ea7d03e0faf6be6260ed97538e6df7349ec3cbcbf5771f7b38e3c8b7"
+checksum = "de5a4a7ff23a55474ce6a741d52aaeca7a82fe9421bb982b86e98c6ac8629397"
 dependencies = [
  "cc",
  "tree-sitter-language",

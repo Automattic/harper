@@ -24,7 +24,7 @@ use crate::input::{
     single_input::{SingleInput, SingleInputTrait, StdinInput},
 };
 
-/// Sync version of harper-ls/src/dictionary_io@load_dict
+/// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
@@ -57,7 +57,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     Ok(packs)
 }
 
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
+/// Path version of harper-ls file dictionary name rewriting.
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 

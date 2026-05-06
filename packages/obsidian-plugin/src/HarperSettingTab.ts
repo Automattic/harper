@@ -159,6 +159,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;
+				ta.inputEl.rows = 10;
 				ta.setValue(linesToString(settings.userDictionary ?? [''])).onChange(async (v) => {
 					const dict = stringToLines(v);
 					settings.userDictionary = dict;

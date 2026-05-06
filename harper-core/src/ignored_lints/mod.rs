@@ -10,7 +10,7 @@ use crate::{Document, linting::Lint};
 ///
 /// To use this structure, apply [`Self::remove_ignored`] on the output of a
 /// [`Linter`](crate::linting::Linter).
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct IgnoredLints {
     context_hashes: HashSet<u64>,
 }

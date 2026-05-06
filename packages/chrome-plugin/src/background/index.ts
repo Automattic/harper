@@ -74,6 +74,35 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
+/** Read the current popup state and the tab that triggered it from storage. */
+async function getReportTabState() {
+	const result = await chrome.storage.local.get(['popupState', 'reportTabId']);
+	return {
+		popupPage: result.popupState?.page as string | undefined,
+		reportTabId: result.reportTabId as number | undefined,
+	};
+}
+
+/** Reset the popup back to the main page, clearing any in-progress report. */
+async function clearReportState(): Promise<void> {
+	await chrome.storage.local.set({ popupState: { page: 'main' } });
+}
+
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+	const { popupPage, reportTabId } = await getReportTabState();
+	if (popupPage === 'report-error' && reportTabId !== tabId) {
+		await clearReportState();
+	}
+});
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+	if (!changeInfo.url) return;
+	const { popupPage, reportTabId } = await getReportTabState();
+	if (popupPage === 'report-error' && reportTabId === tabId) {
+		await clearReportState();
+	}
+});
+
 let linter: LocalLinter;
 const WEIRPACKS_KEY = 'weirpacks';
 
@@ -201,7 +230,7 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 		case 'setHotkey':
 			return handleSetHotkey(message);
 		case 'openReportError':
-			return handleOpenReportError(message);
+			return handleOpenReportError(message, sender);
 		case 'openOptions':
 			chrome.runtime.openOptionsPage();
 			return Promise.resolve(createUnitResponse());
@@ -431,7 +460,10 @@ async function handleSetHotkey(req: SetHotkeyRequest): Promise<UnitResponse> {
 	await setHotkey(hotkey);
 }
 
-async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitResponse> {
+async function handleOpenReportError(
+	req: OpenReportErrorRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<UnitResponse> {
 	const popupState: PopupState = {
 		page: 'report-error',
 		example: req.example,
@@ -439,7 +471,7 @@ async function handleOpenReportError(req: OpenReportErrorRequest): Promise<UnitR
 		feedback: req.feedback,
 	};
 
-	await chrome.storage.local.set({ popupState });
+	await chrome.storage.local.set({ popupState, reportTabId: sender?.tab?.id });
 
 	if (chrome.action?.openPopup) {
 		try {
