@@ -6,11 +6,18 @@ pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();
 
     macro_rules! add_compound_mappings {
-        ($group:expr, { $($name:expr => ($bads:expr, $good:expr)),+ $(,)? }) => {
+        ($group:expr, { $($parts:expr => $compound:expr),+ $(,)? }) => {
             $(
+                let name = {
+                    let mut chars = $compound.chars();
+                    match chars.next() {
+                        None => String::new(),
+                        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                    }
+                };
                 $group.add(
-                    $name,
-                    Box::new(MapPhraseLinter::new_closed_compound($bads, $good)),
+                    &name,
+                    Box::new(MapPhraseLinter::new_closed_compound($parts, $compound)),
                 );
             )+
         };
@@ -21,66 +28,64 @@ pub fn lint_group() -> LintGroup {
     // The second column is the incorrect form of the word and the third column is the correct
     // form.
     add_compound_mappings!(group, {
-        "Anybody"         => (&["any body"][..], "anybody"),
-        "Anyhow"          => (&["any how"][..], "anyhow"),
-        "Anywhere"        => (&["any where"][..], "anywhere"),
-        "Backplane"       => (&["back plane"][..], "backplane"),
-        "Bypass"          => (&["by pass"][..], "bypass"),
-        "Chalkboard"      => (&["chalk board"][..], "chalkboard"),
-        "Deadlift"        => (&["dead lift"][..], "deadlift"),
-        "Desktop"         => (&["desk top"][..], "desktop"),
-        "Devops"          => (&["dev ops"][..], "devops"),
-        "Everybody"       => (&["every body"][..], "everybody"),
-        "Everyone"        => (&["every one"][..], "everyone"),
-        "Everywhere"      => (&["every where"][..], "everywhere"),
-        "Furthermore"     => (&["further more"][..], "furthermore"),
-        "Henceforth"      => (&["hence forth"][..], "henceforth"),
-        "However"         => (&["how ever"][..], "however"),
-        "Insofar"         => (&["in so far"][..], "insofar"),
-        "Instead"         => (&["in stead"][..], "instead"),
-        "Intact"          => (&["in tact"][..], "intact"),
-        "Itself"          => (&["it self"][..], "itself"),
-        "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
-        "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
-        "Laptop"          => (&["lap top"][..], "laptop"),
-        "Middleware"      => (&["middle ware"][..], "middleware"),
-        "Meanwhile"       => (&["mean while"][..], "meanwhile"),
-        "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
-        "Misunderstood"   => (&["miss understood"][..], "misunderstood"),
-        "Misuse"          => (&["miss use"][..], "misuse"),
-        "Misused"         => (&["miss used"][..], "misused"),
-        "Multicore"       => (&["multi core"][..], "multicore"),
-        "Multimedia"      => (&["multi media"][..], "multimedia"),
-        "Multithreading"  => (&["multi threading"][..], "multithreading"),
-        "Myself"          => (&["my self"][..], "myself"),
-        "Nonetheless"     => (&["none the less"][..], "nonetheless"),
-        "Nothing"         => (&["no thing"][..], "nothing"),
-        "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
-        "Nowhere"         => (&["no where"][..], "nowhere"),
-        "Overall"         => (&["over all"][..], "overall"),
-        "Overclocking"    => (&["over clocking"][..], "overclocking"),
-        "Overload"        => (&["over load"][..], "overload"),
-        "Overnight"       => (&["over night"][..], "overnight"),
-        "Postpone"        => (&["post pone"][..], "postpone"),
-        "Proofread"       => (&["proof read"][..], "proofread"),
-        "Regardless"      => (&["regard less"][..], "regardless"),
-        "Shortcoming"     => (&["short coming"][..], "shortcoming"),
-        "Shortcomings"    => (&["short comings"][..], "shortcomings"),
-        "Somebody"        => (&["some body"][..], "somebody"),
-        "Somehow"         => (&["some how"][..], "somehow"),
-        "Someone"         => (&["some one"][..], "someone"),
-        "Somewhere"       => (&["some where"][..], "somewhere"),
-        "There"           => (&["the re"][..], "there"),
-        "Therefore"       => (&["there fore"][..], "therefore"),
-        "Thereupon"       => (&["there upon"][..], "thereupon"),
-        "Underclock"      => (&["under clock"][..], "underclock"),
-        "Upset"           => (&["up set"][..], "upset"),
-        "Upward"          => (&["up ward"][..], "upward"),
-        "Whereupon"       => (&["where upon"][..], "whereupon"),
-        "Widespread"      => (&["wide spread"][..], "widespread"),
-        "Without"         => (&["with out"][..], "without"),
-        "Worldwide"       => (&["world wide"][..], "worldwide"),
-        "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
+        &["any", "body"][..] => "anybody",
+        &["any", "how"][..] => "anyhow",
+        &["any", "where"][..] => "anywhere",
+        &["back", "plane"][..] => "backplane",
+        &["by", "pass"][..] => "bypass",
+        &["chalk", "board"][..] => "chalkboard",
+        &["dead", "lift"][..] => "deadlift",
+        &["desk", "top"][..] => "desktop",
+        &["dev", "ops"][..] => "devops",
+        &["every", "body"][..] => "everybody",
+        &["every", "one"][..] => "everyone",
+        &["every", "where"][..] => "everywhere",
+        &["further", "more"][..] => "furthermore",
+        &["hence", "forth"][..] => "henceforth",
+        &["how", "ever"][..] => "however",
+        &["in", "so", "far"][..] => "insofar",
+        &["in", "stead"][..] => "instead",
+        &["in", "tact"][..] => "intact",
+        &["it", "self"][..] => "itself",
+        &["lap", "top"][..] => "laptop",
+        &["middle", "ware"][..] => "middleware",
+        &["mean", "while"][..] => "meanwhile",
+        &["miss", "understand"][..] => "misunderstand",
+        &["miss", "understood"][..] => "misunderstood",
+        &["miss", "use"][..] => "misuse",
+        &["miss", "used"][..] => "misused",
+        &["multi", "core"][..] => "multicore",
+        &["multi", "media"][..] => "multimedia",
+        &["multi", "threading"][..] => "multithreading",
+        &["my", "self"][..] => "myself",
+        &["none", "the", "less"][..] => "nonetheless",
+        &["no", "thing"][..] => "nothing",
+        &["not", "with", "standing"][..] => "notwithstanding",
+        &["no", "where"][..] => "nowhere",
+        &["over", "all"][..] => "overall",
+        &["over", "clocking"][..] => "overclocking",
+        &["over", "load"][..] => "overload",
+        &["over", "night"][..] => "overnight",
+        &["post", "pone"][..] => "postpone",
+        &["proof", "read"][..] => "proofread",
+        &["regard", "less"][..] => "regardless",
+        &["short", "coming"][..] => "shortcoming",
+        &["short", "comings"][..] => "shortcomings",
+        &["some", "body"][..] => "somebody",
+        &["some", "how"][..] => "somehow",
+        &["some", "one"][..] => "someone",
+        &["some", "where"][..] => "somewhere",
+        &["the", "re"][..] => "there",
+        &["there", "fore"][..] => "therefore",
+        &["there", "upon"][..] => "thereupon",
+        &["under", "clock"][..] => "underclock",
+        &["up", "set"][..] => "upset",
+        &["up", "ward"][..] => "upward",
+        &["where", "upon"][..] => "whereupon",
+        &["wide", "spread"][..] => "widespread",
+        &["with", "out"][..] => "without",
+        &["world", "wide"][..] => "worldwide",
+        &["worth", "while"][..] => "worthwhile",
     });
 
     group.set_all_rules_to(Some(true));
@@ -263,15 +268,15 @@ mod tests {
     }
 
     #[test]
-    fn key_stoke() {
-        let test_sentence = "Use this key stoke to open search.";
-        let expected = "Use this keystroke to open search.";
+    fn in_tact_space() {
+        let test_sentence = "The code remains in tact after the merge.";
+        let expected = "The code remains intact after the merge.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
     #[test]
-    fn in_tact() {
-        let test_sentence = "The code remains in tact after the merge.";
+    fn in_tact_hyphen() {
+        let test_sentence = "The code remains in-tact after the merge.";
         let expected = "The code remains intact after the merge.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
     }
@@ -279,20 +284,6 @@ mod tests {
     #[test]
     fn intact_is_allowed() {
         assert_no_lints("The data set remains intact.", lint_group());
-    }
-
-    #[test]
-    fn key_stokes() {
-        let test_sentence = "These key stokes are hard to memorize.";
-        let expected = "These keystrokes are hard to memorize.";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
-    }
-
-    #[test]
-    fn key_strokes() {
-        let test_sentence = "There may have been a missing key stroke.";
-        let expected = "There may have been a missing keystroke.";
-        assert_suggestion_result(test_sentence, lint_group(), expected);
     }
 
     #[test]
