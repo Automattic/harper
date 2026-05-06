@@ -1,11 +1,11 @@
 import type { LintKind } from 'harper.js';
-import type { IgnorableLintBox, LintBox, UnpackedSuggestion } from './types.js';
+import type { UnpackedSuggestion } from './types.js';
 
 export type EditorFontFamily = 'sans' | 'serif' | 'mono';
 
 export type EditorFontSize = 'default' | number;
 
-export type CategoryCounts = Record<LintKind, number>;
+export type LintKindCounts = Record<LintKind, number>;
 
 export const FONT_OPTIONS: {
 	value: EditorFontFamily;
@@ -37,7 +37,7 @@ export const FONT_OPTIONS: {
 export const FONT_SIZES = [12, 13, 14, 15, 16, 17, 18, 20, 22];
 export const DEFAULT_FONT_SIZE = 'default';
 
-export const LINT_CATEGORY_ORDER: LintKind[] = [
+export const LINT_KIND_ORDER: LintKind[] = [
 	'Spelling',
 	'Typo',
 	'Capitalization',
@@ -67,7 +67,7 @@ export const LINT_CATEGORY_ORDER: LintKind[] = [
  * cards, counts, and active states without spreading Tailwind class maps through
  * Svelte components.
  */
-export const LINT_CATEGORIES: Record<
+export const LINT_KIND_STYLES: Record<
 	LintKind,
 	{
 		label: string;
@@ -240,18 +240,18 @@ export const LINT_CATEGORIES: Record<
 	},
 };
 
-export const LINT_CATEGORY_ENTRIES = LINT_CATEGORY_ORDER.map(
-	(key) => [key, LINT_CATEGORIES[key]] as const,
+export const LINT_KIND_STYLE_ENTRIES = LINT_KIND_ORDER.map(
+	(key) => [key, LINT_KIND_STYLES[key]] as const,
 );
 
 /**
  * Create a zero-filled count map for every lint kind shown by the editor.
  *
- * Components use this as a stable accumulator shape so category count rendering
+ * Components use this as a stable accumulator shape so lint-kind count rendering
  * does not need to handle missing keys.
  */
-export function createEmptyCategoryCounts(): CategoryCounts {
-	return Object.fromEntries(LINT_CATEGORY_ORDER.map((key) => [key, 0])) as CategoryCounts;
+export function createEmptyLintKindCounts(): LintKindCounts {
+	return Object.fromEntries(LINT_KIND_ORDER.map((key) => [key, 0])) as LintKindCounts;
 }
 
 /**
@@ -296,32 +296,6 @@ export function normalizeFontSize(value: EditorFontSize | string): EditorFontSiz
 
 	const rounded = Math.round(numericValue);
 	return Math.min(28, Math.max(11, rounded));
-}
-
-/**
- * Map a raw lint-kind string to the editor's known display category.
- *
- * Harper can expose lint kinds as strings, so this provides a safe fallback for
- * unknown or future kinds instead of breaking category styling.
- */
-export function displayCategoryFor(lintKind: string): LintKind {
-	if (lintKind in LINT_CATEGORIES) {
-		return lintKind as LintKind;
-	}
-
-	return 'Miscellaneous';
-}
-
-/**
- * Build a stable identity for a lint box across render and layout updates.
- *
- * The sidebar uses this ID to preserve active/open state when lint decorations
- * are recomputed from the same underlying lint.
- */
-export function lintBoxId(lintBox: IgnorableLintBox | LintBox): string {
-	const { lint } = lintBox;
-	const rule = 'rule' in lintBox ? lintBox.rule : '';
-	return [rule, lint.context_hash, lint.span.start, lint.span.end, lint.problem_text].join(':');
 }
 
 /**

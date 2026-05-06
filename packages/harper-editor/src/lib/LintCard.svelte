@@ -1,6 +1,6 @@
 <script lang="ts">
 import { slide } from 'svelte/transition';
-import { displayCategoryFor, LINT_CATEGORIES, suggestionText } from './editorDisplay.js';
+import { LINT_KIND_STYLES, suggestionText } from './editorDisplay.js';
 import type { UnpackedLint, UnpackedSuggestion } from './types.js';
 
 export let lint: UnpackedLint;
@@ -26,8 +26,7 @@ const iconClass =
 const baseSuggestionClass =
 	'h-[26px] max-w-full overflow-hidden text-ellipsis rounded-full px-[11px] text-[12.5px] font-semibold';
 
-$: category = displayCategoryFor(lint.lint_kind);
-$: categoryConfig = LINT_CATEGORIES[category];
+$: lintKindStyle = LINT_KIND_STYLES[lint.lint_kind];
 $: if (open && cardEl != null) {
 	requestAnimationFrame(() => {
 		const scroller = cardEl?.closest('[data-problems-scroller]');
@@ -58,7 +57,7 @@ function handleFocus() {
 	bind:this={cardEl}
 	role="group"
 	class={`shrink-0 overflow-hidden rounded-[10px] border-[0.5px] bg-white shadow-sm shadow-stone-950/5 transition-[box-shadow,border-color] duration-150 ${
-		active ? categoryConfig.activeClass : 'border-[rgba(28,26,22,0.14)]'
+		active ? lintKindStyle.activeClass : 'border-[rgba(28,26,22,0.14)]'
 	}`}
 	on:mouseenter={onActivate}
 >
@@ -69,12 +68,12 @@ function handleFocus() {
 		on:click={onToggleOpen}
 	>
 		<span
-			class={`inline-flex h-[11px] w-[11px] shrink-0 items-center justify-center rounded-full ${categoryConfig.haloClass}`}
+			class={`inline-flex h-[11px] w-[11px] shrink-0 items-center justify-center rounded-full ${lintKindStyle.haloClass}`}
 		>
-			<span class={`h-[7px] w-[7px] rounded-full ${categoryConfig.dotClass}`}></span>
+			<span class={`h-[7px] w-[7px] rounded-full ${lintKindStyle.dotClass}`}></span>
 		</span>
 		<span class="text-[12.5px] leading-[1.1] font-semibold text-stone-950">
-			{categoryConfig.label}
+			{lintKindStyle.label}
 		</span>
 		<span
 			class={`ml-auto inline-flex shrink-0 text-stone-500 transition-transform duration-150 ${
@@ -107,7 +106,7 @@ function handleFocus() {
 					{snippet.prefixEllipsis ? '...' : ''}{snippet.prefix}
 				</span>
 				<mark
-					class={`rounded-[3px] px-0.5 font-semibold ${categoryConfig.softClass} ${categoryConfig.textClass}`}
+					class={`rounded-[3px] px-0.5 font-semibold ${lintKindStyle.softClass} ${lintKindStyle.textClass}`}
 					>{snippet.problem}</mark
 				>
 				<span class="text-stone-500">
@@ -123,7 +122,7 @@ function handleFocus() {
 								type="button"
 								class={`${baseSuggestionClass} ${
 									i === 0
-										? `border-transparent ${categoryConfig.softClass} ${categoryConfig.textClass} shadow-none`
+										? `border-transparent ${lintKindStyle.softClass} ${lintKindStyle.textClass} shadow-none`
 										: 'border-[0.5px] border-stone-300 bg-linear-to-b from-white to-stone-50 text-stone-950 shadow-sm shadow-stone-950/5'
 								}`}
 								title={`Replace with "${suggestionText(suggestion)}"`}

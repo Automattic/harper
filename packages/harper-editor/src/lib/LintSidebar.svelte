@@ -2,10 +2,8 @@
 import { cubicOut } from 'svelte/easing';
 import { fade, fly } from 'svelte/transition';
 import {
-	createEmptyCategoryCounts,
-	displayCategoryFor,
-	LINT_CATEGORY_ENTRIES,
-	lintBoxId,
+	createEmptyLintKindCounts,
+	LINT_KIND_STYLE_ENTRIES,
 } from './editorDisplay.js';
 import LintCard from './LintCard.svelte';
 import type { IgnorableLintBox, LintBox } from './types.js';
@@ -22,7 +20,7 @@ export let onHideSidebar: () => void = () => {};
 let openSet: Set<string> = new Set();
 let menuRoot: HTMLDivElement | null = null;
 let previousSignature = '';
-let showCategoryCounts = true;
+let showLintKindCounts = true;
 let menuOpen = false;
 let showIgnoreConfirm = false;
 
@@ -36,18 +34,18 @@ const dangerMenuItemClass =
 $: allOpen = lintBoxes.length > 0 && openSet.size === lintBoxes.length;
 $: problemCountLabel = `${lintBoxes.length} ${lintBoxes.length === 1 ? 'problem' : 'problems'}`;
 $: counts = lintBoxes.reduce((acc, lintBox) => {
-	acc[displayCategoryFor(lintBox.lint.lint_kind)] += 1;
+	acc[lintBox.lint.lint_kind] += 1;
 	return acc;
-}, createEmptyCategoryCounts());
-$: visibleCategoryEntries = LINT_CATEGORY_ENTRIES.filter(([key]) => counts[key] > 0);
-$: signature = lintBoxes.map(lintBoxId).join('|');
+}, createEmptyLintKindCounts());
+$: visibleLintKindEntries = LINT_KIND_STYLE_ENTRIES.filter(([key]) => counts[key] > 0);
+$: signature = lintBoxes.map((lintBox) => lintBox.lint.context_hash).join('|');
 $: if (signature !== previousSignature) {
 	previousSignature = signature;
-	const availableIds = new Set(lintBoxes.map(lintBoxId));
+	const availableIds = new Set(lintBoxes.map((lintBox) => lintBox.lint.context_hash));
 	const next = new Set([...openSet].filter((id) => availableIds.has(id)));
 
 	if (next.size === 0 && lintBoxes.length > 0) {
-		next.add(lintBoxId(lintBoxes[0]));
+		next.add(lintBoxes[0].lint.context_hash);
 	}
 
 	openSet = next;
@@ -74,7 +72,7 @@ function hideSidebar() {
 }
 
 function openAllCards() {
-	openSet = new Set(lintBoxes.map(lintBoxId));
+	openSet = new Set(lintBoxes.map((lintBox) => lintBox.lint.context_hash));
 	menuOpen = false;
 }
 
@@ -184,8 +182,8 @@ function createSnippetFor(lintBox: LintBox) {
 				<button
 					type="button"
 					class="!m-0 inline-flex min-w-0 items-center gap-1.5 border-0 bg-transparent !p-0 text-left !text-[15px] !leading-none font-[inherit] text-inherit"
-					aria-expanded={showCategoryCounts}
-					on:click={() => (showCategoryCounts = !showCategoryCounts)}
+					aria-expanded={showLintKindCounts}
+					on:click={() => (showLintKindCounts = !showLintKindCounts)}
 				>
 					Problems
 					<span
@@ -195,7 +193,7 @@ function createSnippetFor(lintBox: LintBox) {
 					</span>
 					<span
 						class={`inline-flex shrink-0 text-stone-500 transition-transform duration-150 ${
-							showCategoryCounts ? 'rotate-180' : ''
+							showLintKindCounts ? 'rotate-180' : ''
 						}`}
 					>
 						<svg
@@ -283,21 +281,21 @@ function createSnippetFor(lintBox: LintBox) {
 			</div>
 		</header>
 
-		{#if showCategoryCounts && visibleCategoryEntries.length > 0}
+		{#if showLintKindCounts && visibleLintKindEntries.length > 0}
 			<div
 				class="grid grid-cols-3 gap-x-2 gap-y-[7px] overflow-hidden border-b-[0.5px] border-[rgba(28,26,22,0.09)] px-[18px] pb-3"
-				aria-label="Problem categories"
+				aria-label="Problem lint kinds"
 			>
-				{#each visibleCategoryEntries as [key, category]}
+				{#each visibleLintKindEntries as [key, lintKindStyle]}
 					<div
 						class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-1 whitespace-nowrap text-[10px] font-medium text-stone-500"
 					>
 						<span
-							class={`inline-flex h-[9px] w-[9px] shrink-0 items-center justify-center rounded-full ${category.haloClass}`}
+							class={`inline-flex h-[9px] w-[9px] shrink-0 items-center justify-center rounded-full ${lintKindStyle.haloClass}`}
 						>
-							<span class={`h-[7px] w-[7px] rounded-full ${category.dotClass}`}></span>
+							<span class={`h-[7px] w-[7px] rounded-full ${lintKindStyle.dotClass}`}></span>
 						</span>
-						<span class="overflow-hidden text-ellipsis">{category.label}</span>
+						<span class="overflow-hidden text-ellipsis">{lintKindStyle.label}</span>
 						<strong class="font-medium text-stone-400 tabular-nums">{counts[key]}</strong>
 					</div>
 				{/each}
@@ -325,7 +323,7 @@ function createSnippetFor(lintBox: LintBox) {
 				</div>
 			{:else}
 				{#each lintBoxes as lintBox}
-					{@const id = lintBoxId(lintBox)}
+					{@const id = lintBox.lint.context_hash}
 					<LintCard
 						lint={lintBox.lint}
 						snippet={createSnippetFor(lintBox)}

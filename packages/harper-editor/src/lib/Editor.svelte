@@ -12,7 +12,6 @@ import {
 	type EditorFontFamily,
 	type EditorFontSize,
 	fontStackFor,
-	lintBoxId,
 	normalizeFontFamily,
 	normalizeFontSize,
 } from './editorDisplay.js';
@@ -157,7 +156,7 @@ function jumpTo(lintBox: IgnorableLintBox) {
 		return;
 	}
 
-	activeLintId = lintBoxId(lintBox);
+	activeLintId = lintBox.lint.context_hash;
 
 	const range = lintBox.range;
 	if (!range) {
@@ -217,7 +216,7 @@ function syncDocumentText(notify: boolean) {
 // The lint framework owns highlight DOM, so copy its latest boxes into Svelte state.
 function syncLintBoxes() {
 	lintBoxes = [...lfw.getLastIgnorableLintBoxes()];
-	if (activeLintId != null && !lintBoxes.some((lintBox) => lintBoxId(lintBox) === activeLintId)) {
+	if (activeLintId != null && !lintBoxes.some((lintBox) => lintBox.lint.context_hash === activeLintId)) {
 		activeLintId = null;
 	}
 }
@@ -333,7 +332,7 @@ function hideSidebar() {
 				{lintBoxes}
 				{activeLintId}
 				focusLint={jumpTo}
-				onActivate={(lintBox) => (activeLintId = lintBox == null ? null : lintBoxId(lintBox))}
+				onActivate={(lintBox) => (activeLintId = lintBox == null ? null : lintBox.lint.context_hash)}
 				onApplied={handleProblemAction}
 				onIgnored={handleProblemAction}
 				onIgnoreAll={ignoreAllProblems}
