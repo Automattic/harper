@@ -14,7 +14,8 @@ mod tests {
     use super::*;
     use crate::config::Config;
     use harper_core::{
-        Document, IgnoredLints, linting::FlatConfig, linting::Lint, spell::Dictionary,
+        Dialect, DictWordMetadata, Document, IgnoredLints, linting::FlatConfig, linting::Lint,
+        spell::Dictionary,
     };
     use std::sync::Arc;
     use tokio::io::{duplex, empty, sink};
@@ -35,6 +36,59 @@ mod tests {
 
         assert_eq!(config.unwrap(), expected);
         assert!(matches!(request.unwrap(), Some(Request::GetLintConfig)));
+    }
+
+    #[tokio::test]
+    async fn client_receives_dictionary_from_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config
+            .mutable_dictionary
+            .append_word_str("blorple", DictWordMetadata::default());
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
+
+        let (dictionary, request) = tokio::join!(client.get_dictionary(), server.receive_request());
+
+        assert!(dictionary.unwrap().contains_word_str("blorple"));
+        assert!(matches!(request.unwrap(), Some(Request::GetDictionary)));
+    }
+
+    #[tokio::test]
+    async fn client_receives_dialect_from_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config.dialect = Dialect::British;
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
+
+        let (dialect, request) = tokio::join!(client.get_dialect(), server.receive_request());
+
+        assert_eq!(dialect.unwrap(), Dialect::British);
+        assert!(matches!(request.unwrap(), Some(Request::GetDialect)));
+    }
+
+    #[tokio::test]
+    async fn client_receives_ignored_lints_from_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let document = Document::new_markdown_default_curated("A test document.");
+        let lint = Lint::default();
+        let mut config = Config::new();
+        config.ignored_lints.ignore_lint(&lint, &document);
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
+
+        let (ignored_lints, request) =
+            tokio::join!(client.get_ignored_lints(), server.receive_request());
+
+        assert!(ignored_lints.unwrap().is_ignored(&lint, &document));
+        assert!(matches!(request.unwrap(), Some(Request::GetIgnoredLints)));
     }
 
     #[tokio::test]

@@ -1,5 +1,5 @@
 use crate::config::Config;
-use harper_core::DictWordMetadata;
+use harper_core::{DictWordMetadata, spell::Dictionary};
 use std::sync::Arc;
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader};
 use tokio::sync::Mutex;
@@ -45,6 +45,22 @@ where
         match request {
             Request::GetLintConfig => Response::GetLintConfig {
                 config: self.config.lock().await.lint_config.clone(),
+            },
+            Request::GetDictionary => Response::GetDictionary {
+                words: self
+                    .config
+                    .lock()
+                    .await
+                    .mutable_dictionary
+                    .words_iter()
+                    .map(|word| word.iter().collect())
+                    .collect(),
+            },
+            Request::GetDialect => Response::GetDialect {
+                dialect: self.config.lock().await.dialect,
+            },
+            Request::GetIgnoredLints => Response::GetIgnoredLints {
+                ignored_lints: self.config.lock().await.ignored_lints.clone(),
             },
             Request::SetLintConfig { config } => {
                 let mut stored_config = self.config.lock().await;

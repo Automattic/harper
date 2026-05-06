@@ -1,19 +1,25 @@
-use harper_core::{IgnoredLints, linting::FlatConfig};
+use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
 /// Canonical client-to-server protocol message sent by the highlighter process.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Request {
     GetLintConfig,
+    GetDictionary,
+    GetDialect,
+    GetIgnoredLints,
     SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
 }
 
 /// Canonical server-to-client protocol message sent by the Tauri app.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Response {
     GetLintConfig { config: FlatConfig },
+    GetDictionary { words: Vec<String> },
+    GetDialect { dialect: Dialect },
+    GetIgnoredLints { ignored_lints: IgnoredLints },
     Ack,
 }
 
@@ -38,6 +44,30 @@ mod tests {
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(decoded, Request::IgnoreLint { .. }));
+    }
+
+    #[test]
+    fn get_dictionary_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetDictionary).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::GetDictionary));
+    }
+
+    #[test]
+    fn get_dialect_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetDialect).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::GetDialect));
+    }
+
+    #[test]
+    fn get_ignored_lints_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetIgnoredLints).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::GetIgnoredLints));
     }
 
     #[test]
@@ -71,16 +101,54 @@ mod tests {
             config: FlatConfig::new_curated(),
         };
         let encoded = serde_json::to_string(&response).unwrap();
-        let decoded = serde_json::from_str(&encoded).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
 
-        assert_eq!(response, decoded);
+        assert!(matches!(decoded, Response::GetLintConfig { .. }));
+    }
+
+    #[test]
+    fn dictionary_response_serializes_as_json() {
+        let response = Response::GetDictionary {
+            words: vec!["blorple".to_string()],
+        };
+        let encoded = serde_json::to_string(&response).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Response::GetDictionary { words } if words == ["blorple"]));
+    }
+
+    #[test]
+    fn dialect_response_serializes_as_json() {
+        let response = Response::GetDialect {
+            dialect: Dialect::British,
+        };
+        let encoded = serde_json::to_string(&response).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Response::GetDialect {
+                dialect: Dialect::British
+            }
+        ));
+    }
+
+    #[test]
+    fn ignored_lints_response_serializes_as_json() {
+        let response = Response::GetIgnoredLints {
+            ignored_lints: IgnoredLints::new(),
+        };
+        let encoded = serde_json::to_string(&response).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Response::GetIgnoredLints { .. }));
     }
 
     #[test]
     fn ack_response_serializes_as_json() {
         let encoded = serde_json::to_string(&Response::Ack).unwrap();
-        let decoded = serde_json::from_str(&encoded).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
 
-        assert_eq!(Response::Ack, decoded);
+        assert!(matches!(decoded, Response::Ack));
     }
 }

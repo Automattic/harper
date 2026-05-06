@@ -1,4 +1,6 @@
-use harper_core::{IgnoredLints, linting::FlatConfig};
+use harper_core::{
+    Dialect, DictWordMetadata, IgnoredLints, linting::FlatConfig, spell::MutableDictionary,
+};
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout};
 
 use super::error::ProtocolError;
@@ -26,8 +28,45 @@ where
     pub async fn get_lint_config(&mut self) -> Result<FlatConfig, ProtocolError> {
         match self.send_request(Request::GetLintConfig).await? {
             Response::GetLintConfig { config } => Ok(config),
-            Response::Ack => Err(ProtocolError::UnexpectedResponse {
+            _ => Err(ProtocolError::UnexpectedResponse {
                 expected: "GetLintConfig",
+            }),
+        }
+    }
+
+    pub async fn get_dictionary(&mut self) -> Result<MutableDictionary, ProtocolError> {
+        match self.send_request(Request::GetDictionary).await? {
+            Response::GetDictionary { words } => {
+                let mut dictionary = MutableDictionary::new();
+                dictionary.extend_words(words.into_iter().map(|word| {
+                    (
+                        word.chars().collect::<Vec<_>>(),
+                        DictWordMetadata::default(),
+                    )
+                }));
+
+                Ok(dictionary)
+            }
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetDictionary",
+            }),
+        }
+    }
+
+    pub async fn get_dialect(&mut self) -> Result<Dialect, ProtocolError> {
+        match self.send_request(Request::GetDialect).await? {
+            Response::GetDialect { dialect } => Ok(dialect),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetDialect",
+            }),
+        }
+    }
+
+    pub async fn get_ignored_lints(&mut self) -> Result<IgnoredLints, ProtocolError> {
+        match self.send_request(Request::GetIgnoredLints).await? {
+            Response::GetIgnoredLints { ignored_lints } => Ok(ignored_lints),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetIgnoredLints",
             }),
         }
     }
@@ -64,9 +103,7 @@ where
     async fn send_ack_request(&mut self, request: Request) -> Result<(), ProtocolError> {
         match self.send_request(request).await? {
             Response::Ack => Ok(()),
-            Response::GetLintConfig { .. } => {
-                Err(ProtocolError::UnexpectedResponse { expected: "Ack" })
-            }
+            _ => Err(ProtocolError::UnexpectedResponse { expected: "Ack" }),
         }
     }
 

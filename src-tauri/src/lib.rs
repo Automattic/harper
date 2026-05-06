@@ -1,6 +1,6 @@
 use self::highlighter::Highlighter;
 use self::highlighter_process::HighlighterProcess;
-use crate::communication::Client;
+use crate::communication::{Client, ProtocolError};
 use crate::config::Config;
 use clap::{Parser, Subcommand};
 use harper_core::{
@@ -206,12 +206,6 @@ pub fn run_tauri() {
 }
 
 pub fn run_highlighter() {
-    #[cfg(target_os = "macos")]
-    let broker = mac_broker::MacBroker::new();
-
-    #[cfg(not(target_os = "macos"))]
-    let broker = os_broker::NoopBroker;
-
     let client = Rc::new(RefCell::new(Client::current_process()));
     let sync_runtime = Rc::new(
         Builder::new_current_thread()
@@ -219,11 +213,40 @@ pub fn run_highlighter() {
             .build()
             .expect("failed to build highlighter protocol runtime"),
     );
-    let ignored_lints = Rc::new(RefCell::new(IgnoredLints::new()));
-    let user_dictionary = Rc::new(RefCell::new(MutableDictionary::new()));
-    let linter = Rc::new(RefCell::new(create_linter(create_dictionary(
-        user_dictionary.borrow().clone(),
-    ))));
+
+    let startup_config: Result<_, ProtocolError> = {
+        let mut client = client.borrow_mut();
+        sync_runtime.block_on(async {
+            let dialect = client.get_dialect().await?;
+            let user_dictionary = client.get_dictionary().await?;
+            let ignored_lints = client.get_ignored_lints().await?;
+            let lint_config = client.get_lint_config().await?;
+
+            Ok((dialect, user_dictionary, ignored_lints, lint_config))
+        })
+    };
+
+    let (dialect, initial_user_dictionary, initial_ignored_lints, initial_lint_config) =
+        match startup_config {
+            Ok(config) => config,
+            Err(error) => {
+                eprintln!("failed to hydrate highlighter config, using defaults: {error}");
+                let config = Config::new();
+                (
+                    config.dialect,
+                    config.mutable_dictionary,
+                    config.ignored_lints,
+                    config.lint_config,
+                )
+            }
+        };
+
+    let ignored_lints = Rc::new(RefCell::new(initial_ignored_lints));
+    let user_dictionary = Rc::new(RefCell::new(initial_user_dictionary));
+    let linter = Rc::new(RefCell::new(
+        create_linter(create_dictionary(user_dictionary.borrow().clone()), dialect)
+            .with_lint_config(initial_lint_config),
+    ));
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
@@ -237,6 +260,7 @@ pub fn run_highlighter() {
     let dictionary_runtime = sync_runtime.clone();
     let dictionary_user_dictionary = user_dictionary.clone();
     let dictionary_linter = linter.clone();
+    let dictionary_dialect = dialect;
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
@@ -275,9 +299,10 @@ pub fn run_highlighter() {
             .append_word_str(word, DictWordMetadata::default());
 
         let lint_config = dictionary_linter.borrow().config.clone();
-        *dictionary_linter.borrow_mut() = create_linter(create_dictionary(
-            dictionary_user_dictionary.borrow().clone(),
-        ))
+        *dictionary_linter.borrow_mut() = create_linter(
+            create_dictionary(dictionary_user_dictionary.borrow().clone()),
+            dictionary_dialect,
+        )
         .with_lint_config(lint_config);
 
         if let Err(error) =
@@ -293,6 +318,12 @@ pub fn run_highlighter() {
         Ok(config) => disable_linter.borrow_mut().config = config,
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
+
+    #[cfg(target_os = "macos")]
+    let broker = mac_broker::MacBroker::new();
+
+    #[cfg(not(target_os = "macos"))]
+    let broker = os_broker::NoopBroker;
 
     if let Err(error) = Highlighter::new(
         broker,
@@ -316,6 +347,6 @@ fn create_dictionary(user_dictionary: MutableDictionary) -> Arc<MergedDictionary
     Arc::new(dictionary)
 }
 
-fn create_linter(dictionary: Arc<MergedDictionary>) -> LintGroup {
-    LintGroup::new_curated(dictionary, Dialect::American)
+fn create_linter(dictionary: Arc<MergedDictionary>, dialect: Dialect) -> LintGroup {
+    LintGroup::new_curated(dictionary, dialect)
 }
