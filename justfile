@@ -10,7 +10,7 @@ pull-dep-source:
 
   git clone https://github.com/automattic/harper
   cd harper
-  git switch editor-package
+  git switch master
 
 # Build the necessary dependenceies from the Harper monorepo
 build-harper-deps:
@@ -23,6 +23,11 @@ build-harper-deps:
 
 dev:
   cargo tauri dev
+
+dev-highlighter:
+  #! /bin/bash
+  cd src-tauri
+  cargo run -- highlighter
 
 prebuild: build-harper-deps
   cargo tauri info
