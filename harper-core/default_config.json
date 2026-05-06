@@ -1221,6 +1221,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Payed",
+								"state": true,
+								"label": "Payed"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RiseTheQuestion",
 								"state": true,
 								"label": "Rise The Question"
@@ -1252,6 +1259,55 @@
 								"name": "WorseOrWorst",
 								"state": true,
 								"label": "Worse Or Worst"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandGovt",
+								"state": true,
+								"label": "Expand Govt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InflectionPoint",
+								"state": true,
+								"label": "Inflection Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FormativeYears",
+								"state": true,
+								"label": "Formative Years"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandAlgorithm",
+								"state": true,
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVulnerability",
+								"state": true,
+								"label": "Expand Vulnerability"
 							}
 						}
 					]
@@ -2247,6 +2303,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OkToOkay",
+								"state": true,
+								"label": "Ok To Okay"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SpellCheck",
 								"state": true,
 								"label": "Spell Check"
@@ -2278,6 +2341,13 @@
 								"name": "AtLeasToLeast",
 								"state": true,
 								"label": "At Leas To Least"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AtLestToLeast",
+								"state": true,
+								"label": "At Lest To Least"
 							}
 						},
 						{
@@ -2608,6 +2678,13 @@
 								"state": true,
 								"label": "Without Out"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CloseTightKnit",
+								"state": true,
+								"label": "Close Tight Knit"
+							}
 						}
 					]
 				}
@@ -2925,6 +3002,13 @@
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
 							}
 						}
 					]
@@ -3552,6 +3636,13 @@
 								"state": true,
 								"label": "Aspire To"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CodeInWriteIn",
+								"state": true,
+								"label": "Code In Write In"
+							}
 						}
 					]
 				}
@@ -3890,6 +3981,13 @@
 								"name": "NoMatchFor",
 								"state": true,
 								"label": "No Match For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NumericRangeEnDash",
+								"state": true,
+								"label": "Numeric Range En Dash"
 							}
 						},
 						{
@@ -4752,6 +4850,20 @@
 								"state": true,
 								"label": "Web Scraping"
 							}
+						},
+						{
+							"Bool": {
+								"name": "MoreThanMeetsTheEye",
+								"state": true,
+								"label": "More Than Meets The Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InHindsight",
+								"state": true,
+								"label": "In Hindsight"
+							}
 						}
 					]
 				}
@@ -4964,6 +5076,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FindOut",
+								"state": true,
+								"label": "Find Out"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoSoFarAsTo",
 								"state": true,
 								"label": "Go So Far As To"
@@ -5107,6 +5226,13 @@
 								"name": "Whereas",
 								"state": true,
 								"label": "Whereas"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FondOn",
+								"state": true,
+								"label": "Fond On"
 							}
 						}
 					]
