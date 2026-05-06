@@ -96,6 +96,36 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} deduplicates no more lints than raw lint output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = await linter.lint(source);
+		const explicitLints = await linter.lint(source, { dedup: true });
+		const rawLints = await linter.lint(source, { dedup: false });
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
+	test(`${linterName} deduplicates no more lints than raw organized output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = Object.values(await linter.organizedLints(source)).flat();
+		const explicitLints = Object.values(
+			await linter.organizedLints(source, { dedup: true }),
+		).flat();
+		const rawLints = Object.values(await linter.organizedLints(source, { dedup: false })).flat();
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
 		const linter = new Linter({ binary });
 

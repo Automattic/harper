@@ -54,6 +54,7 @@ export default class LocalLinter implements Linter {
 			language,
 			options?.forceAllHeadings ?? false,
 			options?.regex_mask,
+			options?.dedup ?? true,
 		);
 
 		return lints;
@@ -80,6 +81,7 @@ export default class LocalLinter implements Linter {
 			language,
 			options?.forceAllHeadings ?? false,
 			options?.regex_mask,
+			options?.dedup ?? true,
 		);
 
 		const output: Record<string, Lint[]> = {};

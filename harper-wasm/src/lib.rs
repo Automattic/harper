@@ -310,6 +310,7 @@ impl Linter {
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
+        dedup: bool,
     ) -> Vec<OrganizedGroup> {
         let source: Lrc<_> = text.chars().collect();
 
@@ -341,7 +342,9 @@ impl Linter {
             self.ignored_lints.remove_ignored(value, &document);
         }
 
-        remove_overlaps_map(&mut lints);
+        if dedup {
+            remove_overlaps_map(&mut lints);
+        }
 
         lints
             .into_iter()
@@ -369,6 +372,7 @@ impl Linter {
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
+        dedup: bool,
     ) -> Vec<Lint> {
         let source: Lrc<_> = text.chars().collect();
 
@@ -397,7 +401,9 @@ impl Linter {
         self.lint_group.config = temp;
 
         self.ignored_lints.remove_ignored(&mut lints, &document);
-        remove_overlaps(&mut lints);
+        if dedup {
+            remove_overlaps(&mut lints);
+        }
 
         lints
             .into_iter()
@@ -782,7 +788,7 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false, None);
+        let lints = linter.lint(text, Language::Plain, false, None, true);
         assert!(lints.is_empty());
     }
 
@@ -803,6 +809,7 @@ mod tests {
                     Language::Plain,
                     false,
                     None,
+                    true,
                 );
 
                 assert!(results.is_empty())
