@@ -13,12 +13,14 @@ soft-clean:
   # another directory, there is a chance they should not be removed.
   rm -rf packages/chrome-plugin/{build,package}
   rm -rf packages/components/{.svelte-kit,dist}
+  rm -rf packages/harper-editor/{.svelte-kit,dist}
   rm -rf packages/harper.js/{dist,markdown,temp}
   rm -rf packages/lint-framework/{dist}
   rm -rf packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
   rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
   rm -rf packages/web/{.svelte-kit,.sveltepress,build}
   rm -rf packages/wordpress-plugin/{build,harper.zip}
+  rm -rf harper-wasm/pkg
 
 # Hard clean all build artifacts and dependencies
 hard-clean: soft-clean
@@ -42,6 +44,15 @@ build-components:
   set -eo pipefail
 
   cd "{{justfile_directory()}}/packages/components"
+  pnpm install --engine-strict=false
+  pnpm build
+
+# Build the shared Harper editor library
+build-harper-editor: build-lint-framework build-components   
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/packages/harper-editor"
   pnpm install --engine-strict=false
   pnpm build
 
@@ -129,7 +140,7 @@ build-wp: build-harperjs
   pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
-dev-web: build-harperjs build-lint-framework build-components
+dev-web: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -138,7 +149,7 @@ dev-web: build-harperjs build-lint-framework build-components
   pnpm dev
 
 # Build the Harper website.
-build-web: build-harperjs build-lint-framework build-components
+build-web: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
   
@@ -358,7 +369,7 @@ check-rust: audit-dictionary
 # Perform format and type checking.
 check: check-rust check-js build-web
 
-check-js: build-harperjs build-lint-framework build-components
+check-js: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
 
