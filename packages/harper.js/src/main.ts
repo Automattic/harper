@@ -16,6 +16,28 @@ export { packWeirpackFiles, unpackWeirpackBytes } from './weirpack';
  * This is a record, since you shouldn't hard-code the existence of any particular rules and should generalize based on this struct. */
 export type LintConfig = Record<string, boolean | null>;
 
+export type LintKind =
+	| 'Agreement'
+	| 'BoundaryError'
+	| 'Capitalization'
+	| 'Eggcorn'
+	| 'Enhancement'
+	| 'Formatting'
+	| 'Grammar'
+	| 'Malapropism'
+	| 'Miscellaneous'
+	| 'Nonstandard'
+	| 'Punctuation'
+	| 'Readability'
+	| 'Redundancy'
+	| 'Regionalism'
+	| 'Repetition'
+	| 'Spelling'
+	| 'Style'
+	| 'Typo'
+	| 'Usage'
+	| 'WordChoice';
+
 export type StructuredLintSetting =
 	| StructuredLintBoolSetting
 	| StructuredLintOneOfManySetting

@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-	characterCount,
 	type EditorFontFamily,
 	type EditorFontSize,
 	FONT_OPTIONS,
@@ -19,7 +18,7 @@ const fontButtonClass =
 	'inline-flex h-4 min-w-7 items-center justify-center rounded px-2 text-xs leading-none font-medium text-stone-500';
 
 $: words = wordCount(text);
-$: chars = characterCount(text);
+$: chars = text.length;
 </script>
 
 <footer

@@ -1,32 +1,11 @@
+import type { LintKind } from 'harper.js';
 import type { IgnorableLintBox, LintBox, UnpackedSuggestion } from './types.js';
 
 export type EditorFontFamily = 'sans' | 'serif' | 'mono';
 
 export type EditorFontSize = 'default' | number;
 
-export type LintDisplayCategory =
-	| 'Agreement'
-	| 'BoundaryError'
-	| 'Capitalization'
-	| 'Eggcorn'
-	| 'Enhancement'
-	| 'Formatting'
-	| 'Grammar'
-	| 'Malapropism'
-	| 'Miscellaneous'
-	| 'Nonstandard'
-	| 'Punctuation'
-	| 'Readability'
-	| 'Redundancy'
-	| 'Regionalism'
-	| 'Repetition'
-	| 'Spelling'
-	| 'Style'
-	| 'Typo'
-	| 'Usage'
-	| 'WordChoice';
-
-export type CategoryCounts = Record<LintDisplayCategory, number>;
+export type CategoryCounts = Record<LintKind, number>;
 
 export const FONT_OPTIONS: {
 	value: EditorFontFamily;
@@ -58,7 +37,7 @@ export const FONT_OPTIONS: {
 export const FONT_SIZES = [12, 13, 14, 15, 16, 17, 18, 20, 22];
 export const DEFAULT_FONT_SIZE = 'default';
 
-export const LINT_CATEGORY_ORDER: LintDisplayCategory[] = [
+export const LINT_CATEGORY_ORDER: LintKind[] = [
 	'Spelling',
 	'Typo',
 	'Capitalization',
@@ -81,8 +60,15 @@ export const LINT_CATEGORY_ORDER: LintDisplayCategory[] = [
 	'Miscellaneous',
 ];
 
+/**
+ * Presentation metadata for each Harper lint kind.
+ *
+ * Keeping these classes here lets the editor share one visual language across
+ * cards, counts, and active states without spreading Tailwind class maps through
+ * Svelte components.
+ */
 export const LINT_CATEGORIES: Record<
-	LintDisplayCategory,
+	LintKind,
 	{
 		label: string;
 		dotClass: string;
@@ -258,10 +244,22 @@ export const LINT_CATEGORY_ENTRIES = LINT_CATEGORY_ORDER.map(
 	(key) => [key, LINT_CATEGORIES[key]] as const,
 );
 
+/**
+ * Create a zero-filled count map for every lint kind shown by the editor.
+ *
+ * Components use this as a stable accumulator shape so category count rendering
+ * does not need to handle missing keys.
+ */
 export function createEmptyCategoryCounts(): CategoryCounts {
 	return Object.fromEntries(LINT_CATEGORY_ORDER.map((key) => [key, 0])) as CategoryCounts;
 }
 
+/**
+ * Convert persisted or caller-provided font family values to a supported option.
+ *
+ * This keeps the editor resilient to stale settings or arbitrary input while
+ * preserving a predictable default.
+ */
 export function normalizeFontFamily(value: string): EditorFontFamily {
 	if (value === 'serif' || value === 'mono') {
 		return value;
@@ -270,10 +268,22 @@ export function normalizeFontFamily(value: string): EditorFontFamily {
 	return 'sans';
 }
 
+/**
+ * Resolve an editor font family option to the CSS stack used by the editor.
+ *
+ * Components call this instead of duplicating font-stack strings or fallback
+ * behavior.
+ */
 export function fontStackFor(value: EditorFontFamily): string {
 	return FONT_OPTIONS.find((option) => option.value === value)?.stack ?? FONT_OPTIONS[0].stack;
 }
 
+/**
+ * Convert persisted or caller-provided font size values to a supported editor size.
+ *
+ * Numeric values are rounded and clamped so user input cannot produce unreadable
+ * or layout-breaking editor text.
+ */
 export function normalizeFontSize(value: EditorFontSize | string): EditorFontSize {
 	if (value === DEFAULT_FONT_SIZE || value == null || value === '') {
 		return DEFAULT_FONT_SIZE;
@@ -288,28 +298,48 @@ export function normalizeFontSize(value: EditorFontSize | string): EditorFontSiz
 	return Math.min(28, Math.max(11, rounded));
 }
 
-export function displayCategoryFor(lintKind: string): LintDisplayCategory {
+/**
+ * Map a raw lint-kind string to the editor's known display category.
+ *
+ * Harper can expose lint kinds as strings, so this provides a safe fallback for
+ * unknown or future kinds instead of breaking category styling.
+ */
+export function displayCategoryFor(lintKind: string): LintKind {
 	if (lintKind in LINT_CATEGORIES) {
-		return lintKind as LintDisplayCategory;
+		return lintKind as LintKind;
 	}
 
 	return 'Miscellaneous';
 }
 
+/**
+ * Build a stable identity for a lint box across render and layout updates.
+ *
+ * The sidebar uses this ID to preserve active/open state when lint decorations
+ * are recomputed from the same underlying lint.
+ */
 export function lintBoxId(lintBox: IgnorableLintBox | LintBox): string {
 	const { lint } = lintBox;
 	const rule = 'rule' in lintBox ? lintBox.rule : '';
 	return [rule, lint.context_hash, lint.span.start, lint.span.end, lint.problem_text].join(':');
 }
 
+/**
+ * Return the user-facing text for an unpacked suggestion.
+ *
+ * Replacement suggestions show their replacement text, while non-replacement
+ * suggestions fall back to their kind so buttons still have meaningful labels.
+ */
 export function suggestionText(suggestion: UnpackedSuggestion): string {
 	return suggestion.replacement_text !== '' ? suggestion.replacement_text : String(suggestion.kind);
 }
 
+/**
+ * Count whitespace-delimited words for the editor status bar.
+ *
+ * This lightweight count is intentionally display-oriented and avoids coupling
+ * status text to Harper's parser internals.
+ */
 export function wordCount(text: string): number {
 	return text.trim().match(/\S+/g)?.length ?? 0;
-}
-
-export function characterCount(text: string): number {
-	return text.length;
 }

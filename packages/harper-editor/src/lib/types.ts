@@ -1,12 +1,9 @@
-import type { Linter } from 'harper.js';
-
-export type EditorLinter = Linter;
+export type { Linter as EditorLinter, LintKind } from 'harper.js';
 
 export type {
 	Box,
 	IgnorableLintBox,
 	LintBox,
-	LintKind,
 	UnpackedLint,
 	UnpackedSpan,
 	UnpackedSuggestion,
