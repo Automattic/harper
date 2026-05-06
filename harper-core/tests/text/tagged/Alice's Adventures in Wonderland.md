@@ -2078,8 +2078,8 @@
 #
 > “ Well       , be       off        , then      ! ” said the Pigeon  in        a    sulky  tone       , as    it       settled down        again
 # . NSg/VB/J/R . NSg/VLXB NSg/VB/J/P . NSg/J/R/C . . VP/J D   NSg/VB+ NPr/J/R/P D/P+ NSg/J+ N🅪Sg/I/VB+ . R/C/P NPr/ISg+ VP/J    N🅪Sg/VB/J/P P
-> into its     nest       . Alice crouched down        among the trees   as    well       as    she  could   , for   her
-# P    ISg/D$+ NSg/VB/JS+ . NPr+  VP/J     N🅪Sg/VB/J/P P     D+  NPl/V3+ R/C/P NSg/VB/J/R R/C/P ISg+ NSg/VXB . R/C/P ISg/D$+
+> into its     nest    . Alice crouched down        among the trees   as    well       as    she  could   , for   her
+# P    ISg/D$+ NSg/VB+ . NPr+  VP/J     N🅪Sg/VB/J/P P     D+  NPl/V3+ R/C/P NSg/VB/J/R R/C/P ISg+ NSg/VXB . R/C/P ISg/D$+
 > neck    kept getting entangled among the branches , and  every now       and  then      she  had
 # NSg/VB+ VP   NSg/Vg  VP/J      P     D   NPl/V3+  . VB/C Dq    NSg/J/R/C VB/C NSg/J/R/C ISg+ VP
 > to stop   and  untwist it       . After a    while       she  remembered that     she  still      held the
