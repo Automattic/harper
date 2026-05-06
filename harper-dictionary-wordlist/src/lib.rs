@@ -106,8 +106,7 @@ mod tests {
     fn get_test_unsorted_dict() -> MutableDictionary {
         let mut test_unsorted_dict = MutableDictionary::new();
         test_unsorted_dict.extend_words(
-            TEST_UNSORTED_WORDS
-                .map(|w| (w.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
+            TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), Default::default())),
         );
         test_unsorted_dict
     }

@@ -3003,6 +3003,13 @@
 								"state": true,
 								"label": "Was Comprised Of"
 							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
+							}
 						}
 					]
 				}
