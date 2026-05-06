@@ -1,3 +1,12 @@
+/**
+ * Shared display configuration and helpers for the Harper editor UI.
+ *
+ * This module keeps editor-only presentation choices, such as lint-kind styles,
+ * lint-kind ordering, font options, and small formatting helpers, out of Svelte
+ * components. Canonical linting concepts still come from `harper.js` and
+ * `lint-framework`; this file only describes how those values should appear in
+ * the editor.
+ */
 import type { LintKind } from 'harper.js';
 import type { UnpackedSuggestion } from './types.js';
 
