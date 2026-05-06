@@ -2078,8 +2078,8 @@
 #
 > “ Well       , be       off        , then      ! ” said the Pigeon  in        a    sulky  tone       , as    it       settled down        again
 # . NSg/VB/J/R . NSg/VLXB NSg/VB/J/P . NSg/J/R/C . . VP/J D   NSg/VB+ NPr/J/R/P D/P+ NSg/J+ N🅪Sg/I/VB+ . R/C/P NPr/ISg+ VP/J    N🅪Sg/VB/J/P P
-> into its     nest       . Alice crouched down        among the trees   as    well       as    she  could   , for   her
-# P    ISg/D$+ NSg/VB/JS+ . NPr+  VP/J     N🅪Sg/VB/J/P P     D+  NPl/V3+ R/C/P NSg/VB/J/R R/C/P ISg+ NSg/VXB . R/C/P ISg/D$+
+> into its     nest    . Alice crouched down        among the trees   as    well       as    she  could   , for   her
+# P    ISg/D$+ NSg/VB+ . NPr+  VP/J     N🅪Sg/VB/J/P P     D+  NPl/V3+ R/C/P NSg/VB/J/R R/C/P ISg+ NSg/VXB . R/C/P ISg/D$+
 > neck    kept getting entangled among the branches , and  every now       and  then      she  had
 # NSg/VB+ VP   NSg/Vg  VP/J      P     D   NPl/V3+  . VB/C Dq    NSg/J/R/C VB/C NSg/J/R/C ISg+ VP
 > to stop   and  untwist it       . After a    while       she  remembered that     she  still      held the
@@ -3134,8 +3134,8 @@
 # . NSg/I/J/R/C IPl+ NSg/VLPt . . VP/J D   NSg      . . J/R  NSg/VB/J . .
 >
 #
-> Alice tried to fancy    to herself what   such  an  extraordinary way   of living  would
-# NPr+  VP/J  P  NSg/VB/J P  ISg+    NSg/I+ NSg/I D/P NSg/J         NSg/J P  Nᴹ/Vg/J VXB
+> Alice tried to fancy    to herself what   such  an  extraordinary way   of living    would
+# NPr+  VP/J  P  NSg/VB/J P  ISg+    NSg/I+ NSg/I D/P NSg/J         NSg/J P  N🅪Sg/Vg/J VXB
 > be       like         , but     it       puzzled her     too much         , so          she  went    on  : “ But     why    did  they live at
 # NSg/VLXB NSg/VB/J/C/P . NSg/C/P NPr/ISg+ VP/J    ISg/D$+ R   NSg/I/J/R/Dq . NSg/I/J/R/C ISg+ NSg/VPt J/P . . NSg/C/P NSg/VB VXPt IPl+ VB/J NSg/P
 > the bottom   of a    well        ? ”
@@ -4358,8 +4358,8 @@
 # Nᴹ/Vg/J . NSg/J . . .
 >
 #
-> “ You    couldn’t have    wanted it       much         , ” said Alice ; “ living  at    the bottom   of the
-# . ISgPl+ VXB      NSg/VXB VP/J   NPr/ISg+ NSg/I/J/R/Dq . . VP/J NPr+  . . Nᴹ/Vg/J NSg/P D   NSg/VB/J P  D
+> “ You    couldn’t have    wanted it       much         , ” said Alice ; “ living    at    the bottom   of the
+# . ISgPl+ VXB      NSg/VXB VP/J   NPr/ISg+ NSg/I/J/R/Dq . . VP/J NPr+  . . N🅪Sg/Vg/J NSg/P D   NSg/VB/J P  D
 > sea  . ”
 # NSg+ . .
 >
