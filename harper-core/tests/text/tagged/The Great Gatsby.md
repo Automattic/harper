@@ -5926,8 +5926,8 @@
 # NPr/J/R/P P    D   NPr+ .
 >
 #
-> When    Klipspringer had played “ The Love      Nest       ” he       turned around on  the bench   and
-# NSg/I/C ?            VP  VP/J   . D   NPr🅪Sg/VB NSg/VB/JS+ . NPr/ISg+ VP/J   J/P    J/P D   NSg/VB+ VB/C
+> When    Klipspringer had played “ The Love      Nest    ” he       turned around on  the bench   and
+# NSg/I/C ?            VP  VP/J   . D   NPr🅪Sg/VB NSg/VB+ . NPr/ISg+ VP/J   J/P    J/P D   NSg/VB+ VB/C
 > searched unhappily for   Gatsby in        the gloom  .
 # VP/J     R         R/C/P NPr    NPr/J/R/P D   Nᴹ/VB+ .
 >
