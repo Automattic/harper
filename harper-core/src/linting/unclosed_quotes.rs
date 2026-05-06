@@ -30,3 +30,22 @@ impl Linter for UnclosedQuotes {
         "Quotation marks should always be closed. Unpaired quotation marks are a hallmark of sloppy work."
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::UnclosedQuotes;
+    use crate::linting::tests::{assert_lint_count, assert_no_lints};
+
+    #[test]
+    fn allows_dialogue_with_em_dash_interruption() {
+        assert_no_lints(
+            "\"It'll be our\"—she leaned to his ear—\"shared secret.\"",
+            UnclosedQuotes::default(),
+        );
+    }
+
+    #[test]
+    fn still_flags_unclosed_quotes() {
+        assert_lint_count("\"It'll be our", UnclosedQuotes::default(), 1);
+    }
+}
