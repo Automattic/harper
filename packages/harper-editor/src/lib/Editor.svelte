@@ -252,18 +252,14 @@ async function ignoreAllProblems() {
 
 	const text = documentText;
 	const activeLinter = linter;
+	const groupedLints = await activeLinter.organizedLints(text, { dedup: false });
+	const lints = Object.values(groupedLints).flat();
 
-	for (let i = 0; i < 25; i++) {
-		const groupedLints = await activeLinter.organizedLints(text);
-		const lints = Object.values(groupedLints).flat();
-		if (lints.length === 0) {
-			return;
-		}
-
-		for (const lint of lints) {
-			await activeLinter.ignoreLint(text, lint);
-		}
+	if (lints.length === 0) {
+		return;
 	}
+
+	await activeLinter.ignoreLints(text, lints);
 }
 
 async function showSidebar() {
