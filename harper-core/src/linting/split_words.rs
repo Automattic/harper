@@ -123,8 +123,13 @@ impl ExprLinter for SplitWords {
 
             suggestions.push(Suggestion::ReplaceWith(suggestion));
             if suggestions.len() == 1 {
+                let certainty = if candidate.len() == 1 || remainder.len() == 1 {
+                    "possibly"
+                } else {
+                    "probably"
+                };
                 message = Some(format!(
-                    "`{}` should probably be written as `{} {}`.",
+                    "`{}` should {certainty} be written as `{} {}`.",
                     chars.iter().collect::<String>(),
                     candidate.iter().collect::<String>(),
                     remainder.iter().collect::<String>()
@@ -200,7 +205,8 @@ fn should_defer_to_spellcheck(
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints,
+        assert_suggestion_result,
     };
 
     use super::SplitWords;
@@ -328,6 +334,24 @@ mod tests {
             "I would love to eat a cornleaf.",
             SplitWords::default(),
             "I would love to eat a corn leaf.",
+        );
+    }
+
+    #[test]
+    fn not_confident_proc_should_be_pro_c() {
+        assert_lint_message(
+            "proc",
+            SplitWords::default(),
+            "`proc` should possibly be written as `pro c`.",
+        );
+    }
+
+    #[test]
+    fn confident_thankyou_should_be_thank_you() {
+        assert_lint_message(
+            "thankyou",
+            SplitWords::default(),
+            "`thankyou` should probably be written as `thank you`.",
         );
     }
 }
