@@ -43,7 +43,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![greet])
         .setup(|app| {
-            let mut tray = TrayIconBuilder::with_id("harper-menu-bar")
+            let tray = TrayIconBuilder::with_id("harper-menu-bar")
                 .icon(menu_bar_icon()?)
                 .tooltip("Harper Desktop")
                 .show_menu_on_left_click(false)
@@ -62,9 +62,7 @@ pub fn run() {
                 });
 
             #[cfg(target_os = "macos")]
-            {
-                tray = tray.icon_as_template(true);
-            }
+            let tray = tray.icon_as_template(true);
 
             tray.build(app)?;
 
