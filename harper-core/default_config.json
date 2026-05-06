@@ -1288,6 +1288,34 @@
 								"state": true,
 								"label": "Formative Years"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandAlgorithm",
+								"state": true,
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVulnerability",
+								"state": true,
+								"label": "Expand Vulnerability"
+							}
 						}
 					]
 				}
@@ -2981,6 +3009,13 @@
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
 							}
 						}
 					]
@@ -4828,6 +4863,13 @@
 								"name": "MoreThanMeetsTheEye",
 								"state": true,
 								"label": "More Than Meets The Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InHindsight",
+								"state": true,
+								"label": "In Hindsight"
 							}
 						}
 					]
