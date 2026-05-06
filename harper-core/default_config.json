@@ -1274,6 +1274,41 @@
 								"state": true,
 								"label": "Inflection Point"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FormativeYears",
+								"state": true,
+								"label": "Formative Years"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandAlgorithm",
+								"state": true,
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVulnerability",
+								"state": true,
+								"label": "Expand Vulnerability"
+							}
 						}
 					]
 				}
@@ -2310,6 +2345,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AtLestToLeast",
+								"state": true,
+								"label": "At Lest To Least"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeenThere",
 								"state": true,
 								"label": "Been There"
@@ -2960,6 +3002,13 @@
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
 							}
 						}
 					]
@@ -4808,6 +4857,13 @@
 								"state": true,
 								"label": "More Than Meets The Eye"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InHindsight",
+								"state": true,
+								"label": "In Hindsight"
+							}
 						}
 					]
 				}
@@ -5170,6 +5226,13 @@
 								"name": "Whereas",
 								"state": true,
 								"label": "Whereas"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FondOn",
+								"state": true,
+								"label": "Fond On"
 							}
 						}
 					]
