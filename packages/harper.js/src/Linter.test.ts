@@ -365,6 +365,22 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} can ignore multiple lints`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'This is an test of exprting lints.';
+
+		const firstRound = await linter.lint(source);
+
+		expect(firstRound.length).toBeGreaterThanOrEqual(2);
+
+		await linter.ignoreLints(source, firstRound);
+
+		const secondRound = await linter.lint(source);
+
+		expect(secondRound.length).toBe(0);
+		await linter.dispose();
+	});
+
 	test(`${linterName} can ignore lints with hashes`, async () => {
 		const linter = new Linter({ binary });
 		const source = 'This is an test.';

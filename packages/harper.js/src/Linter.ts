@@ -88,6 +88,9 @@ export default interface Linter {
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;
 
+	/** Ignore future instances of lints from a previous linting run in future invocations. */
+	ignoreLints(source: string, lints: Lint[]): Promise<void>;
+
 	/** Ignore future instances of a lint from a previous linting run in future invocations using its hash. */
 	ignoreLintHash(hash: bigint): Promise<void>;
 

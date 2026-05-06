@@ -172,13 +172,17 @@ export default class LocalLinter implements Linter {
 	}
 
 	async ignoreLint(source: string, lint: Lint): Promise<void> {
+		return await this.ignoreLints(source, [lint]);
+	}
+
+	async ignoreLints(source: string, lints: Lint[]): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_lint(source, lint);
+		inner.ignore_lints(source, lints);
 	}
 
 	async ignoreLintHash(hash: bigint): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_hash(hash);
+		inner.ignore_hashes(new BigUint64Array([hash]));
 	}
 
 	async exportIgnoredLints(): Promise<string> {
