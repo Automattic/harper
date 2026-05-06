@@ -265,4 +265,103 @@ mod tests {
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
         );
     }
+
+    #[test]
+    fn chrome_extension_lowercase() {
+        assert_suggestion_result("chrome extension", lint_group(), "Chrome Extension");
+    }
+
+    #[test]
+    fn chrome_extension_uppercase() {
+        assert_suggestion_result("CHROME EXTENSION", lint_group(), "Chrome Extension");
+    }
+
+    #[test]
+    fn chrome_extension_mixed_case() {
+        assert_suggestion_result("cHrOmE eXtEnSiOn", lint_group(), "Chrome Extension");
+    }
+
+    #[test]
+    fn chrome_extension_second_word_lowercase() {
+        assert_suggestion_result("Chrome extension", lint_group(), "Chrome Extension");
+    }
+
+    #[test]
+    fn chrome_extension_first_word_lowercase() {
+        assert_suggestion_result("chrome Extension", lint_group(), "Chrome Extension");
+    }
+
+    #[test]
+    fn chrome_extension_in_sentence() {
+        assert_suggestion_result(
+            "Install the chrome extension from the store.",
+            lint_group(),
+            "Install the Chrome Extension from the store.",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_leading_article() {
+        assert_suggestion_result(
+            "The chrome extension is ready.",
+            lint_group(),
+            "The Chrome Extension is ready.",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_period() {
+        assert_suggestion_result(
+            "We shipped the chrome extension.",
+            lint_group(),
+            "We shipped the Chrome Extension.",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_comma() {
+        assert_suggestion_result(
+            "The chrome extension, not the app, needs review.",
+            lint_group(),
+            "The Chrome Extension, not the app, needs review.",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_with_trailing_colon() {
+        assert_suggestion_result(
+            "Preferred install target: chrome extension",
+            lint_group(),
+            "Preferred install target: Chrome Extension",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_inside_quotes() {
+        assert_suggestion_result(
+            "They called it the \"chrome extension\" build.",
+            lint_group(),
+            "They called it the \"Chrome Extension\" build.",
+        );
+    }
+
+    #[test]
+    fn chrome_extension_across_sentence_boundary_not_present() {
+        assert_lint_count("Chrome. Extension", lint_group(), 0);
+    }
+
+    #[test]
+    fn chrome_extension_allows_correct_case() {
+        assert_lint_count("Chrome Extension", lint_group(), 0);
+    }
+
+    #[test]
+    fn chrome_extension_allows_correct_case_in_sentence() {
+        assert_lint_count("The Chrome Extension is ready.", lint_group(), 0);
+    }
+
+    #[test]
+    fn browser_extension_not_flagged() {
+        assert_lint_count("browser extension", lint_group(), 0);
+    }
 }

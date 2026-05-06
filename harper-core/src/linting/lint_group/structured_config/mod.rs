@@ -116,9 +116,34 @@ impl Setting {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+
+    use crate::Dialect;
     use crate::linting::FlatConfig;
+    use crate::linting::LintGroup;
+    use crate::spell::MutableDictionary;
 
     use super::{Setting, StructuredConfig};
+
+    fn collect_rule_names(config: &StructuredConfig) -> BTreeSet<String> {
+        let mut out = BTreeSet::new();
+
+        for setting in &config.settings {
+            match setting {
+                Setting::Bool { name, .. } => {
+                    out.insert(name.clone());
+                }
+                Setting::OneOfMany { names, .. } => {
+                    out.extend(names.iter().cloned());
+                }
+                Setting::Group { child, .. } => {
+                    out.extend(collect_rule_names(child));
+                }
+            }
+        }
+
+        out
+    }
 
     #[test]
     fn validates_bool_true() {
@@ -282,5 +307,33 @@ mod tests {
     #[test]
     fn curated_is_valid() {
         assert!(StructuredConfig::curated().validate());
+    }
+
+    #[test]
+    fn curated_default_config_lists_every_registered_rule() {
+        let curated = StructuredConfig::curated();
+        let curated_rule_names = collect_rule_names(&curated);
+
+        let runtime_rule_names =
+            LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American)
+                .iter_keys()
+                .map(str::to_owned)
+                .collect::<BTreeSet<_>>();
+
+        let missing_from_default_config = runtime_rule_names
+            .difference(&curated_rule_names)
+            .cloned()
+            .collect::<Vec<_>>();
+        let extra_in_default_config = curated_rule_names
+            .difference(&runtime_rule_names)
+            .cloned()
+            .collect::<Vec<_>>();
+
+        assert!(
+            missing_from_default_config.is_empty() && extra_in_default_config.is_empty(),
+            "default_config.json drifted from the registered rule set\nmissing from default_config.json: {:?}\nextra in default_config.json: {:?}\nDid you forget to add the missing rule(s) to default_config.json?",
+            missing_from_default_config,
+            extra_in_default_config,
+        );
     }
 }

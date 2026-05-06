@@ -15,7 +15,7 @@ impl Default for DayAndAge {
                 .t_ws()
                 .then_word_set(&["day", "days"])
                 .t_ws()
-                .then_word_set(&["and", "in", "an", "on"])
+                .then_word_set(&["and", "in", "an", "on", "of"])
                 .t_ws()
                 .then_word_set(&["age", "ages"]),
         }
@@ -279,6 +279,15 @@ mod tests {
             "and since these days and age storage is usually not a problem, I usually play it safe and just don't bother",
             DayAndAge::default(),
             "and since in this day and age storage is usually not a problem, I usually play it safe and just don't bother",
+        );
+    }
+
+    #[test]
+    fn fix_day_of_age() {
+        assert_suggestion_result(
+            "If you want in this day of age an AI agent can probably implement what you are looking for.",
+            DayAndAge::default(),
+            "If you want in this day and age an AI agent can probably implement what you are looking for.",
         );
     }
 }

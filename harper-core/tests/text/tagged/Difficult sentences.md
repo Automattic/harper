@@ -378,8 +378,8 @@
 # D+  NSg/VB/J+ VL3 NPr/J/R/P D   NSg/VB .
 > There were     three pickles in        a    jar     .
 # R+    NSg/VLPt NSg   NPl/V3  NPr/J/R/P D/P+ NSg/VB+ .
-> I       like         living  in        the city .
-# ISg/#r+ NSg/VB/J/C/P Nᴹ/Vg/J NPr/J/R/P D+  NSg+ .
+> I       like         living    in        the city .
+# ISg/#r+ NSg/VB/J/C/P N🅪Sg/Vg/J NPr/J/R/P D+  NSg+ .
 > There are lots   of trees   in        the park    .
 # R+    VLB NPl/V3 P  NPl/V3+ NPr/J/R/P D+  NPr/VB+ .
 > We   are in        the enemy   camp      .
