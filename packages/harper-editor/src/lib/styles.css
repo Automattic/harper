@@ -20,7 +20,11 @@
 	font: inherit;
 }
 
-.harper-editor button {
+.harper-editor button:not(:disabled) {
+	cursor: pointer;
+}
+
+.harper-editor button:disabled {
 	cursor: default;
 }
 
