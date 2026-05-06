@@ -37,6 +37,7 @@ mod capitalize_personal_pronouns;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
+mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
 mod comma_fixes;
