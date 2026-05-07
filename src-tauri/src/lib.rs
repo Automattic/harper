@@ -1,5 +1,5 @@
 use self::highlighter::Highlighter;
-use self::highlighter_service::{HighlighterService, HighlighterServiceStatus};
+use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
 use crate::config::Config;
 use clap::{Parser, Subcommand};
@@ -58,27 +58,27 @@ struct TrayMenu {
     service_toggle: MenuItem<tauri::Wry>,
 }
 
-fn service_menu_text(status: HighlighterServiceStatus) -> &'static str {
-    match status {
-        HighlighterServiceStatus::Running => "Stop Harper Service",
-        HighlighterServiceStatus::Stopped => "Start Harper Service",
+fn service_menu_text(is_running: bool) -> &'static str {
+    match is_running {
+        true => "Stop Harper Service",
+        false => "Start Harper Service",
     }
 }
 
-fn service_status_color(status: HighlighterServiceStatus) -> [u8; 4] {
-    match status {
-        HighlighterServiceStatus::Running => [34, 197, 94, 255],
-        HighlighterServiceStatus::Stopped => [239, 68, 68, 255],
+fn service_status_color(is_running: bool) -> [u8; 4] {
+    match is_running {
+        true => [34, 197, 94, 255],
+        false => [239, 68, 68, 255],
     }
 }
 
-fn menu_bar_icon(status: HighlighterServiceStatus) -> tauri::Result<Image<'static>> {
+fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
     let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
     let width = icon.width();
     let height = icon.height();
     let mut rgba = icon.rgba().to_vec();
 
-    draw_status_line(&mut rgba, width, height, service_status_color(status));
+    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
 
     Ok(Image::new_owned(rgba, width, height))
 }
@@ -136,11 +136,11 @@ fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
-fn tray_menu(app: &tauri::App, status: HighlighterServiceStatus) -> tauri::Result<TrayMenu> {
+fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
     let service_toggle = MenuItem::with_id(
         app,
         TOGGLE_SERVICE_MENU_ID,
-        service_menu_text(status),
+        service_menu_text(is_running),
         true,
         None::<&str>,
     )?;
@@ -164,12 +164,12 @@ fn tray_menu(app: &tauri::App, status: HighlighterServiceStatus) -> tauri::Resul
 fn update_service_tray_state(
     app: &tauri::AppHandle,
     service_toggle: &MenuItem<tauri::Wry>,
-    status: HighlighterServiceStatus,
+    is_running: bool,
 ) -> tauri::Result<()> {
-    service_toggle.set_text(service_menu_text(status))?;
+    service_toggle.set_text(service_menu_text(is_running))?;
 
     if let Some(tray) = app.tray_by_id(TRAY_MENU_BAR_ID) {
-        tray.set_icon(Some(menu_bar_icon(status)?))?;
+        tray.set_icon(Some(menu_bar_icon(is_running)?))?;
     }
 
     Ok(())
@@ -342,13 +342,13 @@ pub fn run_tauri() {
             }
         })
         .setup(|app| {
-            let service_status = app.state::<HighlighterService>().status();
-            let menu = tray_menu(app, service_status)?;
+            let is_service_running = app.state::<HighlighterService>().is_running();
+            let menu = tray_menu(app, is_service_running)?;
             let service_toggle = menu.service_toggle.clone();
 
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
-                .icon(menu_bar_icon(service_status)?)
+                .icon(menu_bar_icon(is_service_running)?)
                 .tooltip("Harper Desktop")
                 .show_menu_on_left_click(false)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
@@ -363,9 +363,9 @@ pub fn run_tauri() {
                         Err(error) => {
                             eprintln!("failed to toggle highlighter service: {error}");
 
-                            let status = app.state::<HighlighterService>().status();
+                            let is_running = app.state::<HighlighterService>().is_running();
                             if let Err(error) =
-                                update_service_tray_state(app, &service_toggle, status)
+                                update_service_tray_state(app, &service_toggle, is_running)
                             {
                                 eprintln!("failed to update service tray state: {error}");
                             }
