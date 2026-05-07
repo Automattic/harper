@@ -3003,6 +3003,13 @@
 								"state": true,
 								"label": "Was Comprised Of"
 							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
+							}
 						}
 					]
 				}
@@ -3635,6 +3642,13 @@
 								"name": "CodeInWriteIn",
 								"state": true,
 								"label": "Code In Write In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
 							}
 						}
 					]

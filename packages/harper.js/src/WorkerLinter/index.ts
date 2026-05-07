@@ -155,7 +155,11 @@ export default class WorkerLinter implements Linter {
 	}
 
 	ignoreLint(source: string, lint: Lint): Promise<void> {
-		return this.rpc('ignoreLint', [source, lint]);
+		return this.ignoreLints(source, [lint]);
+	}
+
+	ignoreLints(source: string, lints: Lint[]): Promise<void> {
+		return this.rpc('ignoreLints', [source, lints]);
 	}
 
 	ignoreLintHash(hash: bigint): Promise<void> {
