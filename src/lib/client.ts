@@ -1,9 +1,17 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { Lint, LintConfig, Linter } from "harper.js";
+import { Dialect, type Lint, type LintConfig, type Linter } from "harper.js";
 
 export class Client {
   static async getLintConfig(): Promise<LintConfig> {
     return await invoke<LintConfig>("get_lint_config");
+  }
+
+  static async getDialect(): Promise<Dialect> {
+    return await invoke<Dialect>("get_dialect");
+  }
+
+  static async setDialect(dialect: Dialect): Promise<void> {
+    await invoke("set_dialect", { dialect });
   }
 
   static async setLintConfig(lintConfig: LintConfig): Promise<void> {

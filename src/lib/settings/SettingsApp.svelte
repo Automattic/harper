@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { Dialect } from "harper.js";
   import type { LintConfig } from "harper.js";
   import { Client } from "$lib/client";
   import SettingsSidebar from "./SettingsSidebar.svelte";
@@ -49,6 +50,9 @@
   let isLintConfigLoading = true;
   let isLintConfigSaving = false;
   let lintConfigError = "";
+  let isDialectLoading = true;
+  let isDialectSaving = false;
+  let dialectError = "";
 
   const titleMap: Record<SectionId, string> = {
     "getting-started": "Getting Started",
@@ -107,18 +111,22 @@
   }
 
   onMount(() => {
-    void loadLintConfig();
+    void refreshAppConfig();
 
-    const refreshLintConfig = () => {
+    const refreshConfig = () => {
       if (!isLintConfigSaving) {
         void loadLintConfig();
       }
+
+      if (!isDialectSaving) {
+        void loadDialect();
+      }
     };
 
-    window.addEventListener("focus", refreshLintConfig);
+    window.addEventListener("focus", refreshConfig);
 
     return () => {
-      window.removeEventListener("focus", refreshLintConfig);
+      window.removeEventListener("focus", refreshConfig);
     };
   });
 
@@ -128,6 +136,10 @@
 
   function updateSetup(patch: Partial<SettingsState["setup"]>) {
     updateState({ setup: { ...state.setup, ...patch } });
+  }
+
+  async function refreshAppConfig() {
+    await Promise.all([loadLintConfig(), loadDialect()]);
   }
 
   async function loadLintConfig() {
@@ -219,6 +231,69 @@
 
   function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleOverride) {
     config[ruleId] = ruleOverrideToLintValue(value);
+  }
+
+  async function loadDialect() {
+    isDialectLoading = true;
+    dialectError = "";
+
+    try {
+      const dialect = await Client.getDialect();
+      updateState({ dialect: dialectToSettingsValue(dialect) });
+    } catch (error) {
+      dialectError = `Unable to load dialect: ${error}`;
+    } finally {
+      isDialectLoading = false;
+    }
+  }
+
+  function dialectToSettingsValue(dialect: Dialect): string {
+    switch (dialect) {
+      case Dialect.British:
+        return "british";
+      case Dialect.Canadian:
+        return "canadian";
+      case Dialect.Australian:
+        return "australian";
+      case Dialect.Indian:
+        return "indian";
+      case Dialect.American:
+      default:
+        return "american";
+    }
+  }
+
+  function settingsValueToDialect(value: string): Dialect {
+    switch (value) {
+      case "british":
+        return Dialect.British;
+      case "canadian":
+        return Dialect.Canadian;
+      case "australian":
+        return Dialect.Australian;
+      case "indian":
+        return Dialect.Indian;
+      case "american":
+      default:
+        return Dialect.American;
+    }
+  }
+
+  async function setDialect(value: string) {
+    const previousDialect = state.dialect;
+
+    updateState({ dialect: value });
+    isDialectSaving = true;
+    dialectError = "";
+
+    try {
+      await Client.setDialect(settingsValueToDialect(value));
+    } catch (error) {
+      updateState({ dialect: previousDialect });
+      dialectError = `Unable to save dialect: ${error}`;
+    } finally {
+      isDialectSaving = false;
+    }
   }
 
   function buildSetupSteps(): SetupStep[] {
@@ -708,14 +783,22 @@
             <select
               id="dialect"
               class="select wide"
+              disabled={isDialectLoading || isDialectSaving}
               bind:value={state.dialect}
-              on:change={() => updateState({ dialect: state.dialect })}
+              on:change={(event) => setDialect(event.currentTarget.value)}
             >
               {#each DIALECT_OPTIONS as option}
                 <option value={option.value}>{option.label}</option>
               {/each}
             </select>
           </div>
+          {#if isDialectLoading}
+            <p class="result-summary">Loading dialect...</p>
+          {:else if dialectError}
+            <p class="result-summary">{dialectError}</p>
+          {:else if isDialectSaving}
+            <p class="result-summary">Saving dialect...</p>
+          {/if}
         </div>
 
         <div class="divider"></div>

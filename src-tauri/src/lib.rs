@@ -111,6 +111,26 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
 }
 
 #[tauri::command]
+async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
+    Ok(config.lock().await.dialect)
+}
+
+#[tauri::command]
+async fn set_dialect(
+    dialect: Dialect,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.dialect = dialect;
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
 async fn set_lint_config(
     lint_config: FlatConfig,
     config: State<'_, Arc<Mutex<Config>>>,
@@ -210,6 +230,8 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
+            get_dialect,
+            set_dialect,
             set_lint_config,
             ignore_lint,
             add_to_dictionary,
