@@ -3714,6 +3714,7 @@ dependencies = [
  "egui_commonmark",
  "harper-core",
  "harper-dictionary-wordlist",
+ "objc2-app-kit 0.3.2",
  "objc2-foundation 0.3.2",
  "pollster",
  "serde",
@@ -5117,6 +5118,7 @@ checksum = "d49e936b501e5c5bf01fda3a9452ff86dc3ea98ad5f283e1455153142d97518c"
 dependencies = [
  "bitflags 2.11.1",
  "block2 0.6.2",
+ "libc",
  "objc2 0.6.4",
  "objc2-core-foundation",
  "objc2-core-graphics",

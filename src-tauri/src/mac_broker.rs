@@ -15,11 +15,14 @@ use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::{Lint, Suggestion};
+use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr};
 
 use crate::os_broker::OsBroker;
 use crate::rect::{ActionableLint, Rect};
+
+const APPROVED_BUNDLE_IDENTIFIERS: &[&str] = &["com.apple.TextEdit"];
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -68,6 +71,10 @@ impl OsBroker for MacBroker {
             }
         };
 
+        if !is_pid_approved(pid) {
+            return Vec::new();
+        }
+
         let el = AXUIElement::application(pid);
 
         let walker = TreeWalker::new();
@@ -99,6 +106,50 @@ fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     }
 
     Ok(pid)
+}
+
+fn is_pid_approved(pid: pid_t) -> bool {
+    let bundle_identifier = match bundle_identifier_for_pid(pid) {
+        Ok(Some(bundle_identifier)) => bundle_identifier,
+        Ok(None) => return false,
+        Err(error) => {
+            eprintln!("Unable to identify focused app bundle: {error}");
+            return false;
+        }
+    };
+
+    is_approved_bundle_identifier(&bundle_identifier)
+}
+
+fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
+    let Some(app) = (unsafe { NSRunningApplication::runningApplicationWithProcessIdentifier(pid) })
+    else {
+        return Ok(None);
+    };
+    let Some(bundle_identifier) = (unsafe { app.bundleIdentifier() }) else {
+        return Ok(None);
+    };
+
+    Ok(Some(bundle_identifier.to_string()))
+}
+
+fn is_approved_bundle_identifier(bundle_identifier: &str) -> bool {
+    APPROVED_BUNDLE_IDENTIFIERS.contains(&bundle_identifier)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::is_approved_bundle_identifier;
+
+    #[test]
+    fn text_edit_is_approved() {
+        assert!(is_approved_bundle_identifier("com.apple.TextEdit"));
+    }
+
+    #[test]
+    fn other_apps_are_not_approved() {
+        assert!(!is_approved_bundle_identifier("com.apple.Notes"));
+    }
 }
 
 fn ax_element_attribute(
