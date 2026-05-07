@@ -1080,7 +1080,8 @@ fn main() -> anyhow::Result<()> {
                         for (i, record) in matching.iter().enumerate() {
                             let route_desc = match &record.kind {
                                 ProvenanceKind::Direct => {
-                                    format!("DIRECT — appears as a base entry in dictionary.dict")
+                                    "DIRECT — appears as a base entry in dictionary.dict"
+                                        .to_string()
                                 }
                                 ProvenanceKind::AffixGenerated { flag, kind } => {
                                     let kind_str = match kind {
@@ -1114,15 +1115,15 @@ fn main() -> anyhow::Result<()> {
                         }
 
                         // Check for case-folding collisions
-                        if let Some(variants) = case_variants.get(&target_lower) {
-                            if variants.len() > 1 {
-                                println!();
-                                println!(
-                                    "  ⚠ CASE VARIANTS — the following entries share the same case-folded form:"
-                                );
-                                for v in variants {
-                                    println!("     - {}", v);
-                                }
+                        if let Some(variants) = case_variants.get(&target_lower)
+                            && variants.len() > 1
+                        {
+                            println!();
+                            println!(
+                                "  ⚠ CASE VARIANTS — the following entries share the same case-folded form:"
+                            );
+                            for v in variants {
+                                println!("     - {}", v);
                             }
                         }
                     }
