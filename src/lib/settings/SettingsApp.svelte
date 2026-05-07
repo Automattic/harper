@@ -53,6 +53,9 @@
   let isDialectLoading = true;
   let isDialectSaving = false;
   let dialectError = "";
+  let isDictionaryLoading = true;
+  let isDictionarySaving = false;
+  let dictionaryError = "";
 
   const titleMap: Record<SectionId, string> = {
     "getting-started": "Getting Started",
@@ -121,6 +124,10 @@
       if (!isDialectSaving) {
         void loadDialect();
       }
+
+      if (!isDictionarySaving) {
+        void loadDictionary();
+      }
     };
 
     window.addEventListener("focus", refreshConfig);
@@ -139,7 +146,7 @@
   }
 
   async function refreshAppConfig() {
-    await Promise.all([loadLintConfig(), loadDialect()]);
+    await Promise.all([loadLintConfig(), loadDialect(), loadDictionary()]);
   }
 
   async function loadLintConfig() {
@@ -296,6 +303,41 @@
     }
   }
 
+  async function loadDictionary() {
+    isDictionaryLoading = true;
+    dictionaryError = "";
+
+    try {
+      const dictionary = await Client.getDictionary();
+      updateState({ dictionary });
+    } catch (error) {
+      dictionaryError = `Unable to load dictionary: ${error}`;
+    } finally {
+      isDictionaryLoading = false;
+    }
+  }
+
+  async function saveDictionary(nextDictionary: string[]) {
+    const previousDictionary = state.dictionary;
+
+    updateState({ dictionary: nextDictionary });
+    isDictionarySaving = true;
+    dictionaryError = "";
+
+    try {
+      await Client.setDictionary(nextDictionary);
+    } catch (error) {
+      updateState({ dictionary: previousDictionary });
+      dictionaryError = `Unable to save dictionary: ${error}`;
+    } finally {
+      isDictionarySaving = false;
+    }
+  }
+
+  function sortDictionary(words: string[]) {
+    return [...words].sort((a, b) => a.localeCompare(b));
+  }
+
   function buildSetupSteps(): SetupStep[] {
     const accessibilityDone = state.setup.accessibility === "granted";
     const integrationDone = state.setup.integration === "selected";
@@ -347,7 +389,7 @@
     updateSetup({ integration: "selected" });
   }
 
-  function addDictionaryWord() {
+  async function addDictionaryWord() {
     const word = newDictionaryWord.trim();
 
     if (!word || state.dictionary.includes(word)) {
@@ -355,12 +397,30 @@
       return;
     }
 
-    updateState({ dictionary: [word, ...state.dictionary] });
+    const previousDictionary = state.dictionary;
+    updateState({ dictionary: sortDictionary([...state.dictionary, word]) });
     newDictionaryWord = "";
+
+    isDictionarySaving = true;
+    dictionaryError = "";
+
+    try {
+      await Client.addToDictionary(word);
+      updateState({ dictionary: await Client.getDictionary() });
+    } catch (error) {
+      updateState({ dictionary: previousDictionary });
+      dictionaryError = `Unable to add dictionary word: ${error}`;
+    } finally {
+      isDictionarySaving = false;
+    }
   }
 
-  function removeDictionaryWord(word: string) {
-    updateState({ dictionary: state.dictionary.filter((item) => item !== word) });
+  async function removeDictionaryWord(word: string) {
+    await saveDictionary(state.dictionary.filter((item) => item !== word));
+  }
+
+  async function clearDictionary() {
+    await saveDictionary([]);
   }
 
   function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
@@ -877,18 +937,32 @@
         <div class="stanza">
           <div class="eyebrow">User Dictionary</div>
           <p class="section-copy">
-            Words and names Harper should never flag. This list is local demo state.
+            Words and names Harper should never flag. This list syncs with Harper's local app config.
           </p>
+
+          {#if isDictionaryLoading}
+            <p class="result-summary">Loading dictionary...</p>
+          {:else if dictionaryError}
+            <p class="result-summary">{dictionaryError}</p>
+          {:else if isDictionarySaving}
+            <p class="result-summary">Saving dictionary...</p>
+          {/if}
 
           <div class="add-row">
             <input
               class="text-field"
               type="text"
               placeholder="Add a word..."
+              disabled={isDictionaryLoading || isDictionarySaving}
               bind:value={newDictionaryWord}
               on:keydown={(event) => event.key === "Enter" && addDictionaryWord()}
             />
-            <button class="button primary" type="button" on:click={addDictionaryWord}>Add</button>
+            <button
+              class="button primary"
+              type="button"
+              disabled={isDictionaryLoading || isDictionarySaving}
+              on:click={addDictionaryWord}
+            >Add</button>
           </div>
 
           <div class="list-card">
@@ -912,6 +986,7 @@
                     <button
                       class="icon-button danger"
                       type="button"
+                      disabled={isDictionaryLoading || isDictionarySaving}
                       aria-label={`Remove ${word}`}
                       on:click={() => removeDictionaryWord(word)}
                     >
@@ -927,7 +1002,12 @@
             <button class="button" type="button">Import from file...</button>
             <button class="button" type="button">Export dictionary</button>
             <span class="spacer"></span>
-            <button class="button danger" type="button" on:click={() => updateState({ dictionary: [] })}>
+            <button
+              class="button danger"
+              type="button"
+              disabled={isDictionaryLoading || isDictionarySaving}
+              on:click={clearDictionary}
+            >
               Clear all
             </button>
           </div>

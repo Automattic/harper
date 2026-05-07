@@ -6,7 +6,7 @@ use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
     linting::{FlatConfig, Lint, LintGroup},
-    spell::MutableDictionary,
+    spell::{Dictionary, MutableDictionary},
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
 use tauri::{
@@ -146,6 +146,43 @@ async fn set_lint_config(
 }
 
 #[tauri::command]
+async fn get_dictionary(config: State<'_, Arc<Mutex<Config>>>) -> Result<Vec<String>, String> {
+    let mut words = config
+        .lock()
+        .await
+        .mutable_dictionary
+        .words_iter()
+        .map(|word| word.iter().collect::<String>())
+        .collect::<Vec<_>>();
+    words.sort();
+
+    Ok(words)
+}
+
+#[tauri::command]
+async fn set_dictionary(
+    words: Vec<String>,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut dictionary = MutableDictionary::new();
+    dictionary.extend_words(words.into_iter().map(|word| {
+        (
+            word.chars().collect::<Vec<_>>(),
+            DictWordMetadata::default(),
+        )
+    }));
+
+    let mut config = config.lock().await;
+    config.mutable_dictionary = dictionary;
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
 async fn ignore_lint(
     ignored_lints: String,
     config: State<'_, Arc<Mutex<Config>>>,
@@ -233,6 +270,8 @@ pub fn run_tauri() {
             get_dialect,
             set_dialect,
             set_lint_config,
+            get_dictionary,
+            set_dictionary,
             ignore_lint,
             add_to_dictionary,
         ])

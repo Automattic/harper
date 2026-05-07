@@ -20,6 +20,14 @@ export class Client {
     await invoke("set_lint_config", { lintConfig });
   }
 
+  static async getDictionary(): Promise<string[]> {
+    return await invoke<string[]>("get_dictionary");
+  }
+
+  static async setDictionary(words: string[]): Promise<void> {
+    await invoke("set_dictionary", { words });
+  }
+
   static async disableRule(ruleName: string): Promise<LintConfig> {
     const lintConfig = await Client.getLintConfig();
     lintConfig[ruleName] = false;
