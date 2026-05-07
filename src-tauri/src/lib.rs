@@ -10,8 +10,9 @@ use harper_core::{
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
 use tauri::{
-    Manager, State, WebviewUrl, WebviewWindowBuilder,
+    Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
+    menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
 use tokio::{
@@ -43,10 +44,34 @@ enum Command {
     Highlighter,
 }
 
+const EDITOR_WINDOW_LABEL: &str = "main";
 const SETTINGS_WINDOW_LABEL: &str = "settings";
+const OPEN_EDITOR_MENU_ID: &str = "open-editor";
+const SETTINGS_MENU_ID: &str = "settings";
+const QUIT_MENU_ID: &str = "quit";
 
 fn menu_bar_icon() -> tauri::Result<Image<'static>> {
     Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png")).map(Image::to_owned)
+}
+
+fn show_editor_window(app: &tauri::AppHandle) -> tauri::Result<()> {
+    if let Some(window) = app.get_webview_window(EDITOR_WINDOW_LABEL) {
+        window.show()?;
+        window.set_focus()?;
+        return Ok(());
+    }
+
+    let window = WebviewWindowBuilder::new(
+        app,
+        EDITOR_WINDOW_LABEL,
+        WebviewUrl::App("index.html".into()),
+    )
+    .title("harper-desktop")
+    .inner_size(800.0, 600.0)
+    .build()?;
+    window.set_focus()?;
+
+    Ok(())
 }
 
 fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
@@ -68,6 +93,16 @@ fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     .build()?;
 
     Ok(())
+}
+
+fn tray_menu(app: &tauri::App) -> tauri::Result<Menu<tauri::Wry>> {
+    let open_editor =
+        MenuItem::with_id(app, OPEN_EDITOR_MENU_ID, "Open Editor", true, None::<&str>)?;
+    let separator = PredefinedMenuItem::separator(app)?;
+    let settings = MenuItem::with_id(app, SETTINGS_MENU_ID, "Settings", true, None::<&str>)?;
+    let quit = MenuItem::with_id(app, QUIT_MENU_ID, "Quit", true, None::<&str>)?;
+
+    Menu::with_items(app, &[&open_editor, &separator, &settings, &quit])
 }
 
 #[tauri::command]
@@ -179,11 +214,38 @@ pub fn run_tauri() {
             ignore_lint,
             add_to_dictionary,
         ])
+        .on_window_event(|window, event| {
+            if window.label() == EDITOR_WINDOW_LABEL {
+                if let WindowEvent::CloseRequested { api, .. } = event {
+                    api.prevent_close();
+
+                    if let Err(error) = window.hide() {
+                        eprintln!("failed to hide editor window: {error}");
+                    }
+                }
+            }
+        })
         .setup(|app| {
+            let menu = tray_menu(app)?;
             let tray = TrayIconBuilder::with_id("harper-menu-bar")
+                .menu(&menu)
                 .icon(menu_bar_icon()?)
                 .tooltip("Harper Desktop")
                 .show_menu_on_left_click(false)
+                .on_menu_event(|app, event| match event.id().as_ref() {
+                    OPEN_EDITOR_MENU_ID => {
+                        if let Err(error) = show_editor_window(app) {
+                            eprintln!("failed to show editor window: {error}");
+                        }
+                    }
+                    SETTINGS_MENU_ID => {
+                        if let Err(error) = show_settings_window(app) {
+                            eprintln!("failed to show settings window: {error}");
+                        }
+                    }
+                    QUIT_MENU_ID => app.exit(0),
+                    _ => {}
+                })
                 .on_tray_icon_event(|tray, event| {
                     if let TrayIconEvent::Click {
                         button: MouseButton::Left,
