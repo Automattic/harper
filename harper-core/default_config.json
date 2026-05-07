@@ -3726,6 +3726,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByOnesOwn",
+								"state": true,
+								"label": "By One's Own"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BrandBrandish",
 								"state": true,
 								"label": "Brand Brandish"
