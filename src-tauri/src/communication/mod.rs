@@ -92,6 +92,31 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn client_receives_allowed_bundle_identifiers_from_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config.allowed_bundle_identifiers = vec!["com.example.Editor".to_string()];
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
+
+        let (bundle_identifiers, request) = tokio::join!(
+            client.get_allowed_bundle_identifiers(),
+            server.receive_request()
+        );
+
+        assert_eq!(
+            bundle_identifiers.unwrap(),
+            vec!["com.example.Editor".to_string()]
+        );
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::GetAllowedBundleIdentifiers)
+        ));
+    }
+
+    #[tokio::test]
     async fn client_can_merge_ignored_lints_on_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
@@ -214,6 +239,70 @@ mod tests {
                 .await
                 .mutable_dictionary
                 .contains_word_str("blorple")
+        );
+    }
+
+    #[tokio::test]
+    async fn client_can_add_allowed_bundle_identifier_on_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let config = Arc::new(Mutex::new(Config::new()));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+
+        let (ack, request) = tokio::join!(
+            client.add_allowed_bundle_identifier("com.example.Editor"),
+            server.receive_request()
+        );
+
+        assert!(ack.is_ok());
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::AddAllowedBundleIdentifier { bundle_identifier })
+                if bundle_identifier == "com.example.Editor"
+        ));
+        assert!(
+            config
+                .lock()
+                .await
+                .is_approved_bundle_identifier("com.example.Editor")
+        );
+    }
+
+    #[tokio::test]
+    async fn client_can_remove_allowed_bundle_identifier_on_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config.add_allowed_bundle_identifier("com.example.Editor".to_string());
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+
+        let (ack, request) = tokio::join!(
+            client.remove_allowed_bundle_identifier("com.example.Editor"),
+            server.receive_request()
+        );
+
+        assert!(ack.is_ok());
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::RemoveAllowedBundleIdentifier { bundle_identifier })
+                if bundle_identifier == "com.example.Editor"
+        ));
+        assert!(
+            !config
+                .lock()
+                .await
+                .is_approved_bundle_identifier("com.example.Editor")
         );
     }
 

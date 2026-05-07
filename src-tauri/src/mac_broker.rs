@@ -17,12 +17,11 @@ use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::{NSPoint, NSRect, NSSize};
-use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr};
+use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
 
+use crate::config::Config;
 use crate::os_broker::OsBroker;
 use crate::rect::{ActionableLint, Rect};
-
-const APPROVED_BUNDLE_IDENTIFIERS: &[&str] = &["com.apple.TextEdit"];
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -31,11 +30,15 @@ const APPROVED_BUNDLE_IDENTIFIERS: &[&str] = &["com.apple.TextEdit"];
 /// targeting the app the user was reviewing.
 pub struct MacBroker {
     last_focused: Option<pid_t>,
+    allowed_bundle_identifiers: Rc<RefCell<Vec<String>>>,
 }
 
 impl MacBroker {
-    pub fn new() -> Self {
-        Self { last_focused: None }
+    pub fn new(allowed_bundle_identifiers: Rc<RefCell<Vec<String>>>) -> Self {
+        Self {
+            last_focused: None,
+            allowed_bundle_identifiers,
+        }
     }
 
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
@@ -53,7 +56,9 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new()
+        Self::new(Rc::new(RefCell::new(
+            Config::curated_allowed_bundle_identifiers(),
+        )))
     }
 }
 
@@ -71,7 +76,7 @@ impl OsBroker for MacBroker {
             }
         };
 
-        if !is_pid_approved(pid) {
+        if !is_pid_approved(pid, &self.allowed_bundle_identifiers.borrow()) {
             return Vec::new();
         }
 
@@ -108,7 +113,7 @@ fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     Ok(pid)
 }
 
-fn is_pid_approved(pid: pid_t) -> bool {
+fn is_pid_approved(pid: pid_t, allowed_bundle_identifiers: &[String]) -> bool {
     let bundle_identifier = match bundle_identifier_for_pid(pid) {
         Ok(Some(bundle_identifier)) => bundle_identifier,
         Ok(None) => return false,
@@ -118,7 +123,7 @@ fn is_pid_approved(pid: pid_t) -> bool {
         }
     };
 
-    is_approved_bundle_identifier(&bundle_identifier)
+    Config::is_bundle_identifier_approved_by(allowed_bundle_identifiers, &bundle_identifier)
 }
 
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
@@ -131,25 +136,6 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     };
 
     Ok(Some(bundle_identifier.to_string()))
-}
-
-fn is_approved_bundle_identifier(bundle_identifier: &str) -> bool {
-    APPROVED_BUNDLE_IDENTIFIERS.contains(&bundle_identifier)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::is_approved_bundle_identifier;
-
-    #[test]
-    fn text_edit_is_approved() {
-        assert!(is_approved_bundle_identifier("com.apple.TextEdit"));
-    }
-
-    #[test]
-    fn other_apps_are_not_approved() {
-        assert!(!is_approved_bundle_identifier("com.apple.Notes"));
-    }
 }
 
 fn ax_element_attribute(

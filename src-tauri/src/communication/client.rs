@@ -71,6 +71,18 @@ where
         }
     }
 
+    pub async fn get_allowed_bundle_identifiers(&mut self) -> Result<Vec<String>, ProtocolError> {
+        match self
+            .send_request(Request::GetAllowedBundleIdentifiers)
+            .await?
+        {
+            Response::GetAllowedBundleIdentifiers { bundle_identifiers } => Ok(bundle_identifiers),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetAllowedBundleIdentifiers",
+            }),
+        }
+    }
+
     pub async fn ignore_lint(&mut self, ignored_lints: &IgnoredLints) -> Result<(), ProtocolError> {
         self.send_ack_request(Request::IgnoreLint {
             ignored_lints: ignored_lints.clone(),
@@ -96,6 +108,26 @@ where
     pub async fn add_to_dictionary(&mut self, word: &str) -> Result<(), ProtocolError> {
         self.send_ack_request(Request::AddToDictionary {
             word: word.to_string(),
+        })
+        .await
+    }
+
+    pub async fn add_allowed_bundle_identifier(
+        &mut self,
+        bundle_identifier: &str,
+    ) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::AddAllowedBundleIdentifier {
+            bundle_identifier: bundle_identifier.to_string(),
+        })
+        .await
+    }
+
+    pub async fn remove_allowed_bundle_identifier(
+        &mut self,
+        bundle_identifier: &str,
+    ) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::RemoveAllowedBundleIdentifier {
+            bundle_identifier: bundle_identifier.to_string(),
         })
         .await
     }

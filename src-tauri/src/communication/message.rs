@@ -8,9 +8,12 @@ pub enum Request {
     GetDictionary,
     GetDialect,
     GetIgnoredLints,
+    GetAllowedBundleIdentifiers,
     SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
+    AddAllowedBundleIdentifier { bundle_identifier: String },
+    RemoveAllowedBundleIdentifier { bundle_identifier: String },
 }
 
 /// Canonical server-to-client protocol message sent by the Tauri app.
@@ -20,6 +23,7 @@ pub enum Response {
     GetDictionary { words: Vec<String> },
     GetDialect { dialect: Dialect },
     GetIgnoredLints { ignored_lints: IgnoredLints },
+    GetAllowedBundleIdentifiers { bundle_identifiers: Vec<String> },
     Ack,
 }
 
@@ -71,6 +75,14 @@ mod tests {
     }
 
     #[test]
+    fn get_allowed_bundle_identifiers_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetAllowedBundleIdentifiers).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::GetAllowedBundleIdentifiers));
+    }
+
+    #[test]
     fn set_lint_config_request_serializes_as_json() {
         let request = Request::SetLintConfig {
             config: FlatConfig::new_curated(),
@@ -92,6 +104,36 @@ mod tests {
         assert!(matches!(
             decoded,
             Request::AddToDictionary { word } if word == "blorple"
+        ));
+    }
+
+    #[test]
+    fn add_allowed_bundle_identifier_request_serializes_as_json() {
+        let request = Request::AddAllowedBundleIdentifier {
+            bundle_identifier: "com.example.Editor".to_string(),
+        };
+        let encoded = serde_json::to_string(&request).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Request::AddAllowedBundleIdentifier { bundle_identifier }
+                if bundle_identifier == "com.example.Editor"
+        ));
+    }
+
+    #[test]
+    fn remove_allowed_bundle_identifier_request_serializes_as_json() {
+        let request = Request::RemoveAllowedBundleIdentifier {
+            bundle_identifier: "com.example.Editor".to_string(),
+        };
+        let encoded = serde_json::to_string(&request).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Request::RemoveAllowedBundleIdentifier { bundle_identifier }
+                if bundle_identifier == "com.example.Editor"
         ));
     }
 
@@ -142,6 +184,21 @@ mod tests {
         let decoded: Response = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(decoded, Response::GetIgnoredLints { .. }));
+    }
+
+    #[test]
+    fn allowed_bundle_identifiers_response_serializes_as_json() {
+        let response = Response::GetAllowedBundleIdentifiers {
+            bundle_identifiers: vec!["com.example.Editor".to_string()],
+        };
+        let encoded = serde_json::to_string(&response).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Response::GetAllowedBundleIdentifiers { bundle_identifiers }
+                if bundle_identifiers == vec!["com.example.Editor".to_string()]
+        ));
     }
 
     #[test]

@@ -62,6 +62,9 @@ where
             Request::GetIgnoredLints => Response::GetIgnoredLints {
                 ignored_lints: self.config.lock().await.ignored_lints.clone(),
             },
+            Request::GetAllowedBundleIdentifiers => Response::GetAllowedBundleIdentifiers {
+                bundle_identifiers: self.config.lock().await.allowed_bundle_identifiers.clone(),
+            },
             Request::SetLintConfig { config } => {
                 let mut stored_config = self.config.lock().await;
                 stored_config.lint_config = config.clone();
@@ -87,6 +90,26 @@ where
                 config
                     .mutable_dictionary
                     .append_word_str(word, DictWordMetadata::default());
+
+                if let Err(error) = config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
+
+                Response::Ack
+            }
+            Request::AddAllowedBundleIdentifier { bundle_identifier } => {
+                let mut config = self.config.lock().await;
+                config.add_allowed_bundle_identifier(bundle_identifier.clone());
+
+                if let Err(error) = config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
+
+                Response::Ack
+            }
+            Request::RemoveAllowedBundleIdentifier { bundle_identifier } => {
+                let mut config = self.config.lock().await;
+                config.remove_allowed_bundle_identifier(bundle_identifier);
 
                 if let Err(error) = config.save_to_system().await {
                     eprintln!("failed to save config: {error}");

@@ -47,6 +47,18 @@ export class Client {
   static async addToDictionary(word: string): Promise<void> {
     await invoke("add_to_dictionary", { word });
   }
+
+  static async getAllowedBundleIdentifiers(): Promise<string[]> {
+    return await invoke<string[]>("get_allowed_bundle_identifiers");
+  }
+
+  static async addAllowedBundleIdentifier(bundleIdentifier: string): Promise<void> {
+    await invoke("add_allowed_bundle_identifier", { bundleIdentifier });
+  }
+
+  static async removeAllowedBundleIdentifier(bundleIdentifier: string): Promise<void> {
+    await invoke("remove_allowed_bundle_identifier", { bundleIdentifier });
+  }
 }
 
 function rustDialectToDialect(dialect: RustDialect): Dialect {

@@ -18,12 +18,13 @@ pub enum ConfigError {
     Io(#[from] io::Error),
 }
 
-/// User-controlled linting state needed to construct and apply a Harper lint group.
+/// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
     pub mutable_dictionary: MutableDictionary,
     pub dialect: Dialect,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
+    pub allowed_bundle_identifiers: Vec<String>,
 }
 
 impl Config {
@@ -33,7 +34,41 @@ impl Config {
             dialect: Dialect::American,
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
+            allowed_bundle_identifiers: Self::curated_allowed_bundle_identifiers(),
         }
+    }
+
+    pub fn curated_allowed_bundle_identifiers() -> Vec<String> {
+        vec!["com.apple.TextEdit".to_string()]
+    }
+
+    pub fn is_approved_bundle_identifier(&self, bundle_identifier: &str) -> bool {
+        Self::is_bundle_identifier_approved_by(&self.allowed_bundle_identifiers, bundle_identifier)
+    }
+
+    pub fn is_bundle_identifier_approved_by(
+        allowed_bundle_identifiers: &[String],
+        bundle_identifier: &str,
+    ) -> bool {
+        allowed_bundle_identifiers
+            .iter()
+            .any(|allowed| allowed == bundle_identifier)
+    }
+
+    pub fn add_allowed_bundle_identifier(&mut self, bundle_identifier: String) {
+        let bundle_identifier = bundle_identifier.trim();
+        if bundle_identifier.is_empty() || self.is_approved_bundle_identifier(bundle_identifier) {
+            return;
+        }
+
+        self.allowed_bundle_identifiers
+            .push(bundle_identifier.to_string());
+        self.allowed_bundle_identifiers.sort();
+    }
+
+    pub fn remove_allowed_bundle_identifier(&mut self, bundle_identifier: &str) {
+        self.allowed_bundle_identifiers
+            .retain(|allowed| allowed != bundle_identifier);
     }
 
     pub async fn save_to_system(&self) -> Result<(), ConfigError> {
@@ -98,6 +133,7 @@ impl Config {
             "dialect": &self.dialect,
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
+            "allowed_bundle_identifiers": &self.allowed_bundle_identifiers,
         }))
     }
 
@@ -113,6 +149,11 @@ impl Config {
             dialect: deserialize_field(object, "dialect")?,
             ignored_lints: deserialize_field(object, "ignored_lints")?,
             lint_config: deserialize_field(object, "lint_config")?,
+            allowed_bundle_identifiers: deserialize_optional_field(
+                object,
+                "allowed_bundle_identifiers",
+            )?
+            .unwrap_or_else(Self::curated_allowed_bundle_identifiers),
         })
     }
 }
@@ -130,6 +171,21 @@ where
         .ok_or_else(|| serde_json::Error::custom(format!("missing config field `{field}`")))?;
 
     serde_json::from_value(value)
+}
+
+#[allow(dead_code)]
+fn deserialize_optional_field<T>(
+    object: &mut serde_json::Map<String, serde_json::Value>,
+    field: &'static str,
+) -> serde_json::Result<Option<T>>
+where
+    T: DeserializeOwned,
+{
+    let Some(value) = object.remove(field) else {
+        return Ok(None);
+    };
+
+    serde_json::from_value(value).map(Some)
 }
 
 impl Default for Config {
@@ -157,6 +213,7 @@ mod tests {
         assert!(serialized.contains("dialect"));
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
+        assert!(serialized.contains("allowed_bundle_identifiers"));
     }
 
     #[test]
@@ -172,10 +229,77 @@ mod tests {
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(
+            deserialized.allowed_bundle_identifiers,
+            config.allowed_bundle_identifiers
+        );
+        assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
             serde_json::from_str::<serde_json::Value>(&serialized).unwrap()
         );
+    }
+
+    #[test]
+    fn new_uses_curated_allowed_bundle_identifiers() {
+        let config = Config::new();
+
+        assert_eq!(
+            config.allowed_bundle_identifiers,
+            Config::curated_allowed_bundle_identifiers()
+        );
+        assert!(config.is_approved_bundle_identifier("com.apple.TextEdit"));
+    }
+
+    #[test]
+    fn deserialize_main_uses_curated_bundle_identifiers_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("allowed_bundle_identifiers");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(
+            deserialized.allowed_bundle_identifiers,
+            Config::curated_allowed_bundle_identifiers()
+        );
+    }
+
+    #[test]
+    fn deserialize_main_preserves_allowed_bundle_identifiers() {
+        let mut config = Config::new();
+        config.allowed_bundle_identifiers = vec!["com.example.Editor".to_string()];
+
+        let deserialized = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
+
+        assert_eq!(
+            deserialized.allowed_bundle_identifiers,
+            vec!["com.example.Editor".to_string()]
+        );
+    }
+
+    #[test]
+    fn allowed_bundle_identifier_helpers_add_remove_and_check() {
+        let mut config = Config::new();
+
+        config.add_allowed_bundle_identifier(" com.example.Editor ".to_string());
+        config.add_allowed_bundle_identifier("com.example.Editor".to_string());
+        assert!(config.is_approved_bundle_identifier("com.example.Editor"));
+        assert_eq!(
+            config
+                .allowed_bundle_identifiers
+                .iter()
+                .filter(|bundle_identifier| bundle_identifier.as_str() == "com.example.Editor")
+                .count(),
+            1
+        );
+
+        config.remove_allowed_bundle_identifier("com.example.Editor");
+
+        assert!(!config.is_approved_bundle_identifier("com.example.Editor"));
     }
 
     #[test]
