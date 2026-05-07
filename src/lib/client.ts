@@ -1,17 +1,19 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Dialect, type Lint, type LintConfig, type Linter } from "harper.js";
 
+type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
+
 export class Client {
   static async getLintConfig(): Promise<LintConfig> {
     return await invoke<LintConfig>("get_lint_config");
   }
 
   static async getDialect(): Promise<Dialect> {
-    return await invoke<Dialect>("get_dialect");
+    return rustDialectToDialect(await invoke<RustDialect>("get_dialect"));
   }
 
   static async setDialect(dialect: Dialect): Promise<void> {
-    await invoke("set_dialect", { dialect });
+    await invoke("set_dialect", { dialect: dialectToRustDialect(dialect) });
   }
 
   static async setLintConfig(lintConfig: LintConfig): Promise<void> {
@@ -36,5 +38,37 @@ export class Client {
 
   static async addToDictionary(word: string): Promise<void> {
     await invoke("add_to_dictionary", { word });
+  }
+}
+
+function rustDialectToDialect(dialect: RustDialect): Dialect {
+  switch (dialect) {
+    case "British":
+      return Dialect.British;
+    case "Australian":
+      return Dialect.Australian;
+    case "Canadian":
+      return Dialect.Canadian;
+    case "Indian":
+      return Dialect.Indian;
+    case "American":
+    default:
+      return Dialect.American;
+  }
+}
+
+function dialectToRustDialect(dialect: Dialect): RustDialect {
+  switch (dialect) {
+    case Dialect.British:
+      return "British";
+    case Dialect.Australian:
+      return "Australian";
+    case Dialect.Canadian:
+      return "Canadian";
+    case Dialect.Indian:
+      return "Indian";
+    case Dialect.American:
+    default:
+      return "American";
   }
 }
