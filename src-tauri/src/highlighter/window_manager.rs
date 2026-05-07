@@ -9,6 +9,7 @@ use super::AddToDictionary;
 use super::DisableRule;
 use super::Error;
 use super::IgnoreLint;
+use super::RefreshConfig;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
@@ -28,7 +29,9 @@ pub struct WindowManager {
     ignore_lint: IgnoreLint,
     add_to_dictionary: AddToDictionary,
     disable_rule: DisableRule,
+    refresh_config: RefreshConfig,
     read_interval: Duration,
+    config_poll_interval: Duration,
 }
 
 impl WindowManager {
@@ -41,7 +44,9 @@ impl WindowManager {
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
         disable_rule: DisableRule,
+        refresh_config: RefreshConfig,
         read_interval: Duration,
+        config_poll_interval: Duration,
     ) -> Result<Self, Error> {
         Ok(Self {
             event_loop: EventLoop::new()?,
@@ -52,7 +57,9 @@ impl WindowManager {
             ignore_lint,
             add_to_dictionary,
             disable_rule,
+            refresh_config,
             read_interval,
+            config_poll_interval,
         })
     }
 
@@ -77,7 +84,9 @@ impl WindowManager {
             self.ignore_lint,
             self.add_to_dictionary,
             self.disable_rule,
+            self.refresh_config,
             self.read_interval,
+            self.config_poll_interval,
         );
 
         self.event_loop
@@ -99,7 +108,10 @@ struct WindowManagerApp {
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
     read_interval: Duration,
+    config_poll_interval: Duration,
     last_read: Instant,
+    last_config_poll: Instant,
+    refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
     error: Option<Error>,
@@ -116,7 +128,9 @@ impl WindowManagerApp {
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
         disable_rule: DisableRule,
+        refresh_config: RefreshConfig,
         read_interval: Duration,
+        config_poll_interval: Duration,
     ) -> Self {
         Self {
             context,
@@ -125,7 +139,10 @@ impl WindowManagerApp {
             os_broker,
             lint_text,
             read_interval,
+            config_poll_interval,
             last_read: Instant::now() - read_interval,
+            last_config_poll: Instant::now(),
+            refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
             error: None,
@@ -141,6 +158,10 @@ impl WindowManagerApp {
         for window in &self.windows {
             window.request_redraw();
         }
+    }
+
+    fn refresh_config(&mut self) {
+        (self.refresh_config)();
     }
 
     /// Toggles native click-through behavior based on the cursor's current interactive Harper target,
@@ -201,9 +222,16 @@ impl ApplicationHandler for WindowManagerApp {
             self.last_read = now;
         }
 
+        if now.duration_since(self.last_config_poll) >= self.config_poll_interval {
+            self.refresh_config();
+            self.last_config_poll = now;
+        }
+
         self.update_cursor_hittest(event_loop);
 
-        event_loop.set_control_flow(ControlFlow::WaitUntil(self.last_read + self.read_interval));
+        let next_read = self.last_read + self.read_interval;
+        let next_config_poll = self.last_config_poll + self.config_poll_interval;
+        event_loop.set_control_flow(ControlFlow::WaitUntil(next_read.min(next_config_poll)));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {

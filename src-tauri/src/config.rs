@@ -1,7 +1,11 @@
-use harper_core::{Dialect, IgnoredLints, linting::FlatConfig, spell::MutableDictionary};
+use harper_core::{
+    Dialect, IgnoredLints,
+    linting::{FlatConfig, LintGroup},
+    spell::{FstDictionary, MergedDictionary, MutableDictionary},
+};
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use serde::de::{DeserializeOwned, Error};
-use std::{fs, io, path::PathBuf};
+use std::{fs, io, path::PathBuf, sync::Arc};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -52,6 +56,25 @@ impl Config {
         config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
 
         Ok(config)
+    }
+
+    pub fn dictionary_from_user_dictionary(
+        user_dictionary: MutableDictionary,
+    ) -> Arc<MergedDictionary> {
+        let mut dictionary = MergedDictionary::new();
+        dictionary.add_dictionary(FstDictionary::curated());
+        dictionary.add_dictionary(Arc::new(user_dictionary));
+
+        Arc::new(dictionary)
+    }
+
+    pub fn create_dictionary(&self) -> Arc<MergedDictionary> {
+        Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
+    }
+
+    pub fn create_linter(&self) -> LintGroup {
+        LintGroup::new_curated(self.create_dictionary(), self.dialect)
+            .with_lint_config(self.lint_config.clone())
     }
 
     #[allow(dead_code)]

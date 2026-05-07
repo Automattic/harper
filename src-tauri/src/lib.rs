@@ -6,7 +6,7 @@ use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
     linting::{FlatConfig, Lint, LintGroup},
-    spell::{FstDictionary, MergedDictionary, MutableDictionary},
+    spell::MutableDictionary,
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
 use tauri::{
@@ -14,7 +14,11 @@ use tauri::{
     image::Image,
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
-use tokio::{runtime::Builder, sync::Mutex};
+use tokio::{
+    io::{Stdin, Stdout},
+    runtime::{Builder, Runtime},
+    sync::Mutex,
+};
 
 pub mod color;
 pub mod communication;
@@ -214,39 +218,21 @@ pub fn run_highlighter() {
             .expect("failed to build highlighter protocol runtime"),
     );
 
-    let startup_config: Result<_, ProtocolError> = {
-        let mut client = client.borrow_mut();
-        sync_runtime.block_on(async {
-            let dialect = client.get_dialect().await?;
-            let user_dictionary = client.get_dictionary().await?;
-            let ignored_lints = client.get_ignored_lints().await?;
-            let lint_config = client.get_lint_config().await?;
+    let startup_config = fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime);
 
-            Ok((dialect, user_dictionary, ignored_lints, lint_config))
-        })
+    let startup_config = match startup_config {
+        Ok(config) => config,
+        Err(error) => {
+            eprintln!("failed to hydrate highlighter config, using defaults: {error}");
+            Config::new()
+        }
     };
 
-    let (dialect, initial_user_dictionary, initial_ignored_lints, initial_lint_config) =
-        match startup_config {
-            Ok(config) => config,
-            Err(error) => {
-                eprintln!("failed to hydrate highlighter config, using defaults: {error}");
-                let config = Config::new();
-                (
-                    config.dialect,
-                    config.mutable_dictionary,
-                    config.ignored_lints,
-                    config.lint_config,
-                )
-            }
-        };
-
-    let ignored_lints = Rc::new(RefCell::new(initial_ignored_lints));
-    let user_dictionary = Rc::new(RefCell::new(initial_user_dictionary));
-    let linter = Rc::new(RefCell::new(
-        create_linter(create_dictionary(user_dictionary.borrow().clone()), dialect)
-            .with_lint_config(initial_lint_config),
-    ));
+    let startup_linter = startup_config.create_linter();
+    let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
+    let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
+    let dialect = Rc::new(RefCell::new(startup_config.dialect));
+    let linter = Rc::new(RefCell::new(startup_linter));
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
@@ -260,14 +246,22 @@ pub fn run_highlighter() {
     let dictionary_runtime = sync_runtime.clone();
     let dictionary_user_dictionary = user_dictionary.clone();
     let dictionary_linter = linter.clone();
-    let dictionary_dialect = dialect;
+    let dictionary_dialect = dialect.clone();
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
     let disable_linter = linter.clone();
 
+    let refresh_client = client.clone();
+    let refresh_runtime = sync_runtime.clone();
+    let refresh_ignored_lints = ignored_lints.clone();
+    let refresh_user_dictionary = user_dictionary.clone();
+    let refresh_dialect = dialect.clone();
+    let refresh_linter = linter.clone();
+
     let lint_text = move |text: &str| {
-        let dictionary = create_dictionary(lint_user_dictionary.borrow().clone());
+        let dictionary =
+            Config::dictionary_from_user_dictionary(lint_user_dictionary.borrow().clone());
         let doc = Document::new_markdown_default(text, &dictionary);
         let mut organized_lints = lint_linter.borrow_mut().organized_lints(&doc);
 
@@ -299,11 +293,13 @@ pub fn run_highlighter() {
             .append_word_str(word, DictWordMetadata::default());
 
         let lint_config = dictionary_linter.borrow().config.clone();
-        *dictionary_linter.borrow_mut() = create_linter(
-            create_dictionary(dictionary_user_dictionary.borrow().clone()),
-            dictionary_dialect,
-        )
-        .with_lint_config(lint_config);
+        let config = Config {
+            mutable_dictionary: dictionary_user_dictionary.borrow().clone(),
+            dialect: *dictionary_dialect.borrow(),
+            ignored_lints: IgnoredLints::new(),
+            lint_config,
+        };
+        *dictionary_linter.borrow_mut() = config.create_linter();
 
         if let Err(error) =
             dictionary_runtime.block_on(dictionary_client.borrow_mut().add_to_dictionary(word))
@@ -319,6 +315,20 @@ pub fn run_highlighter() {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
+    let refresh_config = move || match fetch_highlighter_config(
+        &mut refresh_client.borrow_mut(),
+        &refresh_runtime,
+    ) {
+        Ok(config) => apply_highlighter_config(
+            config,
+            &refresh_ignored_lints,
+            &refresh_user_dictionary,
+            &refresh_dialect,
+            &refresh_linter,
+        ),
+        Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+    };
+
     #[cfg(target_os = "macos")]
     let broker = mac_broker::MacBroker::new();
 
@@ -331,6 +341,7 @@ pub fn run_highlighter() {
         ignore_lint,
         add_to_dictionary,
         disable_rule,
+        refresh_config,
     )
     .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)
@@ -339,14 +350,35 @@ pub fn run_highlighter() {
     }
 }
 
-fn create_dictionary(user_dictionary: MutableDictionary) -> Arc<MergedDictionary> {
-    let mut dictionary = MergedDictionary::new();
-    dictionary.add_dictionary(FstDictionary::curated());
-    dictionary.add_dictionary(Arc::new(user_dictionary));
+fn fetch_highlighter_config(
+    client: &mut Client<Stdin, Stdout>,
+    runtime: &Runtime,
+) -> Result<Config, ProtocolError> {
+    runtime.block_on(async {
+        let dialect = client.get_dialect().await?;
+        let mutable_dictionary = client.get_dictionary().await?;
+        let ignored_lints = client.get_ignored_lints().await?;
+        let lint_config = client.get_lint_config().await?;
 
-    Arc::new(dictionary)
+        Ok(Config {
+            dialect,
+            mutable_dictionary,
+            ignored_lints,
+            lint_config,
+        })
+    })
 }
 
-fn create_linter(dictionary: Arc<MergedDictionary>, dialect: Dialect) -> LintGroup {
-    LintGroup::new_curated(dictionary, dialect)
+fn apply_highlighter_config(
+    config: Config,
+    ignored_lints: &Rc<RefCell<IgnoredLints>>,
+    user_dictionary: &Rc<RefCell<MutableDictionary>>,
+    dialect: &Rc<RefCell<Dialect>>,
+    linter: &Rc<RefCell<LintGroup>>,
+) {
+    let linter_config = config.create_linter();
+    *ignored_lints.borrow_mut() = config.ignored_lints;
+    *user_dictionary.borrow_mut() = config.mutable_dictionary;
+    *dialect.borrow_mut() = config.dialect;
+    *linter.borrow_mut() = linter_config;
 }

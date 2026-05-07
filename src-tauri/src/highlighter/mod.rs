@@ -19,6 +19,7 @@ const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
 type IgnoreLint = Box<dyn FnMut(&Lint, &Document)>;
 type AddToDictionary = Box<dyn FnMut(&str)>;
 type DisableRule = Box<dyn FnMut(&str)>;
+type RefreshConfig = Box<dyn FnMut()>;
 
 /// Public entry point for the screen highlighter system.
 ///
@@ -37,12 +38,14 @@ impl Highlighter {
         ignore_lint: impl FnMut(&Lint, &Document) + 'static,
         add_to_dictionary: impl FnMut(&str) + 'static,
         disable_rule: impl FnMut(&str) + 'static,
+        refresh_config: impl FnMut() + 'static,
     ) -> Result<Self, Error> {
         let context = egui::Context::default();
         let lint_text: LintText = Box::new(lint_text);
         let ignore_lint: IgnoreLint = Box::new(ignore_lint);
         let add_to_dictionary: AddToDictionary = Box::new(add_to_dictionary);
         let disable_rule: DisableRule = Box::new(disable_rule);
+        let refresh_config: RefreshConfig = Box::new(refresh_config);
 
         Ok(Self {
             window_manager: WindowManager::new(
@@ -52,7 +55,9 @@ impl Highlighter {
                 ignore_lint,
                 add_to_dictionary,
                 disable_rule,
+                refresh_config,
                 DEFAULT_READ_INTERVAL,
+                Duration::from_secs(1),
             )?,
             context,
         })
