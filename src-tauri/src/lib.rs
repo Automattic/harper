@@ -175,6 +175,10 @@ fn update_service_tray_state(
     Ok(())
 }
 
+fn should_hide_window_on_close(label: &str) -> bool {
+    label == EDITOR_WINDOW_LABEL || label == SETTINGS_WINDOW_LABEL
+}
+
 #[tauri::command]
 async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
     Ok(config.lock().await.lint_config.clone())
@@ -331,12 +335,12 @@ pub fn run_tauri() {
             add_to_dictionary,
         ])
         .on_window_event(|window, event| {
-            if window.label() == EDITOR_WINDOW_LABEL {
+            if should_hide_window_on_close(window.label()) {
                 if let WindowEvent::CloseRequested { api, .. } = event {
                     api.prevent_close();
 
                     if let Err(error) = window.hide() {
-                        eprintln!("failed to hide editor window: {error}");
+                        eprintln!("failed to hide {} window: {error}", window.label());
                     }
                 }
             }
