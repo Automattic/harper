@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import type { LintConfig } from "harper.js";
+  import { Client } from "$lib/client";
   import SettingsSidebar from "./SettingsSidebar.svelte";
   import {
-    ALL_RULES,
     APP_PICKER_CANDIDATES,
     BUILTIN_APPS,
     DIALECT_OPTIONS,
@@ -43,6 +45,10 @@
   let packDragState: "idle" | "dragging" = "idle";
   let editingPackId: string | null = null;
   let editingPackName = "";
+  let lintConfig: LintConfig | null = null;
+  let isLintConfigLoading = true;
+  let isLintConfigSaving = false;
+  let lintConfigError = "";
 
   const titleMap: Record<SectionId, string> = {
     "getting-started": "Getting Started",
@@ -83,7 +89,8 @@
   );
   $: rulesQuery = rulesSearch.trim().toLowerCase();
   $: filteredRuleGroups = getFilteredRuleGroups(rulesQuery);
-  $: enabledRuleCount = ALL_RULES.filter((rule) => isRuleEnabled(rule)).length;
+  $: displayedRules = getDisplayedRules();
+  $: enabledRuleCount = displayedRules.filter((rule) => isRuleEnabled(rule)).length;
   $: customizedRuleCount = Object.values(state.rules).filter((value) => value !== "default").length;
   $: integrationApps = [
     ...BUILTIN_APPS.filter((app) => !state.removedBuiltins.includes(app.id)),
@@ -99,12 +106,119 @@
     contentEl.scrollTop = 0;
   }
 
+  onMount(() => {
+    void loadLintConfig();
+
+    const refreshLintConfig = () => {
+      if (!isLintConfigSaving) {
+        void loadLintConfig();
+      }
+    };
+
+    window.addEventListener("focus", refreshLintConfig);
+
+    return () => {
+      window.removeEventListener("focus", refreshLintConfig);
+    };
+  });
+
   function updateState(patch: Partial<SettingsState>) {
     state = { ...state, ...patch };
   }
 
   function updateSetup(patch: Partial<SettingsState["setup"]>) {
     updateState({ setup: { ...state.setup, ...patch } });
+  }
+
+  async function loadLintConfig() {
+    isLintConfigLoading = true;
+    lintConfigError = "";
+
+    try {
+      const fetchedLintConfig = await Client.getLintConfig();
+      lintConfig = fetchedLintConfig;
+      updateState({ rules: rulesFromLintConfig(fetchedLintConfig) });
+    } catch (error) {
+      lintConfigError = `Unable to load lint config: ${error}`;
+    } finally {
+      isLintConfigLoading = false;
+    }
+  }
+
+  function rulesFromLintConfig(config: LintConfig): Record<string, RuleOverride> {
+    return Object.fromEntries(
+      Object.entries(config).map(([ruleId, value]) => [ruleId, lintValueToRuleOverride(value)]),
+    );
+  }
+
+  function lintValueToRuleOverride(value: boolean | null | undefined): RuleOverride {
+    if (value === true) return "on";
+    if (value === false) return "off";
+    return "default";
+  }
+
+  function ruleOverrideToLintValue(value: RuleOverride): boolean | null {
+    if (value === "on") return true;
+    if (value === "off") return false;
+    return null;
+  }
+
+  function ruleLabelFromKey(key: string) {
+    return key
+      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+      .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+      .trim();
+  }
+
+  function getRuleGroups(): RuleGroup[] {
+    if (!lintConfig) {
+      return RULE_GROUPS;
+    }
+
+    const rules = Object.keys(lintConfig)
+      .sort((a, b) => ruleLabelFromKey(a).localeCompare(ruleLabelFromKey(b)))
+      .map((ruleId) => ({
+        id: ruleId,
+        name: ruleLabelFromKey(ruleId),
+        desc: "Harper rule from the current app configuration.",
+      }));
+
+    return [
+      {
+        id: "harper-rules",
+        title: "Harper Rules",
+        desc: "Rules loaded from the app's current lint configuration.",
+        rules,
+      },
+    ];
+  }
+
+  function getDisplayedRules() {
+    return getRuleGroups().flatMap((group) => group.rules);
+  }
+
+  async function saveLintConfig(nextLintConfig: LintConfig, nextRules: Record<string, RuleOverride>) {
+    const previousLintConfig = lintConfig;
+    const previousRules = state.rules;
+
+    lintConfig = nextLintConfig;
+    updateState({ rules: nextRules });
+    isLintConfigSaving = true;
+    lintConfigError = "";
+
+    try {
+      await Client.setLintConfig(nextLintConfig);
+    } catch (error) {
+      lintConfig = previousLintConfig;
+      updateState({ rules: previousRules });
+      lintConfigError = `Unable to save lint config: ${error}`;
+    } finally {
+      isLintConfigSaving = false;
+    }
+  }
+
+  function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleOverride) {
+    config[ruleId] = ruleOverrideToLintValue(value);
   }
 
   function buildSetupSteps(): SetupStep[] {
@@ -175,11 +289,13 @@
   }
 
   function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
+    const ruleGroups = getRuleGroups();
+
     if (!query) {
-      return RULE_GROUPS.map((group) => ({ ...group, matchedRules: group.rules }));
+      return ruleGroups.map((group) => ({ ...group, matchedRules: group.rules }));
     }
 
-    return RULE_GROUPS.map((group) => {
+    return ruleGroups.map((group) => {
       const groupMatches =
         group.title.toLowerCase().includes(query) || group.desc.toLowerCase().includes(query);
       const matchedRules = group.rules.filter(
@@ -212,7 +328,7 @@
     return value !== "off" && value !== "forbid";
   }
 
-  function setRuleOverride(ruleId: string, value: RuleOverride) {
+  async function setRuleOverride(ruleId: string, value: RuleOverride) {
     const rules = { ...state.rules };
 
     if (value === "default") {
@@ -221,11 +337,19 @@
       rules[ruleId] = value;
     }
 
-    updateState({ rules });
+    if (!lintConfig) {
+      updateState({ rules });
+      return;
+    }
+
+    const nextLintConfig = { ...lintConfig };
+    setLintConfigRuleValue(nextLintConfig, ruleId, value);
+    await saveLintConfig(nextLintConfig, rules);
   }
 
-  function setGroupOverride(group: RuleGroup, value: RuleOverride) {
+  async function setGroupOverride(group: RuleGroup, value: RuleOverride) {
     const rules = { ...state.rules };
+    const nextLintConfig = lintConfig ? { ...lintConfig } : null;
 
     for (const rule of group.rules) {
       if (value === "default") {
@@ -233,9 +357,18 @@
       } else {
         rules[rule.id] = value;
       }
+
+      if (nextLintConfig) {
+        setLintConfigRuleValue(nextLintConfig, rule.id, value);
+      }
     }
 
-    updateState({ rules });
+    if (!nextLintConfig) {
+      updateState({ rules });
+      return;
+    }
+
+    await saveLintConfig(nextLintConfig, rules);
   }
 
   function getGroupState(group: RuleGroup): RuleOverride | "mixed" {
@@ -244,13 +377,37 @@
     return values.every((value) => value === first) ? first : "mixed";
   }
 
-  function resetRules() {
-    updateState({ rules: {} });
+  async function resetRules() {
+    if (!lintConfig) {
+      updateState({ rules: {} });
+      return;
+    }
+
+    const nextLintConfig = { ...lintConfig };
+    const nextRules: Record<string, RuleOverride> = {};
+
+    for (const rule of displayedRules) {
+      nextLintConfig[rule.id] = null;
+    }
+
+    await saveLintConfig(nextLintConfig, nextRules);
   }
 
-  function disableRules() {
-    const rules = Object.fromEntries(ALL_RULES.map((rule) => [rule.id, "off" as RuleOverride]));
-    updateState({ rules });
+  async function disableRules() {
+    const rules = Object.fromEntries(displayedRules.map((rule) => [rule.id, "off" as RuleOverride]));
+
+    if (!lintConfig) {
+      updateState({ rules });
+      return;
+    }
+
+    const nextLintConfig = { ...lintConfig };
+
+    for (const rule of displayedRules) {
+      nextLintConfig[rule.id] = false;
+    }
+
+    await saveLintConfig(nextLintConfig, rules);
   }
 
   function toggleGroup(groupId: string) {
@@ -762,9 +919,17 @@
       <section>
         <div class="rules-heading">
           <div class="eyebrow">Rules</div>
-          <h1>{ALL_RULES.length} rules, grouped by topic</h1>
+          <h1>{displayedRules.length} rules, grouped by topic</h1>
           <p>{enabledRuleCount} enabled, {customizedRuleCount} customized.</p>
         </div>
+
+        {#if isLintConfigLoading}
+          <p class="result-summary">Loading lint config...</p>
+        {:else if lintConfigError}
+          <p class="result-summary">{lintConfigError}</p>
+        {:else if isLintConfigSaving}
+          <p class="result-summary">Saving lint config...</p>
+        {/if}
 
         <div class="sticky-tools">
           <div class="rule-search">
@@ -776,8 +941,12 @@
               </button>
             {/if}
           </div>
-          <button class="button" type="button" on:click={resetRules}>Reset to defaults</button>
-          <button class="button" type="button" on:click={disableRules}>Disable all</button>
+          <button class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={resetRules}>
+            Reset to defaults
+          </button>
+          <button class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={disableRules}>
+            Disable all
+          </button>
         </div>
 
         {#if rulesQuery}
@@ -804,6 +973,7 @@
                 </span>
                 <select
                   class="select compact"
+                  disabled={isLintConfigLoading || isLintConfigSaving}
                   value={groupState === "mixed" ? "default" : groupState}
                   on:click|stopPropagation={() => {}}
                   on:change={(event) => setGroupOverride(group, event.currentTarget.value as RuleOverride)}
@@ -827,6 +997,7 @@
                       </div>
                       <select
                         class="select compact"
+                        disabled={isLintConfigLoading || isLintConfigSaving}
                         value={getRuleValue(rule.id)}
                         on:change={(event) => setRuleOverride(rule.id, event.currentTarget.value as RuleOverride)}
                       >
