@@ -38,6 +38,11 @@ tokio = { version = "1.52.2", features = ["full"] }
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
 core-foundation = "0.10.1"
+objc2-app-kit = { version = "0.3.2", default-features = false, features = [
+    "std",
+    "libc",
+    "NSRunningApplication",
+] }
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "std",
     "NSGeometry",
