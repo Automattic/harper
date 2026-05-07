@@ -1013,10 +1013,7 @@ fn main() -> anyhow::Result<()> {
             for w in &parsed_words {
                 let word_str: String = w.letters.iter().collect();
                 let lower = word_str.to_lowercase();
-                case_variants
-                    .entry(lower)
-                    .or_default()
-                    .push(word_str);
+                case_variants.entry(lower).or_default().push(word_str);
             }
 
             // Expand all dictionary entries with provenance tracking
@@ -1040,12 +1037,17 @@ fn main() -> anyhow::Result<()> {
                                 ProvenanceKind::Direct => serde_json::json!({
                                     "type": "direct"
                                 }),
-                                ProvenanceKind::AffixGenerated { flag, kind } => serde_json::json!({
-                                    "type": "affix_generated",
-                                    "flag": flag.to_string(),
-                                    "affix_kind": format!("{:?}", kind).to_lowercase()
-                                }),
-                                ProvenanceKind::CrossProduct { first_flag, second_flag } => serde_json::json!({
+                                ProvenanceKind::AffixGenerated { flag, kind } => {
+                                    serde_json::json!({
+                                        "type": "affix_generated",
+                                        "flag": flag.to_string(),
+                                        "affix_kind": format!("{:?}", kind).to_lowercase()
+                                    })
+                                }
+                                ProvenanceKind::CrossProduct {
+                                    first_flag,
+                                    second_flag,
+                                } => serde_json::json!({
                                     "type": "cross_product",
                                     "first_flag": first_flag.to_string(),
                                     "second_flag": second_flag.to_string()
@@ -1078,9 +1080,7 @@ fn main() -> anyhow::Result<()> {
                         for (i, record) in matching.iter().enumerate() {
                             let route_desc = match &record.kind {
                                 ProvenanceKind::Direct => {
-                                    format!(
-                                        "DIRECT — appears as a base entry in dictionary.dict"
-                                    )
+                                    format!("DIRECT — appears as a base entry in dictionary.dict")
                                 }
                                 ProvenanceKind::AffixGenerated { flag, kind } => {
                                     let kind_str = match kind {

@@ -428,10 +428,7 @@ impl AttributeList {
 
     /// Expand a single annotated word and return provenance records for every
     /// word it generates.
-    pub fn expand_with_provenance(
-        &self,
-        annotated_word: &AnnotatedWord,
-    ) -> Vec<ProvenanceRecord> {
+    pub fn expand_with_provenance(&self, annotated_word: &AnnotatedWord) -> Vec<ProvenanceRecord> {
         let base_word: String = annotated_word.letters.iter().collect();
         let base_annotations: String = annotated_word.annotations.iter().collect();
         self.expand_with_provenance_inner(annotated_word, &base_word, &base_annotations, None)
@@ -504,10 +501,7 @@ mod tests {
         let all_records = attributes.expand_all_with_provenance(words);
 
         // "hello" has no annotations, so it should only appear as a direct entry
-        let hello_records: Vec<_> = all_records
-            .iter()
-            .filter(|r| r.word == "hello")
-            .collect();
+        let hello_records: Vec<_> = all_records.iter().filter(|r| r.word == "hello").collect();
         assert_eq!(hello_records.len(), 1);
         assert_eq!(hello_records[0].kind, ProvenanceKind::Direct);
         assert_eq!(hello_records[0].base_word, "hello");
@@ -518,8 +512,8 @@ mod tests {
         use super::super::expansion::AffixEntryKind;
         use super::super::tests::{TEST_AFFIX_JSON, TEST_WORD_LIST};
         use super::super::word_list::parse_word_list;
-        use super::ProvenanceKind;
         use super::AttributeList;
+        use super::ProvenanceKind;
 
         let words = parse_word_list(TEST_WORD_LIST).unwrap();
         let attributes = AttributeList::parse(&TEST_AFFIX_JSON.to_string()).unwrap();
@@ -527,10 +521,7 @@ mod tests {
         let all_records = attributes.expand_all_with_provenance(words);
 
         // "try" has flag B (suffix), which should generate "tried" via y→ied
-        let tried_records: Vec<_> = all_records
-            .iter()
-            .filter(|r| r.word == "tried")
-            .collect();
+        let tried_records: Vec<_> = all_records.iter().filter(|r| r.word == "tried").collect();
         assert!(!tried_records.is_empty(), "should have found 'tried'");
         assert_eq!(tried_records[0].base_word, "try");
         assert!(matches!(
@@ -563,10 +554,9 @@ mod tests {
         assert_eq!(reworked_records[0].base_word, "work");
         // It should be a cross-product (A then B, or B then A)
         assert!(
-            reworked_records.iter().any(|r| matches!(
-                r.kind,
-                ProvenanceKind::CrossProduct { .. }
-            )),
+            reworked_records
+                .iter()
+                .any(|r| matches!(r.kind, ProvenanceKind::CrossProduct { .. })),
             "reworked should have at least one cross-product route"
         );
     }
@@ -584,17 +574,15 @@ mod tests {
 
         // "rework" should be reachable as:
         // 1. Direct prefix generation from "work" via A (re-)
-        let rework_records: Vec<_> = all_records
-            .iter()
-            .filter(|r| r.word == "rework")
-            .collect();
+        let rework_records: Vec<_> = all_records.iter().filter(|r| r.word == "rework").collect();
         assert!(!rework_records.is_empty(), "should have found 'rework'");
 
         // Check that it was generated via prefix A from "work"
-        assert!(rework_records.iter().any(|r| matches!(
-            &r.kind,
-            ProvenanceKind::AffixGenerated { flag: 'A', .. }
-        )));
+        assert!(
+            rework_records
+                .iter()
+                .any(|r| matches!(&r.kind, ProvenanceKind::AffixGenerated { flag: 'A', .. }))
+        );
     }
 
     #[test]
