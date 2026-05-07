@@ -1,10 +1,7 @@
 <script lang="ts">
 import { cubicOut } from 'svelte/easing';
 import { fade, fly } from 'svelte/transition';
-import {
-	createEmptyLintKindCounts,
-	LINT_KIND_STYLE_ENTRIES,
-} from './editorDisplay.js';
+import { createEmptyLintKindCounts, LINT_KIND_STYLE_ENTRIES } from './editorDisplay.js';
 import LintCard from './LintCard.svelte';
 import type { IgnorableLintBox, LintBox } from './types.js';
 

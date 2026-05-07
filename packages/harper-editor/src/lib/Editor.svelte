@@ -216,7 +216,10 @@ function syncDocumentText(notify: boolean) {
 // The lint framework owns highlight DOM, so copy its latest boxes into Svelte state.
 function syncLintBoxes() {
 	lintBoxes = [...lfw.getLastIgnorableLintBoxes()];
-	if (activeLintId != null && !lintBoxes.some((lintBox) => lintBox.lint.context_hash === activeLintId)) {
+	if (
+		activeLintId != null &&
+		!lintBoxes.some((lintBox) => lintBox.lint.context_hash === activeLintId)
+	) {
 		activeLintId = null;
 	}
 }
