@@ -1,5 +1,5 @@
 use self::highlighter::Highlighter;
-use self::highlighter_process::HighlighterProcess;
+use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
 use crate::config::Config;
 use clap::{Parser, Subcommand};
@@ -8,7 +8,7 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::{Dictionary, MutableDictionary},
 };
-use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
+use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
     Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
@@ -26,6 +26,7 @@ pub mod communication;
 pub mod config;
 pub mod highlighter;
 pub mod highlighter_process;
+pub mod highlighter_service;
 pub mod lint_kind_color;
 mod os_broker;
 pub mod rect;
@@ -46,12 +47,52 @@ enum Command {
 
 const EDITOR_WINDOW_LABEL: &str = "main";
 const SETTINGS_WINDOW_LABEL: &str = "settings";
+const TRAY_MENU_BAR_ID: &str = "harper-menu-bar";
+const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
 const QUIT_MENU_ID: &str = "quit";
 
-fn menu_bar_icon() -> tauri::Result<Image<'static>> {
-    Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png")).map(Image::to_owned)
+struct TrayMenu {
+    menu: Menu<tauri::Wry>,
+    service_toggle: MenuItem<tauri::Wry>,
+}
+
+fn service_menu_text(is_running: bool) -> &'static str {
+    match is_running {
+        true => "Stop Harper Service",
+        false => "Start Harper Service",
+    }
+}
+
+fn service_status_color(is_running: bool) -> [u8; 4] {
+    match is_running {
+        true => [34, 197, 94, 255],
+        false => [239, 68, 68, 255],
+    }
+}
+
+fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
+    let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
+    let width = icon.width();
+    let height = icon.height();
+    let mut rgba = icon.rgba().to_vec();
+
+    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
+
+    Ok(Image::new_owned(rgba, width, height))
+}
+
+fn draw_status_line(rgba: &mut [u8], width: u32, height: u32, color: [u8; 4]) {
+    let line_height = (height.min(width) / 14).max(3);
+    let start_y = height.saturating_sub(line_height);
+
+    for y in start_y..height {
+        for x in 0..width {
+            let index = ((y * width + x) * 4) as usize;
+            rgba[index..index + 4].copy_from_slice(&color);
+        }
+    }
 }
 
 fn show_editor_window(app: &tauri::AppHandle) -> tauri::Result<()> {
@@ -95,14 +136,43 @@ fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
-fn tray_menu(app: &tauri::App) -> tauri::Result<Menu<tauri::Wry>> {
+fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
+    let service_toggle = MenuItem::with_id(
+        app,
+        TOGGLE_SERVICE_MENU_ID,
+        service_menu_text(is_running),
+        true,
+        None::<&str>,
+    )?;
     let open_editor =
         MenuItem::with_id(app, OPEN_EDITOR_MENU_ID, "Open Editor", true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
     let settings = MenuItem::with_id(app, SETTINGS_MENU_ID, "Settings", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, QUIT_MENU_ID, "Quit", true, None::<&str>)?;
 
-    Menu::with_items(app, &[&open_editor, &separator, &settings, &quit])
+    let menu = Menu::with_items(
+        app,
+        &[&service_toggle, &open_editor, &separator, &settings, &quit],
+    )?;
+
+    Ok(TrayMenu {
+        menu,
+        service_toggle,
+    })
+}
+
+fn update_service_tray_state(
+    app: &tauri::AppHandle,
+    service_toggle: &MenuItem<tauri::Wry>,
+    is_running: bool,
+) -> tauri::Result<()> {
+    service_toggle.set_text(service_menu_text(is_running))?;
+
+    if let Some(tray) = app.tray_by_id(TRAY_MENU_BAR_ID) {
+        tray.set_icon(Some(menu_bar_icon(is_running)?))?;
+    }
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -240,30 +310,15 @@ pub fn run_tauri() {
         }
     };
     let config = Arc::new(Mutex::new(config));
-    let server_config = config.clone();
+    let highlighter_service = HighlighterService::new(config.clone());
 
-    thread::spawn(move || {
-        let rt = Builder::new_current_thread().enable_all().build().unwrap();
-        rt.block_on((async move || {
-            let mut highlighter_process =
-                HighlighterProcess::spawn().expect("failed to spawn highlighter process");
-
-            let mut server = highlighter_process
-                .create_server(server_config)
-                .expect("failed to create server");
-
-            loop {
-                match server.receive_request().await {
-                    Ok(Some(_)) => {}
-                    Ok(None) => break,
-                    Err(error) => eprintln!("failed to receive highlighter request: {error}"),
-                }
-            }
-        })())
-    });
+    if let Err(error) = highlighter_service.start() {
+        eprintln!("failed to start highlighter service: {error}");
+    }
 
     tauri::Builder::default()
         .manage(config)
+        .manage(highlighter_service)
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
@@ -287,13 +342,35 @@ pub fn run_tauri() {
             }
         })
         .setup(|app| {
-            let menu = tray_menu(app)?;
-            let tray = TrayIconBuilder::with_id("harper-menu-bar")
-                .menu(&menu)
-                .icon(menu_bar_icon()?)
+            let is_service_running = app.state::<HighlighterService>().is_running();
+            let menu = tray_menu(app, is_service_running)?;
+            let service_toggle = menu.service_toggle.clone();
+
+            let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
+                .menu(&menu.menu)
+                .icon(menu_bar_icon(is_service_running)?)
                 .tooltip("Harper Desktop")
                 .show_menu_on_left_click(false)
-                .on_menu_event(|app, event| match event.id().as_ref() {
+                .on_menu_event(move |app, event| match event.id().as_ref() {
+                    TOGGLE_SERVICE_MENU_ID => match app.state::<HighlighterService>().toggle() {
+                        Ok(status) => {
+                            if let Err(error) =
+                                update_service_tray_state(app, &service_toggle, status)
+                            {
+                                eprintln!("failed to update service tray state: {error}");
+                            }
+                        }
+                        Err(error) => {
+                            eprintln!("failed to toggle highlighter service: {error}");
+
+                            let is_running = app.state::<HighlighterService>().is_running();
+                            if let Err(error) =
+                                update_service_tray_state(app, &service_toggle, is_running)
+                            {
+                                eprintln!("failed to update service tray state: {error}");
+                            }
+                        }
+                    },
                     OPEN_EDITOR_MENU_ID => {
                         if let Err(error) = show_editor_window(app) {
                             eprintln!("failed to show editor window: {error}");
@@ -320,9 +397,6 @@ pub fn run_tauri() {
                         }
                     }
                 });
-
-            #[cfg(target_os = "macos")]
-            let tray = tray.icon_as_template(true);
 
             tray.build(app)?;
 

@@ -9,7 +9,7 @@ use tokio::sync::Mutex;
 /// Owns the highlighter child process while the Tauri app is running.
 ///
 /// This type exists so child-process cleanup is tied to Rust ownership: keeping it in scope keeps the
-/// highlighter alive, and dropping it terminates and reaps the child when the Tauri event loop exits.
+/// highlighter alive, and controlled shutdown can terminate and reap the child before exit.
 pub struct HighlighterProcess {
     child: Child,
 }
@@ -47,6 +47,11 @@ impl HighlighterProcess {
         })?;
 
         Ok(Server::new(stdout, stdin, config))
+    }
+
+    pub async fn terminate(&mut self) {
+        let _ = self.child.start_kill();
+        let _ = self.child.wait().await;
     }
 }
 
