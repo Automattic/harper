@@ -1,5 +1,5 @@
 use self::highlighter::Highlighter;
-use self::highlighter_process::HighlighterProcess;
+use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
 use crate::config::Config;
 use clap::{Parser, Subcommand};
@@ -8,7 +8,7 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::MutableDictionary,
 };
-use std::{cell::RefCell, rc::Rc, sync::Arc, thread, time::Duration};
+use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
     Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
@@ -26,6 +26,7 @@ pub mod communication;
 pub mod config;
 pub mod highlighter;
 pub mod highlighter_process;
+pub mod highlighter_service;
 pub mod lint_kind_color;
 mod os_broker;
 pub mod rect;
@@ -183,30 +184,15 @@ pub fn run_tauri() {
         }
     };
     let config = Arc::new(Mutex::new(config));
-    let server_config = config.clone();
+    let highlighter_service = HighlighterService::new(config.clone());
 
-    thread::spawn(move || {
-        let rt = Builder::new_current_thread().enable_all().build().unwrap();
-        rt.block_on((async move || {
-            let mut highlighter_process =
-                HighlighterProcess::spawn().expect("failed to spawn highlighter process");
-
-            let mut server = highlighter_process
-                .create_server(server_config)
-                .expect("failed to create server");
-
-            loop {
-                match server.receive_request().await {
-                    Ok(Some(_)) => {}
-                    Ok(None) => break,
-                    Err(error) => eprintln!("failed to receive highlighter request: {error}"),
-                }
-            }
-        })())
-    });
+    if let Err(error) = highlighter_service.start() {
+        eprintln!("failed to start highlighter service: {error}");
+    }
 
     tauri::Builder::default()
         .manage(config)
+        .manage(highlighter_service)
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
