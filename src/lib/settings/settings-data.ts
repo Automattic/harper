@@ -117,23 +117,6 @@ export interface AppIntegration {
   custom?: boolean;
 }
 
-export interface IntegrationMetadata {
-  name: string;
-  tint: string;
-  note?: string;
-}
-
-export const CURATED_INTEGRATION_METADATA: Record<string, IntegrationMetadata> = {
-  "com.apple.TextEdit": {
-    name: "TextEdit",
-    tint: "#5a5f68",
-    note: "Built into macOS and useful for trying Harper.",
-  },
-  "com.apple.mail": { name: "Mail", tint: "#3a8bff" },
-  "com.apple.MobileSMS": { name: "Messages", tint: "#2dc652" },
-  "com.apple.Notes": { name: "Notes", tint: "#f6c444" },
-};
-
 export interface SettingsState {
   setup: SetupState;
   menuBar: boolean;

@@ -1,10 +1,19 @@
 <script lang="ts">
-  import type { AppIntegration } from "../settings-data";
-
-  export let appSearch = "";
-  export let pickerItems: AppIntegration[];
+  export let bundleId = "";
+  export let existingBundleIds: string[];
+  export let isSaving = false;
   export let close: () => void;
-  export let selectApp: (app: AppIntegration) => void;
+  export let add: (bundleId: string) => void;
+
+  $: trimmedBundleId = bundleId.trim();
+  $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
+  $: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
+
+  function submit() {
+    if (canAdd) {
+      add(trimmedBundleId);
+    }
+  }
 </script>
 
 <div
@@ -32,31 +41,33 @@
     }}
   >
     <div class="modal-head">
-      <strong>Choose an application</strong>
-      <span>Applications - /Applications</span>
+      <strong>Add application</strong>
+      <span>Enter the app bundle ID Harper should watch.</span>
     </div>
     <div class="modal-search">
       <span class="settings-icon icon-search" aria-hidden="true"></span>
-      <input type="text" placeholder="Search Applications..." bind:value={appSearch} />
+      <input
+        type="text"
+        placeholder="com.apple.TextEdit"
+        bind:value={bundleId}
+        disabled={isSaving}
+        on:keydown={(event) => {
+          if (event.key === "Enter") {
+            submit();
+          }
+        }}
+      />
     </div>
     <div class="modal-list">
-      {#if pickerItems.length === 0}
-        <div class="empty">No applications match "{appSearch}".</div>
+      {#if isDuplicate}
+        <div class="empty">That application is already configured.</div>
       {:else}
-        {#each pickerItems as app}
-          <button class="picker-row" type="button" on:click={() => selectApp(app)}>
-            <span class="app-tile" style={`--app-tint: ${app.tint}`}>{app.name[0]}</span>
-            <span class="grow">
-              <strong>{app.name}</strong>
-              <small>Application</small>
-            </span>
-            <span>{app.kind}</span>
-          </button>
-        {/each}
+        <div class="empty">Use the app's macOS bundle identifier. Example: com.apple.TextEdit</div>
       {/if}
     </div>
     <div class="modal-actions">
       <button class="button" type="button" on:click={close}>Cancel</button>
+      <button class="button primary" type="button" disabled={!canAdd} on:click={submit}>Add</button>
     </div>
   </div>
 </div>

@@ -1,20 +1,21 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import AppPickerModal from "../components/AppPickerModal.svelte";
   import { Client, type Integration } from "$lib/client";
-  import { CURATED_INTEGRATION_METADATA } from "../settings-data";
 
   interface IntegrationRow extends Integration {
     name: string;
-    tint: string;
-    note?: string;
   }
 
   let integrations: Integration[] = [];
   let integrationsError = "";
   let isIntegrationsLoading = true;
   let isIntegrationsSaving = false;
+  let appPickerOpen = false;
+  let newBundleId = "";
 
   $: integrationApps = integrations.map(toIntegrationRow);
+  $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
   onMount(() => {
     void loadIntegrations();
@@ -34,14 +35,14 @@
   }
 
   function toIntegrationRow(integration: Integration): IntegrationRow {
-    const metadata = CURATED_INTEGRATION_METADATA[integration.bundle_id];
-
     return {
       ...integration,
-      name: metadata?.name ?? integration.bundle_id,
-      tint: metadata?.tint ?? "#6b6f78",
-      note: metadata?.note,
+      name: integrationName(integration.bundle_id),
     };
+  }
+
+  function integrationName(bundleId: string) {
+    return bundleId.split(".").at(-1) || bundleId;
   }
 
   async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
@@ -78,6 +79,35 @@
     } finally {
       isIntegrationsSaving = false;
     }
+  }
+
+  async function addIntegration(bundleId: string) {
+    const trimmedBundleId = bundleId.trim();
+
+    if (!trimmedBundleId || integrations.some((integration) => integration.bundle_id === trimmedBundleId)) {
+      return;
+    }
+
+    const previousIntegrations = integrations;
+
+    integrations = [...integrations, { bundle_id: trimmedBundleId, enabled: true }];
+    isIntegrationsSaving = true;
+    integrationsError = "";
+
+    try {
+      await Client.addIntegration(trimmedBundleId);
+      closeAppPicker();
+    } catch (error) {
+      integrations = previousIntegrations;
+      integrationsError = `Unable to add integration: ${error}`;
+    } finally {
+      isIntegrationsSaving = false;
+    }
+  }
+
+  function closeAppPicker() {
+    appPickerOpen = false;
+    newBundleId = "";
   }
 </script>
 
@@ -123,11 +153,10 @@
       {:else}
         {#each integrationApps as app}
           <div class="app-row">
-            <div class="app-tile" style={`--app-tint: ${app.tint}`}>{app.name[0]}</div>
+            <div class="app-tile" style="--app-tint: #6b6f78">{app.name[0]}</div>
             <div class="grow">
               <strong>{app.name}</strong>
               <p>{app.bundle_id}</p>
-              {#if app.note}<p>{app.note}</p>{/if}
             </div>
             <button
               class="icon-button danger"
@@ -156,7 +185,12 @@
     </div>
 
     <div class="actions-row">
-      <button class="button" type="button" disabled title="Not wired yet">Add application...</button>
+      <button
+        class="button"
+        type="button"
+        disabled={isIntegrationsLoading || isIntegrationsSaving}
+        on:click={() => (appPickerOpen = true)}
+      >Add application...</button>
       <span class="muted">Choose any app from your Applications folder.</span>
     </div>
   </div>
@@ -181,3 +215,13 @@
     </div>
   </div>
 </section>
+
+{#if appPickerOpen}
+  <AppPickerModal
+    bind:bundleId={newBundleId}
+    {existingBundleIds}
+    isSaving={isIntegrationsSaving}
+    close={closeAppPicker}
+    add={addIntegration}
+  />
+{/if}
