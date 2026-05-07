@@ -1,3 +1,4 @@
+use crate::config::Integration;
 use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
@@ -8,12 +9,13 @@ pub enum Request {
     GetDictionary,
     GetDialect,
     GetIgnoredLints,
-    GetAllowedBundleIdentifiers,
+    GetIntegrations,
     SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
-    AddAllowedBundleIdentifier { bundle_identifier: String },
-    RemoveAllowedBundleIdentifier { bundle_identifier: String },
+    AddIntegration { bundle_id: String },
+    RemoveIntegration { bundle_id: String },
+    SetIntegrationEnabled { bundle_id: String, enabled: bool },
 }
 
 /// Canonical server-to-client protocol message sent by the Tauri app.
@@ -23,7 +25,7 @@ pub enum Response {
     GetDictionary { words: Vec<String> },
     GetDialect { dialect: Dialect },
     GetIgnoredLints { ignored_lints: IgnoredLints },
-    GetAllowedBundleIdentifiers { bundle_identifiers: Vec<String> },
+    GetIntegrations { integrations: Vec<Integration> },
     Ack,
 }
 
@@ -75,11 +77,11 @@ mod tests {
     }
 
     #[test]
-    fn get_allowed_bundle_identifiers_request_serializes_as_json() {
-        let encoded = serde_json::to_string(&Request::GetAllowedBundleIdentifiers).unwrap();
+    fn get_integrations_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetIntegrations).unwrap();
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
-        assert!(matches!(decoded, Request::GetAllowedBundleIdentifiers));
+        assert!(matches!(decoded, Request::GetIntegrations));
     }
 
     #[test]
@@ -108,32 +110,46 @@ mod tests {
     }
 
     #[test]
-    fn add_allowed_bundle_identifier_request_serializes_as_json() {
-        let request = Request::AddAllowedBundleIdentifier {
-            bundle_identifier: "com.example.Editor".to_string(),
+    fn add_integration_request_serializes_as_json() {
+        let request = Request::AddIntegration {
+            bundle_id: "com.example.Editor".to_string(),
         };
         let encoded = serde_json::to_string(&request).unwrap();
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(
             decoded,
-            Request::AddAllowedBundleIdentifier { bundle_identifier }
-                if bundle_identifier == "com.example.Editor"
+            Request::AddIntegration { bundle_id } if bundle_id == "com.example.Editor"
         ));
     }
 
     #[test]
-    fn remove_allowed_bundle_identifier_request_serializes_as_json() {
-        let request = Request::RemoveAllowedBundleIdentifier {
-            bundle_identifier: "com.example.Editor".to_string(),
+    fn remove_integration_request_serializes_as_json() {
+        let request = Request::RemoveIntegration {
+            bundle_id: "com.example.Editor".to_string(),
         };
         let encoded = serde_json::to_string(&request).unwrap();
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(
             decoded,
-            Request::RemoveAllowedBundleIdentifier { bundle_identifier }
-                if bundle_identifier == "com.example.Editor"
+            Request::RemoveIntegration { bundle_id } if bundle_id == "com.example.Editor"
+        ));
+    }
+
+    #[test]
+    fn set_integration_enabled_request_serializes_as_json() {
+        let request = Request::SetIntegrationEnabled {
+            bundle_id: "com.example.Editor".to_string(),
+            enabled: false,
+        };
+        let encoded = serde_json::to_string(&request).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(
+            decoded,
+            Request::SetIntegrationEnabled { bundle_id, enabled }
+                if bundle_id == "com.example.Editor" && !enabled
         ));
     }
 
@@ -187,17 +203,23 @@ mod tests {
     }
 
     #[test]
-    fn allowed_bundle_identifiers_response_serializes_as_json() {
-        let response = Response::GetAllowedBundleIdentifiers {
-            bundle_identifiers: vec!["com.example.Editor".to_string()],
+    fn integrations_response_serializes_as_json() {
+        let response = Response::GetIntegrations {
+            integrations: vec![Integration {
+                bundle_id: "com.example.Editor".to_string(),
+                enabled: true,
+            }],
         };
         let encoded = serde_json::to_string(&response).unwrap();
         let decoded: Response = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(
             decoded,
-            Response::GetAllowedBundleIdentifiers { bundle_identifiers }
-                if bundle_identifiers == vec!["com.example.Editor".to_string()]
+            Response::GetIntegrations { integrations }
+                if integrations == vec![Integration {
+                    bundle_id: "com.example.Editor".to_string(),
+                    enabled: true,
+                }]
         ));
     }
 

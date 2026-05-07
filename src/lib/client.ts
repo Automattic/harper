@@ -3,6 +3,11 @@ import { Dialect, type Lint, type LintConfig, type Linter } from "harper.js";
 
 type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
 
+export interface Integration {
+  bundle_id: string;
+  enabled: boolean;
+}
+
 export class Client {
   static async getLintConfig(): Promise<LintConfig> {
     return await invoke<LintConfig>("get_lint_config");
@@ -48,16 +53,20 @@ export class Client {
     await invoke("add_to_dictionary", { word });
   }
 
-  static async getAllowedBundleIdentifiers(): Promise<string[]> {
-    return await invoke<string[]>("get_allowed_bundle_identifiers");
+  static async getIntegrations(): Promise<Integration[]> {
+    return await invoke<Integration[]>("get_integrations");
   }
 
-  static async addAllowedBundleIdentifier(bundleIdentifier: string): Promise<void> {
-    await invoke("add_allowed_bundle_identifier", { bundleIdentifier });
+  static async addIntegration(bundleId: string): Promise<void> {
+    await invoke("add_integration", { bundleId });
   }
 
-  static async removeAllowedBundleIdentifier(bundleIdentifier: string): Promise<void> {
-    await invoke("remove_allowed_bundle_identifier", { bundleIdentifier });
+  static async removeIntegration(bundleId: string): Promise<void> {
+    await invoke("remove_integration", { bundleId });
+  }
+
+  static async setIntegrationEnabled(bundleId: string, enabled: boolean): Promise<void> {
+    await invoke("set_integration_enabled", { bundleId, enabled });
   }
 }
 

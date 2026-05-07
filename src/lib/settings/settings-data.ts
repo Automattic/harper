@@ -117,6 +117,23 @@ export interface AppIntegration {
   custom?: boolean;
 }
 
+export interface IntegrationMetadata {
+  name: string;
+  tint: string;
+  note?: string;
+}
+
+export const CURATED_INTEGRATION_METADATA: Record<string, IntegrationMetadata> = {
+  "com.apple.TextEdit": {
+    name: "TextEdit",
+    tint: "#5a5f68",
+    note: "Built into macOS and useful for trying Harper.",
+  },
+  "com.apple.mail": { name: "Mail", tint: "#3a8bff" },
+  "com.apple.MobileSMS": { name: "Messages", tint: "#2dc652" },
+  "com.apple.Notes": { name: "Notes", tint: "#f6c444" },
+};
+
 export interface SettingsState {
   setup: SetupState;
   menuBar: boolean;
@@ -145,53 +162,6 @@ export const DIALECT_OPTIONS = [
   { value: "canadian", label: "Canadian English" },
   { value: "australian", label: "Australian English" },
   { value: "indian", label: "Indian English" },
-];
-
-export const BUILTIN_APPS: AppIntegration[] = [
-  { id: "mail", name: "Mail", kind: "Apple", tint: "#3a8bff" },
-  { id: "messages", name: "Messages", kind: "Apple", tint: "#2dc652" },
-  { id: "notes", name: "Notes", kind: "Apple", tint: "#f6c444" },
-  { id: "slack", name: "Slack", kind: "Third-party", tint: "#611f5f" },
-  { id: "notion", name: "Notion", kind: "Third-party", tint: "#1a1a1a" },
-  {
-    id: "vscode",
-    name: "Visual Studio Code",
-    kind: "Developer",
-    tint: "#007acc",
-  },
-  { id: "obsidian", name: "Obsidian", kind: "Developer", tint: "#7c3aed" },
-  {
-    id: "browsers",
-    name: "Web browsers",
-    kind: "Universal",
-    tint: "#b06a1b",
-    note: "Via the Harper browser extension",
-  },
-  {
-    id: "textedit",
-    name: "TextEdit",
-    kind: "Apple",
-    tint: "#5a5f68",
-    note: "Built into macOS and useful for trying Harper.",
-  },
-];
-
-export const APP_PICKER_CANDIDATES: AppIntegration[] = [
-  { id: "pages", name: "Pages", kind: "Apple", tint: "#f5a44a" },
-  { id: "keynote", name: "Keynote", kind: "Apple", tint: "#3a8bff" },
-  { id: "numbers", name: "Numbers", kind: "Apple", tint: "#2dc652" },
-  { id: "discord", name: "Discord", kind: "Third-party", tint: "#5865f2" },
-  { id: "linear", name: "Linear", kind: "Third-party", tint: "#5e6ad2" },
-  { id: "bear", name: "Bear", kind: "Third-party", tint: "#cc3a3a" },
-  { id: "ia-writer", name: "iA Writer", kind: "Third-party", tint: "#1a1a1a" },
-  { id: "cursor", name: "Cursor", kind: "Developer", tint: "#1a1a1a" },
-  { id: "zed", name: "Zed", kind: "Developer", tint: "#0e7490" },
-  {
-    id: "microsoft-word",
-    name: "Microsoft Word",
-    kind: "Third-party",
-    tint: "#185abd",
-  },
 ];
 
 export const RULE_GROUPS: RuleGroup[] = [
@@ -353,11 +323,6 @@ export function createInitialSettingsState(): SettingsState {
       mail: false,
       messages: false,
       notes: false,
-      slack: false,
-      notion: false,
-      vscode: false,
-      obsidian: false,
-      browsers: false,
     },
     watchEverywhere: false,
     autoIntegrate: false,

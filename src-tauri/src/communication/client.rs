@@ -71,14 +71,13 @@ where
         }
     }
 
-    pub async fn get_allowed_bundle_identifiers(&mut self) -> Result<Vec<String>, ProtocolError> {
-        match self
-            .send_request(Request::GetAllowedBundleIdentifiers)
-            .await?
-        {
-            Response::GetAllowedBundleIdentifiers { bundle_identifiers } => Ok(bundle_identifiers),
+    pub async fn get_integrations(
+        &mut self,
+    ) -> Result<Vec<crate::config::Integration>, ProtocolError> {
+        match self.send_request(Request::GetIntegrations).await? {
+            Response::GetIntegrations { integrations } => Ok(integrations),
             _ => Err(ProtocolError::UnexpectedResponse {
-                expected: "GetAllowedBundleIdentifiers",
+                expected: "GetIntegrations",
             }),
         }
     }
@@ -112,22 +111,28 @@ where
         .await
     }
 
-    pub async fn add_allowed_bundle_identifier(
-        &mut self,
-        bundle_identifier: &str,
-    ) -> Result<(), ProtocolError> {
-        self.send_ack_request(Request::AddAllowedBundleIdentifier {
-            bundle_identifier: bundle_identifier.to_string(),
+    pub async fn add_integration(&mut self, bundle_id: &str) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::AddIntegration {
+            bundle_id: bundle_id.to_string(),
         })
         .await
     }
 
-    pub async fn remove_allowed_bundle_identifier(
+    pub async fn remove_integration(&mut self, bundle_id: &str) -> Result<(), ProtocolError> {
+        self.send_ack_request(Request::RemoveIntegration {
+            bundle_id: bundle_id.to_string(),
+        })
+        .await
+    }
+
+    pub async fn set_integration_enabled(
         &mut self,
-        bundle_identifier: &str,
+        bundle_id: &str,
+        enabled: bool,
     ) -> Result<(), ProtocolError> {
-        self.send_ack_request(Request::RemoveAllowedBundleIdentifier {
-            bundle_identifier: bundle_identifier.to_string(),
+        self.send_ack_request(Request::SetIntegrationEnabled {
+            bundle_id: bundle_id.to_string(),
+            enabled,
         })
         .await
     }

@@ -92,28 +92,29 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn client_receives_allowed_bundle_identifiers_from_server() {
+    async fn client_receives_integrations_from_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
         let mut config = Config::new();
-        config.allowed_bundle_identifiers = vec!["com.example.Editor".to_string()];
+        config.integrations = vec![crate::config::Integration {
+            bundle_id: "com.example.Editor".to_string(),
+            enabled: true,
+        }];
         let config = Arc::new(Mutex::new(config));
         let mut client = Client::new(client_response_reader, client_request_writer);
         let mut server = Server::new(server_request_reader, server_response_writer, config);
 
-        let (bundle_identifiers, request) = tokio::join!(
-            client.get_allowed_bundle_identifiers(),
-            server.receive_request()
-        );
+        let (integrations, request) =
+            tokio::join!(client.get_integrations(), server.receive_request());
 
         assert_eq!(
-            bundle_identifiers.unwrap(),
-            vec!["com.example.Editor".to_string()]
+            integrations.unwrap(),
+            vec![crate::config::Integration {
+                bundle_id: "com.example.Editor".to_string(),
+                enabled: true,
+            }]
         );
-        assert!(matches!(
-            request.unwrap(),
-            Some(Request::GetAllowedBundleIdentifiers)
-        ));
+        assert!(matches!(request.unwrap(), Some(Request::GetIntegrations)));
     }
 
     #[tokio::test]
@@ -243,7 +244,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn client_can_add_allowed_bundle_identifier_on_server() {
+    async fn client_can_add_integration_on_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
         let config = Arc::new(Mutex::new(Config::new()));
@@ -255,30 +256,29 @@ mod tests {
         );
 
         let (ack, request) = tokio::join!(
-            client.add_allowed_bundle_identifier("com.example.Editor"),
+            client.add_integration("com.example.Editor"),
             server.receive_request()
         );
 
         assert!(ack.is_ok());
         assert!(matches!(
             request.unwrap(),
-            Some(Request::AddAllowedBundleIdentifier { bundle_identifier })
-                if bundle_identifier == "com.example.Editor"
+            Some(Request::AddIntegration { bundle_id }) if bundle_id == "com.example.Editor"
         ));
         assert!(
             config
                 .lock()
                 .await
-                .is_approved_bundle_identifier("com.example.Editor")
+                .is_integration_enabled("com.example.Editor")
         );
     }
 
     #[tokio::test]
-    async fn client_can_remove_allowed_bundle_identifier_on_server() {
+    async fn client_can_remove_integration_on_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
         let mut config = Config::new();
-        config.add_allowed_bundle_identifier("com.example.Editor".to_string());
+        config.add_integration("com.example.Editor".to_string());
         let config = Arc::new(Mutex::new(config));
         let mut client = Client::new(client_response_reader, client_request_writer);
         let mut server = Server::new(
@@ -288,21 +288,55 @@ mod tests {
         );
 
         let (ack, request) = tokio::join!(
-            client.remove_allowed_bundle_identifier("com.example.Editor"),
+            client.remove_integration("com.example.Editor"),
             server.receive_request()
         );
 
         assert!(ack.is_ok());
         assert!(matches!(
             request.unwrap(),
-            Some(Request::RemoveAllowedBundleIdentifier { bundle_identifier })
-                if bundle_identifier == "com.example.Editor"
+            Some(Request::RemoveIntegration { bundle_id }) if bundle_id == "com.example.Editor"
         ));
         assert!(
             !config
                 .lock()
                 .await
-                .is_approved_bundle_identifier("com.example.Editor")
+                .integrations
+                .iter()
+                .any(|integration| integration.bundle_id == "com.example.Editor")
+        );
+    }
+
+    #[tokio::test]
+    async fn client_can_set_integration_enabled_on_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config.add_integration("com.example.Editor".to_string());
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(
+            server_request_reader,
+            server_response_writer,
+            config.clone(),
+        );
+
+        let (ack, request) = tokio::join!(
+            client.set_integration_enabled("com.example.Editor", false),
+            server.receive_request()
+        );
+
+        assert!(ack.is_ok());
+        assert!(matches!(
+            request.unwrap(),
+            Some(Request::SetIntegrationEnabled { bundle_id, enabled })
+                if bundle_id == "com.example.Editor" && !enabled
+        ));
+        assert!(
+            !config
+                .lock()
+                .await
+                .is_integration_enabled("com.example.Editor")
         );
     }
 

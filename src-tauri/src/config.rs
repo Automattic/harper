@@ -4,7 +4,10 @@ use harper_core::{
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
-use serde::de::{DeserializeOwned, Error};
+use serde::{
+    Deserialize, Serialize,
+    de::{DeserializeOwned, Error},
+};
 use std::{fs, io, path::PathBuf, sync::Arc};
 use thiserror::Error;
 
@@ -24,7 +27,13 @@ pub struct Config {
     pub dialect: Dialect,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
-    pub allowed_bundle_identifiers: Vec<String>,
+    pub integrations: Vec<Integration>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Integration {
+    pub bundle_id: String,
+    pub enabled: bool,
 }
 
 impl Config {
@@ -34,41 +43,67 @@ impl Config {
             dialect: Dialect::American,
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
-            allowed_bundle_identifiers: Self::curated_allowed_bundle_identifiers(),
+            integrations: Self::curated_integrations(),
         }
     }
 
-    pub fn curated_allowed_bundle_identifiers() -> Vec<String> {
-        vec!["com.apple.TextEdit".to_string()]
+    pub fn curated_integrations() -> Vec<Integration> {
+        [
+            "com.apple.TextEdit",
+            "com.apple.mail",
+            "com.apple.MobileSMS",
+            "com.apple.Notes",
+        ]
+        .into_iter()
+        .map(|bundle_id| Integration {
+            bundle_id: bundle_id.to_string(),
+            enabled: true,
+        })
+        .collect()
     }
 
-    pub fn is_approved_bundle_identifier(&self, bundle_identifier: &str) -> bool {
-        Self::is_bundle_identifier_approved_by(&self.allowed_bundle_identifiers, bundle_identifier)
+    pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
+        Self::is_integration_enabled_in(&self.integrations, bundle_id)
     }
 
-    pub fn is_bundle_identifier_approved_by(
-        allowed_bundle_identifiers: &[String],
-        bundle_identifier: &str,
-    ) -> bool {
-        allowed_bundle_identifiers
+    pub fn is_integration_enabled_in(integrations: &[Integration], bundle_id: &str) -> bool {
+        integrations
             .iter()
-            .any(|allowed| allowed == bundle_identifier)
+            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
     }
 
-    pub fn add_allowed_bundle_identifier(&mut self, bundle_identifier: String) {
-        let bundle_identifier = bundle_identifier.trim();
-        if bundle_identifier.is_empty() || self.is_approved_bundle_identifier(bundle_identifier) {
+    pub fn add_integration(&mut self, bundle_id: String) {
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty()
+            || self
+                .integrations
+                .iter()
+                .any(|item| item.bundle_id == bundle_id)
+        {
             return;
         }
 
-        self.allowed_bundle_identifiers
-            .push(bundle_identifier.to_string());
-        self.allowed_bundle_identifiers.sort();
+        self.integrations.push(Integration {
+            bundle_id: bundle_id.to_string(),
+            enabled: true,
+        });
+        self.integrations
+            .sort_by(|a, b| a.bundle_id.cmp(&b.bundle_id));
     }
 
-    pub fn remove_allowed_bundle_identifier(&mut self, bundle_identifier: &str) {
-        self.allowed_bundle_identifiers
-            .retain(|allowed| allowed != bundle_identifier);
+    pub fn remove_integration(&mut self, bundle_id: &str) {
+        self.integrations
+            .retain(|integration| integration.bundle_id != bundle_id);
+    }
+
+    pub fn set_integration_enabled(&mut self, bundle_id: &str, enabled: bool) {
+        if let Some(integration) = self
+            .integrations
+            .iter_mut()
+            .find(|integration| integration.bundle_id == bundle_id)
+        {
+            integration.enabled = enabled;
+        }
     }
 
     pub async fn save_to_system(&self) -> Result<(), ConfigError> {
@@ -133,7 +168,7 @@ impl Config {
             "dialect": &self.dialect,
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
-            "allowed_bundle_identifiers": &self.allowed_bundle_identifiers,
+            "integrations": &self.integrations,
         }))
     }
 
@@ -149,11 +184,8 @@ impl Config {
             dialect: deserialize_field(object, "dialect")?,
             ignored_lints: deserialize_field(object, "ignored_lints")?,
             lint_config: deserialize_field(object, "lint_config")?,
-            allowed_bundle_identifiers: deserialize_optional_field(
-                object,
-                "allowed_bundle_identifiers",
-            )?
-            .unwrap_or_else(Self::curated_allowed_bundle_identifiers),
+            integrations: deserialize_optional_field(object, "integrations")?
+                .unwrap_or_else(Self::curated_integrations),
         })
     }
 }
@@ -196,7 +228,7 @@ impl Default for Config {
 
 #[cfg(test)]
 mod tests {
-    use super::Config;
+    use super::{Config, Integration};
     use harper_core::DictWordMetadata;
 
     #[test]
@@ -213,7 +245,7 @@ mod tests {
         assert!(serialized.contains("dialect"));
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
-        assert!(serialized.contains("allowed_bundle_identifiers"));
+        assert!(serialized.contains("integrations"));
     }
 
     #[test]
@@ -228,10 +260,7 @@ mod tests {
 
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
-        assert_eq!(
-            deserialized.allowed_bundle_identifiers,
-            config.allowed_bundle_identifiers
-        );
+        assert_eq!(deserialized.integrations, config.integrations);
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -240,66 +269,74 @@ mod tests {
     }
 
     #[test]
-    fn new_uses_curated_allowed_bundle_identifiers() {
+    fn new_uses_curated_integrations() {
         let config = Config::new();
 
-        assert_eq!(
-            config.allowed_bundle_identifiers,
-            Config::curated_allowed_bundle_identifiers()
-        );
-        assert!(config.is_approved_bundle_identifier("com.apple.TextEdit"));
+        assert_eq!(config.integrations, Config::curated_integrations());
+        assert!(config.is_integration_enabled("com.apple.TextEdit"));
+        assert!(config.is_integration_enabled("com.apple.mail"));
+        assert!(config.is_integration_enabled("com.apple.MobileSMS"));
+        assert!(config.is_integration_enabled("com.apple.Notes"));
     }
 
     #[test]
-    fn deserialize_main_uses_curated_bundle_identifiers_when_missing() {
+    fn deserialize_main_uses_curated_integrations_when_missing() {
         let config = Config::new();
         let mut value =
             serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
-        value
-            .as_object_mut()
-            .unwrap()
-            .remove("allowed_bundle_identifiers");
+        value.as_object_mut().unwrap().remove("integrations");
 
         let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
 
-        assert_eq!(
-            deserialized.allowed_bundle_identifiers,
-            Config::curated_allowed_bundle_identifiers()
-        );
+        assert_eq!(deserialized.integrations, Config::curated_integrations());
     }
 
     #[test]
-    fn deserialize_main_preserves_allowed_bundle_identifiers() {
+    fn deserialize_main_preserves_integrations() {
         let mut config = Config::new();
-        config.allowed_bundle_identifiers = vec!["com.example.Editor".to_string()];
+        config.integrations = vec![Integration {
+            bundle_id: "com.example.Editor".to_string(),
+            enabled: false,
+        }];
 
         let deserialized = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
 
         assert_eq!(
-            deserialized.allowed_bundle_identifiers,
-            vec!["com.example.Editor".to_string()]
+            deserialized.integrations,
+            vec![Integration {
+                bundle_id: "com.example.Editor".to_string(),
+                enabled: false,
+            }]
         );
     }
 
     #[test]
-    fn allowed_bundle_identifier_helpers_add_remove_and_check() {
+    fn integration_helpers_add_remove_enable_and_check() {
         let mut config = Config::new();
 
-        config.add_allowed_bundle_identifier(" com.example.Editor ".to_string());
-        config.add_allowed_bundle_identifier("com.example.Editor".to_string());
-        assert!(config.is_approved_bundle_identifier("com.example.Editor"));
+        config.add_integration(" com.example.Editor ".to_string());
+        config.add_integration("com.example.Editor".to_string());
+        assert!(config.is_integration_enabled("com.example.Editor"));
         assert_eq!(
             config
-                .allowed_bundle_identifiers
+                .integrations
                 .iter()
-                .filter(|bundle_identifier| bundle_identifier.as_str() == "com.example.Editor")
+                .filter(|integration| integration.bundle_id == "com.example.Editor")
                 .count(),
             1
         );
 
-        config.remove_allowed_bundle_identifier("com.example.Editor");
+        config.set_integration_enabled("com.example.Editor", false);
+        assert!(!config.is_integration_enabled("com.example.Editor"));
 
-        assert!(!config.is_approved_bundle_identifier("com.example.Editor"));
+        config.remove_integration("com.example.Editor");
+
+        assert!(
+            !config
+                .integrations
+                .iter()
+                .any(|integration| integration.bundle_id == "com.example.Editor")
+        );
     }
 
     #[test]

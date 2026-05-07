@@ -1,7 +1,7 @@
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
-use crate::config::Config;
+use crate::config::{Config, Integration};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
@@ -292,19 +292,19 @@ async fn add_to_dictionary(
 }
 
 #[tauri::command]
-async fn get_allowed_bundle_identifiers(
+async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Vec<String>, String> {
-    Ok(config.lock().await.allowed_bundle_identifiers.clone())
+) -> Result<Vec<Integration>, String> {
+    Ok(config.lock().await.integrations.clone())
 }
 
 #[tauri::command]
-async fn add_allowed_bundle_identifier(
-    bundle_identifier: String,
+async fn add_integration(
+    bundle_id: String,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
-    config.add_allowed_bundle_identifier(bundle_identifier);
+    config.add_integration(bundle_id);
     config
         .save_to_system()
         .await
@@ -314,12 +314,28 @@ async fn add_allowed_bundle_identifier(
 }
 
 #[tauri::command]
-async fn remove_allowed_bundle_identifier(
-    bundle_identifier: String,
+async fn remove_integration(
+    bundle_id: String,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
-    config.remove_allowed_bundle_identifier(&bundle_identifier);
+    config.remove_integration(&bundle_id);
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn set_integration_enabled(
+    bundle_id: String,
+    enabled: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.set_integration_enabled(&bundle_id, enabled);
     config
         .save_to_system()
         .await
@@ -370,9 +386,10 @@ pub fn run_tauri() {
             set_dictionary,
             ignore_lint,
             add_to_dictionary,
-            get_allowed_bundle_identifiers,
-            add_allowed_bundle_identifier,
-            remove_allowed_bundle_identifier,
+            get_integrations,
+            add_integration,
+            remove_integration,
+            set_integration_enabled,
         ])
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label()) {
@@ -473,8 +490,7 @@ pub fn run_highlighter() {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let allowed_bundle_identifiers =
-        Rc::new(RefCell::new(startup_config.allowed_bundle_identifiers));
+    let integrations = Rc::new(RefCell::new(startup_config.integrations));
     let linter = Rc::new(RefCell::new(startup_linter));
 
     let lint_ignored_lints = ignored_lints.clone();
@@ -500,7 +516,7 @@ pub fn run_highlighter() {
     let refresh_ignored_lints = ignored_lints.clone();
     let refresh_user_dictionary = user_dictionary.clone();
     let refresh_dialect = dialect.clone();
-    let refresh_allowed_bundle_identifiers = allowed_bundle_identifiers.clone();
+    let refresh_integrations = integrations.clone();
     let refresh_linter = linter.clone();
 
     let lint_text = move |text: &str| {
@@ -542,7 +558,7 @@ pub fn run_highlighter() {
             dialect: *dictionary_dialect.borrow(),
             ignored_lints: IgnoredLints::new(),
             lint_config,
-            allowed_bundle_identifiers: Vec::new(),
+            integrations: Vec::new(),
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
@@ -569,14 +585,14 @@ pub fn run_highlighter() {
             &refresh_ignored_lints,
             &refresh_user_dictionary,
             &refresh_dialect,
-            &refresh_allowed_bundle_identifiers,
+            &refresh_integrations,
             &refresh_linter,
         ),
         Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
     };
 
     #[cfg(target_os = "macos")]
-    let broker = mac_broker::MacBroker::new(allowed_bundle_identifiers);
+    let broker = mac_broker::MacBroker::new(integrations);
 
     #[cfg(not(target_os = "macos"))]
     let broker = os_broker::NoopBroker;
@@ -605,14 +621,14 @@ fn fetch_highlighter_config(
         let mutable_dictionary = client.get_dictionary().await?;
         let ignored_lints = client.get_ignored_lints().await?;
         let lint_config = client.get_lint_config().await?;
-        let allowed_bundle_identifiers = client.get_allowed_bundle_identifiers().await?;
+        let integrations = client.get_integrations().await?;
 
         Ok(Config {
             dialect,
             mutable_dictionary,
             ignored_lints,
             lint_config,
-            allowed_bundle_identifiers,
+            integrations,
         })
     })
 }
@@ -622,13 +638,13 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    allowed_bundle_identifiers: &Rc<RefCell<Vec<String>>>,
+    integrations: &Rc<RefCell<Vec<Integration>>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
     let linter_config = config.create_linter();
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
-    *allowed_bundle_identifiers.borrow_mut() = config.allowed_bundle_identifiers;
+    *integrations.borrow_mut() = config.integrations;
     *linter.borrow_mut() = linter_config;
 }

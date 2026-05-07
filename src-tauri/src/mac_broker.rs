@@ -19,7 +19,7 @@ use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
 
-use crate::config::Config;
+use crate::config::{Config, Integration};
 use crate::os_broker::OsBroker;
 use crate::rect::{ActionableLint, Rect};
 
@@ -30,14 +30,14 @@ use crate::rect::{ActionableLint, Rect};
 /// targeting the app the user was reviewing.
 pub struct MacBroker {
     last_focused: Option<pid_t>,
-    allowed_bundle_identifiers: Rc<RefCell<Vec<String>>>,
+    integrations: Rc<RefCell<Vec<Integration>>>,
 }
 
 impl MacBroker {
-    pub fn new(allowed_bundle_identifiers: Rc<RefCell<Vec<String>>>) -> Self {
+    pub fn new(integrations: Rc<RefCell<Vec<Integration>>>) -> Self {
         Self {
             last_focused: None,
-            allowed_bundle_identifiers,
+            integrations,
         }
     }
 
@@ -56,9 +56,7 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new(Rc::new(RefCell::new(
-            Config::curated_allowed_bundle_identifiers(),
-        )))
+        Self::new(Rc::new(RefCell::new(Config::curated_integrations())))
     }
 }
 
@@ -76,7 +74,7 @@ impl OsBroker for MacBroker {
             }
         };
 
-        if !is_pid_approved(pid, &self.allowed_bundle_identifiers.borrow()) {
+        if !is_pid_approved(pid, &self.integrations.borrow()) {
             return Vec::new();
         }
 
@@ -113,7 +111,7 @@ fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     Ok(pid)
 }
 
-fn is_pid_approved(pid: pid_t, allowed_bundle_identifiers: &[String]) -> bool {
+fn is_pid_approved(pid: pid_t, integrations: &[Integration]) -> bool {
     let bundle_identifier = match bundle_identifier_for_pid(pid) {
         Ok(Some(bundle_identifier)) => bundle_identifier,
         Ok(None) => return false,
@@ -123,7 +121,7 @@ fn is_pid_approved(pid: pid_t, allowed_bundle_identifiers: &[String]) -> bool {
         }
     };
 
-    Config::is_bundle_identifier_approved_by(allowed_bundle_identifiers, &bundle_identifier)
+    Config::is_integration_enabled_in(integrations, &bundle_identifier)
 }
 
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {

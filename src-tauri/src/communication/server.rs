@@ -62,8 +62,8 @@ where
             Request::GetIgnoredLints => Response::GetIgnoredLints {
                 ignored_lints: self.config.lock().await.ignored_lints.clone(),
             },
-            Request::GetAllowedBundleIdentifiers => Response::GetAllowedBundleIdentifiers {
-                bundle_identifiers: self.config.lock().await.allowed_bundle_identifiers.clone(),
+            Request::GetIntegrations => Response::GetIntegrations {
+                integrations: self.config.lock().await.integrations.clone(),
             },
             Request::SetLintConfig { config } => {
                 let mut stored_config = self.config.lock().await;
@@ -97,9 +97,9 @@ where
 
                 Response::Ack
             }
-            Request::AddAllowedBundleIdentifier { bundle_identifier } => {
+            Request::AddIntegration { bundle_id } => {
                 let mut config = self.config.lock().await;
-                config.add_allowed_bundle_identifier(bundle_identifier.clone());
+                config.add_integration(bundle_id.clone());
 
                 if let Err(error) = config.save_to_system().await {
                     eprintln!("failed to save config: {error}");
@@ -107,9 +107,19 @@ where
 
                 Response::Ack
             }
-            Request::RemoveAllowedBundleIdentifier { bundle_identifier } => {
+            Request::RemoveIntegration { bundle_id } => {
                 let mut config = self.config.lock().await;
-                config.remove_allowed_bundle_identifier(bundle_identifier);
+                config.remove_integration(bundle_id);
+
+                if let Err(error) = config.save_to_system().await {
+                    eprintln!("failed to save config: {error}");
+                }
+
+                Response::Ack
+            }
+            Request::SetIntegrationEnabled { bundle_id, enabled } => {
+                let mut config = self.config.lock().await;
+                config.set_integration_enabled(bundle_id, *enabled);
 
                 if let Err(error) = config.save_to_system().await {
                     eprintln!("failed to save config: {error}");
