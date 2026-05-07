@@ -1,7 +1,8 @@
 use crate::{
     Lint, Token, TokenStringExt,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, SequenceExpr, TimeUnitExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::Word,
 };
 
 pub struct ASomeTime {
@@ -11,18 +12,14 @@ pub struct ASomeTime {
 impl Default for ASomeTime {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("a").t_ws().t_aco("some").t_ws().t_set(&[
-                "time",
-                "days",
-                "hours",
-                "milliseconds",
-                "minutes",
-                "ms",
-                "months",
-                "seconds",
-                "weeks",
-                "years",
-            ]),
+            expr: SequenceExpr::aco("a")
+                .t_ws()
+                .t_aco("some")
+                .t_ws()
+                .then_any_of(vec![
+                    Box::new(Word::new("time")),
+                    Box::new(TimeUnitExpr::plurals_only()),
+                ]),
         }
     }
 }
