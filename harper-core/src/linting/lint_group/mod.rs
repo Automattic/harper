@@ -39,6 +39,7 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
+use super::by_ones_own::ByOnesOwn;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
@@ -532,6 +533,7 @@ impl LintGroup {
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(ByAccident, true);
+        insert_expr_rule!(ByOnesOwn, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(CautionaryTale, true);
