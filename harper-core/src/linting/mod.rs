@@ -203,6 +203,7 @@ mod rise_the_ranks;
 mod roller_skated;
 mod safe_to_save;
 mod save_to_safe;
+mod self_harm_oneself;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
 mod simple_past_to_past_participle;
@@ -765,6 +766,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }

@@ -192,6 +192,7 @@ use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
+use super::self_harm_oneself::SelfHarmOneself;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
@@ -682,6 +683,7 @@ impl LintGroup {
         insert_expr_rule!(RollerSkated, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
+        insert_expr_rule!(SelfHarmOneself, true);
         insert_struct_rule_with_dict!(SentenceCapitalization, true);
         insert_expr_rule!(ShootOneselfInTheFoot, true);
         insert_expr_rule!(SimplePastToPastParticiple, true);

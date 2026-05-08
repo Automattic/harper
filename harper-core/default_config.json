@@ -3010,6 +3010,13 @@
 								"state": true,
 								"label": "Side Tangent"
 							}
+						},
+						{
+							"Bool": {
+								"name": "SelfHarmOneself",
+								"state": true,
+								"label": "Self Harm Oneself"
+							}
 						}
 					]
 				}
