@@ -84,6 +84,7 @@ use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
+use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
@@ -576,6 +577,7 @@ impl LintGroup {
         insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(FleshOutVsFullFledged, true);
+        insert_expr_rule!(FootInchMinuteSecondSymbols, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);

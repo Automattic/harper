@@ -330,6 +330,7 @@ fn lex_punctuation(source: &[char]) -> Option<FoundToken> {
     })
 }
 
+/// Specifically deals only with double quotes: ASCII and smart/typographic
 fn lex_quote(source: &[char]) -> Option<FoundToken> {
     let c = *source.first()?;
 
