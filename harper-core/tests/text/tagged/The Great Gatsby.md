@@ -188,8 +188,8 @@
 # NSg/VB VB/C N🅪Sg+      NPl+       . VB/C IPl+ VP    J/P D$+ NSg+  NPr/J/R/P N🅪Sg/J VB/C Nᴹ/VB/J
 > like         new    money   from the mint     , promising to unfold the shining secrets that     only
 # NSg/VB/J/C/P NSg/J+ N🅪Sg/J+ P    D   NSg/VB/J . Nᴹ/Vg/J   P  NSg/VB D   Nᴹ/Vg/J NPl/V3+ I/C/Ddem J/R/C
-> Midas and  Morgan and  Mæcenas knew . And  I       had the high       intention of reading   many
-# NPr   VB/C NPr+   VB/C ?       VPt  . VB/C ISg/#r+ VP  D   NSg/VB/J/R NSg/VB    P  NPrᴹ/Vg/J NSg/I/J/Dq+
+> Midas and  Morgan and  Mæcenas knew . And  I       had the high       intention of reading     many
+# NPr   VB/C NPr+   VB/C ?       VPt  . VB/C ISg/#r+ VP  D   NSg/VB/J/R NSg/VB    P  NPr🅪Sg/Vg/J NSg/I/J/Dq+
 > other     books   besides . I       was  rather     literary in        college — one      year I       wrote a   series
 # NSg/VB/J+ NPl/V3+ R/P     . ISg/#r+ VLPt NPr/VB/J/R J        NPr/J/R/P NSg     . NSg/I/J+ NSg+ ISg/#r+ VPt   D/P NSgPl
 > of very solemn and  obvious editorials for   the Yale News   — and  now       I       was  going   to
@@ -3458,8 +3458,8 @@
 # NSg/VB/J+ .
 >
 #
-> Reading   over    what   I       have    written so          far      , I       see    I       have    given       the impression that
-# NPrᴹ/Vg/J NSg/J/P NSg/I+ ISg/#r+ NSg/VXB VPp/J   NSg/I/J/R/C NSg/VB/J . ISg/#r+ NSg/VB ISg/#r+ NSg/VXB NSg/VPp/J/P D+  NSg/VB+    I/C/Ddem
+> Reading     over    what   I       have    written so          far      , I       see    I       have    given       the impression that
+# NPr🅪Sg/Vg/J NSg/J/P NSg/I+ ISg/#r+ NSg/VXB VPp/J   NSg/I/J/R/C NSg/VB/J . ISg/#r+ NSg/VB ISg/#r+ NSg/VXB NSg/VPp/J/P D+  NSg/VB+    I/C/Ddem
 > the events of three nights  several weeks  apart were     all          that      absorbed me       . On  the
 # D   NPl/V3 P  NSg+  NPl/V3+ J/Dq+   NPrPl+ J     NSg/VLPt NSg/I/J/C/Dq I/C/Ddem+ VP/J     NPr/ISg+ . J/P D+
 > contrary  , they were     merely casual events in        a    crowded summer     , and  , until much
@@ -11224,8 +11224,8 @@
 # NSg/J R/C/P I/C/Ddem+ . NPr/ISg+ VP   NPr/ISg+ ISg/#r+ NSg+ NSg/VB/J/C/P D/P NSg/VB NSg/C . VB/C ISg/#r+ N🅪Sg/VB/J ISg+ R/C/P NPr/ISg+ . .
 >
 #
-> He       was  reluctant to close    the book    , reading   each item    aloud and  then      looking
-# NPr/ISg+ VLPt J         P  NSg/VB/J D+  NSg/VB+ . NPrᴹ/Vg/J Dq+  NSg/VB+ J     VB/C NSg/J/R/C Nᴹ/Vg/J
+> He       was  reluctant to close    the book    , reading     each item    aloud and  then      looking
+# NPr/ISg+ VLPt J         P  NSg/VB/J D+  NSg/VB+ . NPr🅪Sg/Vg/J Dq+  NSg/VB+ J     VB/C NSg/J/R/C Nᴹ/Vg/J
 > eagerly at    me       . I       think  he       rather     expected me       to copy   down        the list    for   my  own
 # R       NSg/P NPr/ISg+ . ISg/#r+ NSg/VB NPr/ISg+ NPr/VB/J/R NSg/VP/J NPr/ISg+ P  NSg/VB N🅪Sg/VB/J/P D+  NSg/VB+ R/C/P D$+ NSg/VB/J+
 > use      .

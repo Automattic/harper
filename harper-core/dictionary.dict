@@ -6270,6 +6270,7 @@ MSG/NOg             # flavour enhancer
 MSRP/NSg
 MST/ONgV
 MSW/N
+MSX/NOgS            # 8-bit series of Japanese computers
 MT/JNOg             # US state (Montana)
 MTV/Og
 MVP/Ng              # most valuable player
@@ -13472,7 +13473,7 @@ atomisation/NwgS!_₹
 atomise/VGd>SZ!_₹
 atomiser/NgS!_₹
 atomistic/J
-atomization/NwgS!_₹
+atomization/NwgS   
 atomize/VGd>SZ
 atomizer/NgS
 atonal/JY
@@ -33920,6 +33921,7 @@ medusae/9
 meed/NgV
 meek/~JY^>pV
 meekness/Ng
+meerkat/NgS
 meerschaum/NSg
 meet/~VGSNgJz
 meet up/V/
@@ -41970,7 +41972,7 @@ reader/~Ng
 readership/~NSg
 readily/~Ry
 readiness/~Ng
-reading/~V6Ng
+reading/~V6NwgS
 readme/NgS
 readmitted/VtT
 readout/NSg
@@ -42120,6 +42122,7 @@ reconciler/NgS
 reconciliation/~NS
 recondite/JNSgV
 reconditioner/NgS
+reconfigurability/Nmg
 reconfiguration/N
 reconfigure/VGdS
 reconnaissance/~NgS
@@ -45381,9 +45384,9 @@ similitude/NgE
 simmer/VGdSNg
 simonise/Vb!_₹
 simonize/VbdSG
-simonized/VtT!_₹
-simonizes/Vh!_₹
-simonizing/V6!_₹
+simonized/VtT
+simonizes/Vh
+simonizing/V6
 simony/Ng
 simp/NSgVdG
 simpatico/J
@@ -45436,6 +45439,10 @@ singsong/NSgJVdG
 singular/~JYNSg
 singularity/~NSg
 singulative/NSgJ
+sinicise/VGdS!_₹
+sinicisation/Nmg!_₹
+sinicization/Nmg
+sinicize/VGdS
 sinister/~J
 sink/~VG>SNgBZ
 sinkable/JU
@@ -53822,6 +53829,7 @@ Alexandre/OgS
 AliExpress/Og
 Alibaba/Og
 AlphaFold/Og        # Google DeepMind project
+Altera/Og           # FPGA company
 Ambien/NSg          # insomnia treatment
 AngularJS/Og
 Anker/Sg
@@ -53959,6 +53967,8 @@ Evo/OgS             # car model
 Expedia/Og
 Exynos/OgJ          # Samsung SoC series.
 FAANG/NSg           # Facebook, Amazon, Apple, Netflix, Google
+#FAT/Ng              # family of file systems - TODO currrently causes 'fat' to be flagged as misspelled
+FAT16/Ng            # file system
 FAT32/Ng            # file system
 FFI/Ng              # foreign function interface - see also interop
 FFmpeg/Og
@@ -54017,6 +54027,7 @@ Graphviz/Sg
 Gravatar/Og
 H.265/ONSg          # High Efficiency Video Coding
 HAProxy/Og          # high availability proxy
+HDL/NgS             # hardware description language
 HDR/J               # high dynamic range
 HEIC/ONSg           # High Efficiency Image Container
 HEIF/ONSg           # High Efficiency Image Format
@@ -54288,6 +54299,7 @@ Snapchat/Sg
 SolidJS/Og          # ui lib
 Soros/Og            # financier George Soros
 SpaceX/Og
+Speccy/OgS          # nickname of the Sinclair ZX Spectrum 8-bit computer
 Spotify/Og
 Stellantis/Og       # car company
 Substack/Og
@@ -54345,6 +54357,7 @@ VAG/Og              # car company
 VARCHAR/NgS
 VCS/Ng              # version control system
 VFD/NgS             # vacuum fluorescent display
+VHDL/N              # hardware description language
 VLIW                # very long instruction word (cpu architecture)
 VMware/ONSg
 VPN/NSg             # virtual private network
@@ -54353,6 +54366,7 @@ VS Code/Og
 Vaadin/Sg
 VaultPress/Og
 Vercel/Og           # cloud
+Verlilog/Og.        # hardware description language
 VideoPress/Og
 Viktor/Sg
 Vim script/Omg      # the spelling/capitalization variant used on Vim's docs
@@ -54391,6 +54405,7 @@ XPath/Og            # XML path language
 Xbox/NOSg
 Xcode/Og            # Apple IDE
 XeTeX/Og            # TeX typesetting engine
+Xilinx/Og           # FPGA company
 Xorg/ONSg
 Y2K/g               # year 2000
 YAML/OgS            # markup language
@@ -54559,6 +54574,7 @@ strat/NgS           # gamer slang strategy
 subchannel/NgS
 subexpression/NgS
 subkey/NgS
+subpixel/NgS        # only in American Heritage Dictionary
 subreddit/NgS       # see Reddit
 supersequence/NgS
 synchronic/JQ       # linguistics
