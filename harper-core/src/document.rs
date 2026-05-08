@@ -776,7 +776,7 @@ impl Document {
 
             let is_tldr_chunk = tl.kind.is_word()
                 && tl.span.len() == 2
-                && tl.get_ch(&self.source).eq_ch(&['t', 'l'])
+                && tl.get(&self.source) == ['t', 'l']
                 && simicolon.kind.is_semicolon()
                 && dr.kind.is_word()
                 && dr.span.len() >= 2

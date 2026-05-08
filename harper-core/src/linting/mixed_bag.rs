@@ -1,4 +1,3 @@
-use crate::CharStringExt;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
@@ -35,10 +34,9 @@ impl ExprLinter for MixedBag {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let bad_span = find_the_only_token_matching(toks, src, |tok, _src| {
-            tok.get_ch(src).eq_ch(&['b', 'a', 'd'])
-        })?
-        .span;
+        let bad_span =
+            find_the_only_token_matching(toks, src, |tok, _src| tok.get(src) == ['b', 'a', 'd'])?
+                .span;
 
         Some(Lint {
             span: bad_span,

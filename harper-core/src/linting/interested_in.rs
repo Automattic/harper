@@ -1,6 +1,6 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    CharStringExt, Token, TokenKind,
+    Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -31,10 +31,11 @@ impl ExprLinter for InterestedIn {
     }
 
     fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let prep_span = tokens.last().unwrap().span;
-        let prep_chars = prep_span.get_content(source);
+        let tok = tokens.last()?;
+        let prep_span = tok.span;
+        let prep_chars = tok.get(source);
 
-        if prep_chars.eq_ch(&['i', 'n']) {
+        if prep_chars == ['i', 'n'] {
             return None;
         }
 
@@ -43,7 +44,7 @@ impl ExprLinter for InterestedIn {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "in".chars().collect(),
-                prep_chars,
+                prep_chars.as_slice(),
             )],
             message: "The correct preposition to use with `interested` is `in`.".to_string(),
             ..Default::default()

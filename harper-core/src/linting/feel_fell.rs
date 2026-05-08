@@ -1,5 +1,4 @@
 use crate::Token;
-use crate::char_string::CharStringExt;
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
@@ -47,7 +46,7 @@ impl ExprLinter for FeelFell {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let fell_token = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.get_ch(src).eq_ch(&['f', 'e', 'l', 'l'])
+            tok.get(src) == ['f', 'e', 'l', 'l']
         })?;
 
         Some(Lint {

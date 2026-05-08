@@ -55,9 +55,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
     let tokspan = toks.span()?;
     let (adjtok, nountok) = (toks.first()?, toks.last()?);
 
-    let badadj = adjtok
-        .get_ch(src)
-        .eq_ch(&['v', 'i', 's', 'c', 'o', 'u', 's']);
+    let badadj = adjtok.get(src) == ['v', 'i', 's', 'c', 'o', 'u', 's'];
 
     let badnoun = match pref {
         Prefer::Circle => nountok

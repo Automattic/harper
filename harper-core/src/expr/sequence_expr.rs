@@ -1,7 +1,7 @@
 use paste::paste;
 
 use crate::{
-    CharStringExt, Lrc, Span, Token, TokenKind,
+    Lrc, Span, Token, TokenKind,
     expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
@@ -298,7 +298,7 @@ impl SequenceExpr {
     /// Match any word except the ones in `words`.
     pub fn then_word_except(self, words: &'static [&'static str]) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
-            !tok.kind.is_word() || !words.iter().any(|&word| tok.get_ch(src).eq_str(word))
+            !tok.kind.is_word() || !words.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -329,7 +329,7 @@ impl SequenceExpr {
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
-            pred_is(&tok.kind) && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
+            pred_is(&tok.kind) && !ex.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -390,7 +390,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !pred_not(&tok.kind)
-                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
+                && !ex.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -424,7 +424,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !preds_isnt.iter().any(|pred| pred(&tok.kind))
-                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
+                && !ex.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -476,7 +476,7 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
-                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
+                && !ex.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -492,7 +492,7 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds.iter().any(|pred| pred(&tok.kind))
-                || words.iter().any(|&word| tok.get_ch(src).eq_str(word))
+                || words.iter().any(|&word| tok.get(src) == word)
         })
     }
 
@@ -511,7 +511,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
                 && !pred_not(&tok.kind)
-                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
+                && !ex.iter().any(|&word| tok.get(src) == word)
         })
     }
 

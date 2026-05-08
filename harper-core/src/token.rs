@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+use crate::char_slice::CaseInsensitiveCharSlice;
 use crate::{FatToken, Span, TokenKind};
 
 /// Represents a semantic, parsed component of a [`Document`](crate::Document).
@@ -14,6 +15,11 @@ pub struct Token {
 impl Token {
     pub fn new(span: Span<char>, kind: TokenKind) -> Self {
         Self { span, kind }
+    }
+
+    /// Get the token's content as a `CaseInsensitiveCharSlice`.
+    pub fn get<'a>(&self, source: &'a [char]) -> CaseInsensitiveCharSlice<'a> {
+        CaseInsensitiveCharSlice::new(self.get_ch(source))
     }
 
     /// Get the token's content as a slice of characters.

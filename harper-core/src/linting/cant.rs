@@ -1,10 +1,10 @@
 use super::{ExprLinter, Suggestion};
 use crate::Lint;
+use crate::Token;
 use crate::expr::{Expr, LongestMatchOf, SequenceExpr};
 use crate::linting::LintKind;
 use crate::linting::expr_linter::Chunk;
 use crate::linting::expr_linter::find_the_only_token_matching;
-use crate::{CharStringExt, Token};
 
 pub struct Cant {
     expr: LongestMatchOf,
@@ -40,7 +40,7 @@ impl ExprLinter for Cant {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let token = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.get_ch(src).eq_ch(&['c', 'a', 'n', 't'])
+            tok.get(src) == ['c', 'a', 'n', 't']
         })?;
 
         let jargon = token.get_ch(src);

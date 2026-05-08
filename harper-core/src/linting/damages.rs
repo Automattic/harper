@@ -88,7 +88,7 @@ impl ExprLinter for Damages {
             if (prev_word.kind.is_adjective()
                 || prev_word.kind.is_determiner()
                 || prev_word.kind.is_preposition())
-                && !prev_word.get_ch(src).eq_ch(&['t', 'o'])
+                && prev_word.get(src) != ['t', 'o']
             {
                 can = CanPrecede::Noun;
             }

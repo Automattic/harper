@@ -3,6 +3,7 @@
 
 mod case;
 mod char_ext;
+mod char_slice;
 mod char_string;
 mod currency;
 mod dict_word_metadata;
