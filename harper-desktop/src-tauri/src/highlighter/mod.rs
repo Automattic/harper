@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 use std::time::Duration;
 
 pub use error::Error;
-use window_manager::WindowManager;
+use window_manager::{WindowManager, WindowManagerCallbacks, WindowManagerIntervals};
 
 use harper_core::{Document, linting::Lint};
 
@@ -51,13 +51,17 @@ impl Highlighter {
             window_manager: WindowManager::new(
                 context.clone(),
                 Box::new(os_broker),
-                lint_text,
-                ignore_lint,
-                add_to_dictionary,
-                disable_rule,
-                refresh_config,
-                DEFAULT_READ_INTERVAL,
-                Duration::from_secs(1),
+                WindowManagerCallbacks {
+                    lint_text,
+                    ignore_lint,
+                    add_to_dictionary,
+                    disable_rule,
+                    refresh_config,
+                },
+                WindowManagerIntervals {
+                    read: DEFAULT_READ_INTERVAL,
+                    config_poll: Duration::from_secs(1),
+                },
             )?,
             context,
         })

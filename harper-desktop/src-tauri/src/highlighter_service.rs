@@ -222,10 +222,10 @@ impl HighlighterWorker {
             let _ = shutdown_sender.send(());
         }
 
-        if let Some(thread) = self.thread.take() {
-            if let Err(error) = thread.join() {
-                eprintln!("highlighter service thread panicked: {error:?}");
-            }
+        if let Some(thread) = self.thread.take()
+            && let Err(error) = thread.join()
+        {
+            eprintln!("highlighter service thread panicked: {error:?}");
         }
     }
 }

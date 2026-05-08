@@ -34,32 +34,40 @@ pub struct WindowManager {
     config_poll_interval: Duration,
 }
 
+pub struct WindowManagerCallbacks {
+    pub lint_text: LintText,
+    pub ignore_lint: IgnoreLint,
+    pub add_to_dictionary: AddToDictionary,
+    pub disable_rule: DisableRule,
+    pub refresh_config: RefreshConfig,
+}
+
+pub struct WindowManagerIntervals {
+    pub read: Duration,
+    pub config_poll: Duration,
+}
+
 impl WindowManager {
     /// Creates the event loop before windows exist because winit requires window creation to happen
     /// from inside that loop's lifecycle callbacks.
     pub fn new(
         context: egui::Context,
         os_broker: Box<dyn OsBroker>,
-        lint_text: LintText,
-        ignore_lint: IgnoreLint,
-        add_to_dictionary: AddToDictionary,
-        disable_rule: DisableRule,
-        refresh_config: RefreshConfig,
-        read_interval: Duration,
-        config_poll_interval: Duration,
+        callbacks: WindowManagerCallbacks,
+        intervals: WindowManagerIntervals,
     ) -> Result<Self, Error> {
         Ok(Self {
             event_loop: EventLoop::new()?,
             context,
             rects: Vec::new(),
             os_broker,
-            lint_text,
-            ignore_lint,
-            add_to_dictionary,
-            disable_rule,
-            refresh_config,
-            read_interval,
-            config_poll_interval,
+            lint_text: callbacks.lint_text,
+            ignore_lint: callbacks.ignore_lint,
+            add_to_dictionary: callbacks.add_to_dictionary,
+            disable_rule: callbacks.disable_rule,
+            refresh_config: callbacks.refresh_config,
+            read_interval: intervals.read,
+            config_poll_interval: intervals.config_poll,
         })
     }
 
@@ -80,13 +88,17 @@ impl WindowManager {
             self.context,
             self.rects,
             self.os_broker,
-            self.lint_text,
-            self.ignore_lint,
-            self.add_to_dictionary,
-            self.disable_rule,
-            self.refresh_config,
-            self.read_interval,
-            self.config_poll_interval,
+            WindowManagerCallbacks {
+                lint_text: self.lint_text,
+                ignore_lint: self.ignore_lint,
+                add_to_dictionary: self.add_to_dictionary,
+                disable_rule: self.disable_rule,
+                refresh_config: self.refresh_config,
+            },
+            WindowManagerIntervals {
+                read: self.read_interval,
+                config_poll: self.config_poll_interval,
+            },
         );
 
         self.event_loop
@@ -124,25 +136,26 @@ impl WindowManagerApp {
         context: egui::Context,
         rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
-        lint_text: LintText,
-        ignore_lint: IgnoreLint,
-        add_to_dictionary: AddToDictionary,
-        disable_rule: DisableRule,
-        refresh_config: RefreshConfig,
-        read_interval: Duration,
-        config_poll_interval: Duration,
+        callbacks: WindowManagerCallbacks,
+        intervals: WindowManagerIntervals,
     ) -> Self {
+        let read_interval = intervals.read;
         Self {
             context,
             windows: Vec::new(),
-            render_state: RenderState::new(rects, ignore_lint, add_to_dictionary, disable_rule),
+            render_state: RenderState::new(
+                rects,
+                callbacks.ignore_lint,
+                callbacks.add_to_dictionary,
+                callbacks.disable_rule,
+            ),
             os_broker,
-            lint_text,
+            lint_text: callbacks.lint_text,
             read_interval,
-            config_poll_interval,
+            config_poll_interval: intervals.config_poll,
             last_read: Instant::now() - read_interval,
             last_config_poll: Instant::now(),
-            refresh_config,
+            refresh_config: callbacks.refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
             error: None,

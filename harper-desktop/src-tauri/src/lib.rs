@@ -392,13 +392,13 @@ pub fn run_tauri() {
             set_integration_enabled,
         ])
         .on_window_event(|window, event| {
-            if should_hide_window_on_close(window.label()) {
-                if let WindowEvent::CloseRequested { api, .. } = event {
-                    api.prevent_close();
+            if should_hide_window_on_close(window.label())
+                && let WindowEvent::CloseRequested { api, .. } = event
+            {
+                api.prevent_close();
 
-                    if let Err(error) = window.hide() {
-                        eprintln!("failed to hide {} window: {error}", window.label());
-                    }
+                if let Err(error) = window.hide() {
+                    eprintln!("failed to hide {} window: {error}", window.label());
                 }
             }
         })
