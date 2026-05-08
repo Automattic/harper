@@ -32,7 +32,7 @@ fn word_provenance_finds_affix_generated() {
         "expected AFFIX provenance for 'quickly', got: {stdout}"
     );
     assert!(
-        stdout.contains("quick"),
+        stdout.contains("base: quick/"),
         "expected base word 'quick' for 'quickly', got: {stdout}"
     );
 }
