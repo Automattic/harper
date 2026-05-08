@@ -87,7 +87,7 @@ enum Args {
         #[arg(long, value_name = "WEIRPACK")]
         weirpacks: Vec<SingleInput>,
         /// Output format for lint results.
-        #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
+        #[arg(long, value_enum, default_value_t = OutputFormat::Rich)]
         format: OutputFormat,
     },
     /// Parse a provided document and print the detected symbols.
