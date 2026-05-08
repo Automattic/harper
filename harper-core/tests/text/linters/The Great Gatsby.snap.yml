@@ -3084,6 +3084,14 @@ Suggest:
 
 
 
+Lint:    Nonstandard (127 priority)
+Message: |
+    2021 | Grand Canal; I saw him opening a chest of rubies to ease, with their
+    2022 | crimson-lighted depths, the gnawings of his broken heart.
+         |                             ^~~~~~~~ This might be a nonstandard use of a verbal noun. “gnawing” doesn't normally have a plural.
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     2021 | Grand Canal; I saw him opening a chest of rubies to ease, with their
