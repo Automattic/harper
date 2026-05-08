@@ -15161,6 +15161,8 @@ bloodthirstily/Ry
 bloodthirstiness/Nmg
 bloodthirsty/J>^p
 bloody/~J^>pVGdSN
+bloody-minded/J
+bloody-mindedness/Nmg
 bloom/~NgSVGd>Z
 bloomer/Ng
 bloop/VGd>SNgZ
@@ -17627,11 +17629,12 @@ chow/~NSgVGd
 chowder/NwgSV
 chrism/Ng
 christen/VSGdr
-christening/NgSV6
+christening/NwgSV6
 christian/~NJU
 christology
 chroma/~Ng
 chromatic/~JQ
+chromaticism/Nmg
 chromatin/~Ng
 chromatography/~Nmg
 chrome/~NmgSVGd
@@ -21806,6 +21809,7 @@ dismissiveness/Nmg
 disorder/~NmVY
 disorganisation/Nmg!_₹
 disorganization/Nmg
+disorientingly/R
 disparage/NSVdGL
 disparagement/Nmg
 disparaging/~JYV6N
@@ -22360,6 +22364,7 @@ draughtswomen/N9!_₹
 draughty/J>^p!_₹
 draw/~V>GSNgZz
 drawback/~NgS
+drawbar/NgS
 drawbridge/~NgS
 drawer/~NgS
 drawing/~VSNwg
@@ -24830,6 +24835,7 @@ ferociousness/Nmg
 ferocity/Nmg
 ferret/~NSgVGd
 ferric/J
+ferrite/NwSg
 ferromagnetic/J
 ferromagnetism/N
 ferrous/~J
@@ -25463,6 +25469,7 @@ fluent/~JYN
 fluff/~NwSgVdG
 fluffiness/Nmg
 fluffy/~J>^pN
+flugelhorn/NgS
 fluid/~NwSgJY
 fluidity/~Ng
 fluke/NSgV
@@ -30193,6 +30200,9 @@ infancy/~Ng
 infant/~NgSV
 infanticide/NwgS
 infantile/~J
+infantilisation/Nmg!_₹
+infantilise/VdSG!_₹
+infantilization/Nmg
 infantilize/VdSG
 infantry/~NwSg
 infantryman/~N0g
@@ -33949,6 +33959,7 @@ megalomaniacal/J
 megalopolis/~NgS
 megameter/NS<
 megametre/NS!@_₹
+megohm/NgS
 megapascal/NS
 megaphone/NSgVdG
 megapixel/~NSgJ
@@ -34434,6 +34445,7 @@ millionth/JNg
 millionths/N
 millipede/NSg
 millisecond/NSg
+millivolt/NSg
 millpond/NSg
 millrace/NSg
 millstone/~NSg
@@ -34639,6 +34651,7 @@ misfit/NSgV
 misfitted/VtT
 misfitting/V6
 misfortune/~NSg
+misframe/VSdG
 misgiving/NgS
 misgovern/VSdGL
 misgovernment/Ng
@@ -43285,6 +43298,7 @@ rootless/Jp
 rootlet/NSg
 rope/~NgSVGd>Z
 roper/~Ng
+ropey/J
 ropy/J>^
 rosary/~NSg
 rose/~NgSVtJ
@@ -43860,6 +43874,7 @@ saving/~NwgV6JP
 savings/~Nmg
 savior/~NSg<
 saviour/NgS!@_₹
+savoir faire/Nm
 savor/NgSVdG
 savoriness/Nmg<
 savory/J^>pNSg
@@ -46674,6 +46689,7 @@ splint/NSgVGd>Z
 splinter/~NgVdG
 splintery/J
 split/~VSJNg
+splitter/NgS
 splitting/~NgSJV6
 splodge/NSV
 splosh/VdGSN
@@ -48455,10 +48471,12 @@ syntactic/~J
 syntactical/JY
 syntax/~Nmg
 synth/N0g
+synthpop/Nmg        # only in Collins
 synth-pop/Nmg
 syntheses/N9
 synthesis/~N0wg
 synthesise/V!_₹
+synthesiser/~NgS!_₹
 synthesize/~VGd>SZ
 synthesizer/~NgS
 synthetic/~JNSgQ
@@ -54090,6 +54108,7 @@ Kagi/Sg
 Kahneman/Sg
 KanBan/Ng
 Kartvelian/OmgJ     # linguistics
+Kernighan/Og        # Brian ~
 KiCad/Og            # software
 Kia/ONSg            # automobile brand
 Kra-Dai/OmgJ        # linguistics
@@ -54259,6 +54278,7 @@ ReactJS/Og
 Red Hat/Og
 Reddit/Og
 ReLU/NwgS           # rectifier linear unit
+Ritchie/Og          # Dennis !
 Rivian/Sg           # ev company
 Roblox/Og           # game
 Roumania/Og         # pre-WWII spelling
@@ -54420,6 +54440,7 @@ Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9
 a8c/Sg
+aftertouch/Nmg      # MIDI feature
 ambitransitive/J    # verb which is both transitive and intransitive
 anti-alias/VSdG
 antimalware/Nmg
@@ -54468,6 +54489,7 @@ ext4/Ng             # file system
 failable/J
 failover/NwgS
 falsy/J
+featuritis/Nmg†
 feedforward/NmJ
 filepath/NgS
 filesystem/~Sg      # dictionaries prefer: file system
@@ -54509,6 +54531,7 @@ lingua franca/NSg
 linguæ francæ/N9g
 linguae francae/N9g
 linkification/Nmg
+linklog/NgS
 lookahead/Nmg
 lookbehind/Nmg
 manip/NgS           # gamer slang manipulation
@@ -54639,6 +54662,7 @@ piebaldism/Nmg      # medicine
 praxis/Nmg
 queenship/Nwg
 resolutive/J
+retrocomputing/Nmg
 sortition/Nmg       # Political science: a method of appointment to office by random draw
 subvocalization/Nwg # phonetics
 supervenience/Nmg   # From emergentist ontology
