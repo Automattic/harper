@@ -4867,6 +4867,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheLastDays",
+								"state": true,
+								"label": "The Last Days"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"

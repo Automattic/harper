@@ -226,6 +226,7 @@ mod take_serious;
 mod that_than;
 mod that_which;
 mod the_how_why;
+mod the_last_days;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
