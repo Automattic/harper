@@ -3649,10 +3649,10 @@
 								"name": "ThereIsAgreement",
 								"state": true,
 								"label": "There Is Agreement"
-              },
-            },
-            {
-              "Bool": {
+							}
+						},
+						{
+							"Bool": {
 								"name": "ASomeTime",
 								"state": true,
 								"label": "A Some Time"
