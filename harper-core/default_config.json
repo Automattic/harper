@@ -3650,6 +3650,20 @@
 								"state": true,
 								"label": "Code In Write In"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ThereIsAgreement",
+								"state": true,
+								"label": "There Is Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
+							}
 						}
 					]
 				}
@@ -3729,6 +3743,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -4863,6 +4884,13 @@
 								"name": "MoreThanMeetsTheEye",
 								"state": true,
 								"label": "More Than Meets The Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InFavourOfDoing",
+								"state": true,
+								"label": "In Favour Of Doing"
 							}
 						},
 						{

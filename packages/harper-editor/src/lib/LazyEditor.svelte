@@ -1,9 +1,13 @@
 <script lang="ts">
 import { Spinner } from 'components';
-import type Linter from 'harper.js';
+import type { Linter } from 'harper.js';
+import type { EditorFontFamily, EditorFontSize } from './editorDisplay.js';
 
 export let content = '';
 export let linter: Linter;
+export let defaultFontFamily: EditorFontFamily = 'sans';
+export let defaultFontSize: EditorFontSize = 'default';
+export let onChange: (text: string) => void = () => {};
 
 let editor = import('./Editor.svelte');
 let loading = true;
@@ -15,7 +19,14 @@ function onReady() {
 
 {#await editor then { default: Editor}}
 	<div class={`flex-row h-full w-full ${loading ? 'hidden' : 'flex'}`}>
-		<Editor content={content} {linter} {onReady} />
+		<Editor
+			{content}
+			{linter}
+			{onReady}
+			{defaultFontFamily}
+			{defaultFontSize}
+			{onChange}
+		/>
 	</div>
 {/await}
 
