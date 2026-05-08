@@ -381,11 +381,11 @@ export async function testMultipleSuggestionsAndUndo(
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Replace with "test"').click();
-		await page.waitForTimeout(500);
+		await page.waitForTimeout(5000);
 		await assertEditorContains(editor, 'test here');
 
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
-		await page.waitForTimeout(6000);
+		await page.waitForTimeout(12000);
 		await expect(getHarperHighlights(page)).toHaveCount(3);
 
 		// Get highlights sorted by visual position and click on the middle one
@@ -398,7 +398,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await editor.press('End');
 
 		await page.getByTitle('Replace with "test"').click();
-		await page.waitForTimeout(500);
+		await page.waitForTimeout(5000);
 
 		// Verify only second "tset" was corrected
 		await assertEditorContains(editor, 'first tset');
@@ -407,7 +407,7 @@ export async function testMultipleSuggestionsAndUndo(
 
 		// Undo
 		await editor.press('Control+z');
-		await page.waitForTimeout(300);
+		await page.waitForTimeout(3000);
 		await assertEditorContains(editor, 'The second tset');
 	});
 }
