@@ -11,6 +11,7 @@ const ACRONYMS: &[(&str, &[&str], &str)] = &[
     ("ATM", &["automated teller", "automatic teller"], "machine"),
     ("GUI", &["graphical user"], "interface"),
     ("LCD", &["liquid crystal"], "display"),
+    ("LLM", &["large language"], "model"),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
     ("PIN", &["personal identification"], "number"),
     ("TUI", &["text-based user", "terminal user"], "interface"),
@@ -345,6 +346,32 @@ mod tests {
             &[
                 "we have implemented verification algorithms, which ensure that VIN received is correct",
                 "we have implemented verification algorithms, which ensure that vehicle identification number received is correct",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_llm_model() {
+        assert_good_and_bad_suggestions(
+            "They end up attributing a lot of what they're doing to the capabilities of the LLM model.",
+            RedundantAcronyms::default(),
+            &[
+                "They end up attributing a lot of what they're doing to the capabilities of the LLM.",
+                "They end up attributing a lot of what they're doing to the capabilities of the large language model.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_llm_models() {
+        assert_good_and_bad_suggestions(
+            "Ollama is an open-source tool for running LLM models locally.",
+            RedundantAcronyms::default(),
+            &[
+                "Ollama is an open-source tool for running LLMs locally.",
+                "Ollama is an open-source tool for running large language models locally.",
             ],
             &[],
         );
