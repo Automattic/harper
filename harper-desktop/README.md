@@ -17,21 +17,22 @@ Right now, Harper Desktop does little more than serve as an offline editor for M
 ## Building
 
 Most actions needed to work on this repository are available via [`just`](https://github.com/casey/just).
-For the time being, this project has [the same prerequisites as the Harper monorepo](https://writewithharper.com/docs/contributors/environment).
-We will get to why in a second.
+Harper Desktop is part of the Harper monorepo and uses the root Cargo and pnpm workspaces.
 
-I have not fully decided whether Harper Desktop will become a part of the Harper monorepo. 
-Until I have, we will be developing it in a private repository.
-To access the bits of Harper that aren't packaged in public places, the `justfile` contains a command to pull down a copy of the Harper monorepo and build the components that are relevant to Harper Desktop.
-
-To build those dependencies, run the following command:
+To launch a development version of Harper Desktop with live reload, run:
 
 ```bash
-just pull-dep-source build-harper-deps
+just dev-desktop
 ```
 
-From there, you can launch a development version of Harper Desktop (with live reload and all of those goodies) using:
+To check the frontend and Rust targets, run:
 
 ```bash
-just dev
+just check-desktop
+```
+
+To build Linux bundles, run:
+
+```bash
+just build-desktop-linux
 ```
