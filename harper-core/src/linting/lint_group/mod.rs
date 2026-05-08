@@ -219,6 +219,7 @@ use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
+use super::there_is_agreement::ThereIsAgreement;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -776,6 +777,13 @@ impl LintGroup {
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Uses Dictionary, and Sentence rather than Chunk
+        out.add(
+            "ThereIsAgreement",
+            ThereIsAgreement::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("ThereIsAgreement", true);
 
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
