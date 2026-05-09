@@ -767,6 +767,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }

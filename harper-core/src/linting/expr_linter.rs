@@ -42,6 +42,7 @@ pub trait ExprLinter: LSend {
 
     /// A simple getter for the expression you want Harper to search for.
     fn expr(&self) -> &dyn Expr;
+
     /// If any portions of a [`Document`] match [`Self::expr`], they are passed through [`ExprLinter::match_to_lint`]
     /// or [`ExprLinter::match_to_lint_with_context`] to be transformed into a [`Lint`] for editor consumption.
     ///
@@ -52,7 +53,9 @@ pub trait ExprLinter: LSend {
     ///
     /// Return `None` to skip producing a lint for this match.
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        self.match_to_lint_with_context(matched_tokens, source, None)
+        self.match_to_lints_with_context(matched_tokens, source, None)
+            .into_iter()
+            .next()
     }
 
     /// Transform matched tokens into a [`Lint`] with access to surrounding context.
@@ -70,6 +73,18 @@ pub trait ExprLinter: LSend {
         // Default implementation falls back to the simple version
         self.match_to_lint(matched_tokens, source)
     }
+
+    fn match_to_lints_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Vec<Lint> {
+        self.match_to_lint_with_context(matched_tokens, source, context)
+            .into_iter()
+            .collect()
+    }
+
     /// A user-facing description of what kinds of grammatical errors this rule looks for.
     /// It is usually shown in settings menus.
     fn description(&self) -> &str;
@@ -123,8 +138,8 @@ pub fn run_on_chunk<'a>(
     linter
         .expr()
         .iter_matches(unit, source)
-        .filter_map(|match_span| {
-            linter.match_to_lint_with_context(
+        .flat_map(|match_span| {
+            linter.match_to_lints_with_context(
                 &unit[match_span.start..match_span.end],
                 source,
                 Some((&unit[..match_span.start], &unit[match_span.end..])),
@@ -184,12 +199,17 @@ pub fn preceded_by_word(
 
 #[cfg(test)]
 mod tests_context {
-    use crate::expr::{Expr, FixedPhrase};
-    use crate::linting::expr_linter::{Chunk, Sentence};
-    use crate::linting::tests::assert_suggestion_result;
-    use crate::linting::{ExprLinter, Suggestion};
-    use crate::token_string_ext::TokenStringExt;
-    use crate::{Lint, Token};
+    use crate::{
+        Lint, Token,
+        char_string::CharStringExt,
+        expr::{Expr, FixedPhrase, SequenceExpr},
+        linting::{
+            ExprLinter, Suggestion,
+            expr_linter::{Chunk, Sentence},
+            tests::{assert_good_and_bad_suggestions, assert_suggestion_result},
+        },
+        token_string_ext::TokenStringExt,
+    };
 
     pub struct TestSimpleLinter {
         expr: Box<dyn Expr>,
@@ -290,6 +310,66 @@ mod tests_context {
         }
     }
 
+    pub struct TestMultiContextLinter {
+        expr: Box<dyn Expr>,
+    }
+
+    impl Default for TestMultiContextLinter {
+        fn default() -> Self {
+            Self {
+                expr: Box::new(
+                    SequenceExpr::word_set(&["he", "they"])
+                        .t_ws()
+                        .then_any_word()
+                        .t_ws()
+                        .t_set(&["sleep", "sleeps"]),
+                ),
+            }
+        }
+    }
+
+    impl ExprLinter for TestMultiContextLinter {
+        type Unit = Chunk;
+
+        fn expr(&self) -> &dyn Expr {
+            &*self.expr
+        }
+
+        fn match_to_lints_with_context(
+            &self,
+            toks: &[Token],
+            src: &[char],
+            _context: Option<(&[Token], &[Token])>,
+        ) -> Vec<Lint> {
+            let mut lints = Vec::new();
+
+            // ignore context for this test
+
+            let (pron, verb) = (&toks[0], &toks[4]);
+
+            if pron.get_ch(src).eq_str("he") && verb.get_ch(src).eq_str("sleep") {
+                lints.push(Lint {
+                    span: pron.span.clone(),
+                    suggestions: vec![Suggestion::ReplaceWith("they".chars().collect())],
+                    message: "singular pronoun disagrees with plural verb".to_string(),
+                    ..Default::default()
+                });
+                lints.push(Lint {
+                    span: verb.span.clone(),
+                    suggestions: vec![Suggestion::ReplaceWith("sleeps".chars().collect())],
+                    message: "singular pronoun disagrees with plural verb".to_string(),
+                    ..Default::default()
+                });
+            }
+
+            lints
+        }
+
+        fn description(&self) -> &str {
+            "multi context linter"
+        }
+    }
+
     pub struct TestSentenceLinter {
         expr: Box<dyn Expr>,
     }
@@ -336,6 +416,16 @@ mod tests_context {
     #[test]
     fn context_test_321() {
         assert_suggestion_result("three two one", TestContextLinter::default(), "three < one");
+    }
+
+    #[test]
+    fn multi_context_test_pronoun_verb_agreement() {
+        assert_good_and_bad_suggestions(
+            "he always sleep",
+            TestMultiContextLinter::default(),
+            &["he always sleeps", "they always sleep"],
+            &["they always sleeps"],
+        );
     }
 
     #[test]
