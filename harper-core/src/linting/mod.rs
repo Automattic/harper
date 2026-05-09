@@ -271,6 +271,7 @@ mod wordpress_dotcom;
 mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
+mod wrong_negative;
 
 pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;

@@ -3639,6 +3639,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CodeInWriteIn",
 								"state": true,
 								"label": "Code In Write In"
