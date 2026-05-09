@@ -6,6 +6,7 @@ use std::sync::Arc;
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
+use harper_core::languages::Language;
 use hashbrown::HashMap;
 use rayon::prelude::*;
 use serde::Serialize;
@@ -15,7 +16,7 @@ use harper_core::{
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
+    {DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -88,7 +89,7 @@ pub struct LintOptions {
     pub ignore: Option<Vec<String>>,
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
-    pub dialect: Dialect,
+    pub language: Language,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
@@ -188,7 +189,7 @@ pub fn lint(
         count,
         ref mut ignore,
         ref mut only,
-        dialect,
+        language,
         ref weirpack_inputs,
         ..
     } = lint_options;
@@ -350,7 +351,7 @@ pub fn lint(
         ReportStyle::Compact => {}
         _ => {
             final_report(
-                dialect,
+                language,
                 true,
                 all_lint_kinds,
                 all_rules,
@@ -402,7 +403,7 @@ fn lint_one_input(
         ignore,
         only,
         keep_overlapping_lints,
-        dialect,
+        language,
         weirpack_inputs: _,
         color: _,
         format: _,
@@ -445,7 +446,7 @@ fn lint_one_input(
             }
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *language);
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;
@@ -785,7 +786,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
 }
 
 fn final_report(
-    dialect: Dialect,
+    language: Language,
     batch_mode: bool,
     all_lint_kinds: HashMap<LintKind, usize>,
     all_rules: HashMap<String, usize>,
@@ -906,7 +907,10 @@ fn final_report(
             })
             .collect();
 
-        println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
+        println!(
+            "All files Spelling::SpellCheck (For language: {})",
+            language
+        );
         print_formatted_items(spelling_vec, color);
     }
 }

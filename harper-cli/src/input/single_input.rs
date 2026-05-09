@@ -6,7 +6,8 @@ use strum_macros::EnumTryAs;
 
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
-use harper_core::parsers::{Markdown, OrgMode, Parser};
+use harper_core::languages::LanguageFamily;
+use harper_core::parsers::{Markdown, OrgMode, Parser, PlainPortuguese};
 use harper_core::spell::Dictionary;
 use harper_core::{
     Document,
@@ -77,6 +78,19 @@ impl SingleInput {
             // Input is not a valid filepath, we assume it's intended to be a string.
             Self::Text(TextInput {
                 text: input_string.to_owned(),
+                language: LanguageFamily::English,
+            })
+        }
+    }
+
+    /// Parse a string into a [`SingleInput`] with the given language family for plain-text inputs.
+    pub(crate) fn parse_string_with_language(input_string: &str, language: LanguageFamily) -> Self {
+        if let Ok(file) = FileInput::try_from_path(Path::new(input_string)) {
+            Self::File(file)
+        } else {
+            Self::Text(TextInput {
+                text: input_string.to_owned(),
+                language,
             })
         }
     }
@@ -148,6 +162,8 @@ impl SingleInputTrait for FileInput {
             Some("py") | Some("pyi") => Box::new(PythonParser::default()),
             Some("adoc") | Some("asciidoc") => Box::new(AsciidocParser::default()),
             Some("txt") => Box::new(PlainEnglish),
+            // Portuguese plain-text extensions
+            Some("pt") => Box::new(PlainPortuguese),
             _ => {
                 if let Some(comment_parser) =
                     CommentParser::new_from_filename(&self.path, _markdown_options)
@@ -176,10 +192,19 @@ impl InputTrait for FileInput {
 #[derive(Clone)]
 pub(crate) struct TextInput {
     text: String,
+    /// The language family to use when parsing this text input.
+    language: LanguageFamily,
 }
 impl SingleInputTrait for TextInput {
     fn get_content(&self) -> anyhow::Result<Cow<'_, str>> {
         Ok(Cow::from(&self.text))
+    }
+
+    fn get_parser(&self, _markdown_options: MarkdownOptions) -> Box<dyn Parser> {
+        match self.language {
+            LanguageFamily::English => Box::new(PlainEnglish),
+            LanguageFamily::Portuguese => Box::new(PlainPortuguese),
+        }
     }
 }
 impl InputTrait for TextInput {

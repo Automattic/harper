@@ -1,17 +1,16 @@
+use std::borrow::Cow;
+
 use enum_dispatch::enum_dispatch;
-use std::{borrow::Cow, io::Read, path::PathBuf};
 use strum_macros::EnumTryAs;
 
-use harper_core::spell::Dictionary;
-use harper_core::{
-    Document,
-    parsers::{MarkdownOptions, PlainEnglish},
-};
+pub mod single_input;
+use single_input::SingleInput;
 
-use harper_core::languages::LanguageFamily;
-use harper_core::parsers::{Parser, PlainPortuguese};
+pub mod multi_input;
+use multi_input::MultiInput;
 
 /// The general trait implemented by all input types.
+#[enum_dispatch]
 pub(crate) trait InputTrait {
     /// Gets a human-readable identifier for the input. For example, this can be a filename, or
     /// simply the string `"<input>"`.
