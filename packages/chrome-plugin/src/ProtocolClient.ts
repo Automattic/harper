@@ -13,6 +13,12 @@ export default class ProtocolClient {
 		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
 	}
 
+	public static async shouldLintForDomain(domain: string): Promise<boolean> {
+		return (
+			await chrome.runtime.sendMessage({ kind: 'shouldLintForDomain', domain })
+		).allowed;
+	}
+
 	public static async lint(
 		text: string,
 		domain: string,

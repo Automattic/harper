@@ -32,7 +32,8 @@ export type Request =
 	| PostFormDataRequest
 	| GetWeirpacksRequest
 	| AddWeirpackRequest
-	| RemoveWeirpackRequest;
+	| RemoveWeirpackRequest
+	| ShouldLintForDomainRequest;
 
 export type Response =
 	| LintResponse
@@ -51,7 +52,18 @@ export type Response =
 	| GetInstalledOnResponse
 	| GetReviewedResponse
 	| PostFormDataResponse
-	| GetWeirpacksResponse;
+	| GetWeirpacksResponse
+	| ShouldLintForDomainResponse;
+
+export type ShouldLintForDomainRequest = {
+	kind: 'shouldLintForDomain';
+	domain: string;
+};
+
+export type ShouldLintForDomainResponse = {
+	kind: 'shouldLintForDomain';
+	allowed: boolean;
+};
 
 export type LintRequest = {
 	kind: 'lint';

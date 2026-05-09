@@ -52,6 +52,8 @@ import {
 	type SetHotkeyRequest,
 	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
+	type ShouldLintForDomainRequest,
+	type ShouldLintForDomainResponse,
 	type UnitResponse,
 	type WeirpackMeta,
 } from '../protocol';
@@ -187,6 +189,8 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 	switch (message.kind) {
 		case 'lint':
 			return handleLint(message, sender);
+		case 'shouldLintForDomain':
+			return handleShouldLintForDomain(message, sender);
 		case 'getConfig':
 			return handleGetConfig(message);
 		case 'getStructuredConfig':
@@ -263,7 +267,7 @@ async function handleLint(
 		return { kind: 'lints', lints: {} };
 	}
 
-	if (!(await shouldLintForRequest(req, sender))) {
+	if (!(await shouldLintForDomain(req.domain, sender))) {
 		return { kind: 'lints', lints: {} };
 	}
 
@@ -278,24 +282,34 @@ async function handleLint(
 	return { kind: 'lints', lints: unpackedBySource };
 }
 
-async function shouldLintForRequest(
-	req: LintRequest,
+async function shouldLintForDomain(
+	domain: string,
 	sender?: chrome.runtime.MessageSender,
 ): Promise<boolean> {
-	if (await enabledForDomain(req.domain)) {
+	if (await enabledForDomain(domain)) {
 		return true;
 	}
 
-	if (await isDomainSet(req.domain)) {
+	if (await isDomainSet(domain)) {
 		return false;
 	}
 
 	const parentDomain = getParentDomain(sender);
-	if (parentDomain == null || parentDomain === req.domain) {
+	if (parentDomain == null || parentDomain === domain) {
 		return false;
 	}
 
 	return await enabledForDomain(parentDomain);
+}
+
+async function handleShouldLintForDomain(
+	req: ShouldLintForDomainRequest,
+	sender?: chrome.runtime.MessageSender,
+): Promise<ShouldLintForDomainResponse> {
+	return {
+		kind: 'shouldLintForDomain',
+		allowed: await shouldLintForDomain(req.domain, sender),
+	};
 }
 
 function getParentDomain(sender?: chrome.runtime.MessageSender): string | null {
