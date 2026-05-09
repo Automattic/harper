@@ -173,6 +173,7 @@ mod ought_to_be;
 mod out_of_date;
 mod oxford_comma;
 mod oxymorons;
+mod past_participle_without_auxiliary;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
