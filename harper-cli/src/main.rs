@@ -27,17 +27,17 @@ use harper_stats::Stats;
 use serde::Serialize;
 use serde_json::Value;
 
+mod annotate;
 mod input;
+mod lint;
+mod prep_pattern;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
 
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
 use crate::lint::{OutputFormat, lint};
+use annotate::AnnotationType;
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
@@ -219,6 +219,29 @@ enum Args {
         /// The location of the Weir file to test
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Find preposition patterns for testing word + preposition combinations.
+    PrepPattern {
+        /// Comma-separated list of word inflections to search for (e.g., install,installed,installing,installs)
+        #[arg(short, long, value_delimiter = ',')]
+        words: Vec<String>,
+        /// The preposition to test against (e.g., P, in, on, at)
+        preposition: String,
+        /// The text or file you wish to search. If not provided, it will be read from standard input.
+        #[arg(last = true)]
+        inputs: Vec<AnyInput>,
+        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
+        /// Path to the user dictionary.
+        #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string(), value_hint = ValueHint::FilePath)]
+        user_dict_path: PathBuf,
+        /// Path to the directory for file-local dictionaries.
+        #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string(), value_hint = ValueHint::FilePath)]
+        file_dict_path: PathBuf,
+        /// Output format for results.
+        #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
+        format: OutputFormat,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -986,6 +1009,31 @@ fn main() -> anyhow::Result<()> {
                 eprintln!("{:?}", failing_tests);
                 process::exit(1);
             }
+        }
+        Args::PrepPattern {
+            words,
+            preposition,
+            inputs,
+            dialect: dialect_str,
+            user_dict_path,
+            file_dict_path,
+            format,
+        } => {
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+
+            crate::prep_pattern::run_prep_pattern(
+                markdown_options,
+                curated_dictionary,
+                inputs,
+                words,
+                preposition,
+                dialect,
+                user_dict_path,
+                file_dict_path,
+                format,
+                color,
+            )
         }
         Args::Completion { shell } => {
             generate(
