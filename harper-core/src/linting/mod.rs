@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod a_some_time;
 mod a_while;
 mod addicting;
 mod adjective_double_degree;
@@ -98,6 +99,7 @@ mod how_to;
 mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
+mod in_favour_of_doing;
 mod in_on_the_cards;
 mod in_time_from_now;
 mod inflected_verb_after_to;
@@ -229,6 +231,7 @@ mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
 mod then_than;
+mod there_is_agreement;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
