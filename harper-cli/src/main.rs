@@ -14,7 +14,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::{LintGroup, Linter};
+use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
 use harper_core::{
@@ -100,6 +100,10 @@ enum Args {
         /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
         #[arg(short, long, default_value = "us")]
         dialect: String,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, every curated rule will run.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -287,12 +291,36 @@ fn main() -> anyhow::Result<()> {
         }
         Args::Repl {
             dialect: dialect_str,
+            only,
         } => {
             use std::io::{BufRead, Write};
 
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
             let mut linter = LintGroup::new_curated(curated_dictionary.clone(), dialect);
+
+            if let Some(rules) = only {
+                let known: Vec<String> = rules
+                    .into_iter()
+                    .filter(|rule| {
+                        if linter.config.has_rule(rule) {
+                            true
+                        } else {
+                            eprintln!("Warning: Cannot enable unknown rule '{}'.", rule);
+                            false
+                        }
+                    })
+                    .collect();
+
+                linter.set_all_rules_to(Some(false));
+                for rule in &known {
+                    linter.config.set_rule_enabled(rule, true);
+                }
+
+                if known.is_empty() {
+                    eprintln!("Warning: No rules are enabled.");
+                }
+            }
 
             let stdin = io::stdin();
             let mut stdin = stdin.lock();
@@ -323,15 +351,20 @@ fn main() -> anyhow::Result<()> {
                 }
 
                 let doc = Document::new_plain_english(trimmed, &curated_dictionary);
-                let lints = linter.lint(&doc);
+                let named_lints = linter.organized_lints(&doc);
 
-                if lints.is_empty() {
+                if named_lints.values().all(|lints| lints.is_empty()) {
                     println!("(no lints)");
                     continue;
                 }
 
-                for lint in lints {
-                    println!("[{:?}] {}", lint.lint_kind, lint.message);
+                for (rule_name, lints) in &named_lints {
+                    for lint in lints {
+                        println!("[{}::{}] {}", lint.lint_kind, rule_name, lint.message);
+                        for suggestion in &lint.suggestions {
+                            println!("    {}", suggestion);
+                        }
+                    }
                 }
             }
 
