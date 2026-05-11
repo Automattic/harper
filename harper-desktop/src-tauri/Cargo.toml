@@ -50,3 +50,6 @@ objc2-foundation = { version = "0.3.2", default-features = false, features = [
 ] }
 accessibility-sys = "0.2.0"
 core-graphics = "0.25.0"
+
+[target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
+tauri-plugin-autostart = "2.5.1"

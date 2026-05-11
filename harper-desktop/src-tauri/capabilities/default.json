@@ -3,5 +3,11 @@
 	"identifier": "default",
 	"description": "Capability for the main window",
 	"windows": ["main", "settings"],
-	"permissions": ["core:default", "opener:default"]
+	"permissions": [
+		"core:default",
+		"opener:default",
+		"autostart:allow-enable",
+		"autostart:allow-disable",
+		"autostart:allow-is-enabled"
+	]
 }

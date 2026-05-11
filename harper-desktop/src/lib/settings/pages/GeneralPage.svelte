@@ -6,26 +6,34 @@
 
   let menuBar = true;
   let menuBarClick = "open-settings";
-  let launchAtStartup = true;
+  let launchAtStartup = false;
   let autoUpdate = true;
   let dialect = "american";
   let isDialectLoading = true;
   let isDialectSaving = false;
   let dialectError = "";
+  let isLaunchAtStartupLoading = true;
+  let isLaunchAtStartupSaving = false;
+  let launchAtStartupError = "";
 
   onMount(() => {
     void loadDialect();
+    void loadLaunchAtStartup();
 
-    const refreshDialect = () => {
+    const refreshSettings = () => {
       if (!isDialectSaving) {
         void loadDialect();
       }
+
+      if (!isLaunchAtStartupSaving) {
+        void loadLaunchAtStartup();
+      }
     };
 
-    window.addEventListener("focus", refreshDialect);
+    window.addEventListener("focus", refreshSettings);
 
     return () => {
-      window.removeEventListener("focus", refreshDialect);
+      window.removeEventListener("focus", refreshSettings);
     };
   });
 
@@ -56,6 +64,36 @@
       dialectError = `Unable to save dialect: ${error}`;
     } finally {
       isDialectSaving = false;
+    }
+  }
+
+  async function loadLaunchAtStartup() {
+    isLaunchAtStartupLoading = true;
+    launchAtStartupError = "";
+
+    try {
+      launchAtStartup = await Client.getLaunchAtStartup();
+    } catch (error) {
+      launchAtStartupError = `Unable to load startup setting: ${error}`;
+    } finally {
+      isLaunchAtStartupLoading = false;
+    }
+  }
+
+  async function setLaunchAtStartup(enabled: boolean) {
+    const previousLaunchAtStartup = launchAtStartup;
+
+    launchAtStartup = enabled;
+    isLaunchAtStartupSaving = true;
+    launchAtStartupError = "";
+
+    try {
+      await Client.setLaunchAtStartup(enabled);
+    } catch (error) {
+      launchAtStartup = previousLaunchAtStartup;
+      launchAtStartupError = `Unable to save startup setting: ${error}`;
+    } finally {
+      isLaunchAtStartupSaving = false;
     }
   }
 
@@ -140,13 +178,20 @@
                 class="checkbox"
                 type="button"
                 role="checkbox"
-                disabled
-                title="Not wired yet"
+                disabled={isLaunchAtStartupLoading || isLaunchAtStartupSaving}
                 aria-checked={launchAtStartup}
+                on:click={() => setLaunchAtStartup(!launchAtStartup)}
               >
                 {#if launchAtStartup}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
               </button>
             </div>
+            {#if isLaunchAtStartupLoading}
+              <p class="result-summary">Loading startup setting...</p>
+            {:else if launchAtStartupError}
+              <p class="result-summary">{launchAtStartupError}</p>
+            {:else if isLaunchAtStartupSaving}
+              <p class="result-summary">Saving startup setting...</p>
+            {/if}
 
             <div class="row top">
               <div>

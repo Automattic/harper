@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
+import { disable, enable, isEnabled } from "@tauri-apps/plugin-autostart";
 import { Dialect, type Lint, type LintConfig, type Linter } from "harper.js";
 
 type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
@@ -19,6 +20,18 @@ export class Client {
 
   static async setDialect(dialect: Dialect): Promise<void> {
     await invoke("set_dialect", { dialect: dialectToRustDialect(dialect) });
+  }
+
+  static async getLaunchAtStartup(): Promise<boolean> {
+    return await isEnabled();
+  }
+
+  static async setLaunchAtStartup(enabled: boolean): Promise<void> {
+    if (enabled) {
+      await enable();
+    } else {
+      await disable();
+    }
   }
 
   static async setLintConfig(lintConfig: LintConfig): Promise<void> {
