@@ -37,19 +37,9 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
     gradient: "linear-gradient(180deg, #f5a0c0 0%, #c75c9c 100%)",
   },
   {
-    id: "shortcuts",
-    label: "Shortcuts",
-    gradient: "linear-gradient(180deg, #f3c34a 0%, #d98b22 100%)",
-  },
-  {
     id: "rules",
     label: "Rules",
     gradient: "linear-gradient(180deg, #4cc28b 0%, #1f8f5c 100%)",
-  },
-  {
-    id: "weirpacks",
-    label: "Weirpacks",
-    gradient: "linear-gradient(180deg, #b78cf6 0%, #7c3aed 100%)",
   },
   {
     id: "integrations",
