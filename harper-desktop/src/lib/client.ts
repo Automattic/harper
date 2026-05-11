@@ -20,8 +20,19 @@ export class Client {
 
   static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
     const structuredLintConfig = await invoke<string>("get_structured_lint_config");
+    console.debug("[harper-desktop] raw structured lint config", {
+      length: structuredLintConfig.length,
+      preview: structuredLintConfig.slice(0, 500),
+    });
 
-    return JSON.parse(structuredLintConfig) as StructuredLintConfig;
+    const parsedStructuredLintConfig = JSON.parse(structuredLintConfig) as StructuredLintConfig;
+    console.debug("[harper-desktop] parsed structured lint config", {
+      keys: Object.keys(parsedStructuredLintConfig),
+      settingsCount: parsedStructuredLintConfig.settings?.length,
+      firstSetting: parsedStructuredLintConfig.settings?.[0],
+    });
+
+    return parsedStructuredLintConfig;
   }
 
   static async getDialect(): Promise<Dialect> {

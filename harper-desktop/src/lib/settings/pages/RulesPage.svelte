@@ -61,8 +61,19 @@
       defaultLintConfig = fetchedDefaultLintConfig;
       structuredLintConfig = fetchedStructuredLintConfig;
       rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
+
+      const ruleGroups = ruleGroupsFromStructuredConfig(fetchedStructuredLintConfig);
+      console.debug("[harper-desktop] rules page lint config loaded", {
+        lintConfigRuleCount: Object.keys(fetchedLintConfig).length,
+        defaultLintConfigRuleCount: Object.keys(fetchedDefaultLintConfig).length,
+        structuredTopLevelSettingsCount: fetchedStructuredLintConfig.settings?.length,
+        derivedGroupCount: ruleGroups.length,
+        derivedRuleCount: ruleGroups.reduce((count, group) => count + group.rules.length, 0),
+        firstDerivedGroup: ruleGroups[0],
+      });
     } catch (error) {
       lintConfigError = `Unable to load lint config: ${error}`;
+      console.error("[harper-desktop] unable to load rules page lint config", error);
     } finally {
       isLintConfigLoading = false;
     }
@@ -108,6 +119,12 @@
   function ruleGroupsFromStructuredConfig(config: StructuredLintConfig): RuleGroup[] {
     const groups: RuleGroup[] = [];
     const looseRules: RuleItem[] = [];
+
+    console.debug("[harper-desktop] deriving rule groups from structured config", {
+      keys: Object.keys(config),
+      settingsCount: config.settings?.length,
+      firstSetting: config.settings?.[0],
+    });
 
     for (const setting of config.settings) {
       if ("Group" in setting) {
@@ -171,6 +188,8 @@
         desc: "Harper rule option from the curated rule catalog.",
       }));
     }
+
+    console.debug("[harper-desktop] structured setting did not match expected variants", setting);
 
     return [];
   }
