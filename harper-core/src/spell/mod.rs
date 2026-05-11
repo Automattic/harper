@@ -17,6 +17,7 @@ mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
+mod phonetic;
 mod trie_dictionary;
 mod word_id;
 mod word_map;
@@ -374,6 +375,12 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         if is_er_misspelling(misspelled_word, sug.word) {
             score -= 15;
         }
+    }
+
+    // Phonetic matching boost - boost suggestions that sound similar
+    let phonetic_score = super::phonetic::phonetic_similarity(misspelled_word, sug.word);
+    if phonetic_score < 10 {
+        score -= (10 - phonetic_score) / 2;
     }
 
     score
