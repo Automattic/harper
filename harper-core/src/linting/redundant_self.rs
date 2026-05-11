@@ -105,7 +105,7 @@ impl ExprLinter for RedundantSelf {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Detects redundant use of `self-` prefixes with reflexive pronouns (e.g., `self-host it themselves`)."
     }
 }
 
