@@ -5,7 +5,7 @@ use crate::config::{Config, Integration};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
-    linting::{FlatConfig, Lint, LintGroup},
+    linting::{FlatConfig, HumanReadableStructuredConfig, Lint, LintGroup, StructuredConfig},
     spell::{Dictionary, MutableDictionary},
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
@@ -181,7 +181,31 @@ fn should_hide_window_on_close(label: &str) -> bool {
 
 #[tauri::command]
 async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
-    Ok(config.lock().await.lint_config.clone())
+    let mut lint_config = config.lock().await.lint_config.clone();
+    lint_config.fill_with_curated();
+
+    Ok(lint_config)
+}
+
+#[tauri::command]
+async fn get_default_lint_config() -> Result<FlatConfig, String> {
+    Ok(FlatConfig::new_curated())
+}
+
+#[tauri::command]
+async fn get_structured_lint_config(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<HumanReadableStructuredConfig, String> {
+    let mut flat_config = config.lock().await.lint_config.clone();
+    flat_config.fill_with_curated();
+
+    let mut structured_config = StructuredConfig::curated();
+
+    structured_config.copy_from_flat_config(&flat_config);
+
+    Ok(HumanReadableStructuredConfig::from_structured_config(
+        &structured_config,
+    ))
 }
 
 #[tauri::command]
@@ -209,6 +233,9 @@ async fn set_lint_config(
     lint_config: FlatConfig,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
+    let mut lint_config = lint_config;
+    lint_config.fill_with_curated();
+
     let mut config = config.lock().await;
     config.lint_config = lint_config;
     config
@@ -383,6 +410,8 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
+            get_default_lint_config,
+            get_structured_lint_config,
             get_dialect,
             set_dialect,
             set_lint_config,

@@ -123,6 +123,7 @@ impl Config {
         let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
+        config.lint_config.fill_with_curated();
         config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
 
         Ok(config)

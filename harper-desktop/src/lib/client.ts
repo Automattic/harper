@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { disable, enable, isEnabled } from "@tauri-apps/plugin-autostart";
-import { Dialect, type Lint, type LintConfig, type Linter } from "harper.js";
+import { Dialect, type Lint, type LintConfig, type Linter, type StructuredLintConfig } from "harper.js";
 
 type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
 
@@ -12,6 +12,14 @@ export interface Integration {
 export class Client {
   static async getLintConfig(): Promise<LintConfig> {
     return await invoke<LintConfig>("get_lint_config");
+  }
+
+  static async getDefaultLintConfig(): Promise<LintConfig> {
+    return await invoke<LintConfig>("get_default_lint_config");
+  }
+
+  static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+    return await invoke<StructuredLintConfig>("get_structured_lint_config");
   }
 
   static async getDialect(): Promise<Dialect> {

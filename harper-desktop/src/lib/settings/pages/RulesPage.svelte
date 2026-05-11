@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { LintConfig } from "harper.js";
+  import type { LintConfig, StructuredLintConfig, StructuredLintSetting } from "harper.js";
   import { Client } from "$lib/client";
-  import { RULE_GROUPS, type RuleGroup, type RuleItem, type RuleOverride } from "../settings-data";
 
+  type RuleOverride = "default" | "on" | "off";
+  type RuleItem = { id: string; name: string; desc: string };
+  type RuleGroup = { id: string; title: string; desc: string; rules: RuleItem[] };
   type MatchedRuleGroup = RuleGroup & { matchedRules: RuleItem[] };
 
   const defaultRuleOptions: { value: RuleOverride; label: string }[] = [
@@ -13,6 +15,8 @@
   ];
 
   let lintConfig: LintConfig | null = null;
+  let defaultLintConfig: LintConfig | null = null;
+  let structuredLintConfig: StructuredLintConfig | null = null;
   let rules: Record<string, RuleOverride> = {};
   let rulesSearch = "";
   let expandedGroups: Record<string, boolean> = {};
@@ -47,9 +51,16 @@
     lintConfigError = "";
 
     try {
-      const fetchedLintConfig = await Client.getLintConfig();
+      const [fetchedLintConfig, fetchedDefaultLintConfig, fetchedStructuredLintConfig] = await Promise.all([
+        Client.getLintConfig(),
+        Client.getDefaultLintConfig(),
+        Client.getStructuredLintConfig(),
+      ]);
+
       lintConfig = fetchedLintConfig;
-      rules = rulesFromLintConfig(fetchedLintConfig);
+      defaultLintConfig = fetchedDefaultLintConfig;
+      structuredLintConfig = fetchedStructuredLintConfig;
+      rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
     } catch (error) {
       lintConfigError = `Unable to load lint config: ${error}`;
     } finally {
@@ -57,9 +68,12 @@
     }
   }
 
-  function rulesFromLintConfig(config: LintConfig): Record<string, RuleOverride> {
+  function rulesFromLintConfig(config: LintConfig, defaultConfig: LintConfig): Record<string, RuleOverride> {
     return Object.fromEntries(
-      Object.entries(config).map(([ruleId, value]) => [ruleId, lintValueToRuleOverride(value)]),
+      Object.entries(config).map(([ruleId, value]) => [
+        ruleId,
+        value === defaultConfig[ruleId] ? "default" : lintValueToRuleOverride(value),
+      ]),
     );
   }
 
@@ -69,10 +83,11 @@
     return "default";
   }
 
-  function ruleOverrideToLintValue(value: RuleOverride): boolean | null {
+  function ruleOverrideToLintValue(ruleId: string, value: RuleOverride): boolean {
     if (value === "on") return true;
     if (value === "off") return false;
-    return null;
+
+    return defaultLintConfig?.[ruleId] ?? false;
   }
 
   function ruleLabelFromKey(key: string) {
@@ -83,26 +98,81 @@
   }
 
   function getRuleGroups(): RuleGroup[] {
-    if (!lintConfig) {
-      return RULE_GROUPS;
+    if (!structuredLintConfig) {
+      return [];
     }
 
-    const rules = Object.keys(lintConfig)
-      .sort((a, b) => ruleLabelFromKey(a).localeCompare(ruleLabelFromKey(b)))
-      .map((ruleId) => ({
-        id: ruleId,
-        name: ruleLabelFromKey(ruleId),
-        desc: "Harper rule from the current app configuration.",
-      }));
+    return ruleGroupsFromStructuredConfig(structuredLintConfig);
+  }
 
-    return [
-      {
-        id: "harper-rules",
-        title: "Harper Rules",
-        desc: "Rules loaded from the app's current lint configuration.",
+  function ruleGroupsFromStructuredConfig(config: StructuredLintConfig): RuleGroup[] {
+    const groups: RuleGroup[] = [];
+    const looseRules: RuleItem[] = [];
+
+    for (const setting of config.settings) {
+      if ("Group" in setting) {
+        groups.push(...groupsFromSetting(setting.Group));
+      } else {
+        looseRules.push(...rulesFromSetting(setting));
+      }
+    }
+
+    if (looseRules.length > 0) {
+      groups.push({
+        id: "ungrouped-rules",
+        title: "Ungrouped Rules",
+        desc: "Rules from the app's current lint configuration that are not assigned to a category.",
+        rules: looseRules,
+      });
+    }
+
+    return groups;
+  }
+
+  function groupsFromSetting(group: Extract<StructuredLintSetting, { Group: unknown }>["Group"]): RuleGroup[] {
+    const groups: RuleGroup[] = [];
+    const rules: RuleItem[] = [];
+
+    for (const setting of group.child.settings) {
+      if ("Group" in setting) {
+        groups.push(...groupsFromSetting(setting.Group));
+      } else {
+        rules.push(...rulesFromSetting(setting));
+      }
+    }
+
+    if (rules.length > 0) {
+      groups.unshift({
+        id: `${groups.length}-${group.label}`,
+        title: group.label,
+        desc: group.description,
         rules,
-      },
-    ];
+      });
+    }
+
+    return groups;
+  }
+
+  function rulesFromSetting(setting: StructuredLintSetting): RuleItem[] {
+    if ("Bool" in setting) {
+      return [
+        {
+          id: setting.Bool.name,
+          name: setting.Bool.label ?? ruleLabelFromKey(setting.Bool.name),
+          desc: "Harper rule from the curated rule catalog.",
+        },
+      ];
+    }
+
+    if ("OneOfMany" in setting) {
+      return setting.OneOfMany.names.map((name, index) => ({
+        id: name,
+        name: setting.OneOfMany.labels?.[index] ?? ruleLabelFromKey(name),
+        desc: "Harper rule option from the curated rule catalog.",
+      }));
+    }
+
+    return [];
   }
 
   function getDisplayedRules() {
@@ -130,7 +200,7 @@
   }
 
   function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleOverride) {
-    config[ruleId] = ruleOverrideToLintValue(value);
+    config[ruleId] = ruleOverrideToLintValue(ruleId, value);
   }
 
   function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
@@ -160,27 +230,18 @@
     }).filter((group): group is MatchedRuleGroup => group !== null);
   }
 
-  function getRuleOptions(rule: RuleItem) {
-    return rule.states ?? defaultRuleOptions;
-  }
-
   function getRuleValue(ruleId: string): RuleOverride {
     return rules[ruleId] ?? "default";
   }
 
   function isRuleEnabled(rule: RuleItem) {
-    const value = getRuleValue(rule.id);
-    return value !== "off" && value !== "forbid";
+    return lintConfig?.[rule.id] ?? defaultLintConfig?.[rule.id] ?? false;
   }
 
   async function setRuleOverride(ruleId: string, value: RuleOverride) {
     const nextRules = { ...rules };
 
-    if (value === "default") {
-      delete nextRules[ruleId];
-    } else {
-      nextRules[ruleId] = value;
-    }
+    nextRules[ruleId] = value;
 
     if (!lintConfig) {
       rules = nextRules;
@@ -197,11 +258,7 @@
     const nextLintConfig = lintConfig ? { ...lintConfig } : null;
 
     for (const rule of group.rules) {
-      if (value === "default") {
-        delete nextRules[rule.id];
-      } else {
-        nextRules[rule.id] = value;
-      }
+      nextRules[rule.id] = value;
 
       if (nextLintConfig) {
         setLintConfigRuleValue(nextLintConfig, rule.id, value);
@@ -229,13 +286,12 @@
     }
 
     const nextLintConfig = { ...lintConfig };
-    const nextRules: Record<string, RuleOverride> = {};
 
     for (const rule of displayedRules) {
-      nextLintConfig[rule.id] = null;
+      nextLintConfig[rule.id] = defaultLintConfig?.[rule.id] ?? false;
     }
 
-    await saveLintConfig(nextLintConfig, nextRules);
+    await saveLintConfig(nextLintConfig, rulesFromLintConfig(nextLintConfig, defaultLintConfig ?? {}));
   }
 
   async function disableRules() {
@@ -352,7 +408,7 @@
                         value={getRuleValue(rule.id)}
                         on:change={(event) => setRuleOverride(rule.id, event.currentTarget.value as RuleOverride)}
                       >
-                        {#each getRuleOptions(rule) as option}
+                        {#each defaultRuleOptions as option}
                           <option value={option.value}>{option.label}</option>
                         {/each}
                       </select>
