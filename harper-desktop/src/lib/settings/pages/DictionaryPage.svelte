@@ -8,6 +8,7 @@
   let isDictionaryLoading = true;
   let isDictionarySaving = false;
   let dictionaryError = "";
+  let importInput: HTMLInputElement;
 
   $: filteredWords = dictionary.filter((word: string) =>
     word.toLowerCase().includes(dictionarySearch.trim().toLowerCase()),
@@ -63,6 +64,17 @@
     return [...words].sort((a, b) => a.localeCompare(b));
   }
 
+  function parseDictionaryText(text: string) {
+    return text
+      .split(/\r?\n/)
+      .map((word) => word.trim())
+      .filter(Boolean);
+  }
+
+  function mergeDictionaryWords(words: string[]) {
+    return sortDictionary([...new Set([...dictionary, ...words])]);
+  }
+
   async function addDictionaryWord(inputWord: string) {
     const word = inputWord.trim();
 
@@ -92,6 +104,39 @@
 
   async function clearDictionary() {
     await saveDictionary([]);
+  }
+
+  async function importDictionary(event: Event) {
+    const input = event.currentTarget as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      const importedWords = parseDictionaryText(await file.text());
+      await saveDictionary(mergeDictionaryWords(importedWords));
+    } catch (error) {
+      dictionaryError = `Unable to import dictionary: ${error}`;
+    } finally {
+      input.value = "";
+    }
+  }
+
+  function exportDictionary() {
+    try {
+      const blob = new Blob([`${dictionary.join("\n")}\n`], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "harper-dictionary.txt";
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      dictionaryError = `Unable to export dictionary: ${error}`;
+    }
   }
 
   async function submitDictionaryWord() {
@@ -167,8 +212,25 @@
           </div>
 
           <div class="actions-row">
-            <button class="button" type="button" disabled title="Not wired yet">Import from file...</button>
-            <button class="button" type="button" disabled title="Not wired yet">Export dictionary</button>
+            <input
+              bind:this={importInput}
+              type="file"
+              accept=".txt,.dic,text/plain"
+              hidden
+              on:change={importDictionary}
+            />
+            <button
+              class="button"
+              type="button"
+              disabled={isDictionaryLoading || isDictionarySaving}
+              on:click={() => importInput.click()}
+            >Import from file...</button>
+            <button
+              class="button"
+              type="button"
+              disabled={isDictionaryLoading || isDictionarySaving || dictionary.length === 0}
+              on:click={exportDictionary}
+            >Export dictionary</button>
             <span class="spacer"></span>
             <button
               class="button danger"
