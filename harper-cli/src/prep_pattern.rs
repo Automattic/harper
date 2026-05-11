@@ -1,5 +1,4 @@
 use anyhow::Result;
-use serde_json;
 
 use harper_core::parsers::MarkdownOptions;
 use harper_core::spell::FstDictionary;
@@ -15,11 +14,7 @@ pub fn run_prep_pattern(
     inputs: Vec<AnyInput>,
     words: Vec<String>,
     preposition: String,
-    _dialect: harper_core::Dialect,
-    _user_dict_path: std::path::PathBuf,
-    _file_dict_path: std::path::PathBuf,
     format: crate::OutputFormat,
-    _color: bool,
 ) -> Result<()> {
     // If no inputs provided, read from stdin
     let inputs = if inputs.is_empty() {

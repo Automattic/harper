@@ -230,15 +230,6 @@ enum Args {
         /// The text or file you wish to search. If not provided, it will be read from standard input.
         #[arg(last = true)]
         inputs: Vec<AnyInput>,
-        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
-        #[arg(short, long, default_value = "us")]
-        dialect: String,
-        /// Path to the user dictionary.
-        #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string(), value_hint = ValueHint::FilePath)]
-        user_dict_path: PathBuf,
-        /// Path to the directory for file-local dictionaries.
-        #[arg(short, long, default_value = data_local_dir().unwrap().join("harper-ls/file_dictionaries/").into_os_string(), value_hint = ValueHint::FilePath)]
-        file_dict_path: PathBuf,
         /// Output format for results.
         #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
         format: OutputFormat,
@@ -1014,27 +1005,15 @@ fn main() -> anyhow::Result<()> {
             words,
             preposition,
             inputs,
-            dialect: dialect_str,
-            user_dict_path,
-            file_dict_path,
             format,
-        } => {
-            let dialect = parse_dialect(&dialect_str)
-                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
-
-            crate::prep_pattern::run_prep_pattern(
-                markdown_options,
-                curated_dictionary,
-                inputs,
-                words,
-                preposition,
-                dialect,
-                user_dict_path,
-                file_dict_path,
-                format,
-                color,
-            )
-        }
+        } => crate::prep_pattern::run_prep_pattern(
+            markdown_options,
+            curated_dictionary,
+            inputs,
+            words,
+            preposition,
+            format,
+        ),
         Args::Completion { shell } => {
             generate(
                 shell,
