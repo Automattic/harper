@@ -188,6 +188,15 @@ pub trait TokenStringExt: private::Sealed {
         Some(&slice[start_idx..end_idx_plus_one])
     }
 
+    // delegate to span
+    fn get_ch<'a>(&self, src: &'a [char]) -> Option<&'a [char]> {
+        self.span().map(|s| s.get_content(src))
+    }
+
+    fn get_str(&self, src: &[char]) -> Option<String> {
+        self.span().map(|s| s.get_content_string(src))
+    }
+
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_ {
         let tokens = self.tokens();
 
