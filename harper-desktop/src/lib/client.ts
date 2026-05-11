@@ -19,7 +19,9 @@ export class Client {
   }
 
   static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
-    return await invoke<StructuredLintConfig>("get_structured_lint_config");
+    const structuredLintConfig = await invoke<string>("get_structured_lint_config");
+
+    return JSON.parse(structuredLintConfig) as StructuredLintConfig;
   }
 
   static async getDialect(): Promise<Dialect> {

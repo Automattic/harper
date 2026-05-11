@@ -195,7 +195,7 @@ async fn get_default_lint_config() -> Result<FlatConfig, String> {
 #[tauri::command]
 async fn get_structured_lint_config(
     config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<HumanReadableStructuredConfig, String> {
+) -> Result<String, String> {
     let mut flat_config = config.lock().await.lint_config.clone();
     flat_config.fill_with_curated();
 
@@ -203,9 +203,9 @@ async fn get_structured_lint_config(
 
     structured_config.copy_from_flat_config(&flat_config);
 
-    Ok(HumanReadableStructuredConfig::from_structured_config(
-        &structured_config,
-    ))
+    let config = HumanReadableStructuredConfig::from_structured_config(&structured_config);
+
+    serde_json::to_string(&config).map_err(|error| error.to_string())
 }
 
 #[tauri::command]

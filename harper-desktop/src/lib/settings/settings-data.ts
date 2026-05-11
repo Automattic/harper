@@ -27,11 +27,6 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
     gradient: "linear-gradient(180deg, #3e8cff 0%, #1a5dd9 100%)",
   },
   {
-    id: "writing",
-    label: "Writing",
-    gradient: "linear-gradient(180deg, #e48a4a 0%, #b06a1b 100%)",
-  },
-  {
     id: "dictionary",
     label: "Dictionary",
     gradient: "linear-gradient(180deg, #f5a0c0 0%, #c75c9c 100%)",
