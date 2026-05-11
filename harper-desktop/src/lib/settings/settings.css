@@ -668,14 +668,16 @@ body.settings-view {
   }
 
   .chevron {
-    width: 20px;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
     color: var(--settings-ink-3);
-    transform: rotate(-90deg);
+    fill: currentColor;
     transition: transform 140ms ease;
   }
 
   .chevron.expanded {
-    transform: rotate(0deg);
+    transform: rotate(90deg);
   }
 
   .rules-list {
