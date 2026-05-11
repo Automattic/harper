@@ -29,6 +29,7 @@ use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
 use super::ask_no_preposition::AskNoPreposition;
+use super::your_before_auxiliary::{YourBeforeAuxiliary, TheirBeforeAuxiliary};
 use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -219,6 +220,7 @@ use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
+use super::there_is_agreement::ThereIsAgreement;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -258,6 +260,7 @@ use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+use super::wrong_preposition::WrongPreposition;
 use super::wrong_apostrophe::WrongApostrophe;
 
 use super::{ExprLinter, Lint};
@@ -525,6 +528,8 @@ impl LintGroup {
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
         insert_expr_rule!(AskNoPreposition, true);
+        insert_expr_rule!(YourBeforeAuxiliary, true);
+        insert_expr_rule!(TheirBeforeAuxiliary, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
@@ -747,6 +752,7 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
+        insert_expr_rule!(WrongPreposition, true);
         insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
@@ -776,6 +782,13 @@ impl LintGroup {
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Uses Dictionary, and Sentence rather than Chunk
+        out.add(
+            "ThereIsAgreement",
+            ThereIsAgreement::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("ThereIsAgreement", true);
 
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
@@ -933,7 +946,7 @@ mod tests {
             spellcheck_lints[0]
                 .suggestions
                 .iter()
-                .any(|suggestion| suggestion.to_string() == "Replace with: “extension”")
+                .any(|suggestion| suggestion.to_string() == "Replace with: “extension�?)
         );
 
         assert!(
