@@ -18,6 +18,9 @@ export default defineConfig(async () => ({
 	server: {
 		port: 1420,
 		strictPort: true,
+		fs: {
+			allow: ['../packages/harper.js/dist'],
+		},
 		host: host || false,
 		hmr: host
 			? {

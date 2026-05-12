@@ -1,12 +1,29 @@
 <script lang="ts">
-import { WorkerLinter } from 'harper.js';
-import { binaryInlined } from 'harper.js/binaryInlined';
+import type { Linter } from 'harper.js';
 import { Editor } from 'harper-editor';
+import { onMount } from 'svelte';
 import 'harper-editor/style.css';
 
-const linter = new WorkerLinter({ binary: binaryInlined });
+let linter: Linter | null = null;
+
+onMount(() => {
+	void createLinter();
+});
+
+async function createLinter() {
+	const [{ WorkerLinter }, { slimBinaryInlined }] = await Promise.all([
+		import('harper.js'),
+		import('harper.js/slimBinaryInlined'),
+	]);
+
+	const nextLinter = new WorkerLinter({ binary: slimBinaryInlined });
+	await nextLinter.setup();
+	linter = nextLinter;
+}
 </script>
 
 <div class="h-screen w-screen">
-  <Editor {linter} />
+	{#if linter}
+		<Editor {linter} />
+	{/if}
 </div>

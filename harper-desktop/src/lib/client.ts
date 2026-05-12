@@ -1,18 +1,36 @@
 import { invoke } from '@tauri-apps/api/core';
 import { disable, enable, isEnabled } from '@tauri-apps/plugin-autostart';
-import {
+import type {
 	Dialect,
-	type Lint,
-	type LintConfig,
-	type Linter,
-	LocalLinter,
-	type StructuredLintConfig,
+	Lint,
+	LintConfig,
+	Linter,
+	LocalLinter as LocalLinterType,
+	StructuredLintConfig,
 } from 'harper.js';
-import { binaryInlined } from 'harper.js/binaryInlined';
 
 type RustDialect = 'American' | 'British' | 'Australian' | 'Canadian' | 'Indian';
 
-const configLinter = new LocalLinter({ binary: binaryInlined });
+const DialectValue = {
+	American: 0,
+	British: 1,
+	Australian: 2,
+	Canadian: 3,
+	Indian: 4,
+} as const;
+
+let configLinterPromise: Promise<LocalLinterType> | null = null;
+
+function getConfigLinter(): Promise<LocalLinterType> {
+	configLinterPromise ??= Promise.all([
+		import('harper.js'),
+		import('harper.js/slimBinaryInlined'),
+	]).then(
+		([{ LocalLinter }, { slimBinaryInlined }]) => new LocalLinter({ binary: slimBinaryInlined }),
+	);
+
+	return configLinterPromise;
+}
 
 export interface Integration {
 	bundle_id: string;
@@ -25,10 +43,14 @@ export class Client {
 	}
 
 	static async getDefaultLintConfig(): Promise<LintConfig> {
+		const configLinter = await getConfigLinter();
+
 		return JSON.parse(await configLinter.getDefaultLintConfigAsJSON()) as LintConfig;
 	}
 
 	static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		const configLinter = await getConfigLinter();
+
 		await configLinter.setLintConfigWithJSON(JSON.stringify(await Client.getLintConfig()));
 
 		return JSON.parse(await configLinter.getStructuredLintConfigJSON()) as StructuredLintConfig;
@@ -106,27 +128,27 @@ export class Client {
 function rustDialectToDialect(dialect: RustDialect): Dialect {
 	switch (dialect) {
 		case 'British':
-			return Dialect.British;
+			return DialectValue.British as Dialect;
 		case 'Australian':
-			return Dialect.Australian;
+			return DialectValue.Australian as Dialect;
 		case 'Canadian':
-			return Dialect.Canadian;
+			return DialectValue.Canadian as Dialect;
 		case 'Indian':
-			return Dialect.Indian;
+			return DialectValue.Indian as Dialect;
 		default:
-			return Dialect.American;
+			return DialectValue.American as Dialect;
 	}
 }
 
 function dialectToRustDialect(dialect: Dialect): RustDialect {
 	switch (dialect) {
-		case Dialect.British:
+		case DialectValue.British:
 			return 'British';
-		case Dialect.Australian:
+		case DialectValue.Australian:
 			return 'Australian';
-		case Dialect.Canadian:
+		case DialectValue.Canadian:
 			return 'Canadian';
-		case Dialect.Indian:
+		case DialectValue.Indian:
 			return 'Indian';
 		default:
 			return 'American';

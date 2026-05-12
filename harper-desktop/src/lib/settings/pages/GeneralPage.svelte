@@ -1,8 +1,16 @@
 <script lang="ts">
-import { Dialect } from 'harper.js';
+import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 import { DIALECT_OPTIONS } from '../settings-data';
+
+const DialectValue = {
+	American: 0,
+	British: 1,
+	Australian: 2,
+	Canadian: 3,
+	Indian: 4,
+} as const;
 
 let menuBar = true;
 let menuBarClick = 'open-settings';
@@ -99,13 +107,13 @@ async function setLaunchAtStartup(enabled: boolean) {
 
 function dialectToSettingsValue(dialect: Dialect): string {
 	switch (dialect) {
-		case Dialect.British:
+		case DialectValue.British:
 			return 'british';
-		case Dialect.Canadian:
+		case DialectValue.Canadian:
 			return 'canadian';
-		case Dialect.Australian:
+		case DialectValue.Australian:
 			return 'australian';
-		case Dialect.Indian:
+		case DialectValue.Indian:
 			return 'indian';
 		default:
 			return 'american';
@@ -115,15 +123,15 @@ function dialectToSettingsValue(dialect: Dialect): string {
 function settingsValueToDialect(value: string): Dialect {
 	switch (value) {
 		case 'british':
-			return Dialect.British;
+			return DialectValue.British as Dialect;
 		case 'canadian':
-			return Dialect.Canadian;
+			return DialectValue.Canadian as Dialect;
 		case 'australian':
-			return Dialect.Australian;
+			return DialectValue.Australian as Dialect;
 		case 'indian':
-			return Dialect.Indian;
+			return DialectValue.Indian as Dialect;
 		default:
-			return Dialect.American;
+			return DialectValue.American as Dialect;
 	}
 }
 </script>
