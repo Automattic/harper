@@ -27,7 +27,14 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                 result[1] = ' ';
                 return result;
             }
-            ('P', 'N') | ('P', 'S') | ('P', 'H') | ('A', 'E') | ('A', 'I') | ('A', 'O') | ('G', 'N') | ('G', 'H') => {
+            ('P', 'N')
+            | ('P', 'S')
+            | ('P', 'H')
+            | ('A', 'E')
+            | ('A', 'I')
+            | ('A', 'O')
+            | ('G', 'N')
+            | ('G', 'H') => {
                 if word[0] == 'A' || word[0] == 'G' {
                     pos += 1;
                 }
@@ -130,7 +137,9 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                     }
                     'N' => {
                         // Drop at end or before vowel
-                        if pos + 2 >= word.len() || (pos + 2 < word.len() && is_vowel(word[pos + 2])) {
+                        if pos + 2 >= word.len()
+                            || (pos + 2 < word.len() && is_vowel(word[pos + 2]))
+                        {
                             pos += 2;
                             continue;
                         }
@@ -187,7 +196,10 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                     result[result_pos] = 'X';
                     result_pos += 1;
                     pos += 2;
-                } else if pos + 2 < word.len() && word[pos + 1] == 'I' && matches!(word[pos + 2], 'O' | 'A' | 'Y') {
+                } else if pos + 2 < word.len()
+                    && word[pos + 1] == 'I'
+                    && matches!(word[pos + 2], 'O' | 'A' | 'Y')
+                {
                     result[result_pos] = 'X';
                     result_pos += 1;
                     pos += 3;
@@ -202,7 +214,10 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                     result[result_pos] = '0'; // Theta sound
                     result_pos += 1;
                     pos += 2;
-                } else if pos + 2 < word.len() && word[pos + 1] == 'I' && matches!(word[pos + 2], 'O' | 'A' | 'Y') {
+                } else if pos + 2 < word.len()
+                    && word[pos + 1] == 'I'
+                    && matches!(word[pos + 2], 'O' | 'A' | 'Y')
+                {
                     result[result_pos] = 'X';
                     result_pos += 1;
                     pos += 3;
@@ -260,14 +275,23 @@ pub fn phonetic_similarity(word1: &[char], word2: &[char]) -> i32 {
     let code1 = metaphone(word1);
     let code2 = metaphone(word2);
 
-    let matching = code1.iter().zip(code2.iter()).filter(|(a, b)| **a != ' ' && a == b).count();
+    let matching = code1
+        .iter()
+        .zip(code2.iter())
+        .filter(|(a, b)| **a != ' ' && a == b)
+        .count();
     let total = code1.iter().filter(|&&c| c != ' ').count().max(1);
     let code2_nonzero = code2.iter().filter(|&&c| c != ' ').count().max(1);
 
     // Prefix bonus for common starting sounds
-    let prefix_len = word1.iter().zip(word2.iter()).take_while(|(a, b)| a.eq_ignore_ascii_case(b)).count();
+    let prefix_len = word1
+        .iter()
+        .zip(word2.iter())
+        .take_while(|(a, b)| a.eq_ignore_ascii_case(b))
+        .count();
 
-    let similarity = (matching as f64 / total as f64 + matching as f64 / code2_nonzero as f64) / 2.0;
+    let similarity =
+        (matching as f64 / total as f64 + matching as f64 / code2_nonzero as f64) / 2.0;
     let prefix_bonus = (prefix_len as f64 * 0.1).min(0.2);
 
     let score = 1.0 - similarity - prefix_bonus;
@@ -289,13 +313,21 @@ mod tests {
     fn test_phonetic_similarity_same() {
         // Same words should have very low score
         let score = phonetic_similarity(&['C', 'A', 'T'], &['C', 'A', 'T']);
-        assert!(score <= 5, "Same words should score very low, got {}", score);
+        assert!(
+            score <= 5,
+            "Same words should score very low, got {}",
+            score
+        );
     }
 
     #[test]
     fn test_phonetic_similarity_phonetic() {
         // "cat" and "kat" sound the same
         let score = phonetic_similarity(&['C', 'A', 'T'], &['K', 'A', 'T']);
-        assert!(score < 15, "Phonetically similar words should score low, got {}", score);
+        assert!(
+            score < 15,
+            "Phonetically similar words should score low, got {}",
+            score
+        );
     }
 }
