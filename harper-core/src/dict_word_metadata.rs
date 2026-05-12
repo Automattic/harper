@@ -1025,6 +1025,8 @@ pub enum Dialect {
     Australian = 1 << 2,
     British = 1 << 3,
     Indian = 1 << 4,
+    Singaporean = 1 << 5,
+    Malaysian = 1 << 6,
 }
 impl Dialect {
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
@@ -1042,7 +1044,7 @@ impl Dialect {
     /// ```
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
+    /// let abbrs = ["US", "CA", "AU", "GB", "IN", "SG", "MY"];
     /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
     ///
     /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
@@ -1050,6 +1052,8 @@ impl Dialect {
     /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
     /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
+    /// assert_eq!(Some(Dialect::Singaporean), dialects.next().unwrap()); // SG
+    /// assert_eq!(Some(Dialect::Malaysian), dialects.next().unwrap()); // MY
     /// ```
     #[must_use]
     pub fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -1059,6 +1063,8 @@ impl Dialect {
             "AU" => Some(Self::Australian),
             "GB" => Some(Self::British),
             "IN" => Some(Self::Indian),
+            "SG" => Some(Self::Singaporean),
+            "MY" => Some(Self::Malaysian),
             _ => None,
         }
     }
@@ -1081,6 +1087,10 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
                 df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
+                df if df.is_dialect_enabled_strict(Dialect::Singaporean) => {
+                    Ok(Dialect::Singaporean)
+                }
+                df if df.is_dialect_enabled_strict(Dialect::Malaysian) => Ok(Dialect::Malaysian),
                 _ => Err(()),
             }
         } else {
@@ -1107,6 +1117,8 @@ bitflags::bitflags! {
         const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
         const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+        const SINGAPOREAN = Dialect::Singaporean as DialectFlagsUnderlyingType;
+        const MALAYSIAN = Dialect::Malaysian as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags {
