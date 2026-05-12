@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, expr_linter::followed_by_word},
     spell::Dictionary,
 };
 
@@ -81,15 +81,12 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             return None;
         }
 
-        // Skip if the next word-like token is a pronoun, which starts a
-        // new clause modifying the matched tail — e.g. "one of the best
-        // I've found", "one of the best that he saw". In those cases the
-        // matched adj (here "best") is used as a substantive adjective,
-        // not an out-of-agreement singular noun.
-        let after = ctx?.1;
-        if let Some(next_word) = after.iter().find(|t| t.kind.is_word_like())
-            && next_word.kind.is_pronoun()
-        {
+        // Skip when followed by a pronoun-led clause. The matched
+        // singular form is being used as a substantive (noun phrase
+        // head) and the pronoun starts a relative or independent
+        // clause — e.g. "one of the best he saw", "one of the best
+        // that they tried".
+        if followed_by_word(ctx, |t| t.kind.is_pronoun()) {
             return None;
         }
         let nounspan = nountok.span;
@@ -300,6 +297,26 @@ mod tests {
     fn dont_flag_one_of_the_rabbits_gloves() {
         assert_no_lints(
             "As she said this she looked down at her hands, and was surprised to see that she had put on one of the Rabbit’s little white kid gloves while she was talking.",
+            OneOfTheSingular::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_one_of_the_best_followed_by_relative_pronoun() {
+        // "best" is used as a substantive (noun phrase head) and
+        // "that he ever saw" is a relative clause modifying it.
+        assert_no_lints(
+            "It was one of the best that he ever saw.",
+            OneOfTheSingular::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_one_of_the_best_followed_by_personal_pronoun() {
+        // Substantive adjective + independent-pronoun clause; not a
+        // missing-plural construction.
+        assert_no_lints(
+            "It was one of the best he saw.",
             OneOfTheSingular::new(FstDictionary::curated()),
         );
     }
