@@ -1,5 +1,3 @@
-use hashbrown::HashSet;
-
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -34,13 +32,15 @@ impl<D: Dictionary + 'static> TransposedSpace<D> {
     }
 }
 
-fn keep_unique(values: &mut HashSet<String>, word1: &[char], word2: &[char]) {
+fn keep_unique(values: &mut Vec<String>, word1: &[char], word2: &[char]) {
     let value = format!(
         "{} {}",
         word1.iter().collect::<String>(),
         word2.iter().collect::<String>()
     );
-    values.insert(value);
+    if !values.contains(&value) {
+        values.push(value);
+    }
 }
 
 impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
@@ -73,37 +73,15 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
         let mut w1_plus_w2_first = word1.to_vec();
         w1_plus_w2_first.push(*w2_first);
 
-        let mut values = HashSet::new();
+        let mut values = Vec::new();
 
         // "thec" "at" -> "the cat"
         if self.dict.contains_word(w1_start) && self.dict.contains_word(&w1_last_plus_w2) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(&w1_last_plus_w2);
-            if let Some(canon_w1) = self.dict.get_correct_capitalization_of(w1_start) {
-                if let Some(canon_w2) = maybe_canon_w2 {
-                    keep_unique(&mut values, canon_w1, canon_w2);
-                } else {
-                    keep_unique(&mut values, canon_w1, &w1_last_plus_w2);
-                }
-            } else if let Some(canon_w2) = maybe_canon_w2 {
-                keep_unique(&mut values, w1_start, canon_w2);
-            }
-
             keep_unique(&mut values, w1_start, &w1_last_plus_w2);
         }
 
         // "th" "ecat" -> "the cat"
         if self.dict.contains_word(&w1_plus_w2_first) && self.dict.contains_word(w2_end) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(w2_end);
-            if let Some(canon_w1) = self.dict.get_correct_capitalization_of(&w1_plus_w2_first) {
-                if let Some(canon_w2) = maybe_canon_w2 {
-                    keep_unique(&mut values, canon_w1, canon_w2);
-                } else {
-                    keep_unique(&mut values, canon_w1, w2_end);
-                }
-            } else if let Some(canon_w2) = maybe_canon_w2 {
-                keep_unique(&mut values, &w1_plus_w2_first, canon_w2);
-            }
-
             keep_unique(&mut values, &w1_plus_w2_first, w2_end);
         }
 
@@ -143,7 +121,7 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 mod tests {
     use super::TransposedSpace;
     use crate::{
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        linting::tests::{assert_suggestion_count, assert_suggestion_result},
         spell::FstDictionary,
     };
 
@@ -173,14 +151,19 @@ mod tests {
             "Sometimes the space is one character early.",
         );
     }
+
     #[test]
-    fn test_3355() {
+    fn test_3355_result() {
         assert_suggestion_result(
             "cham peng",
             TransposedSpace::new(FstDictionary::curated()),
             "champ eng",
         );
-        assert_lint_count(
+    }
+
+    #[test]
+    fn test_3355_count() {
+        assert_suggestion_count(
             "cham peng",
             TransposedSpace::new(FstDictionary::curated()),
             1,
