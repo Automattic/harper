@@ -20,7 +20,7 @@ impl Default for FindFine {
             .t_aco("find")
             // Don't flag when `find` is followed by something that could be its
             // object, e.g. "what you want to do is find someone to replace you".
-            .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
+            .then_unless(SequenceExpr::whitespace().then(UPOSSet::new(&[
                 UPOS::NOUN,
                 UPOS::PROPN,
                 UPOS::PRON,
