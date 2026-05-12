@@ -34,10 +34,8 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
             | ('A', 'I')
             | ('A', 'O')
             | ('G', 'N')
-            | ('G', 'H') => {
-                if word[0] == 'A' || word[0] == 'G' {
-                    pos += 1;
-                }
+            | ('G', 'H') if word[0] == 'A' || word[0] == 'G' => {
+                pos += 1;
             }
             _ => {}
         }
@@ -160,11 +158,12 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                 }
             }
             'H' => {
-                if pos == 0 || (pos > 0 && !is_vowel(word[pos - 1])) {
-                    if pos + 1 < word.len() && is_vowel(word[pos + 1]) {
-                        result[result_pos] = 'H';
-                        result_pos += 1;
-                    }
+                if (pos == 0 || (pos > 0 && !is_vowel(word[pos - 1])))
+                    && pos + 1 < word.len()
+                    && is_vowel(word[pos + 1])
+                {
+                    result[result_pos] = 'H';
+                    result_pos += 1;
                 }
                 pos += 1;
             }
