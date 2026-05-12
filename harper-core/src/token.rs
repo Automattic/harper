@@ -16,6 +16,11 @@ impl Token {
         Self { span, kind }
     }
 
+    /// Check if this token should be skipped during linting.
+    pub fn kind_is_unlintable(&self) -> bool {
+        matches!(self.kind, TokenKind::Unlintable)
+    }
+
     /// Get the token's content as a slice of characters.
     pub fn get_ch<'a>(&self, source: &'a [char]) -> &'a [char] {
         self.span.get_content(source)
