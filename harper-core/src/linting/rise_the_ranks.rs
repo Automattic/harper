@@ -46,7 +46,7 @@ impl ExprLinter for RiseTheRanks {
         &self.expr
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         Some(Lint {
             span: toks[0].span,
             lint_kind: LintKind::Usage,
