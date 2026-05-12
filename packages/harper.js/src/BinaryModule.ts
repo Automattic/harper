@@ -1,25 +1,58 @@
+import * as defaultGlue from 'harper-wasm';
 import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
+import * as fullGlue from 'harper-wasm/harper_wasm.js';
 
 import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
 import type { LintConfig } from './main';
 
-const loadBinary = pMemoize(async (binary: string) => {
-	const exports = await import('harper-wasm');
+type WasmModule = typeof fullGlue;
 
-	let input: InitInput;
-	if (typeof process !== 'undefined' && binary.startsWith('file://')) {
-		const fs = await import(/* webpackIgnore: true */ /* @vite-ignore */ 'fs');
-		input = new Promise((resolve, reject) => {
-			fs.readFile(new URL(binary).pathname, (err, data) => {
-				if (err) reject(err);
-				resolve(data);
-			});
-		});
-	} else {
-		input = binary;
+function loadGlue(binary: string): WasmModule {
+	if (binary.includes('harper_wasm_slim')) {
+		return defaultGlue as WasmModule;
 	}
-	await exports.default({ module_or_path: input });
+
+	return fullGlue;
+}
+
+function getDefaultGlueBinary(binary: string): string | null {
+	if (binary.includes('harper_wasm_slim')) {
+		return binary;
+	}
+
+	if (binary.includes('harper_wasm_bg.wasm')) {
+		return binary.replace('harper_wasm_bg.wasm', 'harper_wasm_slim_bg.wasm');
+	}
+
+	return null;
+}
+
+function getInitInput(binary: string): InitInput {
+	if (typeof process !== 'undefined' && binary.startsWith('file://')) {
+		return import(/* webpackIgnore: true */ /* @vite-ignore */ 'fs').then(
+			(fs) =>
+				new Promise<Uint8Array>((resolve, reject) => {
+					fs.readFile(new URL(binary).pathname, (err, data) => {
+						if (err) reject(err);
+						resolve(data);
+					});
+				}),
+		);
+	}
+
+	return binary;
+}
+
+const loadBinary = pMemoize(async (binary: string) => {
+	const exports = loadGlue(binary);
+
+	const defaultGlueBinary = getDefaultGlueBinary(binary);
+	if (defaultGlueBinary != null) {
+		await defaultGlue.default({ module_or_path: getInitInput(defaultGlueBinary) });
+	}
+
+	await exports.default({ module_or_path: getInitInput(binary) });
 
 	return exports;
 });
@@ -43,7 +76,7 @@ export function createBinaryModuleFromUrl(url: string): BinaryModule {
 /** A wrapper around the underlying WebAssembly module that contains Harper's core code. Used to construct a `Linter`, as well as access some miscellaneous other functions. */
 export class BinaryModuleImpl {
 	public url: string | URL = '';
-	private inner: Promise<typeof import('harper-wasm')> | null = null;
+	private inner: Promise<WasmModule> | null = null;
 
 	/** Load a binary from a specified URL. This is the only recommended way to construct this type. */
 	public static create(url: string | URL): BinaryModuleImpl {
