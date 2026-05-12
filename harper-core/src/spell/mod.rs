@@ -378,7 +378,7 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     }
 
     // Phonetic matching boost - boost suggestions that sound similar
-    let phonetic_score = super::phonetic::phonetic_similarity(misspelled_word, sug.word);
+    let phonetic_score = self::phonetic::phonetic_similarity(misspelled_word, sug.word);
     if phonetic_score < 10 {
         score -= (10 - phonetic_score) / 2;
     }
