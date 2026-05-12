@@ -3,17 +3,18 @@ use std::num::NonZero;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
-use super::Suggestion;
-use super::{Lint, LintKind, Linter};
-use crate::document::Document;
-use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
+use crate::{
+    document::Document,
+    linting::{Lint, LintKind, Linter, Suggestion},
+    spell::{Dictionary, suggest_correct_spelling},
+    {CharString, CharStringExt, Dialect, TokenStringExt},
+};
 
 pub struct SpellCheck<T>
 where
     T: Dictionary,
 {
-    dictionary: T,
+    dict: T,
     suggestion_cache: LruCache<CharString, Vec<CharString>>,
     dialect: Dialect,
 }
@@ -21,7 +22,7 @@ where
 impl<T: Dictionary> SpellCheck<T> {
     pub fn new(dictionary: T, dialect: Dialect) -> Self {
         Self {
-            dictionary,
+            dict: dictionary,
             suggestion_cache: LruCache::new(NonZero::new(10000).unwrap()),
             dialect,
         }
@@ -42,11 +43,11 @@ impl<T: Dictionary> SpellCheck<T> {
         // Back off until we find a match.
         for dist in 2..5 {
             let suggestions: Vec<CharString> =
-                suggest_correct_spelling(word, 200, dist, &self.dictionary)
+                suggest_correct_spelling(word, 200, dist, &self.dict)
                     .into_iter()
                     .filter(|v| {
                         // Ignore entries outside the configured dialect
-                        self.dictionary
+                        self.dict
                             .get_word_metadata(v)
                             .unwrap()
                             .dialects
@@ -70,37 +71,87 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
-        for word in document.iter_words() {
+        let mut skip_past: Option<usize> = None;
+        for word_idx in document.iter_word_indices() {
+            // Skip words that already passed spellcheck as part of a compound with the previous word.
+            if let Some(skip_past) = skip_past
+                && word_idx <= skip_past
+            {
+                continue;
+            }
+            let word = document.get_token(word_idx).unwrap();
             let word_chars = document.get_span_content(&word.span);
 
-            if let Some(metadata) = word.kind.as_word().unwrap()
+            // Is the word in the dictionary on its own?
+            if let Some(Some(metadata)) = word.kind.as_word()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
-                && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+                && (self.dict.contains_exact_word(word_chars)
+                    || self.dict.contains_exact_word(&word_chars.to_lower()))
             {
                 continue;
             };
 
-            let mut possibilities = self.suggest_correct_spelling(word_chars);
-
-            // If the misspelled word is capitalized, capitalize the results too.
-            if let Some(mis_f) = word_chars.first()
-                && mis_f.is_uppercase()
+            // Check if this word forms a compound with the next word
+            if let (Some(next_tok), Some(next_next_tok)) = (
+                document.get_token_offset(word_idx, 1),
+                document.get_token_offset(word_idx, 2),
+            ) && (next_tok.kind.is_whitespace() || next_tok.kind.is_hyphen())
+                && next_next_tok.kind.is_word()
             {
-                for sug_f in possibilities.iter_mut().filter_map(|w| {
-                    // Skip words that have uppercase chars in any position except the first.
-                    // (For words with specific capitalization, like 'macOS')
-                    w.iter()
-                        .skip(1)
-                        .all(|c| !c.is_uppercase())
-                        .then_some(w.first_mut())
-                        .flatten()
+                let next_word_chars = document.get_span_content(&next_next_tok.span);
+                let mut compound_chars =
+                    Vec::with_capacity(word_chars.len() + 1 + next_word_chars.len());
+                compound_chars.extend_from_slice(word_chars);
+                compound_chars.push(if next_tok.kind.is_hyphen() { '-' } else { ' ' });
+                compound_chars.extend_from_slice(next_word_chars);
+
+                if self.dict.contains_exact_word(&compound_chars) {
+                    skip_past = Some(word_idx + 2);
+                    continue;
+                }
+            };
+
+            // Also check if this word forms a compound with the previous word
+            if let (Some(prev_tok), Some(prev_prev_tok)) = (
+                document.get_token_offset(word_idx, -1),
+                document.get_token_offset(word_idx, -2),
+            ) && (prev_tok.kind.is_whitespace() || prev_tok.kind.is_hyphen())
+                && prev_prev_tok.kind.is_word()
+            {
+                let prev_word_chars = document.get_span_content(&prev_prev_tok.span);
+                let mut compound_chars =
+                    Vec::with_capacity(prev_word_chars.len() + 1 + word_chars.len());
+                compound_chars.extend_from_slice(prev_word_chars);
+                compound_chars.push(if prev_tok.kind.is_hyphen() { '-' } else { ' ' });
+                compound_chars.extend_from_slice(word_chars);
+
+                if self.dict.contains_exact_word(&compound_chars) {
+                    continue;
+                }
+            };
+
+            let mut candidates = self.suggest_correct_spelling(word_chars);
+
+            // If the misspelled word is in title case, apply title case to suggestions too.
+            if let Some(err_1st_char) = word_chars.first()
+                && err_1st_char.is_uppercase()
+            {
+                for cand_1st_char in candidates.iter_mut().filter_map(|sugg_word| {
+                    // Only process suggestions that don't have "exotic casing", thus preserving
+                    // words with modern capitalization patterns like 'macOS', 'iPhone', etc.
+                    let has_exotic_casing = sugg_word.iter().skip(1).any(|c| c.is_uppercase());
+
+                    if !has_exotic_casing {
+                        sugg_word.first_mut()
+                    } else {
+                        None
+                    }
                 }) {
-                    *sug_f = sug_f.to_uppercase().next().unwrap();
+                    *cand_1st_char = cand_1st_char.to_uppercase().next().unwrap();
                 }
             }
 
-            let suggestions: Vec<_> = possibilities
+            let suggestions: Vec<_> = candidates
                 .iter()
                 .map(|sug| Suggestion::ReplaceWith(sug.to_vec()))
                 .collect();
@@ -109,7 +160,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             let message = if suggestions.len() == 1 {
                 format!(
                     "Did you mean `{}`?",
-                    possibilities.first().unwrap().iter().collect::<String>()
+                    candidates.first().unwrap().iter().collect::<String>()
                 )
             } else {
                 format!(
@@ -140,15 +191,19 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::dict_word_metadata::DialectFlags;
-    use crate::linting::Linter;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
-    use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        dict_word_metadata::DialectFlags,
+        linting::{
+            Linter,
+            tests::{
+                assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints,
+                assert_suggestion_result,
+            },
+        },
+        spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
+        {DictWordMetadata, Document},
     };
-    use crate::{DictWordMetadata, Document};
 
     // Capitalization tests
 
@@ -1005,6 +1060,71 @@ mod tests {
             "childrens",
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "children's",
+        );
+    }
+
+    #[test]
+    fn hyphenated_compound_1st_word_not_in_dict() {
+        assert_lint_count(
+            "Greco",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+        assert_no_lints(
+            "Greco-Roman",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn hyphenated_compound_2nd_word_not_in_dict() {
+        assert_lint_count(
+            "droppingly",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+        assert_no_lints(
+            "jaw-droppingly",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn hyphenated_compound_neither_word_in_dict() {
+        assert_lint_count(
+            "goosey. loosey.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            2,
+        );
+        assert_no_lints(
+            "loosey-goosey",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn open_compound_1st_word_not_in_dict() {
+        assert_lint_count(
+            "welch/plug",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            1,
+        );
+        assert_no_lints(
+            "welch plug",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+        );
+    }
+
+    #[test]
+    fn open_compound_neither_word_in_dict() {
+        assert_lint_count(
+            "Holy and holey are words, but moly and moley are not.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            2,
+        );
+        assert_no_lints(
+            "holy moly vs holy moley",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
         );
     }
 }
