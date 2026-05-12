@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::spell::rune::{AttributeList, ProvenanceKind, ProvenanceRecord, parse_word_list};
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -219,6 +220,15 @@ enum Args {
         /// The location of the Weir file to test
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Trace the provenance of a word: is it in the dictionary directly, generated
+    /// by affix rules, or produced via cross-product interaction?
+    WordProvenance {
+        /// The words whose provenance you want to trace.
+        words: Vec<String>,
+        /// Print results as JSON instead of human-readable text.
+        #[arg(long)]
+        json: bool,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -986,6 +996,142 @@ fn main() -> anyhow::Result<()> {
                 eprintln!("{:?}", failing_tests);
                 process::exit(1);
             }
+        }
+        Args::WordProvenance { words, json } => {
+            let curated_word_list = include_str!("../../harper-core/dictionary.dict");
+            let curated_annotations = include_str!("../../harper-core/annotations.json");
+
+            let parsed_words = parse_word_list(curated_word_list)
+                .map_err(|e| anyhow!("Failed to parse dictionary: {e}"))?;
+            let attributes = AttributeList::parse(curated_annotations)
+                .map_err(|e| anyhow!("Failed to parse annotations: {e}"))?;
+
+            // Build case-folding collision map from parsed words before expansion
+            // consumes the iterator. Words that only differ by case will share
+            // the same WordId in Harper's dictionary.
+            let mut case_variants: HashMap<String, Vec<String>> = HashMap::new();
+            for w in &parsed_words {
+                let word_str: String = w.letters.iter().collect();
+                let lower = word_str.to_lowercase();
+                case_variants.entry(lower).or_default().push(word_str);
+            }
+
+            // Expand all dictionary entries with provenance tracking
+            let all_records = attributes.expand_all_with_provenance(parsed_words);
+
+            for target_word in &words {
+                let target_lower = target_word.to_lowercase();
+
+                // Find all provenance records matching this word (case-insensitive)
+                let matching: Vec<&ProvenanceRecord> = all_records
+                    .iter()
+                    .filter(|r| r.word.to_lowercase() == target_lower)
+                    .collect();
+
+                if json {
+                    // JSON output
+                    let json_records: Vec<serde_json::Value> = matching
+                        .iter()
+                        .map(|r| {
+                            let kind_str = match &r.kind {
+                                ProvenanceKind::Direct => serde_json::json!({
+                                    "type": "direct"
+                                }),
+                                ProvenanceKind::AffixGenerated { flag, kind } => {
+                                    serde_json::json!({
+                                        "type": "affix_generated",
+                                        "flag": flag.to_string(),
+                                        "affix_kind": format!("{:?}", kind).to_lowercase()
+                                    })
+                                }
+                                ProvenanceKind::CrossProduct {
+                                    first_flag,
+                                    second_flag,
+                                } => serde_json::json!({
+                                    "type": "cross_product",
+                                    "first_flag": first_flag.to_string(),
+                                    "second_flag": second_flag.to_string()
+                                }),
+                            };
+                            serde_json::json!({
+                                "word": r.word,
+                                "base_entry": r.base_word,
+                                "base_annotations": r.base_annotations,
+                                "provenance": kind_str
+                            })
+                        })
+                        .collect();
+
+                    let output = serde_json::json!({
+                        "query": target_word,
+                        "routes": json_records
+                    });
+                    println!("{}", serde_json::to_string_pretty(&output).unwrap());
+                } else {
+                    // Human-readable output
+                    if matching.is_empty() {
+                        println!("'{}': not found in the expanded dictionary.", target_word);
+                    } else {
+                        println!(
+                            "'{}': found via {} route(s):\n",
+                            target_word,
+                            matching.len()
+                        );
+                        for (i, record) in matching.iter().enumerate() {
+                            let route_desc = match &record.kind {
+                                ProvenanceKind::Direct => {
+                                    "DIRECT — appears as a base entry in dictionary.dict"
+                                        .to_string()
+                                }
+                                ProvenanceKind::AffixGenerated { flag, kind } => {
+                                    let kind_str = match kind {
+                                        harper_core::spell::rune::AffixEntryKind::Prefix => {
+                                            "prefix"
+                                        }
+                                        harper_core::spell::rune::AffixEntryKind::Suffix => {
+                                            "suffix"
+                                        }
+                                    };
+                                    format!(
+                                        "AFFIX — generated by {} flag '{}' from base",
+                                        kind_str, flag
+                                    )
+                                }
+                                ProvenanceKind::CrossProduct {
+                                    first_flag,
+                                    second_flag,
+                                } => {
+                                    format!(
+                                        "CROSS-PRODUCT — flag '{}' then flag '{}' from base",
+                                        first_flag, second_flag
+                                    )
+                                }
+                            };
+                            println!("  {}. {}", i + 1, route_desc);
+                            println!(
+                                "     base: {}/{}",
+                                record.base_word, record.base_annotations
+                            );
+                        }
+
+                        // Check for case-folding collisions
+                        if let Some(variants) = case_variants.get(&target_lower)
+                            && variants.len() > 1
+                        {
+                            println!();
+                            println!(
+                                "  ⚠ CASE VARIANTS — the following entries share the same case-folded form:"
+                            );
+                            for v in variants {
+                                println!("     - {}", v);
+                            }
+                        }
+                    }
+                    println!();
+                }
+            }
+
+            Ok(())
         }
         Args::Completion { shell } => {
             generate(

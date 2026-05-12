@@ -494,6 +494,11 @@ get-metadata-brief *words:
 get-forms word:
   cargo run --bin harper-cli -- forms {{word}}
 
+# Trace the provenance of one or more words: how they ended up in the dictionary.
+alias provenance := word-provenance
+word-provenance *words:
+  cargo run --bin harper-cli -- word-provenance {{words}}
+
 # Get a random sample of words from Harper's dictionary and list all forms of each.
 sample-forms count:
   #!/usr/bin/env bash
