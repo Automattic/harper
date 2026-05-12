@@ -1,315 +1,328 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import type { LintConfig, StructuredLintConfig, StructuredLintSetting } from "harper.js";
-  import { Client } from "$lib/client";
+import type { LintConfig, StructuredLintConfig, StructuredLintSetting } from 'harper.js';
+import { onMount } from 'svelte';
+import { Client } from '$lib/client';
 
-  type RuleOverride = "default" | "on" | "off";
-  type RuleItem = { id: string; name: string; desc: string };
-  type RuleGroup = { id: string; title: string; desc: string; rules: RuleItem[] };
-  type MatchedRuleGroup = RuleGroup & { matchedRules: RuleItem[] };
+type RuleOverride = 'default' | 'on' | 'off';
+type RuleItem = { id: string; name: string; desc: string };
+type RuleGroup = { id: string; title: string; desc: string; rules: RuleItem[] };
+type MatchedRuleGroup = RuleGroup & { matchedRules: RuleItem[] };
 
-  const defaultRuleOptions: { value: RuleOverride; label: string }[] = [
-    { value: "default", label: "Default" },
-    { value: "on", label: "Enabled" },
-    { value: "off", label: "Disabled" },
-  ];
+const defaultRuleOptions: { value: RuleOverride; label: string }[] = [
+	{ value: 'default', label: 'Default' },
+	{ value: 'on', label: 'Enabled' },
+	{ value: 'off', label: 'Disabled' },
+];
 
-  let lintConfig: LintConfig | null = null;
-  let defaultLintConfig: LintConfig | null = null;
-  let structuredLintConfig: StructuredLintConfig | null = null;
-  let rules: Record<string, RuleOverride> = {};
-  let rulesSearch = "";
-  let expandedGroups: Record<string, boolean> = {};
-  let isLintConfigLoading = true;
-  let isLintConfigSaving = false;
-  let lintConfigError = "";
+let lintConfig: LintConfig | null = null;
+let defaultLintConfig: LintConfig | null = null;
+let structuredLintConfig: StructuredLintConfig | null = null;
+let rules: Record<string, RuleOverride> = {};
+let rulesSearch = '';
+let expandedGroups: Record<string, boolean> = {};
+let isLintConfigLoading = true;
+let isLintConfigSaving = false;
+let lintConfigError = '';
 
-  $: rulesQuery = rulesSearch.trim().toLowerCase();
-  $: displayedRules = getDisplayedRules();
-  $: enabledRuleCount = displayedRules.filter((rule) => isRuleEnabled(rule)).length;
-  $: customizedRuleCount = Object.values(rules).filter((value) => value !== "default").length;
-  $: filteredRuleGroups = getFilteredRuleGroups(rulesQuery);
+$: rulesQuery = rulesSearch.trim().toLowerCase();
+$: displayedRules = getDisplayedRules();
+$: enabledRuleCount = displayedRules.filter((rule) => isRuleEnabled(rule)).length;
+$: customizedRuleCount = Object.values(rules).filter((value) => value !== 'default').length;
+$: filteredRuleGroups = getFilteredRuleGroups(rulesQuery);
 
-  onMount(() => {
-    void loadLintConfig();
+onMount(() => {
+	void loadLintConfig();
 
-    const refreshLintConfig = () => {
-      if (!isLintConfigSaving) {
-        void loadLintConfig();
-      }
-    };
+	const refreshLintConfig = () => {
+		if (!isLintConfigSaving) {
+			void loadLintConfig();
+		}
+	};
 
-    window.addEventListener("focus", refreshLintConfig);
+	window.addEventListener('focus', refreshLintConfig);
 
-    return () => {
-      window.removeEventListener("focus", refreshLintConfig);
-    };
-  });
+	return () => {
+		window.removeEventListener('focus', refreshLintConfig);
+	};
+});
 
-  async function loadLintConfig() {
-    isLintConfigLoading = true;
-    lintConfigError = "";
+async function loadLintConfig() {
+	isLintConfigLoading = true;
+	lintConfigError = '';
 
-    const [fetchedLintConfig, fetchedDefaultLintConfig, fetchedStructuredLintConfig] = await Promise.all([
-      Client.getLintConfig(),
-      Client.getDefaultLintConfig(),
-      Client.getStructuredLintConfig(),
-    ]);
+	const [fetchedLintConfig, fetchedDefaultLintConfig, fetchedStructuredLintConfig] =
+		await Promise.all([
+			Client.getLintConfig(),
+			Client.getDefaultLintConfig(),
+			Client.getStructuredLintConfig(),
+		]);
 
-    lintConfig = fetchedLintConfig;
-    defaultLintConfig = fetchedDefaultLintConfig;
-    structuredLintConfig = fetchedStructuredLintConfig;
-    rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
-    isLintConfigLoading = false;
-  }
+	lintConfig = fetchedLintConfig;
+	defaultLintConfig = fetchedDefaultLintConfig;
+	structuredLintConfig = fetchedStructuredLintConfig;
+	rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
+	isLintConfigLoading = false;
+}
 
-  function rulesFromLintConfig(config: LintConfig, defaultConfig: LintConfig): Record<string, RuleOverride> {
-    return Object.fromEntries(
-      Object.entries(config).map(([ruleId, value]) => [
-        ruleId,
-        value === defaultConfig[ruleId] ? "default" : lintValueToRuleOverride(value),
-      ]),
-    );
-  }
+function rulesFromLintConfig(
+	config: LintConfig,
+	defaultConfig: LintConfig,
+): Record<string, RuleOverride> {
+	return Object.fromEntries(
+		Object.entries(config).map(([ruleId, value]) => [
+			ruleId,
+			value === defaultConfig[ruleId] ? 'default' : lintValueToRuleOverride(value),
+		]),
+	);
+}
 
-  function lintValueToRuleOverride(value: boolean | null | undefined): RuleOverride {
-    if (value === true) return "on";
-    if (value === false) return "off";
-    return "default";
-  }
+function lintValueToRuleOverride(value: boolean | null | undefined): RuleOverride {
+	if (value === true) return 'on';
+	if (value === false) return 'off';
+	return 'default';
+}
 
-  function ruleOverrideToLintValue(ruleId: string, value: RuleOverride): boolean {
-    if (value === "on") return true;
-    if (value === "off") return false;
+function ruleOverrideToLintValue(ruleId: string, value: RuleOverride): boolean {
+	if (value === 'on') return true;
+	if (value === 'off') return false;
 
-    return defaultLintConfig?.[ruleId] ?? false;
-  }
+	return defaultLintConfig?.[ruleId] ?? false;
+}
 
-  function ruleLabelFromKey(key: string) {
-    return key
-      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-      .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
-      .trim();
-  }
+function ruleLabelFromKey(key: string) {
+	return key
+		.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+		.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+		.trim();
+}
 
-  function getRuleGroups(): RuleGroup[] {
-    if (!structuredLintConfig) {
-      return [];
-    }
+function getRuleGroups(): RuleGroup[] {
+	if (!structuredLintConfig) {
+		return [];
+	}
 
-    return ruleGroupsFromStructuredConfig(structuredLintConfig);
-  }
+	return ruleGroupsFromStructuredConfig(structuredLintConfig);
+}
 
-  function ruleGroupsFromStructuredConfig(config: StructuredLintConfig): RuleGroup[] {
-    const groups: RuleGroup[] = [];
-    const looseRules: RuleItem[] = [];
+function ruleGroupsFromStructuredConfig(config: StructuredLintConfig): RuleGroup[] {
+	const groups: RuleGroup[] = [];
+	const looseRules: RuleItem[] = [];
 
-    for (const setting of config.settings) {
-      if ("Group" in setting) {
-        groups.push(...groupsFromSetting(setting.Group));
-      } else {
-        looseRules.push(...rulesFromSetting(setting));
-      }
-    }
+	for (const setting of config.settings) {
+		if ('Group' in setting) {
+			groups.push(...groupsFromSetting(setting.Group));
+		} else {
+			looseRules.push(...rulesFromSetting(setting));
+		}
+	}
 
-    if (looseRules.length > 0) {
-      groups.push({
-        id: "ungrouped-rules",
-        title: "Ungrouped Rules",
-        desc: "Rules from the app's current lint configuration that are not assigned to a category.",
-        rules: looseRules,
-      });
-    }
+	if (looseRules.length > 0) {
+		groups.push({
+			id: 'ungrouped-rules',
+			title: 'Ungrouped Rules',
+			desc: "Rules from the app's current lint configuration that are not assigned to a category.",
+			rules: looseRules,
+		});
+	}
 
-    return groups;
-  }
+	return groups;
+}
 
-  function groupsFromSetting(group: Extract<StructuredLintSetting, { Group: unknown }>["Group"]): RuleGroup[] {
-    const groups: RuleGroup[] = [];
-    const rules: RuleItem[] = [];
+function groupsFromSetting(
+	group: Extract<StructuredLintSetting, { Group: unknown }>['Group'],
+): RuleGroup[] {
+	const groups: RuleGroup[] = [];
+	const rules: RuleItem[] = [];
 
-    for (const setting of group.child.settings) {
-      if ("Group" in setting) {
-        groups.push(...groupsFromSetting(setting.Group));
-      } else {
-        rules.push(...rulesFromSetting(setting));
-      }
-    }
+	for (const setting of group.child.settings) {
+		if ('Group' in setting) {
+			groups.push(...groupsFromSetting(setting.Group));
+		} else {
+			rules.push(...rulesFromSetting(setting));
+		}
+	}
 
-    if (rules.length > 0) {
-      groups.unshift({
-        id: `${groups.length}-${group.label}`,
-        title: group.label,
-        desc: group.description,
-        rules,
-      });
-    }
+	if (rules.length > 0) {
+		groups.unshift({
+			id: `${groups.length}-${group.label}`,
+			title: group.label,
+			desc: group.description,
+			rules,
+		});
+	}
 
-    return groups;
-  }
+	return groups;
+}
 
-  function rulesFromSetting(setting: StructuredLintSetting): RuleItem[] {
-    if ("Bool" in setting) {
-      return [
-        {
-          id: setting.Bool.name,
-          name: setting.Bool.label ?? ruleLabelFromKey(setting.Bool.name),
-          desc: "Harper rule from the curated rule catalog.",
-        },
-      ];
-    }
+function rulesFromSetting(setting: StructuredLintSetting): RuleItem[] {
+	if ('Bool' in setting) {
+		return [
+			{
+				id: setting.Bool.name,
+				name: setting.Bool.label ?? ruleLabelFromKey(setting.Bool.name),
+				desc: 'Harper rule from the curated rule catalog.',
+			},
+		];
+	}
 
-    if ("OneOfMany" in setting) {
-      return setting.OneOfMany.names.map((name, index) => ({
-        id: name,
-        name: setting.OneOfMany.labels?.[index] ?? ruleLabelFromKey(name),
-        desc: "Harper rule option from the curated rule catalog.",
-      }));
-    }
+	if ('OneOfMany' in setting) {
+		return setting.OneOfMany.names.map((name, index) => ({
+			id: name,
+			name: setting.OneOfMany.labels?.[index] ?? ruleLabelFromKey(name),
+			desc: 'Harper rule option from the curated rule catalog.',
+		}));
+	}
 
-    return [];
-  }
+	return [];
+}
 
-  function getDisplayedRules() {
-    return getRuleGroups().flatMap((group) => group.rules);
-  }
+function getDisplayedRules() {
+	return getRuleGroups().flatMap((group) => group.rules);
+}
 
-  async function saveLintConfig(nextLintConfig: LintConfig, nextRules: Record<string, RuleOverride>) {
-    const previousLintConfig = lintConfig;
-    const previousRules = rules;
+async function saveLintConfig(nextLintConfig: LintConfig, nextRules: Record<string, RuleOverride>) {
+	const previousLintConfig = lintConfig;
+	const previousRules = rules;
 
-    lintConfig = nextLintConfig;
-    rules = nextRules;
-    isLintConfigSaving = true;
-    lintConfigError = "";
+	lintConfig = nextLintConfig;
+	rules = nextRules;
+	isLintConfigSaving = true;
+	lintConfigError = '';
 
-    try {
-      await Client.setLintConfig(nextLintConfig);
-    } catch (error) {
-      lintConfig = previousLintConfig;
-      rules = previousRules;
-      lintConfigError = `Unable to save lint config: ${error}`;
-    } finally {
-      isLintConfigSaving = false;
-    }
-  }
+	try {
+		await Client.setLintConfig(nextLintConfig);
+	} catch (error) {
+		lintConfig = previousLintConfig;
+		rules = previousRules;
+		lintConfigError = `Unable to save lint config: ${error}`;
+	} finally {
+		isLintConfigSaving = false;
+	}
+}
 
-  function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleOverride) {
-    config[ruleId] = ruleOverrideToLintValue(ruleId, value);
-  }
+function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleOverride) {
+	config[ruleId] = ruleOverrideToLintValue(ruleId, value);
+}
 
-  function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
-    const ruleGroups = getRuleGroups();
+function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
+	const ruleGroups = getRuleGroups();
 
-    if (!query) {
-      return ruleGroups.map((group) => ({ ...group, matchedRules: group.rules }));
-    }
+	if (!query) {
+		return ruleGroups.map((group) => ({ ...group, matchedRules: group.rules }));
+	}
 
-    return ruleGroups.map((group) => {
-      const groupMatches =
-        group.title.toLowerCase().includes(query) || group.desc.toLowerCase().includes(query);
-      const matchedRules = group.rules.filter(
-        (rule) =>
-          rule.name.toLowerCase().includes(query) || rule.desc.toLowerCase().includes(query),
-      );
+	return ruleGroups
+		.map((group) => {
+			const groupMatches =
+				group.title.toLowerCase().includes(query) || group.desc.toLowerCase().includes(query);
+			const matchedRules = group.rules.filter(
+				(rule) =>
+					rule.name.toLowerCase().includes(query) || rule.desc.toLowerCase().includes(query),
+			);
 
-      if (groupMatches) {
-        return { ...group, matchedRules: group.rules };
-      }
+			if (groupMatches) {
+				return { ...group, matchedRules: group.rules };
+			}
 
-      if (matchedRules.length > 0) {
-        return { ...group, matchedRules };
-      }
+			if (matchedRules.length > 0) {
+				return { ...group, matchedRules };
+			}
 
-      return null;
-    }).filter((group): group is MatchedRuleGroup => group !== null);
-  }
+			return null;
+		})
+		.filter((group): group is MatchedRuleGroup => group !== null);
+}
 
-  function getRuleValue(ruleId: string): RuleOverride {
-    return rules[ruleId] ?? "default";
-  }
+function getRuleValue(ruleId: string): RuleOverride {
+	return rules[ruleId] ?? 'default';
+}
 
-  function isRuleEnabled(rule: RuleItem) {
-    return lintConfig?.[rule.id] ?? defaultLintConfig?.[rule.id] ?? false;
-  }
+function isRuleEnabled(rule: RuleItem) {
+	return lintConfig?.[rule.id] ?? defaultLintConfig?.[rule.id] ?? false;
+}
 
-  async function setRuleOverride(ruleId: string, value: RuleOverride) {
-    const nextRules = { ...rules };
+async function setRuleOverride(ruleId: string, value: RuleOverride) {
+	const nextRules = { ...rules };
 
-    nextRules[ruleId] = value;
+	nextRules[ruleId] = value;
 
-    if (!lintConfig) {
-      rules = nextRules;
-      return;
-    }
+	if (!lintConfig) {
+		rules = nextRules;
+		return;
+	}
 
-    const nextLintConfig = { ...lintConfig };
-    setLintConfigRuleValue(nextLintConfig, ruleId, value);
-    await saveLintConfig(nextLintConfig, nextRules);
-  }
+	const nextLintConfig = { ...lintConfig };
+	setLintConfigRuleValue(nextLintConfig, ruleId, value);
+	await saveLintConfig(nextLintConfig, nextRules);
+}
 
-  async function setGroupOverride(group: RuleGroup, value: RuleOverride) {
-    const nextRules = { ...rules };
-    const nextLintConfig = lintConfig ? { ...lintConfig } : null;
+async function setGroupOverride(group: RuleGroup, value: RuleOverride) {
+	const nextRules = { ...rules };
+	const nextLintConfig = lintConfig ? { ...lintConfig } : null;
 
-    for (const rule of group.rules) {
-      nextRules[rule.id] = value;
+	for (const rule of group.rules) {
+		nextRules[rule.id] = value;
 
-      if (nextLintConfig) {
-        setLintConfigRuleValue(nextLintConfig, rule.id, value);
-      }
-    }
+		if (nextLintConfig) {
+			setLintConfigRuleValue(nextLintConfig, rule.id, value);
+		}
+	}
 
-    if (!nextLintConfig) {
-      rules = nextRules;
-      return;
-    }
+	if (!nextLintConfig) {
+		rules = nextRules;
+		return;
+	}
 
-    await saveLintConfig(nextLintConfig, nextRules);
-  }
+	await saveLintConfig(nextLintConfig, nextRules);
+}
 
-  function getGroupState(group: RuleGroup): RuleOverride | "mixed" {
-    const values = group.rules.map((rule) => getRuleValue(rule.id));
-    const first = values[0];
-    return values.every((value) => value === first) ? first : "mixed";
-  }
+function getGroupState(group: RuleGroup): RuleOverride | 'mixed' {
+	const values = group.rules.map((rule) => getRuleValue(rule.id));
+	const first = values[0];
+	return values.every((value) => value === first) ? first : 'mixed';
+}
 
-  async function resetRules() {
-    if (!lintConfig) {
-      rules = {};
-      return;
-    }
+async function resetRules() {
+	if (!lintConfig) {
+		rules = {};
+		return;
+	}
 
-    const nextLintConfig = { ...lintConfig };
+	const nextLintConfig = { ...lintConfig };
 
-    for (const rule of displayedRules) {
-      nextLintConfig[rule.id] = defaultLintConfig?.[rule.id] ?? false;
-    }
+	for (const rule of displayedRules) {
+		nextLintConfig[rule.id] = defaultLintConfig?.[rule.id] ?? false;
+	}
 
-    await saveLintConfig(nextLintConfig, rulesFromLintConfig(nextLintConfig, defaultLintConfig ?? {}));
-  }
+	await saveLintConfig(
+		nextLintConfig,
+		rulesFromLintConfig(nextLintConfig, defaultLintConfig ?? {}),
+	);
+}
 
-  async function disableRules() {
-    const nextRules = Object.fromEntries(displayedRules.map((rule) => [rule.id, "off" as RuleOverride]));
+async function disableRules() {
+	const nextRules = Object.fromEntries(
+		displayedRules.map((rule) => [rule.id, 'off' as RuleOverride]),
+	);
 
-    if (!lintConfig) {
-      rules = nextRules;
-      return;
-    }
+	if (!lintConfig) {
+		rules = nextRules;
+		return;
+	}
 
-    const nextLintConfig = { ...lintConfig };
+	const nextLintConfig = { ...lintConfig };
 
-    for (const rule of displayedRules) {
-      nextLintConfig[rule.id] = false;
-    }
+	for (const rule of displayedRules) {
+		nextLintConfig[rule.id] = false;
+	}
 
-    await saveLintConfig(nextLintConfig, nextRules);
-  }
+	await saveLintConfig(nextLintConfig, nextRules);
+}
 
-  function toggleGroup(groupId: string) {
-    if (rulesQuery) return;
-    expandedGroups = { ...expandedGroups, [groupId]: !expandedGroups[groupId] };
-  }
+function toggleGroup(groupId: string) {
+	if (rulesQuery) return;
+	expandedGroups = { ...expandedGroups, [groupId]: !expandedGroups[groupId] };
+}
 </script>
 
 <section>

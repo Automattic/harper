@@ -1,114 +1,117 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import AppPickerModal from "../components/AppPickerModal.svelte";
-  import { Client, type Integration } from "$lib/client";
+import { onMount } from 'svelte';
+import { Client, type Integration } from '$lib/client';
+import AppPickerModal from '../components/AppPickerModal.svelte';
 
-  interface IntegrationRow extends Integration {
-    name: string;
-  }
+interface IntegrationRow extends Integration {
+	name: string;
+}
 
-  let integrations: Integration[] = [];
-  let integrationsError = "";
-  let isIntegrationsLoading = true;
-  let isIntegrationsSaving = false;
-  let appPickerOpen = false;
-  let newBundleId = "";
+let integrations: Integration[] = [];
+let integrationsError = '';
+let isIntegrationsLoading = true;
+let isIntegrationsSaving = false;
+let appPickerOpen = false;
+let newBundleId = '';
 
-  $: integrationApps = integrations.map(toIntegrationRow);
-  $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
+$: integrationApps = integrations.map(toIntegrationRow);
+$: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
-  onMount(() => {
-    void loadIntegrations();
-  });
+onMount(() => {
+	void loadIntegrations();
+});
 
-  async function loadIntegrations() {
-    isIntegrationsLoading = true;
-    integrationsError = "";
+async function loadIntegrations() {
+	isIntegrationsLoading = true;
+	integrationsError = '';
 
-    try {
-      integrations = await Client.getIntegrations();
-    } catch (error) {
-      integrationsError = `Unable to load integrations: ${error}`;
-    } finally {
-      isIntegrationsLoading = false;
-    }
-  }
+	try {
+		integrations = await Client.getIntegrations();
+	} catch (error) {
+		integrationsError = `Unable to load integrations: ${error}`;
+	} finally {
+		isIntegrationsLoading = false;
+	}
+}
 
-  function toIntegrationRow(integration: Integration): IntegrationRow {
-    return {
-      ...integration,
-      name: integrationName(integration.bundle_id),
-    };
-  }
+function toIntegrationRow(integration: Integration): IntegrationRow {
+	return {
+		...integration,
+		name: integrationName(integration.bundle_id),
+	};
+}
 
-  function integrationName(bundleId: string) {
-    return bundleId.split(".").at(-1) || bundleId;
-  }
+function integrationName(bundleId: string) {
+	return bundleId.split('.').at(-1) || bundleId;
+}
 
-  async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
-    const previousIntegrations = integrations;
+async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
+	const previousIntegrations = integrations;
 
-    integrations = integrations.map((integration) =>
-      integration.bundle_id === bundleId ? { ...integration, enabled } : integration,
-    );
-    isIntegrationsSaving = true;
-    integrationsError = "";
+	integrations = integrations.map((integration) =>
+		integration.bundle_id === bundleId ? { ...integration, enabled } : integration,
+	);
+	isIntegrationsSaving = true;
+	integrationsError = '';
 
-    try {
-      await Client.setIntegrationEnabled(bundleId, enabled);
-    } catch (error) {
-      integrations = previousIntegrations;
-      integrationsError = `Unable to update integration: ${error}`;
-    } finally {
-      isIntegrationsSaving = false;
-    }
-  }
+	try {
+		await Client.setIntegrationEnabled(bundleId, enabled);
+	} catch (error) {
+		integrations = previousIntegrations;
+		integrationsError = `Unable to update integration: ${error}`;
+	} finally {
+		isIntegrationsSaving = false;
+	}
+}
 
-  async function removeIntegration(bundleId: string) {
-    const previousIntegrations = integrations;
+async function removeIntegration(bundleId: string) {
+	const previousIntegrations = integrations;
 
-    integrations = integrations.filter((integration) => integration.bundle_id !== bundleId);
-    isIntegrationsSaving = true;
-    integrationsError = "";
+	integrations = integrations.filter((integration) => integration.bundle_id !== bundleId);
+	isIntegrationsSaving = true;
+	integrationsError = '';
 
-    try {
-      await Client.removeIntegration(bundleId);
-    } catch (error) {
-      integrations = previousIntegrations;
-      integrationsError = `Unable to remove integration: ${error}`;
-    } finally {
-      isIntegrationsSaving = false;
-    }
-  }
+	try {
+		await Client.removeIntegration(bundleId);
+	} catch (error) {
+		integrations = previousIntegrations;
+		integrationsError = `Unable to remove integration: ${error}`;
+	} finally {
+		isIntegrationsSaving = false;
+	}
+}
 
-  async function addIntegration(bundleId: string) {
-    const trimmedBundleId = bundleId.trim();
+async function addIntegration(bundleId: string) {
+	const trimmedBundleId = bundleId.trim();
 
-    if (!trimmedBundleId || integrations.some((integration) => integration.bundle_id === trimmedBundleId)) {
-      return;
-    }
+	if (
+		!trimmedBundleId ||
+		integrations.some((integration) => integration.bundle_id === trimmedBundleId)
+	) {
+		return;
+	}
 
-    const previousIntegrations = integrations;
+	const previousIntegrations = integrations;
 
-    integrations = [...integrations, { bundle_id: trimmedBundleId, enabled: true }];
-    isIntegrationsSaving = true;
-    integrationsError = "";
+	integrations = [...integrations, { bundle_id: trimmedBundleId, enabled: true }];
+	isIntegrationsSaving = true;
+	integrationsError = '';
 
-    try {
-      await Client.addIntegration(trimmedBundleId);
-      closeAppPicker();
-    } catch (error) {
-      integrations = previousIntegrations;
-      integrationsError = `Unable to add integration: ${error}`;
-    } finally {
-      isIntegrationsSaving = false;
-    }
-  }
+	try {
+		await Client.addIntegration(trimmedBundleId);
+		closeAppPicker();
+	} catch (error) {
+		integrations = previousIntegrations;
+		integrationsError = `Unable to add integration: ${error}`;
+	} finally {
+		isIntegrationsSaving = false;
+	}
+}
 
-  function closeAppPicker() {
-    appPickerOpen = false;
-    newBundleId = "";
-  }
+function closeAppPicker() {
+	appPickerOpen = false;
+	newBundleId = '';
+}
 </script>
 
 <section>

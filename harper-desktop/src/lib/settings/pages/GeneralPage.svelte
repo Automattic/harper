@@ -1,133 +1,131 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { Dialect } from "harper.js";
-  import { Client } from "$lib/client";
-  import { DIALECT_OPTIONS } from "../settings-data";
+import { Dialect } from 'harper.js';
+import { onMount } from 'svelte';
+import { Client } from '$lib/client';
+import { DIALECT_OPTIONS } from '../settings-data';
 
-  let menuBar = true;
-  let menuBarClick = "open-settings";
-  let launchAtStartup = false;
-  let autoUpdate = true;
-  let dialect = "american";
-  let isDialectLoading = true;
-  let isDialectSaving = false;
-  let dialectError = "";
-  let isLaunchAtStartupLoading = true;
-  let isLaunchAtStartupSaving = false;
-  let launchAtStartupError = "";
+let menuBar = true;
+let menuBarClick = 'open-settings';
+let launchAtStartup = false;
+let autoUpdate = true;
+let dialect = 'american';
+let isDialectLoading = true;
+let isDialectSaving = false;
+let dialectError = '';
+let isLaunchAtStartupLoading = true;
+let isLaunchAtStartupSaving = false;
+let launchAtStartupError = '';
 
-  onMount(() => {
-    void loadDialect();
-    void loadLaunchAtStartup();
+onMount(() => {
+	void loadDialect();
+	void loadLaunchAtStartup();
 
-    const refreshSettings = () => {
-      if (!isDialectSaving) {
-        void loadDialect();
-      }
+	const refreshSettings = () => {
+		if (!isDialectSaving) {
+			void loadDialect();
+		}
 
-      if (!isLaunchAtStartupSaving) {
-        void loadLaunchAtStartup();
-      }
-    };
+		if (!isLaunchAtStartupSaving) {
+			void loadLaunchAtStartup();
+		}
+	};
 
-    window.addEventListener("focus", refreshSettings);
+	window.addEventListener('focus', refreshSettings);
 
-    return () => {
-      window.removeEventListener("focus", refreshSettings);
-    };
-  });
+	return () => {
+		window.removeEventListener('focus', refreshSettings);
+	};
+});
 
-  async function loadDialect() {
-    isDialectLoading = true;
-    dialectError = "";
+async function loadDialect() {
+	isDialectLoading = true;
+	dialectError = '';
 
-    try {
-      dialect = dialectToSettingsValue(await Client.getDialect());
-    } catch (error) {
-      dialectError = `Unable to load dialect: ${error}`;
-    } finally {
-      isDialectLoading = false;
-    }
-  }
+	try {
+		dialect = dialectToSettingsValue(await Client.getDialect());
+	} catch (error) {
+		dialectError = `Unable to load dialect: ${error}`;
+	} finally {
+		isDialectLoading = false;
+	}
+}
 
-  async function setDialect(value: string) {
-    const previousDialect = dialect;
+async function setDialect(value: string) {
+	const previousDialect = dialect;
 
-    dialect = value;
-    isDialectSaving = true;
-    dialectError = "";
+	dialect = value;
+	isDialectSaving = true;
+	dialectError = '';
 
-    try {
-      await Client.setDialect(settingsValueToDialect(value));
-    } catch (error) {
-      dialect = previousDialect;
-      dialectError = `Unable to save dialect: ${error}`;
-    } finally {
-      isDialectSaving = false;
-    }
-  }
+	try {
+		await Client.setDialect(settingsValueToDialect(value));
+	} catch (error) {
+		dialect = previousDialect;
+		dialectError = `Unable to save dialect: ${error}`;
+	} finally {
+		isDialectSaving = false;
+	}
+}
 
-  async function loadLaunchAtStartup() {
-    isLaunchAtStartupLoading = true;
-    launchAtStartupError = "";
+async function loadLaunchAtStartup() {
+	isLaunchAtStartupLoading = true;
+	launchAtStartupError = '';
 
-    try {
-      launchAtStartup = await Client.getLaunchAtStartup();
-    } catch (error) {
-      launchAtStartupError = `Unable to load startup setting: ${error}`;
-    } finally {
-      isLaunchAtStartupLoading = false;
-    }
-  }
+	try {
+		launchAtStartup = await Client.getLaunchAtStartup();
+	} catch (error) {
+		launchAtStartupError = `Unable to load startup setting: ${error}`;
+	} finally {
+		isLaunchAtStartupLoading = false;
+	}
+}
 
-  async function setLaunchAtStartup(enabled: boolean) {
-    const previousLaunchAtStartup = launchAtStartup;
+async function setLaunchAtStartup(enabled: boolean) {
+	const previousLaunchAtStartup = launchAtStartup;
 
-    launchAtStartup = enabled;
-    isLaunchAtStartupSaving = true;
-    launchAtStartupError = "";
+	launchAtStartup = enabled;
+	isLaunchAtStartupSaving = true;
+	launchAtStartupError = '';
 
-    try {
-      await Client.setLaunchAtStartup(enabled);
-    } catch (error) {
-      launchAtStartup = previousLaunchAtStartup;
-      launchAtStartupError = `Unable to save startup setting: ${error}`;
-    } finally {
-      isLaunchAtStartupSaving = false;
-    }
-  }
+	try {
+		await Client.setLaunchAtStartup(enabled);
+	} catch (error) {
+		launchAtStartup = previousLaunchAtStartup;
+		launchAtStartupError = `Unable to save startup setting: ${error}`;
+	} finally {
+		isLaunchAtStartupSaving = false;
+	}
+}
 
-  function dialectToSettingsValue(dialect: Dialect): string {
-    switch (dialect) {
-      case Dialect.British:
-        return "british";
-      case Dialect.Canadian:
-        return "canadian";
-      case Dialect.Australian:
-        return "australian";
-      case Dialect.Indian:
-        return "indian";
-      case Dialect.American:
-      default:
-        return "american";
-    }
-  }
+function dialectToSettingsValue(dialect: Dialect): string {
+	switch (dialect) {
+		case Dialect.British:
+			return 'british';
+		case Dialect.Canadian:
+			return 'canadian';
+		case Dialect.Australian:
+			return 'australian';
+		case Dialect.Indian:
+			return 'indian';
+		default:
+			return 'american';
+	}
+}
 
-  function settingsValueToDialect(value: string): Dialect {
-    switch (value) {
-      case "british":
-        return Dialect.British;
-      case "canadian":
-        return Dialect.Canadian;
-      case "australian":
-        return Dialect.Australian;
-      case "indian":
-        return Dialect.Indian;
-      case "american":
-      default:
-        return Dialect.American;
-    }
-  }
+function settingsValueToDialect(value: string): Dialect {
+	switch (value) {
+		case 'british':
+			return Dialect.British;
+		case 'canadian':
+			return Dialect.Canadian;
+		case 'australian':
+			return Dialect.Australian;
+		case 'indian':
+			return Dialect.Indian;
+		default:
+			return Dialect.American;
+	}
+}
 </script>
 
 <section>

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { openUrl } from "@tauri-apps/plugin-opener";
+import { openUrl } from '@tauri-apps/plugin-opener';
 
-  const SOURCE_URL = "https://github.com/Automattic/harper";
-  const ISSUE_URL = "https://github.com/Automattic/harper/issues/new/choose";
+const SOURCE_URL = 'https://github.com/Automattic/harper';
+const ISSUE_URL = 'https://github.com/Automattic/harper/issues/new/choose';
 </script>
 
 <section class="about">

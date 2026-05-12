@@ -1,7 +1,7 @@
 <script lang="ts">
-  let strictness = "standard";
-  let liveCheck = true;
-  let respectCode = true;
+let strictness = 'standard';
+let liveCheck = true;
+let respectCode = true;
 </script>
 
 <section>

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS, type SectionId } from "./settings-data";
+import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS, type SectionId } from './settings-data';
 
-  export let active: SectionId;
-  export let hasSetupAlert = false;
+export let active: SectionId;
+export let hasSetupAlert = false;
 </script>
 
 <nav class="sidebar" aria-label="Settings sections">

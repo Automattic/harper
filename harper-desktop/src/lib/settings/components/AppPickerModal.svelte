@@ -1,19 +1,19 @@
 <script lang="ts">
-  export let bundleId = "";
-  export let existingBundleIds: string[];
-  export let isSaving = false;
-  export let close: () => void;
-  export let add: (bundleId: string) => void;
+export let bundleId = '';
+export let existingBundleIds: string[];
+export let isSaving = false;
+export let close: () => void;
+export let add: (bundleId: string) => void;
 
-  $: trimmedBundleId = bundleId.trim();
-  $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
-  $: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
+$: trimmedBundleId = bundleId.trim();
+$: isDuplicate = existingBundleIds.includes(trimmedBundleId);
+$: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
 
-  function submit() {
-    if (canAdd) {
-      add(trimmedBundleId);
-    }
-  }
+function submit() {
+	if (canAdd) {
+		add(trimmedBundleId);
+	}
+}
 </script>
 
 <div

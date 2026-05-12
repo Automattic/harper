@@ -1,38 +1,38 @@
 <script lang="ts">
-  import "../app.css";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
-  import { onMount } from "svelte";
+import '../app.css';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { onMount } from 'svelte';
 
-  let isSettings = false;
-  let isViewResolved = false;
+let isSettings = false;
+let isViewResolved = false;
 
-  function hasSettingsRoute() {
-    return (
-      new URLSearchParams(window.location.search).get("view") === "settings" ||
-      window.location.hash === "#settings"
-    );
-  }
+function hasSettingsRoute() {
+	return (
+		new URLSearchParams(window.location.search).get('view') === 'settings' ||
+		window.location.hash === '#settings'
+	);
+}
 
-  onMount(() => {
-    let currentWindowLabel = "";
+onMount(() => {
+	let currentWindowLabel = '';
 
-    try {
-      currentWindowLabel = getCurrentWindow().label;
-    } catch {
-      currentWindowLabel = "";
-    }
+	try {
+		currentWindowLabel = getCurrentWindow().label;
+	} catch {
+		currentWindowLabel = '';
+	}
 
-    isSettings = currentWindowLabel === "settings" || hasSettingsRoute();
-    isViewResolved = true;
+	isSettings = currentWindowLabel === 'settings' || hasSettingsRoute();
+	isViewResolved = true;
 
-    if (isSettings) {
-      document.body.classList.add("settings-view");
-    }
+	if (isSettings) {
+		document.body.classList.add('settings-view');
+	}
 
-    return () => {
-      document.body.classList.remove("settings-view");
-    };
-  });
+	return () => {
+		document.body.classList.remove('settings-view');
+	};
+});
 </script>
 
 {#if isViewResolved}

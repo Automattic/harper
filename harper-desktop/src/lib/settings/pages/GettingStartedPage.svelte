@@ -1,77 +1,77 @@
 <script lang="ts">
-  import { createInitialSettingsState, type SettingsState } from "../settings-data";
+import { createInitialSettingsState, type SettingsState } from '../settings-data';
 
-  type SetupStep = {
-    id: "accessibility" | "integration" | "test-drive";
-    title: string;
-    desc: string;
-    required: boolean;
-    done: boolean;
-    locked: boolean;
-    actionLabel: string;
-    actionVariant: "default" | "primary";
-    action: () => void;
-  };
+type SetupStep = {
+	id: 'accessibility' | 'integration' | 'test-drive';
+	title: string;
+	desc: string;
+	required: boolean;
+	done: boolean;
+	locked: boolean;
+	actionLabel: string;
+	actionVariant: 'default' | 'primary';
+	action: () => void;
+};
 
-  let state: SettingsState = createInitialSettingsState();
+let state: SettingsState = createInitialSettingsState();
 
-  $: setupSteps = buildSetupSteps();
-  $: setupCompletedCount = setupSteps.filter((step) => step.done).length;
-  $: setupAllDone = setupSteps.every((step) => step.done);
+$: setupSteps = buildSetupSteps();
+$: setupCompletedCount = setupSteps.filter((step) => step.done).length;
+$: setupAllDone = setupSteps.every((step) => step.done);
 
-  function updateSetup(patch: Partial<SettingsState["setup"]>) {
-    state = { ...state, setup: { ...state.setup, ...patch } };
-  }
+function updateSetup(patch: Partial<SettingsState['setup']>) {
+	state = { ...state, setup: { ...state.setup, ...patch } };
+}
 
-  function enableTextEditForSetup() {
-    state = {
-      ...state,
-      integrations: { ...state.integrations, textedit: true },
-      setup: { ...state.setup, integration: "selected" },
-    };
-  }
+function enableTextEditForSetup() {
+	state = {
+		...state,
+		integrations: { ...state.integrations, textedit: true },
+		setup: { ...state.setup, integration: 'selected' },
+	};
+}
 
-  function buildSetupSteps(): SetupStep[] {
-    const accessibilityDone = state.setup.accessibility === "granted";
-    const integrationDone = state.setup.integration === "selected";
-    const testDriveDone = state.setup.testDrive === "completed";
+function buildSetupSteps(): SetupStep[] {
+	const accessibilityDone = state.setup.accessibility === 'granted';
+	const integrationDone = state.setup.integration === 'selected';
+	const testDriveDone = state.setup.testDrive === 'completed';
 
-    return [
-      {
-        id: "accessibility",
-        title: "Grant Accessibility permission",
-        desc: "Open system settings and grant Harper access to the Accessibility system.",
-        required: true,
-        done: accessibilityDone,
-        locked: false,
-        actionLabel: accessibilityDone ? "Granted" : "Open System Settings",
-        actionVariant: accessibilityDone ? "default" : "primary",
-        action: () => updateSetup({ accessibility: "granted" }),
-      },
-      {
-        id: "integration",
-        title: "Pick an app to test",
-        desc: "Start with TextEdit, then add more apps from Integrations when you are ready.",
-        required: true,
-        done: integrationDone,
-        locked: !accessibilityDone,
-        actionLabel: integrationDone ? "Manage" : "Browse apps",
-        actionVariant: "default",
-        action: enableTextEditForSetup,
-      },
-      {
-        id: "test-drive",
-        title: "Take a test drive",
-        desc: 'Open TextEdit, type "its not alot of fun", and watch Harper underline the mistakes.',
-        required: false,
-        done: testDriveDone,
-        locked: !accessibilityDone || !integrationDone,
-        actionLabel: testDriveDone ? "Run again" : "Launch TextEdit",
-        actionVariant: testDriveDone ? "default" : "primary",
-        action: () => updateSetup({ testDrive: "completed" }),
-      },
-    ];
-  }
+	return [
+		{
+			id: 'accessibility',
+			title: 'Grant Accessibility permission',
+			desc: 'Open system settings and grant Harper access to the Accessibility system.',
+			required: true,
+			done: accessibilityDone,
+			locked: false,
+			actionLabel: accessibilityDone ? 'Granted' : 'Open System Settings',
+			actionVariant: accessibilityDone ? 'default' : 'primary',
+			action: () => updateSetup({ accessibility: 'granted' }),
+		},
+		{
+			id: 'integration',
+			title: 'Pick an app to test',
+			desc: 'Start with TextEdit, then add more apps from Integrations when you are ready.',
+			required: true,
+			done: integrationDone,
+			locked: !accessibilityDone,
+			actionLabel: integrationDone ? 'Manage' : 'Browse apps',
+			actionVariant: 'default',
+			action: enableTextEditForSetup,
+		},
+		{
+			id: 'test-drive',
+			title: 'Take a test drive',
+			desc: 'Open TextEdit, type "its not alot of fun", and watch Harper underline the mistakes.',
+			required: false,
+			done: testDriveDone,
+			locked: !accessibilityDone || !integrationDone,
+			actionLabel: testDriveDone ? 'Run again' : 'Launch TextEdit',
+			actionVariant: testDriveDone ? 'default' : 'primary',
+			action: () => updateSetup({ testDrive: 'completed' }),
+		},
+	];
+}
 </script>
 
 <section>

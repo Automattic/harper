@@ -1,55 +1,55 @@
 <script lang="ts">
-  import { createInitialSettingsState, type Weirpack } from "../settings-data";
+import { createInitialSettingsState, type Weirpack } from '../settings-data';
 
-  let weirpacks = createInitialSettingsState().weirpacks;
+let weirpacks = createInitialSettingsState().weirpacks;
 
-  let packDragState: "idle" | "dragging" = "idle";
-  let editingPackId: string | null = null;
-  let editingPackName = "";
+let packDragState: 'idle' | 'dragging' = 'idle';
+let editingPackId: string | null = null;
+let editingPackName = '';
 
-  $: enabledPackCount = weirpacks.filter((pack) => pack.enabled).length;
-  $: enabledPackRules = weirpacks
-    .filter((pack) => pack.enabled)
-    .reduce((total, pack) => total + pack.ruleCount, 0);
+$: enabledPackCount = weirpacks.filter((pack) => pack.enabled).length;
+$: enabledPackRules = weirpacks
+	.filter((pack) => pack.enabled)
+	.reduce((total, pack) => total + pack.ruleCount, 0);
 
-  function updatePack(id: string, patch: Partial<Weirpack>) {
-    weirpacks = weirpacks.map((pack) => (pack.id === id ? { ...pack, ...patch } : pack));
-  }
+function updatePack(id: string, patch: Partial<Weirpack>) {
+	weirpacks = weirpacks.map((pack) => (pack.id === id ? { ...pack, ...patch } : pack));
+}
 
-  function removePack(id: string) {
-    weirpacks = weirpacks.filter((pack) => pack.id !== id);
-  }
+function removePack(id: string) {
+	weirpacks = weirpacks.filter((pack) => pack.id !== id);
+}
 
-  function formatSize(bytes: number) {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
-  }
+function formatSize(bytes: number) {
+	if (bytes < 1024) return `${bytes} B`;
+	if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+	return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
 
-  function formatDate(iso: string) {
-    return new Date(iso).toLocaleDateString(undefined, {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  }
+function formatDate(iso: string) {
+	return new Date(iso).toLocaleDateString(undefined, {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric',
+	});
+}
 
-  function startRenamePack(pack: Weirpack) {
-    editingPackId = pack.id;
-    editingPackName = pack.name;
-  }
+function startRenamePack(pack: Weirpack) {
+	editingPackId = pack.id;
+	editingPackName = pack.name;
+}
 
-  function commitRenamePack() {
-    if (!editingPackId) return;
-    const name = editingPackName.trim();
+function commitRenamePack() {
+	if (!editingPackId) return;
+	const name = editingPackName.trim();
 
-    if (name) {
-      updatePack(editingPackId, { name });
-    }
+	if (name) {
+		updatePack(editingPackId, { name });
+	}
 
-    editingPackId = null;
-    editingPackName = "";
-  }
+	editingPackId = null;
+	editingPackName = '';
+}
 </script>
 
 <section>

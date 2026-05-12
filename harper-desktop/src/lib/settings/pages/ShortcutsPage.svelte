@@ -1,16 +1,16 @@
 <script lang="ts">
-  const shortcutItems = [
-    { id: "show-menu", label: "Show Harper menu", keys: ["Shift", "Cmd", "H"] },
-    { id: "quick-review", label: "Open quick review", keys: ["Ctrl", "Cmd", "Space"] },
-    { id: "accept-last", label: "Apply last suggestion", keys: ["Ctrl", "E"] },
-    { id: "dismiss-last", label: "Dismiss last suggestion", keys: ["Ctrl", "D"] },
-    { id: "toggle-pause", label: "Pause or resume checking", keys: ["Ctrl", "Shift", "P"] },
-    { id: "add-word", label: "Add word to dictionary", keys: ["Ctrl", "Shift", "A"] },
-    { id: "next-suggestion", label: "Jump to next suggestion", keys: [] },
-  ];
+const shortcutItems = [
+	{ id: 'show-menu', label: 'Show Harper menu', keys: ['Shift', 'Cmd', 'H'] },
+	{ id: 'quick-review', label: 'Open quick review', keys: ['Ctrl', 'Cmd', 'Space'] },
+	{ id: 'accept-last', label: 'Apply last suggestion', keys: ['Ctrl', 'E'] },
+	{ id: 'dismiss-last', label: 'Dismiss last suggestion', keys: ['Ctrl', 'D'] },
+	{ id: 'toggle-pause', label: 'Pause or resume checking', keys: ['Ctrl', 'Shift', 'P'] },
+	{ id: 'add-word', label: 'Add word to dictionary', keys: ['Ctrl', 'Shift', 'A'] },
+	{ id: 'next-suggestion', label: 'Jump to next suggestion', keys: [] },
+];
 
-  let globalShortcuts = true;
-  let activationKey = "off";
+let globalShortcuts = true;
+let activationKey = 'off';
 </script>
 
 <section>

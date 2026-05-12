@@ -1,85 +1,85 @@
 @import "tailwindcss";
 
 @layer base {
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+	}
 
-  body {
-    overflow: hidden;
-  }
+	body {
+		overflow: hidden;
+	}
 }
 
 @layer components {
-  .settings-icon {
-    width: 16px;
-    height: 16px;
-    flex: 0 0 16px;
-    display: inline-block;
-    background: currentColor;
-    -webkit-mask: var(--settings-icon-url) center / contain no-repeat;
-    mask: var(--settings-icon-url) center / contain no-repeat;
-  }
+	.settings-icon {
+		width: 16px;
+		height: 16px;
+		flex: 0 0 16px;
+		display: inline-block;
+		background: currentColor;
+		-webkit-mask: var(--settings-icon-url) center / contain no-repeat;
+		mask: var(--settings-icon-url) center / contain no-repeat;
+	}
 
-  .settings-icon.getting-started {
-    --settings-icon-url: url("/settings-icons/rocket.svg");
-  }
+	.settings-icon.getting-started {
+		--settings-icon-url: url("/settings-icons/rocket.svg");
+	}
 
-  .settings-icon.general {
-    --settings-icon-url: url("/settings-icons/gear.svg");
-  }
+	.settings-icon.general {
+		--settings-icon-url: url("/settings-icons/gear.svg");
+	}
 
-  .settings-icon.writing {
-    --settings-icon-url: url("/settings-icons/quill.svg");
-  }
+	.settings-icon.writing {
+		--settings-icon-url: url("/settings-icons/quill.svg");
+	}
 
-  .settings-icon.dictionary {
-    --settings-icon-url: url("/settings-icons/book.svg");
-  }
+	.settings-icon.dictionary {
+		--settings-icon-url: url("/settings-icons/book.svg");
+	}
 
-  .settings-icon.shortcuts {
-    --settings-icon-url: url("/settings-icons/key.svg");
-  }
+	.settings-icon.shortcuts {
+		--settings-icon-url: url("/settings-icons/key.svg");
+	}
 
-  .settings-icon.rules {
-    --settings-icon-url: url("/settings-icons/checklist.svg");
-  }
+	.settings-icon.rules {
+		--settings-icon-url: url("/settings-icons/checklist.svg");
+	}
 
-  .settings-icon.weirpacks {
-    --settings-icon-url: url("/settings-icons/package.svg");
-  }
+	.settings-icon.weirpacks {
+		--settings-icon-url: url("/settings-icons/package.svg");
+	}
 
-  .settings-icon.integrations {
-    --settings-icon-url: url("/settings-icons/grid.svg");
-  }
+	.settings-icon.integrations {
+		--settings-icon-url: url("/settings-icons/grid.svg");
+	}
 
-  .settings-icon.about {
-    --settings-icon-url: url("/settings-icons/info.svg");
-  }
+	.settings-icon.about {
+		--settings-icon-url: url("/settings-icons/info.svg");
+	}
 
-  .settings-icon.icon-check {
-    --settings-icon-url: url("/settings-icons/check.svg");
-  }
+	.settings-icon.icon-check {
+		--settings-icon-url: url("/settings-icons/check.svg");
+	}
 
-  .settings-icon.icon-package {
-    --settings-icon-url: url("/settings-icons/package.svg");
-  }
+	.settings-icon.icon-package {
+		--settings-icon-url: url("/settings-icons/package.svg");
+	}
 
-  .settings-icon.icon-search {
-    --settings-icon-url: url("/settings-icons/search.svg");
-  }
+	.settings-icon.icon-search {
+		--settings-icon-url: url("/settings-icons/search.svg");
+	}
 
-  .settings-icon.icon-trash {
-    --settings-icon-url: url("/settings-icons/trash.svg");
-  }
+	.settings-icon.icon-trash {
+		--settings-icon-url: url("/settings-icons/trash.svg");
+	}
 
-  .settings-icon.icon-upload {
-    --settings-icon-url: url("/settings-icons/upload.svg");
-  }
+	.settings-icon.icon-upload {
+		--settings-icon-url: url("/settings-icons/upload.svg");
+	}
 
-  .settings-icon.icon-x {
-    --settings-icon-url: url("/settings-icons/x.svg");
-  }
+	.settings-icon.icon-x {
+		--settings-icon-url: url("/settings-icons/x.svg");
+	}
 }

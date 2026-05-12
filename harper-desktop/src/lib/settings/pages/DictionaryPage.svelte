@@ -1,149 +1,149 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { Client } from "$lib/client";
+import { onMount } from 'svelte';
+import { Client } from '$lib/client';
 
-  let dictionary: string[] = [];
-  let newDictionaryWord = "";
-  let dictionarySearch = "";
-  let isDictionaryLoading = true;
-  let isDictionarySaving = false;
-  let dictionaryError = "";
-  let importInput: HTMLInputElement;
+let dictionary: string[] = [];
+let newDictionaryWord = '';
+let dictionarySearch = '';
+let isDictionaryLoading = true;
+let isDictionarySaving = false;
+let dictionaryError = '';
+let importInput: HTMLInputElement;
 
-  $: filteredWords = dictionary.filter((word: string) =>
-    word.toLowerCase().includes(dictionarySearch.trim().toLowerCase()),
-  );
+$: filteredWords = dictionary.filter((word: string) =>
+	word.toLowerCase().includes(dictionarySearch.trim().toLowerCase()),
+);
 
-  onMount(() => {
-    void loadDictionary();
+onMount(() => {
+	void loadDictionary();
 
-    const refreshDictionary = () => {
-      if (!isDictionarySaving) {
-        void loadDictionary();
-      }
-    };
+	const refreshDictionary = () => {
+		if (!isDictionarySaving) {
+			void loadDictionary();
+		}
+	};
 
-    window.addEventListener("focus", refreshDictionary);
+	window.addEventListener('focus', refreshDictionary);
 
-    return () => {
-      window.removeEventListener("focus", refreshDictionary);
-    };
-  });
+	return () => {
+		window.removeEventListener('focus', refreshDictionary);
+	};
+});
 
-  async function loadDictionary() {
-    isDictionaryLoading = true;
-    dictionaryError = "";
+async function loadDictionary() {
+	isDictionaryLoading = true;
+	dictionaryError = '';
 
-    try {
-      dictionary = await Client.getDictionary();
-    } catch (error) {
-      dictionaryError = `Unable to load dictionary: ${error}`;
-    } finally {
-      isDictionaryLoading = false;
-    }
-  }
+	try {
+		dictionary = await Client.getDictionary();
+	} catch (error) {
+		dictionaryError = `Unable to load dictionary: ${error}`;
+	} finally {
+		isDictionaryLoading = false;
+	}
+}
 
-  async function saveDictionary(nextDictionary: string[]) {
-    const previousDictionary = dictionary;
+async function saveDictionary(nextDictionary: string[]) {
+	const previousDictionary = dictionary;
 
-    dictionary = nextDictionary;
-    isDictionarySaving = true;
-    dictionaryError = "";
+	dictionary = nextDictionary;
+	isDictionarySaving = true;
+	dictionaryError = '';
 
-    try {
-      await Client.setDictionary(nextDictionary);
-    } catch (error) {
-      dictionary = previousDictionary;
-      dictionaryError = `Unable to save dictionary: ${error}`;
-    } finally {
-      isDictionarySaving = false;
-    }
-  }
+	try {
+		await Client.setDictionary(nextDictionary);
+	} catch (error) {
+		dictionary = previousDictionary;
+		dictionaryError = `Unable to save dictionary: ${error}`;
+	} finally {
+		isDictionarySaving = false;
+	}
+}
 
-  function sortDictionary(words: string[]) {
-    return [...words].sort((a, b) => a.localeCompare(b));
-  }
+function sortDictionary(words: string[]) {
+	return [...words].sort((a, b) => a.localeCompare(b));
+}
 
-  function parseDictionaryText(text: string) {
-    return text
-      .split(/\r?\n/)
-      .map((word) => word.trim())
-      .filter(Boolean);
-  }
+function parseDictionaryText(text: string) {
+	return text
+		.split(/\r?\n/)
+		.map((word) => word.trim())
+		.filter(Boolean);
+}
 
-  function mergeDictionaryWords(words: string[]) {
-    return sortDictionary([...new Set([...dictionary, ...words])]);
-  }
+function mergeDictionaryWords(words: string[]) {
+	return sortDictionary([...new Set([...dictionary, ...words])]);
+}
 
-  async function addDictionaryWord(inputWord: string) {
-    const word = inputWord.trim();
+async function addDictionaryWord(inputWord: string) {
+	const word = inputWord.trim();
 
-    if (!word || dictionary.includes(word)) {
-      return;
-    }
+	if (!word || dictionary.includes(word)) {
+		return;
+	}
 
-    const previousDictionary = dictionary;
-    dictionary = sortDictionary([...dictionary, word]);
-    isDictionarySaving = true;
-    dictionaryError = "";
+	const previousDictionary = dictionary;
+	dictionary = sortDictionary([...dictionary, word]);
+	isDictionarySaving = true;
+	dictionaryError = '';
 
-    try {
-      await Client.addToDictionary(word);
-      dictionary = await Client.getDictionary();
-    } catch (error) {
-      dictionary = previousDictionary;
-      dictionaryError = `Unable to add dictionary word: ${error}`;
-    } finally {
-      isDictionarySaving = false;
-    }
-  }
+	try {
+		await Client.addToDictionary(word);
+		dictionary = await Client.getDictionary();
+	} catch (error) {
+		dictionary = previousDictionary;
+		dictionaryError = `Unable to add dictionary word: ${error}`;
+	} finally {
+		isDictionarySaving = false;
+	}
+}
 
-  async function removeDictionaryWord(word: string) {
-    await saveDictionary(dictionary.filter((item) => item !== word));
-  }
+async function removeDictionaryWord(word: string) {
+	await saveDictionary(dictionary.filter((item) => item !== word));
+}
 
-  async function clearDictionary() {
-    await saveDictionary([]);
-  }
+async function clearDictionary() {
+	await saveDictionary([]);
+}
 
-  async function importDictionary(event: Event) {
-    const input = event.currentTarget as HTMLInputElement;
-    const file = input.files?.[0];
+async function importDictionary(event: Event) {
+	const input = event.currentTarget as HTMLInputElement;
+	const file = input.files?.[0];
 
-    if (!file) {
-      return;
-    }
+	if (!file) {
+		return;
+	}
 
-    try {
-      const importedWords = parseDictionaryText(await file.text());
-      await saveDictionary(mergeDictionaryWords(importedWords));
-    } catch (error) {
-      dictionaryError = `Unable to import dictionary: ${error}`;
-    } finally {
-      input.value = "";
-    }
-  }
+	try {
+		const importedWords = parseDictionaryText(await file.text());
+		await saveDictionary(mergeDictionaryWords(importedWords));
+	} catch (error) {
+		dictionaryError = `Unable to import dictionary: ${error}`;
+	} finally {
+		input.value = '';
+	}
+}
 
-  function exportDictionary() {
-    try {
-      const blob = new Blob([`${dictionary.join("\n")}\n`], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+function exportDictionary() {
+	try {
+		const blob = new Blob([`${dictionary.join('\n')}\n`], { type: 'text/plain;charset=utf-8' });
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement('a');
 
-      link.href = url;
-      link.download = "harper-dictionary.txt";
-      link.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      dictionaryError = `Unable to export dictionary: ${error}`;
-    }
-  }
+		link.href = url;
+		link.download = 'harper-dictionary.txt';
+		link.click();
+		URL.revokeObjectURL(url);
+	} catch (error) {
+		dictionaryError = `Unable to export dictionary: ${error}`;
+	}
+}
 
-  async function submitDictionaryWord() {
-    const word = newDictionaryWord;
-    newDictionaryWord = "";
-    await addDictionaryWord(word);
-  }
+async function submitDictionaryWord() {
+	const word = newDictionaryWord;
+	newDictionaryWord = '';
+	await addDictionaryWord(word);
+}
 </script>
 
 <section>
