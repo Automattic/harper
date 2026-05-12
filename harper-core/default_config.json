@@ -3006,6 +3006,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandFavourite",
+								"state": true,
+								"label": "Expand Favourite"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"

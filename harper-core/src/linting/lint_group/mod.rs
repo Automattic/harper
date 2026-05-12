@@ -72,6 +72,7 @@ use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
+use super::expand_favourite::ExpandFavourite;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
@@ -568,6 +569,7 @@ impl LintGroup {
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);
+        insert_expr_rule_with_dialect!(ExpandFavourite, true);
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);

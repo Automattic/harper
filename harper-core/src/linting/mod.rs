@@ -68,6 +68,7 @@ mod else_possessive;
 mod ever_every;
 mod everyday;
 mod except_of;
+mod expand_favourite;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
