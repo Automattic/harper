@@ -1,3 +1,5 @@
+use hashbrown::HashSet;
+
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
@@ -32,15 +34,13 @@ impl<D: Dictionary + 'static> TransposedSpace<D> {
     }
 }
 
-fn keep_unique(values: &mut Vec<String>, word1: &[char], word2: &[char]) {
+fn keep_unique(values: &mut HashSet<String>, word1: &[char], word2: &[char]) {
     let value = format!(
         "{} {}",
         word1.iter().collect::<String>(),
         word2.iter().collect::<String>()
     );
-    if !values.contains(&value) {
-        values.push(value);
-    }
+    values.insert(value);
 }
 
 impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
@@ -73,7 +73,7 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
         let mut w1_plus_w2_first = word1.to_vec();
         w1_plus_w2_first.push(*w2_first);
 
-        let mut values = vec![];
+        let mut values = HashSet::new();
 
         // "thec" "at" -> "the cat"
         if self.dict.contains_word(w1_start) && self.dict.contains_word(&w1_last_plus_w2) {
@@ -142,7 +142,10 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 #[cfg(test)]
 mod tests {
     use super::TransposedSpace;
-    use crate::{linting::tests::assert_suggestion_result, spell::FstDictionary};
+    use crate::{
+        linting::tests::{assert_lint_count, assert_suggestion_result},
+        spell::FstDictionary,
+    };
 
     #[test]
     fn space_too_early() {
@@ -171,11 +174,16 @@ mod tests {
         );
     }
     #[test]
-    fn test_late() {
+    fn test_3355() {
         assert_suggestion_result(
-            "Ands ometimes the space is a character late.",
+            "cham peng",
             TransposedSpace::new(FstDictionary::curated()),
-            "And sometimes the space is a character late.",
+            "champ eng",
+        );
+        assert_lint_count(
+            "cham peng",
+            TransposedSpace::new(FstDictionary::curated()),
+            1,
         );
     }
 }
