@@ -16,11 +16,6 @@ impl Token {
         Self { span, kind }
     }
 
-    /// Check if this token should be skipped during linting.
-    pub fn kind_is_unlintable(&self) -> bool {
-        matches!(self.kind, TokenKind::Unlintable)
-    }
-
     /// Get the token's content as a slice of characters.
     pub fn get_ch<'a>(&self, source: &'a [char]) -> &'a [char] {
         self.span.get_content(source)
@@ -45,9 +40,30 @@ impl Token {
 #[cfg(test)]
 mod tests {
     use crate::{
-        TokenStringExt,
+        Span, Token, TokenKind, TokenStringExt,
         parsers::{Parser, PlainEnglish},
     };
+
+    #[test]
+    fn unlintable_token_is_detected() {
+        let token = Token::new(Span::new(0, 5), TokenKind::Unlintable);
+        assert!(token.kind_is_unlintable());
+    }
+
+    #[test]
+    fn word_token_is_not_unlintable() {
+        let token = Token::new(
+            Span::new(0, 5),
+            TokenKind::Word(crate::WordMetadata::default()),
+        );
+        assert!(!token.kind_is_unlintable());
+    }
+
+    #[test]
+    fn newline_token_is_not_unlintable() {
+        let token = Token::new(Span::new(0, 1), TokenKind::Newline(1));
+        assert!(!token.kind_is_unlintable());
+    }
 
     #[test]
     fn parses_sentences_correctly() {
