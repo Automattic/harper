@@ -27,7 +27,7 @@ pub fn metaphone(word: &[char]) -> [char; 6] {
                 result[1] = ' ';
                 return result;
             }
-            ('P', 'N') | ('P', 'S') | ('P', 'H') | ('A', 'E') | ('A', 'I') | ('A', 'O') | ('G', 'N') | ('K', 'N') | ('G', 'H') => {
+            ('P', 'N') | ('P', 'S') | ('P', 'H') | ('A', 'E') | ('A', 'I') | ('A', 'O') | ('G', 'N') | ('G', 'H') => {
                 if word[0] == 'A' || word[0] == 'G' {
                     pos += 1;
                 }
