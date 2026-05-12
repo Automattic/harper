@@ -25,10 +25,11 @@ let isLintConfigSaving = false;
 let lintConfigError = '';
 
 $: rulesQuery = rulesSearch.trim().toLowerCase();
-$: displayedRules = getDisplayedRules();
+$: ruleGroups = structuredLintConfig ? ruleGroupsFromStructuredConfig(structuredLintConfig) : [];
+$: displayedRules = ruleGroups.flatMap((group) => group.rules);
 $: enabledRuleCount = displayedRules.filter((rule) => isRuleEnabled(rule)).length;
 $: customizedRuleCount = Object.values(rules).filter((value) => value !== 'default').length;
-$: filteredRuleGroups = getFilteredRuleGroups(rulesQuery);
+$: filteredRuleGroups = getFilteredRuleGroups(ruleGroups, rulesQuery);
 
 onMount(() => {
 	void loadLintConfig();
@@ -94,14 +95,6 @@ function ruleLabelFromKey(key: string) {
 		.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
 		.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
 		.trim();
-}
-
-function getRuleGroups(): RuleGroup[] {
-	if (!structuredLintConfig) {
-		return [];
-	}
-
-	return ruleGroupsFromStructuredConfig(structuredLintConfig);
 }
 
 function ruleGroupsFromStructuredConfig(config: StructuredLintConfig): RuleGroup[] {
@@ -176,10 +169,6 @@ function rulesFromSetting(setting: StructuredLintSetting): RuleItem[] {
 	return [];
 }
 
-function getDisplayedRules() {
-	return getRuleGroups().flatMap((group) => group.rules);
-}
-
 async function saveLintConfig(nextLintConfig: LintConfig, nextRules: Record<string, RuleOverride>) {
 	const previousLintConfig = lintConfig;
 	const previousRules = rules;
@@ -204,9 +193,7 @@ function setLintConfigRuleValue(config: LintConfig, ruleId: string, value: RuleO
 	config[ruleId] = ruleOverrideToLintValue(ruleId, value);
 }
 
-function getFilteredRuleGroups(query: string): MatchedRuleGroup[] {
-	const ruleGroups = getRuleGroups();
-
+function getFilteredRuleGroups(ruleGroups: RuleGroup[], query: string): MatchedRuleGroup[] {
 	if (!query) {
 		return ruleGroups.map((group) => ({ ...group, matchedRules: group.rules }));
 	}
