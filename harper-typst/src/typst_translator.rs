@@ -418,8 +418,8 @@ impl<'a> TypstTranslator<'a> {
                 parse_args(&mut set_rule.args().items())
             ],
             Expr::ShowRule(show_rule) => merge![
-                recurse!(show_rule.transform()),
-                show_rule.selector().and_then(|expr| recurse!(expr))
+                show_rule.selector().and_then(|expr| recurse!(expr)),
+                recurse!(show_rule.transform())
             ],
             Expr::Contextual(contextual) => recurse!(contextual.body()),
             Expr::Conditional(conditional) => merge![
