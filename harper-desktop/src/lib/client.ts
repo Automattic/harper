@@ -1,11 +1,11 @@
 import { invoke } from "@tauri-apps/api/core";
 import { disable, enable, isEnabled } from "@tauri-apps/plugin-autostart";
-import { Dialect, type Lint, type LintConfig, type Linter, type StructuredLintConfig, WorkerLinter } from "harper.js";
+import { Dialect, type Lint, type LintConfig, type Linter, LocalLinter, type StructuredLintConfig } from "harper.js";
 import { binaryInlined } from "harper.js/binaryInlined";
 
 type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
 
-const configLinter = new WorkerLinter({ binary: binaryInlined });
+const configLinter = new LocalLinter({ binary: binaryInlined });
 
 export interface Integration {
   bundle_id: string;
@@ -18,13 +18,13 @@ export class Client {
   }
 
   static async getDefaultLintConfig(): Promise<LintConfig> {
-    return await configLinter.getDefaultLintConfig();
+    return JSON.parse(await configLinter.getDefaultLintConfigAsJSON()) as LintConfig;
   }
 
   static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
-    await configLinter.setLintConfig(await Client.getLintConfig());
+    await configLinter.setLintConfigWithJSON(JSON.stringify(await Client.getLintConfig()));
 
-    return await configLinter.getStructuredLintConfig();
+    return JSON.parse(await configLinter.getStructuredLintConfigJSON()) as StructuredLintConfig;
   }
 
   static async getDialect(): Promise<Dialect> {

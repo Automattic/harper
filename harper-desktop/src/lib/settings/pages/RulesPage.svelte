@@ -50,23 +50,17 @@
     isLintConfigLoading = true;
     lintConfigError = "";
 
-    try {
-      const [fetchedLintConfig, fetchedDefaultLintConfig, fetchedStructuredLintConfig] = await Promise.all([
-        Client.getLintConfig(),
-        Client.getDefaultLintConfig(),
-        Client.getStructuredLintConfig(),
-      ]);
+    const [fetchedLintConfig, fetchedDefaultLintConfig, fetchedStructuredLintConfig] = await Promise.all([
+      Client.getLintConfig(),
+      Client.getDefaultLintConfig(),
+      Client.getStructuredLintConfig(),
+    ]);
 
-      lintConfig = fetchedLintConfig;
-      defaultLintConfig = fetchedDefaultLintConfig;
-      structuredLintConfig = fetchedStructuredLintConfig;
-      rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
-    } catch (error) {
-      lintConfigError = `Unable to load lint config: ${error}`;
-      console.error("[harper-desktop] unable to load rules page lint config", error);
-    } finally {
-      isLintConfigLoading = false;
-    }
+    lintConfig = fetchedLintConfig;
+    defaultLintConfig = fetchedDefaultLintConfig;
+    structuredLintConfig = fetchedStructuredLintConfig;
+    rules = rulesFromLintConfig(fetchedLintConfig, fetchedDefaultLintConfig);
+    isLintConfigLoading = false;
   }
 
   function rulesFromLintConfig(config: LintConfig, defaultConfig: LintConfig): Record<string, RuleOverride> {
