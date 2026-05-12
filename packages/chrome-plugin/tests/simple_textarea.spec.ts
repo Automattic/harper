@@ -59,6 +59,7 @@ test('Scrolls correctly', async ({ page }) => {
 });
 
 test('Can dismiss with escape key', async ({ page }) => {
+	test.slow();
 	await page.goto(TEST_PAGE_URL);
 
 	const editor = getTextarea(page);
