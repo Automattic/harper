@@ -18,7 +18,6 @@ use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
-use super::allow_informal_laughter::{AllowInformalLaughter, is_informal_laughter};
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
@@ -294,10 +293,6 @@ pub struct LintGroup {
     clashing_linter_names: Option<Vec<String>>,
 }
 
-const ALLOW_INFORMAL_LAUGHTER: &str = "AllowInformalLaughter";
-const SPELL_CHECK: &str = "SpellCheck";
-const SPLIT_WORDS: &str = "SplitWords";
-
 impl LintGroup {
     // Constructor methods
 
@@ -516,7 +511,6 @@ impl LintGroup {
         insert_expr_rule!(AfterLater, true);
         insert_expr_rule!(AllHellBreakLoose, true);
         insert_expr_rule!(AllIntentsAndPurposes, true);
-        insert_struct_rule!(AllowInformalLaughter, true);
         insert_expr_rule!(AllowTo, true);
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
@@ -796,16 +790,11 @@ impl LintGroup {
 
     pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
         let mut results = BTreeMap::new();
-        let allow_informal_laughter = self.config.is_rule_enabled(ALLOW_INFORMAL_LAUGHTER);
 
         // Normal linters
         for (key, linter) in &mut self.linters {
             if self.config.is_rule_enabled(key) {
-                let mut lints = linter.lint(document);
-                if allow_informal_laughter && should_filter_informal_laughter_lints(key) {
-                    lints.retain(|lint| !is_informal_laughter(lint.get_ch(document.get_source())));
-                }
-                results.insert(key.to_owned(), lints);
+                results.insert(key.to_owned(), linter.lint(document));
             }
         }
 
@@ -847,27 +836,16 @@ impl LintGroup {
                 results
                     .entry(key.to_owned())
                     .or_default()
-                    .extend(vec.iter().cloned().filter_map(|mut lint| {
+                    .extend(vec.iter().cloned().map(|mut lint| {
                         // Bring the spans back into document-space
                         lint.span.push_by(chunk_span.start);
-                        if allow_informal_laughter
-                            && should_filter_informal_laughter_lints(key)
-                            && is_informal_laughter(lint.get_ch(document.get_source()))
-                        {
-                            None
-                        } else {
-                            Some(lint)
-                        }
+                        lint
                     }));
             }
         }
 
         results
     }
-}
-
-fn should_filter_informal_laughter_lints(rule_name: &str) -> bool {
-    matches!(rule_name, SPELL_CHECK | SPLIT_WORDS)
 }
 
 impl Default for LintGroup {
@@ -893,7 +871,7 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::Arc;
 
-    use super::{ALLOW_INFORMAL_LAUGHTER, FlatConfig, LintGroup, SPELL_CHECK, SPLIT_WORDS};
+    use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
@@ -957,56 +935,6 @@ mod tests {
             "expected no lints from SplitWords, but found {:?}",
             organized.get("SplitWords")
         );
-    }
-
-    #[test]
-    fn allows_informal_laughter_by_default() {
-        for source in [
-            "hah",
-            "haha",
-            "hahah",
-            "hahaha",
-            "hahahah",
-            "Hahahah, that landed.",
-            "I laughed hahahah.",
-        ] {
-            assert_no_lints(source, test_group());
-        }
-    }
-
-    #[test]
-    fn disabled_informal_laughter_restores_existing_lints() {
-        let assert_rule_lints = |source: &str, rule_name: &str| {
-            let mut group = test_group();
-            group
-                .config
-                .set_rule_enabled(ALLOW_INFORMAL_LAUGHTER, false);
-            let document = Document::new_plain_english_curated(source);
-            let organized = group.organized_lints(&document);
-            assert!(
-                organized
-                    .get(rule_name)
-                    .is_some_and(|lints| !lints.is_empty()),
-                "expected {rule_name} to lint {source:?}, got {organized:?}",
-            );
-        };
-
-        assert_rule_lints("hah", SPLIT_WORDS);
-        assert_rule_lints("haha", SPLIT_WORDS);
-        assert_rule_lints("hahah", SPELL_CHECK);
-        assert_rule_lints("hahaha", SPELL_CHECK);
-    }
-
-    #[test]
-    fn does_not_allow_malformed_laughter_chains() {
-        for source in ["hahhah", "haah", "hahh", "hha"] {
-            let document = Document::new_plain_english_curated(source);
-            let mut group = test_group();
-            assert!(
-                !group.lint(&document).is_empty(),
-                "expected malformed laughter chain {source:?} to remain linted",
-            );
-        }
     }
 
     #[test]

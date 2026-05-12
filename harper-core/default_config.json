@@ -2282,13 +2282,6 @@
 						},
 						{
 							"Bool": {
-								"name": "AllowInformalLaughter",
-								"state": true,
-								"label": "Allow Informal Laughter"
-							}
-						},
-						{
-							"Bool": {
 								"name": "OrthographicConsistency",
 								"state": true,
 								"label": "Orthographic Consistency"

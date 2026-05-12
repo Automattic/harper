@@ -1,19 +1,3 @@
-use super::{Lint, Linter};
-use crate::Document;
-
-#[derive(Debug, Default, Clone, Copy)]
-pub struct AllowInformalLaughter;
-
-impl Linter for AllowInformalLaughter {
-    fn lint(&mut self, _document: &Document) -> Vec<Lint> {
-        Vec::new()
-    }
-
-    fn description(&self) -> &'static str {
-        "Allows informal laughter written as alternating `ha` syllables."
-    }
-}
-
 pub fn is_informal_laughter(chars: &[char]) -> bool {
     if chars.len() < 2 {
         return false;
