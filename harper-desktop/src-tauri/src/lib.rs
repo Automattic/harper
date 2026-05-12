@@ -5,7 +5,7 @@ use crate::config::{Config, Integration};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
-    linting::{FlatConfig, HumanReadableStructuredConfig, Lint, LintGroup, StructuredConfig},
+    linting::{FlatConfig, Lint, LintGroup},
     spell::{Dictionary, MutableDictionary},
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
@@ -185,27 +185,6 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
     lint_config.fill_with_curated();
 
     Ok(lint_config)
-}
-
-#[tauri::command]
-async fn get_default_lint_config() -> Result<FlatConfig, String> {
-    Ok(FlatConfig::new_curated())
-}
-
-#[tauri::command]
-async fn get_structured_lint_config(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<String, String> {
-    let mut flat_config = config.lock().await.lint_config.clone();
-    flat_config.fill_with_curated();
-
-    let mut structured_config = StructuredConfig::curated();
-
-    structured_config.copy_from_flat_config(&flat_config);
-
-    let config = HumanReadableStructuredConfig::from_structured_config(&structured_config);
-
-    serde_json::to_string(&config).map_err(|error| error.to_string())
 }
 
 #[tauri::command]
@@ -410,8 +389,6 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
-            get_default_lint_config,
-            get_structured_lint_config,
             get_dialect,
             set_dialect,
             set_lint_config,

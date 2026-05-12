@@ -1,8 +1,11 @@
 import { invoke } from "@tauri-apps/api/core";
 import { disable, enable, isEnabled } from "@tauri-apps/plugin-autostart";
-import { Dialect, type Lint, type LintConfig, type Linter, type StructuredLintConfig } from "harper.js";
+import { Dialect, type Lint, type LintConfig, type Linter, type StructuredLintConfig, WorkerLinter } from "harper.js";
+import { binaryInlined } from "harper.js/binaryInlined";
 
 type RustDialect = "American" | "British" | "Australian" | "Canadian" | "Indian";
+
+const configLinter = new WorkerLinter({ binary: binaryInlined });
 
 export interface Integration {
   bundle_id: string;
@@ -15,24 +18,13 @@ export class Client {
   }
 
   static async getDefaultLintConfig(): Promise<LintConfig> {
-    return await invoke<LintConfig>("get_default_lint_config");
+    return await configLinter.getDefaultLintConfig();
   }
 
   static async getStructuredLintConfig(): Promise<StructuredLintConfig> {
-    const structuredLintConfig = await invoke<string>("get_structured_lint_config");
-    console.debug("[harper-desktop] raw structured lint config", {
-      length: structuredLintConfig.length,
-      preview: structuredLintConfig.slice(0, 500),
-    });
+    await configLinter.setLintConfig(await Client.getLintConfig());
 
-    const parsedStructuredLintConfig = JSON.parse(structuredLintConfig) as StructuredLintConfig;
-    console.debug("[harper-desktop] parsed structured lint config", {
-      keys: Object.keys(parsedStructuredLintConfig),
-      settingsCount: parsedStructuredLintConfig.settings?.length,
-      firstSetting: parsedStructuredLintConfig.settings?.[0],
-    });
-
-    return parsedStructuredLintConfig;
+    return await configLinter.getStructuredLintConfig();
   }
 
   static async getDialect(): Promise<Dialect> {
