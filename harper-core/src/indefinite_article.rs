@@ -68,6 +68,10 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
         return Some(InitialSound::Either);
     }
 
+    if matches!(word, ['m', 'p', digit, ..] if digit.is_ascii_digit()) {
+        return Some(InitialSound::Vowel);
+    }
+
     if matches!(word, ['e', 'u', 'l', 'e', ..]) {
         return Some(InitialSound::Vowel);
     }
