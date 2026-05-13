@@ -1,4 +1,5 @@
-expr main (better of)
+expr beBefore [am, are, is, was, were, be, been, being, feel, feels, felt]
+expr main <([(@beBefore better of), (@beBefore ADV better of), (better of [with, without, at, before, now, if, not]), (better of VERB)]), (better of)>
 
 let message "This expression usually takes `off` instead of `of`."
 let description "Rewrites `better of` to `better off` in common comparative phrasing."
@@ -17,6 +18,9 @@ test "She is far better of now." "She is far better off now."
 test "He'd be better of at home." "He'd be better off at home."
 test "The team is BETTER OF with clear goals." "The team is BETTER OFF with clear goals."
 test "Are we better of if we delay launch?" "Are we better off if we delay launch?"
+test "Otherwise I'm much better of not using the feed at all." "Otherwise I'm much better off not using the feed at all."
+test "You may be better of starting from ChernSimons, which is based on KerrBL." "You may be better off starting from ChernSimons, which is based on KerrBL."
+test "you are probably better of with other message broker solutions" "you are probably better off with other message broker solutions"
 
 # True negatives / false-positive checks
 
@@ -26,6 +30,12 @@ test "Of course this is better overall." "Of course this is better overall."
 test "He offered better outcomes, not quick fixes." "He offered better outcomes, not quick fixes."
 test "They got off the train early." "They got off the train early."
 test "A better offer arrived yesterday." "A better offer arrived yesterday."
+test "Apparently ECMA thought better of this restriction." "Apparently ECMA thought better of this restriction."
+test "Curiosity got the better of me and I hacked up a test of this feature." "Curiosity got the better of me and I hacked up a test of this feature."
+test "This page describes who is the better of two players between and within games." "This page describes who is the better of two players between and within games."
+test "I think this is the better of the two paths." "I think this is the better of the two paths."
+test "I considered putting a default into the easybutton.css but thought better of it." "I considered putting a default into the easybutton.css but thought better of it."
+test "The better of /f0 and /f5 runs was selected." "The better of /f0 and /f5 runs was selected."
 
 # Boundary / accepted limits
 
