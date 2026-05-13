@@ -153,6 +153,15 @@ mod tests {
     }
 
     #[test]
+    fn test_late() {
+        assert_suggestion_result(
+            "Ands ometimes the space is a character late.",
+            TransposedSpace::new(FstDictionary::curated()),
+            "And sometimes the space is a character late.",
+        );
+    }
+
+    #[test]
     fn test_3355_result() {
         assert_suggestion_result(
             "cham peng",
