@@ -243,7 +243,11 @@ mod tests {
 
     #[test]
     fn dont_flag_quiet_light() {
-        assert_lint_count("The quiet lights in the houses", QuiteQuietQuit::default(), 0);
+        assert_lint_count(
+            "The quiet lights in the houses",
+            QuiteQuietQuit::default(),
+            0,
+        );
     }
 
     #[test]
@@ -323,7 +327,10 @@ mod tests {
 
     #[test]
     fn dont_flag_keep_quiet_about() {
-        assert_no_lints("She kept quiet about what happened.", QuiteQuietQuit::default());
+        assert_no_lints(
+            "She kept quiet about what happened.",
+            QuiteQuietQuit::default(),
+        );
     }
 
     #[test]
