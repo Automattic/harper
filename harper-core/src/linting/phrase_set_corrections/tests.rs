@@ -26,6 +26,26 @@ fn corrects_much_ado() {
     );
 }
 
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
 // Bollocks
 
 #[test]
