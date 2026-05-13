@@ -2,15 +2,18 @@ use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
-    AXUIElementCopyAttributeValue, AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid,
-    AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
-    kAXBoundsForRangeParameterizedAttribute, kAXErrorIllegalArgument, kAXErrorNoValue,
-    kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess, kAXFocusedApplicationAttribute,
-    kAXPositionAttribute, kAXSizeAttribute, kAXValueTypeCFRange, kAXValueTypeCGPoint,
-    kAXValueTypeCGRect, kAXValueTypeCGSize, pid_t,
+    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, AXUIElementCopyAttributeValue,
+    AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
+    AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
+    kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
+    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXPositionAttribute, kAXSizeAttribute,
+    kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
+    kAXValueTypeCGSize, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
+use core_foundation::boolean::CFBoolean;
+use core_foundation::dictionary::CFDictionary;
 use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
@@ -20,7 +23,7 @@ use objc2_foundation::{NSPoint, NSRect, NSSize};
 use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
 
 use crate::config::{Config, Integration};
-use crate::os_broker::OsBroker;
+use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use crate::rect::{ActionableLint, Rect};
 
 /// macOS implementation of the OS data the highlighter needs.
@@ -94,6 +97,27 @@ impl OsBroker for MacBroker {
         let location = event.location();
 
         Some(egui::pos2(location.x as f32, location.y as f32))
+    }
+
+    fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
+        if unsafe { AXIsProcessTrusted() } {
+            AccessibilityPermissionStatus::Granted
+        } else {
+            AccessibilityPermissionStatus::NotGranted
+        }
+    }
+
+    fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
+        let prompt_key = unsafe { CFString::wrap_under_get_rule(kAXTrustedCheckOptionPrompt) };
+        let prompt_value = CFBoolean::true_value();
+        let options: CFDictionary<CFString, CFBoolean> =
+            CFDictionary::from_CFType_pairs(&[(prompt_key, prompt_value)]);
+
+        if unsafe { AXIsProcessTrustedWithOptions(options.as_concrete_TypeRef()) } {
+            AccessibilityPermissionStatus::Granted
+        } else {
+            AccessibilityPermissionStatus::NotGranted
+        }
     }
 }
 
