@@ -37,6 +37,8 @@ export interface Integration {
 	enabled: boolean;
 }
 
+export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
+
 export class Client {
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
@@ -122,6 +124,14 @@ export class Client {
 
 	static async setIntegrationEnabled(bundleId: string, enabled: boolean): Promise<void> {
 		await invoke('set_integration_enabled', { bundleId, enabled });
+	}
+
+	static async getAccessibilityPermissionStatus(): Promise<AccessibilityPermissionStatus> {
+		return await invoke<AccessibilityPermissionStatus>('get_accessibility_permission_status');
+	}
+
+	static async requestAccessibilityPermission(): Promise<AccessibilityPermissionStatus> {
+		return await invoke<AccessibilityPermissionStatus>('request_accessibility_permission');
 	}
 }
 
