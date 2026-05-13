@@ -480,6 +480,13 @@ impl DictWordMetadata {
         })
     }
 
+    pub fn is_verb_regular_past_form(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms
+                .is_some_and(|vf| vf.contains(VerbFormFlags::PAST))
+        })
+    }
+
     pub fn is_verb_simple_past_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -1982,6 +1989,12 @@ pub mod tests {
         }
 
         #[test]
+        fn regular_past_walked() {
+            let md = md("walked");
+            assert!(md.is_verb_regular_past_form())
+        }
+
+        #[test]
         fn simple_past_ate() {
             let md = md("ate");
             assert!(md.is_verb_simple_past_form())
@@ -2019,6 +2032,14 @@ pub mod tests {
             let md = md("walked");
             assert!(!md.is_verb_simple_past_only());
             assert!(!md.is_verb_past_participle_only());
+            assert!(md.is_verb_regular_past_form());
+        }
+
+        #[test]
+        fn irregular_past_forms_are_not_regular_past() {
+            assert!(!md("ate").is_verb_regular_past_form());
+            assert!(!md("eaten").is_verb_regular_past_form());
+            assert!(!md("thought").is_verb_regular_past_form());
         }
 
         #[test]

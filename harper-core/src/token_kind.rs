@@ -99,6 +99,7 @@ impl TokenKind {
         is_linking_verb,
         is_verb_lemma,
         is_verb_past_form,
+        is_verb_regular_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
         is_verb_simple_past_only,
@@ -451,6 +452,13 @@ mod tests {
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(tk.is_verb_past_participle_only());
         assert!(!tk.is_verb_simple_past_only());
+    }
+
+    #[test]
+    fn walked_is_regular_past_form() {
+        let doc = Document::new_plain_english_curated("walked");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_regular_past_form());
     }
 
     #[test]
