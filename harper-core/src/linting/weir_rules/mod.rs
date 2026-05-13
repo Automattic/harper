@@ -1,5 +1,5 @@
 use super::LintGroup;
-use crate::weir::WeirLinter;
+use crate::weir::{WeirLinter, WeirScope};
 
 macro_rules! generate_boilerplate {
     ([$($name:ident),+ $(,)?]) => {
@@ -8,7 +8,11 @@ macro_rules! generate_boilerplate {
 
                 {
                     $(
-                        group.add_chunk_expr_linter(stringify!($name), WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap());
+                        let linter = WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap();
+                        match linter.scope() {
+                            WeirScope::Chunk => group.add_chunk_expr_linter(stringify!($name), linter.into_chunk_linter().unwrap_or_else(|_| unreachable!())),
+                            WeirScope::Sentence => group.add_sentence_expr_linter(stringify!($name), linter.into_sentence_linter().unwrap_or_else(|_| unreachable!())),
+                        };
                     )+
                 }
 
