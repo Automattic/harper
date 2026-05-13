@@ -104,11 +104,7 @@ mod tests {
 
     #[test]
     fn does_not_flag_correct_their_own() {
-        assert_lint_count(
-            "They manage their own servers.",
-            ThereOwn::default(),
-            0,
-        );
+        assert_lint_count("They manage their own servers.", ThereOwn::default(), 0);
     }
 
     #[test]
@@ -122,19 +118,85 @@ mod tests {
 
     #[test]
     fn does_not_flag_verb_own_after_noun() {
-        assert_lint_count(
-            "People there own nice cars.",
-            ThereOwn::default(),
-            0,
-        );
+        assert_lint_count("People there own nice cars.", ThereOwn::default(), 0);
     }
 
     #[test]
     fn does_not_flag_verb_own_with_determiner() {
-        assert_lint_count(
-            "Companies there own the property.",
+        assert_lint_count("Companies there own the property.", ThereOwn::default(), 0);
+    }
+
+    // Examples from issue #3276 — feature request author's positive cases.
+
+    #[test]
+    fn issue_3276_customise_default_lvl() {
+        assert_suggestion_result(
+            "Provide user the option in setting to customise there own default Effort lvl.",
             ThereOwn::default(),
-            0,
+            "Provide user the option in setting to customise their own default Effort lvl.",
+        );
+    }
+
+    #[test]
+    fn issue_3276_modules_c_files() {
+        assert_suggestion_result(
+            "Allow for modules to provide there own c files.",
+            ThereOwn::default(),
+            "Allow for modules to provide their own c files.",
+        );
+    }
+
+    #[test]
+    fn issue_3276_scripts_create_connection() {
+        assert_suggestion_result(
+            "I have a number of scripts that all create there own connection.",
+            ThereOwn::default(),
+            "I have a number of scripts that all create their own connection.",
+        );
+    }
+
+    #[test]
+    fn issue_3276_silent_appstore_updates() {
+        assert_suggestion_result(
+            "allowing 3rd party appstores to silently update apps installed by theyre own.",
+            ThereOwn::default(),
+            "allowing 3rd party appstores to silently update apps installed by their own.",
+        );
+    }
+
+    #[test]
+    fn issue_3276_theyre_own_command() {
+        assert_suggestion_result(
+            "But because they are they're own command they have their own runtime.",
+            ThereOwn::default(),
+            "But because they are their own command they have their own runtime.",
+        );
+    }
+
+    #[test]
+    fn issue_3276_theyre_own_library() {
+        assert_suggestion_result(
+            "Components I'm working on that will eventually become they're own library.",
+            ThereOwn::default(),
+            "Components I'm working on that will eventually become their own library.",
+        );
+    }
+
+    // Issue #3276's explicit false-positive example.
+
+    #[test]
+    fn issue_3276_false_positive_expensive_cars() {
+        assert_lint_count("People there own expensive cars.", ThereOwn::default(), 0);
+    }
+
+    // Sentence-initial "There own" stays a true positive (no preceding word, so
+    // the adverbial-there guard correctly does not trigger).
+    #[test]
+    fn sentence_initial_there_own_still_flagged() {
+        assert_suggestion_result(
+            "There own employees disagreed with the policy.",
+            ThereOwn::default(),
+            "Their own employees disagreed with the policy.",
         );
     }
 }
