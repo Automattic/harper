@@ -179,7 +179,7 @@ use super::pronoun_verb_agreement::PronounVerbAgreement;
 use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
-use super::quite_quiet::QuiteQuiet;
+use super::quite_quiet_quit::QuiteQuietQuit;
 use super::quote_spacing::QuoteSpacing;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
@@ -672,7 +672,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(PronounVerbAgreement, true);
         insert_expr_rule!(QuantifierNeedsOf, true);
         insert_expr_rule!(QuantifierNumeralConflict, true);
-        insert_expr_rule!(QuiteQuiet, true);
+        insert_expr_rule!(QuiteQuietQuit, true);
         insert_struct_rule!(QuoteSpacing, true);
         insert_expr_rule!(ReasonForDoing, true);
         insert_expr_rule!(RedundantAcronyms, true);
