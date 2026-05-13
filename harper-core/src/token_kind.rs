@@ -455,8 +455,8 @@ mod tests {
     }
 
     #[test]
-    fn walked_is_regular_past_form() {
-        let doc = Document::new_plain_english_curated("walked");
+    fn thought_is_regular_past_form() {
+        let doc = Document::new_plain_english_curated("thought");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(tk.is_verb_regular_past_form());
     }

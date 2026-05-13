@@ -482,8 +482,9 @@ impl DictWordMetadata {
 
     pub fn is_verb_regular_past_form(&self) -> bool {
         self.verb.is_some_and(|v| {
-            v.verb_forms
-                .is_some_and(|vf| vf.contains(VerbFormFlags::PAST))
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PRETERITE) && vf.contains(VerbFormFlags::PAST_PARTICIPLE)
+            })
         })
     }
 
@@ -1989,8 +1990,8 @@ pub mod tests {
         }
 
         #[test]
-        fn regular_past_walked() {
-            let md = md("walked");
+        fn regular_past_thought() {
+            let md = md("thought");
             assert!(md.is_verb_regular_past_form())
         }
 
@@ -2028,18 +2029,18 @@ pub mod tests {
         }
 
         #[test]
-        fn regular_past_forms_are_neither_past_form_only() {
-            let md = md("walked");
+        fn shared_past_forms_are_neither_past_form_only() {
+            let md = md("thought");
             assert!(!md.is_verb_simple_past_only());
             assert!(!md.is_verb_past_participle_only());
             assert!(md.is_verb_regular_past_form());
         }
 
         #[test]
-        fn irregular_past_forms_are_not_regular_past() {
+        fn distinct_past_forms_are_not_regular_past() {
             assert!(!md("ate").is_verb_regular_past_form());
             assert!(!md("eaten").is_verb_regular_past_form());
-            assert!(!md("thought").is_verb_regular_past_form());
+            assert!(!md("walked").is_verb_regular_past_form());
         }
 
         #[test]
