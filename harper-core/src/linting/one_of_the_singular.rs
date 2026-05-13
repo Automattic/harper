@@ -1,7 +1,9 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, expr_linter::followed_by_word},
+    linting::{
+        ExprLinter, LintKind, Suggestion, expr_linter::Chunk, expr_linter::followed_by_word,
+    },
     spell::Dictionary,
 };
 
