@@ -494,6 +494,24 @@ impl DictWordMetadata {
         })
     }
 
+    pub fn is_verb_simple_past_only(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PRETERITE)
+                    && !vf.intersects(VerbFormFlags::PAST | VerbFormFlags::PAST_PARTICIPLE)
+            })
+        })
+    }
+
+    pub fn is_verb_past_participle_only(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PAST_PARTICIPLE)
+                    && !vf.intersects(VerbFormFlags::PAST | VerbFormFlags::PRETERITE)
+            })
+        })
+    }
+
     pub fn is_verb_progressive_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -1973,6 +1991,34 @@ pub mod tests {
         fn past_participle_eaten() {
             let md = md("eaten");
             assert!(md.is_verb_past_participle_form())
+        }
+
+        #[test]
+        fn ate_is_simple_past_only() {
+            let md = md("ate");
+            assert!(md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
+        }
+
+        #[test]
+        fn eaten_is_past_participle_only() {
+            let md = md("eaten");
+            assert!(md.is_verb_past_participle_only());
+            assert!(!md.is_verb_simple_past_only());
+        }
+
+        #[test]
+        fn thought_is_neither_past_form_only() {
+            let md = md("thought");
+            assert!(!md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
+        }
+
+        #[test]
+        fn regular_past_forms_are_neither_past_form_only() {
+            let md = md("walked");
+            assert!(!md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
         }
 
         #[test]

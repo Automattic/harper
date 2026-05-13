@@ -101,6 +101,8 @@ impl TokenKind {
         is_verb_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
+        is_verb_simple_past_only,
+        is_verb_past_participle_only,
         is_verb_progressive_form,
         is_verb_third_person_singular_present_form,
 
@@ -433,6 +435,22 @@ mod tests {
         let doc = Document::new_plain_english_curated("equipment");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(!tk.is_countable_noun());
+    }
+
+    #[test]
+    fn ate_is_simple_past_only() {
+        let doc = Document::new_plain_english_curated("ate");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_simple_past_only());
+        assert!(!tk.is_verb_past_participle_only());
+    }
+
+    #[test]
+    fn eaten_is_past_participle_only() {
+        let doc = Document::new_plain_english_curated("eaten");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_past_participle_only());
+        assert!(!tk.is_verb_simple_past_only());
     }
 
     #[test]
