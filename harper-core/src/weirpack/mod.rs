@@ -9,7 +9,7 @@ use zip::{CompressionMethod, ZipArchive, ZipWriter};
 
 use crate::linting::LintGroup;
 use crate::spell::MutableDictionary;
-use crate::weir::{TestResult, WeirLinter, WeirScope};
+use crate::weir::{TestResult, WeirLinter};
 
 mod error;
 mod manifest;
@@ -72,17 +72,12 @@ impl Weirpack {
 
         for (name, rule) in &self.rules {
             let linter = WeirLinter::new(rule)?;
-            match linter.scope() {
-                WeirScope::Chunk => group.add_chunk_expr_linter(
+            match linter.into_sentence_linter() {
+                Ok(linter) => group.add_sentence_expr_linter(name, linter),
+                Err(linter) => group.add_chunk_expr_linter(
                     name,
                     linter
                         .into_chunk_linter()
-                        .unwrap_or_else(|_| unreachable!()),
-                ),
-                WeirScope::Sentence => group.add_sentence_expr_linter(
-                    name,
-                    linter
-                        .into_sentence_linter()
                         .unwrap_or_else(|_| unreachable!()),
                 ),
             };

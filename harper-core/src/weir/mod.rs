@@ -36,7 +36,7 @@ enum ReplacementStrategy {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumString)]
-pub enum WeirScope {
+enum WeirScope {
     Chunk,
     Sentence,
 }
@@ -58,9 +58,9 @@ pub struct WeirLinter {
     ast: Arc<Ast>,
 }
 
-pub struct ChunkWeirLinter(WeirLinter);
+struct ChunkWeirLinter(WeirLinter);
 
-pub struct SentenceWeirLinter(WeirLinter);
+struct SentenceWeirLinter(WeirLinter);
 
 impl WeirLinter {
     pub fn new(weir_code: &str) -> Result<WeirLinter, Error> {
@@ -160,11 +160,7 @@ impl WeirLinter {
         Ok(linter)
     }
 
-    pub fn scope(&self) -> WeirScope {
-        self.scope
-    }
-
-    pub fn into_chunk_linter(self) -> Result<ChunkWeirLinter, Self> {
+    pub fn into_chunk_linter(self) -> Result<impl ExprLinter<Unit = Chunk>, Self> {
         if self.scope == WeirScope::Chunk {
             Ok(ChunkWeirLinter(self))
         } else {
@@ -172,7 +168,7 @@ impl WeirLinter {
         }
     }
 
-    pub fn into_sentence_linter(self) -> Result<SentenceWeirLinter, Self> {
+    pub fn into_sentence_linter(self) -> Result<impl ExprLinter<Unit = Sentence>, Self> {
         if self.scope == WeirScope::Sentence {
             Ok(SentenceWeirLinter(self))
         } else {
@@ -410,7 +406,7 @@ pub mod tests {
 
     use crate::weir::Error;
 
-    use super::{TestResult, WeirLinter, WeirScope};
+    use super::{TestResult, WeirLinter};
 
     #[track_caller]
     pub fn assert_passes_all(linter: &mut WeirLinter) {
@@ -508,8 +504,14 @@ pub mod tests {
 
         let mut linter = WeirLinter::new(source).unwrap();
 
-        assert_eq!(linter.scope(), WeirScope::Chunk);
         assert_passes_all(&mut linter);
+
+        let linter = WeirLinter::new(source).unwrap();
+        let linter = match linter.into_sentence_linter() {
+            Ok(_) => panic!("default-scoped Weir rule should not convert to sentence linter"),
+            Err(linter) => linter,
+        };
+        assert!(linter.into_chunk_linter().is_ok());
     }
 
     #[test]
@@ -528,8 +530,14 @@ pub mod tests {
 
         let mut linter = WeirLinter::new(source).unwrap();
 
-        assert_eq!(linter.scope(), WeirScope::Sentence);
         assert_passes_all(&mut linter);
+
+        assert!(
+            WeirLinter::new(source)
+                .unwrap()
+                .into_sentence_linter()
+                .is_ok()
+        );
     }
 
     #[test]
