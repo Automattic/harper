@@ -45,11 +45,47 @@ impl Default for QuiteQuiet {
             .t_ws()
             .t_aco("quite");
 
+        // "quite" is sometimes mistyped for the verb "quit", especially in
+        // UI/software contexts like "quit and restart" or "quit the app".
+        let quite_and_verb = SequenceExpr::aco("quite")
+            .t_ws()
+            .t_aco("and")
+            .t_ws()
+            .t_set(&[
+                "install", "reopen", "restart", "update", "re-open", "re-start",
+            ]);
+
+        let quite_the_app = SequenceExpr::aco("quite")
+            .t_ws()
+            .t_aco("the")
+            .t_ws()
+            .t_set(&[
+                "app",
+                "application",
+                "program",
+                "process",
+                "terminal",
+                "window",
+            ]);
+
+        let quite_app = SequenceExpr::aco("quite").t_ws().t_set(&[
+            "app",
+            "application",
+            "command",
+            "program",
+            "process",
+            "terminal",
+            "window",
+        ]);
+
         Self {
             expr: FirstMatchOf::new(vec![
                 Box::new(quiet_word),
                 Box::new(negative_contraction_quiet),
                 Box::new(adverb_quite),
+                Box::new(quite_and_verb),
+                Box::new(quite_the_app),
+                Box::new(quite_app),
             ]),
         }
     }
@@ -65,7 +101,20 @@ impl ExprLinter for QuiteQuiet {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let text = toks.span()?.get_content_string(src).to_lowercase();
 
-        if text.ends_with("quite") {
+        if text.starts_with("quite") {
+            let quite_span = toks.first()?.span;
+
+            return Some(Lint {
+                span: quite_span,
+                lint_kind: LintKind::Typo,
+                suggestions: vec![Suggestion::replace_with_match_case(
+                    "quit".chars().collect(),
+                    quite_span.get_content(src),
+                )],
+                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quit’ (exit or close).".to_string(),
+                priority: 63,
+            });
+        } else if text.ends_with("quite") {
             let quite_span = toks.last()?.span;
 
             return Some(Lint {
@@ -143,6 +192,33 @@ mod tests {
             "It's very quite here at night.",
             QuiteQuiet::default(),
             "It's very quiet here at night.",
+        );
+    }
+
+    #[test]
+    fn fix_quite_and_restart() {
+        assert_suggestion_result(
+            "If you edit the AGENTS.md file you need to quite and restart copilot cli.",
+            QuiteQuiet::default(),
+            "If you edit the AGENTS.md file you need to quit and restart copilot cli.",
+        );
+    }
+
+    #[test]
+    fn fix_quite_the_app() {
+        assert_suggestion_result(
+            "I have to quite the terminal app to stop it.",
+            QuiteQuiet::default(),
+            "I have to quit the terminal app to stop it.",
+        );
+    }
+
+    #[test]
+    fn fix_quite_app() {
+        assert_suggestion_result(
+            "No visible close or quite command is available.",
+            QuiteQuiet::default(),
+            "No visible close or quit command is available.",
         );
     }
 
