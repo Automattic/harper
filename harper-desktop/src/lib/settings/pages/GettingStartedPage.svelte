@@ -24,7 +24,13 @@ let isRequestingAccessibility = false;
 let hasRequestedAccessibility = false;
 let accessibilityDiagnostics: string[] = [];
 
-$: setupSteps = buildSetupSteps();
+$: setupSteps = buildSetupSteps(
+	state,
+	accessibilityStatus,
+	isCheckingAccessibility,
+	isRequestingAccessibility,
+	hasRequestedAccessibility,
+);
 $: setupCompletedCount = setupSteps.filter((step) => step.done).length;
 $: setupAllDone = setupSteps.every((step) => step.done);
 
@@ -93,61 +99,77 @@ function recordAccessibilityDiagnostic(message: string) {
 	accessibilityDiagnostics = [...accessibilityDiagnostics.slice(-7), `${timestamp}: ${message}`];
 }
 
-function accessibilityDescription() {
-	if (accessibilityStatus === 'Granted') {
+function accessibilityDescription(status: AccessibilityPermissionStatus | null) {
+	if (status === 'Granted') {
 		return 'Harper can access text through the macOS Accessibility system.';
 	}
 
-	if (accessibilityStatus === 'Unsupported') {
+	if (status === 'Unsupported') {
 		return 'Accessibility setup is only available on macOS right now.';
 	}
 
 	return 'Open system settings and grant Harper access to the Accessibility system.';
 }
 
-function accessibilityActionLabel() {
-	if (isCheckingAccessibility) {
+function accessibilityActionLabel(
+	status: AccessibilityPermissionStatus | null,
+	isChecking: boolean,
+	isRequesting: boolean,
+	hasRequested: boolean,
+) {
+	if (isChecking) {
 		return 'Checking...';
 	}
 
-	if (isRequestingAccessibility) {
+	if (isRequesting) {
 		return 'Opening...';
 	}
 
-	if (accessibilityStatus === 'Granted') {
+	if (status === 'Granted') {
 		return 'Granted';
 	}
 
-	if (accessibilityStatus === 'Unsupported') {
+	if (status === 'Unsupported') {
 		return 'Unsupported';
 	}
 
-	if (hasRequestedAccessibility) {
+	if (hasRequested) {
 		return 'Recheck Permission';
 	}
 
 	return 'Open System Settings';
 }
 
-function buildSetupSteps(): SetupStep[] {
-	const accessibilityDone = accessibilityStatus === 'Granted';
-	const integrationDone = state.setup.integration === 'selected';
-	const testDriveDone = state.setup.testDrive === 'completed';
+function buildSetupSteps(
+	currentState: SettingsState,
+	currentAccessibilityStatus: AccessibilityPermissionStatus | null,
+	currentIsCheckingAccessibility: boolean,
+	currentIsRequestingAccessibility: boolean,
+	currentHasRequestedAccessibility: boolean,
+): SetupStep[] {
+	const accessibilityDone = currentAccessibilityStatus === 'Granted';
+	const integrationDone = currentState.setup.integration === 'selected';
+	const testDriveDone = currentState.setup.testDrive === 'completed';
 	const accessibilityActionDisabled =
-		isCheckingAccessibility ||
-		isRequestingAccessibility ||
-		accessibilityStatus === 'Granted' ||
-		accessibilityStatus === 'Unsupported';
+		currentIsCheckingAccessibility ||
+		currentIsRequestingAccessibility ||
+		currentAccessibilityStatus === 'Granted' ||
+		currentAccessibilityStatus === 'Unsupported';
 
 	return [
 		{
 			id: 'accessibility',
 			title: 'Grant Accessibility permission',
-			desc: accessibilityDescription(),
+			desc: accessibilityDescription(currentAccessibilityStatus),
 			required: true,
 			done: accessibilityDone,
 			locked: false,
-			actionLabel: accessibilityActionLabel(),
+			actionLabel: accessibilityActionLabel(
+				currentAccessibilityStatus,
+				currentIsCheckingAccessibility,
+				currentIsRequestingAccessibility,
+				currentHasRequestedAccessibility,
+			),
 			actionVariant: accessibilityDone ? 'default' : 'primary',
 			action: requestAccessibilityPermission,
 			actionDisabled: accessibilityActionDisabled,
