@@ -105,6 +105,7 @@ use super::if_wouldve::IfWouldve;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
 use super::in_time_from_now::InTimeFromNow;
+use super::including_but_not_limited_to::IncludingButNotLimitedTo;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
 use super::it_looks_like_that::ItLooksLikeThat;
@@ -597,6 +598,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
+        insert_struct_rule!(IncludingButNotLimitedTo, true);
         insert_expr_rule!(InFavourOfDoing, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
         insert_expr_rule!(InTimeFromNow, true);

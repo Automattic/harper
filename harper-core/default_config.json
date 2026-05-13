@@ -3079,6 +3079,13 @@
 						},
 						{
 							"Bool": {
+								"name": "IncludingButNotLimitedTo",
+								"state": true,
+								"label": "Including But Not Limited To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InflectedVerbAfterTo",
 								"state": true,
 								"label": "Inflected Verb After To"
