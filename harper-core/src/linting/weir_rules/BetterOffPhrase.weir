@@ -24,18 +24,18 @@ test "you are probably better of with other message broker solutions" "you are p
 
 # True negatives / false-positive checks
 
-test "People who are better off can donate more." "People who are better off can donate more."
-test "This is a matter of better options." "This is a matter of better options."
-test "Of course this is better overall." "Of course this is better overall."
-test "He offered better outcomes, not quick fixes." "He offered better outcomes, not quick fixes."
-test "They got off the train early." "They got off the train early."
-test "A better offer arrived yesterday." "A better offer arrived yesterday."
-test "Apparently ECMA thought better of this restriction." "Apparently ECMA thought better of this restriction."
-test "Curiosity got the better of me and I hacked up a test of this feature." "Curiosity got the better of me and I hacked up a test of this feature."
-test "This page describes who is the better of two players between and within games." "This page describes who is the better of two players between and within games."
-test "I think this is the better of the two paths." "I think this is the better of the two paths."
-test "I considered putting a default into the easybutton.css but thought better of it." "I considered putting a default into the easybutton.css but thought better of it."
-test "The better of /f0 and /f5 runs was selected." "The better of /f0 and /f5 runs was selected."
+allows "People who are better off can donate more."
+allows "This is a matter of better options."
+allows "Of course this is better overall."
+allows "He offered better outcomes, not quick fixes."
+allows "They got off the train early."
+allows "A better offer arrived yesterday."
+allows "Apparently ECMA thought better of this restriction."
+allows "Curiosity got the better of me and I hacked up a test of this feature."
+allows "This page describes who is the better of two players between and within games."
+allows "I think this is the better of the two paths."
+allows "I considered putting a default into the easybutton.css but thought better of it."
+allows "The better of /f0 and /f5 runs was selected."
 
 # Boundary / accepted limits
 
