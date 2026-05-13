@@ -247,6 +247,7 @@ use super::vicious_loop::ViciousCircleOrCycle;
 use super::vicious_loop::ViciousCycle;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
+use super::way_wait::WayWait;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
 use super::were_where::WereWhere;
@@ -737,6 +738,7 @@ impl LintGroup {
         insert_expr_rule!(ViciousCircleOrCycle, false);
         insert_expr_rule!(ViciousCycle, false);
         insert_expr_rule!(WasAloud, true);
+        insert_expr_rule!(WayWait, true);
         insert_expr_rule!(WayTooAdjective, true);
         insert_expr_rule!(WellEducated, true);
         insert_expr_rule!(Whereas, true);

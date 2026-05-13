@@ -2754,6 +2754,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WayWait",
+								"state": true,
+								"label": "Way Wait"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantAcronyms",
 								"state": true,
 								"label": "Redundant Acronyms"
