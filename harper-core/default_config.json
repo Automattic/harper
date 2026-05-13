@@ -5269,6 +5269,13 @@
 								"state": true,
 								"label": "Fond On"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ToTo",
+								"state": true,
+								"label": "To To"
+							}
 						}
 					]
 				}
