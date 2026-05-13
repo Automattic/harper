@@ -10,7 +10,7 @@ use harper_core::{
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
-    Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
+    AppHandle, Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
@@ -353,23 +353,72 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
+async fn get_accessibility_permission_status(
+    app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    accessibility_permission_status(app).await
 }
 
 #[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
+async fn request_accessibility_permission(
+    app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    request_platform_accessibility_permission(app).await
 }
 
 #[cfg(target_os = "macos")]
-fn platform_broker() -> impl OsBroker {
-    mac_broker::MacBroker::default()
+async fn accessibility_permission_status(
+    app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    run_accessibility_on_main_thread(app, || {
+        mac_broker::MacBroker::default().accessibility_permission_status()
+    })
+    .await
+}
+
+#[cfg(target_os = "macos")]
+async fn request_platform_accessibility_permission(
+    app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    run_accessibility_on_main_thread(app, || {
+        mac_broker::MacBroker::default().request_accessibility_permission()
+    })
+    .await
+}
+
+#[cfg(target_os = "macos")]
+async fn run_accessibility_on_main_thread(
+    app: AppHandle,
+    action: impl FnOnce() -> AccessibilityPermissionStatus + Send + 'static,
+) -> Result<AccessibilityPermissionStatus, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let (sender, receiver) = std::sync::mpsc::channel();
+
+        app.run_on_main_thread(move || {
+            let _ = sender.send(action());
+        })
+        .map_err(|error| error.to_string())?;
+
+        receiver
+            .recv_timeout(Duration::from_secs(5))
+            .map_err(|_| "Accessibility permission check timed out".to_string())
+    })
+    .await
+    .map_err(|error| error.to_string())?
 }
 
 #[cfg(not(target_os = "macos"))]
-fn platform_broker() -> impl OsBroker {
-    os_broker::NoopBroker
+async fn accessibility_permission_status(
+    _app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    Ok(os_broker::NoopBroker.accessibility_permission_status())
+}
+
+#[cfg(not(target_os = "macos"))]
+async fn request_platform_accessibility_permission(
+    _app: AppHandle,
+) -> Result<AccessibilityPermissionStatus, String> {
+    Ok(os_broker::NoopBroker.request_accessibility_permission())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
