@@ -20,6 +20,7 @@ soft-clean:
   rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
   rm -rf packages/web/{.svelte-kit,.sveltepress,build}
   rm -rf packages/wordpress-plugin/{build,harper.zip}
+  rm -rf harper-desktop/{.svelte-kit,build,package}
   rm -rf harper-wasm/pkg
 
 # Hard clean all build artifacts and dependencies
@@ -156,6 +157,52 @@ build-web: build-harperjs build-lint-framework build-components build-harper-edi
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
   pnpm build
+
+# Start a development server for Harper Desktop.
+dev-desktop: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  cargo tauri dev
+
+# Start the Harper Desktop highlighter process directly.
+dev-desktop-highlighter:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cargo run -p harper-desktop -- highlighter
+
+# Check Harper Desktop frontend and Rust targets.
+check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm check
+
+  cd "{{justfile_directory()}}"
+  cargo check -p harper-desktop --all-targets
+
+# Build Harper Desktop Linux bundles.
+build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  cargo tauri build -b deb,rpm,appimage
+
+# Build Harper Desktop macOS bundles.
+build-desktop-macos: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  cargo tauri build -b app,dmg
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
