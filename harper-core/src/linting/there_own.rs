@@ -1,4 +1,5 @@
-use crate::linting::expr_linter::Chunk;
+use crate::char_string::CharStringExt;
+use crate::linting::expr_linter::{Chunk, followed_by_word, preceded_by_word};
 use crate::{
     Token,
     expr::{Expr, SequenceExpr},
@@ -27,9 +28,26 @@ impl ExprLinter for ThereOwn {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let offender = matched_tokens.first()?;
         let template = offender.span.get_content(source);
+
+        // "there" preceded by a noun/pronoun with "own" followed by a noun/adjective
+        // is likely valid grammar: "people there own nice cars" (people who are there
+        // own nice cars). This does not apply to "they're" or "theyre" variants.
+        let is_there = template.eq_str("there");
+
+        if is_there
+            && preceded_by_word(ctx, |pw| pw.kind.is_nominal())
+            && followed_by_word(ctx, |nw| nw.kind.is_noun() || nw.kind.is_adjective())
+        {
+            return None;
+        }
 
         Some(Lint {
             span: offender.span,
@@ -99,6 +117,15 @@ mod tests {
     fn does_not_flag_there_without_own() {
         assert_lint_count(
             "Put the chairs over there by the window.",
+            ThereOwn::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn does_not_flag_verb_own_after_noun() {
+        assert_lint_count(
+            "People there own nice cars.",
             ThereOwn::default(),
             0,
         );
