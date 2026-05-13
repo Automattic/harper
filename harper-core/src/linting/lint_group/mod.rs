@@ -295,6 +295,7 @@ pub struct LintGroup {
     /// of the key.
     #[expect(clippy::complexity)]
     chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
+    #[expect(clippy::complexity)]
     sentence_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
