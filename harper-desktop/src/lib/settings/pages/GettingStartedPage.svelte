@@ -1,6 +1,6 @@
 <script lang="ts">
-import { Client, type AccessibilityPermissionStatus } from '$lib/client';
 import { onMount } from 'svelte';
+import { type AccessibilityPermissionStatus, Client } from '$lib/client';
 import { createInitialSettingsState, type SettingsState } from '../settings-data';
 
 type SetupStep = {
