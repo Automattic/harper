@@ -54,7 +54,6 @@ const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
 const QUIT_MENU_ID: &str = "quit";
-const ACCESSIBILITY_PERMISSION_DEBUG_MARKER: &str = "accessibility-permission-debug-v1";
 
 struct TrayMenu {
     menu: Menu<tauri::Wry>,
@@ -355,23 +354,12 @@ async fn set_integration_enabled(
 
 #[tauri::command]
 fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    eprintln!("get_accessibility_permission_status: entered");
-    let status = platform_broker().accessibility_permission_status();
-    eprintln!("get_accessibility_permission_status: returning {status:?}");
-    status
+    platform_broker().accessibility_permission_status()
 }
 
 #[tauri::command]
 fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    eprintln!("request_accessibility_permission: entered");
-    let status = platform_broker().request_accessibility_permission();
-    eprintln!("request_accessibility_permission: returning {status:?}");
-    status
-}
-
-#[tauri::command]
-fn accessibility_permission_debug_marker() -> &'static str {
-    ACCESSIBILITY_PERMISSION_DEBUG_MARKER
+    platform_broker().request_accessibility_permission()
 }
 
 #[cfg(target_os = "macos")]
@@ -436,7 +424,6 @@ pub fn run_tauri() {
             set_integration_enabled,
             get_accessibility_permission_status,
             request_accessibility_permission,
-            accessibility_permission_debug_marker,
         ])
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())
