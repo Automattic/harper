@@ -13,7 +13,10 @@ pub struct PastParticipleWithoutAuxiliary {
 impl Default for PastParticipleWithoutAuxiliary {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::default().then_verb_past_participle_form(),
+            expr: SequenceExpr::default().then_kind_is_but_is_not(
+                crate::TokenKind::is_verb_past_participle_form,
+                crate::TokenKind::is_verb_simple_past_form,
+            ),
         }
     }
 }
@@ -32,15 +35,11 @@ impl ExprLinter for PastParticipleWithoutAuxiliary {
         context: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         let target = matched_tokens.first()?;
-        if !target.kind.is_verb_past_participle_form() || target.kind.is_verb_simple_past_form() {
-            return None;
-        }
-
         let (before, _) = context?;
         let leading_idx = token_before_verb_phrase(before)?;
         let leading_token = &before[leading_idx];
 
-        if is_auxiliary_word(leading_token, src) {
+        if could_be_auxiliary(leading_token, src) {
             return None;
         }
 
@@ -75,16 +74,13 @@ impl ExprLinter for PastParticipleWithoutAuxiliary {
                 simple_past.chars().collect(),
                 target.get_ch(src),
             )],
-            message: format!(
-                "Use the simple past `{}` instead of the past participle `{}` when there is no auxiliary verb.",
-                simple_past, past_participle
-            ),
+            message: format!("Use `{}` here, not `{}`.", simple_past, past_participle),
             ..Default::default()
         })
     }
 
     fn description(&self) -> &str {
-        "Corrects irregular past participles used without an auxiliary verb."
+        "Corrects irregular past participles used without a helping verb like `have`."
     }
 }
 
@@ -118,22 +114,22 @@ fn has_auxiliary_before(before: &[Token], verb_idx: usize, src: &[char]) -> bool
     loop {
         let tok = &before[i];
         if tok.kind.is_whitespace() {
-            if i == 0 {
-                break;
-            }
-            i -= 1;
+            i = match i.checked_sub(1) {
+                Some(next) => next,
+                None => break,
+            };
             continue;
         }
 
         if tok.kind.is_adverb() {
-            if i == 0 {
-                break;
-            }
-            i -= 1;
+            i = match i.checked_sub(1) {
+                Some(next) => next,
+                None => break,
+            };
             continue;
         }
 
-        if is_auxiliary_word(tok, src) {
+        if could_be_auxiliary(tok, src) {
             return true;
         }
 
@@ -143,15 +139,20 @@ fn has_auxiliary_before(before: &[Token], verb_idx: usize, src: &[char]) -> bool
     false
 }
 
-fn is_auxiliary_word(tok: &Token, src: &[char]) -> bool {
+fn could_be_auxiliary(tok: &Token, src: &[char]) -> bool {
     let word = tok.get_str(src);
+
+    matches_auxiliary(&word)
+}
+
+fn matches_auxiliary(word: &str) -> bool {
     [
         "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having",
         "i've", "you've", "we've", "they've", "he's", "she's", "it's", "ive", "youve", "weve",
         "theyve", "hes", "shes", "its",
     ]
     .iter()
-    .any(|aux| aux.eq_ignore_ascii_case(&word))
+    .any(|aux| aux.eq_ignore_ascii_case(word))
 }
 
 #[cfg(test)]
