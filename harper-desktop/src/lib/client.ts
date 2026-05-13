@@ -143,6 +143,14 @@ export class Client {
 			'Accessibility permission request timed out',
 		);
 	}
+
+	static async getAccessibilityPermissionDebugMarker(): Promise<string> {
+		return await withTimeout(
+			invoke<string>('accessibility_permission_debug_marker'),
+			ACCESSIBILITY_PERMISSION_TIMEOUT_MS,
+			'Accessibility permission debug marker timed out',
+		);
+	}
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {

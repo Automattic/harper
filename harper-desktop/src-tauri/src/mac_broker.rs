@@ -110,7 +110,8 @@ impl OsBroker for MacBroker {
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
         let prompt_key = unsafe { CFString::wrap_under_get_rule(kAXTrustedCheckOptionPrompt) };
         let prompt_value = CFBoolean::true_value();
-        let options = CFDictionary::from_CFType_pairs(&[(prompt_key, prompt_value)]);
+        let options: CFDictionary<CFString, CFBoolean> =
+            CFDictionary::from_CFType_pairs(&[(prompt_key, prompt_value)]);
 
         if unsafe { AXIsProcessTrustedWithOptions(options.as_concrete_TypeRef()) } {
             AccessibilityPermissionStatus::Granted

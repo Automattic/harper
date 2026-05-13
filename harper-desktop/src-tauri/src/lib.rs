@@ -10,7 +10,7 @@ use harper_core::{
 };
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
-    AppHandle, Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
+    Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
@@ -54,6 +54,7 @@ const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
 const QUIT_MENU_ID: &str = "quit";
+const ACCESSIBILITY_PERMISSION_DEBUG_MARKER: &str = "accessibility-permission-debug-v1";
 
 struct TrayMenu {
     menu: Menu<tauri::Wry>,
@@ -353,72 +354,34 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-async fn get_accessibility_permission_status(
-    app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    accessibility_permission_status(app).await
+fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
+    eprintln!("get_accessibility_permission_status: entered");
+    let status = platform_broker().accessibility_permission_status();
+    eprintln!("get_accessibility_permission_status: returning {status:?}");
+    status
 }
 
 #[tauri::command]
-async fn request_accessibility_permission(
-    app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    request_platform_accessibility_permission(app).await
+fn request_accessibility_permission() -> AccessibilityPermissionStatus {
+    eprintln!("request_accessibility_permission: entered");
+    let status = platform_broker().request_accessibility_permission();
+    eprintln!("request_accessibility_permission: returning {status:?}");
+    status
+}
+
+#[tauri::command]
+fn accessibility_permission_debug_marker() -> &'static str {
+    ACCESSIBILITY_PERMISSION_DEBUG_MARKER
 }
 
 #[cfg(target_os = "macos")]
-async fn accessibility_permission_status(
-    app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    run_accessibility_on_main_thread(app, || {
-        mac_broker::MacBroker::default().accessibility_permission_status()
-    })
-    .await
-}
-
-#[cfg(target_os = "macos")]
-async fn request_platform_accessibility_permission(
-    app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    run_accessibility_on_main_thread(app, || {
-        mac_broker::MacBroker::default().request_accessibility_permission()
-    })
-    .await
-}
-
-#[cfg(target_os = "macos")]
-async fn run_accessibility_on_main_thread(
-    app: AppHandle,
-    action: impl FnOnce() -> AccessibilityPermissionStatus + Send + 'static,
-) -> Result<AccessibilityPermissionStatus, String> {
-    tauri::async_runtime::spawn_blocking(move || {
-        let (sender, receiver) = std::sync::mpsc::channel();
-
-        app.run_on_main_thread(move || {
-            let _ = sender.send(action());
-        })
-        .map_err(|error| error.to_string())?;
-
-        receiver
-            .recv_timeout(Duration::from_secs(5))
-            .map_err(|_| "Accessibility permission check timed out".to_string())
-    })
-    .await
-    .map_err(|error| error.to_string())?
+fn platform_broker() -> impl OsBroker {
+    mac_broker::MacBroker::default()
 }
 
 #[cfg(not(target_os = "macos"))]
-async fn accessibility_permission_status(
-    _app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    Ok(os_broker::NoopBroker.accessibility_permission_status())
-}
-
-#[cfg(not(target_os = "macos"))]
-async fn request_platform_accessibility_permission(
-    _app: AppHandle,
-) -> Result<AccessibilityPermissionStatus, String> {
-    Ok(os_broker::NoopBroker.request_accessibility_permission())
+fn platform_broker() -> impl OsBroker {
+    os_broker::NoopBroker
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -473,6 +436,7 @@ pub fn run_tauri() {
             set_integration_enabled,
             get_accessibility_permission_status,
             request_accessibility_permission,
+            accessibility_permission_debug_marker,
         ])
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())

@@ -22,12 +22,14 @@ let accessibilityError = '';
 let isCheckingAccessibility = true;
 let isRequestingAccessibility = false;
 let hasRequestedAccessibility = false;
+let accessibilityDiagnostics: string[] = [];
 
 $: setupSteps = buildSetupSteps();
 $: setupCompletedCount = setupSteps.filter((step) => step.done).length;
 $: setupAllDone = setupSteps.every((step) => step.done);
 
 onMount(() => {
+	recordAccessibilityDiagnostic('settings page mounted');
 	void checkAccessibilityPermission();
 });
 
@@ -46,13 +48,20 @@ function enableTextEditForSetup() {
 async function checkAccessibilityPermission() {
 	isCheckingAccessibility = true;
 	accessibilityError = '';
+	recordAccessibilityDiagnostic('starting backend debug marker check');
 
 	try {
+		const marker = await Client.getAccessibilityPermissionDebugMarker();
+		recordAccessibilityDiagnostic(`backend marker returned: ${marker}`);
+		recordAccessibilityDiagnostic('starting permission status check');
 		accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+		recordAccessibilityDiagnostic(`permission status returned: ${accessibilityStatus}`);
 	} catch (error) {
 		accessibilityError = `Unable to check Accessibility permission: ${error}`;
+		recordAccessibilityDiagnostic(`permission check failed: ${error}`);
 	} finally {
 		isCheckingAccessibility = false;
+		recordAccessibilityDiagnostic('permission check finished');
 	}
 }
 
@@ -64,15 +73,24 @@ async function requestAccessibilityPermission() {
 
 	isRequestingAccessibility = true;
 	accessibilityError = '';
+	recordAccessibilityDiagnostic('starting permission request');
 
 	try {
 		accessibilityStatus = await Client.requestAccessibilityPermission();
 		hasRequestedAccessibility = true;
+		recordAccessibilityDiagnostic(`permission request returned: ${accessibilityStatus}`);
 	} catch (error) {
 		accessibilityError = `Unable to request Accessibility permission: ${error}`;
+		recordAccessibilityDiagnostic(`permission request failed: ${error}`);
 	} finally {
 		isRequestingAccessibility = false;
+		recordAccessibilityDiagnostic('permission request finished');
 	}
+}
+
+function recordAccessibilityDiagnostic(message: string) {
+	const timestamp = new Date().toLocaleTimeString();
+	accessibilityDiagnostics = [...accessibilityDiagnostics.slice(-7), `${timestamp}: ${message}`];
 }
 
 function accessibilityDescription() {
@@ -241,6 +259,22 @@ function buildSetupSteps(): SetupStep[] {
                     <div class="grow">
                       <strong>Waiting for macOS</strong>
                       <p>After granting access in System Settings, return here and recheck permission.</p>
+                    </div>
+                  </div>
+                {/if}
+
+                {#if step.id === "accessibility"}
+                  <div class="detected-app">
+                    <div class="app-tile" style="--app-tint: #2a6bd8">D</div>
+                    <div class="grow">
+                      <strong>Permission diagnostics</strong>
+                      {#if accessibilityDiagnostics.length === 0}
+                        <p>No diagnostics recorded yet.</p>
+                      {:else}
+                        {#each accessibilityDiagnostics as diagnostic}
+                          <p><code>{diagnostic}</code></p>
+                        {/each}
+                      {/if}
                     </div>
                   </div>
                 {/if}
