@@ -9,7 +9,7 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::{Dictionary, MutableDictionary},
 };
-use std::{cell::RefCell, collections::BTreeMap, rc::Rc, sync::Arc, time::Duration};
+use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
     Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
@@ -563,7 +563,6 @@ pub fn run_highlighter() {
         let mut debounce_state = lint_debounce_state.borrow_mut();
 
         match debounce_state.status(text, debounce_ms) {
-            DebounceStatus::Waiting => return BTreeMap::new(),
             DebounceStatus::Cached(lints) => return lints,
             DebounceStatus::Ready => {}
         }
