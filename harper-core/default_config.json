@@ -801,6 +801,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArgumentToBeMade",
+								"state": true,
+								"label": "Argument To Be Made"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -1259,6 +1266,55 @@
 								"name": "WorseOrWorst",
 								"state": true,
 								"label": "Worse Or Worst"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandGovt",
+								"state": true,
+								"label": "Expand Govt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InflectionPoint",
+								"state": true,
+								"label": "Inflection Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FormativeYears",
+								"state": true,
+								"label": "Formative Years"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandAlgorithm",
+								"state": true,
+								"label": "Expand Algorithm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandCoordinate",
+								"state": true,
+								"label": "Expand Coordinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandNotification",
+								"state": true,
+								"label": "Expand Notification"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandVulnerability",
+								"state": true,
+								"label": "Expand Vulnerability"
 							}
 						}
 					]
@@ -2296,6 +2352,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AtLestToLeast",
+								"state": true,
+								"label": "At Lest To Least"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeenThere",
 								"state": true,
 								"label": "Been There"
@@ -2622,6 +2685,13 @@
 								"state": true,
 								"label": "Without Out"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CloseTightKnit",
+								"state": true,
+								"label": "Close Tight Knit"
+							}
 						}
 					]
 				}
@@ -2939,6 +3009,13 @@
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
 							}
 						}
 					]
@@ -3573,6 +3650,20 @@
 								"state": true,
 								"label": "Code In Write In"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ThereIsAgreement",
+								"state": true,
+								"label": "There Is Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
+							}
 						}
 					]
 				}
@@ -3652,6 +3743,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -4780,6 +4878,27 @@
 								"state": true,
 								"label": "Web Scraping"
 							}
+						},
+						{
+							"Bool": {
+								"name": "MoreThanMeetsTheEye",
+								"state": true,
+								"label": "More Than Meets The Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InFavourOfDoing",
+								"state": true,
+								"label": "In Favour Of Doing"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InHindsight",
+								"state": true,
+								"label": "In Hindsight"
+							}
 						}
 					]
 				}
@@ -5142,6 +5261,13 @@
 								"name": "Whereas",
 								"state": true,
 								"label": "Whereas"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FondOn",
+								"state": true,
+								"label": "Fond On"
 							}
 						}
 					]
