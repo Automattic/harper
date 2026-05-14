@@ -39,6 +39,7 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
+use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::cautionary_tale::CautionaryTale;
@@ -101,6 +102,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
@@ -217,6 +219,7 @@ use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
+use super::there_is_agreement::ThereIsAgreement;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -532,6 +535,7 @@ impl LintGroup {
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(ByAccident, true);
+        insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(CautionaryTale, true);
@@ -593,6 +597,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
+        insert_expr_rule!(InFavourOfDoing, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
         insert_expr_rule!(InTimeFromNow, true);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo, true);
@@ -772,6 +777,13 @@ impl LintGroup {
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
+
+        // Uses Dictionary, and Sentence rather than Chunk
+        out.add(
+            "ThereIsAgreement",
+            ThereIsAgreement::new(dictionary.clone()),
+        );
+        out.config.set_rule_enabled("ThereIsAgreement", true);
 
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
