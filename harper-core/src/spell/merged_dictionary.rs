@@ -129,7 +129,7 @@ impl Dictionary for MergedDictionary {
 
     fn contains_exact_word_str(&self, word: &str) -> bool {
         let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
+        self.contains_exact_word(&chars)
     }
 
     fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
@@ -195,5 +195,31 @@ impl Dictionary for MergedDictionary {
             .sorted()
             .dedup()
             .collect()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::sync::Arc;
+
+    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
+    use crate::DictWordMetadata;
+
+    #[test]
+    fn merged_contains_exact_word_str_is_case_sensitive() {
+        let mut user_dict = MutableDictionary::new();
+        user_dict.append_word_str("Foo", DictWordMetadata::default());
+
+        let mut merged = MergedDictionary::new();
+        merged.add_dictionary(Arc::new(user_dict));
+
+        assert!(merged.contains_word_str("Foo"));
+        assert!(merged.contains_word_str("foo"));
+
+        assert!(merged.contains_exact_word(&['F', 'o', 'o']));
+        assert!(!merged.contains_exact_word(&['f', 'o', 'o']));
+
+        assert!(merged.contains_exact_word_str("Foo"));
+        assert!(!merged.contains_exact_word_str("foo"));
     }
 }
