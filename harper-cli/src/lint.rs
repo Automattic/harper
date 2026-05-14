@@ -18,11 +18,8 @@ use harper_core::{
     {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
-use crate::input::{
-    AnyInput, InputTrait,
-    multi_input::MultiInput,
-    single_input::{SingleInput, SingleInputTrait, StdinInput},
-};
+use crate::input::{AnyInput, InputTrait, single_input::{SingleInput, SingleInputTrait}};
+use crate::input_helpers::expand_inputs;
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
@@ -178,7 +175,7 @@ impl InputInfo<'_> {
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
-    mut inputs: Vec<AnyInput>,
+    inputs: Vec<AnyInput>,
     mut lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
@@ -192,11 +189,6 @@ pub fn lint(
         ref weirpack_inputs,
         ..
     } = lint_options;
-
-    // Zero or more inputs, default to stdin if not provided
-    if inputs.is_empty() {
-        inputs.push(SingleInput::from(StdinInput).into());
-    }
 
     let weirpacks = load_weirpacks(weirpack_inputs)?;
 
@@ -259,31 +251,15 @@ pub fn lint(
         (OutputFormat::Default, false) => ReportStyle::FullAriadne,
     };
 
-    let mut input_jobs = Vec::new();
-    for user_input in inputs {
-        if let Some(dir_input) = user_input
-            .try_as_multi_ref()
-            .and_then(MultiInput::try_as_dir_ref)
-        {
-            let mut file_entries: Vec<_> = dir_input.iter_files()?.collect();
-
-            file_entries.sort_by(|a, b| a.path().file_name().cmp(&b.path().file_name()));
-
-            for entry in file_entries.into_iter().map(SingleInput::from) {
-                input_jobs.push(InputJob {
-                    batch_mode: true,
-                    parent_input_id: user_input.get_identifier().to_string(),
-                    input: entry.into(),
-                });
-            }
-        } else {
-            input_jobs.push(InputJob {
-                batch_mode: false,
-                parent_input_id: String::new(),
-                input: user_input.clone(),
-            });
-        }
-    }
+    let expanded = expand_inputs(inputs)?;
+    let input_jobs: Vec<InputJob> = expanded
+        .into_iter()
+        .map(|e| InputJob {
+            batch_mode: e.is_batch,
+            parent_input_id: e.parent_id,
+            input: e.input,
+        })
+        .collect();
 
     let per_input_results = {
         let run_job = |job: InputJob| {

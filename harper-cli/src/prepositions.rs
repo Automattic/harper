@@ -6,11 +6,8 @@ use harper_core::{
     spell::FstDictionary,
 };
 
-use crate::input::{
-    AnyInput, InputTrait,
-    multi_input::MultiInput,
-    single_input::{SingleInput, SingleInputTrait, StdinInput},
-};
+use crate::input::{AnyInput, InputTrait, single_input::SingleInputTrait};
+use crate::input_helpers::{expand_inputs, process_inputs, ExpandedInput};
 
 /// Scan documents for preposition collocations.
 ///
@@ -87,29 +84,10 @@ pub fn prepositions(
         }
     };
 
-    let inputs = if inputs.is_empty() {
-        vec![SingleInput::from(StdinInput).into()]
-    } else {
-        inputs
-    };
+    let expanded = expand_inputs(inputs)?;
 
-    let mut expanded = Vec::new();
-    for input in inputs {
-        if let Some(dir) = input
-            .try_as_multi_ref()
-            .and_then(MultiInput::try_as_dir_ref)
-        {
-            let mut files: Vec<_> = dir.iter_files()?.collect();
-            files.sort_by(|a, b| a.path().file_name().cmp(&b.path().file_name()));
-            for file in files {
-                expanded.push(SingleInput::from(file).into());
-            }
-        } else {
-            expanded.push(input);
-        }
-    }
-
-    for input in expanded {
+    process_inputs(expanded, |expanded_input| {
+        let ExpandedInput { input, .. } = expanded_input;
         if let Some(single) = input.try_as_single_ref() {
             match single.load(MarkdownOptions::default(), &FstDictionary::curated()) {
                 Ok((doc, _)) => {
@@ -151,7 +129,8 @@ pub fn prepositions(
                 Err(e) => eprintln!("{}", e),
             }
         }
-    }
+        Ok(())
+    })?;
 
     Ok(())
 }

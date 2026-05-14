@@ -31,6 +31,7 @@ use serde_json::Value;
 
 mod annotate;
 mod input;
+mod input_helpers;
 mod lint;
 mod prepositions;
 
