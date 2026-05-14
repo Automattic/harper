@@ -2,6 +2,7 @@ use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
+use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
@@ -24,6 +25,7 @@ use tokio::{
 pub mod color;
 pub mod communication;
 pub mod config;
+mod debounce;
 pub mod highlighter;
 pub mod highlighter_process;
 pub mod highlighter_service;
@@ -560,32 +562,10 @@ pub fn run_highlighter() {
         let debounce_ms = *lint_debounce_ms.borrow();
         let mut debounce_state = lint_debounce_state.borrow_mut();
 
-        if debounce_ms > 0 {
-            let now = std::time::Instant::now();
-
-            if debounce_state.last_observed_text.as_deref() != Some(text) {
-                debounce_state.last_observed_text = Some(text.to_string());
-                debounce_state.last_text_change = Some(now);
-                debounce_state.last_linted_text = None;
-                debounce_state.last_lints = BTreeMap::new();
-
-                return BTreeMap::new();
-            }
-
-            if let Some(last_linted_text) = &debounce_state.last_linted_text
-                && last_linted_text == text
-            {
-                return debounce_state.last_lints.clone();
-            }
-
-            let Some(last_text_change) = debounce_state.last_text_change else {
-                debounce_state.last_text_change = Some(now);
-                return BTreeMap::new();
-            };
-
-            if now.duration_since(last_text_change) < Duration::from_millis(debounce_ms) {
-                return BTreeMap::new();
-            }
+        match debounce_state.status(text, debounce_ms) {
+            DebounceStatus::Waiting => return BTreeMap::new(),
+            DebounceStatus::Cached(lints) => return lints,
+            DebounceStatus::Ready => {}
         }
 
         let dictionary =
@@ -597,10 +577,7 @@ pub fn run_highlighter() {
             lint_ignored_lints.borrow().remove_ignored(lints, &doc);
         }
 
-        if debounce_ms > 0 {
-            debounce_state.last_linted_text = Some(text.to_string());
-            debounce_state.last_lints = organized_lints.clone();
-        }
+        debounce_state.store_lints(text, debounce_ms, &organized_lints);
 
         organized_lints
     };
@@ -726,12 +703,4 @@ fn apply_highlighter_config(
     *integrations.borrow_mut() = config.integrations;
     *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
-}
-
-#[derive(Default)]
-struct DebounceState {
-    last_observed_text: Option<String>,
-    last_text_change: Option<std::time::Instant>,
-    last_linted_text: Option<String>,
-    last_lints: BTreeMap<String, Vec<Lint>>,
 }
