@@ -1,6 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::Sentence;
 use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, SequenceExpr},
@@ -32,6 +32,13 @@ impl Default for WereWhere {
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
+        // "where you ..." can be a typo for "were you ..." when it starts a question.
+        let where_you_verb = SequenceExpr::aco("where")
+            .t_ws()
+            .t_aco("you")
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
+
         // === were → where ===
 
         // A verb of cognition or motion followed directly by "were" and then a
@@ -53,6 +60,7 @@ impl Default for WereWhere {
             expr: SequenceExpr::any_of(vec![
                 Box::new(unambiguous_pronoun_where),
                 Box::new(you_where_verb),
+                Box::new(where_you_verb),
                 Box::new(verb_were_clause),
             ]),
         }
@@ -60,13 +68,18 @@ impl Default for WereWhere {
 }
 
 impl ExprLinter for WereWhere {
-    type Unit = Chunk;
+    type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
         &self.expr
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         const WHERE: &[char] = &['w', 'h', 'e', 'r', 'e'];
         const WERE: &[char] = &['w', 'e', 'r', 'e'];
 
@@ -81,6 +94,9 @@ impl ExprLinter for WereWhere {
         });
 
         if let Some(tok) = where_tok {
+            if !crate::linting::expr_linter::at_start_of_sentence(context) {
+                return None;
+            }
             Some(Lint {
                 span: tok.span,
                 lint_kind: LintKind::Typo,
@@ -263,6 +279,15 @@ mod tests {
         );
     }
 
+    #[test]
+    fn fix_where_you_able() {
+        assert_suggestion_result(
+            "Where you able to make forward progress here?",
+            WereWhere::default(),
+            "Were you able to make forward progress here?",
+        );
+    }
+
     // ── were → where: more verbs and pronouns ────────────────────────────────
 
     #[test]
@@ -366,6 +391,27 @@ mod tests {
     fn no_flag_showed_me_where() {
         // Object pronoun "me" sits between "showed" and "where" — no direct adjacency
         assert_no_lints("He showed me where the exit was.", WereWhere::default());
+    }
+
+    #[test]
+    fn no_flag_where_you_go() {
+        assert_no_lints("I wonder where you go from here.", WereWhere::default());
+    }
+
+    #[test]
+    fn no_flag_where_you_can_customize() {
+        assert_no_lints(
+            "Click the menu item where you can customize the settings.",
+            WereWhere::default(),
+        );
+    }
+
+    #[test]
+    fn no_flag_where_you_allocate() {
+        assert_no_lints(
+            "Use the panel where you allocate resources for the task.",
+            WereWhere::default(),
+        );
     }
 
     // ── known limitations (documented but not yet handled) ───────────────────

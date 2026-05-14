@@ -65,7 +65,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 	test(`${linterName} detects repeated words`, async () => {
 		const linter = new Linter({ binary });
 
-		const lints = await linter.lint('The the problem is...');
+		const lints = await linter.lint('The the problem is');
 
 		expect(lints.length).toBe(1);
 
@@ -87,7 +87,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 			flattened.push(...value);
 		}
 
-		expect(flattened.length).toBe(1);
+		expect(flattened.length).toBe(2);
 		expect(flattened.length).toBe(normal.length);
 
 		const item = flattened[0];
@@ -96,13 +96,43 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} deduplicates no more lints than raw lint output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = await linter.lint(source);
+		const explicitLints = await linter.lint(source, { dedup: true });
+		const rawLints = await linter.lint(source, { dedup: false });
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
+	test(`${linterName} deduplicates no more lints than raw organized output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = Object.values(await linter.organizedLints(source)).flat();
+		const explicitLints = Object.values(
+			await linter.organizedLints(source, { dedup: true }),
+		).flat();
+		const rawLints = Object.values(await linter.organizedLints(source, { dedup: false })).flat();
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
@@ -119,9 +149,9 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const linter = new Linter({ binary });
 
 		const promises = [
-			linter.lint('The problem is that that...'),
-			linter.lint('The problem is...'),
-			linter.lint('The the problem is...'),
+			linter.lint('The problem is that that'),
+			linter.lint('The problem is'),
+			linter.lint('The the problem is'),
 		];
 
 		const results = await Promise.all(promises);
@@ -262,6 +292,50 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} can get structured lint config`, async () => {
+		const linter = new Linter({ binary });
+
+		const structuredConfig = await linter.getStructuredLintConfig();
+		const firstGroup = structuredConfig.settings.find((setting) => 'Group' in setting);
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+		expect(structuredConfig.settings.length).toBeGreaterThan(0);
+		expect(firstGroup && 'Group' in firstGroup).toBe(true);
+		if (!firstGroup || !('Group' in firstGroup)) {
+			throw new Error('Expected at least one group in the structured config.');
+		}
+		expect(firstGroup.Group.description).toBeTypeOf('string');
+		expect(firstGroup.Group.description.length).toBeGreaterThan(0);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON parses`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const structuredConfig = JSON.parse(json);
+
+		expect(structuredConfig).toBeTypeOf('object');
+		expect(structuredConfig.settings).toBeTypeOf('object');
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} structured lint config JSON and object agree`, async () => {
+		const linter = new Linter({ binary });
+
+		const json = await linter.getStructuredLintConfigJSON();
+		const object = await linter.getStructuredLintConfig();
+
+		expect(object).toBeTypeOf('object');
+		expect(json).toBeTypeOf('string');
+		expect(object).toEqual(JSON.parse(json));
+
+		await linter.dispose();
+	});
+
 	test(`${linterName} can generate lint context hashes`, async () => {
 		const linter = new Linter({ binary });
 		const source = 'This is an test.';
@@ -288,6 +362,22 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBeLessThan(firstRound.length);
+		await linter.dispose();
+	});
+
+	test(`${linterName} can ignore multiple lints`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'This is an test of exprting lints.';
+
+		const firstRound = await linter.lint(source);
+
+		expect(firstRound.length).toBeGreaterThanOrEqual(2);
+
+		await linter.ignoreLints(source, firstRound);
+
+		const secondRound = await linter.lint(source);
+
+		expect(secondRound.length).toBe(0);
 		await linter.dispose();
 	});
 

@@ -11,7 +11,7 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
@@ -24,7 +24,7 @@ use crate::input::{
     single_input::{SingleInput, SingleInputTrait, StdinInput},
 };
 
-/// Sync version of harper-ls/src/dictionary_io@load_dict
+/// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
@@ -57,7 +57,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     Ok(packs)
 }
 
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
+/// Path version of harper-ls file dictionary name rewriting.
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 
@@ -202,7 +202,7 @@ pub fn lint(
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
-    let mut config = LintGroupConfig::new_curated();
+    let mut config = FlatConfig::new_curated();
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);

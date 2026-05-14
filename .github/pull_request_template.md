@@ -18,3 +18,4 @@
 
 - [ ] I have performed a self-review of my own code
 - [ ] I have added tests to cover my changes
+- [ ] I have considered splitting this into smaller pull requests.

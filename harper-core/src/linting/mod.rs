@@ -3,6 +3,7 @@
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
 mod a_part;
+mod a_some_time;
 mod a_while;
 mod addicting;
 mod adjective_double_degree;
@@ -18,6 +19,7 @@ mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
+mod arrive_to;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_curses;
@@ -36,7 +38,9 @@ mod capitalize_personal_pronouns;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
+mod close_tight_knit;
 mod closed_compounds;
+mod code_in_write_in;
 mod comma_fixes;
 mod compound_nouns;
 mod compound_subject_i;
@@ -65,6 +69,7 @@ mod ever_every;
 mod everyday;
 mod except_of;
 mod expand_memory_shorthands;
+mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
 mod far_be_it;
@@ -94,9 +99,11 @@ mod how_to;
 mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
+mod in_favour_of_doing;
 mod in_on_the_cards;
 mod in_time_from_now;
 mod inflected_verb_after_to;
+mod informal_laughter;
 mod initialism_linter;
 mod initialisms;
 mod interested_in;
@@ -152,6 +159,7 @@ mod nor_modal_pronoun;
 mod not_only_inversion;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
+mod numeric_range_en_dash;
 mod obsess_preposition;
 mod of_course;
 mod oldest_in_the_book;
@@ -224,6 +232,7 @@ mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
 mod then_than;
+mod there_is_agreement;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
@@ -241,6 +250,7 @@ mod try_ones_hand_at;
 mod try_ones_luck;
 mod unclosed_quotes;
 mod update_place_names;
+mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
 mod very_unique;
@@ -255,6 +265,7 @@ mod were_where;
 mod whereas;
 mod whom_subject_of_verb;
 mod widely_accepted;
+mod will_non_lemma;
 mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
@@ -265,7 +276,9 @@ mod wrong_apostrophe;
 pub use expr_linter::{Chunk, ExprLinter};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
-pub use lint_group::{LintGroup, LintGroupConfig};
+pub use lint_group::{
+    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
+};
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
@@ -609,7 +622,8 @@ pub mod tests {
         // Lint current text and try each suggestion branch
         let chars: Vec<char> = text.chars().collect();
         let document = create_document(&chars, doc_type);
-        let lints = linter.lint(&document);
+        let mut lints = linter.lint(&document);
+        lints.sort_by_key(|l| l.priority);
 
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {
@@ -762,7 +776,6 @@ pub mod tests {
         if !found_bad.is_empty() || !unseen_good.is_empty() {
             eprintln!("\n=== Test Summary ===");
 
-            // In the summary section, change these loops:
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
@@ -770,7 +783,6 @@ pub mod tests {
                 }
             }
 
-            // And for the good suggestions:
             if !unseen_good.is_empty() {
                 eprintln!(
                     "\n❌ Missing {} expected good suggestions:",

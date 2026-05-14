@@ -6,6 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
+use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
@@ -222,6 +223,14 @@ impl Linter {
         serde_json::to_string(&self.lint_group.config).unwrap()
     }
 
+    pub fn get_structured_lint_config_as_json(&self) -> String {
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        serde_json::to_string(&human).unwrap()
+    }
+
     pub fn set_lint_config_from_json(&mut self, json: String) -> Result<(), String> {
         self.lint_group.config = serde_json::from_str(&json).map_err(|v| v.to_string())?;
         Ok(())
@@ -251,24 +260,41 @@ impl Linter {
         self.lint_group.config.serialize(&serializer).unwrap()
     }
 
+    pub fn get_structured_lint_config_as_object(&self) -> JsValue {
+        let serializer = Serializer::json_compatible();
+
+        let mut config = StructuredConfig::curated();
+        config.copy_from_flat_config(&self.lint_group.config);
+
+        let human = HumanReadableStructuredConfig::from_structured_config(&config);
+        human.serialize(&serializer).unwrap()
+    }
+
     pub fn set_lint_config_from_object(&mut self, object: JsValue) -> Result<(), String> {
         self.lint_group.config =
             serde_wasm_bindgen::from_value(object).map_err(|v| v.to_string())?;
         Ok(())
     }
 
-    pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
+    pub fn ignore_lints(&mut self, source_text: String, lints: Vec<Lint>) {
         let source: Lrc<_> = source_text.chars().collect();
 
-        let document =
-            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
+        for lint in lints {
+            let document = Document::new_from_chars(
+                source.clone(),
+                &lint.language.create_parser(),
+                &self.dictionary,
+            );
 
-        self.ignored_lints.ignore_lint(&lint.inner, &document);
+            self.ignored_lints.ignore_lint(&lint.inner, &document);
+        }
     }
 
     /// Add a specific context hash to the ignored lints list.
-    pub fn ignore_hash(&mut self, hash: u64) {
-        self.ignored_lints.ignore_hash(hash);
+    pub fn ignore_hashes(&mut self, hashes: Vec<u64>) {
+        for hash in hashes {
+            self.ignored_lints.ignore_hash(hash);
+        }
     }
 
     /// Compute the context hash of a given lint.
@@ -291,6 +317,7 @@ impl Linter {
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
+        dedup: bool,
     ) -> Vec<OrganizedGroup> {
         let source: Lrc<_> = text.chars().collect();
 
@@ -322,7 +349,9 @@ impl Linter {
             self.ignored_lints.remove_ignored(value, &document);
         }
 
-        remove_overlaps_map(&mut lints);
+        if dedup {
+            remove_overlaps_map(&mut lints);
+        }
 
         lints
             .into_iter()
@@ -350,6 +379,7 @@ impl Linter {
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
+        dedup: bool,
     ) -> Vec<Lint> {
         let source: Lrc<_> = text.chars().collect();
 
@@ -378,7 +408,9 @@ impl Linter {
         self.lint_group.config = temp;
 
         self.ignored_lints.remove_ignored(&mut lints, &document);
-        remove_overlaps(&mut lints);
+        if dedup {
+            remove_overlaps(&mut lints);
+        }
 
         lints
             .into_iter()
@@ -763,7 +795,7 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false, None);
+        let lints = linter.lint(text, Language::Plain, false, None, true);
         assert!(lints.is_empty());
     }
 
@@ -784,6 +816,7 @@ mod tests {
                     Language::Plain,
                     false,
                     None,
+                    true,
                 );
 
                 assert!(results.is_empty())

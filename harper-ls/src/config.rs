@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
-use harper_core::{Dialect, linting::LintGroupConfig, parsers::MarkdownOptions};
+use harper_core::{Dialect, linting::FlatConfig, parsers::MarkdownOptions};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -69,7 +69,7 @@ pub struct Config {
     pub workspace_dict_path: PathBuf,
     pub ignored_lints_path: PathBuf,
     pub stats_path: PathBuf,
-    pub lint_config: LintGroupConfig,
+    pub lint_config: FlatConfig,
     pub diagnostic_severity: DiagnosticSeverity,
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
@@ -218,7 +218,7 @@ impl Default for Config {
             workspace_dict_path: ".harper-dictionary.txt".into(),
             ignored_lints_path: data_local_dir().unwrap().join("harper-ls/ignored_lints/"),
             stats_path: data_local_dir().unwrap().join("harper-ls/stats.txt"),
-            lint_config: LintGroupConfig::default(),
+            lint_config: FlatConfig::default(),
             diagnostic_severity: DiagnosticSeverity::Hint,
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,

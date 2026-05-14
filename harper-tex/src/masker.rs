@@ -22,6 +22,8 @@ impl harper_core::Masker for Masker {
 
             if matches!(c, '%') {
                 actions.push_back(CursorAction::PushMaskAndIncBy(1));
+            } else if let Some(ws) = newline_whitespace_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(ws));
             } else if let Some(s) = math_mode_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
             } else if let Some(s) = equation_at_cursor(cursor, source) {
@@ -53,6 +55,21 @@ impl harper_core::Masker for Masker {
 
         mask
     }
+}
+
+/// If the cursor is at a newline, mask the newline and any following whitespace (indentation).
+/// This prevents indentation at the start of lines from being grammar-checked.
+fn newline_whitespace_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    if source.get(cursor) != Some(&'\n') {
+        return None;
+    }
+    let ws_len = source[cursor..]
+        .iter()
+        .take_while(|&&c| c.is_whitespace())
+        .count();
+    // Only mask if there is actual indentation after the newline, not a bare line break.
+    // A bare \n between sentences should remain visible to preserve sentence boundaries.
+    if ws_len > 1 { Some(ws_len) } else { None }
 }
 
 /// Check whether there is a math mode block at the current cursor. If so, this function will return the amount cursor needs to be incremented by in order to escape the block.
@@ -120,6 +137,28 @@ fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<Curs
     }
 }
 
+fn is_math_env(env: &[char]) -> bool {
+    let math_envs = [
+        "equation",
+        "equation*",
+        "align",
+        "align*",
+        "gather",
+        "gather*",
+        "multline",
+        "multline*",
+        "flalign",
+        "flalign*",
+        "alignat",
+        "alignat*",
+        "eqnarray",
+        "eqnarray*",
+        "math",
+        "displaymath",
+    ];
+    math_envs.iter().any(|e| env.eq_str(e))
+}
+
 fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     let CommandComponents {
         name,
@@ -127,10 +166,11 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
         curly_content,
     } = deconstruct_command(&source[cursor..])?;
 
-    if name.eq_str("begin") && curly_content.is_some_and(|cc| cc.eq_str("equation")) {
+    if name.eq_str("begin") && curly_content.is_some_and(is_math_env) {
+        let env_content = curly_content.unwrap();
         let mut diff = 1
             + name.len()
-            + curly_content.unwrap().len()
+            + env_content.len()
             + square_content.map(|sc| sc.len()).unwrap_or_default();
 
         loop {
@@ -140,7 +180,7 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
                 ..
             }) = deconstruct_command(&source[cursor + diff..])
                 && name.eq_str("end")
-                && curly_content.is_some_and(|cc| cc.eq_str("equation"))
+                && curly_content.is_some_and(|cc| cc == env_content)
             {
                 break;
             }
@@ -241,6 +281,19 @@ mod tests {
     use super::{Masker, deconstruct_command};
 
     #[test]
+    fn does_not_mask_spaces_within_sentence() {
+        // Spaces between words (not before %) must remain in allowed spans
+        // so that lints like double-space detection can still fire.
+        let source: Vec<_> = "word  word".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: String = mask
+            .iter_allowed(&source)
+            .flat_map(|(_, chars)| chars.iter().copied())
+            .collect();
+        assert_eq!(allowed, "word  word");
+    }
+
+    #[test]
     fn ignores_many_comment_signs() {
         let source: Vec<_> = "%%%".chars().collect();
         let mask = Masker::default().create_mask(&source);
@@ -270,6 +323,53 @@ mod tests {
         let mask = Masker::default().create_mask(&source);
 
         assert_eq!(mask.iter_allowed(&source).count(), 2)
+    }
+
+    fn masks_math_env(env: &str) {
+        let source: Vec<_> =
+            format!("This is text. \\begin{{{env}}} x^2 + y^2 \\end{{{env}}} More text.")
+                .chars()
+                .collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for chunk in &allowed {
+            assert!(
+                !chunk.contains("x^2"),
+                "Math content leaked through for env '{env}': {chunk:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn masks_equation_star_env() {
+        masks_math_env("equation*");
+    }
+
+    #[test]
+    fn masks_align_env() {
+        masks_math_env("align");
+    }
+
+    #[test]
+    fn masks_indentation_before_item() {
+        let source: Vec<_> = "\\begin{itemize}\n  \\item Hello world.\n\\end{itemize}"
+            .chars()
+            .collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for span in &allowed {
+            let trimmed = span.trim();
+            assert!(
+                !trimmed.is_empty() || span.len() <= 1,
+                "Whitespace-only span with multiple spaces leaked through: {span:?}"
+            );
+        }
     }
 
     #[test]
