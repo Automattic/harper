@@ -379,7 +379,7 @@ mod tests {
 
     #[test]
     fn create_mask_does_not_panic_on_trailing_backslash() {
-        for input in [r"\", r"Text ending with \" ] {
+        for input in [r"\", r"Text ending with \"] {
             let source: Vec<_> = input.chars().collect();
             Masker::default().create_mask(&source);
         }
