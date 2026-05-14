@@ -32,19 +32,7 @@ use serde_json::Value;
 mod annotate;
 mod input;
 mod lint;
-mod prep;
-
-// #[derive(Debug, Clone)]
-// pub struct PrepGroup(Vec<String>);
-
-// impl std::str::FromStr for PrepGroup {
-//     type Err = std::convert::Infallible;
-
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         let preps = s.split(',').map(|p| p.to_string()).collect();
-//         Ok(PrepGroup(preps))
-//     }
-// }
+mod prepositions;
 
 use annotate::AnnotationType;
 use input::{
@@ -52,7 +40,7 @@ use input::{
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
 use lint::{LintOptions, OutputFormat, lint};
-use prep::prep;
+use prepositions::prepositions;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
@@ -241,7 +229,7 @@ enum Args {
         shell: Shell,
     },
     /// Scan a document for collocations with prepositions.
-    Prep {
+    Prepositions {
         /// The text or file you wish to grammar check. If not provided, it will be read from
         /// standard input.
         #[arg(last = true)]
@@ -1028,13 +1016,13 @@ fn main() -> anyhow::Result<()> {
             );
             Ok(())
         }
-        Args::Prep {
+        Args::Prepositions {
             inputs,
-            before_preps,
+            before_preps: preps_before,
             words,
-            after_preps,
+            after_preps: preps_after,
         } => {
-            prep(inputs, before_preps, words, after_preps)?;
+            prepositions(inputs, preps_before, words, preps_after)?;
             Ok(())
         }
     }
