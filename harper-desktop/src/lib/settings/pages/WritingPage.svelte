@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 
 let debounceMs = 0;
-let pendingDebounceMs = '0';
+let debounceMsInput = '0';
 let isDebounceLoading = true;
 let isDebounceSaving = false;
 let debounceError = '';
@@ -30,7 +30,7 @@ async function loadDebounceMs() {
 
 	try {
 		debounceMs = await Client.getDebounceMs();
-		pendingDebounceMs = String(debounceMs);
+		debounceMsInput = String(debounceMs);
 	} catch (error) {
 		debounceError = `Unable to load debounce delay: ${error}`;
 	} finally {
@@ -39,25 +39,25 @@ async function loadDebounceMs() {
 }
 
 async function saveDebounceMs() {
-	const parsed = Number(pendingDebounceMs);
+	const parsedDebounceMs = Number(debounceMsInput);
 
-	if (!Number.isInteger(parsed) || parsed < 0) {
+	if (!Number.isInteger(parsedDebounceMs) || parsedDebounceMs < 0) {
 		debounceError = 'Debounce delay must be a non-negative whole number.';
-		pendingDebounceMs = String(debounceMs);
+		debounceMsInput = String(debounceMs);
 		return;
 	}
 
 	const previousDebounceMs = debounceMs;
-	debounceMs = parsed;
-	pendingDebounceMs = String(parsed);
+	debounceMs = parsedDebounceMs;
+	debounceMsInput = String(parsedDebounceMs);
 	isDebounceSaving = true;
 	debounceError = '';
 
 	try {
-		await Client.setDebounceMs(parsed);
+		await Client.setDebounceMs(parsedDebounceMs);
 	} catch (error) {
 		debounceMs = previousDebounceMs;
-		pendingDebounceMs = String(previousDebounceMs);
+		debounceMsInput = String(previousDebounceMs);
 		debounceError = `Unable to save debounce delay: ${error}`;
 	} finally {
 		isDebounceSaving = false;
@@ -82,8 +82,8 @@ async function saveDebounceMs() {
                 min="0"
                 step="50"
                 disabled={isDebounceLoading || isDebounceSaving}
-                value={pendingDebounceMs}
-                on:input={(event) => (pendingDebounceMs = event.currentTarget.value)}
+                value={debounceMsInput}
+                on:input={(event) => (debounceMsInput = event.currentTarget.value)}
                 on:change={saveDebounceMs}
               />
               <span>ms</span>
