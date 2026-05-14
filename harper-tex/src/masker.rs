@@ -174,6 +174,10 @@ fn equation_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
             + square_content.map(|sc| sc.len()).unwrap_or_default();
 
         loop {
+            if cursor + diff >= source.len() {
+                return Some(source.len() - cursor);
+            }
+
             if let Some(CommandComponents {
                 name,
                 curly_content,
@@ -215,27 +219,26 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
 
     cursor += 1;
 
-    // The name of the command
+    // The name of the command. A command requires at least one character after the
+    // leading backslash; otherwise a trailing `\` is malformed rather than a
+    // command.
+    source.get(cursor)?;
     let name_len = source
         .iter()
         .skip(cursor + 1)
         .take_while(|t| t.is_alphabetic())
         .count();
-    let name = &source[cursor..cursor + 1 + name_len];
+    let name_end = cursor + 1 + name_len;
+    let name = source.get(cursor..name_end)?;
 
-    cursor += name_len + 1;
+    cursor = name_end;
 
     // The optional square braces
     let square_content = if source.get(cursor) == Some(&'[') {
         cursor += 1;
 
-        let brace_len = source
-            .iter()
-            .skip(cursor)
-            .take_while(|t| **t != ']')
-            .count();
-
-        let content = &source[cursor..cursor + brace_len];
+        let brace_len = source.iter().skip(cursor).position(|t| *t == ']')?;
+        let content = source.get(cursor..cursor + brace_len)?;
 
         cursor += brace_len + 1;
         Some(content)
@@ -243,17 +246,12 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
         None
     };
 
-    // The optional square braces
+    // The optional curly braces
     let curly_content = if source.get(cursor) == Some(&'{') {
         cursor += 1;
 
-        let brace_len = source
-            .iter()
-            .skip(cursor)
-            .take_while(|t| **t != '}')
-            .count();
-
-        let content = &source[cursor..cursor + brace_len];
+        let brace_len = source.iter().skip(cursor).position(|t| *t == '}')?;
+        let content = source.get(cursor..cursor + brace_len)?;
         Some(content)
     } else {
         None
@@ -373,6 +371,21 @@ mod tests {
     }
 
     #[test]
+    fn trailing_backslash_is_not_a_command() {
+        let source: Vec<_> = r"\".chars().collect();
+
+        assert!(deconstruct_command(&source).is_none());
+    }
+
+    #[test]
+    fn create_mask_does_not_panic_on_trailing_backslash() {
+        for input in [r"\", r"Text ending with \" ] {
+            let source: Vec<_> = input.chars().collect();
+            Masker::default().create_mask(&source);
+        }
+    }
+
+    #[test]
     fn emits_all_command_components_correctly() {
         let source: Vec<_> = r"\begin[some]{math}".chars().collect();
         let CommandComponents {
@@ -384,6 +397,27 @@ mod tests {
         assert_eq!(name.iter().collect::<String>(), "begin");
         assert_eq!(square_content.unwrap().iter().collect::<String>(), "some");
         assert_eq!(curly_content.unwrap().iter().collect::<String>(), "math");
+    }
+
+    #[test]
+    fn unterminated_math_environment_masks_through_eof() {
+        let source: Vec<_> = r"Text \begin{equation} x^2 + y^2".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: String = mask
+            .iter_allowed(&source)
+            .flat_map(|(_, chars)| chars.iter().copied())
+            .collect();
+
+        assert_eq!(allowed, "Text ");
+    }
+
+    #[test]
+    fn rejects_unterminated_command_arguments() {
+        let square_source: Vec<_> = r"\begin[some".chars().collect();
+        let curly_source: Vec<_> = r"\section{Energy and Environment".chars().collect();
+
+        assert!(deconstruct_command(&square_source).is_none());
+        assert!(deconstruct_command(&curly_source).is_none());
     }
 
     #[test]
