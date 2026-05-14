@@ -5,8 +5,7 @@ use std::sync::Arc;
 use foldhash::quality::FixedState;
 use itertools::Itertools;
 
-use super::{FstDictionary, WordId};
-use super::{FuzzyMatchResult, dictionary::Dictionary};
+use super::{FstDictionary, FuzzyMatchResult, WordId, dictionary::Dictionary};
 use crate::{CharString, DictWordMetadata};
 
 /// A simple wrapper over [`Dictionary`] that allows
