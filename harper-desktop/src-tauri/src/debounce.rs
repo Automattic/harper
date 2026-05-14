@@ -24,9 +24,8 @@ impl DebounceState {
             self.last_observed_text = Some(text.to_string());
             self.last_text_change = Some(now);
             self.last_linted_text = None;
-            self.last_lints.clear();
 
-            return DebounceStatus::Waiting;
+            return DebounceStatus::Cached(self.last_lints.clone());
         }
 
         if self.last_linted_text.as_deref() == Some(text) {
@@ -35,11 +34,11 @@ impl DebounceState {
 
         let Some(last_text_change) = self.last_text_change else {
             self.last_text_change = Some(now);
-            return DebounceStatus::Waiting;
+            return DebounceStatus::Cached(self.last_lints.clone());
         };
 
         if now.duration_since(last_text_change) < Duration::from_millis(debounce_ms) {
-            return DebounceStatus::Waiting;
+            return DebounceStatus::Cached(self.last_lints.clone());
         }
 
         DebounceStatus::Ready
@@ -62,6 +61,5 @@ impl DebounceState {
 
 pub(crate) enum DebounceStatus {
     Ready,
-    Waiting,
     Cached(BTreeMap<String, Vec<Lint>>),
 }
