@@ -202,8 +202,8 @@ impl Dictionary for MergedDictionary {
 mod tests {
     use std::sync::Arc;
 
-    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
     use crate::DictWordMetadata;
+    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
 
     #[test]
     fn merged_contains_exact_word_str_is_case_sensitive() {
