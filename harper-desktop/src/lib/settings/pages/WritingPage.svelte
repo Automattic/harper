@@ -1,66 +1,100 @@
 <script lang="ts">
-let strictness = 'standard';
-let liveCheck = true;
-let respectCode = true;
+import { onMount } from 'svelte';
+import { Client } from '$lib/client';
+
+let debounceMs = 0;
+let pendingDebounceMs = '0';
+let isDebounceLoading = true;
+let isDebounceSaving = false;
+let debounceError = '';
+
+onMount(() => {
+	void loadDebounceMs();
+
+	const refreshSettings = () => {
+		if (!isDebounceSaving) {
+			void loadDebounceMs();
+		}
+	};
+
+	window.addEventListener('focus', refreshSettings);
+
+	return () => {
+		window.removeEventListener('focus', refreshSettings);
+	};
+});
+
+async function loadDebounceMs() {
+	isDebounceLoading = true;
+	debounceError = '';
+
+	try {
+		debounceMs = await Client.getDebounceMs();
+		pendingDebounceMs = String(debounceMs);
+	} catch (error) {
+		debounceError = `Unable to load debounce delay: ${error}`;
+	} finally {
+		isDebounceLoading = false;
+	}
+}
+
+async function saveDebounceMs() {
+	const parsed = Number(pendingDebounceMs);
+
+	if (!Number.isInteger(parsed) || parsed < 0) {
+		debounceError = 'Debounce delay must be a non-negative whole number.';
+		pendingDebounceMs = String(debounceMs);
+		return;
+	}
+
+	const previousDebounceMs = debounceMs;
+	debounceMs = parsed;
+	pendingDebounceMs = String(parsed);
+	isDebounceSaving = true;
+	debounceError = '';
+
+	try {
+		await Client.setDebounceMs(parsed);
+	} catch (error) {
+		debounceMs = previousDebounceMs;
+		pendingDebounceMs = String(previousDebounceMs);
+		debounceError = `Unable to save debounce delay: ${error}`;
+	} finally {
+		isDebounceSaving = false;
+	}
+}
 </script>
 
 <section>
         <div class="stanza">
-          <div class="eyebrow">Grammar checking</div>
+          <div class="eyebrow">Writing</div>
           <p class="section-copy">
-            Tune how assertive Harper is. Lower strictness surfaces fewer suggestions.
+            Choose how long Harper waits after text changes before checking it. Use 0 ms for
+            immediate checking.
           </p>
           <div class="rows">
             <div class="inline-row">
-              <label for="strictness">Strictness:</label>
-              <select
-                id="strictness"
+              <label for="debounce-ms">Debounce delay:</label>
+              <input
+                id="debounce-ms"
                 class="select"
-                disabled
-                title="Not wired yet"
-                bind:value={strictness}
-              >
-                <option value="relaxed">Relaxed</option>
-                <option value="standard">Standard</option>
-                <option value="strict">Strict</option>
-              </select>
+                type="number"
+                min="0"
+                step="50"
+                disabled={isDebounceLoading || isDebounceSaving}
+                value={pendingDebounceMs}
+                on:input={(event) => (pendingDebounceMs = event.currentTarget.value)}
+                on:change={saveDebounceMs}
+              />
+              <span>ms</span>
             </div>
-
-            <div class="row">
-              <div>
-                <strong>Check while I type</strong>
-                <p>Suggestions appear as you write.</p>
-              </div>
-              <button
-                class:checked={liveCheck}
-                class="checkbox"
-                type="button"
-                role="checkbox"
-                disabled
-                title="Not wired yet"
-                aria-checked={liveCheck}
-              >
-                {#if liveCheck}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
-
-            <div class="row top">
-              <div>
-                <strong>Respect code blocks and quotes</strong>
-                <p>Harper skips fenced code, inline code, and block quotes when checking Markdown.</p>
-              </div>
-              <button
-                class:checked={respectCode}
-                class="checkbox"
-                type="button"
-                role="checkbox"
-                disabled
-                title="Not wired yet"
-                aria-checked={respectCode}
-              >
-                {#if respectCode}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-              </button>
-            </div>
+            {#if isDebounceLoading}
+              <p class="result-summary">Loading debounce delay...</p>
+            {:else if debounceError}
+              <p class="result-summary">{debounceError}</p>
+            {:else if isDebounceSaving}
+              <p class="result-summary">Saving debounce delay...</p>
+            {/if}
           </div>
         </div>
       </section>

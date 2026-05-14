@@ -64,6 +64,14 @@ export class Client {
 		await invoke('set_dialect', { dialect: dialectToRustDialect(dialect) });
 	}
 
+	static async getDebounceMs(): Promise<number> {
+		return await invoke<number>('get_debounce_ms');
+	}
+
+	static async setDebounceMs(debounceMs: number): Promise<void> {
+		await invoke('set_debounce_ms', { debounceMs });
+	}
+
 	static async getLaunchAtStartup(): Promise<boolean> {
 		return await isEnabled();
 	}
