@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct NotOnlyInversion {
@@ -29,19 +29,12 @@ impl ExprLinter for NotOnlyInversion {
         "Corrects `not only it is` to `not only is it`"
     }
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🍭 {}", format_lint_match(toks, ctx, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let (prontok, betok) = (toks.get_rel(-3)?, toks.get_rel(-1)?);
         let (pronspan, bespan) = (prontok.span, betok.span);
         let (pronch, bech) = (pronspan.get_content(src), bespan.get_content(src));
 
         let pronbetoks = toks.get_rel_slice(-3, -1)?;
-        eprintln!("🍭🍭 '{}'", pronbetoks.span()?.get_content_string(src));
 
         let inverted = [bech.to_vec(), vec![' '], pronch.to_vec()].concat();
 
@@ -55,7 +48,6 @@ impl ExprLinter for NotOnlyInversion {
             )],
             ..Default::default()
         })
-        // None
     }
 
     fn expr(&self) -> &dyn Expr {
