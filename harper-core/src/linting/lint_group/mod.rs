@@ -119,6 +119,7 @@ use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
+use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
@@ -667,6 +668,7 @@ impl LintGroup {
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LongTimeAgo, true);
         insert_expr_rule!(LookDownOnesNose, true);
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule_with_dict!(MassNouns, true);

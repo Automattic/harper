@@ -124,6 +124,7 @@ mod lint;
 mod lint_group;
 mod lint_kind;
 mod long_sentences;
+mod long_time_ago;
 mod look_down_ones_nose;
 mod looking_forward_to;
 mod map_phrase_linter;
