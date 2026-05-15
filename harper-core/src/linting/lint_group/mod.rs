@@ -221,6 +221,7 @@ use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
+use super::there_own::ThereOwn;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -766,6 +767,7 @@ impl LintGroup {
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
         insert_expr_rule!(ThenThan, true);
+        insert_expr_rule!(ThereOwn, true);
         insert_expr_rule!(Theres, true);
         insert_expr_rule!(ThesesThese, true);
         insert_struct_rule!(TheyreConfusions, true);
