@@ -36,6 +36,7 @@ use input::{
 mod annotate;
 use annotate::AnnotationType;
 
+mod corpus;
 mod lint;
 use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
@@ -213,6 +214,18 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<SingleInput>,
+    },
+    /// Run a corpus file of marked sentences to detect false positives and negatives.
+    Corpus {
+        /// Path to the corpus file.
+        #[arg(value_hint = ValueHint::FilePath)]
+        input: PathBuf,
+        /// Restrict testing to only a specific lint rule.
+        #[arg(long)]
+        rule: Option<String>,
+        /// Specify the dialect.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
     },
     /// Run the tests contained within a Weir file.
     Test {
@@ -971,6 +984,20 @@ fn main() -> anyhow::Result<()> {
 
             println!();
 
+            Ok(())
+        }
+        Args::Corpus {
+            input,
+            rule,
+            dialect: dialect_str,
+        } => {
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+
+            let all_passed = corpus::corpus(&input, rule.as_deref(), dialect)?;
+            if !all_passed {
+                process::exit(1);
+            }
             Ok(())
         }
         Args::Test { input } => {
