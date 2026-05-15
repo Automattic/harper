@@ -31,11 +31,11 @@ type FrameworkActions = {
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
 /** Events on the window that can trigger a re-render. */
 const PAGE_EVENTS = ['resize', 'scroll'];
+const NEAR_CARET_SUPPRESSION_HORIZONTAL_PX = 12;
+const NEAR_CARET_SUPPRESSION_VERTICAL_PX = 2;
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
-	private static readonly NEAR_CARET_SUPPRESSION_HORIZONTAL_PX = 12;
-	private static readonly NEAR_CARET_SUPPRESSION_VERTICAL_PX = 2;
 	private highlights: Highlights;
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
@@ -330,8 +330,8 @@ export default class LintFramework {
 			!isBoxWithinThreshold(
 				caretPosition,
 				closest,
-				LintFramework.NEAR_CARET_SUPPRESSION_HORIZONTAL_PX,
-				LintFramework.NEAR_CARET_SUPPRESSION_VERTICAL_PX,
+				NEAR_CARET_SUPPRESSION_HORIZONTAL_PX,
+				NEAR_CARET_SUPPRESSION_VERTICAL_PX,
 			)
 		) {
 			return boxes;
