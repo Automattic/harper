@@ -1,14 +1,6 @@
 import type { EditorView } from '@codemirror/view';
 import { Dialect } from 'harper.js';
-import {
-	type App,
-	editorInfoField,
-	MarkdownView,
-	Menu,
-	Notice,
-	Plugin,
-	type PluginManifest,
-} from 'obsidian';
+import { editorInfoField, MarkdownView, Menu, Notice, Plugin } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
 import { HarperSettingTab } from './HarperSettingTab';
@@ -31,10 +23,6 @@ export default class HarperPlugin extends Plugin {
 	private dialectSpan: HTMLSpanElement | null = null;
 	private logo: HTMLSpanElement | null = null;
 	private settings: HarperSettingTab | null = null;
-
-	constructor(app: App, manifest: PluginManifest) {
-		super(app, manifest);
-	}
 
 	async onload() {
 		if (typeof Response === 'undefined') {
