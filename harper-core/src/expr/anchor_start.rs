@@ -14,6 +14,10 @@ impl Step for AnchorStart {
             None
         }
     }
+    fn step_rev(&self, _tokens: &[Token], _cursor: usize, _source: &[char]) -> Option<isize> {
+        eprintln!("🛑 ANCHOR START");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]

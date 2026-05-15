@@ -23,4 +23,8 @@ impl Expr for LongestMatchOf {
             .filter_map(|expr| expr.run(cursor, tokens, source))
             .max_by_key(Span::len)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 LONGEST");
+        None // Not implemented
+    }
 }

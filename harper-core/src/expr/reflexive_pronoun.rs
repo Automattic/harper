@@ -59,6 +59,10 @@ impl Expr for ReflexivePronoun {
         }
         expr.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 REFLEXIVE PRONOUN");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]
