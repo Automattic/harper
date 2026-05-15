@@ -273,7 +273,7 @@ mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
 
-pub use expr_linter::{Chunk, ExprLinter};
+pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
 pub use lint_group::{
