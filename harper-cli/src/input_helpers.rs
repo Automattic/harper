@@ -57,22 +57,6 @@ pub fn expand_inputs(inputs: Vec<AnyInput>) -> anyhow::Result<Vec<ExpandedInput>
     Ok(expanded)
 }
 
-/// Process expanded inputs with a callback function.
-///
-/// The callback receives the `ExpandedInput` and should return a `Result`.
-/// Errors are printed to stderr but don't stop processing of other inputs.
-pub fn process_inputs<F>(inputs: Vec<ExpandedInput>, mut f: F) -> anyhow::Result<()>
-where
-    F: FnMut(&ExpandedInput) -> anyhow::Result<()>,
-{
-    for input in inputs {
-        if let Err(e) = f(&input) {
-            eprintln!("{}", e);
-        }
-    }
-    Ok(())
-}
-
 /// Process inputs and collect results, with optional parallelism.
 ///
 /// This combines input expansion and processing into a single step.

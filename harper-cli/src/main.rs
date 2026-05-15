@@ -1028,7 +1028,6 @@ fn main() -> anyhow::Result<()> {
             parallel,
         } => {
             prepositions(inputs, preps_before, words, preps_after, parallel)?;
-            println!("⚠️ parallel mode: {}", parallel);
             Ok(())
         }
     }
