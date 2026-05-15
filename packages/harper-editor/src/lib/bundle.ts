@@ -1,4 +1,4 @@
 import 'components/components.css';
 import './styles.css';
 
-export * from './index';
+export * from './index.js';

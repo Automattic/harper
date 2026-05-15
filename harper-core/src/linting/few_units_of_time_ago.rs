@@ -13,7 +13,7 @@ pub struct FewUnitsOfTimeAgo {
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
-        let units = TimeUnitExpr;
+        let units = TimeUnitExpr::default();
 
         let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
 
