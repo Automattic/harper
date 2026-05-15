@@ -895,8 +895,10 @@ pub fn lint_group() -> LintGroup {
             &[(
                 &[
                     "now a days", "now-a-days", "now a day's",
-                    "now a day", "now-a-day",
-                    "now adays", "now-adays"
+                    "nowaday", "now a day", "now-a-day",
+                    "now adays", "now-adays", "now aday's",
+                    "now aday",
+                    "nowa days",
                 ],
                 &["nowadays"]
             )],

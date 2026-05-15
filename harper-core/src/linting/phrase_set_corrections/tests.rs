@@ -3076,6 +3076,42 @@ fn fix_now_adays_space() {
     );
 }
 
+#[test]
+fn fix_nowaday() {
+    assert_suggestion_result(
+        "nowaday, I have to capitalize the first letter of the name gets from @babel/types.",
+        lint_group(),
+        "nowadays, I have to capitalize the first letter of the name gets from @babel/types.",
+    );
+}
+
+#[test]
+fn fix_now_adays_apostrophe() {
+    assert_suggestion_result(
+        "I believe CSS clamp has great browser support now aday's as well.",
+        lint_group(),
+        "I believe CSS clamp has great browser support nowadays as well.",
+    );
+}
+
+#[test]
+fn fix_nowa_days() {
+    assert_suggestion_result(
+        "But discord would be great cause discord is universally used for all games and companies and schools nowa days.",
+        lint_group(),
+        "But discord would be great cause discord is universally used for all games and companies and schools nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_aday() {
+    assert_suggestion_result(
+        "OF all Occupations that now aday is used,I would not be a butcher",
+        lint_group(),
+        "OF all Occupations that nowadays is used,I would not be a butcher",
+    );
+}
+
 // RaiseTheQuestion
 
 // -raise the question-
