@@ -1,0 +1,87 @@
+name: Harper Desktop
+
+on:
+  push:
+    branches: ["master"]
+    tags: ["v*"]
+  merge_group:
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    name: ${{ matrix.platform.name }}
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      matrix:
+        platform:
+          - name: Linux x64
+            artifact_name: harper-desktop-linux-x64
+            os: ubuntu-latest
+            command: just build-desktop-linux
+            artifact_paths: |
+              target/release/bundle/deb/*.deb
+              target/release/bundle/rpm/*.rpm
+              target/release/bundle/appimage/*.AppImage
+          - name: macOS x64
+            artifact_name: harper-desktop-macos-x64
+            os: macos-13
+            command: just build-desktop-macos
+            artifact_paths: |
+              target/release/bundle/dmg/*.dmg
+          - name: macOS arm64
+            artifact_name: harper-desktop-macos-arm64
+            os: macos-14
+            command: just build-desktop-macos
+            artifact_paths: |
+              target/release/bundle/dmg/*.dmg
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Just
+        uses: extractions/setup-just@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install Tauri Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            libwebkit2gtk-4.1-dev \
+            libxdo-dev
+          sudo apt-get install -y libappindicator3-dev || true
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.8
+      - name: Install cargo-binstall
+        uses: cargo-bins/cargo-binstall@main
+      - name: Install wasm-pack
+        run: cargo binstall wasm-pack --force --no-confirm
+      - name: Install tauri-cli
+        run: cargo binstall tauri-cli --force --no-confirm
+      - name: Build Harper Desktop
+        run: ${{ matrix.platform.command }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform.artifact_name }}
+          path: ${{ matrix.platform.artifact_paths }}
+          if-no-files-found: error
+      - name: Release artifacts
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ${{ matrix.platform.artifact_paths }}
+          allowUpdates: true
+          draft: true
