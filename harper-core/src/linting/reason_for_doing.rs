@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Lint, Token,
+    Lint, Token,
     expr::{Expr, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
@@ -53,8 +53,7 @@ impl ExprLinter for ReasonForDoing {
         // let ofchars = ofspan.get_content(src);
 
         // "for reasons of doing" is a legit construction. TODO: Usually, but not always!
-        if reasonchars.last()? == &'s'
-            && preceded_by_word(ctx, |t| t.get_ch(src).eq_ch(&['f', 'o', 'r']))
+        if reasonchars.last()? == &'s' && preceded_by_word(ctx, |t| t.eq_ch(src, &['f', 'o', 'r']))
         {
             return None;
         }

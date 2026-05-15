@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Lint, Token, TokenStringExt,
+    Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     irregular_verbs::IrregularVerbs,
     linting::{
@@ -63,7 +63,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
         let verb_str = verb_tok.span.get_content_string(src);
 
         // Disambiguate 'will' noun from 'will' verb: Preceding "a", "the", "my", "your", etc. show it's a noun.
-        if fut_tok.get_ch(src).eq_ch(&['w', 'i', 'l', 'l'])
+        if fut_tok.eq_ch(src, &['w', 'i', 'l', 'l'])
             && preceded_by_word(ctx, |tok| tok.kind.is_determiner())
         {
             return None;
