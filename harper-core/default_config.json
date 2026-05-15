@@ -3240,6 +3240,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PastParticipleWithoutAuxiliary",
+								"state": true,
+								"label": "Past Participle Without Auxiliary"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SingleBe",
 								"state": true,
 								"label": "Single Be"
