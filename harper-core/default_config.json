@@ -1316,6 +1316,13 @@
 								"state": true,
 								"label": "Expand Vulnerability"
 							}
+						},
+						{
+							"Bool": {
+								"name": "Nowadays",
+								"state": true,
+								"label": "Nowadays"
+							}
 						}
 					]
 				}
