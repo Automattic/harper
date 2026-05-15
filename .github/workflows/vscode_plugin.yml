@@ -52,7 +52,7 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2.7.8
         with:
-          cache-bin: true
+          cache-bin: false
       - name: Build harper-ls
         uses: houseabsolute/actions-rust-cross@v1
         with:
