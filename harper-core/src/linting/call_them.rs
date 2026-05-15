@@ -1,4 +1,5 @@
-use std::{ops::Range, sync::Arc};
+use std::ops::Range;
+use std::rc::Rc;
 
 use crate::expr::{Expr, ExprMap, SequenceExpr};
 use crate::patterns::DerivedFrom;
@@ -15,7 +16,7 @@ impl Default for CallThem {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let post_exception = Arc::new(SequenceExpr::default().t_ws().then_word_set(&["if", "it"]));
+        let post_exception = Rc::new(SequenceExpr::default().t_ws().then_word_set(&["if", "it"]));
 
         map.insert(
             SequenceExpr::with(DerivedFrom::new_from_str("call"))
