@@ -852,6 +852,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects incorrect variants of `in hindsight` to the standard phrase.",
             LintKind::Usage
         ),
+        "Keystroke" => (
+            &[
+                (&["key stroke", "key stoke"], &["keystroke"]),
+                (&["key strokes", "key stokes"], &["keystrokes"]),
+            ],
+            "Did you mean the closed compound `keystroke`?",
+            "Looks for incorrect spacing inside the closed compound `keystroke`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),

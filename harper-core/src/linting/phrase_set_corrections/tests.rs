@@ -2834,6 +2834,29 @@ fn corrects_on_hind_sight_hyphenated() {
     )
 }
 
+// Keystroke
+
+#[test]
+fn corrects_key_stoke() {
+    let test_sentence = "Use this key stoke to open search.";
+    let expected = "Use this keystroke to open search.";
+    assert_suggestion_result(test_sentence, lint_group(), expected);
+}
+
+#[test]
+fn corrects_key_stokes() {
+    let test_sentence = "These key stokes are hard to memorize.";
+    let expected = "These keystrokes are hard to memorize.";
+    assert_suggestion_result(test_sentence, lint_group(), expected);
+}
+
+#[test]
+fn corrects_key_strokes() {
+    let test_sentence = "There may have been a missing key stroke.";
+    let expected = "There may have been a missing keystroke.";
+    assert_suggestion_result(test_sentence, lint_group(), expected);
+}
+
 // MakeItSeem
 
 #[test]

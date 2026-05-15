@@ -1,11 +1,10 @@
 use super::{ExprLinter, Lint, LintKind};
 use crate::expr::Expr;
-use crate::expr::FixedPhrase;
-use crate::expr::LongestMatchOf;
+use crate::expr::SequenceExpr;
 use crate::expr::SimilarToPhrase;
 use crate::linting::Suggestion;
 use crate::linting::expr_linter::Chunk;
-use crate::weir::weir_expr_to_expr;
+use crate::patterns::Word;
 use crate::{Token, TokenStringExt};
 
 pub struct MapPhraseLinter {
@@ -43,65 +42,52 @@ impl MapPhraseLinter {
         )
     }
 
-    pub fn new_fixed_phrases(
-        phrase: impl IntoIterator<Item = impl AsRef<str>>,
-        correct_forms: impl IntoIterator<Item = impl ToString>,
+    pub fn new_fixed_phrase<'a>(
+        parts: impl AsRef<[&'a str]>,
+        compound: impl ToString,
         message: impl ToString,
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let patterns = LongestMatchOf::new(
-            phrase
-                .into_iter()
-                .map(|p| {
-                    let expr: Box<dyn Expr> = Box::new(weir_expr_to_expr(p.as_ref()).unwrap());
-                    expr
-                })
-                .collect(),
-        );
+        let words = parts.as_ref();
+        let expr = words
+            .iter()
+            .enumerate()
+            .fold(SequenceExpr::default(), |mut expr, (i, word)| {
+                // Add the word with any capitalization using Word::new
+                expr = expr.then(Word::new(word));
+
+                // Add whitespace or hyphen between words, but not after the last word
+                if i < words.len() - 1 {
+                    expr = expr.then_whitespace_or_hyphen();
+                }
+
+                expr
+            });
 
         Self::new(
-            Box::new(patterns),
-            correct_forms,
+            Box::new(expr),
+            [compound.to_string()],
             message,
             description,
             lint_kind,
         )
     }
 
-    pub fn new_fixed_phrase(
-        phrase: impl AsRef<str>,
-        correct_forms: impl IntoIterator<Item = impl ToString>,
-        message: impl ToString,
-        description: impl ToString,
-        lint_kind: Option<LintKind>,
-    ) -> Self {
-        Self::new(
-            Box::new(FixedPhrase::from_phrase(phrase.as_ref())),
-            correct_forms,
-            message,
-            description,
-            lint_kind,
-        )
-    }
-
-    pub fn new_closed_compound(
-        phrases: impl IntoIterator<Item = impl AsRef<str>>,
-        correct_form: impl ToString,
-    ) -> Self {
+    pub fn new_closed_compound<'a>(phrase: impl AsRef<[&'a str]>, compound: impl ToString) -> Self {
         let message = format!(
             "Did you mean the closed compound `{}`?",
-            correct_form.to_string()
+            compound.to_string()
         );
 
         let description = format!(
             "Looks for incorrect spacing inside the closed compound `{}`.",
-            correct_form.to_string()
+            compound.to_string()
         );
 
-        Self::new_fixed_phrases(
-            phrases,
-            [correct_form],
+        Self::new_fixed_phrase(
+            phrase,
+            compound,
             message,
             description,
             Some(LintKind::Miscellaneous),
