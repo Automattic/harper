@@ -15,6 +15,8 @@ use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
+
+use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use tokio::{
     io::{Stdin, Stdout},
     runtime::{Builder, Runtime},
@@ -350,6 +352,26 @@ async fn set_integration_enabled(
     Ok(())
 }
 
+#[tauri::command]
+fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
+    platform_broker().accessibility_permission_status()
+}
+
+#[tauri::command]
+fn request_accessibility_permission() -> AccessibilityPermissionStatus {
+    platform_broker().request_accessibility_permission()
+}
+
+#[cfg(target_os = "macos")]
+fn platform_broker() -> impl OsBroker {
+    mac_broker::MacBroker::default()
+}
+
+#[cfg(not(target_os = "macos"))]
+fn platform_broker() -> impl OsBroker {
+    os_broker::NoopBroker
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let args = Args::parse();
@@ -400,6 +422,8 @@ pub fn run_tauri() {
             add_integration,
             remove_integration,
             set_integration_enabled,
+            get_accessibility_permission_status,
+            request_accessibility_permission,
         ])
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())

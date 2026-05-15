@@ -264,7 +264,7 @@ use super::wrong_apostrophe::WrongApostrophe;
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, Sentence};
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
@@ -285,6 +285,8 @@ pub struct LintGroup {
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
     chunk_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
+    /// We use a binary map here so the ordering is stable.
+    sentence_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Sentence>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
@@ -293,6 +295,8 @@ pub struct LintGroup {
     /// of the key.
     #[expect(clippy::complexity)]
     chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
+    #[expect(clippy::complexity)]
+    sentence_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -305,7 +309,9 @@ impl LintGroup {
             config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
+            sentence_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
+            sentence_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
             clashing_linter_names: None,
         }
@@ -315,6 +321,7 @@ impl LintGroup {
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
         self.linters.contains_key(name.as_ref())
             || self.chunk_expr_linters.contains_key(name.as_ref())
+            || self.sentence_expr_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
@@ -358,6 +365,27 @@ impl LintGroup {
         }
     }
 
+    /// Add a sentence-based [`ExprLinter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add_sentence_expr_linter(
+        &mut self,
+        name: impl AsRef<str>,
+        linter: impl ExprLinter<Unit = Sentence> + 'static,
+    ) -> bool {
+        if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(name.as_ref().to_string());
+            }
+            false
+        } else {
+            self.sentence_expr_linters
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+            true
+        }
+    }
+
     /// Merge the contents of another [`LintGroup`] into this one.
     pub fn merge_from(&mut self, other: LintGroup) {
         self.config.merge_from(other.config);
@@ -384,12 +412,27 @@ impl LintGroup {
             }
         }
         self.chunk_expr_linters.extend(other.chunk_expr_linters);
+
+        if let Some((conflicting_key, _)) = other
+            .sentence_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(conflicting_key.clone());
+            }
+        }
+        self.sentence_expr_linters
+            .extend(other.sentence_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
         self.linters
             .keys()
             .chain(self.chunk_expr_linters.keys())
+            .chain(self.sentence_expr_linters.keys())
             .map(|v| v.as_str())
     }
 
@@ -416,6 +459,11 @@ impl LintGroup {
                     .iter()
                     .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
             )
+            .chain(
+                self.sentence_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
+            )
             .collect()
     }
 
@@ -426,6 +474,11 @@ impl LintGroup {
             .map(|(key, value)| (key.as_str(), value.description_html()))
             .chain(
                 self.chunk_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), value.description_html())),
+            )
+            .chain(
+                self.sentence_expr_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), value.description_html())),
             )
@@ -858,6 +911,53 @@ impl LintGroup {
             }
         }
 
+        // Sentence Expr linters
+        for sentence in document.iter_sentences() {
+            let Some(sentence_span) = sentence.span() else {
+                continue;
+            };
+
+            let sentence_chars = document.get_span_content(&sentence_span);
+            let config_hash = self.hasher_builder.hash_one(&self.config);
+            let char_hash = self.hasher_builder.hash_one(sentence_chars);
+            let cache_key = (char_hash, config_hash);
+
+            let sentence_results = if let Some(hit) = self.sentence_expr_cache.get(&cache_key) {
+                hit.clone()
+            } else {
+                let mut pattern_lints = BTreeMap::new();
+
+                for (key, linter) in &mut self.sentence_expr_linters {
+                    if self.config.is_rule_enabled(key) {
+                        let lints =
+                            run_on_chunk(linter, sentence, document.get_source()).map(|mut l| {
+                                l.span.pull_by(sentence_span.start);
+                                l
+                            });
+
+                        pattern_lints.insert(key.clone(), lints.collect());
+                    }
+                }
+
+                let pattern_lints = Lrc::new(pattern_lints);
+
+                self.sentence_expr_cache
+                    .put(cache_key, pattern_lints.clone());
+                pattern_lints
+            };
+
+            for (key, vec) in sentence_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(sentence_span.start);
+                        lint
+                    }));
+            }
+        }
+
         results
     }
 }
@@ -889,6 +989,7 @@ mod tests {
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
+    use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
 
     fn test_group() -> LintGroup {
@@ -954,6 +1055,31 @@ mod tests {
     #[test]
     fn ok_becomes_okay() {
         assert_suggestion_result("This is ok.", test_group(), "This is okay.");
+    }
+
+    #[test]
+    fn weir_linter_uses_configured_sentence_scope() {
+        let source = r#"
+            expr main one**two
+            let message "Use three."
+            let description "Test sentence-scoped Weir."
+            let kind "Miscellaneous"
+            let becomes "three"
+            let strategy "Exact"
+            let scope "Sentence"
+        "#;
+
+        let mut group = LintGroup::empty();
+        group.add_sentence_expr_linter(
+            "TestSentenceWeir",
+            WeirLinter::new(source)
+                .unwrap()
+                .into_sentence_linter()
+                .unwrap_or_else(|_| unreachable!()),
+        );
+        group.config.set_rule_enabled("TestSentenceWeir", true);
+
+        assert_suggestion_result("one, two.", group, "three.");
     }
 
     #[test]

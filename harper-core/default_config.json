@@ -1598,6 +1598,13 @@
 						},
 						{
 							"Bool": {
+								"name": "IncludingButNotLimitedToPunctuation",
+								"state": true,
+								"label": "Including But Not Limited To Punctuation"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MercedesBenzHyphen",
 								"state": true,
 								"label": "Mercedes Benz Hyphen"
