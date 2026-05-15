@@ -204,15 +204,78 @@ async function changeDialect(): Promise<void> {
 		label: name,
 	}));
 
-	const selected = await window.showQuickPick(dialects, {
-		placeHolder: 'Select Harper dialect',
-	});
+	const currentDialect = getCurrentDialect();
+	const selected = await showDialectQuickPick(dialects, currentDialect);
 
 	if (selected && typeof selected !== 'string') {
 		await workspace
 			.getConfiguration('harper')
 			.update('dialect', selected.label, ConfigurationTarget.Global);
 	}
+}
+
+/**
+ Retrieves the currently active Harper dialect for the active editor.
+ This function reads the `harper.dialect` configuration scoped to the
+ currently active document (if one exists). If no active editor is present
+ or no dialect has been explicitly set, it returns an empty string.
+ @returns {string} The current dialect (e.g., "American", "British"),
+ or an empty string if no dialect is configured.
+ */
+
+function getCurrentDialect(): string {
+	const activeDocumentUri = window.activeTextEditor?.document.uri;
+	return workspace.getConfiguration('harper', activeDocumentUri).get<string>('dialect', '');
+}
+
+/**
+
+ Displays a VS Code QuickPick UI for selecting a Harper dialect, 
+ preselecting the currently active dialect.
+
+ Unlike `window.showQuickPick`, this implementation explicitly sets 
+ the active (highlighted) item to match the current dialect, ensuring
+ the UI reflects the actual document state instead of defaulting to "US".
+ The function resolves with the selected item when the user confirms, or 
+ `undefined` if the picker is dismissed without selection.
+
+ @param {QuickPickItem[]} dialects - List of available dialect options.
+ @param {string} currentDialect - The currently active dialect label.
+ @returns {Promise<QuickPickItem | undefined>} The selected dialect item,
+
+ or `undefined` if the user cancels.
+ */
+async function showDialectQuickPick(
+	dialects: QuickPickItem[],
+	currentDialect: string,
+): Promise<QuickPickItem | undefined> {
+	const quickPick = window.createQuickPick<QuickPickItem>();
+	quickPick.items = dialects;
+	quickPick.placeholder = 'Select Harper dialect';
+
+	const activeDialect = dialects.find((dialect) => dialect.label === currentDialect);
+	if (activeDialect) {
+		quickPick.activeItems = [activeDialect];
+	}
+
+	return await new Promise((resolve) => {
+		let accepted = false;
+
+		quickPick.onDidAccept(() => {
+			accepted = true;
+			resolve(quickPick.selectedItems[0]);
+			quickPick.hide();
+		});
+
+		quickPick.onDidHide(() => {
+			quickPick.dispose();
+			if (!accepted) {
+				resolve(undefined);
+			}
+		});
+
+		quickPick.show();
+	});
 }
 
 export function deactivate(): Thenable<void> | undefined {

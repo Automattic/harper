@@ -8,7 +8,11 @@ macro_rules! generate_boilerplate {
 
                 {
                     $(
-                        group.add_chunk_expr_linter(stringify!($name), WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap());
+                        let linter = WeirLinter::new(include_str!(concat!(env!("WEIR_RULE_DIR"), "/", stringify!($name), ".weir"))).unwrap();
+                        match linter.into_sentence_linter() {
+                            Ok(linter) => group.add_sentence_expr_linter(stringify!($name), linter),
+                            Err(linter) => group.add_chunk_expr_linter(stringify!($name), linter.into_chunk_linter().unwrap_or_else(|_| unreachable!())),
+                        };
                     )+
                 }
 

@@ -60,6 +60,7 @@ create_test!(ignore_shebang_1.sh, 0);
 create_test!(ignore_shebang_2.sh, 0);
 create_test!(ignore_shebang_3.sh, 0);
 create_test!(ignore_shebang_4.sh, 1);
+create_test!(issue_962.sh, 1);
 create_test!(common.mill, 1);
 create_test!(basic_kotlin.kt, 0);
 create_test!(basic_groovy.groovy, 1);
