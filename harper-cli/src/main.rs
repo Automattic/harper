@@ -246,6 +246,9 @@ enum Args {
         // 'after' preps
         #[arg(short = 'a', value_delimiter = ',')]
         after_preps: Vec<String>,
+        /// Process inputs in parallel (default: false)
+        #[arg(short = 'p', long, default_value = "false")]
+        parallel: bool,
     },
 }
 
@@ -1022,8 +1025,10 @@ fn main() -> anyhow::Result<()> {
             before_preps: preps_before,
             words,
             after_preps: preps_after,
+            parallel,
         } => {
-            prepositions(inputs, preps_before, words, preps_after)?;
+            prepositions(inputs, preps_before, words, preps_after, parallel)?;
+            println!("⚠️ parallel mode: {}", parallel);
             Ok(())
         }
     }

@@ -7,7 +7,7 @@ use harper_core::{
 };
 
 use crate::input::{AnyInput, InputTrait, single_input::SingleInputTrait};
-use crate::input_helpers::{expand_inputs, process_inputs, ExpandedInput};
+use crate::input_helpers::process_inputs_collect;
 
 /// Scan documents for preposition collocations.
 ///
@@ -47,6 +47,7 @@ pub fn prepositions(
     before_preps: Vec<String>,
     words: Vec<String>,
     after_preps: Vec<String>,
+    parallel: bool,
 ) -> anyhow::Result<()> {
     let mut seq = SequenceExpr::default();
 
@@ -84,10 +85,8 @@ pub fn prepositions(
         }
     };
 
-    let expanded = expand_inputs(inputs)?;
-
-    process_inputs(expanded, |expanded_input| {
-        let ExpandedInput { input, .. } = expanded_input;
+    let results = process_inputs_collect(inputs, parallel, |expanded_input| {
+        let input = expanded_input.input;
         if let Some(single) = input.try_as_single_ref() {
             match single.load(MarkdownOptions::default(), &FstDictionary::curated()) {
                 Ok((doc, _)) => {
@@ -130,7 +129,14 @@ pub fn prepositions(
             }
         }
         Ok(())
-    })?;
+    });
+
+    // Check for any expansion errors
+    for result in results {
+        if let Err(e) = result {
+            eprintln!("{}", e);
+        }
+    }
 
     Ok(())
 }

@@ -1,3 +1,5 @@
+use rayon::prelude::*;
+
 use crate::input::{
     AnyInput, InputTrait,
     multi_input::MultiInput,
@@ -59,10 +61,7 @@ pub fn expand_inputs(inputs: Vec<AnyInput>) -> anyhow::Result<Vec<ExpandedInput>
 ///
 /// The callback receives the `ExpandedInput` and should return a `Result`.
 /// Errors are printed to stderr but don't stop processing of other inputs.
-pub fn process_inputs<F>(
-    inputs: Vec<ExpandedInput>,
-    mut f: F,
-) -> anyhow::Result<()>
+pub fn process_inputs<F>(inputs: Vec<ExpandedInput>, mut f: F) -> anyhow::Result<()>
 where
     F: FnMut(&ExpandedInput) -> anyhow::Result<()>,
 {
@@ -72,4 +71,41 @@ where
         }
     }
     Ok(())
+}
+
+/// Process inputs and collect results, with optional parallelism.
+///
+/// This combines input expansion and processing into a single step.
+/// The callback receives an `ExpandedInput` and returns a `Result<T>`.
+/// All results are collected into a `Vec<Result<T>>`.
+///
+/// # Arguments
+///
+/// * `inputs` - The raw inputs to process
+/// * `parallel` - If true, use rayon for parallel processing (when >1 input)
+/// * `f` - Function to process each input, returning a result
+///
+/// # Returns
+///
+/// A vector of results, one per input. Errors in individual inputs
+/// are returned as `Err` values in the vector, not propagated.
+pub fn process_inputs_collect<T, F>(
+    inputs: Vec<AnyInput>,
+    parallel: bool,
+    f: F,
+) -> Vec<anyhow::Result<T>>
+where
+    T: Send,
+    F: Fn(ExpandedInput) -> anyhow::Result<T> + Send + Sync,
+{
+    let expanded = match expand_inputs(inputs) {
+        Ok(e) => e,
+        Err(e) => return vec![Err(e)],
+    };
+
+    if parallel && expanded.len() > 1 {
+        expanded.into_par_iter().map(f).collect()
+    } else {
+        expanded.into_iter().map(f).collect()
+    }
 }

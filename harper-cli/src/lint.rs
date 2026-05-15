@@ -18,7 +18,10 @@ use harper_core::{
     {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
-use crate::input::{AnyInput, InputTrait, single_input::{SingleInput, SingleInputTrait}};
+use crate::input::{
+    AnyInput, InputTrait,
+    single_input::{SingleInput, SingleInputTrait},
+};
 use crate::input_helpers::expand_inputs;
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
