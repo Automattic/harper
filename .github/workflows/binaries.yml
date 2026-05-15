@@ -118,9 +118,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.8
+        uses: Swatinem/rust-cache@v2.9.1
         with:
-          cache-bin: false
+          cache-bin: "true"
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
         with:
