@@ -2,23 +2,25 @@
 
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{self, BufReader};
-use std::path::PathBuf;
-// use std::sync::Arc;
-use std::{fs, process};
+use std::{
+    collections::BTreeMap,
+    fs,
+    fs::File,
+    io::{self, BufReader},
+    path::PathBuf,
+    process,
+};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
-use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
-use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    linting::LintGroup,
+    parsers::{IsolateEnglish, MarkdownOptions},
+    weir::WeirLinter,
 };
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
@@ -27,17 +29,17 @@ use harper_stats::Stats;
 use serde::Serialize;
 use serde_json::Value;
 
+mod annotate;
 mod input;
+mod lint;
+mod prep_pattern;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
 
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
 use crate::lint::{OutputFormat, lint};
+use annotate::AnnotationType;
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
@@ -219,6 +221,21 @@ enum Args {
         /// The location of the Weir file to test
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Find preposition patterns for testing word + preposition combinations.
+    PrepPattern {
+        /// Comma-separated list of word inflections to search for (e.g., install,installed,installing,installs)
+        #[arg(short, long, value_delimiter = ',')]
+        words: Vec<String>,
+        /// Comma-separated list of prepositions to test against (e.g., in,on,at,for,with,by,from,of,to). Use 'any' to match any preposition.
+        #[arg(short, long, value_delimiter = ',')]
+        prepositions: Vec<String>,
+        /// The text or file you wish to search. If not provided, it will be read from standard input.
+        #[arg(last = true)]
+        inputs: Vec<AnyInput>,
+        /// Output format for results.
+        #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
+        format: OutputFormat,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -987,6 +1004,19 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
+        Args::PrepPattern {
+            words,
+            prepositions,
+            inputs,
+            format,
+        } => crate::prep_pattern::run_prep_pattern(
+            markdown_options,
+            curated_dictionary,
+            inputs,
+            words,
+            prepositions,
+            format,
+        ),
         Args::Completion { shell } => {
             generate(
                 shell,
