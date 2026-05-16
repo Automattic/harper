@@ -476,4 +476,78 @@ mod tests {
     fn no_lint_to_only_at_end() {
         assert_no_lints("limited to only", ToTwoToo::default());
     }
+
+    // --- Degree words + noun (mid-sentence) ---
+
+    #[test]
+    fn fixes_to_many_cookies() {
+        assert_suggestion_result(
+            "I ate to many cookies.",
+            ToTwoToo::default(),
+            "I ate too many cookies.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_much_water() {
+        assert_suggestion_result(
+            "There is to much water.",
+            ToTwoToo::default(),
+            "There is too much water.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_few_options() {
+        assert_suggestion_result(
+            "We have to few options.",
+            ToTwoToo::default(),
+            "We have too few options.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_little_time() {
+        assert_suggestion_result(
+            "There is to little time.",
+            ToTwoToo::default(),
+            "There is too little time.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_many_bugs_mid_sentence() {
+        assert_suggestion_result(
+            "There are to many bugs in this project.",
+            ToTwoToo::default(),
+            "There are too many bugs in this project.",
+        );
+    }
+
+    // --- Degree words + noun: false positive guards ---
+
+    #[test]
+    fn no_lint_give_to_many_charities() {
+        assert_no_lints("She likes to give to many charities.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_listen_to_many_podcasts() {
+        assert_no_lints("I listen to many podcasts.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_talk_to_many_people() {
+        assert_no_lints("We talk to many people.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_donate_to_many_causes() {
+        assert_no_lints("They donate to many causes.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_connected_to_many_servers() {
+        assert_no_lints("The app is connected to many servers.", ToTwoToo::default());
+    }
 }
