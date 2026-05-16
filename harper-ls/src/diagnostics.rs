@@ -66,11 +66,15 @@ pub fn lint_to_code_actions<'a>(
                         change_annotations: None,
                     }),
                     command: Some(Command {
-                        title: "Record lint statistic".to_owned(),
-                        command: "HarperRecordLint".to_owned(),
-                        arguments: Some(vec![Value::String(
-                            serde_json::to_string(&RecordKind::from_lint(lint, document)).unwrap(),
-                        )]),
+                        title: "Record lint statistic and update diagnostics".to_owned(),
+                        command: "HarperRecordLintAndUpdate".to_owned(),
+                        arguments: Some(vec![
+                            Value::String(uri.to_string()),
+                            Value::String(
+                                serde_json::to_string(&RecordKind::from_lint(lint, document))
+                                    .unwrap(),
+                            ),
+                        ]),
                     }),
                     is_preferred: None,
                     disabled: None,

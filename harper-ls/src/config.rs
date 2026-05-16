@@ -79,6 +79,10 @@ pub struct Config {
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
     pub exclude_patterns: GlobSet,
+    /// Delay in milliseconds after typing stops before diagnostics are published.
+    /// Set to 0 to publish diagnostics immediately (default behavior).
+    /// Set to a positive value to delay diagnostics until typing stops.
+    pub diagnostic_delay_ms: u64,
 }
 
 impl Config {
@@ -92,11 +96,19 @@ impl Config {
             bail!("Settings must be an object.");
         };
 
-        let Some(Value::Object(value)) = value.get("harper-ls") else {
-            bail!("Settings must contain a \"harper-ls\" key.");
+        // Handle both wrapped and unwrapped configuration formats
+        let config_obj = if !value.contains_key("harper-ls") {
+            // Unwrapped format: use the value directly
+            value
+        } else {
+            // Wrapped format: extract the harper-ls object
+            let Some(Value::Object(inner)) = value.get("harper-ls") else {
+                bail!("Settings must contain a \"harper-ls\" key.");
+            };
+            inner.clone()
         };
 
-        if let Some(v) = value.get("userDictPath") {
+        if let Some(v) = config_obj.get("userDictPath") {
             if !v.is_string() {
                 bail!("userDict path must be a string.");
             }
@@ -107,7 +119,7 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("fileDictPath") {
+        if let Some(v) = config_obj.get("fileDictPath") {
             if !v.is_string() {
                 bail!("fileDict path must be a string.");
             }
@@ -118,7 +130,7 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("workspaceDictPath") {
+        if let Some(v) = config_obj.get("workspaceDictPath") {
             if !v.is_string() {
                 bail!("workspaceDict path must be a string.");
             }
@@ -134,7 +146,7 @@ impl Config {
                 .to_path_buf();
         }
 
-        if let Some(v) = value.get("ignoredLintsPath") {
+        if let Some(v) = config_obj.get("ignoredLintsPath") {
             if !v.is_string() {
                 bail!("ignoredLintsPath path must be a string.");
             }
@@ -145,7 +157,7 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("statsPath") {
+        if let Some(v) = config_obj.get("statsPath") {
             if let Value::String(path) = v {
                 base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
@@ -153,23 +165,23 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("linters") {
+        if let Some(v) = config_obj.get("linters") {
             base.lint_config = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("diagnosticSeverity") {
+        if let Some(v) = config_obj.get("diagnosticSeverity") {
             base.diagnostic_severity = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("dialect") {
+        if let Some(v) = config_obj.get("dialect") {
             base.dialect = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("codeActions") {
+        if let Some(v) = config_obj.get("codeActions") {
             base.code_action_config = CodeActionConfig::from_lsp_config(v.clone())?;
         }
 
-        if let Some(v) = value.get("isolateEnglish") {
+        if let Some(v) = config_obj.get("isolateEnglish") {
             if let Value::Bool(v) = v {
                 base.isolate_english = *v;
             } else {
@@ -177,17 +189,21 @@ impl Config {
             }
         }
 
-        if let Some(v) = value.get("maxFileLength") {
+        if let Some(v) = config_obj.get("maxFileLength") {
             base.max_file_length = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("markdown")
+        if let Some(v) = config_obj.get("markdown")
             && let Some(v) = v.get("IgnoreLinkTitle")
         {
             base.markdown_options.ignore_link_title = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("excludePatterns") {
+        if let Some(v) = config_obj.get("diagnosticDelayMs") {
+            base.diagnostic_delay_ms = serde_json::from_value(v.clone())?;
+        }
+
+        if let Some(v) = config_obj.get("excludePatterns") {
             let Some(a) = v.as_array() else {
                 bail!("excludePatterns must be an array.");
             };
@@ -226,6 +242,7 @@ impl Default for Config {
             dialect: Dialect::American,
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
+            diagnostic_delay_ms: 0,
         }
     }
 }

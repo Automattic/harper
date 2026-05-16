@@ -261,6 +261,7 @@ These configs are under the `markdown` key:
 | `dialect`            | `"American"`, `"British"`, `"Australian"`, `"Canadian"`, `"Indian"` | `"American"`  | Set the dialect of English Harper should expect.                                                                                                                          |
 | `maxFileLength`      | `number`                                                            | `120000`      | Maximum length of file to be linted (in bytes). If a file is larger/longer than this, it will not be linted.                                                              |
 | `excludePatterns`    | `array`                                                             | `[]`          | A set of globs to ignore. If a file matches any of the globs, it will not be linted.                                                                                      |
+| `diagnosticDelayMs`  | `number`                                                            | `0`           | Delay in milliseconds after typing stops before diagnostics are published. Set to `0` to publish diagnostics immediately (default behavior). Set to a positive value (e.g., `1000` for 1 second) to delay diagnostics until typing stops, reducing distractions while typing. |
 
 ## Supported Languages
 

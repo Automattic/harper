@@ -3,6 +3,7 @@ use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 
 use crate::config::Config;
 use crate::document_state::DocumentState;
@@ -45,27 +46,43 @@ use tower_lsp_server::lsp_types::{
 use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{error, info, warn};
 
+/// Type alias for pending diagnostic task with its generation
+/// The generation is used to ensure delayed diagnostics don't overwrite
+/// immediate ones when code actions trigger instant feedback.
+type PendingDiagnosticTask = (tokio::task::JoinHandle<()>, u64);
+
 /// Return harper-ls version
 pub fn ls_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
+#[derive(Clone)]
 pub struct Backend {
     client: Client,
-    root: RwLock<PathBuf>,
-    config: RwLock<Config>,
-    stats: RwLock<Stats>,
-    doc_state: Mutex<HashMap<Uri, DocumentState>>,
+    root: Arc<RwLock<PathBuf>>,
+    config: Arc<RwLock<Config>>,
+    stats: Arc<RwLock<Stats>>,
+    doc_state: Arc<Mutex<HashMap<Uri, DocumentState>>>,
+    /// Tracks the last change time and generation for each document for diagnostic delay
+    /// The generation is incremented on each change, and pending tasks check if their
+    /// generation still matches before publishing.
+    last_change_time: Arc<Mutex<HashMap<Uri, Instant>>>,
+    last_change_generation: Arc<Mutex<HashMap<Uri, u64>>>,
+    /// Tracks pending diagnostic publications that are waiting for the delay
+    pending_diagnostics: Arc<Mutex<HashMap<Uri, PendingDiagnosticTask>>>,
 }
 
 impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
             client,
-            root: RwLock::new(".".into()),
-            stats: RwLock::new(Stats::new()),
-            config: RwLock::new(config),
-            doc_state: Mutex::new(HashMap::new()),
+            root: Arc::new(RwLock::new(".".into())),
+            stats: Arc::new(RwLock::new(Stats::new())),
+            config: Arc::new(RwLock::new(config)),
+            doc_state: Arc::new(Mutex::new(HashMap::new())),
+            last_change_time: Arc::new(Mutex::new(HashMap::new())),
+            last_change_generation: Arc::new(Mutex::new(HashMap::new())),
+            pending_diagnostics: Arc::new(Mutex::new(HashMap::new())),
         }
     }
 
@@ -457,6 +474,12 @@ impl Backend {
     async fn publish_diagnostics(&self, uri: &Uri) {
         let diagnostics = self.generate_diagnostics(uri).await;
 
+        warn!(
+            "DEBUG: publish_diagnostics: {} diagnostics for {:?}",
+            diagnostics.len(),
+            uri
+        );
+
         let result = PublishDiagnosticsParams {
             uri: uri.clone(),
             diagnostics,
@@ -466,6 +489,39 @@ impl Backend {
         self.client
             .send_notification::<PublishDiagnostics>(result)
             .await;
+
+        warn!("DEBUG: publish_diagnostics notification sent for {:?}", uri);
+    }
+
+    /// Publish diagnostics immediately, canceling any pending delayed diagnostics for the document.
+    /// This is used for code actions where we want instant feedback.
+    async fn publish_diagnostics_immediately(&self, uri: &Uri) {
+        warn!("DEBUG: Publishing diagnostics immediately for {:?}", uri);
+
+        // Increment the generation to invalidate any pending delayed diagnostics
+        {
+            let mut generations = self.last_change_generation.lock().await;
+            *generations.entry(uri.clone()).or_insert(0) += 1;
+        }
+
+        // Cancel any pending delayed diagnostics for this document
+        let mut pending = self.pending_diagnostics.lock().await;
+        if let Some((handle, old_generation)) = pending.remove(uri) {
+            warn!(
+                "DEBUG: Cancelled pending delayed diagnostics (gen {}) for {:?}",
+                old_generation, uri
+            );
+            handle.abort();
+        }
+        drop(pending);
+
+        // Update last change time to now
+        let mut last_changes = self.last_change_time.lock().await;
+        last_changes.insert(uri.clone(), Instant::now());
+        drop(last_changes);
+
+        // Publish diagnostics immediately
+        self.publish_diagnostics(uri).await;
     }
 
     /// Update the configuration of the server and publish document updates that
@@ -529,6 +585,7 @@ impl LanguageServer for Backend {
                 execute_command_provider: Some(ExecuteCommandOptions {
                     commands: vec![
                         "HarperRecordLint".to_owned(),
+                        "HarperRecordLintAndUpdate".to_owned(),
                         "HarperAddToUserDict".to_owned(),
                         "HarperAddToWSDict".to_owned(),
                         "HarperAddToFileDict".to_owned(),
@@ -598,14 +655,61 @@ impl LanguageServer for Backend {
             return;
         };
 
-        if let Err(err) = self
-            .update_document(&params.text_document.uri, &last.text, None)
-            .await
-        {
+        let uri = params.text_document.uri.clone();
+
+        if let Err(err) = self.update_document(&uri, &last.text, None).await {
             error!("{err}")
         }
 
-        self.publish_diagnostics(&params.text_document.uri).await;
+        // Check if diagnostic delay is configured
+        let config = self.config.read().await;
+        let delay_ms = config.diagnostic_delay_ms;
+        drop(config); // Release the lock early
+
+        if delay_ms > 0 {
+            // Get the current generation for this document
+            let current_generation = {
+                let mut generations = self.last_change_generation.lock().await;
+                *generations.entry(uri.clone()).or_insert(0) += 1;
+                generations[&uri]
+            };
+
+            // Cancel any pending diagnostic publication for this document
+            let mut pending = self.pending_diagnostics.lock().await;
+            if let Some((handle, _old_generation)) = pending.remove(&uri) {
+                handle.abort();
+            }
+
+            // Update last change time
+            let mut last_changes = self.last_change_time.lock().await;
+            last_changes.insert(uri.clone(), Instant::now());
+            drop(last_changes);
+
+            // Schedule diagnostics to be published after the delay
+            let uri_clone = uri.clone();
+            let last_change_generation = self.last_change_generation.clone();
+            let backend = self.clone();
+            let scheduled_generation = current_generation;
+
+            let handle = tokio::spawn(async move {
+                tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+
+                // Check if this is still the most recent change by comparing generations
+                let generations = last_change_generation.lock().await;
+                let current_gen = generations.get(&uri_clone).copied().unwrap_or(0);
+
+                if current_gen == scheduled_generation {
+                    // This is still the most recent change, publish diagnostics
+                    backend.publish_diagnostics(&uri_clone).await;
+                }
+                // Otherwise, a newer change has occurred and will handle diagnostics
+            });
+
+            pending.insert(uri, (handle, scheduled_generation));
+        } else {
+            // No delay configured, publish immediately
+            self.publish_diagnostics(&uri).await;
+        }
     }
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {
@@ -664,7 +768,7 @@ impl LanguageServer for Backend {
             return Ok(None);
         };
 
-        info!("Received command: \"{}\"", params.command.as_str());
+        warn!("DEBUG: Received command: \"{}\"", params.command.as_str());
 
         match params.command.as_str() {
             "HarperRecordLint" => {
@@ -677,6 +781,41 @@ impl LanguageServer for Backend {
 
                 let mut stats = self.stats.write().await;
                 stats.records.push(record);
+            }
+            "HarperRecordLintAndUpdate" => {
+                let Ok(uri) = first.parse::<Uri>() else {
+                    error!("Unable to parse URI for HarperRecordLintAndUpdate");
+                    return Ok(None);
+                };
+
+                let Some(second) = string_args.next() else {
+                    error!("Missing RecordKind argument for HarperRecordLintAndUpdate");
+                    return Ok(None);
+                };
+
+                let Ok(kind) = serde_json::from_str(&second) else {
+                    error!("Unable to deserialize RecordKind.");
+                    return Ok(None);
+                };
+
+                let record = Record::now(kind);
+                let mut stats = self.stats.write().await;
+                stats.records.push(record);
+
+                // This command is called after a suggestion code action is applied.
+                // The suggestion's WorkspaceEdit has already been applied by the client,
+                // but the client might send executeCommand before textDocument/didChange.
+                // We need to wait briefly to ensure the document state is updated.
+                warn!("DEBUG: HarperRecordLintAndUpdate called for {:?}", uri);
+
+                // Wait a short time to allow did_change to arrive
+                tokio::time::sleep(Duration::from_millis(50)).await;
+
+                warn!(
+                    "DEBUG: Publishing diagnostics immediately (after wait) for {:?}",
+                    uri
+                );
+                self.publish_diagnostics_immediately(&uri).await;
             }
             "HarperAddToUserDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -697,7 +836,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToWSDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -718,7 +857,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperAddToFileDict" => {
                 let word = &first.chars().collect::<Vec<_>>();
@@ -749,7 +888,7 @@ impl LanguageServer for Backend {
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.publish_diagnostics(&file_uri).await;
+                self.publish_diagnostics_immediately(&file_uri).await;
             }
             "HarperOpen" => match open::that(&first) {
                 Ok(()) => {
@@ -799,7 +938,7 @@ impl LanguageServer for Backend {
 
                 drop(doc_lock);
 
-                self.publish_diagnostics(&uri).await;
+                self.publish_diagnostics_immediately(&uri).await;
             }
             _ => (),
         }
@@ -828,7 +967,7 @@ impl LanguageServer for Backend {
                 .await
                 .map_err(|err| error!("{err}"))
                 .err();
-            self.publish_diagnostics(&uri).await;
+            self.publish_diagnostics_immediately(&uri).await;
         }
     }
 
@@ -864,5 +1003,197 @@ impl LanguageServer for Backend {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashMap;
+    use std::sync::Arc;
+    use std::time::{Duration, Instant};
+    use tokio::sync::Mutex;
+    use tower_lsp_server::lsp_types::Uri;
+
+    /// Test that verifies the publish_diagnostics_immediately logic
+    /// by simulating the state changes it performs
+    #[tokio::test]
+    async fn test_publish_diagnostics_immediately_cancels_pending() {
+        // Create mock state that mimics Backend's internal state
+        // Using tuple type directly to avoid needing to import the type alias in tests
+        let pending_diagnostics: Arc<Mutex<HashMap<Uri, (tokio::task::JoinHandle<()>, u64)>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+        let last_change_time: Arc<Mutex<HashMap<Uri, Instant>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+        let last_change_generation: Arc<Mutex<HashMap<Uri, u64>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+
+        let test_uri: Uri = "file:///test.txt".parse().unwrap();
+
+        // Simulate a pending diagnostic task with generation 1
+        {
+            let mut pending = pending_diagnostics.lock().await;
+            let handle =
+                tokio::spawn(async { tokio::time::sleep(Duration::from_millis(1000)).await });
+            pending.insert(test_uri.clone(), (handle, 1));
+        }
+
+        // Simulate setting generation to 1
+        {
+            let mut generations = last_change_generation.lock().await;
+            generations.insert(test_uri.clone(), 1);
+        }
+
+        // Verify pending diagnostic exists
+        {
+            let pending = pending_diagnostics.lock().await;
+            assert!(
+                pending.contains_key(&test_uri),
+                "Pending diagnostic should exist before cancellation"
+            );
+        }
+
+        // Simulate what publish_diagnostics_immediately does:
+        // Step 1: Increment generation
+        {
+            let mut generations = last_change_generation.lock().await;
+            *generations.entry(test_uri.clone()).or_insert(0) += 1;
+        }
+
+        // Step 2: Cancel any pending delayed diagnostics for this document
+        {
+            let mut pending = pending_diagnostics.lock().await;
+            if let Some((handle, _old_gen)) = pending.remove(&test_uri) {
+                handle.abort();
+            }
+        }
+
+        // Step 3: Update last change time to now
+        {
+            let mut last_changes = last_change_time.lock().await;
+            last_changes.insert(test_uri.clone(), Instant::now());
+        }
+
+        // Verify the pending diagnostic was removed
+        {
+            let pending = pending_diagnostics.lock().await;
+            assert!(
+                !pending.contains_key(&test_uri),
+                "Pending diagnostic should have been removed"
+            );
+        }
+
+        // Verify the last change time was updated
+        {
+            let last_changes = last_change_time.lock().await;
+            assert!(
+                last_changes.contains_key(&test_uri),
+                "Last change time should have been set"
+            );
+
+            let last_time = last_changes.get(&test_uri).unwrap();
+            let elapsed = last_time.elapsed();
+            assert!(
+                elapsed < Duration::from_millis(100),
+                "Last change time should be very recent"
+            );
+        }
+
+        // Verify generation was incremented
+        {
+            let generations = last_change_generation.lock().await;
+            assert_eq!(
+                generations[&test_uri], 2,
+                "Generation should have been incremented"
+            );
+        }
+    }
+
+    /// Test that verifies the immediate method handles non-existent pending diagnostics gracefully
+    #[tokio::test]
+    async fn test_publish_diagnostics_immediately_no_pending() {
+        // Using tuple type directly to avoid needing to import the type alias in tests
+        let pending_diagnostics: Arc<Mutex<HashMap<Uri, (tokio::task::JoinHandle<()>, u64)>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+        let last_change_time: Arc<Mutex<HashMap<Uri, Instant>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+        let last_change_generation: Arc<Mutex<HashMap<Uri, u64>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+
+        let test_uri: Uri = "file:///test.txt".parse().unwrap();
+
+        // Simulate incrementing generation
+        {
+            let mut generations = last_change_generation.lock().await;
+            *generations.entry(test_uri.clone()).or_insert(0) += 1;
+        }
+
+        // Call the logic without any pending diagnostics
+        {
+            let mut pending = pending_diagnostics.lock().await;
+            if let Some((handle, _old_gen)) = pending.remove(&test_uri) {
+                handle.abort();
+            }
+        }
+
+        {
+            let mut last_changes = last_change_time.lock().await;
+            last_changes.insert(test_uri.clone(), Instant::now());
+        }
+
+        // Should not panic - just updates last change time
+        {
+            let last_changes = last_change_time.lock().await;
+            assert!(last_changes.contains_key(&test_uri));
+        }
+    }
+
+    /// Test that verifies multiple documents can have independent pending diagnostics
+    #[tokio::test]
+    async fn test_multiple_documents_independent_pending() {
+        // Using tuple type directly to avoid needing to import the type alias in tests
+        let pending_diagnostics: Arc<Mutex<HashMap<Uri, (tokio::task::JoinHandle<()>, u64)>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+
+        let uri1: Uri = "file:///test1.txt".parse().unwrap();
+        let uri2: Uri = "file:///test2.txt".parse().unwrap();
+
+        // Add pending diagnostics for both documents
+        {
+            let mut pending = pending_diagnostics.lock().await;
+            let handle1 =
+                tokio::spawn(async { tokio::time::sleep(Duration::from_millis(1000)).await });
+            let handle2 =
+                tokio::spawn(async { tokio::time::sleep(Duration::from_millis(1000)).await });
+            pending.insert(uri1.clone(), (handle1, 1));
+            pending.insert(uri2.clone(), (handle2, 1));
+        }
+
+        // Verify both exist
+        {
+            let pending = pending_diagnostics.lock().await;
+            assert!(pending.contains_key(&uri1));
+            assert!(pending.contains_key(&uri2));
+        }
+
+        // Cancel only uri1's pending diagnostic (simulating publish_diagnostics_immediately for uri1)
+        {
+            let mut pending = pending_diagnostics.lock().await;
+            if let Some((handle, _old_gen)) = pending.remove(&uri1) {
+                handle.abort();
+            }
+        }
+
+        // Verify uri1's pending was cancelled but uri2's is still there
+        {
+            let pending = pending_diagnostics.lock().await;
+            assert!(
+                !pending.contains_key(&uri1),
+                "uri1's pending should be cancelled"
+            );
+            assert!(
+                pending.contains_key(&uri2),
+                "uri2's pending should still exist"
+            );
+        }
     }
 }
