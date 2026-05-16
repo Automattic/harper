@@ -1,24 +1,25 @@
-mod to_too_adjective_end;
-mod to_too_adjective_punct;
-mod to_too_adjverb_ed_punct;
-mod to_too_adverb;
-mod to_too_chunk_start_comma;
-mod to_too_degree_words;
-mod to_too_eos;
-mod to_too_pronoun_end;
-mod too_to;
+pub mod to_too_adjective_end;
+pub mod to_too_adjective_punct;
+pub mod to_too_adjverb_ed_punct;
+pub mod to_too_adverb;
+pub mod to_too_chunk_start_comma;
+pub mod to_too_degree_words;
+pub mod to_too_eos;
+pub mod to_too_pronoun_end;
+pub mod too_to;
+
+pub use to_too_adjective_end::ToTooAdjectiveEnd;
+pub use to_too_adjective_punct::ToTooAdjectivePunct;
+pub use to_too_adjverb_ed_punct::ToTooAdjVerbEdPunct;
+pub use to_too_adverb::ToTooAdverb;
+pub use to_too_chunk_start_comma::ToTooChunkStartComma;
+pub use to_too_degree_words::ToTooDegreeWords;
+pub use to_too_eos::ToTooEos;
+pub use to_too_pronoun_end::ToTooPronounEnd;
+pub use too_to::TooTo;
 
 use super::merge_linters::merge_linters;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use to_too_adjective_end::ToTooAdjectiveEnd;
-use to_too_adjective_punct::ToTooAdjectivePunct;
-use to_too_adjverb_ed_punct::ToTooAdjVerbEdPunct;
-use to_too_adverb::ToTooAdverb;
-use to_too_chunk_start_comma::ToTooChunkStartComma;
-use to_too_degree_words::ToTooDegreeWords;
-use to_too_eos::ToTooEos;
-use to_too_pronoun_end::ToTooPronounEnd;
-use too_to::TooTo;
 
 merge_linters!(
     ToTwoToo =>
