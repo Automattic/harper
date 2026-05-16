@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 use super::Suggestion;
 use super::{Lint, LintKind, Linter};
@@ -180,7 +180,7 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
                         lint_kind: LintKind::Spelling,
                         suggestions: suggestions
                             .into_iter()
-                            .map(|s| Suggestion::ReplaceWith(s))
+                            .map(Suggestion::ReplaceWith)
                             .collect(),
                         priority: 20,
                         message,

@@ -234,25 +234,22 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         // Check if word is in dictionary and explicitly marked as noun
-        if let Some(metadata) = self.dictionary.get_word_metadata(word) {
-            if metadata.noun.is_some() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(word)
+            && metadata.noun.is_some()
+        {
+            return true;
         }
         // Also check the lowercase form
-        if let Some(metadata) = self.dictionary.get_word_metadata(&lower) {
-            if metadata.noun.is_some() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(&lower)
+            && metadata.noun.is_some()
+        {
+            return true;
         }
 
         // Check for common noun suffixes (with minimum length guards)
         for (suffix, min_len) in &self.noun_suffixes {
-            if lower.len() >= *min_len {
-                let word_suffix = &lower[lower.len() - suffix.len()..];
-                if word_suffix == *suffix {
-                    return true;
-                }
+            if lower.len() >= *min_len && &lower[lower.len() - suffix.len()..] == suffix {
+                return true;
             }
         }
 
@@ -271,42 +268,40 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
 
                 for word in sentence.iter_words() {
                     // Skip first word of sentence (handled by sentence capitalization)
-                    if let Some(fw) = &first_word {
-                        if word.span == fw.span {
-                            continue;
-                        }
+                    if let Some(fw) = &first_word
+                        && word.span == fw.span
+                    {
+                        continue;
                     }
 
                     let word_chars = document.get_span_content(&word.span);
 
                     // Skip words that are already capitalized
-                    if let Some(first_char) = word_chars.first() {
-                        if first_char.is_uppercase() {
-                            continue;
-                        }
+                    if let Some(first_char) = word_chars.first()
+                        && first_char.is_uppercase()
+                    {
+                        continue;
                     }
 
                     // Skip non-alphabetic words
-                    if word_chars.iter().all(|c| c.is_alphabetic()) {
-                        // Check if this is a German noun that should be capitalized
-                        if self.is_likely_noun(&word_chars, document) {
-                            let mut replacement: Vec<char> = word_chars.to_vec();
-                            if let Some(first_char) = replacement.first_mut() {
-                                *first_char =
-                                    first_char.to_uppercase().next().unwrap_or(*first_char);
-                            }
-
-                            lints.push(Lint {
-                                span: word.span,
-                                lint_kind: LintKind::Capitalization,
-                                suggestions: vec![Suggestion::ReplaceWith(replacement)],
-                                priority: 25, // High priority for German
-                                message: format!(
-                                    "In German, all nouns must be capitalized. \"{}\" appears to be a noun.",
-                                    word_chars.iter().collect::<String>()
-                                ),
-                            });
+                    if word_chars.iter().all(|c| c.is_alphabetic())
+                        && self.is_likely_noun(word_chars, document)
+                    {
+                        let mut replacement: Vec<char> = word_chars.to_vec();
+                        if let Some(first_char) = replacement.first_mut() {
+                            *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
                         }
+
+                        lints.push(Lint {
+                            span: word.span,
+                            lint_kind: LintKind::Capitalization,
+                            suggestions: vec![Suggestion::ReplaceWith(replacement)],
+                            priority: 25, // High priority for German
+                            message: format!(
+                                "In German, all nouns must be capitalized. \"{}\" appears to be a noun.",
+                                word_chars.iter().collect::<String>()
+                            ),
+                        });
                     }
                 }
             }

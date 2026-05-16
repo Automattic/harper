@@ -45,11 +45,9 @@ impl<T: Dictionary> Linter for GermanSentenceCapitalization<T> {
                     continue;
                 }
 
-                if let Some(first_word) = sentence.first_non_whitespace() {
-                    if !first_word.kind.is_word() {
-                        continue;
-                    }
-
+                if let Some(first_word) = sentence.first_non_whitespace()
+                    && first_word.kind.is_word()
+                {
                     let word_chars = document.get_span_content(&first_word.span);
 
                     if let Some(first_char) = word_chars.first()
