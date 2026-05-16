@@ -1316,6 +1316,13 @@
 								"state": true,
 								"label": "Expand Vulnerability"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
+							}
 						}
 					]
 				}
