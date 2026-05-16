@@ -60,7 +60,8 @@ pub fn run_prep_pattern(
             let source_chars = source.chars().collect::<Vec<_>>();
 
             // Check if we should match any preposition or specific ones
-            let match_any_preposition = prepositions.len() == 1 && prepositions[0].to_lowercase() == "any";
+            let match_any_preposition =
+                prepositions.len() == 1 && prepositions[0].to_lowercase() == "any";
             let target_prepositions: Vec<String> = if match_any_preposition {
                 Vec::new() // Will match any preposition
             } else {
@@ -70,165 +71,162 @@ pub fn run_prep_pattern(
             for (window_idx, window) in tokens.windows(3).enumerate() {
                 // Check for word + space + preposition pattern
                 if let (Some(word_token), Some(space_token), Some(prep_token)) =
-                    (window.get(0), window.get(1), window.get(2))
+                    (window.first(), window.get(1), window.get(2))
+                    && word_token.kind.is_word()
+                    && space_token.kind.is_whitespace()
+                    && prep_token.kind.is_preposition()
                 {
-                    if word_token.kind.is_word()
-                        && space_token.kind.is_whitespace()
-                        && prep_token.kind.is_preposition()
-                    {
-                        // Check if word matches any of our target words
-                        let word_content = word_token.get_ch(&source_chars);
-                        if word_content.eq_any_ignore_ascii_case_str(
-                            &words.iter().map(|w| w.as_str()).collect::<Vec<_>>(),
-                        ) {
-                            // Check if preposition matches our target prepositions (or any)
-                            let prep_str = prep_token.get_str(&source_chars).to_lowercase();
-                            let preposition_matches = match_any_preposition || 
-                                target_prepositions.iter().any(|target| prep_str.contains(target));
-                            
-                            if preposition_matches {
-                                found_matches = true;
-                                total_found = true;
+                    // Check if word matches any of our target words
+                    let word_content = word_token.get_ch(&source_chars);
+                    if word_content.eq_any_ignore_ascii_case_str(
+                        &words.iter().map(|w| w.as_str()).collect::<Vec<_>>(),
+                    ) {
+                        // Check if preposition matches our target prepositions (or any)
+                        let prep_str = prep_token.get_str(&source_chars).to_lowercase();
+                        let preposition_matches = match_any_preposition
+                            || target_prepositions
+                                .iter()
+                                .any(|target| prep_str.contains(target));
 
-                                // Find line number for this token once
-                                let line_num = tokens[..window_idx]
-                                    .iter()
-                                    .filter(|t| t.kind.is_paragraph_break())
-                                    .count();
+                        if preposition_matches {
+                            found_matches = true;
+                            total_found = true;
 
-                                match format {
-                                    crate::OutputFormat::Default => {
-                                        // Adapted from format_lint_match logic to properly handle tokens
-                                        let fmt_tokens = |tokens: &[&Token]| {
-                                            tokens
-                                                .iter()
-                                                .filter(|t| !t.kind.is_unlintable())
-                                                .map(|t| t.get_str(&source_chars))
-                                                .collect::<String>()
-                                        };
+                            // Find line number for this token once
+                            let line_num = tokens[..window_idx]
+                                .iter()
+                                .filter(|t| t.kind.is_paragraph_break())
+                                .count();
 
-                                        // Get context around the match (2 tokens before, 2 tokens after)
-                                        let context_before =
-                                            (window_idx as isize - 2).max(0) as usize;
-                                        let context_after = (window_idx + 3 + 2).min(tokens.len());
+                            match format {
+                                crate::OutputFormat::Default => {
+                                    // Adapted from format_lint_match logic to properly handle tokens
+                                    let fmt_tokens = |tokens: &[&Token]| {
+                                        tokens
+                                            .iter()
+                                            .filter(|t| !t.kind.is_unlintable())
+                                            .map(|t| t.get_str(&source_chars))
+                                            .collect::<String>()
+                                    };
 
-                                        let before_tokens = &tokens[context_before..window_idx];
-                                        let matched_tokens = &tokens[window_idx..=window_idx + 2]; // word + space + preposition
-                                        let after_tokens = &tokens[window_idx + 3..context_after];
+                                    // Get context around the match (2 tokens before, 2 tokens after)
+                                    let context_before = (window_idx as isize - 2).max(0) as usize;
+                                    let context_after = (window_idx + 3 + 2).min(tokens.len());
 
-                                        println!(
-                                            "{}:{}: \x1b[2m{}\x1b[0m\x1b[1;31m{}\x1b[0m\x1b[2m{}\x1b[0m",
-                                            single_input.get_identifier(),
-                                            line_num + 1,
-                                            fmt_tokens(&before_tokens),
-                                            fmt_tokens(&matched_tokens),
-                                            fmt_tokens(&after_tokens)
-                                        );
-                                    }
-                                    crate::OutputFormat::Json => {
-                                        let match_data = serde_json::json!({
-                                            "line": line_num + 1,
-                                            "word": word_token.get_str(&source_chars),
-                                            "preposition": prep_token.get_str(&source_chars),
-                                            "word_span": (word_token.span.start, word_token.span.end),
-                                            "prep_span": (prep_token.span.start, prep_token.span.end)
-                                        });
-                                        println!("{}", serde_json::to_string(&match_data)?);
-                                    }
-                                    crate::OutputFormat::Compact => {
-                                        println!(
-                                            "{}:{}: '{}' followed by '{}' - {}",
-                                            single_input.get_identifier(),
-                                            line_num + 1,
-                                            word_token.get_str(&source_chars),
-                                            prep_token.get_str(&source_chars),
-                                            source[word_token.span.start..prep_token.span.end]
-                                                .to_string()
-                                        );
-                                    }
+                                    let before_tokens = &tokens[context_before..window_idx];
+                                    let matched_tokens = &tokens[window_idx..=window_idx + 2]; // word + space + preposition
+                                    let after_tokens = &tokens[window_idx + 3..context_after];
+
+                                    println!(
+                                        "{}:{}: \x1b[2m{}\x1b[0m\x1b[1;31m{}\x1b[0m\x1b[2m{}\x1b[0m",
+                                        single_input.get_identifier(),
+                                        line_num + 1,
+                                        fmt_tokens(before_tokens),
+                                        fmt_tokens(matched_tokens),
+                                        fmt_tokens(after_tokens)
+                                    );
+                                }
+                                crate::OutputFormat::Json => {
+                                    let match_data = serde_json::json!({
+                                        "line": line_num + 1,
+                                        "word": word_token.get_str(&source_chars),
+                                        "preposition": prep_token.get_str(&source_chars),
+                                        "word_span": (word_token.span.start, word_token.span.end),
+                                        "prep_span": (prep_token.span.start, prep_token.span.end)
+                                    });
+                                    println!("{}", serde_json::to_string(&match_data)?);
+                                }
+                                crate::OutputFormat::Compact => {
+                                    println!(
+                                        "{}:{}: '{}' followed by '{}' - {}",
+                                        single_input.get_identifier(),
+                                        line_num + 1,
+                                        word_token.get_str(&source_chars),
+                                        prep_token.get_str(&source_chars),
+                                        &source[word_token.span.start..prep_token.span.end]
+                                    );
                                 }
                             }
                         }
                     }
                 }
-                
+
                 // Check for preposition + space + word pattern
                 if let (Some(prep_token), Some(space_token), Some(word_token)) =
-                    (window.get(0), window.get(1), window.get(2))
+                    (window.first(), window.get(1), window.get(2))
+                    && prep_token.kind.is_preposition()
+                    && space_token.kind.is_whitespace()
+                    && word_token.kind.is_word()
                 {
-                    if prep_token.kind.is_preposition()
-                        && space_token.kind.is_whitespace()
-                        && word_token.kind.is_word()
-                    {
-                        // Check if word matches any of our target words
-                        let word_content = word_token.get_ch(&source_chars);
-                        if word_content.eq_any_ignore_ascii_case_str(
-                            &words.iter().map(|w| w.as_str()).collect::<Vec<_>>(),
-                        ) {
-                            // Check if preposition matches our target prepositions (or any)
-                            let prep_str = prep_token.get_str(&source_chars).to_lowercase();
-                            let preposition_matches = match_any_preposition || 
-                                target_prepositions.iter().any(|target| prep_str.contains(target));
-                            
-                            if preposition_matches {
-                                found_matches = true;
-                                total_found = true;
-                                
-                                // Find line number for this token once
-                                let line_num = tokens[..window_idx]
-                                    .iter()
-                                    .filter(|t| t.kind.is_paragraph_break())
-                                    .count();
-                                
-                                match format {
-                                    crate::OutputFormat::Default => {
-                                        // Adapted from format_lint_match logic to properly handle tokens
-                                        let fmt_tokens = |tokens: &[&Token]| {
-                                            tokens
-                                                .iter()
-                                                .filter(|t| !t.kind.is_unlintable())
-                                                .map(|t| t.get_str(&source_chars))
-                                                .collect::<String>()
-                                        };
+                    // Check if word matches any of our target words
+                    let word_content = word_token.get_ch(&source_chars);
+                    if word_content.eq_any_ignore_ascii_case_str(
+                        &words.iter().map(|w| w.as_str()).collect::<Vec<_>>(),
+                    ) {
+                        // Check if preposition matches our target prepositions (or any)
+                        let prep_str = prep_token.get_str(&source_chars).to_lowercase();
+                        let preposition_matches = match_any_preposition
+                            || target_prepositions
+                                .iter()
+                                .any(|target| prep_str.contains(target));
 
-                                        // Get context around the match (2 tokens before, 2 tokens after)
-                                        let context_before = (window_idx as isize - 2).max(0) as usize;
-                                        let context_after = (window_idx + 3 + 2).min(tokens.len());
-                                        
-                                        let before_tokens = &tokens[context_before..window_idx];
-                                        let matched_tokens = &tokens[window_idx..=window_idx + 2]; // preposition + space + word
-                                        let after_tokens = &tokens[window_idx + 3..context_after];
-                                        
-                                        println!(
-                                            "{}:{}: \x1b[2m{}\x1b[0m\x1b[1;31m{}\x1b[0m\x1b[2m{}\x1b[0m",
-                                            single_input.get_identifier(),
-                                            line_num + 1,
-                                            fmt_tokens(&before_tokens),
-                                            fmt_tokens(&matched_tokens),
-                                            fmt_tokens(&after_tokens)
-                                        );
-                                    }
-                                    crate::OutputFormat::Json => {
-                                        let match_data = serde_json::json!({
-                                            "line": line_num + 1,
-                                            "preposition": prep_token.get_str(&source_chars),
-                                            "word": word_token.get_str(&source_chars),
-                                            "prep_span": (prep_token.span.start, prep_token.span.end),
-                                            "word_span": (word_token.span.start, word_token.span.end)
-                                        });
-                                        println!("{}", serde_json::to_string(&match_data)?);
-                                    }
-                                    crate::OutputFormat::Compact => {
-                                        println!(
-                                            "{}:{}: '{}' followed by '{}' - {}",
-                                            single_input.get_identifier(),
-                                            line_num + 1,
-                                            prep_token.get_str(&source_chars),
-                                            word_token.get_str(&source_chars),
-                                            source[prep_token.span.start..word_token.span.end]
-                                                .to_string()
-                                        );
-                                    }
+                        if preposition_matches {
+                            found_matches = true;
+                            total_found = true;
+
+                            // Find line number for this token once
+                            let line_num = tokens[..window_idx]
+                                .iter()
+                                .filter(|t| t.kind.is_paragraph_break())
+                                .count();
+
+                            match format {
+                                crate::OutputFormat::Default => {
+                                    // Adapted from format_lint_match logic to properly handle tokens
+                                    let fmt_tokens = |tokens: &[&Token]| {
+                                        tokens
+                                            .iter()
+                                            .filter(|t| !t.kind.is_unlintable())
+                                            .map(|t| t.get_str(&source_chars))
+                                            .collect::<String>()
+                                    };
+
+                                    // Get context around the match (2 tokens before, 2 tokens after)
+                                    let context_before = (window_idx as isize - 2).max(0) as usize;
+                                    let context_after = (window_idx + 3 + 2).min(tokens.len());
+
+                                    let before_tokens = &tokens[context_before..window_idx];
+                                    let matched_tokens = &tokens[window_idx..=window_idx + 2]; // preposition + space + word
+                                    let after_tokens = &tokens[window_idx + 3..context_after];
+
+                                    println!(
+                                        "{}:{}: \x1b[2m{}\x1b[0m\x1b[1;31m{}\x1b[0m\x1b[2m{}\x1b[0m",
+                                        single_input.get_identifier(),
+                                        line_num + 1,
+                                        fmt_tokens(before_tokens),
+                                        fmt_tokens(matched_tokens),
+                                        fmt_tokens(after_tokens)
+                                    );
+                                }
+                                crate::OutputFormat::Json => {
+                                    let match_data = serde_json::json!({
+                                        "line": line_num + 1,
+                                        "preposition": prep_token.get_str(&source_chars),
+                                        "word": word_token.get_str(&source_chars),
+                                        "prep_span": (prep_token.span.start, prep_token.span.end),
+                                        "word_span": (word_token.span.start, word_token.span.end)
+                                    });
+                                    println!("{}", serde_json::to_string(&match_data)?);
+                                }
+                                crate::OutputFormat::Compact => {
+                                    println!(
+                                        "{}:{}: '{}' followed by '{}' - {}",
+                                        single_input.get_identifier(),
+                                        line_num + 1,
+                                        prep_token.get_str(&source_chars),
+                                        word_token.get_str(&source_chars),
+                                        &source[prep_token.span.start..word_token.span.end]
+                                    );
                                 }
                             }
                         }
