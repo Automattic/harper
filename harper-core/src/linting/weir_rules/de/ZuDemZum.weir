@@ -1,7 +1,7 @@
 expr main [(zu dem zum), (zu dem Zum), (ZU DEM zum)]
 
 let message "»zu dem« kann zu »zum« verkürzt werden."
-let description "Die Präposition »zu« mit Artikel »dem« wird oft zu »zum« verkürzt."
+let description "Fixes a contraction error."
 let kind "Style"
 let becomes "zum"
 let strategy "MatchCase"

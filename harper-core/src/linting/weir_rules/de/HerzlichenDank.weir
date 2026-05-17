@@ -1,7 +1,7 @@
 expr main [(herzliche Dank), (herzliche danke)]
 
 let message "The correct form is `herzlichen Dank`."
-let description "In German, `herzlichen Dank` uses the accusative form of `herzlich`. The form `herzliche Dank` omits the required `-en` ending."
+let description "Fixes a case ending error."
 let kind "Grammar"
 let becomes "herzlichen Dank"
 let strategy "Exact"

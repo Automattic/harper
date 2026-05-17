@@ -1,7 +1,7 @@
 expr main zur der
 
 let message "Use `zu der` or the contraction `zur`, not both together."
-let description "The word `zur` is already a contraction of `zu` + `der`. Writing `zur der` is redundant — use either `zur` or `zu der`."
+let description "Fixes a redundant contraction."
 let kind "Grammar"
 let becomes "zur"
 

@@ -1,7 +1,7 @@
 expr main [(fuer für), (fuer Fuer), (FUER für)]
 
 let message "Die Präposition »für« wird mit »ü« geschrieben (Umlaut), nicht »ue«."
-let description "»für« wird mit Umlaut geschrieben (nicht »fuer«)."
+let description "Fixes spelling with umlaut."
 let kind "Spelling"
 let becomes "für"
 let strategy "MatchCase"

@@ -5301,6 +5301,226 @@
 					]
 				}
 			}
+		},
+		{
+			"Group": {
+				"label": "German",
+				"description": "German language-specific checks for common errors and style issues.",
+				"child": {
+					"settings": [
+						{
+							"Bool": {
+								"name": "BabyphoneBabyfon",
+								"state": true,
+								"label": "BabyphoneBabyfon"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BeimBei",
+								"state": true,
+								"label": "BeimBei"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BenuetzenBenutzen",
+								"state": true,
+								"label": "BenuetzenBenutzen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BerietenBereiten",
+								"state": true,
+								"label": "BerietenBereiten"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ChannelChannel",
+								"state": true,
+								"label": "ChannelChannel"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DanksDanke",
+								"state": true,
+								"label": "DanksDanke"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DeinDein",
+								"state": true,
+								"label": "DeinDein"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EtwasDass",
+								"state": true,
+								"label": "EtwasDass"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FuerFuer",
+								"state": true,
+								"label": "FuerFuer"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GenantGenannt",
+								"state": true,
+								"label": "GenantGenannt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GeschehenGeschehen",
+								"state": true,
+								"label": "GeschehenGeschehen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GilbtGilt",
+								"state": true,
+								"label": "GilbtGilt"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GluckGlueck",
+								"state": true,
+								"label": "GluckGlueck"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HerzlichenDank",
+								"state": true,
+								"label": "HerzlichenDank"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImAm",
+								"state": true,
+								"label": "ImAm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImAnbetracht",
+								"state": true,
+								"label": "ImAnbetracht"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InDemIm",
+								"state": true,
+								"label": "InDemIm"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InIn",
+								"state": true,
+								"label": "InIn"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LetztesEndes",
+								"state": true,
+								"label": "LetztesEndes"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MeinMein",
+								"state": true,
+								"label": "MeinMein"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OllesAlles",
+								"state": true,
+								"label": "OllesAlles"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SeiheSiehe",
+								"state": true,
+								"label": "SeiheSiehe"
+							}
+						},
+						{
+							"Bool": {
+								"name": "VerleihenVerleihen",
+								"state": true,
+								"label": "VerleihenVerleihen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "VielenDank",
+								"state": true,
+								"label": "VielenDank"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WirHaben",
+								"state": true,
+								"label": "WirHaben"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ZuDemZum",
+								"state": true,
+								"label": "ZuDemZum"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ZumAnbeissen",
+								"state": true,
+								"label": "ZumAnbeissen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ZurDer",
+								"state": true,
+								"label": "ZurDer"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ZurZum",
+								"state": true,
+								"label": "ZurZum"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Zwingendermaassen",
+								"state": true,
+								"label": "Zwingendermaassen"
+							}
+						}
+					]
+				}
+			}
 		}
 	]
 }

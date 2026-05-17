@@ -1,7 +1,7 @@
 expr main [(zum Abbeißen), (zum Abbeissen)]
 
 let message "Use `zum Anbeißen` — `anbeißen` means something irresistibly attractive."
-let description "The idiomatic German phrase `zum Anbeißen` (from `anbeißen` — to bite into) means something is incredibly tempting or attractive. The form `zum Abbeißen` (from `abbeißen` — to bite off) is an eggcorn that changes the meaning."
+let description "Fixes an eggcorn in an idiomatic phrase."
 let kind "Typo"
 let becomes "zum Anbeißen"
 

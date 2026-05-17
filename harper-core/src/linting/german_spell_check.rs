@@ -208,6 +208,9 @@ mod tests {
     fn lint_text(text: &str) -> Vec<String> {
         let dict = curated_german_dictionary();
         let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
+        // Add German spell check linter explicitly since it's not in the curated group yet
+        linter.add("GermanSpellCheck", GermanSpellCheck::new(dict.clone()));
+        linter.config.set_rule_enabled("GermanSpellCheck", true);
         let document = Document::new(text, &PlainGerman, &dict);
 
         linter

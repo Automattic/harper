@@ -1,7 +1,7 @@
 expr main etwas dass
 
 let message "Did you mean `etwa dass`?"
-let description "The phrase `etwas dass` is incorrect. `etwa dass` (meaning roughly that) is the correct form. `etwas` (something) and `dass` (that, a conjunction) do not combine grammatically in this way."
+let description "Fixes an incorrect phrase combination."
 let kind "Grammar"
 let becomes "etwa dass"
 

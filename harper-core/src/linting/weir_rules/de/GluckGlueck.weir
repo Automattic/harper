@@ -1,7 +1,7 @@
 expr main [(Gluck Glück)]
 
 let message "Das Wort wird »Glück« geschrieben."
-let description "DasWortwirdGlückgeschrieben."
+let description "The word uses the umlaut character."
 let kind "Spelling"
 let becomes "Glück"
 let strategy "MatchCase"

@@ -1,7 +1,7 @@
 expr main [(mein mein), (mein MEIN), (MEIN mein)]
 
 let message "Das Possessivpronomen »mein« sollte nicht doppelt verwendet werden."
-let description "Das Possessivpronomen »mein« wird nicht doppelt geschrieben."
+let description "Fixes a redundant possessive pronoun."
 let kind "Grammar"
 let becomes "mein"
 let strategy "MatchCase"

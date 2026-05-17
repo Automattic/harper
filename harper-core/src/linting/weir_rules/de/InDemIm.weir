@@ -1,7 +1,7 @@
 expr main [(in dem im), (in dem Im), (IN DEM im)]
 
 let message "»in dem« kann zu »im« verkürzt werden."
-let description "Die Präposition »in« mit Artikel »dem« wird oft zu »im« verkürzt."
+let description "Fixes a contraction error."
 let kind "Style"
 let becomes "im"
 let strategy "MatchCase"

@@ -1,7 +1,7 @@
 expr main [(berieten bereiten)]
 
 let message "Die Verbform lautet »bereiten« (mit »t«)."
-let description "DieVerbformlautet»bereiten«(mit»t«)geschrieben,nicht»berieten«."
+let description "Fixes spelling of a German verb form."
 let kind "Spelling"
 let becomes "bereiten"
 let strategy "MatchCase"

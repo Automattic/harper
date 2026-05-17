@@ -1,7 +1,7 @@
 expr main [(viele Dank), (viele danke)]
 
 let message "The correct form is `vielen Dank`."
-let description "In German, `vielen Dank` uses the accusative form of `viel`. The form `viele Dank` omits the required `-n` ending."
+let description "Fixes a case ending error."
 let kind "Grammar"
 let becomes "vielen Dank"
 let strategy "Exact"

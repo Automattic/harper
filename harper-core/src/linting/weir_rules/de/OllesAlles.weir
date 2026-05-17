@@ -1,7 +1,7 @@
 expr main [(olles alles)]
 
 let message "Meinten Sie »alles«?"
-let description "MeintenSiealles"
+let description "Fixes a common German word."
 let kind "Spelling"
 let becomes "alles"
 let strategy "MatchCase"

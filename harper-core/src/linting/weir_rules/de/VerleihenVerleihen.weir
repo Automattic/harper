@@ -1,7 +1,7 @@
 expr main [(verleihen verleihen)]
 
 let message "Das Verb wird doppelt geschrieben."
-let description "DasVerb»verleihen«wirdnichtdoppeltgeschrieben."
+let description "Fixes a redundant word repetition."
 let kind "Grammar"
 let becomes "verleihen"
 let strategy "MatchCase"

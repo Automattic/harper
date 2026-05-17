@@ -1,7 +1,7 @@
 expr main [(benuetzen benutzen), (benuetzen Benutzen)]
 
 let message "Das Verb lautet »benutzen« (with »t«)."
-let description "DasVerblautet»benutzen«(mit»t«)geschrieben,nicht»benuetzen«."
+let description "Fixes spelling of a German verb."
 let kind "Spelling"
 let becomes "benutzen"
 let strategy "MatchCase"

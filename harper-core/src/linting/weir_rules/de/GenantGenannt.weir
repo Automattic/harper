@@ -1,7 +1,7 @@
 expr main [(genant genannt)]
 
 let message "Das Wort wird »genannt« geschrieben."
-let description "DasWortwirdgenanntgeschrieben."
+let description "Fixes spelling of a German word."
 let kind "Spelling"
 let becomes "genannt"
 let strategy "MatchCase"

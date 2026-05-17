@@ -1,7 +1,7 @@
 expr main [(Channel Channel)]
 
 let message "Die englische Bezeichnung »Channel« wird mit »nn« geschrieben."
-let description "DieenglischeBezeichnung»Channel«wirdmit»nn«geschrieben."
+let description "Fixes spelling of an English word."
 let kind "Spelling"
 let becomes "Channel"
 let strategy "MatchCase"

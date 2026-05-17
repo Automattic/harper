@@ -1,7 +1,7 @@
 expr main [(seihe siehe)]
 
 let message "Das Wort wird »siehe« geschrieben."
-let description "DasWortwirdsiehegeschrieben."
+let description "Fixes a common German word."
 let kind "Spelling"
 let becomes "siehe"
 let strategy "MatchCase"
