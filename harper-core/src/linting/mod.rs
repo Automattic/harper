@@ -197,6 +197,7 @@ mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod redundant_progressive_comparative;
+mod redundant_self;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
@@ -770,6 +771,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }
