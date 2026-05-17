@@ -1,0 +1,27 @@
+expr main [(zum Abbeißen), (zum Abbeissen)]
+
+let message "Use `zum Anbeißen` — `anbeißen` means something irresistibly attractive."
+let description "Corrects the eggcorn `zum Abbeißen` to `zum Anbeißen` in the idiomatic phrase."
+let kind "Typo"
+let becomes "zum Anbeißen"
+
+test "Die Torte sieht zum Abbeißen aus." "Die Torte sieht zum Anbeißen aus."
+test "Das Kleid ist zum Abbeißen schön." "Das Kleid ist zum Anbeißen schön."
+test "zum Abbeißen lecker" "zum Anbeißen lecker"
+test "Das Baby ist ja zum Abbeißen!" "Das Baby ist ja zum Anbeißen!"
+test "Diese Aussicht ist zum Abbeißen schön." "Diese Aussicht ist zum Anbeißen schön."
+test "Der Welpe sah zum Abbeißen aus." "Der Welpe sah zum Anbeißen aus."
+test "Ihr Lächeln ist zum Abbeißen." "Ihr Lächeln ist zum Anbeißen."
+test "Das Essen riecht zum Abbeißen gut." "Das Essen riecht zum Anbeißen gut."
+test "Er ist einfach zum Abbeißen niedlich." "Er ist einfach zum Anbeißen niedlich."
+test "Zum Abbeißen süße Kätzchen." "Zum Anbeißen süße Kätzchen."
+test "Das Angebot ist zum Abbeißen." "Das Angebot ist zum Anbeißen."
+test "Sie ist heute zum Abbeißen gekleidet." "Sie ist heute zum Anbeißen gekleidet."
+test "zum Abbeißen reizend" "zum Anbeißen reizend"
+test "Das ist doch zum Abbeißen!" "Das ist doch zum Anbeißen!"
+test "das Kind ist zum Abbeissen süß" "das Kind ist zum Anbeißen süß"
+
+allows "zum Anbeißen lecker"
+allows "Ich musste den Faden abbeißen."
+allows "Er hat den Knopf abgebissen."
+allows "Das Stück Brot lässt sich leicht abbeißen."

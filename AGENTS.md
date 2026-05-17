@@ -1,6 +1,6 @@
 # Harper Docs Map for Agents
 
-This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
+this repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
 
 Use `packages/web/vite.config.ts` as the source of truth for documentation scope:
 - Sidebar and important doc routes are defined in `packages/web/vite.config.ts`.
@@ -45,7 +45,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/weir/+page.md`: Weir rule language reference with syntax, expression types, and examples. Very important if you're asked to write a Weir rule.
 - `packages/web/src/routes/docs/rules/+page.svelte`: Live/generated rule catalog (rule names, defaults, and descriptions).
 - `packages/web/src/routes/docs/integrations/obsidian/+page.md`: Obsidian plugin overview, privacy/value comparison, installation, and support links.
-- `packages/web/src/routes/docs/integrations/chrome-extension/+page.md`: End-user Chrome extension overview and install link.
+- `packages/web/src/routes/docs/integrations/chrome-extension/+page.md`: End-user Chrome Extension overview and install link.
 - `packages/web/src/routes/docs/integrations/firefox-extension/+page.md`: End-user Firefox extension overview and install link.
 - `packages/web/src/routes/docs/integrations/wordpress/+page.md`: Current WordPress guidance, including migration recommendation to Chrome extension and legacy plugin status.
 - `packages/web/src/routes/docs/integrations/language-server/+page.md`: `harper-ls` install methods, dictionaries, code actions, ignore comments, and full configuration reference.
@@ -82,7 +82,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/about/+page.ts`: Route behavior helper (`ssr = false`) for the About page.
 - `packages/web/src/routes/docs/harperjs/CDN/example/+server.ts`: Serves the HTML example used by the `harper.js` CDN documentation page.
 
-## External Sidebar Targets (No Local Source File)
+## External Sidebar Targets (no Local Source File)
 
 - `https://docs.rs/harper-core/latest/harper_core/`
 - `/docs/harperjs/ref/index.html` (generated API reference target)
