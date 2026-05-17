@@ -124,6 +124,7 @@ mod lint;
 mod lint_group;
 mod lint_kind;
 mod long_sentences;
+mod long_time_ago;
 mod look_down_ones_nose;
 mod looking_forward_to;
 mod map_phrase_linter;
@@ -234,6 +235,7 @@ mod the_point_for;
 mod the_proper_noun_possessive;
 mod then_than;
 mod there_is_agreement;
+mod there_own;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
@@ -274,7 +276,7 @@ mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
 
-pub use expr_linter::{Chunk, ExprLinter};
+pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
 pub use lint_group::{

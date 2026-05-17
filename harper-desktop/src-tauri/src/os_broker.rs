@@ -1,9 +1,17 @@
 use harper_core::linting::Lint;
+use serde::Serialize;
 use std::collections::BTreeMap;
 
 use crate::rect::ActionableLint;
 
 pub type LintText = Box<dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>>;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+pub enum AccessibilityPermissionStatus {
+    Granted,
+    NotGranted,
+    Unsupported,
+}
 
 /// Provides platform-specific state needed by the highlighter without coupling rendering to an OS.
 ///
@@ -17,6 +25,14 @@ pub trait OsBroker {
     ) -> Vec<ActionableLint>;
 
     fn cursor_position(&self) -> Option<egui::Pos2>;
+
+    fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
+        AccessibilityPermissionStatus::Unsupported
+    }
+
+    fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
+        self.accessibility_permission_status()
+    }
 }
 
 /// No-op platform broker for targets that do not have an OS implementation yet.
