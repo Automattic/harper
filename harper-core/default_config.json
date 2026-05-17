@@ -801,6 +801,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArgumentToBeMade",
+								"state": true,
+								"label": "Argument To Be Made"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -1514,6 +1521,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CaseSensitive",
 								"state": true,
 								"label": "Case Sensitive"
@@ -1580,6 +1594,13 @@
 								"name": "IntroCueCommaBeforeThanks",
 								"state": true,
 								"label": "Intro Cue Comma Before Thanks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncludingButNotLimitedToPunctuation",
+								"state": true,
+								"label": "Including But Not Limited To Punctuation"
 							}
 						},
 						{
@@ -1985,6 +2006,13 @@
 								"name": "TheMy",
 								"state": true,
 								"label": "The My"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
 							}
 						},
 						{
@@ -3643,6 +3671,20 @@
 								"state": true,
 								"label": "Code In Write In"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ThereIsAgreement",
+								"state": true,
+								"label": "There Is Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
+							}
 						}
 					]
 				}
@@ -3722,6 +3764,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -4867,9 +4916,23 @@
 						},
 						{
 							"Bool": {
+								"name": "InFavourOfDoing",
+								"state": true,
+								"label": "In Favour Of Doing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LongTimeAgo",
+								"state": true,
+								"label": "Long Time Ago"
 							}
 						}
 					]
