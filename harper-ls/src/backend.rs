@@ -651,10 +651,8 @@ impl Backend {
     /// Returns the detected dialect for a document, falling back to configured default.
     async fn get_document_dialect(&self, uri: &Uri) -> Dialect {
         let doc_lock = self.doc_state.lock().await;
-        if let Some(state) = doc_lock.get(uri) {
-            if let Some(d) = state.cached_dialect {
-                return d;
-            }
+        if let Some(d) = doc_lock.get(uri).and_then(|state| state.cached_dialect) {
+            return d;
         }
         self.config.read().await.dialect
     }
