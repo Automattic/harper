@@ -114,6 +114,7 @@ mod its_contraction;
 mod its_possessive;
 mod jealous_of;
 mod johns_hopkins;
+mod jump_the_gun;
 mod lead_rise_to;
 mod left_right_hand;
 mod less_worse;
