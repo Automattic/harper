@@ -1,7 +1,7 @@
 expr main [(in dem im), (in dem Im), (IN DEM im)]
 
 let message "»in dem« kann zu »im« verkürzt werden."
-let description "Fixes a contraction error."
+let description "Corrects `in dem` to its contraction `im`."
 let kind "Style"
 let becomes "im"
 let strategy "MatchCase"

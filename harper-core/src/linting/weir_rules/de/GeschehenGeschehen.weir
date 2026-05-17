@@ -1,7 +1,7 @@
 expr main [(geschehen geschehen), (geschehen Geschehen)]
 
 let message "Das Verb lautet »geschehen« (with e)."
-let description "Fixes a redundant word repetition."
+let description "Removes the redundant `geschehen geschehen` repetition, keeping only `geschehen`."
 let kind "Spelling"
 let becomes "geschehen"
 let strategy "MatchCase"

@@ -1,7 +1,7 @@
 expr main [(in in), (inn in)]
 
 let message "Die Präposition wird doppelt verwendet."
-let description "Fixes a redundant word repetition."
+let description "Removes the double `in in` sequence, keeping only `in`."
 let kind "Grammar"
 let becomes "in"
 let strategy "MatchCase"

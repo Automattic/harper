@@ -1,7 +1,7 @@
 expr main etwas dass
 
 let message "Did you mean `etwa dass`?"
-let description "Fixes an incorrect phrase combination."
+let description "Corrects the ungrammatical combination `etwas dass` to `etwa dass`."
 let kind "Grammar"
 let becomes "etwa dass"
 

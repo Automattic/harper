@@ -1,7 +1,7 @@
 expr main [(zur zum), (zum zum)]
 
 let message "Die Präposition wird doppelt – behalten Sie nur eine."
-let description "Fixes a contraction error."
+let description "Corrects the conflicting preposition combination `zur zum` to the proper form."
 let kind "Grammar"
 let becomes "zur"
 let strategy "MatchCase"

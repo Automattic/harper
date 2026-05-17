@@ -1,7 +1,7 @@
 expr main [(Babyphone Babyfon)]
 
 let message "Die deutsche Schreibweise für dieses Gerät ist: ein »Babyfon«."
-let description "Fixes spelling of a German device name."
+let description "Removes redundant English loanword `Babyphone` from the German device name `Babyfon`."
 let kind "Spelling"
 let becomes "Babyfon"
 let strategy "MatchCase"

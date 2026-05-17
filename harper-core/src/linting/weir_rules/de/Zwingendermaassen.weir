@@ -1,7 +1,7 @@
 expr main [(zwingendermaßen zwingendermaßen)]
 
 let message "Dieses Wort wird mit »e« und »ß« geschrieben."
-let description "Fixes a common German spelling mistake."
+let description "Corrects `zwingendermaßen` to `gezwungenermaßen` with both `e` and `ß` characters."
 let kind "Spelling"
 let becomes "gezwungenermaßen"
 let strategy "MatchCase"

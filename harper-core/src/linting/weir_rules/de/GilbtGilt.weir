@@ -1,7 +1,7 @@
 expr main [(gilbt gilt)]
 
 let message "Das Wort wird »gilt« oder »gibt« geschrieben."
-let description "Fixes a German verb form."
+let description "Corrects the misspelled `gilbt` to `gilt` or `gib`."
 let kind "Spelling"
 let becomes "gilt"
 let strategy "MatchCase"

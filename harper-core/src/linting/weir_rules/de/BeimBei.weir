@@ -1,7 +1,7 @@
 expr main [(bei beim), (beim bei)]
 
 let message "The preposition is used twice — keep only one."
-let description "Fixes a redundant preposition repetition."
+let description "Removes the redundant `bei beim` or `beim bei` sequence, keeping only `beim`."
 let kind "Grammar"
 let becomes "beim"
 let strategy "Exact"

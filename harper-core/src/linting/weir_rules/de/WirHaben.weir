@@ -1,7 +1,7 @@
 expr main wir habe
 
 let message "Use `wir haben` — `habe` is the first/third person singular form."
-let description "Fixes a verb conjugation error."
+let description "Corrects `wir habe` to `wir haben` for proper first person plural conjugation."
 let kind "Grammar"
 let becomes "wir haben"
 

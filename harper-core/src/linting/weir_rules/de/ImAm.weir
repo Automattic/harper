@@ -1,7 +1,7 @@
 expr main [(im am), (am am)]
 
 let message "Die Präposition wird doppelt – behalten Sie nur eine."
-let description "Fixes a preposition error."
+let description "Corrects `im` to `am` when the context requires the preposition `an dem`."
 let kind "Grammar"
 let becomes "im"
 let strategy "MatchCase"

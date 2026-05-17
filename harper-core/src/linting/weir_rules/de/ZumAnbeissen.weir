@@ -1,7 +1,7 @@
 expr main [(zum Abbeißen), (zum Abbeissen)]
 
 let message "Use `zum Anbeißen` — `anbeißen` means something irresistibly attractive."
-let description "Fixes an eggcorn in an idiomatic phrase."
+let description "Corrects the eggcorn `zum Abbeißen` to `zum Anbeißen` in the idiomatic phrase."
 let kind "Typo"
 let becomes "zum Anbeißen"
 

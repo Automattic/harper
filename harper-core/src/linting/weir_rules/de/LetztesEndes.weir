@@ -1,7 +1,7 @@
 expr main [(letztes Endes letzten Endes)]
 
 let message "Möglicher Tippfehler: Meinten Sie »letzten Endes«?"
-let description "Fixes a common German phrase."
+let description "Corrects `letztes Endes` to `letzten Endes` for proper grammar."
 let kind "Grammar"
 let becomes "letzten Endes"
 let strategy "MatchCase"

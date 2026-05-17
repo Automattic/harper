@@ -1,7 +1,7 @@
 expr main [(mein mein), (mein MEIN), (MEIN mein)]
 
 let message "Das Possessivpronomen »mein« sollte nicht doppelt verwendet werden."
-let description "Fixes a redundant possessive pronoun."
+let description "Removes the redundant `mein mein` sequence, keeping only `mein`."
 let kind "Grammar"
 let becomes "mein"
 let strategy "MatchCase"

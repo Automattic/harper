@@ -1,7 +1,7 @@
 expr main [(seihe siehe)]
 
 let message "Das Wort wird »siehe« geschrieben."
-let description "Fixes a common German word."
+let description "Corrects the misspelled `seihe` to `siehe`."
 let kind "Spelling"
 let becomes "siehe"
 let strategy "MatchCase"

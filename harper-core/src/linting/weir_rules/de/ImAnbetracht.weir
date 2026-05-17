@@ -1,7 +1,7 @@
 expr main [(Im Anbetracht In Anbetracht)]
 
 let message "Die korrekte Präposition hier ist »in«."
-let description "The correct preposition here is in."
+let description "Corrects `Im Anbetracht` to `In Anbetracht` for the phrase."
 let kind "Grammar"
 let becomes "In Anbetracht"
 let strategy "MatchCase"

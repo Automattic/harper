@@ -1,7 +1,7 @@
 expr main [(dein dein), (dein DEIN), (DEIN dein)]
 
 let message "Das Possessivpronomen »dein« sollte nicht doppelt verwendet werden."
-let description "Fixes a redundant possessive pronoun."
+let description "Removes the double use of the possessive pronoun `dein`."
 let kind "Grammar"
 let becomes "dein"
 let strategy "MatchCase"

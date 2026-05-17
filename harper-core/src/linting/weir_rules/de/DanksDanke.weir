@@ -1,7 +1,7 @@
 expr main [(Danks Danke)]
 
 let message "Meinten Sie »Danke«?"
-let description "Fixes a German word."
+let description "Corrects `Danks` to the standard German thanks expression `Danke`."
 let kind "Grammar"
 let becomes "Danke"
 let strategy "MatchCase"
