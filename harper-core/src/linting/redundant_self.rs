@@ -17,7 +17,50 @@ impl Default for RedundantSelf {
             SequenceExpr::aco("self")
                 .t_ws_h()
                 .t_set(&[
-                    "harm", "harmed", "harming", "harms", "taught", "teach", "teaches", "teaching",
+                    "censor",
+                    "censored",
+                    "censors",
+                    "censoring",
+                    "correct",
+                    "corrected",
+                    "correcting",
+                    "corrects",
+                    "describe",
+                    "described",
+                    "describes",
+                    "describing",
+                    "diagnose",
+                    "diagnosed",
+                    "diagnoses",
+                    "diagnosing",
+                    "govern",
+                    "governed",
+                    "governs",
+                    "governing",
+                    "harm",
+                    "harmed",
+                    "harming",
+                    "harms",
+                    "identify",
+                    "identified",
+                    "identifies",
+                    "identifying",
+                    "medicate",
+                    "medicated",
+                    "medicates",
+                    "medicating",
+                    "regulate",
+                    "regulated",
+                    "regulates",
+                    "regulating",
+                    "sabotage",
+                    "sabotaged",
+                    "sabotages",
+                    "sabotaging",
+                    "taught",
+                    "teach",
+                    "teaches",
+                    "teaching",
                 ])
                 .t_ws()
                 .then(ReflexivePronoun::with_common_errors())
@@ -360,6 +403,311 @@ mod tests {
             &[
                 "I though WalletConnect bridge server might be too flooded with requests, so I self-hosted one, same result.",
                 "I though WalletConnect bridge server might be too flooded with requests, so I hosted one myself, same result.",
+            ],
+            &[],
+        );
+    }
+
+    // Self-diagnose oneself pattern tests
+
+    #[test]
+    fn fix_self_diagnosed_myself() {
+        assert_good_and_bad_suggestions(
+            "As a professional amateur doctor I have self-diagnosed myself with a mild case of alzheimer",
+            RedundantSelf::default(),
+            &[
+                "As a professional amateur doctor I have self-diagnosed with a mild case of alzheimer",
+                "As a professional amateur doctor I have diagnosed myself with a mild case of alzheimer",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_diagnose_himself() {
+        assert_good_and_bad_suggestions(
+            "a user can add his X-ray image in the application and he will be able to self diagnose himself",
+            RedundantSelf::default(),
+            &[
+                "a user can add his X-ray image in the application and he will be able to self diagnose",
+                "a user can add his X-ray image in the application and he will be able to diagnose himself",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_diagnose_itself() {
+        assert_good_and_bad_suggestions(
+            "a spare should self-diagnose itself and generate then store its performance stats in performance.txt",
+            RedundantSelf::default(),
+            &[
+                "a spare should self-diagnose and generate then store its performance stats in performance.txt",
+                "a spare should diagnose itself and generate then store its performance stats in performance.txt",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_diagnose_themselves() {
+        assert_good_and_bad_suggestions(
+            "Team application designed as a mediatery to help users self diagnose themselves or seek medical attention",
+            RedundantSelf::default(),
+            &[
+                "Team application designed as a mediatery to help users self diagnose or seek medical attention",
+                "Team application designed as a mediatery to help users diagnose themselves or seek medical attention",
+            ],
+            &[],
+        );
+    }
+
+    // Self-describe oneself pattern tests
+
+    #[test]
+    fn fix_self_describe_myself() {
+        assert_good_and_bad_suggestions(
+            "Moreover, each thing itself can self-describe itself under well-known, e.g.",
+            RedundantSelf::default(),
+            &[
+                "Moreover, each thing itself can self-describe under well-known, e.g.",
+                "Moreover, each thing itself can describe itself under well-known, e.g.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_described_yourself() {
+        assert_good_and_bad_suggestions(
+            "I know this is asking for a lot, but since you self-described yourself as a documentation nerd- would you be willing to help ...",
+            RedundantSelf::default(),
+            &[
+                "I know this is asking for a lot, but since you self-described as a documentation nerd- would you be willing to help ...",
+                "I know this is asking for a lot, but since you described yourself as a documentation nerd- would you be willing to help ...",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_describes_itself() {
+        assert_good_and_bad_suggestions(
+            "httpx self-describes itself as HTTPX is a fully featured HTTP client for Python 3",
+            RedundantSelf::default(),
+            &[
+                "httpx self-describes as HTTPX is a fully featured HTTP client for Python 3",
+                "httpx describes itself as HTTPX is a fully featured HTTP client for Python 3",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_describe_themselves() {
+        assert_good_and_bad_suggestions(
+            "This, along with some other capabilities, will better allow route handler delegates to self-describe themselves from just the type",
+            RedundantSelf::default(),
+            &[
+                "This, along with some other capabilities, will better allow route handler delegates to self-describe from just the type",
+                "This, along with some other capabilities, will better allow route handler delegates to describe themselves from just the type",
+            ],
+            &[],
+        );
+    }
+
+    // Self-medicate oneself pattern tests
+
+    #[test]
+    fn fix_self_medicate_ourselves() {
+        assert_good_and_bad_suggestions(
+            "Needless to say we took advantage of this to self-medicate ourselves during the scheduled downtime.",
+            RedundantSelf::default(),
+            &[
+                "Needless to say we took advantage of this to self-medicate during the scheduled downtime.",
+                "Needless to say we took advantage of this to medicate ourselves during the scheduled downtime.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_medicate_themselves() {
+        assert_good_and_bad_suggestions(
+            "the patient decides to self-medicate themselves, thereby subjecting themselves to additional harms",
+            RedundantSelf::default(),
+            &[
+                "the patient decides to self-medicate, thereby subjecting themselves to additional harms",
+                "the patient decides to medicate themselves, thereby subjecting themselves to additional harms",
+            ],
+            &[],
+        );
+    }
+
+    // Self-sabotage oneself pattern tests
+
+    #[test]
+    fn fix_self_sabotaging_yourself() {
+        assert_good_and_bad_suggestions(
+            "How to stop self-sabotaging yourself.  (My struggle with self-sabotagers) has already been recorded in the archive",
+            RedundantSelf::default(),
+            &[
+                "How to stop self-sabotaging.  (My struggle with self-sabotagers) has already been recorded in the archive",
+                "How to stop sabotaging yourself.  (My struggle with self-sabotagers) has already been recorded in the archive",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_sabotage_themselves() {
+        assert_good_and_bad_suggestions(
+            "I also just don't get why as an artist you'd self sabotage yourself, but you do you if you want you work to be replaced by lazy bastards",
+            RedundantSelf::default(),
+            &[
+                "I also just don't get why as an artist you'd self sabotage, but you do you if you want you work to be replaced by lazy bastards",
+                "I also just don't get why as an artist you'd sabotage yourself, but you do you if you want you work to be replaced by lazy bastards",
+            ],
+            &[],
+        );
+    }
+
+    // Self-correct oneself pattern tests
+
+    #[test]
+    fn fix_self_correct_itself() {
+        assert_good_and_bad_suggestions(
+            "Going against the gradient assure that the algorithm self-correct itself, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
+            RedundantSelf::default(),
+            &[
+                "Going against the gradient assure that the algorithm correct itself, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
+                "Going against the gradient assure that the algorithm self-correct, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_corrects_itself() {
+        assert_good_and_bad_suggestions(
+            "Self corrects itself by fetching the width of the parent",
+            RedundantSelf::default(),
+            &[
+                "Self corrects by fetching the width of the parent",
+                "Corrects itself by fetching the width of the parent",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_correcting_itself() {
+        assert_good_and_bad_suggestions(
+            "the server handling the http site being out of date and then self-correcting itself",
+            RedundantSelf::default(),
+            &[
+                "the server handling the http site being out of date and then correcting itself",
+                "the server handling the http site being out of date and then self-correcting",
+            ],
+            &[],
+        );
+    }
+
+    // Self-regulate oneself pattern tests
+
+    #[test]
+    fn fix_self_regulate_myself() {
+        assert_good_and_bad_suggestions(
+            "Fun fact: Self Regulate myself with Meditation",
+            RedundantSelf::default(),
+            &[
+                // TODO: due to a quirk in `replace_with_match_case`, this generates `ReguLate`
+                // "Fun fact: Regulate myself with Meditation",
+                "Fun fact: Self Regulate with Meditation",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_regulating_ourselves() {
+        assert_good_and_bad_suggestions(
+            "in general we should be self regulating ourselves and trying to help each other succeed",
+            RedundantSelf::default(),
+            &[
+                "in general we should be regulating ourselves and trying to help each other succeed",
+                "in general we should be self regulating and trying to help each other succeed",
+            ],
+            &[],
+        );
+    }
+
+    // Self-censor oneself pattern tests
+
+    #[test]
+    fn fix_self_censor_themselves() {
+        assert_good_and_bad_suggestions(
+            "this would not be desirable, as capturees would be able to self-censor themselves when captured",
+            RedundantSelf::default(),
+            &[
+                "this would not be desirable, as capturees would be able to censor themselves when captured",
+                "this would not be desirable, as capturees would be able to self-censor when captured",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_censoring_themselves() {
+        assert_good_and_bad_suggestions(
+            "Although people often realize that they are self-censoring themselves, it is not always the case.",
+            RedundantSelf::default(),
+            &[
+                "Although people often realize that they are censoring themselves, it is not always the case.",
+                "Although people often realize that they are self-censoring, it is not always the case.",
+            ],
+            &[],
+        );
+    }
+
+    // Self-govern oneself pattern tests
+
+    #[test]
+    fn fix_self_govern_themselves() {
+        assert_good_and_bad_suggestions(
+            "system that enables Founders and investors to coordinate and self-govern themselves through a set of self-executing rules published on a public blockchain",
+            RedundantSelf::default(),
+            &[
+                "system that enables Founders and investors to coordinate and govern themselves through a set of self-executing rules published on a public blockchain",
+                "system that enables Founders and investors to coordinate and self-govern through a set of self-executing rules published on a public blockchain",
+            ],
+            &[],
+        );
+    }
+
+    // Self-identify oneself pattern tests
+
+    #[test]
+    fn fix_self_identify_itself() {
+        assert_good_and_bad_suggestions(
+            "We need this in order for a job to be able to self-identify itself and potentially send it's own ID to a different service",
+            RedundantSelf::default(),
+            &[
+                "We need this in order for a job to be able to identify itself and potentially send it's own ID to a different service",
+                "We need this in order for a job to be able to self-identify and potentially send it's own ID to a different service",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_identified_themselves() {
+        assert_good_and_bad_suggestions(
+            "This is how the workers self-identified themselves to the scheduler.",
+            RedundantSelf::default(),
+            &[
+                "This is how the workers identified themselves to the scheduler.",
+                "This is how the workers self-identified to the scheduler.",
             ],
             &[],
         );
