@@ -1,0 +1,231 @@
+use crate::{
+    Dialect, Lint, Token, TokenStringExt,
+    char_string::CharStringExt,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+};
+
+static VALID_VARIANTS: &[&[&str]] = &[
+    &["worst", "come", "to", "worst"],  // historical original
+    &["worst", "comes", "to", "worst"], // ngram-en #1, ngram-us #2, ngram-uk #2
+    &["worse", "comes", "to", "worst"], // ngram-en #3, ngram-us #1, ngram-uk #3
+    &["the", "worst", "comes", "to", "the", "worst"], // ngram-en #2, ngram-us #3, ngram-uk #1
+];
+
+pub struct WorstComesToWorst {
+    expr: SequenceExpr,
+    dialect: Dialect,
+}
+
+impl WorstComesToWorst {
+    pub fn new(dialect: Dialect) -> Self {
+        Self {
+            expr: SequenceExpr::optional(SequenceExpr::aco("the").t_ws())
+                .t_set(&["worse", "worst"])
+                .t_ws()
+                .t_set(&["come", "comes"])
+                .t_ws()
+                .t_set(&["to", "too"])
+                .t_ws()
+                .then_optional(SequenceExpr::aco("the").t_ws())
+                .t_set(&["worst", "worse"]),
+            dialect,
+        }
+    }
+}
+
+impl ExprLinter for WorstComesToWorst {
+    type Unit = Chunk;
+
+    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+        // Return None if we matched any of the valid variants
+        let is_valid_variant = VALID_VARIANTS.iter().any(|variant| {
+            let mut matched_words_iter = toks
+                .iter()
+                .enumerate()
+                .filter(|(i, _)| *i % 2 == 0) // Even indices (words)
+                .map(|(_, token)| token.get_ch(source));
+
+            // All pairs must match and lengths must be equal (no extra matched words)
+            variant
+                .iter()
+                .zip(&mut matched_words_iter)
+                .all(|(expected, actual)| actual.eq_str(expected))
+                && matched_words_iter.next().is_none()
+        });
+
+        if is_valid_variant {
+            return None;
+        }
+
+        let span = toks.span()?;
+        let template = span.get_content(source);
+
+        let suggestions = VALID_VARIANTS
+            .iter()
+            .map(|words| {
+                let mut replacement = Vec::new();
+                for (i, word) in words.iter().enumerate() {
+                    if i > 0 {
+                        replacement.push(' ');
+                    }
+                    replacement.extend(word.chars());
+                }
+
+                Suggestion::replace_with_match_case(replacement, template)
+            })
+            .collect::<Vec<_>>();
+
+        Some(Lint {
+            span,
+            lint_kind: LintKind::Usage,
+            suggestions,
+            message: "Choose one of these more standard variants of this idiom.".to_string(),
+            ..Default::default()
+        })
+    }
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn description(&self) -> &str {
+        "A linter for wrong variants of (the) worse/worst comes to (the) worst."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        Dialect,
+        linting::tests::{assert_no_lints, assert_suggestion_result},
+    };
+
+    use super::WorstComesToWorst;
+
+    // Contrived basic tests
+
+    #[test]
+    fn fix_main_us_variant() {
+        assert_suggestion_result(
+            "if the worst come too the worse",
+            WorstComesToWorst::new(Dialect::American),
+            "if worse comes to worst",
+        );
+    }
+
+    #[test]
+    fn fix_main_uk_variant() {
+        assert_suggestion_result(
+            "if the worst comes to worse",
+            WorstComesToWorst::new(Dialect::British),
+            "if the worst comes to the worst",
+        );
+    }
+
+    #[test]
+    fn dont_flag_historical_original() {
+        assert_no_lints(
+            "if worst come to worst",
+            WorstComesToWorst::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn dont_flag_uk_preferred_variant() {
+        assert_no_lints(
+            "if the worst comes to the worst",
+            WorstComesToWorst::new(Dialect::British),
+        );
+    }
+
+    #[test]
+    fn dont_flag_us_preferred_variant() {
+        assert_no_lints(
+            "if worse comes to worst",
+            WorstComesToWorst::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn dont_flag_overall_preferred_variant() {
+        assert_no_lints(
+            "if worst comes to worst",
+            WorstComesToWorst::new(Dialect::Indian),
+        );
+    }
+
+    // Real-world tests from GitHub, beginning with "if"
+
+    #[test]
+    fn fix_worst_the_worst() {
+        assert_suggestion_result(
+            "and if worst comes to the worst I can probably modify the data before I load it to avoid this",
+            WorstComesToWorst::new(Dialect::American),
+            "and if worst comes to worst I can probably modify the data before I load it to avoid this",
+        );
+    }
+
+    #[test]
+    fn fix_worse_worse() {
+        assert_suggestion_result(
+            "Then if worse comes to worse, there are plenty of frameworks out there.",
+            WorstComesToWorst::new(Dialect::American),
+            "Then if worse comes to worst, there are plenty of frameworks out there.",
+        );
+    }
+
+    #[test]
+    fn fix_worse_the_worst() {
+        assert_suggestion_result(
+            "If worse comes to the worst, I guess we can disable WASAPI by default again until we can sort this out.",
+            WorstComesToWorst::new(Dialect::American),
+            "If worse comes to worst, I guess we can disable WASAPI by default again until we can sort this out.",
+        );
+    }
+
+    #[test]
+    fn fix_worst_worse() {
+        assert_suggestion_result(
+            "if worst comes to worse, you can always have multiple describe blocks.",
+            WorstComesToWorst::new(Dialect::American),
+            "if worst comes to worst, you can always have multiple describe blocks.",
+        );
+    }
+
+    #[test]
+    fn fix_worse_come_to_worse() {
+        assert_suggestion_result(
+            "If worse come to worse I can always make scenes that will only be those tile collection",
+            WorstComesToWorst::new(Dialect::American),
+            "If worst come to worst I can always make scenes that will only be those tile collection",
+        );
+    }
+
+    #[test]
+    fn fix_worse_come_to_the_worse() {
+        assert_suggestion_result(
+            "If worse comes to the worse, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
+            WorstComesToWorst::new(Dialect::American),
+            "If worse comes to worst, we may need to build our own Jansson in full debug mode and to look into Jansson state.",
+        );
+    }
+
+    // Real-world tests from GitHub, not beginning with "if"
+
+    fn when_worse_worse() {
+        assert_suggestion_result(
+            "When worse comes to worse just log in again.",
+            WorstComesToWorst::new(Dialect::Canadian),
+            "When worst comes to worst just log in again.",
+        );
+    }
+
+    fn just_worse_worse() {
+        assert_suggestion_result(
+            "Worse comes to worse, I could even run maybe 40 samples on our local cluster.",
+            WorstComesToWorst::new(Dialect::Australian),
+            "Worst comes to worst, I could even run maybe 40 samples on our local cluster.",
+        );
+    }
+}
