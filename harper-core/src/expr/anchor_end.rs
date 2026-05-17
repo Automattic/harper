@@ -21,10 +21,10 @@ impl Step for AnchorEnd {
         // Match if cursor is at or past the last non-whitespace token
         // This allows AnchorEnd to work in sequences where the cursor has advanced
         // past the matched content, including when cursor is past the end of the token stream
-        if let Some(last) = last_non_ws {
-            if cursor >= last {
-                return Some(0);
-            }
+        if let Some(last) = last_non_ws
+            && cursor >= last
+        {
+            return Some(0);
         }
 
         None
