@@ -18,7 +18,7 @@ use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    CharStringExt, Dialect, DictWordMetadata, Document, OrthFlags, Span, TokenKind, TokenStringExt,
 };
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
@@ -89,6 +89,21 @@ enum Args {
         /// Output format for lint results.
         #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
         format: OutputFormat,
+    },
+    /// Interactively lint lines of input against the curated ruleset.
+    ///
+    /// Each line entered is parsed and linted as its own document; matching
+    /// lints are printed and a new prompt is shown. Exits on EOF (Ctrl-D) or
+    /// Ctrl-C. Useful for quickly re-checking false-positives or short snippets
+    /// without restarting harper-cli for each query.
+    Repl {
+        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
+        /// Restrict linting to only a specific set of rules.
+        /// If omitted, every curated rule will run.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -273,6 +288,87 @@ fn main() -> anyhow::Result<()> {
                 // TODO workspace_dict_path?
                 file_dict_path,
             )
+        }
+        Args::Repl {
+            dialect: dialect_str,
+            only,
+        } => {
+            use std::io::{BufRead, Write};
+
+            let dialect = parse_dialect(&dialect_str)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
+            let mut linter = LintGroup::new_curated(curated_dictionary.clone(), dialect);
+
+            if let Some(rules) = only {
+                let known: Vec<String> = rules
+                    .into_iter()
+                    .filter(|rule| {
+                        if linter.config.has_rule(rule) {
+                            true
+                        } else {
+                            eprintln!("Warning: Cannot enable unknown rule '{}'.", rule);
+                            false
+                        }
+                    })
+                    .collect();
+
+                linter.set_all_rules_to(Some(false));
+                for rule in &known {
+                    linter.config.set_rule_enabled(rule, true);
+                }
+
+                if known.is_empty() {
+                    eprintln!("Warning: No rules are enabled.");
+                }
+            }
+
+            let stdin = io::stdin();
+            let mut stdin = stdin.lock();
+            let stderr = io::stderr();
+            let mut stderr = stderr.lock();
+
+            writeln!(
+                stderr,
+                "harper-cli repl: enter a line and press Enter. Ctrl-D or Ctrl-C to exit."
+            )?;
+
+            loop {
+                write!(stderr, "> ")?;
+                stderr.flush()?;
+
+                let mut line = String::new();
+                let bytes_read = stdin.read_line(&mut line)?;
+
+                if bytes_read == 0 {
+                    writeln!(stderr)?;
+                    break;
+                }
+
+                let trimmed = line.trim_end_matches('\n').trim_end_matches('\r');
+
+                if trimmed.is_empty() {
+                    continue;
+                }
+
+                let doc = Document::new_plain_english(trimmed, &curated_dictionary);
+                let named_lints = linter.organized_lints(&doc);
+
+                if named_lints.values().all(|lints| lints.is_empty()) {
+                    println!("(no lints)");
+                    continue;
+                }
+
+                for (rule_name, lints) in &named_lints {
+                    for lint in lints {
+                        println!("[{}::{}] {}", lint.lint_kind, rule_name, lint.message);
+                        for suggestion in &lint.suggestions {
+                            println!("    {}", suggestion);
+                        }
+                    }
+                }
+            }
+
+            Ok(())
         }
         Args::Parse { input } => {
             // Try to read from standard input if `input` was not provided.
