@@ -52,6 +52,7 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
+use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
@@ -603,6 +604,7 @@ impl LintGroup {
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CraveFor, true);
         insert_expr_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
