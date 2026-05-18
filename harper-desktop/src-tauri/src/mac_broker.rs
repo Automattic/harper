@@ -6,8 +6,9 @@ use accessibility_sys::{
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
     AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
     kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
-    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt,
-    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
+    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXPositionAttribute, kAXSizeAttribute,
+    kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
+    kAXValueTypeCGSize, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
@@ -16,6 +17,7 @@ use core_foundation::dictionary::CFDictionary;
 use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
+use core_graphics::geometry::{CGPoint, CGSize};
 use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::NSRect;
@@ -33,6 +35,23 @@ use crate::rect::{ActionableLint, Rect};
 pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Rc<RefCell<Vec<Integration>>>,
+    last_geometry: Option<GeometrySnapshot>,
+}
+
+#[derive(Debug, Clone)]
+struct GeometrySnapshot {
+    pid: pid_t,
+    window_frame: Rect,
+    lints: Vec<LintSnapshot>,
+}
+
+#[derive(Debug, Clone)]
+struct LintSnapshot {
+    rect: Rect,
+    rule_name: String,
+    span_start: usize,
+    span_len: usize,
+    source_text: String,
 }
 
 impl MacBroker {
@@ -40,6 +59,7 @@ impl MacBroker {
         Self {
             last_focused: None,
             integrations,
+            last_geometry: None,
         }
     }
 
@@ -53,6 +73,32 @@ impl MacBroker {
             self.last_focused = Some(focused_pid);
             Ok(Some(focused_pid))
         }
+    }
+
+    fn correct_for_window_movement(
+        &mut self,
+        pid: pid_t,
+        window_frame: Rect,
+        rects: &mut [ActionableLint],
+    ) {
+        let lints = lint_snapshots(rects);
+
+        if let Some(last_geometry) = &self.last_geometry
+            && should_translate_geometry(last_geometry, pid, window_frame, &lints)
+        {
+            let dx = window_frame.x - last_geometry.window_frame.x;
+            let dy = window_frame.y - last_geometry.window_frame.y;
+
+            for (positioned_lint, last_lint) in rects.iter_mut().zip(&last_geometry.lints) {
+                positioned_lint.rect = last_lint.rect.translated(dx, dy);
+            }
+        }
+
+        self.last_geometry = Some(GeometrySnapshot {
+            pid,
+            window_frame,
+            lints: lint_snapshots(rects),
+        });
     }
 }
 
@@ -69,25 +115,39 @@ impl OsBroker for MacBroker {
     ) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
-            Ok(None) => return Vec::new(),
+            Ok(None) => {
+                self.last_geometry = None;
+                return Vec::new();
+            }
             Err(err) => {
+                self.last_geometry = None;
                 eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
         };
 
         if !is_pid_approved(pid, &self.integrations.borrow()) {
+            self.last_geometry = None;
             return Vec::new();
         }
 
         let el = AXUIElement::application(pid);
+        let window_frame = focused_window_frame(&el).ok();
 
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
 
         walker.walk(&el, &collector);
 
-        collector.unwrap_rects()
+        let mut rects = collector.unwrap_rects();
+
+        if let Some(window_frame) = window_frame {
+            self.correct_for_window_movement(pid, window_frame, &mut rects);
+        } else {
+            self.last_geometry = None;
+        }
+
+        rects
     }
 
     fn cursor_position(&self) -> Option<egui::Pos2> {
@@ -118,6 +178,138 @@ impl OsBroker for MacBroker {
             AccessibilityPermissionStatus::NotGranted
         }
     }
+}
+
+fn lint_snapshots(rects: &[ActionableLint]) -> Vec<LintSnapshot> {
+    rects
+        .iter()
+        .map(|positioned_lint| LintSnapshot {
+            rect: positioned_lint.rect,
+            rule_name: positioned_lint.rule_name.clone(),
+            span_start: positioned_lint.lint.span.start,
+            span_len: positioned_lint.lint.span.len(),
+            source_text: positioned_lint.source_text.clone(),
+        })
+        .collect()
+}
+
+fn should_translate_geometry(
+    last_geometry: &GeometrySnapshot,
+    pid: pid_t,
+    window_frame: Rect,
+    lints: &[LintSnapshot],
+) -> bool {
+    last_geometry.pid == pid
+        && window_frame.same_size_as(last_geometry.window_frame)
+        && window_frame_has_moved(last_geometry.window_frame, window_frame)
+        && same_lint_identity(&last_geometry.lints, lints)
+}
+
+fn window_frame_has_moved(previous: Rect, current: Rect) -> bool {
+    (previous.x - current.x).abs() > 0.5 || (previous.y - current.y).abs() > 0.5
+}
+
+fn same_lint_identity(left: &[LintSnapshot], right: &[LintSnapshot]) -> bool {
+    left.len() == right.len()
+        && left.iter().zip(right).all(|(left, right)| {
+            left.rule_name == right.rule_name
+                && left.span_start == right.span_start
+                && left.span_len == right.span_len
+                && left.source_text == right.source_text
+        })
+}
+
+fn focused_window_frame(app: &AXUIElement) -> Result<Rect, Box<dyn StdError>> {
+    let window = app.focused_window()?;
+    let position = ax_point_attribute(&window, kAXPositionAttribute)?;
+    let size = ax_size_attribute(&window, kAXSizeAttribute)?;
+
+    Ok(Rect {
+        x: position.x,
+        y: position.y,
+        width: size.width,
+        height: size.height,
+    })
+}
+
+fn ax_point_attribute(element: &AXUIElement, name: &str) -> Result<CGPoint, Box<dyn StdError>> {
+    let value = ax_value_attribute(element, name, kAXValueTypeCGPoint)?;
+    let ax_value = value.as_CFTypeRef() as AXValueRef;
+    let mut point = MaybeUninit::<CGPoint>::uninit();
+
+    let ok = unsafe {
+        AXValueGetValue(
+            ax_value,
+            kAXValueTypeCGPoint,
+            point.as_mut_ptr() as *mut c_void,
+        )
+    };
+
+    if !ok {
+        return Err(format!("AXValueGetValue failed for {name}").into());
+    }
+
+    Ok(unsafe { point.assume_init() })
+}
+
+fn ax_size_attribute(element: &AXUIElement, name: &str) -> Result<CGSize, Box<dyn StdError>> {
+    let value = ax_value_attribute(element, name, kAXValueTypeCGSize)?;
+    let ax_value = value.as_CFTypeRef() as AXValueRef;
+    let mut size = MaybeUninit::<CGSize>::uninit();
+
+    let ok = unsafe {
+        AXValueGetValue(
+            ax_value,
+            kAXValueTypeCGSize,
+            size.as_mut_ptr() as *mut c_void,
+        )
+    };
+
+    if !ok {
+        return Err(format!("AXValueGetValue failed for {name}").into());
+    }
+
+    Ok(unsafe { size.assume_init() })
+}
+
+fn ax_value_attribute(
+    element: &AXUIElement,
+    name: &str,
+    expected_type: u32,
+) -> Result<CFType, Box<dyn StdError>> {
+    let attr = CFString::new(name);
+    let mut value = ptr::null();
+
+    let err = unsafe {
+        AXUIElementCopyAttributeValue(
+            element.as_concrete_TypeRef(),
+            attr.as_concrete_TypeRef(),
+            &mut value,
+        )
+    };
+
+    if err != kAXErrorSuccess {
+        return Err(format!(
+            "AXUIElementCopyAttributeValue failed for {name}: {}",
+            error_string(err)
+        )
+        .into());
+    }
+
+    if value.is_null() {
+        return Err(format!("AXUIElementCopyAttributeValue returned null for {name}").into());
+    }
+
+    let value = unsafe { CFType::wrap_under_create_rule(value) };
+    let ax_value = value.as_CFTypeRef() as AXValueRef;
+
+    if unsafe { AXValueGetType(ax_value) } != expected_type {
+        return Err(
+            format!("AXUIElementCopyAttributeValue returned unexpected type for {name}").into(),
+        );
+    }
+
+    Ok(value)
 }
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
