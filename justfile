@@ -1,3 +1,6 @@
+default:
+  @just --list
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
