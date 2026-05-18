@@ -30,6 +30,10 @@ impl Rect {
     pub fn same_size_as(self, other: Self) -> bool {
         nearly_equal(self.width, other.width) && nearly_equal(self.height, other.height)
     }
+
+    pub fn nearly_equal_to(self, other: Self) -> bool {
+        nearly_equal(self.x, other.x) && nearly_equal(self.y, other.y) && self.same_size_as(other)
+    }
 }
 
 fn nearly_equal(left: f64, right: f64) -> bool {
@@ -122,7 +126,7 @@ mod tests {
     }
 
     #[test]
-    fn same_size_allows_subpixel_accessibility_noise() {
+    fn same_size_allows_subpixel_noise() {
         assert!(Rect::new(0.0, 0.0, 100.0, 50.0).same_size_as(Rect::new(10.0, 10.0, 100.4, 49.6,)));
     }
 
@@ -130,6 +134,16 @@ mod tests {
     fn same_size_rejects_meaningful_resize() {
         assert!(
             !Rect::new(0.0, 0.0, 100.0, 50.0).same_size_as(Rect::new(10.0, 10.0, 101.0, 50.0,))
+        );
+    }
+
+    #[test]
+    fn nearly_equal_to_compares_origin_and_size_with_tolerance() {
+        assert!(
+            Rect::new(10.0, 20.0, 30.0, 40.0).nearly_equal_to(Rect::new(10.4, 19.6, 30.4, 39.6,))
+        );
+        assert!(
+            !Rect::new(10.0, 20.0, 30.0, 40.0).nearly_equal_to(Rect::new(10.6, 20.0, 30.0, 40.0,))
         );
     }
 }
