@@ -73,6 +73,23 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn client_receives_debounce_ms_from_server() {
+        let (client_request_writer, server_request_reader) = duplex(16_384);
+        let (server_response_writer, client_response_reader) = duplex(16_384);
+        let mut config = Config::new();
+        config.debounce_ms = 250;
+        let config = Arc::new(Mutex::new(config));
+        let mut client = Client::new(client_response_reader, client_request_writer);
+        let mut server = Server::new(server_request_reader, server_response_writer, config);
+
+        let (debounce_ms, request) =
+            tokio::join!(client.get_debounce_ms(), server.receive_request());
+
+        assert_eq!(debounce_ms.unwrap(), 250);
+        assert!(matches!(request.unwrap(), Some(Request::GetDebounceMs)));
+    }
+
+    #[tokio::test]
     async fn client_receives_ignored_lints_from_server() {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);

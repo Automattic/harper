@@ -39,8 +39,10 @@ pub trait OsBroker {
 ///
 /// This lets the highlighter compile on non-macOS platforms while making it explicit that there is
 /// currently no accessibility or cursor integration there.
+#[cfg(not(target_os = "macos"))]
 pub struct NoopBroker;
 
+#[cfg(not(target_os = "macos"))]
 impl OsBroker for NoopBroker {
     fn get_boxes(
         &mut self,
