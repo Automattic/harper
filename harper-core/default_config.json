@@ -4934,6 +4934,13 @@
 								"state": true,
 								"label": "Long Time Ago"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
+							}
 						}
 					]
 				}
