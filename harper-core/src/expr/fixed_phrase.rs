@@ -62,6 +62,10 @@ impl Expr for FixedPhrase {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         self.inner.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 FIXED PHRASE");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]

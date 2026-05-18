@@ -63,6 +63,10 @@ impl Expr for SpelledNumberExpr {
 
         expr.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 SPELLED NUMBER");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]

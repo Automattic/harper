@@ -32,6 +32,10 @@ impl Expr for PronounBe {
 
         self.expr.run(cursor, toks, src)
     }
+    fn run_rev(&self, _cursor: usize, _toks: &[Token], _src: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 PRONOUN_BE");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]

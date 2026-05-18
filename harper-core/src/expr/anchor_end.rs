@@ -24,6 +24,10 @@ impl Step for AnchorEnd {
             None
         }
     }
+    fn step_rev(&self, _tokens: &[Token], _cursor: usize, _source: &[char]) -> Option<isize> {
+        eprintln!("🛑 ANCHOR END");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]
