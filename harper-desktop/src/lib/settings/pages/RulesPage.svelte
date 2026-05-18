@@ -228,6 +228,14 @@ function isRuleEnabled(rule: RuleItem) {
 	return lintConfig?.[rule.id] ?? defaultLintConfig?.[rule.id] ?? false;
 }
 
+function allKnownRuleIds() {
+	return new Set([
+		...Object.keys(defaultLintConfig ?? {}),
+		...Object.keys(lintConfig ?? {}),
+		...displayedRules.map((rule) => rule.id),
+	]);
+}
+
 async function setRuleOverride(ruleId: string, value: RuleOverride) {
 	const nextRules = { ...rules };
 
@@ -288,19 +296,18 @@ async function resetRules() {
 }
 
 async function disableRules() {
-	const nextRules = Object.fromEntries(
-		displayedRules.map((rule) => [rule.id, 'off' as RuleOverride]),
-	);
+	const ruleIds = allKnownRuleIds();
+	const nextLintConfig = { ...(lintConfig ?? defaultLintConfig ?? {}) };
+
+	for (const ruleId of ruleIds) {
+		nextLintConfig[ruleId] = false;
+	}
+
+	const nextRules = rulesFromLintConfig(nextLintConfig, defaultLintConfig ?? {});
 
 	if (!lintConfig) {
 		rules = nextRules;
 		return;
-	}
-
-	const nextLintConfig = { ...lintConfig };
-
-	for (const rule of displayedRules) {
-		nextLintConfig[rule.id] = false;
 	}
 
 	await saveLintConfig(nextLintConfig, nextRules);

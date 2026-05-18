@@ -13,7 +13,6 @@ const DialectValue = {
 } as const;
 
 let menuBar = true;
-let menuBarClick = 'open-settings';
 let launchAtStartup = false;
 let autoUpdate = true;
 let dialect = 'american';
@@ -156,22 +155,6 @@ function settingsValueToDialect(value: string): Dialect {
               >
                 {#if menuBar}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
               </button>
-            </div>
-
-            <div class="inline-row">
-              <label for="menu-bar-click">Click the icon to:</label>
-              <select
-                id="menu-bar-click"
-                class="select"
-                disabled
-                title="Not wired yet"
-                bind:value={menuBarClick}
-              >
-                <option value="open-settings">Open settings</option>
-                <option value="show-menu">Show a menu</option>
-                <option value="toggle-pause">Pause or resume</option>
-                <option value="quick-review">Open quick review</option>
-              </select>
             </div>
 
             <div class="row">
