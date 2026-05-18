@@ -1,4 +1,4 @@
-expr main [(get access at premium), (get access at private), (get access at beta), (get access at admin), (get access at paid), (get access at dashboard), (get access at api), (get access at repo), (get access at repository), (get access at features), (get access at tools), (get access at modules), (get access at reports), (get access at settings), (get access at preferences), (get access at models), (get access at resources)]
+expr main [(get access at admin), (get access at api), (get access at beta), (get access at dashboard), (get access at features), (get access at models), (get access at modules), (get access at paid), (get access at preferences), (get access at premium), (get access at private), (get access at repo), (get access at reports), (get access at repository), (get access at resources), (get access at settings), (get access at tools)]
 
 let message "Did you mean `get access to`?"
 let description "Corrects the preposition in `get access at` to the standard collocation `get access to` when introducing the thing being accessed."
