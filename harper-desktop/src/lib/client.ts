@@ -128,6 +128,10 @@ export class Client {
 		await invoke('set_integration_enabled', { bundleId, enabled });
 	}
 
+	static async launchApp(bundleId: string): Promise<void> {
+		await invoke('launch_app', { bundleId });
+	}
+
 	static async getAccessibilityPermissionStatus(): Promise<AccessibilityPermissionStatus> {
 		return await withTimeout(
 			invoke<AccessibilityPermissionStatus>('get_accessibility_permission_status'),

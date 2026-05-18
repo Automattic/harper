@@ -118,6 +118,22 @@ impl OsBroker for MacBroker {
             AccessibilityPermissionStatus::NotGranted
         }
     }
+
+    fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
+        let bundle_id = bundle_id.trim();
+
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+
+        std::process::Command::new("open")
+            .arg("-b")
+            .arg(bundle_id)
+            .spawn()
+            .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
+
+        Ok(())
+    }
 }
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {

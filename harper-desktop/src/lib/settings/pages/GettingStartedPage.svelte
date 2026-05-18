@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { type AccessibilityPermissionStatus, Client } from '$lib/client';
-import { createInitialSettingsState, type SettingsState } from '../settings-data';
+import { createInitialSettingsState, type SectionId, type SettingsState } from '../settings-data';
 
 type SetupStep = {
 	id: 'accessibility' | 'integration' | 'test-drive';
@@ -16,12 +16,16 @@ type SetupStep = {
 	actionDisabled?: boolean;
 };
 
+export let navigateToSection: (section: SectionId) => void;
+
 let state: SettingsState = createInitialSettingsState();
 let accessibilityStatus: AccessibilityPermissionStatus | null = null;
 let accessibilityError = '';
 let isCheckingAccessibility = true;
 let isRequestingAccessibility = false;
 let hasRequestedAccessibility = false;
+let isLaunchingTextEdit = false;
+let testDriveError = '';
 
 $: setupSteps = buildSetupSteps(
 	state,
@@ -47,6 +51,20 @@ function enableTextEditForSetup() {
 		integrations: { ...state.integrations, textedit: true },
 		setup: { ...state.setup, integration: 'selected' },
 	};
+}
+
+async function launchTextEditForTestDrive() {
+	isLaunchingTextEdit = true;
+	testDriveError = '';
+
+	try {
+		await Client.launchApp('com.apple.TextEdit');
+		updateSetup({ testDrive: 'completed' });
+	} catch (error) {
+		testDriveError = `Unable to launch TextEdit: ${error}`;
+	} finally {
+		isLaunchingTextEdit = false;
+	}
 }
 
 async function checkAccessibilityPermission() {
@@ -165,7 +183,7 @@ function buildSetupSteps(
 			locked: !accessibilityDone,
 			actionLabel: integrationDone ? 'Manage' : 'Browse apps',
 			actionVariant: 'default',
-			action: enableTextEditForSetup,
+			action: () => navigateToSection('integrations'),
 		},
 		{
 			id: 'test-drive',
@@ -174,9 +192,14 @@ function buildSetupSteps(
 			required: false,
 			done: testDriveDone,
 			locked: !accessibilityDone || !integrationDone,
-			actionLabel: testDriveDone ? 'Run again' : 'Launch TextEdit',
+			actionLabel: isLaunchingTextEdit
+				? 'Launching...'
+				: testDriveDone
+					? 'Run again'
+					: 'Launch TextEdit',
 			actionVariant: testDriveDone ? 'default' : 'primary',
-			action: () => updateSetup({ testDrive: 'completed' }),
+			action: launchTextEditForTestDrive,
+			actionDisabled: isLaunchingTextEdit,
 		},
 	];
 }
@@ -263,6 +286,16 @@ function buildSetupSteps(
                     <div class="grow">
                       <strong>Waiting for macOS</strong>
                       <p>After granting access in System Settings, return here and recheck permission.</p>
+                    </div>
+                  </div>
+                {/if}
+
+                {#if step.id === "test-drive" && testDriveError}
+                  <div class="detected-app">
+                    <div class="big-mark amber">!</div>
+                    <div class="grow">
+                      <strong>TextEdit launch failed</strong>
+                      <p>{testDriveError}</p>
                     </div>
                   </div>
                 {/if}
