@@ -12,38 +12,54 @@ impl Default for AvoidContractions {
     fn default() -> Self {
         Self {
             expr: WordSet::new(&[
-                "isn't",
                 "aren't",
-                "wasn't",
-                "weren't",
-                "don't",
-                "doesn't",
-                "didn't",
                 "can't",
+                "could've",
                 "couldn't",
-                "shouldn't",
-                "wouldn't",
-                "won't",
-                "haven't",
-                "hasn't",
+                "couldn't've",
+                "didn't",
+                "doesn't",
+                "don't",
                 "hadn't",
+                "hasn't",
+                "haven't",
+                "he'll",
+                "how're",
+                "i'll",
+                "i'm",
+                "i've",
+                "isn't",
+                "it'll",
+                "mayn't",
+                "might've",
+                "mightn't",
+                "must've",
                 "mustn't",
                 "needn't",
-                "I'm",
-                "you're",
-                "we're",
-                "they're",
-                "I've",
-                "you've",
-                "we've",
-                "they've",
-                "I'll",
-                "you'll",
-                "we'll",
-                "they'll",
-                "he'll",
+                "oughtn't",
+                "shan't",
                 "she'll",
-                "it'll",
+                "should've",
+                "shouldn't",
+                "that'll",
+                "they'll",
+                "they're",
+                "they've",
+                "wasn't",
+                "we'll",
+                "we're",
+                "we've",
+                "weren't",
+                "what'll",
+                "who'll",
+                "who're",
+                "who've",
+                "won't",
+                "would've",
+                "wouldn't",
+                "you'll",
+                "you're",
+                "you've",
             ]),
         }
     }
@@ -52,38 +68,54 @@ impl Default for AvoidContractions {
 impl AvoidContractions {
     fn expansion(contraction: &str) -> Option<&'static str> {
         match contraction {
-            "isn't" => Some("is not"),
             "aren't" => Some("are not"),
-            "wasn't" => Some("was not"),
-            "weren't" => Some("were not"),
-            "don't" => Some("do not"),
-            "doesn't" => Some("does not"),
-            "didn't" => Some("did not"),
             "can't" => Some("cannot"),
+            "could've" => Some("could have"),
             "couldn't" => Some("could not"),
-            "shouldn't" => Some("should not"),
-            "wouldn't" => Some("would not"),
-            "won't" => Some("will not"),
-            "haven't" => Some("have not"),
-            "hasn't" => Some("has not"),
+            "couldn't've" => Some("could not have"),
+            "didn't" => Some("did not"),
+            "doesn't" => Some("does not"),
+            "don't" => Some("do not"),
             "hadn't" => Some("had not"),
+            "hasn't" => Some("has not"),
+            "haven't" => Some("have not"),
+            "he'll" => Some("he will"),
+            "how're" => Some("how are"),
+            "i'll" => Some("i will"),
+            "i'm" => Some("i am"),
+            "i've" => Some("i have"),
+            "isn't" => Some("is not"),
+            "it'll" => Some("it will"),
+            "mayn't" => Some("may not"),
+            "might've" => Some("might have"),
+            "mightn't" => Some("might not"),
+            "must've" => Some("must have"),
             "mustn't" => Some("must not"),
             "needn't" => Some("need not"),
-            "i'm" => Some("i am"),
-            "you're" => Some("you are"),
-            "we're" => Some("we are"),
-            "they're" => Some("they are"),
-            "i've" => Some("i have"),
-            "you've" => Some("you have"),
-            "we've" => Some("we have"),
-            "they've" => Some("they have"),
-            "i'll" => Some("i will"),
-            "you'll" => Some("you will"),
-            "we'll" => Some("we will"),
-            "they'll" => Some("they will"),
-            "he'll" => Some("he will"),
+            "oughtn't" => Some("ought not"),
+            "shan't" => Some("shall not"),
             "she'll" => Some("she will"),
-            "it'll" => Some("it will"),
+            "should've" => Some("should have"),
+            "shouldn't" => Some("should not"),
+            "that'll" => Some("that will"),
+            "they'll" => Some("they will"),
+            "they're" => Some("they are"),
+            "they've" => Some("they have"),
+            "wasn't" => Some("was not"),
+            "we'll" => Some("we will"),
+            "we're" => Some("we are"),
+            "we've" => Some("we have"),
+            "weren't" => Some("were not"),
+            "what'll" => Some("what will"),
+            "who'll" => Some("who will"),
+            "who're" => Some("who are"),
+            "who've" => Some("who have"),
+            "won't" => Some("will not"),
+            "would've" => Some("would have"),
+            "wouldn't" => Some("would not"),
+            "you'll" => Some("you will"),
+            "you're" => Some("you are"),
+            "you've" => Some("you have"),
             _ => None,
         }
     }
@@ -233,6 +265,60 @@ mod tests {
     }
 
     #[test]
+    fn expands_additional_unambiguous_contractions() {
+        assert_suggestion_result(
+            "We could've waited.",
+            AvoidContractions::default(),
+            "We could have waited.",
+        );
+        assert_suggestion_result(
+            "They couldn't've known.",
+            AvoidContractions::default(),
+            "They could not have known.",
+        );
+        assert_suggestion_result(
+            "How're you doing?",
+            AvoidContractions::default(),
+            "How are you doing?",
+        );
+        assert_suggestion_result(
+            "You mayn't agree.",
+            AvoidContractions::default(),
+            "You may not agree.",
+        );
+        assert_suggestion_result(
+            "I might've helped.",
+            AvoidContractions::default(),
+            "I might have helped.",
+        );
+        assert_suggestion_result(
+            "We must've missed it.",
+            AvoidContractions::default(),
+            "We must have missed it.",
+        );
+        assert_suggestion_result(
+            "She oughtn't leave.",
+            AvoidContractions::default(),
+            "She ought not leave.",
+        );
+        assert_suggestion_result(
+            "That'll work.",
+            AvoidContractions::default(),
+            "That will work.",
+        );
+        assert_suggestion_result(
+            "What'll happen?",
+            AvoidContractions::default(),
+            "What will happen?",
+        );
+        assert_suggestion_result(
+            "Who're they?",
+            AvoidContractions::default(),
+            "Who are they?",
+        );
+    }
+
+    #[test]
     fn preserves_sentence_initial_case() {
         assert_suggestion_result(
             "Isn't this clear?",
@@ -272,7 +358,15 @@ mod tests {
     #[test]
     fn does_not_flag_ambiguous_contractions() {
         assert_no_lints(
-            "It's done. He'd go. She's been there.",
+            "Ain't that odd? It's done. He'd go. She's been there. Who's ready? We'd left.",
+            AvoidContractions::default(),
+        );
+    }
+
+    #[test]
+    fn does_not_flag_non_standard_or_lexicalized_contractions() {
+        assert_no_lints(
+            "We met y'all near the nor'easter exhibit at five o'clock.",
             AvoidContractions::default(),
         );
     }
