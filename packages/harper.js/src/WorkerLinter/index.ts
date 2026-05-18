@@ -38,7 +38,7 @@ export default class WorkerLinter implements Linter {
 		this.worker.onmessage = () => {
 			this.setupMainEventListeners();
 
-			this.worker.postMessage([this.binary.url, this.dialect]);
+			this.worker.postMessage([this.binary.url, this.dialect, this.binary.glueFlavor]);
 
 			this.working = false;
 			this.submitRemainingRequests();
