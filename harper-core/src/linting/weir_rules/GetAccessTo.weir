@@ -1,0 +1,23 @@
+expr main [(get access at premium), (get access at private), (get access at beta), (get access at admin), (get access at paid), (get access at dashboard), (get access at api), (get access at repo), (get access at repository), (get access at features), (get access at tools), (get access at modules), (get access at reports), (get access at settings), (get access at preferences), (get access at models), (get access at resources)]
+
+let message "Did you mean `get access to`?"
+let description "Corrects the preposition in `get access at` to the standard collocation `get access to` when introducing the thing being accessed."
+let kind "WordChoice"
+let becomes "get access to"
+let strategy "MatchCase"
+
+# True positives
+test "Users can get access at premium features." "Users can get access to premium features."
+test "You get access at modules after payment." "You get access to modules after payment."
+test "Can I get access at this repo?" "Can I get access to this repo?"
+test "She will get access at the private API." "She will get access to the private API."
+test "If someone manages to get access at preferences, decryption gets harder." "If someone manages to get access to preferences, decryption gets harder."
+
+# True negatives / false-positive guards
+allows "Users can get access to premium features."
+allows "But anyway, i don't manage to get access at all, so i will go another way."
+allows "Is it possible to get access at least to: file_content_type, file_size and name?"
+allows "Get access at https://developer.bitping.com."
+allows "You can get access at the front desk."
+allows "Guests get access at Gate 3."
+allows "You'll get access at 9 AM."
