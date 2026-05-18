@@ -46,6 +46,7 @@ mod compound_nouns;
 mod compound_subject_i;
 mod confident;
 mod correct_number_suffix;
+mod crave_for;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
