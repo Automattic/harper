@@ -62,6 +62,15 @@ where
         }
     }
 
+    pub async fn get_debounce_ms(&mut self) -> Result<u64, ProtocolError> {
+        match self.send_request(Request::GetDebounceMs).await? {
+            Response::GetDebounceMs { debounce_ms } => Ok(debounce_ms),
+            _ => Err(ProtocolError::UnexpectedResponse {
+                expected: "GetDebounceMs",
+            }),
+        }
+    }
+
     pub async fn get_ignored_lints(&mut self) -> Result<IgnoredLints, ProtocolError> {
         match self.send_request(Request::GetIgnoredLints).await? {
             Response::GetIgnoredLints { ignored_lints } => Ok(ignored_lints),

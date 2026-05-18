@@ -2,6 +2,7 @@ use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
+use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
@@ -26,6 +27,7 @@ use tokio::{
 pub mod color;
 pub mod communication;
 pub mod config;
+mod debounce;
 pub mod highlighter;
 pub mod highlighter_process;
 pub mod highlighter_service;
@@ -192,6 +194,26 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
 #[tauri::command]
 async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
     Ok(config.lock().await.dialect)
+}
+
+#[tauri::command]
+async fn get_debounce_ms(config: State<'_, Arc<Mutex<Config>>>) -> Result<u64, String> {
+    Ok(config.lock().await.debounce_ms)
+}
+
+#[tauri::command]
+async fn set_debounce_ms(
+    debounce_ms: u64,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.debounce_ms = debounce_ms;
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -412,6 +434,8 @@ pub fn run_tauri() {
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
             get_dialect,
+            get_debounce_ms,
+            set_debounce_ms,
             set_dialect,
             set_lint_config,
             get_dictionary,
@@ -525,11 +549,14 @@ pub fn run_highlighter() {
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
     let integrations = Rc::new(RefCell::new(startup_config.integrations));
+    let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
     let lint_user_dictionary = user_dictionary.clone();
+    let lint_debounce_ms = debounce_ms.clone();
+    let lint_debounce_state = Rc::new(RefCell::new(DebounceState::default()));
 
     let ignore_client = client.clone();
     let ignore_runtime = sync_runtime.clone();
@@ -540,6 +567,7 @@ pub fn run_highlighter() {
     let dictionary_user_dictionary = user_dictionary.clone();
     let dictionary_linter = linter.clone();
     let dictionary_dialect = dialect.clone();
+    let dictionary_debounce_ms = debounce_ms.clone();
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
@@ -551,9 +579,18 @@ pub fn run_highlighter() {
     let refresh_user_dictionary = user_dictionary.clone();
     let refresh_dialect = dialect.clone();
     let refresh_integrations = integrations.clone();
+    let refresh_debounce_ms = debounce_ms.clone();
     let refresh_linter = linter.clone();
 
     let lint_text = move |text: &str| {
+        let debounce_ms = *lint_debounce_ms.borrow();
+        let mut debounce_state = lint_debounce_state.borrow_mut();
+
+        match debounce_state.status(text, debounce_ms) {
+            DebounceStatus::Cached(lints) => return lints,
+            DebounceStatus::Ready => {}
+        }
+
         let dictionary =
             Config::dictionary_from_user_dictionary(lint_user_dictionary.borrow().clone());
         let doc = Document::new_markdown_default(text, &dictionary);
@@ -562,6 +599,8 @@ pub fn run_highlighter() {
         for lints in organized_lints.values_mut() {
             lint_ignored_lints.borrow().remove_ignored(lints, &doc);
         }
+
+        debounce_state.store_lints(text, debounce_ms, &organized_lints);
 
         organized_lints
     };
@@ -593,6 +632,7 @@ pub fn run_highlighter() {
             ignored_lints: IgnoredLints::new(),
             lint_config,
             integrations: Vec::new(),
+            debounce_ms: *dictionary_debounce_ms.borrow(),
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
@@ -620,6 +660,7 @@ pub fn run_highlighter() {
             &refresh_user_dictionary,
             &refresh_dialect,
             &refresh_integrations,
+            &refresh_debounce_ms,
             &refresh_linter,
         ),
         Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
@@ -656,6 +697,7 @@ fn fetch_highlighter_config(
         let ignored_lints = client.get_ignored_lints().await?;
         let lint_config = client.get_lint_config().await?;
         let integrations = client.get_integrations().await?;
+        let debounce_ms = client.get_debounce_ms().await?;
 
         Ok(Config {
             dialect,
@@ -663,6 +705,7 @@ fn fetch_highlighter_config(
             ignored_lints,
             lint_config,
             integrations,
+            debounce_ms,
         })
     })
 }
@@ -673,6 +716,7 @@ fn apply_highlighter_config(
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
     integrations: &Rc<RefCell<Vec<Integration>>>,
+    debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
     let linter_config = config.create_linter();
@@ -680,5 +724,6 @@ fn apply_highlighter_config(
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
     *integrations.borrow_mut() = config.integrations;
+    *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
 }
