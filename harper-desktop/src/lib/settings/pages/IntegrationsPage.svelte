@@ -116,29 +116,6 @@ function closeAppPicker() {
 
 <section>
   <div class="stanza">
-    <div class="eyebrow">App integrations</div>
-    <div class="row top">
-      <div>
-        <strong>Watch everywhere</strong>
-        <p>Harper checks writing in any app that supports text input.</p>
-      </div>
-      <button
-        class="toggle"
-        type="button"
-        role="switch"
-        aria-checked="false"
-        aria-label="Toggle watch everywhere"
-        disabled
-        title="Not wired yet"
-      >
-        <span></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="stanza">
     <div class="eyebrow">Selected apps</div>
     <p class="section-copy">Harper will only watch the apps you enable here.</p>
 
