@@ -26,7 +26,7 @@ jobs:
               target/release/bundle/appimage/*.AppImage
           - name: macOS x64
             artifact_name: harper-desktop-macos-x64
-            os: macos-13
+            os: macos-26-intel
             command: just build-desktop-macos
             artifact_paths: |
               target/release/bundle/dmg/*.dmg
