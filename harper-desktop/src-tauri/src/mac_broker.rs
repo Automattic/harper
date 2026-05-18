@@ -314,7 +314,7 @@ fn dictionary_dictionary(dictionary: &WindowInfo, key: CFStringRef) -> Option<Wi
 fn dictionary_value(dictionary: &WindowInfo, key: CFStringRef) -> Option<CFType> {
     let key = unsafe { CFString::wrap_under_get_rule(key) };
 
-    dictionary.find(&key).map(|value| value.to_untyped())
+    dictionary.find(&key).map(|value| value.clone())
 }
 
 fn ax_element_attribute(
