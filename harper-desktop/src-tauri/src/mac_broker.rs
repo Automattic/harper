@@ -40,6 +40,7 @@ use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
+type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -88,20 +89,12 @@ impl MacBroker {
 
         let now = Instant::now();
         let Some(state) = &mut self.window_movement else {
-            self.window_movement = Some(WindowMovementState {
-                pid,
-                frame,
-                last_changed_at: settled_instant(now),
-            });
+            self.window_movement = Some(settled_window_state(pid, frame, now));
             return false;
         };
 
         if state.pid != pid {
-            *state = WindowMovementState {
-                pid,
-                frame,
-                last_changed_at: settled_instant(now),
-            };
+            *state = settled_window_state(pid, frame, now);
             return false;
         }
 
@@ -233,9 +226,14 @@ fn window_frame_changed(previous: Rect, current: Rect) -> bool {
         || !nearly_equal(previous.height, current.height)
 }
 
-fn settled_instant(now: Instant) -> Instant {
-    now.checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
-        .unwrap_or(now)
+fn settled_window_state(pid: pid_t, frame: Rect, now: Instant) -> WindowMovementState {
+    WindowMovementState {
+        pid,
+        frame,
+        last_changed_at: now
+            .checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+            .unwrap_or(now),
+    }
 }
 
 fn nearly_equal(left: f64, right: f64) -> bool {
@@ -247,11 +245,8 @@ fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
         kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
         kCGNullWindowID,
     )?;
-    let window_infos = unsafe {
-        CFArray::<CFDictionary<CFString, CFType>>::wrap_under_get_rule(
-            window_infos.as_concrete_TypeRef(),
-        )
-    };
+    let window_infos =
+        unsafe { CFArray::<WindowInfo>::wrap_under_get_rule(window_infos.as_concrete_TypeRef()) };
 
     window_infos
         .iter()
@@ -261,19 +256,19 @@ fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
         .find_map(|window_info| window_bounds(&window_info))
 }
 
-fn window_pid(window_info: &CFDictionary<CFString, CFType>) -> Option<pid_t> {
+fn window_pid(window_info: &WindowInfo) -> Option<pid_t> {
     dictionary_i64(window_info, unsafe { kCGWindowOwnerPID }).map(|value| value as pid_t)
 }
 
-fn window_layer(window_info: &CFDictionary<CFString, CFType>) -> Option<i64> {
+fn window_layer(window_info: &WindowInfo) -> Option<i64> {
     dictionary_i64(window_info, unsafe { kCGWindowLayer })
 }
 
-fn window_alpha(window_info: &CFDictionary<CFString, CFType>) -> Option<f64> {
+fn window_alpha(window_info: &WindowInfo) -> Option<f64> {
     dictionary_f64(window_info, unsafe { kCGWindowAlpha })
 }
 
-fn window_bounds(window_info: &CFDictionary<CFString, CFType>) -> Option<Rect> {
+fn window_bounds(window_info: &WindowInfo) -> Option<Rect> {
     let bounds = dictionary_dictionary(window_info, unsafe { kCGWindowBounds })?;
 
     Some(Rect {
@@ -296,32 +291,30 @@ fn window_bounds(window_info: &CFDictionary<CFString, CFType>) -> Option<Rect> {
     })
 }
 
-fn dictionary_i64(dictionary: &CFDictionary<CFString, CFType>, key: CFStringRef) -> Option<i64> {
+fn dictionary_i64(dictionary: &WindowInfo, key: CFStringRef) -> Option<i64> {
     dictionary_number(dictionary, key)?.to_i64()
 }
 
-fn dictionary_f64(dictionary: &CFDictionary<CFString, CFType>, key: CFStringRef) -> Option<f64> {
+fn dictionary_f64(dictionary: &WindowInfo, key: CFStringRef) -> Option<f64> {
     dictionary_number(dictionary, key)?.to_f64()
 }
 
-fn dictionary_number(
-    dictionary: &CFDictionary<CFString, CFType>,
-    key: CFStringRef,
-) -> Option<CFNumber> {
-    let key = unsafe { CFString::wrap_under_get_rule(key) };
-    let value = dictionary.find(&key)?;
+fn dictionary_number(dictionary: &WindowInfo, key: CFStringRef) -> Option<CFNumber> {
+    let value = dictionary_value(dictionary, key)?;
 
     Some(unsafe { CFNumber::wrap_under_get_rule(value.as_CFTypeRef() as _) })
 }
 
-fn dictionary_dictionary(
-    dictionary: &CFDictionary<CFString, CFType>,
-    key: CFStringRef,
-) -> Option<CFDictionary<CFString, CFType>> {
-    let key = unsafe { CFString::wrap_under_get_rule(key) };
-    let value = dictionary.find(&key)?;
+fn dictionary_dictionary(dictionary: &WindowInfo, key: CFStringRef) -> Option<WindowInfo> {
+    let value = dictionary_value(dictionary, key)?;
 
-    Some(unsafe { CFDictionary::wrap_under_get_rule(value.as_CFTypeRef() as _) })
+    Some(unsafe { WindowInfo::wrap_under_get_rule(value.as_CFTypeRef() as _) })
+}
+
+fn dictionary_value(dictionary: &WindowInfo, key: CFStringRef) -> Option<CFType> {
+    let key = unsafe { CFString::wrap_under_get_rule(key) };
+
+    dictionary.find(&key).map(|value| value.to_untyped())
 }
 
 fn ax_element_attribute(

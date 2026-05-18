@@ -296,10 +296,9 @@ async function resetRules() {
 }
 
 async function disableRules() {
-	const ruleIds = allKnownRuleIds();
 	const nextLintConfig = { ...(lintConfig ?? defaultLintConfig ?? {}) };
 
-	for (const ruleId of ruleIds) {
+	for (const ruleId of allKnownRuleIds()) {
 		nextLintConfig[ruleId] = false;
 	}
 
