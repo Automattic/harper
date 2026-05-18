@@ -148,10 +148,7 @@ impl ExprLinter for Damages {
         Some(Lint {
             span: damage_span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                damage_chars[..6].to_vec(),
-                damage_chars,
-            )],
+            suggestions: vec![Suggestion::RemoveSuffix(1)],
             message: "Singular `damage` is correct when not referring to a court case.".to_string(),
             ..Default::default()
         })
