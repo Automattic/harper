@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import { type AccessibilityPermissionStatus, Client } from '$lib/client';
+import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
 import { createInitialSettingsState, type SectionId, type SettingsState } from '../settings-data';
 
 type SetupStep = {
@@ -24,8 +24,15 @@ let accessibilityError = '';
 let isCheckingAccessibility = true;
 let isRequestingAccessibility = false;
 let hasRequestedAccessibility = false;
+let integrations: Integration[] = [];
+let integrationsError = '';
+let isLoadingIntegrations = true;
+let isEnablingTextEdit = false;
 let isLaunchingTextEdit = false;
 let testDriveError = '';
+
+$: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
+$: isTextEditEnabled = textEditIntegration?.enabled === true;
 
 $: setupSteps = buildSetupSteps(
 	state,
@@ -33,24 +40,62 @@ $: setupSteps = buildSetupSteps(
 	isCheckingAccessibility,
 	isRequestingAccessibility,
 	hasRequestedAccessibility,
+	isTextEditEnabled,
+	isLoadingIntegrations,
+	isEnablingTextEdit,
 );
 $: setupCompletedCount = setupSteps.filter((step) => step.done).length;
 $: setupAllDone = setupSteps.every((step) => step.done);
 
 onMount(() => {
 	void checkAccessibilityPermission();
+	void loadIntegrations();
 });
 
 function updateSetup(patch: Partial<SettingsState['setup']>) {
 	state = { ...state, setup: { ...state.setup, ...patch } };
 }
 
-function enableTextEditForSetup() {
-	state = {
-		...state,
-		integrations: { ...state.integrations, textedit: true },
-		setup: { ...state.setup, integration: 'selected' },
-	};
+async function loadIntegrations() {
+	isLoadingIntegrations = true;
+	integrationsError = '';
+
+	try {
+		integrations = await Client.getIntegrations();
+	} catch (error) {
+		integrationsError = `Unable to load integrations: ${error}`;
+	} finally {
+		isLoadingIntegrations = false;
+	}
+}
+
+async function enableTextEditForSetup() {
+	isEnablingTextEdit = true;
+	integrationsError = '';
+
+	try {
+		if (textEditIntegration) {
+			await Client.setIntegrationEnabled('com.apple.TextEdit', true);
+			integrations = integrations.map((integration) =>
+				integration.bundle_id === 'com.apple.TextEdit'
+					? { ...integration, enabled: true }
+					: integration,
+			);
+		} else {
+			await Client.addIntegration('com.apple.TextEdit');
+			integrations = [...integrations, { bundle_id: 'com.apple.TextEdit', enabled: true }];
+		}
+
+		state = {
+			...state,
+			integrations: { ...state.integrations, textedit: true },
+			setup: { ...state.setup, integration: 'selected' },
+		};
+	} catch (error) {
+		integrationsError = `Unable to enable TextEdit: ${error}`;
+	} finally {
+		isEnablingTextEdit = false;
+	}
 }
 
 async function launchTextEditForTestDrive() {
@@ -146,9 +191,12 @@ function buildSetupSteps(
 	currentIsCheckingAccessibility: boolean,
 	currentIsRequestingAccessibility: boolean,
 	currentHasRequestedAccessibility: boolean,
+	currentIsTextEditEnabled: boolean,
+	currentIsLoadingIntegrations: boolean,
+	currentIsEnablingTextEdit: boolean,
 ): SetupStep[] {
 	const accessibilityDone = currentAccessibilityStatus === 'Granted';
-	const integrationDone = currentState.setup.integration === 'selected';
+	const integrationDone = currentIsTextEditEnabled;
 	const testDriveDone = currentState.setup.testDrive === 'completed';
 	const accessibilityActionDisabled =
 		currentIsCheckingAccessibility ||
@@ -184,6 +232,7 @@ function buildSetupSteps(
 			actionLabel: integrationDone ? 'Manage' : 'Browse apps',
 			actionVariant: 'default',
 			action: () => navigateToSection('integrations'),
+			actionDisabled: currentIsLoadingIntegrations || currentIsEnablingTextEdit,
 		},
 		{
 			id: 'test-drive',
@@ -300,15 +349,39 @@ function buildSetupSteps(
                   </div>
                 {/if}
 
-                {#if step.id === "integration" && accessibilityStatus === "Granted" && state.setup.integration !== "selected"}
+                {#if step.id === "integration" && integrationsError}
+                  <div class="detected-app">
+                    <div class="big-mark amber">!</div>
+                    <div class="grow">
+                      <strong>Integration update failed</strong>
+                      <p>{integrationsError}</p>
+                    </div>
+                  </div>
+                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isLoadingIntegrations}
+                  <div class="detected-app">
+                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <div class="grow">
+                      <strong>Checking TextEdit</strong>
+                      <p>Loading integration state...</p>
+                    </div>
+                  </div>
+                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isTextEditEnabled}
+                  <div class="detected-app">
+                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <div class="grow">
+                      <strong>TextEdit enabled</strong>
+                      <p>Harper is configured to check TextEdit.</p>
+                    </div>
+                  </div>
+                {:else if step.id === "integration" && accessibilityStatus === "Granted"}
                   <div class="detected-app">
                     <div class="app-tile" style="--app-tint: #5a5f68">T</div>
                     <div class="grow">
                       <strong>TextEdit detected</strong>
                       <p>A good starter app for trying Harper.</p>
                     </div>
-                    <button class="button primary" type="button" on:click={enableTextEditForSetup}>
-                      Enable
+                    <button class="button primary" type="button" disabled={isEnablingTextEdit} on:click={enableTextEditForSetup}>
+                      {isEnablingTextEdit ? "Enabling..." : "Enable"}
                     </button>
                   </div>
                 {/if}
