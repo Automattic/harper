@@ -7,6 +7,15 @@ Suggest:
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+      11 | With one attack, he was torn a pieces.
+         |                              ^~~~~~~~ Use a singular noun after the indefinite article `a` or `an`.
+Suggest:
+  - Replace with: “a piece”
+
+
+
 Lint:    Capitalization (31 priority)
 Message: |
       20 | at the bottom of the page; sitting at the table; at church; at sea

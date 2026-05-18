@@ -11,6 +11,7 @@ use hashbrown::HashMap;
 use lru::LruCache;
 
 use super::a_part::APart;
+use super::a_plural_noun::APluralNoun;
 use super::a_some_time::ASomeTime;
 use super::a_while::AWhile;
 use super::addicting::Addicting;
@@ -569,6 +570,7 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart, true);
+        insert_expr_rule_with_dict!(APluralNoun, true);
         insert_expr_rule!(ASomeTime, true);
         insert_expr_rule!(AWhile, true);
         insert_expr_rule!(Addicting, true);

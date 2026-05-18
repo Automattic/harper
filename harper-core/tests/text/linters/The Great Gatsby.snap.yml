@@ -927,6 +927,16 @@ Message: |
 
 
 
+Lint:    Agreement (127 priority)
+Message: |
+     725 | His voice faded off and Tom glanced impatiently around the garage. Then I heard
+     726 | footsteps on a stairs, and in a moment the thickish figure of a woman blocked
+         |              ^~~~~~~~ Use a singular noun after the indefinite article `a` or `an`.
+Suggest:
+  - Replace with: “a stair”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      730 | beauty, but there was an immediately perceptible vitality about her as if the
