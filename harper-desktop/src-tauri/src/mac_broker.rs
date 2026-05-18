@@ -1,4 +1,4 @@
-use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
+use accessibility::attribute::AXUIElementAttributes;
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
@@ -6,9 +6,8 @@ use accessibility_sys::{
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
     AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
     kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
-    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXPositionAttribute, kAXSizeAttribute,
-    kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
-    kAXValueTypeCGSize, pid_t,
+    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt,
+    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::base::{CFRange, CFType, TCFType};
@@ -19,7 +18,7 @@ use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::NSRunningApplication;
-use objc2_foundation::{NSPoint, NSRect, NSSize};
+use objc2_foundation::NSRect;
 use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
 
 use crate::config::{Config, Integration};
@@ -149,11 +148,10 @@ fn is_pid_approved(pid: pid_t, integrations: &[Integration]) -> bool {
 }
 
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
-    let Some(app) = (unsafe { NSRunningApplication::runningApplicationWithProcessIdentifier(pid) })
-    else {
+    let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
         return Ok(None);
     };
-    let Some(bundle_identifier) = (unsafe { app.bundleIdentifier() }) else {
+    let Some(bundle_identifier) = app.bundleIdentifier() else {
         return Ok(None);
     };
 
@@ -239,7 +237,7 @@ impl TreeVisitor for RectCollector<'_> {
 
         TreeWalkerFlow::Continue
     }
-    fn exit_element(&self, element: &AXUIElement) {}
+    fn exit_element(&self, _element: &AXUIElement) {}
 }
 
 impl<'a> RectCollector<'a> {
@@ -281,40 +279,6 @@ fn is_textarea(el: &AXUIElement) -> bool {
     false
 }
 
-fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Option<T>, Error> {
-    let attr = AXAttribute::<CFType>::new(&CFString::new(name));
-    let value = element.attribute(&attr)?;
-    let mut out = MaybeUninit::<T>::uninit();
-
-    let ok = unsafe {
-        AXValueGetValue(
-            value.as_CFTypeRef() as AXValueRef,
-            value_type,
-            out.as_mut_ptr() as *mut c_void,
-        )
-    };
-
-    Ok(ok.then(|| unsafe { out.assume_init() }))
-}
-
-fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
-    let Some(position) = ax_value::<NSPoint>(element, kAXPositionAttribute, kAXValueTypeCGPoint)?
-    else {
-        return Ok(None);
-    };
-
-    let Some(size) = ax_value::<NSSize>(element, kAXSizeAttribute, kAXValueTypeCGSize)? else {
-        return Ok(None);
-    };
-
-    Ok(Some(Rect {
-        x: position.x,
-        y: position.y,
-        width: size.width,
-        height: size.height,
-    }))
-}
-
 fn element_rect_for_text_range(
     element: &AXUIElement,
     start_index: isize,
@@ -349,10 +313,12 @@ fn element_rect_for_text_range(
         )
     };
 
-    match error {
-        kAXErrorSuccess => {}
-        kAXErrorNoValue | kAXErrorParameterizedAttributeUnsupported => return Ok(None),
-        error => return Err(Error::Ax(error)),
+    if error == kAXErrorSuccess {
+        // Continue.
+    } else if error == kAXErrorNoValue || error == kAXErrorParameterizedAttributeUnsupported {
+        return Ok(None);
+    } else {
+        return Err(Error::Ax(error));
     }
 
     if value.is_null() {
