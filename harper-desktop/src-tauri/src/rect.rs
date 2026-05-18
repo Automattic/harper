@@ -18,26 +18,6 @@ impl Rect {
             height,
         }
     }
-
-    pub fn translated(self, dx: f64, dy: f64) -> Self {
-        Self {
-            x: self.x + dx,
-            y: self.y + dy,
-            ..self
-        }
-    }
-
-    pub fn same_size_as(self, other: Self) -> bool {
-        nearly_equal(self.width, other.width) && nearly_equal(self.height, other.height)
-    }
-
-    pub fn nearly_equal_to(self, other: Self) -> bool {
-        nearly_equal(self.x, other.x) && nearly_equal(self.y, other.y) && self.same_size_as(other)
-    }
-}
-
-fn nearly_equal(left: f64, right: f64) -> bool {
-    (left - right).abs() <= 0.5
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -111,39 +91,5 @@ impl ColoredRect {
             height,
             color,
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::Rect;
-
-    #[test]
-    fn translated_moves_origin_without_changing_size() {
-        let rect = Rect::new(10.0, 20.0, 30.0, 40.0).translated(5.0, -7.0);
-
-        assert_eq!(rect, Rect::new(15.0, 13.0, 30.0, 40.0));
-    }
-
-    #[test]
-    fn same_size_allows_subpixel_noise() {
-        assert!(Rect::new(0.0, 0.0, 100.0, 50.0).same_size_as(Rect::new(10.0, 10.0, 100.4, 49.6,)));
-    }
-
-    #[test]
-    fn same_size_rejects_meaningful_resize() {
-        assert!(
-            !Rect::new(0.0, 0.0, 100.0, 50.0).same_size_as(Rect::new(10.0, 10.0, 101.0, 50.0,))
-        );
-    }
-
-    #[test]
-    fn nearly_equal_to_compares_origin_and_size_with_tolerance() {
-        assert!(
-            Rect::new(10.0, 20.0, 30.0, 40.0).nearly_equal_to(Rect::new(10.4, 19.6, 30.4, 39.6,))
-        );
-        assert!(
-            !Rect::new(10.0, 20.0, 30.0, 40.0).nearly_equal_to(Rect::new(10.6, 20.0, 30.0, 40.0,))
-        );
     }
 }

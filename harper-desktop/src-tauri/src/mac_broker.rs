@@ -25,11 +25,21 @@ use core_graphics::window::{
 use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::NSRunningApplication;
 use objc2_foundation::NSRect;
-use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
+use std::{
+    cell::RefCell,
+    collections::BTreeMap,
+    error::Error as StdError,
+    ptr,
+    rc::Rc,
+    time::{Duration, Instant},
+};
 
 use crate::config::{Config, Integration};
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use crate::rect::{ActionableLint, Rect};
+
+const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -39,23 +49,14 @@ use crate::rect::{ActionableLint, Rect};
 pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Rc<RefCell<Vec<Integration>>>,
-    last_geometry: Option<GeometrySnapshot>,
+    window_movement: Option<WindowMovementState>,
 }
 
 #[derive(Debug, Clone)]
-struct GeometrySnapshot {
+struct WindowMovementState {
     pid: pid_t,
-    window_frame: Rect,
-    lints: Vec<LintSnapshot>,
-}
-
-#[derive(Debug, Clone)]
-struct LintSnapshot {
-    rect: Rect,
-    rule_name: String,
-    span_start: usize,
-    span_len: usize,
-    source_text: String,
+    frame: Rect,
+    last_changed_at: Instant,
 }
 
 impl MacBroker {
@@ -63,7 +64,7 @@ impl MacBroker {
         Self {
             last_focused: None,
             integrations,
-            last_geometry: None,
+            window_movement: None,
         }
     }
 
@@ -79,32 +80,38 @@ impl MacBroker {
         }
     }
 
-    fn correct_for_window_movement(
-        &mut self,
-        pid: pid_t,
-        window_frame: Rect,
-        rects: &mut [ActionableLint],
-    ) {
-        let lints = lint_snapshots(rects);
+    fn window_is_moving(&mut self, pid: pid_t) -> bool {
+        let Some(frame) = frontmost_window_frame_for_pid(pid) else {
+            self.window_movement = None;
+            return true;
+        };
 
-        if let Some(last_geometry) = &self.last_geometry
-            && should_translate_geometry(last_geometry, pid, window_frame, &lints)
-        {
-            let dx = window_frame.x - last_geometry.window_frame.x;
-            let dy = window_frame.y - last_geometry.window_frame.y;
+        let now = Instant::now();
+        let Some(state) = &mut self.window_movement else {
+            self.window_movement = Some(WindowMovementState {
+                pid,
+                frame,
+                last_changed_at: settled_instant(now),
+            });
+            return false;
+        };
 
-            for positioned_lint in rects {
-                positioned_lint.rect = positioned_lint.rect.translated(dx, dy);
-            }
-
-            return;
+        if state.pid != pid {
+            *state = WindowMovementState {
+                pid,
+                frame,
+                last_changed_at: settled_instant(now),
+            };
+            return false;
         }
 
-        self.last_geometry = Some(GeometrySnapshot {
-            pid,
-            window_frame,
-            lints,
-        });
+        if window_frame_changed(state.frame, frame) {
+            state.frame = frame;
+            state.last_changed_at = now;
+            return true;
+        }
+
+        now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION
     }
 }
 
@@ -122,18 +129,22 @@ impl OsBroker for MacBroker {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
-                self.last_geometry = None;
+                self.window_movement = None;
                 return Vec::new();
             }
             Err(err) => {
-                self.last_geometry = None;
+                self.window_movement = None;
                 eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
         };
 
         if !is_pid_approved(pid, &self.integrations.borrow()) {
-            self.last_geometry = None;
+            self.window_movement = None;
+            return Vec::new();
+        }
+
+        if self.window_is_moving(pid) {
             return Vec::new();
         }
 
@@ -144,15 +155,7 @@ impl OsBroker for MacBroker {
 
         walker.walk(&el, &collector);
 
-        let mut rects = collector.unwrap_rects();
-
-        if let Some(window_frame) = frontmost_window_frame_for_pid(pid) {
-            self.correct_for_window_movement(pid, window_frame, &mut rects);
-        } else {
-            self.last_geometry = None;
-        }
-
-        rects
+        collector.unwrap_rects()
     }
 
     fn cursor_position(&self) -> Option<egui::Pos2> {
@@ -223,44 +226,20 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     Ok(Some(bundle_identifier.to_string()))
 }
 
-fn lint_snapshots(rects: &[ActionableLint]) -> Vec<LintSnapshot> {
-    rects
-        .iter()
-        .map(|positioned_lint| LintSnapshot {
-            rect: positioned_lint.rect,
-            rule_name: positioned_lint.rule_name.clone(),
-            span_start: positioned_lint.lint.span.start,
-            span_len: positioned_lint.lint.span.len(),
-            source_text: positioned_lint.source_text.clone(),
-        })
-        .collect()
+fn window_frame_changed(previous: Rect, current: Rect) -> bool {
+    !nearly_equal(previous.x, current.x)
+        || !nearly_equal(previous.y, current.y)
+        || !nearly_equal(previous.width, current.width)
+        || !nearly_equal(previous.height, current.height)
 }
 
-fn should_translate_geometry(
-    last_geometry: &GeometrySnapshot,
-    pid: pid_t,
-    window_frame: Rect,
-    lints: &[LintSnapshot],
-) -> bool {
-    last_geometry.pid == pid
-        && window_frame.same_size_as(last_geometry.window_frame)
-        && window_frame_has_moved(last_geometry.window_frame, window_frame)
-        && same_lints(&last_geometry.lints, lints)
+fn settled_instant(now: Instant) -> Instant {
+    now.checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+        .unwrap_or(now)
 }
 
-fn window_frame_has_moved(previous: Rect, current: Rect) -> bool {
-    (previous.x - current.x).abs() > 0.5 || (previous.y - current.y).abs() > 0.5
-}
-
-fn same_lints(left: &[LintSnapshot], right: &[LintSnapshot]) -> bool {
-    left.len() == right.len()
-        && left.iter().zip(right).all(|(left, right)| {
-            left.rect.nearly_equal_to(right.rect)
-                && left.rule_name == right.rule_name
-                && left.span_start == right.span_start
-                && left.span_len == right.span_len
-                && left.source_text == right.source_text
-        })
+fn nearly_equal(left: f64, right: f64) -> bool {
+    (left - right).abs() <= WINDOW_FRAME_TOLERANCE
 }
 
 fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
