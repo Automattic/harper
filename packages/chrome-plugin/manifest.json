@@ -1,0 +1,19 @@
+{
+	"manifest_version": 3,
+	"name": "Harper Grammar Checker",
+	"version": "0.1.0",
+	"description": "Harper is a grammar checker for the English language.",
+	"permissions": ["storage"],
+	"content_scripts": [
+		{
+			"matches": ["https://*/*", "http://*/*"],
+			"js": ["content.js"]
+		}
+	],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "popup.html"
+	}
+}
