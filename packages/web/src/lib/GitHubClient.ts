@@ -12,7 +12,7 @@ export interface GitHubRelease {
 }
 
 export class GithubClient {
-	/// Map of string -> [content, expiration time]
+	private static readonly cacheTtlMs = 3600 * 3000;
 	private static versionCache: Map<string, [string, number]> = new Map();
 	private static releaseCache: Map<string, [GitHubRelease, number]> = new Map();
 
@@ -20,50 +20,45 @@ export class GithubClient {
 		repoOwner: string,
 		repoName: string,
 	): Promise<string | null> {
-		const key = `${repoOwner}/${repoName}`;
-
-		const val = this.versionCache.get(key);
-
-		if (val == null) {
-			const updatedValue = await this.getLatestRelease(repoOwner, repoName);
-			this.versionCache.set(key, [updatedValue, Date.now() + 3600 * 3000]);
-			return updatedValue;
-		}
-
-		const [value, expiry] = val;
-
-		if (expiry - Date.now() < 0) {
-			this.versionCache.delete(key);
-			const updatedValue = await this.getLatestRelease(repoOwner, repoName);
-			this.versionCache.set(key, [updatedValue, Date.now() + 3600 * 3000]);
-			return updatedValue;
-		}
-
-		return value;
+		return await this.getFromCache(this.versionCache, `${repoOwner}/${repoName}`, () =>
+			this.getLatestRelease(repoOwner, repoName),
+		);
 	}
 
 	public static async getLatestReleaseMetadataFromCache(
 		repoOwner: string,
 		repoName: string,
 	): Promise<GitHubRelease> {
-		const key = `${repoOwner}/${repoName}`;
+		return await this.getFromCache(this.releaseCache, `${repoOwner}/${repoName}`, () =>
+			this.getLatestReleaseMetadata(repoOwner, repoName),
+		);
+	}
 
-		const val = this.releaseCache.get(key);
+	/**
+	 * Return a cached value when it is still fresh, otherwise load and cache a replacement.
+	 *
+	 * This keeps GitHub release caching behavior consistent between lightweight version
+	 * lookups and full release metadata lookups.
+	 */
+	private static async getFromCache<T>(
+		cache: Map<string, [T, number]>,
+		key: string,
+		load: () => Promise<T>,
+	): Promise<T> {
+		const cached = cache.get(key);
 
-		if (val == null) {
-			const updatedValue = await this.getLatestReleaseMetadata(repoOwner, repoName);
-			this.releaseCache.set(key, [updatedValue, Date.now() + 3600 * 3000]);
-			return updatedValue;
+		if (cached != null) {
+			const [value, expiry] = cached;
+
+			if (expiry >= Date.now()) {
+				return value;
+			}
+
+			cache.delete(key);
 		}
 
-		const [value, expiry] = val;
-
-		if (expiry - Date.now() < 0) {
-			this.releaseCache.delete(key);
-			const updatedValue = await this.getLatestReleaseMetadata(repoOwner, repoName);
-			this.releaseCache.set(key, [updatedValue, Date.now() + 3600 * 3000]);
-			return updatedValue;
-		}
+		const value = await load();
+		cache.set(key, [value, Date.now() + this.cacheTtlMs]);
 
 		return value;
 	}

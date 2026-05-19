@@ -198,8 +198,11 @@ impl Config {
                 .unwrap_or_else(Self::curated_integrations),
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
             auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
-            last_update_check: deserialize_optional_field(object, "last_update_check")?
-                .unwrap_or(None),
+            last_update_check: deserialize_optional_field::<Option<u64>>(
+                object,
+                "last_update_check",
+            )?
+            .flatten(),
         })
     }
 }
