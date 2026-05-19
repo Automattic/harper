@@ -71,6 +71,13 @@ impl IrregularVerbs {
             .map(|(lemma, _, _)| lemma.as_str())
     }
 
+    pub fn get_preterite_for_past_participle(&self, past_participle: &str) -> Option<&str> {
+        self.verbs
+            .iter()
+            .find(|(_, _, pp)| pp.eq_ignore_ascii_case(past_participle))
+            .map(|(_, pt, _)| pt.as_str())
+    }
+
     pub fn get_pasts_for_lemma(&self, lemma: &str) -> Option<(&str, &str)> {
         self.verbs
             .iter()
@@ -125,6 +132,30 @@ mod tests {
     fn cant_find_non_verb() {
         assert_eq!(
             IrregularVerbs::curated().get_past_participle_for_preterite("the"),
+            None
+        );
+    }
+
+    #[test]
+    fn can_find_preterite_for_past_participle_lowercase() {
+        assert_eq!(
+            IrregularVerbs::curated().get_preterite_for_past_participle("seen"),
+            Some("saw")
+        );
+    }
+
+    #[test]
+    fn can_find_preterite_for_past_participle_uppercase() {
+        assert_eq!(
+            IrregularVerbs::curated().get_preterite_for_past_participle("GONE"),
+            Some("went")
+        );
+    }
+
+    #[test]
+    fn cant_find_preterite_for_non_participle() {
+        assert_eq!(
+            IrregularVerbs::curated().get_preterite_for_past_participle("walked"),
             None
         );
     }
