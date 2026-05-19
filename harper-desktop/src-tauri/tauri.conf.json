@@ -24,6 +24,15 @@
 			"icons/128x128@2x.png",
 			"icons/icon.icns",
 			"icons/icon.ico"
-		]
+		],
+		"createUpdaterArtifacts": true
+	},
+	"plugins": {
+		"updater": {
+			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDY4OEU5REVGQzc2MDk4QzkKUldUSm1HREg3NTJPYUNPd1VwT3kxUm5kc3VhKzcrK2FaV3hYemdacVNWb3NvVnJsYndqWUJObC8K",
+			"endpoints": [
+				"https://writewithharper.com/download-harper-desktop/{{target}}/{{arch}}/{{current_version}}"
+			]
+		}
 	}
 }
