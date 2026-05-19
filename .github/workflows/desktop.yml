@@ -67,9 +67,13 @@ jobs:
       - name: Install tauri-cli
         run: cargo binstall tauri-cli --force --no-confirm
       - name: Build Harper Desktop
+        if: startsWith(github.ref, 'refs/tags/v')
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.HARPER_DESKTOP_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.HARPER_DESKTOP_PASSWORD }}
+        run: ${{ matrix.platform.command }}
+      - name: Build Harper Desktop without signing
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         run: ${{ matrix.platform.command }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
