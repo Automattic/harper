@@ -496,6 +496,18 @@ impl SequenceExpr {
         })
     }
 
+    /// Match a token where any of the first token kind predicates returns true
+    /// and the second returns false.    
+    pub fn then_kind_any_but_not<F1, F2>(self, preds_is: &'static [F1], pred_not: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _src: &[char]| {
+            preds_is.iter().any(|pred| pred(&tok.kind)) && !pred_not(&tok.kind)
+        })
+    }
+
     /// Match a token where any of the first token kind predicates returns true,
     /// the second returns false, and the token is not in the list of exceptions.    
     pub fn then_kind_any_but_not_except<F1, F2>(

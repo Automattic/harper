@@ -19,6 +19,8 @@ const DialectValue = {
 	Indian: 4,
 } as const;
 
+const ACCESSIBILITY_PERMISSION_TIMEOUT_MS = 6_000;
+
 let configLinterPromise: Promise<LocalLinterType> | null = null;
 
 function getConfigLinter(): Promise<LocalLinterType> {
@@ -36,6 +38,8 @@ export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
 }
+
+export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
 export class Client {
 	static async getLintConfig(): Promise<LintConfig> {
@@ -62,6 +66,14 @@ export class Client {
 
 	static async setDialect(dialect: Dialect): Promise<void> {
 		await invoke('set_dialect', { dialect: dialectToRustDialect(dialect) });
+	}
+
+	static async getDebounceMs(): Promise<number> {
+		return await invoke<number>('get_debounce_ms');
+	}
+
+	static async setDebounceMs(debounceMs: number): Promise<void> {
+		await invoke('set_debounce_ms', { debounceMs });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
@@ -123,6 +135,36 @@ export class Client {
 	static async setIntegrationEnabled(bundleId: string, enabled: boolean): Promise<void> {
 		await invoke('set_integration_enabled', { bundleId, enabled });
 	}
+
+	static async getAccessibilityPermissionStatus(): Promise<AccessibilityPermissionStatus> {
+		return await withTimeout(
+			invoke<AccessibilityPermissionStatus>('get_accessibility_permission_status'),
+			ACCESSIBILITY_PERMISSION_TIMEOUT_MS,
+			'Accessibility permission check timed out',
+		);
+	}
+
+	static async requestAccessibilityPermission(): Promise<AccessibilityPermissionStatus> {
+		return await withTimeout(
+			invoke<AccessibilityPermissionStatus>('request_accessibility_permission'),
+			ACCESSIBILITY_PERMISSION_TIMEOUT_MS,
+			'Accessibility permission request timed out',
+		);
+	}
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+	let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+	const timeout = new Promise<never>((_, reject) => {
+		timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
+	});
+
+	return Promise.race([promise, timeout]).finally(() => {
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+	});
 }
 
 function rustDialectToDialect(dialect: RustDialect): Dialect {
