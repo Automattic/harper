@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::{
-    Dialect, IrregularNouns, Lint, Token, TokenStringExt,
+    CharStringExt, Dialect, IrregularNouns, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{
@@ -43,6 +43,20 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
         let noun = toks.last()?;
 
         if noun.kind.is_singular_noun() {
+            return None;
+        }
+
+        if noun.kind.is_adverb()
+            || is_directional_adverb(noun, src)
+            || is_great_many_phrase(toks, src)
+        {
+            return None;
+        }
+
+        if has_modifier_before_noun(toks, noun)
+            && noun.kind.is_upos(UPOS::VERB)
+            && noun.kind.is_verb_third_person_singular_present_form()
+        {
             return None;
         }
 
@@ -123,6 +137,40 @@ fn looks_like_third_person_verb_use(noun: &Token, ctx: Option<(&[Token], &[Token
     (noun.kind.is_upos(UPOS::VERB) && next.kind.is_sentence_terminator())
         || next.kind.is_pronoun()
         || next.kind.is_upos(UPOS::PRON)
+}
+
+fn has_modifier_before_noun(toks: &[Token], noun: &Token) -> bool {
+    toks.iter()
+        .skip(1)
+        .any(|tok| !tok.kind.is_whitespace() && tok.span != noun.span)
+}
+
+fn is_directional_adverb(tok: &Token, src: &[char]) -> bool {
+    tok.span.get_content(src).eq_any_ignore_ascii_case_str(&[
+        "backwards",
+        "downwards",
+        "forwards",
+        "inwards",
+        "onwards",
+        "outwards",
+        "upwards",
+    ])
+}
+
+fn is_great_many_phrase(toks: &[Token], src: &[char]) -> bool {
+    let words = toks
+        .iter()
+        .filter(|tok| tok.kind.is_word())
+        .map(|tok| tok.span.get_content(src))
+        .collect::<Vec<_>>();
+
+    matches!(
+        words.as_slice(),
+        [article, great, many, ..]
+            if article.eq_any_ignore_ascii_case_str(&["a"])
+                && great.eq_any_ignore_ascii_case_str(&["great"])
+                && many.eq_any_ignore_ascii_case_str(&["many"])
+    )
 }
 
 fn article_target<'a>(
@@ -245,6 +293,21 @@ mod tests {
     #[test]
     fn allows_third_person_verb_after_adjective_subject() {
         crate::linting::tests::assert_no_lints("An auxiliary precedes it.", linter());
+    }
+
+    #[test]
+    fn allows_third_person_verb_after_noun_modifier_subject() {
+        crate::linting::tests::assert_no_lints("A problem remains in the design.", linter());
+    }
+
+    #[test]
+    fn allows_great_many_plural() {
+        crate::linting::tests::assert_no_lints("It had a great many teeth.", linter());
+    }
+
+    #[test]
+    fn allows_adverb_after_modified_singular_noun() {
+        crate::linting::tests::assert_no_lints("It ran a very little way forwards.", linter());
     }
 
     #[test]
