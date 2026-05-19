@@ -3,6 +3,17 @@
 # See: https://github.com/Automattic/harper/issues/3380
 # See: https://ludwig.guru/s/Besides+for
 # See: https://ell.stackexchange.com/questions/48316
+#
+# Note on comma ambiguity: When "besides" is used as a sentence adverb/conjunction
+# followed by a comma and then "for" beginning a separate prepositional phrase
+# (e.g. "Besides, for the most part..."), the comma token breaks the sequence,
+# so the rule naturally does not match. If the comma is omitted
+# ("Besides for the most part..."), the rule will flag it. In most such cases
+# the "besides" suggestion is still appropriate — "Besides, for the most part..."
+# becomes "Besides, the most part..." is wrong, but "Besides for..." was also
+# wrong without the comma. The user should add the comma. For the rare case
+# where the user genuinely meant "besides for" as a connector without a comma,
+# both suggestions ("besides" or "other than") remain reasonable alternatives.
 
 expr main (besides for)
 
@@ -12,19 +23,24 @@ let kind "Redundancy"
 let becomes ["besides", "other than"]
 
 # TRUE POSITIVES — should be corrected
+# (mixed between "besides" and "other than" suggestions to test both alternatives)
 
 test "Besides for multilevel verbosity you usually do -vv or -vvv." "Besides multilevel verbosity you usually do -vv or -vvv."
-test "Besides for providing practical tools, KTH_Toolbox also defines a convenient framework." "Besides providing practical tools, KTH_Toolbox also defines a convenient framework."
+test "Besides for providing practical tools, KTH_Toolbox also defines a convenient framework." "Other than providing practical tools, KTH_Toolbox also defines a convenient framework."
 test "Without it, the feature is, besides for basic testing with small corpuses of text, not useable." "Without it, the feature is, besides basic testing with small corpuses of text, not useable."
-test "No autocomplete besides for classes that are in the same file I'm editing." "No autocomplete besides classes that are in the same file I'm editing."
+test "No autocomplete besides for classes that are in the same file I'm editing." "No autocomplete other than classes that are in the same file I'm editing."
 test "There were a few cases where it's actually pretty sweet, but besides for that, it was largely ineffective." "There were a few cases where it's actually pretty sweet, but besides that, it was largely ineffective."
-test "I don't have any other options besides for this one." "I don't have any other options besides this one."
-test "Besides for the weather, the trip was great." "Besides the weather, the trip was great."
+test "I don't have any other options besides for this one." "I don't have any other options other than this one."
+test "Besides for the weather, the trip was great." "Other than the weather, the trip was great."
 test "She doesn't eat anything besides for salad." "She doesn't eat anything besides salad."
-test "The app works well besides for a few minor bugs." "The app works well besides a few minor bugs."
+test "The app works well besides for a few minor bugs." "The app works well other than a few minor bugs."
 test "Besides for that one issue, everything is fine." "Besides that one issue, everything is fine."
-test "It's a great product besides for the price." "It's a great product besides the price."
+test "It's a great product besides for the price." "It's a great product other than the price."
 test "We have nothing besides for each other." "We have nothing besides each other."
+
+# Additional true positives with "other than" to ensure both alternatives are tested
+test "He has no qualifications besides for this certificate." "He has no qualifications other than this certificate."
+test "Besides for a brief power outage, the event went smoothly." "Besides a brief power outage, the event went smoothly."
 
 # FALSE POSITIVES — should NOT be flagged
 
@@ -41,3 +57,9 @@ allows "Besides, for him to give up now would be surprising."
 # Other unrelated "besides" usage
 allows "There is no one here besides us."
 allows "What do you have besides this?"
+
+# "Besides for" without a comma where the user meant "besides, for..."
+# These are ambiguous — the rule flags them, but the "besides" suggestion
+# is still a reasonable correction (the comma should be present).
+# Including as allows would be ideal, but the token-level match is correct.
+# We accept this as a known edge case; users can ignore the suggestion.
