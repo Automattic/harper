@@ -4,10 +4,7 @@ use crate::{
     CharStringExt, Dialect, IrregularNouns, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
-    linting::{
-        ExprLinter, LintKind, Suggestion,
-        expr_linter::{Chunk, at_start_of_sentence},
-    },
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     regular_nouns,
     spell::Dictionary,
 };
@@ -66,8 +63,6 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
-        let is_start_of_sentence = at_start_of_sentence(ctx);
-
         let article = toks.first()?;
         let plural = noun.span.get_content(src);
         let suggestions = singular_noun_suggestions(&self.dict, plural)
@@ -78,14 +73,9 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
                 replacement.extend(&src[article.span.end..noun.span.start]);
                 replacement.extend(singular);
 
-                let mut case_template = span.get_content(src).to_vec();
-                if is_start_of_sentence && let Some(first) = case_template.first_mut() {
-                    first.make_ascii_uppercase();
-                }
-
                 Some(Suggestion::replace_with_match_case(
                     replacement,
-                    case_template,
+                    span.get_content(src).to_vec(),
                 ))
             })
             .collect::<Option<Vec<_>>>()?
@@ -158,19 +148,33 @@ fn is_directional_adverb(tok: &Token, src: &[char]) -> bool {
 }
 
 fn is_great_many_phrase(toks: &[Token], src: &[char]) -> bool {
-    let words = toks
-        .iter()
-        .filter(|tok| tok.kind.is_word())
-        .map(|tok| tok.span.get_content(src))
-        .collect::<Vec<_>>();
+    let mut non_ws = toks.iter().filter(|tok| !tok.kind.is_whitespace());
 
-    matches!(
-        words.as_slice(),
-        [article, great, many, ..]
-            if article.eq_any_ignore_ascii_case_str(&["a"])
-                && great.eq_any_ignore_ascii_case_str(&["great"])
-                && many.eq_any_ignore_ascii_case_str(&["many"])
-    )
+    let Some(article) = non_ws.next() else {
+        return false;
+    };
+    let Some(great) = non_ws.next() else {
+        return false;
+    };
+    let Some(many) = non_ws.next() else {
+        return false;
+    };
+
+    article.kind.is_word()
+        && great.kind.is_word()
+        && many.kind.is_word()
+        && article
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(&["a"])
+        && great
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(&["great"])
+        && many
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(&["many"])
 }
 
 fn article_target<'a>(
@@ -271,7 +275,7 @@ mod tests {
         assert_suggestion_result(
             "an beautiful girls is sitting in the chair now.",
             linter(),
-            "A beautiful girl is sitting in the chair now.",
+            "a beautiful girl is sitting in the chair now.",
         );
     }
 
