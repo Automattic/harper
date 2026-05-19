@@ -24,7 +24,6 @@ impl Default for QuiteQuiet {
                         && !k.is_conjunction()
                         && !tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
                             "here", "there", "too", "already", "lately",
-                            "a", "an", "the",
                         ])
                 });
 
@@ -41,30 +40,7 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                &[
-                    "actually",
-                    "never",
-                    "not",
-                    "really",
-                    "generally",
-                    "out",
-                    "up",
-                    "down",
-                    "off",
-                    "over",
-                    "away",
-                    "back",
-                    "about",
-                    "around",
-                    "along",
-                    "through",
-                    "aside",
-                    "together",
-                    "apart",
-                    "forth",
-                    "ahead",
-                    "well",
-                ],
+                &["actually", "never", "not", "really", "generally"],
             )
             .t_ws()
             .t_aco("quite");
@@ -142,6 +118,35 @@ impl ExprLinter for QuiteQuiet {
 mod tests {
     use super::QuiteQuiet;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    #[test]
+    fn no_lint_quite_well() {
+        assert_no_lints(
+            "The book is laid out quite well.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_quite_good() {
+        assert_no_lints("The food was quite good.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn no_lint_quite_a_lot() {
+        assert_no_lints(
+            "There were quite a lot of people.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_quite_a_few() {
+        assert_no_lints(
+            "I have quite a few things to do.",
+            QuiteQuiet::default(),
+        );
+    }
 
     #[test]
     fn fix_quiet_adverb() {
