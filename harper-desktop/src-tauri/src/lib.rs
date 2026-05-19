@@ -384,6 +384,11 @@ fn request_accessibility_permission() -> AccessibilityPermissionStatus {
     platform_broker().request_accessibility_permission()
 }
 
+#[tauri::command]
+fn launch_app(bundle_id: String) -> Result<(), String> {
+    platform_broker().launch_app_bundle(&bundle_id)
+}
+
 #[cfg(target_os = "macos")]
 fn platform_broker() -> impl OsBroker {
     mac_broker::MacBroker::default()
@@ -448,6 +453,7 @@ pub fn run_tauri() {
             set_integration_enabled,
             get_accessibility_permission_status,
             request_accessibility_permission,
+            launch_app,
         ])
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())
