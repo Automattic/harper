@@ -1,0 +1,43 @@
+# "Besides for" is a redundant combination of "besides" and "except for" / "other than".
+# It should be corrected to either "besides" or "other than".
+# See: https://github.com/Automattic/harper/issues/3380
+# See: https://ludwig.guru/s/Besides+for
+# See: https://ell.stackexchange.com/questions/48316
+
+expr main (besides for)
+
+let message "`besides for` is redundant. Use either `besides` or `other than`."
+let description "Corrects the redundant phrase `besides for`, suggesting `besides` or `other than`."
+let kind "Redundancy"
+let becomes ["besides", "other than"]
+
+# TRUE POSITIVES — should be corrected
+
+test "Besides for multilevel verbosity you usually do -vv or -vvv." "Besides multilevel verbosity you usually do -vv or -vvv."
+test "Besides for providing practical tools, KTH_Toolbox also defines a convenient framework." "Besides providing practical tools, KTH_Toolbox also defines a convenient framework."
+test "Without it, the feature is, besides for basic testing with small corpuses of text, not useable." "Without it, the feature is, besides basic testing with small corpuses of text, not useable."
+test "No autocomplete besides for classes that are in the same file I'm editing." "No autocomplete besides classes that are in the same file I'm editing."
+test "There were a few cases where it's actually pretty sweet, but besides for that, it was largely ineffective." "There were a few cases where it's actually pretty sweet, but besides that, it was largely ineffective."
+test "I don't have any other options besides for this one." "I don't have any other options besides this one."
+test "Besides for the weather, the trip was great." "Besides the weather, the trip was great."
+test "She doesn't eat anything besides for salad." "She doesn't eat anything besides salad."
+test "The app works well besides for a few minor bugs." "The app works well besides a few minor bugs."
+test "Besides for that one issue, everything is fine." "Besides that one issue, everything is fine."
+test "It's a great product besides for the price." "It's a great product besides the price."
+test "We have nothing besides for each other." "We have nothing besides each other."
+
+# FALSE POSITIVES — should NOT be flagged
+
+# "besides" used alone as an adverb/conjunction (no "for" following)
+allows "It's a great product besides."
+allows "I don't want to go; besides, I'm tired."
+allows "Besides, I already told you about it."
+
+# "for" belonging to a separate clause after "besides" as a sentence connector
+# (comma after "besides" means "for" starts a new prepositional phrase)
+allows "Besides, for the most part, the system works well."
+allows "Besides, for him to give up now would be surprising."
+
+# Other unrelated "besides" usage
+allows "There is no one here besides us."
+allows "What do you have besides this?"

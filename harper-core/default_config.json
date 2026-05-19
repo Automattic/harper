@@ -3052,6 +3052,13 @@
 								"state": true,
 								"label": "For Free of Charge"
 							}
+						},
+						{
+							"Bool": {
+								"name": "BesidesFor",
+								"state": true,
+								"label": "Besides For"
+							}
 						}
 					]
 				}
