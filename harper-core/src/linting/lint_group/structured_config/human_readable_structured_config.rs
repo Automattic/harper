@@ -2,6 +2,29 @@ use serde::{Deserialize, Serialize};
 
 use super::{Setting, StructuredConfig};
 
+fn pascal_case_to_label(name: &str) -> String {
+    let mut result = String::new();
+    let chars: Vec<char> = name.chars().collect();
+
+    for (i, &c) in chars.iter().enumerate() {
+        if c.is_uppercase() {
+            let prev_is_lower = i > 0 && chars[i - 1].is_lowercase();
+            let next_is_lower = i + 1 < chars.len() && chars[i + 1].is_lowercase();
+            let prev_is_upper = i > 0 && chars[i - 1].is_uppercase();
+
+            if i > 0 && prev_is_lower
+                || prev_is_upper && !next_is_lower
+                || !prev_is_upper && next_is_lower
+            {
+                result.push(' ');
+            }
+        }
+        result.push(c);
+    }
+
+    result
+}
+
 /// A human-readable mirror of [`super::StructuredConfig`].
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct HumanReadableStructuredConfig {
@@ -94,10 +117,13 @@ impl HumanReadableSetting {
 
     fn to_setting(&self) -> Option<Setting> {
         match self {
-            Self::Bool { name, state, .. } => Some(Setting::Bool {
-                name: name.clone(),
-                state: *state,
-            }),
+            Self::Bool { name, state, label } => {
+                let _computed_label = label.clone().unwrap_or_else(|| pascal_case_to_label(name));
+                Some(Setting::Bool {
+                    name: name.clone(),
+                    state: *state,
+                })
+            }
             Self::OneOfMany {
                 names,
                 name,
@@ -109,9 +135,13 @@ impl HumanReadableSetting {
                     None => None,
                 };
 
+                let computed_labels = labels
+                    .clone()
+                    .unwrap_or_else(|| names.iter().map(|n| pascal_case_to_label(n)).collect());
+
                 Some(Setting::OneOfMany {
                     names: names.clone(),
-                    labels: labels.clone().unwrap_or_else(|| names.clone()),
+                    labels: computed_labels,
                     choice,
                 })
             }

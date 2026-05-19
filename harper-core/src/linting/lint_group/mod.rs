@@ -1160,6 +1160,174 @@ mod tests {
         }
     }
 
+    /// Tests that literal descriptions and labels in the config JSON don't contain errors.
+    ///
+    /// This validates the manually-written descriptions and labels in default_config.json
+    /// (Group descriptions, Bool labels, OneOfMany labels, etc.) to ensure they don't trigger
+    /// linter rules.
+    ///
+    /// Labels emit warnings (since they often show incorrect forms they're catching),
+    /// while descriptions cause test failures if they contain errors.
+    ///
+    /// Excludes Style, Miscellaneous, and Grammar lint kinds (labels often show incorrect forms).
+    ///
+    /// TODO: Also check auto-generated labels/descriptions to identify when manual descriptions
+    /// should be added for clarity.
+    #[test]
+    fn config_descriptions_are_clean() {
+        check_config_text(false);
+    }
+
+    /// Tests that literal descriptions and labels in the config JSON don't contain errors.
+    ///
+    /// Same as config_descriptions_are_clean but does NOT exclude any lint kinds.
+    /// Use this to catch all potential issues, including grammar/style in labels.
+    #[test]
+    fn config_descriptions_are_clean_strict() {
+        check_config_text(true);
+    }
+
+    fn check_config_text(strict: bool) {
+        let enforcer_config = FlatConfig::new_curated();
+        let mut lints_to_enforce =
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+                .with_lint_config(enforcer_config);
+
+        // Load the default config JSON
+        let config_json = include_str!("../../../default_config.json");
+        let config: serde_json::Value = serde_json::from_str(config_json).expect("Invalid JSON");
+
+        let mut warning_count = 0;
+
+        fn check_text(
+            lints_to_enforce: &mut LintGroup,
+            context: &str,
+            text: &str,
+            is_label: bool,
+            strict: bool,
+            warning_count: &mut usize,
+        ) {
+            let doc = Document::new_markdown_default_curated(text);
+            eprintln!("{context}: {text}");
+
+            let mut lints = lints_to_enforce.lint(&doc);
+
+            if !strict {
+                // Remove ones related to style, miscellaneous, and grammar
+                // Labels often show incorrect forms they're catching, so we exclude these
+                lints.retain(|l| {
+                    l.lint_kind != LintKind::Style
+                        && l.lint_kind != LintKind::Miscellaneous
+                        && l.lint_kind != LintKind::Grammar
+                });
+            }
+
+            if !lints.is_empty() {
+                if is_label {
+                    eprintln!("⚠️  Warning: {context} has lints:");
+                    for lint in &lints {
+                        eprintln!("   - {}", lint.message);
+                    }
+                    *warning_count += 1;
+                } else {
+                    dbg!(lints);
+                    panic!();
+                }
+            }
+        }
+
+        // Extract all literal descriptions and labels from the config
+        if let Some(settings) = config.get("settings").and_then(|v| v.as_array()) {
+            for (i, setting) in settings.iter().enumerate() {
+                if let Some(group) = setting.get("Group").and_then(|v| v.as_object()) {
+                    if let Some(label) = group.get("label").and_then(|v| v.as_str()) {
+                        check_text(
+                            &mut lints_to_enforce,
+                            &format!("Group[{i}] label"),
+                            label,
+                            true,
+                            strict,
+                            &mut warning_count,
+                        );
+
+                        if let Some(description) = group.get("description").and_then(|v| v.as_str())
+                        {
+                            check_text(
+                                &mut lints_to_enforce,
+                                &format!("Group[{i}] {label} description"),
+                                description,
+                                false,
+                                strict,
+                                &mut warning_count,
+                            );
+                        }
+
+                        // Check child settings
+                        if let Some(child) = group.get("child").and_then(|v| v.as_object()) {
+                            if let Some(child_settings) =
+                                child.get("settings").and_then(|v| v.as_array())
+                            {
+                                for (j, child_setting) in child_settings.iter().enumerate() {
+                                    if let Some(obj) = child_setting.as_object() {
+                                        let context = format!("Group[{i}] {label} setting[{j}]");
+
+                                        // Check Bool labels
+                                        if let Some(bool_obj) =
+                                            obj.get("Bool").and_then(|v| v.as_object())
+                                        {
+                                            if let Some(label) =
+                                                bool_obj.get("label").and_then(|v| v.as_str())
+                                            {
+                                                check_text(
+                                                    &mut lints_to_enforce,
+                                                    &format!("{context} Bool label"),
+                                                    label,
+                                                    true,
+                                                    strict,
+                                                    &mut warning_count,
+                                                );
+                                            }
+                                        }
+
+                                        // Check OneOfMany labels
+                                        if let Some(one_of_many) =
+                                            obj.get("OneOfMany").and_then(|v| v.as_object())
+                                        {
+                                            if let Some(labels) =
+                                                one_of_many.get("labels").and_then(|v| v.as_array())
+                                            {
+                                                for (k, label) in labels.iter().enumerate() {
+                                                    if let Some(label_str) = label.as_str() {
+                                                        check_text(
+                                                            &mut lints_to_enforce,
+                                                            &format!(
+                                                                "{context} OneOfMany label[{k}]"
+                                                            ),
+                                                            label_str,
+                                                            true,
+                                                            strict,
+                                                            &mut warning_count,
+                                                        );
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if warning_count > 0 {
+            eprintln!(
+                "\n⚠️  Found {warning_count} label(s) with lints (warnings only, test passed)"
+            );
+        }
+    }
+
     #[test]
     fn no_linter_names_clash() {
         let group =
