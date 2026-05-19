@@ -33,6 +33,10 @@ pub trait OsBroker {
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
         self.accessibility_permission_status()
     }
+
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
+        Err("Launching apps by bundle ID is only supported on macOS.".to_string())
+    }
 }
 
 /// No-op platform broker for targets that do not have an OS implementation yet.
