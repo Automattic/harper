@@ -16,6 +16,7 @@
 		"@tauri-apps/api": "^2",
 		"@tauri-apps/plugin-autostart": "^2.5.1",
 		"@tauri-apps/plugin-opener": "^2",
+		"@tauri-apps/plugin-updater": "^2.10.1",
 		"harper-editor": "workspace:*",
 		"harper.js": "workspace:*"
 	},

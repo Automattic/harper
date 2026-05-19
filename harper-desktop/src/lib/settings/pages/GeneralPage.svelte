@@ -2,6 +2,7 @@
 import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
+import { DesktopUpdater } from '$lib/DesktopUpdater';
 import { DIALECT_OPTIONS } from '../settings-data';
 
 const DialectValue = {
@@ -22,6 +23,13 @@ let dialectError = '';
 let isLaunchAtStartupLoading = true;
 let isLaunchAtStartupSaving = false;
 let launchAtStartupError = '';
+let isAutoUpdateLoading = true;
+let isAutoUpdateSaving = false;
+let isCheckingForUpdates = false;
+let autoUpdateError = '';
+let updateStatus = '';
+let currentVersion = '';
+let latestVersion = '';
 let debounceMs = 0;
 let debounceMsInput = '0';
 let isDebounceLoading = true;
@@ -31,6 +39,8 @@ let debounceError = '';
 onMount(() => {
 	void loadDialect();
 	void loadLaunchAtStartup();
+	void loadAutoUpdate();
+	void loadUpdateVersions();
 	void loadDebounceMs();
 
 	const refreshSettings = () => {
@@ -40,6 +50,14 @@ onMount(() => {
 
 		if (!isLaunchAtStartupSaving) {
 			void loadLaunchAtStartup();
+		}
+
+		if (!isAutoUpdateSaving) {
+			void loadAutoUpdate();
+		}
+
+		if (!isCheckingForUpdates) {
+			void loadUpdateVersions();
 		}
 
 		if (!isDebounceSaving) {
@@ -111,6 +129,73 @@ async function setLaunchAtStartup(enabled: boolean) {
 		launchAtStartupError = `Unable to save startup setting: ${error}`;
 	} finally {
 		isLaunchAtStartupSaving = false;
+	}
+}
+
+async function loadAutoUpdate() {
+	isAutoUpdateLoading = true;
+	autoUpdateError = '';
+
+	try {
+		autoUpdate = await Client.getAutoUpdate();
+	} catch (error) {
+		autoUpdateError = `Unable to load update setting: ${error}`;
+	} finally {
+		isAutoUpdateLoading = false;
+	}
+}
+
+async function setAutoUpdate(enabled: boolean) {
+	const previousAutoUpdate = autoUpdate;
+
+	autoUpdate = enabled;
+	isAutoUpdateSaving = true;
+	autoUpdateError = '';
+	updateStatus = '';
+
+	try {
+		await Client.setAutoUpdate(enabled);
+	} catch (error) {
+		autoUpdate = previousAutoUpdate;
+		autoUpdateError = `Unable to save update setting: ${error}`;
+	} finally {
+		isAutoUpdateSaving = false;
+	}
+}
+
+async function loadUpdateVersions() {
+	try {
+		const [current, latest] = await Promise.all([
+			DesktopUpdater.getCurrentVersion(),
+			DesktopUpdater.getLatestVersion(),
+		]);
+		currentVersion = current;
+		latestVersion = latest;
+	} catch (error) {
+		console.error('Unable to load update versions.', error);
+	}
+}
+
+async function checkForUpdates() {
+	isCheckingForUpdates = true;
+	autoUpdateError = '';
+	updateStatus = 'Checking for updates...';
+
+	try {
+		await Client.setLastUpdateCheck(Date.now());
+		const result = await DesktopUpdater.updateToLatest();
+		updateStatus = result.message;
+
+		if (result.latestVersion != null) {
+			latestVersion = result.latestVersion;
+		}
+
+		currentVersion = result.currentVersion ?? (await DesktopUpdater.getCurrentVersion());
+	} catch (error) {
+		autoUpdateError = `Unable to check for updates: ${error}`;
+		updateStatus = '';
+	} finally {
+		isCheckingForUpdates = false;
 	}
 }
 
@@ -236,19 +321,41 @@ function settingsValueToDialect(value: string): Dialect {
               <div>
                 <strong>Automatically check for updates</strong>
                 <p>Harper will check for new versions weekly.</p>
+                <p class="result-summary">
+                  Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
+                </p>
               </div>
               <button
                 class:checked={autoUpdate}
                 class="checkbox"
                 type="button"
                 role="checkbox"
-                disabled
-                title="Not wired yet"
+                disabled={isAutoUpdateLoading || isAutoUpdateSaving}
                 aria-checked={autoUpdate}
+                on:click={() => setAutoUpdate(!autoUpdate)}
               >
                 {#if autoUpdate}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
               </button>
             </div>
+            <div class="inline-row">
+              <button
+                class="button"
+                type="button"
+                disabled={isCheckingForUpdates}
+                on:click={checkForUpdates}
+              >
+                {isCheckingForUpdates ? 'Checking...' : 'Check for updates'}
+              </button>
+            </div>
+            {#if isAutoUpdateLoading}
+              <p class="result-summary">Loading update setting...</p>
+            {:else if autoUpdateError}
+              <p class="result-summary">{autoUpdateError}</p>
+            {:else if isAutoUpdateSaving}
+              <p class="result-summary">Saving update setting...</p>
+            {:else if updateStatus}
+              <p class="result-summary">{updateStatus}</p>
+            {/if}
           </div>
         </div>
 

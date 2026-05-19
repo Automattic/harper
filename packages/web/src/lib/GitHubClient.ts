@@ -71,7 +71,7 @@ export class GithubClient {
 	public static async getLatestRelease(repoOwner: string, repoName: string): Promise<string> {
 		const body = await this.getLatestReleaseMetadata(repoOwner, repoName);
 
-		return body.name;
+		return body.tag_name;
 	}
 
 	public static async getLatestReleaseMetadata(
