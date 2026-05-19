@@ -40,7 +40,7 @@ impl<T: Dictionary> SpellCheck<T> {
     }
     fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
         // Back off until we find a match.
-        for dist in 1..5 {
+        for dist in 2..5 {
             let suggestions: Vec<CharString> =
                 suggest_correct_spelling(word, 200, dist, &self.dictionary)
                     .into_iter()
@@ -153,6 +153,24 @@ mod tests {
         linting::tests::{assert_lint_count, assert_suggestion_result},
     };
     use crate::{DictWordMetadata, Document};
+
+    #[test]
+    fn athough_suggests_although() {
+        assert_suggestion_result(
+            "athough it was late, we continued.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "although it was late, we continued.",
+        );
+    }
+
+    #[test]
+    fn athough_suggests_although_capitalized() {
+        assert_suggestion_result(
+            "Athough it was late, we continued.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Although it was late, we continued.",
+        );
+    }
 
     // Capitalization tests
 
