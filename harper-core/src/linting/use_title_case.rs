@@ -100,4 +100,13 @@ mod tests {
             "### 1. To Do a Thing",
         );
     }
+
+    #[test]
+    fn preserves_camel_case_proper_nouns_in_heading() {
+        assert_markdown_suggestion_result(
+            "### apple launched icloud",
+            UseTitleCase::new(FstDictionary::curated()),
+            "### Apple Launched iCloud",
+        );
+    }
 }
