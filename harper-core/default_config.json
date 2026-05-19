@@ -1316,6 +1316,13 @@
 								"state": true,
 								"label": "Expand Vulnerability"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
+							}
 						}
 					]
 				}
@@ -3037,6 +3044,13 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForFreeOfCharge",
+								"state": true,
+								"label": "For Free of Charge"
 							}
 						}
 					]
@@ -4933,6 +4947,13 @@
 								"name": "JumpTheGun",
 								"state": true,
 								"label": "Jump The Gun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
 							}
 						}
 					]

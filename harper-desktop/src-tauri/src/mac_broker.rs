@@ -1,4 +1,4 @@
-use accessibility::attribute::{AXAttribute, AXUIElementAttributes};
+use accessibility::attribute::AXUIElementAttributes;
 use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
@@ -6,25 +6,41 @@ use accessibility_sys::{
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
     AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
     kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
-    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXPositionAttribute, kAXSizeAttribute,
-    kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange, kAXValueTypeCGPoint, kAXValueTypeCGRect,
-    kAXValueTypeCGSize, pid_t,
+    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt,
+    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
+use core_foundation::array::CFArray;
 use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::boolean::CFBoolean;
 use core_foundation::dictionary::CFDictionary;
-use core_foundation::string::CFString;
+use core_foundation::number::CFNumber;
+use core_foundation::string::{CFString, CFStringRef};
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
+use core_graphics::window::{
+    kCGNullWindowID, kCGWindowAlpha, kCGWindowBounds, kCGWindowLayer,
+    kCGWindowListExcludeDesktopElements, kCGWindowListOptionOnScreenOnly, kCGWindowOwnerPID,
+};
 use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::NSRunningApplication;
-use objc2_foundation::{NSPoint, NSRect, NSSize};
-use std::{cell::RefCell, collections::BTreeMap, error::Error as StdError, ptr, rc::Rc};
+use objc2_foundation::NSRect;
+use std::{
+    cell::RefCell,
+    collections::BTreeMap,
+    error::Error as StdError,
+    ptr,
+    rc::Rc,
+    time::{Duration, Instant},
+};
 
 use crate::config::{Config, Integration};
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use crate::rect::{ActionableLint, Rect};
+
+const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
+type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
 ///
@@ -34,6 +50,14 @@ use crate::rect::{ActionableLint, Rect};
 pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Rc<RefCell<Vec<Integration>>>,
+    window_movement: Option<WindowMovementState>,
+}
+
+#[derive(Debug, Clone)]
+struct WindowMovementState {
+    pid: pid_t,
+    frame: Rect,
+    last_changed_at: Instant,
 }
 
 impl MacBroker {
@@ -41,6 +65,7 @@ impl MacBroker {
         Self {
             last_focused: None,
             integrations,
+            window_movement: None,
         }
     }
 
@@ -54,6 +79,32 @@ impl MacBroker {
             self.last_focused = Some(focused_pid);
             Ok(Some(focused_pid))
         }
+    }
+
+    fn window_is_moving(&mut self, pid: pid_t) -> bool {
+        let Some(frame) = frontmost_window_frame_for_pid(pid) else {
+            self.window_movement = None;
+            return true;
+        };
+
+        let now = Instant::now();
+        let Some(state) = &mut self.window_movement else {
+            self.window_movement = Some(settled_window_state(pid, frame, now));
+            return false;
+        };
+
+        if state.pid != pid {
+            *state = settled_window_state(pid, frame, now);
+            return false;
+        }
+
+        if window_frame_changed(state.frame, frame) {
+            state.frame = frame;
+            state.last_changed_at = now;
+            return true;
+        }
+
+        now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION
     }
 }
 
@@ -70,14 +121,23 @@ impl OsBroker for MacBroker {
     ) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
-            Ok(None) => return Vec::new(),
+            Ok(None) => {
+                self.window_movement = None;
+                return Vec::new();
+            }
             Err(err) => {
+                self.window_movement = None;
                 eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
         };
 
         if !is_pid_approved(pid, &self.integrations.borrow()) {
+            self.window_movement = None;
+            return Vec::new();
+        }
+
+        if self.window_is_moving(pid) {
             return Vec::new();
         }
 
@@ -119,6 +179,22 @@ impl OsBroker for MacBroker {
             AccessibilityPermissionStatus::NotGranted
         }
     }
+
+    fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
+        let bundle_id = bundle_id.trim();
+
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+
+        std::process::Command::new("open")
+            .arg("-b")
+            .arg(bundle_id)
+            .spawn()
+            .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
+
+        Ok(())
+    }
 }
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
@@ -149,15 +225,112 @@ fn is_pid_approved(pid: pid_t, integrations: &[Integration]) -> bool {
 }
 
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
-    let Some(app) = (unsafe { NSRunningApplication::runningApplicationWithProcessIdentifier(pid) })
-    else {
+    let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
         return Ok(None);
     };
-    let Some(bundle_identifier) = (unsafe { app.bundleIdentifier() }) else {
+    let Some(bundle_identifier) = app.bundleIdentifier() else {
         return Ok(None);
     };
 
     Ok(Some(bundle_identifier.to_string()))
+}
+
+fn window_frame_changed(previous: Rect, current: Rect) -> bool {
+    !nearly_equal(previous.x, current.x)
+        || !nearly_equal(previous.y, current.y)
+        || !nearly_equal(previous.width, current.width)
+        || !nearly_equal(previous.height, current.height)
+}
+
+fn settled_window_state(pid: pid_t, frame: Rect, now: Instant) -> WindowMovementState {
+    WindowMovementState {
+        pid,
+        frame,
+        last_changed_at: now
+            .checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+            .unwrap_or(now),
+    }
+}
+
+fn nearly_equal(left: f64, right: f64) -> bool {
+    (left - right).abs() <= WINDOW_FRAME_TOLERANCE
+}
+
+fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
+    let window_infos = core_graphics::window::copy_window_info(
+        kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
+        kCGNullWindowID,
+    )?;
+    let window_infos =
+        unsafe { CFArray::<WindowInfo>::wrap_under_get_rule(window_infos.as_concrete_TypeRef()) };
+
+    window_infos
+        .iter()
+        .filter(|window_info| window_pid(window_info) == Some(pid))
+        .filter(|window_info| window_layer(window_info) == Some(0))
+        .filter(|window_info| window_alpha(window_info).is_some_and(|alpha| alpha > 0.0))
+        .find_map(|window_info| window_bounds(&window_info))
+}
+
+fn window_pid(window_info: &WindowInfo) -> Option<pid_t> {
+    dictionary_i64(window_info, unsafe { kCGWindowOwnerPID }).map(|value| value as pid_t)
+}
+
+fn window_layer(window_info: &WindowInfo) -> Option<i64> {
+    dictionary_i64(window_info, unsafe { kCGWindowLayer })
+}
+
+fn window_alpha(window_info: &WindowInfo) -> Option<f64> {
+    dictionary_f64(window_info, unsafe { kCGWindowAlpha })
+}
+
+fn window_bounds(window_info: &WindowInfo) -> Option<Rect> {
+    let bounds = dictionary_dictionary(window_info, unsafe { kCGWindowBounds })?;
+
+    Some(Rect {
+        x: dictionary_f64(
+            &bounds,
+            CFString::from_static_string("X").as_concrete_TypeRef(),
+        )?,
+        y: dictionary_f64(
+            &bounds,
+            CFString::from_static_string("Y").as_concrete_TypeRef(),
+        )?,
+        width: dictionary_f64(
+            &bounds,
+            CFString::from_static_string("Width").as_concrete_TypeRef(),
+        )?,
+        height: dictionary_f64(
+            &bounds,
+            CFString::from_static_string("Height").as_concrete_TypeRef(),
+        )?,
+    })
+}
+
+fn dictionary_i64(dictionary: &WindowInfo, key: CFStringRef) -> Option<i64> {
+    dictionary_number(dictionary, key)?.to_i64()
+}
+
+fn dictionary_f64(dictionary: &WindowInfo, key: CFStringRef) -> Option<f64> {
+    dictionary_number(dictionary, key)?.to_f64()
+}
+
+fn dictionary_number(dictionary: &WindowInfo, key: CFStringRef) -> Option<CFNumber> {
+    let value = dictionary_value(dictionary, key)?;
+
+    Some(unsafe { CFNumber::wrap_under_get_rule(value.as_CFTypeRef() as _) })
+}
+
+fn dictionary_dictionary(dictionary: &WindowInfo, key: CFStringRef) -> Option<WindowInfo> {
+    let value = dictionary_value(dictionary, key)?;
+
+    Some(unsafe { WindowInfo::wrap_under_get_rule(value.as_CFTypeRef() as _) })
+}
+
+fn dictionary_value(dictionary: &WindowInfo, key: CFStringRef) -> Option<CFType> {
+    let key = unsafe { CFString::wrap_under_get_rule(key) };
+
+    dictionary.find(&key).map(|value| value.clone())
 }
 
 fn ax_element_attribute(
@@ -239,7 +412,7 @@ impl TreeVisitor for RectCollector<'_> {
 
         TreeWalkerFlow::Continue
     }
-    fn exit_element(&self, element: &AXUIElement) {}
+    fn exit_element(&self, _element: &AXUIElement) {}
 }
 
 impl<'a> RectCollector<'a> {
@@ -281,40 +454,6 @@ fn is_textarea(el: &AXUIElement) -> bool {
     false
 }
 
-fn ax_value<T>(element: &AXUIElement, name: &str, value_type: u32) -> Result<Option<T>, Error> {
-    let attr = AXAttribute::<CFType>::new(&CFString::new(name));
-    let value = element.attribute(&attr)?;
-    let mut out = MaybeUninit::<T>::uninit();
-
-    let ok = unsafe {
-        AXValueGetValue(
-            value.as_CFTypeRef() as AXValueRef,
-            value_type,
-            out.as_mut_ptr() as *mut c_void,
-        )
-    };
-
-    Ok(ok.then(|| unsafe { out.assume_init() }))
-}
-
-fn element_rect(element: &AXUIElement) -> Result<Option<Rect>, Error> {
-    let Some(position) = ax_value::<NSPoint>(element, kAXPositionAttribute, kAXValueTypeCGPoint)?
-    else {
-        return Ok(None);
-    };
-
-    let Some(size) = ax_value::<NSSize>(element, kAXSizeAttribute, kAXValueTypeCGSize)? else {
-        return Ok(None);
-    };
-
-    Ok(Some(Rect {
-        x: position.x,
-        y: position.y,
-        width: size.width,
-        height: size.height,
-    }))
-}
-
 fn element_rect_for_text_range(
     element: &AXUIElement,
     start_index: isize,
@@ -349,10 +488,12 @@ fn element_rect_for_text_range(
         )
     };
 
-    match error {
-        kAXErrorSuccess => {}
-        kAXErrorNoValue | kAXErrorParameterizedAttributeUnsupported => return Ok(None),
-        error => return Err(Error::Ax(error)),
+    if error == kAXErrorSuccess {
+        // Continue.
+    } else if error == kAXErrorNoValue || error == kAXErrorParameterizedAttributeUnsupported {
+        return Ok(None);
+    } else {
+        return Err(Error::Ax(error));
     }
 
     if value.is_null() {
