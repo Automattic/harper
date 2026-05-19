@@ -4,16 +4,11 @@
 # See: https://ludwig.guru/s/Besides+for
 # See: https://ell.stackexchange.com/questions/48316
 #
-# Note on comma ambiguity: When "besides" is used as a sentence adverb/conjunction
-# followed by a comma and then "for" beginning a separate prepositional phrase
-# (e.g. "Besides, for the most part..."), the comma token breaks the sequence,
-# so the rule naturally does not match. If the comma is omitted
-# ("Besides for the most part..."), the rule will flag it. In most such cases
-# the "besides" suggestion is still appropriate — "Besides, for the most part..."
-# becomes "Besides, the most part..." is wrong, but "Besides for..." was also
-# wrong without the comma. The user should add the comma. For the rare case
-# where the user genuinely meant "besides for" as a connector without a comma,
-# both suggestions ("besides" or "other than") remain reasonable alternatives.
+# Comma ambiguity: When "besides" is a sentence connector followed by a comma,
+# the comma token breaks the Weir sequence match, so "Besides, for..." is not
+# flagged. If the comma is omitted ("Besides for..."), the rule flags it — both
+# suggestions ("besides" / "other than") are reasonable corrections since the
+# missing comma is itself an error and either fix resolves the redundancy.
 
 expr main (besides for)
 
@@ -23,7 +18,8 @@ let kind "Redundancy"
 let becomes ["besides", "other than"]
 
 # TRUE POSITIVES — should be corrected
-# (mixed between "besides" and "other than" suggestions to test both alternatives)
+# Mix between both "becomes" alternatives ("besides" and "other than") to ensure
+# the test runner exercises both suggestions thoroughly.
 
 test "Besides for multilevel verbosity you usually do -vv or -vvv." "Besides multilevel verbosity you usually do -vv or -vvv."
 test "Besides for providing practical tools, KTH_Toolbox also defines a convenient framework." "Other than providing practical tools, KTH_Toolbox also defines a convenient framework."
@@ -37,8 +33,8 @@ test "The app works well besides for a few minor bugs." "The app works well othe
 test "Besides for that one issue, everything is fine." "Besides that one issue, everything is fine."
 test "It's a great product besides for the price." "It's a great product other than the price."
 test "We have nothing besides for each other." "We have nothing besides each other."
-
-# Additional true positives with "other than" to ensure both alternatives are tested
+test "Besides for the main feature, there are several improvements." "Other than the main feature, there are several improvements."
+test "There is no way besides for direct intervention." "There is no way besides direct intervention."
 test "He has no qualifications besides for this certificate." "He has no qualifications other than this certificate."
 test "Besides for a brief power outage, the event went smoothly." "Besides a brief power outage, the event went smoothly."
 
@@ -61,5 +57,4 @@ allows "What do you have besides this?"
 # "Besides for" without a comma where the user meant "besides, for..."
 # These are ambiguous — the rule flags them, but the "besides" suggestion
 # is still a reasonable correction (the comma should be present).
-# Including as allows would be ideal, but the token-level match is correct.
 # We accept this as a known edge case; users can ignore the suggestion.
