@@ -1,0 +1,7 @@
+[Plugin]
+Module=harper_ls
+Name=Harper
+Description=Harper language server integration for grammar checking
+X-Language-Server-Command=harper-ls --stdio
+X-Language-Server-Languages=markdown;plain-text;latex;typst;html
+X-Content-Type=text/markdown;text/plain;text/x-latex;text/x-typst;text/html
