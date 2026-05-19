@@ -4948,6 +4948,13 @@
 								"state": true,
 								"label": "Crave For"
 							}
+						},
+						{
+							"Bool": {
+								"name": "MeanBy",
+								"state": true,
+								"label": "Mean By"
+							}
 						}
 					]
 				}
