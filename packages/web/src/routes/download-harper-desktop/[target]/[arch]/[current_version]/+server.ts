@@ -3,6 +3,9 @@ import { type GitHubRelease, type GitHubReleaseAsset, GithubClient } from '$lib/
 
 const REPO_OWNER = 'automattic';
 const REPO_NAME = 'harper';
+const SIGNATURE_CACHE_TTL_MS = 3600 * 3000;
+
+const signatureCache: Map<string, [string, number]> = new Map();
 
 const responseHeaders = {
 	'Cache-Control': 'no-cache',
@@ -71,10 +74,35 @@ const findUpdateAssets = (release: GitHubRelease, assetPrefix: string) => {
 	return archiveAsset == null || signatureAsset == null ? null : { archiveAsset, signatureAsset };
 };
 
-const getSignature = async (asset: GitHubReleaseAsset) => {
+const getSignatureFromCache = async (asset: GitHubReleaseAsset) => {
+	const cacheKey = asset.browser_download_url;
+	const cached = signatureCache.get(cacheKey);
+
+	if (cached != null) {
+		const [signature, expiry] = cached;
+
+		if (expiry >= Date.now()) {
+			return signature;
+		}
+
+		signatureCache.delete(cacheKey);
+	}
+
 	const resp = await fetch(asset.browser_download_url);
 
-	return resp.ok ? (await resp.text()).trim() : null;
+	if (!resp.ok) {
+		return null;
+	}
+
+	const signature = (await resp.text()).trim();
+
+	if (signature.length === 0) {
+		return null;
+	}
+
+	signatureCache.set(cacheKey, [signature, Date.now() + SIGNATURE_CACHE_TTL_MS]);
+
+	return signature;
 };
 
 const noUpdate = () => new Response(null, { status: 204, headers: responseHeaders });
@@ -110,7 +138,7 @@ export const GET = async ({ params }: RequestEvent) => {
 		return noUpdate();
 	}
 
-	const signature = await getSignature(updateAssets.signatureAsset);
+	const signature = await getSignatureFromCache(updateAssets.signatureAsset);
 
 	if (signature == null) {
 		console.log(
