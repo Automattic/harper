@@ -1,8 +1,13 @@
+use harper_brill::UPOS;
+
 use crate::{
     Dialect, IrregularNouns, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, at_start_of_sentence},
+    },
     regular_nouns,
     spell::Dictionary,
 };
@@ -18,6 +23,7 @@ impl<D: Dictionary> APluralNoun<D> {
             expr: SequenceExpr::default()
                 .then_indefinite_article()
                 .t_ws()
+                .then_zero_or_more(SequenceExpr::default().then_non_verb_adjective().t_ws())
                 .then_plural_noun(),
             dict,
         }
@@ -27,7 +33,12 @@ impl<D: Dictionary> APluralNoun<D> {
 impl<D: Dictionary> ExprLinter for APluralNoun<D> {
     type Unit = Chunk;
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let span = toks.span()?;
         let noun = toks.last()?;
 
@@ -35,16 +46,36 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
+        if noun.kind.is_verb_third_person_singular_present_form()
+            && looks_like_third_person_verb_use(noun, ctx)
+        {
+            return None;
+        }
+
+        let is_start_of_sentence = at_start_of_sentence(ctx);
+
+        let article = toks.first()?;
         let plural = noun.span.get_content(src);
         let suggestions = singular_noun_suggestions(&self.dict, plural)
             .into_iter()
             .map(|singular| {
-                let mut replacement = indefinite_article_for(&singular).to_vec();
-                replacement.push(' ');
+                let article_target = article_target(toks, noun, &singular, src)?;
+                let mut replacement = indefinite_article_for(article_target).to_vec();
+                replacement.extend(&src[article.span.end..noun.span.start]);
                 replacement.extend(singular);
 
-                Suggestion::replace_with_match_case(replacement, span.get_content(src))
+                let mut case_template = span.get_content(src).to_vec();
+                if is_start_of_sentence && let Some(first) = case_template.first_mut() {
+                    first.make_ascii_uppercase();
+                }
+
+                Some(Suggestion::replace_with_match_case(
+                    replacement,
+                    case_template,
+                ))
             })
+            .collect::<Option<Vec<_>>>()?
+            .into_iter()
             .collect::<Vec<_>>();
 
         if suggestions.is_empty() {
@@ -66,6 +97,46 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
 
     fn description(&self) -> &str {
         "Corrects plural nouns after the indefinite article `a` or `an`."
+    }
+}
+
+trait SequenceExprExt {
+    fn then_non_verb_adjective(self) -> Self;
+}
+
+impl SequenceExprExt for SequenceExpr {
+    fn then_non_verb_adjective(self) -> Self {
+        self.then(|tok: &Token, _src: &[char]| tok.kind.is_adjective() && !tok.kind.is_verb())
+    }
+}
+
+fn looks_like_third_person_verb_use(noun: &Token, ctx: Option<(&[Token], &[Token])>) -> bool {
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+
+    let mut non_ws = after.iter().filter(|tok| !tok.kind.is_whitespace());
+    let Some(next) = non_ws.next() else {
+        return noun.kind.is_upos(UPOS::VERB);
+    };
+
+    (noun.kind.is_upos(UPOS::VERB) && next.kind.is_sentence_terminator())
+        || next.kind.is_pronoun()
+        || next.kind.is_upos(UPOS::PRON)
+}
+
+fn article_target<'a>(
+    toks: &'a [Token],
+    noun: &Token,
+    singular: &'a [char],
+    src: &'a [char],
+) -> Option<&'a [char]> {
+    let first_after_article = toks.iter().skip(1).find(|tok| !tok.kind.is_whitespace())?;
+
+    if first_after_article.span == noun.span {
+        Some(singular)
+    } else {
+        Some(first_after_article.span.get_content(src))
     }
 }
 
@@ -136,6 +207,44 @@ mod tests {
     #[test]
     fn corrects_irregular_plural() {
         assert_suggestion_result("I saw a children.", linter(), "I saw a child.");
+    }
+
+    #[test]
+    fn corrects_plural_after_adjective() {
+        assert_suggestion_result(
+            "A beautiful girls is sitting in the chair now.",
+            linter(),
+            "A beautiful girl is sitting in the chair now.",
+        );
+    }
+
+    #[test]
+    fn capitalizes_plural_after_adjective_at_sentence_start() {
+        assert_suggestion_result(
+            "an beautiful girls is sitting in the chair now.",
+            linter(),
+            "A beautiful girl is sitting in the chair now.",
+        );
+    }
+
+    #[test]
+    fn corrects_article_before_adjective() {
+        assert_suggestion_result("I saw an red cars.", linter(), "I saw a red car.");
+    }
+
+    #[test]
+    fn corrects_article_before_vowel_sound_adjective() {
+        assert_suggestion_result("I saw a old errors.", linter(), "I saw an old error.");
+    }
+
+    #[test]
+    fn allows_third_person_verb_after_modified_singular_subject() {
+        crate::linting::tests::assert_no_lints("A predicate adjective follows.", linter());
+    }
+
+    #[test]
+    fn allows_third_person_verb_after_adjective_subject() {
+        crate::linting::tests::assert_no_lints("An auxiliary precedes it.", linter());
     }
 
     #[test]
