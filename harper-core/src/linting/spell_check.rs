@@ -3,8 +3,8 @@ use std::num::NonZero;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
-use super::Suggestion;
 use super::{Lint, LintKind, Linter};
+use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
@@ -40,7 +40,7 @@ impl<T: Dictionary> SpellCheck<T> {
     }
     fn uncached_suggest_correct_spelling(&self, word: &[char]) -> Vec<CharString> {
         // Back off until we find a match.
-        for dist in 2..5 {
+        for dist in 1..5 {
             let suggestions: Vec<CharString> =
                 suggest_correct_spelling(word, 200, dist, &self.dictionary)
                     .into_iter()
@@ -72,6 +72,10 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
+
+            if is_informal_laughter(word_chars) {
+                continue;
+            }
 
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
@@ -1006,5 +1010,15 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::British),
             "children's",
         );
+    }
+
+    #[test]
+    fn allows_informal_laughter() {
+        for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
+            assert_no_lints(
+                source,
+                SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            );
+        }
     }
 }
