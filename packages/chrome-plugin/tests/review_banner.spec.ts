@@ -4,6 +4,7 @@ test.describe('review banner', () => {
 	test.skip(({ browserName }) => browserName === 'firefox', 'Review prompt disabled in Firefox');
 
 	test('review request hidden before 14 days', async ({ context, page }) => {
+		test.slow();
 		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
 		const extensionId = background.url().split('/')[2];
 
@@ -17,6 +18,7 @@ test.describe('review banner', () => {
 	});
 
 	test('review request shown after 14 days', async ({ context, page }) => {
+		test.slow();
 		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
 		const extensionId = background.url().split('/')[2];
 

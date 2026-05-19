@@ -6,6 +6,7 @@ use crate::expr::Expr;
 use crate::linting::{
     ExprLinter, LintKind, Suggestion,
     expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+    informal_laughter::is_informal_laughter,
 };
 use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
@@ -55,6 +56,9 @@ impl ExprLinter for SplitWords {
         }
 
         let chars = &word.get_ch(source);
+        if is_informal_laughter(chars) {
+            return None;
+        }
 
         // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);
@@ -353,5 +357,12 @@ mod tests {
             SplitWords::default(),
             "`thankyou` should probably be written as `thank you`.",
         );
+    }
+
+    #[test]
+    fn allows_informal_laughter() {
+        for source in ["hah", "haha", "hahah", "hahaha", "Hahahah"] {
+            assert_no_lints(source, SplitWords::default());
+        }
     }
 }
