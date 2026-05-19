@@ -3,7 +3,7 @@ import { check, type DownloadEvent } from '@tauri-apps/plugin-updater';
 import { Client } from '$lib/client';
 
 const LATEST_VERSION_URL = 'https://writewithharper.com/latestversion';
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 export type UpdateStatus = 'up-to-date' | 'updated' | 'error';
 
@@ -23,7 +23,7 @@ export interface UpdateOptions {
 const normalizeVersion = (version: string) => version.trim().replace(/^v/i, '');
 
 const shouldCheckForUpdate = (lastUpdateCheck: number | null, now = Date.now()) =>
-	lastUpdateCheck == null || now - lastUpdateCheck >= WEEK_MS;
+	lastUpdateCheck == null || now - lastUpdateCheck >= DAY_MS;
 
 export class DesktopUpdater {
 	/**
@@ -60,7 +60,7 @@ export class DesktopUpdater {
 	 * Check for an available Tauri update and install it when one exists.
 	 *
 	 * This centralizes the updater plugin workflow so manual checks and automatic
-	 * weekly checks use the same behavior and return shape.
+	 * daily checks use the same behavior and return shape.
 	 */
 	static async updateToLatest(options: UpdateOptions = {}): Promise<UpdateResult> {
 		try {
@@ -97,7 +97,7 @@ export class DesktopUpdater {
 	}
 
 	/**
-	 * Run the silent weekly auto-update check when the user has enabled it.
+	 * Run the silent daily auto-update check when the user has enabled it.
 	 *
 	 * This exists to keep scheduling and persisted update-check timestamps out of
 	 * Svelte components while avoiding network/update checks on every app launch.

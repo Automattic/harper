@@ -320,7 +320,7 @@ function settingsValueToDialect(value: string): Dialect {
             <div class="row top">
               <div>
                 <strong>Automatically check for updates</strong>
-                <p>Harper will check for new versions weekly.</p>
+                <p>Harper will check for new versions daily.</p>
                 <p class="result-summary">
                   Current version: {currentVersion || 'loading...'} · Latest version: {latestVersion || 'loading...'}
                 </p>
