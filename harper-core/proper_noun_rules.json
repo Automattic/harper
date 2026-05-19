@@ -333,6 +333,7 @@
 		"canonical": [
 			"Apple iPhone",
 			"Apple iPad",
+			"Apple iPod",
 			"Apple iMac",
 			"Apple MacBook",
 			"Apple Watch",
@@ -350,7 +351,13 @@
 			"Apple AirPods",
 			"Apple AirPods Pro",
 			"Apple AirPods Max",
-			"Apple Vision Pro"
+			"Apple Vision Pro",
+			"MacBook Pro",
+			"MacBook Air",
+			"Mac Pro",
+			"Mac Mini",
+			"AirPods Pro",
+			"AirPods Max"
 		],
 		"description": "When referring to Apple products and services, make sure to treat them as proper nouns."
 	},
