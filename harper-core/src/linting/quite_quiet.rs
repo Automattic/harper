@@ -24,6 +24,7 @@ impl Default for QuiteQuiet {
                         && !k.is_conjunction()
                         && !tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
                             "here", "there", "too", "already", "lately",
+                            "a", "an", "the",
                         ])
                 });
 
@@ -40,7 +41,30 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                &["actually", "never", "not", "really", "generally"],
+                &[
+                    "actually",
+                    "never",
+                    "not",
+                    "really",
+                    "generally",
+                    "out",
+                    "up",
+                    "down",
+                    "off",
+                    "over",
+                    "away",
+                    "back",
+                    "about",
+                    "around",
+                    "along",
+                    "through",
+                    "aside",
+                    "together",
+                    "apart",
+                    "forth",
+                    "ahead",
+                    "well",
+                ],
             )
             .t_ws()
             .t_aco("quite");
