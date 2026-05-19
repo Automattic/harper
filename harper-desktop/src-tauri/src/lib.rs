@@ -471,6 +471,9 @@ pub fn run_tauri() {
             let menu = tray_menu(app, is_service_running)?;
             let service_toggle = menu.service_toggle.clone();
 
+            app.handle()
+                .plugin(tauri_plugin_updater::Builder::new().build());
+
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
                 .icon(menu_bar_icon(is_service_running)?)
