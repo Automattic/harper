@@ -56,6 +56,7 @@ pub enum Language {
     Plain,
     Markdown,
     Typst,
+    Latex,
 }
 
 impl Language {
@@ -74,6 +75,18 @@ impl Language {
                 {
                     panic!(
                         "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
+                    )
+                }
+            }
+            Language::Latex => {
+                #[cfg(feature = "tex")]
+                {
+                    Box::new(harper_tex::TeX::default())
+                }
+                #[cfg(not(feature = "tex"))]
+                {
+                    panic!(
+                        "LaTeX is not supported in this version of Harper. Please use the LaTeX-supported binary."
                     )
                 }
             }

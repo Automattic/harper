@@ -47,6 +47,10 @@ export default class LocalLinter implements Linter {
 				break;
 			case 'typst':
 				language = Language.Typst;
+				break;
+			case 'latex':
+				language = Language.Latex;
+				break;
 		}
 
 		const lints = inner.lint(
@@ -73,6 +77,9 @@ export default class LocalLinter implements Linter {
 				break;
 			case 'typst':
 				language = Language.Typst;
+				break;
+			case 'latex':
+				language = Language.Latex;
 				break;
 		}
 
