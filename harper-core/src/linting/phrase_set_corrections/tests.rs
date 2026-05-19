@@ -26,6 +26,26 @@ fn corrects_much_ado() {
     );
 }
 
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
 // Bollocks
 
 #[test]
@@ -295,6 +315,55 @@ fn corrects_conforming_that() {
         "Thanks for conforming that this issue is fixed in the latest version.",
         lint_group(),
         "Thanks for confirming that this issue is fixed in the latest version.",
+    );
+}
+
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
     );
 }
 

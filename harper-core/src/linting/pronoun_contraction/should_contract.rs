@@ -1,9 +1,8 @@
-use std::sync::Arc;
-
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::sync::Lrc;
 use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
@@ -21,7 +20,7 @@ pub struct ShouldContract {
 
 impl Default for ShouldContract {
     fn default() -> Self {
-        let cap = Arc::new(
+        let cap = Lrc::new(
             SequenceExpr::word_set(&["your", "were"])
                 .then_whitespace()
                 .then_non_quantifier_determiner()

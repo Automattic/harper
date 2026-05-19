@@ -61,6 +61,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -125,6 +133,17 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `confirm` rather than `conform`?",
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
+        ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
         ),
         "DefiniteArticle" => (
             &[
