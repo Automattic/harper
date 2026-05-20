@@ -44,11 +44,10 @@ const faqs = [
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="copy">
-				<SectionKicker>Harper Desktop</SectionKicker>
 				<h1>Works in every app.</h1>
 				<p>
-					Use Harper in the apps you use every day such as Mail, Slack, Notes, Pages, and
-					Discord.
+					Use Harper Desktop in the apps you use every day such as Mail, Slack, Notes, Pages,
+					and Discord.
 				</p>
 				<div class="cta">
 					<PillButton disabled size="lg">
