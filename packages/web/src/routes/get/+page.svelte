@@ -130,7 +130,7 @@ function clearFilters() {
 					<div class="empty">
 						<h2>No match for "{query}"</h2>
 						<p>
-							Don't see your editor? <a href={marketingLinks.github}>Help us build it →</a>
+							Don’t see your editor? <a href={marketingLinks.github}>Help us build it →</a>
 						</p>
 					</div>
 				{:else}
