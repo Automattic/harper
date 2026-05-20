@@ -1,6 +1,5 @@
 <script lang="ts">
 import Arrow from '$lib/components/Arrow.svelte';
-import SectionKicker from './SectionKicker.svelte';
 
 type FaqItem = {
 	q: string;
@@ -9,7 +8,6 @@ type FaqItem = {
 
 export let items: FaqItem[] = [];
 export let title = 'FAQs';
-export let kicker = '';
 export let intro = '';
 export let introHref = '';
 export let introLinkText = '';
@@ -20,9 +18,6 @@ export let layout: 'grid' | 'narrow' = 'narrow';
 <section class="faq">
 	<div class:grid={layout === 'grid'} class:narrow={layout === 'narrow'} class="section-inner">
 		<div class="heading">
-			{#if kicker}
-				<SectionKicker>{kicker}</SectionKicker>
-			{/if}
 			<h2>{title}</h2>
 			{#if intro}
 				<p>

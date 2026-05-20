@@ -8,7 +8,6 @@ import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import PillButton from '$lib/marketing/PillButton.svelte';
 import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
-import SectionKicker from '$lib/marketing/SectionKicker.svelte';
 
 const faqs = [
 	{

@@ -16,7 +16,6 @@ import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import PillButton from '$lib/marketing/PillButton.svelte';
 import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
-import SectionKicker from '$lib/marketing/SectionKicker.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
 import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
@@ -210,7 +209,6 @@ onMount(() => {
 	<section class="integrations-callout">
 		<div class="section-inner split">
 			<div>
-				<SectionKicker>Native everywhere</SectionKicker>
 				<h2>One grammar checker.<br />Every place you write.</h2>
 				<p>
 					Harper is available as a language server, a JavaScript library, a Rust crate, browser
@@ -267,7 +265,6 @@ onMount(() => {
 	<section class="open-source">
 		<div class="section-inner narrow">
 			<HarperMark size={56} />
-			<SectionKicker color="var(--marketing-amber-soft)">Open source · Apache-2.0</SectionKicker>
 			<h2>Pay us a visit on GitHub.</h2>
 			<p>
 				Fork it, file an issue, add a rule, port it to a new editor. Harper is free software,
