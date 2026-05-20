@@ -100,7 +100,6 @@ $: fontSize =
 }
 
 .component-logo :global(svg) {
-	display: block;
 	width: 68%;
 	height: 68%;
 }
