@@ -81,7 +81,7 @@ export let layout: 'grid' | 'narrow' = 'narrow';
 h2 {
 	margin: 0.75rem 0 0;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: clamp(2.2rem, 5vw, 2.5rem);
 	font-weight: 650;
 	line-height: 1.08;
@@ -177,7 +177,7 @@ details p {
 .faq-row h3 {
 	margin: 0 0 0.4rem;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1rem;
 	font-weight: 650;
 	letter-spacing: 0;

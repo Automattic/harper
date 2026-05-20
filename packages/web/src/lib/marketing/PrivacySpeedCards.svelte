@@ -69,7 +69,7 @@ export let desktop = false;
 h2 {
 	margin: 0;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: clamp(2rem, 4vw, 2.25rem);
 	font-weight: 650;
 	line-height: 1.08;
@@ -79,7 +79,7 @@ h2 {
 p {
 	margin: 0;
 	color: var(--marketing-ink-2);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 	font-size: 0.94rem;
 	line-height: 1.6;
 }
@@ -94,7 +94,7 @@ p {
 	gap: 0.85rem;
 	margin-top: auto;
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.7rem;
 }
 

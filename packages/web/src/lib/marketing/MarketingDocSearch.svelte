@@ -33,7 +33,7 @@ onMount(() => {
 	background: rgba(28, 26, 22, 0.04);
 	color: var(--marketing-ink-3);
 	box-shadow: none;
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 	padding: 0 0.75rem;
 }
 
@@ -66,7 +66,7 @@ onMount(() => {
 	border-radius: 0.3rem;
 	background: #fff;
 	color: var(--marketing-ink-2);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.68rem;
 	font-weight: 700;
 }
@@ -87,7 +87,7 @@ onMount(() => {
 	background: #fff;
 	box-shadow: none;
 	color: var(--marketing-ink-2);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.62rem;
 }
 

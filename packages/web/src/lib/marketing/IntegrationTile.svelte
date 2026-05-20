@@ -108,7 +108,7 @@ $: fontSize =
 .monogram {
 	background: var(--tile-bg);
 	color: var(--tile-fg);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 	font-size: var(--tile-font);
 	font-weight: 800;
 	letter-spacing: 0;

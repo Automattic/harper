@@ -31,7 +31,7 @@ export let fix: string;
 
 del,
 strong {
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 }
 
 del,

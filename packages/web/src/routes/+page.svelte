@@ -276,7 +276,7 @@ onMount(() => {
 				and we'd love your help.
 			</p>
 			<div class="button-row center">
-				<PillButton href={marketingLinks.github} kind="secondary" size="lg">Star on GitHub</PillButton>
+				<PillButton href={marketingLinks.github} size="lg">Star on GitHub</PillButton>
 				<PillButton href="/docs/contributors/introduction" kind="secondary" size="lg">
 					Contribute
 				</PillButton>
@@ -292,7 +292,7 @@ onMount(() => {
 	min-height: 100vh;
 	background: var(--marketing-page-bg);
 	color: var(--marketing-ink);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 }
 
 .section-inner {
@@ -327,7 +327,7 @@ h1,
 h2 {
 	margin: 0;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-weight: 650;
 	letter-spacing: 0;
 }
@@ -340,7 +340,7 @@ h1 {
 
 .hero-sub {
 	margin: 1.35rem 0 0;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1.38rem;
 	line-height: 1.35;
 }
@@ -348,7 +348,7 @@ h1 {
 .hero-third {
 	margin: 0.75rem 0 0;
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1.12rem;
 	font-style: italic;
 }
@@ -363,6 +363,7 @@ h1 {
 
 .center {
 	justify-content: center;
+	align-items: center;
 }
 
 .try-editor {
@@ -420,7 +421,7 @@ h1 {
 	align-items: center;
 	justify-content: center;
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.82rem;
 }
 
@@ -434,7 +435,7 @@ h1 {
 .intro .lead {
 	margin: 0;
 	color: var(--marketing-ink);
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: clamp(1.6rem, 4vw, 1.75rem);
 	font-weight: 550;
 	line-height: 1.35;
@@ -547,6 +548,11 @@ h1 {
 	color: rgba(251, 250, 246, 0.72);
 }
 
+.open-source .button-row {
+	flex-direction: column;
+	align-items: center;
+}
+
 @media (max-width: 880px) {
 	.section-inner {
 		padding-inline: 1rem;
@@ -567,6 +573,10 @@ h1 {
 	.section-row {
 		flex-direction: column;
 		align-items: stretch;
+	}
+
+	.button-row.center {
+		align-items: center;
 	}
 
 	.editor-frame {

@@ -141,7 +141,7 @@ const faqs = [
 	min-height: 100vh;
 	background: #f6efe2;
 	color: var(--marketing-ink);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 }
 
 .section-inner {
@@ -186,7 +186,7 @@ h1,
 h2 {
 	margin: 0;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-weight: 650;
 	letter-spacing: 0;
 }
@@ -397,7 +397,7 @@ li b {
 
 .requirements {
 	margin-top: 1rem;
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 }
 
 @media (max-width: 1040px) {

@@ -22,7 +22,7 @@ export let dark = false;
 		0 22px 50px -18px rgba(28, 26, 22, 0.35),
 		0 4px 10px rgba(28, 26, 22, 0.1),
 		0 0 0 0.5px rgba(0, 0, 0, 0.04);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 }
 
 .mini-window.dark {

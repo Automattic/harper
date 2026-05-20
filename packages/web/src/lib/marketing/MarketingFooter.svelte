@@ -54,7 +54,7 @@ import HarperMark from './HarperMark.svelte';
 	border-top: 0.5px solid var(--marketing-line);
 	background: var(--marketing-cream);
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 }
 
 .top {
@@ -94,7 +94,7 @@ p {
 	border-radius: 999px;
 	background: #fff;
 	color: var(--marketing-ink-2);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.68rem;
 }
 
@@ -114,7 +114,7 @@ p {
 h2 {
 	margin: 0 0 0.25rem;
 	color: var(--marketing-amber);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.66rem;
 	font-weight: 800;
 	letter-spacing: 0.14em;

@@ -157,7 +157,7 @@ function clearFilters() {
 	min-height: 100vh;
 	background: var(--marketing-page-bg);
 	color: var(--marketing-ink);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 }
 
 .hero {
@@ -175,7 +175,7 @@ function clearFilters() {
 h1 {
 	margin: 0.85rem 0 0;
 	color: inherit;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: clamp(3.2rem, 7vw, 3.5rem);
 	font-weight: 650;
 	line-height: 1.02;
@@ -186,7 +186,7 @@ h1 {
 	max-width: 35rem;
 	margin: 0.75rem auto 2.2rem;
 	color: var(--marketing-ink-2);
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1.2rem;
 	line-height: 1.45;
 }
@@ -375,7 +375,7 @@ nav span {
 
 nav b {
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.68rem;
 	font-weight: 600;
 }
@@ -383,7 +383,7 @@ nav b {
 .matches {
 	margin: 0;
 	color: var(--marketing-ink-3);
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.7rem;
 }
 
@@ -410,7 +410,7 @@ nav b {
 
 .empty h2 {
 	margin: 0 0 0.4rem;
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1.4rem;
 }
 

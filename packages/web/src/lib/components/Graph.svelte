@@ -67,7 +67,7 @@ function expand(_node: HTMLElement, { width, duration }: { width: number; durati
 	grid-template-columns: 6.2rem 1fr 4rem;
 	align-items: center;
 	gap: 0.65rem;
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.7rem;
 }
 

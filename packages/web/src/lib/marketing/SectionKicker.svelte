@@ -8,7 +8,7 @@ export let color = 'var(--marketing-amber)';
 
 <style>
 .section-kicker {
-	font-family: var(--marketing-mono);
+	font-family: "JetBrains Mono", monospace;
 	font-size: 0.69rem;
 	font-weight: 700;
 	letter-spacing: 0.16em;

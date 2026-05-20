@@ -61,7 +61,7 @@ blockquote {
 }
 
 figure.accent blockquote {
-	font-family: var(--marketing-display);
+	font-family: Domine, serif;
 	font-size: 1.35rem;
 	line-height: 1.3;
 }

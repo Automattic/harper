@@ -32,7 +32,7 @@ export let label = '';
 	height: 2.25rem;
 	padding: 0 1rem;
 	border-radius: 999px;
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 	font-size: 0.82rem;
 	font-weight: 700;
 	text-decoration: none;

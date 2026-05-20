@@ -89,7 +89,7 @@ onMount(() => {
 	background: rgba(246, 241, 230, 0.76);
 	backdrop-filter: saturate(140%) blur(12px);
 	-webkit-backdrop-filter: saturate(140%) blur(12px);
-	font-family: var(--marketing-sans);
+	font-family: inherit;
 	transition:
 		background 180ms ease,
 		box-shadow 180ms ease,
