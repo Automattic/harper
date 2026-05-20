@@ -4,6 +4,23 @@ export let authorSubtitle: string;
 export let testimonial: string;
 export let accent = false;
 
+const baseFigureClasses =
+	'm-0 flex min-h-64 flex-col justify-between gap-4 rounded-2xl border p-6 transition duration-150 ease-out group-hover:-translate-y-px group-hover:border-primary group-hover:shadow-[0_10px_24px_-16px_rgba(0,0,0,0.16)]';
+const regularFigureClasses = 'border-black/10 bg-white text-black dark:border-white/10 dark:bg-black dark:text-white';
+const accentFigureClasses = 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black';
+const baseBlockquoteClasses = 'm-0 border-0 bg-transparent p-0 not-italic text-inherit';
+const regularBlockquoteClasses = 'text-sm leading-relaxed';
+const accentBlockquoteClasses = 'font-serif text-[1.3125rem] font-bold leading-snug';
+const baseCaptionClasses = 'flex items-center gap-3 border-t pt-3.5';
+const regularCaptionClasses = 'border-black/10 dark:border-white/10';
+const accentCaptionClasses = 'border-white/15 dark:border-black/15';
+const avatarClasses =
+	'flex size-8 items-center justify-center rounded-full bg-primary-100 text-xs font-extrabold text-primary dark:bg-primary-900 dark:text-primary-200';
+
+$: figureClasses = `${baseFigureClasses} ${accent ? accentFigureClasses : regularFigureClasses}`;
+$: blockquoteClasses = `${baseBlockquoteClasses} ${accent ? accentBlockquoteClasses : regularBlockquoteClasses}`;
+$: captionClasses = `${baseCaptionClasses} ${accent ? accentCaptionClasses : regularCaptionClasses}`;
+
 function initials(name: string) {
 	return name
 		.split(' ')
@@ -13,99 +30,15 @@ function initials(name: string) {
 }
 </script>
 
-<figure class:accent>
-	<blockquote>“{testimonial}”</blockquote>
-	<figcaption>
-		<span>{initials(authorName)}</span>
-		<div>
-			<strong>{authorName}</strong>
-			<small>{authorSubtitle}</small>
+<figure class={figureClasses}>
+	<blockquote class={blockquoteClasses}>“{testimonial}”</blockquote>
+	<figcaption class={captionClasses}>
+		<span class={avatarClasses}>{initials(authorName)}</span>
+		<div class="flex flex-col">
+			<strong class="text-[0.82rem]">{authorName}</strong>
+			<small class={accent ? 'text-xs text-white/65 dark:text-black/65' : 'text-xs text-black/50 dark:text-white/50'}>
+				{authorSubtitle}
+			</small>
 		</div>
 	</figcaption>
 </figure>
-
-<style>
-figure {
-	display: flex;
-	min-height: 16rem;
-	flex-direction: column;
-	justify-content: space-between;
-	gap: 1rem;
-	margin: 0;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 1rem;
-	background: #fff;
-	padding: 1.5rem;
-	transition:
-		transform 120ms ease,
-		box-shadow 120ms ease,
-		border-color 120ms ease;
-}
-
-figure.accent {
-	border-color: var(--marketing-ink);
-	background: var(--marketing-ink);
-	color: #fbfaf6;
-}
-
-blockquote {
-	margin: 0;
-	border: 0;
-	background: transparent;
-	padding: 0;
-	color: inherit;
-	font-size: 0.94rem;
-	font-style: normal;
-	line-height: 1.55;
-	text-indent: 0;
-}
-
-figure.accent blockquote {
-	font-family: Domine, serif;
-	font-size: 1.35rem;
-	line-height: 1.3;
-}
-
-figcaption {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	border-top: 0.5px solid var(--marketing-line);
-	padding-top: 0.9rem;
-}
-
-figure.accent figcaption {
-	border-color: rgba(251, 250, 246, 0.16);
-}
-
-figcaption > span {
-	display: flex;
-	width: 2rem;
-	height: 2rem;
-	align-items: center;
-	justify-content: center;
-	border-radius: 999px;
-	background: var(--marketing-amber-tint);
-	color: var(--marketing-amber);
-	font-size: 0.75rem;
-	font-weight: 800;
-}
-
-figcaption div {
-	display: flex;
-	flex-direction: column;
-}
-
-figcaption strong {
-	font-size: 0.82rem;
-}
-
-figcaption small {
-	color: var(--marketing-ink-3);
-	font-size: 0.72rem;
-}
-
-figure.accent figcaption small {
-	color: rgba(251, 250, 246, 0.65);
-}
-</style>
