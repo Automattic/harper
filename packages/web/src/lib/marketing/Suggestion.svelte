@@ -5,37 +5,11 @@ export let word: string;
 export let fix: string;
 </script>
 
-<div class="suggestion">
+<div
+	class='absolute right-3 bottom-2.5 inline-flex items-center gap-1.5 rounded-lg border border-black/10 bg-white px-2 py-1 text-[0.68rem] text-black shadow-[0_6px_16px_rgba(0,0,0,0.16)] dark:border-white/10 dark:bg-black dark:text-white'
+>
 	<HarperMark size={11} />
-	<del>{word}</del>
-	<span>-></span>
-	<strong>{fix}</strong>
+	<del class='text-black/50 [font-family:"JetBrains_Mono",monospace] dark:text-white/50'>{word}</del>
+	<span class="text-black/50 dark:text-white/50">→</span>
+	<strong class='[font-family:"JetBrains_Mono",monospace]'>{fix}</strong>
 </div>
-
-<style>
-.suggestion {
-	position: absolute;
-	right: 0.75rem;
-	bottom: 0.65rem;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 0.5rem;
-	background: #fbfaf6;
-	box-shadow: 0 6px 16px rgba(28, 26, 22, 0.16);
-	padding: 0.32rem 0.55rem;
-	color: var(--marketing-ink);
-	font-size: 0.68rem;
-}
-
-del,
-strong {
-	font-family: "JetBrains Mono", monospace;
-}
-
-del,
-span {
-	color: var(--marketing-ink-3);
-}
-</style>

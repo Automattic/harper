@@ -4,12 +4,16 @@ import Squiggle from './Squiggle.svelte';
 import Suggestion from './Suggestion.svelte';
 </script>
 
-<div class="pane slack">
+<div class="absolute bottom-0 left-[-0.6rem] w-80 max-[620px]:static max-[620px]:w-full max-[620px]:transform-none" style="transform: rotate(-4deg);">
 	<MacWindow title="Slack - #launches" dark>
-		<div class="chat-body">
-			<div class="avatar">J</div>
-			<p>
-				<b>Jordan</b><small>2:14 PM</small><br />
+		<div class="flex min-h-[9.6rem] gap-2.5 p-3 pr-3.5 pb-12 text-[0.82rem]">
+			<div
+				class="flex size-[1.65rem] shrink-0 items-center justify-center rounded-[0.45rem] bg-[#4a154b] text-xs font-extrabold text-white"
+			>
+				J
+			</div>
+			<p class="!m-0 leading-[1.55]">
+				<b class="mr-1.5">Jordan</b><small class="text-white/45">2:14 PM</small><br />
 				heads up: the deploy is taking <Squiggle>alot</Squiggle> longer
 				<Squiggle>then</Squiggle> expected. might push to <Squiggle>tommorrow</Squiggle>.
 			</p>
@@ -17,59 +21,3 @@ import Suggestion from './Suggestion.svelte';
 		</div>
 	</MacWindow>
 </div>
-
-<style>
-.pane {
-	position: absolute;
-}
-
-.slack {
-	left: -0.6rem;
-	bottom: 0;
-	width: 20rem;
-	transform: rotate(-4deg);
-}
-
-.chat-body {
-	display: flex;
-	gap: 0.6rem;
-	min-height: 9.6rem;
-	padding: 0.75rem 0.85rem 3rem;
-	font-size: 0.82rem;
-}
-
-.avatar {
-	display: flex;
-	flex-shrink: 0;
-	align-items: center;
-	justify-content: center;
-	width: 1.65rem;
-	height: 1.65rem;
-	border-radius: 0.45rem;
-	background: #4a154b;
-	color: #fff;
-	font-size: 0.75rem;
-	font-weight: 800;
-}
-
-p {
-	margin: 0;
-	line-height: 1.55;
-}
-
-.chat-body b {
-	margin-right: 0.4rem;
-}
-
-.chat-body small {
-	color: var(--marketing-ink-4);
-}
-
-@media (max-width: 620px) {
-	.pane {
-		position: static;
-		width: 100%;
-		transform: none;
-	}
-}
-</style>

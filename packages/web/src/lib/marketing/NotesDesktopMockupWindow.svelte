@@ -4,17 +4,23 @@ import Squiggle from './Squiggle.svelte';
 import Suggestion from './Suggestion.svelte';
 </script>
 
-<div class="pane notes">
+<div class="absolute top-2.5 right-[-0.6rem] z-2 w-70 max-[620px]:static max-[620px]:w-full max-[620px]:transform-none" style="transform: rotate(3.5deg);">
 	<MacWindow title="Notes">
-		<div class="notes-body">
-			<aside>
-				<strong>Birthday dinner</strong>
-				<span>Reserve table at Aug...</span>
+		<div class="flex min-h-46 bg-[#fffdf5] text-black">
+			<aside
+				class="flex w-23 shrink-0 flex-col gap-1 border-r border-black/10 bg-[#f6f0d8] p-2 text-[0.62rem]"
+			>
+				<strong class="rounded-sm bg-[#febc2e] p-1.5 text-[#3a2a08]">Birthday dinner</strong>
+				<span class="text-black/50">Reserve table at Aug...</span>
 			</aside>
-			<section>
-				<h3>Birthday dinner - saturday</h3>
-				<small>Today at 11:08 AM</small>
-				<p>
+			<section class="relative p-3 pb-12 text-[0.78rem]">
+				<h3
+					class="!mt-0 !mb-2.5 border-b border-black/10 pb-2 text-[0.84rem] font-semibold text-black"
+				>
+					Birthday dinner - saturday
+				</h3>
+				<small class="mb-2 block text-black/45">Today at 11:08 AM</small>
+				<p class="!m-0 leading-[1.55]">
 					Reserve table at Augusto's for 8 pm. Pick up a cake on the way,
 					<Squiggle>noone</Squiggle> is allergic to nuts.
 				</p>
@@ -23,79 +29,3 @@ import Suggestion from './Suggestion.svelte';
 		</div>
 	</MacWindow>
 </div>
-
-<style>
-.pane {
-	position: absolute;
-}
-
-.notes {
-	right: -0.6rem;
-	top: 0.6rem;
-	z-index: 2;
-	width: 17.5rem;
-	transform: rotate(3.5deg);
-}
-
-.notes-body {
-	display: flex;
-	min-height: 11.5rem;
-	background: #fffdf5;
-}
-
-.notes-body aside {
-	display: flex;
-	width: 5.75rem;
-	flex-shrink: 0;
-	flex-direction: column;
-	gap: 0.2rem;
-	border-right: 0.5px solid rgba(28, 26, 22, 0.08);
-	background: #f6f0d8;
-	padding: 0.6rem 0.4rem;
-	font-size: 0.62rem;
-}
-
-.notes-body aside strong {
-	border-radius: 0.3rem;
-	background: #febc2e;
-	padding: 0.35rem;
-	color: #3a2a08;
-}
-
-.notes-body aside span {
-	color: var(--marketing-ink-3);
-}
-
-.notes-body section {
-	position: relative;
-	padding: 0.7rem 0.9rem 3rem;
-	font-size: 0.78rem;
-}
-
-h3 {
-	margin: 0 0 0.65rem;
-	padding-bottom: 0.5rem;
-	border-bottom: 0.5px solid var(--marketing-line);
-	color: var(--marketing-ink);
-	font-size: 0.84rem;
-}
-
-.notes-body small {
-	display: block;
-	margin-bottom: 0.55rem;
-	color: var(--marketing-ink-4);
-}
-
-p {
-	margin: 0;
-	line-height: 1.55;
-}
-
-@media (max-width: 620px) {
-	.pane {
-		position: static;
-		width: 100%;
-		transform: none;
-	}
-}
-</style>

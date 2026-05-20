@@ -1,87 +1,28 @@
 <script lang="ts">
 export let title: string;
 export let dark = false;
+
+const windowBaseClasses =
+	'relative overflow-hidden rounded-xl border shadow-[0_22px_50px_-18px_rgba(0,0,0,0.35),0_4px_10px_rgba(0,0,0,0.1),0_0_0_0.5px_rgba(0,0,0,0.04)]';
+$: windowClasses = dark
+	? `${windowBaseClasses} border-white/10 bg-[#2b2d31] text-[#dcddde]`
+	: `${windowBaseClasses} border-black/20 bg-white text-black`;
+$: titlebarClasses = dark
+	? 'flex h-[1.65rem] items-center gap-2 border-b border-white/10 bg-[#1e1f22] px-2.5'
+	: 'flex h-[1.65rem] items-center gap-2 border-b border-black/10 bg-linear-to-b from-[#fafafa] to-[#efece7] px-2.5';
+$: titleClasses = dark
+	? 'mr-[2.1rem] flex-1 text-center text-[0.68rem] text-white/70'
+	: 'mr-[2.1rem] flex-1 text-center text-[0.68rem] text-black/55';
 </script>
 
-<div class:dark class="mini-window">
-	<div class="titlebar">
-		<div class="lights"><span></span><span></span><span></span></div>
-		<strong>{title}</strong>
+<div class={windowClasses}>
+	<div class={titlebarClasses}>
+		<div class="flex gap-1.5">
+			<span class="size-[0.55rem] rounded-full bg-[#ff5f57]"></span>
+			<span class="size-[0.55rem] rounded-full bg-[#febc2e]"></span>
+			<span class="size-[0.55rem] rounded-full bg-[#28c840]"></span>
+		</div>
+		<strong class={titleClasses}>{title}</strong>
 	</div>
-	<div class="body"><slot /></div>
+	<div class="relative min-h-40"><slot /></div>
 </div>
-
-<style>
-.mini-window {
-	position: relative;
-	overflow: hidden;
-	border: 0.5px solid rgba(28, 26, 22, 0.18);
-	border-radius: 0.75rem;
-	background: #fff;
-	box-shadow:
-		0 22px 50px -18px rgba(28, 26, 22, 0.35),
-		0 4px 10px rgba(28, 26, 22, 0.1),
-		0 0 0 0.5px rgba(0, 0, 0, 0.04);
-	font-family: inherit;
-}
-
-.mini-window.dark {
-	background: #2b2d31;
-	color: #dcddde;
-}
-
-.titlebar {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	height: 1.65rem;
-	border-bottom: 0.5px solid rgba(28, 26, 22, 0.08);
-	background: linear-gradient(180deg, #fafafa, #efece7);
-	padding: 0 0.65rem;
-}
-
-.dark .titlebar {
-	border-color: rgba(255, 255, 255, 0.08);
-	background: #1e1f22;
-}
-
-.lights {
-	display: flex;
-	gap: 0.35rem;
-}
-
-.lights span {
-	width: 0.55rem;
-	height: 0.55rem;
-	border-radius: 999px;
-}
-
-.lights span:nth-child(1) {
-	background: #ff5f57;
-}
-
-.lights span:nth-child(2) {
-	background: #febc2e;
-}
-
-.lights span:nth-child(3) {
-	background: #28c840;
-}
-
-.titlebar strong {
-	flex: 1;
-	margin-right: 2.1rem;
-	color: rgba(28, 26, 22, 0.56);
-	font-size: 0.68rem;
-	text-align: center;
-}
-
-.dark .titlebar strong {
-	color: rgba(255, 255, 255, 0.7);
-}
-
-.body {
-	position: relative;
-	min-height: 10rem;
-}
-</style>
