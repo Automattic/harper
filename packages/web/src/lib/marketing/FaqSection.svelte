@@ -13,182 +13,68 @@ export let introHref = '';
 export let introLinkText = '';
 export let collapsible = false;
 export let layout: 'grid' | 'narrow' = 'narrow';
+
+$: innerClass =
+	layout === 'grid'
+		? 'mx-auto grid max-w-[68.75rem] grid-cols-1 gap-12 px-4 md:px-14 min-[881px]:grid-cols-[18.75rem_1fr]'
+		: 'mx-auto max-w-180 px-4 text-center md:px-14';
 </script>
 
-<section class="faq">
-	<div class:grid={layout === 'grid'} class:narrow={layout === 'narrow'} class="section-inner">
-		<div class="heading">
-			<h2>{title}</h2>
+<section class="border-t border-black/10 bg-cream py-20 dark:border-white/10 dark:bg-black">
+	<div class={innerClass}>
+		<div>
+			<h2
+				class="m-0 py-0 text-[clamp(2.2rem,5vw,2.5rem)] leading-[1.08] font-semibold tracking-normal text-black dark:text-white"
+			>
+				{title}
+			</h2>
 			{#if intro}
-				<p>
+				<p class="!mt-4 !mb-0 text-base leading-relaxed text-black/70 dark:text-white/70">
 					{intro}
 					{#if introHref && introLinkText}
-						<a href={introHref}>{introLinkText}<Arrow /></a>
+						<a
+							class="inline-flex items-center gap-1 font-bold text-primary no-underline dark:text-primary-300 [&_path]:fill-none [&_path]:stroke-current [&_path]:stroke-[1.5] [&_path]:[stroke-linecap:round] [&_path]:[stroke-linejoin:round] [&_svg]:h-3 [&_svg]:w-3"
+							href={introHref}>{introLinkText}<Arrow /></a
+						>
 					{/if}
 				</p>
 			{/if}
 		</div>
 
-		<div class:faq-list={collapsible} class:faq-rows={!collapsible}>
+		<div class={collapsible ? 'border-t border-black/10 dark:border-white/10' : ''}>
 			{#if collapsible}
 				{#each items as item}
-					<details>
-						<summary>{item.q}</summary>
-						<p>{item.a}</p>
+					<details class="group border-b border-black/10 dark:border-white/10">
+						<summary
+							class="flex cursor-pointer list-none items-center justify-between py-4 font-bold text-black [&::-webkit-details-marker]:hidden dark:text-white"
+						>
+							<span>{item.q}</span>
+							<span
+								class="inline-flex size-6 items-center justify-center rounded-full bg-black/5 text-black/70 group-open:hidden dark:bg-white/10 dark:text-white/70"
+								aria-hidden="true">+</span
+							>
+							<span
+								class="hidden size-6 items-center justify-center rounded-full bg-black text-primary-100 group-open:inline-flex dark:bg-white dark:text-black"
+								aria-hidden="true">-</span
+							>
+						</summary>
+						<p class="!m-0 max-w-152 pb-5 text-base leading-relaxed text-black/70 dark:text-white/70">
+							{item.a}
+						</p>
 					</details>
 				{/each}
 			{:else}
 				{#each items as item}
-					<div class="faq-row">
-						<h3>{item.q}</h3>
-						<p>{item.a}</p>
+					<div class="border-t border-black/10 py-5 text-left last:border-b dark:border-white/10">
+						<h3 class="!m-0 py-0 text-base font-semibold tracking-normal text-black dark:text-white">
+							{item.q}
+						</h3>
+						<p class="!mt-1.5 !mb-0 text-base leading-relaxed text-black/70 dark:text-white/70">
+							{item.a}
+						</p>
 					</div>
 				{/each}
 			{/if}
 		</div>
 	</div>
 </section>
-
-<style>
-.faq {
-	border-top: 0.5px solid var(--marketing-line);
-	background: #fdfbf5;
-	padding: 4.8rem 0;
-}
-
-.section-inner {
-	max-width: 68.75rem;
-	margin: 0 auto;
-	padding: 0 3.5rem;
-}
-
-.section-inner.grid {
-	display: grid;
-	grid-template-columns: 18.75rem 1fr;
-	gap: 3.1rem;
-}
-
-.section-inner.narrow {
-	max-width: 45rem;
-	text-align: center;
-}
-
-h2 {
-	margin: 0.75rem 0 0;
-	color: inherit;
-	font-family: Domine, serif;
-	font-size: clamp(2.2rem, 5vw, 2.5rem);
-	font-weight: 650;
-	line-height: 1.08;
-	letter-spacing: 0;
-}
-
-p {
-	color: var(--marketing-ink-2);
-	font-size: 1rem;
-	line-height: 1.65;
-}
-
-.heading p {
-	margin: 1rem 0 0;
-}
-
-a {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.2rem;
-	color: var(--marketing-amber);
-	font-weight: 700;
-	text-decoration: none;
-}
-
-a :global(svg) {
-	width: 0.7rem;
-	height: 0.7rem;
-	fill: none;
-	stroke: currentColor;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	stroke-width: 1.5;
-}
-
-.faq-list {
-	border-top: 0.5px solid var(--marketing-line);
-}
-
-details {
-	border-bottom: 0.5px solid var(--marketing-line);
-}
-
-summary {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1.1rem 0;
-	color: var(--marketing-ink);
-	cursor: pointer;
-	font-weight: 750;
-	list-style: none;
-}
-
-summary::-webkit-details-marker {
-	display: none;
-}
-
-summary::after {
-	content: '+';
-	display: inline-flex;
-	width: 1.4rem;
-	height: 1.4rem;
-	align-items: center;
-	justify-content: center;
-	border-radius: 999px;
-	background: rgba(28, 26, 22, 0.06);
-	color: var(--marketing-ink-2);
-}
-
-details[open] summary::after {
-	content: '-';
-	background: var(--marketing-ink);
-	color: var(--marketing-amber-tint);
-}
-
-details p {
-	max-width: 38rem;
-	margin: 0;
-	padding: 0 0 1.25rem;
-}
-
-.faq-row {
-	border-top: 0.5px solid var(--marketing-line);
-	padding: 1.25rem 0;
-	text-align: left;
-}
-
-.faq-row:last-child {
-	border-bottom: 0.5px solid var(--marketing-line);
-}
-
-.faq-row h3 {
-	margin: 0 0 0.4rem;
-	color: inherit;
-	font-family: Domine, serif;
-	font-size: 1rem;
-	font-weight: 650;
-	letter-spacing: 0;
-}
-
-.faq-row p {
-	margin: 0;
-}
-
-@media (max-width: 880px) {
-	.section-inner {
-		padding-inline: 1rem;
-	}
-
-	.section-inner.grid {
-		grid-template-columns: 1fr;
-	}
-}
-</style>
