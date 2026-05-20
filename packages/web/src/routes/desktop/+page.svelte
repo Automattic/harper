@@ -71,11 +71,10 @@ const faqs = [
 	<section class="compatibility">
 		<div class="section-inner">
 			<div class="center-heading">
-				<SectionKicker>Write in every app</SectionKicker>
 				<h2>Every text field. Same Harper.</h2>
 				<p>
 					If your cursor is blinking, Harper is watching. Harper Desktop hooks into macOS text
-					input so the same suggestions follow you across the apps where you write.
+					inputs so the same suggestions follow you across the apps where you write.
 				</p>
 			</div>
 			<div class="app-grid" aria-label="Apps where Harper Desktop works">
@@ -99,7 +98,6 @@ const faqs = [
 	<section class="settings">
 		<div class="section-inner settings-grid">
 			<div>
-				<SectionKicker>Yours to shape</SectionKicker>
 				<h2>Tune the rules. Build your own dictionary.</h2>
 				<p>
 					Every rule in Harper is toggleable. Add team jargon, product names, and favorite
