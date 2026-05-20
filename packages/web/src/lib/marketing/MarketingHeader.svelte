@@ -1,4 +1,6 @@
 <script lang="ts">
+import DiscordLogo from '$lib/components/DiscordLogo.svelte';
+import GitHubLogo from '$lib/components/GitHubLogo.svelte';
 import { onMount } from 'svelte';
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
@@ -49,18 +51,10 @@ onMount(() => {
 
 		<div class="actions">
 			<a class="icon-link" href={marketingLinks.github} aria-label="GitHub">
-				<svg viewBox="0 0 16 16" aria-hidden="true">
-					<path
-						d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.39v-1.36c-2.22.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.77-.2-3.64-.88-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.22 2.2.82a7.7 7.7 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.93.08 2.13.52.56.83 1.28.83 2.15 0 3.08-1.88 3.75-3.66 3.95.29.25.55.74.55 1.5v2.22c0 .22.14.47.55.39A8 8 0 0 0 8 0z"
-					/>
-				</svg>
+				<GitHubLogo />
 			</a>
 			<a class="icon-link" href={marketingLinks.discord} aria-label="Discord">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
-					<path
-						d="M19.27 5.33a18.16 18.16 0 0 0-4.45-1.38.07.07 0 0 0-.07.03c-.2.34-.41.79-.56 1.14a16.84 16.84 0 0 0-5.08 0 11.5 11.5 0 0 0-.57-1.14.07.07 0 0 0-.07-.03 18.1 18.1 0 0 0-4.45 1.38.06.06 0 0 0-.03.03C1.06 9.66.24 13.86.64 18a.08.08 0 0 0 .03.05c1.87 1.37 3.68 2.2 5.46 2.75a.07.07 0 0 0 .08-.03c.42-.57.79-1.18 1.11-1.82a.07.07 0 0 0-.04-.1c-.59-.22-1.16-.5-1.71-.81a.07.07 0 0 1-.01-.12c.12-.08.23-.18.34-.27a.07.07 0 0 1 .07-.01c3.59 1.64 7.47 1.64 11.02 0a.07.07 0 0 1 .08.01c.11.1.22.19.34.27a.07.07 0 0 1-.01.12c-.55.32-1.12.59-1.71.8a.07.07 0 0 0-.04.11c.33.64.7 1.24 1.11 1.81a.07.07 0 0 0 .08.03c1.79-.55 3.6-1.38 5.46-2.75a.08.08 0 0 0 .03-.05c.48-4.78-.81-8.95-3.41-12.64a.05.05 0 0 0-.03-.03zM8.52 15.5c-1.1 0-2-1-2-2.23s.88-2.23 2-2.23 2 1 1.99 2.23c0 1.23-.89 2.23-1.99 2.23zm6.97 0c-1.1 0-2-1-2-2.23s.88-2.23 2-2.23 2.01 1 1.99 2.23c0 1.23-.88 2.23-1.99 2.23z"
-					/>
-				</svg>
+				<DiscordLogo />
 			</a>
 			<MarketingDocSearch />
 			<button
@@ -331,7 +325,7 @@ onMount(() => {
 	color: var(--marketing-ink);
 }
 
-.icon-link svg {
+.icon-link :global(svg) {
 	width: 1rem;
 	height: 1rem;
 	fill: currentColor;
@@ -419,7 +413,7 @@ onMount(() => {
 	:global(.marketing-docsearch .DocSearch-Search-Icon),
 	:global(.marketing-docsearch .DocSearch-Button-Keys),
 	.icon-link,
-	.icon-link svg,
+	.icon-link :global(svg),
 	.menu-button,
 	.menu-button span {
 		transition-duration: 1ms;

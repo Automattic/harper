@@ -5,6 +5,7 @@ import EmacsLogo from '$lib/components/EmacsLogo.svelte';
 import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
 import HelixLogo from '$lib/components/HelixLogo.svelte';
 import NeovimLogo from '$lib/components/NeovimLogo.svelte';
+import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
 import SublimeLogo from '$lib/components/SublimeLogo.svelte';
 import WordPressLogo from '$lib/components/WordPressLogo.svelte';
 import ZedLogo from '$lib/components/ZedLogo.svelte';
@@ -46,6 +47,10 @@ $: fontSize =
 	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
 		<WordPressLogo />
 	</span>
+{:else if integration.id === 'obsidian'}
+	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+		<ObsidianLogo />
+	</span>
 {:else if integration.id === 'zed'}
 	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
 		<ZedLogo />
@@ -61,10 +66,6 @@ $: fontSize =
 {:else if integration.id === 'sublime'}
 	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
 		<SublimeLogo />
-	</span>
-{:else if integration.logo}
-	<span class="tile logo" style={tileStyle} aria-hidden="true">
-		<img src={integration.logo} alt="" />
 	</span>
 {:else}
 	<span
@@ -96,13 +97,6 @@ $: fontSize =
 
 .logo {
 	background: #fff;
-}
-
-.logo img {
-	display: block;
-	width: 64%;
-	height: 64%;
-	object-fit: contain;
 }
 
 .component-logo :global(svg) {

@@ -1,4 +1,5 @@
 <script lang="ts">
+import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
 import { compatibilityApps } from '$lib/marketing/data';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
@@ -79,7 +80,7 @@ const faqs = [
 			<div class="app-grid" aria-label="Apps where Harper Desktop works">
 				{#each compatibilityApps as app}
 					<div>
-						<span><img src={app.logo} alt="" /></span>
+						<AppLogoTile id={app.id} size={60} />
 						<strong>{app.name}</strong>
 					</div>
 				{/each}
@@ -296,25 +297,6 @@ h1 {
 	align-items: center;
 	flex-direction: column;
 	gap: 0.5rem;
-}
-
-.app-grid span {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 3.75rem;
-	height: 3.75rem;
-	border-radius: 0.88rem;
-	background: #fff;
-	box-shadow:
-		0 0 0 0.5px rgba(28, 26, 22, 0.08),
-		0 4px 10px rgba(28, 26, 22, 0.06);
-}
-
-.app-grid img {
-	width: 56%;
-	height: 56%;
-	object-fit: contain;
 }
 
 .app-grid strong {

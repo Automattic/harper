@@ -21,7 +21,6 @@ export type Integration = {
 	color?: string;
 	fg?: string;
 	initial?: string;
-	logo?: string;
 	community?: boolean;
 };
 
@@ -57,7 +56,6 @@ export const integrationCategories: IntegrationCategory[] = [
 				href: '/docs/integrations/obsidian',
 				platform: 'Obsidian plugin',
 				cta: 'install',
-				logo: '/marketing/logos/obsidian.svg',
 			},
 			{
 				id: 'wordpress',
@@ -240,18 +238,18 @@ export const featuredIntegrationIds = [
 ];
 
 export const compatibilityApps = [
-	{ name: 'Gmail', logo: '/marketing/logos/gmail.svg' },
-	{ name: 'iMessage', logo: '/marketing/logos/imessage.svg' },
-	{ name: 'WhatsApp', logo: '/marketing/logos/whatsapp.svg' },
-	{ name: 'Slack', logo: '/marketing/logos/slack.svg' },
-	{ name: 'Discord', logo: '/marketing/logos/discord.svg' },
-	{ name: 'Telegram', logo: '/marketing/logos/telegram.svg' },
-	{ name: 'Notion', logo: '/marketing/logos/notion.svg' },
-	{ name: 'Obsidian', logo: '/marketing/logos/obsidian.svg' },
-	{ name: 'Linear', logo: '/marketing/logos/linear.svg' },
-	{ name: 'GitHub', logo: '/marketing/logos/github.svg' },
-	{ name: 'Things', logo: '/marketing/logos/things.svg' },
-	{ name: 'Scrivener', logo: '/marketing/logos/scrivener.png' },
+	{ id: 'gmail', name: 'Gmail' },
+	{ id: 'imessage', name: 'iMessage' },
+	{ id: 'whatsapp', name: 'WhatsApp' },
+	{ id: 'slack', name: 'Slack' },
+	{ id: 'discord', name: 'Discord' },
+	{ id: 'telegram', name: 'Telegram' },
+	{ id: 'notion', name: 'Notion' },
+	{ id: 'obsidian', name: 'Obsidian' },
+	{ id: 'linear', name: 'Linear' },
+	{ id: 'github', name: 'GitHub' },
+	{ id: 'things', name: 'Things' },
+	{ id: 'scrivener', name: 'Scrivener' },
 ];
 
 export const docSearchConfig = {
