@@ -19,7 +19,7 @@
 > I       analyze how   you    infantilize me       .
 # ISg/#r+ VB      NSg/C ISgPl+ VB          NPr/ISg+ .
 > I       analyse  how   you    infantilise me       .
-# ISg/#r+ VB/Au/Br NSg/C ISgPl+ ?           NPr/ISg+ .
+# ISg/#r+ VB/Au/Br NSg/C ISgPl+ VB/Au/Br    NPr/ISg+ .
 > Careful , traveller !
 # J       . NSg/Comm+ .
 > At    the centre      of the theatre    I       dropped a   litre    of coke       .

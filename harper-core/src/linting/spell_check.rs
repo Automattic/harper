@@ -5,7 +5,7 @@ use smallvec::ToSmallVec;
 
 use crate::{
     document::Document,
-    linting::{Lint, LintKind, Linter, Suggestion},
+    linting::{Lint, LintKind, Linter, Suggestion, informal_laughter::is_informal_laughter},
     spell::{Dictionary, suggest_correct_spelling},
     {CharString, CharStringExt, Dialect, TokenStringExt},
 };
@@ -81,6 +81,10 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             }
             let word = document.get_token(word_idx).unwrap();
             let word_chars = document.get_span_content(&word.span);
+
+            if is_informal_laughter(word_chars) {
+                continue;
+            }
 
             // Is the word in the dictionary on its own?
             if let Some(Some(metadata)) = word.kind.as_word()
@@ -1126,5 +1130,15 @@ mod tests {
             "holy moly vs holy moley",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
         );
+    }
+
+    #[test]
+    fn allows_informal_laughter() {
+        for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
+            assert_no_lints(
+                source,
+                SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            );
+        }
     }
 }
