@@ -1,12 +1,11 @@
 <script lang="ts">
-import SectionKicker from './SectionKicker.svelte';
+import Graph from '$lib/components/Graph.svelte';
 
 export let desktop = false;
 </script>
 
 <div class="cards">
 	<article class="card privacy">
-		<SectionKicker>{desktop ? 'Private' : 'Private by design'}</SectionKicker>
 		<h2>{desktop ? 'Your words never leave your device.' : 'Harper is completely private.'}</h2>
 		<p>
 			{#if desktop}
@@ -31,24 +30,12 @@ export let desktop = false;
 	</article>
 
 	<article class="card speed">
-		<SectionKicker color="var(--marketing-amber-soft)">Wicked fast</SectionKicker>
 		<h2>Suggestions in under 10ms.</h2>
 		<p>
 			Harper runs locally and is built for speed. You get a feedback loop that keeps up with
 			your typing, without waiting for a server.
 		</p>
-		<div class="latency">
-			<div>
-				<span>Harper</span>
-				<b><i style="width: 3%"></i></b>
-				<em>8 ms</em>
-			</div>
-			<div>
-				<span>Cloud checker</span>
-				<b><i style="width: 88%"></i></b>
-				<em>280 ms</em>
-			</div>
-		</div>
+		<Graph />
 	</article>
 </div>
 
@@ -148,46 +135,6 @@ p {
 .privacy-viz .slash {
 	stroke: var(--marketing-amber);
 	stroke-width: 1.6;
-}
-
-.latency {
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
-	margin-top: auto;
-}
-
-.latency div {
-	display: grid;
-	grid-template-columns: 6rem 1fr 3.5rem;
-	align-items: center;
-	gap: 0.65rem;
-	font-family: var(--marketing-mono);
-	font-size: 0.7rem;
-}
-
-.latency b {
-	height: 0.62rem;
-	border-radius: 999px;
-	background: rgba(251, 250, 246, 0.08);
-	overflow: hidden;
-}
-
-.latency i {
-	display: block;
-	height: 100%;
-	border-radius: inherit;
-	background: var(--marketing-amber-soft);
-}
-
-.latency div + div i {
-	background: rgba(251, 250, 246, 0.18);
-}
-
-.latency em {
-	color: rgba(251, 250, 246, 0.75);
-	font-style: normal;
-	text-align: right;
 }
 
 @media (max-width: 760px) {
