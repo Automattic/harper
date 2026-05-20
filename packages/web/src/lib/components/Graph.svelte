@@ -32,83 +32,30 @@ function expand(_node: HTMLElement, { width, duration }: { width: number; durati
 }
 </script>
 
-<div class="graph">
+<div class="mt-auto flex flex-col gap-3">
 	{#each scaledData as [name, width] (name)}
 		<IntersectionObserver element={els[name]} let:intersecting>
 			<div bind:this={els[name]}>
 				{#if intersecting}
-					<div class="row">
-						<span>{name}</span>
-						<b>
+					<div
+						class='grid grid-cols-[1fr_3.5rem] items-center gap-x-3 gap-y-2 text-xs [font-family:"JetBrains_Mono",monospace] min-[421px]:grid-cols-[6.2rem_1fr_4rem]'
+					>
+						<span class="whitespace-nowrap text-current">{name}</span>
+						<b
+							class="col-span-full row-start-2 h-2 overflow-hidden rounded-full bg-white/10 dark:bg-black/10 min-[421px]:col-auto min-[421px]:row-auto"
+						>
 							<i
-								class:harper={name === 'Harper'}
+								class={name === 'Harper'
+									? 'block h-full rounded-full bg-primary'
+									: 'block h-full rounded-full bg-white/20 dark:bg-black/20'}
 								in:expand={{ width, duration: width * maxW }}
 								style={`width: ${width * 100}%;`}
 							></i>
 						</b>
-						<em>{width * maxW} ms</em>
+						<em class="text-right not-italic text-white/75 dark:text-black/75">{width * maxW} ms</em>
 					</div>
 				{/if}
 			</div>
 		</IntersectionObserver>
 	{/each}
 </div>
-
-<style>
-.graph {
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
-	margin-top: auto;
-}
-
-.row {
-	display: grid;
-	grid-template-columns: 6.2rem 1fr 4rem;
-	align-items: center;
-	gap: 0.65rem;
-	font-family: "JetBrains Mono", monospace;
-	font-size: 0.7rem;
-}
-
-.row span {
-	color: inherit;
-	white-space: nowrap;
-}
-
-.row b {
-	height: 0.62rem;
-	border-radius: 999px;
-	background: rgba(251, 250, 246, 0.08);
-	overflow: hidden;
-}
-
-.row i {
-	display: block;
-	height: 100%;
-	border-radius: inherit;
-	background: rgba(251, 250, 246, 0.18);
-}
-
-.row i.harper {
-	background: var(--marketing-amber-soft);
-}
-
-.row em {
-	color: rgba(251, 250, 246, 0.75);
-	font-style: normal;
-	text-align: right;
-}
-
-@media (max-width: 420px) {
-	.row {
-		grid-template-columns: 1fr 3.5rem;
-		gap: 0.45rem 0.65rem;
-	}
-
-	.row b {
-		grid-column: 1 / -1;
-		grid-row: 2;
-	}
-}
-</style>
