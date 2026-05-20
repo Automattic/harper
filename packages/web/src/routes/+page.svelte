@@ -7,6 +7,7 @@ export const frontmatter = {
 <script lang="ts">
 import { browser } from '$app/environment';
 import { createEditorLinter } from '$lib/createEditorLinter';
+import FaqSection from '$lib/marketing/FaqSection.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
@@ -263,25 +264,16 @@ function initials(name: string) {
 		</div>
 	</section>
 
-	<section class="faq">
-		<div class="section-inner faq-grid">
-			<div>
-				<SectionKicker>FAQs</SectionKicker>
-				<h2>Questions, answered.</h2>
-				<p>
-					Don't see yours? <a href={marketingLinks.discord}>Ask on Discord -&gt;</a>
-				</p>
-			</div>
-			<div class="faq-list">
-				{#each faqs as item, index}
-					<details open={index === 0}>
-						<summary>{item.q}</summary>
-						<p>{item.a}</p>
-					</details>
-				{/each}
-			</div>
-		</div>
-	</section>
+	<FaqSection
+		items={faqs}
+		kicker="FAQs"
+		title="Questions, answered."
+		intro="Don't see yours?"
+		introHref={marketingLinks.discord}
+		introLinkText="Ask on Discord →"
+		collapsible
+		layout="grid"
+	/>
 
 	<section class="open-source">
 		<div class="section-inner narrow">
@@ -398,8 +390,7 @@ h1 {
 	line-height: 1.3;
 }
 
-.section-row a,
-.faq a {
+.section-row a {
 	color: var(--marketing-amber);
 	font-weight: 700;
 	text-decoration: none;
@@ -428,8 +419,7 @@ h1 {
 }
 
 .intro,
-.integrations-callout,
-.faq {
+.integrations-callout {
 	border-top: 0.5px solid var(--marketing-line);
 	background: #fdfbf5;
 	padding: 4.8rem 0;
@@ -446,7 +436,6 @@ h1 {
 
 .intro p:not(.lead),
 .integrations-callout p,
-.faq p,
 .open-source p {
 	color: var(--marketing-ink-2);
 	font-size: 1rem;
@@ -465,8 +454,7 @@ h1 {
 }
 
 .split h2,
-.center-heading h2,
-.faq h2 {
+.center-heading h2 {
 	margin-top: 0.75rem;
 	font-size: clamp(2.2rem, 5vw, 2.5rem);
 	line-height: 1.08;
@@ -616,59 +604,6 @@ figure.accent figcaption small {
 	color: rgba(251, 250, 246, 0.65);
 }
 
-.faq-grid {
-	display: grid;
-	grid-template-columns: 18.75rem 1fr;
-	gap: 3.1rem;
-}
-
-.faq-list {
-	border-top: 0.5px solid var(--marketing-line);
-}
-
-details {
-	border-bottom: 0.5px solid var(--marketing-line);
-}
-
-summary {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1.1rem 0;
-	color: var(--marketing-ink);
-	cursor: pointer;
-	font-weight: 750;
-	list-style: none;
-}
-
-summary::-webkit-details-marker {
-	display: none;
-}
-
-summary::after {
-	content: '+';
-	display: inline-flex;
-	width: 1.4rem;
-	height: 1.4rem;
-	align-items: center;
-	justify-content: center;
-	border-radius: 999px;
-	background: rgba(28, 26, 22, 0.06);
-	color: var(--marketing-ink-2);
-}
-
-details[open] summary::after {
-	content: '-';
-	background: var(--marketing-ink);
-	color: var(--marketing-amber-tint);
-}
-
-details p {
-	max-width: 38rem;
-	margin: 0;
-	padding: 0 0 1.25rem;
-}
-
 .open-source {
 	border-top: 0.5px solid var(--marketing-line);
 	background: var(--marketing-ink);
@@ -701,8 +636,7 @@ details p {
 		padding-inline: 1rem;
 	}
 
-	.split,
-	.faq-grid {
+	.split {
 		grid-template-columns: 1fr;
 	}
 

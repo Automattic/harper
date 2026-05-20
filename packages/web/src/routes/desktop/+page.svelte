@@ -1,6 +1,7 @@
 <script lang="ts">
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
+import FaqSection from '$lib/marketing/FaqSection.svelte';
 import { compatibilityApps } from '$lib/marketing/data';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
@@ -130,17 +131,7 @@ const faqs = [
 		</div>
 	</section>
 
-	<section class="faq">
-		<div class="section-inner narrow">
-			<h2>FAQs</h2>
-			{#each faqs as item}
-				<div class="faq-row">
-					<h3>{item.q}</h3>
-					<p>{item.a}</p>
-				</div>
-			{/each}
-		</div>
-	</section>
+	<FaqSection items={faqs} title="FAQs" layout="narrow" />
 
 	<MarketingFooter />
 </div>
@@ -209,8 +200,7 @@ h1 {
 .copy p,
 .center-heading p,
 .settings p,
-.download p,
-.faq p {
+.download p {
 	color: var(--marketing-ink-2);
 	font-size: 1rem;
 	line-height: 1.6;
@@ -247,8 +237,7 @@ h1 {
 }
 
 .compatibility,
-.settings,
-.faq {
+.settings {
 	border-top: 0.5px solid var(--marketing-line);
 	background: #fdfbf5;
 	padding: 4.5rem 0 5rem;
@@ -277,8 +266,7 @@ h1 {
 
 .center-heading h2,
 .settings h2,
-.download h2,
-.faq h2 {
+.download h2 {
 	margin-top: 0.75rem;
 	font-size: clamp(2.1rem, 5vw, 2.45rem);
 	line-height: 1.1;
@@ -410,25 +398,6 @@ li b {
 .requirements {
 	margin-top: 1rem;
 	font-family: var(--marketing-mono);
-}
-
-.faq-row {
-	border-top: 0.5px solid var(--marketing-line);
-	padding: 1.25rem 0;
-	text-align: left;
-}
-
-.faq-row:last-child {
-	border-bottom: 0.5px solid var(--marketing-line);
-}
-
-.faq-row h3 {
-	margin: 0 0 0.4rem;
-	font-size: 1rem;
-}
-
-.faq-row p {
-	margin: 0;
 }
 
 @media (max-width: 1040px) {
