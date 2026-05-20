@@ -15,6 +15,12 @@ import HarperMark from './HarperMark.svelte';
 export let integration: Integration;
 export let size = 40;
 
+const baseTileClasses =
+	'inline-flex shrink-0 items-center justify-center shadow-[0_0_0_0.5px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)]';
+const desktopTileClasses = `${baseTileClasses} border border-black bg-white text-black shadow-none dark:border-white dark:bg-black dark:text-white`;
+const logoTileClasses = `${baseTileClasses} bg-white dark:bg-white [&_svg]:h-[68%] [&_svg]:w-[68%]`;
+const monogramTileClasses = `${baseTileClasses} bg-[var(--tile-bg)] text-[length:var(--tile-font)] font-extrabold tracking-normal text-[var(--tile-fg)]`;
+
 $: tileStyle = `width: ${size}px; height: ${size}px; border-radius: ${Math.round(size * 0.235)}px;`;
 $: markSize = Math.round(size * 0.55);
 $: fontSize =
@@ -24,92 +30,55 @@ $: fontSize =
 </script>
 
 {#if integration.id === 'desktop'}
-	<span class="tile desktop" style={tileStyle} aria-hidden="true">
+	<span class={desktopTileClasses} style={tileStyle} aria-hidden="true">
 		<HarperMark size={markSize} title="" />
 	</span>
 {:else if integration.id === 'chrome'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<ChromeLogo />
 	</span>
 {:else if integration.id === 'firefox'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<FirefoxLogo />
 	</span>
 {:else if integration.id === 'vscode'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<CodeLogo />
 	</span>
 {:else if integration.id === 'neovim'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<NeovimLogo />
 	</span>
 {:else if integration.id === 'wordpress'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<WordPressLogo />
 	</span>
 {:else if integration.id === 'obsidian'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<ObsidianLogo />
 	</span>
 {:else if integration.id === 'zed'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<ZedLogo />
 	</span>
 {:else if integration.id === 'helix'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<HelixLogo />
 	</span>
 {:else if integration.id === 'emacs'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<EmacsLogo />
 	</span>
 {:else if integration.id === 'sublime'}
-	<span class="tile logo component-logo" style={tileStyle} aria-hidden="true">
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<SublimeLogo />
 	</span>
 {:else}
 	<span
-		class="tile monogram"
+		class={monogramTileClasses}
 		style={`${tileStyle} --tile-bg: ${integration.color ?? '#1c1a16'}; --tile-fg: ${integration.fg ?? '#fff'}; --tile-font: ${fontSize}px;`}
 		aria-hidden="true"
 	>
 		{integration.initial ?? integration.name[0]}
 	</span>
 {/if}
-
-<style>
-.tile {
-	display: inline-flex;
-	flex-shrink: 0;
-	align-items: center;
-	justify-content: center;
-	box-shadow:
-		0 0 0 0.5px rgba(28, 26, 22, 0.08),
-		0 1px 2px rgba(28, 26, 22, 0.04);
-}
-
-.desktop {
-	border: 1px solid var(--marketing-ink);
-	background: #fff;
-	color: var(--marketing-ink);
-	box-shadow: none;
-}
-
-.logo {
-	background: #fff;
-}
-
-.component-logo :global(svg) {
-	width: 68%;
-	height: 68%;
-}
-
-.monogram {
-	background: var(--tile-bg);
-	color: var(--tile-fg);
-	font-family: inherit;
-	font-size: var(--tile-font);
-	font-weight: 800;
-	letter-spacing: 0;
-}
-</style>
