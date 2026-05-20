@@ -64,10 +64,11 @@ pub fn try_make_title_case(
         let is_alphabetic_word = word.get_ch(source).iter().any(|c| c.is_alphabetic());
 
         // Tracks whether the proper-noun canonical-capitalization pass below
-        // wrote an intentionally camelCase form (lowercase first alphabetic
-        // letter plus at least one uppercase letter elsewhere, as in
-        // `iPhone`, `eBay`, `macOS`). When true, the title-case rules below
-        // must not overwrite that intentional lowercase first letter.
+        // wrote an intentionally camelCase form (e.g., `iPhone`, `eBay`,
+        // `macOS`). When true, the title-case rules below must not overwrite
+        // that intentional lowercase first letter. Detected via the
+        // dictionary's pre-computed `LOWER_CAMEL` orthography flag rather
+        // than by re-inspecting the canonical string.
         let mut canonical_is_camel_case = false;
 
         if let Some(Some(metadata)) = word.kind.as_word()
@@ -84,12 +85,7 @@ pub fn try_make_title_case(
                     }
                 }
 
-                let first_alpha_is_lower = correct_caps
-                    .iter()
-                    .find(|c| c.is_alphabetic())
-                    .is_some_and(|c| c.is_ascii_lowercase());
-                let has_upper = correct_caps.iter().any(|c| c.is_ascii_uppercase());
-                canonical_is_camel_case = first_alpha_is_lower && has_upper;
+                canonical_is_camel_case = metadata.is_lower_camel();
             }
         };
 
