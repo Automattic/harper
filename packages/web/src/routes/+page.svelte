@@ -6,6 +6,7 @@ export const frontmatter = {
 
 <script lang="ts">
 import { browser } from '$app/environment';
+import TestimonialCollection from '$lib/components/TestimonialCollection.svelte';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
@@ -27,60 +28,70 @@ let linter: Linter | null = null;
 
 const testimonials = [
 	{
-		quote:
+		authorName: 'Rich Edmonds',
+		authorSubtitle: 'Lead PC Hardware Editor, XDA Developers',
+		testimonial:
 			'Written in Rust, everything is processed in an instant and I find it neat to see the browser extension highlight words as I type, effectively checking per letter. And no account is required, allowing me to get up and running in no time.',
-		name: 'Rich Edmonds',
-		role: 'Lead PC Hardware Editor',
-		pub: 'XDA Developers',
+		source:
+			'https://www.xda-developers.com/ditched-grammarly-for-this-amazing-open-source-alternative/',
 	},
 	{
-		quote:
+		authorName: 'Justin Pot',
+		authorSubtitle: 'Tech journalist, Lifehacker',
+		testimonial:
 			'Obsidian is my favorite productivity app, and Harper is a grammar checking tool that works well with it.',
-		name: 'Justin Pot',
-		role: 'Tech journalist',
-		pub: 'Lifehacker',
+		source:
+			'https://lifehacker.com/tech/harper-offline-alternative-to-grammarly?test_uuid=02DN02BmbRCcASIX6xMQtY9&test_variant=B',
 	},
 	{
-		quote:
-			"Awesome extension! It's privacy focused, that means that every check it done locally on your computer, there is no server where your data goes!",
-		name: 'Filip Cujanovic',
-		role: 'Chrome Extension Review',
+		authorName: 'Filip Cujanovic',
+		authorSubtitle: 'Chrome Extension Review',
+		testimonial:
+			"Awesome extension! It's privacy focused, that means that every check it done locally on your computer, there is no server where your data goes! And because of that it's blazingly fast compared to Grammarly.",
+		source:
+			'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews',
 	},
 	{
-		quote: 'What I loved about this tool is that it is private, and open source and really fast.',
-		name: 'Prakash Joshi Pax',
-		role: 'Writer',
-		pub: 'Medium',
+		authorName: 'Prakash Joshi Pax',
+		authorSubtitle: 'Writer, Medium',
+		testimonial: "What I loved about this tool is that it's private, and open source and really fast.",
+		source: 'https://beingpax.medium.com/9-new-obsidian-plugins-you-need-to-check-out-today-d55dba29bfb8',
 	},
 	{
-		quote: 'Harper is great: it is discreet, fast, powerful, and private.',
-		name: 'Tim Miller',
-		role: 'Author',
-		pub: 'Obsidian Rocks',
-		accent: true,
+		authorName: 'Tim Miller',
+		authorSubtitle: 'Author, Obsidian Rocks',
+		testimonial: 'Harper is great: it is discreet, fast, powerful, and private.',
+		source: 'https://obsidian.rocks/resource-harper/',
 	},
 	{
-		quote: "I've been using Harper in Neovim for a long time and am glad to see it as an extension!",
-		name: 'imbolc',
-		role: 'Chrome Extension Review',
+		authorName: 'imbolc',
+		authorSubtitle: 'Chrome Extension Review',
+		testimonial: "I've been using Harper in Neovim for a long time and am glad to see it as an extension!",
+		source:
+			'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews',
 	},
 	{
-		quote: 'What a delightful way to check for flagrant spelling errors in markdown files. Thanks Harper authors!',
-		name: 'Martijn Gribnau',
-		role: 'Software Engineer',
+		authorName: 'Martijn Gribnau',
+		authorSubtitle: 'Software Engineer',
+		testimonial:
+			'What a delightful way to check for flagrant spelling errors in markdown files. Thanks Harper authors!',
+		source: 'https://gribnau.dev/posts/harper-cli/',
 	},
 	{
-		quote:
-			'Harper excels at catching the kinds of mistakes that matter in technical writing: improper capitalization, misspelled words, and awkward phrasing.',
-		name: 'Chloe Ferguson',
-		role: 'Writer',
-		pub: 'We Are Founders',
+		authorName: 'Chloe Ferguson',
+		authorSubtitle: 'Writer, We Are Founders',
+		testimonial:
+			'Harper excels at catching the kinds of mistakes that matter in technical writing – improper capitalization, misspelled words, and awkward phrasing that can make documentation unclear.',
+		source:
+			'https://www.wearefounders.uk/the-grammar-checker-that-actually-gets-developers-meet-harper/',
 	},
 	{
-		quote:
-			"I've been using Harper instead of Grammarly for a few months already, and I can't be happier!",
-		name: 'Rogerio Taques',
-		role: 'Chrome Extension Review',
+		authorName: 'Rogerio Taques',
+		authorSubtitle: 'Chrome Extension Review',
+		testimonial:
+			"I've been using Harper instead of Grammarly for a few months already, and I can't be happier! I can't wait to see the great improvement when this tool reaches version 1.0.0! Great job! I hope that, eventually, it will also support languages other than English.",
+		source:
+			'https://chromewebstore.google.com/detail/private-grammar-checker-h/lodbfhdipoipcjmlebjbgmmgekckhpfb/reviews',
 	},
 ];
 
@@ -137,13 +148,6 @@ onMount(() => {
 	})();
 });
 
-function initials(name: string) {
-	return name
-		.split(' ')
-		.map((part) => part[0])
-		.slice(0, 2)
-		.join('');
-}
 </script>
 
 <svelte:head>
@@ -247,20 +251,7 @@ function initials(name: string) {
 				<SectionKicker>Loved by thousands</SectionKicker>
 				<h2>From writers, journalists, and devs.</h2>
 			</div>
-			<div class="testimonial-grid">
-				{#each testimonials as testimonial}
-					<figure class:accent={testimonial.accent}>
-						<blockquote>"{testimonial.quote}"</blockquote>
-						<figcaption>
-							<span>{initials(testimonial.name)}</span>
-							<div>
-								<strong>{testimonial.name}</strong>
-								<small>{testimonial.role}{testimonial.pub ? `, ${testimonial.pub}` : ''}</small>
-							</div>
-						</figcaption>
-					</figure>
-				{/each}
-			</div>
+			<TestimonialCollection {testimonials} />
 		</div>
 	</section>
 
@@ -518,92 +509,6 @@ h1 {
 	text-align: center;
 }
 
-.testimonial-grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 1.1rem;
-}
-
-figure {
-	display: flex;
-	min-height: 16rem;
-	flex-direction: column;
-	justify-content: space-between;
-	gap: 1rem;
-	margin: 0;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 1rem;
-	background: #fff;
-	padding: 1.5rem;
-}
-
-figure.accent {
-	border-color: var(--marketing-ink);
-	background: var(--marketing-ink);
-	color: #fbfaf6;
-}
-
-blockquote {
-	margin: 0;
-	border: 0;
-	background: transparent;
-	padding: 0;
-	color: inherit;
-	font-size: 0.94rem;
-	font-style: normal;
-	line-height: 1.55;
-	text-indent: 0;
-}
-
-figure.accent blockquote {
-	font-family: var(--marketing-display);
-	font-size: 1.35rem;
-	line-height: 1.3;
-}
-
-figcaption {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	border-top: 0.5px solid var(--marketing-line);
-	padding-top: 0.9rem;
-}
-
-figure.accent figcaption {
-	border-color: rgba(251, 250, 246, 0.16);
-}
-
-figcaption > span {
-	display: flex;
-	width: 2rem;
-	height: 2rem;
-	align-items: center;
-	justify-content: center;
-	border-radius: 999px;
-	background: var(--marketing-amber-tint);
-	color: var(--marketing-amber);
-	font-size: 0.75rem;
-	font-weight: 800;
-}
-
-figcaption div {
-	display: flex;
-	flex-direction: column;
-}
-
-figcaption strong {
-	font-size: 0.82rem;
-}
-
-figcaption small {
-	color: var(--marketing-ink-3);
-	font-size: 0.72rem;
-}
-
-figure.accent figcaption small {
-	color: rgba(251, 250, 246, 0.65);
-}
-
 .open-source {
 	border-top: 0.5px solid var(--marketing-line);
 	background: var(--marketing-ink);
@@ -637,10 +542,6 @@ figure.accent figcaption small {
 	}
 
 	.split {
-		grid-template-columns: 1fr;
-	}
-
-	.testimonial-grid {
 		grid-template-columns: 1fr;
 	}
 }
