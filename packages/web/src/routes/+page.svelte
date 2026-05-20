@@ -248,8 +248,7 @@ onMount(() => {
 	<section class="testimonials">
 		<div class="section-inner wide">
 			<div class="center-heading">
-				<SectionKicker>Loved by thousands</SectionKicker>
-				<h2>From writers, journalists, and devs.</h2>
+				<h2>Loved by writers, journalists, and devs.</h2>
 			</div>
 			<TestimonialCollection {testimonials} />
 		</div>
@@ -257,7 +256,6 @@ onMount(() => {
 
 	<FaqSection
 		items={faqs}
-		kicker="FAQs"
 		title="Questions, answered."
 		intro="Don't see yours?"
 		introHref={marketingLinks.discord}
