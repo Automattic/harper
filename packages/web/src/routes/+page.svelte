@@ -16,7 +16,6 @@ import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import PillButton from '$lib/marketing/PillButton.svelte';
 import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
 import SectionKicker from '$lib/marketing/SectionKicker.svelte';
-import Squiggle from '$lib/marketing/Squiggle.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
 import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
@@ -166,8 +165,8 @@ onMount(() => {
 			<HarperMark size={108} />
 			<h1>Hi. I'm Harper.</h1>
 			<p class="hero-sub">
-				The <Squiggle color="var(--marketing-amber)" thickness={2}>free</Squiggle> grammar checker
-				that respects your privacy.
+				The <strong class="inline-block -rotate-1 bg-primary-100 p-1">Free</strong> Grammar Checker
+				That Respects Your Privacy
 			</p>
 			<p class="hero-third">I make you look like a grammar genius.</p>
 			<div class="hero-actions">
@@ -180,7 +179,7 @@ onMount(() => {
 	<section class="try-editor" aria-labelledby="try-editor-title">
 		<div class="section-inner wide">
 			<div class="section-row">
-				<h2 id="try-editor-title">Try Harper. Go ahead, edit the text.</h2>
+				<h2 id="try-editor-title">Try Harper</h2>
 				<a href="/editor">Open the full editor <span aria-hidden="true">-&gt;</span></a>
 			</div>
 			<div class="editor-frame">
@@ -310,6 +309,7 @@ onMount(() => {
 }
 
 .hero {
+	background: var(--marketing-cream);
 	padding: 4.4rem 2.5rem 5rem;
 	text-align: center;
 }
@@ -365,6 +365,7 @@ h1 {
 }
 
 .try-editor {
+	background: var(--marketing-cream);
 	padding: 0.5rem 0 5.6rem;
 }
 
