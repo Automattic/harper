@@ -1,4 +1,5 @@
 <script lang="ts">
+import Arrow from '$lib/components/Arrow.svelte';
 import SectionKicker from './SectionKicker.svelte';
 
 type FaqItem = {
@@ -27,7 +28,7 @@ export let layout: 'grid' | 'narrow' = 'narrow';
 				<p>
 					{intro}
 					{#if introHref && introLinkText}
-						<a href={introHref}>{introLinkText}</a>
+						<a href={introHref}>{introLinkText}<Arrow /></a>
 					{/if}
 				</p>
 			{/if}
@@ -98,9 +99,22 @@ p {
 }
 
 a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.2rem;
 	color: var(--marketing-amber);
 	font-weight: 700;
 	text-decoration: none;
+}
+
+a :global(svg) {
+	width: 0.7rem;
+	height: 0.7rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 1.5;
 }
 
 .faq-list {

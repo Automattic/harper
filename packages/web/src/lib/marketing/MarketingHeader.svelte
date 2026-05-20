@@ -1,4 +1,5 @@
 <script lang="ts">
+import Arrow from '$lib/components/Arrow.svelte';
 import DiscordLogo from '$lib/components/DiscordLogo.svelte';
 import GitHubLogo from '$lib/components/GitHubLogo.svelte';
 import { onMount } from 'svelte';
@@ -43,9 +44,7 @@ onMount(() => {
 			<a class:active={active === 'docs'} href="/docs/about">Documentation</a>
 			<a class:active={active === 'get'} class:primary={ctaPrimary} class="header-cta" href="/get">
 				<span>Get Harper</span>
-				<svg viewBox="0 0 12 12" aria-hidden="true">
-					<path d="M3 6h6M6.5 3.5L9 6 6.5 8.5" />
-				</svg>
+				<Arrow />
 			</a>
 		</nav>
 
@@ -216,7 +215,7 @@ onMount(() => {
 	color: #fff;
 }
 
-.header-cta svg {
+.header-cta :global(svg) {
 	width: 0.7rem;
 	height: 0.7rem;
 	fill: none;
@@ -405,7 +404,7 @@ onMount(() => {
 	.nav,
 	.nav a,
 	.header-cta,
-	.header-cta svg,
+	.header-cta :global(svg),
 	.actions,
 	:global(.marketing-docsearch),
 	:global(.marketing-docsearch .DocSearch-Button),

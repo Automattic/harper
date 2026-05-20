@@ -6,6 +6,7 @@ export const frontmatter = {
 
 <script lang="ts">
 import { browser } from '$app/environment';
+import Arrow from '$lib/components/Arrow.svelte';
 import TestimonialCollection from '$lib/components/TestimonialCollection.svelte';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
@@ -180,7 +181,7 @@ onMount(() => {
 		<div class="section-inner wide">
 			<div class="section-row">
 				<h2 id="try-editor-title">Try Harper</h2>
-				<a href="/editor">Open the full editor <span aria-hidden="true">-&gt;</span></a>
+				<a href="/editor">Open the full editor <Arrow /></a>
 			</div>
 			<div class="editor-frame">
 				{#if browser && linter}
@@ -260,7 +261,7 @@ onMount(() => {
 		title="Questions, answered."
 		intro="Don't see yours?"
 		introHref={marketingLinks.discord}
-		introLinkText="Ask on Discord →"
+		introLinkText="Ask on Discord"
 		collapsible
 		layout="grid"
 	/>
@@ -383,9 +384,22 @@ h1 {
 }
 
 .section-row a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.2rem;
 	color: var(--marketing-amber);
 	font-weight: 700;
 	text-decoration: none;
+}
+
+.section-row a :global(svg) {
+	width: 0.7rem;
+	height: 0.7rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 1.5;
 }
 
 .editor-frame {
