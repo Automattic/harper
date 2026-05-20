@@ -68,6 +68,14 @@ export class Client {
 		await invoke('set_dialect', { dialect: dialectToRustDialect(dialect) });
 	}
 
+	static async getDebounceMs(): Promise<number> {
+		return await invoke<number>('get_debounce_ms');
+	}
+
+	static async setDebounceMs(debounceMs: number): Promise<void> {
+		await invoke('set_debounce_ms', { debounceMs });
+	}
+
 	static async getLaunchAtStartup(): Promise<boolean> {
 		return await isEnabled();
 	}
@@ -126,6 +134,10 @@ export class Client {
 
 	static async setIntegrationEnabled(bundleId: string, enabled: boolean): Promise<void> {
 		await invoke('set_integration_enabled', { bundleId, enabled });
+	}
+
+	static async launchApp(bundleId: string): Promise<void> {
+		await invoke('launch_app', { bundleId });
 	}
 
 	static async getAccessibilityPermissionStatus(): Promise<AccessibilityPermissionStatus> {

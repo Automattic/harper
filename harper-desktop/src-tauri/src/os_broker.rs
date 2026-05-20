@@ -33,14 +33,20 @@ pub trait OsBroker {
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
         self.accessibility_permission_status()
     }
+
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
+        Err("Launching apps by bundle ID is only supported on macOS.".to_string())
+    }
 }
 
 /// No-op platform broker for targets that do not have an OS implementation yet.
 ///
 /// This lets the highlighter compile on non-macOS platforms while making it explicit that there is
 /// currently no accessibility or cursor integration there.
+#[cfg(not(target_os = "macos"))]
 pub struct NoopBroker;
 
+#[cfg(not(target_os = "macos"))]
 impl OsBroker for NoopBroker {
     fn get_boxes(
         &mut self,

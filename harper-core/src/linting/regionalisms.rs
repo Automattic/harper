@@ -60,6 +60,7 @@ enum Concept {
     LightBulbLightGlobe,
     LorryTruck,
     MotorhomeRv,
+    NoughtZero,
     PhotocopierXerox,
     PhotocopyXerox,
     PickupUte,
@@ -409,6 +410,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: BloodNoseNosebleed,
     },
     Term {
+        term: "nought",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: NoughtZero,
+    },
+    Term {
         term: "pacifier",
         flag: Flag,
         dialects: &[American],
@@ -600,6 +607,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American, Canadian],
         concept: WindscreenWindshield,
+    },
+    Term {
+        term: "zero",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian, Indian],
+        concept: NoughtZero,
     },
 ];
 
@@ -850,5 +863,10 @@ mod tests {
             Regionalisms::new(Dialect::Australian),
             "Is eggplant used in curries or chutneys?",
         );
+    }
+
+    #[test]
+    fn americans_dont_say_nought() {
+        assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
     }
 }
