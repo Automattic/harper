@@ -14,7 +14,7 @@ function initials(name: string) {
 </script>
 
 <figure class:accent>
-	<blockquote>"{testimonial}"</blockquote>
+	<blockquote>“{testimonial}”</blockquote>
 	<figcaption>
 		<span>{initials(authorName)}</span>
 		<div>
