@@ -1,7 +1,7 @@
 <script lang="ts">
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
-import FaqSection from '$lib/marketing/FaqSection.svelte';
+import SimpleFAQ from '$lib/marketing/SimpleFAQ.svelte';
 import { compatibilityApps } from '$lib/marketing/data';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
@@ -129,7 +129,7 @@ const faqs = [
 		</div>
 	</section>
 
-	<FaqSection items={faqs} title="FAQs" layout="narrow" />
+	<SimpleFAQ items={faqs} title="FAQs" />
 
 	<MarketingFooter />
 </div>
