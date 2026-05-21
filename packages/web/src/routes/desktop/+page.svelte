@@ -37,18 +37,20 @@ const faqs = [
 	/>
 </svelte:head>
 
-<div class="marketing-page">
+<div class="min-h-screen bg-[#f6efe2] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="desktop" />
 
-	<section class="hero">
-		<div class="hero-inner">
-			<div class="copy">
-				<h1>Works in every app.</h1>
-				<p>
+	<section class="relative overflow-hidden px-14 pt-3 pb-14 after:pointer-events-none after:absolute after:inset-[-20%_-10%] after:content-[''] after:bg-[radial-gradient(ellipse_at_70%_20%,#fbf3e6_0%,transparent_60%)] dark:after:opacity-10 max-[700px]:px-4">
+		<div class="relative z-[1] mx-auto grid max-w-[77.5rem] grid-cols-[minmax(0,1fr)_minmax(32rem,1.2fr)] items-center gap-8 pt-[1.9rem] max-[1040px]:grid-cols-1">
+			<div>
+				<h1 class="!mt-[0.85rem] !mb-0 py-0 font-serif text-[clamp(3.2rem,6vw,3.9rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+					Works in every app.
+				</h1>
+				<p class="!mt-5 !mb-0 max-w-[28.75rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
 					Use Harper Desktop in the apps you use every day such as Mail, Slack, Notes, Pages,
 					and Discord.
 				</p>
-				<div class="cta">
+				<div class="mt-6 flex flex-col items-start gap-[0.6rem] [&_svg]:size-[0.95rem] [&_svg]:fill-current">
 					<PillButton disabled size="lg">
 						<svg slot="icon" viewBox="0 0 24 24" aria-hidden="true">
 							<path
@@ -57,73 +59,81 @@ const faqs = [
 						</svg>
 						Download for macOS
 					</PillButton>
-					<span>Beta coming soon · macOS 14+ · Apple Silicon &amp; Intel</span>
+					<span class="text-xs text-[#807a6e] dark:text-white/55">Beta coming soon · macOS 14+ · Apple Silicon &amp; Intel</span>
 				</div>
 			</div>
-			<div class="scene">
+			<div class="relative h-[33.75rem] max-[1040px]:h-auto">
 				<DesktopMockups />
 			</div>
 		</div>
 	</section>
 
-	<section class="compatibility">
-		<div class="section-inner">
-			<div class="center-heading">
-				<h2>Every text field. Same Harper.</h2>
-				<p>
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.5rem] pb-20 dark:border-white/10 dark:bg-black">
+		<div class="mx-auto max-w-[68.75rem] px-14 max-[700px]:px-4">
+			<div class="mx-auto max-w-[40rem] text-center">
+				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+					Every text field. Same Harper.
+				</h2>
+				<p class="!mt-6 !mb-0 text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
 					If your cursor is blinking, Harper is watching. Harper Desktop hooks into macOS text
 					inputs so the same suggestions follow you across the apps where you write.
 				</p>
 			</div>
-			<div class="app-grid" aria-label="Apps where Harper Desktop works">
+			<div class="mt-11 grid grid-cols-6 justify-items-center gap-[1.4rem] max-[1040px]:grid-cols-4 max-[700px]:grid-cols-3 max-[700px]:gap-4" aria-label="Apps where Harper Desktop works">
 				{#each compatibilityApps as app}
-					<div>
+					<div class="flex flex-col items-center gap-2">
 						<AppLogoTile id={app.id} size={60} />
-						<strong>{app.name}</strong>
+						<strong class="text-xs text-[#4a463e] dark:text-white/70">{app.name}</strong>
 					</div>
 				{/each}
 			</div>
-			<p class="compat-note">...and every other text field on macOS. If you can type in it, Harper helps.</p>
+			<p class="!mt-9 !mb-0 text-center text-[0.82rem] text-[#807a6e] dark:text-white/55">...and every other text field on macOS. If you can type in it, Harper helps.</p>
 		</div>
 	</section>
 
-	<section class="privacy-speed">
-		<div class="section-inner">
+	<section class="relative overflow-hidden border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] dark:border-white/10 dark:bg-black">
+		<div class="relative z-[1] mx-auto max-w-[68.75rem] px-14 max-[700px]:px-4">
 			<PrivacySpeedCards desktop />
 		</div>
 	</section>
 
-	<section class="settings">
-		<div class="section-inner settings-grid">
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.5rem] pb-20 dark:border-white/10 dark:bg-black">
+		<div class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(0,1fr)_minmax(22rem,1.1fr)] items-center gap-14 px-14 max-[1040px]:grid-cols-1 max-[700px]:px-4">
 			<div>
-				<h2>Tune the rules. Build your own dictionary.</h2>
-				<p>
+				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+					Tune the rules. Build your own dictionary.
+				</h2>
+				<p class="!mt-6 !mb-0 text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
 					Every rule in Harper is toggleable. Add team jargon, product names, and favorite
 					phrases to your personal dictionary, and they stop being underlined everywhere on your
 					Mac.
 				</p>
-				<ul>
-					<li><span></span><b>Pick your English.</b> British, American, Canadian, Australian, or Indian.</li>
-					<li><span></span><b>Enable per app.</b> Grammar checking only where you want it.</li>
-					<li><span></span><b>Make the rules.</b> Build custom rules using Weirpacks.</li>
+				<ul class="mt-5 flex !list-none flex-col gap-[0.65rem] !p-0">
+					<li class="flex gap-[0.65rem] leading-[1.5] text-[#4a463e] dark:text-white/70"><span class="mt-[0.55rem] size-[0.4rem] shrink-0 rounded-full bg-[#b06a1b]"></span><span><b class="text-[#1c1a16] dark:text-white">Pick your English.</b> British, American, Canadian, Australian, or Indian.</span></li>
+					<li class="flex gap-[0.65rem] leading-[1.5] text-[#4a463e] dark:text-white/70"><span class="mt-[0.55rem] size-[0.4rem] shrink-0 rounded-full bg-[#b06a1b]"></span><span><b class="text-[#1c1a16] dark:text-white">Enable per app.</b> Grammar checking only where you want it.</span></li>
+					<li class="flex gap-[0.65rem] leading-[1.5] text-[#4a463e] dark:text-white/70"><span class="mt-[0.55rem] size-[0.4rem] shrink-0 rounded-full bg-[#b06a1b]"></span><span><b class="text-[#1c1a16] dark:text-white">Make the rules.</b> Build custom rules using Weirpacks.</span></li>
 				</ul>
 			</div>
-			<div class="screenshot-window">
-				<div class="titlebar"><span></span><span></span><span></span><strong>Harper - Settings</strong></div>
-				<img src="/marketing/screenshots/settings-rules.png" alt="Harper Desktop settings showing rule toggles" />
+			<div class="overflow-hidden rounded-[0.85rem] border-[0.5px] border-[rgba(28,26,22,0.18)] bg-white shadow-[0_22px_50px_-18px_rgba(28,26,22,0.35),0_4px_10px_rgba(28,26,22,0.1)] dark:border-white/15 dark:bg-white/5">
+				<div class="flex h-[1.65rem] items-center gap-[0.35rem] border-b-[0.5px] border-[rgba(28,26,22,0.08)] bg-[linear-gradient(180deg,#fafafa,#efece7)] px-[0.65rem]">
+					<span class="size-[0.55rem] rounded-full bg-[#ff5f57]"></span><span class="size-[0.55rem] rounded-full bg-[#febc2e]"></span><span class="size-[0.55rem] rounded-full bg-[#28c840]"></span><strong class="mr-8 flex-1 text-center text-[0.68rem] text-[rgba(28,26,22,0.56)]">Harper - Settings</strong>
+				</div>
+				<img class="block h-auto w-full" src="/marketing/screenshots/settings-rules.png" alt="Harper Desktop settings showing rule toggles" />
 			</div>
 		</div>
 	</section>
 
-	<section class="download">
-		<div class="section-inner narrow">
+	<section class="relative overflow-hidden border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] after:pointer-events-none after:absolute after:inset-[-20%_-10%] after:content-[''] after:bg-[radial-gradient(ellipse_at_70%_20%,#fbf3e6_0%,transparent_60%)] dark:border-white/10 dark:bg-black dark:after:opacity-10">
+		<div class="relative z-[1] mx-auto max-w-[45rem] px-14 text-center max-[700px]:px-4 [&_.harper-mark]:mx-auto">
 			<HarperMark size={64} />
-			<h2>Free. Forever. Yours.</h2>
-			<p>
+			<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+				Free. Forever. Yours.
+			</h2>
+			<p class="!mt-6 !mb-[1.6rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
 				Harper Desktop will be free, like the rest of Harper. No account or credit card necessary.
 			</p>
 			<PillButton disabled size="lg">Beta coming soon</PillButton>
-			<div class="requirements">macOS 14 Sonoma or later · Apple Silicon &amp; Intel</div>
+			<div class='mt-4 text-xs text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>macOS 14 Sonoma or later · Apple Silicon &amp; Intel</div>
 		</div>
 	</section>
 
@@ -131,295 +141,3 @@ const faqs = [
 
 	<MarketingFooter />
 </div>
-
-<style>
-.marketing-page {
-	min-height: 100vh;
-	background: #f6efe2;
-	color: var(--marketing-ink);
-	font-family: inherit;
-}
-
-.section-inner {
-	max-width: 68.75rem;
-	margin: 0 auto;
-	padding: 0 3.5rem;
-}
-
-.section-inner.narrow {
-	max-width: 45rem;
-	text-align: center;
-}
-
-.hero {
-	position: relative;
-	overflow: hidden;
-	padding: 0.75rem 3.5rem 3.5rem;
-}
-
-.hero::after,
-.download::after {
-	position: absolute;
-	inset: -20% -10%;
-	content: '';
-	background: radial-gradient(ellipse at 70% 20%, var(--marketing-amber-tint) 0%, transparent 60%);
-	pointer-events: none;
-}
-
-.hero-inner {
-	position: relative;
-	z-index: 1;
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(32rem, 1.2fr);
-	align-items: center;
-	gap: 2rem;
-	max-width: 77.5rem;
-	margin: 0 auto;
-	padding-top: 1.9rem;
-}
-
-h1,
-h2 {
-	margin: 0;
-	color: inherit;
-	font-family: Domine, serif;
-	font-weight: 650;
-	letter-spacing: 0;
-}
-
-h1 {
-	margin-top: 0.85rem;
-	font-size: clamp(3.2rem, 6vw, 3.9rem);
-	line-height: 1.02;
-}
-
-.copy p,
-.center-heading p,
-.settings p,
-.download p {
-	color: var(--marketing-ink-2);
-	font-size: 1rem;
-	line-height: 1.6;
-}
-
-.copy p {
-	max-width: 28.75rem;
-	margin: 1.25rem 0 0;
-}
-
-.cta {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 0.6rem;
-	margin-top: 1.5rem;
-}
-
-.cta svg {
-	width: 0.95rem;
-	height: 0.95rem;
-	fill: currentColor;
-}
-
-.cta span,
-.requirements {
-	color: var(--marketing-ink-3);
-	font-size: 0.75rem;
-}
-
-.scene {
-	position: relative;
-	height: 33.75rem;
-}
-
-.compatibility,
-.settings {
-	border-top: 0.5px solid var(--marketing-line);
-	background: #fdfbf5;
-	padding: 4.5rem 0 5rem;
-}
-
-.privacy-speed,
-.download {
-	position: relative;
-	overflow: hidden;
-	border-top: 0.5px solid var(--marketing-line);
-	background: var(--marketing-cream);
-	padding: 4.5rem 0;
-}
-
-.privacy-speed > .section-inner,
-.download > .section-inner {
-	position: relative;
-	z-index: 1;
-}
-
-.center-heading {
-	max-width: 40rem;
-	margin: 0 auto;
-	text-align: center;
-}
-
-.center-heading h2,
-.settings h2,
-.download h2 {
-	margin-top: 0.75rem;
-	font-size: clamp(2.1rem, 5vw, 2.45rem);
-	line-height: 1.1;
-}
-
-.app-grid {
-	display: grid;
-	grid-template-columns: repeat(6, minmax(0, 1fr));
-	justify-items: center;
-	gap: 1.4rem;
-	margin-top: 2.75rem;
-}
-
-.app-grid div {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	gap: 0.5rem;
-}
-
-.app-grid strong {
-	color: var(--marketing-ink-2);
-	font-size: 0.75rem;
-}
-
-.compat-note {
-	margin: 2.25rem 0 0;
-	color: var(--marketing-ink-3);
-	font-size: 0.82rem;
-	text-align: center;
-}
-
-.settings-grid {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(22rem, 1.1fr);
-	align-items: center;
-	gap: 3.5rem;
-}
-
-ul {
-	display: flex;
-	flex-direction: column;
-	gap: 0.65rem;
-	margin: 1.25rem 0 0;
-	padding: 0;
-	list-style: none;
-}
-
-li {
-	display: flex;
-	gap: 0.65rem;
-	color: var(--marketing-ink-2);
-	line-height: 1.5;
-}
-
-li span {
-	width: 0.4rem;
-	height: 0.4rem;
-	flex-shrink: 0;
-	border-radius: 999px;
-	margin-top: 0.55rem;
-	background: var(--marketing-amber);
-}
-
-li b {
-	color: var(--marketing-ink);
-}
-
-.screenshot-window {
-	overflow: hidden;
-	border: 0.5px solid rgba(28, 26, 22, 0.18);
-	border-radius: 0.85rem;
-	background: #fff;
-	box-shadow:
-		0 22px 50px -18px rgba(28, 26, 22, 0.35),
-		0 4px 10px rgba(28, 26, 22, 0.1);
-}
-
-.titlebar {
-	display: flex;
-	align-items: center;
-	gap: 0.35rem;
-	height: 1.65rem;
-	border-bottom: 0.5px solid rgba(28, 26, 22, 0.08);
-	background: linear-gradient(180deg, #fafafa, #efece7);
-	padding: 0 0.65rem;
-}
-
-.titlebar span {
-	width: 0.55rem;
-	height: 0.55rem;
-	border-radius: 999px;
-}
-
-.titlebar span:nth-child(1) {
-	background: #ff5f57;
-}
-
-.titlebar span:nth-child(2) {
-	background: #febc2e;
-}
-
-.titlebar span:nth-child(3) {
-	background: #28c840;
-}
-
-.titlebar strong {
-	flex: 1;
-	margin-right: 2rem;
-	color: rgba(28, 26, 22, 0.56);
-	font-size: 0.68rem;
-	text-align: center;
-}
-
-.screenshot-window img {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-
-.download :global(.harper-mark) {
-	margin: 0 auto;
-}
-
-.download p {
-	margin-bottom: 1.6rem;
-}
-
-.requirements {
-	margin-top: 1rem;
-	font-family: "JetBrains Mono", monospace;
-}
-
-@media (max-width: 1040px) {
-	.hero-inner,
-	.settings-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.scene {
-		height: auto;
-	}
-
-	.app-grid {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-	}
-}
-
-@media (max-width: 700px) {
-	.hero,
-	.section-inner {
-		padding-inline: 1rem;
-	}
-
-	.app-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1rem;
-	}
-}
-</style>
