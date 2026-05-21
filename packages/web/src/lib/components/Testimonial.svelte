@@ -10,7 +10,8 @@ const regularFigureClasses =
 	'border-black/10 bg-white text-black dark:border-white/10 dark:bg-black dark:text-white';
 const accentFigureClasses =
 	'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black';
-const baseBlockquoteClasses = 'm-0 border-0 bg-transparent p-0 not-italic text-inherit';
+const baseBlockquoteClasses =
+	'm-0 border-0 bg-transparent p-0 not-italic text-inherit dark:border-0 dark:bg-transparent dark:text-inherit';
 const regularBlockquoteClasses = 'text-sm leading-relaxed';
 const accentBlockquoteClasses = 'font-serif text-[1.3125rem] font-bold leading-snug';
 const baseCaptionClasses = 'flex items-center gap-3 border-t pt-3.5';
