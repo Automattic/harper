@@ -1,7 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::{
-    CharStringExt, Dialect, IrregularNouns, Lint, Token, TokenStringExt,
+    CharStringExt, Dialect, IrregularNouns, Lint, Token, TokenStringExt, case,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
@@ -20,8 +20,7 @@ impl<D: Dictionary> APluralNoun<D> {
             expr: SequenceExpr::default()
                 .then_indefinite_article()
                 .t_ws()
-                .then_zero_or_more(SequenceExpr::default().then_non_verb_adjective().t_ws())
-                .then_plural_noun(),
+                .then_zero_or_more_spaced(SequenceExpr::default().then_noun_phrase_member()),
             dict,
         }
     }
@@ -43,8 +42,15 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
+        if is_to_pieces_preposition_typo(toks, src, ctx)
+            || is_plural_location_determiner_typo(toks, src, ctx)
+        {
+            return None;
+        }
+
         if noun.kind.is_adverb()
             || is_directional_adverb(noun, src)
+            || is_quantity_phrase(toks, src)
             || is_great_many_phrase(toks, src)
         {
             return None;
@@ -65,25 +71,31 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
 
         let article = toks.first()?;
         let plural = noun.span.get_content(src);
-        let suggestions = singular_noun_suggestions(&self.dict, plural)
+        let singular_suggestions = singular_noun_suggestions(&self.dict, plural)
             .into_iter()
             .map(|singular| {
                 let article_target = article_target(toks, noun, &singular, src)?;
-                let mut replacement = indefinite_article_for(article_target).to_vec();
+                let mut replacement = match_article_case(
+                    indefinite_article_for(article_target),
+                    article.span.get_content(src),
+                );
                 replacement.extend(&src[article.span.end..noun.span.start]);
                 replacement.extend(singular);
 
-                Some(Suggestion::replace_with_match_case(
-                    replacement,
-                    span.get_content(src).to_vec(),
-                ))
+                Some(Suggestion::ReplaceWith(replacement))
             })
-            .collect::<Option<Vec<_>>>()?
-            .into_iter()
-            .collect::<Vec<_>>();
+            .collect::<Option<Vec<_>>>()?;
 
-        if suggestions.is_empty() {
+        if singular_suggestions.is_empty() {
             return None;
+        }
+
+        let mut suggestions = singular_suggestions;
+
+        if let Some(mut plural_intent_suggestions) =
+            plural_intent_suggestions(toks, src, span.get_content(src), noun)
+        {
+            suggestions.append(&mut plural_intent_suggestions);
         }
 
         Some(Lint {
@@ -105,13 +117,133 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
 }
 
 trait SequenceExprExt {
-    fn then_non_verb_adjective(self) -> Self;
+    fn then_noun_phrase_member(self) -> Self;
 }
 
 impl SequenceExprExt for SequenceExpr {
-    fn then_non_verb_adjective(self) -> Self {
-        self.then(|tok: &Token, _src: &[char]| tok.kind.is_adjective() && !tok.kind.is_verb())
+    fn then_noun_phrase_member(self) -> Self {
+        self.then(|tok: &Token, src: &[char]| {
+            (tok.kind.is_non_possessive_noun() || (tok.kind.is_adjective() && !tok.kind.is_verb()))
+                && !tok.kind.is_preposition()
+                && !tok.kind.is_pronoun()
+                && !tok.kind.is_conjunction()
+                && !tok.kind.is_quantifier()
+                && !tok
+                    .span
+                    .get_content(src)
+                    .eq_any_ignore_ascii_case_str(&["ah", "few", "first", "said", "uh"])
+        })
     }
+}
+
+fn is_to_pieces_preposition_typo(
+    toks: &[Token],
+    src: &[char],
+    ctx: Option<(&[Token], &[Token])>,
+) -> bool {
+    let mut matched_words = toks.iter().filter(|tok| !tok.kind.is_whitespace());
+
+    let Some(article) = matched_words.next() else {
+        return false;
+    };
+    let Some(noun) = matched_words.next() else {
+        return false;
+    };
+
+    if !article
+        .span
+        .get_content(src)
+        .eq_any_ignore_ascii_case_str(&["a"])
+        || !noun
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(&["pieces"])
+    {
+        return false;
+    }
+
+    let Some((before, _)) = ctx else {
+        return false;
+    };
+    let Some(previous_word) = before.iter().rev().find(|tok| tok.kind.is_word()) else {
+        return false;
+    };
+
+    previous_word
+        .span
+        .get_content(src)
+        .eq_any_ignore_ascii_case_str(&[
+            "blew",
+            "blown",
+            "break",
+            "breaking",
+            "broke",
+            "broken",
+            "cut",
+            "fall",
+            "fallen",
+            "fell",
+            "rip",
+            "ripped",
+            "shatter",
+            "shattered",
+            "smash",
+            "smashed",
+            "tear",
+            "tearing",
+            "tore",
+            "torn",
+        ])
+}
+
+const PLURAL_LOCATION_NOUNS: &[&str] = &[
+    "grounds",
+    "headquarters",
+    "outskirts",
+    "premises",
+    "quarters",
+    "stairs",
+    "surroundings",
+    "woods",
+];
+
+fn is_plural_location_determiner_typo(
+    toks: &[Token],
+    src: &[char],
+    ctx: Option<(&[Token], &[Token])>,
+) -> bool {
+    let mut matched_words = toks.iter().filter(|tok| !tok.kind.is_whitespace());
+
+    let Some(article) = matched_words.next() else {
+        return false;
+    };
+    let Some(noun) = matched_words.next() else {
+        return false;
+    };
+
+    if !article
+        .span
+        .get_content(src)
+        .eq_any_ignore_ascii_case_str(&["a"])
+        || !noun
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(PLURAL_LOCATION_NOUNS)
+    {
+        return false;
+    }
+
+    let Some((before, _)) = ctx else {
+        return false;
+    };
+    let Some(previous_word) = before.iter().rev().find(|tok| tok.kind.is_word()) else {
+        return false;
+    };
+
+    previous_word
+        .span
+        .get_content(src)
+        .eq_any_ignore_ascii_case_str(&["down", "from", "on", "to", "up"])
 }
 
 fn looks_like_third_person_verb_use(noun: &Token, ctx: Option<(&[Token], &[Token])>) -> bool {
@@ -145,6 +277,29 @@ fn is_directional_adverb(tok: &Token, src: &[char]) -> bool {
         "outwards",
         "upwards",
     ])
+}
+
+fn is_quantity_phrase(toks: &[Token], src: &[char]) -> bool {
+    let mut non_ws = toks.iter().filter(|tok| !tok.kind.is_whitespace());
+
+    let Some(article) = non_ws.next() else {
+        return false;
+    };
+    let Some(first_after_article) = non_ws.next() else {
+        return false;
+    };
+
+    article
+        .span
+        .get_content(src)
+        .eq_any_ignore_ascii_case_str(&["a", "an"])
+        && first_after_article
+            .span
+            .get_content(src)
+            .eq_any_ignore_ascii_case_str(&[
+                "couple", "dozen", "hundred", "thousand", "million", "billion", "trillion", "one",
+                "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+            ])
 }
 
 fn is_great_many_phrase(toks: &[Token], src: &[char]) -> bool {
@@ -205,6 +360,36 @@ fn singular_noun_suggestions<D: Dictionary>(dict: &D, plural: &[char]) -> Vec<Ve
     suggestions
 }
 
+fn match_article_case(article: &[char], template: &[char]) -> Vec<char> {
+    case::copy_casing(template, article).to_vec()
+}
+
+fn plural_intent_suggestions(
+    toks: &[Token],
+    src: &[char],
+    span_template: &[char],
+    noun: &Token,
+) -> Option<Vec<Suggestion>> {
+    let first_after_article = toks.iter().skip(1).find(|tok| !tok.kind.is_whitespace())?;
+    let replacement_tail = &src[first_after_article.span.start..noun.span.end];
+
+    let mut suggestions = Vec::with_capacity(2);
+    suggestions.push(Suggestion::replace_with_match_case(
+        replacement_tail.to_vec(),
+        span_template,
+    ));
+
+    let mut some_replacement = "some".chars().collect::<Vec<_>>();
+    some_replacement.push(' ');
+    some_replacement.extend(replacement_tail);
+    suggestions.push(Suggestion::replace_with_match_case(
+        some_replacement,
+        span_template,
+    ));
+
+    Some(suggestions)
+}
+
 fn indefinite_article_for(noun: &[char]) -> &'static [char] {
     match starts_with_vowel(noun, Dialect::American) {
         Some(InitialSound::Vowel) => &['a', 'n'],
@@ -215,7 +400,10 @@ fn indefinite_article_for(noun: &[char]) -> &'static [char] {
 #[cfg(test)]
 mod tests {
     use super::APluralNoun;
-    use crate::{linting::tests::assert_suggestion_result, spell::FstDictionary};
+    use crate::{
+        linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result},
+        spell::FstDictionary,
+    };
     use std::sync::Arc;
 
     fn linter() -> APluralNoun<Arc<FstDictionary>> {
@@ -228,6 +416,30 @@ mod tests {
             "I have included a notices on my landing.",
             linter(),
             "I have included a notice on my landing.",
+        );
+    }
+
+    #[test]
+    fn suggests_plural_intent_alternatives() {
+        assert_good_and_bad_suggestions(
+            "I saw a notices.",
+            linter(),
+            &["I saw a notice.", "I saw notices.", "I saw some notices."],
+            &[],
+        );
+    }
+
+    #[test]
+    fn suggests_plural_intent_alternatives_with_modifier() {
+        assert_good_and_bad_suggestions(
+            "A beautiful girls is sitting in the chair now.",
+            linter(),
+            &[
+                "A beautiful girl is sitting in the chair now.",
+                "Beautiful girls is sitting in the chair now.",
+                "Some beautiful girls is sitting in the chair now.",
+            ],
+            &[],
         );
     }
 
@@ -271,7 +483,7 @@ mod tests {
     }
 
     #[test]
-    fn capitalizes_plural_after_adjective_at_sentence_start() {
+    fn corrects_article_and_plural_after_lowercase_sentence_start() {
         assert_suggestion_result(
             "an beautiful girls is sitting in the chair now.",
             linter(),
@@ -315,13 +527,36 @@ mod tests {
     }
 
     #[test]
-    fn preserves_sentence_case() {
+    fn preserves_uppercase_article_case() {
         assert_suggestion_result("A notices arrived.", linter(), "A notice arrived.");
+    }
+
+    #[test]
+    fn does_not_capitalize_lowercase_sentence_start() {
+        assert_suggestion_result("a notices arrived.", linter(), "a notice arrived.");
     }
 
     #[test]
     fn allows_singular_after_a() {
         crate::linting::tests::assert_no_lints("I have included a notice.", linter());
+    }
+
+    #[test]
+    fn allows_to_pieces_preposition_typo() {
+        crate::linting::tests::assert_no_lints("With one attack, he was torn a pieces.", linter());
+    }
+
+    #[test]
+    fn allows_plural_location_determiner_typo_after_preposition() {
+        crate::linting::tests::assert_no_lints("Then I heard footsteps on a stairs.", linter());
+        crate::linting::tests::assert_no_lints("They met on a premises nearby.", linter());
+        crate::linting::tests::assert_no_lints("She waited on a grounds outside.", linter());
+        crate::linting::tests::assert_no_lints("He lives on a outskirts of town.", linter());
+    }
+
+    #[test]
+    fn still_corrects_regular_plural_noun_after_preposition() {
+        assert_suggestion_result("I put it on a tables.", linter(), "I put it on a table.");
     }
 
     #[test]
@@ -345,6 +580,22 @@ mod tests {
     }
 
     #[test]
+    fn allows_quantity_phrase_with_plural_noun() {
+        crate::linting::tests::assert_no_lints("I bought a dozen volumes.", linter());
+        crate::linting::tests::assert_no_lints("It is worth a hundred pounds.", linter());
+        crate::linting::tests::assert_no_lints("She was a thousand times larger.", linter());
+        crate::linting::tests::assert_no_lints("She started a three months trip.", linter());
+    }
+
+    #[test]
+    fn allows_coordinated_singular_and_plural_nouns() {
+        crate::linting::tests::assert_no_lints(
+            "A quorum shall consist of a member or members.",
+            linter(),
+        );
+    }
+
+    #[test]
     fn allows_a_series_of_plural() {
         crate::linting::tests::assert_no_lints("I sent a series of notices.", linter());
     }
@@ -352,5 +603,29 @@ mod tests {
     #[test]
     fn allows_singular_or_plural_word() {
         crate::linting::tests::assert_no_lints("I saw a species.", linter());
+    }
+
+    #[test]
+    fn allows_plural_looking_modifier_before_head_noun() {
+        crate::linting::tests::assert_no_lints("She hired a systems engineer.", linter());
+    }
+
+    #[test]
+    fn allows_plural_looking_modifier_after_adjective() {
+        crate::linting::tests::assert_no_lints("She hired a senior systems engineer.", linter());
+    }
+
+    #[test]
+    fn corrects_plural_head_after_plural_looking_modifier() {
+        assert_suggestion_result(
+            "She hired a senior systems engineers.",
+            linter(),
+            "She hired a senior systems engineer.",
+        );
+    }
+
+    #[test]
+    fn allows_plural_looking_modifier_before_head_noun_with_different_head() {
+        crate::linting::tests::assert_no_lints("She hired a communications director.", linter());
     }
 }
