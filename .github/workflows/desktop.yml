@@ -18,28 +18,17 @@ jobs:
     strategy:
       matrix:
         platform:
-          - name: macOS x64
-            artifact_name: harper-desktop-macos-x64
-            os: macos-26-intel
-            command: just build-desktop-macos
-            unsigned_command: just build-desktop-macos-unsigned
-            artifact_paths: |
-              target/release/bundle/dmg/*.dmg
-              target/release/bundle/macos/*.app.tar.gz
-              target/release/bundle/macos/*.app.tar.gz.sig
-            unsigned_artifact_paths: |
-              target/release/bundle/dmg/*.dmg
           - name: macOS arm64
-            artifact_name: harper-desktop-macos-arm64
+            artifact_name: harper-desktop-macos-universal
             os: macos-14
             command: just build-desktop-macos
             unsigned_command: just build-desktop-macos-unsigned
             artifact_paths: |
-              target/release/bundle/dmg/*.dmg
-              target/release/bundle/macos/*.app.tar.gz
-              target/release/bundle/macos/*.app.tar.gz.sig
+              target/universal-apple-darwin/release/bundle/dmg/*.dmg
+              target/universal-apple-darwin/release/bundle/macos/*.app.tar.gz
+              target/universal-apple-darwin/release/bundle/macos/*.app.tar.gz.sig
             unsigned_artifact_paths: |
-              target/release/bundle/dmg/*.dmg
+              target/universal-apple-darwin/release/bundle/dmg/*.dmg
 
     steps:
       - name: Checkout
@@ -50,6 +39,9 @@ jobs:
         uses: pnpm/action-setup@v4
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install macOS Rust targets
+        if: runner.os == 'macOS'
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:

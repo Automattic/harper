@@ -205,7 +205,7 @@ build-desktop-macos: build-harperjs build-lint-framework build-components build-
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b app,dmg
+  cargo tauri build -b app,dmg --target universal-apple-darwin
 
 # Build Harper Desktop macOS bundles without updater artifacts.
 build-desktop-macos-unsigned: build-harperjs build-lint-framework build-components build-harper-editor
@@ -214,7 +214,7 @@ build-desktop-macos-unsigned: build-harperjs build-lint-framework build-componen
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}'
+  cargo tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
