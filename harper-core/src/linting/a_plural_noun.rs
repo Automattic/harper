@@ -35,28 +35,34 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let span = toks.span()?;
-        let noun = toks.last()?;
+        let head_index = head_noun_index(toks)?;
+        let lint_toks = &toks[..=head_index];
+        let span = lint_toks.span()?;
+        let noun = lint_toks.last()?;
 
-        if noun.kind.is_singular_noun() {
+        if has_line_boundary(lint_toks) {
             return None;
         }
 
-        if is_to_pieces_preposition_typo(toks, src, ctx)
-            || is_plural_location_determiner_typo(toks, src, ctx)
+        if !noun.kind.is_plural_noun() || noun.kind.is_singular_noun() {
+            return None;
+        }
+
+        if is_to_pieces_preposition_typo(lint_toks, src, ctx)
+            || is_plural_location_determiner_typo(lint_toks, src, ctx)
         {
             return None;
         }
 
         if noun.kind.is_adverb()
             || is_directional_adverb(noun, src)
-            || is_quantity_phrase(toks, src)
-            || is_great_many_phrase(toks, src)
+            || is_quantity_phrase(lint_toks, src)
+            || is_great_many_phrase(lint_toks, src)
         {
             return None;
         }
 
-        if has_modifier_before_noun(toks, noun)
+        if has_modifier_before_noun(lint_toks, noun)
             && noun.kind.is_upos(UPOS::VERB)
             && noun.kind.is_verb_third_person_singular_present_form()
         {
@@ -71,31 +77,33 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
 
         let article = toks.first()?;
         let plural = noun.span.get_content(src);
-        let singular_suggestions = singular_noun_suggestions(&self.dict, plural)
-            .into_iter()
-            .map(|singular| {
-                let article_target = article_target(toks, noun, &singular, src)?;
-                let mut replacement = match_article_case(
-                    indefinite_article_for(article_target),
-                    article.span.get_content(src),
-                );
-                replacement.extend(&src[article.span.end..noun.span.start]);
-                replacement.extend(singular);
+        let mut suggestions = if is_plural_location_noun(plural) {
+            Vec::new()
+        } else {
+            singular_noun_suggestions(&self.dict, plural)
+                .into_iter()
+                .map(|singular| {
+                    let article_target = article_target(lint_toks, noun, &singular, src)?;
+                    let mut replacement = match_article_case(
+                        indefinite_article_for(article_target),
+                        article.span.get_content(src),
+                    );
+                    replacement.extend(&src[article.span.end..noun.span.start]);
+                    replacement.extend(singular);
 
-                Some(Suggestion::ReplaceWith(replacement))
-            })
-            .collect::<Option<Vec<_>>>()?;
-
-        if singular_suggestions.is_empty() {
-            return None;
-        }
-
-        let mut suggestions = singular_suggestions;
+                    Some(Suggestion::ReplaceWith(replacement))
+                })
+                .collect::<Option<Vec<_>>>()?
+        };
 
         if let Some(mut plural_intent_suggestions) =
-            plural_intent_suggestions(toks, src, span.get_content(src), noun)
+            plural_intent_suggestions(lint_toks, src, span.get_content(src), noun)
         {
             suggestions.append(&mut plural_intent_suggestions);
+        }
+
+        if suggestions.is_empty() {
+            return None;
         }
 
         Some(Lint {
@@ -114,6 +122,31 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
     fn description(&self) -> &str {
         "Corrects plural nouns after the indefinite article `a` or `an`."
     }
+}
+
+fn head_noun_index(toks: &[Token]) -> Option<usize> {
+    let last_index = toks
+        .iter()
+        .enumerate()
+        .rev()
+        .find(|(_, tok)| !tok.kind.is_whitespace())?
+        .0;
+    let last = &toks[last_index];
+
+    if last.kind.is_plural_noun() {
+        return Some(last_index);
+    }
+
+    if last.kind.is_upos(UPOS::VERB) {
+        return toks[..last_index]
+            .iter()
+            .enumerate()
+            .rev()
+            .find(|(_, tok)| !tok.kind.is_whitespace())
+            .and_then(|(index, tok)| tok.kind.is_plural_noun().then_some(index));
+    }
+
+    Some(last_index)
 }
 
 trait SequenceExprExt {
@@ -150,22 +183,11 @@ fn is_to_pieces_preposition_typo(
         return false;
     };
 
-    if !article
-        .span
-        .get_content(src)
-        .eq_any_ignore_ascii_case_str(&["a"])
-        || !noun
-            .span
-            .get_content(src)
-            .eq_any_ignore_ascii_case_str(&["pieces"])
-    {
+    if !article.span.get_content(src).eq_str("a") || !noun.span.get_content(src).eq_str("pieces") {
         return false;
     }
 
-    let Some((before, _)) = ctx else {
-        return false;
-    };
-    let Some(previous_word) = before.iter().rev().find(|tok| tok.kind.is_word()) else {
+    let Some(previous_word) = previous_word_before_phrase(ctx) else {
         return false;
     };
 
@@ -196,6 +218,14 @@ fn is_to_pieces_preposition_typo(
         ])
 }
 
+fn previous_word_before_phrase<'a>(ctx: Option<(&'a [Token], &'a [Token])>) -> Option<&'a Token> {
+    ctx?.0
+        .iter()
+        .rev()
+        .find(|tok| !tok.kind.is_whitespace())
+        .filter(|tok| tok.kind.is_word())
+}
+
 const PLURAL_LOCATION_NOUNS: &[&str] = &[
     "grounds",
     "headquarters",
@@ -206,6 +236,10 @@ const PLURAL_LOCATION_NOUNS: &[&str] = &[
     "surroundings",
     "woods",
 ];
+
+fn is_plural_location_noun(word: &[char]) -> bool {
+    word.eq_any_ignore_ascii_case_str(PLURAL_LOCATION_NOUNS)
+}
 
 fn is_plural_location_determiner_typo(
     toks: &[Token],
@@ -221,10 +255,7 @@ fn is_plural_location_determiner_typo(
         return false;
     };
 
-    if !article
-        .span
-        .get_content(src)
-        .eq_any_ignore_ascii_case_str(&["a"])
+    if !article.span.get_content(src).eq_str("a")
         || !noun
             .span
             .get_content(src)
@@ -233,10 +264,7 @@ fn is_plural_location_determiner_typo(
         return false;
     }
 
-    let Some((before, _)) = ctx else {
-        return false;
-    };
-    let Some(previous_word) = before.iter().rev().find(|tok| tok.kind.is_word()) else {
+    let Some(previous_word) = previous_word_before_phrase(ctx) else {
         return false;
     };
 
@@ -259,6 +287,11 @@ fn looks_like_third_person_verb_use(noun: &Token, ctx: Option<(&[Token], &[Token
     (noun.kind.is_upos(UPOS::VERB) && next.kind.is_sentence_terminator())
         || next.kind.is_pronoun()
         || next.kind.is_upos(UPOS::PRON)
+}
+
+fn has_line_boundary(toks: &[Token]) -> bool {
+    toks.iter()
+        .any(|tok| tok.kind.is_newline() || tok.kind.is_paragraph_break())
 }
 
 fn has_modifier_before_noun(toks: &[Token], noun: &Token) -> bool {
@@ -318,18 +351,9 @@ fn is_great_many_phrase(toks: &[Token], src: &[char]) -> bool {
     article.kind.is_word()
         && great.kind.is_word()
         && many.kind.is_word()
-        && article
-            .span
-            .get_content(src)
-            .eq_any_ignore_ascii_case_str(&["a"])
-        && great
-            .span
-            .get_content(src)
-            .eq_any_ignore_ascii_case_str(&["great"])
-        && many
-            .span
-            .get_content(src)
-            .eq_any_ignore_ascii_case_str(&["many"])
+        && article.span.get_content(src).eq_str("a")
+        && great.span.get_content(src).eq_str("great")
+        && many.span.get_content(src).eq_str("many")
 }
 
 fn article_target<'a>(
@@ -552,6 +576,50 @@ mod tests {
         crate::linting::tests::assert_no_lints("They met on a premises nearby.", linter());
         crate::linting::tests::assert_no_lints("She waited on a grounds outside.", linter());
         crate::linting::tests::assert_no_lints("He lives on a outskirts of town.", linter());
+    }
+
+    #[test]
+    fn does_not_cross_line_boundaries() {
+        crate::linting::tests::assert_no_lints(
+            "following it, in a way
+contralto voices have",
+            linter(),
+        );
+    }
+
+    #[test]
+    fn still_corrects_to_pieces_after_punctuation() {
+        assert_suggestion_result(
+            "The vase shattered. A pieces, sharp and white, lay on the floor.",
+            linter(),
+            "The vase shattered. Pieces, sharp and white, lay on the floor.",
+        );
+    }
+
+    #[test]
+    fn corrects_plural_head_before_trailing_verb() {
+        assert_good_and_bad_suggestions(
+            "He looked up. A stairs led to the attic.",
+            linter(),
+            &[
+                "He looked up. Stairs led to the attic.",
+                "He looked up. Some stairs led to the attic.",
+            ],
+            &["He looked up. A stair led to the attic."],
+        );
+    }
+
+    #[test]
+    fn still_corrects_plural_location_after_punctuation() {
+        assert_good_and_bad_suggestions(
+            "He looked up. A stairs, narrow and steep, led to the attic.",
+            linter(),
+            &[
+                "He looked up. Stairs, narrow and steep, led to the attic.",
+                "He looked up. Some stairs, narrow and steep, led to the attic.",
+            ],
+            &["He looked up. A stair, narrow and steep, led to the attic."],
+        );
     }
 
     #[test]
