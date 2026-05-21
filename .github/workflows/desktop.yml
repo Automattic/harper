@@ -4,6 +4,8 @@ on:
   push:
     branches: ["master"]
     tags: ["v*"]
+  pull_request:
+    branches: ["master"]
   merge_group:
 
 permissions:
@@ -16,25 +18,27 @@ jobs:
     strategy:
       matrix:
         platform:
-          - name: Linux x64
-            artifact_name: harper-desktop-linux-x64
-            os: ubuntu-latest
-            command: just build-desktop-linux
-            artifact_paths: |
-              target/release/bundle/deb/*.deb
-              target/release/bundle/rpm/*.rpm
-              target/release/bundle/appimage/*.AppImage
           - name: macOS x64
             artifact_name: harper-desktop-macos-x64
             os: macos-26-intel
             command: just build-desktop-macos
+            unsigned_command: just build-desktop-macos-unsigned
             artifact_paths: |
+              target/release/bundle/dmg/*.dmg
+              target/release/bundle/macos/*.app.tar.gz
+              target/release/bundle/macos/*.app.tar.gz.sig
+            unsigned_artifact_paths: |
               target/release/bundle/dmg/*.dmg
           - name: macOS arm64
             artifact_name: harper-desktop-macos-arm64
             os: macos-14
             command: just build-desktop-macos
+            unsigned_command: just build-desktop-macos-unsigned
             artifact_paths: |
+              target/release/bundle/dmg/*.dmg
+              target/release/bundle/macos/*.app.tar.gz
+              target/release/bundle/macos/*.app.tar.gz.sig
+            unsigned_artifact_paths: |
               target/release/bundle/dmg/*.dmg
 
     steps:
@@ -71,12 +75,27 @@ jobs:
       - name: Install tauri-cli
         run: cargo binstall tauri-cli --force --no-confirm
       - name: Build Harper Desktop
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.HARPER_DESKTOP_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.HARPER_DESKTOP_PASSWORD }}
         run: ${{ matrix.platform.command }}
-      - name: Upload artifacts
+      - name: Build Harper Desktop without signing
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        run: ${{ matrix.platform.unsigned_command }}
+      - name: Upload signed artifacts
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform.artifact_name }}
           path: ${{ matrix.platform.artifact_paths }}
+          if-no-files-found: error
+      - name: Upload unsigned artifacts
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform.artifact_name }}
+          path: ${{ matrix.platform.unsigned_artifact_paths }}
           if-no-files-found: error
       - name: Release artifacts
         if: startsWith(github.ref, 'refs/tags/v')

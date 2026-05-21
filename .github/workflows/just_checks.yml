@@ -27,7 +27,6 @@ jobs:
             test-firefox-plugin,
             test-obsidian,
             check-desktop,
-            build-desktop-linux,
           ]
     steps:
       - uses: actions/checkout@v4
