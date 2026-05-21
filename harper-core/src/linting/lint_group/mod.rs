@@ -29,6 +29,7 @@ use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
 use super::ask_no_preposition::AskNoPreposition;
+use super::your_before_auxiliary::{YourBeforeAuxiliary, TheirBeforeAuxiliary};
 use super::aspire_to::AspireTo;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -263,6 +264,7 @@ use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
+use super::wrong_preposition::WrongPreposition;
 use super::wrong_apostrophe::WrongApostrophe;
 
 use super::{ExprLinter, Lint};
@@ -583,6 +585,8 @@ impl LintGroup {
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
         insert_expr_rule!(AskNoPreposition, true);
+        insert_expr_rule!(YourBeforeAuxiliary, true);
+        insert_expr_rule!(TheirBeforeAuxiliary, true);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
@@ -809,6 +813,7 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
+        insert_expr_rule!(WrongPreposition, true);
         insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
@@ -1050,7 +1055,7 @@ mod tests {
             spellcheck_lints[0]
                 .suggestions
                 .iter()
-                .any(|suggestion| suggestion.to_string() == "Replace with: “extension”")
+                .any(|suggestion| suggestion.to_string() == "Replace with: “extension�?)
         );
 
         assert!(

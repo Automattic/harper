@@ -184,6 +184,7 @@ mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod possessive_noun;
 mod possessive_your;
+mod your_before_auxiliary;
 mod progressive_needs_be;
 mod pronoun_are;
 mod pronoun_contraction;
@@ -274,6 +275,7 @@ mod win_prize;
 mod wish_could;
 mod wordpress_dotcom;
 mod worth_to_do;
+mod wrong_preposition;
 mod would_never_have;
 mod wrong_apostrophe;
 
@@ -762,14 +764,14 @@ pub mod tests {
                 if bad.contains(&&*suggestion_text) {
                     found_bad.push((i, j, suggestion_text.clone()));
                     eprintln!(
-                        "  ‚ùå Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                        "  ‚ù?Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                 }
                 // Check for good suggestions
                 else if good.contains(&&*suggestion_text) {
                     found_good.push((i, j, suggestion_text.clone()));
                     eprintln!(
-                        "  ‚úÖ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                        "  ‚ú?Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
                 }
@@ -781,7 +783,7 @@ pub mod tests {
             eprintln!("\n=== Test Summary ===");
 
             if !found_bad.is_empty() {
-                eprintln!("\n‚ùå Found {} bad suggestions:", found_bad.len());
+                eprintln!("\n‚ù?Found {} bad suggestions:", found_bad.len());
                 for (i, j, text) in &found_bad {
                     eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
                 }
@@ -789,7 +791,7 @@ pub mod tests {
 
             if !unseen_good.is_empty() {
                 eprintln!(
-                    "\n‚ùå Missing {} expected good suggestions:",
+                    "\n‚ù?Missing {} expected good suggestions:",
                     unseen_good.len()
                 );
                 for text in &unseen_good {
@@ -797,7 +799,7 @@ pub mod tests {
                 }
             }
 
-            eprintln!("\n‚úÖ Found {} good suggestions", found_good.len());
+            eprintln!("\n‚ú?Found {} good suggestions", found_good.len());
             eprintln!("==================\n");
 
             if !found_bad.is_empty() || !unseen_good.is_empty() {
@@ -805,7 +807,7 @@ pub mod tests {
             }
         } else {
             eprintln!(
-                "\n‚úÖ All {} good suggestions found, no bad suggestions\n",
+                "\n‚ú?All {} good suggestions found, no bad suggestions\n",
                 found_good.len()
             );
         }
