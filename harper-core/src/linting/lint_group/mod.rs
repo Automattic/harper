@@ -90,6 +90,7 @@ use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
+use super::gasp_vs_grasp::GaspVsGrasp;
 use super::go_so_far_as_to::GoSoFarAsTo;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
@@ -642,6 +643,7 @@ impl LintGroup {
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
+        insert_expr_rule!(GaspVsGrasp, true);
         insert_expr_rule!(GoSoFarAsTo, true);
         insert_expr_rule!(GoToWar, true);
         insert_expr_rule!(GoodAt, true);
