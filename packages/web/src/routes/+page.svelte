@@ -157,78 +157,97 @@ onMount(() => {
 	/>
 </svelte:head>
 
-<div class="marketing-page">
+<div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="home" />
 
-	<section class="hero">
-		<div class="hero-inner">
+	<section class="bg-[#fbfaf6] px-10 pt-[4.4rem] pb-20 text-center dark:bg-black max-[880px]:px-4">
+		<div class="mx-auto flex max-w-[44rem] flex-col items-center">
 			<HarperMark size={108} />
-			<h1>Hi. I’m Harper.</h1>
-			<p class="hero-sub">
-				The <strong class="inline-block -rotate-1 bg-primary-100 p-1">Free</strong> Grammar Checker
+			<h1 class="!mt-7 !mb-0 py-0 font-serif text-[clamp(3.4rem,8vw,4rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+				Hi. I’m Harper.
+			</h1>
+			<p class="!mt-[1.35rem] !mb-0 font-serif text-[1.38rem] leading-[1.35]">
+				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
 			</p>
-			<p class="hero-third">I make you look like a grammar genius.</p>
-			<div class="hero-actions">
+			<p class="!mt-3 !mb-0 font-serif text-[1.12rem] leading-[1.35] text-[#807a6e] italic dark:text-white/55">
+				I make you look like a grammar genius.
+			</p>
+			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Get Harper</PillButton>
 				<PillButton href={marketingLinks.github} kind="secondary" size="lg">Star on GitHub</PillButton>
 			</div>
 		</div>
 	</section>
 
-	<section class="try-editor" aria-labelledby="try-editor-title">
-		<div class="section-inner wide">
-			<div class="section-row">
-				<h2 id="try-editor-title">Try Harper</h2>
-				<a href="/editor">Open the full editor <Arrow /></a>
+	<section class="bg-[#fbfaf6] pt-2 pb-[5.6rem] dark:bg-black" aria-labelledby="try-editor-title">
+		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
+			<div class="mb-[1.1rem] flex items-baseline justify-between gap-4 max-[620px]:flex-col max-[620px]:items-stretch">
+				<h2 id="try-editor-title" class="!m-0 py-0 font-serif text-[1.38rem] font-semibold leading-[1.3] tracking-normal text-inherit">
+					Try Harper
+				</h2>
+				<a
+					class="inline-flex items-center gap-1 !text-[#b06a1b] font-bold no-underline hover:no-underline dark:!text-primary-300 [&_path]:fill-none [&_path]:stroke-current [&_path]:stroke-[1.5] [&_path]:[stroke-linecap:round] [&_path]:[stroke-linejoin:round] [&_svg]:size-[0.7rem]"
+					href="/editor">Open the full editor <Arrow /></a
+				>
 			</div>
-			<div class="editor-frame">
+			<div class="h-[35rem] overflow-hidden rounded-[0.9rem] border-[0.5px] border-[rgba(28,26,22,0.16)] bg-[#fbfaf6] shadow-[0_30px_60px_-24px_rgba(28,26,22,0.22),0_6px_14px_rgba(28,26,22,0.06),0_0_0_0.5px_rgba(0,0,0,0.04)] dark:border-white/15 dark:bg-black max-[620px]:h-[40rem]">
 				{#if browser && linter}
 					<LazyEditor content={editorContent} {linter} />
 				{:else}
-					<div class="editor-loading">Loading Harper’s grammar engine...</div>
+					<div class='flex h-full items-center justify-center text-[0.82rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>
+						Loading Harper’s grammar engine...
+					</div>
 				{/if}
 			</div>
 		</div>
 	</section>
 
-	<section id="about" class="intro">
-		<div class="section-inner narrow">
-			<p class="lead">
+	<section id="about" class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black">
+		<div class="mx-auto max-w-[45rem] px-10 max-[880px]:px-4">
+			<p class="!m-0 font-serif text-[clamp(1.6rem,4vw,1.75rem)] font-[550] leading-[1.35] text-[#1c1a16] dark:text-white">
 				Harper is a free, open-source grammar checker designed to be just right. Think of it as
 				the private alternative to Grammarly, built after years of dealing with the shortcomings
 				of the competition.
 			</p>
-			<p>
+			<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
 				Harper catches the kinds of mistakes that matter: improper capitalization, misspelled
 				words, awkward phrasing, and broken grammar. Your writing never leaves your computer.
 			</p>
 		</div>
 	</section>
 
-	<section class="integrations-callout">
-		<div class="section-inner split">
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black">
+		<div class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(0,1fr)_minmax(20rem,1fr)] items-center gap-14 px-10 max-[880px]:grid-cols-1 max-[880px]:px-4">
 			<div>
-				<h2>One grammar checker.<br />Every place you write.</h2>
-				<p>
+				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
+					One grammar checker.<br />Every place you write.
+				</h2>
+				<p class="!mt-6 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
 					Harper is available as a language server, a JavaScript library, a Rust crate, browser
 					extensions, editor extensions, and native apps. Pick the integration that matches your
 					workflow or build your own.
 				</p>
-				<div class="button-row">
+				<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 					<PillButton href="/get">See all integrations</PillButton>
 					<PillButton href="/docs/about" kind="secondary">Read the docs</PillButton>
 				</div>
 			</div>
-			<div class="integration-grid" aria-label="Featured Harper integrations">
+			<div
+				class="grid grid-cols-[repeat(2,minmax(10rem,13.5rem))] justify-center gap-[0.4rem] rounded-2xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white p-[1.1rem] dark:border-white/10 dark:bg-white/5 max-[620px]:grid-cols-1"
+				aria-label="Featured Harper integrations"
+			>
 				{#each featuredIntegrationIds as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
-						<a href={integration.href}>
+						<a
+							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
+							href={integration.href}
+						>
 							<IntegrationTile {integration} size={32} />
-							<span>
-								<strong>{integration.name}</strong>
-								<small>{integration.desc}</small>
+							<span class="flex min-w-0 flex-col">
+								<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
 							</span>
 						</a>
 					{/if}
@@ -237,16 +256,18 @@ onMount(() => {
 		</div>
 	</section>
 
-	<section class="privacy-speed">
-		<div class="section-inner wide">
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] dark:border-white/10 dark:bg-black">
+		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
 			<PrivacySpeedCards />
 		</div>
 	</section>
 
-	<section class="testimonials">
-		<div class="section-inner wide">
-			<div class="center-heading">
-				<h2>Loved by writers, journalists, and devs.</h2>
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] dark:border-white/10 dark:bg-black">
+		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
+			<div class="mb-11 text-center">
+				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
+					Loved by writers, journalists, and devs.
+				</h2>
 			</div>
 			<TestimonialCollection {testimonials} />
 		</div>
@@ -262,324 +283,22 @@ onMount(() => {
 		layout="grid"
 	/>
 
-	<section class="open-source">
-		<div class="section-inner narrow">
+	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#1c1a16] py-[5.6rem] pb-[6.25rem] text-center text-[#fbfaf6] dark:border-white/10">
+		<div class="mx-auto max-w-[45rem] px-10 max-[880px]:px-4 [&_.harper-mark]:mx-auto [&_.harper-mark]:mb-[1.4rem] [&_.harper-mark]:text-[#fbe8c2]">
 			<HarperMark size={56} />
-			<h2>Pay us a visit on GitHub.</h2>
-			<p>
+			<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.5rem,6vw,3.25rem)] font-[650] leading-[1.05] tracking-normal text-inherit">
+				Pay us a visit on GitHub.
+			</h2>
+			<p class="!mt-6 !mb-0 text-base leading-[1.65] text-[#fbfaf6]/70">
 				Fork it, file an issue, add a rule, port it to a new editor. Harper is free software,
 				and we’d love your help.
 			</p>
-			<div class="button-row center">
+			<div class="mt-7 flex flex-col flex-wrap items-center justify-center gap-[0.65rem]">
 				<PillButton href={marketingLinks.github} size="lg">Star on GitHub</PillButton>
-				<PillButton href="/docs/contributors/introduction" kind="secondary" size="lg">
-					Contribute
-				</PillButton>
+				<PillButton href="/docs/contributors/introduction" size="lg">Contribute</PillButton>
 			</div>
 		</div>
 	</section>
 
 	<MarketingFooter />
 </div>
-
-<style>
-.marketing-page {
-	min-height: 100vh;
-	background: var(--marketing-page-bg);
-	color: var(--marketing-ink);
-	font-family: inherit;
-}
-
-.section-inner {
-	max-width: 68.75rem;
-	margin: 0 auto;
-	padding: 0 2.5rem;
-}
-
-.section-inner.wide {
-	max-width: 73.75rem;
-}
-
-.section-inner.narrow {
-	max-width: 45rem;
-}
-
-.hero {
-	background: var(--marketing-cream);
-	padding: 4.4rem 2.5rem 5rem;
-	text-align: center;
-}
-
-.hero-inner {
-	display: flex;
-	max-width: 44rem;
-	margin: 0 auto;
-	flex-direction: column;
-	align-items: center;
-}
-
-h1,
-h2 {
-	margin: 0;
-	color: inherit;
-	font-family: Domine, serif;
-	font-weight: 650;
-	letter-spacing: 0;
-}
-
-h1 {
-	margin-top: 1.75rem;
-	font-size: clamp(3.4rem, 8vw, 4rem);
-	line-height: 1.02;
-}
-
-.hero-sub {
-	margin: 1.35rem 0 0;
-	font-family: Domine, serif;
-	font-size: 1.38rem;
-	line-height: 1.35;
-}
-
-.hero-third {
-	margin: 0.75rem 0 0;
-	color: var(--marketing-ink-3);
-	font-family: Domine, serif;
-	font-size: 1.12rem;
-	font-style: italic;
-}
-
-.hero-actions,
-.button-row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.65rem;
-	margin-top: 1.75rem;
-}
-
-.center {
-	justify-content: center;
-	align-items: center;
-}
-
-.try-editor {
-	background: var(--marketing-cream);
-	padding: 0.5rem 0 5.6rem;
-}
-
-.section-row {
-	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
-	gap: 1rem;
-	margin-bottom: 1.1rem;
-}
-
-.section-row h2 {
-	font-size: 1.38rem;
-	line-height: 1.3;
-}
-
-.section-row a {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.2rem;
-	color: var(--marketing-amber);
-	font-weight: 700;
-	text-decoration: none;
-}
-
-.section-row a :global(svg) {
-	width: 0.7rem;
-	height: 0.7rem;
-	fill: none;
-	stroke: currentColor;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	stroke-width: 1.5;
-}
-
-.editor-frame {
-	height: 35rem;
-	overflow: hidden;
-	border: 0.5px solid var(--marketing-line-strong);
-	border-radius: 0.9rem;
-	background: #fbfaf6;
-	box-shadow:
-		0 30px 60px -24px rgba(28, 26, 22, 0.22),
-		0 6px 14px rgba(28, 26, 22, 0.06),
-		0 0 0 0.5px rgba(0, 0, 0, 0.04);
-}
-
-.editor-loading {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	color: var(--marketing-ink-3);
-	font-family: "JetBrains Mono", monospace;
-	font-size: 0.82rem;
-}
-
-.intro,
-.integrations-callout {
-	border-top: 0.5px solid var(--marketing-line);
-	background: #fdfbf5;
-	padding: 4.8rem 0;
-}
-
-.intro .lead {
-	margin: 0;
-	color: var(--marketing-ink);
-	font-family: Domine, serif;
-	font-size: clamp(1.6rem, 4vw, 1.75rem);
-	font-weight: 550;
-	line-height: 1.35;
-}
-
-.intro p:not(.lead),
-.integrations-callout p,
-.open-source p {
-	color: var(--marketing-ink-2);
-	font-size: 1rem;
-	line-height: 1.65;
-}
-
-.intro p:not(.lead) {
-	margin: 1.25rem 0 0;
-}
-
-.split {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
-	align-items: center;
-	gap: 3.5rem;
-}
-
-.split h2,
-.center-heading h2 {
-	margin-top: 0.75rem;
-	font-size: clamp(2.2rem, 5vw, 2.5rem);
-	line-height: 1.08;
-}
-
-.integration-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(10rem, 13.5rem));
-	gap: 0.4rem;
-	justify-content: center;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 1rem;
-	background: #fff;
-	padding: 1.1rem;
-}
-
-.integration-grid a {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	border-radius: 0.65rem;
-	color: var(--marketing-ink);
-	padding: 0.65rem 0.75rem;
-	text-decoration: none;
-}
-
-.integration-grid a:hover {
-	background: rgba(28, 26, 22, 0.04);
-}
-
-.integration-grid span {
-	display: flex;
-	min-width: 0;
-	flex-direction: column;
-}
-
-.integration-grid strong {
-	overflow: hidden;
-	font-size: 0.84rem;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.integration-grid small {
-	overflow: hidden;
-	color: var(--marketing-ink-3);
-	font-size: 0.72rem;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.privacy-speed,
-.testimonials {
-	border-top: 0.5px solid var(--marketing-line);
-	background: var(--marketing-cream);
-	padding: 4.5rem 0;
-}
-
-.center-heading {
-	margin-bottom: 2.75rem;
-	text-align: center;
-}
-
-.open-source {
-	border-top: 0.5px solid var(--marketing-line);
-	background: var(--marketing-ink);
-	color: #fbfaf6;
-	padding: 5.6rem 0 6.25rem;
-	text-align: center;
-}
-
-.open-source :global(.harper-mark) {
-	margin: 0 auto 1.4rem;
-	color: #fbe8c2;
-}
-
-.open-source h2 {
-	margin-top: 0.75rem;
-	font-size: clamp(2.5rem, 6vw, 3.25rem);
-	line-height: 1.05;
-}
-
-.open-source p {
-	color: rgba(251, 250, 246, 0.72);
-}
-
-.open-source .button-row {
-	flex-direction: column;
-	align-items: center;
-}
-
-@media (max-width: 880px) {
-	.section-inner {
-		padding-inline: 1rem;
-	}
-
-	.hero {
-		padding-inline: 1rem;
-	}
-
-	.split {
-		grid-template-columns: 1fr;
-	}
-}
-
-@media (max-width: 620px) {
-	.hero-actions,
-	.button-row,
-	.section-row {
-		flex-direction: column;
-		align-items: stretch;
-	}
-
-	.button-row.center {
-		align-items: center;
-	}
-
-	.editor-frame {
-		height: 40rem;
-	}
-
-	.integration-grid {
-		grid-template-columns: 1fr;
-	}
-}
-</style>
