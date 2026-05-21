@@ -472,15 +472,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-     238 | puzzle!” And she began thinking over all the children she knew that were of the
-         |                                 ^~~~~~~~ Did you mean the closed compound `overall`?
-Suggest:
-  - Replace with: “overall”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      243 | all sorts of things, and she, oh! she knows such a very little! Besides, she’s

@@ -1,7 +1,7 @@
 use crate::expr::{Expr, FixedPhrase};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, followed_by_word};
 use crate::linting::{ExprLinter, Lint, LintGroup, LintKind, Suggestion};
-use crate::{Token, TokenStringExt};
+use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::MapPhraseLinter;
 
@@ -30,7 +30,10 @@ impl ExprLinter for Overall {
         source: &[char],
         context: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if followed_by_quantifier_complement(context, source) {
+        if followed_by_word(context, |word| {
+            word.get_ch(source)
+                .eq_any_ignore_ascii_case_str(&["the", "of"])
+        }) {
             return None;
         }
 
@@ -52,21 +55,6 @@ impl ExprLinter for Overall {
     fn description(&self) -> &str {
         "Looks for incorrect spacing inside the closed compound `overall`."
     }
-}
-
-fn followed_by_quantifier_complement(
-    context: Option<(&[Token], &[Token])>,
-    source: &[char],
-) -> bool {
-    if let Some((_, after)) = context
-        && let [ws, word, ..] = after
-        && ws.kind.is_whitespace()
-    {
-        let word = word.get_str(source);
-        return word.eq_ignore_ascii_case("the") || word.eq_ignore_ascii_case("of");
-    }
-
-    false
 }
 
 pub fn lint_group() -> LintGroup {

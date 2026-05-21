@@ -1549,15 +1549,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    1307 | A thrill passed over all of us. The three Mr. Mumbles bent forward and listened
-         |                 ^~~~~~~~ Did you mean the closed compound `overall`?
-Suggest:
-  - Replace with: “overall”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1310 | “I don’t think it’s so much that,” argued Lucille sceptically; “it’s more that
