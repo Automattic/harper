@@ -21,8 +21,13 @@ function inferGlueFlavor(binary: string): WasmGlueFlavor {
  * older/custom BinaryModule-like objects remain structurally compatible. When it is
  * absent, fall back to inferring the flavor from the binary URL.
  */
-export function resolveWasmGlueFlavor(binary: Pick<BinaryModule, 'url' | 'glueFlavor'>): WasmGlueFlavor {
-	return binary.glueFlavor ?? inferGlueFlavor(typeof binary.url === 'string' ? binary.url : binary.url.href);
+export function resolveWasmGlueFlavor(
+	binary: Pick<BinaryModule, 'url' | 'glueFlavor'>,
+): WasmGlueFlavor {
+	return (
+		binary.glueFlavor ??
+		inferGlueFlavor(typeof binary.url === 'string' ? binary.url : binary.url.href)
+	);
 }
 
 function loadGlue(glueFlavor: WasmGlueFlavor): WasmModule {
