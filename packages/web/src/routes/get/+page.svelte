@@ -56,92 +56,124 @@ function clearFilters() {
 	/>
 </svelte:head>
 
-<div class="marketing-page">
+<div class="min-h-screen bg-[#f6f1e6] text-[#1c1a16] dark:bg-black dark:text-white">
 	<MarketingHeader active="get" />
 
-	<section class="hero">
-		<div class="hero-inner">
-			<h1>Take Harper with you.</h1>
-			<p>
+	<section class="border-b-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] px-10 py-16 pb-[4.25rem] text-center dark:border-white/10 dark:bg-black max-[860px]:px-4">
+		<div class="mx-auto max-w-[58rem]">
+			<h1 class="!mt-[0.85rem] !mb-0 py-0 font-serif text-[clamp(3.2rem,7vw,3.5rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+				Take Harper with you.
+			</h1>
+			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
-			<div class="hero-cards">
+			<div class="mx-auto grid max-w-[47.5rem] grid-cols-2 gap-[0.85rem] text-left max-[640px]:grid-cols-1">
 				{#each ['desktop', 'chrome'] as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
-						<a href={integration.href}>
+						<a
+							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
+							href={integration.href}
+						>
 							<IntegrationTile {integration} size={40} />
-							<span>
-								<strong>{integration.name}</strong>
-								<small>{integration.desc}</small>
+							<span class="flex min-w-0 flex-col">
+								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
 							</span>
-							<em>{ctaLabel(integration)} →</em>
+							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
 					{/if}
 				{/each}
 			</div>
-			<div class="hint">Or browse {integrations.length - 2} other integrations ↓</div>
+			<div class="mt-[1.1rem] text-[0.82rem] text-[#807a6e] dark:text-white/55">Or browse {integrations.length - 2} other integrations ↓</div>
 		</div>
 	</section>
 
-	<section class="catalog" aria-label="Harper integrations">
-		<div class="catalog-inner">
-			<aside class="rail">
-				<label class="search" aria-label="Search integrations">
-					<svg viewBox="0 0 16 16" aria-hidden="true">
+	<section class="px-10 pt-[3.25rem] pb-20 max-[860px]:px-4" aria-label="Harper integrations">
+		<div class="mx-auto grid max-w-[77.5rem] grid-cols-[14.5rem_1fr] items-start gap-9 max-[860px]:grid-cols-1">
+			<aside class="sticky top-[5.6rem] flex flex-col gap-[1.1rem] max-[860px]:static">
+				<label
+					class="flex h-[2.4rem] items-center gap-[0.55rem] rounded-[0.65rem] border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-3 transition-[border-color,outline-color] duration-150 focus-within:border-transparent focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#2a6bd8] dark:border-white/10 dark:bg-white/5"
+					aria-label="Search integrations"
+				>
+					<svg class="size-[0.88rem] fill-none stroke-[#807a6e] stroke-[1.6] [stroke-linecap:round] dark:stroke-white/55" viewBox="0 0 16 16" aria-hidden="true">
 						<circle cx="7" cy="7" r="4.5" />
 						<path d="M10.5 10.5L14 14" />
 					</svg>
-					<input bind:value={query} type="search" placeholder="Search..." />
+					<input
+						class="min-w-0 flex-1 appearance-none border-0! bg-transparent text-[0.84rem] text-[#1c1a16] shadow-none! outline-0! dark:text-white"
+						bind:value={query}
+						type="search"
+						placeholder="Search..."
+					/>
 				</label>
 
-				<nav aria-label="Filter integrations">
-					<button class:active={activeCategory === 'all'} type="button" on:click={() => (activeCategory = 'all')}>
-						<span>All integrations</span><b>{integrations.length}</b>
+				<nav class="flex flex-col gap-[0.15rem] max-[860px]:grid max-[860px]:grid-cols-2 max-[640px]:grid-cols-1" aria-label="Filter integrations">
+					<button
+						class={`flex cursor-pointer items-center gap-2 rounded-lg border-0 bg-transparent px-[0.6rem] py-[0.45rem] text-left text-[#4a463e] hover:bg-white hover:text-[#1c1a16] hover:shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white ${
+							activeCategory === 'all'
+								? 'bg-white text-[#1c1a16] shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:bg-white/10 dark:text-white'
+								: ''
+						}`}
+						type="button"
+						on:click={() => (activeCategory = 'all')}
+					>
+						<span class="flex-1 text-[0.84rem] font-[650]">All integrations</span><b class='text-[0.68rem] font-semibold text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>{integrations.length}</b>
 					</button>
 					{#each integrationCategories as category}
 						<button
-							class:active={activeCategory === category.id}
+							class={`flex cursor-pointer items-center gap-2 rounded-lg border-0 bg-transparent px-[0.6rem] py-[0.45rem] text-left text-[#4a463e] hover:bg-white hover:text-[#1c1a16] hover:shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white ${
+								activeCategory === category.id
+									? 'bg-white text-[#1c1a16] shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:bg-white/10 dark:text-white'
+									: ''
+							}`}
 							type="button"
 							on:click={() => (activeCategory = category.id)}
 						>
-							<span>{category.label}</span><b>{category.items.length}</b>
+							<span class="flex-1 text-[0.84rem] font-[650]">{category.label}</span><b class='text-[0.68rem] font-semibold text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>{category.items.length}</b>
 						</button>
 					{/each}
 					<button
-						class:active={activeCategory === 'community'}
+						class={`flex cursor-pointer items-center gap-2 rounded-lg border-0 bg-transparent px-[0.6rem] py-[0.45rem] text-left text-[#4a463e] hover:bg-white hover:text-[#1c1a16] hover:shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white ${
+							activeCategory === 'community'
+								? 'bg-white text-[#1c1a16] shadow-[0_0_0_0.5px_rgba(28,26,22,0.1),0_1px_2px_rgba(28,26,22,0.04)] dark:bg-white/10 dark:text-white'
+								: ''
+						}`}
 						type="button"
 						on:click={() => (activeCategory = 'community')}
 					>
-						<span>From the community</span><b>{communityCount}</b>
+						<span class="flex-1 text-[0.84rem] font-[650]">From the community</span><b class='text-[0.68rem] font-semibold text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>{communityCount}</b>
 					</button>
 				</nav>
 
 				{#if query || activeCategory !== 'all'}
-					<p class="matches">
+					<p class='!m-0 text-[0.7rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>
 						{filtered.length} {filtered.length === 1 ? 'match' : 'matches'} ·
-						<button type="button" on:click={clearFilters}>Clear</button>
+						<button class="cursor-pointer border-0 bg-transparent font-extrabold text-[#b06a1b] dark:text-primary-300" type="button" on:click={clearFilters}>Clear</button>
 					</p>
 				{/if}
 			</aside>
 
-			<div class="grid">
+			<div class="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-3 max-[640px]:grid-cols-1">
 				{#if filtered.length === 0}
-					<div class="empty">
-						<h2>No match for "{query}"</h2>
-						<p>
-							Don’t see your editor? <a href={marketingLinks.github}>Help us build it →</a>
+					<div class="col-span-full rounded-[0.9rem] border-[0.5px] border-dashed border-[rgba(28,26,22,0.16)] bg-white px-6 py-[3.75rem] text-center dark:border-white/15 dark:bg-white/5">
+						<h2 class="!mt-0 !mb-1.5 py-0 font-serif text-[1.4rem]">No match for "{query}"</h2>
+						<p class="!m-0 text-[#807a6e] dark:text-white/55">
+							Don’t see your editor? <a class="font-extrabold !text-[#b06a1b] no-underline hover:no-underline dark:!text-primary-300" href={marketingLinks.github}>Help us build it →</a>
 						</p>
 					</div>
 				{:else}
 					{#each filtered as integration}
-						<a class="card" href={integration.href}>
+						<a
+							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
+							href={integration.href}
+						>
 							<IntegrationTile {integration} size={40} />
-							<span>
-								<strong>{integration.name}</strong>
-								<small>{integration.platform}</small>
+							<span class="flex min-w-0 flex-col">
+								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.platform}</small>
 							</span>
-							<em>{ctaLabel(integration)} →</em>
+							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
 					{/each}
 				{/if}
@@ -151,315 +183,3 @@ function clearFilters() {
 
 	<MarketingFooter />
 </div>
-
-<style>
-.marketing-page {
-	min-height: 100vh;
-	background: var(--marketing-page-bg);
-	color: var(--marketing-ink);
-	font-family: inherit;
-}
-
-.hero {
-	border-bottom: 0.5px solid var(--marketing-line);
-	background: #fdfbf5;
-	padding: 4rem 2.5rem 4.25rem;
-	text-align: center;
-}
-
-.hero-inner {
-	max-width: 58rem;
-	margin: 0 auto;
-}
-
-h1 {
-	margin: 0.85rem 0 0;
-	color: inherit;
-	font-family: Domine, serif;
-	font-size: clamp(3.2rem, 7vw, 3.5rem);
-	font-weight: 650;
-	line-height: 1.02;
-	letter-spacing: 0;
-}
-
-.hero p {
-	max-width: 35rem;
-	margin: 0.75rem auto 2.2rem;
-	color: var(--marketing-ink-2);
-	font-family: Domine, serif;
-	font-size: 1.2rem;
-	line-height: 1.45;
-}
-
-.hero-cards {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 0.85rem;
-	max-width: 47.5rem;
-	margin: 0 auto;
-	text-align: left;
-}
-
-.hero-cards a,
-.card {
-	display: grid;
-	grid-template-columns: 2.5rem 1fr auto;
-	align-items: center;
-	gap: 0.9rem;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 0.75rem;
-	background: #fff;
-	color: var(--marketing-ink);
-	padding: 0.9rem 1.1rem;
-	text-decoration: none;
-	transition:
-		transform 120ms ease,
-		box-shadow 120ms ease,
-		border-color 120ms ease;
-}
-
-.hero-cards a:hover,
-.card:hover {
-	border-color: var(--marketing-amber);
-	box-shadow: 0 10px 24px -16px rgba(28, 26, 22, 0.16);
-	transform: translateY(-1px);
-}
-
-.hero-cards span,
-.card span {
-	display: flex;
-	min-width: 0;
-	flex-direction: column;
-}
-
-.hero-cards strong,
-.card strong {
-	font-size: 0.94rem;
-	line-height: 1.25;
-}
-
-.hero-cards small,
-.card small {
-	overflow: hidden;
-	color: var(--marketing-ink-3);
-	font-size: 0.8rem;
-	line-height: 1.4;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.hero-cards em,
-.card em {
-	color: var(--marketing-amber);
-	font-size: 0.78rem;
-	font-style: normal;
-	font-weight: 800;
-	white-space: nowrap;
-}
-
-.hint {
-	margin-top: 1.1rem;
-	color: var(--marketing-ink-3);
-	font-size: 0.82rem;
-}
-
-.catalog {
-	padding: 3.25rem 2.5rem 5rem;
-}
-
-.catalog-inner {
-	display: grid;
-	grid-template-columns: 14.5rem 1fr;
-	align-items: flex-start;
-	gap: 2.25rem;
-	max-width: 77.5rem;
-	margin: 0 auto;
-}
-
-.rail {
-	position: sticky;
-	top: 5.6rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.1rem;
-}
-
-.search {
-	display: flex;
-	align-items: center;
-	gap: 0.55rem;
-	height: 2.4rem;
-	border: 0.5px solid var(--marketing-line);
-	border-radius: 0.65rem;
-	background: #fff;
-	padding: 0 0.75rem;
-	transition:
-		border-color 120ms ease,
-		outline-color 120ms ease;
-}
-
-.search:focus-within {
-	border-color: transparent;
-	outline: 2px solid #2a6bd8;
-	outline-offset: 2px;
-}
-
-.search svg {
-	width: 0.88rem;
-	height: 0.88rem;
-	fill: none;
-	stroke: var(--marketing-ink-3);
-	stroke-linecap: round;
-	stroke-width: 1.6;
-}
-
-.search input {
-	-webkit-appearance: none;
-	appearance: none;
-	min-width: 0;
-	flex: 1;
-	border: 0 !important;
-	background: transparent;
-	box-shadow: none !important;
-	color: var(--marketing-ink);
-	font: inherit;
-	font-size: 0.84rem;
-	outline: 0 !important;
-}
-
-.search input:focus,
-.search input:focus-visible {
-	border: 0 !important;
-	box-shadow: none !important;
-	outline: 0 !important;
-}
-
-nav {
-	display: flex;
-	flex-direction: column;
-	gap: 0.15rem;
-}
-
-nav button,
-.matches button {
-	border: 0;
-	background: transparent;
-	font: inherit;
-}
-
-nav button {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	border-radius: 0.5rem;
-	color: var(--marketing-ink-2);
-	cursor: pointer;
-	padding: 0.45rem 0.6rem;
-	text-align: left;
-}
-
-nav button:hover,
-nav button.active {
-	background: #fff;
-	box-shadow:
-		0 0 0 0.5px var(--marketing-line),
-		0 1px 2px rgba(28, 26, 22, 0.04);
-	color: var(--marketing-ink);
-}
-
-nav span {
-	flex: 1;
-	font-size: 0.84rem;
-	font-weight: 650;
-}
-
-nav b {
-	color: var(--marketing-ink-3);
-	font-family: "JetBrains Mono", monospace;
-	font-size: 0.68rem;
-	font-weight: 600;
-}
-
-.matches {
-	margin: 0;
-	color: var(--marketing-ink-3);
-	font-family: "JetBrains Mono", monospace;
-	font-size: 0.7rem;
-}
-
-.matches button {
-	color: var(--marketing-amber);
-	cursor: pointer;
-	font-weight: 800;
-}
-
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-	gap: 0.75rem;
-}
-
-.empty {
-	grid-column: 1 / -1;
-	border: 0.5px dashed var(--marketing-line-strong);
-	border-radius: 0.9rem;
-	background: #fff;
-	padding: 3.75rem 1.5rem;
-	text-align: center;
-}
-
-.empty h2 {
-	margin: 0 0 0.4rem;
-	font-family: Domine, serif;
-	font-size: 1.4rem;
-}
-
-.empty p {
-	margin: 0;
-	color: var(--marketing-ink-3);
-}
-
-.empty a {
-	color: var(--marketing-amber);
-	font-weight: 800;
-	text-decoration: none;
-}
-
-@media (max-width: 860px) {
-	.hero,
-	.catalog {
-		padding-inline: 1rem;
-	}
-
-	.catalog-inner {
-		grid-template-columns: 1fr;
-	}
-
-	.rail {
-		position: static;
-	}
-
-	nav {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
-@media (max-width: 640px) {
-	.hero-cards,
-	.grid,
-	nav {
-		grid-template-columns: 1fr;
-	}
-
-	.hero-cards a,
-	.card {
-		grid-template-columns: 2.5rem 1fr;
-	}
-
-	.hero-cards em,
-	.card em {
-		grid-column: 2;
-	}
-}
-</style>
