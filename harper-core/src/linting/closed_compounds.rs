@@ -1,6 +1,73 @@
-use crate::linting::LintGroup;
+use crate::expr::{Expr, FixedPhrase};
+use crate::linting::expr_linter::Chunk;
+use crate::linting::{ExprLinter, Lint, LintGroup, LintKind, Suggestion};
+use crate::{Token, TokenStringExt};
 
 use super::MapPhraseLinter;
+
+struct Overall {
+    expr: FixedPhrase,
+}
+
+impl Default for Overall {
+    fn default() -> Self {
+        Self {
+            expr: FixedPhrase::from_phrase("over all"),
+        }
+    }
+}
+
+impl ExprLinter for Overall {
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if followed_by_quantifier_complement(context, source) {
+            return None;
+        }
+
+        let span = matched_tokens.span()?;
+        let matched_text = span.get_content(source);
+
+        Some(Lint {
+            span,
+            lint_kind: LintKind::Miscellaneous,
+            suggestions: vec![Suggestion::replace_with_match_case(
+                "overall".chars().collect(),
+                matched_text,
+            )],
+            message: "Did you mean the closed compound `overall`?".to_string(),
+            priority: 31,
+        })
+    }
+
+    fn description(&self) -> &str {
+        "Looks for incorrect spacing inside the closed compound `overall`."
+    }
+}
+
+fn followed_by_quantifier_complement(
+    context: Option<(&[Token], &[Token])>,
+    source: &[char],
+) -> bool {
+    if let Some((_, after)) = context
+        && let [ws, word, ..] = after
+        && ws.kind.is_whitespace()
+    {
+        let word = word.get_str(source);
+        return word.eq_ignore_ascii_case("the") || word.eq_ignore_ascii_case("of");
+    }
+
+    false
+}
 
 pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();
@@ -57,7 +124,6 @@ pub fn lint_group() -> LintGroup {
         "Nothing"         => (&["no thing"][..], "nothing"),
         "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
         "Nowhere"         => (&["no where"][..], "nowhere"),
-        "Overall"         => (&["over all"][..], "overall"),
         "Overclocking"    => (&["over clocking"][..], "overclocking"),
         "Overload"        => (&["over load"][..], "overload"),
         "Overnight"       => (&["over night"][..], "overnight"),
@@ -82,6 +148,8 @@ pub fn lint_group() -> LintGroup {
         "Worldwide"       => (&["world wide"][..], "worldwide"),
         "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
     });
+
+    group.add("Overall", Box::new(Overall::default()));
 
     group.set_all_rules_to(Some(true));
 
@@ -155,6 +223,19 @@ mod tests {
         let test_sentence = "The over all performance was good.";
         let expected = "The overall performance was good.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn over_all_the_is_allowed() {
+        assert_no_lints("Iterate over all the save data in the slot.", lint_group());
+    }
+
+    #[test]
+    fn over_all_of_the_is_allowed() {
+        assert_no_lints(
+            "Iterate over all of the save data in the slot.",
+            lint_group(),
+        );
     }
 
     #[test]
