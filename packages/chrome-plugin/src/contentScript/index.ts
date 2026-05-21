@@ -39,6 +39,12 @@ const fw = new LintFramework(
 
 const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
 
+function isOverleafPage(): boolean {
+	return (
+		window.location.hostname === 'overleaf.com' || window.location.hostname === 'www.overleaf.com'
+	);
+}
+
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
 	const normalizedEnd = Math.max(normalizedStart, Math.min(end, source.length));
@@ -138,10 +144,12 @@ function scan() {
 	document
 		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')
 		.forEach((element) => {
+			const language = element.getAttribute('data-language');
 			const isTypstPlayground = window.location.hostname === 'typst.app';
-			const explicitlyTypst = element.getAttribute('data-language') === 'typst';
+			const isSupportedCodeMirrorEditor =
+				isTypstPlayground || isOverleafPage() || language === 'typst' || language === 'latex';
 
-			if (!isTypstPlayground && !explicitlyTypst) {
+			if (!isSupportedCodeMirrorEditor) {
 				return;
 			}
 
@@ -153,7 +161,12 @@ function scan() {
 				return;
 			}
 
-			element.setAttribute('data-language', 'typst');
+			if (isOverleafPage()) {
+				element.setAttribute('data-language', 'latex');
+			} else if (isTypstPlayground) {
+				element.setAttribute('data-language', 'typst');
+			}
+
 			fw.addTarget(element);
 		});
 

@@ -140,8 +140,8 @@ export default class LintFramework {
 
 				if (isCM) {
 					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
-					const lines = Array.from(lineElements).map((el) => el.textContent);
-					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
+					const lines = Array.from(lineElements).map((el) => el.textContent ?? '');
+					text = lines.join('\n');
 				} else {
 					text =
 						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
@@ -149,39 +149,15 @@ export default class LintFramework {
 							: (target as HTMLElement).innerText;
 				}
 
-				const newLineIndices = [];
-				let i = 0;
-				for (const c of text ?? '') {
-					if (c == '\n') {
-						newLineIndices.push(i);
-					}
-					i++;
-				}
-
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
 				const language = getTargetLanguage(target);
-				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+				const lintsBySource = await this.lintProvider(text, window.location.hostname, {
 					forceAllHeadings: isHeading(target),
 					language,
 				});
-
-				if (isCM) {
-					// We're about to modify a reference, so let's work on a copy.
-					lintsBySource = window.structuredClone(lintsBySource);
-
-					for (const lints of Object.values(lintsBySource)) {
-						for (const lint of lints) {
-							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
-
-							lint.span.start -= offset_start;
-							lint.span.end -= offset_end;
-						}
-					}
-				}
 
 				return { target: target as HTMLElement, lints: lintsBySource };
 			}),
