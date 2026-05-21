@@ -14,6 +14,17 @@ function inferGlueFlavor(binary: string): WasmGlueFlavor {
 	return binary.includes('harper_wasm_slim') ? 'slim' : 'full';
 }
 
+/**
+ * Resolve the glue flavor for a binary module.
+ *
+ * `glueFlavor` is intentionally optional on the public `BinaryModule` interface so
+ * older/custom BinaryModule-like objects remain structurally compatible. When it is
+ * absent, fall back to inferring the flavor from the binary URL.
+ */
+export function resolveWasmGlueFlavor(binary: Pick<BinaryModule, 'url' | 'glueFlavor'>): WasmGlueFlavor {
+	return binary.glueFlavor ?? inferGlueFlavor(typeof binary.url === 'string' ? binary.url : binary.url.href);
+}
+
 function loadGlue(glueFlavor: WasmGlueFlavor): WasmModule {
 	if (glueFlavor === 'slim') {
 		return defaultGlue as WasmModule;
@@ -77,7 +88,7 @@ function loadBinary(binary: string, glueFlavor: WasmGlueFlavor) {
 
 export interface BinaryModule {
 	url: string | URL;
-	glueFlavor: WasmGlueFlavor;
+	glueFlavor?: WasmGlueFlavor;
 
 	getDefaultLintConfigAsJSON(): Promise<string>;
 
