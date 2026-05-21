@@ -1,8 +1,3 @@
-/*
-let message "Did you mean `by accident`?"
-let description "Incorrect preposition: `by accident` is the idiomatic expression."
- */
-
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr},

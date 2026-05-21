@@ -28,6 +28,7 @@ pub struct Config {
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
+    pub debounce_ms: u64,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -44,6 +45,7 @@ impl Config {
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Self::curated_integrations(),
+            debounce_ms: 0,
         }
     }
 
@@ -170,6 +172,7 @@ impl Config {
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
+            "debounce_ms": self.debounce_ms,
         }))
     }
 
@@ -187,6 +190,7 @@ impl Config {
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
                 .unwrap_or_else(Self::curated_integrations),
+            debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
         })
     }
 }
@@ -247,6 +251,7 @@ mod tests {
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
         assert!(serialized.contains("integrations"));
+        assert!(serialized.contains("debounce_ms"));
     }
 
     #[test]
@@ -262,6 +267,7 @@ mod tests {
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(deserialized.integrations, config.integrations);
+        assert_eq!(deserialized.debounce_ms, config.debounce_ms);
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -290,6 +296,18 @@ mod tests {
         let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
 
         assert_eq!(deserialized.integrations, Config::curated_integrations());
+    }
+
+    #[test]
+    fn deserialize_main_uses_zero_debounce_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("debounce_ms");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.debounce_ms, 0);
     }
 
     #[test]
