@@ -8,6 +8,7 @@ pub enum Request {
     GetLintConfig,
     GetDictionary,
     GetDialect,
+    GetDebounceMs,
     GetIgnoredLints,
     GetIntegrations,
     SetLintConfig { config: FlatConfig },
@@ -24,6 +25,7 @@ pub enum Response {
     GetLintConfig { config: FlatConfig },
     GetDictionary { words: Vec<String> },
     GetDialect { dialect: Dialect },
+    GetDebounceMs { debounce_ms: u64 },
     GetIgnoredLints { ignored_lints: IgnoredLints },
     GetIntegrations { integrations: Vec<Integration> },
     Ack,
@@ -66,6 +68,14 @@ mod tests {
         let decoded: Request = serde_json::from_str(&encoded).unwrap();
 
         assert!(matches!(decoded, Request::GetDialect));
+    }
+
+    #[test]
+    fn get_debounce_ms_request_serializes_as_json() {
+        let encoded = serde_json::to_string(&Request::GetDebounceMs).unwrap();
+        let decoded: Request = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Request::GetDebounceMs));
     }
 
     #[test]
@@ -189,6 +199,15 @@ mod tests {
                 dialect: Dialect::British
             }
         ));
+    }
+
+    #[test]
+    fn debounce_ms_response_serializes_as_json() {
+        let response = Response::GetDebounceMs { debounce_ms: 250 };
+        let encoded = serde_json::to_string(&response).unwrap();
+        let decoded: Response = serde_json::from_str(&encoded).unwrap();
+
+        assert!(matches!(decoded, Response::GetDebounceMs { debounce_ms } if debounce_ms == 250));
     }
 
     #[test]

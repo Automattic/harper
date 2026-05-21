@@ -1,27 +1,30 @@
+default:
+  @just --list
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  # Clean all harper-* directories as they all have a rust backend and build into target
+  # Clean target + all harper-* directories as they all have a rust backend and build into target
   cargo clean
 
   # Handle packages/*
 
   # The path stem is not combined into one file expansion because if they pop up into
   # another directory, there is a chance they should not be removed.
-  rm -rf packages/chrome-plugin/{build,package}
-  rm -rf packages/components/{.svelte-kit,dist}
-  rm -rf packages/harper-editor/{.svelte-kit,dist}
-  rm -rf packages/harper.js/{dist,markdown,temp}
-  rm -rf packages/lint-framework/{dist}
-  rm -rf packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
-  rm -rf packages/vscode-plugin/{.vscode-test,bin,build}
-  rm -rf packages/web/{.svelte-kit,.sveltepress,build}
-  rm -rf packages/wordpress-plugin/{build,harper.zip}
-  rm -rf harper-desktop/{.svelte-kit,build,package}
-  rm -rf harper-wasm/pkg
+
+  rm -rf "{{justfile_directory()}}"/packages/chrome-plugin/{build,package}
+  rm -rf "{{justfile_directory()}}"/packages/components/{.svelte-kit,dist}
+  rm -rf "{{justfile_directory()}}"/packages/harper.js/{dist,markdown,temp}
+  rm -rf "{{justfile_directory()}}"/packages/lint-framework/{dist}
+  rm -rf "{{justfile_directory()}}"/packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
+  rm -rf "{{justfile_directory()}}"/packages/vscode-plugin/{.vscode-test,bin,build}
+  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf "{{justfile_directory()}}"/packages/wordpress-plugin/{build,harper.zip}
+  rm -rf "{{justfile_directory()}}"/harper-desktop/{.svelte-kit,build,package}
+  rm -rf "{{justfile_directory()}}"/harper-wasm/pkg
 
 # Hard clean all build artifacts and dependencies
 hard-clean: soft-clean
@@ -29,7 +32,7 @@ hard-clean: soft-clean
   set -eo pipefail
 
   # Remove all node dependencies
-  rm -rf **/node_modules 
+  find "{{justfile_directory()}}" -type d -name "node_modules" -prune -exec rm -rf {} +
   # Prune node cache
   pnpm store prune
 

@@ -134,6 +134,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
         ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
+        ),
         "DefiniteArticle" => (
             &[
                 ("definitive article", "definite article"),

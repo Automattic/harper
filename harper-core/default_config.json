@@ -1316,6 +1316,13 @@
 								"state": true,
 								"label": "Expand Vulnerability"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
+							}
 						}
 					]
 				}
@@ -1517,6 +1524,13 @@
 								"name": "BluRayHyphen",
 								"state": true,
 								"label": "Blu Ray Hyphen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
 							}
 						},
 						{
@@ -1999,6 +2013,13 @@
 								"name": "TheMy",
 								"state": true,
 								"label": "The My"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
 							}
 						},
 						{
@@ -2712,6 +2733,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BoringWords",
 								"state": false,
 								"label": "Boring Words"
@@ -3023,6 +3051,13 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForFreeOfCharge",
+								"state": true,
+								"label": "For Free of Charge"
 							}
 						}
 					]
@@ -4905,6 +4940,20 @@
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LongTimeAgo",
+								"state": true,
+								"label": "Long Time Ago"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
 							}
 						}
 					]
