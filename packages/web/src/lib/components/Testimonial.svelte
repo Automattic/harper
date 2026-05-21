@@ -6,8 +6,10 @@ export let accent = false;
 
 const baseFigureClasses =
 	'm-0 flex min-h-64 flex-col justify-between gap-4 rounded-2xl border p-6 transition duration-150 ease-out group-hover:-translate-y-px group-hover:border-primary group-hover:shadow-[0_10px_24px_-16px_rgba(0,0,0,0.16)]';
-const regularFigureClasses = 'border-black/10 bg-white text-black dark:border-white/10 dark:bg-black dark:text-white';
-const accentFigureClasses = 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black';
+const regularFigureClasses =
+	'border-black/10 bg-white text-black dark:border-white/10 dark:bg-black dark:text-white';
+const accentFigureClasses =
+	'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black';
 const baseBlockquoteClasses = 'm-0 border-0 bg-transparent p-0 not-italic text-inherit';
 const regularBlockquoteClasses = 'text-sm leading-relaxed';
 const accentBlockquoteClasses = 'font-serif text-[1.3125rem] font-bold leading-snug';

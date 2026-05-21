@@ -1,13 +1,13 @@
 <script lang="ts">
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import DesktopMockups from '$lib/marketing/DesktopMockups.svelte';
-import SimpleFAQ from '$lib/marketing/SimpleFAQ.svelte';
 import { compatibilityApps } from '$lib/marketing/data';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
 import PillButton from '$lib/marketing/PillButton.svelte';
 import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
+import SimpleFAQ from '$lib/marketing/SimpleFAQ.svelte';
 
 const faqs = [
 	{
