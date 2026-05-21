@@ -60,60 +60,67 @@ test('Scrolls correctly', async ({ page }) => {
 	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
 });
 
-test('Remaps textarea highlights during lint delay when typing before a lint', async ({
-	page,
-	context,
-}) => {
-	const background = await getBackground(context);
-	await background.evaluate(async () => {
-		await chrome.storage.local.set({ delay: 10000 });
+test.describe('textarea lint delay', () => {
+	test.skip(
+		({ browserName }) => browserName === 'firefox',
+		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
+	);
+
+	test('Remaps textarea highlights during lint delay when typing before a lint', async ({
+		page,
+		context,
+	}) => {
+		const background = await getBackground(context);
+		await background.evaluate(async () => {
+			await chrome.storage.local.set({ delay: 10000 });
+		});
+
+		await page.goto(TEST_PAGE_URL);
+
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
+
+		const highlight = getHarperHighlights(page).first();
+		await highlight.waitFor({ state: 'visible' });
+		const before = await highlight.boundingBox();
+		expect(before).not.toBeNull();
+
+		await editor.evaluate((el: HTMLTextAreaElement) => {
+			el.setSelectionRange('This is '.length, 'This is '.length);
+			el.focus();
+		});
+		await editor.pressSequentially('really ');
+
+		await expect
+			.poll(async () => (await highlight.boundingBox())?.x ?? null, { timeout: 2000 })
+			.toBeGreaterThan((before?.x ?? 0) + 35);
 	});
 
-	await page.goto(TEST_PAGE_URL);
+	test('Hides stale textarea highlights during lint delay when editing inside a lint', async ({
+		page,
+		context,
+	}) => {
+		const background = await getBackground(context);
+		await background.evaluate(async () => {
+			await chrome.storage.local.set({ delay: 10000 });
+		});
 
-	const editor = getTextarea(page);
-	await replaceEditorContent(editor, 'This is an test');
+		await page.goto(TEST_PAGE_URL);
 
-	const highlight = getHarperHighlights(page).first();
-	await highlight.waitFor({ state: 'visible' });
-	const before = await highlight.boundingBox();
-	expect(before).not.toBeNull();
+		const editor = getTextarea(page);
+		await replaceEditorContent(editor, 'This is an test');
 
-	await editor.evaluate((el: HTMLTextAreaElement) => {
-		el.setSelectionRange('This is '.length, 'This is '.length);
-		el.focus();
+		const highlights = getHarperHighlights(page);
+		await highlights.first().waitFor({ state: 'visible' });
+
+		await editor.evaluate((el: HTMLTextAreaElement) => {
+			el.setSelectionRange('This is a'.length, 'This is a'.length);
+			el.focus();
+		});
+		await editor.pressSequentially('x');
+
+		await expect.poll(async () => await highlights.count(), { timeout: 2000 }).toBe(0);
 	});
-	await editor.pressSequentially('really ');
-
-	await expect
-		.poll(async () => (await highlight.boundingBox())?.x ?? null, { timeout: 2000 })
-		.toBeGreaterThan((before?.x ?? 0) + 35);
-});
-
-test('Hides stale textarea highlights during lint delay when editing inside a lint', async ({
-	page,
-	context,
-}) => {
-	const background = await getBackground(context);
-	await background.evaluate(async () => {
-		await chrome.storage.local.set({ delay: 10000 });
-	});
-
-	await page.goto(TEST_PAGE_URL);
-
-	const editor = getTextarea(page);
-	await replaceEditorContent(editor, 'This is an test');
-
-	const highlights = getHarperHighlights(page);
-	await highlights.first().waitFor({ state: 'visible' });
-
-	await editor.evaluate((el: HTMLTextAreaElement) => {
-		el.setSelectionRange('This is a'.length, 'This is a'.length);
-		el.focus();
-	});
-	await editor.pressSequentially('x');
-
-	await expect.poll(async () => await highlights.count(), { timeout: 2000 }).toBe(0);
 });
 
 test('Can dismiss with escape key', async ({ page }) => {
