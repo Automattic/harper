@@ -4,6 +4,8 @@ on:
   push:
     branches: ["master"]
     tags: ["v*"]
+  pull_request:
+    branches: ["master"]
   merge_group:
 
 permissions:
