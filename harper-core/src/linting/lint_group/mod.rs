@@ -30,6 +30,7 @@ use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
+use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
@@ -583,6 +584,7 @@ impl LintGroup {
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
         insert_expr_rule!(AskNoPreposition, true);
+        insert_expr_rule!(AvoidContractions, false);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
