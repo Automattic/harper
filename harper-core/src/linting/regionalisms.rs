@@ -554,13 +554,13 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "tire",
         flag: HasOtherMeanings,
-        dialects: &[American],
+        dialects: &[American, Canadian],
         concept: TireTyre,
     },
     Term {
         term: "tyre",
         flag: Flag,
-        dialects: &[Australian, British, Canadian, Indian],
+        dialects: &[Australian, British, Indian],
         concept: TireTyre,
     },
     Term {
