@@ -38,7 +38,7 @@ fn keep_unique(values: &mut Vec<String>, word1: &[char], word2: &[char]) {
         word1.iter().collect::<String>(),
         word2.iter().collect::<String>()
     );
-    if !values.contains(&value) {
+    if !values.iter().any(|v| v.eq_ignore_ascii_case(&value)) {
         values.push(value);
     }
 }
@@ -176,6 +176,32 @@ mod tests {
             "Ands ometimes the space is a character late.",
             TransposedSpace::new(FstDictionary::curated()),
             "And sometimes the space is a character late.",
+        );
+    }
+
+    #[test]
+    fn no_duplicate_suggestions_case_insensitive() {
+        // Before the fix, "Thec at" could produce both "The cat" and "the cat"
+        // as suggestions because the canonical and raw forms differed only in case.
+        use crate::linting::tests::assert_suggestion_count;
+        // With the sensitive linter, "Thec at" should produce exactly 1 suggestion
+        // (the canonical form), not 2 (canonical + raw).
+        assert_suggestion_count(
+            "Thec at sat on the mat.",
+            TransposedSpace::sensitive(FstDictionary::curated()),
+            1,
+        );
+    }
+
+    #[test]
+    fn no_duplicate_suggestions_space_early() {
+        use crate::linting::tests::assert_suggestion_count;
+        // "Th ecat" should produce exactly 1 suggestion, not duplicates
+        // that differ only by case.
+        assert_suggestion_count(
+            "Th ecat sat on the mat.",
+            TransposedSpace::sensitive(FstDictionary::curated()),
+            1,
         );
     }
 }
