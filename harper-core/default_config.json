@@ -1305,6 +1305,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandDirectory",
+								"state": true,
+								"label": "Expand Directory"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandNotification",
 								"state": true,
 								"label": "Expand Notification"
