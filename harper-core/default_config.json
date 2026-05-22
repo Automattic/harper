@@ -3706,6 +3706,13 @@
 								"state": true,
 								"label": "A Some Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InRetaliationTo",
+								"state": true,
+								"label": "In Retaliation To"
+							}
 						}
 					]
 				}

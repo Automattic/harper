@@ -863,6 +863,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects incorrect variants of `in hindsight` to the standard phrase.",
             LintKind::Usage
         ),
+        "InRetaliationTo" => (
+            &[
+                (&["in retaliation to"], &["in retaliation for", "in response to"]),
+            ],
+            "Did you mean `in retaliation for` or `in response to`?",
+            "Corrects `in retaliation to` to `in retaliation for` or `in response to`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
