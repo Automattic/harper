@@ -1,5 +1,5 @@
 use crate::{
-    Lint, Token, TokenStringExt,
+    Lint, Token,
     expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
 };
@@ -30,9 +30,9 @@ fn gasp_at_straws_to_grasp(
     src: &[char],
     _ctx: Option<(&[Token], &[Token])>,
 ) -> Option<Lint> {
-    let (verb, straw) = (0, 4);
+    let verb = 0;
     let verb_span = toks[verb].span;
-    let (verb, straw) = (&toks[verb], &toks[straw]);
+    let verb = &toks[verb];
 
     let grasp_form = match &verb.kind {
         k if k.is_verb_lemma() => "grasp",
@@ -63,9 +63,8 @@ fn last_grasp_to_gasp(
     src: &[char],
     _ctx: Option<(&[Token], &[Token])>,
 ) -> Option<Lint> {
-    let (last, grasp) = (0, 2);
+    let grasp = 2;
     let action_span = toks[grasp].span;
-    let (last, action) = (&toks[last], &toks[grasp]);
 
     let lint_kind = LintKind::Malapropism;
     let suggestions = vec![Suggestion::replace_with_match_case_str(
