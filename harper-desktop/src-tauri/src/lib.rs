@@ -217,6 +217,48 @@ async fn set_debounce_ms(
 }
 
 #[tauri::command]
+async fn get_auto_update(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.auto_update)
+}
+
+#[tauri::command]
+async fn set_auto_update(
+    auto_update: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.auto_update = auto_update;
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn get_last_update_check(
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<Option<u64>, String> {
+    Ok(config.lock().await.last_update_check)
+}
+
+#[tauri::command]
+async fn set_last_update_check(
+    last_update_check: Option<u64>,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    config.last_update_check = last_update_check;
+    config
+        .save_to_system()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
 async fn set_dialect(
     dialect: Dialect,
     config: State<'_, Arc<Mutex<Config>>>,
@@ -441,6 +483,10 @@ pub fn run_tauri() {
             get_dialect,
             get_debounce_ms,
             set_debounce_ms,
+            get_auto_update,
+            set_auto_update,
+            get_last_update_check,
+            set_last_update_check,
             set_dialect,
             set_lint_config,
             get_dictionary,
@@ -470,6 +516,9 @@ pub fn run_tauri() {
             let is_service_running = app.state::<HighlighterService>().is_running();
             let menu = tray_menu(app, is_service_running)?;
             let service_toggle = menu.service_toggle.clone();
+
+            app.handle()
+                .plugin(tauri_plugin_updater::Builder::new().build())?;
 
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
@@ -639,6 +688,8 @@ pub fn run_highlighter() {
             lint_config,
             integrations: Vec::new(),
             debounce_ms: *dictionary_debounce_ms.borrow(),
+            auto_update: true,
+            last_update_check: None,
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
@@ -712,6 +763,8 @@ fn fetch_highlighter_config(
             lint_config,
             integrations,
             debounce_ms,
+            auto_update: true,
+            last_update_check: None,
         })
     })
 }

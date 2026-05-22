@@ -29,6 +29,8 @@ pub struct Config {
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
     pub debounce_ms: u64,
+    pub auto_update: bool,
+    pub last_update_check: Option<u64>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -46,6 +48,8 @@ impl Config {
             lint_config: FlatConfig::new_curated(),
             integrations: Self::curated_integrations(),
             debounce_ms: 0,
+            auto_update: true,
+            last_update_check: None,
         }
     }
 
@@ -173,6 +177,8 @@ impl Config {
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
             "debounce_ms": self.debounce_ms,
+            "auto_update": self.auto_update,
+            "last_update_check": self.last_update_check,
         }))
     }
 
@@ -191,6 +197,12 @@ impl Config {
             integrations: deserialize_optional_field(object, "integrations")?
                 .unwrap_or_else(Self::curated_integrations),
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
+            auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
+            last_update_check: deserialize_optional_field::<Option<u64>>(
+                object,
+                "last_update_check",
+            )?
+            .flatten(),
         })
     }
 }
@@ -252,6 +264,8 @@ mod tests {
         assert!(serialized.contains("lint_config"));
         assert!(serialized.contains("integrations"));
         assert!(serialized.contains("debounce_ms"));
+        assert!(serialized.contains("auto_update"));
+        assert!(serialized.contains("last_update_check"));
     }
 
     #[test]
@@ -268,6 +282,8 @@ mod tests {
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(deserialized.integrations, config.integrations);
         assert_eq!(deserialized.debounce_ms, config.debounce_ms);
+        assert_eq!(deserialized.auto_update, config.auto_update);
+        assert_eq!(deserialized.last_update_check, config.last_update_check);
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -308,6 +324,20 @@ mod tests {
         let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
 
         assert_eq!(deserialized.debounce_ms, 0);
+    }
+
+    #[test]
+    fn deserialize_main_uses_default_update_settings_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("auto_update");
+        value.as_object_mut().unwrap().remove("last_update_check");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.auto_update);
+        assert_eq!(deserialized.last_update_check, None);
     }
 
     #[test]
