@@ -1,6 +1,6 @@
 [package]
 name = "harper-desktop"
-version = "0.1.0"
+version = "2.2.0"
 description = "A Tauri App"
 authors = ["you"]
 edition = "2024"
@@ -53,3 +53,7 @@ core-graphics = "0.25.0"
 
 [target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
 tauri-plugin-autostart = "2.5.1"
+tauri-plugin-updater = "2"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"
