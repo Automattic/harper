@@ -38,8 +38,9 @@ mod vec_ext;
 pub mod weir;
 pub mod weirpack;
 
+use hashbrown::HashSet;
 use render_markdown::render_markdown;
-use std::collections::{BTreeMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, VecDeque};
 
 pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
@@ -173,13 +174,14 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
         if span.start < cur {
             // This lint overlaps with the previous one.
             // If spans match exactly, queue suggestions for merging.
-            if let Some(kept) = last_kept {
-                if span.start == kept.start && span.end == kept.end {
-                    pending_merges
-                        .entry((kept.rule_idx, kept.lint_idx))
-                        .or_default()
-                        .extend(span.suggestions.iter().cloned());
-                }
+            if let Some(kept) = last_kept
+                && span.start == kept.start
+                && span.end == kept.end
+            {
+                pending_merges
+                    .entry((kept.rule_idx, kept.lint_idx))
+                    .or_default()
+                    .extend(span.suggestions.iter().cloned());
             }
             removal_flags[span.rule_idx][span.lint_idx] = true;
         } else {
@@ -190,12 +192,12 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
     // Apply merges: extend surviving lints with suggestions from removed overlapping lints.
     for ((rule_idx, lint_idx), extra_suggestions) in pending_merges {
-        if let Some((_, lints)) = lint_map.iter_mut().nth(rule_idx) {
-            if let Some(lint) = lints.get_mut(lint_idx) {
-                lint.suggestions.extend(extra_suggestions);
-                let mut seen = HashSet::new();
-                lint.suggestions.retain(|s| seen.insert(s.clone()));
-            }
+        if let Some((_, lints)) = lint_map.iter_mut().nth(rule_idx)
+            && let Some(lint) = lints.get_mut(lint_idx)
+        {
+            lint.suggestions.extend(extra_suggestions);
+            let mut seen = HashSet::new();
+            lint.suggestions.retain(|s| seen.insert(s.clone()));
         }
     }
 
