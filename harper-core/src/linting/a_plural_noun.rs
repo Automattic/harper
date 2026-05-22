@@ -48,6 +48,10 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
+        if is_all_caps_proper_initialism(noun, src) {
+            return None;
+        }
+
         if is_to_pieces_preposition_typo(lint_toks, src, ctx)
             || is_plural_location_determiner_typo(lint_toks, src, ctx)
         {
@@ -71,6 +75,12 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
 
         if noun.kind.is_verb_third_person_singular_present_form()
             && looks_like_third_person_verb_use(noun, ctx)
+        {
+            return None;
+        }
+
+        if noun.kind.is_verb_third_person_singular_present_form()
+            && follows_singular_subject_in_phrase(lint_toks, noun)
         {
             return None;
         }
@@ -289,6 +299,24 @@ fn looks_like_third_person_verb_use(noun: &Token, ctx: Option<(&[Token], &[Token
         || next.kind.is_upos(UPOS::PRON)
 }
 
+fn follows_singular_subject_in_phrase(toks: &[Token], noun: &Token) -> bool {
+    let Some(noun_index) = toks.iter().position(|tok| tok.span == noun.span) else {
+        return false;
+    };
+
+    let Some(previous) = toks[..noun_index]
+        .iter()
+        .rev()
+        .find(|tok| !tok.kind.is_whitespace())
+    else {
+        return false;
+    };
+
+    previous.kind.is_upos(UPOS::NOUN)
+        && previous.kind.is_singular_noun()
+        && !previous.kind.is_plural_noun()
+}
+
 fn has_line_boundary(toks: &[Token]) -> bool {
     toks.iter()
         .any(|tok| tok.kind.is_newline() || tok.kind.is_paragraph_break())
@@ -298,6 +326,16 @@ fn has_modifier_before_noun(toks: &[Token], noun: &Token) -> bool {
     toks.iter()
         .skip(1)
         .any(|tok| !tok.kind.is_whitespace() && tok.span != noun.span)
+}
+
+fn is_all_caps_proper_initialism(tok: &Token, src: &[char]) -> bool {
+    let content = tok.span.get_content(src);
+
+    tok.kind.is_proper_noun()
+        && content.len() > 1
+        && content
+            .iter()
+            .all(|ch| !ch.is_alphabetic() || ch.is_uppercase())
 }
 
 fn is_directional_adverb(tok: &Token, src: &[char]) -> bool {
@@ -538,6 +576,33 @@ mod tests {
     #[test]
     fn allows_third_person_verb_after_noun_modifier_subject() {
         crate::linting::tests::assert_no_lints("A problem remains in the design.", linter());
+    }
+
+    #[test]
+    fn allows_third_person_verb_after_singular_subject_without_pos_tag() {
+        crate::linting::tests::assert_no_lints(
+            "When a rollout finishes, the job continues.",
+            linter(),
+        );
+    }
+
+    #[test]
+    fn allows_third_person_verb_after_singular_subject_with_pos_tag() {
+        crate::linting::tests::assert_no_lints("A system crashes after startup.", linter());
+    }
+
+    #[test]
+    fn allows_all_caps_proper_initialism_head() {
+        crate::linting::tests::assert_no_lints(
+            "Consider turning it on after clean installing a new OS and fully updating it.",
+            linter(),
+        );
+        crate::linting::tests::assert_no_lints("Ouroboros is an Agent OS for AI coding.", linter());
+    }
+
+    #[test]
+    fn still_corrects_all_caps_common_plural() {
+        assert_suggestion_result("I saw a DOGS.", linter(), "I saw a DOG.");
     }
 
     #[test]
