@@ -51,7 +51,7 @@ const faqs = [
 					and Discord.
 				</p>
 				<div class="mt-6 flex flex-col items-start gap-[0.6rem] [&_svg]:size-[0.95rem] [&_svg]:fill-current">
-					<PillButton disabled size="lg">
+					<PillButton href="/desktop/download" size="lg">
 						<svg slot="icon" viewBox="0 0 24 24" aria-hidden="true">
 							<path
 								d="M17.05 12.4c-.04-3.1 2.53-4.6 2.65-4.66-1.45-2.1-3.69-2.4-4.49-2.43-1.91-.2-3.73 1.13-4.7 1.13-.97 0-2.46-1.1-4.06-1.07-2.09.03-4.02 1.22-5.09 3.08-2.17 3.76-.55 9.31 1.55 12.37 1.03 1.5 2.24 3.17 3.84 3.12 1.56-.06 2.14-1 4.02-1s2.42 1 4.06.97c1.68-.02 2.74-1.5 3.76-3.02 1.19-1.73 1.67-3.4 1.7-3.5-.04-.02-3.27-1.26-3.3-4.99zM14.05 3.95c.85-1.04 1.43-2.48 1.27-3.91-1.23.05-2.72.82-3.6 1.86-.79.92-1.49 2.4-1.3 3.81 1.37.1 2.78-.7 3.63-1.76z"
@@ -59,7 +59,7 @@ const faqs = [
 						</svg>
 						Download for macOS
 					</PillButton>
-					<span class="text-xs text-[#807a6e] dark:text-white/55">Beta coming soon · macOS 14+ · Apple Silicon &amp; Intel</span>
+					<span class="text-xs text-[#807a6e] dark:text-white/55">macOS 14+ · Apple Silicon &amp; Intel</span>
 				</div>
 			</div>
 			<div class="relative h-[33.75rem] max-[1040px]:h-auto">
@@ -130,9 +130,9 @@ const faqs = [
 				Free. Forever. Yours.
 			</h2>
 			<p class="!mt-6 !mb-[1.6rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
-				Harper Desktop will be free, like the rest of Harper. No account or credit card necessary.
+				Harper Desktop is free, like the rest of Harper. No account or credit card necessary.
 			</p>
-			<PillButton disabled size="lg">Beta coming soon</PillButton>
+			<PillButton href="/desktop/download" size="lg">Download for macOS</PillButton>
 			<div class='mt-4 text-xs text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>macOS 14 Sonoma or later · Apple Silicon &amp; Intel</div>
 		</div>
 	</section>
