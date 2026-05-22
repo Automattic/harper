@@ -82,7 +82,7 @@ impl ExprLinter for RedundantAcronyms {
             .find(|(a, _, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
 
         // Skip if AllCapsOnly flag is set and acronym is not all caps
-        if matches!(flag, Flag::AllCapsOnly) && acronym_str != acronym_str.to_uppercase() {
+        if matches!(flag, AllCapsOnly) && !acronym_str.chars().all(|c| c.is_ascii_uppercase()) {
             return Option::None;
         }
 
@@ -90,7 +90,7 @@ impl ExprLinter for RedundantAcronyms {
             .iter()
             .all(|c| c.is_ascii_alphabetic() && c.is_ascii_uppercase());
 
-        let plural_ending = if matches!(flag, Flag::DontPluralizeAcronym) {
+        let plural_ending = if matches!(flag, DontPluralizeAcronym) {
             String::new()
         } else {
             last_word_chars
