@@ -22,6 +22,7 @@ mod apart_from;
 mod arrive_to;
 mod ask_no_preposition;
 mod aspire_to;
+mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
 mod be_adjective_confusions;
