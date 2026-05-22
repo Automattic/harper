@@ -1012,13 +1012,23 @@ mod tests {
         );
     }
 
-    #[test]
-    fn allows_informal_laughter() {
-        for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
-            assert_no_lints(
-                source,
-                SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            );
-        }
-    }
+ #[test]
+ fn allows_informal_laughter() {
+ for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
+ assert_no_lints(
+ source,
+ SpellCheck::new(FstDictionary::curated(), Dialect::American),
+ );
+ }
+ }
+
+ /// Regression test for <https://github.com/Automattic/harper/issues/3362>
+ #[test]
+ fn athough_suggests_although() {
+ assert_suggestion_result(
+ "I went athough the door.",
+ SpellCheck::new(FstDictionary::curated(), Dialect::American),
+ "I went although the door.",
+ );
+ }
 }
