@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct FellowCoRedundancy {
@@ -74,21 +74,14 @@ impl Default for FellowCoRedundancy {
 impl ExprLinter for FellowCoRedundancy {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, context, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+        // "co" and the whitespace or hyphen is 2 tokens, "co" is also 2 chars
 
-        // "co" and the whitespace or hyphen is 2 tokens, "co" is also two chars
+        let (fellow_sep, co_worker) = toks.split_at(2);
 
-        let (fellow_sep, co_verber) = toks.split_at(2);
-
-        let (co, verber) = match co_verber.len() {
-            1 => co_verber[0].get_ch(src).split_at(2),
-            3 => (co_verber[0..2].get_ch(src)?, co_verber[2..].get_ch(src)?),
+        let (co, worker) = match co_worker.len() {
+            1 => co_worker[0].get_ch(src).split_at(2),
+            3 => (co_worker[0..2].get_ch(src)?, co_worker[2..].get_ch(src)?),
             _ => return None,
         };
 
@@ -97,7 +90,7 @@ impl ExprLinter for FellowCoRedundancy {
             lint_kind: LintKind::Redundancy,
             suggestions: [co, fellow_sep.get_ch(src)?]
                 .map(|cf| {
-                    Suggestion::ReplaceWith(cf.iter().chain(verber.iter()).copied().collect())
+                    Suggestion::ReplaceWith(cf.iter().chain(worker.iter()).copied().collect())
                 })
                 .into(),
             message: "Using `fellow` with `co` is redundant.".to_string(),
