@@ -411,6 +411,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InThisThatRegard" => (
+            &[
+                ("in this regards", "in this regard"),
+                ("in that regards", "in that regard"),
+            ],
+            "Use `in this/that regard` with singular `regard`.",
+            "Corrects `in this/that regards` to `in this/that regard`.",
+            LintKind::Usage
+        ),
         "InflectionPoint" => (
             &[
                 ("infliction point", "inflection point"),
