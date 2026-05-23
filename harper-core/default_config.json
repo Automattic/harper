@@ -5173,12 +5173,19 @@
 							}
 						},
 						{
-							"Bool": {
-								"name": "GoSoFarAsTo",
-								"state": true,
-								"label": "Go So Far As To"
-							}
-						},
+						"Bool": {
+							"name": "GoBackAgo",
+							"state": true,
+							"label": "Go Back Ago"
+						}
+					},
+					{
+						"Bool": {
+							"name": "GoSoFarAsTo",
+							"state": true,
+							"label": "Go So Far As To"
+						}
+					},
 						{
 							"Bool": {
 								"name": "GoToWar",
