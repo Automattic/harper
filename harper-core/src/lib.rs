@@ -307,4 +307,67 @@ mod tests {
         assert_eq!(lints.len(), 1);
         assert_eq!(lints[0].suggestions.len(), 2);
     }
+
+    /// Regression test for <https://github.com/Automattic/harper/issues/2460>
+    /// When SpellCheck and SplitWords both flag a compound like "titlecase",
+    /// suggestions from both linters should be preserved.
+    #[test]
+    fn overlapping_spellcheck_splitwords_merge_suggestions() {
+        use crate::linting::{LintKind, Suggestion};
+        use crate::span::Span;
+
+        let span = Span::new(0, 9);
+        let spell_lint = Lint {
+            span,
+            lint_kind: LintKind::Spelling,
+            suggestions: vec![Suggestion::ReplaceWith("title's".chars().collect())],
+            message: "Possibly misspelled word.".to_string(),
+            priority: 63,
+        };
+        let split_lint = Lint {
+            span,
+            lint_kind: LintKind::Spelling,
+            suggestions: vec![Suggestion::ReplaceWith("title case".chars().collect())],
+            message: "Possibly missing space.".to_string(),
+            priority: 63,
+        };
+
+        let mut lints = vec![spell_lint, split_lint];
+        remove_overlaps(&mut lints);
+
+        // After overlap removal, one lint should remain with both suggestions.
+        assert_eq!(lints.len(), 1);
+        assert!(lints[0].suggestions.len() >= 2);
+    }
+
+    /// When overlapping lints share identical suggestions, deduplication
+    /// should ensure no duplicates remain.
+    #[test]
+    fn overlapping_lints_deduplicate_suggestions() {
+        use crate::linting::{LintKind, Suggestion};
+        use crate::span::Span;
+
+        let span = Span::new(0, 7);
+        let lint_a = Lint {
+            span,
+            lint_kind: LintKind::Spelling,
+            suggestions: vec![Suggestion::ReplaceWith("although".chars().collect())],
+            message: "Possibly misspelled word.".to_string(),
+            priority: 63,
+        };
+        let lint_b = Lint {
+            span,
+            lint_kind: LintKind::Spelling,
+            suggestions: vec![Suggestion::ReplaceWith("although".chars().collect())],
+            message: "Another checker.".to_string(),
+            priority: 63,
+        };
+
+        let mut lints = vec![lint_a, lint_b];
+        remove_overlaps(&mut lints);
+
+        assert_eq!(lints.len(), 1);
+        // Same suggestion from both lints should be deduplicated.
+        assert_eq!(lints[0].suggestions.len(), 1);
+    }
 }

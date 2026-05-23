@@ -1026,9 +1026,9 @@ mod tests {
     #[test]
     fn athough_suggests_although() {
         assert_suggestion_result(
-            "He came athough he was tired.",
+            "We kept going athough it was raining.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "He came although he was tired.",
+            "We kept going although it was raining.",
         );
     }
 }
