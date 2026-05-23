@@ -82,6 +82,7 @@ use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
 use super::feel_fell::FeelFell;
+use super::fellow_co_redundancy::FellowCoRedundancy;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
@@ -635,6 +636,7 @@ impl LintGroup {
         insert_expr_rule!(FascinatedBy, true);
         insert_expr_rule_with_dialect!(FedUpWith, true);
         insert_expr_rule!(FeelFell, true);
+        insert_expr_rule!(FellowCoRedundancy, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FindFine, true);
