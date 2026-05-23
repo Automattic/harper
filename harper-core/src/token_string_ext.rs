@@ -302,3 +302,57 @@ impl TokenStringExt for [Token] {
         self
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::{Document, TokenKind, TokenStringExt};
+
+    #[test]
+    fn comma_splits_chunk() {
+        let doc = Document::new_markdown_default_curated("first part, second part");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 2);
+    }
+
+    #[test]
+    fn semicolon_splits_chunk() {
+        let doc = Document::new_markdown_default_curated("first part; second part");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 2);
+    }
+
+    #[test]
+    fn period_splits_chunk() {
+        let doc = Document::new_markdown_default_curated("First sentence. Second sentence");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 2);
+    }
+
+    #[test]
+    fn colon_splits_chunk() {
+        let doc = Document::new_markdown_default_curated("heading: body text");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 2);
+    }
+
+    #[test]
+    fn no_terminator_produces_single_chunk() {
+        let doc =
+            Document::new_markdown_default_curated("just a simple sentence without terminators");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 1);
+    }
+
+    #[test]
+    fn semicolon_chunk_contains_terminator() {
+        use crate::Punctuation;
+        let doc = Document::new_markdown_default_curated("first part; second part");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        // The first chunk should end with a semicolon (split_inclusive keeps the terminator)
+        let last_kind = &chunks[0].last().unwrap().kind;
+        assert!(
+            matches!(last_kind, TokenKind::Punctuation(Punctuation::Semicolon)),
+            "First chunk should end with semicolon, got: {last_kind:?}"
+        );
+    }
+}

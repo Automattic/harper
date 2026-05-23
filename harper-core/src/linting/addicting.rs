@@ -15,8 +15,6 @@ impl Default for Addicting {
             expr: SequenceExpr::aco("addicting").then_longest_of(vec![
                 // matches `addicting` without anything after
                 Box::new(AnchorEnd),
-                // Semicolon is not handled like comma is for `Chunk` - TODO: remove when #3405 is fixed
-                Box::new(SequenceExpr::default().then_semicolon()),
                 // matches `addicting` <ws> [ any word but not a reflexive pronoun or object pronoun ]
                 Box::new(SequenceExpr::whitespace().then(All::new(vec![
                     // positive - any word
@@ -161,7 +159,7 @@ mod tests {
     }
 
     #[test]
-    fn fix_at_end_with_semicolon_no_commas_due_to_chunk_mode() {
+    fn fix_at_end_with_semicolon_standalone_chunk() {
         assert_suggestion_result(
             "Extremely addicting; Best game played in a long time",
             Addicting::default(),
