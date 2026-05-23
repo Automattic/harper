@@ -54621,6 +54621,7 @@ timespan/NgS
 tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
+uncomment/VSdG
 unicast/JVSdG
 unlintable/J
 upsert/VdSGNg       # database operation: update or insert
