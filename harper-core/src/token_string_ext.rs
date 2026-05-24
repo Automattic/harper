@@ -225,8 +225,52 @@ pub trait TokenStringExt: private::Sealed {
     /// Here is an example, it is short.
     /// ```
     fn iter_chunks(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
-        self.tokens()
-            .split_inclusive(|tok| tok.kind.is_chunk_terminator())
+        struct ChunkIter<'a> {
+            rem: &'a [Token],
+        }
+
+        impl<'a> Iterator for ChunkIter<'a> {
+            type Item = &'a [Token];
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.rem.is_empty() {
+                    return None;
+                }
+
+                let split = self
+                    .rem
+                    .iter()
+                    .enumerate()
+                    .find_map(|(i, tok)| {
+                        if tok.kind.is_chunk_terminator() {
+                            // A semicolon only splits a chunk when it acts as a
+                            // clause separator (followed by whitespace or end of
+                            // tokens).  When it sits between two words with no
+                            // intervening whitespace — e.g. "don;t" — it is almost
+                            // certainly an apostrophe typo, not a clause break, so
+                            // keep it inside the current chunk so that
+                            // WrongApostrophe can still match across it.
+                            if tok.kind.is_semicolon() {
+                                let next_is_space =
+                                    self.rem.get(i + 1).is_none_or(|t| t.kind.is_whitespace());
+                                if !next_is_space {
+                                    return None; // don't split here
+                                }
+                            }
+                            Some(i + 1)
+                        } else {
+                            None
+                        }
+                    })
+                    .unwrap_or(self.rem.len());
+
+                let (chunk, rest) = self.rem.split_at(split);
+                self.rem = rest;
+                Some(chunk)
+            }
+        }
+
+        ChunkIter { rem: self.tokens() }
     }
 
     /// Get an iterator over token slices that represent the individual
@@ -348,11 +392,35 @@ mod tests {
         use crate::Punctuation;
         let doc = Document::new_markdown_default_curated("first part; second part");
         let chunks: Vec<_> = doc.iter_chunks().collect();
-        // The first chunk should end with a semicolon (split_inclusive keeps the terminator)
+        // The first chunk should end with a semicolon (the terminator is kept)
         let last_kind = &chunks[0].last().unwrap().kind;
         assert!(
             matches!(last_kind, TokenKind::Punctuation(Punctuation::Semicolon)),
             "First chunk should end with semicolon, got: {last_kind:?}"
         );
+    }
+
+    /// A semicolon with no following whitespace is likely an
+    /// apostrophe typo (e.g. "don;t"), so it must NOT split the
+    /// chunk — otherwise `WrongApostrophe` cannot match across it.
+    #[test]
+    fn mid_word_semicolon_does_not_split_chunk() {
+        let doc = Document::new_markdown_default_curated("I don;t think so.");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(
+            chunks.len(),
+            1,
+            "mid-word semicolon should not split: {chunks:?}"
+        );
+    }
+
+    /// A semicolon at the end of the token stream still acts as a
+    /// chunk terminator (it is followed by nothing, which we treat
+    /// as a natural break point).
+    #[test]
+    fn trailing_semicolon_terminates_chunk() {
+        let doc = Document::new_markdown_default_curated("first part;");
+        let chunks: Vec<_> = doc.iter_chunks().collect();
+        assert_eq!(chunks.len(), 1);
     }
 }
