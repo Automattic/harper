@@ -863,6 +863,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects incorrect variants of `in hindsight` to the standard phrase.",
             LintKind::Usage
         ),
+        "LevelOfDetails" => (
+            &[
+                (&["level of details"], &["level of detail", "levels of detail"]),
+                (&["level-of-details"], &["level-of-detail", "levels-of-details"]),
+                (&["levels of details"], &["levels of detail"])
+            ],
+            "For multiple levels, pluralize `level` instead of `detail`. `Detail` remains singular whether one or multiple levels.",
+            "Corrects `level of details` to `level of detail` or `levels of detail`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),

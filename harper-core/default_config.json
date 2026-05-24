@@ -3240,6 +3240,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LevelOfDetails",
+								"state": true,
+								"label": "Level of Details"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ProgressiveNeedsBe",
 								"state": true,
 								"label": "Progressive Needs Be"
