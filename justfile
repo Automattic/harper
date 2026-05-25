@@ -608,6 +608,16 @@ bump-versions: update-vscode-linters
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
 
+  cd "{{justfile_directory()}}/harper-desktop"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
+  mv tauri.conf.json.edited tauri.conf.json
+
   just format
 
   lazygit
