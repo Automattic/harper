@@ -25,7 +25,10 @@
 			"icons/icon.icns",
 			"icons/icon.ico"
 		],
-		"createUpdaterArtifacts": true
+		"createUpdaterArtifacts": true,
+		"macOS": {
+			"bundleName": "Harper"
+		}
 	},
 	"plugins": {
 		"updater": {
