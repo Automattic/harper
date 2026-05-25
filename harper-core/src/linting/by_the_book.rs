@@ -4,7 +4,6 @@ use crate::{
     expr::{AnchorEnd, Expr, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
-        debug::format_lint_match,
         expr_linter::{Chunk, find_the_only_token_matching},
     },
 };
@@ -42,14 +41,8 @@ impl Default for ByTheBook {
 impl ExprLinter for ByTheBook {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        matched_tokens: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
-        let span = find_the_only_token_matching(matched_tokens, source, |t, s| {
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+        let span = find_the_only_token_matching(toks, src, |t, s| {
             t.get_ch(s).eq_ch(&['b', 'o', 'o', 'k', 's'])
         })?
         .span;
@@ -59,7 +52,7 @@ impl ExprLinter for ByTheBook {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "book",
-                span.get_content(source),
+                span.get_content(src),
             )],
             message: "Did you mean the idiom `by the book`?".to_string(),
             ..Default::default()
