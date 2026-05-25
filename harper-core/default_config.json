@@ -4958,7 +4958,7 @@
 						},
 						{
 							"Bool": {
-								"name": "As Much As",
+								"name": "AsMuchAs",
 								"state": true,
 								"label": "As Much As"
 							}	
