@@ -124,6 +124,16 @@ impl Config {
         Ok(())
     }
 
+    pub fn main_config_exists() -> Result<bool, ConfigError> {
+        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+
+        match fs::metadata(main_path) {
+            Ok(_) => Ok(true),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(false),
+            Err(error) => Err(error.into()),
+        }
+    }
+
     pub async fn load_from_system() -> Result<Self, ConfigError> {
         let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
@@ -397,6 +407,14 @@ mod tests {
             path.parent().unwrap().file_name().unwrap(),
             "harper-desktop"
         );
+    }
+
+    #[test]
+    fn main_config_exists_reports_missing_file() {
+        let exists = Config::main_config_exists().unwrap();
+        let expected = Config::main_path().unwrap().exists();
+
+        assert_eq!(exists, expected);
     }
 
     #[test]

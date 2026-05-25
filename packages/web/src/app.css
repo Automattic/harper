@@ -66,6 +66,39 @@
 	--color-white-950: #221502;
 }
 
+:root {
+	--marketing-amber: #b06a1b;
+	--marketing-amber-soft: #d98b3a;
+	--marketing-amber-tint: #fbf3e6;
+	--marketing-amber-line: #e9d6b3;
+	--marketing-cream: #fbfaf6;
+	--marketing-page-bg: #f6f1e6;
+	--marketing-ink: #1c1a16;
+	--marketing-ink-2: #4a463e;
+	--marketing-ink-3: #807a6e;
+	--marketing-ink-4: #ada79a;
+	--marketing-line: rgba(28, 26, 22, 0.1);
+	--marketing-line-strong: rgba(28, 26, 22, 0.16);
+	--marketing-underline: #c96442;
+	--marketing-grass: #2f8a5b;
+
+	--docsearch-primary-color: var(--marketing-amber);
+	--docsearch-text-color: var(--marketing-ink);
+	--docsearch-muted-color: var(--marketing-ink-3);
+	--docsearch-searchbox-background: #fff;
+	--docsearch-searchbox-focus-background: #fff;
+	--docsearch-modal-background: #f6f1e6;
+	--docsearch-footer-background: #fbfaf6;
+	--docsearch-hit-background: #fff;
+	--docsearch-hit-color: var(--marketing-ink);
+	--docsearch-highlight-color: var(--marketing-amber);
+}
+
+html,
+body {
+	min-height: 100%;
+}
+
 body {
 	@apply bg-white text-black dark:bg-black dark:text-white;
 
@@ -189,4 +222,32 @@ th[align="right"] {
 
 .last-update {
 	display: none;
+}
+
+.marketing-page {
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+.marketing-page *,
+.marketing-page *::before,
+.marketing-page *::after {
+	box-sizing: border-box;
+}
+
+.marketing-page a {
+	color: inherit;
+}
+
+.DocSearch-Container {
+	z-index: 9999;
+}
+
+.DocSearch-Modal {
+	border-radius: 16px;
+	box-shadow: 0 30px 70px -24px rgba(28, 26, 22, 0.42);
+}
+
+.DocSearch-Hit a {
+	border-radius: 10px;
 }

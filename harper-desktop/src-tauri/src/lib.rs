@@ -111,7 +111,7 @@ fn show_editor_window(app: &tauri::AppHandle) -> tauri::Result<()> {
         EDITOR_WINDOW_LABEL,
         WebviewUrl::App("index.html".into()),
     )
-    .title("harper-desktop")
+    .title("Harper")
     .inner_size(800.0, 600.0)
     .build()?;
     window.set_focus()?;
@@ -456,11 +456,29 @@ pub fn run_tauri() {
         .enable_all()
         .build()
         .expect("failed to build config runtime");
-    let config = match config_runtime.block_on(Config::load_from_system()) {
-        Ok(config) => config,
+    let is_first_launch = match Config::main_config_exists() {
+        Ok(exists) => !exists,
         Err(error) => {
-            eprintln!("failed to load config, using defaults: {error}");
-            Config::new()
+            eprintln!("failed to check config existence: {error}");
+            false
+        }
+    };
+
+    let config = if is_first_launch {
+        let config = Config::new();
+
+        if let Err(error) = config_runtime.block_on(config.save_to_system()) {
+            eprintln!("failed to save initial config: {error}");
+        }
+
+        config
+    } else {
+        match config_runtime.block_on(Config::load_from_system()) {
+            Ok(config) => config,
+            Err(error) => {
+                eprintln!("failed to load config, using defaults: {error}");
+                Config::new()
+            }
         }
     };
     let config = Arc::new(Mutex::new(config));
@@ -512,7 +530,7 @@ pub fn run_tauri() {
                 }
             }
         })
-        .setup(|app| {
+        .setup(move |app| {
             let is_service_running = app.state::<HighlighterService>().is_running();
             let menu = tray_menu(app, is_service_running)?;
             let service_toggle = menu.service_toggle.clone();
@@ -573,6 +591,10 @@ pub fn run_tauri() {
                 });
 
             tray.build(app)?;
+
+            if is_first_launch {
+                show_settings_window(app.handle())?;
+            }
 
             Ok(())
         })
