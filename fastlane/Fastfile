@@ -1,0 +1,56 @@
+# frozen_string_literal: true
+
+UI.user_error!('Please run fastlane via `bundle exec`') unless FastlaneCore::Helper.bundler?
+
+APPLE_TEAM_ID = 'PZYM8XX95Q'
+
+CODE_SIGNING_STORAGE_OPTIONS = {
+  storage_mode: 's3',
+  s3_bucket: 'a8c-fastlane-match',
+  s3_region: 'us-east-2'
+}.freeze
+
+CODE_SIGNING_ENV_VARS = %w[
+  MATCH_S3_ACCESS_KEY
+  MATCH_S3_SECRET_ACCESS_KEY
+  MATCH_PASSWORD
+].freeze
+
+ASC_API_KEY_ENV_VARS = %w[
+  APP_STORE_CONNECT_API_KEY_KEY_ID
+  APP_STORE_CONNECT_API_KEY_ISSUER_ID
+  APP_STORE_CONNECT_API_KEY_KEY
+].freeze
+
+require 'fastlane/plugin/wpmreleasetoolkit'
+
+# Convenience alias — wpmreleasetoolkit 14.4+ namespaces this under
+# Fastlane::Wpmreleasetoolkit but exposes no top-level shortcut.
+EnvManager = Fastlane::Wpmreleasetoolkit::EnvManager
+
+before_all do
+  # Ensures match works correctly in CI by setting up a temporary keychain.
+  # No-op locally, so safe to run unconditionally.
+  setup_ci
+
+  # No `.env` file in this repo today — env vars come from the Buildkite agent.
+  # `set_up` still needed so EnvManager has a configured instance.
+  EnvManager.set_up(env_file_name: 'harper-desktop.env')
+end
+
+desc 'Fetch the Developer ID Application certificate into the keychain'
+lane :set_up_signing do |readonly: true|
+  CODE_SIGNING_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
+  ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) } unless readonly
+
+  sync_code_signing(
+    type: 'developer_id',
+    platform: 'macos',
+    team_id: APPLE_TEAM_ID,
+    # Developer ID cert is team-wide; no per-app storage key needed.
+    app_identifier: [],
+    api_key: readonly ? nil : app_store_connect_api_key,
+    readonly: readonly,
+    **CODE_SIGNING_STORAGE_OPTIONS
+  )
+end
