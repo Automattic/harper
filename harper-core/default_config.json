@@ -2422,6 +2422,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
