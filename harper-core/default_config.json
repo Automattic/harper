@@ -4955,6 +4955,13 @@
 								"state": true,
 								"label": "Crave For"
 							}
+						},
+						{
+							"Bool": {
+								"name": "As Much As",
+								"state": true,
+								"label": "As Much As"
+							}	
 						}
 					]
 				}
