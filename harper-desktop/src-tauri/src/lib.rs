@@ -111,7 +111,7 @@ fn show_editor_window(app: &tauri::AppHandle) -> tauri::Result<()> {
         EDITOR_WINDOW_LABEL,
         WebviewUrl::App("index.html".into()),
     )
-    .title("harper-desktop")
+    .title("Harper")
     .inner_size(800.0, 600.0)
     .build()?;
     window.set_focus()?;
