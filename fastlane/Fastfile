@@ -72,7 +72,6 @@ lane :notarize_macos do |package:|
     package: package,
     bundle_id: bundle_id,
     api_key: app_store_connect_api_key,
-    print_log: true,
-    verbose: true
+    print_log: true
   )
 end
