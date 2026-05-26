@@ -28,7 +28,13 @@ if ! command -v cargo-binstall >/dev/null 2>&1; then
 		| bash
 fi
 cargo binstall --no-confirm --force just
-cargo binstall --no-confirm --force tauri-cli
+# Pin tauri-cli to a version with a published arm64-apple-darwin prebuilt.
+# Leaving this unpinned resolves to whatever's newest — `latest` doesn't always
+# have prebuilts on every platform yet, and binstall silently falls back to a
+# source compile (~2 minutes). 2.6.1 matches the `tauri-build` dep in
+# `harper-desktop/src-tauri/Cargo.toml` and has been out long enough that all
+# prebuilts are published.
+cargo binstall --no-confirm --force tauri-cli@2.6.1
 cargo binstall --no-confirm --force wasm-pack
 
 echo "--- :npm: Install Node + pnpm"
