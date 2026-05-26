@@ -11,7 +11,6 @@ mariadb_data
 .direnv/*
 
 # Fastlane / Bundler
-.env
 vendor/bundle/
 .bundle/*
 !.bundle/config
