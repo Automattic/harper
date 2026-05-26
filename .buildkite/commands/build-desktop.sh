@@ -19,10 +19,13 @@ fi
 rustup target add aarch64-apple-darwin x86_64-apple-darwin wasm32-unknown-unknown
 
 echo "--- :package: Install build tools"
-# Without Rust pre-baked there's no `cargo-binstall` either. Bootstrap it via
-# `cargo install` (~minute), then use it for the rest (downloads prebuilts).
+# Without Rust pre-baked there's no `cargo-binstall` either. Use cargo-binstall's
+# own curl installer to pull a prebuilt — about a second, vs ~1m15s of `cargo
+# install --locked` building it from source.
 if ! command -v cargo-binstall >/dev/null 2>&1; then
-	cargo install cargo-binstall --locked
+	curl -L --proto '=https' --tlsv1.2 -sSf \
+		https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
+		| bash
 fi
 cargo binstall --no-confirm --force just
 cargo binstall --no-confirm --force tauri-cli
