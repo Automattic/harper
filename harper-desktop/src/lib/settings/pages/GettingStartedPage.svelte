@@ -83,7 +83,10 @@ async function enableTextEditForSetup() {
 			);
 		} else {
 			await Client.addIntegration('com.apple.TextEdit');
-			integrations = [...integrations, { bundle_id: 'com.apple.TextEdit', enabled: true }];
+			integrations = [
+				...integrations,
+				{ bundle_id: 'com.apple.TextEdit', enabled: true, display_name: 'TextEdit' },
+			];
 		}
 
 		state = {

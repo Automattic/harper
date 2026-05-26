@@ -37,6 +37,7 @@ function getConfigLinter(): Promise<LocalLinterType> {
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
+	display_name: string;
 }
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
