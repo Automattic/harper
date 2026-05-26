@@ -133,21 +133,7 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				let text = null;
-
-				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
-				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
-
-				if (isCM) {
-					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
-					const lines = Array.from(lineElements).map((el) => el.textContent ?? '');
-					text = lines.join('\n');
-				} else {
-					text =
-						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-							? target.value
-							: (target as HTMLElement).innerText;
-				}
+				const text = getTargetText(target);
 
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
@@ -330,6 +316,26 @@ function getScrollableAncestors(element: Node): Element[] {
 	}
 
 	return scrollables;
+}
+
+/**
+ * Get the text representation Harper should lint for a target.
+ */
+function getTargetText(target: Node): string | null {
+	if (target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement) {
+		return target.value;
+	}
+
+	if (!(target instanceof HTMLElement)) {
+		return null;
+	}
+
+	if (getCMRoot(target) != null) {
+		const lines = Array.from(target.querySelectorAll<HTMLElement>('.cm-line'));
+		return lines.map((el) => el.textContent ?? '').join('\n');
+	}
+
+	return target.innerText;
 }
 
 function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
