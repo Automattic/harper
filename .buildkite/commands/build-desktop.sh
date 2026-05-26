@@ -29,6 +29,12 @@ cargo binstall --no-confirm --force tauri-cli
 cargo binstall --no-confirm --force wasm-pack
 
 echo "--- :npm: Enable corepack / install pnpm"
+# Xcode CI agents don't bake in Node (or bake in too old a one without corepack).
+# Install/upgrade via brew so we get a modern Node + corepack, then let corepack
+# pick up the `packageManager` pin from the root `package.json` automatically.
+if ! command -v corepack >/dev/null 2>&1; then
+	brew install node
+fi
 corepack enable
 
 echo "--- :key: Fetch Developer ID certificate"
