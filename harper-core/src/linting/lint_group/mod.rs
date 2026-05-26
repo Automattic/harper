@@ -67,6 +67,7 @@ use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
 use super::do_mistake::DoMistake;
+use super::do_support::DoSupport;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
@@ -840,6 +841,10 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WereWhere", WereWhere::default());
         out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence and Dictionary
+        out.add_sentence_expr_linter("DoSupport", DoSupport::new(dictionary.clone()));
+        out.config.set_rule_enabled("DoSupport", true);
 
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
