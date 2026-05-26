@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Buildkite step: build, sign, and notarize harper-desktop.
+# See .buildkite/pipeline.yml.
 
 set -euo pipefail
 
