@@ -30,13 +30,19 @@ else
 fi
 echo "Build target: $TAURI_TARGET (recipe: $JUST_RECIPE)"
 
-echo "--- :floppy_disk: Restore cargo dependency cache"
-# Cache `~/.cargo/registry` (downloaded crate sources + index) keyed off
-# `Cargo.lock` and `rust-toolchain.toml`. Saves cargo from re-downloading
-# hundreds of crates on every build. `~/.cargo/git/db` (git deps) gets the
-# same key — Tauri pulls a couple via patch.
-CARGO_CACHE_KEY="$BUILDKITE_PIPELINE_SLUG-cargo-deps-darwin-arm64-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
-restore_cache "$CARGO_CACHE_KEY"
+echo "--- :floppy_disk: Restore cargo caches"
+# Two cache layers, both keyed off Cargo.lock + rust-toolchain.toml so they
+# invalidate the moment any dep version moves.
+#   1. `~/.cargo/registry` + `~/.cargo/git/db` — downloaded crate sources / git
+#      deps. ~340MB compressed. Saves the crate-download phase on cold builds.
+#   2. `target/` — compiled artifacts. Several GB compressed. Lets cargo's
+#      incremental compilation reuse object files across builds. The target
+#      cache also includes the Tauri target arch in its key, since universal
+#      and arm64-only builds produce disjoint object trees.
+CARGO_DEPS_KEY="$BUILDKITE_PIPELINE_SLUG-cargo-deps-darwin-arm64-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
+CARGO_TARGET_KEY="$BUILDKITE_PIPELINE_SLUG-target-darwin-arm64-$TAURI_TARGET-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
+restore_cache "$CARGO_DEPS_KEY"
+restore_cache "$CARGO_TARGET_KEY"
 
 echo "--- :package: Install build tools"
 # Without Rust pre-baked there's no `cargo-binstall` either. Use cargo-binstall's
@@ -75,13 +81,15 @@ echo "--- :hammer: Build harper-desktop (signed)"
 export APPLE_SIGNING_IDENTITY="Developer ID Application: Automattic, Inc. (PZYM8XX95Q)"
 just "$JUST_RECIPE"
 
-echo "--- :floppy_disk: Save cargo dependency cache"
+echo "--- :floppy_disk: Save cargo caches"
 # `save_cache` is a no-op when the key already exists in S3, so this is cheap on
-# subsequent builds with the same `Cargo.lock`. Runs after the build (so we know
-# the deps that ended up downloaded are coherent) but before notarization (so a
-# flaky notary doesn't cost us the cache).
-save_cache "$HOME/.cargo/registry" "$CARGO_CACHE_KEY"
-save_cache "$HOME/.cargo/git/db" "$CARGO_CACHE_KEY-git" || true
+# subsequent same-deps builds. Runs after the build (so what gets cached is
+# coherent) but before notarization (a flaky notary shouldn't lose us the
+# cache). The target/ save is the one to watch — several GB of upload on a cold
+# key.
+save_cache "$HOME/.cargo/registry" "$CARGO_DEPS_KEY"
+save_cache "$HOME/.cargo/git/db" "$CARGO_DEPS_KEY-git" || true
+save_cache target "$CARGO_TARGET_KEY"
 
 echo "--- :apple: Notarize and staple"
 # Tauri signs but does not notarize when only APPLE_SIGNING_IDENTITY is set.
