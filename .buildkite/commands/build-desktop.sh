@@ -102,5 +102,5 @@ DMG_FILE=$(find "target/$TAURI_TARGET/release/bundle/dmg" -maxdepth 1 -name '*.d
 [ -n "$APP_BUNDLE" ] || { echo "no .app produced"; exit 1; }
 [ -n "$DMG_FILE" ]   || { echo "no .dmg produced"; exit 1; }
 
-Tools/notarize.sh "$APP_BUNDLE"
-Tools/notarize.sh "$DMG_FILE"
+bundle exec fastlane notarize_macos package:"$APP_BUNDLE"
+bundle exec fastlane notarize_macos package:"$DMG_FILE"

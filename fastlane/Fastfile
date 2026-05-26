@@ -4,6 +4,8 @@ UI.user_error!('Please run fastlane via `bundle exec`') unless FastlaneCore::Hel
 
 APPLE_TEAM_ID = 'PZYM8XX95Q'
 
+TAURI_CONFIG_PATH = File.expand_path('../harper-desktop/src-tauri/tauri.conf.json', __dir__)
+
 CODE_SIGNING_STORAGE_OPTIONS = {
   storage_mode: 's3',
   s3_bucket: 'a8c-fastlane-match',
@@ -22,6 +24,7 @@ ASC_API_KEY_ENV_VARS = %w[
   APP_STORE_CONNECT_API_KEY_KEY
 ].freeze
 
+require 'json'
 require 'fastlane/plugin/wpmreleasetoolkit'
 
 # Convenience alias — wpmreleasetoolkit 14.4+ namespaces this under
@@ -52,5 +55,24 @@ lane :set_up_signing do |readonly: true|
     api_key: readonly ? nil : app_store_connect_api_key,
     readonly: readonly,
     **CODE_SIGNING_STORAGE_OPTIONS
+  )
+end
+
+desc 'Submit a signed .app or .dmg to Apple for notarization and staple the ticket'
+lane :notarize_macos do |package:|
+  ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
+
+  # `bundle_id` is required by the action for validation, even
+  # though notarytool itself doesn't need it. For .app the
+  # action would auto-read it from Info.plist; for .dmg we must
+  # supply it.
+  bundle_id = JSON.parse(File.read(TAURI_CONFIG_PATH)).fetch('identifier')
+
+  notarize(
+    package: package,
+    bundle_id: bundle_id,
+    api_key: app_store_connect_api_key,
+    print_log: true,
+    verbose: true
   )
 end
