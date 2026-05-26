@@ -7,7 +7,7 @@ install_gems
 
 echo "--- :rust: Install Rust toolchain"
 # A8C Mac VMs have no Rust tooling baked in. Install `rustup` non-interactively,
-# then add the targets the Tauri universal build needs.
+# then add the targets we need.
 # `--no-modify-path` is intentional: we source `cargo/env` ourselves below so
 # nothing outside this build step picks up cargo on a shared agent.
 if ! command -v rustup >/dev/null 2>&1; then
@@ -16,7 +16,19 @@ if ! command -v rustup >/dev/null 2>&1; then
 fi
 # shellcheck disable=SC1091
 . "$HOME/.cargo/env"
-rustup target add aarch64-apple-darwin x86_64-apple-darwin wasm32-unknown-unknown
+
+# Universal builds (master, tags) need both arches. PR/branch builds run
+# Apple-Silicon-only to skip the x86_64 half of the compile (~4m saved).
+if [ "${BUILDKITE_BRANCH:-}" = "master" ] || [ -n "${BUILDKITE_TAG:-}" ]; then
+	TAURI_TARGET=universal-apple-darwin
+	JUST_RECIPE=build-desktop-macos
+	rustup target add aarch64-apple-darwin x86_64-apple-darwin wasm32-unknown-unknown
+else
+	TAURI_TARGET=aarch64-apple-darwin
+	JUST_RECIPE=build-desktop-macos-arm64
+	rustup target add aarch64-apple-darwin wasm32-unknown-unknown
+fi
+echo "Build target: $TAURI_TARGET (recipe: $JUST_RECIPE)"
 
 echo "--- :package: Install build tools"
 # Without Rust pre-baked there's no `cargo-binstall` either. Use cargo-binstall's
@@ -48,17 +60,18 @@ echo "--- :key: Fetch Developer ID certificate"
 bundle exec fastlane set_up_signing
 
 echo "--- :hammer: Build harper-desktop (signed)"
-# `just build-desktop-macos` runs `cargo tauri build -b app,dmg --target universal-apple-darwin`
-# in `harper-desktop/`. With `APPLE_SIGNING_IDENTITY` set, Tauri's bundler signs the
-# produced .app and .dmg. `TAURI_SIGNING_PRIVATE_KEY` enables the minisign updater signing.
+# `just $JUST_RECIPE` runs `pnpm tauri build -b app,dmg --target $TAURI_TARGET`
+# in `harper-desktop/`. With `APPLE_SIGNING_IDENTITY` set, Tauri's bundler signs
+# the produced .app and .dmg. `TAURI_SIGNING_PRIVATE_KEY` enables the minisign
+# updater signing.
 export APPLE_SIGNING_IDENTITY="Developer ID Application: Automattic, Inc. (PZYM8XX95Q)"
-just build-desktop-macos
+just "$JUST_RECIPE"
 
 echo "--- :apple: Notarize and staple"
 # Tauri signs but does not notarize when only APPLE_SIGNING_IDENTITY is set.
 # Notarize the .app and .dmg ourselves so Gatekeeper accepts them with no warning.
-APP_BUNDLE=$(find target/universal-apple-darwin/release/bundle/macos -maxdepth 1 -name '*.app' -type d | head -1)
-DMG_FILE=$(find target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -name '*.dmg' -type f | head -1)
+APP_BUNDLE=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app' -type d | head -1)
+DMG_FILE=$(find "target/$TAURI_TARGET/release/bundle/dmg" -maxdepth 1 -name '*.dmg' -type f | head -1)
 
 [ -n "$APP_BUNDLE" ] || { echo "no .app produced"; exit 1; }
 [ -n "$DMG_FILE" ]   || { echo "no .dmg produced"; exit 1; }
