@@ -5,6 +5,8 @@
 
 XCODE_VERSION=$(sed -E 's/^~> ?//' .xcode-version)
 CI_TOOLKIT_PLUGIN_VERSION="6.1.0"
+NVM_PLUGIN_VERSION="0.6.0"
 
 export IMAGE_ID="xcode-$XCODE_VERSION"
 export CI_TOOLKIT_PLUGIN="automattic/a8c-ci-toolkit#$CI_TOOLKIT_PLUGIN_VERSION"
+export NVM_PLUGIN="automattic/nvm#$NVM_PLUGIN_VERSION"

@@ -37,17 +37,11 @@ cargo binstall --no-confirm --force wasm-pack
 # it up. The justfile recipes invoke it as `pnpm tauri build` rather than
 # `cargo tauri build`.
 
-echo "--- :npm: Install Node + pnpm"
-# Xcode CI agents don't bake in Node. Brew installs are idempotent (no-op if
-# already present). Skipping corepack: Node 25+ no longer bundles it, and the
-# `packageManager` pin in the root `package.json` is only a hint at this point
-# — pnpm 10.x reads it but tolerates a minor version mismatch on its own.
-if ! command -v node >/dev/null 2>&1; then
-	brew install node
-fi
-if ! command -v pnpm >/dev/null 2>&1; then
-	brew install pnpm
-fi
+echo "--- :npm: Install pnpm"
+# Node is set up by the `automattic/nvm` Buildkite plugin from `.nvmrc`.
+# `pnpm` is not bundled — install it via `npm install -g`. Pin matches the
+# `packageManager` field in the root `package.json`.
+npm install -g pnpm@10.10.0
 hash -r
 
 echo "--- :key: Fetch Developer ID certificate"

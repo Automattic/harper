@@ -11,7 +11,7 @@ steps:
   - label: ":tauri: Build, sign, notarize harper-desktop"
     key: build-desktop
     command: .buildkite/commands/build-desktop.sh
-    plugins: [$CI_TOOLKIT_PLUGIN]
+    plugins: [$CI_TOOLKIT_PLUGIN, $NVM_PLUGIN]
     artifact_paths:
       - target/universal-apple-darwin/release/bundle/dmg/*.dmg
       - target/universal-apple-darwin/release/bundle/macos/*.app.tar.gz
