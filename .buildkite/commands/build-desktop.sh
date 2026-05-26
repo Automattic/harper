@@ -30,6 +30,14 @@ else
 fi
 echo "Build target: $TAURI_TARGET (recipe: $JUST_RECIPE)"
 
+echo "--- :floppy_disk: Restore cargo dependency cache"
+# Cache `~/.cargo/registry` (downloaded crate sources + index) keyed off
+# `Cargo.lock` and `rust-toolchain.toml`. Saves cargo from re-downloading
+# hundreds of crates on every build. `~/.cargo/git/db` (git deps) gets the
+# same key — Tauri pulls a couple via patch.
+CARGO_CACHE_KEY="$BUILDKITE_PIPELINE_SLUG-cargo-deps-darwin-arm64-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
+restore_cache "$CARGO_CACHE_KEY"
+
 echo "--- :package: Install build tools"
 # Without Rust pre-baked there's no `cargo-binstall` either. Use cargo-binstall's
 # own curl installer to pull a prebuilt — about a second, vs ~1m15s of `cargo
@@ -66,6 +74,14 @@ echo "--- :hammer: Build harper-desktop (signed)"
 # updater signing.
 export APPLE_SIGNING_IDENTITY="Developer ID Application: Automattic, Inc. (PZYM8XX95Q)"
 just "$JUST_RECIPE"
+
+echo "--- :floppy_disk: Save cargo dependency cache"
+# `save_cache` is a no-op when the key already exists in S3, so this is cheap on
+# subsequent builds with the same `Cargo.lock`. Runs after the build (so we know
+# the deps that ended up downloaded are coherent) but before notarization (so a
+# flaky notary doesn't cost us the cache).
+save_cache "$HOME/.cargo/registry" "$CARGO_CACHE_KEY"
+save_cache "$HOME/.cargo/git/db" "$CARGO_CACHE_KEY-git" || true
 
 echo "--- :apple: Notarize and staple"
 # Tauri signs but does not notarize when only APPLE_SIGNING_IDENTITY is set.
