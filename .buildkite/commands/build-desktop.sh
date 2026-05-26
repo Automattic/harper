@@ -5,12 +5,22 @@ set -euo pipefail
 echo "--- :rubygems: Install gems"
 install_gems
 
-echo "--- :rust: Install macOS Rust targets"
+echo "--- :rust: Install Rust toolchain"
+# A8C Mac VMs have no Rust tooling baked in. Install `rustup` non-interactively,
+# then add the targets the Tauri universal build needs.
+# `--no-modify-path` is intentional: we source `cargo/env` ourselves below so
+# nothing outside this build step picks up cargo on a shared agent.
+if ! command -v rustup >/dev/null 2>&1; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+		| sh -s -- -y --no-modify-path --default-toolchain stable --profile minimal
+fi
+# shellcheck disable=SC1091
+. "$HOME/.cargo/env"
 rustup target add aarch64-apple-darwin x86_64-apple-darwin wasm32-unknown-unknown
 
 echo "--- :package: Install build tools"
-# `just`, `tauri-cli`, and `wasm-pack` are not baked into the Xcode agent image.
-# `cargo-binstall` should be — fall back to `cargo install` if not.
+# Without Rust pre-baked there's no `cargo-binstall` either. Bootstrap it via
+# `cargo install` (~minute), then use it for the rest (downloads prebuilts).
 if ! command -v cargo-binstall >/dev/null 2>&1; then
 	cargo install cargo-binstall --locked
 fi
