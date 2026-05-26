@@ -31,6 +31,7 @@ pub struct Config {
     pub debounce_ms: u64,
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
+    pub highlighter_service_enabled: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -50,6 +51,7 @@ impl Config {
             debounce_ms: 0,
             auto_update: true,
             last_update_check: None,
+            highlighter_service_enabled: true,
         }
     }
 
@@ -124,6 +126,16 @@ impl Config {
         Ok(())
     }
 
+    pub fn main_config_exists() -> Result<bool, ConfigError> {
+        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+
+        match fs::metadata(main_path) {
+            Ok(_) => Ok(true),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(false),
+            Err(error) => Err(error.into()),
+        }
+    }
+
     pub async fn load_from_system() -> Result<Self, ConfigError> {
         let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
@@ -179,6 +191,7 @@ impl Config {
             "debounce_ms": self.debounce_ms,
             "auto_update": self.auto_update,
             "last_update_check": self.last_update_check,
+            "highlighter_service_enabled": self.highlighter_service_enabled,
         }))
     }
 
@@ -203,6 +216,11 @@ impl Config {
                 "last_update_check",
             )?
             .flatten(),
+            highlighter_service_enabled: deserialize_optional_field(
+                object,
+                "highlighter_service_enabled",
+            )?
+            .unwrap_or(true),
         })
     }
 }
@@ -266,6 +284,7 @@ mod tests {
         assert!(serialized.contains("debounce_ms"));
         assert!(serialized.contains("auto_update"));
         assert!(serialized.contains("last_update_check"));
+        assert!(serialized.contains("highlighter_service_enabled"));
     }
 
     #[test]
@@ -284,6 +303,10 @@ mod tests {
         assert_eq!(deserialized.debounce_ms, config.debounce_ms);
         assert_eq!(deserialized.auto_update, config.auto_update);
         assert_eq!(deserialized.last_update_check, config.last_update_check);
+        assert_eq!(
+            deserialized.highlighter_service_enabled,
+            config.highlighter_service_enabled
+        );
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -338,6 +361,21 @@ mod tests {
 
         assert!(deserialized.auto_update);
         assert_eq!(deserialized.last_update_check, None);
+    }
+
+    #[test]
+    fn deserialize_main_enables_highlighter_service_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("highlighter_service_enabled");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.highlighter_service_enabled);
     }
 
     #[test]
@@ -397,6 +435,14 @@ mod tests {
             path.parent().unwrap().file_name().unwrap(),
             "harper-desktop"
         );
+    }
+
+    #[test]
+    fn main_config_exists_reports_missing_file() {
+        let exists = Config::main_config_exists().unwrap();
+        let expected = Config::main_path().unwrap().exists();
+
+        assert_eq!(exists, expected);
     }
 
     #[test]
