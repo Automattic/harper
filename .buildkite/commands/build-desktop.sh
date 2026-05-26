@@ -28,14 +28,18 @@ cargo binstall --no-confirm --force just
 cargo binstall --no-confirm --force tauri-cli
 cargo binstall --no-confirm --force wasm-pack
 
-echo "--- :npm: Enable corepack / install pnpm"
-# Xcode CI agents don't bake in Node (or bake in too old a one without corepack).
-# Install/upgrade via brew so we get a modern Node + corepack, then let corepack
-# pick up the `packageManager` pin from the root `package.json` automatically.
-if ! command -v corepack >/dev/null 2>&1; then
+echo "--- :npm: Install Node + pnpm"
+# Xcode CI agents don't bake in Node. Brew installs are idempotent (no-op if
+# already present). Skipping corepack: Node 25+ no longer bundles it, and the
+# `packageManager` pin in the root `package.json` is only a hint at this point
+# — pnpm 10.x reads it but tolerates a minor version mismatch on its own.
+if ! command -v node >/dev/null 2>&1; then
 	brew install node
 fi
-corepack enable
+if ! command -v pnpm >/dev/null 2>&1; then
+	brew install pnpm
+fi
+hash -r
 
 echo "--- :key: Fetch Developer ID certificate"
 bundle exec fastlane set_up_signing
