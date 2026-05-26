@@ -43,7 +43,7 @@ impl Config {
     pub fn new() -> Self {
         Self {
             mutable_dictionary: MutableDictionary::new(),
-            dialect: Dialect::American,
+            dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Self::curated_integrations(),
@@ -51,6 +51,12 @@ impl Config {
             auto_update: true,
             last_update_check: None,
         }
+    }
+
+    pub fn detect_system_dialect() -> Dialect {
+        tauri_plugin_os::locale()
+            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
+            .unwrap_or(Dialect::American)
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
