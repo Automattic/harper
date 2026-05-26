@@ -198,7 +198,7 @@ build-desktop-linux: build-harperjs build-lint-framework build-components build-
   pnpm install
   pnpm tauri build -b deb,rpm,appimage
 
-# Build Harper Desktop macOS bundles (Apple Silicon only — faster than universal).
+# Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
