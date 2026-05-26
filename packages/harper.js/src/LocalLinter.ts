@@ -6,6 +6,19 @@ import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
 import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 
+function languageOptionToWasmLanguage(languageOption: LintOptions['language']): Language {
+	switch (languageOption) {
+		case 'plaintext':
+			return Language.Plain;
+		case 'typst':
+			return Language.Typst;
+		case 'latex':
+			return Language.Latex;
+		default:
+			return Language.Markdown;
+	}
+}
+
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
  * See the interface definition for more details. */
 export default class LocalLinter implements Linter {
@@ -36,22 +49,7 @@ export default class LocalLinter implements Linter {
 	async lint(text: string, options?: LintOptions): Promise<Lint[]> {
 		const inner = await this.inner;
 
-		let language = Language.Markdown;
-
-		switch (options?.language) {
-			case 'plaintext':
-				language = Language.Plain;
-				break;
-			case 'markdown':
-				language = Language.Markdown;
-				break;
-			case 'typst':
-				language = Language.Typst;
-				break;
-			case 'latex':
-				language = Language.Latex;
-				break;
-		}
+		const language = languageOptionToWasmLanguage(options?.language);
 
 		const lints = inner.lint(
 			text,
@@ -66,22 +64,7 @@ export default class LocalLinter implements Linter {
 
 	async organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
 		const inner = await this.inner;
-		let language = Language.Markdown;
-
-		switch (options?.language) {
-			case 'plaintext':
-				language = Language.Plain;
-				break;
-			case 'markdown':
-				language = Language.Markdown;
-				break;
-			case 'typst':
-				language = Language.Typst;
-				break;
-			case 'latex':
-				language = Language.Latex;
-				break;
-		}
+		const language = languageOptionToWasmLanguage(options?.language);
 
 		const lintGroups = inner.organized_lints(
 			text,
