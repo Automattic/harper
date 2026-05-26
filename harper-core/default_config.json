@@ -4955,6 +4955,13 @@
 								"state": true,
 								"label": "Crave For"
 							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
+							}
 						}
 					]
 				}
