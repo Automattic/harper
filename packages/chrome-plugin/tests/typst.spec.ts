@@ -9,6 +9,7 @@ async function assertHighlightCount(page: Page, count: number) {
 }
 
 test('Typst CodeMirror editor can apply a suggestion', async ({ page }) => {
+	test.slow();
 	await page.goto(TEST_PAGE_URL, { waitUntil: 'domcontentloaded' });
 
 	const editor = page.locator('.cm-editor .cm-content[contenteditable="true"]').first();

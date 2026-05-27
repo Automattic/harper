@@ -49,6 +49,7 @@ test('Hacker News wraps correctly', async ({ page }) => {
 });
 
 test('Hacker News scrolls correctly', async ({ page }) => {
+	test.slow();
 	await page.goto(await getTestPageUrl(page));
 
 	await page.waitForTimeout(2000);

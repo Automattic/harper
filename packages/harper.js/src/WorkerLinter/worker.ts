@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 import './shims';
-import { SuperBinaryModule } from '../BinaryModule';
+import { SuperBinaryModule, type WasmGlueFlavor } from '../BinaryModule';
 import LocalLinter from '../LocalLinter';
 import Serializer, { isSerializedRequest, type SerializedRequest } from '../Serializer';
 
@@ -8,11 +8,14 @@ import Serializer, { isSerializedRequest, type SerializedRequest } from '../Seri
 self.postMessage('ready');
 
 self.onmessage = (e) => {
-	const [binaryUrl, dialect] = e.data;
+	const [binaryUrl, dialect, glueFlavor] = e.data;
 	if (typeof binaryUrl !== 'string') {
 		throw new TypeError(`Expected binary to be a string of url but got ${typeof binaryUrl}.`);
 	}
-	const binary = SuperBinaryModule.create(binaryUrl);
+	if (glueFlavor !== undefined && glueFlavor !== 'full' && glueFlavor !== 'slim') {
+		throw new TypeError(`Expected glue flavor to be "full" or "slim" but got ${glueFlavor}.`);
+	}
+	const binary = SuperBinaryModule.create(binaryUrl, glueFlavor as WasmGlueFlavor | undefined);
 	const serializer = new Serializer(binary);
 	const linter = new LocalLinter({ binary, dialect });
 

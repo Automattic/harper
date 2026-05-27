@@ -61,6 +61,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+                ("arguments to be said", "arguments to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -125,6 +134,17 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `confirm` rather than `conform`?",
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
+        ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
         ),
         "DefiniteArticle" => (
             &[
@@ -835,14 +855,6 @@ pub fn lint_group() -> LintGroup {
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
-        ),
-        "InHindsight" => (
-            &[
-                (&["in hind sight", "in hind-sight", "on hindsight", "on hind sight", "on hind-sight"], &["in hindsight"]),
-            ],
-            "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
-            "Corrects incorrect variants of `in hindsight` to the standard phrase.",
-            LintKind::Usage
         ),
         "MakeItSeem" => (
             &[
