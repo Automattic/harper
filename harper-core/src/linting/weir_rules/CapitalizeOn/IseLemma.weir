@@ -1,4 +1,4 @@
-expr main [capitalise off, capitalise off of]
+expr main [(capitalise off of), (capitalise off)]
 
 let message "Did you mean `capitalise on`?"
 let description "Corrects `capitalise off` to `capitalise on`."
