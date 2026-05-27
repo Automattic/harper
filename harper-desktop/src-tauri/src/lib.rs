@@ -183,6 +183,23 @@ fn should_hide_window_on_close(label: &str) -> bool {
     label == EDITOR_WINDOW_LABEL || label == SETTINGS_WINDOW_LABEL
 }
 
+fn accessibility_allows_highlighter_start() -> bool {
+    platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+}
+
+fn start_highlighter_service_if_enabled_and_permitted(
+    highlighter_service: &HighlighterService,
+    highlighter_service_enabled: bool,
+) {
+    if !highlighter_service_enabled || !accessibility_allows_highlighter_start() {
+        return;
+    }
+
+    if let Err(error) = highlighter_service.start() {
+        eprintln!("failed to start highlighter service: {error}");
+    }
+}
+
 #[tauri::command]
 async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
     let mut lint_config = config.lock().await.lint_config.clone();
@@ -427,6 +444,46 @@ fn request_accessibility_permission() -> AccessibilityPermissionStatus {
 }
 
 #[tauri::command]
+async fn start_highlighter_service(
+    config: State<'_, Arc<Mutex<Config>>>,
+    highlighter_service: State<'_, HighlighterService>,
+) -> Result<bool, String> {
+    {
+        let mut config = config.lock().await;
+        config.highlighter_service_enabled = true;
+        config
+            .save_to_system()
+            .await
+            .map_err(|error| error.to_string())?;
+    }
+
+    if accessibility_allows_highlighter_start() {
+        highlighter_service
+            .start()
+            .map_err(|error| error.to_string())?;
+    }
+
+    Ok(highlighter_service.is_running())
+}
+
+#[tauri::command]
+async fn stop_highlighter_service(
+    config: State<'_, Arc<Mutex<Config>>>,
+    highlighter_service: State<'_, HighlighterService>,
+) -> Result<bool, String> {
+    {
+        let mut config = config.lock().await;
+        config.highlighter_service_enabled = false;
+        config
+            .save_to_system()
+            .await
+            .map_err(|error| error.to_string())?;
+    }
+
+    Ok(highlighter_service.stop())
+}
+
+#[tauri::command]
 fn launch_app(bundle_id: String) -> Result<(), String> {
     platform_broker().launch_app_bundle(&bundle_id)
 }
@@ -481,12 +538,13 @@ pub fn run_tauri() {
             }
         }
     };
+    let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
     let highlighter_service = HighlighterService::new(config.clone());
-
-    if let Err(error) = highlighter_service.start() {
-        eprintln!("failed to start highlighter service: {error}");
-    }
+    start_highlighter_service_if_enabled_and_permitted(
+        &highlighter_service,
+        highlighter_service_enabled,
+    );
 
     tauri::Builder::default()
         .manage(config)
@@ -518,6 +576,8 @@ pub fn run_tauri() {
             set_integration_enabled,
             get_accessibility_permission_status,
             request_accessibility_permission,
+            start_highlighter_service,
+            stop_highlighter_service,
             launch_app,
         ])
         .on_window_event(|window, event| {
@@ -545,25 +605,50 @@ pub fn run_tauri() {
                 .tooltip("Harper Desktop")
                 .show_menu_on_left_click(false)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
-                    TOGGLE_SERVICE_MENU_ID => match app.state::<HighlighterService>().toggle() {
-                        Ok(status) => {
-                            if let Err(error) =
-                                update_service_tray_state(app, &service_toggle, status)
-                            {
-                                eprintln!("failed to update service tray state: {error}");
-                            }
-                        }
-                        Err(error) => {
-                            eprintln!("failed to toggle highlighter service: {error}");
+                    TOGGLE_SERVICE_MENU_ID => {
+                        let highlighter_service = app.state::<HighlighterService>();
 
-                            let is_running = app.state::<HighlighterService>().is_running();
-                            if let Err(error) =
-                                update_service_tray_state(app, &service_toggle, is_running)
+                        let toggle_result = if highlighter_service.is_running() {
+                            tauri::async_runtime::block_on(stop_highlighter_service(
+                                app.state::<Arc<Mutex<Config>>>(),
+                                highlighter_service,
+                            ))
+                        } else {
+                            let result = tauri::async_runtime::block_on(start_highlighter_service(
+                                app.state::<Arc<Mutex<Config>>>(),
+                                highlighter_service,
+                            ));
+
+                            if matches!(result, Ok(false))
+                                && !accessibility_allows_highlighter_start()
+                                && let Err(error) = show_settings_window(app)
                             {
-                                eprintln!("failed to update service tray state: {error}");
+                                eprintln!("failed to show settings window: {error}");
+                            }
+
+                            result
+                        };
+
+                        match toggle_result {
+                            Ok(status) => {
+                                if let Err(error) =
+                                    update_service_tray_state(app, &service_toggle, status)
+                                {
+                                    eprintln!("failed to update service tray state: {error}");
+                                }
+                            }
+                            Err(error) => {
+                                eprintln!("failed to toggle highlighter service: {error}");
+
+                                let is_running = app.state::<HighlighterService>().is_running();
+                                if let Err(error) =
+                                    update_service_tray_state(app, &service_toggle, is_running)
+                                {
+                                    eprintln!("failed to update service tray state: {error}");
+                                }
                             }
                         }
-                    },
+                    }
                     OPEN_EDITOR_MENU_ID => {
                         if let Err(error) = show_editor_window(app) {
                             eprintln!("failed to show editor window: {error}");
@@ -713,6 +798,7 @@ pub fn run_highlighter() {
             debounce_ms: *dictionary_debounce_ms.borrow(),
             auto_update: true,
             last_update_check: None,
+            highlighter_service_enabled: true,
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
@@ -788,6 +874,7 @@ fn fetch_highlighter_config(
             debounce_ms,
             auto_update: true,
             last_update_check: None,
+            highlighter_service_enabled: true,
         })
     })
 }

@@ -118,6 +118,10 @@ async function checkAccessibilityPermission() {
 
 	try {
 		accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to check Accessibility permission: ${error}`;
 	} finally {
@@ -137,6 +141,10 @@ async function requestAccessibilityPermission() {
 	try {
 		accessibilityStatus = await Client.requestAccessibilityPermission();
 		hasRequestedAccessibility = true;
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to request Accessibility permission: ${error}`;
 	} finally {
