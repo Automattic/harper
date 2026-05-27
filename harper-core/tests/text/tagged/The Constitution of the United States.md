@@ -937,7 +937,7 @@
 > powers   and  duties of his     office  , the Vice        President shall continue to discharge
 # NPrPl/V3 VB/C NPl    P  ISg/D$+ NSg/VB+ . D+  NSg/VB/J/P+ NSg/VB+   VXB   NSg/VB   P  N🅪Sg/VB
 > the same as    Acting  President ; otherwise , the President shall resume the powers
-# D   I/J  R/C/P Nᴹ/Vg/J NSg/VB+   . J/R       . D+  NSg/VB+   VXB   NSg/VB D   NPrPl/V3
+# D   I/J  R/C/P Nᴹ/Vg/J NSg/VB+   . J/R/C     . D+  NSg/VB+   VXB   NSg/VB D   NPrPl/V3
 > and  duties of his     office  .
 # VB/C NPl    P  ISg/D$+ NSg/VB+ .
 >
@@ -1029,7 +1029,7 @@
 > and  all          other    Officers of the United States    , whose Appointments are not     herein
 # VB/C NSg/I/J/C/Dq NSg/VB/J NPl/V3   P  D   VP/J   NPrPl/V3+ . I+    NPl+         VLB NSg/R/C R
 > otherwise provided for   , and  which shall be       established by    Law      : but     the Congress
-# J/R       VP/J/C   R/C/P . VB/C I/C+  VXB   NSg/VLXB VP/J        NSg/P N🅪Sg/VB+ . NSg/C/P D   NPr/VB+
+# J/R/C     VP/J/C   R/C/P . VB/C I/C+  VXB   NSg/VLXB VP/J        NSg/P N🅪Sg/VB+ . NSg/C/P D   NPr/VB+
 > may     by    Law      vest   the Appointment of such  inferior Officers , as    they think
 # NPr/VXB NSg/P N🅪Sg/VB+ NSg/VB D   NSg         P  NSg/I NSg/J    NPl/V3+  . R/C/P IPl+ NSg/VB
 > proper , in        the President alone , in        the Courts of Law      , or    in        the Heads  of
@@ -1193,7 +1193,7 @@
 >
 #
 > No        person  shall be       held to answer for   a    capital , or    otherwise infamous crime    ,
-# NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB VP   P  NSg/VB R/C/P D/P+ N🅪Sg/J+ . NPr/C J/R       VB/J+    N🅪Sg/VB+ .
+# NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB VP   P  NSg/VB R/C/P D/P+ N🅪Sg/J+ . NPr/C J/R/C     VB/J+    N🅪Sg/VB+ .
 > unless on  a   presentment or    indictment of a   grand jury      , except in        cases   arising
 # C      J/P D/P NSg         NPr/C NSg        P  D/P NSg/J NSg/VB/J+ . VB/C/P NPr/J/R/P NPl/V3+ Nᴹ/Vg/J
 > in        the land      or    naval forces  , or    in        the militia , when    in        actual service in        time
@@ -1231,7 +1231,7 @@
 > dollars , the right    of trial     by    jury      shall be       preserved , and  no        fact tried by    a
 # NPl+    . D   NPr/VB/J P  NSg/VB/J+ NSg/P NSg/VB/J+ VXB   NSg/VLXB VP/J      . VB/C NSg/Dq/P+ NSg+ VP/J  NSg/P D/P+
 > jury      , shall be       otherwise reexamined in        any    court     of the United States    , than
-# NSg/VB/J+ . VXB   NSg/VLXB J/R       VP/J       NPr/J/R/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
+# NSg/VB/J+ . VXB   NSg/VLXB J/R/C     VP/J       NPr/J/R/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
 > according to the rules  of the common   law      .
 # Nᴹ/Vg/J   P  D   NPl/V3 P  D   NSg/VB/J N🅪Sg/VB+ .
 >
