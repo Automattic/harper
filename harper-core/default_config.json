@@ -2422,6 +2422,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -4961,6 +4968,20 @@
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
 							}
 						}
 					]
