@@ -30,7 +30,11 @@ async function loadCurrentVersion() {
           telemetry, no cloud.
         </p>
         <div class="actions-row center">
-          <button class="button" type="button" disabled title="Not wired yet">Release notes</button>
+          <button
+            class="button"
+            type="button"
+            on:click={() => void openUrl('https://github.com/Automattic/harper/releases/latest')}
+          >Release notes</button>
           <button class="button" type="button" on:click={() => void openUrl(SOURCE_URL)}>Source on GitHub</button>
           <button class="button" type="button" on:click={() => void openUrl(ISSUE_URL)}>Report an issue</button>
         </div>

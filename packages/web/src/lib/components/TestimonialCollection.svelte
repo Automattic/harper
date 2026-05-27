@@ -1,5 +1,4 @@
 <script lang="ts">
-import { Link } from 'components';
 import Testimonial from './Testimonial.svelte';
 
 type TestimonialItem = {
@@ -15,19 +14,17 @@ export let testimonials: TestimonialItem[] = [];
 const { class: extraClass = '', ...restProps } = $$restProps;
 </script>
 
-<section
-	{...restProps}
-	class={`mx-auto w-full max-w-6xl ${extraClass}`.trim()}
->
-	<div class="columns-1 gap-6 sm:columns-2 lg:columns-3">
+<section {...restProps} class={extraClass}>
+	<div class="grid grid-cols-1 gap-4 min-[881px]:grid-cols-3">
 		{#each testimonials as item, index (item.authorName + index)}
-			<Link href={item.source} class={`block mb-6 break-inside-avoid ${index % 2 == 0 ? "skew-hover" : "skew-hover-left"}`}>
+			<a class="group text-inherit no-underline hover:no-underline" href={item.source}>
 				<Testimonial
 					authorName={item.authorName}
 					authorSubtitle={item.authorSubtitle}
 					testimonial={item.testimonial}
+					accent={index === 4}
 				/>
-			</Link>
+			</a>
 		{/each}
 	</div>
 </section>

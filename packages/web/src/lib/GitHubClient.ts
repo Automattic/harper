@@ -34,6 +34,26 @@ export class GithubClient {
 		);
 	}
 
+	public static async getLatestReleaseAssetUrlFromCache(
+		repoOwner: string,
+		repoName: string,
+		assetNamePattern: RegExp,
+	): Promise<string | null> {
+		const release = await this.getLatestReleaseMetadataFromCache(repoOwner, repoName);
+
+		return this.findReleaseAssetUrl(release, assetNamePattern);
+	}
+
+	public static async getLatestReleaseAssetUrl(
+		repoOwner: string,
+		repoName: string,
+		assetNamePattern: RegExp,
+	): Promise<string | null> {
+		const release = await this.getLatestReleaseMetadata(repoOwner, repoName);
+
+		return this.findReleaseAssetUrl(release, assetNamePattern);
+	}
+
 	/**
 	 * Return a cached value when it is still fresh, otherwise load and cache a replacement.
 	 *
@@ -87,5 +107,14 @@ export class GithubClient {
 		}
 
 		return (await resp.json()) as GitHubRelease;
+	}
+
+	private static findReleaseAssetUrl(
+		release: GitHubRelease,
+		assetNamePattern: RegExp,
+	): string | null {
+		const asset = release.assets.find((asset) => assetNamePattern.test(asset.name));
+
+		return asset?.browser_download_url ?? null;
 	}
 }
