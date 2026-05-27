@@ -121,6 +121,7 @@ use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
+use super::lifetime_life::LifetimeLife;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
@@ -676,6 +677,8 @@ impl LintGroup {
         insert_expr_rule!(LetToDo, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
+        out.add_sentence_expr_linter("LifetimeLife", LifetimeLife::default());
+        out.config.set_rule_enabled("LifetimeLife", true);
         insert_struct_rule!(LongSentences, true);
         insert_expr_rule!(LongTimeAgo, true);
         insert_expr_rule!(LookDownOnesNose, true);
