@@ -4972,6 +4972,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
 								"name": "EverySingleOneOf",
 								"state": true,
 								"label": "Every Single One Of"
