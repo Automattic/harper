@@ -1,0 +1,9 @@
+expr [main capitalize off, main capitalize off of]
+
+let message "Did you mean `capitalize on`?"
+let description "Corrects `capitalize off` to `capitalize on`."
+let kind "Usage"
+let becomes "capitalize on"
+
+test "A script to buy a certain cryptocurrency as fast as possible to capitalize off of Pump-and-Dump's." "A script to buy a certain cryptocurrency as fast as possible to capitalize on of Pump-and-Dump's."
+test "marketing companies wanted to capitalize off those events" "marketing companies wanted to capitalize on those events"

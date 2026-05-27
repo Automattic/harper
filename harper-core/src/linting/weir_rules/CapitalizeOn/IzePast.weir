@@ -1,0 +1,9 @@
+expr main [capitalized off, capitalized off of]
+
+let message "Did you mean `capitalized on`?"
+let description "Corrects `capitalize off` to `capitalize on`."
+let kind "Usage"
+let becomes "capitalized on"
+
+test "Notion has capitalized off of this, as well as every popular Chinese app ..." "Notion has capitalized on this, as well as every popular Chinese app ..."
+test "Capitalized off the name recognition of the original project despite having no affiliation ..." "Capitalized on the name recognition of the original project despite having no affiliation ..."
