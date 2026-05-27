@@ -89,14 +89,15 @@ lane :create_desktop_github_release do |tag:, dmg:, app_tarball:, app_signature:
   # `create_github_release` crashes with a FrozenError when no notes path is
   # given (wpmreleasetoolkit 14.6.0 calls `gsub!` on a frozen empty literal).
   # Pass an empty tempfile to get the action's intended "no notes" behavior.
-  empty_notes = Tempfile.new(['release-notes', '.md'])
-  empty_notes.close
+  Tempfile.create(['release-notes', '.md']) do |empty_notes|
+    empty_notes.close
 
-  create_github_release(
-    repository: GITHUB_REPO,
-    version: tag,
-    release_assets: [dmg, app_tarball, app_signature],
-    release_notes_file_path: empty_notes.path,
-    is_draft: true
-  )
+    create_github_release(
+      repository: GITHUB_REPO,
+      version: tag,
+      release_assets: [dmg, app_tarball, app_signature],
+      release_notes_file_path: empty_notes.path,
+      is_draft: true
+    )
+  end
 end
