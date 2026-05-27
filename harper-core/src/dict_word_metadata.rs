@@ -1089,7 +1089,6 @@ impl Dialect {
         }
     }
     // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
-    #[must_use]
     pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
         bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
     }
