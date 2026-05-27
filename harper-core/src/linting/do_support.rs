@@ -190,12 +190,13 @@ where
                 }
 
                 // doubled consonant (e.g. "logged" → "log")
-                if let Some(last) = without_ed.last() {
-                    if !last.is_vowel() && without_ed.len() > 1 {
-                        let without_doubled = without_ed[..without_ed.len() - 1].to_vec();
-                        if self.is_verb_lemma(&without_doubled) {
-                            suggs.push(without_doubled);
-                        }
+                if let Some(last) = without_ed.last()
+                    && !last.is_vowel()
+                    && without_ed.len() > 1
+                {
+                    let without_doubled = without_ed[..without_ed.len() - 1].to_vec();
+                    if self.is_verb_lemma(&without_doubled) {
+                        suggs.push(without_doubled);
                     }
                 }
             }
@@ -331,10 +332,10 @@ where
                 // Only proceed if the third word is a valid subject head
                 if is_pronoun || is_determiner || is_noun {
                     // Don't flag if NOT sentence-initial (could be indirect question)
-                    if let Some((before, _)) = context {
-                        if !before.is_empty() {
-                            return None;
-                        }
+                    if let Some((before, _)) = context
+                        && !before.is_empty()
+                    {
+                        return None;
                     }
 
                     // ── Guard: wh-word as subject ────────────────────
@@ -480,10 +481,10 @@ where
 
         if is_past && !second_tok.kind.is_verb_lemma() {
             // Don't flag in questions — "Did you went?" is handled by DidPast
-            if let Some((before, _)) = context {
-                if before.is_empty() || (before.len() == 1 && before[0].kind.is_whitespace()) {
-                    return None;
-                }
+            if let Some((before, _)) = context
+                && (before.is_empty() || (before.len() == 1 && before[0].kind.is_whitespace()))
+            {
+                return None;
             }
 
             if let Some(lemma_chars) = self.get_lemma_for_past(second_word, src) {
