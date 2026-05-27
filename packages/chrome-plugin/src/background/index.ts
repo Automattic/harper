@@ -124,6 +124,7 @@ const defaultEnabledDomains = [
 	'mail.google.com',
 	'trix-editor.org',
 	'github.com',
+	'linear.app',
 	'messages.google.com',
 	'blank.page',
 	'blankpage.im',

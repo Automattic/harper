@@ -205,7 +205,16 @@ build-desktop-macos: build-harperjs build-lint-framework build-components build-
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b app,dmg
+  cargo tauri build -b app,dmg --target universal-apple-darwin
+
+# Build Harper Desktop macOS bundles without updater artifacts.
+build-desktop-macos-unsigned: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  cargo tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
@@ -598,6 +607,16 @@ bump-versions: update-vscode-linters
 
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
+  mv tauri.conf.json.edited tauri.conf.json
 
   just format
 
