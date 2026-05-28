@@ -554,6 +554,7 @@ pub fn run_tauri() {
             None,
         ))
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
             get_dialect,

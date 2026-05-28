@@ -3713,6 +3713,13 @@
 								"state": true,
 								"label": "A Some Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
 						}
 					]
 				}
@@ -4961,6 +4968,13 @@
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
 							}
 						},
 						{
