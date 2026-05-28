@@ -9,6 +9,7 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::{Dictionary, MutableDictionary},
 };
+use serde::Serialize;
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
     Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
@@ -56,6 +57,13 @@ const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
 const QUIT_MENU_ID: &str = "quit";
+
+#[derive(Debug, Clone, Serialize)]
+struct IntegrationView {
+    bundle_id: String,
+    enabled: bool,
+    display_name: String,
+}
 
 struct TrayMenu {
     menu: Menu<tauri::Wry>,
@@ -383,8 +391,18 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Vec<Integration>, String> {
-    Ok(config.lock().await.integrations.clone())
+) -> Result<Vec<IntegrationView>, String> {
+    let integrations = config.lock().await.integrations.clone();
+    let broker = platform_broker();
+
+    Ok(integrations
+        .into_iter()
+        .map(|integration| IntegrationView {
+            display_name: broker.integration_display_name(&integration.bundle_id),
+            bundle_id: integration.bundle_id,
+            enabled: integration.enabled,
+        })
+        .collect())
 }
 
 #[tauri::command]
