@@ -28,6 +28,8 @@ export default class LocalLinter implements Linter {
 
 	async setup(): Promise<void> {
 		await this.lint('', { language: 'plaintext' });
+		// Workaround for Issue 3490: ensure default rule state is materialized
+		await this.getDefaultLintConfigAsJSON();
 
 		const exported = await this.exportIgnoredLints();
 		await this.importIgnoredLints(exported);
