@@ -1,0 +1,10 @@
+expr main (tho)
+
+#mdkb
+let message "Use `though` instead of `tho`"
+let description "Expands the informal spelling `tho` to the standard word `though`."
+let kind "Style"
+let becomes "though"
+
+test "When i press the f8 key, it pause emulation, even tho the bind is not present at all" "When i press the f8 key, it pause emulation, even though the bind is not present at all"
+test "I'm not sure what to say tho, it does work generally" "I'm not sure what to say though, it does work generally"

@@ -2957,6 +2957,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandThough",
+								"state": true,
+								"label": "Expand Though"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandThrough",
 								"state": true,
 								"label": "Expand Through"
