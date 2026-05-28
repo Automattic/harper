@@ -9,6 +9,10 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
 Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Whenever agents are done making changes, they should run `just format` before handing work back to the user.
+
+Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
+Agents should remind humans of this when possible.
 
 ## Read First
 
@@ -93,14 +97,122 @@ Importantly, all the tools available in this repository are available via `just`
 - `harper-wasm`: The WebAssembly build target that powers browser and JavaScript integrations such as `harper.js`.
 - `packages/lint-framework`: A package containing the tooling necessary to read/write/highlight text on the web for the purpose of linting.
 - `packages/components`: Shared Svelte component package used by web-facing packages.
+- `packages/harper-editor`: Shared Svelte editor package used by web-facing packages and Harper Desktop.
 - `packages/web`: The Harper website, including documentation and a live demo that uses the `lint-framework`.
 - `packages/harper.js`: The JavaScript package that uses `harper-wasm` to lint text from websites or Node.js processes.
 - `packages/chrome-plugin`: The Harper Chrome Extension - uses the `lint-framework`. Also support Firefox.
 - `packages/obsidian-plugin`
 - `packages/wordpress-plugin`
 - `packages/vscode-plugin`: The Harper Visual Studio Code plugin. Uses `harper-ls`.
+- `harper-desktop`: The Harper Desktop app. It is a Tauri v2 + SvelteKit SPA with an offline editor, settings UI, tray/service control, and native overlay highlighter.
 
 There are of course projects in this repository not listed above. If relevant, feel free to poke around.
+
+## Harper Desktop
+
+### Commands
+
+- Use `pnpm` for frontend packages; `harper-desktop/package.json` pins `pnpm@10.10.0`.
+- Dev app: `just dev-desktop` from repo root. It builds shared web packages, runs `cargo tauri dev`, and Tauri then runs `pnpm dev` on port `1420`.
+- Start the highlighter process directly: `just dev-desktop-highlighter` from repo root.
+- Frontend checks: `pnpm check` from `harper-desktop`.
+- Frontend build only: `pnpm build` from `harper-desktop`.
+- Full desktop checks: `just check-desktop` from repo root.
+- Rust checks: `cargo check -p harper-desktop --all-targets` from repo root.
+- Rust formatting/fix loop from repo root: `cargo fmt && cargo check -p harper-desktop --all-targets`.
+- Bundle builds match CI: `just build-desktop-linux` or `just build-desktop-macos`.
+- `just build-desktop-linux` builds deb/rpm/appimage bundles.
+- `just build-desktop-macos` builds app/dmg bundles.
+
+### Architecture
+
+- Harper Desktop lives under `harper-desktop` and is part of the root Cargo and pnpm workspaces.
+- It is a SvelteKit SPA inside Tauri v2.
+- SSR is disabled in `harper-desktop/src/routes/+layout.ts`.
+- `harper-desktop/svelte.config.js` uses `adapter-static` with `fallback: "index.html"`.
+- Main Rust entrypoint is `harper-desktop/src-tauri/src/main.rs`, which calls `harper_desktop_lib::run()`.
+- CLI behavior is in `harper-desktop/src-tauri/src/lib.rs`: no subcommand runs the normal Tauri app; `highlighter` runs the native overlay highlighter.
+- Tauri config lives in `harper-desktop/src-tauri/tauri.conf.json`.
+- Tauri capabilities live in `harper-desktop/src-tauri/capabilities/default.json`.
+- The main Svelte route is `harper-desktop/src/routes/+page.svelte`; it switches between the settings UI and editor UI.
+- The editor UI lives in `harper-desktop/src/lib/EditorView.svelte` and uses workspace dependencies on `harper.js` and `harper-editor`.
+- The settings UI lives under `harper-desktop/src/lib/settings/`.
+- Rust uses local workspace dependencies from `harper-desktop/src-tauri/Cargo.toml`, including `harper-core` and `harper-dictionary-wordlist`.
+- The Tauri app starts a tray/menu-bar controlled highlighter service on launch and can open editor/settings windows from the tray.
+- Editor and settings windows hide on close instead of exiting; quit is handled through the tray menu.
+
+### Highlighter Architecture
+
+- The highlighter is Rust/egui/winit code under `harper-desktop/src-tauri/src/highlighter/`.
+- `Highlighter` is the public entry point for the overlay system.
+- `Window` owns native window/GPU plumbing.
+- `WindowManager` owns the winit event loop, monitor windows, cursor hit-testing, and popup selection.
+- `RenderState` owns highlight rendering, popup drawing, markdown rendering cache, and popup action dispatch.
+- `RenderState` uses `ActionableLint` values from `harper-desktop/src-tauri/src/rect.rs`.
+- `ActionableLint` stores lint geometry, the Harper `Lint`, and source text needed for suggestion application and popup actions.
+- Suggestion popup actions currently include close, apply suggestion, ignore lint, add to dictionary, disable rule, and refresh config.
+- Popup hover text is implemented in `RenderState` button helpers.
+- The highlighter read interval is set in `run_highlighter()` with `with_read_interval(Duration::from_millis(16))`.
+
+### OS Integration
+
+- OS integration is behind `harper-desktop/src-tauri/src/os_broker.rs`.
+- macOS uses `harper-desktop/src-tauri/src/mac_broker.rs`.
+- non-macOS currently uses `NoopBroker`.
+- macOS highlighter focus handling depends on `MacBroker.last_focused`; clicking the overlay can make the highlighter process focused, so accessibility reads fall back to the last non-highlighter PID.
+- macOS integrations are bundle-ID based and controlled by persisted `Integration` entries.
+- Highlighter stdout is reserved for JSON-line IPC. Diagnostics in highlighter paths should use `eprintln!`, not `println!`.
+
+### IPC And App State
+
+- Tauri app state lives in `harper-desktop/src-tauri/src/config.rs`.
+- `Config` currently stores `mutable_dictionary: MutableDictionary`, `dialect: Dialect`, `ignored_lints: IgnoredLints`, `lint_config: FlatConfig`, and `integrations: Vec<Integration>`.
+- `Config::new()` uses `MutableDictionary::new()`, `Dialect::American`, `IgnoredLints::new()`, `FlatConfig::new_curated()`, and curated default integrations.
+- Config is persisted under the system config directory in a `harper-desktop` folder. Main settings are serialized to `config.json`; the mutable dictionary is stored separately as `dictionary.txt`.
+- `Config::load_from_system()` loads the serialized config and then hydrates the mutable dictionary with the selected dialect.
+- The Tauri app owns shared config as `Arc<Mutex<Config>>`.
+- `run_tauri()` loads persisted config, creates `HighlighterService`, starts the highlighter service, and creates the tray/menu-bar UI.
+- The highlighter process is spawned through `harper-desktop/src-tauri/src/highlighter_process.rs`.
+- IPC is implemented under `harper-desktop/src-tauri/src/communication/`.
+- IPC uses newline-delimited JSON over child stdin/stdout.
+- The Tauri app is the protocol server.
+- The highlighter process is the protocol client.
+- Protocol messages live in `harper-desktop/src-tauri/src/communication/message.rs`.
+- Supported requests include `GetLintConfig`, `GetDictionary`, `GetDialect`, `GetIgnoredLints`, `GetIntegrations`, `SetLintConfig`, `IgnoreLint`, `AddToDictionary`, `AddIntegration`, `RemoveIntegration`, and `SetIntegrationEnabled`.
+- Supported responses include `GetLintConfig`, `GetDictionary`, `GetDialect`, `GetIgnoredLints`, `GetIntegrations`, and `Ack`.
+- `IgnoredLints` is transferred as whole serialized state and merged server-side.
+- `AddToDictionary` sends only the word; Rust appends it with `DictWordMetadata::default()`.
+- The highlighter uses a Tokio current-thread runtime to call async IPC client methods from synchronous UI callbacks.
+- That runtime is bridge plumbing only; it is not used for linting or UI rendering.
+
+### Dictionary And Linting Gotchas
+
+- Keep dictionary construction centralized through `Config::dictionary_from_user_dictionary(user_dictionary: MutableDictionary) -> Arc<MergedDictionary>` and `Config::create_dictionary()`.
+- Keep linter construction centralized through `Config::create_linter()`.
+- The same merged dictionary source must be used for both `Document::new_markdown_default(text, &dictionary)` and `LintGroup::new_curated(dictionary, dialect)`.
+- Do not use `Document::new_markdown_default_curated(text)` in the main highlighter lint callback when user dictionary words should suppress spelling lints.
+- Harper spelling lint behavior depends on document token metadata, so a linter with the updated dictionary is not enough if the `Document` was built with the curated dictionary only.
+- `RenderState` may still use curated document construction for localized source extraction where dictionary membership does not matter.
+
+### Frontend Integration
+
+- Tauri commands in `harper-desktop/src-tauri/src/lib.rs` include `get_lint_config`, `get_dialect`, `set_dialect`, `set_lint_config`, `get_dictionary`, `set_dictionary`, `ignore_lint`, `add_to_dictionary`, `get_integrations`, `add_integration`, `remove_integration`, and `set_integration_enabled`.
+- JS helper lives in `harper-desktop/src/lib/client.ts`.
+- JS helper class is named `Client` and exposes static methods for lint config, dialect, dictionary, ignored lints, dictionary additions, and integrations.
+- `Client.ignoreLint(...)` uses Harper JS ignored-lints export data and invokes the Rust command.
+- `Client.addToDictionary(word)` sends only the word to Rust.
+- Vite's dev server must stay on port `1420`; `harper-desktop/vite.config.js` uses `strictPort: true` because Tauri expects that port.
+- Vite intentionally ignores `src-tauri/**` during frontend file watching.
+
+### Repo-Specific Gotchas
+
+- CI installs `wasm-pack`, `tauri-cli`, and `cargo-hack` with `cargo binstall`, then runs the relevant root `just` task.
+- Avoid mixing behavior fixes with structural refactors in the highlighter; popup/UI, IPC, dictionary behavior, config persistence, settings UI, and OS-coordinate fixes are easier to review separately.
+
+### Known Review Findings
+
+- Secondary-monitor highlighter coordinates may be wrong. Accessibility rectangles appear to be global screen coordinates, while each overlay window's egui origin is local to that monitor/window. Translate by monitor/window origin or render through one virtual-desktop-sized overlay.
+- macOS text range lookup may be wrong after emoji or other non-BMP characters. Harper spans are char-based, while macOS accessibility ranges are NSString/UTF-16 based. Convert spans before calling `AXBoundsForRangeParameterizedAttribute`.
 
 ## On Writing New Rules
 
@@ -110,6 +222,7 @@ When asked to write a new rule, keep these guidelines in mind:
 - You should include at least 15 total tests, covering a wide variety of cases. Cover false-positives, false negatives, true positives, and if relevant, true negatives.
 - You should run any and all tests to ensure that you do no break existing behavior and that your new rule runs the way you expect.
 - After adding a new rule, update `harper-core/default_config.json` so it is enabled in the curated default config.
+- Built-in Weir rules can be grouped by putting related `.weir` files in a directory under `harper-core/src/linting/weir_rules`; the directory name becomes the single public rule name.
 - If the rule is related to a closed compound noun, see if you can just add an entry to the existing closed compound linter.
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.

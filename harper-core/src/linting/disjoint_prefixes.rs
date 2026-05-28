@@ -41,7 +41,7 @@ where
             .t_ws_h()
             .then_kind_either(TokenKind::is_verb, TokenKind::is_noun)
             .then_optional_hyphen()
-            .and_not(SequenceExpr::any_of(vec![
+            .but_not(SequenceExpr::any_of(vec![
                 // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
                 Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
                 // Don't merge "co op" whether separated by space or hyphen.
