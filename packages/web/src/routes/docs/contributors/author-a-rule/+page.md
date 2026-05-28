@@ -263,6 +263,15 @@ From there, you can run `just lint <test filename>`.
 It should emit a readable report of the grammatical errors in the document.
 If the error your rule looks for does _not_ appear in this list, something is wrong.
 
+Once you have unit tests for your rule, use `cargo test -- <REGEX>` from `harper-core` to run only the tests whose names match a pattern:
+
+```bash
+cd harper-core
+cargo test -- <REGEX>
+```
+
+This keeps the edit-test loop fast while you iterate on one rule and skips tests from other workspace crates.
+
 If you need any help writing or debugging rules, don't be afraid to contact the Harper team in your draft pull request.
 
 > **Note:** if two lints (or suggestions) overlap or address the same problem, this command will only display the first one.
