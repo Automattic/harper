@@ -171,6 +171,14 @@ export class Client {
 			'Accessibility permission request timed out',
 		);
 	}
+
+	static async startHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('start_highlighter_service');
+	}
+
+	static async stopHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('stop_highlighter_service');
+	}
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
