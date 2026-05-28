@@ -210,6 +210,7 @@ mod tests {
     #[test]
     fn allow_an_mp_and_an_mp3() {
         assert_lint_count("an MP and an MP3?", AnA::new(Dialect::American), 0);
+        assert_lint_count("an mp3", AnA::new(Dialect::American), 0);
     }
 
     #[test]

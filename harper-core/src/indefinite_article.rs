@@ -138,6 +138,7 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
             | ['n', 'g', ..]
             | ['n', 'v', ..]
             | ['x', 'b', 'o', 'x']
+            | ['m', 'p', '3' | '4', ..]
             | ['h', 'e', 'i', 'r', ..]
             | ['h', 'o', 'n', 'o', 'r', ..]
             | ['h', 'o', 'n', 'e', 's', ..]
