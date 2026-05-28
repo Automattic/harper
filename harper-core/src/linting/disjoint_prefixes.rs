@@ -11,7 +11,7 @@ pub struct DisjointPrefixes<D> {
 }
 
 // Known false positives not to join to these prefixes:
-const OUT_EXCEPTIONS: &[&str] = &["boxes", "facing", "live", "numbers", "playing"];
+const OUT_EXCEPTIONS: &[&str] = &["boxes", "facing", "live", "numbers", "playing", "right"];
 const OVER_EXCEPTIONS: &[&str] = &["all", "joy", "long", "night", "reading", "steps", "time"];
 const UNDER_EXCEPTIONS: &[&str] = &["development", "mine"];
 const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
