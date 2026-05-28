@@ -4,6 +4,8 @@ UI.user_error!('Please run fastlane via `bundle exec`') unless FastlaneCore::Hel
 
 APPLE_TEAM_ID = 'PZYM8XX95Q'
 
+GITHUB_REPO = 'Automattic/harper'
+
 TAURI_CONFIG_PATH = File.expand_path('../harper-desktop/src-tauri/tauri.conf.json', __dir__)
 
 CODE_SIGNING_STORAGE_OPTIONS = {
@@ -25,6 +27,7 @@ ASC_API_KEY_ENV_VARS = %w[
 ].freeze
 
 require 'json'
+require 'tempfile'
 require 'fastlane/plugin/wpmreleasetoolkit'
 
 # Convenience alias — wpmreleasetoolkit 14.4+ namespaces this under
@@ -74,4 +77,27 @@ lane :notarize_macos do |package:|
     api_key: app_store_connect_api_key,
     print_log: true
   )
+end
+
+desc 'Create a draft GitHub release for harper-desktop with the signed/notarized macOS artifacts attached'
+lane :create_desktop_github_release do |tag:, dmg:, app_tarball:, app_signature:|
+  EnvManager.get_required_env!('GITHUB_TOKEN')
+
+  # `create_github_release` is create-only — a re-run on an existing tag
+  # requires deleting the partial draft on GitHub before retrying.
+
+  # `create_github_release` crashes with a FrozenError when no notes path is
+  # given (wpmreleasetoolkit 14.6.0 calls `gsub!` on a frozen empty literal).
+  # Pass an empty tempfile to get the action's intended "no notes" behavior.
+  Tempfile.create(['release-notes', '.md']) do |empty_notes|
+    empty_notes.close
+
+    create_github_release(
+      repository: GITHUB_REPO,
+      version: tag,
+      release_assets: [dmg, app_tarball, app_signature],
+      release_notes_file_path: empty_notes.path,
+      is_draft: true
+    )
+  end
 end

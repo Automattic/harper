@@ -104,3 +104,16 @@ DMG_FILE=$(find "target/$TAURI_TARGET/release/bundle/dmg" -maxdepth 1 -name '*.d
 
 bundle exec fastlane notarize_macos package:"$APP_BUNDLE"
 bundle exec fastlane notarize_macos package:"$DMG_FILE"
+
+if [ -n "${BUILDKITE_TAG:-}" ]; then
+	echo "--- :rocket: Publish draft GitHub release"
+	APP_TARBALL=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app.tar.gz' -type f | head -1)
+	APP_SIG=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app.tar.gz.sig' -type f | head -1)
+	[ -n "$APP_TARBALL" ] || { echo "no .app.tar.gz produced"; exit 1; }
+	[ -n "$APP_SIG" ]     || { echo "no .app.tar.gz.sig produced"; exit 1; }
+	bundle exec fastlane create_desktop_github_release \
+		tag:"$BUILDKITE_TAG" \
+		dmg:"$DMG_FILE" \
+		app_tarball:"$APP_TARBALL" \
+		app_signature:"$APP_SIG"
+fi
