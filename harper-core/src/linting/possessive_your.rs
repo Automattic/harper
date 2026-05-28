@@ -18,7 +18,7 @@ impl Default for PossessiveYour {
             .then_kind_is_but_is_not_except(
                 TokenKind::is_nominal,
                 TokenKind::is_likely_homograph,
-                &["guys", "what's"],
+                &["guys", "what's", "yourself"],
             );
 
         Self { expr: pattern }
