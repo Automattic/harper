@@ -42,7 +42,10 @@ function toIntegrationRow(integration: Integration): IntegrationRow {
 }
 
 function integrationName(bundleId: string) {
-	return bundleId.split('.').at(-1) || bundleId;
+	// Capitalize the first letter so that e.g. "com.apple.mail" → "Mail" instead of "mail".
+	// Apps with already title-case suffixes (e.g. "TextEdit") are unaffected.
+	const raw = bundleId.split('.').at(-1) || bundleId;
+	return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
