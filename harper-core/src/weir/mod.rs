@@ -464,6 +464,30 @@ pub mod tests {
     }
 
     #[test]
+    fn array_prefers_longest_match_over_first_match() {
+        for main in [
+            "[(capitalized off of), (capitalized off)]",
+            "[(capitalized off), (capitalized off of)]",
+        ] {
+            let source = format!(
+                r#"
+            expr main {main}
+            let message "Use the replacement."
+            let description "Regression test for overlapping Weir array options."
+            let kind "Miscellaneous"
+            let becomes "replacement"
+            let strategy "Exact"
+
+            test "capitalized off of" "replacement"
+            "#
+            );
+
+            let mut linter = WeirLinter::new(&source).unwrap();
+            assert_passes_all(&mut linter);
+        }
+    }
+
+    #[test]
     fn g_suite_with_refs() {
         let source = r#"
             expr a (G [Suite, Suit])
