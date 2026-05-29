@@ -488,7 +488,7 @@ fn apply_suggestion_to_element(
 
 fn is_supported_text_element(el: &AXUIElement) -> bool {
     if let Ok(role) = el.role() {
-        return is_supported_text_role(&role);
+        return is_supported_text_role(&role.to_string());
     }
 
     false
