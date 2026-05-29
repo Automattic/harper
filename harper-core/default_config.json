@@ -3720,6 +3720,13 @@
 								"state": true,
 								"label": "Naked Eye"
 							}
+						},
+						{
+							"Bool": {
+								"name": "AsToInterrogative",
+								"state": true,
+								"label": "As To Interrogative"
+							}
 						}
 					]
 				}
