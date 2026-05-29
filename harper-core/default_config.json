@@ -3581,16 +3581,23 @@
 								"label": "Rules Of Thumb"
 							}
 						},
-						{
-							"Bool": {
-								"name": "SameAs",
-								"state": true,
-								"label": "Same As"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ShutdownVerb",
+{
+						"Bool": {
+							"name": "SameAs",
+							"state": true,
+							"label": "Same As"
+						}
+					},
+					{
+						"Bool": {
+							"name": "SameExact",
+							"state": true,
+							"label": "Same Exact"
+						}
+					},
+					{
+						"Bool": {
+							"name": "ShutdownVerb",
 								"state": true,
 								"label": "Shutdown Verb"
 							}

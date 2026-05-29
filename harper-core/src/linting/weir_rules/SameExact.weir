@@ -1,0 +1,22 @@
+expr main (same exact)
+
+let message "`Exact` is redundant after `same`. Use `same` alone."
+let description "Flags the redundant phrase `same exact`, since `same` already implies exactness. Use `same` by itself."
+let kind "Redundancy"
+let becomes "same"
+
+test "It is the same exact issue." "It is the same issue."
+test "We need the same exact configuration." "We need the same configuration."
+test "They had the same exact problem." "They had the same problem."
+test "This is the same exact approach we used before." "This is the same approach we used before."
+test "She ordered the same exact meal." "She ordered the same meal."
+test "Both are the same exact size." "Both are the same size."
+
+test "It is the Same Exact issue." "It is the Same issue."
+test "It is the SAME EXACT issue." "It is the SAME issue."
+
+allows "They are exactly the same."
+allows "It is the same issue."
+allows "The exact same thing happened."
+allows "She used the exact same method."
+allows "He arrived at the exact same time."
