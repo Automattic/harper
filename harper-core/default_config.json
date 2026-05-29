@@ -3581,7 +3581,7 @@
 								"label": "Rules Of Thumb"
 							}
 						},
-{
+					{
 						"Bool": {
 							"name": "SameAs",
 							"state": true,
