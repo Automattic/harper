@@ -1,9 +1,10 @@
-expr main (same exact)
+expr main [(same exact), (Same Exact), (SAME EXACT)]
 
 let message "`Exact` is redundant after `same`. Use `same` alone."
 let description "Flags the redundant phrase `same exact`, since `same` already implies exactness. Use `same` by itself."
 let kind "Redundancy"
 let becomes "same"
+let strategy "MatchCase"
 
 test "It is the same exact issue." "It is the same issue."
 test "We need the same exact configuration." "We need the same configuration."
