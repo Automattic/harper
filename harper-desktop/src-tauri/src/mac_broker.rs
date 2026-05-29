@@ -413,7 +413,7 @@ struct RectCollector<'a> {
 impl TreeVisitor for RectCollector<'_> {
     fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
         if let Ok(value) = element.value()
-            && is_textarea(element)
+            && is_supported_text_element(element)
         {
             let string =
                 unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
@@ -486,14 +486,34 @@ fn apply_suggestion_to_element(
     }
 }
 
-fn is_textarea(el: &AXUIElement) -> bool {
-    if let Ok(role) = el.role()
-        && role == "AXTextArea"
-    {
-        return true;
+fn is_supported_text_element(el: &AXUIElement) -> bool {
+    if let Ok(role) = el.role() {
+        return is_supported_text_role(&role);
     }
 
     false
+}
+
+fn is_supported_text_role(role: &str) -> bool {
+    matches!(role, "AXTextArea" | "AXTextField")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn supported_text_roles_include_text_area_and_text_field() {
+        assert!(is_supported_text_role("AXTextArea"));
+        assert!(is_supported_text_role("AXTextField"));
+    }
+
+    #[test]
+    fn supported_text_roles_reject_unrelated_roles() {
+        assert!(!is_supported_text_role("AXButton"));
+        assert!(!is_supported_text_role("AXStaticText"));
+        assert!(!is_supported_text_role(""));
+    }
 }
 
 fn element_rect_for_text_range(
