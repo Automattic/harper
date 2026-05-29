@@ -1,0 +1,20 @@
+expr main (close proximity)
+
+let message "`Proximity` already means closeness, so `close` is redundant. Use `proximity` alone."
+let description "Flags the redundant phrase `close proximity`, since `proximity` itself already means closeness."
+let kind "Redundancy"
+let becomes "proximity"
+
+test "The two buildings are in close proximity to each other." "The two buildings are in proximity to each other."
+test "The hotel is in close proximity to the beach." "The hotel is in proximity to the beach."
+test "There are several restaurants in close proximity." "There are several restaurants in proximity."
+test "The sensors detect objects in close proximity." "The sensors detect objects in proximity."
+test "They live in close proximity to the park." "They live in proximity to the park."
+
+test "The two buildings are in CLOSE PROXIMITY to each other." "The two buildings are in PROXIMITY to each other."
+test "THE HOTEL IS IN CLOSE PROXIMITY." "THE HOTEL IS IN PROXIMITY."
+
+allows "The stars are close together."
+allows "They were in close contact."
+allows "She kept a close watch on the sensor."
+allows "Proximity is measured in meters."
