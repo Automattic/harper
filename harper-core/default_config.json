@@ -3713,6 +3713,13 @@
 								"state": true,
 								"label": "A Some Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
 						}
 					]
 				}
