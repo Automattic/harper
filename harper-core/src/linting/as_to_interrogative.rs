@@ -58,7 +58,7 @@ impl ExprLinter for AsToInterrogative {
     }
 
     fn description(&self) -> &str {
-        "Corrects `to` to `as to` between certain adjectives and wh-words."
+        "Corrects `to` to `as to` between certain adjectives and `wh-words`."
     }
 }
 
