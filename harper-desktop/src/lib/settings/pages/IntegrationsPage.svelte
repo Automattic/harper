@@ -37,12 +37,8 @@ async function loadIntegrations() {
 function toIntegrationRow(integration: Integration): IntegrationRow {
 	return {
 		...integration,
-		name: integrationName(integration.bundle_id),
+		name: integration.display_name,
 	};
-}
-
-function integrationName(bundleId: string) {
-	return bundleId.split('.').at(-1) || bundleId;
 }
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
@@ -93,12 +89,16 @@ async function addIntegration(bundleId: string) {
 
 	const previousIntegrations = integrations;
 
-	integrations = [...integrations, { bundle_id: trimmedBundleId, enabled: true }];
+	integrations = [
+		...integrations,
+		{ bundle_id: trimmedBundleId, enabled: true, display_name: trimmedBundleId },
+	];
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
 	try {
 		await Client.addIntegration(trimmedBundleId);
+		await loadIntegrations();
 		closeAppPicker();
 	} catch (error) {
 		integrations = previousIntegrations;

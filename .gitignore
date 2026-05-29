@@ -9,3 +9,10 @@ mariadb_data
 
 # Ignore direnv files
 .direnv/*
+
+# Fastlane / Bundler
+vendor/bundle/
+.bundle/*
+!.bundle/config
+fastlane/report.xml
+fastlane/README.md
