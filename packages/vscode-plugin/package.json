@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.2.1",
+	"version": "2.3.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -798,6 +798,12 @@
 					"default": true,
 					"description": "Incorrect preposition: `by accident` is the idiomatic expression."
 				},
+				"harper.linters.ByTheBook": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `by the books` to `by the book`."
+				},
 				"harper.linters.ByTheWay": {
 					"scope": "resource",
 					"type": "boolean",
@@ -899,6 +905,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags common soundalikes of \"chock-full\" and makes sure they're hyphenated."
+				},
+				"harper.linters.ClicheAccent": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
 				},
 				"harper.linters.ClickThroughRate": {
 					"scope": "resource",
@@ -1343,6 +1355,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `every once and again` to `every once in a while` or `once again`."
+				},
+				"harper.linters.EverySingleOneOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects missing `one` in the phrase 'every single one of'."
 				},
 				"harper.linters.EveryTime": {
 					"scope": "resource",
@@ -2801,6 +2819,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Replaces hat/had/hit/hid in the idiom `nail on the head` with `head`."
+				},
+				"harper.linters.NakedEye": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the wrong preposition used instead of `to`, `with`, or `by` the naked eye."
 				},
 				"harper.linters.NationalCapitals": {
 					"scope": "resource",
