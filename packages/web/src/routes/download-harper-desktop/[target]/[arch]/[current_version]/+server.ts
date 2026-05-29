@@ -42,36 +42,40 @@ const compareVersions = (left: string, right: string) => {
 const isCurrentVersionUpToDate = (currentVersion: string, latestVersion: string) =>
 	compareVersions(currentVersion, latestVersion) >= 0;
 
-const getAssetPrefix = (target: string, arch: string) => {
+const supportsTarget = (target: string, arch: string) => {
 	const normalizedTarget = target.toLowerCase();
 	const normalizedArch = arch.toLowerCase();
 	const isMacOs = ['darwin', 'macos', 'macos-universal', 'apple-darwin'].some((targetName) =>
 		normalizedTarget.includes(targetName),
 	);
 
-	if (!isMacOs) {
-		return null;
-	}
+	return isMacOs && ['aarch64', 'arm64', 'x86_64', 'x64', 'amd64'].includes(normalizedArch);
+};
 
-	if (['aarch64', 'arm64'].includes(normalizedArch)) {
-		return 'harper-desktop-macos-arm64';
-	}
+const updateAssetBasenames = [
+	'Harper',
+	// Pre-rename artifacts used the old product name. Keep this fallback so users can still update
+	// from releases published before the app bundle was renamed to `Harper.app`.
+	'harper-desktop',
+	// Older server logic expected these names, so tolerate them if any draft/retry release used them.
+	'harper-desktop-macos-arm64',
+	'harper-desktop-macos-x64',
+];
 
-	if (['x86_64', 'x64', 'amd64'].includes(normalizedArch)) {
-		return 'harper-desktop-macos-x64';
+const findAssetByName = (assets: GitHubReleaseAsset[], name: string) =>
+	assets.find((asset) => asset.name === name);
+
+const findUpdateAssets = (release: GitHubRelease) => {
+	for (const basename of updateAssetBasenames) {
+		const archiveAsset = findAssetByName(release.assets, `${basename}.app.tar.gz`);
+		const signatureAsset = findAssetByName(release.assets, `${basename}.app.tar.gz.sig`);
+
+		if (archiveAsset != null && signatureAsset != null) {
+			return { archiveAsset, signatureAsset };
+		}
 	}
 
 	return null;
-};
-
-const findAssetByPrefixAndSuffix = (assets: GitHubReleaseAsset[], prefix: string, suffix: string) =>
-	assets.find((asset) => asset.name.startsWith(prefix) && asset.name.endsWith(suffix));
-
-const findUpdateAssets = (release: GitHubRelease, assetPrefix: string) => {
-	const archiveAsset = findAssetByPrefixAndSuffix(release.assets, assetPrefix, '.app.tar.gz');
-	const signatureAsset = findAssetByPrefixAndSuffix(release.assets, assetPrefix, '.app.tar.gz.sig');
-
-	return archiveAsset == null || signatureAsset == null ? null : { archiveAsset, signatureAsset };
 };
 
 const getSignatureFromCache = async (asset: GitHubReleaseAsset) => {
@@ -114,9 +118,7 @@ export const GET = async ({ params }: RequestEvent) => {
 		return noUpdate();
 	}
 
-	const assetPrefix = getAssetPrefix(target, arch);
-
-	if (assetPrefix == null) {
+	if (!supportsTarget(target, arch)) {
 		console.log(`No Harper Desktop update available for unsupported platform ${target}/${arch}.`);
 		return noUpdate();
 	}
@@ -131,10 +133,9 @@ export const GET = async ({ params }: RequestEvent) => {
 		return noUpdate();
 	}
 
-	const updateAssets = findUpdateAssets(latestRelease, assetPrefix);
-
+	const updateAssets = findUpdateAssets(latestRelease);
 	if (updateAssets == null) {
-		console.log(`No Harper Desktop updater assets found for ${assetPrefix} in ${latestVersion}.`);
+		console.log(`No Harper Desktop updater assets found in ${latestVersion}.`);
 		return noUpdate();
 	}
 
