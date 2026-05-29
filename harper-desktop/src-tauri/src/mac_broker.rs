@@ -23,7 +23,7 @@ use core_graphics::window::{
     kCGWindowListExcludeDesktopElements, kCGWindowListOptionOnScreenOnly, kCGWindowOwnerPID,
 };
 use harper_core::linting::{Lint, Suggestion};
-use objc2_app_kit::NSRunningApplication;
+use objc2_app_kit::{NSRunningApplication, NSWorkspace};
 use objc2_foundation::NSRect;
 use std::{
     cell::RefCell,
@@ -241,16 +241,35 @@ fn display_name_from_app_path(path: &str) -> Option<String> {
 
 fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     let system = AXUIElement::system_wide();
-    let app = ax_element_attribute(&system, kAXFocusedApplicationAttribute)?;
+    let app = match ax_element_attribute(&system, kAXFocusedApplicationAttribute) {
+        Ok(app) => app,
+        Err(error) => {
+            if let Some(pid) = frontmost_application_pid() {
+                return Ok(pid);
+            }
+
+            return Err(error);
+        }
+    };
 
     let mut pid: pid_t = 0;
     let err = unsafe { AXUIElementGetPid(app.as_concrete_TypeRef(), &mut pid) };
 
     if err != kAXErrorSuccess {
+        if let Some(pid) = frontmost_application_pid() {
+            return Ok(pid);
+        }
+
         return Err(format!("AXUIElementGetPid failed: {}", error_string(err)).into());
     }
 
     Ok(pid)
+}
+
+fn frontmost_application_pid() -> Option<pid_t> {
+    NSWorkspace::sharedWorkspace()
+        .frontmostApplication()
+        .map(|app| app.processIdentifier())
 }
 
 fn is_pid_approved(pid: pid_t, integrations: &[Integration]) -> bool {
