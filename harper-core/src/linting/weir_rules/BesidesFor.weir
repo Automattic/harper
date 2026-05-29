@@ -1,0 +1,70 @@
+# "Besides for" is a redundant combination of "besides" and "except for" / "other than".
+# It should be corrected to either "besides" or "other than".
+# See: https://github.com/Automattic/harper/issues/3380
+# See: https://ludwig.guru/s/Besides+for
+# See: https://ell.stackexchange.com/questions/48316
+#
+# Comma ambiguity: When "besides" is a sentence connector followed by a comma,
+# the comma token breaks the Weir sequence match, so "Besides, for..." is not
+# flagged. If the comma is omitted ("Besides for..."), the rule flags it.
+# In sentence-opener position, the user likely meant "Besides, for...", but
+# "besides for" is still redundant — either "besides" alone or "other than"
+# resolves it. Some tests below cover this comma-less sentence-opener pattern
+# explicitly, per reviewer request.
+
+expr main (besides for)
+
+let message "`besides for` is redundant. Use either `besides` or `other than`."
+let description "Corrects the redundant phrase `besides for`, suggesting `besides` or `other than`."
+let kind "Redundancy"
+let becomes ["besides", "other than"]
+
+# TRUE POSITIVES — should be corrected
+# Expected outputs deliberately mix between both "becomes" alternatives
+# ("besides" and "other than") so the test runner exercises both.
+
+# Mid-sentence uses — "besides" suggestion
+test "Besides for multilevel verbosity you usually do -vv or -vvv." "Besides multilevel verbosity you usually do -vv or -vvv."
+test "Without it, the feature is, besides for basic testing with small corpuses of text, not useable." "Without it, the feature is, besides basic testing with small corpuses of text, not useable."
+test "There were a few cases where it's actually pretty sweet, but besides for that, it was largely ineffective." "There were a few cases where it's actually pretty sweet, but besides that, it was largely ineffective."
+test "She doesn't eat anything besides for salad." "She doesn't eat anything besides salad."
+test "Besides for that one issue, everything is fine." "Besides that one issue, everything is fine."
+test "We have nothing besides for each other." "We have nothing besides each other."
+test "There is no way besides for direct intervention." "There is no way besides direct intervention."
+test "Besides for a brief power outage, the event went smoothly." "Besides a brief power outage, the event went smoothly."
+
+# Mid-sentence uses — "other than" suggestion
+test "Besides for providing practical tools, KTH_Toolbox also defines a convenient framework." "Other than providing practical tools, KTH_Toolbox also defines a convenient framework."
+test "No autocomplete besides for classes that are in the same file I'm editing." "No autocomplete other than classes that are in the same file I'm editing."
+test "I don't have any other options besides for this one." "I don't have any other options other than this one."
+test "Besides for the weather, the trip was great." "Other than the weather, the trip was great."
+test "The app works well besides for a few minor bugs." "The app works well other than a few minor bugs."
+test "It's a great product besides for the price." "It's a great product other than the price."
+test "Besides for the main feature, there are several improvements." "Other than the main feature, there are several improvements."
+test "He has no qualifications besides for this certificate." "He has no qualifications other than this certificate."
+
+# Sentence-opener "Besides for..." without a comma (user likely meant "Besides, for...")
+# These test the comma-omission edge case explicitly. The rule still flags them
+# because "besides for" is redundant regardless of intent. Both suggestions are
+# reasonable: "besides" drops the redundant "for"; "other than" replaces the
+# whole phrase. We pick the more natural-sounding alternative per sentence.
+test "Besides for that reason I decided to leave early." "Other than that reason I decided to leave early."
+test "Besides for the fact it was raining we would have gone hiking." "Besides the fact it was raining we would have gone hiking."
+test "Besides for being too expensive the hotel was actually quite nice." "Other than being too expensive the hotel was actually quite nice."
+test "Besides for one small detail the plan is perfect." "Besides one small detail the plan is perfect."
+
+# FALSE POSITIVES — should NOT be flagged
+
+# "besides" used alone as an adverb/conjunction (no "for" following)
+allows "It's a great product besides."
+allows "I don't want to go; besides, I'm tired."
+allows "Besides, I already told you about it."
+
+# "for" belonging to a separate clause after "besides" as a sentence connector
+# (comma after "besides" means "for" starts a new prepositional phrase)
+allows "Besides, for the most part, the system works well."
+allows "Besides, for him to give up now would be surprising."
+
+# Other unrelated "besides" usage
+allows "There is no one here besides us."
+allows "What do you have besides this?"

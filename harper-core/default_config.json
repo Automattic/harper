@@ -4398,6 +4398,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BesidesFor",
+								"state": true,
+								"label": "Besides For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BewareOf",
 								"state": true,
 								"label": "Beware Of"
