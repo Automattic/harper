@@ -52,23 +52,19 @@ const supportsTarget = (target: string, arch: string) => {
 	return isMacOs && ['aarch64', 'arm64', 'x86_64', 'x64', 'amd64'].includes(normalizedArch);
 };
 
-const updateAssetBasenames = [
+const appBundleBasenames = [
 	'Harper',
-	// Pre-rename artifacts used the old product name. Keep this fallback so users can still update
-	// from releases published before the app bundle was renamed to `Harper.app`.
 	'harper-desktop',
-	// Older server logic expected these names, so tolerate them if any draft/retry release used them.
 	'harper-desktop-macos-arm64',
 	'harper-desktop-macos-x64',
 ];
 
-const findAssetByName = (assets: GitHubReleaseAsset[], name: string) =>
-	assets.find((asset) => asset.name === name);
-
 const findUpdateAssets = (release: GitHubRelease) => {
-	for (const basename of updateAssetBasenames) {
-		const archiveAsset = findAssetByName(release.assets, `${basename}.app.tar.gz`);
-		const signatureAsset = findAssetByName(release.assets, `${basename}.app.tar.gz.sig`);
+	const assetsByName = new Map(release.assets.map((asset) => [asset.name, asset]));
+
+	for (const basename of appBundleBasenames) {
+		const archiveAsset = assetsByName.get(`${basename}.app.tar.gz`);
+		const signatureAsset = assetsByName.get(`${basename}.app.tar.gz.sig`);
 
 		if (archiveAsset != null && signatureAsset != null) {
 			return { archiveAsset, signatureAsset };
