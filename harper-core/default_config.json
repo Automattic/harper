@@ -4983,6 +4983,12 @@
 								"state": true,
 								"label": "Every Single One Of"
 							}
+						},{
+							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
 						}
 					]
 				}
