@@ -35,7 +35,6 @@ impl Default for GoBackAgo {
                         "precisely",
                         "probably",
                         "roughly",
-                        "to",
                     ])
                     .t_ws(),
                 )
@@ -102,7 +101,7 @@ impl ExprLinter for GoBackAgo {
     }
 
     fn description(&self) -> &str {
-        "Checks for the word `ago` following `go back [a period of time]`, which is redundant."
+        "Checks for the word `ago` following `go back [a period of time]`, which is redundant. Does not flag `go back to [duration] ago`, where `to` introduces a point in time and `ago` is not redundant."
     }
 }
 
@@ -177,29 +176,23 @@ mod tests {
     }
 
     #[test]
-    fn goes_back_to_40_years_ago() {
-        assert_suggestion_result(
-            "This goes back to 40 years ago.",
-            GoBackAgo::default(),
-            "This goes back to 40 years.",
-        );
+    fn goes_back_to_40_years_ago_is_valid() {
+        assert_no_lints("This goes back to 40 years ago.", GoBackAgo::default());
     }
 
     #[test]
-    fn going_back_to_ten_years_ago() {
-        assert_suggestion_result(
+    fn going_back_to_ten_years_ago_is_valid() {
+        assert_no_lints(
             "We're going back to ten years ago to find the origin.",
             GoBackAgo::default(),
-            "We're going back to ten years to find the origin.",
         );
     }
 
     #[test]
-    fn go_back_to_a_week_ago() {
-        assert_suggestion_result(
+    fn go_back_to_a_week_ago_is_valid() {
+        assert_no_lints(
             "Let's go back to a week ago and see what happened.",
             GoBackAgo::default(),
-            "Let's go back to a week and see what happened.",
         );
     }
 
@@ -213,11 +206,10 @@ mod tests {
     }
 
     #[test]
-    fn went_back_to_five_days_ago() {
-        assert_suggestion_result(
+    fn went_back_to_five_days_ago_is_valid() {
+        assert_no_lints(
             "He went back to five days ago in the version history.",
             GoBackAgo::default(),
-            "He went back to five days in the version history.",
         );
     }
 
