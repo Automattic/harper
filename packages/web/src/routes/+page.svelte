@@ -163,14 +163,14 @@ onMount(() => {
 	<section class="bg-[#fbfaf6] px-10 pt-[4.4rem] pb-20 text-center dark:bg-black max-[880px]:px-4">
 		<div class="mx-auto flex max-w-[44rem] flex-col items-center">
 			<HarperMark size={108} />
-			<h1 class="!mt-7 !mb-0 py-0 font-serif text-[clamp(3.4rem,8vw,4rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+			<h1 class="!mt-7 !mb-0 py-0 !font-serif text-[clamp(3.4rem,8vw,4rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
 				Hi. I’m Harper.
 			</h1>
-			<p class="!mt-[1.35rem] !mb-0 font-serif text-[1.38rem] leading-[1.35]">
+			<p class="!mt-[1.35rem] !mb-0 !font-serif text-[1.38rem] leading-[1.35]">
 				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
 			</p>
-			<p class="!mt-3 !mb-0 font-serif text-[1.12rem] leading-[1.35] text-[#807a6e] italic dark:text-white/55">
+			<p class="!mt-3 !mb-0 !font-serif text-[1.12rem] leading-[1.35] text-[#807a6e] italic dark:text-white/55">
 				I make you look like a grammar genius.
 			</p>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
@@ -183,7 +183,7 @@ onMount(() => {
 	<section class="bg-[#fbfaf6] pt-2 pb-[5.6rem] dark:bg-black" aria-labelledby="try-editor-title">
 		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
 			<div class="mb-[1.1rem] flex items-baseline justify-between gap-4 max-[620px]:flex-col max-[620px]:items-stretch">
-				<h2 id="try-editor-title" class="!m-0 py-0 font-serif text-[1.38rem] font-semibold leading-[1.3] tracking-normal text-inherit">
+				<h2 id="try-editor-title" class="!m-0 py-0 !font-serif text-[1.38rem] font-semibold leading-[1.3] tracking-normal text-inherit">
 					Try Harper
 				</h2>
 				<a
@@ -205,7 +205,7 @@ onMount(() => {
 
 	<section id="about" class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black">
 		<div class="mx-auto max-w-[45rem] px-10 max-[880px]:px-4">
-			<p class="!m-0 font-serif text-[clamp(1.6rem,4vw,1.75rem)] font-[550] leading-[1.35] text-[#1c1a16] dark:text-white">
+			<p class="!m-0 !font-serif text-[clamp(1.6rem,4vw,1.75rem)] font-[550] leading-[1.35] text-[#1c1a16] dark:text-white">
 				Harper is a free, open-source grammar checker designed to be just right. Think of it as
 				the private alternative to Grammarly, built after years of dealing with the shortcomings
 				of the competition.
@@ -220,7 +220,7 @@ onMount(() => {
 	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black">
 		<div class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(0,1fr)_minmax(20rem,1fr)] items-center gap-14 px-10 max-[880px]:grid-cols-1 max-[880px]:px-4">
 			<div>
-				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
+				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
 					One grammar checker.<br />Every place you write.
 				</h2>
 				<p class="!mt-6 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
@@ -265,7 +265,7 @@ onMount(() => {
 	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] dark:border-white/10 dark:bg-black">
 		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
 			<div class="mb-11 text-center">
-				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
+				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
 					Loved by writers, journalists, and devs.
 				</h2>
 			</div>
@@ -286,7 +286,7 @@ onMount(() => {
 	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#1c1a16] py-[5.6rem] pb-[6.25rem] text-center text-[#fbfaf6] dark:border-white/10">
 		<div class="mx-auto max-w-[45rem] px-10 max-[880px]:px-4 [&_.harper-mark]:mx-auto [&_.harper-mark]:mb-[1.4rem] [&_.harper-mark]:text-[#fbe8c2]">
 			<HarperMark size={56} />
-			<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.5rem,6vw,3.25rem)] font-[650] leading-[1.05] tracking-normal text-inherit">
+			<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.5rem,6vw,3.25rem)] font-[650] leading-[1.05] tracking-normal text-inherit">
 				Pay us a visit on GitHub.
 			</h2>
 			<p class="!mt-6 !mb-0 text-base leading-[1.65] text-[#fbfaf6]/70">
