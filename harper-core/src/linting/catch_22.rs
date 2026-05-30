@@ -1,8 +1,8 @@
 use crate::{
-    Lint, Token, TokenStringExt,
+    Lint, Token,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct Catch22 {
@@ -35,25 +35,15 @@ impl Default for Catch22 {
 impl ExprLinter for Catch22 {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        matched_tokens: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
-        let span = matched_tokens[0].span;
-        let lint_kind = LintKind::Malapropism;
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "catch",
-            span.get_content(source),
-        )];
-        let message = "This idiom uses 'catch' instead of 'cache' or 'cash'.".to_string();
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         Some(Lint {
-            span,
-            lint_kind,
-            suggestions,
-            message,
+            span: toks[0].span,
+            lint_kind: LintKind::Malapropism,
+            suggestions: vec![Suggestion::replace_with_match_case_str(
+                "catch",
+                toks[0].span.get_content(src),
+            )],
+            message: "This idiom uses 'catch' instead of 'cache' or 'cash'.".to_string(),
             ..Default::default()
         })
     }
