@@ -224,6 +224,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
+use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
 use super::there_own::ThereOwn;
@@ -776,6 +777,7 @@ impl LintGroup {
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
+        insert_expr_rule!(TheTheToThatThe, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThereOwn, true);
         insert_expr_rule!(Theres, true);
