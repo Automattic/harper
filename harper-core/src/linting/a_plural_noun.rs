@@ -116,12 +116,11 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
                 .collect::<Option<Vec<_>>>()?
         };
 
-        if !followed_by_hyphen(ctx) {
-            if let Some(mut plural_intent_suggestions) =
+        if !followed_by_hyphen(ctx)
+            && let Some(mut plural_intent_suggestions) =
                 plural_intent_suggestions(lint_toks, src, span.get_content(src), noun)
-            {
-                suggestions.append(&mut plural_intent_suggestions);
-            }
+        {
+            suggestions.append(&mut plural_intent_suggestions);
         }
 
         if suggestions.is_empty() {
