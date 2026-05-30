@@ -4,7 +4,10 @@ use crate::{
     CharStringExt, Dialect, IrregularNouns, Lint, Token, TokenStringExt, case,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_hyphen},
+    },
     regular_nouns,
     spell::Dictionary,
 };
@@ -48,12 +51,15 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
-        if is_all_caps_proper_initialism(noun, src) {
+        if is_all_caps_proper_initialism(noun, src)
+            || is_accepted_plural_hyphen_modifier(noun, ctx, src)
+        {
             return None;
         }
 
         if is_to_pieces_preposition_typo(lint_toks, src, ctx)
             || is_plural_location_determiner_typo(lint_toks, src, ctx)
+            || is_likely_an_for_and_typo(lint_toks, noun, src, ctx)
         {
             return None;
         }
@@ -85,6 +91,10 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
             return None;
         }
 
+        if is_progressive_verb_object_before_to(lint_toks, noun, ctx) {
+            return None;
+        }
+
         let article = toks.first()?;
         let plural = noun.span.get_content(src);
         let mut suggestions = if is_plural_location_noun(plural) {
@@ -106,10 +116,12 @@ impl<D: Dictionary> ExprLinter for APluralNoun<D> {
                 .collect::<Option<Vec<_>>>()?
         };
 
-        if let Some(mut plural_intent_suggestions) =
-            plural_intent_suggestions(lint_toks, src, span.get_content(src), noun)
-        {
-            suggestions.append(&mut plural_intent_suggestions);
+        if !followed_by_hyphen(ctx) {
+            if let Some(mut plural_intent_suggestions) =
+                plural_intent_suggestions(lint_toks, src, span.get_content(src), noun)
+            {
+                suggestions.append(&mut plural_intent_suggestions);
+            }
         }
 
         if suggestions.is_empty() {
@@ -251,6 +263,41 @@ fn is_plural_location_noun(word: &[char]) -> bool {
     word.eq_any_ignore_ascii_case_str(PLURAL_LOCATION_NOUNS)
 }
 
+fn is_likely_an_for_and_typo(
+    toks: &[Token],
+    noun: &Token,
+    src: &[char],
+    ctx: Option<(&[Token], &[Token])>,
+) -> bool {
+    let Some(article) = toks.iter().find(|tok| !tok.kind.is_whitespace()) else {
+        return false;
+    };
+
+    if !article.span.get_content(src).eq_str("an")
+        || !noun.kind.is_verb_third_person_singular_present_form()
+    {
+        return false;
+    }
+
+    let Some(previous_word) = previous_word_before_phrase(ctx) else {
+        return false;
+    };
+
+    if !previous_word
+        .kind
+        .is_verb_third_person_singular_present_form()
+    {
+        return false;
+    }
+
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+
+    let next_word = after.iter().find(|tok| tok.kind.is_word());
+    !next_word.is_some_and(|tok| tok.kind.is_noun())
+}
+
 fn is_plural_location_determiner_typo(
     toks: &[Token],
     src: &[char],
@@ -317,6 +364,37 @@ fn follows_singular_subject_in_phrase(toks: &[Token], noun: &Token) -> bool {
         && !previous.kind.is_plural_noun()
 }
 
+fn is_progressive_verb_object_before_to(
+    toks: &[Token],
+    noun: &Token,
+    ctx: Option<(&[Token], &[Token])>,
+) -> bool {
+    let Some(noun_index) = toks.iter().position(|tok| tok.span == noun.span) else {
+        return false;
+    };
+
+    let Some(previous) = toks[..noun_index]
+        .iter()
+        .rev()
+        .find(|tok| !tok.kind.is_whitespace())
+    else {
+        return false;
+    };
+
+    if !previous.kind.is_verb_progressive_form() {
+        return false;
+    }
+
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+
+    after
+        .iter()
+        .find(|tok| !tok.kind.is_whitespace())
+        .is_some_and(|tok| tok.kind.is_preposition() && tok.kind.is_upos(UPOS::PART))
+}
+
 fn has_line_boundary(toks: &[Token]) -> bool {
     toks.iter()
         .any(|tok| tok.kind.is_newline() || tok.kind.is_paragraph_break())
@@ -336,6 +414,45 @@ fn is_all_caps_proper_initialism(tok: &Token, src: &[char]) -> bool {
         && content
             .iter()
             .all(|ch| !ch.is_alphabetic() || ch.is_uppercase())
+}
+
+const ACCEPTED_PLURAL_HYPHEN_MODIFIERS: &[(&str, &str)] = &[
+    ("hands", "on"),
+    ("needs", "based"),
+    ("rights", "based"),
+    ("rules", "based"),
+    ("sales", "driven"),
+    ("sports", "related"),
+    ("standards", "based"),
+    ("standards", "compliant"),
+    ("systems", "level"),
+];
+
+fn is_accepted_plural_hyphen_modifier(
+    noun: &Token,
+    ctx: Option<(&[Token], &[Token])>,
+    src: &[char],
+) -> bool {
+    if !followed_by_hyphen(ctx) {
+        return false;
+    }
+
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+    let Some(next_word) = after.iter().skip(1).find(|tok| !tok.kind.is_whitespace()) else {
+        return false;
+    };
+
+    let noun_content = noun.span.get_content(src);
+    let next_content = next_word.span.get_content(src);
+
+    ACCEPTED_PLURAL_HYPHEN_MODIFIERS
+        .iter()
+        .any(|(left, right)| {
+            noun_content.eq_any_ignore_ascii_case_str(&[*left])
+                && next_content.eq_any_ignore_ascii_case_str(&[*right])
+        })
 }
 
 fn is_directional_adverb(tok: &Token, src: &[char]) -> bool {
@@ -603,6 +720,46 @@ mod tests {
     #[test]
     fn still_corrects_all_caps_common_plural() {
         assert_suggestion_result("I saw a DOGS.", linter(), "I saw a DOG.");
+    }
+
+    #[test]
+    fn allows_accepted_plural_hyphen_modifier() {
+        crate::linting::tests::assert_no_lints(
+            "Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.",
+            linter(),
+        );
+        crate::linting::tests::assert_no_lints("This is a rights-based approach.", linter());
+        crate::linting::tests::assert_no_lints("Use a standards-compliant parser.", linter());
+        crate::linting::tests::assert_no_lints("It gives a systems-level view.", linter());
+    }
+
+    #[test]
+    fn allows_an_typo_for_and_before_verb() {
+        crate::linting::tests::assert_no_lints(
+            "It plays like 1 minute of the song and then stops, and after about 30 minutes later, the bot disconnects an throws DisTubeError",
+            linter(),
+        );
+    }
+
+    #[test]
+    fn allows_progressive_verb_object_before_to() {
+        crate::linting::tests::assert_no_lints(
+            "OpenCTI is an open source platform allowing organizations to manage their cyber threat intelligence knowledge and observables.",
+            linter(),
+        );
+        crate::linting::tests::assert_no_lints(
+            "The goal is to create a comprehensive tool allowing users to capitalize technical and non-technical information.",
+            linter(),
+        );
+    }
+
+    #[test]
+    fn still_corrects_unaccepted_plural_hyphen_modifier() {
+        assert_suggestion_result(
+            "/config tui opens a forms-style config editor powered by schemaui",
+            linter(),
+            "/config tui opens a form-style config editor powered by schemaui",
+        );
     }
 
     #[test]
