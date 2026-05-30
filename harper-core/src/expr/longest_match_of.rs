@@ -14,6 +14,10 @@ impl LongestMatchOf {
     pub fn add(&mut self, expr: impl Expr + 'static) {
         self.exprs.push(Box::new(expr));
     }
+
+    pub fn add_boxed(&mut self, expr: Box<dyn Expr>) {
+        self.exprs.push(expr);
+    }
 }
 
 impl Expr for LongestMatchOf {

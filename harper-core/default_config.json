@@ -3720,6 +3720,13 @@
 								"state": true,
 								"label": "In Retaliation To"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
 						}
 					]
 				}
