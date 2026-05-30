@@ -29,6 +29,8 @@ use std::{
     cell::RefCell,
     collections::BTreeMap,
     error::Error as StdError,
+    path::Path,
+    process::Command,
     ptr,
     rc::Rc,
     time::{Duration, Instant},
@@ -178,6 +180,62 @@ impl OsBroker for MacBroker {
         } else {
             AccessibilityPermissionStatus::NotGranted
         }
+    }
+
+    fn system_integration_display_name(&self, bundle_id: &str) -> Option<String> {
+        system_integration_display_name(bundle_id)
+    }
+
+    fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
+        let bundle_id = bundle_id.trim();
+
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+
+        Command::new("open")
+            .arg("-b")
+            .arg(bundle_id)
+            .spawn()
+            .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
+
+        Ok(())
+    }
+}
+
+fn system_integration_display_name(bundle_id: &str) -> Option<String> {
+    let bundle_id = bundle_id.trim();
+
+    if bundle_id.is_empty() {
+        return None;
+    }
+
+    let predicate_bundle_id = bundle_id.replace('\\', "\\\\").replace('"', "\\\"");
+    let output = Command::new("mdfind")
+        .arg(format!(
+            "kMDItemCFBundleIdentifier == \"{predicate_bundle_id}\""
+        ))
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    String::from_utf8_lossy(&output.stdout)
+        .lines()
+        .filter_map(|line| display_name_from_app_path(line.trim()))
+        .next()
+}
+
+fn display_name_from_app_path(path: &str) -> Option<String> {
+    let file_name = Path::new(path).file_name()?.to_str()?;
+    let display_name = file_name.strip_suffix(".app").unwrap_or(file_name).trim();
+
+    if display_name.is_empty() {
+        None
+    } else {
+        Some(display_name.to_string())
     }
 }
 

@@ -9,6 +9,7 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
 Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Whenever agents are done making changes, they should run `just format` before handing work back to the user.
 
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
@@ -221,6 +222,7 @@ When asked to write a new rule, keep these guidelines in mind:
 - You should include at least 15 total tests, covering a wide variety of cases. Cover false-positives, false negatives, true positives, and if relevant, true negatives.
 - You should run any and all tests to ensure that you do no break existing behavior and that your new rule runs the way you expect.
 - After adding a new rule, update `harper-core/default_config.json` so it is enabled in the curated default config.
+- Built-in Weir rules can be grouped by putting related `.weir` files in a directory under `harper-core/src/linting/weir_rules`; the directory name becomes the single public rule name.
 - If the rule is related to a closed compound noun, see if you can just add an entry to the existing closed compound linter.
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.
