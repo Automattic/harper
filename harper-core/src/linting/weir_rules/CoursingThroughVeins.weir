@@ -1,0 +1,10 @@
+expr main (cursing through veins)
+
+let message "In this idiom, blood `courses` (flows) through veins, not `curses`."
+let description "In English idioms, `to course` means to flow rapidly—so avoid the eggcorn `cursing through veins.`"
+let kind "Eggcorn"
+let becomes "coursing through veins"
+
+test "cursing through veins" "coursing through veins"
+test "It felt like the drugs were cursing through veins." "It felt like the drugs were coursing through veins."
+allows "He was cursing through the entire meeting."

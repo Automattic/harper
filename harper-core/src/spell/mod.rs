@@ -11,9 +11,15 @@ pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;
+pub use crate::language::german::spell::{curated_german_dictionary, german_dictionary};
+pub use crate::language::portuguese::spell::{
+    curated_portuguese_dictionary, portuguese_dictionary,
+};
 
 mod dictionary;
+pub(crate) mod embedded_dictionary;
 mod fst_dictionary;
+
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;
@@ -445,7 +451,7 @@ mod tests {
             "punctation",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
 
         assert!(results.iter().all_unique())
@@ -477,7 +483,7 @@ mod tests {
             "Semantical",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
 
         assert!(results.iter().all_unique())
@@ -494,7 +500,7 @@ mod tests {
             "hvllo",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
 
         assert!(results.iter().take(3).contains(&"hello".to_string()));
@@ -508,7 +514,7 @@ mod tests {
             misspelled_word,
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
 
         dbg!(&results);
@@ -532,19 +538,19 @@ mod tests {
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
         let results2 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
         let results3 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+            &FstDictionary::curated(),
         );
 
         assert_eq!(results1, results2);

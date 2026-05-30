@@ -1,0 +1,8 @@
+expr main (Guinea Bissau)
+
+let message "The official spelling is hyphenated."
+let description "Checks for the correct official name of the African country."
+let kind "Punctuation"
+let becomes "Guinea-Bissau"
+
+test "Guinea Bissau" "Guinea-Bissau"

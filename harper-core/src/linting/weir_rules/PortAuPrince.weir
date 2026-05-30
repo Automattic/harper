@@ -1,0 +1,7 @@
+expr main (Port au Prince)
+
+let message "The official spelling is hyphenated."
+let description "Checks for the correct official name of the capital of Haiti."
+let kind "Punctuation"
+let becomes "Port-au-Prince"
+

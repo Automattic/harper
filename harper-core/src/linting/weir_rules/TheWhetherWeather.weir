@@ -1,0 +1,34 @@
+expr main (the whether)
+
+let message "This phrase likely uses the noun for atmospheric conditions."
+let description "Fixes the common mix-up where `whether` is used after `the` when the weather noun is intended."
+let kind "WordChoice"
+let becomes "the weather"
+let strategy "MatchCase"
+
+# True positives
+
+test "Can you check the whether?" "Can you check the weather?"
+test "How is the whether today?" "How is the weather today?"
+test "I checked the whether before driving." "I checked the weather before driving."
+test "Please post the whether update." "Please post the weather update."
+test "THE WHETHER LOOKS BAD." "THE WEATHER LOOKS BAD."
+test "the whether in Seattle changes fast." "the weather in Seattle changes fast."
+test "What's the whether like there?" "What's the weather like there?"
+test "We planned around the whether forecast." "We planned around the weather forecast."
+
+# True negatives / false-positive guards
+
+test "Can you check the weather?" "Can you check the weather?"
+test "I wonder whether we should leave." "I wonder whether we should leave."
+test "Whether you stay or go is up to you." "Whether you stay or go is up to you."
+test "The weather is perfect." "The weather is perfect."
+test "She asked whether the weather would hold." "She asked whether the weather would hold."
+test "We debated whether to cancel." "We debated whether to cancel."
+
+# Boundary and near-miss coverage
+
+test "Check whether the weather changed." "Check whether the weather changed."
+test "THE WEATHER report is ready." "THE WEATHER report is ready."
+test "The whether, as written here, is a typo." "The weather, as written here, is a typo."
+test "He asked whether there was bad weather." "He asked whether there was bad weather."

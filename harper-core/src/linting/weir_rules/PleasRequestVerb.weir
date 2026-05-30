@@ -1,0 +1,28 @@
+expr main <([(pleas review), (pleas check), (pleas help), (pleas read), (pleas fix), (pleas explain), (pleas advise), (pleas share), (pleas update), (pleas confirm), (pleas send), (pleas tell), (pleas look)]), pleas>
+
+let message "Use `please` as the request opener."
+let description "Fixes the typo `pleas` when it appears as a request cue before common action verbs."
+let kind "Typo"
+let becomes "please"
+
+# true positives
+
+test "Pleas review this pull request." "Please review this pull request."
+test "pleas check the logs again." "please check the logs again."
+test "Pleas help me with this error." "Please help me with this error."
+test "Could you pleas read this quickly?" "Could you please read this quickly?"
+test "Pleas fix the broken link." "Please fix the broken link."
+test "Pleas explain what changed." "Please explain what changed."
+test "Pleas share the screenshot." "Please share the screenshot."
+test "Pleas update the ticket status." "Please update the ticket status."
+test "Pleas confirm receipt." "Please confirm receipt."
+test "Pleas send the invoice today." "Please send the invoice today."
+
+# true negatives / false-positive guards
+
+test "Please review this pull request." "Please review this pull request."
+test "Their legal pleas were ignored." "Their legal pleas were ignored."
+test "The pleas fall on deaf ears." "The pleas fall on deaf ears."
+test "He pleas for mercy." "He pleas for mercy."
+test "Could you please check the logs again?" "Could you please check the logs again?"
+test "These pleas sound desperate." "These pleas sound desperate."

@@ -1,16 +1,15 @@
-use super::{MutableDictionary, WordId};
+use std::{
+    borrow::Cow,
+    cell::RefCell,
+    sync::{Arc, LazyLock},
+};
+
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
-use std::borrow::Cow;
-use std::sync::LazyLock;
-use std::{cell::RefCell, sync::Arc};
 
-use crate::languages::LanguageFamily;
+use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordId};
 use crate::{CharString, CharStringExt, DictWordMetadata};
-
-use super::Dictionary;
-use super::FuzzyMatchResult;
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
@@ -30,13 +29,6 @@ const TRANSPOSITION_COST_ONE: bool = true;
 
 static DICT: LazyLock<Arc<FstDictionary>> =
     LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
-static DICT_PORTUGUESE: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
-    Arc::new(
-        (*MutableDictionary::curated_select_language(LanguageFamily::Portuguese))
-            .clone()
-            .into(),
-    )
-});
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a
@@ -58,21 +50,15 @@ impl PartialEq for FstDictionary {
 impl FstDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
-    pub fn curated(language: LanguageFamily) -> Arc<Self> {
-        match language {
-            LanguageFamily::English => (*DICT).clone(),
-            LanguageFamily::Portuguese => (*DICT_PORTUGUESE).clone(),
-        }
+    pub fn curated() -> Arc<Self> {
+        (*DICT).clone()
     }
-    pub fn curated_select_language(language: LanguageFamily) -> Arc<Self> {
-        match language {
-            LanguageFamily::English => (*DICT).clone(),
-            LanguageFamily::Portuguese => (*DICT_PORTUGUESE).clone(),
-        }
+
+    /// Create a dictionary from a language family.
+    /// Currently supports English, German, and Portuguese.
+    pub fn curated_for_language(language_family: crate::languages::LanguageFamily) -> Arc<Self> {
+        crate::language::registry::dictionary_for_language(language_family)
     }
-    // pub fn curated() -> Arc<Self> {
-    //     (*DICT).clone()
-    // }
 
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
@@ -326,7 +312,7 @@ mod tests {
 
     #[test]
     fn fst_map_contains_all_in_mutable_dict() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         for word in dict.words_iter() {
             let misspelled_normalized = word.normalized();
@@ -342,7 +328,7 @@ mod tests {
 
     #[test]
     fn fst_contains_hello() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         let word: Vec<_> = "hello".chars().collect();
         let misspelled_normalized = word.normalized();
@@ -358,14 +344,14 @@ mod tests {
 
     #[test]
     fn on_is_not_nominal() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
     }
 
     #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         let results = dict.fuzzy_match_str("hello", 3, 100);
         let is_sorted_by_dist = results
@@ -379,14 +365,14 @@ mod tests {
 
     #[test]
     fn curated_contains_no_duplicates() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert!(dict.words.iter().map(|(word, _)| word).all_unique());
     }
 
     #[test]
     fn contractions_not_derived() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         let contractions = ["there's", "we're", "here's"];
 
@@ -403,7 +389,7 @@ mod tests {
 
     #[test]
     fn plural_llamas_derived_from_llama() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert_eq!(
             dict.get_word_metadata_str("llamas")
@@ -416,7 +402,7 @@ mod tests {
 
     #[test]
     fn plural_cats_derived_from_cat() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert_eq!(
             dict.get_word_metadata_str("cats")
@@ -429,7 +415,7 @@ mod tests {
 
     #[test]
     fn unhappy_derived_from_happy() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert_eq!(
             dict.get_word_metadata_str("unhappy")
@@ -442,7 +428,7 @@ mod tests {
 
     #[test]
     fn quickly_derived_from_quick() {
-        let dict = FstDictionary::curated(crate::languages::LanguageFamily::English);
+        let dict = FstDictionary::curated();
 
         assert_eq!(
             dict.get_word_metadata_str("quickly")

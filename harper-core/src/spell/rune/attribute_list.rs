@@ -13,12 +13,8 @@ use super::expansion::{
 };
 use super::word_list::AnnotatedWord;
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::languages::LanguageFamily;
 use crate::spell::WordId;
-use crate::{
-    CharString, CharStringExt, DialectFlagsEnum, DictWordMetadata, EnglishDialectFlags,
-    PortugueseDialectFlags, Span,
-};
+use crate::{CharString, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
@@ -39,46 +35,10 @@ impl AttributeList {
         }
     }
 
-    pub fn parse(source: &str, language: LanguageFamily) -> Result<Self, Error> {
-        fn apply_dialects(parsed: &mut HumanReadableAttributeList, language: LanguageFamily) {
-            let dialects = match language {
-                LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::empty()),
-                LanguageFamily::Portuguese => {
-                    DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
-                }
-            };
-
-            for property in parsed.properties.values_mut() {
-                property.metadata.dialects = match (language, property.metadata.dialects) {
-                    (LanguageFamily::English, DialectFlagsEnum::English(_)) => {
-                        property.metadata.dialects
-                    }
-                    (LanguageFamily::English, DialectFlagsEnum::Portuguese(_)) => {
-                        unreachable!("Os property.metadata.dialects are created in English")
-                    }
-                    (LanguageFamily::Portuguese, DialectFlagsEnum::English(_)) => dialects,
-                    (LanguageFamily::Portuguese, DialectFlagsEnum::Portuguese(_)) => {
-                        property.metadata.dialects
-                    }
-                };
-            }
-
-            for expansion in parsed.affixes.values_mut() {
-                for metadata_expansion in expansion.target.as_mut_slice() {
-                    metadata_expansion.metadata.dialects = dialects;
-                    if let Some(base) = metadata_expansion.if_base.as_mut() {
-                        base.dialects = dialects;
-                    }
-                }
-                expansion.base_metadata.dialects = dialects;
-            }
-        }
-        serde_json::from_str::<HumanReadableAttributeList>(source)
+    pub fn parse(source: &str) -> Result<Self, Error> {
+        let human_readable: Result<HumanReadableAttributeList, _> = serde_json::from_str(source);
+        human_readable
             .map_err(Error::from)
-            .map(|mut parsed| {
-                apply_dialects(&mut parsed, language);
-                parsed
-            })
             .and_then(|parsed| parsed.into_normal())
     }
 
@@ -93,26 +53,12 @@ impl AttributeList {
     /// # Arguments
     /// * `word` - The word to expand, along with its attributes
     /// * `dest` - The WordMap to store the expanded words and their metadata
-    pub fn expand_annotated_word(
-        &self,
-        annotated_word: AnnotatedWord,
-        word_map: &mut WordMap,
-        language: LanguageFamily,
-    ) {
+    pub fn expand_annotated_word(&self, annotated_word: AnnotatedWord, word_map: &mut WordMap) {
         // Pre-allocate space in the destination map for better performance
         word_map.reserve(annotated_word.annotations.len() + 1);
 
         // Initialize base metadata that will be applied to all derived forms
-        let dialect_flags = match language {
-            LanguageFamily::English => DialectFlagsEnum::English(EnglishDialectFlags::empty()),
-            LanguageFamily::Portuguese => {
-                DialectFlagsEnum::Portuguese(PortugueseDialectFlags::empty())
-            }
-        };
-        let mut base_metadata = DictWordMetadata {
-            dialects: dialect_flags,
-            ..Default::default()
-        };
+        let mut base_metadata = DictWordMetadata::default();
 
         // Store metadata that should only be applied if certain conditions are met
         let orth_flags = OrthFlags::from_letters(&annotated_word.letters);
@@ -126,10 +72,6 @@ impl AttributeList {
             let Some(property) = self.properties.get(attr) else {
                 continue;
             };
-            // println!(
-            //     "base_metadata: {:#?}\nproperty.metadata: {:#?}",
-            //     base_metadata.dialects, property.metadata.dialects
-            // );
             base_metadata.merge(&property.metadata);
         }
 
@@ -148,17 +90,11 @@ impl AttributeList {
 
             // Apply each replacement rule in this affix
             for replacement in &expansion.replacements {
-                if let Some(filter) = &replacement.metadata_condition
-                    && !check_metadata_condition(&base_metadata, filter)
-                {
-                    continue;
-                }
                 if let Some(replaced) =
                     Self::apply_replacement(replacement, &annotated_word.letters, expansion.kind)
                 {
                     // Get or create metadata for this new word form
                     let metadata = new_words.entry(replaced.clone()).or_default();
-                    metadata.dialects = dialect_flags;
 
                     // Process each target for this replacement
                     for target in &expansion.target {
@@ -211,7 +147,6 @@ impl AttributeList {
                             annotations: opposite_attributes.clone(),
                         },
                         word_map,
-                        language,
                     );
                     // Update the metadata of the expanded word
                     let target_metadata = word_map.get_metadata_mut_chars(&new_word).unwrap();
@@ -249,7 +184,7 @@ impl AttributeList {
         // Store the final metadata for the base word
         word_map.insert(WordMapEntry {
             metadata: full_metadata.clone(),
-            canonical_spelling: annotated_word.letters.clone(),
+            canonical_spelling: annotated_word.letters,
         });
 
         // Process any conditional expansions
@@ -275,10 +210,9 @@ impl AttributeList {
         &self,
         words: impl IntoIterator<Item = AnnotatedWord>,
         dest: &mut WordMap,
-        language: LanguageFamily,
     ) {
         for word in words {
-            self.expand_annotated_word(word, dest, language);
+            self.expand_annotated_word(word, dest);
         }
     }
 
@@ -338,219 +272,6 @@ impl AttributeList {
     }
 }
 
-/// Checks the object with the metadata condition.
-/// Returns true if the all the conditions are true, and false if one of them fails
-fn check_metadata_condition(obj: &DictWordMetadata, filter: &serde_json::Value) -> bool {
-    fn recursive(obj_snippet: &serde_json::Value, filter_snippet: &serde_json::Value) -> bool {
-        for (key, value) in filter_snippet.as_object().unwrap() {
-            if value.is_object() {
-                if !recursive(&obj_snippet[key].clone(), &value.clone()) {
-                    return false;
-                }
-            } else if value != &obj_snippet[key] {
-                return false;
-            }
-        }
-        true
-    }
-    let serialized_obj = serde_json::to_value(obj).expect("Could not serialize DictWordMetadata");
-    recursive(&serialized_obj, filter)
-}
-
-/// Gather metadata about the orthography of a word.
-fn check_orthography(word: &AnnotatedWord) -> OrthFlags {
-    use crate::char_ext::CharExt;
-    use crate::dict_word_metadata_orthography::OrthFlags;
-
-    let mut ortho_flags = OrthFlags::default();
-    let mut all_lower = true;
-    let mut all_upper = true;
-    let mut first_is_upper = false;
-    let mut first_is_lower = false;
-    let mut saw_upper_after_first = false;
-    let mut saw_lower_after_first = false;
-    let mut is_first_char = true;
-    let mut upper_to_lower = false;
-    let mut lower_to_upper = false;
-    let letter_count = word
-        .letters
-        .iter()
-        .filter(|c| c.is_english_lingual())
-        .count();
-
-    for &c in &word.letters {
-        // Multiword: contains at least one space
-        if c == ' ' {
-            ortho_flags |= OrthFlags::MULTIWORD;
-            continue;
-        }
-        // Hyphenated: contains at least one hyphen
-        if c == '-' {
-            ortho_flags |= OrthFlags::HYPHENATED;
-            continue;
-        }
-        // Apostrophe: contains at least one apostrophe (straight or curly)
-        if c == '\'' || c == '’' {
-            ortho_flags |= OrthFlags::APOSTROPHE;
-            continue;
-        }
-        // Only consider English letters for case flags
-        if !c.is_english_lingual() {
-            continue;
-        }
-        if c.is_lowercase() {
-            all_upper = false;
-            if is_first_char {
-                first_is_lower = true;
-            } else {
-                saw_lower_after_first = true;
-                if upper_to_lower {
-                    lower_to_upper = true;
-                }
-                upper_to_lower = true;
-            }
-        } else if c.is_uppercase() {
-            all_lower = false;
-            if is_first_char {
-                first_is_upper = true;
-            } else {
-                saw_upper_after_first = true;
-                if lower_to_upper {
-                    upper_to_lower = true;
-                }
-                lower_to_upper = true;
-            }
-        } else {
-            // Non-cased char (e.g., numbers, symbols) - ignore for case flags
-            // Reset case tracking after non-letter character
-            first_is_upper = false;
-            first_is_lower = false;
-            upper_to_lower = false;
-            lower_to_upper = false;
-        }
-        is_first_char = false;
-    }
-
-    // Set case-related orthography flags
-    if letter_count > 0 {
-        if all_lower {
-            ortho_flags |= OrthFlags::LOWERCASE;
-        }
-        if all_upper {
-            ortho_flags |= OrthFlags::ALLCAPS;
-        }
-        // Only mark as TITLECASE if more than one letter
-        if letter_count > 1 && first_is_upper && !saw_upper_after_first {
-            ortho_flags |= OrthFlags::TITLECASE;
-        }
-        // LowerCamel: first is lowercase and there's at least one uppercase character after it
-        // Note: This must come after Titlecase check to avoid marking Titlecase words as LowerCamel
-        // Example: "pH" is LowerCamel, but "Providence" is Titlecase
-        if first_is_lower && saw_upper_after_first {
-            ortho_flags |= OrthFlags::LOWER_CAMEL;
-        }
-        // UpperCamel: first is uppercase and there are both lowercase and uppercase characters after it
-        // Note: This must come after Titlecase check to avoid marking Titlecase words as UpperCamel
-        // Example: "CamelCase" is UpperCamel, but "Providence" is Titlecase
-        if first_is_upper && saw_lower_after_first && saw_upper_after_first {
-            ortho_flags |= OrthFlags::UPPER_CAMEL;
-        }
-    }
-
-    if looks_like_roman_numerals(&word.letters)
-        && is_really_roman_numerals(&word.letters.to_lower())
-    {
-        ortho_flags |= OrthFlags::ROMAN_NUMERALS;
-    }
-
-    ortho_flags
-}
-
-fn looks_like_roman_numerals(word: &CharString) -> bool {
-    let mut is_roman = false;
-    let first_char_upper;
-
-    if let Some((&first, rest)) = word.split_first()
-        && "mdclxvi".contains(first.to_ascii_lowercase())
-    {
-        first_char_upper = first.is_uppercase();
-
-        for &c in rest {
-            if !"mdclxvi".contains(c.to_ascii_lowercase()) || c.is_uppercase() != first_char_upper {
-                return false;
-            }
-        }
-        is_roman = true;
-    }
-    is_roman
-}
-
-fn is_really_roman_numerals(word: &[char]) -> bool {
-    let s: String = word.iter().collect();
-    let mut chars = s.chars().peekable();
-
-    let mut m_count = 0;
-    while m_count < 4 && chars.peek() == Some(&'m') {
-        chars.next();
-        m_count += 1;
-    }
-
-    if !check_roman_group(&mut chars, 'c', 'd', 'm') {
-        return false;
-    }
-
-    if !check_roman_group(&mut chars, 'x', 'l', 'c') {
-        return false;
-    }
-
-    if !check_roman_group(&mut chars, 'i', 'v', 'x') {
-        return false;
-    }
-
-    if chars.next().is_some() {
-        return false;
-    }
-
-    true
-}
-
-fn check_roman_group<I: Iterator<Item = char>>(
-    chars: &mut std::iter::Peekable<I>,
-    one: char,
-    five: char,
-    ten: char,
-) -> bool {
-    match chars.peek() {
-        Some(&c) if c == one => {
-            chars.next();
-            match chars.peek() {
-                Some(&next) if next == ten || next == five => {
-                    chars.next();
-                    true
-                }
-                _ => {
-                    let mut count = 0;
-                    while count < 2 && chars.peek() == Some(&one) {
-                        chars.next();
-                        count += 1;
-                    }
-                    true
-                }
-            }
-        }
-        Some(&c) if c == five => {
-            chars.next();
-            let mut count = 0;
-            while count < 3 && chars.peek() == Some(&one) {
-                chars.next();
-                count += 1;
-            }
-            true
-        }
-        _ => true,
-    }
-}
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableAttributeList {
     affixes: HashMap<char, HumanReadableExpansion>,
@@ -574,14 +295,11 @@ impl HumanReadableAttributeList {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        languages::LanguageFamily,
-        spell::{Dictionary, FstDictionary},
-    };
+    use crate::spell::{Dictionary, FstDictionary};
 
     #[test]
     fn proper_noun_property_propagates_to_plurals() {
-        let fst_dict = FstDictionary::curated(LanguageFamily::English);
+        let fst_dict = FstDictionary::curated();
         if let Some(vw_plural) = fst_dict.get_word_metadata_str("Volkswagens") {
             assert!(vw_plural.is_proper_noun());
         }
@@ -589,8 +307,7 @@ mod tests {
 
     #[test]
     fn proper_noun_propagates_to_possessives_2327() {
-        if let Some(vw_possessive) =
-            FstDictionary::curated(LanguageFamily::English).get_word_metadata_str("Volkswagen's")
+        if let Some(vw_possessive) = FstDictionary::curated().get_word_metadata_str("Volkswagen's")
         {
             assert!(vw_possessive.is_possessive_noun());
         }

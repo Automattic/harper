@@ -3,7 +3,7 @@ use super::{
     rune::{self, AttributeList, parse_word_list},
     word_map::{WordMap, WordMapEntry},
 };
-use crate::{edit_distance::edit_distance_min_alloc, languages::LanguageFamily};
+use crate::edit_distance::edit_distance_min_alloc;
 use itertools::Itertools;
 use std::sync::Arc;
 use std::{borrow::Cow, sync::LazyLock};
@@ -29,27 +29,16 @@ pub struct MutableDictionary {
 
 /// The uncached function that is used to produce the original copy of the
 /// curated dictionary.
-fn uncached_inner_new(language: LanguageFamily) -> Arc<MutableDictionary> {
-    let (dict_path, annotations_path) = match language {
-        LanguageFamily::English => (
-            include_str!("../../dictionary.dict"),
-            include_str!("../../annotations.json"),
-        ),
-        LanguageFamily::Portuguese => (
-            include_str!("../../dictionary-portuguese.dict"),
-            include_str!("../../annotations-portuguese.json"),
-        ),
-    };
-    MutableDictionary::from_rune_files(dict_path, annotations_path, language)
-        .map(Arc::new)
-        .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
+fn uncached_inner_new() -> Arc<MutableDictionary> {
+    MutableDictionary::from_rune_files(
+        include_str!("../../dictionary.dict"),
+        include_str!("../../annotations.json"),
+    )
+    .map(Arc::new)
+    .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
-pub static DICT: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(|| uncached_inner_new(LanguageFamily::English));
-
-pub static DICT_PORTUGUESE: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(|| uncached_inner_new(LanguageFamily::Portuguese));
+static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new);
 
 impl MutableDictionary {
     pub fn new() -> Self {
@@ -58,19 +47,14 @@ impl MutableDictionary {
         }
     }
 
-    pub fn from_rune_files(
-        word_list: &str,
-        attr_list: &str,
-        language: LanguageFamily,
-    ) -> Result<Self, rune::Error> {
+    pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
         let word_list = parse_word_list(word_list)?;
-        let attr_list = AttributeList::parse(attr_list, language)?;
+        let attr_list = AttributeList::parse(attr_list)?;
 
         // There will be at _least_ this number of words
         let mut word_map = WordMap::default();
 
-        attr_list.expand_annotated_words(word_list, &mut word_map, language);
-        println!("Done expanding words");
+        attr_list.expand_annotated_words(word_list, &mut word_map);
 
         Ok(Self { word_map })
     }
@@ -78,14 +62,8 @@ impl MutableDictionary {
     /// Create a dictionary from the curated dictionary included
     /// in the Harper binary.
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
-    pub fn curated_select_language(language: LanguageFamily) -> Arc<Self> {
-        match language {
-            LanguageFamily::English => (*DICT).clone(), // (*DICT).clone(),
-            LanguageFamily::Portuguese => (*DICT_PORTUGUESE).clone(),
-        }
-    }
     pub fn curated() -> Arc<Self> {
-        (*DICT).clone() //(*DICT).clone()
+        (*DICT).clone()
     }
 
     /// Appends words to the dictionary.
@@ -303,7 +281,6 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::languages::LanguageFamily;
     use crate::spell::{Dictionary, MutableDictionary};
     use crate::{DictWordMetadata, char_string::char_string};
 
@@ -453,18 +430,9 @@ mod tests {
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../annotations.json");
 
-        let merged = MutableDictionary::from_rune_files(
-            "1\nblork/DGS",
-            curated_attr_list,
-            LanguageFamily::English,
-        )
-        .unwrap();
-        let spread = MutableDictionary::from_rune_files(
-            "2\nblork/DG\nblork/S",
-            curated_attr_list,
-            LanguageFamily::English,
-        )
-        .unwrap();
+        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
+        let spread =
+            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

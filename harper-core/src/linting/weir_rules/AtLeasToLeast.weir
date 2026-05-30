@@ -1,0 +1,34 @@
+expr main <([(at leas)]), leas>
+
+let message "Use the standard phrase with `least` here."
+let description "Fixes the frequent typo `at leas` when the intended expression is `at least`."
+let kind "Typo"
+let becomes "least"
+let strategy "MatchCase"
+
+# True positives
+
+test "At leas we shipped the patch." "At least we shipped the patch."
+test "at leas I remembered to push." "at least I remembered to push."
+test "We can, at leas, retry tomorrow." "We can, at least, retry tomorrow."
+test "AT LEAS TRY AGAIN." "AT LEAST TRY AGAIN."
+test "I guess at leas one test should pass." "I guess at least one test should pass."
+test "At leas, this error is reproducible." "At least, this error is reproducible."
+
+# True negatives / false positives
+
+test "At least we shipped the patch." "At least we shipped the patch."
+test "I have a leas on that apartment." "I have a leas on that apartment."
+test "Please at leisure review the draft." "Please at leisure review the draft."
+test "The least risky option won." "The least risky option won."
+test "They said: \"at leash\" as a joke." "They said: \"at leash\" as a joke."
+test "The release is at, leas, in notes." "The release is at, leas, in notes."
+
+# Boundary and false-negative coverage
+
+test "At leas? Maybe." "At least? Maybe."
+test "If not now, at leas tomorrow." "If not now, at least tomorrow."
+test "We are at leas halfway done." "We are at least halfway done."
+test "At leas!" "At least!"
+test "I wrote \"at leas\" twice: at leas." "I wrote \"at least\" twice: at least."
+test "Looking at least-cost models." "Looking at least-cost models."

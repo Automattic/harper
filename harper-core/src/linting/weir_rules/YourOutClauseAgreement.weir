@@ -1,0 +1,34 @@
+expr clause_start [when, if, since, because, but, as, unless, once, until, till, while, before, after]
+expr place_link [of, in, on, with, under, over, at, around, inside, outside]
+expr main <([([when, if, since, because, but, as, unless, once, until, till, while, before, after] your out [of, in, on, with, under, over, at, around, inside, outside]), ([when, if, since, because, but, as, unless, once, until, till, while, before, after] your ADV out [of, in, on, with, under, over, at, around, inside, outside])]), your>
+
+let message "Use the contraction for `you are` in this clause."
+let description "Corrects `your` when it appears where a subject-plus-verb contraction is intended before `out` and a following preposition."
+let kind "Grammar"
+let becomes "you're"
+
+# True positives
+
+test "Let me know when your out of the meeting." "Let me know when you're out of the meeting."
+test "Ping me if your out in January." "Ping me if you're out in January."
+test "Since your out on leave, I'll cover support." "Since you're out on leave, I'll cover support."
+test "Because your out of credits, checkout failed." "Because you're out of credits, checkout failed."
+test "As your out at lunch, I left a note." "As you're out at lunch, I left a note."
+test "Before your out with clients, review this doc." "Before you're out with clients, review this doc."
+test "After your out under the canopy, call me." "After you're out under the canopy, call me."
+test "If your completely out of ideas, start from the template." "If you're completely out of ideas, start from the template."
+
+# True negatives / false positives
+
+test "Let me know when you're out of the meeting." "Let me know when you're out of the meeting."
+test "Tell me when your outage is resolved." "Tell me when your outage is resolved."
+test "If your outbox is full, archive old mail." "If your outbox is full, archive old mail."
+test "Because your outdoor camera failed, we replaced it." "Because your outdoor camera failed, we replaced it."
+test "When your outfit is ready, send a photo." "When your outfit is ready, send a photo."
+
+# False negatives (accepted gaps)
+
+test "Whenever your out of office, I can help." "Whenever your out of office, I can help."
+test "Wherever your out of office, someone can cover." "Wherever your out of office, someone can cover."
+test "If your way out of this is patience, wait." "If your way out of this is patience, wait."
+test "Tell me your out of office hours." "Tell me your out of office hours."

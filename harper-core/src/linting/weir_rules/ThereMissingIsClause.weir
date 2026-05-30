@@ -1,0 +1,36 @@
+expr starter [if, when, whether, because, unless]
+expr article [a, an, another]
+expr main <([(@starter there @article)]), there>
+
+let message "This clause usually needs a linking verb after `there`."
+let description "Inserts `is` in common subordinate clauses like `if there a ...` where the copula is omitted."
+let kind "Grammar"
+let becomes "there is"
+let strategy "MatchCase"
+
+# True positives
+
+test "Tell me if there a delay." "Tell me if there is a delay."
+test "Ping me when there an outage." "Ping me when there is an outage."
+test "Ask whether there another option." "Ask whether there is another option."
+test "I worry because there a mismatch." "I worry because there is a mismatch."
+test "Escalate unless there a fix." "Escalate unless there is a fix."
+test "If there a blocker, post it." "If there is a blocker, post it."
+test "WHEN THERE AN ISSUE, CALL ME." "WHEN THERE IS AN ISSUE, CALL ME."
+test "because there another route, we can retry" "because there is another route, we can retry"
+
+# False positives / true negatives
+
+test "Tell me if there is a delay." "Tell me if there is a delay."
+test "Ping me when there are outages." "Ping me when there are outages."
+test "I worry because there was a mismatch." "I worry because there was a mismatch."
+test "Unless there is a fix, escalate." "Unless there is a fix, escalate."
+test "If there, a delay is likely." "If there, a delay is likely."
+test "When there isn't an issue, we proceed." "When there isn't an issue, we proceed."
+
+# False negatives / boundary behavior
+
+test "Tell me if there any delay." "Tell me if there any delay."
+test "Ping me when there no outage." "Ping me when there no outage."
+test "Ask whether there many options." "Ask whether there many options."
+test "I worry because there one mismatch." "I worry because there one mismatch."

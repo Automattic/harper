@@ -1,0 +1,26 @@
+expr main (likely hood)
+
+let message "Merge `likely hood` into the established noun `likelihood`."
+let description "Treat the split tokens as one compound word (`likelihood`) whenever the adjective `likely` precedes `hood`."
+let kind "Usage"
+let becomes "likelihood"
+let strategy "MatchCase"
+
+# True positives
+test "likely hood" "likelihood"
+test "Likely hood" "Likelihood"
+test "The likely hood of rain has me packing an umbrella." "The likelihood of rain has me packing an umbrella."
+test "We treat that likely hood as a probability metric." "We treat that likelihood as a probability metric."
+test "An analyst improved on his likely hood forecast." "An analyst improved on his likelihood forecast."
+test "The likely hood of data loss grows with age." "The likelihood of data loss grows with age."
+test "Another likely hood sample shows the same pattern." "Another likelihood sample shows the same pattern."
+test "My likely hood estimation improved yesterday." "My likelihood estimation improved yesterday."
+test "Likely hood matters more than a coin flip." "Likelihood matters more than a coin flip."
+test "Treat that likely hood carefully." "Treat that likelihood carefully."
+
+# Seek to leave everything else untouched
+allows "The hood is dark and damp."
+allows "I like your hooded jacket; it's warm."
+allows "Likely, the hood is black tonight."
+allows "The likelihood is already high so we celebrate."
+allows "He feared the hoods in the alley."

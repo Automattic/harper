@@ -1,0 +1,10 @@
+expr main [(at the expanse of), (at the expance of), (at the expenses of)]
+
+let message "In the context of tradeoffs, use `at the expense of`. `Expanse` means "
+let description "The correct idiom is `at the expense of`, with singular `expense`. But retain `expanse` if this phrase refers to a wide area."
+let kind "Eggcorn"
+let becomes "at the expense of"
+
+test "for those who wish to favor code size and compilation time at the expanse of slightly less efficient code" "for those who wish to favor code size and compilation time at the expense of slightly less efficient code"
+test "That - at least for me - increases the database performce at the expance of the speed of synchronisation between container and host." "That - at least for me - increases the database performce at the expense of the speed of synchronisation between container and host."
+test "we, users, can solve this by ourselves, at the expenses of using more votes" "we, users, can solve this by ourselves, at the expense of using more votes"

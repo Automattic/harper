@@ -1,10 +1,9 @@
-use harper_core::DialectsEnum;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
-use harper_core::{EnglishDialect, linting::FlatConfig, parsers::MarkdownOptions};
+use harper_core::{Dialect, linting::FlatConfig, parsers::MarkdownOptions};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -75,7 +74,7 @@ pub struct Config {
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
-    pub dialect: DialectsEnum,
+    pub dialect: Dialect,
     /// Maximum length (in bytes) a file can have before it's skipped.
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
@@ -148,9 +147,9 @@ impl Config {
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+                base.stats_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
-                bail!("fileDict path must be a string.");
+                bail!("statsPath must be a string.");
             }
         }
 
@@ -224,9 +223,36 @@ impl Default for Config {
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
-            dialect: DialectsEnum::English(EnglishDialect::American),
+            dialect: Dialect::American,
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    use tempfile::TempDir;
+
+    #[test]
+    fn stats_path_config_does_not_override_file_dict_path() {
+        let tempdir = TempDir::new().unwrap();
+        let workspace_root = tempdir.path();
+
+        let configured_stats = workspace_root.join("custom-stats.txt");
+        let config = Config::from_lsp_config(
+            workspace_root,
+            json!({
+                "harper-ls": {
+                    "statsPath": configured_stats.to_string_lossy()
+                }
+            }),
+        )
+        .unwrap();
+
+        assert_eq!(config.stats_path, configured_stats);
+        assert_eq!(config.file_dict_path, Config::default().file_dict_path);
     }
 }

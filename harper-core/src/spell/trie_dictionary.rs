@@ -15,11 +15,8 @@ pub struct TrieDictionary<D: Dictionary> {
     inner: D,
 }
 
-pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> = LazyLock::new(|| {
-    Arc::new(TrieDictionary::new(FstDictionary::curated(
-        crate::languages::LanguageFamily::English,
-    )))
-});
+pub static DICT: LazyLock<Arc<TrieDictionary<Arc<FstDictionary>>>> =
+    LazyLock::new(|| Arc::new(TrieDictionary::new(FstDictionary::curated())));
 
 impl TrieDictionary<Arc<FstDictionary>> {
     /// Create a dictionary from the curated dictionary included

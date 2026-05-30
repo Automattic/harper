@@ -1,0 +1,9 @@
+expr main (some the)
+
+let message "Add `of` to form the partitive phrase: `some of the`."
+let description "Quantity words such as `some` normally take `of` before a definite article. Including `of` signals that you mean a subset of a larger set, preventing a momentary stumble in comprehension."
+let kind "Typo"
+let becomes "some of the"
+
+test "Some the trees are too thick to climb." "Some of the trees are too thick to climb."
+test "You have misplaced some the config files." "You have misplaced some of the config files."

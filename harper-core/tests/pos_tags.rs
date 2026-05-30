@@ -80,11 +80,9 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
-use harper_core::languages::LanguageFamily;
 use harper_core::spell::FstDictionary;
 use harper_core::{
-    Degree, DialectsEnum, DictWordMetadata, Document, EnglishDialect, OrthFlags, TokenKind,
-    VerbFormFlags,
+    Degree, Dialect, DictWordMetadata, Document, OrthFlags, TokenKind, VerbFormFlags,
 };
 
 mod snapshot;
@@ -250,18 +248,10 @@ fn get_dialect_annotations(word: &DictWordMetadata) -> Vec<&'static str> {
     let mut north_america = false;
     let mut commonwealth = false;
 
-    let en_au = word
-        .dialects
-        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::Australian));
-    let en_ca = word
-        .dialects
-        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::Canadian));
-    let en_gb = word
-        .dialects
-        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British));
-    let en_us = word
-        .dialects
-        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American));
+    let en_au = word.dialects.is_dialect_enabled_strict(Dialect::Australian);
+    let en_ca = word.dialects.is_dialect_enabled_strict(Dialect::Canadian);
+    let en_gb = word.dialects.is_dialect_enabled_strict(Dialect::British);
+    let en_us = word.dialects.is_dialect_enabled_strict(Dialect::American);
 
     // Dialect groups in alphabetical order
     if en_gb && en_au && en_ca {
@@ -375,7 +365,7 @@ impl Formatter {
 #[test]
 fn test_pos_tagger() {
     snapshot::snapshot_all_text_files("tagged", ".md", |source, _| {
-        let dict = FstDictionary::curated(LanguageFamily::English);
+        let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 
         let mut formatter = Formatter::new();

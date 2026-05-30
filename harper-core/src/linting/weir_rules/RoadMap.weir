@@ -1,0 +1,7 @@
+expr main (roadmap)
+
+let message "Did you mean `road map`?"
+let description "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
+let kind "WordChoice"
+let becomes "road map"
+

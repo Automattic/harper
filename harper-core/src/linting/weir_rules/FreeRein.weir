@@ -1,0 +1,7 @@
+expr main (free reign)
+
+let message "Use the correct phrase for unrestricted control."
+let description "Ensures the correct use of `free rein`, avoiding confusion with `free reign`, which incorrectly suggests authority rather than freedom of action."
+let kind "Eggcorn"
+let becomes "free rein"
+

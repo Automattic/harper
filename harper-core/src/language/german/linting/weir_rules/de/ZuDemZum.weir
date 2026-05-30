@@ -1,0 +1,28 @@
+expr main [(zu dem zum), (zu dem Zum), (ZU DEM zum)]
+
+let message "»zu dem« kann zu »zum« verkürzt werden."
+let description "Corrects `zu dem` to its contraction `zum`."
+let kind "Style"
+let becomes "zum"
+let strategy "MatchCase"
+
+test "Er geht zu dem zum Arzt." "Er geht zum Arzt."
+test "Wir fahren zu dem zum Bahnhof." "Wir fahren zum Bahnhof."
+test "Das führt zu dem zum Ziel." "Das führt zum Ziel."
+test "zu dem zum ersten Mal" "zum ersten Mal"
+test "zu dem zum Schluss" "zum Schluss"
+test "zu dem zum Ende" "zum Ende"
+test "zu dem zum Beispiel" "zum Beispiel"
+test "zu dem zum Teil" "zum Teil"
+test "zu dem zum größten Teil" "zum größten Teil"
+test "zu dem zum einen" "zum einen"
+test "zu dem zum anderen" "zum anderen"
+test "zu dem zum besseren Verständnis" "zum besseren Verständnis"
+test "zu dem zum Wiederholungen" "zum Wiederholungen"
+test "zu dem zum Anbruch" "zum Anbruch"
+test "zu dem zum damaligen Zeitpunkt" "zum damaligen Zeitpunkt"
+
+allows "zu dem Zeitpunkt"
+allows "zu dem Zweck"
+allows "zu dem Grund"
+allows "zu dem Ergebnis"

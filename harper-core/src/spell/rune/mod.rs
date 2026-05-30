@@ -19,7 +19,6 @@ mod tests {
     use super::super::word_map::WordMap;
     use super::word_list::parse_word_list;
     use crate::CharStringExt;
-    use crate::languages::LanguageFamily;
     use crate::spell::rune::AttributeList;
 
     pub const TEST_WORD_LIST: &str = "4\nhello\ntry/B\nwork/AB\nblank/";
@@ -78,12 +77,11 @@ mod tests {
 
     fn assert_expansion_results(test_word_list: &str, expected: Vec<&str>) {
         let words = parse_word_list(test_word_list).unwrap();
-        let attributes =
-            AttributeList::parse(&TEST_AFFIX_JSON.to_string(), LanguageFamily::English).unwrap();
+        let attributes = AttributeList::parse(&TEST_AFFIX_JSON.to_string()).unwrap();
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_annotated_words(words, &mut expanded, LanguageFamily::English);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let expanded: HashSet<String> = expanded
             .into_iter()
@@ -125,12 +123,11 @@ mod tests {
     #[test]
     fn correctly_expands_test_files_with_comments() {
         let words = parse_word_list(TEST_WORD_LIST_WITH_COMMENTS).unwrap();
-        let attributes =
-            AttributeList::parse(&TEST_AFFIX_JSON.to_string(), LanguageFamily::English).unwrap();
+        let attributes = AttributeList::parse(&TEST_AFFIX_JSON.to_string()).unwrap();
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_annotated_words(words, &mut expanded, LanguageFamily::English);
+        attributes.expand_annotated_words(words, &mut expanded);
         let expanded: HashSet<String> = expanded
             .into_iter()
             .map(|v| v.canonical_spelling.to_string())
@@ -204,13 +201,12 @@ mod tests {
                 "properties": {}
             })
             .to_string(),
-            LanguageFamily::English,
         )
         .unwrap();
 
         let mut expanded = WordMap::default();
 
-        attributes.expand_annotated_words(words, &mut expanded, LanguageFamily::English);
+        attributes.expand_annotated_words(words, &mut expanded);
 
         let giant_data = expanded.get_with_str("giant").unwrap();
         assert!(giant_data.metadata.is_noun());

@@ -1,0 +1,8 @@
+expr main (brutalness)
+
+let message "This word has a more standard, more common synonym."
+let description "Suggests the more standard and common synonym `brutality`."
+let kind "WordChoice"
+let becomes "brutality"
+
+test "the mildness and brutalness of the story rises." "the mildness and brutality of the story rises."

@@ -1,0 +1,9 @@
+expr main (in of itself)
+
+let message "Use `in itself` (more common) or `in and of itself` (more formal) to mean 'intrinsically'."
+let description "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`."
+let kind "Usage"
+let becomes ["in itself", "in and of itself"]
+
+test "in of itself" "in and of itself"
+test "This is not entirely unexpected in of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..." "This is not entirely unexpected in and of itself, as Git and GitHub Desktop both generally prove fairly bad at delineating context intelligently..."

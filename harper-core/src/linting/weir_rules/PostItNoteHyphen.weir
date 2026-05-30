@@ -1,0 +1,28 @@
+expr main <(post it [note, notes]), ( )>
+
+let message "Use a hyphen in this compound term."
+let description "Standardizes the sticky-note product phrase by joining the first two words."
+let kind "Punctuation"
+let becomes "-"
+
+# True positives
+test "Please grab a post it note." "Please grab a post-it note."
+test "I left a post it note on your monitor." "I left a post-it note on your monitor."
+test "She buys post it notes in bulk." "She buys post-it notes in bulk."
+test "Can you read that POST IT NOTE?" "Can you read that POST-IT NOTE?"
+test "The drawer has Post It Notes." "The drawer has Post-It Notes."
+test "post it note" "post-it note"
+test "post it notes" "post-it notes"
+test "A bright yellow post it note helped." "A bright yellow post-it note helped."
+
+# False positives / true negatives
+test "Please post it now." "Please post it now."
+test "This post itches sometimes." "This post itches sometimes."
+test "She wrote on a post-it note." "She wrote on a post-it note."
+test "We discussed post it board layouts." "We discussed post it board layouts."
+test "They said, 'post it,' then left." "They said, 'post it,' then left."
+test "Bring one sticky note." "Bring one sticky note."
+
+# False negatives guardrails
+test "That Post It note was clear." "That Post-It note was clear."
+test "I found POST IT notes everywhere." "I found POST-IT notes everywhere."

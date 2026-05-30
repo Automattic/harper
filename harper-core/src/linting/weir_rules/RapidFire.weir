@@ -1,0 +1,7 @@
+expr main (rapid fire)
+
+let message "It is more idiomatic to hypenate `rapid-fire`."
+let description "Checks to ensure writers hyphenate `rapid-fire`."
+let kind "Punctuation"
+let becomes "rapid-fire"
+

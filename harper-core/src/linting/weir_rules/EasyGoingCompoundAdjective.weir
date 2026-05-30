@@ -1,0 +1,35 @@
+expr main <(easy going [person, people, attitude, style, approach, tone, manner, personality, vibe, team, culture, workflow]), ( )>
+
+let message "Hyphenate this compound modifier."
+let description "Adds a hyphen in `easy going` when it directly describes a following noun."
+let kind "Punctuation"
+let becomes "-"
+let strategy "MatchCase"
+
+# True positives
+
+test "He is an easy going person." "He is an easy-going person."
+test "She has an easy going attitude." "She has an easy-going attitude."
+test "They built an easy going culture." "They built an easy-going culture."
+test "We want an easy going workflow." "We want an easy-going workflow."
+test "I like her easy going style." "I like her easy-going style."
+test "That is an easy going approach." "That is an easy-going approach."
+test "Our coach keeps an easy going tone." "Our coach keeps an easy-going tone."
+test "AN EASY GOING TEAM CAN STILL WIN." "AN EASY-GOING TEAM CAN STILL WIN."
+
+# False positives / true negatives
+
+test "He is easy going." "He is easy going."
+test "They are going easy on us." "They are going easy on us."
+test "We took it easy going forward." "We took it easy going forward."
+test "She has an easy-going attitude." "She has an easy-going attitude."
+test "This is an easy and going concern." "This is an easy and going concern."
+test "An easy path is better." "An easy path is better."
+test "They welcomed easy going people." "They welcomed easy-going people."
+
+# False negatives / boundary behavior
+
+test "She is an easy really going manager." "She is an easy really going manager."
+test "It felt easy going into finals." "It felt easy going into finals."
+test "The easy going-away party was short." "The easy going-away party was short."
+test "The phrase easy going appears in notes." "The phrase easy going appears in notes."

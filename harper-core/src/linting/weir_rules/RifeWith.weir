@@ -1,0 +1,7 @@
+expr main (ripe with)
+
+let message "Use the correct phrase for something abundant."
+let description "Corrects `ripe with` to `rife with`, preserving the phrase’s meaning of being filled with something, often undesirable."
+let kind "Eggcorn"
+let becomes "rife with"
+

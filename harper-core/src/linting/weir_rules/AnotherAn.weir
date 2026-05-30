@@ -1,0 +1,8 @@
+expr main (another an)
+
+let message "Use `another` on its own."
+let description "Corrects `another an` to `another`."
+let kind "Redundancy"
+let becomes "another"
+
+test "Yet another an atomic deployment tool." "Yet another atomic deployment tool."

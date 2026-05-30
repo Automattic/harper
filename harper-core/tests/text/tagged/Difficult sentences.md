@@ -714,8 +714,8 @@
 # NPr/VXB ISg/#r+ NSg/VB ISgPl+ J/P D/P+ NSg/J+    NPr🅪Sg+ .
 > Smith   scored again on  twelve minutes , doubling Mudchester Rovers ' lead      .
 # NPr/VB+ VP/J   P     J/P NSg+   NPl/V3+ . Nᴹ/Vg/J  ?          W?     . N🅪Sg/VB/J .
-> I       was  reading   a   book   on  history .
-# ISg/#r+ VLPt NPrᴹ/Vg/J D/P NSg/VB J/P N🅪Sg+   .
+> I       was  reading     a   book   on  history .
+# ISg/#r+ VLPt NPr🅪Sg/Vg/J D/P NSg/VB J/P N🅪Sg+   .
 > The city hosted the World   Summit  on  the Information Society
 # D+  NSg+ VP/J   D+  NSg/VB+ NSg/VB+ J/P D+  Nᴹ+         N🅪Sg+
 > I       have    no       opinion on  this    subject   .

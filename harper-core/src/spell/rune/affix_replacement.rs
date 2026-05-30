@@ -1,11 +1,10 @@
-use serde::{self, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 use super::Error;
 use super::matcher::Matcher;
 
 #[derive(Debug, Clone)]
 pub struct AffixReplacement {
-    pub metadata_condition: Option<serde_json::Value>,
     pub remove: Vec<char>,
     pub add: Vec<char>,
     pub condition: Matcher,
@@ -14,7 +13,6 @@ pub struct AffixReplacement {
 impl AffixReplacement {
     pub fn to_human_readable(&self) -> HumanReadableAffixReplacement {
         HumanReadableAffixReplacement {
-            metadata_condition: self.metadata_condition.clone(),
             remove: self.remove.iter().collect(),
             add: self.add.iter().collect(),
             condition: self.condition.to_string(),
@@ -26,7 +24,6 @@ impl AffixReplacement {
 /// whatever) and maintain the nice Regex syntax of the inner [`Matcher`].
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableAffixReplacement {
-    pub metadata_condition: Option<serde_json::Value>,
     pub remove: String,
     pub add: String,
     pub condition: String,
@@ -35,7 +32,6 @@ pub struct HumanReadableAffixReplacement {
 impl HumanReadableAffixReplacement {
     pub fn to_normal(&self) -> Result<AffixReplacement, Error> {
         Ok(AffixReplacement {
-            metadata_condition: self.metadata_condition.clone(),
             remove: self.remove.chars().collect(),
             add: self.add.chars().collect(),
             condition: Matcher::parse(&self.condition)?,

@@ -94,7 +94,7 @@ fn bench_word_list<F>(
 ///
 /// This is the most direct way to measure changes in the FST spell-check path.
 fn bench_fuzzy_match(group: &mut BenchmarkGroup<'_, WallTime>, name: &str, words: &[Vec<char>]) {
-    let dict = FstDictionary::curated(harper_core::languages::LanguageFamily::English);
+    let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
         black_box(dict.fuzzy_match(word, 3, 200)).len()
@@ -111,7 +111,7 @@ fn bench_suggest_correct_spelling(
     name: &str,
     words: &[Vec<char>],
 ) {
-    let dict = FstDictionary::curated(harper_core::languages::LanguageFamily::English);
+    let dict = FstDictionary::curated();
 
     bench_word_list(group, name, words, |word| {
         black_box(suggest_correct_spelling(word, 200, 3, &*dict)).len()
@@ -128,7 +128,7 @@ fn bench_fuzzy_match_merged_dict_single_child(
     name: &str,
     words: &[Vec<char>],
 ) {
-    let dict = FstDictionary::curated(harper_core::languages::LanguageFamily::English);
+    let dict = FstDictionary::curated();
     let mut merged = MergedDictionary::new();
     merged.add_dictionary(dict);
 

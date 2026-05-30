@@ -1,0 +1,343 @@
+use itertools::Itertools;
+
+use crate::{
+    char_ext::CharExt,
+    expr::{Expr, SequenceExpr},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    spell::Dictionary,
+    {CharStringExt, Lint, Token, TokenStringExt},
+};
+
+pub struct MoreAdjective<D> {
+    expr: SequenceExpr,
+    dict: D,
+}
+
+impl<D> MoreAdjective<D>
+where
+    D: Dictionary,
+{
+    pub fn new(dict: D) -> Self {
+        Self {
+            expr: SequenceExpr::word_set(&["more", "most"])
+                .t_ws()
+                .then_positive_adjective()
+                // Include a following "than adjective" which we'll use to identify a false positive #2925
+                .then_optional(
+                    SequenceExpr::whitespace()
+                        .t_aco("than")
+                        .t_ws()
+                        .then_positive_adjective(),
+                ),
+            dict,
+        }
+    }
+
+    fn add_valid_candidate(&self, candidates: &mut Vec<String>, candidate: String) -> bool {
+        if let Some(metadata) = self.dict.get_word_metadata_str(&candidate)
+            && (metadata.is_comparative_adjective() || metadata.is_superlative_adjective())
+        {
+            candidates.push(candidate);
+            true
+        } else {
+            false
+        }
+    }
+}
+
+impl<D> ExprLinter for MoreAdjective<D>
+where
+    D: Dictionary,
+{
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+        // Abort when the optional clause is present, or when the `Expr` changes
+        if toks.len() != 3 || !toks[1].kind.is_whitespace() || !toks[2].kind.is_positive_adjective()
+        {
+            return None;
+        }
+
+        let phrase = toks.span()?;
+
+        enum Degree {
+            Comparative,
+            Superlative,
+        }
+
+        let degree_tok = &toks[0];
+        let degree_chars = degree_tok.get_ch(src);
+
+        let degree = if degree_chars.eq_str("more") {
+            Degree::Comparative
+        } else if degree_chars.eq_str("most") {
+            Degree::Superlative
+        } else {
+            return None;
+        };
+
+        let ending = match degree {
+            Degree::Comparative => "er",
+            Degree::Superlative => "est",
+        };
+
+        let adj_tok = &toks[2];
+        let adj_span = adj_tok.span;
+        let adj_chars = adj_span.get_content(src);
+        let adj_str = adj_span.get_content_string(src);
+
+        if adj_chars.len() < 2 {
+            return None;
+        }
+
+        // "humaner" = "more humane", not "more human"
+        if adj_str == "human" {
+            return None;
+        }
+
+        let mut candidates: Vec<String> = vec![];
+
+        // Only a handful of adjectives are irregular
+        let new_candidates = match adj_str.as_str() {
+            "bad" => match degree {
+                Degree::Comparative => Some(&["worse"][..]),
+                Degree::Superlative => Some(&["worst"][..]),
+            },
+            "good" => match degree {
+                Degree::Comparative => Some(&["better"][..]),
+                Degree::Superlative => Some(&["best"][..]),
+            },
+            "far" => match degree {
+                Degree::Comparative => Some(&["further", "farther"][..]),
+                Degree::Superlative => Some(&["furthest", "farthest"][..]),
+            },
+            _ => None,
+        };
+        if let Some(irregulars) = new_candidates {
+            candidates.extend(irregulars.iter().map(|c| c.to_string()));
+        }
+
+        // Just add the ending: smart -> smarter/smartest
+        self.add_valid_candidate(&mut candidates, format!("{}{}", adj_str, ending));
+
+        // Double consonant: big -> bigger/biggest
+        let penult = adj_chars[adj_chars.len() - 2];
+        let last = adj_chars[adj_chars.len() - 1];
+        if penult.is_vowel() && !last.is_vowel() {
+            self.add_valid_candidate(&mut candidates, format!("{}{}{}", adj_str, last, ending));
+        }
+
+        if last == 'y' {
+            // smelly -> smellier/smelliest
+            self.add_valid_candidate(
+                &mut candidates,
+                format!(
+                    "{}i{}",
+                    &adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
+                    ending
+                ),
+            );
+        } else if last == 'e' {
+            // cute -> cuter/cutest
+            self.add_valid_candidate(
+                &mut candidates,
+                format!(
+                    "{}{}",
+                    &adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
+                    ending
+                ),
+            );
+        }
+
+        if candidates.is_empty() {
+            return None;
+        }
+
+        let suggestions = candidates
+            .iter()
+            .map(|c| {
+                Suggestion::replace_with_match_case(
+                    c.chars().collect_vec(),
+                    phrase.get_content(src),
+                )
+            })
+            .collect::<Vec<Suggestion>>();
+
+        Some(Lint {
+            span: phrase,
+            lint_kind: LintKind::Style,
+            suggestions,
+            message: "This is not an error, but an inflected form of this adjective also exists"
+                .to_string(),
+            ..Default::default()
+        })
+    }
+
+    fn description(&self) -> &str {
+        "Looks for comparative adjective constructions with `more` than could use inflected forms."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::MoreAdjective;
+    use crate::{
+        linting::tests::{
+            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        },
+        spell::FstDictionary,
+    };
+
+    // True positives
+
+    #[test]
+    fn add_er() {
+        assert_suggestion_result(
+            "The red car is more fast.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "The red car is faster.",
+        );
+    }
+
+    #[test]
+    fn add_r() {
+        assert_suggestion_result(
+            "The fluffy one is more cute.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "The fluffy one is cuter.",
+        );
+    }
+
+    #[test]
+    fn double_final_consonant() {
+        assert_suggestion_result(
+            "You'll find out when you're more big.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "You'll find out when you're bigger.",
+        )
+    }
+
+    #[test]
+    fn final_y() {
+        assert_suggestion_result(
+            "That one was even more smelly!",
+            MoreAdjective::new(FstDictionary::curated()),
+            "That one was even smellier!",
+        );
+    }
+
+    #[test]
+    fn irregular_good() {
+        assert_suggestion_result(
+            "I bet you couldn't do more good.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "I bet you couldn't do better.",
+        );
+    }
+
+    #[test]
+    fn irregular_far() {
+        assert_good_and_bad_suggestions(
+            "Is it much more far?",
+            MoreAdjective::new(FstDictionary::curated()),
+            &["Is it much further?", "Is it much farther?"],
+            &[],
+        );
+    }
+
+    #[test]
+    fn humane() {
+        assert_suggestion_result(
+            "That Klingon is more humane than the humans!",
+            MoreAdjective::new(FstDictionary::curated()),
+            "That Klingon is humaner than the humans!",
+        );
+    }
+
+    // False positives
+
+    #[test]
+    fn dont_flag_more_time() {
+        assert_no_lints(
+            "I need more time.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_model() {
+        assert_no_lints(
+            "Expanded access to more model architectures",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_human() {
+        assert_no_lints(
+            "I am more human than machine.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_battle() {
+        assert_no_lints(
+            "and has more battle-tested defaults",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_like() {
+        assert_no_lints(
+            "It's more like a suggestion than a mistake.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_ground() {
+        assert_no_lints(
+            "This E2E security scan covers more ground",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_foreign() {
+        assert_no_lints(
+            "There are more foreign visitors this year.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_subtle_than_direct_2925() {
+        assert_no_lints(
+            "more subtle than direct",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_correct_in_most_to_innest_3284() {
+        assert_no_lints(
+            "I have spent most in my life in Florida and had never heard \"display\" with an emphasis on the first syllable.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    #[ignore = "this problem persists, even after changing the 'cut' and 'cute' annotations"]
+    fn dont_correct_more_cut_to_cuter() {
+        assert_no_lints(
+            "they’re more cut from “one and done” cloth",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+}

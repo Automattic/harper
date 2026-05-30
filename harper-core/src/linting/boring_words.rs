@@ -1,0 +1,57 @@
+use itertools::Itertools;
+
+use crate::expr::{Expr, FirstMatchOf, WordExprGroup};
+use crate::thesaurus_helper;
+use crate::{Token, TokenStringExt};
+
+use super::{ExprLinter, Lint, LintKind};
+use crate::linting::expr_linter::Chunk;
+
+pub struct BoringWords {
+    expr: WordExprGroup<FirstMatchOf>,
+}
+
+impl Default for BoringWords {
+    fn default() -> Self {
+        let mut expr = WordExprGroup::default();
+
+        expr.add_word("very");
+        expr.add_word("interesting");
+        expr.add_word("several");
+        expr.add_word("most");
+        expr.add_word("many");
+
+        Self { expr }
+    }
+}
+
+impl ExprLinter for BoringWords {
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        let matched_word = matched_tokens.span()?.get_content_string(source);
+
+        Some(Lint {
+            span: matched_tokens.span()?,
+            lint_kind: LintKind::Enhancement,
+            suggestions: thesaurus_helper::get_synonym_replacement_suggestions(
+                &matched_word,
+                &matched_tokens[0].kind,
+            )
+            .take(5)
+            .collect_vec(),
+            message: format!(
+                "“{matched_word}” is a boring word. Try something a little more exotic."
+            ),
+            priority: 127,
+        })
+    }
+
+    fn description(&self) -> &'static str {
+        "This rule looks for particularly boring or overused words. Using varied language is an easy way to keep a reader's attention."
+    }
+}

@@ -1,0 +1,8 @@
+expr main (spacial attention)
+
+let message "Did you mean `special attention`?"
+let description "Changes `spacial attention` to `special attention`."
+let kind "Typo"
+let becomes "special attention"
+
+test "spacial attention" "special attention"

@@ -1,0 +1,9 @@
+expr main [(part of speeches), (parts of speeches)]
+
+let message "The correct plural is `parts of speech`."
+let description "Corrects pluralizing the wrong noun in `part of speech`."
+let kind "Grammar"
+let becomes "parts of speech"
+
+test "Learning the part of speeches is important." "Learning the parts of speech is important."
+test "We studied parts of speeches yesterday." "We studied parts of speech yesterday."

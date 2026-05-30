@@ -1,0 +1,35 @@
+expr subjects [i, you, we, they, he, she, it]
+expr main <(@subjects no nothing), no>
+
+let message "This looks like a misspelled verb in this phrase."
+let description "Fixes `no` to `know` in common `subject + no nothing` constructions."
+let kind "Grammar"
+let becomes "know"
+let strategy "MatchCase"
+
+# True positives
+
+test "You no nothing about me." "You know nothing about me."
+test "I no nothing about networking." "I know nothing about networking."
+test "We no nothing about this outage." "We know nothing about this outage."
+test "They no nothing about the timeline." "They know nothing about the timeline."
+test "He no nothing about the contract." "He know nothing about the contract."
+test "She no nothing about this repo." "She know nothing about this repo."
+test "It no nothing about human language." "It know nothing about human language."
+test "YOU NO NOTHING ABOUT THIS." "YOU KNOW NOTHING ABOUT THIS."
+
+# False positives / true negatives
+
+test "You know nothing about me." "You know nothing about me."
+test "I know nothing about networking." "I know nothing about networking."
+test "No, nothing changed in production." "No, nothing changed in production."
+test "You said no; nothing else was required." "You said no; nothing else was required."
+test "You no longer need this setting." "You no longer need this setting."
+test "They know absolutely nothing about the incident." "They know absolutely nothing about the incident."
+test "The sign says no nothing policy exceptions." "The sign says no nothing policy exceptions."
+test "He knows nothing about the contract." "He knows nothing about the contract."
+
+# False negatives / known limits by design
+
+test "You no absolutely nothing about me." "You no absolutely nothing about me."
+test "My team no nothing about this outage." "My team no nothing about this outage."

@@ -1,0 +1,12 @@
+expr main [(on route to), (in route to), (on-route to), (in-route to)]
+
+let message "Did you mean `en route`?"
+let description "Detects variants like `on route` or `in route` and suggests `en route`."
+let kind "Eggcorn"
+let becomes ["en route to", "en-route to"]
+
+test "on route to" "en route to"
+test "in route to" "en route to"
+test "vehicles may already be on route to one end of a Shipment" "vehicles may already be en route to one end of a Shipment"
+test "TF-South is in route to conduct SSE on the strike." "TF-South is en route to conduct SSE on the strike."
+test "I ultimately just want a slight preference for matches that are on-route to correct cases like the above." "I ultimately just want a slight preference for matches that are en-route to correct cases like the above."

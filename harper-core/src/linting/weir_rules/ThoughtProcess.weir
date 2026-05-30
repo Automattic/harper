@@ -1,0 +1,7 @@
+expr main (though process)
+
+let message "Did you mean `thought process`?"
+let description "Changes `though process` to `thought process`."
+let kind "Typo"
+let becomes "thought process"
+

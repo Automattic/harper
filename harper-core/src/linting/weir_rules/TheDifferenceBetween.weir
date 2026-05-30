@@ -1,0 +1,9 @@
+expr main [(the different between), (the differents between)]
+
+let message "The correct word is `difference`, not `different` or `differents`."
+let description "Corrects `the different(s) between to `the difference between`."
+let kind "Usage"
+let becomes "the difference between"
+
+test "What is the different between the two msi files of the latest version?" "What is the difference between the two msi files of the latest version?"
+test "what's the differents between \"await page.$(selector)\" and \"page.$(selector)\" ?" "what's the difference between \"await page.$(selector)\" and \"page.$(selector)\" ?"

@@ -1,0 +1,7 @@
+expr main (off the cuff)
+
+let message "Use the hyphenated form for `off-the-cuff`."
+let description "Ensures `off-the-cuff` is correctly hyphenated."
+let kind "Punctuation"
+let becomes "off-the-cuff"
+

@@ -1,0 +1,163 @@
+use crate::{
+    Token, TokenKind,
+    expr::{Expr, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, preceded_by_word},
+    },
+};
+
+pub struct PossessiveYour {
+    expr: SequenceExpr,
+}
+
+impl Default for PossessiveYour {
+    fn default() -> Self {
+        let pattern = SequenceExpr::aco("you")
+            .then_whitespace()
+            .then_kind_is_but_is_not_except(
+                TokenKind::is_nominal,
+                TokenKind::is_likely_homograph,
+                &["guys", "what's"],
+            );
+
+        Self { expr: pattern }
+    }
+}
+
+impl ExprLinter for PossessiveYour {
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if preceded_by_word(ctx, |pw| pw.kind.is_verb()) {
+            return None;
+        }
+
+        let span = matched_tokens.first()?.span;
+        let orig_chars = span.get_content(source);
+
+        Some(Lint {
+            span,
+            lint_kind: LintKind::WordChoice,
+            suggestions: vec![
+                Suggestion::replace_with_match_case("your".chars().collect(), orig_chars),
+                Suggestion::replace_with_match_case("you're a".chars().collect(), orig_chars),
+                Suggestion::replace_with_match_case("you're an".chars().collect(), orig_chars),
+            ],
+            message: "The possessive version of this word is more common in this context."
+                .to_owned(),
+            ..Default::default()
+        })
+    }
+
+    fn description(&self) -> &'static str {
+        "The possessive form of `you` is more likely before nouns."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    use super::PossessiveYour;
+
+    #[test]
+    #[ignore = "currently fails because comments is a homographs (verb or noun)"]
+    fn your_comments() {
+        assert_suggestion_result(
+            "You comments may end up in the documentation.",
+            PossessiveYour::default(),
+            "Your comments may end up in the documentation.",
+        );
+    }
+
+    #[test]
+    fn allow_intro_page() {
+        assert_lint_count(
+            "You can try out an editor that uses Harper under-the-hood here.",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allow_you_guys() {
+        assert_lint_count(
+            "I mean I'm pretty sure you guys can't do anything with this stuff.",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn test_suggestion_your() {
+        assert_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "Your combination of artist and teacher.",
+        );
+    }
+
+    #[test]
+    fn test_suggestion_youre_a() {
+        assert_suggestion_result(
+            "You combination of artist and teacher.",
+            PossessiveYour::default(),
+            "You're a combination of artist and teacher.",
+        );
+    }
+
+    #[test]
+    #[ignore]
+    fn test_suggestion_multiple() {
+        assert_suggestion_result(
+            "You knowledge. You imagination. You icosahedron",
+            PossessiveYour::default(),
+            "Your knowledge. Your imagination. You're an icosahedron",
+        );
+    }
+
+    #[test]
+    fn dont_flag_just_showing_you() {
+        assert_lint_count(
+            "I'm just showing you what's available and how to use it.",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn allows_issue_1583() {
+        assert_no_lints(
+            "Note that in a world with modules everywhere, you almost never need an IIFE",
+            PossessiveYour::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_brought_you() {
+        assert_lint_count(
+            "team who also brought you [BloodHound Enterprise](http://specterops.io/bloodhound-verview/).",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_1919_teaches_you() {
+        assert_lint_count(
+            "Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.",
+            PossessiveYour::default(),
+            0,
+        );
+    }
+}

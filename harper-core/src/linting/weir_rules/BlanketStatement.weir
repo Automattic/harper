@@ -1,0 +1,8 @@
+expr main (blanketed statement)
+
+let message "Use the more idiomatic phrasing."
+let description "Corrects common errors in the phrase `blanket statement`."
+let kind "Usage"
+let becomes "blanket statement"
+
+test "This seems like a blanketed statement and I have not found any info to back up whether PyJWT is affected." "This seems like a blanket statement and I have not found any info to back up whether PyJWT is affected."

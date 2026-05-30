@@ -1,0 +1,11 @@
+expr main [(if IIRC), (IIRC correctly)]
+
+let message "`IIRC` already means 'if I recall correctly', so adding 'if' or 'correctly' is redundant."
+let description "Flags redundant use of 'if' or 'correctly' with `IIRC`, since `IIRC` already stands for 'if I recall correctly'."
+let kind "Redundancy"
+let becomes "IIRC"
+let strategy "Exact"
+
+test "This is due to the fact that if IIRC up to 2 processes mpirun will bind to core and then it will be socket." "This is due to the fact that IIRC up to 2 processes mpirun will bind to core and then it will be socket."
+test "if iirc getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it" "IIRC getting it to work with the SQLite storage engine was turning into a whole project and we decided to punt it"
+test "IIRC correctly, someone on the Home Assistant forums went as far as discovering that RS-485 was being used." "IIRC, someone on the Home Assistant forums went as far as discovering that RS-485 was being used."

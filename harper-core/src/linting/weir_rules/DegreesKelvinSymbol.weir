@@ -1,0 +1,8 @@
+expr main (°K)
+
+let message "Use just the symbol `K` when discussing the unit Kelvin."
+let description "Corrects use of `°K` to `K`."
+let kind "Usage"
+let becomes "K"
+
+test "°K" "K"

@@ -1,0 +1,8 @@
+expr main (for while)
+
+let message "When describing a timeframe, use `a while`."
+let description "Corrects the missing article in `for while`, forming `for a while`."
+let kind "Typo"
+let becomes "for a while"
+
+test "Build flutter releases in github actions for production only android for while." "Build flutter releases in github actions for production only android for a while."

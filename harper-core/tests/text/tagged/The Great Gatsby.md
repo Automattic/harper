@@ -188,8 +188,8 @@
 # NSg/VB VB/C N🅪Sg+      NPl+       . VB/C IPl+ VP    J/P D$+ NSg+  NPr/J/R/P N🅪Sg/J VB/C Nᴹ/VB/J
 > like         new    money   from the mint     , promising to unfold the shining secrets that     only
 # NSg/VB/J/C/P NSg/J+ N🅪Sg/J+ P    D   NSg/VB/J . Nᴹ/Vg/J   P  NSg/VB D   Nᴹ/Vg/J NPl/V3+ I/C/Ddem J/R/C
-> Midas and  Morgan and  Mæcenas knew . And  I       had the high       intention of reading   many
-# NPr   VB/C NPr+   VB/C ?       VPt  . VB/C ISg/#r+ VP  D   NSg/VB/J/R NSg/VB    P  NPrᴹ/Vg/J NSg/I/J/Dq+
+> Midas and  Morgan and  Mæcenas knew . And  I       had the high       intention of reading     many
+# NPr   VB/C NPr+   VB/C ?       VPt  . VB/C ISg/#r+ VP  D   NSg/VB/J/R NSg/VB    P  NPr🅪Sg/Vg/J NSg/I/J/Dq+
 > other     books   besides . I       was  rather     literary in        college — one      year I       wrote a   series
 # NSg/VB/J+ NPl/V3+ R/P     . ISg/#r+ VLPt NPr/VB/J/R J        NPr/J/R/P NSg     . NSg/I/J+ NSg+ ISg/#r+ VPt   D/P NSgPl
 > of very solemn and  obvious editorials for   the Yale News   — and  now       I       was  going   to
@@ -3941,7 +3941,7 @@
 > haunted him  . For   a    moment I       suspected that     he       was  pulling my  leg       , but     a    glance
 # VP/J    ISg+ . R/C/P D/P+ NSg+   ISg/#r+ VP/J      I/C/Ddem NPr/ISg+ VLPt Nᴹ/Vg/J D$+ NSg/VB/J+ . NSg/C/P D/P+ NSg/VB+
 > at    him  convinced me       otherwise .
-# NSg/P ISg+ VP/J      NPr/ISg+ J/R       .
+# NSg/P ISg+ VP/J      NPr/ISg+ J/R/C     .
 >
 #
 > “ After that     I       lived like         a   young    rajah in        all          the capitals of Europe — Paris ,
@@ -5698,8 +5698,8 @@
 # ISg/D$+ NPr/VB+ Nᴹ/Vg/J   P  D   NSg/VB  P  NSg+     NPr/ISg+ NPr/VPt P    ISg/D$+ NSg/VB/J/R . VP/J  NPl/V3+ .
 > Sometimes , too , he       stared around at    his     possessions in        a    dazed way    , as    though in
 # R         . R   . NPr/ISg+ VP/J   J/P    NSg/P ISg/D$+ NPl/V3+     NPr/J/R/P D/P+ VP/J+ NSg/J+ . R/C/P C      NPr/J/R/P
-> her     actual and  astounding presence none  of it       was  any    longer real  . Once  he
-# ISg/D$+ NSg/J  VB/C Nᴹ/Vg/J    N🅪Sg/VB+ NSg/I P  NPr/ISg+ VLPt I/R/Dq NSg/JC NSg/J . NSg/C NPr/ISg+
+> her     actual and  astounding presence none of it       was  any    longer real  . Once  he
+# ISg/D$+ NSg/J  VB/C Nᴹ/Vg/J    N🅪Sg/VB+ I    P  NPr/ISg+ VLPt I/R/Dq NSg/JC NSg/J . NSg/C NPr/ISg+
 > nearly toppled down        a   flight    of stairs .
 # R      VP/J    N🅪Sg/VB/J/P D/P N🅪Sg/VB/J P  NPl+   .
 >
@@ -5926,8 +5926,8 @@
 # NPr/J/R/P P    D   NPr+ .
 >
 #
-> When    Klipspringer had played “ The Love      Nest       ” he       turned around on  the bench   and
-# NSg/I/C ?            VP  VP/J   . D   NPr🅪Sg/VB NSg/VB/JS+ . NPr/ISg+ VP/J   J/P    J/P D   NSg/VB+ VB/C
+> When    Klipspringer had played “ The Love      Nest    ” he       turned around on  the bench   and
+# NSg/I/C ?            VP  VP/J   . D   NPr🅪Sg/VB NSg/VB+ . NPr/ISg+ VP/J   J/P    J/P D   NSg/VB+ VB/C
 > searched unhappily for   Gatsby in        the gloom  .
 # VP/J     R         R/C/P NPr    NPr/J/R/P D   Nᴹ/VB+ .
 >
@@ -6142,8 +6142,8 @@
 # N🅪Sg/VB/J+ I/C/Ddem+ VP   ISg+ NSg/I/J/Dq+ NPl/V3+ D/P NSg         NSg/VP ISg+ R          J      NSg/C/P J/P
 > the verge  of soft  - mindedness , and  , suspecting this    , an  infinite number     of women
 # D   NSg/VB P  NSg/J . Nᴹ+        . VB/C . Nᴹ/Vg/J    I/Ddem+ . D/P NSg/J    N🅪Sg/VB/JC P  NPl+
-> tried to separate him  from his     money   . The none   too savory ramifications by    which
-# VP/J  P  NSg/VB/J ISg+ P    ISg/D$+ N🅪Sg/J+ . D+  NSg/I+ R   NSg/J  +             NSg/P I/C+
+> tried to separate him  from his     money   . The none too savory ramifications by    which
+# VP/J  P  NSg/VB/J ISg+ P    ISg/D$+ N🅪Sg/J+ . D+  I+   R   NSg/J  +             NSg/P I/C+
 > Ella Kaye , the newspaper woman   , played Madame de   Maintenon to his     weakness and
 # NPr  NPr  . D   N🅪Sg/VB+  NSg/VB+ . VP/J   NSg+   NPr+ ?         P  ISg/D$+ N🅪Sg+    VB/C
 > sent   him  to sea in        a   yacht   , were common   property of the turgid journalism
@@ -11224,8 +11224,8 @@
 # NSg/J R/C/P I/C/Ddem+ . NPr/ISg+ VP   NPr/ISg+ ISg/#r+ NSg+ NSg/VB/J/C/P D/P NSg/VB NSg/C . VB/C ISg/#r+ N🅪Sg/VB/J ISg+ R/C/P NPr/ISg+ . .
 >
 #
-> He       was  reluctant to close    the book    , reading   each item    aloud and  then      looking
-# NPr/ISg+ VLPt J         P  NSg/VB/J D+  NSg/VB+ . NPrᴹ/Vg/J Dq+  NSg/VB+ J     VB/C NSg/J/R/C Nᴹ/Vg/J
+> He       was  reluctant to close    the book    , reading     each item    aloud and  then      looking
+# NPr/ISg+ VLPt J         P  NSg/VB/J D+  NSg/VB+ . NPr🅪Sg/Vg/J Dq+  NSg/VB+ J     VB/C NSg/J/R/C Nᴹ/Vg/J
 > eagerly at    me       . I       think  he       rather     expected me       to copy   down        the list    for   my  own
 # R       NSg/P NPr/ISg+ . ISg/#r+ NSg/VB NPr/ISg+ NPr/VB/J/R NSg/VP/J NPr/ISg+ P  NSg/VB N🅪Sg/VB/J/P D+  NSg/VB+ R/C/P D$+ NSg/VB/J+
 > use      .

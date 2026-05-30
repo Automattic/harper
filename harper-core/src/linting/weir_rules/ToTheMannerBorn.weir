@@ -1,0 +1,7 @@
+expr main (to the manor born)
+
+let message "Use the correct phrase for being naturally suited to something."
+let description "Corrects `to the manor born` to `to the manner born`, ensuring the intended meaning of being naturally suited to a way of life."
+let kind "Eggcorn"
+let becomes "to the manner born"
+

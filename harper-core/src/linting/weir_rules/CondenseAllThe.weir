@@ -1,0 +1,7 @@
+expr main (all of the)
+
+let message "Consider simplifying to `all the`."
+let description "Suggests removing `of` in `all of the` for a more concise phrase."
+let kind "Redundancy"
+let becomes "all the"
+

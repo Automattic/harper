@@ -1,0 +1,9 @@
+expr main [(one foul swoop), (one fowl swoop)]
+
+let message "Use the correct phrase for something happening suddenly."
+let description "Corrects `one foul swoop` to `one fell swoop`, preserving the phrase’s original meaning of sudden and complete action."
+let kind "Eggcorn"
+let becomes "one fell swoop"
+
+test "I just want to turn OFF all of the Controllers with one foul swoop." "I just want to turn OFF all of the Controllers with one fell swoop."
+test "I am trying to delete the image and it's associated thumbnail in one fowl swoop." "I am trying to delete the image and it's associated thumbnail in one fell swoop."

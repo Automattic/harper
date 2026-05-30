@@ -90,7 +90,7 @@ pub fn lex_portuguese_token(source: &[char]) -> FoundToken {
         lex_tabs,
         lex_spaces,
         lex_newlines,
-        // lex_plural_digit, // The Portugese language doesn't have this feature
+        // lex_plural_digit, // The Portuguese language doesn't have this feature
         lex_hex_number, // Before lex_number, which would match the initial 0
         // lex_long_decade,  // This works in other ways in Portuguese
         lex_number,

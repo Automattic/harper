@@ -1,0 +1,33 @@
+expr main (cause it is)
+
+let message "Prefer `because it is` in this clause."
+let description "Normalizes informal `cause it is` to the standard subordinating form in explanatory clauses."
+let kind "Style"
+let becomes "because it is"
+let strategy "MatchCase"
+
+# True positives
+
+test "Cause it is late, we should leave." "Because it is late, we should leave."
+test "cause it is noisy, I use headphones." "because it is noisy, I use headphones."
+test "I stayed home cause it is raining." "I stayed home because it is raining."
+test "We paused deployment cause it is unstable." "We paused deployment because it is unstable."
+test "CAUSE IT IS CLEAR NOW." "BECAUSE IT IS CLEAR NOW."
+test "Cause it is simple, ship it." "Because it is simple, ship it."
+test "They agreed cause it is practical." "They agreed because it is practical."
+
+# False negatives (intentionally out of scope)
+
+test "Cause it was late, we should leave." "Cause it was late, we should leave."
+test "Cause it's late, we should leave." "Cause it's late, we should leave."
+test "Cause it has changed, reread docs." "Cause it has changed, reread docs."
+test "Cause it had failed, we rolled back." "Cause it had failed, we rolled back."
+
+# True negatives / false positives
+
+test "Because it is late, we should leave." "Because it is late, we should leave."
+test "Stress can cause it is not obvious." "Stress can because it is not obvious."
+test "The cause it is unclear." "The because it is unclear."
+test "They discuss cause and effect." "They discuss cause and effect."
+test "Because it was late, we should leave." "Because it was late, we should leave."
+test "No one said cause it is wrong." "No one said because it is wrong."

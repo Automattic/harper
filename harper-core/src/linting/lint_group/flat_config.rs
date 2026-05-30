@@ -1,14 +1,12 @@
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 use std::mem;
-use std::sync::OnceLock;
 
 use hashbrown::HashMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::LintGroup;
-use crate::EnglishDialect;
-use crate::languages::Language;
+use crate::Dialect;
 use crate::spell::MutableDictionary;
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
@@ -40,21 +38,6 @@ pub struct FlatConfig {
 }
 
 impl FlatConfig {
-    fn curated() -> Self {
-        static CURATED: OnceLock<FlatConfig> = OnceLock::new();
-
-        CURATED
-            .get_or_init(|| {
-                // The Dictionary and Dialect do not matter, we're just after the config.
-                let group = LintGroup::new_curated(
-                    MutableDictionary::new().into(),
-                    Language::English(EnglishDialect::American),
-                );
-                group.config
-            })
-            .clone()
-    }
-
     /// Check if a rule exists in the configuration.
     pub fn has_rule(&self, key: impl AsRef<str>) -> bool {
         self.inner.contains_key(key.as_ref())
@@ -103,13 +86,23 @@ impl FlatConfig {
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
-        let mut temp = Self::new_curated();
+        self.fill_with_curated_for(Dialect::American);
+    }
+
+    /// Fill the group with the dialect-aware curated values for the given document dialect.
+    pub fn fill_with_curated_for(&mut self, dialect: Dialect) {
+        let mut temp = Self::new_curated_for(dialect);
         mem::swap(self, &mut temp);
         self.merge_from(temp);
     }
 
     pub fn new_curated() -> Self {
-        Self::curated()
+        Self::new_curated_for(Dialect::American)
+    }
+
+    pub fn new_curated_for(dialect: Dialect) -> Self {
+        let group = LintGroup::new_curated(MutableDictionary::new().into(), dialect);
+        group.config
     }
 }
 

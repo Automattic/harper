@@ -1,0 +1,9 @@
+expr main (out of sink)
+
+let message "Did you mean `out of sync` or `out of synch`?"
+let description "Corrects `out of sink` to `out of sync` or `out of synch`."
+let kind "Spelling"
+let becomes ["out of sync", "out of synch"]
+
+test "This results in the NavigationStack getting out of sink" "This results in the NavigationStack getting out of sync"
+test "Currently, data/costs.scv file is out of sink with the model and must be updated to match the requirements of the sector-coupled version." "Currently, data/costs.scv file is out of synch with the model and must be updated to match the requirements of the sector-coupled version."

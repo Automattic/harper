@@ -1,0 +1,8 @@
+expr main (suffice to say)
+
+let message "`Suffice it to say` is the more standard and more common variant."
+let description "Corrects `suffice to say` to `suffice it to say`."
+let kind "Usage"
+let becomes "suffice it to say"
+
+test "I don't fully grok the bug, but suffice to say it is not an RCD issue." "I don't fully grok the bug, but suffice it to say it is not an RCD issue."

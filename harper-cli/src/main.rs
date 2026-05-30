@@ -1,18 +1,18 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::languages::LanguageFamily;
+use harper_core::language::registry::dictionary_for_dialect;
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
-use clap::{CommandFactory, Parser, ValueEnum, ValueHint};
+use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
 use harper_core::linting::LintGroup;
@@ -40,23 +40,6 @@ use annotate::AnnotationType;
 mod lint;
 use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
-
-/// Supported language families for text input.
-#[derive(Debug, Clone, Copy, Default, ValueEnum)]
-enum Language {
-    #[default]
-    English,
-    Portuguese,
-}
-
-impl From<Language> for LanguageFamily {
-    fn from(lang: Language) -> Self {
-        match lang {
-            Language::English => LanguageFamily::English,
-            Language::Portuguese => LanguageFamily::Portuguese,
-        }
-    }
-}
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
@@ -116,9 +99,6 @@ enum Args {
         /// The text or file you wish to parse. If not provided, it will be read from standard
         /// input.
         input: Option<SingleInput>,
-        /// Language family to use when parsing plain-text inputs.
-        #[arg(long, value_enum, default_value_t = Language::English)]
-        language: Language,
     },
     /// Parse a provided document and show the spans of the detected tokens.
     Spans {
@@ -128,9 +108,6 @@ enum Args {
         /// Include newlines in the output
         #[arg(short, long)]
         include_newlines: bool,
-        /// Language family to use when parsing plain-text inputs.
-        #[arg(long, value_enum, default_value_t = Language::English)]
-        language: Language,
     },
     /// Parse and annotate a provided document.
     Annotate {
@@ -143,9 +120,6 @@ enum Args {
         /// Attempt to detect and ignore non-English spans of text.
         #[arg(short, long)]
         isolate_english: bool,
-        /// Language family to use when parsing plain-text inputs.
-        #[arg(long, value_enum, default_value_t = Language::English)]
-        language: Language,
     },
     /// Get the metadata associated with one or more words.
     Metadata {
@@ -169,9 +143,6 @@ enum Args {
     MineWords {
         /// The document to mine words from.
         input: Option<SingleInput>,
-        /// Language family to use when parsing plain-text inputs.
-        #[arg(long, value_enum, default_value_t = Language::English)]
-        language: Language,
     },
     #[cfg(feature = "training")]
     TrainBrillTagger {
@@ -246,9 +217,6 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<SingleInput>,
-        /// Language family to use when parsing plain-text inputs.
-        #[arg(long, value_enum, default_value_t = Language::English)]
-        language: Language,
     },
     /// Run the tests contained within a Weir file.
     Test {
@@ -292,16 +260,22 @@ fn main() -> anyhow::Result<()> {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
+            let dict: Arc<dyn Dictionary> = if dialect.is_english() {
+                curated_dictionary.clone()
+            } else {
+                dictionary_for_dialect(dialect)
+            };
+
             lint(
                 markdown_options,
-                curated_dictionary,
+                dict,
                 inputs,
                 LintOptions {
                     count,
                     ignore,
                     only,
                     keep_overlapping_lints,
-                    language,
+                    dialect,
                     weirpack_inputs: weirpacks,
                     color,
                     format,
@@ -312,9 +286,9 @@ fn main() -> anyhow::Result<()> {
                 file_dict_path,
             )
         }
-        Args::Parse { input, language } => {
+        Args::Parse { input } => {
             // Try to read from standard input if `input` was not provided.
-            let input = resolve_single_input(input, language);
+            let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
             let (doc, _) = input.load(markdown_options, &curated_dictionary)?;
@@ -329,10 +303,9 @@ fn main() -> anyhow::Result<()> {
         Args::Spans {
             input,
             include_newlines,
-            language,
         } => {
             // Try to read from standard input if `input` was not provided.
-            let input = resolve_single_input(input, language);
+            let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
             let (doc, source) = input.load(markdown_options, &curated_dictionary)?;
@@ -379,10 +352,9 @@ fn main() -> anyhow::Result<()> {
             input,
             annotation_type,
             isolate_english,
-            language,
         } => {
             // Try to read from standard input if `input` was not provided.
-            let input = resolve_single_input(input, language);
+            let input = input.unwrap_or_read_from_stdin();
 
             let parser = if isolate_english {
                 Box::new(IsolateEnglish::new(
@@ -562,8 +534,8 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::MineWords { input, language } => {
-            let input = resolve_single_input(input, language);
+        Args::MineWords { input } => {
+            let input = input.unwrap_or_read_from_stdin();
             let (doc, _source) = input.load(MarkdownOptions::default(), &curated_dictionary)?;
 
             let mut words = HashMap::new();
@@ -641,6 +613,7 @@ fn main() -> anyhow::Result<()> {
             // And not characters used for the dictionary format
             const BAD_CHARS: [char; 3] = ['/', '#', ' '];
 
+            // Then use it like this:
             if old.chars().count() != 1 || BAD_CHARS.iter().any(|&c| old.contains(c)) {
                 return Err(anyhow!(
                     "Flags must be one Unicode code point, not / or # or space. Old flag '{old}' is {}",
@@ -915,6 +888,7 @@ fn main() -> anyhow::Result<()> {
                 .collect();
             results.sort_by_key(|(k, _)| k.clone());
 
+            // Instead of moving `results` into the for loop, iterate over a reference to it
             for (normalized, originals) in &results {
                 println!("\nVariants for '{normalized}':");
                 for original in originals {
@@ -940,6 +914,7 @@ fn main() -> anyhow::Result<()> {
 
                     if bits.count_ones() > 1 {
                         longest_word = longest_word.max(word.len());
+                        // Mask out all bits except the case-related ones before printing
                         processed_words.insert(
                             word.to_string(),
                             OrthFlags::from_bits_truncate(orth.bits() & case_bitmask.bits()),
@@ -955,9 +930,11 @@ fn main() -> anyhow::Result<()> {
             }
             Ok(())
         }
-        Args::NominalPhrases { input, language } => {
-            let input = resolve_single_input(input, language);
-            let (doc, _) = input.load(MarkdownOptions::default(), &curated_dictionary)?;
+        Args::NominalPhrases { input } => {
+            // Get input from either file or direct text
+            let (doc, _) = input
+                .unwrap_or_read_from_stdin()
+                .load(MarkdownOptions::default(), &curated_dictionary)?;
 
             let phrases: Vec<_> = doc
                 .iter_nominal_phrases()
@@ -1034,30 +1011,6 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-/// Resolve an optional `SingleInput`, applying the given language to stdin/text inputs.
-///
-/// If `input` is `None`, falls back to reading from stdin (which always uses `PlainEnglish`
-/// since we cannot know the language ahead of time — the caller should pass `--language` only
-/// when providing text directly).
-fn resolve_single_input(input: Option<SingleInput>, language: Language) -> SingleInput {
-    use input::single_input::{SingleInput as SI, StdinInput, TextInput};
-
-    match input {
-        None => StdinInput.into(),
-        Some(si) => {
-            // If it's a plain-text variant (not a file), re-wrap it with the requested language.
-            if let Some(text_input) = si.try_as_text_ref() {
-                SI::Text(TextInput::new(
-                    text_input.text().to_owned(),
-                    language.into(),
-                ))
-            } else {
-                si
-            }
-        }
-    }
-}
-
 /// Parse a dialect string into a Dialect enum value.
 /// Supports common synonyms, abbreviations, and codes.
 fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
@@ -1067,6 +1020,11 @@ fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
         "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
         "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
         "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
+        "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(Dialect::German),
+        "at" | "austria" | "austrian" | "de-at" | "de_at" => Ok(Dialect::GermanAustrian),
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Ok(Dialect::GermanSwiss),
+        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" | "br" | "brazil" | "pt-br"
+        | "pt_br" => Ok(Dialect::Portuguese),
         _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }

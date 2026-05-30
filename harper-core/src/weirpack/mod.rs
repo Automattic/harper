@@ -7,7 +7,6 @@ use hashbrown::HashMap;
 use zip::write::FileOptions;
 use zip::{CompressionMethod, ZipArchive, ZipWriter};
 
-use crate::languages::LanguageFamily;
 use crate::linting::LintGroup;
 use crate::spell::MutableDictionary;
 use crate::weir::{TestResult, WeirLinter};
@@ -73,7 +72,15 @@ impl Weirpack {
 
         for (name, rule) in &self.rules {
             let linter = WeirLinter::new(rule)?;
-            group.add_chunk_expr_linter(name, linter);
+            match linter.into_sentence_linter() {
+                Ok(linter) => group.add_sentence_expr_linter(name, linter),
+                Err(linter) => group.add_chunk_expr_linter(
+                    name,
+                    linter
+                        .into_chunk_linter()
+                        .unwrap_or_else(|_| unreachable!()),
+                ),
+            };
             group.config.set_rule_enabled(name, true);
         }
 
@@ -105,7 +112,7 @@ impl Weirpack {
             && let Some(annot) = &self.annotations
         {
             Ok(Some(
-                MutableDictionary::from_rune_files(dict, annot, LanguageFamily::English)
+                MutableDictionary::from_rune_files(dict, annot)
                     .map_err(|_| Error::InvalidDictionaryFormat)?,
             ))
         } else {

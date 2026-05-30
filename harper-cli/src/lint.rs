@@ -6,17 +6,17 @@ use std::sync::Arc;
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
-use harper_core::languages::Language;
 use hashbrown::HashMap;
 use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
+    Dialect, DictWordMetadata, Document, Token, TokenKind,
     linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
+    remove_overlaps_map,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
-    {DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -25,7 +25,7 @@ use crate::input::{
     single_input::{SingleInput, SingleInputTrait, StdinInput},
 };
 
-/// Sync version of harper-ls/src/dictionary_io@load_dict
+/// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
@@ -58,7 +58,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     Ok(packs)
 }
 
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
+/// Path version of harper-ls file dictionary name rewriting.
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 
@@ -89,7 +89,7 @@ pub struct LintOptions {
     pub ignore: Option<Vec<String>>,
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
-    pub language: Language,
+    pub dialect: Dialect,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
@@ -190,7 +190,7 @@ pub fn lint(
         count,
         ref mut ignore,
         ref mut only,
-        language,
+        dialect,
         ref weirpack_inputs,
         ..
     } = lint_options;
@@ -352,7 +352,7 @@ pub fn lint(
         ReportStyle::Compact => {}
         _ => {
             final_report(
-                language,
+                dialect,
                 true,
                 all_lint_kinds,
                 all_rules,
@@ -404,7 +404,7 @@ fn lint_one_input(
         ignore,
         only,
         keep_overlapping_lints,
-        language,
+        dialect,
         weirpack_inputs: _,
         color: _,
         format: _,
@@ -448,7 +448,7 @@ fn lint_one_input(
             }
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *language);
+                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;
@@ -797,7 +797,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
 }
 
 fn final_report(
-    language: Language,
+    dialect: Dialect,
     batch_mode: bool,
     all_lint_kinds: HashMap<LintKind, usize>,
     all_rules: HashMap<String, usize>,
@@ -918,10 +918,7 @@ fn final_report(
             })
             .collect();
 
-        println!(
-            "All files Spelling::SpellCheck (For language: {})",
-            language
-        );
+        println!("All files Spelling::SpellCheck (For dialect: {})", dialect);
         print_formatted_items(spelling_vec, color);
     }
 }
