@@ -26,6 +26,35 @@ fn corrects_much_ado() {
     );
 }
 
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
+    );
+}
+
 // Bollocks
 
 #[test]
@@ -298,6 +327,55 @@ fn corrects_conforming_that() {
     );
 }
 
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+    );
+}
+
 // DefiniteArticle
 
 #[test]
@@ -565,6 +643,26 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandAlgorithm
+
+#[test]
+fn corrects_algo() {
+    assert_suggestion_result(
+        "Always glad when the algo feeds me a new dissident.",
+        lint_group(),
+        "Always glad when the algorithm feeds me a new dissident.",
+    );
+}
+
+#[test]
+fn corrects_algos() {
+    assert_suggestion_result(
+        "I moved algos development to a private repository.",
+        lint_group(),
+        "I moved algorithms development to a private repository.",
+    );
+}
+
 // ExpandArgument
 
 #[test]
@@ -582,6 +680,26 @@ fn corrects_args() {
         "but every test I've done shows args as being about 65% faster",
         lint_group(),
         "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandCoordinate
+
+#[test]
+fn corrects_coord() {
+    assert_suggestion_result(
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coord systems that do not support them",
+        lint_group(),
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coordinate systems that do not support them",
+    );
+}
+
+#[test]
+fn corrects_coords() {
+    assert_suggestion_result(
+        "Here is how you can extract the list of coords from any geometry:",
+        lint_group(),
+        "Here is how you can extract the list of coordinates from any geometry:",
     );
 }
 
@@ -625,6 +743,26 @@ fn corrects_derefs() {
         "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
         lint_group(),
         "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
+// ExpandNotification
+
+#[test]
+fn corrects_notif() {
+    assert_suggestion_result(
+        "Amazing to see the notif of this on my phone!",
+        lint_group(),
+        "Amazing to see the notification of this on my phone!",
+    );
+}
+
+#[test]
+fn corrects_notifs() {
+    assert_suggestion_result(
+        "I don't encourage you spending all your time on social media or keeping the notifs on if you're working on something serious.",
+        lint_group(),
+        "I don't encourage you spending all your time on social media or keeping the notifications on if you're working on something serious.",
     );
 }
 
@@ -673,6 +811,39 @@ fn correct_ptrs() {
 
 // ExpandStandardOutput
 // -none-
+
+// ExpandVulnerability
+
+#[test]
+fn corrects_vuln() {
+    assert_suggestion_result(
+        "I did not understand this vuln in first place now I do not understand in 2nd place as well😢",
+        lint_group(),
+        "I did not understand this vulnerability in first place now I do not understand in 2nd place as well😢",
+    );
+}
+
+#[test]
+fn corrects_vulns() {
+    // Fix just this lint
+    let mut only_expand_vuln = lint_group();
+    only_expand_vuln.set_all_rules_to(None); // Disable all linters
+    only_expand_vuln
+        .config
+        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
+
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        only_expand_vuln,
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
+    );
+    // Fix all lints in the `LintGroup`
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        lint_group(),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive parameters, and auth endpoints.",
+    );
+}
 
 // ExplanationMark
 #[test]
@@ -2961,6 +3132,35 @@ fn detect_arisen_the_question() {
         "Some have arisen the question like how to use this wireless HD mini camera",
         lint_group(),
         "Some have raised the question like how to use this wireless HD mini camera",
+    );
+}
+
+// SideTangent
+
+#[test]
+fn fix_side_tangent_start_of_sentence() {
+    assert_suggestion_result(
+        "Side tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+        lint_group(),
+        "Tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+    );
+}
+
+#[test]
+fn fix_side_tangent_aside() {
+    assert_suggestion_result(
+        "As a side tangent, in addition to not solving the gradual code repair problem",
+        lint_group(),
+        "As an aside, in addition to not solving the gradual code repair problem",
+    );
+}
+
+#[test]
+fn fix_side_tangents() {
+    assert_suggestion_result(
+        "so we don't get bogged down by tiny formatting bikeshedding side tangents",
+        lint_group(),
+        "so we don't get bogged down by tiny formatting bikeshedding tangents",
     );
 }
 
