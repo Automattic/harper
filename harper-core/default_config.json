@@ -3066,6 +3066,13 @@
 								"state": true,
 								"label": "For Free of Charge"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
+							}
 						}
 					]
 				}
