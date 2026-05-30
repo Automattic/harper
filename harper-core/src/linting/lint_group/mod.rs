@@ -144,6 +144,7 @@ use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
+use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_longer::NoLonger;
@@ -697,6 +698,7 @@ impl LintGroup {
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_expr_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NakedEye, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoLonger, true);
