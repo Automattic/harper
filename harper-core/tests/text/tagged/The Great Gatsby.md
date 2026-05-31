@@ -3941,7 +3941,7 @@
 > haunted him  . For   a    moment I       suspected that     he       was  pulling my  leg       , but     a    glance
 # VP/J    ISg+ . R/C/P D/P+ NSg+   ISg/#r+ VP/J      I/C/Ddem NPr/ISg+ VLPt Nᴹ/Vg/J D$+ NSg/VB/J+ . NSg/C/P D/P+ NSg/VB+
 > at    him  convinced me       otherwise .
-# NSg/P ISg+ VP/J      NPr/ISg+ J/R       .
+# NSg/P ISg+ VP/J      NPr/ISg+ J/R/C     .
 >
 #
 > “ After that     I       lived like         a   young    rajah in        all          the capitals of Europe — Paris ,

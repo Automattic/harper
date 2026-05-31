@@ -49,7 +49,7 @@ impl BeAdjectiveLinter {
                 // and would cause false positives.
                 // Future improvements could add "it" support with
                 // more sophisticated context analysis.
-                .and_not(Word::new("it")),
+                .but_not(Word::new("it")),
             verb,
             adjective,
             message,

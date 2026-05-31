@@ -14,7 +14,7 @@ impl Default for ArriveTo {
             expr: SequenceExpr::word_set(&["arrive", "arrived", "arrives", "arriving"])
                 .t_ws()
                 .t_aco("to")
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()

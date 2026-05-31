@@ -11,7 +11,7 @@ export async function GET() {
 
 	return new Response(latestVersion, {
 		headers: {
-			'Access-Control-Allow-Origin': 'app://obsidian.md',
+			'Access-Control-Allow-Origin': '*',
 			'Cache-Control': 'no-cache',
 		},
 	});
@@ -20,7 +20,7 @@ export async function GET() {
 export async function OPTIONS() {
 	return new Response(null, {
 		headers: {
-			'Access-Control-Allow-Origin': 'app://obsidian.md',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'GET',
 			'Access-Control-Allow-Headers': 'Harper-Version',
 		},
