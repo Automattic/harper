@@ -8,7 +8,7 @@ export const liveVersions = writable<Record<string, string>>({
 });
 
 export async function loadLiveVersions() {
-	// 4. Firefox Addon
+	// 1. Firefox Addon
 	try {
 		const ver = (
 			await (
@@ -27,7 +27,7 @@ export async function loadLiveVersions() {
 		liveVersions.update((v) => ({ ...v, js: ver }));
 	} catch {}
 
-	// 1. Rust Crate
+	// 3. Rust Crate
 	try {
 		const lines = (await (await fetch('https://index.crates.io/ha/rp/harper-core')).text()).split(
 			'\n',
@@ -35,7 +35,7 @@ export async function loadLiveVersions() {
 		liveVersions.update((v) => ({ ...v, rust: JSON.parse(lines[lines.length - 2]).vers }));
 	} catch {}
 
-	// 3. VS Code Extension
+	// 4. VS Code Extension
 	try {
 		const res = await fetch(
 			'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery',
