@@ -4426,6 +4426,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Brutality",
 								"state": true,
 								"label": "Brutality"
