@@ -83,14 +83,20 @@ function clearFilters() {
 						>
 							<IntegrationTile {integration} size={40} />
 							<span class="flex min-w-0 flex-col">
-								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+								<div class="flex items-center gap-1.5">
+									<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+									{#if $liveVersions[integration.id]}
+										<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+											{$liveVersions[integration.id]}
+										</span>
+									{:else if $liveVersions[integration.name]}
+										<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+											{$liveVersions[integration.name]}
+										</span>
+									{/if}
+								</div>
 								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
 									{integration.desc}
-									{#if $liveVersions[integration.id]}
-										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
-									{:else if $liveVersions[integration.name]}
-										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.name]})</span>
-									{/if}
 								</small>
 							</span>
 							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
@@ -183,14 +189,20 @@ function clearFilters() {
 						>
 						<IntegrationTile {integration} size={40} />
 						<span class="flex min-w-0 flex-col">
-							<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+							<div class="flex items-center gap-1.5">
+								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+								{#if $liveVersions[integration.id]}
+									<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+										{$liveVersions[integration.id]}
+									</span>
+								{:else if $liveVersions[integration.name]}
+									<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+										{$liveVersions[integration.name]}
+									</span>
+								{/if}
+							</div>
 							<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
 								{integration.platform}
-								{#if $liveVersions[integration.id]}
-									<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
-								{:else if $liveVersions[integration.name]}
-									<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.name]})</span>
-								{/if}
 							</small>
 						</span>
 						<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>

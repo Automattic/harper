@@ -254,13 +254,16 @@ onMount(() => {
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
-								<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
+								<div class="flex items-center gap-1.5 overflow-hidden">
+									<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
+									{#if $liveVersions[integration.id]}
+										<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.65rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+											v{$liveVersions[integration.id]}
+										</span>
+									{/if}
+								</div>
 								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">
 									{integration.desc}
-
-									{#if $liveVersions[integration.id]}
-										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
-									{/if}
 								</small>
 							</span>
 						</a>

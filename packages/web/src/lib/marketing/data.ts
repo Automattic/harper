@@ -107,7 +107,7 @@ export const integrationCategories: IntegrationCategory[] = [
 		items: [
 			{
 				id: 'vscode',
-				name: 'Visual Studio Code',
+				name: 'VS Code',
 				desc: 'Marketplace extension.',
 				href: marketingLinks.vscode,
 				platform: 'VS Code, Cursor',
