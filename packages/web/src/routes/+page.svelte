@@ -19,6 +19,7 @@ import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
 import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
+import { loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
 
@@ -141,10 +142,17 @@ const faqs = [
 	},
 ];
 
+let liveFxVer = '';
+let liveJsVer = '';
+let liveRustVer = '';
+let liveVscodeVer = '';
+
 onMount(() => {
 	void (async () => {
 		linter = await createEditorLinter();
 	})();
+
+    void loadLiveVersions();
 });
 
 </script>
@@ -247,7 +255,13 @@ onMount(() => {
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
 								<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">
+									{integration.desc}
+
+									{#if $liveVersions[integration.id]}
+										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
+									{/if}
+								</small>
 							</span>
 						</a>
 					{/if}

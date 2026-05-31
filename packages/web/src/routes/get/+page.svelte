@@ -1,4 +1,5 @@
 <script lang="ts">
+import { onMount } from 'svelte';
 import {
 	type Integration,
 	integrationCategories,
@@ -8,9 +9,14 @@ import {
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
+import { liveVersions, loadLiveVersions } from '$lib/marketing/versions';
 
 let activeCategory = 'all';
 let query = '';
+
+onMount(() => {
+	void loadLiveVersions();
+});
 
 $: filtered = integrations.filter((integration) => {
 	if (activeCategory === 'community' && !integration.community) {
@@ -78,7 +84,14 @@ function clearFilters() {
 							<IntegrationTile {integration} size={40} />
 							<span class="flex min-w-0 flex-col">
 								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
+									{integration.desc}
+									{#if $liveVersions[integration.id]}
+										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
+									{:else if $liveVersions[integration.name]}
+										<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.name]})</span>
+									{/if}
+								</small>
 							</span>
 							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
@@ -168,12 +181,19 @@ function clearFilters() {
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
 							href={integration.href}
 						>
-							<IntegrationTile {integration} size={40} />
-							<span class="flex min-w-0 flex-col">
-								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.platform}</small>
-							</span>
-							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
+						<IntegrationTile {integration} size={40} />
+						<span class="flex min-w-0 flex-col">
+							<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+							<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
+								{integration.platform}
+								{#if $liveVersions[integration.id]}
+									<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.id]})</span>
+								{:else if $liveVersions[integration.name]}
+									<span class="opacity-75 font-mono ml-1">({$liveVersions[integration.name]})</span>
+								{/if}
+							</small>
+						</span>
+						<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
 					{/each}
 				{/if}

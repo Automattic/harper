@@ -17,6 +17,7 @@ export type Integration = {
 	categoryLabel: string;
 	tag?: string;
 	platform?: string;
+	version?: string;
 	cta: 'install' | 'docs';
 	color?: string;
 	fg?: string;
