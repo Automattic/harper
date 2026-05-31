@@ -138,7 +138,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const results = await Promise.all(promises);
 
 		expect(results[0].length).toBe(1);
-		expect(results[0][0].suggestions().length).toBe(1);
+		expect(results[0][0].suggestions().length).toBe(2);
 		expect(results[1].length).toBe(0);
 		expect(results[2].length).toBe(1);
 
@@ -157,7 +157,7 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const results = await Promise.all(promises);
 
 		expect(results[0].length).toBe(1);
-		expect(results[0][0].suggestions().length).toBe(1);
+		expect(results[0][0].suggestions().length).toBe(2);
 		expect(results[1].length).toBe(0);
 		expect(results[2].length).toBe(1);
 
