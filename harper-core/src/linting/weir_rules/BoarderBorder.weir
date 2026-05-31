@@ -1,7 +1,7 @@
-# "Boarder" (a person who rents a room) is very commonly confused with
-# "border" (an edge, boundary, or dividing line). In technical and everyday
-# writing, "border" is far more common, and "boarder" is almost never the
-# intended word.
+# "Boarder" (a person who rents a room) is an eggcorn for "border"
+# (an edge, boundary, or dividing line). The words sound similar and
+# "boarder" can superficially seem plausible, but in technical and everyday
+# writing "border" is far more commonly the intended word.
 #
 # See: https://github.com/Automattic/harper/issues/3471
 #
@@ -17,8 +17,8 @@ expr preps [of, between, around, with, on]
 expr main [<(boarder @preps), boarder>, <(boarders @preps), boarders>, <(cross the boarder), boarder>, <(cross the boarders), boarders>]
 
 let message "Did you mean `border`?"
-let description "Flags likely word confusion where `boarder` (a lodger) appears where `border` (an edge/boundary) is intended."
-let kind "WordChoice"
+let description "Flags the eggcorn `boarder` (a lodger) where `border` (an edge/boundary) is intended."
+let kind "Eggcorn"
 let becomes ["border", "borders"]
 let strategy "MatchCase"
 
