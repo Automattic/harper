@@ -263,11 +263,13 @@ use super::whom_subject_of_verb::WhomSubjectOfVerb;
 use super::widely_accepted::WidelyAccepted;
 use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
+use super::wrong_preposition::WrongPreposition;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
+use super::your_before_auxiliary::{YourBeforeAuxiliary, TheirBeforeAuxiliary};
 
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
@@ -813,11 +815,14 @@ impl LintGroup {
         insert_expr_rule!(WidelyAccepted, true);
         insert_expr_rule_with_dict!(WillNonLemma, true);
         insert_expr_rule!(WinPrize, true);
+        insert_expr_rule!(WrongPreposition, true);
         insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
         insert_expr_rule!(WrongApostrophe, true);
+        insert_expr_rule!(YourBeforeAuxiliary, true);
+        insert_expr_rule!(TheirBeforeAuxiliary, true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
