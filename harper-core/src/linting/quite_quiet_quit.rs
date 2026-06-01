@@ -3,11 +3,11 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::{CharStringExt, Token, TokenKind, TokenStringExt};
 
-pub struct QuiteQuiet {
+pub struct QuiteQuietQuit {
     expr: FirstMatchOf,
 }
 
-impl Default for QuiteQuiet {
+impl Default for QuiteQuietQuit {
     fn default() -> Self {
         // "quiet" + adj/adv/verb likely means "quite" was intended.
         // Exclude nouns, prepositions, conjunctions, and select adverbs
@@ -45,17 +45,53 @@ impl Default for QuiteQuiet {
             .t_ws()
             .t_aco("quite");
 
+        // "quite" is sometimes mistyped for the verb "quit", especially in
+        // UI/software contexts like "quit and restart" or "quit the app".
+        let quite_and_verb = SequenceExpr::aco("quite")
+            .t_ws()
+            .t_aco("and")
+            .t_ws()
+            .t_set(&[
+                "install", "reopen", "restart", "update", "re-open", "re-start",
+            ]);
+
+        let quite_the_app = SequenceExpr::aco("quite")
+            .t_ws()
+            .t_aco("the")
+            .t_ws()
+            .t_set(&[
+                "app",
+                "application",
+                "program",
+                "process",
+                "terminal",
+                "window",
+            ]);
+
+        let quite_app = SequenceExpr::aco("quite").t_ws().t_set(&[
+            "app",
+            "application",
+            "command",
+            "program",
+            "process",
+            "terminal",
+            "window",
+        ]);
+
         Self {
             expr: FirstMatchOf::new(vec![
                 Box::new(quiet_word),
                 Box::new(negative_contraction_quiet),
                 Box::new(adverb_quite),
+                Box::new(quite_and_verb),
+                Box::new(quite_the_app),
+                Box::new(quite_app),
             ]),
         }
     }
 }
 
-impl ExprLinter for QuiteQuiet {
+impl ExprLinter for QuiteQuietQuit {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -65,7 +101,20 @@ impl ExprLinter for QuiteQuiet {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let text = toks.span()?.get_content_string(src).to_lowercase();
 
-        if text.ends_with("quite") {
+        if text.starts_with("quite") {
+            let quite_span = toks.first()?.span;
+
+            return Some(Lint {
+                span: quite_span,
+                lint_kind: LintKind::Typo,
+                suggestions: vec![Suggestion::replace_with_match_case(
+                    "quit".chars().collect(),
+                    quite_span.get_content(src),
+                )],
+                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quit’ (exit or close).".to_string(),
+                priority: 63,
+            });
+        } else if text.ends_with("quite") {
             let quite_span = toks.last()?.span;
 
             return Some(Lint {
@@ -116,14 +165,14 @@ impl ExprLinter for QuiteQuiet {
 
 #[cfg(test)]
 mod tests {
-    use super::QuiteQuiet;
+    use super::QuiteQuietQuit;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn fix_quiet_adverb() {
         assert_suggestion_result(
             "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quiet often.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quite often.",
         );
     }
@@ -132,7 +181,7 @@ mod tests {
     fn fix_quiet_adjective() {
         assert_suggestion_result(
             "... has been already reported multiple times and I find it quiet dumb that it still exists",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "... has been already reported multiple times and I find it quite dumb that it still exists",
         );
     }
@@ -141,40 +190,71 @@ mod tests {
     fn fix_very_quite() {
         assert_suggestion_result(
             "It's very quite here at night.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "It's very quiet here at night.",
         );
     }
 
     #[test]
+    fn fix_quite_and_restart() {
+        assert_suggestion_result(
+            "If you edit the AGENTS.md file you need to quite and restart copilot cli.",
+            QuiteQuietQuit::default(),
+            "If you edit the AGENTS.md file you need to quit and restart copilot cli.",
+        );
+    }
+
+    #[test]
+    fn fix_quite_the_app() {
+        assert_suggestion_result(
+            "I have to quite the terminal app to stop it.",
+            QuiteQuietQuit::default(),
+            "I have to quit the terminal app to stop it.",
+        );
+    }
+
+    #[test]
+    fn fix_quite_app() {
+        assert_suggestion_result(
+            "No visible close or quite command is available.",
+            QuiteQuietQuit::default(),
+            "No visible close or quit command is available.",
+        );
+    }
+
+    #[test]
     fn fix_doesnt_quiet() {
-        assert_suggestion_result("doesn't quiet", QuiteQuiet::default(), "doesn't quite");
+        assert_suggestion_result("doesn't quiet", QuiteQuietQuit::default(), "doesn't quite");
     }
 
     #[test]
     fn fix_doesnt_quiet_typographical_apostrophe() {
-        assert_suggestion_result("doesn’t quiet", QuiteQuiet::default(), "doesn’t quite");
+        assert_suggestion_result("doesn’t quiet", QuiteQuietQuit::default(), "doesn’t quite");
     }
 
     #[test]
     fn fix_doesnt_quiet_in_context() {
         assert_suggestion_result(
             "When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quiet run right, and doesn't really let me rev it.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "When we got the car back into the workshop, we actually managed to get it running and driving, but it doesn't quite run right, and doesn't really let me rev it.",
         );
     }
 
     #[test]
     fn dont_flag_quiet_light() {
-        assert_lint_count("The quiet lights in the houses", QuiteQuiet::default(), 0);
+        assert_lint_count(
+            "The quiet lights in the houses",
+            QuiteQuietQuit::default(),
+            0,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_till() {
         assert_lint_count(
             "You’d better try and sit quiet till morning.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             0,
         );
     }
@@ -183,7 +263,7 @@ mod tests {
     fn fix_cant_quiet() {
         assert_suggestion_result(
             "I can't quiet read it",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "I can't quite read it",
         );
     }
@@ -192,7 +272,7 @@ mod tests {
     fn fix_wont_quiet() {
         assert_suggestion_result(
             "It won't quiet fit",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "It won't quite fit",
         );
     }
@@ -201,21 +281,21 @@ mod tests {
     fn fix_couldnt_quiet() {
         assert_suggestion_result(
             "I couldn't quiet understand everything",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "I couldn't quite understand everything",
         );
     }
 
     #[test]
     fn fix_but_its_not_quite_clear_1956() {
-        assert_no_lints("But it's not quite clear", QuiteQuiet::default());
+        assert_no_lints("But it's not quite clear", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_adv_quite_1971() {
         assert_no_lints(
             "It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
@@ -223,7 +303,7 @@ mod tests {
     fn issue_2003() {
         assert_no_lints(
             "The namespaces are generally quite short",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
@@ -233,7 +313,7 @@ mod tests {
     fn dont_flag_go_quiet_for() {
         assert_no_lints(
             "If I go quiet for a week… yeah I'm dead.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
@@ -241,20 +321,23 @@ mod tests {
     fn dont_flag_went_quiet_about() {
         assert_no_lints(
             "He went quiet about the whole thing.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
     #[test]
     fn dont_flag_keep_quiet_about() {
-        assert_no_lints("She kept quiet about what happened.", QuiteQuiet::default());
+        assert_no_lints(
+            "She kept quiet about what happened.",
+            QuiteQuietQuit::default(),
+        );
     }
 
     #[test]
     fn dont_flag_stay_quiet_during() {
         assert_no_lints(
             "Please stay quiet during the presentation.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
@@ -262,62 +345,62 @@ mod tests {
     fn dont_flag_fell_quiet_after() {
         assert_no_lints(
             "The room fell quiet after the announcement.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
         );
     }
 
     #[test]
     fn dont_flag_remained_quiet_in() {
-        assert_no_lints("She remained quiet in meetings.", QuiteQuiet::default());
+        assert_no_lints("She remained quiet in meetings.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_grew_quiet_on() {
-        assert_no_lints("He grew quiet on the matter.", QuiteQuiet::default());
+        assert_no_lints("He grew quiet on the matter.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_be_quiet_for() {
-        assert_no_lints("Be quiet for a moment.", QuiteQuiet::default());
+        assert_no_lints("Be quiet for a moment.", QuiteQuietQuit::default());
     }
 
     // --- Predicate adjective: conjunctions ---
 
     #[test]
     fn dont_flag_quiet_and() {
-        assert_no_lints("Stay quiet and listen.", QuiteQuiet::default());
+        assert_no_lints("Stay quiet and listen.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_quiet_but() {
-        assert_no_lints("She was quiet but firm.", QuiteQuiet::default());
+        assert_no_lints("She was quiet but firm.", QuiteQuietQuit::default());
     }
 
     // --- Predicate adjective: temporal/locative adverbs ---
 
     #[test]
     fn dont_flag_quiet_now() {
-        assert_no_lints("Be quiet now.", QuiteQuiet::default());
+        assert_no_lints("Be quiet now.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_quiet_there() {
-        assert_no_lints("It's quiet there.", QuiteQuiet::default());
+        assert_no_lints("It's quiet there.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_quiet_down() {
-        assert_no_lints("Quiet down, everyone.", QuiteQuiet::default());
+        assert_no_lints("Quiet down, everyone.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_quiet_enough() {
-        assert_no_lints("The room was quiet enough.", QuiteQuiet::default());
+        assert_no_lints("The room was quiet enough.", QuiteQuietQuit::default());
     }
 
     #[test]
     fn dont_flag_quiet_lately() {
-        assert_no_lints("It's been quiet lately.", QuiteQuiet::default());
+        assert_no_lints("It's been quiet lately.", QuiteQuietQuit::default());
     }
 
     // --- Still catches genuine typos ---
@@ -326,7 +409,7 @@ mod tests {
     fn still_catches_quiet_remarkable() {
         assert_suggestion_result(
             "That was quiet remarkable.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "That was quite remarkable.",
         );
     }
@@ -335,7 +418,7 @@ mod tests {
     fn still_catches_quiet_impressive() {
         assert_suggestion_result(
             "That was quiet impressive.",
-            QuiteQuiet::default(),
+            QuiteQuietQuit::default(),
             "That was quite impressive.",
         );
     }

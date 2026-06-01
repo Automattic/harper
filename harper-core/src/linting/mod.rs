@@ -197,7 +197,7 @@ mod pronoun_verb_agreement;
 mod proper_noun_capitalization_linters;
 mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
-mod quite_quiet;
+mod quite_quiet_quit;
 mod quote_spacing;
 mod reason_for_doing;
 mod redundant_acronyms;

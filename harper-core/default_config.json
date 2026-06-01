@@ -2789,7 +2789,7 @@
 						},
 						{
 							"Bool": {
-								"name": "QuiteQuiet",
+								"name": "QuiteQuietQuit",
 								"state": true,
 								"label": "Quite Quiet"
 							}
