@@ -25,7 +25,7 @@ unicode-script = "0.5.8"
 unicode-width = "0.2.2"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
 cached = "0.59.0"
-lru = "0.16.3"
+lru = "0.18.0"
 foldhash = "0.2.0"
 strum_macros = "0.28.0"
 strum = "0.28.0"
