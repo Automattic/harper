@@ -38,7 +38,7 @@ impl Default for InBetterShape {
 impl ExprLinter for InBetterShape {
     type Unit = Chunk;
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         let span = matched_tokens[4..6].span()?;
         let lint_kind = LintKind::Usage;
         let suggestions = vec![Suggestion::Remove];
