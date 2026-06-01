@@ -1,7 +1,11 @@
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints, linting::FlatConfig, spell::MutableDictionary,
 };
-use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout};
+use std::time::Duration;
+use tokio::{
+    io::{AsyncBufReadExt, AsyncRead, AsyncWrite, BufReader, Stdin, Stdout},
+    time::timeout,
+};
 
 use super::error::ProtocolError;
 use super::framing::write_message;
@@ -157,7 +161,16 @@ where
         write_message(&mut self.writer, &request).await?;
 
         let mut line = String::new();
-        if self.reader.read_line(&mut line).await? == 0 {
+        let response = timeout(Duration::from_secs(5), self.reader.read_line(&mut line)).await;
+        let bytes_read = match response {
+            Ok(bytes_read) => bytes_read?,
+            Err(_) => {
+                eprintln!("parent process did not respond within 5 seconds; exiting highlighter");
+                std::process::exit(1);
+            }
+        };
+
+        if bytes_read == 0 {
             return Err(ProtocolError::UnexpectedEof);
         }
 

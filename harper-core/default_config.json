@@ -3066,6 +3066,13 @@
 								"state": true,
 								"label": "For Free of Charge"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
+							}
 						}
 					]
 				}
@@ -3719,6 +3726,13 @@
 								"name": "ASomeTime",
 								"state": true,
 								"label": "A Some Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
 							}
 						}
 					]

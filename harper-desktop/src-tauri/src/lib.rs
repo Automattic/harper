@@ -9,13 +9,15 @@ use harper_core::{
     linting::{FlatConfig, Lint, LintGroup},
     spell::{Dictionary, MutableDictionary},
 };
+use serde::Serialize;
 use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
 use tauri::{
     Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
-    menu::{Menu, MenuItem, PredefinedMenuItem},
+    menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
+use tauri_plugin_opener::OpenerExt;
 
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use tokio::{
@@ -55,7 +57,15 @@ const TRAY_MENU_BAR_ID: &str = "harper-menu-bar";
 const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
+const REPORT_ISSUE_MENU_ID: &str = "report-issue";
 const QUIT_MENU_ID: &str = "quit";
+
+#[derive(Debug, Clone, Serialize)]
+struct IntegrationView {
+    bundle_id: String,
+    enabled: bool,
+    display_name: String,
+}
 
 struct TrayMenu {
     menu: Menu<tauri::Wry>,
@@ -140,6 +150,38 @@ fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
+fn open_issue_report(app: &tauri::AppHandle) {
+    if let Err(error) = app.opener().open_url(
+        "https://github.com/Automattic/harper/issues/new/choose",
+        None::<&str>,
+    ) {
+        eprintln!("failed to open issue report URL: {error}");
+    }
+}
+
+fn desktop_app_menu(app: &tauri::AppHandle) -> tauri::Result<Menu<tauri::Wry>> {
+    let menu = Menu::default(app)?;
+
+    if let Some(help_menu) = menu
+        .get(HELP_SUBMENU_ID)
+        .and_then(|item| item.as_submenu().cloned())
+    {
+        if !help_menu.items()?.is_empty() {
+            help_menu.append(&PredefinedMenuItem::separator(app)?)?;
+        }
+
+        help_menu.append(&MenuItem::with_id(
+            app,
+            REPORT_ISSUE_MENU_ID,
+            "Report an Issue",
+            true,
+            None::<&str>,
+        )?)?;
+    }
+
+    Ok(menu)
+}
+
 fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
     let service_toggle = MenuItem::with_id(
         app,
@@ -152,11 +194,25 @@ fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
         MenuItem::with_id(app, OPEN_EDITOR_MENU_ID, "Open Editor", true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
     let settings = MenuItem::with_id(app, SETTINGS_MENU_ID, "Settings", true, None::<&str>)?;
+    let report_issue = MenuItem::with_id(
+        app,
+        REPORT_ISSUE_MENU_ID,
+        "Report an Issue",
+        true,
+        None::<&str>,
+    )?;
     let quit = MenuItem::with_id(app, QUIT_MENU_ID, "Quit", true, None::<&str>)?;
 
     let menu = Menu::with_items(
         app,
-        &[&service_toggle, &open_editor, &separator, &settings, &quit],
+        &[
+            &service_toggle,
+            &open_editor,
+            &separator,
+            &settings,
+            &report_issue,
+            &quit,
+        ],
     )?;
 
     Ok(TrayMenu {
@@ -383,8 +439,18 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Vec<Integration>, String> {
-    Ok(config.lock().await.integrations.clone())
+) -> Result<Vec<IntegrationView>, String> {
+    let integrations = config.lock().await.integrations.clone();
+    let broker = platform_broker();
+
+    Ok(integrations
+        .into_iter()
+        .map(|integration| IntegrationView {
+            display_name: broker.integration_display_name(&integration.bundle_id),
+            bundle_id: integration.bundle_id,
+            enabled: integration.enabled,
+        })
+        .collect())
 }
 
 #[tauri::command]
@@ -554,6 +620,7 @@ pub fn run_tauri() {
             None,
         ))
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![
             get_lint_config,
             get_dialect,
@@ -579,6 +646,12 @@ pub fn run_tauri() {
             stop_highlighter_service,
             launch_app,
         ])
+        .menu(desktop_app_menu)
+        .on_menu_event(|app, event| {
+            if event.id().as_ref() == REPORT_ISSUE_MENU_ID {
+                open_issue_report(app);
+            }
+        })
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())
                 && let WindowEvent::CloseRequested { api, .. } = event
@@ -658,6 +731,7 @@ pub fn run_tauri() {
                             eprintln!("failed to show settings window: {error}");
                         }
                     }
+                    REPORT_ISSUE_MENU_ID => open_issue_report(app),
                     QUIT_MENU_ID => app.exit(0),
                     _ => {}
                 })

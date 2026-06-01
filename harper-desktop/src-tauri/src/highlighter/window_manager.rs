@@ -3,6 +3,8 @@ use std::time::{Duration, Instant};
 use winit::application::ApplicationHandler;
 use winit::event::{ElementState, MouseButton, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
+#[cfg(target_os = "macos")]
+use winit::platform::macos::{ActivationPolicy, EventLoopBuilderExtMacOS};
 use winit::window::WindowId;
 
 use super::AddToDictionary;
@@ -56,8 +58,15 @@ impl WindowManager {
         callbacks: WindowManagerCallbacks,
         intervals: WindowManagerIntervals,
     ) -> Result<Self, Error> {
+        let mut event_loop_builder = EventLoop::builder();
+
+        #[cfg(target_os = "macos")]
+        event_loop_builder
+            .with_activation_policy(ActivationPolicy::Accessory)
+            .with_default_menu(false);
+
         Ok(Self {
-            event_loop: EventLoop::new()?,
+            event_loop: event_loop_builder.build()?,
             context,
             rects: Vec::new(),
             os_broker,
