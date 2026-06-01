@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct InBetterShape {
@@ -38,13 +38,7 @@ impl Default for InBetterShape {
 impl ExprLinter for InBetterShape {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        matched_tokens: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = matched_tokens[4..6].span()?;
         let lint_kind = LintKind::Usage;
         let suggestions = vec![Suggestion::Remove];
