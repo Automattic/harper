@@ -31,6 +31,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
+        with:
+          just-version: '1.50.0'
       - name: Install pnpm
         uses: pnpm/action-setup@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1

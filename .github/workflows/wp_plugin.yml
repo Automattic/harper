@@ -17,6 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
+        with:
+          just-version: '1.50.0'
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".node-version"
