@@ -74,7 +74,7 @@ pnpm dev
 | A documentation page | `http://localhost:3000/docs/...` (path mirrors `src/routes/docs/...`) |
 | Homepage or marketing UI | `http://localhost:3000/` |
 | Live grammar demo / editor | `http://localhost:3000/` (demo) or `http://localhost:3000/editor` |
-| Rules catalog | `http://localhost:3000/docs/rules` |
+| Rule catalog | `http://localhost:3000/docs/rules` |
 | Weir studio | `http://localhost:3000/weir/studio` |
 
 SveltePress doc pages support standard Markdown plus SveltePress features (admonitions, embedded code, etc.). Use an existing page under `src/routes/docs/` as a template.
