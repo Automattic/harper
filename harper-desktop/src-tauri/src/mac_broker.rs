@@ -1,18 +1,18 @@
 use accessibility::attribute::AXUIElementAttributes;
 use accessibility::ui_element::AXUIElement;
-use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
+use accessibility::{AXAttribute, Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
     AXIsProcessTrusted, AXIsProcessTrustedWithOptions, AXUIElementCopyAttributeValue,
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXUIElementSetAttributeValue,
     AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
     kAXBoundsForRangeParameterizedAttribute, kAXErrorAttributeUnsupported, kAXErrorIllegalArgument,
     kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess,
-    kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange,
-    kAXValueTypeCGRect, pid_t,
+    kAXFocusedApplicationAttribute, kAXFocusedUIElementAttribute, kAXTrustedCheckOptionPrompt,
+    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::array::CFArray;
-use core_foundation::base::{CFRange, CFType, TCFType};
+use core_foundation::base::{CFCopyTypeIDDescription, CFRange, CFType, CFTypeID, TCFType};
 use core_foundation::boolean::CFBoolean;
 use core_foundation::dictionary::CFDictionary;
 use core_foundation::number::CFNumber;
@@ -27,7 +27,7 @@ use harper_core::linting::{Lint, Suggestion};
 use objc2_app_kit::{NSRunningApplication, NSWorkspace};
 use objc2_foundation::NSRect;
 use std::{
-    cell::RefCell,
+    cell::{Cell, RefCell},
     collections::BTreeMap,
     error::Error as StdError,
     path::Path,
@@ -43,7 +43,15 @@ use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
 const ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL: Duration = Duration::from_secs(10);
+const ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL: Duration = Duration::from_millis(250);
+const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration = Duration::from_secs(1);
+const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
+const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
+const DISCORD_BUNDLE_ID: &str = "com.hnc.Discord";
+const DISCORD_DIAGNOSTIC_CANDIDATE_LIMIT: usize = 12;
+const DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT: usize = 40;
+const DISCORD_DIAGNOSTIC_FOCUSED_CHAIN_LIMIT: usize = 12;
 type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
@@ -68,7 +76,35 @@ struct WindowMovementState {
 #[derive(Debug, Clone)]
 struct AccessibilityActivationState {
     pid: pid_t,
+    bundle_id: String,
+    strategy: AccessibilityActivationStrategy,
+    status: AccessibilityActivationStatus,
     last_attempted_at: Instant,
+    enhanced_user_interface_restore_value: Option<bool>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum AccessibilityActivationStrategy {
+    None,
+    Chromium,
+}
+
+#[derive(Debug, Clone, Copy)]
+enum AccessibilityActivationStatus {
+    Pending {
+        ready_at: Instant,
+        verification_attempts: u8,
+    },
+    Ready,
+    Unsupported,
+    Failed,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum AccessibilityActivationVerification {
+    FoundTextRangeBounds,
+    FoundSupportedTextElement,
+    NoSupportedTextElement,
 }
 
 impl MacBroker {
@@ -119,34 +155,193 @@ impl MacBroker {
         now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION
     }
 
-    fn should_attempt_accessibility_activation(&mut self, pid: pid_t) -> bool {
-        let now = Instant::now();
-        let Some(state) = &mut self.accessibility_activation else {
-            self.accessibility_activation = Some(AccessibilityActivationState {
-                pid,
-                last_attempted_at: now,
-            });
+    fn reset_accessibility_activation(&mut self) {
+        if let Some(state) = self.accessibility_activation.take() {
+            release_accessibility_activation(&state);
+        }
+    }
+
+    fn ensure_accessibility_activation(
+        &mut self,
+        pid: pid_t,
+        bundle_id: &str,
+        app: &AXUIElement,
+    ) -> bool {
+        let strategy = accessibility_activation_strategy_for_bundle_id(bundle_id);
+
+        if strategy == AccessibilityActivationStrategy::None {
+            self.reset_accessibility_activation();
             return true;
+        }
+
+        let needs_new_activation = match &self.accessibility_activation {
+            Some(state) => {
+                state.pid != pid || state.bundle_id != bundle_id || state.strategy != strategy
+            }
+            None => true,
         };
 
-        if state.pid != pid {
-            state.pid = pid;
-            state.last_attempted_at = now;
-            return true;
+        if needs_new_activation {
+            self.reset_accessibility_activation();
+            return self.start_accessibility_activation(pid, bundle_id, strategy, app);
         }
 
-        if now.duration_since(state.last_attempted_at) >= ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL {
-            state.last_attempted_at = now;
-            return true;
-        }
+        let Some(status) = self
+            .accessibility_activation
+            .as_ref()
+            .map(|state| state.status)
+        else {
+            return self.start_accessibility_activation(pid, bundle_id, strategy, app);
+        };
 
-        false
+        let now = Instant::now();
+        match status {
+            AccessibilityActivationStatus::Ready => true,
+            AccessibilityActivationStatus::Pending {
+                ready_at,
+                verification_attempts,
+            } => {
+                if now < ready_at {
+                    return false;
+                }
+
+                let verification = verify_accessibility_activation(app, bundle_id, pid);
+
+                if verification == AccessibilityActivationVerification::FoundTextRangeBounds {
+                    eprintln!(
+                        "Accessibility activation verified for {bundle_id} pid {pid}: {verification:?}"
+                    );
+                    if let Some(state) = &mut self.accessibility_activation {
+                        state.status = AccessibilityActivationStatus::Ready;
+                    }
+                    return true;
+                }
+
+                let next_verification_attempts = verification_attempts.saturating_add(1);
+                let retry_interval = accessibility_activation_verification_retry_interval(
+                    next_verification_attempts,
+                );
+
+                eprintln!(
+                    "Accessibility activation for {bundle_id} pid {pid} is not ready for text metrics yet: {verification:?}; retrying verification in {} ms",
+                    retry_interval.as_millis()
+                );
+                if let Some(state) = &mut self.accessibility_activation {
+                    state.status = AccessibilityActivationStatus::Pending {
+                        ready_at: instant_after(now, retry_interval),
+                        verification_attempts: next_verification_attempts,
+                    };
+                }
+
+                false
+            }
+            AccessibilityActivationStatus::Unsupported | AccessibilityActivationStatus::Failed => {
+                let Some(last_attempted_at) = self
+                    .accessibility_activation
+                    .as_ref()
+                    .map(|state| state.last_attempted_at)
+                else {
+                    return self.start_accessibility_activation(pid, bundle_id, strategy, app);
+                };
+
+                if now.duration_since(last_attempted_at) < ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL {
+                    return false;
+                }
+
+                self.reset_accessibility_activation();
+                self.start_accessibility_activation(pid, bundle_id, strategy, app)
+            }
+        }
+    }
+
+    fn start_accessibility_activation(
+        &mut self,
+        pid: pid_t,
+        bundle_id: &str,
+        strategy: AccessibilityActivationStrategy,
+        app: &AXUIElement,
+    ) -> bool {
+        match strategy {
+            AccessibilityActivationStrategy::None => true,
+            AccessibilityActivationStrategy::Chromium => {
+                self.request_enhanced_user_interface(pid, bundle_id, strategy, app)
+            }
+        }
+    }
+
+    fn request_enhanced_user_interface(
+        &mut self,
+        pid: pid_t,
+        bundle_id: &str,
+        strategy: AccessibilityActivationStrategy,
+        app: &AXUIElement,
+    ) -> bool {
+        let now = Instant::now();
+        let settle_duration = accessibility_activation_settle_duration(strategy);
+
+        match set_enhanced_user_interface_preserving_previous(app, true) {
+            Ok(enhanced_user_interface_restore_value) => {
+                eprintln!(
+                    "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; {}; waiting for {} debounce",
+                    boolean_attribute_diagnostic(app, "AXEnhancedUserInterface"),
+                    accessibility_activation_settle_label(strategy)
+                );
+                self.accessibility_activation = Some(AccessibilityActivationState {
+                    pid,
+                    bundle_id: bundle_id.to_string(),
+                    strategy,
+                    status: AccessibilityActivationStatus::Pending {
+                        ready_at: instant_after(now, settle_duration),
+                        verification_attempts: 0,
+                    },
+                    last_attempted_at: now,
+                    enhanced_user_interface_restore_value,
+                });
+                false
+            }
+            Err(error) if is_unsupported_accessibility_activation_error(error) => {
+                eprintln!(
+                    "AXEnhancedUserInterface unsupported for {bundle_id} pid {pid}: {}",
+                    error_string(error)
+                );
+                self.accessibility_activation = Some(AccessibilityActivationState {
+                    pid,
+                    bundle_id: bundle_id.to_string(),
+                    strategy,
+                    status: AccessibilityActivationStatus::Unsupported,
+                    last_attempted_at: now,
+                    enhanced_user_interface_restore_value: None,
+                });
+                false
+            }
+            Err(error) => {
+                eprintln!(
+                    "Unable to request AXEnhancedUserInterface for {bundle_id} pid {pid}: {}",
+                    error_string(error)
+                );
+                self.accessibility_activation = Some(AccessibilityActivationState {
+                    pid,
+                    bundle_id: bundle_id.to_string(),
+                    strategy,
+                    status: AccessibilityActivationStatus::Failed,
+                    last_attempted_at: now,
+                    enhanced_user_interface_restore_value: None,
+                });
+                false
+            }
+        }
     }
 }
 
 impl Default for MacBroker {
     fn default() -> Self {
         Self::new(Rc::new(RefCell::new(Config::curated_integrations())))
+    }
+}
+
+impl Drop for MacBroker {
+    fn drop(&mut self) {
+        self.reset_accessibility_activation();
     }
 }
 
@@ -159,20 +354,35 @@ impl OsBroker for MacBroker {
             Ok(Some(pid)) => pid,
             Ok(None) => {
                 self.window_movement = None;
-                self.accessibility_activation = None;
+                self.reset_accessibility_activation();
                 return Vec::new();
             }
             Err(err) => {
                 self.window_movement = None;
-                self.accessibility_activation = None;
+                self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
         };
 
-        if !is_pid_approved(pid, &self.integrations.borrow()) {
+        let bundle_identifier = match bundle_identifier_for_pid(pid) {
+            Ok(Some(bundle_identifier)) => bundle_identifier,
+            Ok(None) => {
+                self.window_movement = None;
+                self.reset_accessibility_activation();
+                return Vec::new();
+            }
+            Err(error) => {
+                self.window_movement = None;
+                self.reset_accessibility_activation();
+                eprintln!("Unable to identify focused app bundle: {error}");
+                return Vec::new();
+            }
+        };
+
+        if !Config::is_integration_enabled_in(&self.integrations.borrow(), &bundle_identifier) {
             self.window_movement = None;
-            self.accessibility_activation = None;
+            self.reset_accessibility_activation();
             return Vec::new();
         }
 
@@ -181,9 +391,8 @@ impl OsBroker for MacBroker {
         }
 
         let el = AXUIElement::application(pid);
-        if self.should_attempt_accessibility_activation(pid) {
-            enable_manual_accessibility(&el);
-            enable_enhanced_user_interface_on_windows(&el);
+        if !self.ensure_accessibility_activation(pid, &bundle_identifier, &el) {
+            return Vec::new();
         }
 
         let walker = TreeWalker::new();
@@ -313,19 +522,6 @@ fn frontmost_application_pid() -> Option<pid_t> {
         .map(|app| app.processIdentifier())
 }
 
-fn is_pid_approved(pid: pid_t, integrations: &[Integration]) -> bool {
-    let bundle_identifier = match bundle_identifier_for_pid(pid) {
-        Ok(Some(bundle_identifier)) => bundle_identifier,
-        Ok(None) => return false,
-        Err(error) => {
-            eprintln!("Unable to identify focused app bundle: {error}");
-            return false;
-        }
-    };
-
-    Config::is_integration_enabled_in(integrations, &bundle_identifier)
-}
-
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
     let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
         return Ok(None);
@@ -337,40 +533,182 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     Ok(Some(bundle_identifier.to_string()))
 }
 
-fn enable_manual_accessibility(app: &AXUIElement) {
-    if let Err(error) = set_manual_accessibility(app) {
-        if error != kAXErrorAttributeUnsupported && error != kAXErrorNoValue {
-            eprintln!(
-                "Unable to enable manual accessibility support: {}",
-                error_string(error)
-            );
-        }
+fn accessibility_activation_strategy_for_bundle_id(
+    bundle_id: &str,
+) -> AccessibilityActivationStrategy {
+    if is_chromium_browser_bundle_id(bundle_id) {
+        AccessibilityActivationStrategy::Chromium
+    } else if is_electron_app_bundle_id(bundle_id) {
+        AccessibilityActivationStrategy::Chromium
+    } else {
+        AccessibilityActivationStrategy::None
     }
 }
 
-fn set_manual_accessibility(app: &AXUIElement) -> Result<(), i32> {
-    set_boolean_attribute(app, "AXManualAccessibility", true)
+fn is_chromium_browser_bundle_id(bundle_id: &str) -> bool {
+    matches!(
+        bundle_id,
+        "com.google.Chrome"
+            | "com.google.Chrome.beta"
+            | "com.google.Chrome.dev"
+            | "com.google.Chrome.canary"
+            | "org.chromium.Chromium"
+            | "com.brave.Browser"
+            | "com.brave.Browser.beta"
+            | "com.brave.Browser.nightly"
+            | "com.microsoft.edgemac"
+            | "com.microsoft.edgemac.Beta"
+            | "com.microsoft.edgemac.Dev"
+            | "com.microsoft.edgemac.Canary"
+            | "com.vivaldi.Vivaldi"
+            | "com.operasoftware.Opera"
+            | "com.operasoftware.OperaNext"
+            | "com.operasoftware.OperaGX"
+    )
 }
 
-fn enable_enhanced_user_interface_on_windows(app: &AXUIElement) {
-    let Ok(windows) = app.windows() else {
+fn is_electron_app_bundle_id(bundle_id: &str) -> bool {
+    matches!(
+        bundle_id,
+        "com.github.Electron"
+            | "com.microsoft.VSCode"
+            | "com.microsoft.VSCodeInsiders"
+            | "com.tinyspeck.slackmacgap"
+            | "com.hnc.Discord"
+            | "com.hnc.DiscordPTB"
+            | "com.hnc.DiscordCanary"
+            | "md.obsidian"
+            | "notion.id"
+    )
+}
+
+fn accessibility_activation_settle_duration(strategy: AccessibilityActivationStrategy) -> Duration {
+    match strategy {
+        AccessibilityActivationStrategy::Chromium => CHROMIUM_ACCESSIBILITY_SETTLE_DURATION,
+        AccessibilityActivationStrategy::None => Duration::ZERO,
+    }
+}
+
+fn accessibility_activation_settle_label(
+    strategy: AccessibilityActivationStrategy,
+) -> &'static str {
+    match strategy {
+        AccessibilityActivationStrategy::Chromium => "Chromium",
+        AccessibilityActivationStrategy::None => "accessibility",
+    }
+}
+
+fn accessibility_activation_verification_retry_interval(verification_attempts: u8) -> Duration {
+    if verification_attempts <= ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS {
+        ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL
+    } else {
+        ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL
+    }
+}
+
+fn instant_after(now: Instant, duration: Duration) -> Instant {
+    now.checked_add(duration).unwrap_or(now)
+}
+
+fn release_accessibility_activation(state: &AccessibilityActivationState) {
+    if state.enhanced_user_interface_restore_value.is_none() {
+        return;
+    }
+
+    let app = AXUIElement::application(state.pid);
+
+    restore_boolean_attribute(
+        &app,
+        "AXEnhancedUserInterface",
+        state.enhanced_user_interface_restore_value,
+    );
+}
+
+fn is_unsupported_accessibility_activation_error(error: i32) -> bool {
+    error == kAXErrorAttributeUnsupported || error == kAXErrorNoValue
+}
+
+fn set_enhanced_user_interface_preserving_previous(
+    app: &AXUIElement,
+    enabled: bool,
+) -> Result<Option<bool>, i32> {
+    set_boolean_attribute_preserving_previous(app, "AXEnhancedUserInterface", enabled)
+}
+
+fn restore_boolean_attribute(element: &AXUIElement, name: &str, restore_value: Option<bool>) {
+    let Some(restore_value) = restore_value else {
         return;
     };
 
-    for window in windows.iter() {
-        if let Err(error) = set_enhanced_user_interface(&window) {
-            if error != kAXErrorAttributeUnsupported && error != kAXErrorNoValue {
-                eprintln!(
-                    "Unable to enable enhanced accessibility support on window: {}",
-                    error_string(error)
-                );
-            }
-        }
+    if let Err(error) = set_boolean_attribute(element, name, restore_value) {
+        eprintln!(
+            "Unable to restore {name} to {restore_value}: {}",
+            error_string(error)
+        );
     }
 }
 
-fn set_enhanced_user_interface(window: &AXUIElement) -> Result<(), i32> {
-    set_boolean_attribute(window, "AXEnhancedUserInterface", true)
+fn set_boolean_attribute_preserving_previous(
+    element: &AXUIElement,
+    name: &str,
+    value: bool,
+) -> Result<Option<bool>, i32> {
+    let previous = boolean_attribute_value(element, name).ok();
+    set_boolean_attribute(element, name, value)?;
+
+    Ok(previous)
+}
+
+fn boolean_attribute_diagnostic(element: &AXUIElement, name: &str) -> String {
+    format!(
+        "{name} settable={} value={}",
+        attribute_settable_summary(element, name),
+        boolean_attribute_value_summary(element, name)
+    )
+}
+
+fn attribute_settable_summary(element: &AXUIElement, name: &str) -> String {
+    let name = CFString::new(name);
+    let attribute = AXAttribute::new(&name);
+
+    element
+        .is_settable(&attribute)
+        .map(|settable| settable.to_string())
+        .unwrap_or_else(|error| format!("error:{error}"))
+}
+
+fn boolean_attribute_value_summary(element: &AXUIElement, name: &str) -> String {
+    boolean_attribute_value(element, name)
+        .map(|value| value.to_string())
+        .unwrap_or_else(|error| error)
+}
+
+fn boolean_attribute_value(element: &AXUIElement, name: &str) -> Result<bool, String> {
+    let attribute = CFString::new(name);
+    let mut value = ptr::null();
+    let error = unsafe {
+        AXUIElementCopyAttributeValue(
+            element.as_concrete_TypeRef(),
+            attribute.as_concrete_TypeRef(),
+            &mut value,
+        )
+    };
+
+    if error != kAXErrorSuccess {
+        return Err(format!("error:{}", error_string(error)));
+    }
+
+    if value.is_null() {
+        return Err("null".to_string());
+    }
+
+    let value = unsafe { CFType::wrap_under_create_rule(value) };
+    if !value.instance_of::<CFBoolean>() {
+        return Err(format!("non_boolean:{}", cf_type_name(value.type_of())));
+    }
+
+    let value = unsafe { CFBoolean::wrap_under_get_rule(value.as_CFTypeRef() as _) };
+    Ok(bool::from(value))
 }
 
 fn set_boolean_attribute(element: &AXUIElement, name: &str, value: bool) -> Result<(), i32> {
@@ -523,6 +861,486 @@ fn ax_element_attribute(
     Ok(unsafe { AXUIElement::wrap_under_create_rule(value as _) })
 }
 
+#[derive(Debug, Clone, Copy)]
+enum TextRangeBoundsProbe {
+    Success(Rect),
+    ZeroSized(Rect),
+    EmptyString,
+    InvalidRangeValue,
+    AxNoValue,
+    AxParameterizedAttributeUnsupported,
+    AxError(i32),
+    NullValue,
+    WrongAXValueType(u32),
+    ValueGetFailed,
+}
+
+impl TextRangeBoundsProbe {
+    fn describe(self) -> String {
+        match self {
+            Self::Success(rect) => format!(
+                "success(x={}, y={}, width={}, height={})",
+                rect.x, rect.y, rect.width, rect.height
+            ),
+            Self::ZeroSized(rect) => format!(
+                "zero_size(x={}, y={}, width={}, height={})",
+                rect.x, rect.y, rect.width, rect.height
+            ),
+            Self::EmptyString => "not_checked_empty_string".to_string(),
+            Self::InvalidRangeValue => "invalid_cf_range_value".to_string(),
+            Self::AxNoValue => format!("ax_error({})", error_string(kAXErrorNoValue)),
+            Self::AxParameterizedAttributeUnsupported => format!(
+                "ax_error({})",
+                error_string(kAXErrorParameterizedAttributeUnsupported)
+            ),
+            Self::AxError(error) => format!("ax_error({})", error_string(error)),
+            Self::NullValue => "null_bounds_value".to_string(),
+            Self::WrongAXValueType(value_type) => format!("wrong_ax_value_type({value_type})"),
+            Self::ValueGetFailed => "ax_value_get_value_failed".to_string(),
+        }
+    }
+
+    fn has_usable_text_metrics(self) -> bool {
+        matches!(self, Self::Success(_))
+    }
+}
+
+fn dump_discord_focused_element_chain(
+    app: &AXUIElement,
+    context: &DiscordActivationDiagnosticContext,
+) {
+    let focused = match ax_element_attribute(app, kAXFocusedUIElementAttribute) {
+        Ok(focused) => focused,
+        Err(error) => {
+            eprintln!(
+                "Discord AX focused chain unavailable: bundle={} pid={} error={error}",
+                context.bundle_id, context.pid
+            );
+            return;
+        }
+    };
+
+    let mut current = Some(focused);
+    for depth in 0..DISCORD_DIAGNOSTIC_FOCUSED_CHAIN_LIMIT {
+        let Some(element) = current else {
+            break;
+        };
+
+        eprintln!(
+            "Discord AX focused chain depth {depth}: bundle={} pid={} role={} subrole={} title=\"{}\" description=\"{}\" value_type={} value_settable={} value_chars={} value_snippet=\"{}\" bounds={} attributes={}",
+            context.bundle_id,
+            context.pid,
+            element_role(&element),
+            element_subrole(&element),
+            element_title(&element),
+            element_description(&element),
+            element_value_type(&element),
+            element_value_settable(&element),
+            element_value_char_count(&element),
+            element_value_snippet(&element),
+            element_bounds_summary(&element),
+            element_attribute_names_summary(&element)
+        );
+
+        current = element.parent().ok();
+    }
+}
+
+fn element_role(element: &AXUIElement) -> String {
+    element
+        .role()
+        .map(|role| role.to_string())
+        .unwrap_or_else(|error| format!("error:{error}"))
+}
+
+fn element_subrole(element: &AXUIElement) -> String {
+    element
+        .subrole()
+        .map(|subrole| subrole.to_string())
+        .unwrap_or_else(|error| format!("error:{error}"))
+}
+
+fn element_title(element: &AXUIElement) -> String {
+    element
+        .title()
+        .map(|title| escaped_snippet(&title.to_string(), 80))
+        .unwrap_or_default()
+}
+
+fn element_description(element: &AXUIElement) -> String {
+    element
+        .description()
+        .map(|description| escaped_snippet(&description.to_string(), 80))
+        .unwrap_or_default()
+}
+
+fn element_value_type(element: &AXUIElement) -> String {
+    element
+        .value()
+        .map(|value| cf_type_name(value.type_of()))
+        .unwrap_or_else(|error| format!("error:{error}"))
+}
+
+fn element_value_settable(element: &AXUIElement) -> String {
+    element
+        .is_settable(&AXAttribute::value())
+        .map(|settable| settable.to_string())
+        .unwrap_or_else(|error| format!("error:{error}"))
+}
+
+fn element_value_char_count(element: &AXUIElement) -> usize {
+    element
+        .value()
+        .ok()
+        .and_then(|value| cf_type_to_string(&value))
+        .map(|value| value.chars().count())
+        .unwrap_or(0)
+}
+
+fn element_value_snippet(element: &AXUIElement) -> String {
+    element
+        .value()
+        .ok()
+        .and_then(|value| cf_type_to_string(&value))
+        .map(|value| escaped_snippet(&value, 120))
+        .unwrap_or_default()
+}
+
+fn element_bounds_summary(element: &AXUIElement) -> String {
+    let Some(value) = element
+        .value()
+        .ok()
+        .and_then(|value| cf_type_to_string(&value))
+    else {
+        return "not_checked_no_string_value".to_string();
+    };
+
+    if value.is_empty() {
+        return TextRangeBoundsProbe::EmptyString.describe();
+    }
+
+    probe_element_rect_for_text_range(element, 0, 1).describe()
+}
+
+fn element_attribute_names_summary(element: &AXUIElement) -> String {
+    let attributes = match element.attribute_names() {
+        Ok(attributes) => attributes,
+        Err(error) => return format!("error:{error}"),
+    };
+
+    let mut names = attributes
+        .iter()
+        .map(|attribute| attribute.to_string())
+        .collect::<Vec<_>>();
+    names.sort();
+
+    let total = names.len();
+    names.truncate(DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT);
+
+    if total > names.len() {
+        format!("[{} ... +{}]", names.join(", "), total - names.len())
+    } else {
+        format!("[{}]", names.join(", "))
+    }
+}
+
+fn cf_type_to_string(value: &CFType) -> Option<String> {
+    value
+        .instance_of::<CFString>()
+        .then(|| unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _) }.to_string())
+}
+
+fn cf_type_name(type_id: CFTypeID) -> String {
+    unsafe { CFString::wrap_under_create_rule(CFCopyTypeIDDescription(type_id)) }.to_string()
+}
+
+fn escaped_snippet(text: &str, max_chars: usize) -> String {
+    text.chars()
+        .take(max_chars)
+        .collect::<String>()
+        .escape_debug()
+        .to_string()
+}
+
+fn probe_element_rect_for_text_range(
+    element: &AXUIElement,
+    start_index: isize,
+    length: isize,
+) -> TextRangeBoundsProbe {
+    let range = CFRange {
+        location: start_index,
+        length,
+    };
+
+    let range_value_ref = unsafe {
+        AXValueCreate(
+            kAXValueTypeCFRange,
+            &range as *const CFRange as *const c_void,
+        )
+    };
+
+    if range_value_ref.is_null() {
+        return TextRangeBoundsProbe::InvalidRangeValue;
+    }
+
+    let range_value = unsafe { CFType::wrap_under_create_rule(range_value_ref as _) };
+    let attr = CFString::new(kAXBoundsForRangeParameterizedAttribute);
+    let mut value = ptr::null();
+
+    let error = unsafe {
+        AXUIElementCopyParameterizedAttributeValue(
+            element.as_concrete_TypeRef(),
+            attr.as_concrete_TypeRef(),
+            range_value.as_CFTypeRef(),
+            &mut value,
+        )
+    };
+
+    if error == kAXErrorNoValue {
+        return TextRangeBoundsProbe::AxNoValue;
+    }
+
+    if error == kAXErrorParameterizedAttributeUnsupported {
+        return TextRangeBoundsProbe::AxParameterizedAttributeUnsupported;
+    }
+
+    if error != kAXErrorSuccess {
+        return TextRangeBoundsProbe::AxError(error);
+    }
+
+    if value.is_null() {
+        return TextRangeBoundsProbe::NullValue;
+    }
+
+    let value = unsafe { CFType::wrap_under_create_rule(value) };
+    let ax_value = value.as_CFTypeRef() as AXValueRef;
+    let value_type = unsafe { AXValueGetType(ax_value) };
+
+    if value_type != kAXValueTypeCGRect {
+        return TextRangeBoundsProbe::WrongAXValueType(value_type);
+    }
+
+    let mut rect = MaybeUninit::<NSRect>::uninit();
+
+    let ok = unsafe {
+        AXValueGetValue(
+            ax_value,
+            kAXValueTypeCGRect,
+            rect.as_mut_ptr() as *mut c_void,
+        )
+    };
+
+    if !ok {
+        return TextRangeBoundsProbe::ValueGetFailed;
+    }
+
+    let rect = unsafe { rect.assume_init() };
+
+    let rect = Rect {
+        x: rect.origin.x,
+        y: rect.origin.y,
+        width: rect.size.width,
+        height: rect.size.height,
+    };
+
+    if rect_has_usable_text_metrics(rect) {
+        TextRangeBoundsProbe::Success(rect)
+    } else {
+        TextRangeBoundsProbe::ZeroSized(rect)
+    }
+}
+
+fn rect_has_usable_text_metrics(rect: Rect) -> bool {
+    rect.width > 0.0 && rect.height > 0.0
+}
+
+fn verify_accessibility_activation(
+    app: &AXUIElement,
+    bundle_id: &str,
+    pid: pid_t,
+) -> AccessibilityActivationVerification {
+    let walker = TreeWalker::new();
+    let diagnostic = DiscordActivationDiagnosticContext::new(bundle_id, pid);
+
+    if let Some(context) = &diagnostic {
+        eprintln!(
+            "Discord AX diagnostic start: bundle={} pid={}",
+            context.bundle_id, context.pid
+        );
+        eprintln!(
+            "Discord AX app accessibility attributes: {}",
+            boolean_attribute_diagnostic(app, "AXEnhancedUserInterface")
+        );
+        dump_discord_focused_element_chain(app, context);
+    }
+
+    let probe = AccessibilityActivationProbe::new(diagnostic);
+
+    walker.walk(app, &probe);
+
+    probe.log_diagnostic_summary();
+    probe.result()
+}
+
+#[derive(Debug, Clone)]
+struct DiscordActivationDiagnosticContext {
+    bundle_id: String,
+    pid: pid_t,
+}
+
+impl DiscordActivationDiagnosticContext {
+    fn new(bundle_id: &str, pid: pid_t) -> Option<Self> {
+        (bundle_id == DISCORD_BUNDLE_ID).then(|| Self {
+            bundle_id: bundle_id.to_string(),
+            pid,
+        })
+    }
+}
+
+struct AccessibilityActivationProbe {
+    found_supported_text_element: Cell<bool>,
+    found_text_range_bounds: Cell<bool>,
+    diagnostic: Option<DiscordActivationDiagnosticContext>,
+    role_counts: RefCell<BTreeMap<String, usize>>,
+    value_element_count: Cell<usize>,
+    supported_text_element_count: Cell<usize>,
+    range_bounds_count: Cell<usize>,
+    dumped_candidate_count: Cell<usize>,
+}
+
+impl AccessibilityActivationProbe {
+    fn new(diagnostic: Option<DiscordActivationDiagnosticContext>) -> Self {
+        Self {
+            found_supported_text_element: Cell::new(false),
+            found_text_range_bounds: Cell::new(false),
+            diagnostic,
+            role_counts: RefCell::new(BTreeMap::new()),
+            value_element_count: Cell::new(0),
+            supported_text_element_count: Cell::new(0),
+            range_bounds_count: Cell::new(0),
+            dumped_candidate_count: Cell::new(0),
+        }
+    }
+
+    fn result(&self) -> AccessibilityActivationVerification {
+        if self.found_text_range_bounds.get() {
+            AccessibilityActivationVerification::FoundTextRangeBounds
+        } else if self.found_supported_text_element.get() {
+            AccessibilityActivationVerification::FoundSupportedTextElement
+        } else {
+            AccessibilityActivationVerification::NoSupportedTextElement
+        }
+    }
+
+    fn log_diagnostic_summary(&self) {
+        let Some(context) = &self.diagnostic else {
+            return;
+        };
+
+        let role_counts = self.role_counts.borrow();
+        let mut roles = role_counts
+            .iter()
+            .map(|(role, count)| format!("{role}:{count}"))
+            .collect::<Vec<_>>();
+        roles.sort();
+        roles.truncate(DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT);
+
+        eprintln!(
+            "Discord AX diagnostic summary: bundle={} pid={} result={:?} roles={} value_elements={} supported_text_elements={} range_bounds_successes={} dumped_candidates={}",
+            context.bundle_id,
+            context.pid,
+            self.result(),
+            roles.join(", "),
+            self.value_element_count.get(),
+            self.supported_text_element_count.get(),
+            self.range_bounds_count.get(),
+            self.dumped_candidate_count.get()
+        );
+    }
+
+    fn record_role(&self, element: &AXUIElement) {
+        let Some(_context) = &self.diagnostic else {
+            return;
+        };
+
+        let role = element_role(element);
+        let mut role_counts = self.role_counts.borrow_mut();
+        *role_counts.entry(role).or_insert(0) += 1;
+    }
+
+    fn log_candidate(
+        &self,
+        element: &AXUIElement,
+        value: &CFType,
+        string: &str,
+        bounds: TextRangeBoundsProbe,
+    ) {
+        let Some(context) = &self.diagnostic else {
+            return;
+        };
+
+        let candidate_index = self.dumped_candidate_count.get();
+        if candidate_index >= DISCORD_DIAGNOSTIC_CANDIDATE_LIMIT {
+            return;
+        }
+
+        self.dumped_candidate_count.set(candidate_index + 1);
+        eprintln!(
+            "Discord AX candidate #{candidate_index}: bundle={} pid={} role={} subrole={} value_type={} value_settable={} value_chars={} value_snippet=\"{}\" bounds={} attributes={}",
+            context.bundle_id,
+            context.pid,
+            element_role(element),
+            element_subrole(element),
+            cf_type_name(value.type_of()),
+            element_value_settable(element),
+            string.chars().count(),
+            escaped_snippet(string, 120),
+            bounds.describe(),
+            element_attribute_names_summary(element)
+        );
+    }
+}
+
+impl TreeVisitor for AccessibilityActivationProbe {
+    fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
+        self.record_role(element);
+
+        let value = element.value().ok();
+        if value.is_some() {
+            self.value_element_count
+                .set(self.value_element_count.get() + 1);
+        }
+
+        if let Some(value) = value
+            && is_supported_text_element(element)
+        {
+            self.supported_text_element_count
+                .set(self.supported_text_element_count.get() + 1);
+            self.found_supported_text_element.set(true);
+
+            let string = cf_type_to_string(&value).unwrap_or_default();
+            let bounds = if string.is_empty() {
+                TextRangeBoundsProbe::EmptyString
+            } else {
+                probe_element_rect_for_text_range(element, 0, 1)
+            };
+
+            self.log_candidate(element, &value, &string, bounds);
+
+            if bounds.has_usable_text_metrics() {
+                self.range_bounds_count
+                    .set(self.range_bounds_count.get() + 1);
+                self.found_text_range_bounds.set(true);
+                return TreeWalkerFlow::Exit;
+            }
+        }
+
+        TreeWalkerFlow::Continue
+    }
+
+    fn exit_element(&self, _element: &AXUIElement) {}
+}
+
 struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
     lint_text: RefCell<&'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>>,
@@ -632,6 +1450,120 @@ mod tests {
         assert!(!is_supported_text_role("AXStaticText"));
         assert!(!is_supported_text_role(""));
     }
+
+    #[test]
+    fn chromium_browsers_use_enhanced_user_interface_activation() {
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.google.Chrome"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("org.chromium.Chromium"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.brave.Browser"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.microsoft.edgemac"),
+            AccessibilityActivationStrategy::Chromium
+        );
+    }
+
+    #[test]
+    fn known_electron_apps_use_chromium_activation() {
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.microsoft.VSCode"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.tinyspeck.slackmacgap"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("md.obsidian"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.hnc.Discord"),
+            AccessibilityActivationStrategy::Chromium
+        );
+    }
+
+    #[test]
+    fn native_apps_do_not_require_activation() {
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.apple.TextEdit"),
+            AccessibilityActivationStrategy::None
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.apple.Notes"),
+            AccessibilityActivationStrategy::None
+        );
+    }
+
+    #[test]
+    fn chromium_activation_uses_chromium_settle_duration() {
+        assert_eq!(
+            accessibility_activation_settle_duration(AccessibilityActivationStrategy::Chromium),
+            CHROMIUM_ACCESSIBILITY_SETTLE_DURATION
+        );
+    }
+
+    #[test]
+    fn verification_retry_slows_after_fast_attempts() {
+        assert_eq!(
+            accessibility_activation_verification_retry_interval(
+                ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS
+            ),
+            ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL
+        );
+        assert_eq!(
+            accessibility_activation_verification_retry_interval(
+                ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS + 1
+            ),
+            ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL
+        );
+    }
+
+    #[test]
+    fn text_range_bounds_probe_requires_non_zero_geometry() {
+        let usable = TextRangeBoundsProbe::Success(Rect {
+            x: 10.0,
+            y: 20.0,
+            width: 1.0,
+            height: 12.0,
+        });
+        let zero_width = TextRangeBoundsProbe::ZeroSized(Rect {
+            x: 10.0,
+            y: 20.0,
+            width: 0.0,
+            height: 12.0,
+        });
+        let zero_height = TextRangeBoundsProbe::ZeroSized(Rect {
+            x: 10.0,
+            y: 20.0,
+            width: 1.0,
+            height: 0.0,
+        });
+
+        assert!(usable.has_usable_text_metrics());
+        assert!(!zero_width.has_usable_text_metrics());
+        assert!(!zero_height.has_usable_text_metrics());
+        assert!(rect_has_usable_text_metrics(Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 1.0,
+            height: 1.0,
+        }));
+        assert!(!rect_has_usable_text_metrics(Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 1.0,
+        }));
+    }
 }
 
 fn element_rect_for_text_range(
@@ -639,74 +1571,16 @@ fn element_rect_for_text_range(
     start_index: isize,
     length: isize,
 ) -> Result<Option<Rect>, Error> {
-    let range = CFRange {
-        location: start_index,
-        length,
-    };
-
-    let range_value_ref = unsafe {
-        AXValueCreate(
-            kAXValueTypeCFRange,
-            &range as *const CFRange as *const c_void,
-        )
-    };
-
-    if range_value_ref.is_null() {
-        return Err(Error::Ax(kAXErrorIllegalArgument));
+    match probe_element_rect_for_text_range(element, start_index, length) {
+        TextRangeBoundsProbe::Success(rect) => Ok(Some(rect)),
+        TextRangeBoundsProbe::InvalidRangeValue => Err(Error::Ax(kAXErrorIllegalArgument)),
+        TextRangeBoundsProbe::AxError(error) => Err(Error::Ax(error)),
+        TextRangeBoundsProbe::EmptyString
+        | TextRangeBoundsProbe::ZeroSized(_)
+        | TextRangeBoundsProbe::AxNoValue
+        | TextRangeBoundsProbe::AxParameterizedAttributeUnsupported
+        | TextRangeBoundsProbe::NullValue
+        | TextRangeBoundsProbe::WrongAXValueType(_)
+        | TextRangeBoundsProbe::ValueGetFailed => Ok(None),
     }
-
-    let range_value = unsafe { CFType::wrap_under_create_rule(range_value_ref as _) };
-    let attr = CFString::new(kAXBoundsForRangeParameterizedAttribute);
-    let mut value = ptr::null();
-
-    let error = unsafe {
-        AXUIElementCopyParameterizedAttributeValue(
-            element.as_concrete_TypeRef(),
-            attr.as_concrete_TypeRef(),
-            range_value.as_CFTypeRef(),
-            &mut value,
-        )
-    };
-
-    if error == kAXErrorSuccess {
-        // Continue.
-    } else if error == kAXErrorNoValue || error == kAXErrorParameterizedAttributeUnsupported {
-        return Ok(None);
-    } else {
-        return Err(Error::Ax(error));
-    }
-
-    if value.is_null() {
-        return Ok(None);
-    }
-
-    let value = unsafe { CFType::wrap_under_create_rule(value) };
-    let ax_value = value.as_CFTypeRef() as AXValueRef;
-
-    if unsafe { AXValueGetType(ax_value) } != kAXValueTypeCGRect {
-        return Ok(None);
-    }
-
-    let mut rect = MaybeUninit::<NSRect>::uninit();
-
-    let ok = unsafe {
-        AXValueGetValue(
-            ax_value,
-            kAXValueTypeCGRect,
-            rect.as_mut_ptr() as *mut c_void,
-        )
-    };
-
-    if !ok {
-        return Ok(None);
-    }
-
-    let rect = unsafe { rect.assume_init() };
-
-    Ok(Some(Rect {
-        x: rect.origin.x,
-        y: rect.origin.y,
-        width: rect.size.width,
-        height: rect.size.height,
-    }))
 }
