@@ -1,6 +1,6 @@
 use crate::{
     Lint, Lrc, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, SequenceExpr},
+    expr::{Expr, LongestMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
 };
 
@@ -61,20 +61,27 @@ const ELUDE: &[&str] = &["elude", "eluded", "eludes", "eluding"];
 
 impl Default for AlludeVsElude {
     fn default() -> Self {
-        let either_verb = Lrc::new(FirstMatchOf::new(vec![
+        let either_verb = Lrc::new(LongestMatchOf::new(vec![
             Box::new(SequenceExpr::word_set(ALLUDE)),
             Box::new(SequenceExpr::word_set(ELUDE)),
         ]));
 
         Self {
-            expr: SequenceExpr::any_of(vec![
+            expr: SequenceExpr::longest_of(vec![
                 Box::new(
                     SequenceExpr::word_set(COMMON_BEFORE_VERB)
                         .t_ws()
                         .then(either_verb.clone()),
                 ),
                 Box::new(
-                    SequenceExpr::with(either_verb)
+                    SequenceExpr::with(either_verb.clone())
+                        .t_ws()
+                        .t_set(COMMON_AFTER_VERB),
+                ),
+                Box::new(
+                    SequenceExpr::word_set(COMMON_BEFORE_VERB)
+                        .t_ws()
+                        .then(either_verb)
                         .t_ws()
                         .t_set(COMMON_AFTER_VERB),
                 ),
