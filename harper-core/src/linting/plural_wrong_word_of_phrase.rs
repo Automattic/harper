@@ -99,6 +99,13 @@ impl ExprLinter for PluralWrongWordOfPhrase {
         // NOTE: We depend only on the first space or hyphen to determine the separator
         let sep = [' ', '-'][toks[1].kind.is_hyphen() as usize];
 
+        // If `mid` contains a hyphen or space, it must also use the matching separator
+        let mid = match sep {
+            ' ' => mid.replace('-', " "),
+            '-' => mid.replace(' ', "-"),
+            _ => mid.to_string(),
+        };
+
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
