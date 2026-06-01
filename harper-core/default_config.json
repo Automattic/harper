@@ -4990,6 +4990,13 @@
 								"state": true,
 								"label": "Every Single One Of"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InBetterShape",
+								"state": true,
+								"label": "In Better Shape"
+							}
 						}
 					]
 				}
