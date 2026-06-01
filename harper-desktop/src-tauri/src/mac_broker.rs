@@ -145,6 +145,7 @@ impl OsBroker for MacBroker {
         }
 
         let el = AXUIElement::application(pid);
+        enable_manual_accessibility(&el);
         enable_enhanced_user_interface_on_windows(&el);
 
         let walker = TreeWalker::new();
@@ -298,6 +299,21 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     Ok(Some(bundle_identifier.to_string()))
 }
 
+fn enable_manual_accessibility(app: &AXUIElement) {
+    if let Err(error) = set_manual_accessibility(app) {
+        if error != kAXErrorAttributeUnsupported && error != kAXErrorNoValue {
+            eprintln!(
+                "Unable to enable manual accessibility support: {}",
+                error_string(error)
+            );
+        }
+    }
+}
+
+fn set_manual_accessibility(app: &AXUIElement) -> Result<(), i32> {
+    set_boolean_attribute(app, "AXManualAccessibility", true)
+}
+
 fn enable_enhanced_user_interface_on_windows(app: &AXUIElement) {
     let Ok(windows) = app.windows() else {
         return;
@@ -316,13 +332,21 @@ fn enable_enhanced_user_interface_on_windows(app: &AXUIElement) {
 }
 
 fn set_enhanced_user_interface(window: &AXUIElement) -> Result<(), i32> {
-    let attribute = CFString::new("AXEnhancedUserInterface");
-    let enabled = CFBoolean::true_value();
+    set_boolean_attribute(window, "AXEnhancedUserInterface", true)
+}
+
+fn set_boolean_attribute(element: &AXUIElement, name: &str, value: bool) -> Result<(), i32> {
+    let attribute = CFString::new(name);
+    let value = if value {
+        CFBoolean::true_value()
+    } else {
+        CFBoolean::false_value()
+    };
     let error = unsafe {
         AXUIElementSetAttributeValue(
-            window.as_concrete_TypeRef(),
+            element.as_concrete_TypeRef(),
             attribute.as_concrete_TypeRef(),
-            enabled.as_CFTypeRef(),
+            value.as_CFTypeRef(),
         )
     };
 
