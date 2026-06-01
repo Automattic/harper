@@ -3,11 +3,12 @@ use accessibility::ui_element::AXUIElement;
 use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
     AXIsProcessTrusted, AXIsProcessTrustedWithOptions, AXUIElementCopyAttributeValue,
-    AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXValueCreate, AXValueGetType,
-    AXValueGetValue, AXValueRef, error_string, kAXBoundsForRangeParameterizedAttribute,
-    kAXErrorIllegalArgument, kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported,
-    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt,
-    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
+    AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXUIElementSetAttributeValue,
+    AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
+    kAXBoundsForRangeParameterizedAttribute, kAXErrorAttributeUnsupported, kAXErrorIllegalArgument,
+    kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess,
+    kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange,
+    kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::array::CFArray;
@@ -144,6 +145,7 @@ impl OsBroker for MacBroker {
         }
 
         let el = AXUIElement::application(pid);
+        enable_enhanced_user_interface_on_windows(&el);
 
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
@@ -294,6 +296,41 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     };
 
     Ok(Some(bundle_identifier.to_string()))
+}
+
+fn enable_enhanced_user_interface_on_windows(app: &AXUIElement) {
+    let Ok(windows) = app.windows() else {
+        return;
+    };
+
+    for window in windows.iter() {
+        if let Err(error) = set_enhanced_user_interface(&window) {
+            if error != kAXErrorAttributeUnsupported && error != kAXErrorNoValue {
+                eprintln!(
+                    "Unable to enable enhanced accessibility support on window: {}",
+                    error_string(error)
+                );
+            }
+        }
+    }
+}
+
+fn set_enhanced_user_interface(window: &AXUIElement) -> Result<(), i32> {
+    let attribute = CFString::new("AXEnhancedUserInterface");
+    let enabled = CFBoolean::true_value();
+    let error = unsafe {
+        AXUIElementSetAttributeValue(
+            window.as_concrete_TypeRef(),
+            attribute.as_concrete_TypeRef(),
+            enabled.as_CFTypeRef(),
+        )
+    };
+
+    if error == kAXErrorSuccess {
+        Ok(())
+    } else {
+        Err(error)
+    }
 }
 
 fn window_frame_changed(previous: Rect, current: Rect) -> bool {
