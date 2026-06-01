@@ -42,6 +42,7 @@ use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+const ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL: Duration = Duration::from_secs(10);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
 type WindowInfo = CFDictionary<CFString, CFType>;
 
@@ -54,6 +55,7 @@ pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Rc<RefCell<Vec<Integration>>>,
     window_movement: Option<WindowMovementState>,
+    accessibility_activation: Option<AccessibilityActivationState>,
 }
 
 #[derive(Debug, Clone)]
@@ -63,12 +65,19 @@ struct WindowMovementState {
     last_changed_at: Instant,
 }
 
+#[derive(Debug, Clone)]
+struct AccessibilityActivationState {
+    pid: pid_t,
+    last_attempted_at: Instant,
+}
+
 impl MacBroker {
     pub fn new(integrations: Rc<RefCell<Vec<Integration>>>) -> Self {
         Self {
             last_focused: None,
             integrations,
             window_movement: None,
+            accessibility_activation: None,
         }
     }
 
@@ -109,6 +118,30 @@ impl MacBroker {
 
         now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION
     }
+
+    fn should_attempt_accessibility_activation(&mut self, pid: pid_t) -> bool {
+        let now = Instant::now();
+        let Some(state) = &mut self.accessibility_activation else {
+            self.accessibility_activation = Some(AccessibilityActivationState {
+                pid,
+                last_attempted_at: now,
+            });
+            return true;
+        };
+
+        if state.pid != pid {
+            state.pid = pid;
+            state.last_attempted_at = now;
+            return true;
+        }
+
+        if now.duration_since(state.last_attempted_at) >= ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL {
+            state.last_attempted_at = now;
+            return true;
+        }
+
+        false
+    }
 }
 
 impl Default for MacBroker {
@@ -126,10 +159,12 @@ impl OsBroker for MacBroker {
             Ok(Some(pid)) => pid,
             Ok(None) => {
                 self.window_movement = None;
+                self.accessibility_activation = None;
                 return Vec::new();
             }
             Err(err) => {
                 self.window_movement = None;
+                self.accessibility_activation = None;
                 eprintln!("Unable to identify focused window: {err}");
                 return Vec::new();
             }
@@ -137,6 +172,7 @@ impl OsBroker for MacBroker {
 
         if !is_pid_approved(pid, &self.integrations.borrow()) {
             self.window_movement = None;
+            self.accessibility_activation = None;
             return Vec::new();
         }
 
@@ -145,8 +181,10 @@ impl OsBroker for MacBroker {
         }
 
         let el = AXUIElement::application(pid);
-        enable_manual_accessibility(&el);
-        enable_enhanced_user_interface_on_windows(&el);
+        if self.should_attempt_accessibility_activation(pid) {
+            enable_manual_accessibility(&el);
+            enable_enhanced_user_interface_on_windows(&el);
+        }
 
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
