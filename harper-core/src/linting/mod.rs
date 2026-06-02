@@ -439,7 +439,7 @@ pub mod tests {
                         span: *ws,
                         lint_kind: LintKind::Spelling,
                         suggestions,
-                        message: "Test linter for 'linting assertion' tests".to_string(),
+                        message: "Test linter for 'linting assertion' tests".to_owned(),
                         ..Default::default()
                     }
                 })

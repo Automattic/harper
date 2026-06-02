@@ -76,7 +76,7 @@ impl Linter for RepeatedWords {
                         suggestions: vec![Suggestion::ReplaceWith(
                             document.get_span_content(&tok_a.span).to_vec(),
                         )],
-                        message: "Did you mean to repeat this word?".to_string(),
+                        message: "Did you mean to repeat this word?".to_owned(),
                         ..Default::default()
                     })
                 }
