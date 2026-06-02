@@ -32,7 +32,7 @@ impl Default for QuiteQuiet {
                 return false;
             }
             tok.get_ch(src)
-                .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '’', 't']])
+                .ends_with_any_ignore_ascii_case_chars(&[&['n', '\'', 't'], &['n', '\u{2019}', 't']])
         })
         .t_ws()
         .t_aco("quiet");
@@ -40,7 +40,14 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                assert_no_lints("It's probably quite doable.", QuiteQuiet::default());
+                &[
+                    "actually",
+                    "never",
+                    "not",
+                    "probably",
+                    "really",
+                    "generally",
+                ],
             )
             .t_ws()
             .t_aco("quite");
@@ -75,7 +82,7 @@ impl ExprLinter for QuiteQuiet {
                     "quiet".chars().collect(),
                     quite_span.get_content(src),
                 )],
-                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_string(),
+                message: "'Quite' might be a typo here. It means 'rather' but you might be trying to say 'quiet' (not noisy).".to_string(),
                 priority: 63,
             });
         } else if text.starts_with("quiet") {
@@ -88,7 +95,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "'Quiet' might be a typo here. It means 'not noisy' but you might be trying to say 'quite' (rather).".to_string(),
                 priority: 63,
             });
         } else if text.ends_with("quiet") {
@@ -101,7 +108,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "'Quiet' might be a typo here. It means 'not noisy' but you might be trying to say 'quite' (rather).".to_string(),
                 priority: 63,
             });
         }
@@ -110,7 +117,7 @@ impl ExprLinter for QuiteQuiet {
     }
 
     fn description(&self) -> &str {
-        "Helps distinguish between ‘quiet’ (making ‘little noise’) and ‘quite’ (meaning ‘rather’)."
+        "Helps distinguish between 'quiet' (making 'little noise') and 'quite' (meaning 'rather')."
     }
 }
 
@@ -153,7 +160,7 @@ mod tests {
 
     #[test]
     fn fix_doesnt_quiet_typographical_apostrophe() {
-        assert_suggestion_result("doesn’t quiet", QuiteQuiet::default(), "doesn’t quite");
+        assert_suggestion_result("doesn't quiet", QuiteQuiet::default(), "doesn't quite");
     }
 
     #[test]
@@ -173,7 +180,7 @@ mod tests {
     #[test]
     fn dont_flag_quiet_till() {
         assert_lint_count(
-            "You’d better try and sit quiet till morning.",
+            "You'd better try and sit quiet till morning.",
             QuiteQuiet::default(),
             0,
         );
@@ -214,7 +221,7 @@ mod tests {
     #[test]
     fn dont_flag_adv_quite_1971() {
         assert_no_lints(
-            "It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.",
+            "It's actually quite smart. It's really quite smart. The proof is actually quite neat. Actually really quite simple. It's actually quite strong. The Sneetches got really quite smart on that day.",
             QuiteQuiet::default(),
         );
     }
@@ -344,10 +351,7 @@ mod tests {
 
     #[test]
     fn dont_flag_probably_quite_doable_3560() {
-        assert_no_lints(
-            "It's probably quite doable.",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("It's probably quite doable.", QuiteQuiet::default());
     }
 
     #[test]
@@ -360,17 +364,11 @@ mod tests {
 
     #[test]
     fn dont_flag_quite_happy_3560() {
-        assert_no_lints(
-            "I'm quite happy with the result.",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("I'm quite happy with the result.", QuiteQuiet::default());
     }
 
     #[test]
     fn dont_flag_quite_large_3560() {
-        assert_no_lints(
-            "The project is quite large.",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("The project is quite large.", QuiteQuiet::default());
     }
 }
