@@ -816,21 +816,14 @@ fn ax_element_attribute(
 /// Outcome of asking macOS for the bounds of a text range.
 ///
 /// `AXBoundsForRange` can fail in several non-fatal ways, especially while an app
-/// is still activating. Capturing those outcomes lets activation verification and
-/// normal rectangle collection share the same low-level probe without converting
-/// every miss into a hard error.
+/// is still activating. Those soft failures are grouped as `Unavailable` because
+/// callers only need to know whether usable geometry exists yet.
 #[derive(Debug, Clone, Copy)]
 enum TextRangeBoundsProbe {
     Success(Rect),
-    ZeroSized(Rect),
-    EmptyString,
+    Unavailable,
     InvalidRangeValue,
-    AxNoValue,
-    AxParameterizedAttributeUnsupported,
     AxError(i32),
-    NullValue,
-    WrongAXValueType(u32),
-    ValueGetFailed,
 }
 
 impl TextRangeBoundsProbe {
@@ -891,12 +884,8 @@ fn probe_element_rect_for_text_range(
         )
     };
 
-    if error == kAXErrorNoValue {
-        return TextRangeBoundsProbe::AxNoValue;
-    }
-
-    if error == kAXErrorParameterizedAttributeUnsupported {
-        return TextRangeBoundsProbe::AxParameterizedAttributeUnsupported;
+    if error == kAXErrorNoValue || error == kAXErrorParameterizedAttributeUnsupported {
+        return TextRangeBoundsProbe::Unavailable;
     }
 
     if error != kAXErrorSuccess {
@@ -904,7 +893,7 @@ fn probe_element_rect_for_text_range(
     }
 
     if value.is_null() {
-        return TextRangeBoundsProbe::NullValue;
+        return TextRangeBoundsProbe::Unavailable;
     }
 
     let value = unsafe { CFType::wrap_under_create_rule(value) };
@@ -912,7 +901,7 @@ fn probe_element_rect_for_text_range(
     let value_type = unsafe { AXValueGetType(ax_value) };
 
     if value_type != kAXValueTypeCGRect {
-        return TextRangeBoundsProbe::WrongAXValueType(value_type);
+        return TextRangeBoundsProbe::Unavailable;
     }
 
     let mut rect = MaybeUninit::<NSRect>::uninit();
@@ -926,7 +915,7 @@ fn probe_element_rect_for_text_range(
     };
 
     if !ok {
-        return TextRangeBoundsProbe::ValueGetFailed;
+        return TextRangeBoundsProbe::Unavailable;
     }
 
     let rect = unsafe { rect.assume_init() };
@@ -941,7 +930,7 @@ fn probe_element_rect_for_text_range(
     if rect_has_usable_text_metrics(rect) {
         TextRangeBoundsProbe::Success(rect)
     } else {
-        TextRangeBoundsProbe::ZeroSized(rect)
+        TextRangeBoundsProbe::Unavailable
     }
 }
 
@@ -1014,7 +1003,7 @@ impl TreeVisitor for AccessibilityActivationProbe {
 
             let string = cf_type_to_string(&value).unwrap_or_default();
             let bounds = if string.is_empty() {
-                TextRangeBoundsProbe::EmptyString
+                TextRangeBoundsProbe::Unavailable
             } else {
                 probe_element_rect_for_text_range(element, 0, 1)
             };
@@ -1181,22 +1170,10 @@ mod tests {
             width: 1.0,
             height: 12.0,
         });
-        let zero_width = TextRangeBoundsProbe::ZeroSized(Rect {
-            x: 10.0,
-            y: 20.0,
-            width: 0.0,
-            height: 12.0,
-        });
-        let zero_height = TextRangeBoundsProbe::ZeroSized(Rect {
-            x: 10.0,
-            y: 20.0,
-            width: 1.0,
-            height: 0.0,
-        });
+        let unavailable = TextRangeBoundsProbe::Unavailable;
 
         assert!(usable.has_usable_text_metrics());
-        assert!(!zero_width.has_usable_text_metrics());
-        assert!(!zero_height.has_usable_text_metrics());
+        assert!(!unavailable.has_usable_text_metrics());
         assert!(rect_has_usable_text_metrics(Rect {
             x: 0.0,
             y: 0.0,
@@ -1221,12 +1198,6 @@ fn element_rect_for_text_range(
         TextRangeBoundsProbe::Success(rect) => Ok(Some(rect)),
         TextRangeBoundsProbe::InvalidRangeValue => Err(Error::Ax(kAXErrorIllegalArgument)),
         TextRangeBoundsProbe::AxError(error) => Err(Error::Ax(error)),
-        TextRangeBoundsProbe::EmptyString
-        | TextRangeBoundsProbe::ZeroSized(_)
-        | TextRangeBoundsProbe::AxNoValue
-        | TextRangeBoundsProbe::AxParameterizedAttributeUnsupported
-        | TextRangeBoundsProbe::NullValue
-        | TextRangeBoundsProbe::WrongAXValueType(_)
-        | TextRangeBoundsProbe::ValueGetFailed => Ok(None),
+        TextRangeBoundsProbe::Unavailable => Ok(None),
     }
 }
