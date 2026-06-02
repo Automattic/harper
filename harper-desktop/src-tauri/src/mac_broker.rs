@@ -98,8 +98,7 @@ enum AccessibilityActivationStatus {
         verification_attempts: u8,
     },
     Ready,
-    Unsupported,
-    Failed,
+    RetryLater,
 }
 
 /// Result of probing an activated app for text elements with usable geometry.
@@ -244,7 +243,7 @@ impl MacBroker {
 
                 false
             }
-            AccessibilityActivationStatus::Unsupported | AccessibilityActivationStatus::Failed => {
+            AccessibilityActivationStatus::RetryLater => {
                 let Some(last_attempted_at) = self
                     .accessibility_activation
                     .as_ref()
@@ -304,7 +303,7 @@ impl MacBroker {
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    status: AccessibilityActivationStatus::Unsupported,
+                    status: AccessibilityActivationStatus::RetryLater,
                     last_attempted_at: now,
                     enhanced_user_interface_restore_value: None,
                 });
@@ -318,7 +317,7 @@ impl MacBroker {
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    status: AccessibilityActivationStatus::Failed,
+                    status: AccessibilityActivationStatus::RetryLater,
                     last_attempted_at: now,
                     enhanced_user_interface_restore_value: None,
                 });
