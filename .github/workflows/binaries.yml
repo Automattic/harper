@@ -118,11 +118,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.9.1
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           cache-bin: "true"
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v1
+        uses: houseabsolute/actions-rust-cross@f481cb5e0110765615313e2177ce12a99bf26bbd # v1
         with:
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
@@ -147,7 +147,7 @@ jobs:
 
       - name: Release artifacts
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
           artifacts: ${{ matrix.platform.name }}
           allowUpdates: true
