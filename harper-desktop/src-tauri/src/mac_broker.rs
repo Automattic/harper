@@ -1,18 +1,18 @@
 use accessibility::attribute::AXUIElementAttributes;
 use accessibility::ui_element::AXUIElement;
-use accessibility::{AXAttribute, Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
+use accessibility::{Error, TreeVisitor, TreeWalker, TreeWalkerFlow};
 use accessibility_sys::{
     AXIsProcessTrusted, AXIsProcessTrustedWithOptions, AXUIElementCopyAttributeValue,
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXUIElementSetAttributeValue,
     AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
     kAXBoundsForRangeParameterizedAttribute, kAXErrorAttributeUnsupported, kAXErrorIllegalArgument,
     kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess,
-    kAXFocusedApplicationAttribute, kAXFocusedUIElementAttribute, kAXTrustedCheckOptionPrompt,
-    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
+    kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange,
+    kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::array::CFArray;
-use core_foundation::base::{CFCopyTypeIDDescription, CFRange, CFType, CFTypeID, TCFType};
+use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::boolean::CFBoolean;
 use core_foundation::dictionary::CFDictionary;
 use core_foundation::number::CFNumber;
@@ -48,10 +48,6 @@ const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration = Dura
 const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
 const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
-const DISCORD_BUNDLE_ID: &str = "com.hnc.Discord";
-const DISCORD_DIAGNOSTIC_CANDIDATE_LIMIT: usize = 12;
-const DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT: usize = 40;
-const DISCORD_DIAGNOSTIC_FOCUSED_CHAIN_LIMIT: usize = 12;
 type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
@@ -282,8 +278,7 @@ impl MacBroker {
         match set_enhanced_user_interface_preserving_previous(app, true) {
             Ok(enhanced_user_interface_restore_value) => {
                 eprintln!(
-                    "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; {}; waiting for {} debounce",
-                    boolean_attribute_diagnostic(app, "AXEnhancedUserInterface"),
+                    "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; waiting for {} debounce",
                     accessibility_activation_settle_label(strategy)
                 );
                 self.accessibility_activation = Some(AccessibilityActivationState {
@@ -659,30 +654,6 @@ fn set_boolean_attribute_preserving_previous(
     Ok(previous)
 }
 
-fn boolean_attribute_diagnostic(element: &AXUIElement, name: &str) -> String {
-    format!(
-        "{name} settable={} value={}",
-        attribute_settable_summary(element, name),
-        boolean_attribute_value_summary(element, name)
-    )
-}
-
-fn attribute_settable_summary(element: &AXUIElement, name: &str) -> String {
-    let name = CFString::new(name);
-    let attribute = AXAttribute::new(&name);
-
-    element
-        .is_settable(&attribute)
-        .map(|settable| settable.to_string())
-        .unwrap_or_else(|error| format!("error:{error}"))
-}
-
-fn boolean_attribute_value_summary(element: &AXUIElement, name: &str) -> String {
-    boolean_attribute_value(element, name)
-        .map(|value| value.to_string())
-        .unwrap_or_else(|error| error)
-}
-
 fn boolean_attribute_value(element: &AXUIElement, name: &str) -> Result<bool, String> {
     let attribute = CFString::new(name);
     let mut value = ptr::null();
@@ -704,7 +675,7 @@ fn boolean_attribute_value(element: &AXUIElement, name: &str) -> Result<bool, St
 
     let value = unsafe { CFType::wrap_under_create_rule(value) };
     if !value.instance_of::<CFBoolean>() {
-        return Err(format!("non_boolean:{}", cf_type_name(value.type_of())));
+        return Err("non_boolean".to_string());
     }
 
     let value = unsafe { CFBoolean::wrap_under_get_rule(value.as_CFTypeRef() as _) };
@@ -876,171 +847,8 @@ enum TextRangeBoundsProbe {
 }
 
 impl TextRangeBoundsProbe {
-    fn describe(self) -> String {
-        match self {
-            Self::Success(rect) => format!(
-                "success(x={}, y={}, width={}, height={})",
-                rect.x, rect.y, rect.width, rect.height
-            ),
-            Self::ZeroSized(rect) => format!(
-                "zero_size(x={}, y={}, width={}, height={})",
-                rect.x, rect.y, rect.width, rect.height
-            ),
-            Self::EmptyString => "not_checked_empty_string".to_string(),
-            Self::InvalidRangeValue => "invalid_cf_range_value".to_string(),
-            Self::AxNoValue => format!("ax_error({})", error_string(kAXErrorNoValue)),
-            Self::AxParameterizedAttributeUnsupported => format!(
-                "ax_error({})",
-                error_string(kAXErrorParameterizedAttributeUnsupported)
-            ),
-            Self::AxError(error) => format!("ax_error({})", error_string(error)),
-            Self::NullValue => "null_bounds_value".to_string(),
-            Self::WrongAXValueType(value_type) => format!("wrong_ax_value_type({value_type})"),
-            Self::ValueGetFailed => "ax_value_get_value_failed".to_string(),
-        }
-    }
-
     fn has_usable_text_metrics(self) -> bool {
         matches!(self, Self::Success(_))
-    }
-}
-
-fn dump_discord_focused_element_chain(
-    app: &AXUIElement,
-    context: &DiscordActivationDiagnosticContext,
-) {
-    let focused = match ax_element_attribute(app, kAXFocusedUIElementAttribute) {
-        Ok(focused) => focused,
-        Err(error) => {
-            eprintln!(
-                "Discord AX focused chain unavailable: bundle={} pid={} error={error}",
-                context.bundle_id, context.pid
-            );
-            return;
-        }
-    };
-
-    let mut current = Some(focused);
-    for depth in 0..DISCORD_DIAGNOSTIC_FOCUSED_CHAIN_LIMIT {
-        let Some(element) = current else {
-            break;
-        };
-
-        eprintln!(
-            "Discord AX focused chain depth {depth}: bundle={} pid={} role={} subrole={} title=\"{}\" description=\"{}\" value_type={} value_settable={} value_chars={} value_snippet=\"{}\" bounds={} attributes={}",
-            context.bundle_id,
-            context.pid,
-            element_role(&element),
-            element_subrole(&element),
-            element_title(&element),
-            element_description(&element),
-            element_value_type(&element),
-            element_value_settable(&element),
-            element_value_char_count(&element),
-            element_value_snippet(&element),
-            element_bounds_summary(&element),
-            element_attribute_names_summary(&element)
-        );
-
-        current = element.parent().ok();
-    }
-}
-
-fn element_role(element: &AXUIElement) -> String {
-    element
-        .role()
-        .map(|role| role.to_string())
-        .unwrap_or_else(|error| format!("error:{error}"))
-}
-
-fn element_subrole(element: &AXUIElement) -> String {
-    element
-        .subrole()
-        .map(|subrole| subrole.to_string())
-        .unwrap_or_else(|error| format!("error:{error}"))
-}
-
-fn element_title(element: &AXUIElement) -> String {
-    element
-        .title()
-        .map(|title| escaped_snippet(&title.to_string(), 80))
-        .unwrap_or_default()
-}
-
-fn element_description(element: &AXUIElement) -> String {
-    element
-        .description()
-        .map(|description| escaped_snippet(&description.to_string(), 80))
-        .unwrap_or_default()
-}
-
-fn element_value_type(element: &AXUIElement) -> String {
-    element
-        .value()
-        .map(|value| cf_type_name(value.type_of()))
-        .unwrap_or_else(|error| format!("error:{error}"))
-}
-
-fn element_value_settable(element: &AXUIElement) -> String {
-    element
-        .is_settable(&AXAttribute::value())
-        .map(|settable| settable.to_string())
-        .unwrap_or_else(|error| format!("error:{error}"))
-}
-
-fn element_value_char_count(element: &AXUIElement) -> usize {
-    element
-        .value()
-        .ok()
-        .and_then(|value| cf_type_to_string(&value))
-        .map(|value| value.chars().count())
-        .unwrap_or(0)
-}
-
-fn element_value_snippet(element: &AXUIElement) -> String {
-    element
-        .value()
-        .ok()
-        .and_then(|value| cf_type_to_string(&value))
-        .map(|value| escaped_snippet(&value, 120))
-        .unwrap_or_default()
-}
-
-fn element_bounds_summary(element: &AXUIElement) -> String {
-    let Some(value) = element
-        .value()
-        .ok()
-        .and_then(|value| cf_type_to_string(&value))
-    else {
-        return "not_checked_no_string_value".to_string();
-    };
-
-    if value.is_empty() {
-        return TextRangeBoundsProbe::EmptyString.describe();
-    }
-
-    probe_element_rect_for_text_range(element, 0, 1).describe()
-}
-
-fn element_attribute_names_summary(element: &AXUIElement) -> String {
-    let attributes = match element.attribute_names() {
-        Ok(attributes) => attributes,
-        Err(error) => return format!("error:{error}"),
-    };
-
-    let mut names = attributes
-        .iter()
-        .map(|attribute| attribute.to_string())
-        .collect::<Vec<_>>();
-    names.sort();
-
-    let total = names.len();
-    names.truncate(DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT);
-
-    if total > names.len() {
-        format!("[{} ... +{}]", names.join(", "), total - names.len())
-    } else {
-        format!("[{}]", names.join(", "))
     }
 }
 
@@ -1048,18 +856,6 @@ fn cf_type_to_string(value: &CFType) -> Option<String> {
     value
         .instance_of::<CFString>()
         .then(|| unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _) }.to_string())
-}
-
-fn cf_type_name(type_id: CFTypeID) -> String {
-    unsafe { CFString::wrap_under_create_rule(CFCopyTypeIDDescription(type_id)) }.to_string()
-}
-
-fn escaped_snippet(text: &str, max_chars: usize) -> String {
-    text.chars()
-        .take(max_chars)
-        .collect::<String>()
-        .escape_debug()
-        .to_string()
 }
 
 fn probe_element_rect_for_text_range(
@@ -1156,69 +952,27 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 
 fn verify_accessibility_activation(
     app: &AXUIElement,
-    bundle_id: &str,
-    pid: pid_t,
+    _bundle_id: &str,
+    _pid: pid_t,
 ) -> AccessibilityActivationVerification {
     let walker = TreeWalker::new();
-    let diagnostic = DiscordActivationDiagnosticContext::new(bundle_id, pid);
-
-    if let Some(context) = &diagnostic {
-        eprintln!(
-            "Discord AX diagnostic start: bundle={} pid={}",
-            context.bundle_id, context.pid
-        );
-        eprintln!(
-            "Discord AX app accessibility attributes: {}",
-            boolean_attribute_diagnostic(app, "AXEnhancedUserInterface")
-        );
-        dump_discord_focused_element_chain(app, context);
-    }
-
-    let probe = AccessibilityActivationProbe::new(diagnostic);
+    let probe = AccessibilityActivationProbe::new();
 
     walker.walk(app, &probe);
 
-    probe.log_diagnostic_summary();
     probe.result()
-}
-
-#[derive(Debug, Clone)]
-struct DiscordActivationDiagnosticContext {
-    bundle_id: String,
-    pid: pid_t,
-}
-
-impl DiscordActivationDiagnosticContext {
-    fn new(bundle_id: &str, pid: pid_t) -> Option<Self> {
-        (bundle_id == DISCORD_BUNDLE_ID).then(|| Self {
-            bundle_id: bundle_id.to_string(),
-            pid,
-        })
-    }
 }
 
 struct AccessibilityActivationProbe {
     found_supported_text_element: Cell<bool>,
     found_text_range_bounds: Cell<bool>,
-    diagnostic: Option<DiscordActivationDiagnosticContext>,
-    role_counts: RefCell<BTreeMap<String, usize>>,
-    value_element_count: Cell<usize>,
-    supported_text_element_count: Cell<usize>,
-    range_bounds_count: Cell<usize>,
-    dumped_candidate_count: Cell<usize>,
 }
 
 impl AccessibilityActivationProbe {
-    fn new(diagnostic: Option<DiscordActivationDiagnosticContext>) -> Self {
+    fn new() -> Self {
         Self {
             found_supported_text_element: Cell::new(false),
             found_text_range_bounds: Cell::new(false),
-            diagnostic,
-            role_counts: RefCell::new(BTreeMap::new()),
-            value_element_count: Cell::new(0),
-            supported_text_element_count: Cell::new(0),
-            range_bounds_count: Cell::new(0),
-            dumped_candidate_count: Cell::new(0),
         }
     }
 
@@ -1231,91 +985,13 @@ impl AccessibilityActivationProbe {
             AccessibilityActivationVerification::NoSupportedTextElement
         }
     }
-
-    fn log_diagnostic_summary(&self) {
-        let Some(context) = &self.diagnostic else {
-            return;
-        };
-
-        let role_counts = self.role_counts.borrow();
-        let mut roles = role_counts
-            .iter()
-            .map(|(role, count)| format!("{role}:{count}"))
-            .collect::<Vec<_>>();
-        roles.sort();
-        roles.truncate(DISCORD_DIAGNOSTIC_ATTRIBUTE_LIMIT);
-
-        eprintln!(
-            "Discord AX diagnostic summary: bundle={} pid={} result={:?} roles={} value_elements={} supported_text_elements={} range_bounds_successes={} dumped_candidates={}",
-            context.bundle_id,
-            context.pid,
-            self.result(),
-            roles.join(", "),
-            self.value_element_count.get(),
-            self.supported_text_element_count.get(),
-            self.range_bounds_count.get(),
-            self.dumped_candidate_count.get()
-        );
-    }
-
-    fn record_role(&self, element: &AXUIElement) {
-        let Some(_context) = &self.diagnostic else {
-            return;
-        };
-
-        let role = element_role(element);
-        let mut role_counts = self.role_counts.borrow_mut();
-        *role_counts.entry(role).or_insert(0) += 1;
-    }
-
-    fn log_candidate(
-        &self,
-        element: &AXUIElement,
-        value: &CFType,
-        string: &str,
-        bounds: TextRangeBoundsProbe,
-    ) {
-        let Some(context) = &self.diagnostic else {
-            return;
-        };
-
-        let candidate_index = self.dumped_candidate_count.get();
-        if candidate_index >= DISCORD_DIAGNOSTIC_CANDIDATE_LIMIT {
-            return;
-        }
-
-        self.dumped_candidate_count.set(candidate_index + 1);
-        eprintln!(
-            "Discord AX candidate #{candidate_index}: bundle={} pid={} role={} subrole={} value_type={} value_settable={} value_chars={} value_snippet=\"{}\" bounds={} attributes={}",
-            context.bundle_id,
-            context.pid,
-            element_role(element),
-            element_subrole(element),
-            cf_type_name(value.type_of()),
-            element_value_settable(element),
-            string.chars().count(),
-            escaped_snippet(string, 120),
-            bounds.describe(),
-            element_attribute_names_summary(element)
-        );
-    }
 }
 
 impl TreeVisitor for AccessibilityActivationProbe {
     fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-        self.record_role(element);
-
-        let value = element.value().ok();
-        if value.is_some() {
-            self.value_element_count
-                .set(self.value_element_count.get() + 1);
-        }
-
-        if let Some(value) = value
+        if let Ok(value) = element.value()
             && is_supported_text_element(element)
         {
-            self.supported_text_element_count
-                .set(self.supported_text_element_count.get() + 1);
             self.found_supported_text_element.set(true);
 
             let string = cf_type_to_string(&value).unwrap_or_default();
@@ -1325,11 +1001,7 @@ impl TreeVisitor for AccessibilityActivationProbe {
                 probe_element_rect_for_text_range(element, 0, 1)
             };
 
-            self.log_candidate(element, &value, &string, bounds);
-
             if bounds.has_usable_text_metrics() {
-                self.range_bounds_count
-                    .set(self.range_bounds_count.get() + 1);
                 self.found_text_range_bounds.set(true);
                 return TreeWalkerFlow::Exit;
             }
