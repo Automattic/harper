@@ -14981,7 +14981,7 @@ bitplane/NgS
 bitrate/NgS
 bitstream/Sg
 bitten/~VT
-bitter/~JY^>pNgSV
+bitter/~JY^>pNgSVdG
 bittern/~NSg
 bitterness/~Nmg
 bitters/NgV
@@ -21681,6 +21681,7 @@ dipstick/NSgV
 dipterous/J
 diptych/N0g
 diptychs/N9
+dir/NgS†
 dire/~JY^>
 dire wolf/Ng
 dire wolves/9
@@ -24619,7 +24620,10 @@ fancywork/Ng
 fandango/~NgSV
 fandom/~N
 fanfare/~NwSgV
-fanfic/Nmg†
+fanfic/Nmg†         # AHD:yes, Britannica:no, Cambridge:yes, Chambers:no, Collins:yes, Longman:->fanfic, MW:yes, OED:yes, OL:also
+fan fic/Nmg†        # AHD:no, Britannica:no, Cambridge:also, Chambers:no, Collins:no, Longman: no, MW:no, OED:no, OL:no
+fanfiction/Nmg      # AHD:no, Britannica:no, Cambridge:no, Chambers:no, Collins:no, Longman:yes, MW:->fan fiction, OED:->fan fiction, OL:no
+fan fiction/Nmg     # AHD:yes, Britannica:no, Cambridge:yes, Chambers:no, Collins:yes, Longman:->fanfic, MW:yes, OED:yes, OL:yes
 fang/~NgSVd
 fanlight/NSg
 fanmade/J
@@ -26894,7 +26898,7 @@ girth/NwgSV
 girths/N
 GIS/N # Geographic Information System
 gist/NgSV
-git/~NOSV
+git/~NOgSV
 gite/NS
 give/~VG>SNZz
 giveaway/NgSJ
@@ -27934,6 +27938,7 @@ halve/VdSG
 halyard/NgS
 ham/~NwSgV
 ham-fisted/J
+hamate/NgSJ
 hamburg/~NSgV>Z
 hamburger/~NwgSV
 hamlet/~NgS
@@ -30544,7 +30549,10 @@ instigate/VdSGn
 instigation/~Ngm
 instigator/NgS
 instil/VS!_₹
+instill/VS<@
 instillation/Ngm
+instilled/VtT
+instilling/V6
 instinct/~NgSJv
 instinctive/JY
 instinctual/J
@@ -30874,7 +30882,7 @@ invention/~NwgSr
 inventive/~JYp
 inventiveness/Ng
 inventor/~NgS
-inventory/~NSgVdG
+inventory/~NwSgVdG
 inverse/~JYNSgV
 invert/~Vd>GSNgJZ
 inverter/Ng
@@ -34869,6 +34877,7 @@ mocker/NgS
 mockery/~NwSg
 mocking/~VNJY
 mockingbird/~NSg
+mockumentary/NSg
 mockup/NgS          # American Heritage ("also" in Cambridge, Collins)
 mod/~NSgVJ^
 modal/~JNSg
@@ -34966,7 +34975,7 @@ mollusk/NSg
 molly/~NSgV
 mollycoddle/NSgVdG
 molt/Vd>GSNgnZ
-molten/JV!@_₹
+molten/J
 molter/Ng
 molybdenum/Nmg
 mom/~NSgV<@
@@ -45341,12 +45350,12 @@ sidecar/NSg
 sidekick/~NSg
 sidelight/NgS
 sideline/~NSgVdG
-sidenote/NSg
-side note/NSg
 sideload/VdGS
 sidelong/J
 sideman/~Ng
 sidemen/9
+sidenote/NSg
+side note/NSg
 sidepiece/NgS
 sidereal/J
 sidesaddle/NgS
@@ -47301,14 +47310,14 @@ stigmatization/Nge
 stigmatize/VGdSe
 stile/NSgV
 stiletto/NSgV
-still/~J^RNSVGdi
+still/~J^RNSVGd
 still's
 stillbirth/Ng
 stillbirths/N
 stillborn/~JN
-stilled/JVtTi!_₹
+stilled/JVtT
 stiller/~JN
-stilling/V6Ni!_₹
+stilling/V6N
 stillness/Ng
 stilt/~NSgVd
 stilted/JYV
@@ -53908,7 +53917,7 @@ ASUS/Og
 ATF/Ng              # automatic transmission fluid
 AVC/Ng              # H.264 video format
 AVL tree/NgS        # data structure
-Afroasiatic/OmgJ.   # linguistics
+Afroasiatic/OmgJ    # linguistics
 Airbnb/ONSg
 Akismet/Og
 Alexa/Og            # voice assistant
@@ -54459,7 +54468,7 @@ VS Code/Og
 Vaadin/Sg
 VaultPress/Og
 Vercel/Og           # cloud
-Verlilog/Og.        # hardware description language
+Verlilog/Og         # hardware description language
 VideoPress/Og
 Viktor/Sg
 Vim script/Omg      # the spelling/capitalization variant used on Vim's docs
@@ -54682,6 +54691,7 @@ timespan/NgS
 tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
+uncomment/VSdG
 unicast/JVSdG
 unlintable/J
 upsert/VdSGNg       # database operation: update or insert
