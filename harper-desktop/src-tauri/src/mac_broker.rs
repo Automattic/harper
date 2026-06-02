@@ -192,7 +192,7 @@ impl MacBroker {
 
         if needs_new_activation {
             self.reset_accessibility_activation();
-            return self.start_accessibility_activation(pid, bundle_id, app);
+            return self.request_enhanced_user_interface(pid, bundle_id, app);
         }
 
         let Some(status) = self
@@ -200,7 +200,7 @@ impl MacBroker {
             .as_ref()
             .map(|state| state.status)
         else {
-            return self.start_accessibility_activation(pid, bundle_id, app);
+            return self.request_enhanced_user_interface(pid, bundle_id, app);
         };
 
         let now = Instant::now();
@@ -250,7 +250,7 @@ impl MacBroker {
                     .as_ref()
                     .map(|state| state.last_attempted_at)
                 else {
-                    return self.start_accessibility_activation(pid, bundle_id, app);
+                    return self.request_enhanced_user_interface(pid, bundle_id, app);
                 };
 
                 if now.duration_since(last_attempted_at) < ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL {
@@ -258,22 +258,9 @@ impl MacBroker {
                 }
 
                 self.reset_accessibility_activation();
-                self.start_accessibility_activation(pid, bundle_id, app)
+                self.request_enhanced_user_interface(pid, bundle_id, app)
             }
         }
-    }
-
-    /// Starts a fresh activation attempt for the focused app.
-    ///
-    /// All approved targets use the same Chromium-style activation path so the
-    /// broker has a single state machine regardless of which application is focused.
-    fn start_accessibility_activation(
-        &mut self,
-        pid: pid_t,
-        bundle_id: &str,
-        app: &AXUIElement,
-    ) -> bool {
-        self.request_enhanced_user_interface(pid, bundle_id, app)
     }
 
     /// Requests `AXEnhancedUserInterface` and records the result.
