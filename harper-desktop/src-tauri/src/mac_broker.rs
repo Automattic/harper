@@ -213,7 +213,7 @@ impl MacBroker {
                     return false;
                 }
 
-                let verification = verify_accessibility_activation(app, bundle_id, pid);
+                let verification = verify_accessibility_activation(app);
 
                 if verification == AccessibilityActivationVerification::FoundTextRangeBounds {
                     eprintln!(
@@ -958,11 +958,7 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 /// Readiness is defined as finding a supported text element whose first character
 /// has usable range bounds. This avoids collecting lints before macOS can tell
 /// Harper where those lints should be drawn.
-fn verify_accessibility_activation(
-    app: &AXUIElement,
-    _bundle_id: &str,
-    _pid: pid_t,
-) -> AccessibilityActivationVerification {
+fn verify_accessibility_activation(app: &AXUIElement) -> AccessibilityActivationVerification {
     let walker = TreeWalker::new();
     let probe = AccessibilityActivationProbe::new();
 
