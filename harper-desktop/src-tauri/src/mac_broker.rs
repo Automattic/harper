@@ -73,16 +73,9 @@ struct WindowMovementState {
 struct AccessibilityActivationState {
     pid: pid_t,
     bundle_id: String,
-    strategy: AccessibilityActivationStrategy,
     status: AccessibilityActivationStatus,
     last_attempted_at: Instant,
     enhanced_user_interface_restore_value: Option<bool>,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum AccessibilityActivationStrategy {
-    None,
-    Chromium,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -163,23 +156,14 @@ impl MacBroker {
         bundle_id: &str,
         app: &AXUIElement,
     ) -> bool {
-        let strategy = accessibility_activation_strategy_for_bundle_id(bundle_id);
-
-        if strategy == AccessibilityActivationStrategy::None {
-            self.reset_accessibility_activation();
-            return true;
-        }
-
         let needs_new_activation = match &self.accessibility_activation {
-            Some(state) => {
-                state.pid != pid || state.bundle_id != bundle_id || state.strategy != strategy
-            }
+            Some(state) => state.pid != pid || state.bundle_id != bundle_id,
             None => true,
         };
 
         if needs_new_activation {
             self.reset_accessibility_activation();
-            return self.start_accessibility_activation(pid, bundle_id, strategy, app);
+            return self.start_accessibility_activation(pid, bundle_id, app);
         }
 
         let Some(status) = self
@@ -187,7 +171,7 @@ impl MacBroker {
             .as_ref()
             .map(|state| state.status)
         else {
-            return self.start_accessibility_activation(pid, bundle_id, strategy, app);
+            return self.start_accessibility_activation(pid, bundle_id, app);
         };
 
         let now = Instant::now();
@@ -237,7 +221,7 @@ impl MacBroker {
                     .as_ref()
                     .map(|state| state.last_attempted_at)
                 else {
-                    return self.start_accessibility_activation(pid, bundle_id, strategy, app);
+                    return self.start_accessibility_activation(pid, bundle_id, app);
                 };
 
                 if now.duration_since(last_attempted_at) < ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL {
@@ -245,7 +229,7 @@ impl MacBroker {
                 }
 
                 self.reset_accessibility_activation();
-                self.start_accessibility_activation(pid, bundle_id, strategy, app)
+                self.start_accessibility_activation(pid, bundle_id, app)
             }
         }
     }
@@ -254,37 +238,29 @@ impl MacBroker {
         &mut self,
         pid: pid_t,
         bundle_id: &str,
-        strategy: AccessibilityActivationStrategy,
         app: &AXUIElement,
     ) -> bool {
-        match strategy {
-            AccessibilityActivationStrategy::None => true,
-            AccessibilityActivationStrategy::Chromium => {
-                self.request_enhanced_user_interface(pid, bundle_id, strategy, app)
-            }
-        }
+        self.request_enhanced_user_interface(pid, bundle_id, app)
     }
 
     fn request_enhanced_user_interface(
         &mut self,
         pid: pid_t,
         bundle_id: &str,
-        strategy: AccessibilityActivationStrategy,
         app: &AXUIElement,
     ) -> bool {
         let now = Instant::now();
-        let settle_duration = accessibility_activation_settle_duration(strategy);
+        let settle_duration = CHROMIUM_ACCESSIBILITY_SETTLE_DURATION;
 
         match set_enhanced_user_interface_preserving_previous(app, true) {
             Ok(enhanced_user_interface_restore_value) => {
                 eprintln!(
                     "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; waiting for {} debounce",
-                    accessibility_activation_settle_label(strategy)
+                    "Chromium"
                 );
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    strategy,
                     status: AccessibilityActivationStatus::Pending {
                         ready_at: instant_after(now, settle_duration),
                         verification_attempts: 0,
@@ -302,7 +278,6 @@ impl MacBroker {
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    strategy,
                     status: AccessibilityActivationStatus::Unsupported,
                     last_attempted_at: now,
                     enhanced_user_interface_restore_value: None,
@@ -317,7 +292,6 @@ impl MacBroker {
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    strategy,
                     status: AccessibilityActivationStatus::Failed,
                     last_attempted_at: now,
                     enhanced_user_interface_restore_value: None,
@@ -526,74 +500,6 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     };
 
     Ok(Some(bundle_identifier.to_string()))
-}
-
-fn accessibility_activation_strategy_for_bundle_id(
-    bundle_id: &str,
-) -> AccessibilityActivationStrategy {
-    if is_chromium_browser_bundle_id(bundle_id) {
-        AccessibilityActivationStrategy::Chromium
-    } else if is_electron_app_bundle_id(bundle_id) {
-        AccessibilityActivationStrategy::Chromium
-    } else {
-        AccessibilityActivationStrategy::None
-    }
-}
-
-fn is_chromium_browser_bundle_id(bundle_id: &str) -> bool {
-    matches!(
-        bundle_id,
-        "com.google.Chrome"
-            | "com.google.Chrome.beta"
-            | "com.google.Chrome.dev"
-            | "com.google.Chrome.canary"
-            | "org.chromium.Chromium"
-            | "com.brave.Browser"
-            | "com.brave.Browser.beta"
-            | "com.brave.Browser.nightly"
-            | "com.microsoft.edgemac"
-            | "com.microsoft.edgemac.Beta"
-            | "com.microsoft.edgemac.Dev"
-            | "com.microsoft.edgemac.Canary"
-            | "com.vivaldi.Vivaldi"
-            | "com.operasoftware.Opera"
-            | "com.operasoftware.OperaNext"
-            | "com.operasoftware.OperaGX"
-    )
-}
-
-fn is_electron_app_bundle_id(bundle_id: &str) -> bool {
-    matches!(
-        bundle_id,
-        "com.github.Electron"
-            | "com.microsoft.VSCode"
-            | "com.microsoft.VSCodeInsiders"
-            | "com.todesktop.230313mzl4w4u92"
-            | "com.codeium.windsurf"
-            | "com.google.antigravity"
-            | "com.tinyspeck.slackmacgap"
-            | "com.hnc.Discord"
-            | "com.hnc.DiscordPTB"
-            | "com.hnc.DiscordCanary"
-            | "md.obsidian"
-            | "notion.id"
-    )
-}
-
-fn accessibility_activation_settle_duration(strategy: AccessibilityActivationStrategy) -> Duration {
-    match strategy {
-        AccessibilityActivationStrategy::Chromium => CHROMIUM_ACCESSIBILITY_SETTLE_DURATION,
-        AccessibilityActivationStrategy::None => Duration::ZERO,
-    }
-}
-
-fn accessibility_activation_settle_label(
-    strategy: AccessibilityActivationStrategy,
-) -> &'static str {
-    match strategy {
-        AccessibilityActivationStrategy::Chromium => "Chromium",
-        AccessibilityActivationStrategy::None => "accessibility",
-    }
 }
 
 fn accessibility_activation_verification_retry_interval(verification_attempts: u8) -> Duration {
@@ -1127,74 +1033,10 @@ mod tests {
     }
 
     #[test]
-    fn chromium_browsers_use_enhanced_user_interface_activation() {
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.google.Chrome"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("org.chromium.Chromium"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.brave.Browser"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.microsoft.edgemac"),
-            AccessibilityActivationStrategy::Chromium
-        );
-    }
-
-    #[test]
-    fn known_electron_apps_use_chromium_activation() {
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.microsoft.VSCode"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.todesktop.230313mzl4w4u92"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.codeium.windsurf"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.google.antigravity"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.tinyspeck.slackmacgap"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("md.obsidian"),
-            AccessibilityActivationStrategy::Chromium
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.hnc.Discord"),
-            AccessibilityActivationStrategy::Chromium
-        );
-    }
-
-    #[test]
-    fn native_apps_do_not_require_activation() {
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.apple.TextEdit"),
-            AccessibilityActivationStrategy::None
-        );
-        assert_eq!(
-            accessibility_activation_strategy_for_bundle_id("com.apple.Notes"),
-            AccessibilityActivationStrategy::None
-        );
-    }
-
-    #[test]
     fn chromium_activation_uses_chromium_settle_duration() {
         assert_eq!(
-            accessibility_activation_settle_duration(AccessibilityActivationStrategy::Chromium),
-            CHROMIUM_ACCESSIBILITY_SETTLE_DURATION
+            CHROMIUM_ACCESSIBILITY_SETTLE_DURATION,
+            Duration::from_secs(3)
         );
     }
 
