@@ -70,8 +70,7 @@ impl Default for SingleBe {
 
         fn be_like_or_contraction() -> SequenceExpr {
             SequenceExpr::any_of(vec![
-                Box::new(InflectionOfBe::new()),
-                Box::new(DerivedFrom::new_from_str("be")),
+                Box::new(be_like_expr()),
                 Box::new(looks_like_be_contraction),
             ])
         }
