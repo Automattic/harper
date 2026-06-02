@@ -196,6 +196,10 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/chrome-extension',
 										},
 										{
+											title: 'Website',
+											to: '/docs/contributors/website',
+										},
+										{
 											title: 'WordPress',
 											to: '/docs/contributors/wordpress',
 										},
