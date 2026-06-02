@@ -40,7 +40,7 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                &["actually", "never", "not", "probably", "really", "generally"],
+                assert_no_lints("It's probably quite doable.", QuiteQuiet::default());
             )
             .t_ws()
             .t_aco("quite");
