@@ -4990,7 +4990,8 @@
 								"state": true,
 								"label": "Every Single One Of"
 							}
-						},{
+						},
+						{
 							"Bool": {
 								"name": "Impressed",
 								"state": true,
