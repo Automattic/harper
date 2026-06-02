@@ -568,6 +568,9 @@ fn is_electron_app_bundle_id(bundle_id: &str) -> bool {
         "com.github.Electron"
             | "com.microsoft.VSCode"
             | "com.microsoft.VSCodeInsiders"
+            | "com.todesktop.230313mzl4w4u92"
+            | "com.codeium.windsurf"
+            | "com.google.antigravity"
             | "com.tinyspeck.slackmacgap"
             | "com.hnc.Discord"
             | "com.hnc.DiscordPTB"
@@ -1147,6 +1150,18 @@ mod tests {
     fn known_electron_apps_use_chromium_activation() {
         assert_eq!(
             accessibility_activation_strategy_for_bundle_id("com.microsoft.VSCode"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.todesktop.230313mzl4w4u92"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.codeium.windsurf"),
+            AccessibilityActivationStrategy::Chromium
+        );
+        assert_eq!(
+            accessibility_activation_strategy_for_bundle_id("com.google.antigravity"),
             AccessibilityActivationStrategy::Chromium
         );
         assert_eq!(
