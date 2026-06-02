@@ -69,12 +69,7 @@ struct WindowMovementState {
     last_changed_at: Instant,
 }
 
-/// Tracks an in-flight or completed accessibility activation for the focused app.
-///
-/// Chromium-derived apps may not expose usable text-range bounds until
-/// `AXEnhancedUserInterface` has been requested and given time to settle. This
-/// state prevents repeated AX writes on every highlighter tick and records the
-/// previous attribute value so it can be restored when focus changes.
+/// Tracks accessibility activation for the focused app and any value to restore.
 #[derive(Debug, Clone)]
 struct AccessibilityActivationState {
     pid: pid_t,
@@ -84,13 +79,7 @@ struct AccessibilityActivationState {
     enhanced_user_interface_restore_value: Option<bool>,
 }
 
-/// Describes where the current accessibility activation attempt is in its
-/// lifecycle.
-///
-/// The highlighter runs continuously, so activation needs to be modeled across
-/// ticks: first wait for the target app to debounce, then verify that text
-/// geometry is available, and finally either proceed, retry, or remember that
-/// the target does not support the requested AX attribute.
+/// State of the focused app's accessibility activation attempt.
 #[derive(Debug, Clone, Copy)]
 enum AccessibilityActivationStatus {
     Pending {
@@ -101,11 +90,7 @@ enum AccessibilityActivationStatus {
     RetryLater,
 }
 
-/// Result of probing an activated app for text elements with usable geometry.
-///
-/// This separates “we found editable text but bounds are not ready yet” from
-/// “there is no supported text element right now”, which lets retry logging and
-/// backoff describe what the highlighter is waiting for.
+/// Result of checking whether an activated app exposes usable text geometry.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum AccessibilityActivationVerification {
     FoundTextRangeBounds,
@@ -161,23 +146,14 @@ impl MacBroker {
         now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION
     }
 
-    /// Clears the tracked activation state and restores any saved AX attribute value.
-    ///
-    /// This is called when focus changes, when there is no approved target, and when
-    /// the broker shuts down so Harper does not leave `AXEnhancedUserInterface`
-    /// changed on another application.
+    /// Clears activation state and restores any saved AX attribute value.
     fn reset_accessibility_activation(&mut self) {
         if let Some(state) = self.accessibility_activation.take() {
             release_accessibility_activation(&state);
         }
     }
 
-    /// Ensures the focused target has gone through the accessibility activation flow.
-    ///
-    /// The highlighter needs `AXBoundsForRange` to return non-zero text rectangles
-    /// before lint highlights can be placed. This method starts activation for a new
-    /// target, waits for the debounce window, verifies text geometry, and applies
-    /// retry/backoff when the app is not ready yet.
+    /// Activates the focused app and waits until text range bounds are usable.
     fn ensure_accessibility_activation(
         &mut self,
         pid: pid_t,
@@ -262,12 +238,7 @@ impl MacBroker {
         }
     }
 
-    /// Requests `AXEnhancedUserInterface` and records the result.
-    ///
-    /// The previous value is preserved when available because this attribute belongs
-    /// to the target app, not Harper. Successful requests enter a pending state so
-    /// macOS and Chromium/Electron can finish exposing text metrics before Harper
-    /// tries to collect highlight rectangles.
+    /// Requests `AXEnhancedUserInterface`, preserving the previous value if readable.
     fn request_enhanced_user_interface(
         &mut self,
         pid: pid_t,
@@ -334,10 +305,6 @@ impl Default for MacBroker {
 }
 
 impl Drop for MacBroker {
-    /// Restores accessibility activation state if the broker is destroyed.
-    ///
-    /// This is a final safety net for the attribute restoration performed on focus
-    /// changes and early returns.
     fn drop(&mut self) {
         self.reset_accessibility_activation();
     }
@@ -514,11 +481,7 @@ fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     Ok(pid)
 }
 
-/// Returns the process ID of AppKit's frontmost application.
-///
-/// This is a fallback for cases where the system-wide focused application AX
-/// attribute is unavailable or does not yield a PID, but AppKit still knows which
-/// app owns the active menu bar/focus.
+/// Fallback PID lookup when system-wide focused-application AX lookup fails.
 fn frontmost_application_pid() -> Option<pid_t> {
     NSWorkspace::sharedWorkspace()
         .frontmostApplication()
@@ -536,11 +499,7 @@ fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdEr
     Ok(Some(bundle_identifier.to_string()))
 }
 
-/// Chooses how long to wait before re-checking activation readiness.
-///
-/// Early checks are frequent so newly activated apps become usable quickly. After
-/// several misses, retries slow down to avoid spending every highlighter tick
-/// walking an app that is not exposing usable text metrics.
+/// Backs off activation verification after repeated misses.
 fn accessibility_activation_verification_retry_interval(verification_attempts: u8) -> Duration {
     if verification_attempts <= ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS {
         ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL
@@ -550,17 +509,11 @@ fn accessibility_activation_verification_retry_interval(verification_attempts: u
 }
 
 /// Adds a duration to an instant without panicking on overflow.
-///
-/// Activation deadlines are best-effort scheduling hints, so falling back to `now`
-/// is safer than unwinding if the platform clock values cannot represent the sum.
 fn instant_after(now: Instant, duration: Duration) -> Instant {
     now.checked_add(duration).unwrap_or(now)
 }
 
-/// Restores the target app's accessibility activation attribute when possible.
-///
-/// `AXEnhancedUserInterface` is mutated only to let Harper obtain text geometry,
-/// so the saved value is put back when the target changes or the broker exits.
+/// Restores `AXEnhancedUserInterface` when a previous value was captured.
 fn release_accessibility_activation(state: &AccessibilityActivationState) {
     if state.enhanced_user_interface_restore_value.is_none() {
         return;
@@ -575,18 +528,12 @@ fn release_accessibility_activation(state: &AccessibilityActivationState) {
     );
 }
 
-/// Returns whether an AX error means the target cannot use this activation path.
-///
-/// Unsupported/no-value errors are tracked separately from transient failures so
-/// the broker can retry less aggressively without treating the app as ready.
+/// Returns whether an AX error means the target does not support this attribute.
 fn is_unsupported_accessibility_activation_error(error: i32) -> bool {
     error == kAXErrorAttributeUnsupported || error == kAXErrorNoValue
 }
 
-/// Enables or disables `AXEnhancedUserInterface` while returning its old value.
-///
-/// Keeping this wrapper named after the AX attribute makes call sites explicit and
-/// centralizes the stringly-typed macOS attribute name.
+/// Sets `AXEnhancedUserInterface` while returning its old value when readable.
 fn set_enhanced_user_interface_preserving_previous(
     app: &AXUIElement,
     enabled: bool,
@@ -595,9 +542,6 @@ fn set_enhanced_user_interface_preserving_previous(
 }
 
 /// Restores a boolean AX attribute if a previous value was captured.
-///
-/// Some apps do not expose the old value even if setting succeeds, so `None` is a
-/// deliberate no-op rather than an error.
 fn restore_boolean_attribute(element: &AXUIElement, name: &str, restore_value: Option<bool>) {
     let Some(restore_value) = restore_value else {
         return;
@@ -612,10 +556,6 @@ fn restore_boolean_attribute(element: &AXUIElement, name: &str, restore_value: O
 }
 
 /// Sets a boolean AX attribute and returns the previous value when readable.
-///
-/// This supports reversible accessibility activation while still allowing the set
-/// operation to proceed for apps that expose write-only or otherwise unreadable
-/// boolean attributes.
 fn set_boolean_attribute_preserving_previous(
     element: &AXUIElement,
     name: &str,
@@ -628,9 +568,6 @@ fn set_boolean_attribute_preserving_previous(
 }
 
 /// Reads a boolean AX attribute from an accessibility element.
-///
-/// The helper validates that macOS returned a `CFBoolean` so callers do not treat
-/// missing, null, or differently typed AX values as a real saved state.
 fn boolean_attribute_value(element: &AXUIElement, name: &str) -> Result<bool, String> {
     let attribute = CFString::new(name);
     let mut value = ptr::null();
@@ -660,9 +597,6 @@ fn boolean_attribute_value(element: &AXUIElement, name: &str) -> Result<bool, St
 }
 
 /// Writes a boolean AX attribute and returns the raw AX error on failure.
-///
-/// Keeping the low-level error code lets activation distinguish unsupported
-/// attributes from other failures.
 fn set_boolean_attribute(element: &AXUIElement, name: &str, value: bool) -> Result<(), i32> {
     let attribute = CFString::new(name);
     let value = if value {
@@ -814,10 +748,6 @@ fn ax_element_attribute(
 }
 
 /// Outcome of asking macOS for the bounds of a text range.
-///
-/// `AXBoundsForRange` can fail in several non-fatal ways, especially while an app
-/// is still activating. Those soft failures are grouped as `Unavailable` because
-/// callers only need to know whether usable geometry exists yet.
 #[derive(Debug, Clone, Copy)]
 enum TextRangeBoundsProbe {
     Success(Rect),
@@ -828,18 +758,12 @@ enum TextRangeBoundsProbe {
 
 impl TextRangeBoundsProbe {
     /// Returns true only when the probe produced non-zero text geometry.
-    ///
-    /// Zero-sized rectangles are treated as not ready because they cannot anchor a
-    /// visible highlighter underline or suggestion popup.
     fn has_usable_text_metrics(self) -> bool {
         matches!(self, Self::Success(_))
     }
 }
 
 /// Converts a Core Foundation value to a Rust string when it is a `CFString`.
-///
-/// Accessibility element values are dynamically typed; activation probing only
-/// checks text-range bounds for string values with at least one character.
 fn cf_type_to_string(value: &CFType) -> Option<String> {
     value
         .instance_of::<CFString>()
@@ -847,9 +771,6 @@ fn cf_type_to_string(value: &CFType) -> Option<String> {
 }
 
 /// Probes `AXBoundsForRange` for a specific text range on an element.
-///
-/// This is the shared low-level geometry lookup used both to verify that an app is
-/// ready after activation and to map Harper lint spans to on-screen rectangles.
 fn probe_element_rect_for_text_range(
     element: &AXUIElement,
     start_index: isize,
@@ -935,18 +856,11 @@ fn probe_element_rect_for_text_range(
 }
 
 /// Returns whether a text rectangle has enough geometry to render a highlight.
-///
-/// macOS can report zero-sized range bounds while an application is still settling;
-/// those bounds are ignored until a later activation verification succeeds.
 fn rect_has_usable_text_metrics(rect: Rect) -> bool {
     rect.width > 0.0 && rect.height > 0.0
 }
 
 /// Walks an app's accessibility tree to determine whether activation is ready.
-///
-/// Readiness is defined as finding a supported text element whose first character
-/// has usable range bounds. This avoids collecting lints before macOS can tell
-/// Harper where those lints should be drawn.
 fn verify_accessibility_activation(app: &AXUIElement) -> AccessibilityActivationVerification {
     let walker = TreeWalker::new();
     let probe = AccessibilityActivationProbe::new();
@@ -957,10 +871,6 @@ fn verify_accessibility_activation(app: &AXUIElement) -> AccessibilityActivation
 }
 
 /// Tree visitor used to verify that the activated app exposes usable text bounds.
-///
-/// It records whether any supported text element exists and stops the walk as soon
-/// as one element returns non-zero bounds, minimizing work during repeated
-/// activation checks.
 struct AccessibilityActivationProbe {
     found_supported_text_element: Cell<bool>,
     found_text_range_bounds: Cell<bool>,
@@ -976,9 +886,6 @@ impl AccessibilityActivationProbe {
     }
 
     /// Summarizes what the probe found during the tree walk.
-    ///
-    /// The caller uses this to decide whether to proceed, continue waiting, or log
-    /// that the focused app currently has no supported editable text.
     fn result(&self) -> AccessibilityActivationVerification {
         if self.found_text_range_bounds.get() {
             AccessibilityActivationVerification::FoundTextRangeBounds
@@ -992,9 +899,6 @@ impl AccessibilityActivationProbe {
 
 impl TreeVisitor for AccessibilityActivationProbe {
     /// Checks each AX element for supported text and usable range bounds.
-    ///
-    /// Returning `Exit` on the first usable rectangle keeps activation verification
-    /// cheap once the target app is ready.
     fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
         if let Ok(value) = element.value()
             && is_supported_text_element(element)
@@ -1102,9 +1006,6 @@ fn apply_suggestion_to_element(
 }
 
 /// Returns whether an accessibility element has a text role Harper can lint.
-///
-/// Role checking is centralized so activation verification and lint rectangle
-/// collection agree on which AX elements are considered editable text.
 fn is_supported_text_element(el: &AXUIElement) -> bool {
     if let Ok(role) = el.role() {
         return is_supported_text_role(&role.to_string());
@@ -1114,9 +1015,6 @@ fn is_supported_text_element(el: &AXUIElement) -> bool {
 }
 
 /// Returns whether an AX role represents editable text supported by the highlighter.
-///
-/// `AXTextField` is included in addition to `AXTextArea` so single-line inputs in
-/// browsers and Electron apps can be linted.
 fn is_supported_text_role(role: &str) -> bool {
     matches!(role, "AXTextArea" | "AXTextField")
 }
