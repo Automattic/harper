@@ -405,9 +405,11 @@ fn ax_element_attribute(
     Ok(unsafe { AXUIElement::wrap_under_create_rule(value as _) })
 }
 
+type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
+
 struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
-    lint_text: RefCell<&'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>>,
+    lint_text: RefCell<&'a mut LintCallback<'a>>,
 }
 
 impl TreeVisitor for RectCollector<'_> {
