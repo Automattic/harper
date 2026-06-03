@@ -12,24 +12,19 @@ use tokio::{
     sync::{Mutex, oneshot},
 };
 
-/// Runtime resources for one running highlighter service instance.
-///
-/// A worker owns the shutdown signal and OS thread that hosts the Tokio runtime, child highlighter
-/// process, and Tauri-side IPC server.
+/// Represents a thread that manages the communication and state for a highlighter process.
 pub struct HighlighterWorker {
     shutdown_sender: Option<oneshot::Sender<()>>,
     thread: Option<JoinHandle<()>>,
 }
 
 impl HighlighterWorker {
-    /// Spawns the service thread, child highlighter process, and IPC server.
-    ///
-    /// The startup channel makes this method synchronous from the caller's perspective: it only
-    /// returns success after the child process and server pipes are ready.
+    /// Spawns a new highlighter process and thread to manage it.
     pub fn spawn(config: Arc<Mutex<Config>>) -> io::Result<Self> {
         let (shutdown_sender, shutdown_receiver) = oneshot::channel();
         let (startup_sender, startup_receiver) = std::sync::mpsc::sync_channel(1);
 
+        // Start a thread to manage communication with the new process.
         let thread = thread::Builder::new()
             .name("harper-highlighter-service".to_string())
             .spawn(move || {
@@ -83,17 +78,11 @@ impl HighlighterWorker {
     }
 
     /// Reports whether the worker thread has exited.
-    ///
-    /// The service uses this to lazily clean up workers that ended because the child process exited
-    /// or IPC reached EOF.
     pub fn is_finished(&self) -> bool {
         self.thread.as_ref().is_some_and(JoinHandle::is_finished)
     }
 
     /// Requests shutdown and joins the worker thread.
-    ///
-    /// Sending the shutdown signal lets the async server loop break before the worker terminates and
-    /// reaps the child process.
     pub fn stop(&mut self) {
         if let Some(shutdown_sender) = self.shutdown_sender.take() {
             let _ = shutdown_sender.send(());
@@ -115,9 +104,7 @@ impl Drop for HighlighterWorker {
 }
 
 /// Serves highlighter IPC requests until shutdown or child EOF.
-///
-/// This exists so the worker thread can race normal protocol handling against the service shutdown
-/// signal without making the highlighter process aware of tray-service state.
+/// This is the content of the thread the above struct represents.
 async fn run_server_until_shutdown<R, W>(
     server: &mut Server<R, W>,
     mut shutdown_receiver: oneshot::Receiver<()>,
