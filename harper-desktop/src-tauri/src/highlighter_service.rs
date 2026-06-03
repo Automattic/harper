@@ -1,16 +1,9 @@
-use crate::config::Config;
-use crate::highlighter_process::HighlighterProcess;
-use crate::{communication::Server, highlighter_worker::HighlighterWorker};
+use crate::{config::Config, highlighter_worker::HighlighterWorker};
 use std::{
     io,
     sync::{Arc, Mutex as StdMutex},
-    thread::{self, JoinHandle},
 };
-use tokio::{
-    io::{AsyncRead, AsyncWrite},
-    runtime::Builder,
-    sync::{Mutex, oneshot},
-};
+use tokio::sync::Mutex;
 
 /// Wraps around a [`HighlighterWorker`] and turns it into a service that is easier to manage.
 /// We can start and stop it and simply provide a shared `Config` object that we can update whenever.
