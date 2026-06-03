@@ -1,6 +1,6 @@
 [package]
 name = "harper-desktop"
-version = "2.2.1"
+version = "2.3.1"
 description = "A Tauri App"
 authors = ["you"]
 edition = "2024"
@@ -43,6 +43,7 @@ objc2-app-kit = { version = "0.3.2", default-features = false, features = [
     "std",
     "libc",
     "NSRunningApplication",
+    "NSWorkspace",
 ] }
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "std",

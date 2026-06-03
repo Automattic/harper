@@ -3073,6 +3073,13 @@
 								"state": true,
 								"label": "For Free of Charge"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
+							}
 						}
 					]
 				}
@@ -4989,6 +4996,13 @@
 								"name": "EverySingleOneOf",
 								"state": true,
 								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
 							}
 						}
 					]
