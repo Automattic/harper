@@ -171,6 +171,7 @@ use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::plural_decades::PluralDecades;
@@ -727,6 +728,7 @@ impl LintGroup {
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
+        insert_expr_rule!(PayForPrice, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
