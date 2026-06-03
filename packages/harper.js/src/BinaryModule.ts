@@ -112,7 +112,7 @@ export function createBinaryModuleFromUrl(url: string, glueFlavor?: WasmGlueFlav
 export class BinaryModuleImpl {
 	public url: string | URL = '';
 	public glueFlavor: WasmGlueFlavor = 'full';
-	private inner: Promise<WasmModule> | null = null;
+	protected inner: Promise<WasmModule> | null = null;
 
 	/** Load a binary from a specified URL. This is the only recommended way to construct this type. */
 	public static create(url: string | URL, glueFlavor?: WasmGlueFlavor): BinaryModuleImpl {
@@ -155,8 +155,6 @@ export class SuperBinaryModule extends BinaryModuleImpl {
 	}
 
 	async getBinaryModule(): Promise<any> {
-		return await LazyPromise.from(() =>
-			loadBinary(typeof this.url === 'string' ? this.url : this.url.href, this.glueFlavor),
-		);
+		return await this.inner!;
 	}
 }
