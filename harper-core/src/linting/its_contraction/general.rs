@@ -70,10 +70,10 @@ impl Linter for General {
 impl General {
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
         let offender = toks.first()?;
-        let offender_chars = offender.span.get_content(source);
+        let offender_chars = offender.get_ch(source);
 
         let modifier = toks.get(2)?;
-        let modifier_text = modifier.span.get_content_string(source);
+        let modifier_text = modifier.get_str(source);
         let modifier_lower = modifier_text.to_ascii_lowercase();
         let next_kind = toks.get(4).map(|tok| tok.kind.clone());
 
@@ -190,7 +190,7 @@ impl General {
             return false;
         }
 
-        let modifier_text = modifier.span.get_content_string(source);
+        let modifier_text = modifier.get_str(source);
 
         !["had", "been", "got"]
             .iter()
@@ -198,7 +198,7 @@ impl General {
     }
 
     fn is_likely_predicative_participle(tok: &Token, source: &[char]) -> bool {
-        let text = tok.span.get_content_string(source);
+        let text = tok.get_str(source);
 
         ["called", "named", "known", "termed", "titled"]
             .iter()

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic iframe textarea parent</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f4f4f5;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 32px auto;
+        padding: 24px;
+      }
+
+      iframe {
+        width: 100%;
+        height: 320px;
+        border: 1px solid #d4d4d8;
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Dynamic iframe textarea test</h1>
+      <iframe
+        id="editor-frame"
+        title="Cross-origin child editor"
+        src="http://127.0.0.1:8081/iframe_dynamic_textarea_child.html"
+      ></iframe>
+    </main>
+  </body>
+</html>

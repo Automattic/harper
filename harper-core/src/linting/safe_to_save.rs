@@ -47,7 +47,7 @@ impl ExprLinter for SafeToSave {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let safe_idx = toks
             .iter()
-            .position(|t| t.span.get_content_string(src).to_lowercase() == "safe")?;
+            .position(|t| t.get_str(src).to_lowercase() == "safe")?;
 
         let safe_tok = &toks[safe_idx];
 

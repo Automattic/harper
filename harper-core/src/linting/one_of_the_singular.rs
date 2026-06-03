@@ -24,9 +24,7 @@ impl SeqExprExt for SequenceExpr {
             (t.kind.is_non_possessive_noun() || t.kind.is_adjective())
                 && !t.kind.is_preposition() // "in" etc.
                 && !t.kind.is_pronoun() // "who" etc.
-                && !t
-                    .span
-                    .get_content(s)
+                && !t.get_ch(s)
                     .eq_any_ignore_ascii_case_str(&["ah", "few", "first", "said", "uh"])
         })
     }

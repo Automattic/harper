@@ -1,34 +1,32 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
-    expr::{All, AnchorEnd, Expr, FirstMatchOf, LongestMatchOf, ReflexivePronoun, SequenceExpr},
+    expr::{All, AnchorEnd, Expr, FirstMatchOf, ReflexivePronoun, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct Addicting {
-    expr: LongestMatchOf,
+    expr: SequenceExpr,
 }
 
 impl Default for Addicting {
     fn default() -> Self {
         Self {
-            expr: LongestMatchOf::new(vec![
+            expr: SequenceExpr::aco("addicting").then_longest_of(vec![
                 // matches `addicting` without anything after
-                Box::new(SequenceExpr::aco("addicting").then(AnchorEnd)),
+                Box::new(AnchorEnd),
+                // Semicolon is not handled like comma is for `Chunk` - TODO: remove when #3405 is fixed
+                Box::new(SequenceExpr::default().then_semicolon()),
                 // matches `addicting` <ws> [ any word but not a reflexive pronoun or object pronoun ]
-                Box::new(
-                    SequenceExpr::aco("addicting")
-                        .then_whitespace()
-                        .then(All::new(vec![
-                            // positive - any word
-                            Box::new(SequenceExpr::any_word()),
-                            // negative - reflexive pronoun or object pronoun
-                            Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
-                                Box::new(ReflexivePronoun::with_common_errors()),
-                                Box::new(SequenceExpr::default().then_object_pronoun()),
-                            ]))),
-                        ])),
-                ),
+                Box::new(SequenceExpr::whitespace().then(All::new(vec![
+                    // positive - any word
+                    Box::new(SequenceExpr::any_word()),
+                    // negative - reflexive pronoun or object pronoun
+                    Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
+                        Box::new(ReflexivePronoun::with_common_errors()),
+                        Box::new(SequenceExpr::default().then_object_pronoun()),
+                    ]))),
+                ]))),
             ]),
         }
     }
@@ -49,7 +47,7 @@ impl ExprLinter for Addicting {
             lint_kind: LintKind::Style,
             suggestions: vec![Suggestion::replace_with_match_case(
                 "addictive".chars().collect(),
-                tok.span.get_content(src),
+                tok.get_ch(src),
             )],
             message: "When used as an adjective, `addictive` is the traditional and more f form."
                 .to_owned(),
@@ -118,6 +116,56 @@ mod tests {
         assert_no_lints(
             "The British, in another display of gunboat diplomacy, coerced countless innocent people into addicting themselves to opium.",
             Addicting::default(),
+        );
+    }
+
+    #[test]
+    fn fix_at_end() {
+        assert_suggestion_result("It is addicting", Addicting::default(), "It is addictive");
+    }
+
+    #[test]
+    fn fix_before_comma() {
+        assert_suggestion_result(
+            "An addicting, side-scrolling, bouncing platform game - mzmousa/fruit-catcher.",
+            Addicting::default(),
+            "An addictive, side-scrolling, bouncing platform game - mzmousa/fruit-catcher.",
+        );
+    }
+
+    #[test]
+    fn fix_at_end_with_bang() {
+        assert_suggestion_result(
+            "Name of the Game is \"Pappu Pakia\". It is super fun and addicting!",
+            Addicting::default(),
+            "Name of the Game is \"Pappu Pakia\". It is super fun and addictive!",
+        );
+    }
+
+    #[test]
+    fn fix_at_end_with_period() {
+        assert_suggestion_result(
+            "This game is kind of addicting. The fast pace and small initial tail size puts emphasis on control and reaction time.",
+            Addicting::default(),
+            "This game is kind of addictive. The fast pace and small initial tail size puts emphasis on control and reaction time.",
+        );
+    }
+
+    #[test]
+    fn fix_at_end_with_semicolon() {
+        assert_suggestion_result(
+            "Powerful emotionally, Extremely addicting; Best game played in a long time, lost hours of time playing game without realizing",
+            Addicting::default(),
+            "Powerful emotionally, Extremely addictive; Best game played in a long time, lost hours of time playing game without realizing",
+        );
+    }
+
+    #[test]
+    fn fix_at_end_with_semicolon_no_commas_due_to_chunk_mode() {
+        assert_suggestion_result(
+            "Extremely addicting; Best game played in a long time",
+            Addicting::default(),
+            "Extremely addictive; Best game played in a long time",
         );
     }
 }

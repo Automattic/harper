@@ -1,7 +1,45 @@
+default:
+  @just --list
+
+# Clean build artifacts (but keep dependencies)
+alias clean := soft-clean
+soft-clean:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  # Clean target + all harper-* directories as they all have a rust backend and build into target
+  cargo clean
+
+  # Handle packages/*
+
+  # The path stem is not combined into one file expansion because if they pop up into
+  # another directory, there is a chance they should not be removed.
+
+  rm -rf "{{justfile_directory()}}"/packages/chrome-plugin/{build,package}
+  rm -rf "{{justfile_directory()}}"/packages/components/{.svelte-kit,dist}
+  rm -rf "{{justfile_directory()}}"/packages/harper.js/{dist,markdown,temp}
+  rm -rf "{{justfile_directory()}}"/packages/lint-framework/{dist}
+  rm -rf "{{justfile_directory()}}"/packages/obsidian-plugin/{harper-obsidian-plugin.zip,main.js}
+  rm -rf "{{justfile_directory()}}"/packages/vscode-plugin/{.vscode-test,bin,build}
+  rm -rf "{{justfile_directory()}}"/packages/web/{.svelte-kit,.sveltepress,build}
+  rm -rf "{{justfile_directory()}}"/packages/wordpress-plugin/{build,harper.zip}
+  rm -rf "{{justfile_directory()}}"/harper-desktop/{.svelte-kit,build,package}
+  rm -rf "{{justfile_directory()}}"/harper-wasm/pkg
+
+# Hard clean all build artifacts and dependencies
+hard-clean: soft-clean
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  # Remove all node dependencies
+  find "{{justfile_directory()}}" -type d -name "node_modules" -prune -exec rm -rf {} +
+  # Prune node cache
+  pnpm store prune
+
 # Format entire project
 alias fmt := format
 format:
-  cargo fmt  
+  cargo fmt
   pnpm format
 
 # Build the shared component library
@@ -13,14 +51,25 @@ build-components:
   pnpm install --engine-strict=false
   pnpm build
 
+# Build the shared Harper editor library
+build-harper-editor: build-lint-framework build-components   
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/packages/harper-editor"
+  pnpm install --engine-strict=false
+  pnpm build
+
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt
+    wasm-pack build --target web --no-opt --out-name harper_wasm
+    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
   else
-    wasm-pack build --target web
+    wasm-pack build --target web --out-name harper_wasm
+    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
   fi
 
 # Build `harper.js` with all size optimizations available.
@@ -31,6 +80,7 @@ build-harperjs: build-wasm
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
@@ -94,7 +144,7 @@ build-wp: build-harperjs
   pnpm plugin-zip
 
 # Compile the website's dependencies and start a development server. Note that if you make changes to `harper-wasm`, you will have to re-run this command.
-dev-web: build-harperjs build-lint-framework build-components
+dev-web: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -103,13 +153,77 @@ dev-web: build-harperjs build-lint-framework build-components
   pnpm dev
 
 # Build the Harper website.
-build-web: build-harperjs build-lint-framework build-components
+build-web: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
   
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
   pnpm build
+
+# Start a development server for Harper Desktop.
+dev-desktop: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri dev
+
+# Start the Harper Desktop highlighter process directly.
+dev-desktop-highlighter:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cargo run -p harper-desktop -- highlighter
+
+# Check Harper Desktop frontend and Rust targets.
+check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm check
+
+  cd "{{justfile_directory()}}"
+  cargo check -p harper-desktop --all-targets
+
+# Build Harper Desktop Linux bundles.
+build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b deb,rpm,appimage
+
+# Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
+build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b app,dmg --target aarch64-apple-darwin
+
+# Build Harper Desktop macOS bundles.
+build-desktop-macos: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b app,dmg --target universal-apple-darwin
+
+# Build Harper Desktop macOS bundles without updater artifacts.
+build-desktop-macos-unsigned: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
@@ -118,8 +232,20 @@ build-obsidian: build-harperjs
   
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
+  max_bundle_size_bytes=$((30 * 1024 * 1024))
+
   pnpm install
   pnpm build
+
+  bundle_size_bytes=$(wc -c < main.js | tr -d '[:space:]')
+
+  if [ "$bundle_size_bytes" -gt "$max_bundle_size_bytes" ]; then
+    bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $bundle_size_bytes / 1024 / 1024 }")
+    max_bundle_size_mb=$(awk "BEGIN { printf \"%.2f\", $max_bundle_size_bytes / 1024 / 1024 }")
+
+    echo "Obsidian plugin bundle size ${bundle_size_mb} MB exceeds the ${max_bundle_size_mb} MB limit. This can cause problems for mobile devices with limited memory." >&2
+    exit 1
+  fi
 
   zip harper-obsidian-plugin.zip manifest.json main.js
 
@@ -311,7 +437,7 @@ check-rust: audit-dictionary
 # Perform format and type checking.
 check: check-rust check-js build-web
 
-check-js: build-harperjs build-lint-framework build-components
+check-js: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -490,6 +616,16 @@ bump-versions: update-vscode-linters
 
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
+  mv tauri.conf.json.edited tauri.conf.json
 
   just format
 
@@ -731,3 +867,75 @@ run-snapshots:
 
   cd harper-core
   cargo test -- test_pos_tagger test_most_lints
+
+# list configuration groups by label and description, with settings if mode is verbose
+ls-config mode="brief":
+  #! /usr/bin/env node
+  const verbose = '{{mode}}' === 'verbose';
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  const formatLine = (items, maxLen = 120) => {
+    const lines = [];
+    let line = '  ';
+    items.forEach((item, i) => {
+      const comma = i < items.length - 1 ? ', ' : '';
+      const wouldExceed = line.length + item.length + comma.length > maxLen;
+      if (wouldExceed && line !== '  ') {
+        lines.push(line);
+        line = '  ';
+      }
+      line += item + comma;
+    });
+    lines.push(line);
+    return lines.join('\n');
+  };
+  
+  config.forEach(g => {
+    console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`);
+    if (verbose) {
+      const names = g.Group.child.settings.map(s => s.Bool.name);
+      console.log(formatLine(names));
+    }
+  });
+
+# Search configuration groups for substring in label or description
+grep-config query:
+  #! /usr/bin/env node
+  const q = '{{query}}'.toLowerCase();
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
+        .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
+
+# search configuration group settings for substring in name
+grep-config-settings query:
+  #! /usr/bin/env node
+  const q = '{{query}}'.toLowerCase();
+  const config = JSON.parse(require('fs').readFileSync(require('path').join('{{justfile_directory()}}', 'harper-core/default_config.json'), 'utf8')).settings;
+  
+  const formatLine = (items, maxLen = 120) => {
+    const lines = [];
+    let line = '  ';
+    items.forEach((item, i) => {
+      const comma = i < items.length - 1 ? ', ' : '';
+      const wouldExceed = line.length + item.length + comma.length > maxLen;
+      if (wouldExceed && line !== '  ') {
+        lines.push(line);
+        line = '  ';
+      }
+      line += item + comma;
+    });
+    lines.push(line);
+    return lines.join('\n');
+  };
+  
+  config.forEach(g => {
+    const matches = g.Group.child.settings
+      .filter(s => s.Bool.name.toLowerCase().includes(q))
+      .map(s => s.Bool.name);
+    
+    if (matches.length) {
+      console.log(`\x1b[1m${g.Group.label}\x1b[0m:`);
+      console.log(`\x1b[36m${formatLine(matches)}\x1b[0m`);
+    }
+  });

@@ -1,15 +1,14 @@
 use hashbrown::HashSet;
 
-use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
 pub struct MassPlurals<D> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
@@ -20,9 +19,7 @@ where
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
         let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
-            tok.span
-                .get_content(src)
-                .ends_with_ignore_ascii_case_chars(&['s'])
+            tok.get_ch(src).ends_with_ignore_ascii_case_chars(&['s'])
         });
         let oov_looks_plural = All::new(vec![Box::new(oov), Box::new(looks_plural)]);
 
@@ -33,10 +30,10 @@ where
         ]);
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(oov_looks_plural),
-                Box::new(phrases),
-            ])),
+                Box::new(phrases) as Box<dyn Expr>,
+            ]),
             dict,
         }
     }
@@ -61,7 +58,7 @@ where
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
@@ -76,7 +73,7 @@ where
         } else {
             let invalid_plural_tok = &invalid_plural_toks[0];
             // Not a fixed phrase, so it's a single word that's not in the dictionary and ends with -s
-            let mut remaining_chars = invalid_plural_tok.span.get_content(src);
+            let mut remaining_chars = invalid_plural_tok.get_ch(src);
 
             // -s
             if remaining_chars.ends_with(&['s']) {

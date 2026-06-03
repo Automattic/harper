@@ -36,9 +36,7 @@ impl ExprLinter for ThoughThought {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let tok = find_the_only_token_matching(toks, src, |tok, src| {
-            tok.span
-                .get_content(src)
-                .eq_ignore_ascii_case_chars(&['t', 'h', 'o', 'u', 'g', 'h'])
+            tok.get_ch(src).eq_ch(&['t', 'h', 'o', 'u', 'g', 'h'])
         })?;
 
         Some(Lint {
@@ -46,7 +44,7 @@ impl ExprLinter for ThoughThought {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "thought",
-                tok.span.get_content(src),
+                tok.get_ch(src),
             )],
             message: "Is this a typo for `thought`?".to_string(),
             ..Default::default()

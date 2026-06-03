@@ -100,12 +100,12 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
             Ok(FoundNode::new(Some(AstStmtNode::Comment(comment)), end + 1))
         }
         TokenKind::Word(_) => {
-            let word_literal = key_token.span.get_content(source);
+            let word_literal = key_token.get_ch(source);
 
             match word_literal {
                 ['l', 'e', 't'] => {
                     expected_space(cursor + 1, tokens, source)?;
-                    let name = tokens[cursor + 2].span.get_content_string(source);
+                    let name = tokens[cursor + 2].get_str(source);
                     expected_space(cursor + 3, tokens, source)?;
 
                     let str_res = parse_quoted_string(&tokens[cursor + 4..end], source);
@@ -132,9 +132,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                     } else {
                         let open_brac_tok = &tokens[cursor + 4];
                         if !open_brac_tok.kind.is_open_square() {
-                            return Err(Error::UnexpectedToken(
-                                open_brac_tok.span.get_content_string(source),
-                            ));
+                            return Err(Error::UnexpectedToken(open_brac_tok.get_str(source)));
                         }
 
                         let matching = locate_matching_brace(
@@ -168,7 +166,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
 
                     Ok(FoundNode::new(
                         Some(AstStmtNode::create_set_expr(
-                            tokens[cursor + 2].span.get_content_string(source),
+                            tokens[cursor + 2].get_str(source),
                             AstExprNode::Seq(parse_seq(
                                 &tokens[(cursor + 4).min(end)..end],
                                 source,
@@ -182,9 +180,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                     cursor += 1 + case.next_idx;
 
                     if cursor != end {
-                        return Err(Error::UnexpectedToken(
-                            tokens[cursor].span.get_content_string(source),
-                        ));
+                        return Err(Error::UnexpectedToken(tokens[cursor].get_str(source)));
                     }
 
                     Ok(FoundNode::new(
@@ -202,9 +198,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                     cursor += 1 + sol.next_idx;
 
                     if cursor != end {
-                        return Err(Error::UnexpectedToken(
-                            tokens[cursor].span.get_content_string(source),
-                        ));
+                        return Err(Error::UnexpectedToken(tokens[cursor].get_str(source)));
                     }
 
                     Ok(FoundNode::new(
@@ -215,9 +209,7 @@ fn parse_stmt(tokens: &[Token], source: &[char]) -> Result<FoundNode<Option<AstS
                 _ => Err(Error::UnexpectedToken(word_literal.to_string())),
             }
         }
-        _ => Err(Error::UnsupportedToken(
-            key_token.span.get_content_string(source),
-        )),
+        _ => Err(Error::UnsupportedToken(key_token.get_str(source))),
     }
 }
 
@@ -241,9 +233,7 @@ fn parse_quoted_string(tokens: &[Token], source: &[char]) -> Result<FoundNode<St
 
     let quote_tok = tokens.get(cursor).ok_or(Error::EndOfInput)?;
     if !quote_tok.kind.is_quote() {
-        return Err(Error::UnexpectedToken(
-            quote_tok.span.get_content_string(source),
-        ));
+        return Err(Error::UnexpectedToken(quote_tok.get_str(source)));
     }
 
     let mut end = None;

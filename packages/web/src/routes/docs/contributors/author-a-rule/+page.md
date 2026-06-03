@@ -122,7 +122,12 @@ Similarly, if you just want Harper to enforce proper capitalization of a multi-t
 },
 ```
 
-If neither of those work for the rule you have in mind, continue on to the next section.
+If your rule is a good fit for Weir, add it under `harper-core/src/linting/weir_rules`.
+A top-level file, such as `RuleName.weir`, is loaded as one public rule named `RuleName`.
+If several related Weir rules should share one setting and one rules-catalog entry, put them in a directory instead.
+For example, `RuleName/Singular.weir` and `RuleName/Plural.weir` run as separate child rules, but Harper exposes them together as one public rule named `RuleName`.
+
+If none of those work for the rule you have in mind, continue on to the next section.
 
 ## Create Your Rule's Module
 
@@ -176,6 +181,13 @@ insert_expr_rule!(OutOfDate, true);
 If you use a `ExprLinter`, use `insert_expr_rule` to take advantage of Harper's aggressive caching.
 Otherwise, use `insert_struct_rule`.
 
+## Update `default_config.json`
+
+Whenever you add a new rule, update `harper-core/default_config.json` too.
+That file defines the curated default configuration shown throughout Harper, so a new rule will not
+appear in the default setup until it is added there as well.
+See also [`StructuredConfig`](https://docs.rs/harper-core/latest/harper_core/linting/lint_group/struct.StructuredConfig.html).
+
 ## Write Your Rule
 
 Defining an expression and [implementing the ExprLinter trait](https://docs.rs/harper-core/latest/harper_core/linting/trait.ExprLinter.html) is the easiest way to define a new rule for Harper.
@@ -221,6 +233,21 @@ impl ExprLinter for ThatWhich {
 }
 ```
 
+## Use ExprLinter Skeleton Templates
+
+To make it easier to get started with ExprLinter rules, Harper provides skeleton templates you can copy:
+
+- **[harper-core/expr_linter_skeleton.rs](../../../../../../../harper-core/expr_linter_skeleton.rs)** - A minimal, uncommented skeleton
+- **[harper-core/expr_linter_skeleton_commented.rs](../../../../../../../harper-core/expr_linter_skeleton_commented.rs)** - A heavily commented version with detailed explanations
+
+To use these:
+1. Copy either file to `harper-core/src/linting/my_rule.rs`
+2. Rename the struct from `ExprLinterSkeleton` to your rule name
+3. Follow the `// EDIT` comments to customize the expression and logic
+4. Remove the debug `eprintln!` statement before committing
+
+The commented version is especially helpful for understanding the various components and options available when implementing ExprLinter rules.
+
 ## Test Your Changes
 
 To test your rule, first write out an example of the error it looks for in a test file at the root of the Harper monorepo.
@@ -235,6 +262,15 @@ Your test should look different.
 From there, you can run `just lint <test filename>`.
 It should emit a readable report of the grammatical errors in the document.
 If the error your rule looks for does _not_ appear in this list, something is wrong.
+
+Once you have unit tests for your rule, use `cargo test -- <REGEX>` from `harper-core` to run only the tests whose names match a pattern:
+
+```bash
+cd harper-core
+cargo test -- <REGEX>
+```
+
+This keeps the edit-test loop fast while you iterate on one rule and skips tests from other workspace crates.
 
 If you need any help writing or debugging rules, don't be afraid to contact the Harper team in your draft pull request.
 

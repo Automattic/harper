@@ -1,6 +1,5 @@
 /// <reference types="vitest" />
 import { playwright } from '@vitest/browser-playwright';
-import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
 import apiExtractorConfig from './api-extractor.json';
@@ -21,9 +20,13 @@ function removeAssetsPlugin(options: { test: RegExp }): Plugin {
 export default defineConfig({
 	build: {
 		lib: {
-			entry: resolve(__dirname, 'src/main.ts'),
-			fileName: 'harper',
-			name: 'harper',
+			entry: {
+				index: './src/main.ts',
+				binary: './src/binaries/binary.ts',
+				slimBinary: './src/binaries/slimBinary.ts',
+				binaryInlined: './src/binaries/binaryInlined.ts',
+				slimBinaryInlined: './src/binaries/slimBinaryInlined.ts',
+			},
 			formats: ['es'],
 		},
 		minify: false,
@@ -32,7 +35,6 @@ export default defineConfig({
 			external: [/^node:/, 'fs'],
 			output: {
 				minifyInternalExports: false,
-				inlineDynamicImports: true,
 			},
 			treeshake: {
 				moduleSideEffects: false,

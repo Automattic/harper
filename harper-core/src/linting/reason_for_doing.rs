@@ -47,18 +47,14 @@ impl ExprLinter for ReasonForDoing {
         const OF: usize = 2;
         // let reasontok = &toks[REASON];
         // let reasonspan = reasontok.span;
-        let reasonchars = toks[REASON].span.get_content(src);
+        let reasonchars = toks[REASON].get_ch(src);
         // let oftok = &toks[OF];
         let ofspan = toks[OF].span;
         // let ofchars = ofspan.get_content(src);
 
         // "for reasons of doing" is a legit construction. TODO: Usually, but not always!
         if reasonchars.last()? == &'s'
-            && preceded_by_word(ctx, |t| {
-                t.span
-                    .get_content(src)
-                    .eq_ignore_ascii_case_chars(&['f', 'o', 'r'])
-            })
+            && preceded_by_word(ctx, |t| t.get_ch(src).eq_ch(&['f', 'o', 'r']))
         {
             return None;
         }

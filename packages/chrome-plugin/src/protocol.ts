@@ -1,13 +1,16 @@
-import type { Dialect, LintConfig, LintOptions } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
 	| LintRequest
 	| GetConfigRequest
+	| GetStructuredConfigRequest
 	| SetConfigRequest
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetDelayRequest
+	| SetDelayRequest
 	| SetDomainStatusRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
@@ -34,9 +37,11 @@ export type Request =
 export type Response =
 	| LintResponse
 	| GetConfigResponse
+	| GetStructuredConfigResponse
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
@@ -69,6 +74,15 @@ export type GetConfigResponse = {
 	config: LintConfig;
 };
 
+export type GetStructuredConfigRequest = {
+	kind: 'getStructuredConfig';
+};
+
+export type GetStructuredConfigResponse = {
+	kind: 'getStructuredConfig';
+	config: StructuredLintConfig;
+};
+
 export type SetConfigRequest = {
 	kind: 'setConfig';
 	config: LintConfig;
@@ -77,6 +91,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetDelayRequest = {
+	kind: 'getDelay';
+};
+
+export type GetDelayResponse = {
+	kind: 'getDelay';
+	delay: number;
+};
+
+export type SetDelayRequest = {
+	kind: 'setDelay';
+	delay: number;
 };
 
 export type GetLintDescriptionsRequest = {

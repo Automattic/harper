@@ -28,14 +28,14 @@ impl ExprLinter for WasAloud {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let verb = matched_tokens[0].span.get_content_string(source);
+        let verb = matched_tokens[0].get_str(source);
 
         Some(Lint {
             span: matched_tokens.span()?,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::replace_with_match_case(
                 format!("{verb} allowed").chars().collect(),
-                matched_tokens[0].span.get_content(source),
+                matched_tokens[0].get_ch(source),
             )],
             message: format!("Did you mean `{verb} allowed`?"),
             priority: 31,

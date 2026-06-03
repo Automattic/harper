@@ -52,7 +52,7 @@ impl ExprLinter for GoSoFarAsTo {
             format!(
                 "{} as {}",
                 go_so_far_toks.span()?.get_content_string(src),
-                to_tok.span.get_content_string(src)
+                to_tok.get_str(src)
             )
             .chars()
             .collect(),

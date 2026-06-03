@@ -23,7 +23,7 @@ impl Default for NoLonger {
                         TokenKind::is_adjective,
                     ][..],
                 ))
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()
@@ -51,7 +51,7 @@ impl ExprLinter for NoLonger {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "no",
-                toks[0].span.get_content(src),
+                toks[0].get_ch(src),
             )],
             message: "The correct expression is `no longer`.".to_string(),
             ..Default::default()

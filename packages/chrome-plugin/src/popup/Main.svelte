@@ -115,7 +115,7 @@ function daysSince(date: Date): number {
       </h1>
   
       <p class="text-sm font-medium font-sans dark:text-white text-right">
-        Harper is {enabled ? 'enabled on ' : 'disabled on '}{domain}
+        Harper is {enabled ? 'enabled on ' : 'disabled on '}{domain.length > 10 ? "this page" : domain}.
       </p>
     </section>
   </section>

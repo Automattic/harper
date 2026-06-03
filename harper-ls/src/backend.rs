@@ -5,7 +5,6 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use crate::config::Config;
-use crate::dictionary_io::{load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
@@ -14,12 +13,13 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
-use harper_core::linting::{LintGroup, LintGroupConfig};
+use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -316,7 +316,7 @@ impl Backend {
             parser: impl Parser + 'static,
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
-            lint_config: &LintGroupConfig,
+            lint_config: &FlatConfig,
             dialect: Dialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
@@ -393,7 +393,7 @@ impl Backend {
                 }
             }
             "mail" => Some(Box::new(PlainEnglish)),
-            "markdown" => Some(Box::new(Markdown::new(markdown_options))),
+            "markdown" | "quarto" => Some(Box::new(Markdown::new(markdown_options))),
             "org" => Some(Box::new(OrgMode)),
             "plaintext" | "text" => Some(Box::new(PlainEnglish)),
             "python" => Some(Box::new(PythonParser::default())),

@@ -13,7 +13,7 @@ pub struct FewUnitsOfTimeAgo {
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
-        let units = TimeUnitExpr;
+        let units = TimeUnitExpr::default();
 
         let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
 
@@ -39,7 +39,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
         let mut span = None;
 
         for tok in toks.iter().take(3) {
-            if tok.span.get_content_string(src).eq_ignore_ascii_case("few") {
+            if tok.get_str(src).eq_ignore_ascii_case("few") {
                 span = Some(tok.span);
                 break;
             }

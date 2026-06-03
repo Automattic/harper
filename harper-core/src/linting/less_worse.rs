@@ -32,9 +32,9 @@ impl ExprLinter for LessWorse {
 
         let span = toks.span()?;
 
-        let how_little = toks[0].span.get_content(src).to_lower();
+        let how_little = toks[0].get_ch(src).to_lower();
         let space_or_hyphen = &toks[1];
-        let how_bad = toks[2].span.get_content(src).to_lower();
+        let how_bad = toks[2].get_ch(src).to_lower();
 
         let (suggestions, message): (&[&[char]], &str) = match (
             how_little.as_ref(),

@@ -1,4 +1,4 @@
-import type { BinaryModule, SuperBinaryModule } from './binary';
+import type { BinaryModule, SuperBinaryModule } from './BinaryModule';
 import { assert } from './utils';
 
 export type SerializableTypes =
@@ -72,12 +72,13 @@ export default class Serializer {
 		if (arg.to_json !== undefined) {
 			const json = arg.to_json();
 			let type: SerializableTypes | undefined;
+			const constructorName = arg.constructor?.name;
 
-			if (arg instanceof Lint) {
+			if (arg instanceof Lint || constructorName === 'Lint') {
 				type = 'Lint';
-			} else if (arg instanceof Suggestion) {
+			} else if (arg instanceof Suggestion || constructorName === 'Suggestion') {
 				type = 'Suggestion';
-			} else if (arg instanceof Span) {
+			} else if (arg instanceof Span || constructorName === 'Span') {
 				type = 'Span';
 			}
 

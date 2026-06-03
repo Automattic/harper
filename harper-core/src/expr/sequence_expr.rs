@@ -60,19 +60,25 @@ impl Expr for SequenceExpr {
         for cur_expr in &self.exprs {
             let out = cur_expr.run(cursor, tokens, source)?;
 
-            // Only expand the window if the match actually covers some tokens
-            if out.end > out.start {
-                window.expand_to_include(out.start);
-                window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
-            }
+            // Zero-width assertions (like AnchorEnd) validate position without consuming tokens
+            // They should not expand the window or advance the cursor
+            let is_zero_width = out.end == out.start;
 
-            // Only advance cursor if we actually matched something
-            if out.end > cursor {
-                cursor = out.end;
-            } else if out.start < cursor {
-                cursor = out.start;
+            if !is_zero_width {
+                // Only expand the window if the match actually covers some tokens
+                if out.end > out.start {
+                    window.expand_to_include(out.start);
+                    window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
+                }
+
+                // Only advance cursor if we actually matched something
+                if out.end > cursor {
+                    cursor = out.end;
+                } else if out.start < cursor {
+                    cursor = out.start;
+                }
             }
-            // If both start and end are equal to cursor, don't move the cursor
+            // If zero-width, don't expand window or advance cursor - just validate position
         }
 
         match &self.capture_range {
@@ -307,10 +313,7 @@ impl SequenceExpr {
     /// Match any word except the ones in `words`.
     pub fn then_word_except(self, words: &'static [&'static str]) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
-            !tok.kind.is_word()
-                || !words
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+            !tok.kind.is_word() || !words.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -341,10 +344,7 @@ impl SequenceExpr {
         F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
-            pred_is(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+            pred_is(&tok.kind) && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -405,9 +405,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !pred_not(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -441,9 +439,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             pred_is(&tok.kind)
                 && !preds_isnt.iter().any(|pred| pred(&tok.kind))
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -495,9 +491,7 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -513,9 +507,19 @@ impl SequenceExpr {
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds.iter().any(|pred| pred(&tok.kind))
-                || words
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                || words.iter().any(|&word| tok.get_ch(src).eq_str(word))
+        })
+    }
+
+    /// Match a token where any of the first token kind predicates returns true
+    /// and the second returns false.    
+    pub fn then_kind_any_but_not<F1, F2>(self, preds_is: &'static [F1], pred_not: F2) -> Self
+    where
+        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+    {
+        self.then(move |tok: &Token, _src: &[char]| {
+            preds_is.iter().any(|pred| pred(&tok.kind)) && !pred_not(&tok.kind)
         })
     }
 
@@ -534,9 +538,7 @@ impl SequenceExpr {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
                 && !pred_not(&tok.kind)
-                && !ex
-                    .iter()
-                    .any(|&word| tok.span.get_content(src).eq_ignore_ascii_case_str(word))
+                && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
         })
     }
 
@@ -638,6 +640,7 @@ impl SequenceExpr {
     gen_then_from_is!(backslash);
     gen_then_from_is!(slash);
     gen_then_from_is!(percent);
+    gen_then_from_is!(backtick);
 
     // Other
 
@@ -687,7 +690,7 @@ where
 mod tests {
     use crate::{
         Document, TokenKind,
-        expr::{ExprExt, SequenceExpr},
+        expr::{AnchorEnd, ExprExt, SequenceExpr},
         linting::tests::SpanVecExt,
     };
 
@@ -813,5 +816,68 @@ mod tests {
         );
         let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
         assert_eq!(matches.to_strings(&doc), vec!["one world", "two world"]);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_1() {
+        let expr = SequenceExpr::aco("foo").then_any_of(vec![
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_bar = Document::new_plain_english_curated("foo bar");
+
+        let matches_with_bar = expr.iter_matches_in_doc(&doc_with_bar).collect::<Vec<_>>();
+
+        eprintln!("matches_with_bar: {:#?}", matches_with_bar);
+
+        // "foo bar" matches with span covering both tokens
+        assert_eq!(matches_with_bar.len(), 1);
+        assert_eq!(matches_with_bar[0].start, 0);
+        assert_eq!(matches_with_bar[0].end, 3);
+        assert_eq!(matches_with_bar.to_strings(&doc_with_bar), vec!["foo bar"]);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_2() {
+        let expr = SequenceExpr::aco("foo").then_any_of(vec![
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_end = Document::new_plain_english_curated("foo");
+
+        let matches_with_end = expr.iter_matches_in_doc(&doc_with_end).collect::<Vec<_>>();
+
+        eprintln!("matches_with_end: {:#?}", matches_with_end);
+
+        // "foo" at end matches with span covering just "foo"
+        assert_eq!(matches_with_end.len(), 1);
+        assert_eq!(matches_with_end[0].start, 0);
+        assert_eq!(matches_with_end[0].end, 1);
+        assert_eq!(matches_with_end.to_strings(&doc_with_end), vec!["foo"]);
+    }
+
+    #[test]
+    fn flag_foo_followed_by_bar_or_at_end_3() {
+        let expr = SequenceExpr::aco("foo").then_any_of(vec![
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+            Box::new(AnchorEnd),
+        ]);
+
+        let doc_with_foo_bar_baz = Document::new_plain_english_curated("foo bar baz");
+
+        let matches_with_foo_bar_baz = expr
+            .iter_matches_in_doc(&doc_with_foo_bar_baz)
+            .collect::<Vec<_>>();
+
+        eprintln!("matches_with_foo_bar_baz: {:#?}", matches_with_foo_bar_baz);
+
+        // "foo bar baz" should NOT match because "bar" is not at the end
+        assert_eq!(matches_with_foo_bar_baz.len(), 0);
+        assert_eq!(
+            matches_with_foo_bar_baz.to_strings(&doc_with_foo_bar_baz),
+            Vec::<String>::new()
+        );
     }
 }

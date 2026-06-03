@@ -60,7 +60,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
         for word in toks
             .iter()
             .filter(|tok| tok.kind.is_word())
-            .map(|tok| tok.span.get_content(src))
+            .map(|tok| tok.get_ch(src))
             .collect::<Vec<_>>()
         {
             let term: &[char] = match word {

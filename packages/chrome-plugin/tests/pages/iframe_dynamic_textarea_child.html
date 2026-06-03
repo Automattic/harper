@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic child editor</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: sans-serif;
+        background: white;
+      }
+
+      button {
+        margin-bottom: 16px;
+        padding: 10px 18px;
+        border: 1px solid #6a3be5;
+        border-radius: 999px;
+        background: white;
+        color: #6a3be5;
+        cursor: pointer;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 12px;
+        font: 16px/1.4 sans-serif;
+        border: 1px solid #a1a1aa;
+        box-sizing: border-box;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="reveal" type="button">Enter manually</button>
+    <div id="editor-root"></div>
+    <script>
+      const revealButton = document.getElementById('reveal');
+      const editorRoot = document.getElementById('editor-root');
+
+      revealButton.addEventListener('click', () => {
+        if (document.getElementById('editor') != null) {
+          return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.id = 'editor';
+        textarea.spellcheck = true;
+
+        editorRoot.appendChild(textarea);
+
+        // Reveal after Harper's one-shot delayed scan so focus is what triggers attachment.
+        window.setTimeout(() => {
+          textarea.style.opacity = '1';
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>

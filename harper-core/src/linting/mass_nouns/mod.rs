@@ -60,7 +60,7 @@ mod tests {
     #[test]
     fn flag_advices_and_an_advice() {
         assert_lint_count(
-            "I asked for an advice and he gave me two advices!",
+            "I asked for an advice. He gave me two advices!",
             MassNouns::new(FstDictionary::curated()),
             2,
         );
@@ -81,6 +81,15 @@ mod tests {
             "I managed to pack all my clothings into one suitcase.",
             MassNouns::new(FstDictionary::curated()),
             "I managed to pack all my clothing into one suitcase.",
+        );
+    }
+
+    #[test]
+    fn ignore_a_fun_and_fantastic() {
+        assert_lint_count(
+            "It was such a fun and fantastic adventure together that ...",
+            MassNouns::new(FstDictionary::curated()),
+            0,
         );
     }
 }

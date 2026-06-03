@@ -61,6 +61,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+                ("arguments to be said", "arguments to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -126,6 +135,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
         ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
+        ),
         "DefiniteArticle" => (
             &[
                 ("definitive article", "definite article"),
@@ -176,6 +196,15 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "ExpandAlgorithm" => (
+            &[
+                ("algo", "algorithm"),
+                ("algos", "algorithms"),
+            ],
+            "Use `algorithm` instead of `algo`",
+            "Expands the abbreviation `algo` to the full word `algorithm` for clarity.",
+            LintKind::Style
+        ),
         "ExpandArgument" => (
             &[
                 ("arg", "argument"),
@@ -201,6 +230,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `dereference` instead of `deref`",
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandNotification" => (
+            &[
+                ("notif", "notification"),
+                ("notifs", "notifications"),
+            ],
+            "Use `notification` instead of `notif`",
+            "Expands the abbreviation `notif` to the full word `notification` for clarity.",
             LintKind::Style
         ),
         "ExpandParameter" => (
@@ -229,6 +267,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `standard input`, `standard output`, and `standard error` instead of `stdin`, `stdout`, and `stderr`",
             "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity.",
+            LintKind::Style
+        ),
+        "ExpandVulnerability" => (
+            &[
+                ("vuln", "vulnerability"),
+                ("vulns", "vulnerabilities"),
+            ],
+            "Use `vulnerability` instead of `vuln`",
+            "Expands the abbreviation `vuln` to the full word `vulnerability` for clarity.",
             LintKind::Style
         ),
         "ExplanationMark" => (
@@ -365,6 +412,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InflectionPoint" => (
+            &[
+                ("infliction point", "inflection point"),
+                ("infliction points", "inflection points"),
+            ],
+            "To refer to a significant change in a trend, `inflection point` is the correct term.",
+            "Corrects `infliction point` to `inflection point`.",
+            LintKind::Malapropism
+        ),
         "InvestIn" => (
             &[
                 // Verb
@@ -417,6 +473,17 @@ pub fn lint_group() -> LintGroup {
             LintKind::Style
         ),
 
+        "LookForwardTo" => (
+            &[
+                ("look forward for", "look forward to"),
+                ("looked forward for", "looked forward to"),
+                ("looks forward for", "looks forward to"),
+                ("looking forward for", "looking forward to")
+            ],
+            "The correct preposition in this phrase is `to`.",
+            "Corrects `look forward for` to `look forward to`.",
+            LintKind::Usage
+        ),
         "MakeDoWith" => (
             &[
                 ("make due with", "make do with"),
@@ -570,6 +637,32 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "UseToUsedTo" => (
+            &[
+                // "be" verbs + "use to" -> "used to" (accustomed to)
+                ("am use to", "am used to"),
+                ("are use to", "are used to"),
+                ("is use to", "is used to"),
+                ("was use to", "was used to"),
+                ("were use to", "were used to"),
+                ("be use to", "be used to"),
+                // contractions of "be"
+                ("i'm use to", "i'm used to"),
+                ("we're use to", "we're used to"),
+                ("you're use to", "you're used to"),
+                ("they're use to", "they're used to"),
+                ("he's use to", "he's used to"),
+                ("she's use to", "she's used to"),
+                ("it's use to", "it's used to"),
+                // "get" forms + "use to" -> "used to" (becoming accustomed)
+                ("getting use to", "getting used to"),
+                ("get use to", "get used to"),
+                ("got use to", "got used to"),
+            ],
+            "The correct form is `used to`, not `use to`.",
+            "Corrects `use to` to `used to` when meaning accustomed to (after forms of `be` or `get`).",
+            LintKind::Grammar
+        ),
         "WreakHavoc" => (
             &[
                 ("wreck havoc", "wreak havoc"),
@@ -580,6 +673,22 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `wreak havoc`?",
             "Corrects the eggcorn `wreck havoc` to `wreak havoc`, which is the proper term for causing chaos or destruction.",
             LintKind::Eggcorn
+        ),
+        "VerseAsVerb" => (
+            &[
+                ("verse against", "play against"),
+                ("versed against", "played against"),
+                ("versing against", "playing against"),
+                ("verses against", "plays against"),
+                ("verse me", "play me"),
+                ("verse him", "play him"),
+                ("verse her", "play her"),
+                ("verse them", "play them"),
+                ("verse you", "play you"),
+            ],
+            "`Verse` is not a verb meaning to compete. Use `play against` or `compete against` instead.",
+            "Corrects the nonstandard use of `verse` as a verb (from `versus`) to standard alternatives.",
+            LintKind::Nonstandard
         ),
         "WroteToRote" => (
             &[
@@ -630,6 +739,24 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
+        "DateBackFrom" => (
+            &[
+                (&["date back from"], &["date from", "date back to"]),
+                (&["dates back from"], &["dates from", "dates back to"]),
+            ],
+            "Use `date from` or `date back to`, not `date back from`.",
+            "Corrects the blend of `date from` and `date back to` into the nonstandard `date back from`.",
+            LintKind::Usage
+        ),
         "DoubleEdgedSword" => (
             &[
                 (&["double edge sword", "double-edge sword", "double edge-sword", "double-edge-sword",
@@ -650,6 +777,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
             LintKind::Style
         ),
+        "ExpandCoordinate" => (
+            &[
+                (&["coord"], &["coordinate"]),
+                (&["coords"], &["coordinates"]),
+            ],
+            "Use `coordinate` instead of `coord`",
+            "Expands the abbreviation `coord` to the full word `coordinate` for clarity.",
+            LintKind::Style
+        ),
         "ExpandDecl" => (
             &[
                 (&["decl"], &["declaration", "declarator"]),
@@ -657,6 +793,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `declaration` or `declarator` instead of `decl`",
             "Expands the abbreviation `decl` to the full word `declaration` or `declarator` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandGovt" => (
+            &[
+                (&["govt", "govt."], &["government"]),
+                (&["govts"], &["governments"])
+            ],
+            "Use `government` instead of `govt` or `govt.`",
+            "Expands the abbreviation `govt` or `govt.` to the full word `government` for clarity.",
             LintKind::Style
         ),
         "Expat" => (
@@ -721,6 +866,15 @@ pub fn lint_group() -> LintGroup {
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
         ),
+        "Monumentous" => (
+            &[
+                (&["monumentous"], &["momentous", "monumental"]),
+                (&["monumentously"], &["momentously", "monumentally"]),
+            ],
+            "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
+            "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
+            LintKind::Nonstandard
+        ),
         "NervousWreck" => (
             &[
                 (&["nerve wreck", "nerve-wreck"], &["nervous wreck"]),
@@ -757,6 +911,16 @@ pub fn lint_group() -> LintGroup {
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
+        ),
+        "SideTangent" => (
+            &[
+                (&["a side tangent"], &["a tangent", "an aside"]),
+                (&["side tangent"], &["tangent", "aside"]),
+                (&["side tangents"], &["tangents", "aside"])
+            ],
+            "The word `side` is redundant in this phrase.",
+            "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
+            LintKind::Redundancy
         ),
         "ToTooIdioms" => (
             &[

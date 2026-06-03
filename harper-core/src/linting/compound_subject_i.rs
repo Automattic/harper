@@ -46,13 +46,9 @@ impl ExprLinter for CompoundSubjectI {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let pronoun = matched_tokens.iter().find(|tok| {
-            tok.kind.is_word()
-                && tok
-                    .span
-                    .get_content_string(source)
-                    .eq_ignore_ascii_case("me")
-        })?;
+        let pronoun = matched_tokens
+            .iter()
+            .find(|tok| tok.kind.is_word() && tok.get_str(source).eq_ignore_ascii_case("me"))?;
         Some(Lint {
             span: pronoun.span,
             lint_kind: LintKind::Grammar,

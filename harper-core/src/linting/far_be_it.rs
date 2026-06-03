@@ -35,7 +35,7 @@ impl ExprLinter for FarBeIt {
         let content = span.get_content(src);
 
         // We can only correct using `far be it for`, otherwise we recommend rephrasing the sentence.
-        let (suggestions, message) = if span.get_content(src).eq_ignore_ascii_case_str("for") {
+        let (suggestions, message) = if span.get_content(src).eq_str("for") {
             (
                 vec![Suggestion::replace_with_match_case(
                     vec!['f', 'r', 'o', 'm'],

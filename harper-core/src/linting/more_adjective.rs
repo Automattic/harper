@@ -2,7 +2,7 @@ use itertools::Itertools;
 
 use crate::{
     char_ext::CharExt,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
     {CharStringExt, Lint, Token, TokenStringExt},
@@ -21,7 +21,18 @@ where
         Self {
             expr: SequenceExpr::word_set(&["more", "most"])
                 .t_ws()
-                .then_positive_adjective(),
+                .then_positive_adjective()
+                // Include a following "than adjective" which we'll use to identify a false positive #2925
+                // Or a following hyphen which we'll use to identify a false positive #3568
+                .then_optional(FirstMatchOf::new(vec![
+                    Box::new(
+                        SequenceExpr::whitespace()
+                            .t_aco("than")
+                            .t_ws()
+                            .then_positive_adjective(),
+                    ),
+                    Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
+                ])),
             dict,
         }
     }
@@ -49,7 +60,7 @@ where
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        // Check invariants just in case the Expr changes
+        // Abort when the optional clause is present, or when the `Expr` changes
         if toks.len() != 3 || !toks[1].kind.is_whitespace() || !toks[2].kind.is_positive_adjective()
         {
             return None;
@@ -63,11 +74,11 @@ where
         }
 
         let degree_tok = &toks[0];
-        let degree_chars = degree_tok.span.get_content(src);
+        let degree_chars = degree_tok.get_ch(src);
 
-        let degree = if degree_chars.eq_ignore_ascii_case_str("more") {
+        let degree = if degree_chars.eq_str("more") {
             Degree::Comparative
-        } else if degree_chars.eq_ignore_ascii_case_str("most") {
+        } else if degree_chars.eq_str("most") {
             Degree::Superlative
         } else {
             return None;
@@ -177,11 +188,13 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+    use super::MoreAdjective;
+    use crate::{
+        linting::tests::{
+            assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        },
+        spell::FstDictionary,
     };
-    use crate::spell::FstDictionary;
 
     // True positives
 
@@ -303,6 +316,31 @@ mod tests {
     fn dont_flag_more_foreign() {
         assert_no_lints(
             "There are more foreign visitors this year.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_subtle_than_direct_2925() {
+        assert_no_lints(
+            "more subtle than direct",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_correct_in_most_to_innest_3284() {
+        assert_no_lints(
+            "I have spent most in my life in Florida and had never heard \"display\" with an emphasis on the first syllable.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    #[ignore = "this problem persists, even after changing the 'cut' and 'cute' annotations"]
+    fn dont_correct_more_cut_to_cuter() {
+        assert_no_lints(
+            "they’re more cut from “one and done” cloth",
             MoreAdjective::new(FstDictionary::curated()),
         );
     }

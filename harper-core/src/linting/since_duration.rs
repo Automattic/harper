@@ -48,8 +48,7 @@ impl ExprLinter for SinceDuration {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let last = toks.last()?;
         if last
-            .span
-            .get_content(src)
+            .get_ch(src)
             .eq_any_ignore_ascii_case_chars(&[&['a', 'g', 'o'], &['o', 'l', 'd']])
         {
             return None;
@@ -59,7 +58,7 @@ impl ExprLinter for SinceDuration {
 
         let mut since_point_in_time = since_duration_span.get_content(src).to_vec();
         since_point_in_time.push(' ');
-        let unit_template = toks.last()?.span.get_content(src);
+        let unit_template = toks.last()?.get_ch(src);
         since_point_in_time.extend(
             match_case_string(unit_template, AGO_VARIANTS)
                 .iter()
@@ -68,7 +67,7 @@ impl ExprLinter for SinceDuration {
         let ago_suggestion = Suggestion::ReplaceWith(since_point_in_time);
 
         let duration = toks[1..].span()?.get_content(src);
-        let since_template = toks.first()?.span.get_content(src);
+        let since_template = toks.first()?.get_ch(src);
         let mut for_duration = match_case_string(since_template, FOR_VARIANTS).to_vec();
         for_duration.extend(duration);
         let for_suggestion = Suggestion::ReplaceWith(for_duration);

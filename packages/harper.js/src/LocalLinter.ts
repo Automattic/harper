@@ -1,10 +1,10 @@
 import type { Dialect, Lint, Suggestion, Linter as WasmLinter } from 'harper-wasm';
 import { Language } from 'harper-wasm';
 import LazyPromise from 'p-lazy';
-import type { SuperBinaryModule } from './binary';
+import type { SuperBinaryModule } from './BinaryModule';
 import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
-import type { LintConfig, LintOptions } from './main';
+import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
  * See the interface definition for more details. */
@@ -54,6 +54,7 @@ export default class LocalLinter implements Linter {
 			language,
 			options?.forceAllHeadings ?? false,
 			options?.regex_mask,
+			options?.dedup ?? true,
 		);
 
 		return lints;
@@ -80,6 +81,7 @@ export default class LocalLinter implements Linter {
 			language,
 			options?.forceAllHeadings ?? false,
 			options?.regex_mask,
+			options?.dedup ?? true,
 		);
 
 		const output: Record<string, Lint[]> = {};
@@ -118,6 +120,16 @@ export default class LocalLinter implements Linter {
 
 	async getDefaultLintConfig(): Promise<LintConfig> {
 		return await this.binary.getDefaultLintConfig();
+	}
+
+	async getStructuredLintConfig(): Promise<StructuredLintConfig> {
+		const inner = await this.inner;
+		return inner.get_structured_lint_config_as_object();
+	}
+
+	async getStructuredLintConfigJSON(): Promise<string> {
+		const inner = await this.inner;
+		return inner.get_structured_lint_config_as_json();
 	}
 
 	async setLintConfig(config: LintConfig): Promise<void> {
@@ -160,13 +172,17 @@ export default class LocalLinter implements Linter {
 	}
 
 	async ignoreLint(source: string, lint: Lint): Promise<void> {
+		return await this.ignoreLints(source, [lint]);
+	}
+
+	async ignoreLints(source: string, lints: Lint[]): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_lint(source, lint);
+		inner.ignore_lints(source, lints);
 	}
 
 	async ignoreLintHash(hash: bigint): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_hash(hash);
+		inner.ignore_hashes(new BigUint64Array([hash]));
 	}
 
 	async exportIgnoredLints(): Promise<string> {

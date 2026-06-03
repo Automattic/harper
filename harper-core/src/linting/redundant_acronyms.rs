@@ -11,6 +11,7 @@ const ACRONYMS: &[(&str, &[&str], &str)] = &[
     ("ATM", &["automated teller", "automatic teller"], "machine"),
     ("GUI", &["graphical user"], "interface"),
     ("LCD", &["liquid crystal"], "display"),
+    ("LLM", &["large language"], "model"),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
     ("PIN", &["personal identification"], "number"),
     ("TUI", &["text-based user", "terminal user"], "interface"),
@@ -31,9 +32,7 @@ impl Default for RedundantAcronyms {
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
                     Box::new(Word::new(last_str)),
                     Box::new(move |t: &Token, src: &[char]| {
-                        t.span
-                            .get_content(src)
-                            .eq_ignore_ascii_case_str(&format!("{last_string}s"))
+                        t.get_ch(src).eq_str(&format!("{last_string}s"))
                     }),
                 ])) as Box<dyn Expr>
             })
@@ -55,7 +54,7 @@ impl ExprLinter for RedundantAcronyms {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let last_word_span = toks.last()?.span;
         let last_word_chars = last_word_span.get_content(src);
-        let acronym_str = toks.first()?.span.get_content_string(src);
+        let acronym_str = toks.first()?.get_str(src);
 
         // "pin number" (lowercase) is used to refer to the pins on microchips, etc.
         if acronym_str.eq_ignore_ascii_case("PIN") && acronym_str != "PIN" {
@@ -347,6 +346,32 @@ mod tests {
             &[
                 "we have implemented verification algorithms, which ensure that VIN received is correct",
                 "we have implemented verification algorithms, which ensure that vehicle identification number received is correct",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_llm_model() {
+        assert_good_and_bad_suggestions(
+            "They end up attributing a lot of what they're doing to the capabilities of the LLM model.",
+            RedundantAcronyms::default(),
+            &[
+                "They end up attributing a lot of what they're doing to the capabilities of the LLM.",
+                "They end up attributing a lot of what they're doing to the capabilities of the large language model.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_llm_models() {
+        assert_good_and_bad_suggestions(
+            "Ollama is an open-source tool for running LLM models locally.",
+            RedundantAcronyms::default(),
+            &[
+                "Ollama is an open-source tool for running LLMs locally.",
+                "Ollama is an open-source tool for running large language models locally.",
             ],
             &[],
         );

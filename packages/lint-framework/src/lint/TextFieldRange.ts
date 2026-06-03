@@ -51,7 +51,13 @@ export default class TextFieldRange {
 		refs: number;
 	} {
 		const existing = TextFieldRange.arenas.get(field);
-		if (existing) return existing;
+		if (existing?.mirror.isConnected) return existing;
+		if (existing) {
+			try {
+				existing.mirror.remove();
+			} catch {}
+			TextFieldRange.arenas.delete(field);
+		}
 
 		const mirror = document.createElement('div');
 		mirror.className = 'harper-textfield-mirror';

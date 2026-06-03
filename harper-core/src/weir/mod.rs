@@ -16,8 +16,8 @@ use is_macro::Is;
 use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
 
-use crate::expr::Expr;
-use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
+use crate::expr::{Expr, ExprExt};
+use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Sentence, Suggestion};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
@@ -35,6 +35,12 @@ enum ReplacementStrategy {
     Exact,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, EnumString)]
+enum WeirScope {
+    Chunk,
+    Sentence,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TestResult {
     pub expected: String,
@@ -48,8 +54,13 @@ pub struct WeirLinter {
     strategy: ReplacementStrategy,
     replacements: Vec<String>,
     lint_kind: LintKind,
+    scope: WeirScope,
     ast: Arc<Ast>,
 }
+
+struct ChunkWeirLinter(WeirLinter);
+
+struct SentenceWeirLinter(WeirLinter);
 
 impl WeirLinter {
     pub fn new(weir_code: &str) -> Result<WeirLinter, Error> {
@@ -61,6 +72,7 @@ impl WeirLinter {
         let lint_kind_name = "kind";
         let replacement_name = "becomes";
         let replacement_strat_name = "strategy";
+        let scope_name = "scope";
 
         let resolved = resolve_exprs(&ast)?;
 
@@ -124,11 +136,22 @@ impl WeirLinter {
             LintKind::Miscellaneous
         };
 
+        let scope_var = ast.get_variable_value(scope_name);
+        let scope = if let Some(scope) = scope_var {
+            let str = scope
+                .as_string()
+                .ok_or(Error::ExpectedDifferentVariableType)?;
+            WeirScope::from_str(str).ok().ok_or(Error::InvalidScope)?
+        } else {
+            WeirScope::Chunk
+        };
+
         let linter = WeirLinter {
             strategy: replacement_strat,
             ast,
             expr: expr.clone(),
             lint_kind,
+            scope,
             description,
             message,
             replacements,
@@ -137,139 +160,20 @@ impl WeirLinter {
         Ok(linter)
     }
 
-    /// Counts the total number of tests defined.
-    pub fn count_tests(&self) -> usize {
-        self.ast.iter_tests().count()
+    pub fn into_chunk_linter(self) -> Result<impl ExprLinter<Unit = Chunk>, Self> {
+        if self.scope == WeirScope::Chunk {
+            Ok(ChunkWeirLinter(self))
+        } else {
+            Err(self)
+        }
     }
 
-    /// Runs the tests defined in the source code, returning any failing results.
-    pub fn run_tests(&mut self) -> Vec<TestResult> {
-        fn apply_nth_suggestion(text: &str, lint: &Lint, n: usize) -> Option<String> {
-            let suggestion = lint.suggestions.get(n)?;
-            let mut text_chars: Vec<char> = text.chars().collect();
-            suggestion.apply(lint.span, &mut text_chars);
-            Some(text_chars.iter().collect())
+    pub fn into_sentence_linter(self) -> Result<impl ExprLinter<Unit = Sentence>, Self> {
+        if self.scope == WeirScope::Sentence {
+            Ok(SentenceWeirLinter(self))
+        } else {
+            Err(self)
         }
-
-        fn transform_top3_to_expected(
-            text: &str,
-            expected: &str,
-            linter: &mut impl Linter,
-        ) -> Option<String> {
-            let mut queue: VecDeque<(String, usize)> = VecDeque::new();
-            let mut seen: HashSet<String> = HashSet::new();
-
-            queue.push_back((text.to_string(), 0));
-            seen.insert(text.to_string());
-
-            while let Some((current, depth)) = queue.pop_front() {
-                if current == expected {
-                    return Some(current);
-                }
-
-                if depth >= 100 {
-                    continue;
-                }
-
-                let doc = Document::new_from_vec(
-                    current.chars().collect::<Vec<_>>().into(),
-                    &Markdown::default(),
-                    &FstDictionary::curated(),
-                );
-                let lints = linter.lint(&doc);
-
-                if let Some(lint) = lints.first() {
-                    for i in 0..3 {
-                        if let Some(next) = apply_nth_suggestion(&current, lint, i)
-                            && seen.insert(next.clone())
-                        {
-                            queue.push_back((next, depth + 1));
-                        }
-                    }
-                }
-            }
-
-            None
-        }
-
-        fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
-            let mut text_chars: Vec<char> = text.chars().collect();
-            let mut iter_count = 0;
-
-            loop {
-                let test = Document::new_from_vec(
-                    text_chars.clone().into(),
-                    &Markdown::default(),
-                    &FstDictionary::curated(),
-                );
-                let lints = linter.lint(&test);
-
-                if let Some(lint) = lints.first() {
-                    if let Some(suggestion) = lint.suggestions.get(n) {
-                        suggestion.apply(lint.span, &mut text_chars);
-                    } else {
-                        break;
-                    }
-                } else {
-                    break;
-                }
-
-                iter_count += 1;
-                if iter_count == 100 {
-                    break;
-                }
-            }
-
-            text_chars.iter().collect()
-        }
-
-        fn lint_count(text: &str, linter: &mut impl Linter) -> usize {
-            let document = Document::new_from_vec(
-                text.chars().collect::<Vec<_>>().into(),
-                &Markdown::default(),
-                &FstDictionary::curated(),
-            );
-
-            linter.lint(&document).len()
-        }
-
-        let mut results = Vec::new();
-        let tests: Vec<(String, String)> = self
-            .ast
-            .iter_tests()
-            .map(|(text, expected)| (text.to_string(), expected.to_string()))
-            .collect();
-
-        for (text, expected) in tests {
-            let matched = transform_top3_to_expected(&text, &expected, self);
-
-            match matched {
-                Some(result) => {
-                    let remaining_lints = lint_count(&result, self);
-
-                    if remaining_lints != 0 {
-                        results.push(TestResult {
-                            expected: expected.to_string(),
-                            got: result,
-                        });
-                    }
-                }
-                None => results.push(TestResult {
-                    expected: expected.to_string(),
-                    got: transform_nth_str(&text, self, 0),
-                }),
-            }
-        }
-
-        results
-    }
-}
-
-impl ExprLinter for WeirLinter {
-    type Unit = Chunk;
-
-    fn expr(&self) -> &dyn Expr {
-        &self.expr
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
@@ -298,8 +202,190 @@ impl ExprLinter for WeirLinter {
         })
     }
 
+    /// Counts the total number of tests defined.
+    pub fn count_tests(&self) -> usize {
+        self.ast.iter_tests().count()
+    }
+
+    /// Runs the tests defined in the source code, returning any failing results.
+    pub fn run_tests(&mut self) -> Vec<TestResult> {
+        fn apply_nth_suggestion(text: &str, lint: &Lint, n: usize) -> Option<String> {
+            let suggestion = lint.suggestions.get(n)?;
+            let mut text_chars: Vec<char> = text.chars().collect();
+            suggestion.apply(lint.span, &mut text_chars);
+            Some(text_chars.iter().collect())
+        }
+
+        fn transform_to_expected(
+            text: &str,
+            expected: &str,
+            linter: &mut impl Linter,
+        ) -> Option<String> {
+            let mut queue: VecDeque<(String, usize)> = VecDeque::new();
+            let mut seen: HashSet<String> = HashSet::new();
+
+            queue.push_back((text.to_string(), 0));
+            seen.insert(text.to_string());
+
+            while let Some((current, depth)) = queue.pop_front() {
+                if current == expected {
+                    return Some(current);
+                }
+
+                if depth >= 100 {
+                    continue;
+                }
+
+                let doc = Document::new_from_chars(
+                    current.chars().collect::<Vec<_>>().into(),
+                    &Markdown::default(),
+                    &FstDictionary::curated(),
+                );
+                let lints = linter.lint(&doc);
+
+                if let Some(lint) = lints.first() {
+                    for i in 0..lint.suggestions.len() {
+                        if let Some(next) = apply_nth_suggestion(&current, lint, i)
+                            && seen.insert(next.clone())
+                        {
+                            queue.push_back((next, depth + 1));
+                        }
+                    }
+                }
+            }
+
+            None
+        }
+
+        fn transform_nth_str(text: &str, linter: &mut impl Linter, n: usize) -> String {
+            let mut text_chars: Vec<char> = text.chars().collect();
+            let mut iter_count = 0;
+
+            loop {
+                let test = Document::new_from_chars(
+                    text_chars.clone().into(),
+                    &Markdown::default(),
+                    &FstDictionary::curated(),
+                );
+                let lints = linter.lint(&test);
+
+                if let Some(lint) = lints.first() {
+                    if let Some(suggestion) = lint.suggestions.get(n) {
+                        suggestion.apply(lint.span, &mut text_chars);
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+
+                iter_count += 1;
+                if iter_count == 100 {
+                    break;
+                }
+            }
+
+            text_chars.iter().collect()
+        }
+
+        fn lint_count(text: &str, linter: &mut impl Linter) -> usize {
+            let document = Document::new_from_chars(
+                text.chars().collect::<Vec<_>>().into(),
+                &Markdown::default(),
+                &FstDictionary::curated(),
+            );
+
+            linter.lint(&document).len()
+        }
+
+        let mut results = Vec::new();
+        let tests: Vec<(String, String)> = self
+            .ast
+            .iter_tests()
+            .map(|(text, expected)| (text.to_string(), expected.to_string()))
+            .collect();
+
+        for (text, expected) in tests {
+            let matched = transform_to_expected(&text, &expected, self);
+
+            match matched {
+                Some(result) => {
+                    let remaining_lints = lint_count(&result, self);
+
+                    if remaining_lints != 0 {
+                        results.push(TestResult {
+                            expected: expected.to_string(),
+                            got: result,
+                        });
+                    }
+                }
+                None => results.push(TestResult {
+                    expected: expected.to_string(),
+                    got: transform_nth_str(&text, self, 0),
+                }),
+            }
+        }
+
+        results
+    }
+}
+
+impl Linter for WeirLinter {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let source = document.get_source();
+        let mut lints = Vec::new();
+        let units: Box<dyn Iterator<Item = &[Token]> + '_> = match self.scope {
+            WeirScope::Chunk => Box::new(document.iter_chunks()),
+            WeirScope::Sentence => Box::new(document.iter_sentences()),
+        };
+
+        for unit in units {
+            lints.extend(
+                self.expr
+                    .iter_matches(unit, source)
+                    .filter_map(|match_span| {
+                        self.match_to_lint(&unit[match_span.start..match_span.end], source)
+                    }),
+            );
+        }
+
+        lints
+    }
+
     fn description(&self) -> &str {
         &self.description
+    }
+}
+
+impl ExprLinter for ChunkWeirLinter {
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.0.expr
+    }
+
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        self.0.match_to_lint(matched_tokens, source)
+    }
+
+    fn description(&self) -> &str {
+        &self.0.description
+    }
+}
+
+impl ExprLinter for SentenceWeirLinter {
+    type Unit = Sentence;
+
+    fn expr(&self) -> &dyn Expr {
+        &self.0.expr
+    }
+
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+        self.0.match_to_lint(matched_tokens, source)
+    }
+
+    fn description(&self) -> &str {
+        &self.0.description
     }
 }
 
@@ -378,6 +464,30 @@ pub mod tests {
     }
 
     #[test]
+    fn array_prefers_longest_match_over_first_match() {
+        for main in [
+            "[(capitalized off of), (capitalized off)]",
+            "[(capitalized off), (capitalized off of)]",
+        ] {
+            let source = format!(
+                r#"
+            expr main {main}
+            let message "Use the replacement."
+            let description "Regression test for overlapping Weir array options."
+            let kind "Miscellaneous"
+            let becomes "replacement"
+            let strategy "Exact"
+
+            test "capitalized off of" "replacement"
+            "#
+            );
+
+            let mut linter = WeirLinter::new(&source).unwrap();
+            assert_passes_all(&mut linter);
+        }
+    }
+
+    #[test]
     fn g_suite_with_refs() {
         let source = r#"
             expr a (G [Suite, Suit])
@@ -401,6 +511,73 @@ pub mod tests {
 
         assert_passes_all(&mut linter);
         assert_eq!(4, linter.count_tests());
+    }
+
+    #[test]
+    fn scope_defaults_to_chunk() {
+        let source = r#"
+            expr main one**two
+            let message "Use three."
+            let description "Test chunk-scoped Weir."
+            let kind "Miscellaneous"
+            let becomes "three"
+            let strategy "Exact"
+
+            allows "one, two."
+        "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+
+        let linter = WeirLinter::new(source).unwrap();
+        let linter = match linter.into_sentence_linter() {
+            Ok(_) => panic!("default-scoped Weir rule should not convert to sentence linter"),
+            Err(linter) => linter,
+        };
+        assert!(linter.into_chunk_linter().is_ok());
+    }
+
+    #[test]
+    fn sentence_scope_can_match_across_chunks() {
+        let source = r#"
+            expr main one**two
+            let message "Use three."
+            let description "Test sentence-scoped Weir."
+            let kind "Miscellaneous"
+            let becomes "three"
+            let strategy "Exact"
+            let scope "Sentence"
+
+            test "one, two." "three."
+        "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+
+        assert_passes_all(&mut linter);
+
+        assert!(
+            WeirLinter::new(source)
+                .unwrap()
+                .into_sentence_linter()
+                .is_ok()
+        );
+    }
+
+    #[test]
+    fn invalid_scope_errors() {
+        let source = r#"
+            expr main one
+            let message ""
+            let description ""
+            let kind "Miscellaneous"
+            let becomes ""
+            let scope "Paragraph"
+        "#;
+
+        let res = WeirLinter::new(source);
+
+        assert_eq!(res.err(), Some(Error::InvalidScope));
     }
 
     #[test]
@@ -486,6 +663,30 @@ pub mod tests {
         let source = "expr main";
         let res = WeirLinter::new(source);
         assert_eq!(res.err(), Some(Error::ExpectedVariableUndefined))
+    }
+
+    #[test]
+    fn becomes_array_with_many_alternatives() {
+        let source = r#"
+ expr main (the fact)
+ let message "Consider alternative phrasing"
+ let description "Test that all 'becomes' alternatives can be reached"
+ let kind "Miscellaneous"
+ let becomes ["the allegation", "the idea", "the claim", "the story", "the rumor"]
+ let strategy "Exact"
+
+ test "There is truth to the fact that people like images." "There is truth to the allegation that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the idea that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the claim that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the story that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the rumor that people like images."
+
+ allows "There is truth to the story that people like images."
+ "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(6, linter.count_tests());
     }
 
     #[quickcheck]

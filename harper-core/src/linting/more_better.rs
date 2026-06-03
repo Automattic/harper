@@ -39,7 +39,7 @@ impl ExprLinter for MoreBetter {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let phrase_span = toks.span()?;
 
-        let degree_str = toks.first()?.span.get_content_string(src);
+        let degree_str = toks.first()?.get_str(src);
         let adj_span = toks.last()?.span;
 
         let suggestion = Suggestion::replace_with_match_case(

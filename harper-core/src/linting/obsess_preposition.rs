@@ -64,11 +64,11 @@ impl ExprLinter for ObsessPreposition {
         // 👎
         // obsessed of
 
-        if prep_chars.eq_ignore_ascii_case_str("over") {
+        if prep_chars.eq_str("over") {
             return None;
         }
 
-        if conj == Conj::Ed && prep_chars.eq_ignore_ascii_case_str("with") {
+        if conj == Conj::Ed && prep_chars.eq_str("with") {
             return None;
         }
 

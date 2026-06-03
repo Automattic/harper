@@ -1088,6 +1088,15 @@ mod tests {
     }
 
     #[test]
+    fn no_change_side_effect() {
+        assert_lint_count(
+            "I forgot to test the side effect that users are deleted when clearing data.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
     fn corrects_cause_and_affect() {
         assert_suggestion_result(
             "Cause and affect are not the same thing.",
@@ -1396,6 +1405,66 @@ mod tests {
             "contributed more than you weight",
             NounVerbConfusion::default(),
             "contributed more than you weigh",
+        );
+    }
+
+    // Tests for issue #2958: "side effect" must not be flagged.
+    // Legitimate verb uses like "padding side affects the results" should also pass.
+
+    #[test]
+    fn no_flag_side_effects_from_medication() {
+        assert_lint_count(
+            "There were no side effects from the medication.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_flag_side_effects_in_functions() {
+        assert_lint_count(
+            "Avoid side effects in your functions.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_flag_this_change_has_no_side_effects() {
+        assert_lint_count(
+            "This change has no side effects.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_flag_padding_side_affects_results() {
+        // "side" is the subject, "affects" is the verb — legitimate usage.
+        assert_lint_count(
+            "I am still not clear how padding side affects the results.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_flag_what_side_affects_import_machinery() {
+        // "side" is part of the noun phrase "what side", "affects" is the verb.
+        assert_lint_count(
+            "Move that to the top level so you don't need to worry about what side affects the import machinery.",
+            NounVerbConfusion::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_flag_script_side_affect_other_side() {
+        // "side" is part of the noun phrase "script side", "affect" is the verb.
+        assert_lint_count(
+            "Would an unfreed reference in the script side affect the other side somehow?",
+            NounVerbConfusion::default(),
+            0,
         );
     }
 }

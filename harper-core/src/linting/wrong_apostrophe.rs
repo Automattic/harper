@@ -13,18 +13,15 @@ pub struct WrongApostrophe {
 impl Default for WrongApostrophe {
     fn default() -> Self {
         Self {
-            expr: FirstMatchOf::new(vec![
-                Box::new(
-                    SequenceExpr::any_word()
-                        .then_semicolon()
-                        .then_word_set(&CONTRACTION_AND_POSSESSIVE_ENDINGS),
-                ),
-                Box::new(
-                    SequenceExpr::any_word()
-                        .then_acute()
-                        .then_word_set(&CONTRACTION_AND_POSSESSIVE_ENDINGS),
-                ),
-            ]),
+            expr: FirstMatchOf::new(vec![Box::new(
+                SequenceExpr::any_word()
+                    .then_any_of(vec![
+                        Box::new(SequenceExpr::default().then_semicolon()),
+                        Box::new(SequenceExpr::default().then_acute()),
+                        Box::new(SequenceExpr::default().then_backtick()),
+                    ])
+                    .then_word_set(&CONTRACTION_AND_POSSESSIVE_ENDINGS),
+            )]),
         }
     }
 }
@@ -43,12 +40,11 @@ impl ExprLinter for WrongApostrophe {
 
         let replacement_str = format!(
             "{}'{}",
-            base.span.get_content_string(src).to_lowercase(),
-            ending.span.get_content_string(src).to_lowercase()
+            base.get_str(src).to_lowercase(),
+            ending.get_str(src).to_lowercase()
         );
 
-        let lettercase_template =
-            [base.span.get_content(src), ending.span.get_content(src)].concat();
+        let lettercase_template = [base.get_ch(src), ending.get_ch(src)].concat();
 
         Some(Lint {
             span: whole_span,
@@ -63,7 +59,7 @@ impl ExprLinter for WrongApostrophe {
     }
 
     fn description(&self) -> &str {
-        "Corrects semicolons or acute accents typed instead of apostrophes."
+        "Corrects semicolons, acute accents, and backticks typed instead of apostrophes."
     }
 }
 
@@ -179,6 +175,15 @@ mod tests {
             "You´re looking for clues, but you´re missing all the signs",
             WrongApostrophe::default(),
             "You're looking for clues, but you're missing all the signs",
+        );
+    }
+
+    #[test]
+    fn fix_backticks_used_as_apostrophes() {
+        assert_suggestion_result(
+            "And It Won`T Make One Bit Of Difference If I Answer Right Or Wrong. When You`Re Rich, They Think You Really Know",
+            WrongApostrophe::default(),
+            "And It Won'T Make One Bit Of Difference If I Answer Right Or Wrong. When You'Re Rich, They Think You Really Know",
         );
     }
 }

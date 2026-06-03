@@ -82,7 +82,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
         let mut suggestions: Vec<_> = self
             .wrong_forms_to_correct_forms
             .iter()
-            .filter(|(wrong_form, _)| matched_text.eq_ignore_ascii_case_str(wrong_form))
+            .filter(|(wrong_form, _)| matched_text.eq_str(wrong_form))
             .map(|(_, correct_form)| {
                 Suggestion::replace_with_match_case(correct_form.chars().collect(), matched_text)
             })
@@ -94,7 +94,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             .flat_map(|(wrong_forms, correct_forms)| {
                 wrong_forms
                     .iter()
-                    .filter(move |&&wrong_form| matched_text.eq_ignore_ascii_case_str(wrong_form))
+                    .filter(move |&&wrong_form| matched_text.eq_str(wrong_form))
                     .flat_map(move |_| {
                         correct_forms.iter().map(move |correct_form| {
                             Suggestion::replace_with_match_case(

@@ -16,6 +16,7 @@ const PATTERNS: &[(&[&str], &str, &[&str])] = &[
     (&["line"], "of", &["code"]),
     (&["part"], "of", &["speech", "speeches"]),
     (&["point"], "of", &["view"]),
+    (&["proof"], "of", &["concept"]),
     (&["rule"], "of", &["thumb"]),
 ];
 
@@ -23,13 +24,13 @@ impl Default for PluralWrongWordOfPhrase {
     fn default() -> Self {
         let word_str = |w| {
             SequenceExpr::with(move |t: &Token, s: &[char]| {
-                t.kind.is_word() && t.span.get_content(s).eq_ignore_ascii_case_str(w)
+                t.kind.is_word() && t.get_ch(s).eq_str(w)
             })
         };
 
         let word_string = |w: String| {
             SequenceExpr::with(move |t: &Token, s: &[char]| {
-                t.kind.is_word() && t.span.get_content(s).eq_ignore_ascii_case_str(&w)
+                t.kind.is_word() && t.get_ch(s).eq_str(&w)
             })
         };
 
@@ -95,11 +96,21 @@ impl ExprLinter for PluralWrongWordOfPhrase {
             format!("{}s", main_noun[0])
         };
 
+        // NOTE: We depend only on the first space or hyphen to determine the separator
+        let sep = [' ', '-'][toks[1].kind.is_hyphen() as usize];
+
+        // If `mid` contains a hyphen or space, it must also use the matching separator
+        let mid = match sep {
+            ' ' => mid.replace('-', " "),
+            '-' => mid.replace(' ', "-"),
+            _ => mid.to_string(),
+        };
+
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
             suggestions: vec![Suggestion::replace_with_match_case(
-                format!("{} {} {}", main_noun_pl, mid, last_noun[0])
+                format!("{}{}{}{}{}", main_noun_pl, sep, mid, sep, last_noun[0])
                     .chars()
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
@@ -211,7 +222,7 @@ mod tests {
         assert_suggestion_result(
             "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
             PluralWrongWordOfPhrase::default(),
-            "Add rules of thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
+            "Add rules-of-thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
         );
     }
 
@@ -251,7 +262,7 @@ mod tests {
         assert_suggestion_result(
             "what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here",
             PluralWrongWordOfPhrase::default(),
-            "what makes 'Super Hexagon' rise above other nostalgic flashes in the pan is that there is a game to be learned here",
+            "what makes 'Super Hexagon' rise above other nostalgic flashes-in-the-pan is that there is a game to be learned here",
         );
     }
 
@@ -261,6 +272,17 @@ mod tests {
             "Who are some of the biggest flashes in the pans in wrestling history?",
             PluralWrongWordOfPhrase::default(),
             "Who are some of the biggest flashes in the pan in wrestling history?",
+        );
+    }
+
+    // ProofOfConcept
+
+    #[test]
+    fn correct_proof_of_concepts() {
+        assert_suggestion_result(
+            "I wrote about my love of throwaway prototypes; those little proof-of-concepts that exist purely to get an idea out of your head",
+            PluralWrongWordOfPhrase::default(),
+            "I wrote about my love of throwaway prototypes; those little proofs-of-concept that exist purely to get an idea out of your head",
         );
     }
 }

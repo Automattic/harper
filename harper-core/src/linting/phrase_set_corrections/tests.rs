@@ -26,6 +26,35 @@ fn corrects_much_ado() {
     );
 }
 
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
+    );
+}
+
 // Bollocks
 
 #[test]
@@ -298,6 +327,55 @@ fn corrects_conforming_that() {
     );
 }
 
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+    );
+}
+
 // DefiniteArticle
 
 #[test]
@@ -565,6 +643,26 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandAlgorithm
+
+#[test]
+fn corrects_algo() {
+    assert_suggestion_result(
+        "Always glad when the algo feeds me a new dissident.",
+        lint_group(),
+        "Always glad when the algorithm feeds me a new dissident.",
+    );
+}
+
+#[test]
+fn corrects_algos() {
+    assert_suggestion_result(
+        "I moved algos development to a private repository.",
+        lint_group(),
+        "I moved algorithms development to a private repository.",
+    );
+}
+
 // ExpandArgument
 
 #[test]
@@ -582,6 +680,26 @@ fn corrects_args() {
         "but every test I've done shows args as being about 65% faster",
         lint_group(),
         "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandCoordinate
+
+#[test]
+fn corrects_coord() {
+    assert_suggestion_result(
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coord systems that do not support them",
+        lint_group(),
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coordinate systems that do not support them",
+    );
+}
+
+#[test]
+fn corrects_coords() {
+    assert_suggestion_result(
+        "Here is how you can extract the list of coords from any geometry:",
+        lint_group(),
+        "Here is how you can extract the list of coordinates from any geometry:",
     );
 }
 
@@ -625,6 +743,26 @@ fn corrects_derefs() {
         "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
         lint_group(),
         "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
+// ExpandNotification
+
+#[test]
+fn corrects_notif() {
+    assert_suggestion_result(
+        "Amazing to see the notif of this on my phone!",
+        lint_group(),
+        "Amazing to see the notification of this on my phone!",
+    );
+}
+
+#[test]
+fn corrects_notifs() {
+    assert_suggestion_result(
+        "I don't encourage you spending all your time on social media or keeping the notifs on if you're working on something serious.",
+        lint_group(),
+        "I don't encourage you spending all your time on social media or keeping the notifications on if you're working on something serious.",
     );
 }
 
@@ -673,6 +811,39 @@ fn correct_ptrs() {
 
 // ExpandStandardOutput
 // -none-
+
+// ExpandVulnerability
+
+#[test]
+fn corrects_vuln() {
+    assert_suggestion_result(
+        "I did not understand this vuln in first place now I do not understand in 2nd place as well😢",
+        lint_group(),
+        "I did not understand this vulnerability in first place now I do not understand in 2nd place as well😢",
+    );
+}
+
+#[test]
+fn corrects_vulns() {
+    // Fix just this lint
+    let mut only_expand_vuln = lint_group();
+    only_expand_vuln.set_all_rules_to(None); // Disable all linters
+    only_expand_vuln
+        .config
+        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
+
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        only_expand_vuln,
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
+    );
+    // Fix all lints in the `LintGroup`
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        lint_group(),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive parameters, and auth endpoints.",
+    );
+}
 
 // ExplanationMark
 #[test]
@@ -1112,6 +1283,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InflectionPoint
+
+#[test]
+fn corrects_infliction_point() {
+    assert_suggestion_result(
+        "You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        lint_group(),
+        "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+    );
+}
+
+#[test]
+fn corrects_infliction_points() {
+    assert_suggestion_result(
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".",
+        lint_group(),
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".",
+    );
+}
+
 // InvestIn
 
 #[test]
@@ -1219,6 +1410,44 @@ fn litotes_more_preferable() {
         "Is it more preferable to use process.env.variable or env.parsed.variable?",
         lint_group(),
         "Is it preferable to use process.env.variable or env.parsed.variable?",
+    );
+}
+
+// LookForwardTo
+
+#[test]
+fn fix_look_forward_for() {
+    assert_suggestion_result(
+        "I will mark this issue as an enhancement and will look forward for enrolling it.",
+        lint_group(),
+        "I will mark this issue as an enhancement and will look forward to enrolling it.",
+    );
+}
+
+#[test]
+fn fix_looked_forward_for() {
+    assert_suggestion_result(
+        "Looked forward for standalone components so much, please fix this.",
+        lint_group(),
+        "Looked forward to standalone components so much, please fix this.",
+    );
+}
+
+#[test]
+fn fix_looking_forward_for() {
+    assert_suggestion_result(
+        "Looking forward for Typed version of this stack navigation",
+        lint_group(),
+        "Looking forward to Typed version of this stack navigation",
+    );
+}
+
+#[test]
+fn fix_looks_forward_for() {
+    assert_suggestion_result(
+        "Please take this words as from one of your fans who looks forward for a great and interesting project :)",
+        lint_group(),
+        "Please take this words as from one of your fans who looks forward to a great and interesting project :)",
     );
 }
 
@@ -1834,6 +2063,45 @@ fn i_wish_it_was() {
     );
 }
 
+// UseToUsedTo
+
+#[test]
+fn corrects_getting_use_to() {
+    assert_suggestion_result(
+        "I'm getting use to it slowly.",
+        lint_group(),
+        "I'm getting used to it slowly.",
+    );
+}
+
+#[test]
+fn corrects_are_use_to() {
+    assert_suggestion_result(
+        "If you are use to Ubuntu, then the way sudo works should not be strange.",
+        lint_group(),
+        "If you are used to Ubuntu, then the way sudo works should not be strange.",
+    );
+}
+
+#[test]
+fn corrects_im_use_to() {
+    assert_suggestion_result(
+        "I'm use to doing a lot of work.",
+        lint_group(),
+        "I'm used to doing a lot of work.",
+    );
+}
+
+#[test]
+fn allows_use_to_as_verb() {
+    assert_no_lints("This is the editor I use to write code.", lint_group());
+}
+
+#[test]
+fn allows_used_to() {
+    assert_no_lints("I used to develop with objects in JS.", lint_group());
+}
+
 // WreakHavoc
 
 #[test]
@@ -1870,6 +2138,40 @@ fn fix_wrecks_havoc() {
         lint_group(),
         "Small POC using rust with ptrace that wreaks havoc on msync",
     );
+}
+
+// VerseAsVerb
+
+#[test]
+fn corrects_verse_against() {
+    assert_suggestion_result(
+        "A game of Morra, with 3 different AI you can verse against.",
+        lint_group(),
+        "A game of Morra, with 3 different AI you can play against.",
+    );
+}
+
+#[test]
+fn corrects_versing_against() {
+    assert_suggestion_result(
+        "This will help when you are versing against a particular boss.",
+        lint_group(),
+        "This will help when you are playing against a particular boss.",
+    );
+}
+
+#[test]
+fn corrects_verse_me() {
+    assert_suggestion_result(
+        "Come verse me in this game.",
+        lint_group(),
+        "Come play me in this game.",
+    );
+}
+
+#[test]
+fn allows_versus() {
+    assert_no_lints("It was red versus blue in the finals.", lint_group());
 }
 
 // WroteToRote
@@ -2087,6 +2389,66 @@ fn copywrote() {
     );
 }
 
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        lint_group(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        lint_group(),
+        "He overpaid in part to have the specification met.",
+    );
+}
+
+// DateBackFrom
+
+#[test]
+fn corrects_date_back_from() {
+    assert_good_and_bad_suggestions(
+        "There are too many open issues that date back from 4 years ago.",
+        lint_group(),
+        &[
+            "There are too many open issues that date from 4 years ago.",
+            "There are too many open issues that date back to 4 years ago.",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn corrects_dates_back_from() {
+    assert_good_and_bad_suggestions(
+        "This code dates back from 2014.",
+        lint_group(),
+        &[
+            "This code dates from 2014.",
+            "This code dates back to 2014.",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn allows_date_back_to() {
+    assert_no_lints(
+        "These scripts date back to when Perl was popular.",
+        lint_group(),
+    );
+}
+
+// Note: "the date back from" and "get dates back from" are known false
+// positives where "date" is a noun (retrieving data). Phrase set matching
+// cannot distinguish these from the verb form. See issue #2864.
+
 // DoubleEdgedSword
 
 #[test]
@@ -2151,6 +2513,35 @@ fn expand_alloc() {
         "Used to find system libraries that alloc RWX regions on load.",
         lint_group(),
         "Used to find system libraries that allocate RWX regions on load.",
+    );
+}
+
+// ExpandGovt
+
+#[test]
+fn corrects_govt_no_dot() {
+    assert_suggestion_result(
+        "Separation between privately issued credentials vs govt issued identity credentials",
+        lint_group(),
+        "Separation between privately issued credentials vs government issued identity credentials",
+    );
+}
+
+#[test]
+fn corrects_govt_do() {
+    assert_suggestion_result(
+        "Demystifying public comments on govt. regulations.",
+        lint_group(),
+        "Demystifying public comments on government regulations.",
+    );
+}
+
+#[test]
+fn corrects_govts() {
+    assert_suggestion_result(
+        "Those 'elite' economists have been advising govts for years.",
+        lint_group(),
+        "Those 'elite' economists have been advising governments for years.",
     );
 }
 
@@ -2501,6 +2892,26 @@ fn corrects_made_it_seemed() {
     );
 }
 
+// Monumentous
+
+#[test]
+fn corrects_monumentous() {
+    assert_suggestion_result(
+        "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+        lint_group(),
+        "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+    );
+}
+
+#[test]
+fn corrects_monumentously() {
+    assert_suggestion_result(
+        "the most impressive thing out of all of this is that GitHub created such a monumentously good name",
+        lint_group(),
+        "the most impressive thing out of all of this is that GitHub created such a monumentally good name",
+    );
+}
+
 // NervousWreck
 
 #[test]
@@ -2721,6 +3132,35 @@ fn detect_arisen_the_question() {
         "Some have arisen the question like how to use this wireless HD mini camera",
         lint_group(),
         "Some have raised the question like how to use this wireless HD mini camera",
+    );
+}
+
+// SideTangent
+
+#[test]
+fn fix_side_tangent_start_of_sentence() {
+    assert_suggestion_result(
+        "Side tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+        lint_group(),
+        "Tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+    );
+}
+
+#[test]
+fn fix_side_tangent_aside() {
+    assert_suggestion_result(
+        "As a side tangent, in addition to not solving the gradual code repair problem",
+        lint_group(),
+        "As an aside, in addition to not solving the gradual code repair problem",
+    );
+}
+
+#[test]
+fn fix_side_tangents() {
+    assert_suggestion_result(
+        "so we don't get bogged down by tiny formatting bikeshedding side tangents",
+        lint_group(),
+        "so we don't get bogged down by tiny formatting bikeshedding tangents",
     );
 }
 

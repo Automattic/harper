@@ -24,6 +24,7 @@ mod fixed_phrase;
 mod longest_match_of;
 mod mergeable_words;
 mod optional;
+mod pronoun_be;
 mod reflexive_pronoun;
 mod repeating;
 mod sequence_expr;
@@ -50,6 +51,7 @@ pub use fixed_phrase::FixedPhrase;
 pub use longest_match_of::LongestMatchOf;
 pub use mergeable_words::MergeableWords;
 pub use optional::Optional;
+pub use pronoun_be::PronounBe;
 pub use reflexive_pronoun::ReflexivePronoun;
 pub use repeating::Repeating;
 pub use sequence_expr::SequenceExpr;
@@ -163,7 +165,7 @@ where
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
     fn and(self, other: impl Expr + 'static) -> All;
-    fn and_not(self, other: impl Expr + 'static) -> All;
+    fn but_not(self, other: impl Expr + 'static) -> All;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
 }
 
@@ -182,7 +184,7 @@ where
     }
 
     /// Returns an expression that matches only if the current one matches and the expression contained in `other` does not.
-    fn and_not(self, other: impl Expr + 'static) -> All {
+    fn but_not(self, other: impl Expr + 'static) -> All {
         self.and(UnlessStep::new(other, |_tok: &Token, _src: &[char]| true))
     }
 

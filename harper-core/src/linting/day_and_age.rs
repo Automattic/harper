@@ -15,7 +15,7 @@ impl Default for DayAndAge {
                 .t_ws()
                 .then_word_set(&["day", "days"])
                 .t_ws()
-                .then_word_set(&["and", "in", "an", "on"])
+                .then_word_set(&["and", "in", "an", "on", "of"])
                 .t_ws()
                 .then_word_set(&["age", "ages"]),
         }
@@ -44,8 +44,7 @@ impl ExprLinter for DayAndAge {
             && last.kind.is_whitespace()
             && (penult.kind.is_preposition()
                 || penult
-                    .span
-                    .get_content(src)
+                    .get_ch(src)
                     .eq_any_ignore_ascii_case_chars(&[&['i', 's'], &['i', 't']]))
         {
             Some(penult.span)
@@ -68,13 +67,13 @@ impl ExprLinter for DayAndAge {
         let bads: Vec<bool> = chars
             .iter()
             .zip(good.iter())
-            .map(|(actual, &good)| !actual.eq_ignore_ascii_case_chars(good))
+            .map(|(actual, &good)| !actual.eq_ch(good))
             .collect();
 
         let good_main = !bads.iter().any(|&b| b);
 
         let (span, replacement): (Span<char>, &str) = if prep_chars
-            .is_some_and(|p| p.eq_ignore_ascii_case_chars(&['s', 'i', 'n', 'c', 'e']))
+            .is_some_and(|p| p.eq_ch(&['s', 'i', 'n', 'c', 'e']))
         {
             // "since" is a preposition but it's also a conjunction, so keep it but add "in" after it
             (main_span, "in this day and age")
@@ -280,6 +279,15 @@ mod tests {
             "and since these days and age storage is usually not a problem, I usually play it safe and just don't bother",
             DayAndAge::default(),
             "and since in this day and age storage is usually not a problem, I usually play it safe and just don't bother",
+        );
+    }
+
+    #[test]
+    fn fix_day_of_age() {
+        assert_suggestion_result(
+            "If you want in this day of age an AI agent can probably implement what you are looking for.",
+            DayAndAge::default(),
+            "If you want in this day and age an AI agent can probably implement what you are looking for.",
         );
     }
 }

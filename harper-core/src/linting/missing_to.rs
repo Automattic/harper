@@ -1,6 +1,6 @@
 use harper_brill::UPOS;
 
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, followed_by_word, preceded_by_word};
 use crate::{
     Token,
     expr::{Expr, ExprMap, SequenceExpr},
@@ -252,13 +252,28 @@ impl ExprLinter for MissingTo {
         &self.map
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let offending_idx = *self.map.lookup(0, matched_tokens, source)?;
         let controller = &matched_tokens[offending_idx];
         let span = controller.span;
 
-        let controller_text = controller.span.get_content_string(source).to_lowercase();
+        let controller_text = controller.get_str(source).to_lowercase();
         let controller_text = controller_text.as_str();
+
+        if controller.kind.is_verb()
+            && controller.kind.is_adjective()
+            && preceded_by_word(context, |tok| tok.kind.is_nominal())
+            && followed_by_word(context, |tok| {
+                tok.kind.is_auxiliary_verb() || tok.kind.is_adverb()
+            })
+        {
+            return None;
+        }
 
         let is_adjective_controller = matches!(controller_text, "eager" | "inclined" | "ready");
 
@@ -315,7 +330,7 @@ impl ExprLinter for MissingTo {
             .skip(offending_idx + 1)
             .find(|tok| !tok.kind.is_whitespace())?;
 
-        let next_text = next_token.span.get_content_string(source).to_lowercase();
+        let next_text = next_token.get_str(source).to_lowercase();
 
         if controller_text.starts_with("try") && next_text == "and" {
             return None;
@@ -529,6 +544,15 @@ mod tests {
     fn no_lint_delays_meant_decisions() {
         assert_lint_count(
             "The delays meant decisions were often made on outdated information, hindering agility and potentially impacting return on investment.",
+            MissingTo::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn no_lint_reduced_relative_clause_after_participle() {
+        assert_lint_count(
+            "The techniques learned would probably not change much with resolution so 480i would seem almost as usable for educational use as 8K video.",
             MissingTo::default(),
             0,
         );

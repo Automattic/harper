@@ -1,0 +1,44 @@
+expr beBefore [am, are, is, was, were, be, been, being, feel, feels, felt]
+expr main <([(@beBefore better of), (@beBefore ADV better of), (better of [with, without, at, before, now, if, not]), (better of VERB)]), (better of)>
+
+let message "This expression usually takes `off` instead of `of`."
+let description "Rewrites `better of` to `better off` in common comparative phrasing."
+let kind "Grammar"
+let becomes "better off"
+let strategy "MatchCase"
+
+# True positives
+
+test "People who are better of can donate more." "People who are better off can donate more."
+test "You will be better of waiting until tomorrow." "You will be better off waiting until tomorrow."
+test "I feel better of without that app." "I feel better off without that app."
+test "We are better of focusing on quality." "We are better off focusing on quality."
+test "They were better of before the update." "They were better off before the update."
+test "She is far better of now." "She is far better off now."
+test "He'd be better of at home." "He'd be better off at home."
+test "The team is BETTER OF with clear goals." "The team is BETTER OFF with clear goals."
+test "Are we better of if we delay launch?" "Are we better off if we delay launch?"
+test "Otherwise I'm much better of not using the feed at all." "Otherwise I'm much better off not using the feed at all."
+test "You may be better of starting from ChernSimons, which is based on KerrBL." "You may be better off starting from ChernSimons, which is based on KerrBL."
+test "you are probably better of with other message broker solutions" "you are probably better off with other message broker solutions"
+
+# True negatives / false-positive checks
+
+allows "People who are better off can donate more."
+allows "This is a matter of better options."
+allows "Of course this is better overall."
+allows "He offered better outcomes, not quick fixes."
+allows "They got off the train early."
+allows "A better offer arrived yesterday."
+allows "Apparently ECMA thought better of this restriction."
+allows "Curiosity got the better of me and I hacked up a test of this feature."
+allows "This page describes who is the better of two players between and within games."
+allows "I think this is the better of the two paths."
+allows "I considered putting a default into the easybutton.css but thought better of it."
+allows "The better of /f0 and /f5 runs was selected."
+
+# Boundary / accepted limits
+
+allows "She chose the better option from the list."
+allows "Pick the best design from these three mockups."
+allows "They discussed old and new methods in detail."

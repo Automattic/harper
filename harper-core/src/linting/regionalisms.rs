@@ -39,9 +39,11 @@ enum Concept {
     CaravanTrailer,
     CatsupKetchupTomatoSauce,
     CellPhoneMobilePhone,
-    CoolboxCoolerEsky,
+    CheckCheque,
+    CheckbookChequebook,
     ChipsCrisps,
     CilantroCoriander,
+    CoolboxCoolerEsky,
     Crore,
     Crores,
     DiaperNappy,
@@ -60,6 +62,7 @@ enum Concept {
     LightBulbLightGlobe,
     LorryTruck,
     MotorhomeRv,
+    NoughtZero,
     PhotocopierXerox,
     PhotocopyXerox,
     PickupUte,
@@ -67,8 +70,9 @@ enum Concept {
     Prepone,
     SpannerWrench,
     StationWagonEstate,
-    UpdateUpdation,
+    TireTyre,
     UpdatesUpdations,
+    UpdateUpdation,
     WindscreenWindshield,
 }
 
@@ -191,6 +195,30 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: CellPhoneMobilePhone,
+    },
+    Term {
+        term: "check",
+        flag: UniversalTerm,
+        dialects: &[American],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "checkbook",
+        flag: Flag,
+        dialects: &[American],
+        concept: CheckbookChequebook,
+    },
+    Term {
+        term: "cheque",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "chequebook",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckbookChequebook,
     },
     Term {
         term: "chips",
@@ -409,6 +437,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: BloodNoseNosebleed,
     },
     Term {
+        term: "nought",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: NoughtZero,
+    },
+    Term {
         term: "pacifier",
         flag: Flag,
         dialects: &[American],
@@ -518,6 +552,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: FaucetTap,
     },
     Term {
+        term: "tire",
+        flag: HasOtherMeanings,
+        dialects: &[American, Canadian],
+        concept: TireTyre,
+    },
+    Term {
+        term: "tyre",
+        flag: Flag,
+        dialects: &[Australian, British, Indian],
+        concept: TireTyre,
+    },
+    Term {
         term: "tomato sauce",
         flag: HasOtherMeanings,
         dialects: &[Australian],
@@ -600,6 +646,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American, Canadian],
         concept: WindscreenWindshield,
+    },
+    Term {
+        term: "zero",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian, Indian],
+        concept: NoughtZero,
     },
 ];
 
@@ -850,5 +902,10 @@ mod tests {
             Regionalisms::new(Dialect::Australian),
             "Is eggplant used in curries or chutneys?",
         );
+    }
+
+    #[test]
+    fn americans_dont_say_nought() {
+        assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
     }
 }
