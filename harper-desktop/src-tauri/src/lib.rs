@@ -1,3 +1,4 @@
+mod highlighter_worker;
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};

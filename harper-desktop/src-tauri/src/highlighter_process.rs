@@ -10,11 +10,11 @@ use tokio::sync::Mutex;
 ///
 /// This type exists so child-process cleanup is tied to Rust ownership: keeping it in scope keeps the
 /// highlighter alive, and controlled shutdown can terminate and reap the child before exit.
-pub struct HighlighterProcess {
+pub struct HighlighterProcessManager {
     child: Child,
 }
 
-impl HighlighterProcess {
+impl HighlighterProcessManager {
     /// Must be called from within a Tokio runtime
     pub fn spawn() -> io::Result<Self> {
         let child = Command::new(std::env::current_exe()?)
@@ -55,7 +55,7 @@ impl HighlighterProcess {
     }
 }
 
-impl Drop for HighlighterProcess {
+impl Drop for HighlighterProcessManager {
     fn drop(&mut self) {
         let _ = self.child.start_kill();
     }
