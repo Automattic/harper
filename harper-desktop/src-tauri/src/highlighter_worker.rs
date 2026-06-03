@@ -1,4 +1,4 @@
-use crate::highlighter_process::HighlighterProcessManager;
+use crate::highlighter_process::HighlighterProcess;
 use crate::{communication::Server, config::Config};
 use std::{
     io,
@@ -37,7 +37,7 @@ impl HighlighterWorker {
                 };
 
                 runtime.block_on(async move {
-                    let mut highlighter_process = match HighlighterProcessManager::spawn() {
+                    let mut highlighter_process = match HighlighterProcess::spawn() {
                         Ok(process) => process,
                         Err(error) => {
                             let _ = startup_sender.send(Err(error));

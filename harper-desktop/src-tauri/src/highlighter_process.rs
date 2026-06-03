@@ -6,15 +6,12 @@ use std::sync::Arc;
 use tokio::process::{Child, ChildStdin, ChildStdout, Command};
 use tokio::sync::Mutex;
 
-/// Owns the highlighter child process while the Tauri app is running.
-///
-/// This type exists so child-process cleanup is tied to Rust ownership: keeping it in scope keeps the
-/// highlighter alive, and controlled shutdown can terminate and reap the child before exit.
-pub struct HighlighterProcessManager {
+/// Represents a highlighter process.
+pub struct HighlighterProcess {
     child: Child,
 }
 
-impl HighlighterProcessManager {
+impl HighlighterProcess {
     /// Must be called from within a Tokio runtime
     pub fn spawn() -> io::Result<Self> {
         let child = Command::new(std::env::current_exe()?)
@@ -55,7 +52,7 @@ impl HighlighterProcessManager {
     }
 }
 
-impl Drop for HighlighterProcessManager {
+impl Drop for HighlighterProcess {
     fn drop(&mut self) {
         let _ = self.child.start_kill();
     }

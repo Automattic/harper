@@ -1,5 +1,5 @@
 use crate::config::Config;
-use crate::highlighter_process::HighlighterProcessManager;
+use crate::highlighter_process::HighlighterProcess;
 use crate::{communication::Server, highlighter_worker::HighlighterWorker};
 use std::{
     io,
