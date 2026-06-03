@@ -239,6 +239,7 @@ mod the_how_why;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
+mod the_the_to_that_the;
 mod then_than;
 mod there_is_agreement;
 mod there_own;
