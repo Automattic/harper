@@ -310,11 +310,10 @@ impl Drop for MacBroker {
     }
 }
 
+type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
+
 impl OsBroker for MacBroker {
-    fn get_boxes(
-        &mut self,
-        lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
-    ) -> Vec<ActionableLint> {
+    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
@@ -926,7 +925,7 @@ impl TreeVisitor for AccessibilityActivationProbe {
 
 struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
-    lint_text: RefCell<&'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>>,
+    lint_text: RefCell<&'a mut LintCallback<'a>>,
 }
 
 impl TreeVisitor for RectCollector<'_> {
@@ -977,7 +976,7 @@ impl TreeVisitor for RectCollector<'_> {
 }
 
 impl<'a> RectCollector<'a> {
-    fn new(lint_text: &'a mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>) -> Self {
+    fn new(lint_text: &'a mut LintCallback) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
             lint_text: RefCell::new(lint_text),
