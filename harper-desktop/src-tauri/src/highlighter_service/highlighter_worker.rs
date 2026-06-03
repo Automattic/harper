@@ -1,4 +1,4 @@
-use crate::highlighter_process::HighlighterProcess;
+use super::highlighter_process::HighlighterProcess;
 use crate::{communication::Server, config::Config};
 use std::{
     io,

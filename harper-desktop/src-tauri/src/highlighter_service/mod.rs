@@ -1,4 +1,8 @@
-use crate::{config::Config, highlighter_worker::HighlighterWorker};
+mod highlighter_process;
+mod highlighter_worker;
+
+use crate::config::Config;
+use highlighter_worker::HighlighterWorker;
 use std::{
     io,
     sync::{Arc, Mutex as StdMutex},

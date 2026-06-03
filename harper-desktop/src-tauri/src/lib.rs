@@ -1,4 +1,3 @@
-mod highlighter_worker;
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use crate::communication::{Client, ProtocolError};
@@ -33,7 +32,6 @@ pub mod communication;
 pub mod config;
 mod debounce;
 pub mod highlighter;
-pub mod highlighter_process;
 pub mod highlighter_service;
 pub mod lint_kind_color;
 mod os_broker;
