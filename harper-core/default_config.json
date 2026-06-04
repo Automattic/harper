@@ -801,6 +801,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArgumentToBeMade",
+								"state": true,
+								"label": "Argument To Be Made"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -1309,6 +1316,13 @@
 								"state": true,
 								"label": "Expand Vulnerability"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
+							}
 						}
 					]
 				}
@@ -1514,6 +1528,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CaseSensitive",
 								"state": true,
 								"label": "Case Sensitive"
@@ -1580,6 +1601,13 @@
 								"name": "IntroCueCommaBeforeThanks",
 								"state": true,
 								"label": "Intro Cue Comma Before Thanks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncludingButNotLimitedToPunctuation",
+								"state": true,
+								"label": "Including But Not Limited To Punctuation"
 							}
 						},
 						{
@@ -1989,6 +2017,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Theres",
 								"state": true,
 								"label": "There's"
@@ -2387,6 +2422,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -2685,6 +2727,13 @@
 								"state": true,
 								"label": "Close Tight Knit"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheTheToThatThe",
+								"state": true,
+								"label": "The The To That The"
+							}
 						}
 					]
 				}
@@ -2696,6 +2745,13 @@
 				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
 						{
 							"Bool": {
 								"name": "BoringWords",
@@ -3002,6 +3058,27 @@
 								"name": "WasComprisedOf",
 								"state": true,
 								"label": "Was Comprised Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SideTangent",
+								"state": true,
+								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForFreeOfCharge",
+								"state": true,
+								"label": "For Free of Charge"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
 							}
 						}
 					]
@@ -3636,6 +3713,27 @@
 								"state": true,
 								"label": "Code In Write In"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ThereIsAgreement",
+								"state": true,
+								"label": "There Is Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
 						}
 					]
 				}
@@ -3715,6 +3813,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -4853,9 +4958,51 @@
 						},
 						{
 							"Bool": {
+								"name": "InFavourOfDoing",
+								"state": true,
+								"label": "In Favour Of Doing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LongTimeAgo",
+								"state": true,
+								"label": "Long Time Ago"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
 							}
 						}
 					]

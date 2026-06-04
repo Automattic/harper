@@ -61,6 +61,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+                ("arguments to be said", "arguments to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -125,6 +134,17 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `confirm` rather than `conform`?",
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
+        ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
         ),
         "DefiniteArticle" => (
             &[
@@ -836,14 +856,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
-        "InHindsight" => (
-            &[
-                (&["in hind sight", "in hind-sight", "on hindsight", "on hind sight", "on hind-sight"], &["in hindsight"]),
-            ],
-            "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
-            "Corrects incorrect variants of `in hindsight` to the standard phrase.",
-            LintKind::Usage
-        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -899,6 +911,16 @@ pub fn lint_group() -> LintGroup {
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
+        ),
+        "SideTangent" => (
+            &[
+                (&["a side tangent"], &["a tangent", "an aside"]),
+                (&["side tangent"], &["tangent", "aside"]),
+                (&["side tangents"], &["tangents", "aside"])
+            ],
+            "The word `side` is redundant in this phrase.",
+            "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
+            LintKind::Redundancy
         ),
         "ToTooIdioms" => (
             &[

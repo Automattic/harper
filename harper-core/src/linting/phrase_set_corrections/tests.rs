@@ -26,6 +26,35 @@ fn corrects_much_ado() {
     );
 }
 
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
+    );
+}
+
 // Bollocks
 
 #[test]
@@ -295,6 +324,55 @@ fn corrects_conforming_that() {
         "Thanks for conforming that this issue is fixed in the latest version.",
         lint_group(),
         "Thanks for confirming that this issue is fixed in the latest version.",
+    );
+}
+
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
     );
 }
 
@@ -2767,53 +2845,6 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
-// InHindsight
-
-#[test]
-fn corrects_on_hindsight() {
-    assert_suggestion_result(
-        "On hindsight, the tip to \"try launching your terminal\" would've been useful",
-        lint_group(),
-        "In hindsight, the tip to \"try launching your terminal\" would've been useful",
-    );
-}
-
-#[test]
-fn corrects_in_hind_sight_hyphenated() {
-    assert_suggestion_result(
-        "It probably could have been better to fake an OSS project name in hind-sight, but anyway we can still fix this.",
-        lint_group(),
-        "It probably could have been better to fake an OSS project name in hindsight, but anyway we can still fix this.",
-    );
-}
-
-#[test]
-fn corrects_in_hind_sight() {
-    assert_suggestion_result(
-        "In hind sight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
-        lint_group(),
-        "In hindsight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
-    )
-}
-
-#[test]
-fn corrects_on_hind_sight() {
-    assert_suggestion_result(
-        "Yes, on hind sight I've used tasks that don't respond well to kills.",
-        lint_group(),
-        "Yes, in hindsight I've used tasks that don't respond well to kills.",
-    )
-}
-
-#[test]
-fn corrects_on_hind_sight_hyphenated() {
-    assert_suggestion_result(
-        "On hind-sight the likely root cause was not force cleaning helm config.",
-        lint_group(),
-        "In hindsight the likely root cause was not force cleaning helm config.",
-    )
-}
-
 // MakeItSeem
 
 #[test]
@@ -3101,6 +3132,35 @@ fn detect_arisen_the_question() {
         "Some have arisen the question like how to use this wireless HD mini camera",
         lint_group(),
         "Some have raised the question like how to use this wireless HD mini camera",
+    );
+}
+
+// SideTangent
+
+#[test]
+fn fix_side_tangent_start_of_sentence() {
+    assert_suggestion_result(
+        "Side tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+        lint_group(),
+        "Tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+    );
+}
+
+#[test]
+fn fix_side_tangent_aside() {
+    assert_suggestion_result(
+        "As a side tangent, in addition to not solving the gradual code repair problem",
+        lint_group(),
+        "As an aside, in addition to not solving the gradual code repair problem",
+    );
+}
+
+#[test]
+fn fix_side_tangents() {
+    assert_suggestion_result(
+        "so we don't get bogged down by tiny formatting bikeshedding side tangents",
+        lint_group(),
+        "so we don't get bogged down by tiny formatting bikeshedding tangents",
     );
 }
 
