@@ -77,7 +77,7 @@ impl Linter for RepeatedWords {
                             document.get_span_content(&tok_a.span).to_vec(),
                         )],
                         message: "Did you mean to repeat this word?".to_owned(),
-                        ..Default::default()
+                        priority: 128, // Lower priority than `TheTheToThatThe`
                     })
                 }
             }
