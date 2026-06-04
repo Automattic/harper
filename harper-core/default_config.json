@@ -2422,6 +2422,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -2720,6 +2727,13 @@
 								"state": true,
 								"label": "Close Tight Knit"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheTheToThatThe",
+								"state": true,
+								"label": "The The To That The"
+							}
 						}
 					]
 				}
@@ -2731,6 +2745,13 @@
 				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
 						{
 							"Bool": {
 								"name": "BoringWords",
@@ -3051,6 +3072,13 @@
 								"name": "ForFreeOfCharge",
 								"state": true,
 								"label": "For Free of Charge"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
 							}
 						}
 					]
@@ -3698,6 +3726,13 @@
 								"name": "ASomeTime",
 								"state": true,
 								"label": "A Some Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
 							}
 						}
 					]
@@ -4947,6 +4982,27 @@
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
 							}
 						}
 					]

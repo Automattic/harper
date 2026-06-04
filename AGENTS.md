@@ -9,6 +9,7 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 
 If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
 Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
+Whenever agents are done making changes, they should run `just format` before handing work back to the user.
 
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
@@ -70,6 +71,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/author-a-rule/+page.md`: Step-by-step workflow for implementing and testing new grammar rules.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
+- `packages/web/src/routes/docs/contributors/website/+page.md`: Local development, preview, and validation for writewithharper.com (SvelteKit/SveltePress).
 - `packages/web/src/routes/docs/contributors/wordpress/+page.md`: How to build and run the WordPress plugin locally.
 - `packages/web/src/routes/docs/contributors/obsidian/+page.md`: Obsidian-plugin contributor workflow and plugin-specific constraints.
 - `packages/web/src/routes/docs/contributors/review/+page.md`: PR reviewer playbook, including ways to fetch artifacts and test patches locally.
@@ -221,6 +223,7 @@ When asked to write a new rule, keep these guidelines in mind:
 - You should include at least 15 total tests, covering a wide variety of cases. Cover false-positives, false negatives, true positives, and if relevant, true negatives.
 - You should run any and all tests to ensure that you do no break existing behavior and that your new rule runs the way you expect.
 - After adding a new rule, update `harper-core/default_config.json` so it is enabled in the curated default config.
+- Built-in Weir rules can be grouped by putting related `.weir` files in a directory under `harper-core/src/linting/weir_rules`; the directory name becomes the single public rule name.
 - If the rule is related to a closed compound noun, see if you can just add an entry to the existing closed compound linter.
 
 Unless you are specifically requested to write the rule in a specific way, choose the language (Rust or Weir) and methodology that fits the task.

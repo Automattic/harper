@@ -37,6 +37,7 @@ function getConfigLinter(): Promise<LocalLinterType> {
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
+	display_name: string;
 }
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
@@ -74,6 +75,22 @@ export class Client {
 
 	static async setDebounceMs(debounceMs: number): Promise<void> {
 		await invoke('set_debounce_ms', { debounceMs });
+	}
+
+	static async getAutoUpdate(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_update');
+	}
+
+	static async setAutoUpdate(autoUpdate: boolean): Promise<void> {
+		await invoke('set_auto_update', { autoUpdate });
+	}
+
+	static async getLastUpdateCheck(): Promise<number | null> {
+		return await invoke<number | null>('get_last_update_check');
+	}
+
+	static async setLastUpdateCheck(lastUpdateCheck: number | null): Promise<void> {
+		await invoke('set_last_update_check', { lastUpdateCheck });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
@@ -154,6 +171,14 @@ export class Client {
 			ACCESSIBILITY_PERMISSION_TIMEOUT_MS,
 			'Accessibility permission request timed out',
 		);
+	}
+
+	static async startHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('start_highlighter_service');
+	}
+
+	static async stopHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('stop_highlighter_service');
 	}
 }
 

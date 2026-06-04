@@ -73,37 +73,15 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
         let mut w1_plus_w2_first = word1.to_vec();
         w1_plus_w2_first.push(*w2_first);
 
-        let mut values = vec![];
+        let mut values = Vec::new();
 
         // "thec" "at" -> "the cat"
         if self.dict.contains_word(w1_start) && self.dict.contains_word(&w1_last_plus_w2) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(&w1_last_plus_w2);
-            if let Some(canon_w1) = self.dict.get_correct_capitalization_of(w1_start) {
-                if let Some(canon_w2) = maybe_canon_w2 {
-                    keep_unique(&mut values, canon_w1, canon_w2);
-                } else {
-                    keep_unique(&mut values, canon_w1, &w1_last_plus_w2);
-                }
-            } else if let Some(canon_w2) = maybe_canon_w2 {
-                keep_unique(&mut values, w1_start, canon_w2);
-            }
-
             keep_unique(&mut values, w1_start, &w1_last_plus_w2);
         }
 
         // "th" "ecat" -> "the cat"
         if self.dict.contains_word(&w1_plus_w2_first) && self.dict.contains_word(w2_end) {
-            let maybe_canon_w2 = self.dict.get_correct_capitalization_of(w2_end);
-            if let Some(canon_w1) = self.dict.get_correct_capitalization_of(&w1_plus_w2_first) {
-                if let Some(canon_w2) = maybe_canon_w2 {
-                    keep_unique(&mut values, canon_w1, canon_w2);
-                } else {
-                    keep_unique(&mut values, canon_w1, w2_end);
-                }
-            } else if let Some(canon_w2) = maybe_canon_w2 {
-                keep_unique(&mut values, &w1_plus_w2_first, canon_w2);
-            }
-
             keep_unique(&mut values, &w1_plus_w2_first, w2_end);
         }
 
@@ -142,7 +120,10 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 #[cfg(test)]
 mod tests {
     use super::TransposedSpace;
-    use crate::{linting::tests::assert_suggestion_result, spell::FstDictionary};
+    use crate::{
+        linting::tests::{assert_suggestion_count, assert_suggestion_result},
+        spell::FstDictionary,
+    };
 
     #[test]
     fn space_too_early() {
@@ -170,12 +151,31 @@ mod tests {
             "Sometimes the space is one character early.",
         );
     }
+
     #[test]
     fn test_late() {
         assert_suggestion_result(
             "Ands ometimes the space is a character late.",
             TransposedSpace::new(FstDictionary::curated()),
             "And sometimes the space is a character late.",
+        );
+    }
+
+    #[test]
+    fn test_3355_result() {
+        assert_suggestion_result(
+            "cham peng",
+            TransposedSpace::new(FstDictionary::curated()),
+            "champ eng",
+        );
+    }
+
+    #[test]
+    fn test_3355_count() {
+        assert_suggestion_count(
+            "cham peng",
+            TransposedSpace::new(FstDictionary::curated()),
+            1,
         );
     }
 }
