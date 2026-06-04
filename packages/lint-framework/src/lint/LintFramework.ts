@@ -1,10 +1,11 @@
 import type { LintOptions } from 'harper.js';
 import { closestBox, type IgnorableLintBox } from './Box';
-import computeLintBoxes from './computeLintBoxes';
+import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
+import { remapLintToCurrentSource } from './spanMapping';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
@@ -14,6 +15,17 @@ type Modifier = 'Ctrl' | 'Shift' | 'Alt';
 type Hotkey = {
 	modifiers: Modifier[];
 	key: string;
+};
+
+type FrameworkActions = {
+	ignoreLint?: (hash: string) => Promise<void>;
+	getActivationKey?: () => Promise<ActivationKey>;
+	getHotkey?: () => Promise<Hotkey>;
+	getDelay?: () => Promise<number>;
+	openOptions?: () => Promise<void>;
+	addToUserDictionary?: (words: string[]) => Promise<void>;
+	reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+	setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 };
 
 /** Events on an input (any kind) that can trigger a re-render. */
@@ -29,6 +41,7 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
+	private lastInputAt = 0;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
@@ -43,15 +56,7 @@ export default class LintFramework {
 		options?: LintOptions,
 	) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
-	private actions: {
-		ignoreLint?: (hash: string) => Promise<void>;
-		getActivationKey?: () => Promise<ActivationKey>;
-		getHotkey?: () => Promise<Hotkey>;
-		openOptions?: () => Promise<void>;
-		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-	};
+	private actions: FrameworkActions;
 
 	constructor(
 		lintProvider: (
@@ -59,15 +64,7 @@ export default class LintFramework {
 			domain: string,
 			options?: LintOptions,
 		) => Promise<UnpackedLintGroups>,
-		actions: {
-			ignoreLint?: (hash: string) => Promise<void>;
-			getActivationKey?: () => Promise<ActivationKey>;
-			getHotkey?: () => Promise<Hotkey>;
-			openOptions?: () => Promise<void>;
-			addToUserDictionary?: (words: string[]) => Promise<void>;
-			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-		},
+		actions: FrameworkActions,
 	) {
 		this.lintProvider = lintProvider;
 		this.actions = actions;
@@ -84,6 +81,7 @@ export default class LintFramework {
 		this.lastLints = [];
 
 		this.updateEventCallback = () => {
+			this.lastInputAt = Date.now();
 			this.update();
 		};
 
@@ -121,6 +119,11 @@ export default class LintFramework {
 			return;
 		}
 
+		const delay = (await this.actions.getDelay?.()) ?? 0;
+		if (delay > 0 && Date.now() - this.lastInputAt < delay) {
+			return;
+		}
+
 		// Avoid duplicate requests in the queue
 		this.lintRequested = true;
 
@@ -131,30 +134,7 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				let text = null;
-
-				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
-				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
-
-				if (isCM) {
-					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
-					const lines = Array.from(lineElements).map((el) => el.textContent);
-					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
-				} else {
-					text =
-						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-							? target.value
-							: target.textContent;
-				}
-
-				const newLineIndices = [];
-				let i = 0;
-				for (const c of text ?? '') {
-					if (c == '\n') {
-						newLineIndices.push(i);
-					}
-					i++;
-				}
+				const { text, isCM, newLineIndices } = this.getTargetText(target);
 
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
@@ -296,6 +276,39 @@ export default class LintFramework {
 		}
 	}
 
+	private getTargetText(target: Node): {
+		text: string | null;
+		isCM: boolean;
+		newLineIndices: number[];
+	} {
+		let text: string | null = null;
+
+		// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
+		const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
+
+		if (isCM) {
+			const lineElements = (target as HTMLElement).querySelectorAll<HTMLElement>('.cm-line');
+			const lines = Array.from(lineElements).map((el) => el.textContent);
+			text = lines.reduce((acc: string, x: string | null) => `${acc}${x ?? ''}\n`, '');
+		} else {
+			text =
+				target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+					? target.value
+					: (target as HTMLElement).innerText;
+		}
+
+		const newLineIndices: number[] = [];
+		let i = 0;
+		for (const c of text ?? '') {
+			if (c == '\n') {
+				newLineIndices.push(i);
+			}
+			i++;
+		}
+
+		return { text, isCM, newLineIndices };
+	}
+
 	private requestRender() {
 		if (this.renderRequested) {
 			return;
@@ -304,17 +317,33 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) =>
-				target
-					? Object.entries(lints).flatMap(([ruleName, ls]) =>
-							ls.flatMap((l) =>
-								computeLintBoxes(target, l as any, ruleName, {
-									ignoreLint: this.actions.ignoreLint,
-								}),
-							),
-						)
-					: [],
-			);
+			const boxes = this.lastLints.flatMap(({ target, lints }) => {
+				if (!target) {
+					return [];
+				}
+
+				const { text, isCM } = this.getTargetText(target);
+				if (text == null) {
+					return [];
+				}
+
+				return Object.entries(lints).flatMap(([ruleName, ls]) =>
+					ls.flatMap((lint) => {
+						const currentLint = isCM
+							? lint.source === text
+								? lint
+								: null
+							: remapLintToCurrentSource(lint, text);
+						if (currentLint == null) {
+							return [];
+						}
+
+						return computeLintBoxes(target, currentLint, ruleName, {
+							ignoreLint: this.actions.ignoreLint,
+						});
+					}),
+				);
+			});
 			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);

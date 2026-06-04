@@ -17,7 +17,53 @@ function iconSvg(definition: IconDefinition): string {
 const settingsIconSvg = iconSvg(faSliders);
 const disableIconSvg = iconSvg(faToggleOff);
 
-let previouslyActiveElement: null | HTMLElement = null;
+/** Saved cursor restore function, captured when the popup steals focus. */
+let savedRestore: (() => void) | null = null;
+
+function saveCursorState() {
+	const el = document.activeElement;
+	if (!el || el === document.body || el.tagName.toLowerCase() === 'harper-render-box') return;
+
+	if (el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement) {
+		const start = el.selectionStart;
+		const end = el.selectionEnd;
+		const dir = el.selectionDirection ?? undefined;
+		savedRestore =
+			start != null
+				? () => {
+						el.focus({ preventScroll: true });
+						el.setSelectionRange(start, end, dir);
+					}
+				: () => el.focus({ preventScroll: true });
+	} else if (el instanceof HTMLElement) {
+		const sel = window.getSelection();
+		const range = sel && sel.rangeCount > 0 ? sel.getRangeAt(0).cloneRange() : null;
+		savedRestore = () => {
+			el.focus({ preventScroll: true });
+			if (range) {
+				const s = window.getSelection();
+				if (s) {
+					s.removeAllRanges();
+					s.addRange(range);
+				}
+			}
+		};
+	}
+}
+
+/** Deferred so in-flight key events (e.g. Escape) finish before the editor regains focus. */
+function restoreCursorState() {
+	const restore = savedRestore;
+	if (!restore) return;
+	savedRestore = null;
+	setTimeout(() => {
+		try {
+			restore();
+		} catch {
+			// Range may reference nodes removed by a framework reconciler.
+		}
+	}, 0);
+}
 
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
@@ -26,9 +72,7 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	}
 
 	requestAnimationFrame(() => {
-		if (document.activeElement?.tagName.toLowerCase() != 'harper-render-box') {
-			previouslyActiveElement = document.activeElement as HTMLElement;
-		}
+		saveCursorState();
 
 		node.focus();
 		Object.defineProperty(node, '__harperAutofocused', {
@@ -478,7 +522,7 @@ export default function SuggestionBox(
 	const ignoreLintCallback = box.ignoreLint;
 
 	const refocusClose = () => {
-		previouslyActiveElement?.focus();
+		restoreCursorState();
 		close();
 	};
 
@@ -503,7 +547,7 @@ export default function SuggestionBox(
 			footer(
 				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
 					box.applySuggestion(v);
-					refocusClose();
+					close();
 				}),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary

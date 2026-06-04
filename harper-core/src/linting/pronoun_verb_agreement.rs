@@ -185,6 +185,13 @@ where
         let pron_tok = &toks[0];
         let is_3psg = pron_tok.kind.is_third_person_singular_pronoun();
 
+        // Skip when the pronoun is part of a hyphenated compound (e.g. "co-founded").
+        // The tokenizer splits "co-founded" into separate tokens, but "co" as a prefix
+        // is not acting as a pronoun.
+        if pron_tok.span.end < src.len() && src[pron_tok.span.end] == '-' {
+            return None;
+        }
+
         let verb_tok = toks.last()?;
 
         if let Some((before, _)) = ctx

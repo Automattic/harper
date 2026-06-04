@@ -1,0 +1,10 @@
+expr main [(more than what meets the eye), (more that meets the eye), (more that what meets the eye)]
+
+let message "For something that has hidden complexity or depth, `more than meets the eye` is the most idiomatic and most standard."
+let description "Corrects nonstandard and less idiomatic variants of `more than meets the eye`."
+let kind "Usage"
+let becomes "more than meets the eye"
+
+test "They decided to investigate and found out that there was more than what meets the eye here." "They decided to investigate and found out that there was more than meets the eye here."
+test "But there might be more that meets the eye there, too:" "But there might be more than meets the eye there, too:"
+test "As i have said before, there is at times more that what meets the eye." "As i have said before, there is at times more than meets the eye."

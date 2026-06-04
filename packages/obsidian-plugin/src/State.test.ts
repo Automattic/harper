@@ -1,3 +1,4 @@
+import type { StructuredLintConfig, StructuredLintSetting } from 'harper.js';
 import { shuffle } from 'lodash-es';
 import { expect, test } from 'vitest';
 import State from './State';
@@ -18,6 +19,32 @@ function createEphemeralState(): State {
 		() => {},
 		undefined,
 	);
+}
+
+function collectStructuredRuleNames(config: StructuredLintConfig): string[] {
+	const out: string[] = [];
+
+	const visit = (setting: StructuredLintSetting) => {
+		if ('Bool' in setting) {
+			out.push(setting.Bool.name);
+			return;
+		}
+
+		if ('OneOfMany' in setting) {
+			out.push(...setting.OneOfMany.names);
+			return;
+		}
+
+		for (const child of setting.Group.child.settings) {
+			visit(child);
+		}
+	};
+
+	for (const setting of config.settings) {
+		visit(setting);
+	}
+
+	return out;
 }
 
 test('Toggling linting should change extension array.', () => {
@@ -104,6 +131,18 @@ test('Lint settings and descriptions have the same keys', async () => {
 
 	expect(missingInDescriptions.length).toBe(0);
 	expect(extraInDescriptions.length).toBe(0);
+});
+
+test('Structured lint config and flat lint settings have the same keys', async () => {
+	const state = createEphemeralState();
+
+	const settings = await state.getSettings();
+	const structured = await state.getStructuredLintConfig();
+
+	const lintKeys = Object.keys(settings.lintSettings).sort();
+	const structuredKeys = collectStructuredRuleNames(structured).sort();
+
+	expect(structuredKeys).toStrictEqual(lintKeys);
 });
 
 test('Can be initialized with incomplete lint settings and retain default state.', async () => {

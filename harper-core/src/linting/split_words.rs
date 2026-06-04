@@ -3,7 +3,11 @@ use std::sync::Arc;
 use hashbrown::HashSet;
 
 use crate::expr::Expr;
-use crate::linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk};
+use crate::linting::{
+    ExprLinter, LintKind, Suggestion,
+    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+    informal_laughter::is_informal_laughter,
+};
 use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
 use crate::{Lint, Token};
 
@@ -38,7 +42,12 @@ impl ExprLinter for SplitWords {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let word = &matched_tokens[0];
 
         // If it's a recognized word, we don't care about it.
@@ -47,6 +56,9 @@ impl ExprLinter for SplitWords {
         }
 
         let chars = &word.get_ch(source);
+        if is_informal_laughter(chars) {
+            return None;
+        }
 
         // Get all possible prefix candidates from trie and extract valid split positions
         let candidates = self.dict.find_words_with_common_prefix(chars);
@@ -76,6 +88,7 @@ impl ExprLinter for SplitWords {
         }
 
         let mut suggestions = Vec::new();
+        let mut has_anchor_split = false;
         let mut message: Option<String> = None;
 
         // Check positions in middle-outward order
@@ -88,20 +101,22 @@ impl ExprLinter for SplitWords {
             let remainder = &chars[split_pos..];
 
             // Both parts must be valid common words
-            if let Some(cand_meta) = self.dict.get_word_metadata(candidate) {
-                if !cand_meta.common {
-                    continue;
-                }
-            } else {
+            let Some(cand_meta) = self.dict.get_word_metadata(candidate) else {
+                continue;
+            };
+            if !cand_meta.common {
                 continue;
             }
 
-            if let Some(rem_meta) = self.dict.get_word_metadata(remainder) {
-                if !rem_meta.common {
-                    continue;
-                }
-            } else {
+            let Some(rem_meta) = self.dict.get_word_metadata(remainder) else {
                 continue;
+            };
+            if !rem_meta.common {
+                continue;
+            }
+
+            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+                has_anchor_split = true;
             }
 
             // Valid split found
@@ -112,8 +127,13 @@ impl ExprLinter for SplitWords {
 
             suggestions.push(Suggestion::ReplaceWith(suggestion));
             if suggestions.len() == 1 {
+                let certainty = if candidate.len() == 1 || remainder.len() == 1 {
+                    "possibly"
+                } else {
+                    "probably"
+                };
                 message = Some(format!(
-                    "`{}` should probably be written as `{} {}`.",
+                    "`{}` should {certainty} be written as `{} {}`.",
                     chars.iter().collect::<String>(),
                     candidate.iter().collect::<String>(),
                     remainder.iter().collect::<String>()
@@ -123,6 +143,10 @@ impl ExprLinter for SplitWords {
 
         if !suggestions.is_empty() {
             let original_word: String = chars.iter().collect();
+
+            if should_defer_to_spellcheck(&self.dict, chars, has_anchor_split, context) {
+                return None;
+            }
 
             if suggestions.len() != 1 {
                 message = Some(format!(
@@ -143,10 +167,50 @@ impl ExprLinter for SplitWords {
     }
 }
 
+fn is_anchor_split(meta: &crate::DictWordMetadata, word: &[char]) -> bool {
+    meta.preposition
+        || meta.is_determiner()
+        || meta.is_conjunction()
+        || meta.is_pronoun()
+        || meta.is_adverb()
+        || word.len() <= 2
+}
+
+fn should_defer_to_spellcheck(
+    dict: &TrieDictionary<Arc<FstDictionary>>,
+    chars: &[char],
+    has_anchor_split: bool,
+    context: Option<(&[Token], &[Token])>,
+) -> bool {
+    if has_anchor_split {
+        return false;
+    }
+
+    let nounish_context = context.is_some_and(|_| {
+        at_start_of_sentence(context)
+            || preceded_by_word(context, |tok| {
+                tok.kind.is_determiner()
+                    || tok.kind.is_pronoun()
+                    || tok.kind.is_adjective()
+                    || tok.kind.is_possessive_determiner()
+            })
+    });
+
+    if !nounish_context {
+        return false;
+    }
+
+    // If the whole word has a strong one-word correction, prefer that over a content-word split.
+    dict.fuzzy_match(chars, 1, 1)
+        .first()
+        .is_some_and(|suggestion| suggestion.edit_distance == 1)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::linting::tests::{
-        assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
+        assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints,
+        assert_suggestion_result,
     };
 
     use super::SplitWords;
@@ -217,6 +281,21 @@ mod tests {
     }
 
     #[test]
+    fn ignores_single_word_misspelling_with_split_like_halves() {
+        assert_no_lints("I love this extention!", SplitWords::default());
+    }
+
+    #[test]
+    fn corrects_doesthe() {
+        assert_suggestion_result("doesthe", SplitWords::default(), "does the");
+    }
+
+    #[test]
+    fn corrects_splitwords() {
+        assert_suggestion_result("splitwords", SplitWords::default(), "split words");
+    }
+
+    #[test]
     fn test_atall_to_at_all() {
         assert_suggestion_result(
             "don't seem to support symbolic links atall.",
@@ -260,5 +339,30 @@ mod tests {
             SplitWords::default(),
             "I would love to eat a corn leaf.",
         );
+    }
+
+    #[test]
+    fn not_confident_proc_should_be_pro_c() {
+        assert_lint_message(
+            "proc",
+            SplitWords::default(),
+            "`proc` should possibly be written as `pro c`.",
+        );
+    }
+
+    #[test]
+    fn confident_thankyou_should_be_thank_you() {
+        assert_lint_message(
+            "thankyou",
+            SplitWords::default(),
+            "`thankyou` should probably be written as `thank you`.",
+        );
+    }
+
+    #[test]
+    fn allows_informal_laughter() {
+        for source in ["hah", "haha", "hahah", "hahaha", "Hahahah"] {
+            assert_no_lints(source, SplitWords::default());
+        }
     }
 }

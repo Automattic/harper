@@ -1,6 +1,6 @@
 import type { Dialect, Lint, Suggestion } from 'harper-wasm';
 import type { BinaryModule } from './BinaryModule';
-import type { LintConfig, LintOptions } from './main';
+import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 import type Summary from './Summary';
 
 export interface WeirpackTestFailure {
@@ -45,6 +45,16 @@ export default interface Linter {
 	 * This method does not affect the caller's lint configuration, nor does it return the current one. */
 	getDefaultLintConfig(): Promise<LintConfig>;
 
+	/** Get the linter's current structured configuration.
+	 * This is intended for organizing and rendering settings UIs.
+	 * Persisted config changes must still be applied through the flat `setLintConfig` API. */
+	getStructuredLintConfig(): Promise<StructuredLintConfig>;
+
+	/** Get the linter's current structured configuration as JSON.
+	 * This is a presentation-oriented view over the underlying flat config.
+	 * Persisted config changes must still be applied through the flat `setLintConfig` API. */
+	getStructuredLintConfigJSON(): Promise<string>;
+
 	/** Set the linter's current configuration. */
 	setLintConfig(config: LintConfig): Promise<void>;
 
@@ -77,6 +87,9 @@ export default interface Linter {
 
 	/** Ignore future instances of a lint from a previous linting run in future invocations. */
 	ignoreLint(source: string, lint: Lint): Promise<void>;
+
+	/** Ignore future instances of lints from a previous linting run in future invocations. */
+	ignoreLints(source: string, lints: Lint[]): Promise<void>;
 
 	/** Ignore future instances of a lint from a previous linting run in future invocations using its hash. */
 	ignoreLintHash(hash: bigint): Promise<void>;

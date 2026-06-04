@@ -3,7 +3,7 @@ use crate::{
     expr::{Expr, SequenceExpr},
     linting::{
         ExprLinter, Suggestion,
-        expr_linter::{Chunk, followed_by_word},
+        expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
     },
     patterns::ModalVerb,
 };
@@ -29,6 +29,7 @@ impl Default for ModalBeAdjective {
                     &[
                         "backup", // adjective commonly misused as a verb
                         "likely", // adjective but with special usage
+                        "way",    // typo for "wait" in patterns like "can't way to"
                     ] as &[_],
                 ),
         }
@@ -54,7 +55,8 @@ impl ExprLinter for ModalBeAdjective {
                     .get_ch(src)
                     .eq_any_ignore_ascii_case_str(&["at", "by", "if"]))
                 || (toks.last().unwrap().get_ch(src).eq_str("kind") && nw.get_ch(src).eq_str("of"))
-        }) {
+        }) || followed_by_hyphen(ctx)
+        {
             return None;
         }
 
@@ -144,6 +146,22 @@ mod tests {
         );
         assert_no_lints(
             "some older software (filezilla on debian-stable) cannot passive-mode with TLS",
+            ModalBeAdjective::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_soft_fork_3168() {
+        assert_no_lints(
+            "You should soft-fork the repository.",
+            ModalBeAdjective::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_cant_way() {
+        assert_no_lints(
+            "I can't way for something better to be released.",
             ModalBeAdjective::default(),
         );
     }
