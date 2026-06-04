@@ -63,6 +63,14 @@ pub fn try_make_title_case(
         let word = &toks[word_idx];
         let is_alphabetic_word = word.get_ch(source).iter().any(|c| c.is_alphabetic());
 
+        // Tracks whether the proper-noun canonical-capitalization pass below
+        // wrote an intentionally camelCase form (e.g., `iPhone`, `eBay`,
+        // `macOS`). When true, the title-case rules below must not overwrite
+        // that intentional lowercase first letter. Detected via the
+        // dictionary's pre-computed `LOWER_CAMEL` orthography flag rather
+        // than by re-inspecting the canonical string.
+        let mut canonical_is_camel_case = false;
+
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
@@ -76,6 +84,8 @@ pub fn try_make_title_case(
                         set_output_char(word.span.start - start_index + i, *c);
                     }
                 }
+
+                canonical_is_camel_case = metadata.is_lower_camel();
             }
         };
 
@@ -90,18 +100,24 @@ pub fn try_make_title_case(
             || is_first_alphabetic_word
             || word_likes.peek().is_none();
 
-        if should_capitalize {
-            set_output_char(
-                word.span.start - start_index,
-                relevant_text[word.span.start - start_index].to_ascii_uppercase(),
-            );
-        } else {
-            // The whole word should be lowercase.
-            for i in word.span {
+        // The generic title-case rules below would overwrite the
+        // intentional lowercase first letter of a camelCase canonical
+        // (e.g., `iCloud` → `ICloud`). Skip them in that case; the
+        // proper-noun pass above has already written the correct form.
+        if !canonical_is_camel_case {
+            if should_capitalize {
                 set_output_char(
-                    i - start_index,
-                    relevant_text[i - start_index].to_ascii_lowercase(),
+                    word.span.start - start_index,
+                    relevant_text[word.span.start - start_index].to_ascii_uppercase(),
                 );
+            } else {
+                // The whole word should be lowercase.
+                for i in word.span {
+                    set_output_char(
+                        i - start_index,
+                        relevant_text[i - start_index].to_ascii_lowercase(),
+                    );
+                }
             }
         }
 
@@ -231,6 +247,30 @@ mod tests {
         assert_eq!(
             make_title_case_str("videopress", &PlainEnglish, &FstDictionary::curated()),
             "VideoPress"
+        )
+    }
+
+    #[test]
+    fn preserves_icloud_camel_case_mid_sentence() {
+        assert_eq!(
+            make_title_case_str(
+                "she backs up photos to icloud",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "She Backs up Photos to iCloud",
+        )
+    }
+
+    #[test]
+    fn preserves_icloud_camel_case_as_first_word() {
+        assert_eq!(
+            make_title_case_str(
+                "icloud syncs your files",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "iCloud Syncs Your Files",
         )
     }
 
